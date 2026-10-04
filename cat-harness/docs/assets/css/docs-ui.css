@@ -3658,6 +3658,11 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   background: var(--fa-glass-card);
   color: var(--fa-glass-ink);
   border: 1px solid var(--fa-glass-edge);
+  /* BORDER-BOX: with the move bar open the row reaches `max-width: 100%`, and
+     a content-box 100% plus its padding and border overflowed the sheet by
+     18px — so pressing a move-bar button scrolled the glass sideways and the
+     button jumped out from under the pointer (measured, issue #1900). */
+  box-sizing: border-box;
 }
 .fa-glass-zoom-btn {
   min-width: 2.75rem;
@@ -7940,7 +7945,7 @@ a.fa-harness-tab__body:focus-visible {
   /* A position means nothing in a column, so the controls that set one go.
      Close and Return stay: they are about WHERE IT LIVES, not where it sits. */
   .fa-sticky-layer [data-fa-control="move"],
-  .fa-glass-asset-tool[aria-label^="Make "],
+  .fa-glass-asset-resize,
   .fa-glass-tidy { display: none; }
 }
 
@@ -8130,6 +8135,79 @@ a.fa-harness-tab__body:focus-visible {
    keeps a book's shape. */
 @media (max-width: 37.49rem) {
   .fa-glass-shelf > .fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) { min-height: 16rem; }
+}
+
+/* ── Issue #1900: open, resize by the corner, confirm the close ──────────
+ *
+ * THE CORNER is the pointer's way to size a card (owner, 2026-10-02: the
+ * card's own −/+ went — *"remove if not needed"*). It is an accelerator: the
+ * keys in move mode and the move bar's −/+ do the same without a drag
+ * (`board-windows`, the floor). The tool row keeps clear of it, so the corner
+ * never sits on top of ×. Drawn in the glass's edge token, so every glass
+ * theme (and a themed sticky's own edge) colours it. */
+.fa-glass-asset-resize {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: nwse-resize;
+  touch-action: none;
+  background: linear-gradient(135deg,
+    transparent 0 52%, var(--fa-sticky-edge, var(--fa-glass-edge)) 52% 58%,
+    transparent 58% 70%, var(--fa-sticky-edge, var(--fa-glass-edge)) 70% 76%,
+    transparent 76% 88%, var(--fa-sticky-edge, var(--fa-glass-edge)) 88% 94%, transparent 94%);
+}
+.fa-glass-shelf .fa-glass-asset:has(> .fa-glass-asset-resize) > .fa-glass-asset-tools { padding-right: 1.75rem; }
+/* A library card OPENS its entry, so it is a tab stop; its focus is drawn. */
+.fa-glass-asset[data-fa-opens]:focus-visible {
+  outline: 3px solid var(--fa-glass-accent);
+  outline-offset: 2px;
+}
+
+/* THE CONFIRM × opens: a native modal, so the browser traps focus. Inside the
+   layer, so the glass's theme tokens reach it. */
+.fa-glass-confirm {
+  box-sizing: border-box;
+  max-width: min(28rem, calc(100vw - 2rem));
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--fa-glass-edge);
+  border-radius: var(--fa-folio-radius, 0);
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+}
+.fa-glass-confirm::backdrop { background: rgba(0, 0, 0, 0.45); }
+.fa-glass-confirm-title { margin: 0 0 0.5rem; font-size: 1rem; }
+.fa-glass-confirm p { margin: 0 0 0.6rem; font-size: 0.9rem; line-height: 1.45; }
+.fa-glass-confirm a,
+.fa-glass-shelved-say a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.fa-glass-confirm-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: flex-end; }
+.fa-glass-confirm-actions button {
+  /* Low-dexterity profile: a confirm is the last place to economise on target size. */
+  min-height: 2.75rem;
+  padding: 0 0.875rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+/* Focus lands on the safe choice, and it carries the weight. */
+.fa-glass-confirm-cancel { font-weight: 600; }
+
+/* WHERE IT WENT, said where the card was — and always present, empty until
+   something is shelved, so the status region exists before it speaks. */
+.fa-glass-shelved-say {
+  max-width: 40rem;
+  margin: 0 auto;
+  font-size: 0.9rem;
+  color: var(--fa-glass-ink);
+  background: var(--fa-glass-card);
+}
+.fa-glass-shelved-say:not(:empty) {
+  margin: 0.5rem auto;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--fa-glass-edge);
 }
 
 /* The browser-only note's dismiss. */

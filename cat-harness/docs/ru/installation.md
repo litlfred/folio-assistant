@@ -107,7 +107,7 @@ cat-harness\scripts\upload-to-uploads.bat https://example.org/guideline.pdf
 подсказку по установке для всего, что отсутствует:
 
 ```sh
-bun run cat-harness/src/index.ts --check-deps
+bun run cat-harness-tools/src/index.ts --check-deps
 # или через npm-скрипт
 bun run check-deps
 ```
@@ -118,13 +118,13 @@ folio-assistant — это MCP-сервер. Он поддерживает дв�
 
 ```sh
 # транспорт stdio — то, что запускают LLM-харнессы (Claude Code и др.)
-bun run cat-harness/src/index.ts --stdio
+bun run cat-harness-tools/src/index.ts --stdio
 
 # транспорт HTTP — для долгоживущего общего инстанса / веб-интерфейса
-bun run cat-harness/src/index.ts --http
+bun run cat-harness-tools/src/index.ts --http
 
 # указать репозиторий контента, над которым вы работаете (по умолчанию ../.. )
-bun run cat-harness/src/index.ts --stdio --repo /path/to/your/content-repo
+bun run cat-harness-tools/src/index.ts --stdio --repo /path/to/your/content-repo
 ```
 
 В `package.json` есть удобные скрипты:
@@ -182,7 +182,7 @@ folio-assistant предоставляет свои инструменты че�
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness-tools/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }
@@ -191,7 +191,7 @@ folio-assistant предоставляет свои инструменты че�
 Либо зарегистрируйте его через CLI:
 
 ```sh
-claude mcp add folio-assistant -- bun run /path/to/folio-assistant/cat-harness/src/index.ts --stdio --repo .
+claude mcp add folio-assistant -- bun run /path/to/folio-assistant/cat-harness-tools/src/index.ts --stdio --repo .
 ```
 
 Claude Code также нативно считывает `AGENTS.md` / `CLAUDE.md` и учитывает
@@ -209,7 +209,7 @@ Antigravity нативно считывает `AGENTS.md`, поддержива�
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness-tools/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }
@@ -230,7 +230,7 @@ Gemini CLI нативно считывает `AGENTS.md` / `GEMINI.md`. Заре
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness-tools/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }

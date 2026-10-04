@@ -18,8 +18,10 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`instance-versioning.test.ts`](instance-versioning.test.ts) | a file |  |
 | [`kg-qa.test.ts`](kg-qa.test.ts) | a file |  |
 | [`kind-validator.test.ts`](kind-validator.test.ts) | a file |  |
+| [`landing-instance.test.ts`](landing-instance.test.ts) | a file |  |
 | [`layer-direction.test.ts`](layer-direction.test.ts) | a file |  |
 | [`portable-path.test.ts`](portable-path.test.ts) | a file |  |
+| [`qa-attestations-criteria.test.ts`](qa-attestations-criteria.test.ts) | a file |  |
 | [`reference-direction-declaration.test.ts`](reference-direction-declaration.test.ts) | a file |  |
 | [`schema-graph.test.ts`](schema-graph.test.ts) | a file |  |
 | [`skill-overlay.test.ts`](skill-overlay.test.ts) | a file |  |

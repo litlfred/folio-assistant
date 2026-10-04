@@ -58,14 +58,71 @@ permissions:
   actions: read
   statuses: write
 
-concurrency:
-  group: merge-guard-${{ github.event.pull_request.number || github.event.issue.number || inputs.pr || github.run_id }}
-  cancel-in-progress: true
-
+# THROTTLE. Measured 2026-10-04: ~25 runs in the 6 min after #2000 merged
+# and 54 in ~20 min. Of the first 97 runs, 37 were `workflow_run` (9 of them
+# evaluated no PR at all — a completion on `main`, where a merge-guard status
+# means nothing), 26 `issue_comment` and 34 `pull_request`; of 90 PR comments
+# sampled over the same day, 52 contained nothing any check reads. Every cut
+# below is a JOB-level `if:`, so a skipped run is never given a runner, and
+# every cut drops only an event that CANNOT change a verdict: the status means
+# exactly what it meant before.
+#
+# The concurrency group is on the JOB, not the workflow, on purpose: a
+# workflow-level group is entered by runs whose job is then skipped, so an
+# irrelevant comment would cancel a real evaluation in flight and leave a
+# stale status. A skipped job never enters a job-level group.
 jobs:
   merge-guard:
     name: merge-guard (evaluate)
-    if: github.event_name != 'issue_comment' || github.event.issue.pull_request
+    # One filter per event; `workflow_dispatch` always runs.
+    #
+    # issue_comment — only on a PR, and only when the comment (or, for an
+    # edit, its previous text) contains something a check READS from a
+    # comment: `ready:` (check 3's marker, and the window of check 7), `?`
+    # (check 7's questions), a `claude.ai/code/session_` footer (check 2
+    # attributes a ready flip to the nearest signed comment; check 3 needs the
+    # marker signed), or merge-main's `merge-main-bot` marker (checks 3 and 5
+    # read the shas it names). `contains()` is case-insensitive, as `READY_RE`
+    # is. Those are every comment-reading function in `merge-guard.ts`
+    # (`readyMarkers`, `openQuestions`, `signingSession`, `botPushedShas`); a
+    # check that reads comments for anything else must add its text here.
+    #
+    # workflow_run — not for a completion on this repository's default branch,
+    # and not for one GitHub associates with no PR: `pull_requests` is exactly
+    # what the first step reads, so an empty list already evaluated nothing —
+    # it just did so on a paid runner. CI completing on a PR head still runs.
+    #
+    # pull_request — every type still runs, except an `edited` that changed
+    # neither the body (checks 2, 3 and 6 read it) nor the base (check 1): a
+    # title-only edit cannot change a verdict.
+    if: >-
+      (github.event_name == 'issue_comment'
+        && github.event.issue.pull_request
+        && (contains(github.event.comment.body, 'ready:')
+          || contains(github.event.comment.body, '?')
+          || contains(github.event.comment.body, 'claude.ai/code/session_')
+          || contains(github.event.comment.body, 'merge-main-bot')
+          || contains(github.event.changes.body.from, 'ready:')
+          || contains(github.event.changes.body.from, '?')
+          || contains(github.event.changes.body.from, 'claude.ai/code/session_')
+          || contains(github.event.changes.body.from, 'merge-main-bot')))
+      || (github.event_name == 'workflow_run'
+        && !(github.event.workflow_run.head_branch == github.event.repository.default_branch
+          && github.event.workflow_run.head_repository.full_name == github.repository)
+        && toJSON(github.event.workflow_run.pull_requests) != '[]')
+      || (github.event_name == 'pull_request'
+        && (github.event.action != 'edited' || github.event.changes.body || github.event.changes.base))
+      || github.event_name == 'workflow_dispatch'
+    # One group per PR, so a burst (a push, a label, a comment) collapses to
+    # the latest evaluation, which reads the newest facts. A `workflow_run` is
+    # keyed by its head BRANCH instead: its `pull_requests` may name more than
+    # one PR, and cancelling it from one PR's group would leave the other's
+    # status stale. It still collapses the two gating workflows' completions
+    # on one head into one evaluation. Before this, a `workflow_run` fell
+    # through to `github.run_id` and never collapsed at all.
+    concurrency:
+      group: merge-guard-${{ github.event.pull_request.number || github.event.issue.number || inputs.pr || format('branch-{0}', github.event.workflow_run.head_branch) }}
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:

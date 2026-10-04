@@ -1,11 +1,11 @@
 ---
 # folio-assistant-qsx4
 title: who-style-guide folds INTO who-iris as a declared subgraph, docs included
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T00:02:14Z
-updated_at: 2026-10-02T22:18:46Z
+updated_at: 2026-10-04T18:29:58Z
 parent: folio-assistant-kupb
 ---
 
@@ -40,3 +40,13 @@ The who-iris prose that still described the retired `dependents` field is **rewo
 
 ## Holder 2026-10-02 22:40Z
 Driven by https://claude.ai/code/session_01SmeBn6QZsDFaNQ4GtuC2sd (Parcel B, epic 7x5n): merging main into #1735 per the PR's merge plan, regenerating, gates, then ready.
+
+
+## Closed on evidence, 2026-10-04 (bean-coordination §"Closing a bean whose work has already landed")
+
+Its work merged in PR #1735 on 2026-10-03; the holder note of 2026-10-02 named that PR, so this is landed work, not mid-flight. Each Done-when re-derived on `main` @ `d174883`, not quoted:
+- **content under `who-iris/` by `git mv`, declared in `who-iris.json`.** `git ls-tree origin/main` holds `who-iris/skills/voices/who-{editorial,guideline-development,publication-design}/`, `who-iris/glossary/who-iris.glossary.json`, `who-iris/docs/style-guide.md` and `style-guide-agents.md`; `who-iris.json` declares `who-iris-skills`, `glossary` and `who-iris-docs`.
+- **instance retired, no live reference left.** 0 files under `who-style-guide/` on main; the remaining mentions outside beans are history comments plus one `.gitignore` guard for the old generated residue.
+- **gates green.** `check:voices`, `check:voice-skills`, `check:glossary`, `kg:audit:check` and `check:undeclared-files:check` each exit 0 on `main`. The "NOT done — needs a person" residue (three generated files under `who-style-guide/test/results/`) is gone with the directory.
+
+Session: https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi
