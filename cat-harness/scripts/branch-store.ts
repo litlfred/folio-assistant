@@ -1077,8 +1077,15 @@ export function mountTip(loc: TipLocation, opts: MountOptions = {}): MountResult
   if (prior) {
     const pending = localChanges(prior, repoRoot);
     if (pending.length) return { state: "refused", reason: `${prior.into} has ${pending.length} unpushed change(s); push or discard them before re-mounting` };
-  } else if (existsSync(into) && walkFiles(into).length) {
-    return { state: "refused", reason: `${into} holds files and is not a mount of ${loc.id}` };
+  } else if (existsSync(into)) {
+    // Files the checkout itself ignores are local scratch, not a competing
+    // copy: `fsh-guts/logs/` is written by the log writer whether or not the
+    // trashcan is mounted, and a first mount must not be refused over them
+    // (bean `9c7h`). They are left exactly where they are.
+    const present = walkFiles(into);
+    const ignored = ignoredByCheckout(repoRoot, into, present);
+    const competing = present.filter((rel) => !ignored.has(rel));
+    if (competing.length) return { state: "refused", reason: `${into} holds ${competing.length} file(s) and is not a mount of ${loc.id}` };
   }
   const r = store.readTreeEntries(loc.path);
   if (r.state !== "hit") return r;
@@ -1115,6 +1122,51 @@ export function pendingMountChanges(id: string, opts: MountOptions = {}): Change
   const repoRoot = opts.repoRoot ?? gitTopLevel();
   const m = readMarker(repoRoot, id);
   return m ? localChanges(m, repoRoot) : undefined;
+}
+
+/**
+ * Where a declared directory's content can be READ right now (bean `9c7h`).
+ *
+ * The declared path alone does not answer that once a directory lives on a
+ * branch: until it is mounted, the path is empty or absent, and a reader that
+ * walked it would report a clean, empty corpus — the third state collapsing
+ * into zero. So a reader asks here and refuses `not-mounted`.
+ */
+export type ContentAt =
+  | { state: "present"; dir: string; via: "checkout" | "mount" }
+  | { state: "not-mounted"; dir: string; branch: string; reason: string }
+  | { state: "undeclared"; reason: string };
+
+export function contentAt(id: string, repoRoot: string = gitTopLevel()): ContentAt {
+  for (const inst of instanceRootsIn(repoRoot)) {
+    for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {
+      if (d.id !== id) continue;
+      const dir = d.absPath.replace(/[/\\]+$/, "");
+      const at = keptAt(inst, repoRoot, d);
+      if (!at) return { state: "present", dir, via: "checkout" };
+      const m = readMarker(repoRoot, id);
+      if (m) return { state: "present", dir: m.into, via: "mount" };
+      return {
+        state: "not-mounted",
+        dir,
+        branch: at.branch,
+        reason: `${id} is kept on ${at.branch} and is not mounted in this worktree; run \`bun run state:mount\` first`,
+      };
+    }
+  }
+  return { state: "undeclared", reason: `no declared directory has id ${id}` };
+}
+
+/**
+ * For a CLI that reads `id`'s content: exit 2 ("could not determine") with
+ * the reason when the content is kept on a branch and not mounted here.
+ * A command-line entry point only — a library caller asks {@link contentAt}.
+ */
+export function exitUnlessMounted(id: string, tool: string, repoRoot: string = gitTopLevel()): void {
+  const at = contentAt(id, repoRoot);
+  if (at.state !== "not-mounted") return;
+  console.error(`::error::${tool}: could not determine — ${at.reason}. Reading ${at.dir} as it stands would report an empty ${id} as a clean one.`);
+  process.exit(2);
 }
 
 /**

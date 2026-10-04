@@ -140,6 +140,12 @@ jobs:
       - name: Install deps
         run: bun install --frozen-lockfile
 
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
       - name: Regenerate skill schema reference
         run: bun run cat-harness/scripts/gen-schema-docs.ts
 

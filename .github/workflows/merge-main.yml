@@ -211,6 +211,12 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
       - name: Check the branch did not move since selection
         env:
           SELECTED: ${{ steps.pr.outputs.sha }}
@@ -237,6 +243,8 @@ jobs:
           # #1777's head that proves this step).
           git submodule update --init --recursive
           bun install --frozen-lockfile
+          # bean 9c7h: fsh-guts is kept on its branch; mount it before the gates prove the merge
+          bun run state:mount
 
       - name: merge main in, with main's merge-base.ts
         id: merge
