@@ -37,3 +37,6 @@ IMMZ.D2.DT.Measles.Low transmission Countries with low levels of measles transmi
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="PlanDefinition-IMMZD2DTMalaria.html" data-next="PlanDefinition-IMMZD2DTMeaslesMCVDose0.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

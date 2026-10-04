@@ -37,3 +37,6 @@ IMMZ.D2.DT.JE.Live attenuated vaccine Live attenuated vaccination schedule (1-do
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="PlanDefinition-IMMZD2DTJEInactivatedVeroCellDerivedVaccine.html" data-next="PlanDefinition-IMMZD2DTJELiveRecombinantVaccine.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
