@@ -23,6 +23,7 @@ import {
   evaluate,
   isBotMerge,
   openQuestions,
+  parseMergeMainDispatches,
   readyMarkers,
   signingSession,
   untickedItems,
@@ -45,17 +46,20 @@ const FIXTURES = join(import.meta.dir, "fixtures", "merge-guard");
 const SCAN: TriggerScan = {
   triggers: [
     { file: ".github/workflows/code-quality-gates.yml", name: "Code-quality gates", requirement: "required", filters: [] },
-    { file: ".github/workflows/jsonld-drift.yml", name: "JSON-LD generated-file drift", requirement: "conditional", filters: ["paths"] },
+    { file: ".github/workflows/jsonld-gen-check.yml", name: "JSON-LD generated-file drift", requirement: "conditional", filters: ["paths"] },
     { file: ".github/workflows/feature-staging.yml", name: "Feature Staging (GitHub Pages)", requirement: "conditional", filters: ["paths"] },
     { file: SELF_WORKFLOW_FILE, name: "Merge guard", requirement: "conditional", filters: ["types"] },
   ],
   unreadable: [],
 };
 
+/** What today's `merge-main.yml` dispatches, fixed here for the reason {@link SCAN} is. */
+const DISPATCHED = ["code-quality-gates.yml", "jsonld-gen-check.yml"] as const;
+
 /** A fresh, mutable copy of a real PR's snapshot. */
 function real(n: 1937 | 1957 | 1960): GuardSnapshot {
   const fx = JSON.parse(readFileSync(join(FIXTURES, `pr-${n}.json`), "utf8")) as { snapshot: Omit<GuardSnapshot, "scan"> };
-  return { ...structuredClone(fx.snapshot), scan: SCAN };
+  return { ...structuredClone(fx.snapshot), scan: SCAN, mergeMainDispatches: [...DISPATCHED] };
 }
 
 const status = (s: GuardSnapshot, id: CheckId, o: GuardOptions = {}) => evaluate(s, o).checks.find((c) => c.id === id)!;
@@ -253,6 +257,97 @@ describe("check 5 — the head's own pull_request CI", () => {
     expect(v.checks.find((c) => c.id === "ci")!.status).toBe("unknown");
     expect(v.verdict).toBe("unknown");
     expect(v.exitCode).toBe(2);
+  });
+});
+
+/**
+ * A bot-merged head: merge-main pushed it with the bot token, so GitHub held
+ * every `pull_request` run at `action_required` (bean `0qjq`), and merge-main
+ * dispatched the two gating workflows on the branch. #1937's head IS such a
+ * merge (`ee4151d2cc`, authored by the bot), so its record is the base; its
+ * `pull_request` runs are re-cast as held, which is what they are today.
+ */
+describe("check 5 — a held run on a bot-merged head is judged by its dispatch", () => {
+  const botHead = (dispatch: Record<string, Partial<GuardRun> | null> = {}) => {
+    const s = real(1937);
+    if (s.runs.state !== "has-run") throw new Error("fixture");
+    for (const r of s.runs.runs) if (r.event === "pull_request") r.conclusion = "action_required";
+    s.runs.runs = s.runs.runs.flatMap((r) => {
+      if (r.event !== "workflow_dispatch") return [r];
+      const patch = dispatch[r.name];
+      return patch === null ? [] : [{ ...r, ...patch }];
+    });
+    return s;
+  };
+
+  test("every pull_request run held, green dispatches of both gating workflows — passes; staging is not judged", () => {
+    const c = status(botHead(), "ci");
+    expect(c.status).toBe("pass");
+    expect(c.detail).toContain("judged by its green `workflow_dispatch` run: Code-quality gates, JSON-LD generated-file drift");
+    expect(c.detail).toContain("not judged (preview-only, not dispatched by merge-main): Feature Staging (GitHub Pages)");
+  });
+
+  test("Feature Staging held and never dispatched does not refuse — it is not one merge-main dispatches", () => {
+    const s = botHead();
+    if (s.runs.state !== "has-run") throw new Error("fixture");
+    expect(s.runs.runs.some((r) => r.name === "Feature Staging (GitHub Pages)" && r.event === "workflow_dispatch")).toBe(false);
+    expect(status(s, "ci").status).toBe("pass");
+  });
+
+  test("a dispatch still in progress is not-ready", () => {
+    const c = status(botHead({ "Code-quality gates": { status: "in_progress", conclusion: null } }), "ci");
+    expect([c.status, c.kind]).toEqual(["refuse", "not-ready"]);
+    expect(c.detail).toContain("Code-quality gates: action_required; its `workflow_dispatch` stand-in (run 37114602513) is in_progress");
+  });
+
+  test("a red dispatch is a defect", () => {
+    const c = status(botHead({ "JSON-LD generated-file drift": { conclusion: "failure" } }), "ci");
+    expect([c.status, c.kind]).toEqual(["refuse", "defect"]);
+    expect(c.detail).toContain("is failure");
+  });
+
+  test("no dispatch yet for code-quality-gates is not-ready: merge-main still owes it", () => {
+    const c = status(botHead({ "Code-quality gates": null }), "ci");
+    expect([c.status, c.kind]).toEqual(["refuse", "not-ready"]);
+    expect(c.detail).toContain("the `workflow_dispatch` merge-main owes for `code-quality-gates.yml` has not appeared");
+  });
+
+  test("merge-main.yml unparseable is unknown — never a pass", () => {
+    const s = botHead({ "Code-quality gates": null });
+    s.mergeMainDispatches = { unknown: "no `for wf in … ; do gh workflow run` line" };
+    const v = evaluate(s);
+    expect(v.checks.find((c) => c.id === "ci")!.status).toBe("unknown");
+    expect(v.exitCode).toBe(2);
+    // The held preview-only workflow needs the set too: unknown even with both gates dispatched.
+    const t = botHead();
+    t.mergeMainDispatches = { unknown: "unparseable" };
+    expect(status(t, "ci").status).toBe("unknown");
+  });
+
+  test("a held run on a head that is NOT a bot merge gets no stand-in", () => {
+    const s = botHead();
+    // An ordinary commit: one parent, so neither its author nor a bot comment makes it a bot merge.
+    s.commits.at(-1)!.parents = s.commits.at(-1)!.parents.slice(0, 1);
+    const c = status(s, "ci");
+    expect([c.status, c.kind]).toEqual(["refuse", "not-ready"]);
+    expect(c.detail).toContain("not a merge-main bot merge");
+  });
+
+  test("an ordinary head whose pull_request runs executed is unchanged: a green dispatch never rescues a red run", () => {
+    // #1937 as recorded: the bot-merged head's pull_request runs EXECUTED and failed.
+    const c = status(real(1937), "ci");
+    expect([c.status, c.kind]).toEqual(["refuse", "defect"]);
+    expect(c.detail).toContain("Code-quality gates: failure");
+    expect(c.detail).not.toContain("judged by its green");
+    expect(status(real(1957), "ci").status).toBe("pass");
+  });
+
+  test("parseMergeMainDispatches reads today's merge-main.yml, and refuses a line it cannot read", () => {
+    const yml = readFileSync(join(import.meta.dir, "..", "..", "..", ".github", "workflows", "merge-main.yml"), "utf8");
+    expect(parseMergeMainDispatches(yml)).toEqual([...DISPATCHED]);
+    expect(parseMergeMainDispatches('for wf in a.yml b.yml; do\n  gh workflow run "$wf" --ref x\ndone')).toEqual(["a.yml", "b.yml"]);
+    expect(parseMergeMainDispatches('for wf in $WORKFLOWS; do gh workflow run "$wf"; done')).toBeUndefined();
+    expect(parseMergeMainDispatches("gh workflow run code-quality-gates.yml")).toBeUndefined();
   });
 });
 

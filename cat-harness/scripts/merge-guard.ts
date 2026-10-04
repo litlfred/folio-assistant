@@ -51,7 +51,14 @@
  *    merge-main bot merge (#1937, #1960, #1957).
  * 4. `labels` — `ready-to-merge` present, `needs-merge-human` absent (#1937, #1960).
  * 5. `ci` — every `pull_request` run on the head is `success` or `skipped`,
- *    and every workflow owed for that event ran (#1937).
+ *    and every workflow owed for that event ran (#1937). One substitution: on
+ *    a head that is a merge-main bot merge, a `pull_request` run GitHub held
+ *    for approval (`NOT_EXECUTED`, bean `0qjq`) is judged by the latest
+ *    `workflow_dispatch` run of the same workflow on the head — green counts,
+ *    running is not-ready, red is a defect. Held with no dispatch: refused
+ *    not-ready if `merge-main.yml` dispatches that workflow (it is still
+ *    owed), reported "not judged" if it does not (preview-only), `unknown` if
+ *    that file's dispatch line cannot be parsed.
  * 6. `checklist` — no unticked `- [ ]` item in the body (#1960).
  * 7. `open-question` — no comment newer than the ready marker asks the owner
  *    or the Merge Manager an open question. A heuristic; its limits are on
@@ -101,7 +108,8 @@
  * text a session wrote. The workflow runs this script from `main`'s copy for
  * that reason, but a pull_request run still uses the PR's workflow file.
  */
-import { resolve } from "node:path";
+import { readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 
 import { coverageFor, runsForHead, NOT_EXECUTED, type HeadRunVerdict, type RunRow } from "./check-head-has-run.ts";
 import { classifyResponse, withBackoff } from "../src/core/retry.js";
@@ -119,6 +127,8 @@ export const BOT_LOGIN = "github-actions[bot]";
 export const MERGE_MAIN_MARKER = "<!-- merge-main-bot -->";
 /** This guard's own workflow. Its runs are never evidence about the head: they are the guard. */
 export const SELF_WORKFLOW_FILE = ".github/workflows/merge-guard.yml";
+/** The workflow that merges main into PR heads, and dispatches the gating workflows after a bot push. */
+export const MERGE_MAIN_WORKFLOW = ".github/workflows/merge-main.yml";
 /** The commit-status context the workflow posts and a ruleset would require. */
 export const STATUS_CONTEXT = "merge-guard";
 /** How far from a `ready_for_review` event a session-bearing comment may be and still attribute it. */
@@ -178,6 +188,7 @@ export interface GhPull {
 export interface GuardRun extends RunRow {
   id?: number;
   created_at?: string;
+  head_sha?: string | null;
 }
 
 /**
@@ -193,6 +204,12 @@ export interface GuardSnapshot {
   baseMergedAsHeadOf: number[] | { unknown: string };
   runs: HeadRunVerdict;
   scan: TriggerScan;
+  /**
+   * The workflow FILES (basenames) merge-main dispatches on a PR head it
+   * pushed with the bot token, parsed from {@link MERGE_MAIN_WORKFLOW} by
+   * {@link parseMergeMainDispatches}; `unknown` when that could not be read.
+   */
+  mergeMainDispatches: string[] | { unknown: string };
 }
 
 export interface GuardOptions {
@@ -396,6 +413,19 @@ export function openQuestions(
   return out;
 }
 
+/**
+ * The workflow files merge-main dispatches after a bot-token push, from its
+ * `for wf in a.yml b.yml; do gh workflow run "$wf" …` line. `undefined` when
+ * that line is absent or names anything but workflow files: check 5 then
+ * cannot say which held runs are owed a dispatch, and returns `unknown`.
+ */
+export function parseMergeMainDispatches(text: string): string[] | undefined {
+  const m = text.match(/for\s+wf\s+in\s+([^;\n]+?)\s*;\s*do\s+gh\s+workflow\s+run\s+"?\$\{?wf\b/);
+  if (!m) return undefined;
+  const files = m[1]!.trim().split(/\s+/);
+  return files.length > 0 && files.every((f) => /^[\w.-]+\.ya?ml$/.test(f)) ? files : undefined;
+}
+
 // ─── the seven checks ──────────────────────────────────────────────────────
 
 const R = (n: number, id: CheckId, status: CheckStatus, detail: string, kind?: RefusalKind): CheckResult =>
@@ -517,40 +547,140 @@ function runOrder(r: GuardRun): number {
   return r.id ?? Number(r.html_url?.match(/\/runs\/(\d+)/)?.[1] ?? 0);
 }
 
+/** The latest run per workflow name, by {@link runOrder}. */
+function latestByName(runs: readonly GuardRun[]): Map<string, GuardRun> {
+  const latest = new Map<string, GuardRun>();
+  for (const r of runs) {
+    const prev = latest.get(r.name);
+    if (!prev || runOrder(r) > runOrder(prev)) latest.set(r.name, r);
+  }
+  return latest;
+}
+
+/** What a held `pull_request` run resolves to, once its stand-in is looked for. */
+type HeldOutcome =
+  | { ok: true; how: "dispatch"; run: GuardRun }
+  | { ok: true; how: "not-judged" }
+  | { ok: false; problem: string; kind: RefusalKind }
+  | { unknown: string };
+
 function checkCi(s: GuardSnapshot): CheckResult {
   if (s.runs.state === "cannot-ask") return R(5, "ci", "unknown", `could not read the head's runs: ${s.runs.reason}`);
   if (s.scan.unreadable.length) {
     return R(5, "ci", "unknown", `could not read ${s.scan.unreadable.map((u) => u.file).join(", ")}, so the owed set is not established`);
   }
-  const all: GuardRun[] = s.runs.state === "has-run" ? (s.runs.runs as GuardRun[]) : [];
+  const head = s.pr.head.sha.toLowerCase();
+  // `runsForHead` asks by head_sha already; this is belt and braces for a run
+  // that carries its sha, so a dispatch on another commit can never stand in.
+  const onHead = (r: GuardRun) => !r.head_sha || r.head_sha.toLowerCase() === head;
+  const all: GuardRun[] = (s.runs.state === "has-run" ? (s.runs.runs as GuardRun[]) : []).filter(onHead);
   const selfNames = new Set(s.scan.triggers.filter((t) => t.file === SELF_WORKFLOW_FILE).map((t) => t.name));
   const prRuns = all.filter((r) => r.event === "pull_request" && !selfNames.has(r.name));
-  const dispatched = all.filter((r) => r.event === "workflow_dispatch" && r.conclusion === "success").length;
-  const note = dispatched ? ` (${dispatched} green \`workflow_dispatch\` run(s) on this head are not counted: a dispatch is evidence about the branch, not the merge ref)` : "";
-  if (prRuns.length === 0) return R(5, "ci", "refuse", `no \`pull_request\` run names the head${note}`);
+  const dispatchRuns = latestByName(all.filter((r) => r.event === "workflow_dispatch" && !selfNames.has(r.name)));
 
+  // A `workflow_dispatch` run counts ONLY as the stand-in for a `pull_request`
+  // run GitHub held for approval (`NOT_EXECUTED`) on a head that is a
+  // merge-main bot merge. merge-main pushes with the bot token, GitHub holds
+  // the PR's own runs at `action_required` (bean `0qjq`), and merge-main then
+  // dispatches the gating workflows on the branch. Everywhere else a dispatch
+  // resolves `refs/heads/<branch>`, not the merge ref (`yv4z`) — but here
+  // merge-main has ALREADY merged main into the head, so the head IS the merge
+  // and a dispatch on it judges the tree that would land. A green dispatch
+  // never rescues a `pull_request` run that executed and went red (#1937).
+  const headCommit = s.commits.find((c) => c.sha.toLowerCase() === head);
+  const botHead = headCommit !== undefined && isBotMerge(headCommit, botPushedShas(s.comments));
+  const fileOf = (name: string) => s.scan.triggers.find((t) => t.name === name)?.file;
+  const baseName = (file: string) => file.split("/").at(-1)!;
+
+  const held = new Map<string, HeldOutcome>();
+  const resolveHeld = (name: string, conclusion: string): HeldOutcome => {
+    const cached = held.get(name);
+    if (cached) return cached;
+    const out = ((): HeldOutcome => {
+      if (!botHead) {
+        return { ok: false, problem: `${name}: ${conclusion}, and the head is not a merge-main bot merge, so no dispatch can stand in`, kind: "not-ready" };
+      }
+      const d = dispatchRuns.get(name);
+      if (d) {
+        const ref = `its \`workflow_dispatch\` stand-in${d.id ? ` (run ${d.id})` : ""}`;
+        if (d.status !== "completed") return { ok: false, problem: `${name}: ${conclusion}; ${ref} is ${d.status}`, kind: "not-ready" };
+        if (PASSING.has(d.conclusion ?? "")) return { ok: true, how: "dispatch", run: d };
+        const kind: RefusalKind = NOT_EXECUTED.has(d.conclusion ?? "") ? "not-ready" : "defect";
+        return { ok: false, problem: `${name}: ${conclusion}; ${ref} is ${d.conclusion}`, kind };
+      }
+      if (!Array.isArray(s.mergeMainDispatches)) return { unknown: s.mergeMainDispatches.unknown };
+      const file = fileOf(name);
+      if (file && !s.mergeMainDispatches.includes(baseName(file))) return { ok: true, how: "not-judged" };
+      return {
+        ok: false,
+        problem: file
+          ? `${name}: ${conclusion}, and the \`workflow_dispatch\` merge-main owes for \`${baseName(file)}\` has not appeared`
+          : `${name}: ${conclusion}, no \`workflow_dispatch\` on the head, and no workflow file declares that name, so whether merge-main owes one is not established`,
+        kind: "not-ready",
+      };
+    })();
+    held.set(name, out);
+    return out;
+  };
+
+  const problems = new Map<string, { text: string; kind: RefusalKind }>();
+  const problem = (name: string, text: string, kind: RefusalKind) => {
+    if (!problems.has(name)) problems.set(name, { text, kind });
+  };
+
+  const latest = latestByName(prRuns);
+  for (const [name, r] of latest) {
+    if (r.status !== "completed") problem(name, `${name}: ${r.status}`, "not-ready");
+    else if (NOT_EXECUTED.has(r.conclusion ?? "")) {
+      // A run that never executed is not a verdict on the tree, so it is not
+      // red either; on a bot-merged head its dispatch may stand in for it.
+      const o = resolveHeld(name, r.conclusion ?? "");
+      if ("unknown" in o) {
+        return R(5, "ci", "unknown", `\`${name}\` was held for approval and has no dispatch, and \`.github/workflows/merge-main.yml\` could not be read for the workflows it dispatches: ${o.unknown}`);
+      }
+      if (!o.ok) problem(name, o.problem, o.kind);
+    } else if (!PASSING.has(r.conclusion ?? "")) problem(name, `${name}: ${r.conclusion}`, "defect");
+  }
+
+  // Coverage applies the same substitution: a required workflow whose only
+  // `pull_request` runs were held is satisfied by its stand-in, per the rules above.
   const scan: TriggerScan = { ...s.scan, triggers: s.scan.triggers.filter((t) => t.file !== SELF_WORKFLOW_FILE) };
   const cov = coverageFor(all, scan, "pull_request");
-  const problems: string[] = [];
-  for (const w of cov.required) if (!w.ran) problems.push(`${w.name}: ${w.state}`);
-  const latest = new Map<string, GuardRun>();
-  for (const r of prRuns) {
-    const prev = latest.get(r.name);
-    if (!prev || runOrder(r) > runOrder(prev)) latest.set(r.name, r);
-  }
-  let red = false;
-  for (const [name, r] of latest) {
-    if (r.status !== "completed") problems.push(`${name}: ${r.status}`);
-    else if (!PASSING.has(r.conclusion ?? "")) {
-      problems.push(`${name}: ${r.conclusion}`);
-      // A run that never executed (action_required, startup_failure) is
-      // not a verdict on the tree, so it is not red either.
-      if (!NOT_EXECUTED.has(r.conclusion ?? "")) red = true;
+  for (const w of cov.required) {
+    if (w.ran) continue;
+    if (w.state === "blocked") {
+      const o = resolveHeld(w.name, latest.get(w.name)?.conclusion ?? "blocked");
+      if ("unknown" in o) {
+        return R(5, "ci", "unknown", `\`${w.name}\` was held for approval and has no dispatch, and \`.github/workflows/merge-main.yml\` could not be read for the workflows it dispatches: ${o.unknown}`);
+      }
+      if (!o.ok) problem(w.name, o.problem, o.kind);
+      continue;
     }
+    problem(w.name, `${w.name}: ${w.state}`, "not-ready");
   }
-  return problems.length
-    ? R(5, "ci", "refuse", `\`pull_request\` CI on the head is not green: ${problems.join("; ")}${note}`, red ? "defect" : "not-ready")
-    : R(5, "ci", "pass", `${latest.size} \`pull_request\` workflow(s) on the head, all success or skipped`);
+
+  const standIns = [...held].filter(([, o]) => "ok" in o && o.ok && o.how === "dispatch").map(([n]) => n).sort();
+  const notJudged = [...held].filter(([, o]) => "ok" in o && o.ok && o.how === "not-judged").map(([n]) => n).sort();
+  const unused = [...dispatchRuns.values()].filter((r) => r.conclusion === "success" && !standIns.includes(r.name)).length;
+  const notes = [
+    standIns.length
+      ? `${standIns.length} held for approval on this bot-merged head and judged by its green \`workflow_dispatch\` run: ${standIns.join(", ")}`
+      : "",
+    notJudged.length ? `not judged (preview-only, not dispatched by merge-main): ${notJudged.join(", ")}` : "",
+    unused
+      ? `${unused} green \`workflow_dispatch\` run(s) on this head are not counted: a dispatch stands in only for a \`pull_request\` run held for approval on a bot-merged head`
+      : "",
+  ].filter(Boolean);
+  const note = notes.length ? ` (${notes.join("; ")})` : "";
+
+  if (prRuns.length === 0) return R(5, "ci", "refuse", `no \`pull_request\` run names the head${note}`);
+  if (problems.size) {
+    const list = [...problems.values()];
+    const kind: RefusalKind = list.some((p) => p.kind === "defect") ? "defect" : "not-ready";
+    return R(5, "ci", "refuse", `\`pull_request\` CI on the head is not green: ${list.map((p) => p.text).join("; ")}${note}`, kind);
+  }
+  const how = standIns.length || notJudged.length ? ", once held runs are resolved" : "";
+  return R(5, "ci", "pass", `${latest.size} \`pull_request\` workflow(s) on the head, all success or skipped${how}${note}`);
 }
 
 function checkChecklist(s: GuardSnapshot): CheckResult {
@@ -667,7 +797,14 @@ export async function fetchSnapshot(repo: string, n: number, root: string): Prom
   }
   const runs = await runsForHead(repo, pr.head.sha);
   const scan = scanTriggers(root, "pull_request");
-  return { pr, comments, timeline, commits, baseMergedAsHeadOf, runs, scan };
+  let mergeMainDispatches: GuardSnapshot["mergeMainDispatches"];
+  try {
+    const parsed = parseMergeMainDispatches(readFileSync(join(root, MERGE_MAIN_WORKFLOW), "utf8"));
+    mergeMainDispatches = parsed ?? { unknown: `no \`for wf in … ; do gh workflow run\` line in ${MERGE_MAIN_WORKFLOW}` };
+  } catch (e) {
+    mergeMainDispatches = { unknown: e instanceof Error ? e.message : String(e) };
+  }
+  return { pr, comments, timeline, commits, baseMergedAsHeadOf, runs, scan, mergeMainDispatches };
 }
 
 export type MergeOutcome = { merged: true; sha: string } | { merged: false; refused: boolean; reason: string };

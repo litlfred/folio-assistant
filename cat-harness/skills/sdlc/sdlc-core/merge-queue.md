@@ -207,8 +207,19 @@ The seven checks, each named in a refusal by number and id:
    merge-main bot merges after it.
 4. **`labels`** — `ready-to-merge` present, `needs-merge-human` absent.
 5. **`ci`** — every `pull_request` run on the head is `success` or `skipped`,
-   and every workflow owed for that event ran. A `workflow_dispatch` green is
-   reported and **not** counted.
+   and every workflow owed for that event ran. A `workflow_dispatch` run
+   counts **only** as the stand-in for a `pull_request` run GitHub held for
+   approval (`action_required`, bean `0qjq`) on a head that is a merge-main
+   bot merge: merge-main has already merged main into that head, so the head
+   IS the merge, and a dispatch on it judges the tree that would land. The
+   latest dispatch of the same workflow on the head decides — green counts,
+   running is not-ready, red is a defect. Held with no dispatch: not-ready if
+   `merge-main.yml`'s `for wf in … ; do gh workflow run` line names that
+   workflow's file (the dispatch is still owed), reported **not judged** if
+   it does not (Feature Staging, preview-only), and `unknown` if that line
+   cannot be parsed. A green dispatch never rescues a `pull_request` run that
+   executed and went red (#1937), and anywhere else it is reported and **not**
+   counted.
 6. **`checklist`** — no unticked `- [ ]` in the body.
 7. **`open-question`** — no comment after the marker asks the owner or the
    Merge Manager a question (a heuristic; its limits are on `openQuestions`
