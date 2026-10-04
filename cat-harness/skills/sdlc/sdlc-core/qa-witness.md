@@ -1,7 +1,7 @@
 ---
 name: qa-witness
 description: >
-  The QA projections under `test/results/witnesses/` — what a `qa-witness/v1` document
+  The QA projections written to `test/results/witnesses/` and stored on the `qa-reports` branch — what a `qa-witness/v1` document
   says, which three families produce one, how to read a verdict and the witness
   behind it, and why "could not determine" is a third state everywhere in them.
 consulted: true
@@ -13,12 +13,18 @@ graph-kinds:
 
 A **QA witness** is what a reader sees when they open the QA badge beside a
 heading on the docs site. One JSON document per subject, all of them
-`"$schema": "qa-witness/v1"`, all of them committed under
-`test/results/witnesses/` and **published** at `/assets/qa/`.
+`"$schema": "qa-witness/v1"`, all of them written under
+`test/results/witnesses/`, **stored** on the orphan `qa-reports` branch under
+`main/<sha>/` or `pr/<n>/<sha>/`, and **published** at `/assets/qa/`.
 
-Those are two different questions. Where a witness LIVES follows provenance —
+Those are different questions. Where a witness LIVES follows provenance —
 it is a QA process's output, so it belongs in the declared `test/results/`
-tree with everything else a QA reviewer produced. Where it is SERVED FROM is
+tree with everything else a QA reviewer produced. That tree is the run's
+WORKING COPY; the durable record is the commit-keyed entry the CI job
+`qa-publish` writes to `qa-reports` through `qa-store.ts` (arc `3fva`). Until
+bean `5hox` removes them, the files are also still committed on `main` — a
+copy on its way out, not the record, so do not regenerate a witness to
+"commit the result". Where it is SERVED FROM is
 unchanged: every `data-qa-src` in a generated page says `/assets/qa/…`, and
 the publishing workflows copy the directory into `_site/assets/qa/` after
 Jekyll runs. It sat in `docs/` until 2026-09-19 only because that is where
@@ -113,13 +119,15 @@ and render order coincide only while nothing sorts above it.
 
 | | |
 |---|---|
-| projections (committed) | `test/results/witnesses/**/*.{block,kg,translation}.json` |
+| projections (working copy) | `test/results/witnesses/**/*.{block,kg,translation}.json` |
+| projections (stored) | `qa-reports:main/<sha>/<instance>/test/results/witnesses/…` (or `pr/<n>/<sha>/…`); `bun run qa:fetch --ref …` reads them, and a miss is never read as clean |
 | projections (published) | `/assets/qa/…`, copied into `_site` by `docs-site.yml` and `feature-staging.yml` |
 | schema + builder | `content/pipeline/qa-witness.ts` |
 | written by | `scripts/gen-docs-pages.ts` |
 | drawn by | `docs/assets/js/docs-ui.js` (`qaBuildPanel`) |
 | block verdicts | `content/**/*.qa.json` |
 | kg verdicts | `test/results/kg-qa/<subject-dir>/<stem>.kg-qa.json` — the tree MIRRORS the subject's path, because four basenames already collide across packages. Path from `kgQaSidecarPath` in `schemas/kg-qa.ts`, never composed by hand. Auditor in `skills/kg-qa.manifest.json` |
+| judgements behind a verdict | `test/attestations/<family>/<mirrored subject path>.attestations.json` (`qa-attestations/v1`, the `attestations` graph): every agent, human and baseline-pair judgement, kept on `main` because regeneration cannot reproduce it (owner ruling D2 (a)). Schema `schemas/qa-attestations.ts` |
 
 The schema lives in `content/pipeline/` rather than `schemas/` because it is
 the pipeline's own output shape. Worth knowing when you go looking for it in

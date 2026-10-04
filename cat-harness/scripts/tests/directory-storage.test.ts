@@ -11,8 +11,11 @@
  * | `harness:dirs` | absent → created | absent → NOT created (an empty working copy reads as clean) |
  * | `audit:coverage` | censused | skipped, and the kind reads `stored` |
  *
- * `keyedBy` is `commit`, `tip` or `route`; `tip` is refused on a `qa`
- * directory. No real declaration sets the field yet; flipping one is a later bean.
+ * `keyedBy` is `commit`, `tip` or `route` (beans `2h76`, `9ofm`); `tip` is refused on a `qa`
+ * directory. Every real `qa` directory declares it since bean `5hox`, and the
+ * last describe block pins the one consequence a fixture cannot: each stored
+ * directory's working copy is ignored by version control, so a writer's output
+ * is never committed by accident and the removal stays removed.
  *
  * ## The two keyings are NOT the same question (bean `9ofm`)
  *
@@ -42,6 +45,8 @@ import { MOUNT_MARKER_SCHEMA, markerPath } from "../branch-store.ts";
 import { ContentDirectorySchema, DirectoryStorageSchema, materialiseDirectories, resolveDirectories } from "../../schemas/cat-harness.js";
 import { censusDirectories } from "../audit-coverage.js";
 import { auditInstance } from "../check-declared-dirs.ts";
+import { graphReadPath } from "../graph-read.js";
+import { resolveSubgraphSource } from "../../schemas/subgraph-source.js";
 import { QaUsageError, resolveQaLocation } from "../qa-store.js";
 
 const made: string[] = [];
@@ -51,6 +56,7 @@ afterAll(() => {
 
 const STORED = { branch: "qa-reports", keyedBy: "commit" } as const;
 const TIP = { branch: "cat/cat-harness/beans", keyedBy: "tip" } as const;
+const ROUTE = { branch: "cat/cat-harness/uml-overview", keyedBy: "route" } as const;
 
 /** `instance()`, in a real (empty) git repository — what the tip cases need. */
 function gitInstance(dirs: Array<Record<string, unknown>>): string {
@@ -125,6 +131,90 @@ describe("the schema", () => {
   });
 });
 
+// `route` arrived in `DirectoryStorageSchema` with bean `1j3q` and did NOT arrive
+// in `subgraph-source.ts`'s `KeyedBySchema`, which is what every consumer parses
+// through. A declaration carrying it therefore parsed and then threw. These pin
+// both halves: that the value survives the resolver, and that each consumer has
+// DECIDED what to do with it rather than inheriting a `!== "tip"` arm.
+describe("a route-keyed directory is TWO-valued, and the missing third is deliberate", () => {
+  /** A route-keyed instance whose files are still tracked — the pre-cutover state. */
+  function notCutOver(): string {
+    const root = gitInstance([{ id: "uml", path: "uml/", graphKinds: ["docs"], storage: ROUTE }]);
+    mkdirSync(join(root, "uml"));
+    writeFileSync(join(root, "uml", "a.html"), "x\n");
+    writeFileSync(join(root, "uml", "b.html"), "y\n");
+    git(root, "add", "uml/a.html", "uml/b.html");
+    return root;
+  }
+
+  test("the resolver ACCEPTS keyedBy route — it threw a ZodError until the two enums were made one", () => {
+    const root = gitInstance([{ id: "uml", path: "uml/", graphKinds: ["docs"], storage: ROUTE }]);
+    // The symptom of the drift was a THROW out of `auditInstance`, surfacing as
+    // an `unmounted` finding carrying `Invalid option: expected one of
+    // "commit"|"tip"`. Not a crash, and not a pass: a wrong finding.
+    const f = auditInstance(root, root);
+    expect(JSON.stringify(f)).not.toContain("Invalid option");
+    expect(JSON.stringify(f)).not.toContain("ZodError");
+  });
+
+  test("not-cut-over: route gets the two-copies finding, because two copies is two copies", () => {
+    const root = notCutOver();
+    const f = auditInstance(root, root);
+    expect(f.map((x) => x.kind)).toEqual(["not-cut-over"]);
+    expect(f[0]!.detail).toContain("keyed by route");
+    expect(f[0]!.detail).toContain("still tracks 2 file(s)");
+    expect(f[0]!.detail).toContain("ONE change");
+  });
+
+  test("cut over: NO finding — there is no route-keyed mount for `unmounted` to be about", () => {
+    const root = gitInstance([{ id: "uml", path: "uml/", graphKinds: ["docs"], storage: ROUTE }]);
+    // The discriminator against the tip case, which reports `unmounted` for the
+    // identical fixture. A finding here could never be cleared: nothing mounts a
+    // route store, so it would redden every run for ever.
+    expect(auditInstance(root, root)).toEqual([]);
+    const tip = gitInstance([{ id: "uml", path: "uml/", graphKinds: ["docs"], storage: TIP }]);
+    expect(auditInstance(tip, tip).map((x) => x.kind)).toEqual(["unmounted"]);
+  });
+
+  test("graph-read: not-cut-over reads the CHECKOUT and says so; cut over is REFUSED, never a path", () => {
+    const root = notCutOver();
+    const pre = graphReadPath("uml", root);
+    expect(pre.state).toBe("ok");
+    expect(pre.state === "ok" && pre.from).toBe("checkout");
+    expect(pre.state === "ok" && pre.notCutOver).toBe(true);
+
+    const after = gitInstance([{ id: "uml", path: "uml/", graphKinds: ["docs"], storage: ROUTE }]);
+    const post = graphReadPath("uml", after);
+    expect(post.state).toBe("refused");
+    // Naming the reason, not just the state: "nothing moved" was the old answer
+    // and it returned `ok`, so a test asserting only `refused` would pass over a
+    // refusal invented for any other cause.
+    expect(post.state === "refused" && post.reason).toContain("has no mount");
+    expect(post.state === "refused" && post.reason).toContain("dh4f");
+  });
+
+  test("audit:coverage: `stored` only once it is TRUE — not-cut-over is undetermined", () => {
+    const root = notCutOver();
+    const pre = censusDirectories([{ id: "uml", absPath: join(root, "uml"), storage: ROUTE }], undefined, root);
+    expect({ stored: pre.stored, undetermined: pre.undetermined }).toEqual({ stored: 0, undetermined: 1 });
+
+    const after = gitInstance([{ id: "uml", path: "uml/", graphKinds: ["docs"], storage: ROUTE }]);
+    const post = censusDirectories([{ id: "uml", absPath: join(after, "uml"), storage: ROUTE }], undefined, after);
+    expect({ stored: post.stored, undetermined: post.undetermined }).toEqual({ stored: 1, undetermined: 0 });
+  });
+
+  test("a route-keyed `qa` subgraph is refused by the resolver too, not only by the schema", () => {
+    // `ContentDirectorySchema` already refuses it for a DECLARED entry. This is
+    // the hand-built-entry path `audit-coverage.ts` uses, where no schema runs —
+    // and the guard named `tip` alone until this change.
+    expect(() => resolveSubgraphSource({ id: "qa", path: "test/results/", graphKinds: ["qa"], storage: ROUTE })).toThrow(/keyed by commit/);
+    expect(() => resolveSubgraphSource({ id: "qa", path: "test/results/", graphKinds: ["qa"], storage: TIP })).toThrow(/keyed by commit/);
+    // And a commit-keyed one is NOT refused, so the guard is about the keying
+    // rather than about `qa`.
+    expect(resolveSubgraphSource({ id: "qa", path: "test/results/", graphKinds: ["qa"], storage: STORED }).kind).toBe("branch");
+  });
+});
+
 describe("presence checks honour it", () => {
   test("check:declared-dirs: an absent STORED directory is not a finding; the same without storage is", () => {
     const stored = instance([{ id: "qa", path: "test/results/", graphKinds: ["qa"], storage: STORED }]);
@@ -162,7 +252,16 @@ describe("presence checks honour it", () => {
       { absPath: a, storage: STORED },
       { absPath: b, storage: STORED },
     ]);
-    expect(r).toEqual({ files: 0, sidecars: 0, stored: 2, undetermined: 0 });
+    expect(r).toEqual({ files: 0, sidecars: 0, stored: 2, undetermined: 0, uncounted: 0 });
+  });
+
+  test("a directory neither stored nor present is UNCOUNTED, never a census of zero (bean 0dav, C8)", () => {
+    const root = instance([]);
+    const here = join(root, "here");
+    mkdirSync(here);
+    writeFileSync(join(here, "x.json"), "{}");
+    const r = censusDirectories([{ absPath: here }, { absPath: join(root, "gone") }]);
+    expect(r).toEqual({ files: 1, sidecars: 0, stored: 0, undetermined: 0, uncounted: 1 });
   });
 });
 
@@ -223,6 +322,7 @@ describe("a tip-keyed directory is three-valued, and only one value is a pass", 
       sidecars: 0,
       stored: 0,
       undetermined: 0,
+      uncounted: 0,
     });
 
     // Unmounted: `undetermined`, and NOT `stored` — "could not read the files"
@@ -232,6 +332,7 @@ describe("a tip-keyed directory is three-valued, and only one value is a pass", 
       sidecars: 0,
       stored: 0,
       undetermined: 1,
+      uncounted: 0,
     });
   });
 
@@ -258,6 +359,7 @@ describe("a tip-keyed directory is three-valued, and only one value is a pass", 
       sidecars: 0,
       stored: 1,
       undetermined: 0,
+      uncounted: 0,
     });
   });
 
@@ -289,7 +391,7 @@ describe("resolveQaLocation", () => {
     ]);
 
     const plain = instance([{ id: "qa", path: "test/results/", graphKinds: ["qa"] }]);
-    expect(resolveQaLocation(plain)).toMatchObject({ branch: "qa-reports", declared: false });
+    expect(resolveQaLocation(plain)).toMatchObject({ branch: "cat/cat-harness/qa-reports", declared: false });
   });
 
   test("two qa directories naming different branches are refused, not resolved by order", () => {
@@ -298,5 +400,25 @@ describe("resolveQaLocation", () => {
       { id: "qa2", path: "more/results/", graphKinds: ["qa"], storage: { branch: "two", keyedBy: "commit" } },
     ]);
     expect(() => resolveQaLocation(root)).toThrow(QaUsageError);
+  });
+});
+
+describe("the real declarations (bean 5hox)", () => {
+  const repoRoot = join(import.meta.dir, "..", "..", "..");
+
+  test("every declared qa directory is stored, and every stored working copy is ignored", () => {
+    const loc = resolveQaLocation(repoRoot);
+    expect(loc.directories.length).toBeGreaterThan(0);
+    expect(loc.declared).toBe(true);
+    expect(loc.directories.filter((d) => !d.storage).map((d) => d.path)).toEqual([]);
+    const probes = loc.directories.map((d) => `${d.path}/probe.json`);
+    const r = spawnSync("git", ["check-ignore", "--no-index", "--stdin"], { cwd: repoRoot, input: probes.join("\n") + "\n", encoding: "utf-8" });
+    const ignored = new Set(r.stdout.split("\n").filter(Boolean));
+    expect(probes.filter((p) => !ignored.has(p))).toEqual([]);
+  });
+
+  test("attestations are never ignored: they stay on main (ruling D2 (a))", () => {
+    const r = spawnSync("git", ["check-ignore", "--no-index", "-q", "cat-harness/test/attestations/kg-qa/probe.attestations.json"], { cwd: repoRoot });
+    expect(r.status).toBe(1);
   });
 });

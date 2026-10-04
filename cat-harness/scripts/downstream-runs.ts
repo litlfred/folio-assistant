@@ -30,7 +30,7 @@
  * need no change.
  */
 import type { ToolDefinition } from "../schemas/tool.ts";
-import { listToolRuns, type DownstreamState } from "../schemas/tool-run.ts";
+import { listToolRuns, TOOL_RUNS_DIR, type DownstreamState } from "../schemas/tool-run.ts";
 import type { KgCriterionEntry, KgFinding } from "../schemas/kg-qa.ts";
 import { graphVerdict, LSI_TOOL_ID, proseGraphs, targetOf } from "./lsi.ts";
 
@@ -83,22 +83,34 @@ export function toolDownstreamEntry(tool: ToolDefinition, verifiers: readonly st
 }
 
 /**
- * Downstream tools with no declaration. Three ways one shows itself:
- * a member reader for an undeclared Tool, a run record naming one, and a
- * publish verifier that says it judges one.
+ * Downstream tools with no declaration, as `downstream-tool-declared`'s entry.
+ * Three ways one shows itself: a member reader for an undeclared Tool, a run
+ * record naming one, and a publish verifier that says it judges one.
+ *
+ * ## Records that are not in the checkout are `unknown`, never a pass
+ *
+ * Bean `oq1j` (reader `R26`). The run records are derived QA bound for the
+ * `qa-reports` branch. With no record directory to list, the record half of
+ * the question was not asked ({@link listToolRuns}). The entry is then
+ * `unknown`, and it carries the reason as a finding beside whatever the other
+ * two halves found. `unknown` outranks `fail`, the rule `qa-results.ts`'s
+ * judge mode keeps: a sweep blind on one part has not cleared the others.
+ * Returning the findings alone, as this did, would make an unlisted directory
+ * a quiet pass.
  */
-export function undeclaredDownstream(
+export function undeclaredDownstreamEntry(
   tools: readonly ToolDefinition[],
   instanceRoot: string,
   verifiers: ReadonlyArray<{ id: string; tool?: string }>,
-): KgFinding[] {
+): KgCriterionEntry {
   const declared = new Map(tools.filter((t) => t.downstream).map((t) => [t.id, t.downstream!]));
   const out: KgFinding[] = [];
   for (const id of Object.keys(MEMBERS)) {
     if (declared.get(id)?.judgedAt !== "checkout")
       out.push({ where: id, detail: `scripts/downstream-runs.ts registers a member reader for "${id}", but no Tool node declares it \`downstream\` with \`judgedAt: checkout\`.` });
   }
-  for (const { path, record } of listToolRuns(instanceRoot)) {
+  const listing = listToolRuns(instanceRoot);
+  for (const { path, record } of listing.state === "hit" ? listing.runs : []) {
     if (!record) {
       out.push({ where: path, detail: "a run record that does not parse as folio-tool-run/v1 — it records nothing." });
       continue;
@@ -112,5 +124,8 @@ export function undeclaredDownstream(
     if (!d || d.judgedAt !== "published" || d.verifier !== v.id)
       out.push({ where: v.id, detail: `publish verifier "${v.id}" judges Tool "${v.tool}", which does not declare a \`downstream\` output judged by it.` });
   }
-  return out;
+  if (listing.state === "unknown") {
+    return { result: "unknown", findings: [...out, { where: TOOL_RUNS_DIR.split("\\").join("/"), detail: `run records not examined: ${listing.reason}.` }] };
+  }
+  return { result: out.length ? "fail" : "pass", findings: out };
 }

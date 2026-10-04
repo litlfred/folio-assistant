@@ -78,8 +78,8 @@
       "shape": "branch",
       "name": "cat/cat-harness/fsh-guts",
       "legacy": [],
-      "holds": "the kept trashcan (fsh-guts/: retired material, never rendered or published), one live copy at the tip; SEEDED 2026-10-03 (9c8828be, an orphan seed, tree = main's fsh-guts/ at 53ba9f55), not authoritative: main's fsh-guts/ stays the store until bean 9c7h moves every reader and writer onto it",
-      "writers": ["none yet: bean 9c7h retargets the relocating processes onto scripts/branch-store.ts (PR #1937)"],
+      "holds": "the kept trashcan (fsh-guts/: retired material, never rendered or published), one live copy at the tip; AUTHORITATIVE since the 9c7h cutover (2026-10-04): seeded 9c8828be, spliced to main's last fsh-guts/ tree (3750b31a) at 9c13b434, and main no longer tracks fsh-guts/. Read it mounted (`bun run state:mount`); readers refuse an unmounted copy",
+      "writers": ["scripts/state-push.ts over scripts/branch-store.ts pushMount (agents relocating per skill kg-core/fsh-guts)", "folio-assistant-core/scripts/sample-import-run.ts (into the mounted copy, refusing an unmounted one)"],
       "repos": "this repository"
     }
   ],

@@ -46,6 +46,7 @@ import {
   repoRootFor } from "../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../schemas/namespaces.js";
 import { fshGutsDirectories, readFshGutsNode } from "../schemas/fsh-guts.js";
+import { exitUnlessMounted } from "./branch-store.js";
 import { contextBindings, vocabMapping } from "../schemas/vocab-mapping.js";
 import { STANDARD_PREFIXES } from "../schemas/vocab-mapping-fhir.js";
 
@@ -274,6 +275,7 @@ export function buildFshGutsExport(root: string = ROOT, baseUrl?: string): FshGu
 }
 
 if (import.meta.main) {
+  exitUnlessMounted("fsh-guts", "fsh-guts-export", resolve(ROOT, ".."));
   const argv = process.argv.slice(2);
   const arg = (flag: string): string | undefined => {
     const i = argv.indexOf(flag);

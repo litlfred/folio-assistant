@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-reference-direction.ts",
-    "script_hash": "87ab77814831"
+    "script_hash": "275f7ff26383"
   },
   "subject": {
     "kind": "reference-direction",
@@ -16,7 +16,7 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 124,
+      "count": 128,
       "entries": [
         {
           "file": "cat-harness/content/docs/fhir-content/the-three-layers.md",
@@ -36,6 +36,10 @@
         },
         {
           "file": "cat-harness/content/pipeline/pot-extract.ts",
+          "names": 2
+        },
+        {
+          "file": "cat-harness/content/pipeline/qa-checkers-dak.ts",
           "names": 2
         },
         {
@@ -159,8 +163,20 @@
           "names": 2
         },
         {
+          "file": "cat-harness/docs/proposals/placement-audit-2026-10-01.json",
+          "names": 12
+        },
+        {
+          "file": "cat-harness/docs/proposals/placement-audit-2026-10-01.md",
+          "names": 14
+        },
+        {
           "file": "cat-harness/docs/proposals/placement-concern-groups-2026-10-01.md",
           "names": 9
+        },
+        {
+          "file": "cat-harness/docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md",
+          "names": 4
         },
         {
           "file": "cat-harness/docs/proposals/separation-arc-2026-10-01.md",
@@ -738,18 +754,18 @@
       "entries": [
         {
           "instances": 18,
-          "occurrences": 5977,
+          "occurrences": 8789,
           "allowed": 0,
-          "wrongDirection": 1672,
-          "wrongDirectionFiles": 379,
-          "exempt": 1195,
-          "namesRepository": 2054,
-          "undetermined": 1056,
+          "wrongDirection": 4237,
+          "wrongDirectionFiles": 391,
+          "exempt": 1410,
+          "namesRepository": 2083,
+          "undetermined": 1059,
           "pendingFiles": 47,
-          "pendingOccurrences": 412
+          "pendingOccurrences": 416
         }
       ]
     }
   },
-  "total": 176
+  "total": 180
 }
