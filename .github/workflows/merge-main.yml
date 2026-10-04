@@ -404,10 +404,10 @@ jobs:
       # reported outcome (labelled needs-merge-human) and stays green; any
       # other non-zero exit — unrepaired, error, could not start — fails here,
       # AFTER the comment, so the PR is told why.
-      # ... and it still fails HERE. `continue-on-error` on the job keeps that
-      # failure out of the run's conclusion; it does not make it green. The
-      # member is red, its log says why, and the verdict step below says whether
-      # anybody is told again.
+      # IT STILL FAILS HERE. `continue-on-error` on this job (above) keeps that
+      # failure out of the RUN's conclusion; it does not make the member green.
+      # The member is red, its log says why, and the verdict step below says
+      # whether anybody is told about it again.
       - name: Fail on anything but a merge, an up-to-date branch or a refusal
         if: always() && steps.merge.outcome == 'success' && steps.merge.outputs.status != '0' && steps.merge.outputs.refused != 'true'
         env:
@@ -440,15 +440,23 @@ jobs:
           set -uo pipefail
           out="$RUNNER_TEMP/verdict-$PR.json"
           tool="$RUNNER_TEMP/tool/cat-harness/scripts/merge-main-comment.ts"
-          if [ -f "$tool" ]; then
+          # `grep`, not existence alone: the tool that runs is MAIN's copy, like
+          # merge-base's, so until this change is on main the copy there has no
+          # --verdict mode. A version skew and a crashed job are both "could not
+          # determine", which is loud either way — but saying WHICH is the
+          # difference between one self-explaining email and a baffling one.
+          if [ -f "$tool" ] && grep -q -- "--verdict" "$tool"; then
             bun run "$tool" --verdict "$out" --plan "$RUNNER_TEMP/plan.json"
           else
-            # The job died before main's tool was in hand — the checkout, the
-            # install, the tool worktree itself. That is the BOT broken rather
-            # than a PR needing a person, so it is undetermined and loud; said
-            # in shell, because the thing that would have said it is what failed.
-            printf '{"pr":"%s","verdict":"undetermined","notify":true,"reason":"the job failed before main had checked out the merge tool, so nothing could classify it","signature":"","previous":""}' "$PR" > "$out"
-            echo "::error::merge-main #$PR: undetermined — the job failed before main's merge tool was available"
+            if [ -f "$tool" ]; then
+              why="main's copy of the merge tool has no --verdict mode yet, so this change has not landed on main"
+            else
+              why="the job failed before main had checked out the merge tool"
+            fi
+            # Said in shell, because the thing that would have said it is
+            # exactly what is missing.
+            printf '{"pr":"%s","verdict":"undetermined","notify":true,"reason":"%s — nothing could classify this member","signature":"","previous":""}' "$PR" "$why" > "$out"
+            echo "::error::merge-main #$PR: undetermined — $why"
           fi
           cat "$out"
 

@@ -302,8 +302,11 @@ describe("one bad member no longer reds the whole run (bean `03nl`)", () => {
     expect((steps[record] as { if?: string }).if).toBe("always()");
     expect((steps[upload] as { if?: string }).if).toBe("always()");
     expect(upload).toBeGreaterThan(record);
-    // A job that died before main's tool was checked out still writes one.
+    // A job that died before main's tool was checked out still writes one —
+    // and so does one whose tool predates the --verdict mode, since the copy
+    // that runs is main's. Both are "could not determine", which is loud.
     expect(steps[record]!.run).toContain('"verdict":"undetermined","notify":true');
+    expect(steps[record]!.run).toContain('grep -q -- "--verdict" "$tool"');
   });
 
   test("the aggregator runs main's copy, with the submodules its checkout needs", () => {
