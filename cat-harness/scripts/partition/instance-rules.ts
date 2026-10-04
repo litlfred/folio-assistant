@@ -1334,15 +1334,19 @@ export const RULES: Rule[] = [
       // distinction `folio-graph-kind.ts` argues. Left to triage it landed
       // in core on a keyword, which had the ownership exactly backwards.
       "schemas/graph-kind-registry.ts",
-      // dmx1's two leaves, imported by the registry and the declaration schema:
-      // instance discovery (moved verbatim out of cat-harness.ts) and the
-      // graph-kind node schema. Harness for the same reason as their importers.
+      // declared-path-literal: a partition plan names modules by path, the
+      // same base case as the TARGET layouts above. dmx1's and riit's leaves,
+      // imported by the registry and the declaration schema: instance discovery
+      // (moved verbatim out of cat-harness.ts), the graph-kind, validator,
+      // block-kind and contribution node schemas, and the declared-node scan.
+      // Harness for the same reason as their importers.
       "schemas/instance-roots.ts",
       "schemas/graph-kind-node.ts",
       "schemas/declared-nodes.ts",
       "schemas/validator-node.ts",
       "schemas/block-kind-node.ts",
       "schemas/contribution-nodes.ts",
+
       // Roles, actors and the KG audit sidecar are harness-layer for the same
       // reason and on the same terms: `role-graph.ts` imports only
       // `namespaces.ts`, `kg-qa.ts` imports zod and `portable-path.ts` below.

@@ -7462,6 +7462,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.directorystorageschema.branchprefix",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DirectoryStorageSchema.branchPrefix"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`keyedBy: \"family\"` only (bean `lehh`, owner 2026-10-04): a FAMILY of branches, one per key — the branch-only graphs fhir-ast (one branch per IG package) and lake-cache (one per Lean package and toolchain). `path` is where a mount of ONE member lands, as fsh-guts' is. Resolved to `kind: \"family\"`, never to a single branch."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.branchPrefix",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.directorystorageschema.keyedby",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -7478,6 +7497,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.directorystorageschema.keyfrom",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DirectoryStorageSchema.keyFrom"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`family` only: what the key is, in words — \"the IG's package id\"."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyFrom",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.directorystorageschema.repository",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DirectoryStorageSchema.repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`family` only: where the family is. Absent = this repository, a copy materialised here; `owner/repo` = read from that remote (owner, 2026-10-04: a remote AST may be read or materialised locally, \"similar for lean cache\")."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.repository",
       "skos:note": "candidate"
     },
     {

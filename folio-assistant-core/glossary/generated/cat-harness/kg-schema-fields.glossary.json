@@ -2751,10 +2751,31 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.directorystorageschema.branchprefix",
+      "prefLabel": "DirectoryStorageSchema.branchPrefix",
+      "definition": "`keyedBy: \"family\"` only (bean `lehh`, owner 2026-10-04): a FAMILY of branches, one per key — the branch-only graphs fhir-ast (one branch per IG package) and lake-cache (one per Lean package and toolchain). `path` is where a mount of ONE member lands, as fsh-guts' is. Resolved to `kind: \"family\"`, never to a single branch.",
+      "source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.branchPrefix",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.directorystorageschema.keyedby",
       "prefLabel": "DirectoryStorageSchema.keyedBy",
       "definition": "How entries are keyed on the branch: one entry per `commit`, one live copy at the `tip`, or one entry per published `route`. See {@link DirectoryStorageSchema}'s docblock for why `route` is not a synonym for `tip`.",
       "source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.directorystorageschema.keyfrom",
+      "prefLabel": "DirectoryStorageSchema.keyFrom",
+      "definition": "`family` only: what the key is, in words — \"the IG's package id\".",
+      "source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyFrom",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.directorystorageschema.repository",
+      "prefLabel": "DirectoryStorageSchema.repository",
+      "definition": "`family` only: where the family is. Absent = this repository, a copy materialised here; `owner/repo` = read from that remote (owner, 2026-10-04: a remote AST may be read or materialised locally, \"similar for lean cache\").",
+      "source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.repository",
       "status": "candidate"
     },
     {
