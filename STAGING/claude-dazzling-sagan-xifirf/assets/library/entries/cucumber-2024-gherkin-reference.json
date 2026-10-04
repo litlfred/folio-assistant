@@ -1,0 +1,405 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "cucumber-2024-gherkin-reference",
+  "blocks": [
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s001-gherkin-reference",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Gherkin Reference",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s001-gherkin-reference.md",
+      "narrative": null,
+      "content": "---\ntitle: Gherkin Reference\nsubtitle: \"Cucumber syntax: Given, When, Then\"\n---\nGherkin uses a set of special [keywords](#keywords) to give structure and meaning to\nexecutable specifications. Each keyword is translated to many spoken languages;\nin this reference we'll use English.\n\nMost lines in a Gherkin document start with one of the [keywords](#keywords).\n\nComments are only permitted at the start of a new line, anywhere in the feature file. They begin with zero or more spaces,\nfollowed by a hash sign (`#`) and some text.\n\nBlock comments are currently not supported by Gherkin.\n\nEither spaces",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s002-keywords",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Keywords",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s002-keywords.md",
+      "narrative": null,
+      "content": "# Keywords\n\nEach line that isn't a blank line has to start with a Gherkin *keyword*, followed by any text you like. The only exceptions are the free-form descriptions placed underneath `Example`/`Scenario`, `Background`, `Scenario Outline` and `Rule` lines.\n\nThe primary keywords are:\n\n- [`Feature`](#feature)\n- [`Rule`](#rule) (as of Gherkin 6)\n- [`Example`](#example) (or `Scenario`)\n- [`Given`](#given), [`When`](#when), [`Then`](#then), [`And`](#and-but), [`But`](#and-but) for steps (or [`*`](#Asterisk))\n- [`Background`](#background)\n- [`Scenario Outline`](#scenario-outline) (or [`Scenario Tem",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s003-feature",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Feature",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s003-feature.md",
+      "narrative": null,
+      "content": "## Feature\n\nThe purpose of the `Feature` keyword is to provide a high-level description\nof a software feature, and to group related scenarios.\n\nThe first primary keyword in a Gherkin document must always be `Feature`, followed\nby a `:` and a short text that describes the feature.\n\nYou can add free-form text underneath `Feature` to add more description.\n\nThese description lines are ignored by Cucumber at runtime, but are available for reporting (they are included by reporting tools like the official HTML formatter).\n\n```gherkin\nFeature: Guess the word\n\n  The word guess game is a turn-based game",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s004-descriptions",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Descriptions",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s004-descriptions.md",
+      "narrative": null,
+      "content": "## Descriptions\n\nFree-form descriptions (as described above for `Feature`) can also be placed underneath\n`Example`/`Scenario`, `Background`, `Scenario Outline` and `Rule`.\n\nYou can write anything you like, as long as no line starts with a keyword.\n\nDescriptions can be in the form of Markdown - formatters including the official HTML formatter support this.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s005-rule",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Rule",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s005-rule.md",
+      "narrative": null,
+      "content": "## Rule\n\nThe (optional) `Rule` keyword has been part of Gherkin since v6. \n\n{{% note \"Cucumber Support for Rule\"%}}\nThe `Rule` keyword is still pretty new. It has been ported in a lot of Cucumber implementation already.\nYet if you encounter issues, check the documentation of your Cucumber implementation to make sure it supports it.\n{{% /note %}}\n\nThe purpose of the `Rule` keyword is to represent one *business rule* that should be implemented.\nIt provides additional information for a feature.\nA `Rule` is used to group together several scenarios\nthat belong to this *business rule*. A `Rule` shou",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s006-example",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Example",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s006-example.md",
+      "narrative": null,
+      "content": "## Example\n\nThis is a *concrete example* that *illustrates* a business rule. It consists of\na list of [steps](#steps).\n\nThe keyword `Scenario` is a synonym of the keyword `Example`.\n\nYou can have as many steps as you like, but we recommend 3-5 steps per example. Having too many steps will cause the example to lose its expressive power as a specification and documentation.\n\nIn addition to being a specification and documentation, an example is also a *test*. As a whole, your examples are an\n*executable specification* of the system.\n\nExamples follow this same pattern:\n\n- Describe an initial conte",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s007-steps",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Steps",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s007-steps.md",
+      "narrative": null,
+      "content": "## Steps\n\nEach step starts with `Given`, `When`, `Then`, `And`, or `But`.\n\nCucumber executes each step in a scenario one at a time, in the sequence you’ve written them in.\nWhen Cucumber tries to execute a step, it looks for a matching step definition to execute.\n\nKeywords are not taken into account when looking for a step definition. This means you cannot have a\n`Given`, `When`, `Then`, `And` or `But` step with the same text as another step.\n\nCucumber considers the following steps duplicates:\n\n```gherkin\nGiven there is money in my account\nThen there is money in my account\n```\n\nThis might seem",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s008-given",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Given",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s008-given.md",
+      "narrative": null,
+      "content": "### Given\n\n`Given` steps are used to describe the initial context of the system - the *scene* of the scenario.\nIt is typically something that happened in the *past*.\n\nWhen Cucumber executes a `Given` step, it will configure the system to be in a well-defined state,\nsuch as creating and configuring objects or adding data to a test database.\n\nThe purpose of `Given` steps is to **put the system in a known state** before the user (or external system) starts interacting with the system (in the `When` steps).\nAvoid talking about user interaction in `Given`'s. If you were creating use cases, `Given`'",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s009-when",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "When",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s009-when.md",
+      "narrative": null,
+      "content": "### When\n\n`When` steps are used to describe an event, or an *action*. This can be a person interacting with the system, or it can be an event triggered by another system.\n\nExamples:\n\n- Guess a word\n- Invite a friend\n- Withdraw money\n\n{{% note \"Imagine it's 1922\" %}}\nMost software does something people could do manually (just not as efficiently).\n\nTry hard to come up with examples that don't make any assumptions about\ntechnology or user interface. Imagine it's 1922, when there were no computers.\n\nImplementation details should be hidden in the [step definitions](/docs/cucumber/step-definitions).",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s010-then",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Then",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s010-then.md",
+      "narrative": null,
+      "content": "### Then\n\n`Then` steps are used to describe an *expected* outcome, or result.\n\nThe [step definition](/docs/cucumber/step-definitions) of a `Then` step should use an *assertion* to\ncompare the *actual* outcome (what the system actually does) to the *expected* outcome\n(what the step says the system is supposed to do).\n\nAn outcome *should* be on an **observable** output. That is, something that comes *out* of the system (report, user interface, message), and not a behaviour deeply buried inside the system (like a record in a database).\n\nExamples:\n\n- See that the guessed word was wrong\n- Receive a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s011-and-but",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "And, But",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s011-and-but.md",
+      "narrative": null,
+      "content": "### And, But\n\nIf you have successive `Given`'s or `Then`'s, you *could* write:\n\n```gherkin\nExample: Multiple Givens\n  Given one thing\n  Given another thing\n  Given yet another thing\n  When I open my eyes\n  Then I should see something\n  Then I shouldn't see something else\n```\n\nOr, you could make the example more fluidly structured by replacing the successive `Given`'s or `Then`'s with `And`'s and `But`'s:\n\n```gherkin\nExample: Multiple Givens\n  Given one thing\n  And another thing\n  And yet another thing\n  When I open my eyes\n  Then I should see something\n  But I shouldn't see something else\n```",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s012-background",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Background",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s012-background.md",
+      "narrative": null,
+      "content": "## Background\n\nOccasionally you'll find yourself repeating the same `Given` steps in all of the scenarios in a `Feature`.\n\nSince it is repeated in every scenario, this is an indication that those steps\nare not *essential* to describe the scenarios; they are *incidental details*. You can literally move such `Given` steps to the background, by grouping them under a `Background` section.\n\nA `Background` allows you to add some context to the scenarios that follow it. It can contain one or more `Given` steps, which are run before *each* scenario, but after any [Before hooks](/docs/cucumber/api/#hoo",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s013-tips-for-using-background",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Tips for using Background",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s013-tips-for-using-background.md",
+      "narrative": null,
+      "content": "## Tips for using Background\n\n* Don't use `Background` to set up **complicated states**, unless that state is actually something the client needs to know.\n  * For example, if the user and site names don't matter to the client, use a higher-level step such as\n`Given I am logged in as a site owner`.\n* Keep your `Background` section **short**.\n  * The client needs to actually remember this stuff when reading the scenarios. If the `Background` is more than 4 lines long, consider moving some of the irrelevant details into higher-level steps.\n* Make your `Background` section **vivid**.\n  * Use colou",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s014-scenario-outline",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Scenario Outline",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s014-scenario-outline.md",
+      "narrative": null,
+      "content": "## Scenario Outline\n\nThe `Scenario Outline` keyword can be used to run the same `Scenario` multiple times,\nwith different combinations of values.\n\nThe keyword `Scenario Template` is a synonym of the keyword `Scenario Outline`.\n\nCopying and pasting scenarios to use different values quickly becomes tedious and repetitive:\n\n```gherkin\nScenario: eat 5 out of 12\n  Given there are 12 cucumbers\n  When I eat 5 cucumbers\n  Then I should have 7 cucumbers\n\nScenario: eat 5 out of 20\n  Given there are 20 cucumbers\n  When I eat 5 cucumbers\n  Then I should have 15 cucumbers\n```\n\nWe can collapse these two sim",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s015-examples",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Examples",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s015-examples.md",
+      "narrative": null,
+      "content": "### Examples\n\nA `Scenario Outline` must contain one or more `Examples` (or `Scenarios`) section(s). Its steps are interpreted as a \ntemplate\nwhich is never directly run. Instead, the `Scenario Outline` is run *once for each row* in\nthe `Examples` section beneath it (not counting the first header row).\n\nThe steps can use `<>` delimited *parameters* that reference headers in the examples table.\nCucumber will replace these parameters with values from the table *before* it tries\nto match the step against a step definition.\n\nYou can use parameters in `Scenario Outline` descriptions as well.\n\nYou ca",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s016-step-arguments",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Step Arguments",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s016-step-arguments.md",
+      "narrative": null,
+      "content": "# Step Arguments\n\nIn some cases you might want to pass more data to a step than fits on a single line.\nFor this purpose Gherkin has `Doc Strings` and `Data Tables`.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s017-doc-strings",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Doc Strings",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s017-doc-strings.md",
+      "narrative": null,
+      "content": "## Doc Strings\n\n`Doc Strings` are handy for passing a larger piece of text to a step definition.\n\nThe text should be offset by delimiters consisting of three double-quote marks on lines of their own:\n```gherkin\nGiven a blog post named \"Random\" with Markdown body\n  \"\"\"\n  Some Title, Eh?\n  ===============\n  Here is the first paragraph of my blog post. Lorem ipsum dolor sit amet,\n  consectetur adipiscing elit.\n  \"\"\"\n```\nIn your step definition, there’s no need to find this text and match it in your pattern.\nIt will automatically be passed as the last argument in the step definition.\n\nIndentation",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s018-data-tables",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data Tables",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s018-data-tables.md",
+      "narrative": null,
+      "content": "## Data Tables\n\n`Data Tables` are handy for passing a list of values to a step definition:\n\n```gherkin\nGiven the following users exist:\n  | name   | email              | twitter         |\n  | Aslak  | aslak@cucumber.io  | @aslak_hellesoy |\n  | Julien | julien@cucumber.io | @jbpros         |\n  | Matt   | matt@cucumber.io   | @mattwynne      |\n```\nJust like `Doc Strings`, `Data Tables` will be passed to the step definition as the last argument.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s019-table-cell-escaping",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Table Cell Escaping",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s019-table-cell-escaping.md",
+      "narrative": null,
+      "content": "### Table Cell Escaping\n\nIf you want to use a newline character in a table cell, you can write this\nas `\\n`. If you need a `|` as part of the cell, you can escape it as `\\|`. And\nfinally, if you need a `\\`, you can escape that with `\\\\`.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s020-data-table-api",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data Table API",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s020-data-table-api.md",
+      "narrative": null,
+      "content": "### Data Table API\n\nCucumber provides a rich API for manipulating tables from within step definitions.\nSee the [Data Table API reference](https://github.com/cucumber/cucumber-jvm/tree/main/datatable) reference for\nmore details.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/cucumber-2024-gherkin-reference/blocks/prose-s021-spoken-languages",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Spoken Languages",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s021-spoken-languages.md",
+      "narrative": null,
+      "content": "# Spoken Languages\n\nThe language you choose for Gherkin should be the same language your users and\ndomain experts use when they talk about the domain. Translating between\ntwo languages should be avoided.\n\nThis is why Gherkin has been translated to [over 70 languages](/docs/gherkin/languages) .\n\nHere is a Gherkin scenario written in Norwegian:\n\n```gherkin\n# language: no\nFunksjonalitet: Gjett et ord\n\n  Eksempel: Ordmaker starter et spill\n    Når Ordmaker starter et spill\n    Så må Ordmaker vente på at Gjetter blir med\n\n  Eksempel: Gjetter blir med\n    Gitt at Ordmaker har startet et spill med or",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}
