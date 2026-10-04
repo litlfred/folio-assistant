@@ -196,11 +196,15 @@ would have caught it.
 
 ## Done when
 - [x] owner picks an option
-- [ ] `gh-pages` declares `keyedBy: "route"` in `scripts/special-branches.json`
-- [ ] a gate compares each special branch's declared `writers` with the measured
+- [x] `gh-pages` declares `keyedBy: "route"` in `scripts/special-branches.json`
+- [x] a gate compares each special branch's declared `writers` with the measured
       writers, and fails on a disagreement in either direction
-- [ ] `merge-steward` is recast to steward a NAMED watched ref, with the ref
+- [x] `merge-steward` is recast to steward a NAMED watched ref, with the ref
       named by the lane instance rather than by the role
+- [x] the steward skill carries the coalesce-into-one-push-per-window discipline
+      (`skills/sdlc/sdlc-core/ref-stewardship.md`)
+- [x] the window is TYPED for handover — `schemas/ref-window.ts`, `expires` and
+      `handoff` required, no `extend`, the host's facts refused by name
 - [ ] the 5 gh-pages producers write through `branch-store`'s route keying
 - [ ] a test covers the same-route double write that must still be reported
 - [ ] a successful deployment lands within one burst of a push to `gh-pages`
