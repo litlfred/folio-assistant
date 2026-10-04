@@ -124,7 +124,7 @@ LSI indexes, detangle sidecars and tool-run records under `test/results/`.
 Recomputed from the whole corpus, so any concurrent skill or schema change
 touches them.
 
-### `docs-auto` — take the base, regenerate (352)
+### `auto-docs` — take the base, regenerate (352)
 
 The generated docs index pages, already `-merge` in `.gitattributes`. One page
 per directory, so a new file anywhere changes one.
@@ -198,8 +198,8 @@ refused.
 pages `gen-library-viz`, `gen-folio-viz` and `gen-schema-viz` place through
 `viewerPlacement`, each rewritten whole from the corpus and checked by its
 `:viz --check`. Same false positive as above: its `uploads/` pages render
-uploads rather than being them (#1775). `docs-auto/` under the same prefix
-keeps its own `docs-auto` entry.
+uploads rather than being them (#1775). `auto-docs/` under the same prefix
+keeps its own `auto-docs` entry.
 
 ### `navbar-include` — take the base, regenerate
 

@@ -3,8 +3,11 @@
 title: 'Separation stage 0: preconditions — PR0/PR1 landed, boundary gates watched red, baseline recorded'
 status: todo
 type: task
+priority: normal
+tags:
+    - mvp
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-01T06:58:00Z
+updated_at: 2026-10-04T09:56:45Z
 parent: folio-assistant-iirv
 ---
 

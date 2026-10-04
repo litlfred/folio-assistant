@@ -56,7 +56,7 @@ import { BranchStore, MANIFEST_FILE, MANIFEST_SCHEMA } from "./branch-store.ts";
 
 export const SPECIAL_BRANCHES = join(import.meta.dir, "special-branches.json");
 
-interface SpecialBranch {
+export interface SpecialBranch {
   id: string;
   shape: string;
   name: string;
@@ -267,7 +267,7 @@ export function brief(rows: readonly DriftRow[]): string {
     "These are SEEDS: `main` is still the store, so drift here breaks nothing today.",
     "It breaks the cutover: a cutover from a stale seed resurrects what the seed holds",
     "and loses what landed since, in one subtree replacement with no diff to read.",
-    "Full list: `bun run state:drift`.",
+    "Full list: `bun run state:drift`. Refresh one: `bun run state:seed --id <graph>`.",
   );
   return lines.join("\n");
 }
@@ -295,9 +295,10 @@ if (import.meta.main) {
     );
     if (drifted.length) {
       console.log(
-        `\n✗ Refresh the seed before any cutover. A cutover from a stale seed does NOT fail: it\n` +
-          `  resurrects what the seed still holds and loses what landed on the source ref since,\n` +
-          `  and the cutover commit replaces the whole subtree at once so there is no diff to read.`,
+        `\n✗ Refresh the seed before any cutover — \`bun run state:seed --id <graph>\`, one per drifted\n` +
+          `  row above. A cutover from a stale seed does NOT fail: it resurrects what the seed still\n` +
+          `  holds and loses what landed on the source ref since, and the cutover commit replaces the\n` +
+          `  whole subtree at once so there is no diff to read.`,
       );
     }
     if (unknown.length) console.log(`\n? Not a pass. "Could not reach the branch" and "in sync" are different answers.`);

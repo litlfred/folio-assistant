@@ -105,6 +105,13 @@ audit-coverage <span class="fa-gloss-status">candidate, extracted</span>
 <p>Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the stored record holds the relation rather than the census.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/audit-coverage.md"><code>cat-harness/skills/kg/kg-core/audit-coverage.md</code></a></p>
 </dd>
+<dt id="cat-harness--kg-skills--auto-docs" data-fa-state="extracted" data-fa-gloss="">
+auto-docs <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/auto-docs.md"><code>cat-harness/skills/ui/ui-core/auto-docs.md</code></a></p>
+</dd>
 </dl>
 
 <h2 id="letter-B">B</h2>
@@ -669,13 +676,6 @@ dmn-authoring <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p><em>The asset carries no description.</em></p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/dmn-authoring.md"><code>cat-harness/skills/process/workflow/dmn-authoring.md</code></a></p>
-</dd>
-<dt id="cat-harness--kg-skills--docs-auto" data-fa-state="extracted" data-fa-gloss="">
-docs-auto <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/docs-auto.md"><code>cat-harness/skills/ui/ui-core/docs-auto.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--docs-generation" data-fa-state="extracted" data-fa-gloss="">
 docs-generation <span class="fa-gloss-status">candidate, extracted</span>
