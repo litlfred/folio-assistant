@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-smart-trust-glyph/skills/content-author/output.schema.json",
+  "title": "Content Author Output",
+  "description": "Output schema for general content authoring.",
+  "type": "object",
+  "required": [
+    "artifacts"
+  ],
+  "properties": {
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "type"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "ready-for-validation"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/smart-trust-glyph",
+    "sha": "139ad201ed6d9e1f23f8db9dcd5ceb4c2a3be337",
+    "pr": "2127/merge",
+    "run": "37241344146"
+  }
+}
