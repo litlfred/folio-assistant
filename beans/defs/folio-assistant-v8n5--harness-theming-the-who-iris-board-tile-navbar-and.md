@@ -1,11 +1,11 @@
 ---
 # folio-assistant-v8n5
 title: 'HARNESS THEMING: the who-iris board tile, navbar and stickies render on the IRIS theme, not only its pages'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-30T08:43:50Z
-updated_at: 2026-09-30T11:02:57Z
+updated_at: 2026-10-04T15:52:40Z
 parent: folio-assistant-yg29
 ---
 
@@ -72,3 +72,13 @@ Rendered in Chromium against the real `docs-ui.css` and `themes.css` (computed `
 | `pale-sage`, no priority | 3px rgb(111, 140, 100), the sage accent |
 
 **Not verified here:** the deployed who-iris landing page itself. The staging preview is the place to look.
+
+
+## Summary of Changes — closed on evidence, 2026-10-04
+
+Closed by session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi on the owner's choice (*"Close GOAL 3's last box"*), not by the session that built it. Evidence, not authorship:
+
+- **Merged:** #1611 (2026-09-30, the `iris-sticky` theme, instance sticky themes in `themes.css`, tile tone from own theme) and #1681 (2026-09-30, the owner-ruled accent band on themed cards with no priority). Both branches carry later commits that never merged; the work they name is on `main`.
+- **All four Done-when boxes** were already ticked by the building session.
+- **The one item this bean recorded as not verified — the DEPLOYED landing page — is now checked**, from the `gh-pages` ref (commit of 2026-10-04T15:46Z; github.io itself is proxy-denied here): `index.html` carries one card with `data-fa-sticky-theme="iris-sticky"` and `id="harness-who-iris"`, and the deployed `assets/css/docs-ui.css` carries the `.fa-sticky[data-fa-sticky-theme]:not([class*="fa-sticky-p-"])` band rule. Not checked: computed colours in a browser on the deployed page.
+- **Left open elsewhere, deliberately:** `pnn5` (under `1xhc`) — v8n5 Done-when #2's comparison over the iterated set waits on an owner ruling about which theme may style which surface. It is a gate-coverage gap, not this bean's surface work.

@@ -33,4 +33,4 @@ writes against, and the pipeline that fills it**.
 ## Done when
 
 - [ ] the owner states this milestone's outcome in their own words, replacing the derived scope above
-- [ ] `slw1` and `0lmb` carry `parent:` this bean
+- [x] `slw1` and `0lmb` carry `parent:` this bean
