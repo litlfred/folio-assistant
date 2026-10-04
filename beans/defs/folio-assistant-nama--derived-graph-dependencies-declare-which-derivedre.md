@@ -24,7 +24,7 @@ Use the ORDER in which subgraphs are declared as the rendering order. That is ch
 - [x] the schema carries an edge between directories: a derived/rendered subgraph names the graphs it is computed FROM, by directory id, resolvable across `needs` the way computedFrom is checked
 - [ ] fhir-ast, ig-docs, gh-pages and lean-cache are declared as graphs with those edges (fhir-ast -> ig-docs -> gh-pages)
 - [x] a gate refuses an edge naming an undeclared id, and a cycle
-- [ ] the rendering order is DERIVED from the edges (topological). Until then, declaration order is used, and a check flags a consumer declared before its source
+- [x] the rendering order is DERIVED from the edges (topological). Until then, declaration order is used, and a check flags a consumer declared before its source
 - [ ] consumers walk it: regen, the main publish workflow (lbz8) and the staging cone (sibling bean)
 
 ## 2026-10-04: design note, for the owner's review

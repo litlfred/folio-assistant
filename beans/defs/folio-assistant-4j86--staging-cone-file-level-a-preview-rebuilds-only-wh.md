@@ -29,9 +29,9 @@ A rendered output is in the cone when a changed file is in:
 When the cone cannot be computed (no changed-file list, an API failure, an unknown generator), the preview carries everything: today's rule for doubt, kept.
 
 ## Done when
-- [ ] the rule is written in feature-staging.md, with pointers from staging-review.md (what a cut preview leaves out) and before-after-preview.md (the general rule across rendered kinds)
-- [ ] the cone is computed from changed files, generator import closures and the derived-graph edges, replacing the prefix match
-- [ ] measured: a skill-only PR carries no IG, and a gen-ig-pages.ts change carries every IG
+- [x] the rule is written in feature-staging.md, with pointers from staging-review.md (what a cut preview leaves out) and before-after-preview.md (the general rule across rendered kinds)
+- [x] the cone is computed from changed files, generator import closures and the derived-graph edges, replacing the prefix match
+- [x] measured: a skill-only PR carries no IG, and a gen-ig-pages.ts change carries every IG
 - [ ] per-IG Jekyll and AST sites rebuild only when in the cone
 
 ## 2026-10-04: owner ruling — the generator is declared as `writer` on the directory

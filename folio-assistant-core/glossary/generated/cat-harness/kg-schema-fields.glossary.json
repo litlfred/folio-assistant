@@ -2520,6 +2520,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectory.writer",
+      "prefLabel": "ContentDirectory.writer",
+      "definition": "The GENERATOR that writes this directory: repo-relative script files, and directories ending in `/` for what a generator READS rather than imports (its templates). The other half of `derivedFrom`: that names the DATA a derived graph is computed from, this names the CODE (owner, 2026-10-04, bean `4j86`, option 1 of 3).",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.writer",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectoryshape.composed",
       "prefLabel": "ContentDirectoryShape.composed",
       "definition": "This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the Jekyll source instead of mounting its built output.",
@@ -2615,6 +2622,13 @@
       "prefLabel": "ContentDirectoryShape.visualisedAs",
       "definition": "HOW this graph is shown, and what can be done to it.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.visualisedAs",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentdirectoryshape.writer",
+      "prefLabel": "ContentDirectoryShape.writer",
+      "definition": "The generator that writes this directory: repo-relative script files, and directories ending in `/` for what it reads rather than imports. See the interface field. At least one path, none twice.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.writer",
       "status": "candidate"
     },
     {
