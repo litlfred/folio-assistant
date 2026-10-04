@@ -816,9 +816,8 @@ fetch(DATA_HREF).then(function(r){
   }
   if (G.refScan) {
     var none = scoped.filter(function(e){ return e.refCount === 0; }).length;
-    $("badges").innerHTML += '<span class="badge"><b>'+G.refScan.filesRead+
-      "</b> json file(s) scanned for references" +
-      (none ? ', <b>'+none+"</b> entr(ies) referenced by nothing" : "") +
+    $("badges").innerHTML += '<span class="badge">' +
+      (none ? '<b>'+none+"</b> entr(ies) referenced by nothing" : "references scanned") +
       (G.refScan.unreadable.length
         ? ' <span class="pill warn" title="'+esc(G.refScan.unreadable.join("\\n"))+'">'+
           G.refScan.unreadable.length+" unreadable — the zeros are provisional</span>"
@@ -1133,7 +1132,12 @@ if (import.meta.main) {
     }
     const scan = scanLibraryRefs(sources, repo);
     for (const e of g.entries) e.referencedBy = scan.bySlug[e.id] ?? [];
-    g.refScan = { filesRead: scan.filesRead, unreadable: scan.unreadable };
+    // `scan.filesRead` is NOT carried into the projection — bean `65oe`. It is
+    // a count of files on disk, so it differs between CI and a local checkout
+    // and made this committed artefact unable to agree with itself. It is
+    // reported on the line below instead, where a statistic about a run
+    // belongs.
+    g.refScan = { unreadable: scan.unreadable };
     const orphans = g.entries.filter((e) => (e.referencedBy?.length ?? 0) === 0).map((e) => e.id);
     console.log(
       `  · references: ${scan.filesRead} json file(s) read, ` +

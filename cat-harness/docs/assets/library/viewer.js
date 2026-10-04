@@ -584,9 +584,8 @@ fetch(DATA_HREF).then(function(r){
   }
   if (G.refScan) {
     var none = scoped.filter(function(e){ return e.refCount === 0; }).length;
-    $("badges").innerHTML += '<span class="badge"><b>'+G.refScan.filesRead+
-      "</b> json file(s) scanned for references" +
-      (none ? ', <b>'+none+"</b> entr(ies) referenced by nothing" : "") +
+    $("badges").innerHTML += '<span class="badge">' +
+      (none ? '<b>'+none+"</b> entr(ies) referenced by nothing" : "references scanned") +
       (G.refScan.unreadable.length
         ? ' <span class="pill warn" title="'+esc(G.refScan.unreadable.join("\n"))+'">'+
           G.refScan.unreadable.length+" unreadable — the zeros are provisional</span>"

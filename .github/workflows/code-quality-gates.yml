@@ -2098,6 +2098,11 @@ jobs:
           # still wrote its sidecar, and nothing called it. The `:check` form
           # judges and writes nothing.
           bun run check:avatar-coverage:check
+          # The site's `/` is a DECIDED harness, never the generator's own
+          # directory or the repository's name (issue #1904): one instantiated
+          # harness lands without a flag, several need `site.landing` on one
+          # (or two or more, for a hub), and several with none fail here.
+          bun run check:landing-instance
           # A reader's folio must be the SAME folio in every library they
           # browse (F8/F9). A page that forgets the mount is a folio that
           # silently disappears when they follow a link — the page renders,
