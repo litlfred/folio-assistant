@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/root-scan-census.ts",
-    "script_hash": "10b972f0204d"
+    "script_hash": "5011c24a55d5"
   },
   "subject": {
     "kind": "root-scan-census",
@@ -239,12 +239,12 @@
           "gitAware": false
         },
         {
-          "file": "cat-harness/scripts/gen-default-boards.ts",
+          "file": "cat-harness/scripts/gen-auto-docs.ts",
           "seededAtRoot": false,
           "gitAware": true
         },
         {
-          "file": "cat-harness/scripts/gen-docs-auto.ts",
+          "file": "cat-harness/scripts/gen-default-boards.ts",
           "seededAtRoot": false,
           "gitAware": true
         },
@@ -516,7 +516,7 @@
       ]
     },
     "seeded-at-root-not-git-aware": {
-      "summary": "The shape that actually costs something: a scan whose start argument IS a root constant, that does not ask git. 0 of 0 such scans, 82 enumerating scripts in all, across 9 instance(s)' scripts/ (bootstrap-tools, cat-harness, cat-harness-tools, cat-openapi, fhir-harness, folio-assistant-core, smart-base, smart-trust, who-iris). Reported and NEVER failed — the owner's ruling of 2026-09-27, over the objection that a check which cannot fail is the 1xhc pattern; what CAN fail here is the sidecar going stale.",
+      "summary": "The shape that actually costs something: a scan whose start argument IS a root constant, that does not ask git. 0 of 0 such scans, 82 enumerating scripts in all, across 9 instance(s)' scripts/ (bootstrap-tools, cat-harness, cat-harness-tools, cat-openapi, fhir-harness, folio-assistant-core, smart-base, smart-trust, who-iris). Reported and NEVER failed — the owner's ruling of 2026-09-27, over the objection that a check which cannot fail is the 1xhc pattern; what CAN fail here is a NEW one against a baseline (bean `0dav`).",
       "count": 0,
       "entries": []
     }

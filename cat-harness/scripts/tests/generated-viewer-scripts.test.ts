@@ -80,7 +80,7 @@ function parses(source: string): string | undefined {
 // DERIVED, not listed. The first version named `library` and `schemas` — the
 // two families that broke in PR #805 — and that is how a guard ends up
 // narrower than its own docstring: it said "every generated viewer" while
-// covering 12 of 25 pages, leaving `voices`, `uploads` and `docs-auto`
+// covering 12 of 25 pages, leaving `voices`, `uploads` and `auto-docs`
 // unexamined. Walking the generated tree means a new viewer family is covered
 // the day it is generated rather than the day somebody remembers. Bean `jfr6`.
 const pages = viewerPages(join(SITE, "cat-harness"));

@@ -396,10 +396,10 @@ export function auditInstance(
  * it** — this module's own docblock opens by saying a declaration into thin air
  * makes every consumer "report a clean run over nothing", and five entries in
  * `cat-harness/docs/docs.json` were exactly that: `proposals`, `requirements`,
- * `docs-auto` and the two uml routes (bean `xsrv`).
+ * `auto-docs` and the two uml routes (bean `xsrv`).
  *
  * It also explains a thing reported on #2022 as a quirk: `audit:coverage` calls
- * `docs-auto` `no-directory` because nothing resolved a nested path for
+ * `auto-docs` `no-directory` because nothing resolved a nested path for
  * presence.
  *
  * `nestedDirectories` walks to any depth and guards a declaration naming its
