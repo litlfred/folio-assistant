@@ -247,17 +247,17 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/latex-build-cache",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`cat-harness/scripts/install-tex.sh`) and quick changed-chapter feature builds (`cat-harness/scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
+      "description": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work is the iterative loop: a static preflight with no TeX, getting an engine into the sandbox (Tool `tex-install`), quick changed-chapter feature builds with latexdiff (Tool `paper-feature-build`), then the full build. Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-paper-adapter",
-      "instructionLines": 135,
+      "instructionLines": 173,
       "instructionsPath": "../folio-assistant-sci/skills/content/folio-paper-adapter/latex-build-cache.md",
       "name": "latex-build-cache",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1d34f6df8d3901a2442f5f02af819b5d054fe871a72c3818998dbbd2eabe6b3d",
-        "bytes": 8194,
-        "sha256": "1d34f6df8d3901a2442f5f02af819b5d054fe871a72c3818998dbbd2eabe6b3d"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6babc3bbed2c2b45dae6ebaee2d2d522d92cefb630f7ab0a7c20bea2d0efaa33",
+        "bytes": 10485,
+        "sha256": "6babc3bbed2c2b45dae6ebaee2d2d522d92cefb630f7ab0a7c20bea2d0efaa33"
       },
       "title": "LaTeX build performance — findings + what's safe"
     },
@@ -839,15 +839,24 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/folio-paper-adapter/formalizer/",
       "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "bootstrap:graphKind/skills"
+      ],
       "name": "skills/content/folio-paper-adapter/formalizer",
       "path": "skills/content/folio-paper-adapter/formalizer/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup/",
       "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "bootstrap:graphKind/skills"
+      ],
       "name": "skills/content/folio-paper-adapter/lean-environment-setup",
       "path": "skills/content/folio-paper-adapter/lean-environment-setup/"
     }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
   ],
   "name": "skills/content/folio-paper-adapter",
   "path": "skills/content/folio-paper-adapter/"

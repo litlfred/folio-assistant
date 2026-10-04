@@ -7,6 +7,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
       "@type": "cat-harness:SkillPackage",
       "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/artefact-reachability",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/associate-harness",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/audit-coverage",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-node-review",
@@ -35,6 +36,25 @@
       "name": "kg-core",
       "path": "skills/kg/kg-core",
       "version": "0.1.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/artefact-reachability",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Which declared executable artefacts can be reached — decision tables, BPMN diagrams, self-declared entry points. Read before trusting that a .dmn works because it loads, before concluding a script has a caller, and before building any reachability report: load is not evaluability, a test is not a caller, and where a grep fails in both directions the subject has to be narrowed rather than the signals.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 307,
+      "instructionsPath": "skills/kg/kg-core/artefact-reachability.md",
+      "name": "artefact-reachability",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c8421a188ef480025ddff065616ceeb4f50b4c56bc653bdd48862e85a0bdfa07",
+        "bytes": 15599,
+        "sha256": "c8421a188ef480025ddff065616ceeb4f50b4c56bc653bdd48862e85a0bdfa07"
+      },
+      "title": "Artefact reachability — load is not evaluability, and a test is not a caller"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/associate-harness",
@@ -158,13 +178,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 1464,
+      "instructionLines": 1472,
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
       "name": "directory-conventions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ae5c7960543decd0b675976391b6dcba485124b21250395c84762af597737651",
-        "bytes": 111561,
-        "sha256": "ae5c7960543decd0b675976391b6dcba485124b21250395c84762af597737651"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0c8d5ae2bc90f18d5d0effbdbb3e66a66e8e7c29605c6dc6b5b7a2c42e2d12a9",
+        "bytes": 112122,
+        "sha256": "0c8d5ae2bc90f18d5d0effbdbb3e66a66e8e7c29605c6dc6b5b7a2c42e2d12a9"
       },
       "title": "Directory conventions — what an instance declares it scans"
     },

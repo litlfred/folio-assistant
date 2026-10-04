@@ -31,6 +31,17 @@
       "title": "Adjudication — judgement, when the mechanism ran out of facts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/agent-handoff",
+      "@type": "bootstrap:Skill",
+      "name": "agent-handoff",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4ceedc36053ea3cc71cbfd15a288b2f3e151fae5c0df6ee15366351a95899cb0",
+        "bytes": 16243,
+        "sha256": "4ceedc36053ea3cc71cbfd15a288b2f3e151fae5c0df6ee15366351a95899cb0"
+      },
+      "title": "One task, two agents, one human between them"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-blocking",
       "@type": "bootstrap:Skill",
       "name": "bean-blocking",
@@ -46,9 +57,9 @@
       "@type": "bootstrap:Skill",
       "name": "bean-coordination",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/61fd24e7c40d7adcc8bc3e792ec1604fdec6ab750922102aeeedd3a677591691",
-        "bytes": 44528,
-        "sha256": "61fd24e7c40d7adcc8bc3e792ec1604fdec6ab750922102aeeedd3a677591691"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/04e6f253c7ae1be7067d26a7aa229d39057db5789ebfa61b58137ba8579d9006",
+        "bytes": 48314,
+        "sha256": "04e6f253c7ae1be7067d26a7aa229d39057db5789ebfa61b58137ba8579d9006"
       },
       "title": "Bean Coordination"
     },
@@ -62,6 +73,17 @@
         "sha256": "d86c3b4a9813c66a143831af28fd673a232b8014fedff33ef60bcf760ed15d95"
       },
       "title": "/before-after-preview — show the reviewer the change, not a description of it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-archaeology",
+      "@type": "bootstrap:Skill",
+      "name": "branch-archaeology",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5b3030630729a5cec4f434cf977a9cb86d40b1133180db07a955231863c2bf0f",
+        "bytes": 9739,
+        "sha256": "5b3030630729a5cec4f434cf977a9cb86d40b1133180db07a955231863c2bf0f"
+      },
+      "title": "Branch archaeology: what each branch holds that main does not"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ci-health",
@@ -156,9 +178,9 @@
       "@type": "bootstrap:Skill",
       "name": "feature-staging",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f12ba95761e171a77ce49b193ba3ebcb748c50d8efc418c2866a7058f24dd9e4",
-        "bytes": 15774,
-        "sha256": "f12ba95761e171a77ce49b193ba3ebcb748c50d8efc418c2866a7058f24dd9e4"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c46edcaa46e35660082c611e5fff4531ad756e7a5d04e8b74852c128713b0cfb",
+        "bytes": 15994,
+        "sha256": "c46edcaa46e35660082c611e5fff4531ad756e7a5d04e8b74852c128713b0cfb"
       },
       "title": "Feature-branch staging"
     },
@@ -211,9 +233,9 @@
       "@type": "bootstrap:Skill",
       "name": "handover-report",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7254b6dcee5ddae169fc173c1065322cf89fd6589f0ef8592518d583badafb82",
-        "bytes": 6753,
-        "sha256": "7254b6dcee5ddae169fc173c1065322cf89fd6589f0ef8592518d583badafb82"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a35a5ae644196f191b7e3bef6e2a9d7f695d1b4a9c06f7d64b3db04f555afb42",
+        "bytes": 6762,
+        "sha256": "a35a5ae644196f191b7e3bef6e2a9d7f695d1b4a9c06f7d64b3db04f555afb42"
       },
       "title": "Handover report"
     },
@@ -277,9 +299,9 @@
       "@type": "bootstrap:Skill",
       "name": "merge-conflict-patterns",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/217bfbb734fbc766b616dd3316422832ff3fa3d2f5b1aed1b3efa9228cc3ac4e",
-        "bytes": 33929,
-        "sha256": "217bfbb734fbc766b616dd3316422832ff3fa3d2f5b1aed1b3efa9228cc3ac4e"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/09388ffa1ff80656a75f8f521be204ce89e54c20400193edc051a2df06c81ff5",
+        "bytes": 38750,
+        "sha256": "09388ffa1ff80656a75f8f521be204ce89e54c20400193edc051a2df06c81ff5"
       },
       "title": "Merge-conflict patterns — what a merge may resolve on its own"
     },
@@ -288,9 +310,9 @@
       "@type": "bootstrap:Skill",
       "name": "merge-queue",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7af73f1d535ebb8a5fff7df1881057b1e79ed749c7c37f85cc97b2225b15e230",
-        "bytes": 33394,
-        "sha256": "7af73f1d535ebb8a5fff7df1881057b1e79ed749c7c37f85cc97b2225b15e230"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3ff70c1ce68076538edab504c06d7e1e8b2ee32b355e9327598f31ed876e428c",
+        "bytes": 47164,
+        "sha256": "3ff70c1ce68076538edab504c06d7e1e8b2ee32b355e9327598f31ed876e428c"
       },
       "title": "Merge queue — what lands next, and as what"
     },
@@ -475,9 +497,9 @@
       "@type": "bootstrap:Skill",
       "name": "session-intent",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/23b708f30210bd4e21757423a61a652addc1762b8efd3b7f78b2c6d853b95cc4",
-        "bytes": 12020,
-        "sha256": "23b708f30210bd4e21757423a61a652addc1762b8efd3b7f78b2c6d853b95cc4"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e80d6250ded4d5333eafaabe4f7ca523639981b8006bbf91da42c3e4aaf55792",
+        "bytes": 12299,
+        "sha256": "e80d6250ded4d5333eafaabe4f7ca523639981b8006bbf91da42c3e4aaf55792"
       },
       "title": "/session-intent — durable session intent + results"
     },
@@ -486,9 +508,9 @@
       "@type": "bootstrap:Skill",
       "name": "staging-review",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dcfb0407d0d9f0a22827680993f491c469841503effe8a7c46dc8945d256fae0",
-        "bytes": 32598,
-        "sha256": "dcfb0407d0d9f0a22827680993f491c469841503effe8a7c46dc8945d256fae0"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fcbba40f65ae181a51921066720da229e5255361a4d2aee28adc91ab2f39a6e5",
+        "bytes": 33125,
+        "sha256": "fcbba40f65ae181a51921066720da229e5255361a4d2aee28adc91ab2f39a6e5"
       },
       "title": "Staging review — before/after comparison"
     },
@@ -541,9 +563,9 @@
       "@type": "bootstrap:Skill",
       "name": "todo-manager",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/25399c6fddd9a7081fb819c4dd67723ae3fb0881b86c44ee51529ca74c816ea2",
-        "bytes": 30573,
-        "sha256": "25399c6fddd9a7081fb819c4dd67723ae3fb0881b86c44ee51529ca74c816ea2"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2babc0b06e04a8059bb10b2082b7bd2b3af5e82f5b7d08b37218a359c4693c3b",
+        "bytes": 34387,
+        "sha256": "2babc0b06e04a8059bb10b2082b7bd2b3af5e82f5b7d08b37218a359c4693c3b"
       },
       "title": "Session Task Manager (`beans`)"
     },
@@ -612,6 +634,17 @@
         "sha256": "7ce95033fc35b801a2299ad149883a5769aee3630fa4b44ea63454a4bf7331a9"
       },
       "title": "Where a proposal goes — the issue, not the documentation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/work-plan-restructure",
+      "@type": "bootstrap:Skill",
+      "name": "work-plan-restructure",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/144607707c4005a7540ac4af7e4f100b2f816bd23d8256c83db5aa5b2a947cd9",
+        "bytes": 9233,
+        "sha256": "144607707c4005a7540ac4af7e4f100b2f816bd23d8256c83db5aa5b2a947cd9"
+      },
+      "title": "Restructuring a work plan — a reviewed plan, not a bulk edit"
     }
   ],
   "hasSubgraph": [

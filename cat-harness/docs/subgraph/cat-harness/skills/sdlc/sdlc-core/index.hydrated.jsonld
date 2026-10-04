@@ -9,9 +9,11 @@
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/activity-log",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adjudication",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/agent-handoff",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-blocking",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-coordination",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/before-after-preview",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-archaeology",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/coordinate",
@@ -61,7 +63,8 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upstream-version-adoption",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visual-diff",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/watch",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/where-a-proposal-goes"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/where-a-proposal-goes",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/work-plan-restructure"
       ],
       "description": "Software-delivery practice for agents and people working in the harness: the work plan (beans, claiming, blocking, briefs, turn reports), issues and PRs, continual progress, review and merge (prepare-merge, staging review, visual diff, rendered verification), CI health and platform gates, release and deployment, and coordinating sessions and swarms. Moved out of folio-core into the sdlc topic (bean 9umr, owner ruling 2026-09-30); crdm and spec-kit are its siblings in the same topic.",
       "hasManifest": true,
@@ -108,6 +111,25 @@
       "title": "Adjudication — judgement, when the mechanism ran out of facts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/agent-handoff",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Governs handing ONE task to an agent in another environment — a local agent with network the cloud session lacks, a sibling on a different machine, anything that cannot read the coordinator's context and that a person may relay to. States who writes which bean, where the receiver reports, what the person pastes (one sentence: bean, branch, repository) and the brief the bean opens with (second person, to the executor), what the receiver checks before acting, who closes, who may grant an exception, and how to recognise and answer the five ways an executor fails. Use when writing a bean for another agent to execute, and as the receiver before acting on one. Triggers on: hand off, handoff, local agent, agy, mac agent, needs network, executor failed, agent went silent, re-hand, \"give me a branch and bean for them\", relay, the other agent.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 300,
+      "instructionsPath": "skills/sdlc/sdlc-core/agent-handoff.md",
+      "name": "agent-handoff",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4ceedc36053ea3cc71cbfd15a288b2f3e151fae5c0df6ee15366351a95899cb0",
+        "bytes": 16243,
+        "sha256": "4ceedc36053ea3cc71cbfd15a288b2f3e151fae5c0df6ee15366351a95899cb0"
+      },
+      "title": "One task, two agents, one human between them"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-blocking",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
@@ -135,13 +157,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 821,
+      "instructionLines": 887,
       "instructionsPath": "skills/sdlc/sdlc-core/bean-coordination.md",
       "name": "bean-coordination",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/61fd24e7c40d7adcc8bc3e792ec1604fdec6ab750922102aeeedd3a677591691",
-        "bytes": 44528,
-        "sha256": "61fd24e7c40d7adcc8bc3e792ec1604fdec6ab750922102aeeedd3a677591691"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/04e6f253c7ae1be7067d26a7aa229d39057db5789ebfa61b58137ba8579d9006",
+        "bytes": 48314,
+        "sha256": "04e6f253c7ae1be7067d26a7aa229d39057db5789ebfa61b58137ba8579d9006"
       },
       "title": "Bean Coordination"
     },
@@ -163,6 +185,25 @@
         "sha256": "d86c3b4a9813c66a143831af28fd673a232b8014fedff33ef60bcf760ed15d95"
       },
       "title": "/before-after-preview — show the reviewer the change, not a description of it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-archaeology",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Classify every remote branch against the default branch (merged, landed by squash or cherry-pick, partially landed, unlanded, undetermined) by commit ancestry, patch-id and merge-tree, not by subject line. Report only, never delete. A branch touching content or mathematics is a salvage-review item and never a delete candidate. Covers the treeless fetch that makes thousands of branches cheap, caching by tip sha, and the report's shape. Read before answering \"which branches can go?\" or \"what work never landed?\".",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 184,
+      "instructionsPath": "skills/sdlc/sdlc-core/branch-archaeology.md",
+      "name": "branch-archaeology",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5b3030630729a5cec4f434cf977a9cb86d40b1133180db07a955231863c2bf0f",
+        "bytes": 9739,
+        "sha256": "5b3030630729a5cec4f434cf977a9cb86d40b1133180db07a955231863c2bf0f"
+      },
+      "title": "Branch archaeology: what each branch holds that main does not"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ci-health",
@@ -324,13 +365,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 310,
+      "instructionLines": 312,
       "instructionsPath": "skills/sdlc/sdlc-core/feature-staging.md",
       "name": "feature-staging",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f12ba95761e171a77ce49b193ba3ebcb748c50d8efc418c2866a7058f24dd9e4",
-        "bytes": 15774,
-        "sha256": "f12ba95761e171a77ce49b193ba3ebcb748c50d8efc418c2866a7058f24dd9e4"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c46edcaa46e35660082c611e5fff4531ad756e7a5d04e8b74852c128713b0cfb",
+        "bytes": 15994,
+        "sha256": "c46edcaa46e35660082c611e5fff4531ad756e7a5d04e8b74852c128713b0cfb"
       },
       "title": "Feature-branch staging"
     },
@@ -423,9 +464,9 @@
       "instructionsPath": "skills/sdlc/sdlc-core/handover-report.md",
       "name": "handover-report",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7254b6dcee5ddae169fc173c1065322cf89fd6589f0ef8592518d583badafb82",
-        "bytes": 6753,
-        "sha256": "7254b6dcee5ddae169fc173c1065322cf89fd6589f0ef8592518d583badafb82"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a35a5ae644196f191b7e3bef6e2a9d7f695d1b4a9c06f7d64b3db04f555afb42",
+        "bytes": 6762,
+        "sha256": "a35a5ae644196f191b7e3bef6e2a9d7f695d1b4a9c06f7d64b3db04f555afb42"
       },
       "title": "Handover report"
     },
@@ -533,13 +574,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 647,
+      "instructionLines": 726,
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
       "name": "merge-conflict-patterns",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/217bfbb734fbc766b616dd3316422832ff3fa3d2f5b1aed1b3efa9228cc3ac4e",
-        "bytes": 33929,
-        "sha256": "217bfbb734fbc766b616dd3316422832ff3fa3d2f5b1aed1b3efa9228cc3ac4e"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/09388ffa1ff80656a75f8f521be204ce89e54c20400193edc051a2df06c81ff5",
+        "bytes": 38750,
+        "sha256": "09388ffa1ff80656a75f8f521be204ce89e54c20400193edc051a2df06c81ff5"
       },
       "title": "Merge-conflict patterns — what a merge may resolve on its own"
     },
@@ -547,18 +588,18 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/merge-queue",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Use for \"merge the ready PRs\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size.",
+      "description": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Every merge goes through `merge:guard`. Use for \"merge the ready PRs\", \"land this PR\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 638,
+      "instructionLines": 878,
       "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
       "name": "merge-queue",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7af73f1d535ebb8a5fff7df1881057b1e79ed749c7c37f85cc97b2225b15e230",
-        "bytes": 33394,
-        "sha256": "7af73f1d535ebb8a5fff7df1881057b1e79ed749c7c37f85cc97b2225b15e230"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3ff70c1ce68076538edab504c06d7e1e8b2ee32b355e9327598f31ed876e428c",
+        "bytes": 47164,
+        "sha256": "3ff70c1ce68076538edab504c06d7e1e8b2ee32b355e9327598f31ed876e428c"
       },
       "title": "Merge queue — what lands next, and as what"
     },
@@ -874,13 +915,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 269,
+      "instructionLines": 273,
       "instructionsPath": "skills/sdlc/sdlc-core/session-intent.md",
       "name": "session-intent",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/23b708f30210bd4e21757423a61a652addc1762b8efd3b7f78b2c6d853b95cc4",
-        "bytes": 12020,
-        "sha256": "23b708f30210bd4e21757423a61a652addc1762b8efd3b7f78b2c6d853b95cc4"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e80d6250ded4d5333eafaabe4f7ca523639981b8006bbf91da42c3e4aaf55792",
+        "bytes": 12299,
+        "sha256": "e80d6250ded4d5333eafaabe4f7ca523639981b8006bbf91da42c3e4aaf55792"
       },
       "title": "/session-intent — durable session intent + results"
     },
@@ -893,13 +934,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 656,
+      "instructionLines": 663,
       "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
       "name": "staging-review",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dcfb0407d0d9f0a22827680993f491c469841503effe8a7c46dc8945d256fae0",
-        "bytes": 32598,
-        "sha256": "dcfb0407d0d9f0a22827680993f491c469841503effe8a7c46dc8945d256fae0"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fcbba40f65ae181a51921066720da229e5255361a4d2aee28adc91ab2f39a6e5",
+        "bytes": 33125,
+        "sha256": "fcbba40f65ae181a51921066720da229e5255361a4d2aee28adc91ab2f39a6e5"
       },
       "title": "Staging review — before/after comparison"
     },
@@ -987,13 +1028,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 593,
+      "instructionLines": 661,
       "instructionsPath": "skills/sdlc/sdlc-core/todo-manager.md",
       "name": "todo-manager",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/25399c6fddd9a7081fb819c4dd67723ae3fb0881b86c44ee51529ca74c816ea2",
-        "bytes": 30573,
-        "sha256": "25399c6fddd9a7081fb819c4dd67723ae3fb0881b86c44ee51529ca74c816ea2"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2babc0b06e04a8059bb10b2082b7bd2b3af5e82f5b7d08b37218a359c4693c3b",
+        "bytes": 34387,
+        "sha256": "2babc0b06e04a8059bb10b2082b7bd2b3af5e82f5b7d08b37218a359c4693c3b"
       },
       "title": "Session Task Manager (`beans`)"
     },
@@ -1109,6 +1150,25 @@
         "sha256": "7ce95033fc35b801a2299ad149883a5769aee3630fa4b44ea63454a4bf7331a9"
       },
       "title": "Where a proposal goes — the issue, not the documentation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/work-plan-restructure",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Reorganise a work plan that has outgrown one-bean-at-a-time repair — session logs typed as epics, duplicate families, generated template beans, stale claims, unparented work — through a reviewed PLAN rather than in bulk. The taxonomy is stated as data, a dry-run plan lists one row per bean (action, new parent, new status, evidence, note) with its before-state so the plan is its own inverse, the owner approves it by class or by row, and the apply is batched and reversible. Scrap, never delete. Read before changing the parent, type or status of more than a handful of beans at once.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 176,
+      "instructionsPath": "skills/sdlc/sdlc-core/work-plan-restructure.md",
+      "name": "work-plan-restructure",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/144607707c4005a7540ac4af7e4f100b2f816bd23d8256c83db5aa5b2a947cd9",
+        "bytes": 9233,
+        "sha256": "144607707c4005a7540ac4af7e4f100b2f816bd23d8256c83db5aa5b2a947cd9"
+      },
+      "title": "Restructuring a work plan — a reviewed plan, not a bulk edit"
     }
   ],
   "hasSubgraph": [
