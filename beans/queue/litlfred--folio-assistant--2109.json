@@ -1,0 +1,19 @@
+{
+  "$schema": "folio-merge-queue-entry/v1",
+  "repository": "litlfred/folio-assistant",
+  "pr": 2109,
+  "placement": {
+    "kind": "computed",
+    "decision": "cat-harness/processes/sdlc/decisions/merge-priority.dmn#Decision_MergePriority",
+    "rule": "Rule_NotReady",
+    "class": "hand-back",
+    "rank": 92
+  },
+  "reason": "ACK: the salvage of #1964 (closed), under bean veiu: the shared IPS/IPA fixture plus 4 test rewrites. The exclusions baseline goes from 7 to 1; the last entry, the l3-fhir-pipeline.bpmn import, needs the owner's OK. Couples with #2082 (lbz8). Needs the owner's approval.",
+  "decidedBy": "https://claude.ai/code/session_019gRX6w8kzAX6wpHbgdyu3s",
+  "decidedAt": "2026-10-04T15:45:00Z",
+  "status": "active",
+  "beans": [
+    "folio-assistant-veiu"
+  ]
+}
