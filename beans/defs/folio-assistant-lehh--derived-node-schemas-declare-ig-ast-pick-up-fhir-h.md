@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-04T13:52:13Z
-updated_at: 2026-10-04T16:20:19Z
+updated_at: 2026-10-04T17:21:55Z
 parent: folio-assistant-nama
 ---
 
@@ -31,3 +31,7 @@ Owner, 2026-10-04: *"bean - was an AST schema somewhere. pickup. add schemas for
 **Owner ruling: branch-only graphs are declared with a new keying, `family`** (option 1 of 3; rejected: register the kinds only, with no directories; or give special-branches rows a graph kind). A directory declares `storage: { branchPrefix, keyedBy: \"family\", keyFrom }` and a mount path, following the fsh-guts precedent (declared on a branch, present after `state:mount`), so `check:declared-dirs` can accept it as 'on a branch, mounted on demand' rather than as a dh4f absence. fhir-ast and lake-cache take `family`; gh-pages is one branch. Edges then resolve, and ig-ast's node schema is the existing `ig-ast.ts`.
 
 **A measurement for rva2, not acted on:** both route-keyed seeds (uml-overview, ig-docs) record `seededFrom` and no `source.ref`, so `state-drift` reads them as unknown and never measures them. Measured by hand 2026-10-04: ig-docs is in sync with main for all three IGs, apart from the excluded READMEs. When rva2 moves state-drift onto declarations, a route seed's source is main by construction (one writer regenerates each route from main).
+
+## 2026-10-04: ig-ast declared, not centrally
+
+The `ig-ast` kind is a node in `fhir-harness/kinds/` (dmx1), never a central entry. Per the owner's rulings it is ingested into the CONSUMING folio, which may read it remotely or materialise it on a local branch. So family storage gained an optional `repository` (absent = materialised here), and smart-trust declares `smart-trust-ast` on `cat/fhir-harness/fhir-ast/` at litlfred/smart-trust, whose one member today is `smart.who.int.trust`. lake-cache follows the same pattern; the `.lake/` mount path is still open (rva2).
