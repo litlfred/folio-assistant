@@ -182,6 +182,7 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "check:source-licence": READ_ONLY,
   "check:stale-field-advice": READ_ONLY,
   "check:stale-paths": READ_ONLY,
+  "check:state-on-main": READ_ONLY,
   "check:structure-accessor": READ_ONLY,
   "check:subgraph-coverage": READ_ONLY,
   "check:subgraphs": READ_ONLY,
