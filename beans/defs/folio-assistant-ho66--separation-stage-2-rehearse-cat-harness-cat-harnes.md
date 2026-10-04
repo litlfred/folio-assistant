@@ -4,8 +4,10 @@ title: 'Separation stage 2: rehearse cat-harness + cat-harness-tools standalone 
 status: in-progress
 type: task
 priority: normal
+tags:
+    - mvp
 created_at: 2026-10-01T06:58:02Z
-updated_at: 2026-10-03T09:48:05Z
+updated_at: 2026-10-04T09:56:45Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-vj2p

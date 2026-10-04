@@ -906,7 +906,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, docs:auto:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read \"the only place those five are read against the tree as checked out\", because at the time all six lived in one job behind `bun test`, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean `ymsu`). Task_RepositoryGates is now a separate job that runs all six and never runs `bun test`, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (`bun run skill:register`) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean `v625`'s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on `kg:detangle:check` and the cause was `kg-detangle.ts` counting 1214 files of a gitignored `node_modules/` as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of `bun test` either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans `v625`, `fjwi`."
+          "@value": "Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, auto:docs:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read \"the only place those five are read against the tree as checked out\", because at the time all six lived in one job behind `bun test`, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean `ymsu`). Task_RepositoryGates is now a separate job that runs all six and never runs `bun test`, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (`bun run skill:register`) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean `v625`'s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on `kg:detangle:check` and the cause was `kg-detangle.ts` counting 1214 files of a gitignored `node_modules/` as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of `bun test` either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans `v625`, `fjwi`."
         }
       ],
       "skos:notation": "Task_SkillChain",
@@ -3111,86 +3111,6 @@
       ],
       "skos:notation": "Task_WriteStatus",
       "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_WriteStatus",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_igastdeltareview.task_diff",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Diff base → head and render the delta pages [ig-ast-delta]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "`ig-ast.ts diff <base> <head> --plan plan.json --site <site>/ast-delta/`: resources added, removed, changed (with an element-level differential) and version-changed; edges added and removed; the plan's decision. Every page opens with the provisional mark and is wrapped in raw so narrative Liquid is not executed."
-        }
-      ],
-      "skos:notation": "Task_Diff",
-      "dcterms:source": "cat-harness/processes/content/ig-ast-delta-review.bpmn#Task_Diff",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_igastdeltareview.task_filecoupling",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Note the missed coupling on the bean [todo-manager]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Append to bean `a9tx` (W8): the resource key, the differential path, and why it is unexplained. Check before creating: beans create is not idempotent. A note, not a new bean, unless the owner asks for one."
-        }
-      ],
-      "skos:notation": "Task_FileCoupling",
-      "dcterms:source": "cat-harness/processes/content/ig-ast-delta-review.bpmn#Task_FileCoupling",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_igastdeltareview.task_review",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Read the rendered delta [ig-ast-delta]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Start at the delta index; open each changed resource's page. Check `builtAt` before judging: a resource carried from the base was not rebuilt, so a difference there is the change itself or a missed coupling, never noise. The differential is structural: a reordered repeating element shows at every index."
-        }
-      ],
-      "skos:notation": "Task_Review",
-      "dcterms:source": "cat-harness/processes/content/ig-ast-delta-review.bpmn#Task_Review",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_igastdeltareview.task_validity",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Check the base AST against the IG's inputs [ig-ast-delta]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "`ig-ast.ts validity <base> --ig <root>`: folio-assistant-core's compiledValidity on the manifest's inputs, with the input digest recomputed by the same algorithm as the Java writer. Exit 0 valid, 1 stale-inputs (names which input), 2 cannot-tell. Run against the BASE revision's checkout."
-        }
-      ],
-      "skos:notation": "Task_Validity",
-      "dcterms:source": "cat-harness/processes/content/ig-ast-delta-review.bpmn#Task_Validity",
       "skos:note": "candidate"
     },
     {

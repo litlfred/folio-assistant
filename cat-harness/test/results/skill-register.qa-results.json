@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/skill-register.ts",
-    "script_hash": "f6f17328ae9a"
+    "script_hash": "a778c37be91d"
   },
   "subject": {
     "kind": "corpus",
@@ -37,10 +37,10 @@
           "current": true
         },
         {
-          "verify": "docs:auto:check",
+          "verify": "auto:docs:check",
           "because": "the generated docs index",
           "ran": true,
-          "current": true
+          "current": false
         },
         {
           "verify": "lsi:skills:check",

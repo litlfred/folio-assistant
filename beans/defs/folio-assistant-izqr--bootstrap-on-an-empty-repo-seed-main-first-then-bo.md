@@ -4,8 +4,10 @@ title: 'BOOTSTRAP ON AN EMPTY REPO: seed main first, then bootstrap onto it'
 status: in-progress
 type: task
 priority: normal
+tags:
+    - mvp
 created_at: 2026-09-22T22:56:13Z
-updated_at: 2026-09-30T14:56:03Z
+updated_at: 2026-10-04T09:56:46Z
 parent: folio-assistant-vke6
 ---
 

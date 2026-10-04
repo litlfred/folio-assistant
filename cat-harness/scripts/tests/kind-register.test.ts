@@ -6,10 +6,10 @@
  * ## What this pins, against what it deliberately does not
  *
  * The command's value is that it names **the kind**, where every underlying
- * check names a generated file. Measured on #2022: adding `docs-auto`, six
+ * check names a generated file. Measured on #2022: adding `auto-docs`, six
  * hand-picked `check:*` commands passed while `bun run gates` found 5 failures
  * across 217 and `bun test` found two more — and not one of those failures said
- * "docs-auto". So the assertions below are about the KIND appearing in the
+ * "auto-docs". So the assertions below are about the KIND appearing in the
  * finding, not about any artefact's content.
  *
  * It does not assert a hue rule, because measuring the corpus removed one: 11
