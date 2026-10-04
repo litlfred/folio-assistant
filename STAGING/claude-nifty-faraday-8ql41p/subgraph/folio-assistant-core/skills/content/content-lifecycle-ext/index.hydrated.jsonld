@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/content-lifecycle-ext/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle-ext",
+      "@type": "cat-harness:SkillPackage",
+      "hasManifest": true,
+      "name": "content-lifecycle-ext",
+      "path": "../folio-assistant-core/skills/content/content-lifecycle-ext"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/quality-control",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle-ext",
+      "instructionLines": 70,
+      "instructionsPath": "../folio-assistant-core/skills/content/content-lifecycle-ext/quality-control.md",
+      "name": "quality-control",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c083976b7b6f9ee100f6b1eda32e01745aaf1698d76ddbf7dcbe0316122f97fa",
+        "bytes": 3035,
+        "sha256": "c083976b7b6f9ee100f6b1eda32e01745aaf1698d76ddbf7dcbe0316122f97fa"
+      },
+      "title": "quality-control"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/content/content-lifecycle-ext",
+  "path": "skills/content/content-lifecycle-ext/"
+}
