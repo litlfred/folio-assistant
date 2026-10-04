@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 850,
+      "count": 852,
       "unit": "beans"
     }
   },
@@ -5871,16 +5871,16 @@
     {
       "id": "folio-assistant-gz47",
       "title": "Audit every declared subgraph for literal paths in tests and consumers: check:declared-paths sees only cat-harness's own declarations and code",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [
         "folio-assistant-z9hh"
       ],
       "createdAt": "2026-10-03T08:51:59Z",
-      "updatedAt": "2026-10-03T08:51:59Z",
+      "updatedAt": "2026-10-04T13:34:36Z",
       "preview": "Owner, 2026-10-03: \"audit other declared sub-graphs. may have same issue with tests or other consumers\". The trigger was fsh-guts (9c7h): five tests and one writer named `fsh-guts/` by path, and #1945 and #1948 moved them onto the declaration (`fshGutsDirectory`). The owner's 2026-10-03 content-source ruling makes the class general: ANY declared subgraph's source may move (directory → branch → gra",
       "file": "beans/defs/folio-assistant-gz47--audit-every-declared-subgraph-for-literal-paths-in.md"
     },
@@ -6953,6 +6953,20 @@
       "updatedAt": "2026-10-03T10:06:52Z",
       "preview": "Owner rulings 2026-10-03 (verbatim): \"todos = subgraph node + todo content nodes\" -> option 1, \"and make pattern for declared repo branches (and declared dir subgraphs)\". Later the same day: \"It's the same pattern. One of them is mounting the directory while one of them is mounting a branch. Another mount type could come in the future. A sub graph declares where it's getting its content.. It could",
       "file": "beans/defs/folio-assistant-l4ay--subgraph-source-node-pattern-a-declared-subgraph-d.md"
+    },
+    {
+      "id": "folio-assistant-l4c5",
+      "title": "GLASS CARDS (#1900, PR #1918): open the visualiser, corner resize, confirmed close naming where the card goes back to",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T14:13:18Z",
+      "updatedAt": "2026-10-04T14:13:47Z",
+      "preview": "Finish PR #1918 for issue #1900: library cards on the folio glass open their declared view (else the entry page), resize by a corner grip (keys + move-bar buttons as the non-drag path), and x asks first, naming where the card goes back to (library / Todos / the landing sticky's page) via the page's one confirm dialog shared with fsh-guts. Caption uses the index title.\n\n## Done when\n- PR #1918 gree",
+      "file": "beans/defs/folio-assistant-l4c5--glass-cards-1900-pr-1918-open-the-visualiser-corne.md"
     },
     {
       "id": "folio-assistant-l9d5",
@@ -9689,6 +9703,20 @@
       "file": "beans/defs/folio-assistant-tcd6--staging-cleanup-is-broken-the-cleanup-jobs-checkou.md"
     },
     {
+      "id": "folio-assistant-tdi0",
+      "title": "latex-known-macros.json lacks \\phantom and \\lessgtr: preflight false positives on a real paper",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-d308",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T18:57:25Z",
+      "updatedAt": "2026-10-04T19:02:51Z",
+      "preview": "Found 2026-10-04 running paper-feature-build on litlfred/qou (PR #2118). The LaTeX preflight that build.ts runs reports two undefined-macro findings, and both are standard commands:\n- \\phantom is LaTeX core (first use qou chapters/mass-theory.tex:7091);\n- \\lessgtr is amssymb, which the paper print template loads (chapters/knots-particles-confinement.tex:179).\ncat-harness/content/pipeline/latex-kno",
+      "file": "beans/defs/folio-assistant-tdi0--latex-known-macrosjson-lacks-phantom-and-lessgtr-p.md"
+    },
+    {
       "id": "folio-assistant-tfo1",
       "title": "INGESTION: a skill that takes 3 avatar/theme layouts, checks them, and says why it refused",
       "status": "todo",
@@ -12162,14 +12190,14 @@
         "file": "beans/defs/folio-assistant-p5wm--goal-2-lhs-navbar-working-with-instantiated-harnes.md",
         "status": "in-progress",
         "epics": 6,
-        "total": 122,
+        "total": 123,
         "closed": 41,
-        "open": 81,
-        "inProgress": 23,
+        "open": 82,
+        "inProgress": 24,
         "todo": 58,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.3360655737704918
+        "share": 0.3333333333333333
       },
       {
         "id": "folio-assistant-rwmf",
@@ -12192,14 +12220,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 219,
-        "closed": 84,
+        "total": 220,
+        "closed": 85,
         "open": 135,
-        "inProgress": 76,
-        "todo": 58,
+        "inProgress": 75,
+        "todo": 59,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3835616438356164
+        "share": 0.38636363636363635
       },
       {
         "id": "folio-assistant-yg29",
@@ -12218,8 +12246,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 503,
-    "coveredOpen": 498,
+    "openTotal": 504,
+    "coveredOpen": 499,
     "duplicateIds": 1
   }
 }
