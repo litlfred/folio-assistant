@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-04T13:11:35Z
-updated_at: 2026-10-04T13:11:58Z
+updated_at: 2026-10-04T13:13:49Z
 parent: folio-assistant-1xhc
 ---
 
@@ -83,3 +83,33 @@ whether anything fails when a caller stops distinguishing.
 [x] a test asserts the three verdicts no longer share one signature
 [ ] the five other could-not-determine tools above: does anything fail when a
     caller flattens them? NOT MEASURED — handed on, not folded in
+
+
+## Second instance, measured 2026-10-04 — `state:mount`
+
+Found on PR #2074, on the line DIRECTLY ABOVE the one this bean fixes, added by
+the PR that fixed the mount-before-merge defect:
+
+    if (mount.status !== 0) abort("state:mount against the merged declarations failed");
+
+`state-mount.ts:322` is
+
+    process.exit(r.state === "failed" || r.state === "partial" ? 1 : 0);
+
+so `partial` and `failed` share exit 1, and the abort records a partial mount as
+a failure. The tool's own report text contradicts it in as many words — "a
+partial mount is not a rollback, and nothing was discarded" — and lists what DID
+mount so a reader does not conclude the whole mount is gone. The caller throws
+that away.
+
+The abort is right (do not push a tree whose graphs may not be mounted); the
+recorded reason is wrong, which is this bean's shape exactly. `state:mount`
+already takes `--json` and returns `r.state`, so the caller can name the state
+without parsing prose.
+
+Reported on #2074 rather than fixed here: it is that PR's own line and its
+author's call. Not folded into #2086, which does not touch it.
+
+TWO instances found in TWO modules, in one sitting, on adjacent lines — so the
+unmeasured hand-off above is not hypothetical, and the next step is to look
+rather than to reason about it.
