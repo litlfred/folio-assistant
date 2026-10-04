@@ -302,7 +302,19 @@ export const LibraryIndexSchema = z
     queues: z.array(
       z.object({ instance: z.string(), dir: z.string(), total: Count, ingested: Count, uningested: Count }).strict(),
     ),
-    refScan: z.object({ filesRead: Count, unreadable: StringList }).strict().optional(),
+    // NO `filesRead` here, deliberately — bean `65oe`. It counted the files the
+    // scan read ON DISK, so it was a property of the checkout rather than of the
+    // library, and committing it made this artefact disagree with itself across
+    // environments: CI wrote ~2555, a cloud container ~2663, and each side saw
+    // the other as stale for ever. `library:viz` is one of the two inputs
+    // `regen` names as UNGATED, so nothing ever went red and the churn was
+    // silent. The count still exists where a fact about a run belongs — the
+    // run's own console output.
+    //
+    // The PRESENCE of refScan is still the signal that the scan ran at all
+    // ("nobody looked" is a third answer, distinct from "nothing referenced
+    // it"), and `unreadable` is still what makes a zero provisional.
+    refScan: z.object({ unreadable: StringList }).strict().optional(),
   })
   .strict();
 

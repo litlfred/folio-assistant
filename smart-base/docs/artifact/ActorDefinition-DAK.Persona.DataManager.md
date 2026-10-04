@@ -37,3 +37,6 @@ A professional who manages, analyses, and disseminates health data to support ev
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
+
+<footer id="ig-footer" data-prev="ActorDefinition-DAK.Persona.CommunityHealthWorker.html" data-next="ActorDefinition-DAK.Persona.HealthcareProvider.html" class="st-ig"></footer>
+<script src="{{ '/smart-base/assets/ig-footer.js' | relative_url }}" defer></script>

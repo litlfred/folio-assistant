@@ -37,3 +37,6 @@ This library defines concepts for ages and age ranges used throughout the Immuni
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="ConceptMap-IMMZ.Z.ConceptMap.html" data-next="Library-IMMZCommon.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

@@ -55,7 +55,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Review task](review-task.html) | 6 | — |
 | [Voice overlay review](voice-review.html) | 6 | — |
 | [A sub-graph wants to leave](graph-detanglement.html) | 8 | — |
-| [A knowledge graph leaves for its own repositories](kg-separation.html) | 17 | — |
+| [A knowledge graph leaves for its own repositories](kg-separation.html) | 18 | — |
 | [KG to public portal](kg-to-portal.html) | 10 | — |
 | [Mount a declared subgraph](mount-subgraph.html) | 4 | — |
 | [Code node review](review-code.html) | 4 | — |

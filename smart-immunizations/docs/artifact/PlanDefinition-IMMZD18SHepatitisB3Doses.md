@@ -37,3 +37,6 @@ IMMZ.D18.S.Hepatitis B.3-dose schedule 3-dose schedule (birth dose + 2 primary s
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="PlanDefinition-IMMZD18SHepatitisALiveAttenuatedHAV1Dose.html" data-next="PlanDefinition-IMMZD18SHepatitisB4Doses.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
