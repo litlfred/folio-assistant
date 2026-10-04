@@ -13,6 +13,7 @@ Part of [C@T Harness](../../../../../README.md) 0.1.0, declared as `index-tools`
 | [`index.html`](index.html) | a file |  |
 | [`core-tools/`](core-tools/) | _nothing declares what this holds_ | |
 | [`fhir-ig-tools/`](fhir-ig-tools/) | _nothing declares what this holds_ | |
+| [`sci-tools/`](sci-tools/) | _nothing declares what this holds_ | |
 | [`smart-base-tools/`](smart-base-tools/) | _nothing declares what this holds_ | |
 | [`tools/`](tools/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->
