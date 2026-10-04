@@ -65,11 +65,12 @@ const REPO = repoRootFor(ROOT);
  * directory's graph (`beans.json`'s `defs`), and they are what the README's
  * table names; a `subgraph: true` entry is promoted to an instance directory
  * of its own (`skills.json`'s `voices`) and describes itself under its own
- * heading. The two partition, so a promoted directory's row keeps the count.
+ * heading. The two partition, so a promoted directory's row borrows nothing.
  *
  * Only a single-segment `path` names a row — `defs/archive` is a directory
  * inside a row, not one. A missing, unparseable or description-less
- * declaration supplies nothing and the row falls back to the file count:
+ * declaration supplies nothing and the row says nothing declares it (no
+ * count since bean `ba9e`):
  * absent stays absent rather than being invented. An unparseable file is
  * `check:harness-dirs`'s finding, not this one's.
  */
@@ -239,6 +240,12 @@ if (import.meta.main) {
   const stale = staleFiles.length;
   const result = qaResult(p);
   if (!check) writeQaResult(ROOT, "subgraph-readmes", result);
+  // PRINTED, never recorded (bean `ba9e`). A finding that depends on the
+  // worktree would make the recorded result depend on it too — the defect
+  // counting the committed tree exists to remove.
+  for (const u of p.findings["untracked-not-counted"]) {
+    console.warn(`  ! untracked, so not counted or listed in ${u.directory}'s README until staged: ${u.path}`);
+  }
   const f = p.findings;
   console.log(
     `${p.writes.size} directory README(s); ${check ? `${stale} stale` : `${wrote} written`}. ` +
