@@ -239,6 +239,17 @@ export interface ComputationWitness {
    * (e.g. ``"docs/audits/2026-05-06-path-b-evacuation.md"``).
    */
   auditOnly?: string;
+  /**
+   * The producer, its content hash, and the commit that last changed it —
+   * written by ``WitnessBuilder`` on every witness and missing from this
+   * interface until 2026-10-04 (`scripts/witness-audit.ts` recorded the
+   * drift). ``scriptHash`` is what staleness keys on; ``scriptCommitSha`` is
+   * provenance only, because a rebase-merge rewrites it. The runtime schema is
+   * ``schemas/computation-witness.ts``.
+   */
+  scriptFile?: string;
+  scriptHash?: string;
+  scriptCommitSha?: string;
 }
 
 /**

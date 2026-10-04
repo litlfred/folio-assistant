@@ -388,6 +388,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="computation-witness"] {
+  /* a clipboard with a tick — a computation's record of what it checked, and that it held */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 4h6v2H9zM7 5H5v15h14V5h-2M8.5 13l2.5 2.5 4.5-5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="binary-release"] {
   /* a sealed carton with its strap — what shipped under a version, recorded by digest and size, never by its bytes */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 9l8-4 8 4v7l-8 4-8-4zM4 9l8 4m8-4l-8 4m0 0v7M8 7l8 4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -580,6 +587,7 @@
   .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 46% 34%); }
   .fa-avatar[data-fa-kind="code"] { background-color: hsl(268 46% 34%); }
   .fa-avatar[data-fa-kind="qa-report"] { background-color: hsl(168 46% 34%); }
+  .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 46% 34%); }
   .fa-avatar[data-fa-kind="binary-release"] { background-color: hsl(24 46% 34%); }
   .fa-avatar[data-fa-kind="test-plan"] { background-color: hsl(140 46% 34%); }
   .fa-avatar[data-fa-kind="test-report"] { background-color: hsl(110 46% 34%); }
@@ -654,6 +662,7 @@
     .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 46% 34%); }
     .fa-avatar[data-fa-kind="code"] { background-color: hsl(268 46% 34%); }
     .fa-avatar[data-fa-kind="qa-report"] { background-color: hsl(168 46% 34%); }
+    .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 46% 34%); }
     .fa-avatar[data-fa-kind="binary-release"] { background-color: hsl(24 46% 34%); }
     .fa-avatar[data-fa-kind="test-plan"] { background-color: hsl(140 46% 34%); }
     .fa-avatar[data-fa-kind="test-report"] { background-color: hsl(110 46% 34%); }
@@ -729,6 +738,7 @@
   .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 42% 72%); }
   .fa-avatar[data-fa-kind="code"] { background-color: hsl(268 42% 72%); }
   .fa-avatar[data-fa-kind="qa-report"] { background-color: hsl(168 42% 72%); }
+  .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 42% 72%); }
   .fa-avatar[data-fa-kind="binary-release"] { background-color: hsl(24 42% 72%); }
   .fa-avatar[data-fa-kind="test-plan"] { background-color: hsl(140 42% 72%); }
   .fa-avatar[data-fa-kind="test-report"] { background-color: hsl(110 42% 72%); }
@@ -803,6 +813,7 @@
     .fa-avatar[data-fa-kind="health"] { background-color: hsl(4 42% 72%); }
     .fa-avatar[data-fa-kind="code"] { background-color: hsl(268 42% 72%); }
     .fa-avatar[data-fa-kind="qa-report"] { background-color: hsl(168 42% 72%); }
+    .fa-avatar[data-fa-kind="computation-witness"] { background-color: hsl(328 42% 72%); }
     .fa-avatar[data-fa-kind="binary-release"] { background-color: hsl(24 42% 72%); }
     .fa-avatar[data-fa-kind="test-plan"] { background-color: hsl(140 42% 72%); }
     .fa-avatar[data-fa-kind="test-report"] { background-color: hsl(110 42% 72%); }
@@ -880,6 +891,7 @@
   .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 16% 52%); }
   .fa-avatar[data-fa-kind="code"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
   .fa-avatar[data-fa-kind="qa-report"][data-fa-trash="true"] { background-color: hsl(168 16% 52%); }
+  .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 16% 52%); }
   .fa-avatar[data-fa-kind="binary-release"][data-fa-trash="true"] { background-color: hsl(24 16% 52%); }
   .fa-avatar[data-fa-kind="test-plan"][data-fa-trash="true"] { background-color: hsl(140 16% 52%); }
   .fa-avatar[data-fa-kind="test-report"][data-fa-trash="true"] { background-color: hsl(110 16% 52%); }
@@ -953,6 +965,7 @@
     .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 16% 52%); }
     .fa-avatar[data-fa-kind="code"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
     .fa-avatar[data-fa-kind="qa-report"][data-fa-trash="true"] { background-color: hsl(168 16% 52%); }
+    .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 16% 52%); }
     .fa-avatar[data-fa-kind="binary-release"][data-fa-trash="true"] { background-color: hsl(24 16% 52%); }
     .fa-avatar[data-fa-kind="test-plan"][data-fa-trash="true"] { background-color: hsl(140 16% 52%); }
     .fa-avatar[data-fa-kind="test-report"][data-fa-trash="true"] { background-color: hsl(110 16% 52%); }
@@ -1026,6 +1039,7 @@
   .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 14% 56%); }
   .fa-avatar[data-fa-kind="code"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
   .fa-avatar[data-fa-kind="qa-report"][data-fa-trash="true"] { background-color: hsl(168 14% 56%); }
+  .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 14% 56%); }
   .fa-avatar[data-fa-kind="binary-release"][data-fa-trash="true"] { background-color: hsl(24 14% 56%); }
   .fa-avatar[data-fa-kind="test-plan"][data-fa-trash="true"] { background-color: hsl(140 14% 56%); }
   .fa-avatar[data-fa-kind="test-report"][data-fa-trash="true"] { background-color: hsl(110 14% 56%); }
@@ -1099,6 +1113,7 @@
     .fa-avatar[data-fa-kind="health"][data-fa-trash="true"] { background-color: hsl(4 14% 56%); }
     .fa-avatar[data-fa-kind="code"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
     .fa-avatar[data-fa-kind="qa-report"][data-fa-trash="true"] { background-color: hsl(168 14% 56%); }
+    .fa-avatar[data-fa-kind="computation-witness"][data-fa-trash="true"] { background-color: hsl(328 14% 56%); }
     .fa-avatar[data-fa-kind="binary-release"][data-fa-trash="true"] { background-color: hsl(24 14% 56%); }
     .fa-avatar[data-fa-kind="test-plan"][data-fa-trash="true"] { background-color: hsl(140 14% 56%); }
     .fa-avatar[data-fa-kind="test-report"][data-fa-trash="true"] { background-color: hsl(110 14% 56%); }

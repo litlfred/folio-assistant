@@ -20,6 +20,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-validators`,
 | [`board-positions.json`](board-positions.json) | data |  |
 | [`boards-board.json`](boards-board.json) | data |  |
 | [`code-list.json`](code-list.json) | data |  |
+| [`computation-witness.json`](computation-witness.json) | data |  |
 | [`document-kind-coverage.json`](document-kind-coverage.json) | data |  |
 | [`document-kind.json`](document-kind.json) | data |  |
 | [`external-schema-external-schema.json`](external-schema-external-schema.json) | data |  |

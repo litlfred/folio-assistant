@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/m-r/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1808 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1775 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 508 terms and is 286 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 504 terms and is 284 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2060</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2060</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2027</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2027</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">508</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">504</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a></nav>
 
@@ -1415,20 +1415,6 @@ PipelinePluginContribution.kind <span class="fa-gloss-status">candidate, extract
 <p>The slot this fills, e.g. <code>&quot;lean-lexer&quot;</code>. One contributor per kind.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contributions.ts"><code>cat-harness/schemas/contributions.ts#PipelinePluginContribution.kind</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--contribution-nodes.pipelinepluginnodeschema.implementation" data-fa-state="extracted" data-fa-gloss="">
-PipelinePluginNodeSchema.implementation <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The table of slot implementations, typed against the slots' contract.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contribution-nodes.ts"><code>cat-harness/schemas/contribution-nodes.ts#PipelinePluginNodeSchema.implementation</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--contribution-nodes.pipelinepluginnodeschema.slot" data-fa-state="extracted" data-fa-gloss="">
-PipelinePluginNodeSchema.slot <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The generic pipeline slot this fills (<code>content/pipeline/pipeline-plugins.ts</code>); the key into the table.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contribution-nodes.ts"><code>cat-harness/schemas/contribution-nodes.ts#PipelinePluginNodeSchema.slot</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--document-image.placementschema.coverage" data-fa-state="extracted" data-fa-gloss="">
 PlacementSchema.coverage <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1824,20 +1810,6 @@ QaCheckerContribution.sourceFile <span class="fa-gloss-status">candidate, extrac
 <dd>
 <p>The file that DEFINES <code>check</code>, relative to the contributor's own root.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contributions.ts"><code>cat-harness/schemas/contributions.ts#QaCheckerContribution.sourceFile</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--contribution-nodes.qacheckernodeschema.check" data-fa-state="extracted" data-fa-gloss="">
-QaCheckerNodeSchema.check <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The dispatch table holding the checker. Its path is the <code>sourceFile</code> freshness is hashed over.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contribution-nodes.ts"><code>cat-harness/schemas/contribution-nodes.ts#QaCheckerNodeSchema.check</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--contribution-nodes.qacheckernodeschema.criterion" data-fa-state="extracted" data-fa-gloss="">
-QaCheckerNodeSchema.criterion <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The QA criterion this checker answers; the key into the table <code>check</code> names.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contribution-nodes.ts"><code>cat-harness/schemas/contribution-nodes.ts#QaCheckerNodeSchema.criterion</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--block-qa.qacriteriondefinition.adapters" data-fa-state="extracted" data-fa-gloss="">
 QaCriterionDefinition.adapters <span class="fa-gloss-status">candidate, extracted</span>

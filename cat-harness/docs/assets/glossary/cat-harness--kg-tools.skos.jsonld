@@ -2294,6 +2294,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/witness-conformance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Witness conformance report"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Check every `*.witness.json` in the folio's declared `computation-witness` directories against the two schemas in `schemas/computation-witness.ts`: the envelope every witness should meet (a failure is a malformed file) and the producer contract (a failure is a finding against the producer, grouped by the fields at fault). Also lists files that are not strict JSON, which Python's reader accepts and every other consumer rejects. Report-only: it never edits a witness, which is generator output."
+        }
+      ],
+      "skos:notation": "witness-conformance",
+      "dcterms:source": "cat-harness/tools/index.ts#witness-conformance",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/work-plan-prime",
       "@type": "skos:Concept",
       "skos:inScheme": {

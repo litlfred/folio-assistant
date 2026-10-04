@@ -11200,6 +11200,13 @@
       "status": "candidate"
     },
     {
+      "id": "types.computationwitness.scriptfile",
+      "prefLabel": "ComputationWitness.scriptFile",
+      "definition": "The producer, its content hash, and the commit that last changed it — written by ``WitnessBuilder`` on every witness and missing from this interface until 2026-10-04 (`scripts/witness-audit.ts` recorded the drift). ``scriptHash`` is what staleness keys on; ``scriptCommitSha`` is provenance only, because a rebase-merge rewrites it. The runtime schema is ``schemas/computation-witness.ts``.",
+      "source": "cat-harness/schemas/types.ts#ComputationWitness.scriptFile",
+      "status": "candidate"
+    },
+    {
       "id": "types.conjectureblock.lean",
       "prefLabel": "ConjectureBlock.lean",
       "definition": "Optional Lean stub for the conjecture statement.",
