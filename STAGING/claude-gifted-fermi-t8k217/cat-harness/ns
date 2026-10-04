@@ -567,6 +567,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphKind/ig-pages",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "ig-pages",
+      "comment": "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived.",
+      "prefLabel": "ig-pages",
+      "definition": "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived.",
+      "notation": "cat-harness:graphKind/ig-pages",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphKind/interaction",
       "@type": [
         "bootstrap:GraphKind",

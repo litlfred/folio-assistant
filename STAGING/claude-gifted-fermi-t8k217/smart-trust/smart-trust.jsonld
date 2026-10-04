@@ -322,14 +322,14 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T14:24:23.779Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f6771d78e97e4a9541a7fd6f138fda976ecdc6de",
-  "sourceCommitSha": "f6771d78e97e4a9541a7fd6f138fda976ecdc6de",
-  "sourceCommitAt": "2026-10-04T14:18:50Z",
+  "generatedAt": "2026-10-04T14:40:05.430Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/59db30dcba989cb1f3a4279f4fad426edbcb2bff",
+  "sourceCommitSha": "59db30dcba989cb1f3a4279f4fad426edbcb2bff",
+  "sourceCommitAt": "2026-10-04T14:27:48Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphKind": 5,
+    "GraphKind": 6,
     "Subgraph": 5,
     "Asset": 2
   },
@@ -340,6 +340,13 @@
       "name": "docs",
       "renderable": true,
       "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/ig-pages",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "ig-pages",
+      "renderable": false,
+      "summary": "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa",
@@ -415,7 +422,8 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs",
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/ig-pages"
       ],
       "description": "The reader-facing pages, generated from `fhir-artifact-index/index.json` by `smart-trust:pages` (`fhir-harness/scripts/gen-ig-pages.ts`). THE REASON THIS EXISTS: `fhir-artifact-index` is registered `renderable: false`, and until 2026-09-21 this instance declared only that kind — so 674 ingested artefacts were reachable at no URL, which is how the owner found it, by asking where `/smart-trust` was. Only `docs` and `folio` are renderable, and `mount-instance-docs.ts` copies any declared `docs` directory as FINISHED HTML (Jekyll's source is hardcoded to `cat-harness/docs`, so an instance's own pages are built by nothing). `instanceRoot: true` is what makes THIS kind answer at `/smart-trust/` rather than the choice falling to sort order — the defect `withRoutes` documents. It is the only renderable kind here today, so nothing is ambiguous yet; declaring it now means adding a second one later cannot silently move the root. Generated, never authored: `smart-trust:pages:check` is the gate. The viewer for this instance's docs, BUILT BY cat-harness — the owner's rule that a harness which instantiates a directory makes a visualiser for it. Declared HERE, in this instance's own file, rather than in the root's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a COMPOSITION LAYER, so declaring this directory there would overlay this instance's `index.md` onto the site's own. Measured — `compose-docs.test.ts` failed exactly that way when tried. The ref resolves because `injectRails` measures against the BUILT instance's docs prefix (cat-harness's), not the declaring instance's, which is the same reason `who-iris-library`'s cat-harness-built ref resolves today. This directory is NOT mounted: `mount-instance-docs` skips a docs directory with no `index.html`, and this one has none. The viewer is real regardless — `auto-docs` indexes the 20 pages it holds and publishes that page. \"No verbatim mount\" and \"no viewer\" are different facts, and declaring this is what stops the second being inferred from the first.",
       "readmePath": "docs/README.md",
@@ -485,8 +493,8 @@
   ],
   "staging": {
     "branch": "claude/gifted-fermi-t8k217",
-    "sha": "0b649b0d24b07391b22ce23e9fc12d161913bf25",
+    "sha": "670d6dd6b76f71dbbb757aa74ec1f94b5c8398cb",
     "pr": "2082/merge",
-    "run": "37208803776"
+    "run": "37209364089"
   }
 }
