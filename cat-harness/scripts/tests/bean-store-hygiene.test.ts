@@ -34,7 +34,10 @@ const VALID = new Set(["draft", "todo", "in-progress", "completed", "scrapped"])
 
 function beanFiles(): string[] {
   if (!existsSync(BEANS)) return [];
-  return readdirSync(BEANS).filter((f) => f.endsWith(".md"));
+  // `README.md` is the directory's own page, written by `readme:subgraphs`
+  // since `bean-defs` became a resolved declared directory (#2094). It is not
+  // a bean, and the `beans` CLI does not read it as one.
+  return readdirSync(BEANS).filter((f) => f.endsWith(".md") && f !== "README.md");
 }
 
 describe("bean store hygiene", () => {
