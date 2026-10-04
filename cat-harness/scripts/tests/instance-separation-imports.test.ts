@@ -13,12 +13,25 @@
  * `../schemas/builders` shim, for the same reason — and re-pointing the
  * platform is a one-file edit.
  *
- * **Opt-in, by having the shim.** The platform layers (cat-harness,
- * folio-assistant-core, …) also declare a `repository` they will move to, but
- * they import EACH OTHER by design and are governed by `check:import-direction`
- * and the separation arc; requiring a shim of them would be a second, louder
- * answer to a question already answered. The smart-* instances are pinned as
- * opted in, so the rule cannot quietly become vacuous.
+ * **Every staged instance, not only the ones that opted in.** Until
+ * 2026-10-04 the rule applied only to an instance that already had a
+ * `platform.ts`, so an instance with ONE climb and no shim was invisible to
+ * it — and that is exactly the climb PR #2082 measured failing in the seeded
+ * smart-trust fork (`pages-markdown.test.ts` → `fhir-harness/…`). Opt-in made
+ * the guard silent in the one case it exists for. Now every instance whose
+ * declaration names a `repository` other than its `livesAt` is covered, with
+ * two explicit, checked lists:
+ *
+ * - `PLATFORM_LAYERS` — the layers other instances build ON (cat-harness,
+ *   folio-assistant-core, fhir-harness, …). They import EACH OTHER by design
+ *   and are governed by `check:import-direction` and the separation arc;
+ *   requiring a shim of them would be a second, louder answer to a question
+ *   already answered.
+ * - `NOT_YET_SHIMMED` — a covered instance that still climbs, with its count
+ *   as a ceiling that may only fall. A new climb anywhere else fails.
+ *
+ * Both lists are checked against the declarations, so a stale name fails
+ * rather than exempting nothing.
  *
  * Measured 2026-10-02: six climbs in three files before stage D (#1767)
  * moved smart-trust's themes/ and the DAK schemas and scripts into
@@ -82,18 +95,65 @@ function climbsOutOf(instance: string): string[] {
   return out;
 }
 
-describe("staged instances reach the platform only through platform.ts", () => {
-  const optedIn = stagedInstances().filter((i) => existsSync(join(ROOT, i, SHIM)));
+/**
+ * Staged instances that are platform, not content: other instances build on
+ * them, and they import each other by design (see the module doc).
+ */
+const PLATFORM_LAYERS = new Set([
+  "cat-harness",
+  "cat-harness-tools",
+  "cat-openapi",
+  "fhir-harness",
+  "folio-assistant-core",
+  "folio-assistant-sci",
+]);
 
-  test("smart-base has opted in (the rule is not vacuous)", () => {
-    // smart-trust opted in too until stage D (#1767) moved its themes/ into
-    // smart-base; it has no code that climbs out any more, so no shim.
-    expect(optedIn).toEqual(expect.arrayContaining(["smart-base"]));
+/**
+ * Covered instances that still climb without a shim, each with its measured
+ * climb count as a CEILING (2026-10-04). Lower it when climbs are rerouted;
+ * remove the entry when it reaches zero.
+ */
+const NOT_YET_SHIMMED: Record<string, number> = {
+  "who-iris": 18,
+};
+
+describe("staged instances reach the platform only through platform.ts", () => {
+  const staged = stagedInstances();
+  const covered = staged.filter((i) => !PLATFORM_LAYERS.has(i));
+
+  test("every exempted name is a staged instance (no list exempts nothing)", () => {
+    const listed = [...PLATFORM_LAYERS, ...Object.keys(NOT_YET_SHIMMED)];
+    expect(listed.filter((i) => !staged.includes(i))).toEqual([]);
+    expect(Object.keys(NOT_YET_SHIMMED).filter((i) => PLATFORM_LAYERS.has(i))).toEqual([]);
   });
 
-  test("in an opted-in instance, no file but platform.ts imports from outside it", () => {
+  test("smart-base and smart-trust are covered and route through a shim (the rule is not vacuous)", () => {
+    // smart-trust had no shim from stage D (#1767) until 2026-10-04, and the
+    // opt-in guard let its one climb through — the one PR #2082 measured
+    // failing in the fork. Pinned so that cannot recur quietly.
+    for (const i of ["smart-base", "smart-trust"]) {
+      expect(covered).toContain(i);
+      expect(existsSync(join(ROOT, i, SHIM))).toBe(true);
+    }
+  });
+
+  test("in every covered instance, no file but platform.ts imports from outside it", () => {
     // The whole list on a failure: each line is an edit the separation would
-    // have to find, and the fix is to route it through `<instance>/platform.ts`.
-    expect(optedIn.flatMap(climbsOutOf)).toEqual([]);
+    // have to find, and the fix is to route it through `<instance>/platform.ts`
+    // (create one if the instance has none).
+    const climbs = covered.filter((i) => !(i in NOT_YET_SHIMMED)).flatMap(climbsOutOf);
+    expect(climbs).toEqual([]);
+  });
+
+  test("a not-yet-shimmed instance never gains a climb", () => {
+    for (const [i, ceiling] of Object.entries(NOT_YET_SHIMMED)) {
+      const n = climbsOutOf(i).length;
+      expect({ instance: i, climbs: n, overCeiling: n > ceiling, shimmed: n === 0 }).toEqual({
+        instance: i,
+        climbs: n,
+        overCeiling: false,
+        shimmed: false,
+      });
+    }
   });
 });

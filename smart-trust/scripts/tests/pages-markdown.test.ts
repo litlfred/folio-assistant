@@ -25,7 +25,7 @@
  * @module smart-trust/scripts/tests/pages-markdown.test
  */
 import { describe, expect, it } from "bun:test";
-import { VIEW_PAGE } from "../../../fhir-harness/scripts/resource-views.ts";
+import { VIEW_PAGE } from "../../platform.ts";
 import { existsSync, readFileSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 
