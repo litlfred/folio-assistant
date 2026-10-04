@@ -80,7 +80,7 @@ import {
 } from "./kg-node";
 import { NS_PREFIXES, propertyIri, termIri } from "./namespaces";
 import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
-import { KeyedBySchema, SubgraphSourceSchema, contentIsOffCheckout, type SubgraphSource } from "./subgraph-source";
+import { BranchPrefixSchema, KeyedBySchema, SubgraphSourceSchema, contentIsOffCheckout, type SubgraphSource } from "./subgraph-source";
 
 /**
  * The suffix every instance declaration carries — `<name>.config.json`.
@@ -1518,7 +1518,25 @@ export const DirectoryStorageSchema = z
      */
     keyedBy: KeyedBySchema,
   })
-  .strict();
+  .strict()
+  .or(
+    /**
+     * A FAMILY of branches, one per key (bean `lehh`, owner 2026-10-04): the
+     * branch-only graphs fhir-ast (one branch per IG package) and lake-cache
+     * (one per Lean package and toolchain). `path` is where a mount of ONE
+     * member lands, as fsh-guts' is. Resolved to `kind: "family"`, never to a
+     * single branch: see `FamilySourceSchema` for why it is not a fourth
+     * `keyedBy` on the shape above.
+     */
+    z
+      .object({
+        branchPrefix: BranchPrefixSchema,
+        keyedBy: z.literal("family"),
+        /** What the key is, in words: "the IG's package id". */
+        keyFrom: z.string().min(1),
+      })
+      .strict(),
+  );
 export type DirectoryStorage = z.infer<typeof DirectoryStorageSchema>;
 
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({

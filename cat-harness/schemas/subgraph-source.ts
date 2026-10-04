@@ -101,6 +101,12 @@ export const BranchNameSchema = z
 export const KeyedBySchema = z.enum(["commit", "tip", "route"]);
 export type KeyedBy = z.infer<typeof KeyedBySchema>;
 
+/** A branch-name PREFIX for a family of branches: a plain branch name ending in `/`. */
+export const BranchPrefixSchema = z
+  .string()
+  .regex(/^(?!-)(?!refs\/)[A-Za-z0-9._/-]+\/$/, "a plain branch prefix ending in /, e.g. cat/fhir-harness/fhir-ast/")
+  .refine((b) => !b.includes("..") && !b.includes("//") && !b.startsWith("/"), "not a valid branch prefix");
+
 /** The content is the checkout's own directory at the entry's `path`. */
 export const DirectorySourceSchema = z.object({ kind: z.literal("directory") }).strict();
 
@@ -114,23 +120,45 @@ export const BranchSourceSchema = z
   .strict();
 
 /**
+ * The content is a FAMILY of branches, one per key: `<branchPrefix><key>`,
+ * where `keyFrom` says in words what the key is (an IG's package id; a Lean
+ * package and toolchain). Bean `lehh`, owner 2026-10-04 (option 1 of 3): a
+ * branch-only graph is declared on its directory, with a mount path, as
+ * fsh-guts is. Its own KIND rather than a fourth `keyedBy` on `branch`,
+ * because a family has no single branch to read: a consumer that took the
+ * `branch` arm would read a branch that does not exist as an empty graph. A new
+ * union member is a compile error at every such consumer instead.
+ */
+export const FamilySourceSchema = z
+  .object({
+    kind: z.literal("family"),
+    branchPrefix: BranchPrefixSchema,
+    keyFrom: z.string().min(1),
+  })
+  .strict();
+
+/**
  * A declared subgraph's content source. A discriminated union, so a new kind
  * is a new member here and a compile error at every consumer that has not
  * decided what to do with it.
  */
-export const SubgraphSourceSchema = z.discriminatedUnion("kind", [DirectorySourceSchema, BranchSourceSchema]);
+export const SubgraphSourceSchema = z.discriminatedUnion("kind", [DirectorySourceSchema, BranchSourceSchema, FamilySourceSchema]);
 export type SubgraphSource = z.infer<typeof SubgraphSourceSchema>;
 export type SubgraphSourceKind = SubgraphSource["kind"];
 
 /** Every kind the union knows — for a reader that must refuse the rest (`branch-store mount`'s exit code). */
-export const SUBGRAPH_SOURCE_KINDS: readonly SubgraphSourceKind[] = ["directory", "branch"];
+export const SUBGRAPH_SOURCE_KINDS: readonly SubgraphSourceKind[] = ["directory", "branch", "family"];
 
 /** The config half: `<instance>.config.json` → `subgraphSources`, keyed by directory id. */
 export const SubgraphSourceOverridesSchema = z.record(z.string().min(1), SubgraphSourceSchema);
 export type SubgraphSourceOverrides = z.infer<typeof SubgraphSourceOverridesSchema>;
 
 /** The #1764 shape, read only to map it. */
-const LegacyStorageSchema = z.object({ branch: BranchNameSchema, keyedBy: KeyedBySchema });
+const LegacyStorageSchema = z.union([
+  z.object({ branch: BranchNameSchema, keyedBy: KeyedBySchema }),
+  // `storage`'s family form (bean `lehh`): the owner's spelling, mapped to `kind: "family"`.
+  z.object({ branchPrefix: BranchPrefixSchema, keyedBy: z.literal("family"), keyFrom: z.string().min(1) }),
+]);
 
 /** Which layer the answer came from — reported, so an override is never silent. */
 export type SourceDeclaredIn = "default" | "declaration" | "storage" | "config";
@@ -164,6 +192,17 @@ export type ResolvedSubgraphSource =
        * member of a `family`), or `undefined` when none does — a FINDING the
        * subgraph-source gate reports, never a guess at the name.
        */
+      special: SpecialBranchRow | undefined;
+      declaredIn: SourceDeclaredIn;
+    }
+  | {
+      kind: "family";
+      id: string;
+      /** The entry's `path` — where a mount of ONE member of the family lands. */
+      path: string;
+      branchPrefix: string;
+      keyFrom: string;
+      /** The `family` row of `special-branches.json` with this prefix, while that table exists (bean rva2). */
       special: SpecialBranchRow | undefined;
       declaredIn: SourceDeclaredIn;
     };
@@ -256,7 +295,9 @@ export function resolveSubgraphSource(
     declaredIn = "declaration";
   } else if (entry.storage !== undefined) {
     const s = LegacyStorageSchema.parse(entry.storage);
-    src = { kind: "branch", branch: s.branch, keyedBy: s.keyedBy };
+    src = "branchPrefix" in s
+      ? { kind: "family", branchPrefix: s.branchPrefix, keyFrom: s.keyFrom }
+      : { kind: "branch", branch: s.branch, keyedBy: s.keyedBy };
     declaredIn = "storage";
   }
   switch (src.kind) {
@@ -287,6 +328,23 @@ export function resolveSubgraphSource(
         declaredIn,
       };
     }
+    case "family": {
+      if ((entry.graphKinds ?? []).includes("qa")) {
+        throw new Error(
+          `directory "${entry.id}" is a \`qa\` subgraph: it is keyed by commit, and a branch family is not.`,
+        );
+      }
+      const prefix = src.branchPrefix;
+      return {
+        kind: "family",
+        id: entry.id,
+        path: entry.path,
+        branchPrefix: prefix,
+        keyFrom: src.keyFrom,
+        special: (rows ?? specialBranches()).find((r) => r.shape === "family" && (r.name === prefix || r.legacy.includes(prefix))),
+        declaredIn,
+      };
+    }
   }
 }
 
@@ -314,6 +372,9 @@ export function contentSourceJsonLd(src: ResolvedSubgraphSource, repository?: st
         declaredIn: src.declaredIn,
       };
     }
+    case "family":
+      // The prefix is the family's identifier; no single branch has a tree URL.
+      return { kind: "family", branch: src.branchPrefix, keyFrom: src.keyFrom, declaredIn: src.declaredIn };
   }
 }
 
@@ -344,6 +405,7 @@ export function contentSourceContext(): Record<string, unknown> {
       kind: propertyIri("contentSourceKind"),
       branch: propertyIri("contentSourceBranch"),
       keyedBy: termIri("keyedBy"),
+      keyFrom: termIri("keyFrom"),
       declaredIn: termIri("sourceDeclaredIn"),
     },
   };

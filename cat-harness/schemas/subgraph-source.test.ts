@@ -138,3 +138,35 @@ describe("THE GATE — every declared subgraph in this checkout resolves", () =>
     expect(findings).toEqual([]);
   });
 });
+
+describe("a branch FAMILY (bean lehh)", () => {
+  const FAMILY_ENTRY = { id: "ig-ast", path: "ig-ast/", graphKinds: ["ig-ast"] };
+  const rows: SpecialBranchRow[] = [{ id: "fhir-ast", shape: "family", name: "cat/fhir-harness/fhir-ast/", legacy: [] }];
+  test("the storage spelling resolves to kind family, never to one branch", () => {
+    const r = resolveSubgraphSource(
+      { ...FAMILY_ENTRY, storage: { branchPrefix: "cat/fhir-harness/fhir-ast/", keyedBy: "family", keyFrom: "the IG's package id" } },
+      undefined,
+      rows,
+    );
+    expect(r).toMatchObject({ kind: "family", branchPrefix: "cat/fhir-harness/fhir-ast/", keyFrom: "the IG's package id", declaredIn: "storage" });
+    expect(r.kind === "family" && r.special?.id).toBe("fhir-ast");
+  });
+  test("the source spelling resolves the same way", () => {
+    const r = resolveSubgraphSource({ ...FAMILY_ENTRY, source: { kind: "family", branchPrefix: "cat/x/y/", keyFrom: "k" } }, undefined, rows);
+    expect(r).toMatchObject({ kind: "family", declaredIn: "declaration" });
+  });
+  test("a prefix must end in /, and a family keying names no single branch", () => {
+    expect(SubgraphSourceSchema.safeParse({ kind: "family", branchPrefix: "cat/x/y", keyFrom: "k" }).success).toBe(false);
+    expect(() => resolveSubgraphSource({ ...FAMILY_ENTRY, storage: { branch: "cat/x/y", keyedBy: "family", keyFrom: "k" } })).toThrow();
+  });
+  test("a qa subgraph cannot be a family", () => {
+    expect(() =>
+      resolveSubgraphSource({ id: "qa", path: "test/results/", graphKinds: ["qa"], source: { kind: "family", branchPrefix: "cat/x/", keyFrom: "k" } }, undefined, rows),
+    ).toThrow(/qa/);
+  });
+  test("is off the checkout, and its JSON-LD names the prefix and the key", () => {
+    expect(contentIsOffCheckout({ storage: { branchPrefix: "cat/x/", keyedBy: "family", keyFrom: "k" } })).toBe(true);
+    const r = resolveSubgraphSource({ ...FAMILY_ENTRY, source: { kind: "family", branchPrefix: "cat/x/", keyFrom: "k" } }, undefined, rows);
+    expect(contentSourceJsonLd(r)).toEqual({ kind: "family", branch: "cat/x/", keyFrom: "k", declaredIn: "declaration" });
+  });
+});

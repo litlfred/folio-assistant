@@ -353,11 +353,16 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "a later kind — as resolved after the instance config's override.",
     replacedBy: "dcterms:source",
   },
-  contentSourceKind: { gloss: "Which kind of content source: `directory` or `branch`.", replacedBy: "dcterms:type" },
+  contentSourceKind: { gloss: "Which kind of content source: `directory`, `branch`, or a branch `family`.", replacedBy: "dcterms:type" },
   contentSourceBranch: { gloss: "The repository branch a subgraph's content is read from.", replacedBy: "dcterms:identifier" },
   keyedBy: {
     gloss:
       "How entries are keyed on a content branch: one entry per `commit`, or one live copy at the `tip`.",
+  },
+  keyFrom: {
+    gloss:
+      "What the key of a branch FAMILY is, in words (an IG's package id; a Lean package and toolchain): each member " +
+      "branch is the family's prefix followed by one key.",
   },
   sourceDeclaredIn: {
     gloss:
