@@ -43,3 +43,6 @@ IG rather than a gap in this index.
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTMalariaContraindicationsVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTMalariaContraindicationsVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTMalariaContraindicationsVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTMalariaContraindicationsVS.openapi.json` |
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD5DTMalariaContraindicationsVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTMalariaContraindicationsVS.jsonld` · [view](ValueSet-IMMZD5DTMalariaContraindicationsVS.jsonld.html) |
+
+<footer id="ig-footer" data-prev="ValueSet-IMMZD5DTJEContraindicationsVS.html" data-next="ValueSet-IMMZD5DTMeaslesContraindicationsVS.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

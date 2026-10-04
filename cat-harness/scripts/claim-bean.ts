@@ -68,7 +68,10 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { findBean, noteBean, updateBean } from "./beans-fallback.js";
+import { CLOSED_STATUSES } from "./bean-store-read.ts";
+import { appendNoteToText, findBean, noteBean, setFieldInText, updateBean } from "./beans-fallback.js";
+import { BranchStore, resolveTipLocation, type BranchStoreOptions } from "./branch-store.ts";
+import { graphReadPath } from "./graph-read.ts";
 
 /** The claim line `noteBean` just appended, exactly as it was written. */
 const CLAIM_NOTE = /^_\d{4}-\d{2}-\d{2}T[\d:]+Z_ — Claimed by \S+ —.*$/m;
@@ -227,8 +230,183 @@ function statusOnBranch(
  * `branch` is recorded in the claim note so a sibling can see WHO holds it —
  * a claim that does not say who made it cannot be told from an abandoned one.
  */
+/**
+ * Claim a bean on the BRANCH STORE — the post-cutover path.
+ *
+ * ## Why this exists, and why it is not a port
+ *
+ * #2042 landed a REFUSAL for the cut-over case and said so in its own words:
+ * *"Claim through the branch store instead (bean `9ofm`: this script's own
+ * migration row is still open)."* #2052 then named the consequence as the last
+ * hard blocker on the cutover, correctly: `AGENTS.md`, `bean-coordination` and
+ * the session-start sweep all require a claim before durable work, so a
+ * repository where claiming is impossible is worse than one where it races.
+ * The owner ruled 2026-10-04 that claims move *"when the readers and writers
+ * are all ready for cutover"* — which is now.
+ *
+ * ## It is STRONGER than the default-branch path, not a fallback
+ *
+ * {@link claimOnDefaultBranch} fetches, commits and pushes, and detects a race
+ * by losing one and retrying — up to {@link MAX_ATTEMPTS} times, reporting
+ * `fell-back` when every attempt loses. The branch store carries `expect` (the
+ * blob id this reader saw) on the write, so a sibling that got there first is
+ * a **`conflict` on the first attempt**, atomically, with the competing blob
+ * named. That is bean `35nj`'s race detected rather than survived.
+ *
+ * `attempts` is therefore 1 on this path, and that is not a cosmetic
+ * difference: `attempts: 2+` on the old path means "a real race happened", and
+ * here a real race is a `conflict` instead.
+ *
+ * **`fell-back` cannot arise here, and must not.** It means "the claim is on
+ * this branch only" — and after the cutover a PR branch has no `beans/` to
+ * hold one, so returning it would be a lie about where the claim is. #2052
+ * raised exactly this. The states this path can return are `pushed`,
+ * `already-claimed`, `already-closed`, `new-on-branch` and `unknown`.
+ *
+ * ## What it writes
+ *
+ * The bytes come from {@link setFieldInText} and {@link appendNoteToText} —
+ * the same transforms the filesystem writer uses, extracted for this. The
+ * store's contract is *"it is the same store, not a shadow copy"*, and the
+ * only way a second writer keeps it is by sharing the transform rather than
+ * reimplementing it: what lands here has to read back cleanly under the CLI.
+ *
+ * Everything is read from the BRANCH, including `beans.json` — so a claim
+ * works whether or not this checkout has a mount.
+ */
+export function claimOnBranchStore(
+  id: string,
+  branch: string,
+  opts: { repo?: string; dryRun?: boolean; store?: BranchStoreOptions } = {},
+): ClaimOutcome {
+  const repo = opts.repo ?? process.cwd();
+  const unknown = (reason: string): ClaimOutcome => ({ state: "unknown", reason, attempts: 0 });
+
+  let loc;
+  try {
+    loc = resolveTipLocation("beans", repo, "tip");
+  } catch (e) {
+    return unknown(`the bean graph is not a tip-keyed branch store here: ${(e as Error).message}`);
+  }
+
+  // `opts.store` is passed through for the same reason `mountTip` takes one:
+  // the interesting behaviour here is what happens when a sibling writes
+  // BETWEEN this read and this write, and `beforePush` is the only honest way
+  // to stage that — otherwise the conflict branch is unreachable from a test
+  // and the race detection is a claim rather than a verified property.
+  // `BranchStore.open` THROWS on a repository with no `origin` (and on a
+  // malformed branch name). `beans:claim` crashing with a stack trace instead
+  // of reporting its third state is the failure this whole arc has been
+  // removing, so it is caught and reported — found by the test that pins the
+  // dispatch, which runs against a fixture with no remote.
+  let store;
+  try {
+    store = BranchStore.open(loc.branch, { repoRoot: repo, log: () => {}, ...opts.store });
+  } catch (e) {
+    return unknown(`could not open the branch store for ${loc.branch}: ${(e as Error).message}`);
+  }
+
+  // The graph's own declaration, read FROM THE BRANCH: `beans/beans.json` says
+  // where `defs` is within the graph, and after the cutover that file is only
+  // on the branch. Composing `defs` here instead would be the second spelling
+  // this arc has spent five PRs removing.
+  const graph = store.readJson<{ directories?: Array<{ path: string; graphKinds?: string[] }> }>(`${loc.path}/beans.json`);
+  if (graph.state !== "hit") return unknown(`could not read ${loc.path}/beans.json on ${loc.branch}: ${graph.reason}`);
+  const defs = graph.value.directories?.find((d) => (d.graphKinds ?? []).includes("bean-defs"));
+  if (!defs) return unknown(`${loc.path}/beans.json on ${loc.branch} declares no \`bean-defs\` directory`);
+  const defsPath = `${loc.path}/${defs.path.replace(/\/+$/, "")}`;
+
+  const dir = store.listDir(defsPath);
+  if (dir.state !== "hit") return unknown(`could not list ${defsPath} on ${loc.branch}: ${dir.reason}`);
+  // Accept the bare suffix as well as the full prefixed id, for the reason
+  // `findBean` gives: an agent reading a report sees `p4vj`, not
+  // `folio-assistant-p4vj`.
+  const file =
+    dir.entries.find((e) => e.type === "blob" && e.name.startsWith(`${id}--`)) ??
+    dir.entries.find((e) => e.type === "blob" && /--/.test(e.name) && e.name.split("--")[0]!.endsWith(`-${id}`));
+  if (!file) return unknown(`no bean matching "${id}" on ${loc.branch} under ${defsPath}`);
+
+  const path = `${defsPath}/${file.name}`;
+  const read = store.readFile(path);
+  if (read.state !== "hit") return unknown(`could not read ${path} on ${loc.branch}: ${read.reason}`);
+
+  const status = /^status:[ \t]*(.*)$/m.exec(read.text)?.[1]?.trim().replace(/^['"]|['"]$/g, "") ?? "";
+  if (CLOSED_STATUSES.has(status)) return { state: "already-closed", closedAs: status, attempts: 1 };
+  if (status === "in-progress") {
+    // Who holds it, from the claim note the writer below leaves. Reported
+    // rather than guessed: this cannot tell a live sibling from a claim
+    // abandoned five days ago, and inventing a staleness threshold would need
+    // a basis nothing here has — the same rule the default-branch path states.
+    const held = /Claimed by ([^\s—]+)/.exec(read.text)?.[1];
+    return held ? { state: "already-claimed", heldBy: held, attempts: 1 } : { state: "held-unknown", attempts: 1 };
+  }
+
+  if (opts.dryRun === true) {
+    return { state: "pushed", reason: `would claim ${id} on ${loc.branch} (currently ${status || "unknown"})`, attempts: 1 };
+  }
+
+  const next = appendNoteToText(
+    setFieldInText(read.text, "status", "in-progress"),
+    `Claimed by ${branch} — pushed to ${loc.branch} so sibling sessions see it before this branch has a PR (bean 35nj).`,
+  );
+
+  const w = store.write(
+    [{ path, content: next, expect: read.blob }],
+    `beans(${id}): claim in-progress from ${branch}\n\nClaim only, no work. Spliced onto ${loc.branch} with \`expect\` so a\nsibling that claimed first is a conflict rather than a lost write. Bean 35nj.`,
+  );
+
+  switch (w.state) {
+    case "pushed":
+      return { state: "pushed", attempts: w.attempts };
+    case "unchanged":
+      // The tip already carries these exact bytes. Someone claimed it for this
+      // same branch; idempotent, so report it as done rather than as a race.
+      return { state: "pushed", reason: "already in-progress for this branch on the tip", attempts: w.attempts };
+    case "conflict":
+      // THE RACE, caught on the first attempt. `expect` named the blob this
+      // reader saw and the tip disagrees, so a sibling wrote between the read
+      // and the write — which is exactly what bean `35nj` is about.
+      return {
+        state: "already-claimed",
+        reason: `a sibling wrote ${path} on ${loc.branch} between this read and this write (expected ${read.blob.slice(0, 12)})`,
+        attempts: w.attempts,
+      };
+    default:
+      return { state: "unknown", reason: `${w.state} writing ${path} to ${loc.branch}: ${w.reason}`, attempts: w.attempts };
+  }
+}
+
 export function claimOnDefaultBranch(id: string, branch: string, opts: { repo?: string; dryRun?: boolean } = {}): ClaimOutcome {
   const repo = opts.repo ?? process.cwd();
+
+  // PRE-FLIGHT: is the default branch still where the bean store is?
+  //
+  // Bean `9ofm` row D. This whole mechanism is "push the claim to the DEFAULT
+  // branch so a sibling session sees it before this branch has a PR" (bean
+  // `35nj`). Once the bean graph is cut over to `cat/cat-harness/beans`, the
+  // default branch no longer holds the store — so that push would land a claim
+  // where no reader looks. Silent, and worse than not claiming at all: the
+  // sibling reads `todo`, starts the same work, and `35nj`'s measured cost
+  // (two sessions, 61 seconds apart, two PRs for one bean) comes back with the
+  // guard that was supposed to stop it reporting success.
+  //
+  // `notCutOver` is the discriminator, and it is why that field exists: a
+  // declaration naming the branch while the checkout still tracks the files
+  // means the default branch IS the store, so today's behaviour is correct and
+  // unchanged. A MOUNT, or an unreachable graph, means it is not.
+  const where = graphReadPath("beans", repo);
+  // CUT OVER → the branch store, which is where the beans now are. This was a
+  // refusal in #2042 and is a WRITER since the owner's 2026-10-04 ruling that
+  // claims move "when the readers and writers are all ready for cutover".
+  // Dispatching here rather than at the call sites keeps `beans:claim` one
+  // command: nothing a contributor runs changes at the cutover.
+  //
+  // `notCutOver` deliberately stays on the default branch: the declaration
+  // names the branch but the checkout still tracks the files, so the default
+  // branch IS the store and today's behaviour is correct.
+  if (where.state === "refused" || (where.state === "ok" && where.from === "mount")) {
+    return claimOnBranchStore(id, branch, opts);
+  }
 
   const local = findBean(repo, id);
   if (local === undefined) {

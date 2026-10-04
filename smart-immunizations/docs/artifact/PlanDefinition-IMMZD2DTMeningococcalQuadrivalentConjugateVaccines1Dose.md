@@ -37,3 +37,6 @@ IMMZ.D2.DT.Meningococcal.Quadrivalent conjugate vaccines 1 dose Quadrivalent con
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="PlanDefinition-IMMZD2DTMeningococcalPolysaccharideVaccines.html" data-next="PlanDefinition-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines2Doses.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

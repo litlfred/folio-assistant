@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-03T08:47:15Z
+updated_at: 2026-10-03T09:07:44Z
 parent: folio-assistant-uhkv
 ---
 
@@ -54,3 +54,11 @@ which is the only kind of evidence that a split is doing work.
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
 
 _2026-10-03T08:47:15Z_ — Claimed by claude/gifted-fermi-t8k217 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Exclusion list is a gate — 2026-10-03
+
+Session https://claude.ai/code/session_015Q15h1fg2Hh9MJXfAqr4h7. `check:fhir-harness-exclusions` (smart-base/scripts/, because the list names WHO things and smart-base owns them) grades code, JSON values and BPMN, and counts prose mentions without grading them. The DAK step names are read from smart-base's own pre/post tables.
+
+**The premise "the layer is clean today" was measured false:** 20 graded hits in 9 file×rule pairs, plus 65 prose mentions. Owner ruling: baseline the hits and ratchet now, and clear them in a second stream: bean `veiu`, session https://claude.ai/code/session_01PpaL9j6AhiTfvqnkF7BiaG.
+
+The unexpected one: `fhir-harness/tools/index.ts` declares Tools for DAK post-processing steps 3-5, which smart-base's table assigns to the WHO layer. Owner ruled the same day: they STAY in fhir-harness (generic — they only transform existing metadata); recorded in the gate's MOVED_DOWN.

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-65oe
 title: 'library:viz is not reproducible across environments: refScan.filesRead embeds a count of the files on disk'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-03T15:40:27Z
-updated_at: 2026-10-03T15:40:47Z
+updated_at: 2026-10-04T06:08:20Z
 parent: folio-assistant-1xhc
 ---
 
@@ -74,6 +74,60 @@ Option 1 is the one that matches the existing rule. Not acted on here: the owner
 decides what a published index carries.
 
 ## Done when
-- [ ] owner picks an option
-- [ ] `library:viz` output is identical for the same tree on CI and locally
-- [ ] a test fixes that, so it cannot regress silently while ungated
+- [x] owner picks an option  — 2026-10-03, *"resolve 65oe"*; option 1 (drop the
+  field), the one matching "a measurement must not be a term in itself"
+- [x] `library:viz` output is identical for the same tree on CI and locally  —
+  measured by adding a scanned json file and regenerating: index hash
+  `4becfade04c4` before, with the extra file, and after removing it. Identical
+  in all three states, where previously the middle one incremented
+- [x] a test fixes that, so it cannot regress silently while ungated  —
+  `cat-harness/scripts/tests/library-refscan-reproducible.test.ts`, 6 tests,
+  proven to bite: reintroducing `filesRead` fails 3 of the 6
+
+## Summary of Changes
+
+Landed on `main` in **#2035**, merged 2026-10-04T05:54:37Z by litlfred as
+`5b88957fbe`. Verified with `git merge-base --is-ancestor`, not from the PR's
+state field.
+
+**What changed.** `refScan` is now `{ unreadable }` and still `.strict()`, so
+`filesRead` is REFUSED rather than ignored if it returns. The type in
+`library-graph.ts` follows; `gen-library-viz.ts` stops carrying it into the
+projection and its badge no longer prints it.
+
+**What deliberately did not.** `refScan` itself stays, because its PRESENCE is
+how a reader knows the scan ran — the generator's own comment calls "nobody
+looked" a third answer. `unreadable` stays, because it names FILES and is what
+makes a zero provisional. And the count is not lost: it still prints on the
+run's own console line, where a statistic about a run belongs.
+
+**Verified on main after the merge**, which is the check that settles it:
+
+    main:cat-harness/docs/assets/library/index.json
+      refScan = {"unreadable": []}
+
+**The badge reads better, not worse.** It used to lead with
+`2663 json file(s) scanned for references` — a statistic about the machine.
+Executing its code path against the committed index now gives
+`48 entr(ies) referenced by nothing`: a finding about the library, from 66
+entries. The `unreadable` pill and the no-badge third state both survive.
+
+**Two things this cost, recorded because they outlive the bean.**
+
+1. I committed the churn FOUR times before diagnosing it, and attributed it to
+   `merge-main-bot` failing to regenerate. That was wrong: `merge-base.ts` runs
+   `regen` and commits its output. Nothing failed to regenerate; the artefact
+   could not agree with itself across machines.
+2. The PR SELF-STARVED. Every bot merge into any branch regenerated this file
+   with its own container's count and landed it on main, so the PR re-conflicted
+   on that one file against almost every main commit — 372 behind, reflowed, 16
+   more within minutes, conflicted again. The resolution was mechanical (take
+   either side, run `bun run library:viz`), and the exit was landing it rather
+   than reflowing it. Worth remembering for any future PR that removes a field
+   from a frequently regenerated artefact.
+
+**The class was checked, not just the instance.** `regen` now names THREE
+ungated inputs where it named two. `uploads:viz` emits no artefact of its own
+(its queue block publishes inside `library/index.json`), and `schema:viz`'s
+`read*` keys are schema FIELD NAMES rather than counts. So `filesRead` was the
+only instance of this defect.

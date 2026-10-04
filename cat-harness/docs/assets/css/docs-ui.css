@@ -2669,6 +2669,16 @@ a.fa-tile[data-fa-readonly]:focus-visible {
 }
 
 .fa-tile-caption { display: block; }
+/* The harness a tile belongs to, APPENDED beside its one name rather than
+ * folded into it (bean `ob3m` finding 6). Smaller, so the base label still
+ * reads first. The colour is inherited and not faded, so it keeps the tile's
+ * contrast in both schemes. */
+.fa-tile-qualifier {
+  display: block;
+  font-size: 0.72em;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
 
 /* ── A tile's view ────────────────────────────────────────────────────── */
 

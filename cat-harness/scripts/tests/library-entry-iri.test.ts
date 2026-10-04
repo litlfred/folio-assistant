@@ -20,7 +20,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { ADDRESS_JS } from "../lib/library-address.ts";
-import { entryView, instanceRootRoutes, isEntryShellFor, isSubjectShell, libraryConfigOf, VIEWER_JS, viewerHtml } from "../gen-library-viz.ts";
+import { entryPageHtml, entryView, instanceRootRoutes, isEntryShellFor, isSubjectShell, libraryConfigOf, VIEWER_JS, viewerHtml } from "../gen-library-viz.ts";
 import { ReferencedSourceSchema } from "../../schemas/referenced-source.ts";
 import { LibraryIndexSchema } from "../../schemas/site-indexes.ts";
 import { checkEntry } from "../check-l1-complete.ts";
@@ -120,7 +120,7 @@ describe("a row's TITLE opens the entry's own page (owner, 2026-10-02)", () => {
 });
 
 describe("the shell template", () => {
-  const shell = viewerHtml("../../../assets/library/index.json", "smart-base", "", "../../", {
+  const shell = entryPageHtml("../../../assets/library/index.json", "smart-base", "", "../../", {
     id: "smart-trust",
     jsonld: "../../../assets/library/jsonld/smart-base/smart-trust/manifest.jsonld",
   });
@@ -136,6 +136,21 @@ describe("the shell template", () => {
     expect(shell).toContain('<script src="../../../assets/library/viewer.js"></script>');
     expect(shell).toContain('<link rel="stylesheet" href="../../../assets/library/viewer.css">');
     expect(shell).not.toContain("<style>");
+  });
+  test("is a thin page (#1941): rail declined, both sources named, the mount after the script", () => {
+    const mounted = entryPageHtml("../../../assets/library/index.json", "smart-base", "<script data-fa-folio-mount></script>", "../../", {
+      id: "smart-trust",
+      jsonld: "../../../assets/library/jsonld/smart-base/smart-trust/manifest.jsonld",
+    });
+    expect(mounted).toContain('<meta name="folio-navbar" content="none">');
+    expect(mounted).toContain('<a href="../../../assets/library/index.json">the library projection</a> and this entry from');
+    expect(mounted).toMatch(/<script src="[^"]*viewer\.js"><\/script>\n<script data-fa-folio-mount><\/script>\n<\/body>/);
+  });
+  test("an entry with no published JSON-LD gets no `alternate`, and its noscript names only the projection", () => {
+    const bare = entryPageHtml("../../../assets/library/index.json", "smart-base", "", "../../", { id: "x" });
+    expect(bare).not.toContain('rel="alternate"');
+    expect(bare).toContain("the library projection</a>; it needs JavaScript");
+    expect(libraryConfigOf(bare)).toEqual({ data: "../../../assets/library/index.json", scope: "smart-base", libRoot: "../../", entry: "x" });
   });
   test("is a few KB", () => {
     expect(shell.length).toBeLessThan(4096);

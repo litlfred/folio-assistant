@@ -37,3 +37,6 @@ This library defines context-independent elements for Hepatitis A used throughou
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="Library-IMMZD2DTDTPPregnancyStartingWith4DosesLogic.html" data-next="Library-IMMZD2DTHepatitisAEncounterElements.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
