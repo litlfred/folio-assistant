@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 785,
+      "count": 784,
       "unit": "beans"
     }
   },
@@ -235,14 +235,14 @@
     {
       "id": "folio-assistant-0s6w",
       "title": "MERGE VERIFICATION: reading merge-tree's rc through a command substitution reports the WRONG exit status, and it reads as clean",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T02:07:04Z",
-      "updatedAt": "2026-10-03T02:07:04Z",
+      "updatedAt": "2026-10-04T06:03:36Z",
       "preview": "A merge steward verifies mergeability with `git merge-tree --write-tree` and reads the exit\ncode: **rc=0 clean, rc=1 CONFLICT, rc>=2 an ERROR that is not clean**. On 2026-10-03 that\nread was wrong for a whole session, in one specific shell form, and it reported **clean**.\n\n## The defect\n\n```sh\ngit merge-tree --write-tree origin/main \"$sha\" >/dev/null 2>&1\necho \"merge-tree rc=$?\"                   ",
       "file": "beans/defs/folio-assistant-0s6w--merge-verification-reading-merge-trees-rc-through.md"
     },
@@ -3692,7 +3692,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T22:34:28Z",
-      "updatedAt": "2026-10-04T05:43:44Z",
+      "updatedAt": "2026-10-04T05:43:41Z",
       "preview": "Child of `y7b3` part 2, which the owner left as \"decide later\" on 2026-09-30\nwith three options on the table (band the count, drop it, keep it exact).\n**Owner chose a fourth on 2026-10-02: pull the count dynamically from the KG\nJSON-LD rather than freeze it into committed markdown.**\n\n## Why that is the right answer and the other three are not\n\nThe repository had already reached this conclusion fr",
       "file": "beans/defs/folio-assistant-ba9e--generated-readme-subdirectory-counts-207-volatile.md"
     },
@@ -7598,7 +7598,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T15:09:20Z",
-      "updatedAt": "2026-10-01T15:57:57Z",
+      "updatedAt": "2026-10-01T15:57:53Z",
       "preview": "Upstream fixed 2026-10-01: bootstrap#1 (f75a2167d226) and bootstrap-tools#4 (30464126ed93) — READMEs reproducible via published-IRI term links, each repo checks its own README in CI. Main pins PR0's 7a91356 / c5e5e25. Bump both gitlinks, re-extract bootstrap translation templates (translate-bpmn --extract), regenerate bootstrap kg-qa sidecars and SVGs, gates green.\n## Done when\n- [ ] pins at f75a2",
       "file": "beans/defs/folio-assistant-pw9j--bump-bootstrapbootstrap-tools-pins-to-the-fixed-up.md"
     },
@@ -9191,20 +9191,6 @@
       "file": "beans/defs/folio-assistant-uknu--duplicate-id-on-every-docs-page-just-the-docs-rend.md"
     },
     {
-      "id": "folio-assistant-uoij",
-      "title": "kind:register — one command performs the SEVEN artefacts adding a graph kind obliges, the way skill:register does for a skill",
-      "status": "todo",
-      "type": "task",
-      "priority": "normal",
-      "parent": "folio-assistant-0lmb",
-      "blocking": [],
-      "blockedBy": [],
-      "createdAt": "2026-10-04T05:32:27Z",
-      "updatedAt": "2026-10-04T05:32:48Z",
-      "preview": "Owner chose this on 2026-10-04, as item 2 of three (\"1 2 3\") after #2032 went green.\n\n## The measurement that makes it a bean rather than an idea\n\nAdding the `docs-auto` kind on #2022, I ran **six hand-picked `check:*` commands** and\nthey all passed. `bun run gates` then found **5 failures across 217**, and `bun test`\nfound two more:\n\n| obligation | found by | generated? |\n|---|---|---|\n| `readme:",
-      "file": "beans/defs/folio-assistant-uoij--kindregister-one-command-performs-the-seven-artefa.md"
-    },
-    {
       "id": "folio-assistant-uoob",
       "title": "MERGE GATE (f): refuse an unfinished PR — no current ready marker, or a base branch whose PR already merged",
       "status": "in-progress",
@@ -10338,7 +10324,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:28:54Z",
-      "updatedAt": "2026-10-04T05:37:22Z",
+      "updatedAt": "2026-10-03T17:52:50Z",
       "preview": "The follow-on to `1j3q` (PR #1996), which built `storage.keyedBy: \"route\"` and\ndeliberately flipped nothing. This is the first family that uses it.\n\n## Why `docs/uml/` and not the other 48\n\n**A-narrow, chosen over A-full.** Measured on #1966: **49 of 94** gated checks\nwrite page files. Flipping them together cannot be bisected — a red tells you\n\"some page moved wrong\" and nothing more. `docs/uml/`",
       "file": "beans/defs/folio-assistant-xsrv--route-keyed-cutover-first-family-move-docsuml-off.md"
     },
@@ -11138,8 +11124,8 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 305,
-    "openTotal": 469,
+    "orphanOpen": 303,
+    "openTotal": 467,
     "coveredOpen": 160,
     "duplicateIds": 1
   }
