@@ -1042,6 +1042,14 @@ jobs:
           bun run cat-harness/scripts/kg-export.ts --instance . --base-url "$BASE" --out "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld"
           cp "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld" "./_site/${ROOT_STUB}/${ROOT_STUB}.json"
 
+          # EVERY OTHER declared instance's graph, one document each — bean
+          # `4ak5` item 1. The set is derived from the declarations by the
+          # script, never listed here; the three instances above keep their
+          # own steps and are named, with why, in its PUBLISHED_ELSEWHERE.
+          # `check:published-instance-exports` runs the same plan, and fails if
+          # any declared instance is published by neither.
+          bun run cat-harness/scripts/instance-exports.ts --out-dir ./_site --base-url "$BASE"
+
           # THE NAMESPACE DOCUMENTS AND THE BOOTSTRAP GRAPH — bean `35kc`.
           #
           # Staging published NONE of these while the live site published all
