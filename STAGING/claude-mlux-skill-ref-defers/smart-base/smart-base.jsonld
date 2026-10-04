@@ -318,10 +318,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T12:31:28.826Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/370f800f6c04113d73be94d82e185e54f7adc092",
-  "sourceCommitSha": "370f800f6c04113d73be94d82e185e54f7adc092",
-  "sourceCommitAt": "2026-10-04T12:26:40Z",
+  "generatedAt": "2026-10-04T13:03:41.392Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9cd4fcec1b2c02f770392e42249ab1b0f37dbb5c",
+  "sourceCommitSha": "9cd4fcec1b2c02f770392e42249ab1b0f37dbb5c",
+  "sourceCommitAt": "2026-10-04T12:58:39Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1533,7 +1533,7 @@
       ],
       "description": "L1 source content: one `<bib-slug>/` per ingested WHO publication, holding `sections/*.md` and `structure.json`. Every knowledge-graph reference to one of these sources resolves through here, never to a loose path or a bare URL — which is the whole reason the bytes could not stay in `uploads/`. The corpus-grep checklist searches `library/` ONLY, so a publication left in the incoming queue does not merely go unread: it makes a clean grep mean \"nobody has done this\" while the source sits right there. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it — overrides match on id and never on path, and a distinct id at the same path yields two entries for one directory that every fan-out consumer then scans twice.",
       "readmePath": "library/README.md",
-      "fileCount": 3349,
+      "fileCount": 3350,
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/library"
     },
     {
@@ -1730,8 +1730,8 @@
   ],
   "staging": {
     "branch": "claude/mlux-skill-ref-defers",
-    "sha": "5b6e63589657c663e1c582bff4cc3b53de65eb06",
+    "sha": "9f15c51cbef615dadc34daf128453456718ff52c",
     "pr": "2076/merge",
-    "run": "37202129351"
+    "run": "37203978887"
   }
 }
