@@ -61,6 +61,7 @@ import {
   TILE_SURFACES,
   visualisationsOf,
 } from "../schemas/cat-harness.js";
+import { tileLabel } from "./lib/nav-label.js";
 
 /** Where a tile may appear. A visualisation that says nothing appears on every surface. */
 export type TileSurface = CatHarnessTileSurface;
@@ -71,8 +72,29 @@ export interface GraphTile {
   id: string;
   /** The directory this visualises. */
   directory: string;
-  /** What the tile says. Falls back to the directory's id — never blank. */
+  /**
+   * What the tile says: the destination's ONE label (`lib/nav-label.ts`,
+   * bean `ob3m` finding 6). The declared title with any harness suffix
+   * stripped, else the display name of the directory's first kind. Never the
+   * directory id, which is what put `root-docs` on the glass beside `docs` on
+   * the rail for the same page.
+   */
   title: string;
+  /**
+   * The harness this tile's directory belongs to, by its declared title —
+   * appended to the label where the harness matters ("Docs · C@T Harness"),
+   * never folded into it. Absent when the caller did not say.
+   */
+  qualifier?: string;
+  /**
+   * True when another tile carries the same {@link title}, so the qualifier
+   * is what tells them apart and is SHOWN beside the label rather than only
+   * spoken. Decided here, over the whole set, because the client draws one
+   * tile at a time and cannot see the others. Elsewhere the qualifier is in
+   * the accessible name and the tooltip only: a square tile has room for one
+   * line, and on a tile with a unique name the second line hid its count.
+   */
+  showQualifier?: true;
   /** The declared page, repo-root relative, exactly as declared. */
   ref: string;
   /**
@@ -246,6 +268,13 @@ export function graphTiles(
   dirs: readonly TiledDirectory[],
   /** The site directory, relative to the repository root. Omit for no hrefs. */
   siteDirFromRepoRoot?: string,
+  /**
+   * The harness each directory belongs to, as its declared title — the tile's
+   * qualifier. Omit and no tile carries one.
+   */
+  qualifierFor?: (d: TiledDirectory) => string | undefined,
+  /** Harness names a declared title may end with, as "Docs — cat-harness". Stripped from the label. */
+  harnessNames: readonly string[] = [],
 ): GraphTile[] {
   const tiles: GraphTile[] = [];
   // ONE TILE PER PAGE (#1168 B7a-2b, owner 2026-09-29: "tiles for all, one
@@ -264,13 +293,19 @@ export function graphTiles(
     const vis = visualisationsOf(d.coverage, d.id).filter((v) => firstFor.get(v.ref) === d.id && !opened.has(v.ref));
     for (const v of vis) opened.add(v.ref);
     vis.forEach((v: Visualisation & { title: string }, i) => {
+      // `visualisationsOf` and `viewersOf` both fall back to the directory id
+      // when nothing is declared. That fallback is not a name, so it is read
+      // as "not declared" and the kind's display name is used instead.
+      const declared = v.title === d.id ? undefined : v.title;
+      const qualifier = qualifierFor?.(d);
       tiles.push({
         // The index is part of the id only where it has to be. A directory
         // with one visualisation gets its own name, which is what a reader
         // sees in a URL fragment and what a test addresses it by.
         id: vis.length === 1 ? d.id : `${d.id}/${i + 1}`,
         directory: d.id,
-        title: v.title,
+        title: tileLabel(d, declared, harnessNames),
+        ...(qualifier ? { qualifier } : {}),
         ref: v.ref,
         surfaces: TILE_SURFACES.filter((s) => showsOn(v, s)),
         ...(siteDirFromRepoRoot === undefined
@@ -293,6 +328,9 @@ export function graphTiles(
       });
     });
   }
+  const seen = new Map<string, number>();
+  for (const t of tiles) seen.set(t.title, (seen.get(t.title) ?? 0) + 1);
+  for (const t of tiles) if (t.qualifier && seen.get(t.title)! > 1) t.showQualifier = true;
   return tiles;
 }
 
