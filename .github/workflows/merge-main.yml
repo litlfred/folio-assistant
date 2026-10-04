@@ -125,6 +125,22 @@ jobs:
     if: needs.select.outputs.prs != '[]' && needs.select.outputs.prs != ''
     runs-on: ubuntu-latest
     timeout-minutes: 75
+    # ONE MEMBER'S FAILURE IS NOT THE RUN'S FAILURE — bean `03nl`, 2026-10-04.
+    #
+    # `fail-fast: false` already stops one member killing the others. It does
+    # not stop one member reding the RUN, and GitHub emails a failed run: the
+    # owner was emailed "merge:main into PR (…) — Failed in 6 minutes" dozens of
+    # times a day while exactly one of fifteen members was failing, on a
+    # condition already fixed on another branch (bean `z7n1`). A member's
+    # failure is information about THAT PR, and it is already written where that
+    # PR's author will see it; the run's colour is the owner's inbox.
+    #
+    # So the member still fails — it is red here, it annotates, it writes its
+    # verdict and its summary, and the PR's comment says why — and the `notify`
+    # job below decides, once per run, whether any of it is news. Everything
+    # quiet is still recorded, which is `1xhc` applied to notifications:
+    # a report nobody receives must still be a report somebody can find.
+    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
@@ -211,7 +227,11 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      # `id` because this exit 1 is an expected RACE, not a defect: under a fast
+      # merge cadence the head moves between selection and checkout several
+      # times an hour. The verdict step reads this outcome and stays quiet.
       - name: Check the branch did not move since selection
+        id: head
         env:
           SELECTED: ${{ steps.pr.outputs.sha }}
         run: |
@@ -320,6 +340,25 @@ jobs:
             done
           fi
 
+      # WHAT THIS PR'S COMMENT ALREADY REPORTS — read BEFORE the comment step
+      # overwrites it, which is the only moment the previous run's answer is
+      # still there to read. The bot writes one comment per PR, edited in place,
+      # and since bean `03nl` that comment carries the signature of the failure
+      # it reports; a failure whose signature the comment already holds is one
+      # the owner has already been told about. No second store: the durable
+      # record IS the dedup key, so there is nothing to go stale on its own, and
+      # deleting the comment correctly makes the next failure new again.
+      - name: Read the failure this PR's comment already reports
+        id: prev
+        if: always() && steps.merge.outcome != 'skipped'
+        run: |
+          set -uo pipefail
+          sig=$(gh api "repos/$REPO/issues/$PR/comments?per_page=100" --paginate \
+            --jq ".[] | select(.body | startswith(\"$MARKER\")) | select(.body | test(\"merge-main-signature\")) | .body | capture(\"merge-main-signature: (?<s>[0-9a-f]+)\").s" \
+            | head -n1) || sig=""
+          echo "signature=$sig" >> "$GITHUB_OUTPUT"
+          echo "::notice::the existing comment reports failure signature '${sig:-none}'"
+
       # The composition is `cat-harness/scripts/merge-main-comment.ts`, run
       # from main's tool worktree like merge-base itself, so its branches are
       # unit-tested. A CANCELLED job (a newer push to main superseded it) or a
@@ -337,9 +376,12 @@ jobs:
           BLOCKED: ${{ steps.push.outputs.blocked }}
           REJECTED: ${{ steps.push.outputs.rejected }}
           SHA: ${{ steps.push.outputs.sha }}
+          # The PR's head, not main's: it is part of the failure signature, so a
+          # push by the AUTHOR makes a repeating failure new again.
+          HEAD_SHA: ${{ steps.pr.outputs.sha }}
         run: |
           set -euo pipefail
-          plan=$(bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-main-comment.ts" --log "$RUNNER_TEMP/merge.log")
+          plan=$(bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-main-comment.ts" --log "$RUNNER_TEMP/merge.log" --plan-out "$RUNNER_TEMP/plan.json")
           if [ "$(jq -r .action <<<"$plan")" = leave ]; then
             echo "::notice::comment left untouched — $(jq -r .reason <<<"$plan")"
             exit 0
@@ -362,6 +404,10 @@ jobs:
       # reported outcome (labelled needs-merge-human) and stays green; any
       # other non-zero exit — unrepaired, error, could not start — fails here,
       # AFTER the comment, so the PR is told why.
+      # ... and it still fails HERE. `continue-on-error` on the job keeps that
+      # failure out of the run's conclusion; it does not make it green. The
+      # member is red, its log says why, and the verdict step below says whether
+      # anybody is told again.
       - name: Fail on anything but a merge, an up-to-date branch or a refusal
         if: always() && steps.merge.outcome == 'success' && steps.merge.outputs.status != '0' && steps.merge.outputs.refused != 'true'
         env:
@@ -369,3 +415,110 @@ jobs:
         run: |
           echo "::error::merge-base exited $STATUS without a refusal — see the log above"
           exit 1
+
+      # WHAT THIS MEMBER FOUND, written down whatever happened to it — bean
+      # `03nl`. `always()`, and last, so it also covers the steps that exit 1 on
+      # purpose (the head-moved race) and the ones that fail by surprise
+      # (install, the tool worktree). A member that reports nothing is read by
+      # the notifier as "could not determine", which is LOUD: a job that cannot
+      # say what happened is not a job that passed.
+      - name: Record what this member found, and whether it is news
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+          HEAD_CHECK: ${{ steps.head.outcome }}
+          MERGE_OUTCOME: ${{ steps.merge.outcome }}
+          PUSH_OUTCOME: ${{ steps.push.outcome }}
+          STATUS: ${{ steps.merge.outputs.status }}
+          REFUSED: ${{ steps.merge.outputs.refused }}
+          MERGED: ${{ steps.merge.outputs.merged }}
+          PUSHED: ${{ steps.push.outputs.sha != '' && 'success' || 'no' }}
+          BLOCKED: ${{ steps.push.outputs.blocked }}
+          REJECTED: ${{ steps.push.outputs.rejected }}
+          PREVIOUS_SIGNATURE: ${{ steps.prev.outputs.signature }}
+        run: |
+          set -uo pipefail
+          out="$RUNNER_TEMP/verdict-$PR.json"
+          tool="$RUNNER_TEMP/tool/cat-harness/scripts/merge-main-comment.ts"
+          if [ -f "$tool" ]; then
+            bun run "$tool" --verdict "$out" --plan "$RUNNER_TEMP/plan.json"
+          else
+            # The job died before main's tool was in hand — the checkout, the
+            # install, the tool worktree itself. That is the BOT broken rather
+            # than a PR needing a person, so it is undetermined and loud; said
+            # in shell, because the thing that would have said it is what failed.
+            printf '{"pr":"%s","verdict":"undetermined","notify":true,"reason":"the job failed before main had checked out the merge tool, so nothing could classify it","signature":"","previous":""}' "$PR" > "$out"
+            echo "::error::merge-main #$PR: undetermined — the job failed before main's merge tool was available"
+          fi
+          cat "$out"
+
+      - name: Hand the verdict to the run's single notifier
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: merge-main-verdict-${{ matrix.pr }}
+          path: ${{ runner.temp }}/verdict-${{ matrix.pr }}.json
+          retention-days: 5
+          if-no-files-found: warn
+
+  # THE RUN'S ONE NOTIFICATION — bean `03nl`.
+  #
+  # Every member reports; this job is the only thing that reds the run, and so
+  # the only thing that emails. Three conditions, and nothing else:
+  #
+  #   - a NEW or CHANGED failure on some PR (a signature the PR's own comment
+  #     did not already report),
+  #   - a SYSTEMIC failure (every selected PR failed — that is the bot or main,
+  #     not fifteen people), and it is loud even when each member is a repeat,
+  #   - a member that reported NO verdict, or one it could not classify.
+  #
+  # A repeat of an identical failure on an unchanged head is none of those, and
+  # is the whole of what went quiet. It is still in that PR's comment, in that
+  # member's summary and annotation, and in that member's red job.
+  #
+  # `select`'s own failure is deliberately NOT a fourth condition: that job
+  # carries no `continue-on-error`, so it reds the run by itself, and failing
+  # here as well would mean two emails for one condition. This job says so and
+  # exits 0.
+  notify:
+    name: Notify once, and only if something is new
+    needs: [select, merge]
+    # `!cancelled()` rather than `always()`: a cancelled run is superseded by a
+    # newer one, which will notify if there is anything to notify about. It
+    # must still run when `merge` FAILED (that is the case it exists for) and
+    # when `merge` was SKIPPED (nothing was behind main).
+    if: ${{ !cancelled() && needs.select.result != 'skipped' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      # Main's copy of the aggregator, for the same reason the merge job uses
+      # main's copy of merge-base: the question is about this run, not about any
+      # PR's tree. `submodules` because it runs a platform script
+      # (`check:workflow-submodules`), shallow because one commit is enough.
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          submodules: recursive
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      # Nothing to download when no PR was behind main; and a download that
+      # finds nothing must not stop the aggregator, because "no verdicts for
+      # three selected PRs" is exactly what it has to report.
+      - uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          pattern: merge-main-verdict-*
+          path: verdicts
+          merge-multiple: true
+
+      - name: Decide whether this run says anything to anybody
+        env:
+          PRS: ${{ needs.select.outputs.prs }}
+          SELECT_RESULT: ${{ needs.select.result }}
+        run: bun run cat-harness/scripts/merge-main-comment.ts --aggregate verdicts
