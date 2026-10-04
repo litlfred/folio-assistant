@@ -435,6 +435,49 @@ owner), the steward writes three things in the same change:
 A PR whose body names no bean gets the entry with `beans: []` and a comment
 asking the author to name one. The steward does not invent the association.
 
+## Every open PR has an entry: review the whole list, then triage it
+
+Owner, 2026-10-04, verbatim: *"review all open PRs.... anything not in merge
+queue? put in as status unknown any found. then try to figure out where they
+are, what's stale, etc."* and *"add to merge manager skills."*
+
+`merge:steward` skips drafts, and a PR that nobody ACKed has no entry, so the
+queue silently shrinks to the PRs someone happened to look at. Measured on
+the first review: **18 of 26** open PRs had no entry, 9 of them drafts.
+
+On a review, and at least once per working session:
+
+1. **List every open PR**, drafts included, from the API; not from the
+   steward's table and not from memory.
+2. **Every PR without an entry gets one with `status: "unknown"`.** A
+   draft gets the placement `rule: "draft"`, `class: "hand-back"`,
+   `rank: 99`, and its `decision` names the steward, not the DMN, because
+   the table never placed it. Claiming the table did would be a fact the
+   steward invented.
+3. **Triage each one into a status** (`QUEUE_STATUSES` in
+   `schemas/merge-queue.ts`), with the evidence in `reason`:
+
+   | status | when |
+   |---|---|
+   | `active` | its author pushed or commented within 24 hours |
+   | `waiting-on-author` | handed back with a named ask, and the author is not back yet |
+   | `blocked` | waits on another PR, bean or ruling, named in `reason` |
+   | `stale` | no push **and** no human comment for more than 24 hours. Bot pushes from `merge-main` do not count as activity |
+   | `approval-void` | the owner approved it, and then its scope changed |
+   | `landed` | merged. The entry stays as history; it is never deleted |
+
+4. **Report the stale ones to the owner as a decision**, never close them:
+   closing a PR is the author's or the owner's call
+   ([`deletion-requires-confirmation`](../../conduct/conduct-core/deletion-requires-confirmation.md)).
+
+**An approval is for the content that was approved.** Measured on the first
+review: #2082 was approved as a three-bean close, and an hour later its
+branch carried an 11-file code change under a new title. Compare the title
+and the changed-file count against what was approved before landing. On a
+mismatch, set `approval-void` and ask again. The typed fix is a `release`
+bound to `releasedSha` (the zmdo session's draft on #2065); until it lands,
+this check is the steward's.
+
 ## Your merge cadence is an input to the bot's throughput
 
 **Pacing and concurrency are one question, not two.** `merge-main.yml` sweeps

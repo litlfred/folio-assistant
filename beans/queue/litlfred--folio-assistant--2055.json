@@ -1,7 +1,7 @@
 {
   "$schema": "folio-merge-queue-entry/v1",
   "repository": "litlfred/folio-assistant",
-  "pr": 2084,
+  "pr": 2055,
   "placement": {
     "kind": "computed",
     "decision": "cat-harness/processes/sdlc/decisions/merge-priority.dmn#Decision_MergePriority",
@@ -9,12 +9,11 @@
     "class": "ci-not-green",
     "rank": 91
   },
-  "reason": "LANDED as 63ec4ff. (Previously: ACK: received into the queue at the 13:09Z sweep; owner-approved 2026-10-04 (\"Approve all 4\"). Waiting on the jsonld-gen-check run on its head.)",
+  "reason": "STATUS UNKNOWN on the 13:40Z all-PR review (open, not in the queue), triaged as: CI red and conflicted, no push for 5h. Its follow-up #2080 (same author, 5hox) is open alongside it.",
   "decidedBy": "https://claude.ai/code/session_019gRX6w8kzAX6wpHbgdyu3s",
   "decidedAt": "2026-10-04T13:50:00Z",
+  "status": "waiting-on-author",
   "beans": [
-    "folio-assistant-9c7h",
-    "folio-assistant-7x5n"
-  ],
-  "status": "landed"
+    "folio-assistant-06e3"
+  ]
 }
