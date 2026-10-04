@@ -16,7 +16,7 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 155,
+      "count": 156,
       "entries": [
         {
           "file": "cat-harness/content/docs/content-types/content-types.ts",
@@ -37,6 +37,10 @@
         {
           "file": "cat-harness/content/pipeline/pot-extract.ts",
           "names": 2
+        },
+        {
+          "file": "cat-harness/docs/_data/translation-qa.json",
+          "names": 11
         },
         {
           "file": "cat-harness/docs/ar/agentic-harness.md",
@@ -391,7 +395,7 @@
           "names": 2
         },
         {
-          "file": "cat-harness/scripts/gen-docs-auto.ts",
+          "file": "cat-harness/scripts/gen-auto-docs.ts",
           "names": 3
         },
         {
@@ -882,18 +886,18 @@
       "entries": [
         {
           "instances": 14,
-          "occurrences": 10605,
+          "occurrences": 10697,
           "allowed": 0,
-          "wrongDirection": 4395,
-          "wrongDirectionFiles": 494,
+          "wrongDirection": 4483,
+          "wrongDirectionFiles": 495,
           "exempt": 2118,
-          "namesRepository": 2956,
-          "undetermined": 1136,
+          "namesRepository": 2959,
+          "undetermined": 1137,
           "pendingFiles": 48,
           "pendingOccurrences": 394
         }
       ]
     }
   },
-  "total": 212
+  "total": 213
 }

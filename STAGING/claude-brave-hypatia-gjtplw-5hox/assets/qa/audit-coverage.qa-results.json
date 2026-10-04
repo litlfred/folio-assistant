@@ -30,6 +30,18 @@
           "hasFiles": true
         },
         {
+          "kind": "auto-docs",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run auto:docs:check"
+          ],
+          "typed": false,
+          "hasFiles": false
+        },
+        {
           "kind": "bean-defs",
           "state": "no-directory",
           "directories": [],
@@ -313,6 +325,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run auto:docs:check",
             "bun run cat-harness/scripts/gen-schema-docs.ts --check",
             "bun run check:agent-entry-links",
             "bun run check:agents-xref",
@@ -330,7 +343,6 @@
             "bun run check:viewer-backticks",
             "bun run check:viewer-nav",
             "bun run check:wireframes:check",
-            "bun run docs:auto:check",
             "bun run docs:harness:check",
             "bun run docs:pages:check",
             "bun run gen:jsonld:check",
@@ -349,18 +361,6 @@
           ],
           "typed": true,
           "hasFiles": true
-        },
-        {
-          "kind": "docs-auto",
-          "state": "no-directory",
-          "directories": [],
-          "criteria": [],
-          "subjectKinds": [],
-          "gates": [
-            "bun run docs:auto:check"
-          ],
-          "typed": false,
-          "hasFiles": false
         },
         {
           "kind": "document-kinds",
@@ -1215,6 +1215,13 @@
       "count": 20,
       "entries": [
         {
+          "kind": "auto-docs",
+          "criteria": 0,
+          "gates": [
+            "bun run auto:docs:check"
+          ]
+        },
+        {
           "kind": "bean-defs",
           "criteria": 0,
           "gates": [
@@ -1253,13 +1260,6 @@
           "criteria": 0,
           "gates": [
             "bun run boards:default:check"
-          ]
-        },
-        {
-          "kind": "docs-auto",
-          "criteria": 0,
-          "gates": [
-            "bun run docs:auto:check"
           ]
         },
         {
