@@ -64,3 +64,12 @@ Owner: **"Land #2113, then no trains (Recommended)"**.
 Train B (#1918, #2093, #2094) dissolved; each lands alone after merging main on
 its own branch. Rule added to merge-queue §"A train admits only members that
 STACK cleanly (STRICT)".
+
+## 2026-10-04 ~18:42Z — owner ruling: prioritise #2066 to end the LSI treadmill
+
+Asked: every landing re-conflicts every open PR on the LSI pair, LSI page and
+harness.json (#1918, #2093, #2094, #1898 all conflicted after #2107, ~12 min
+regen each). #2066 removes the LSI trio from main but is handed back (lb8h).
+Owner: **"Prioritise #2066 (Recommended)"**. A Merge Manager takeover agent
+finishes #2066 (merge main, CI green, sign); session 01VfkKoc lands it, since
+my session's agent did the work (guard check 2).
