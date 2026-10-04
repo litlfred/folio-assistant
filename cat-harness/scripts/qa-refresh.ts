@@ -50,12 +50,35 @@
  *
  * ## Two modes, decided by the checkout
  *
- * - **tracked** — version control still tracks files under a `qa` directory
- *   (before `5hox`). Nothing is run: the commit's own copy IS the record, and
+ * - **tracked** — every writer's declared paths are still tracked (before
+ *   `5hox`). Nothing is run: the commit's own copy IS the record, and
  *   `5hox`'s precondition is that `main/<sha>` is byte-identical to it
  *   (`qa:verify-moved`). Running the writers would make it differ.
  * - **computed** — nothing is tracked there (after `5hox`). Every writer runs,
  *   in order, into the working copy.
+ * - **mixed** — some writers' paths are tracked and some are not. Each writer
+ *   is decided ON ITS OWN DECLARED PATHS: unbacked, it runs; backed, the
+ *   commit's copy is its record and it does not.
+ *
+ * ## Why the mode is per WRITER and not per checkout (bean `tqjj`)
+ *
+ * It was per checkout until 2026-10-04, as one boolean over every tracked file
+ * under the qa roots. That made `5hox` **atomic**: untracking one family while
+ * its 1,020 siblings stayed tracked left the mode at `tracked`, so the family's
+ * writer did not run, so nothing produced it, so `qa-reports` stopped carrying
+ * it — and the readers that fetch it by ref went UNKNOWN with no step having
+ * failed. Measured on the LSI family, the first subset whose readers were
+ * migrated (`oq1j`). A removal that can only be done 1,186 files at once is a
+ * removal that does not get done; `QA_WRITERS` already declares each writer's
+ * paths, so the decision each writer needs was already in hand.
+ *
+ * The asymmetry between the two halves of `mixed` is deliberate. `empty` and
+ * `failed` are judged over EVERY writer, because a backed writer's family
+ * holding no file means the commit's copy is missing it. `unclaimed` is judged
+ * only over the files NOT tracked: a tracked file's provenance is the commit
+ * that carries it, so asking which writer claims it is asking the wrong
+ * question, and answering it would fail `qa-publish` over files this change
+ * does not touch.
  *
  * Usage:
  *   bun run qa:refresh [--report FILE] [--json]   # run (computed) or account (tracked); write the report
@@ -207,7 +230,7 @@ export function claimants(path: string, writers: readonly QaWriter[] = QA_WRITER
   return writers.filter((w) => w.writes.some((g) => globToRegExp(g).test(path))).map((w) => w.id);
 }
 
-export type RefreshMode = "tracked" | "computed";
+export type RefreshMode = "tracked" | "computed" | "mixed";
 
 export interface WriterRun {
   id: string;
@@ -241,6 +264,10 @@ export interface QaRefreshReport {
  *
  * In `tracked` mode the record is the commit's own copy, so only emptiness is
  * judged — a tracked copy with no file at all is not a record of anything.
+ *
+ * In `mixed` mode the per-writer judgements apply, but `unclaimed` is computed
+ * over `unbacked` only: see the module docblock for why a tracked file is not
+ * asked which writer claims it.
  */
 export function assess(args: {
   mode: RefreshMode;
@@ -248,6 +275,8 @@ export function assess(args: {
   runs: readonly WriterRun[];
   writers?: readonly QaWriter[];
   commit?: string;
+  /** `mixed` mode: the paths version control still tracks, whose provenance is the commit. */
+  tracked?: readonly string[];
 }): QaRefreshReport {
   const writers = args.writers ?? QA_WRITERS;
   const paths = args.inventory.directories.flatMap((d) => d.files.map((f) => f.path));
@@ -256,11 +285,14 @@ export function assess(args: {
   const empty: string[] = [];
   const failed: string[] = [];
   const reasons: string[] = [];
-  if (args.mode === "computed") {
+  if (args.mode !== "tracked") {
+    const trackedSet = new Set(args.tracked ?? []);
     for (const w of writers) families[w.id] = 0;
     for (const p of paths) {
       const by = claimants(p, writers);
-      if (by.length === 0) unclaimed.push(p);
+      // A tracked file's provenance is the commit that carries it, so it is
+      // never asked which writer claims it (module docblock, bean `tqjj`).
+      if (by.length === 0 && !trackedSet.has(p)) unclaimed.push(p);
       for (const id of by) families[id]!++;
     }
     for (const w of writers) if (families[w.id] === 0) empty.push(w.id);
@@ -299,6 +331,29 @@ function git(repoRoot: string, args: string[]): string {
 export function trackedQaFiles(repoRoot: string, roots: readonly string[]): string[] {
   if (roots.length === 0) return [];
   return git(repoRoot, ["ls-files", "-z", "--", ...roots]).split("\0").filter(Boolean);
+}
+
+/**
+ * Split the declared writers by whether version control still carries their
+ * output — the per-writer form of the two modes (module docblock, bean `tqjj`).
+ *
+ * A writer is BACKED when at least one tracked path matches one of its
+ * declared `writes` globs: the commit carries its record, so running it would
+ * make `main/<sha>` differ from the commit and break `5hox`'s hash check.
+ * UNBACKED, nothing in the commit holds its output, so this run must produce
+ * it or `qa-reports` carries nothing for it.
+ */
+export function partitionWriters(
+  tracked: readonly string[],
+  writers: readonly QaWriter[] = QA_WRITERS,
+): { backed: QaWriter[]; unbacked: QaWriter[] } {
+  const backed: QaWriter[] = [];
+  const unbacked: QaWriter[] = [];
+  for (const w of writers) {
+    const res = w.writes.map((g) => globToRegExp(g));
+    (tracked.some((p) => res.some((re) => re.test(p))) ? backed : unbacked).push(w);
+  }
+  return { backed, unbacked };
 }
 
 /** Run one writer from the repository root; its output streams through. */
@@ -341,24 +396,24 @@ function main(argv: string[]): number {
   if (roots.length === 0) throw new QaUsageError("no instance declares a qa directory; there is nothing to refresh");
   const commit = git(repoRoot, ["rev-parse", "HEAD"]).trim();
   const tracked = trackedQaFiles(repoRoot, roots);
-  const mode: RefreshMode = tracked.length > 0 ? "tracked" : "computed";
+  const { backed, unbacked } = partitionWriters(tracked);
+  const mode: RefreshMode = unbacked.length === 0 ? "tracked" : backed.length === 0 ? "computed" : "mixed";
   const runs: WriterRun[] = [];
-  if (mode === "tracked") {
+  if (backed.length) {
     console.log(
-      `qa:refresh: ${tracked.length} file(s) are still tracked under the qa directories — the commit's own copy is the record, ` +
-        "so no writer runs (5hox's hash check needs main/<sha> byte-identical to it)",
+      `qa:refresh: ${tracked.length} file(s) are still tracked under the qa directories, backing ${backed.length} writer(s) — ` +
+        "the commit's own copy is their record, so they do not run (5hox's hash check needs main/<sha> byte-identical to it)",
     );
-  } else {
-    for (const w of QA_WRITERS) runs.push(runWriter(repoRoot, w));
   }
-  const report = assess({ mode, inventory: movedInventory(repoRoot, roots), runs, commit });
+  for (const w of unbacked) runs.push(runWriter(repoRoot, w));
+  const report = assess({ mode, inventory: movedInventory(repoRoot, roots), runs, commit, tracked });
   const out = resolve(one("report") ?? join(repoRoot, "build", "qa-refresh.json"));
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, JSON.stringify(report, null, 2) + "\n");
   if (argv.includes("--json")) console.log(JSON.stringify(report, null, 2));
   console.log(
     `qa:refresh ${report.complete ? "COMPLETE" : "INCOMPLETE"} (${mode}): ${report.files} file(s), ${report.bytes} bytes` +
-      (mode === "computed" ? ` from ${runs.length} writer(s)` : "") +
+      (runs.length ? ` from ${runs.length} writer(s)` : "") +
       ` — report ${out}`,
   );
   for (const r of report.reasons) console.error(`  ✗ ${r}`);

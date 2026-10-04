@@ -507,7 +507,8 @@ export const STEPS: readonly Step[] = [
     write: ["lsi:viz"],
     verify: ["lsi:viz:check"],
     because:
-      "the LSI index's VIEWER PAGE, which `lsi:skills` above stales and nothing here regenerated until 2026-09-30. Measured: adding one skill left `cat-harness/docs/lsi/index.md` stale while this chain reported \"8 artefact(s) current\" — so the claim to be at a fixed point was false in exactly the way this chain exists to prevent, and it reddened `main` through `lsi:viz:check` in the Repository-gates job. The index and its page are two artefacts, and a chain that writes one and verifies only the other is a chain with a hole in it",
+      "the LSI index's VIEWER PAGE, which `lsi:skills` above stales and nothing here regenerated until 2026-09-30. Measured: adding one skill left `cat-harness/docs/lsi/index.md` stale while this chain reported \"8 artefact(s) current\" — so the claim to be at a fixed point was false in exactly the way this chain exists to prevent, and it reddened `main` through `lsi:viz:check` in the Repository-gates job. The index and its page are two artefacts, and a chain that writes one and verifies only the other is a chain with a hole in it. " +
+      "Since bean `tqjj` (2026-10-04) that measurement is the ARGUMENT RATHER THAN THE SYMPTOM: the page is no longer committed, because an artefact one skill edit stales is an artefact this chain can only chase. The step stays, and the two commands now ask a weaker question honestly — `lsi:viz` writes the ignored local copy a reader can look at, and `lsi:viz:check` asks whether the page can be DRAWN from this commit's evidence. Keeping it registered is deliberate: dropping it would make the chain silent about an unreadable index store, which is the one way this still breaks",
   },
   {
     write: ["kg:audit"],

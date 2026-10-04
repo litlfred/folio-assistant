@@ -82,6 +82,56 @@ correct one are indistinguishable from their output, and the stale one here
 reads as *more* work rather than less, so nothing about the result looks
 wrong.
 
+## A pattern is not always the answer — ask what the file's record is
+
+**Read this before declaring a pattern for a path that already has one.** The
+registry answers *how* a conflict is resolved. It never answers *whether* one
+arises, and reaching for it a second time on the same path is the move to
+stop and check.
+
+Two nearby things are already written down and neither is this one:
+
+- **bean `in5a`** — a declared pattern settles a file whose content is a
+  function of the TREE, and settles nothing about one whose content is a
+  function of the machine that built it. There, take-base is a loop: take
+  either side, regenerate, and the value is whatever this container sees.
+- **this section** — the content *is* tree-determined, the pattern *does*
+  resolve it, and the path still conflicts on every merge.
+
+The worked example is bean `tqjj`, and the measurement is what makes it a rule
+rather than a preference. `**/test/results/lsi/**` and
+`**/test/results/tool-runs/**` have been declared under `derived-results` all
+along, and `cat-harness/docs/lsi/**` under `glossary`. On 2026-10-04 those three
+paths were still blocking **seven open pull requests each**, 317-319 of the last
+400 commits on `main` touching them. Regenerating `skills.lsi.json` on an
+unchanged tree gave a **byte-identical** file, so `in5a` did not apply; but
+appending one sentence to one of 229 skill files rewrote the `fingerprint`,
+**9 of 12** `dimensions` entries and **166 of 229** `neighbours` entries. An
+SVD rotation is globally sensitive, so the convergent resolution is a rewrite
+of 94 % of the file — and nothing on `main` judged those bytes: corrupting the
+sidecar's `fingerprint` left `lsi:skills:check` at exit 0 (`.gitattributes`,
+bean `eqxp`).
+
+So the question to ask is not *which strategy*, it is:
+
+> **What is this file's record, and is `main` it?**
+
+- **`main` is the record** — an authored file, or a generated one a reader
+  navigates to by name. Declare the pattern; that is what the registry is for.
+- **`main` is not the record** — the file's record is the `qa-reports` entry
+  for its commit, or a build output, and the copy on `main` is a duplicate kept
+  in step by a gate. Then **take it off `main`**, and keep the declaration for
+  the branches still carrying it, where the base has deleted the file and
+  take-base resolves that too (see the next section).
+
+`.gitattributes` reached the same conclusion from the `-merge` side and states
+it plainly: *"Removing these conflicts, rather than tidying them, needs the
+files off `main` altogether."* Two things make that safe rather than merely
+tidy, and both are checks, not care: every reader must already cope with the
+file's absence (bean `oq1j` for the LSI readers), and something must still
+PRODUCE it where its record lives — `qa:refresh` decides that **per writer**,
+so a family can be removed on its own instead of all 1,186 at once.
+
 ## When one side deleted the file
 
 A modify/delete conflict has no stage for the side that deleted it, so
@@ -126,6 +176,11 @@ LSI indexes, detangle sidecars and tool-run records under `test/results/`.
 Recomputed from the whole corpus, so any concurrent skill or schema change
 touches them.
 
+The **LSI** half is untracked on `main` since bean `tqjj`, and the globs are
+kept for the branches still carrying it. See §"A pattern is not always the
+answer": this family is the measured case where the declaration was correct,
+did what it claimed, and removed no conflicts.
+
 ### `docs-auto` — take the base, regenerate (352)
 
 The generated docs index pages, already `-merge` in `.gitattributes`. One page
@@ -160,6 +215,13 @@ would be a hand-kept list able to drift from the workflow.
 
 The generated glossary and LSI pages: whole-corpus aggregates where concurrent
 term additions always collide.
+
+The **LSI page** is untracked on `main` since bean `tqjj` — written during the
+docs-site build — and its glob is kept for the branches still carrying it. The
+glossary page is **not** eligible for the same move, and the difference is the
+test in §"A pattern is not always the answer": `main` IS the glossary page's
+record, because a reader navigates to it by name and no per-commit publish
+holds a copy.
 
 ### `translated-glossary` — take the base, regenerate
 

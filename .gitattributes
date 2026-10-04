@@ -50,6 +50,13 @@
 cat-harness/docs/glossary/index.md                      linguist-generated=true -diff -merge
 cat-harness/docs/cat-harness/docs-auto/**               linguist-generated=true -diff -merge
 cat-harness/test/results/audit-coverage.qa-results.json linguist-generated=true -diff -merge
+# UNTRACKED on `main` since bean `tqjj` (2026-10-04), and the entry is kept on
+# purpose. A branch opened before that change still carries the file, and the
+# attribute is what makes its one conflict against a base that deleted it a
+# clean whole-file conflict. It is also the measurement this file's closing
+# paragraph predicted: the entry was correct, it did what it claimed, and the
+# path still conflicted on seven open pull requests — "Removing these
+# conflicts, rather than tidying them, needs the files off `main` altogether."
 cat-harness/test/results/tool-runs/lsi-index/cat-harness/skills.tool-run.json linguist-generated=true -diff -merge
 
 # Line endings the interpreters require, whatever core.autocrlf says.
