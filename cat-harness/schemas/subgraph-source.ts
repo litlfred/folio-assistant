@@ -19,7 +19,7 @@
  * | kind | content comes from | the entry's `path` is |
  * |---|---|---|
  * | `directory` (the default) | the checkout, at `path` | the content itself |
- * | `branch` | a declared repository branch (`special-branches.json`), keyed by `commit` or `tip` | where a mount of it lands |
+ * | `branch` | a declared repository branch, keyed by `commit` or `tip` | where a mount of it lands |
  *
  * A third kind (a graph database) is a new MEMBER of the union — an additive
  * change every `switch` on `kind` is then forced by the compiler to answer —
@@ -35,9 +35,11 @@
  * answers to one question is the defect this module exists to remove.
  * `qa-store.ts` and `branch-store.ts` still read `storage` directly; moving
  * them onto the resolver is their owners' change (#1957 takes `branch-store`'s
- * `mount`/`push` onto it), not this module's. `special-branches.json` stays the
- * one declaration of branch NAMES (and their legacy spellings): a branch
- * source names its branch, and the resolver attaches the matching row.
+ * `mount`/`push` onto it), not this module's. The DECLARATION is the only
+ * source of a branch's name (bean rva2, owner 2026-10-04: special-branches.json
+ * leaves infrastructure). The resolver attaches no table row any more, and a
+ * branch no directory declares is a health finding (`state:drift`), not a
+ * resolver failure.
  *
  * ## Overridable by the instance config, matched on id
  *
@@ -56,9 +58,6 @@
  * precedence (config, then `source`, then legacy `storage`, then the
  * `directory` default) is stated once.
  */
-import { readFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
 import { z } from "zod";
 
 import { propertyIri, termIri } from "./namespaces";
@@ -174,13 +173,6 @@ const LegacyStorageSchema = z.union([
 /** Which layer the answer came from — reported, so an override is never silent. */
 export type SourceDeclaredIn = "default" | "declaration" | "storage" | "config";
 
-/** A row of `special-branches.json`, as far as a source needs it. */
-export interface SpecialBranchRow {
-  id: string;
-  shape: "branch" | "family";
-  name: string;
-  legacy: string[];
-}
 
 export type ResolvedSubgraphSource =
   | {
@@ -198,12 +190,6 @@ export type ResolvedSubgraphSource =
       path: string;
       branch: string;
       keyedBy: KeyedBy;
-      /**
-       * The `special-branches.json` row naming this branch (exactly, or as a
-       * member of a `family`), or `undefined` when none does — a FINDING the
-       * subgraph-source gate reports, never a guess at the name.
-       */
-      special: SpecialBranchRow | undefined;
       declaredIn: SourceDeclaredIn;
     }
   | {
@@ -215,44 +201,12 @@ export type ResolvedSubgraphSource =
       keyFrom: string;
       /** The remote `owner/repo` the family is read from; absent when it is materialised on this repository. */
       repository?: string;
-      /** The `family` row of `special-branches.json` with this prefix, while that table exists (bean rva2). */
-      special: SpecialBranchRow | undefined;
       declaredIn: SourceDeclaredIn;
     };
 
-/**
- * Where `special-branches.json` is — resolved LAZILY, from `import.meta.url`.
- * `import.meta.dir` is Bun's alone: Playwright loads this module under Node,
- * where a top-level `resolve(import.meta.dir, …)` threw before any test ran.
- * Lazy as well, so importing the declaration schema touches no filesystem.
- */
-function specialBranchesPath(): string {
-  return resolve(dirname(fileURLToPath(import.meta.url)), "..", "scripts", "special-branches.json");
-}
 
-let specialRows: SpecialBranchRow[] | undefined;
 
-/** `special-branches.json`'s rows — the one declaration of branch names. */
-export function specialBranches(path?: string): SpecialBranchRow[] {
-  if (path === undefined && specialRows !== undefined) return specialRows;
-  const raw = JSON.parse(readFileSync(path ?? specialBranchesPath(), "utf-8")) as { branches?: SpecialBranchRow[] };
-  const rows = (raw.branches ?? []).map((b) => ({ id: b.id, shape: b.shape, name: b.name, legacy: [...(b.legacy ?? [])] }));
-  if (path === undefined) specialRows = rows;
-  return rows;
-}
 
-/** The row declaring `branch`: an exact `branch` row, or the `family` whose prefix it carries. Legacy names count. */
-export function specialBranchFor(branch: string, rows: readonly SpecialBranchRow[] = specialBranches()): SpecialBranchRow | undefined {
-  for (const r of rows) {
-    if (r.shape === "branch" && (r.name === branch || r.legacy.includes(branch))) return r;
-  }
-  for (const r of rows) {
-    if (r.shape === "family" && [r.name, ...r.legacy].some((p) => p.endsWith("/") && branch.startsWith(p) && branch.length > p.length)) {
-      return r;
-    }
-  }
-  return undefined;
-}
 
 /** The fields of a directory entry the resolver reads. */
 export interface SourcedEntry {
@@ -289,7 +243,6 @@ export function contentIsOffCheckout(entry: { source?: SubgraphSource; storage?:
 export function resolveSubgraphSource(
   entry: SourcedEntry,
   overrides?: SubgraphSourceOverrides,
-  rows?: readonly SpecialBranchRow[],
 ): ResolvedSubgraphSource {
   if (entry.source !== undefined && entry.storage !== undefined) {
     throw new Error(
@@ -337,7 +290,6 @@ export function resolveSubgraphSource(
         path: entry.path,
         branch: src.branch,
         keyedBy: src.keyedBy,
-        special: specialBranchFor(src.branch, rows),
         declaredIn,
       };
     }
@@ -355,7 +307,6 @@ export function resolveSubgraphSource(
         branchPrefix: prefix,
         keyFrom: src.keyFrom,
         ...(src.repository ? { repository: src.repository } : {}),
-        special: (rows ?? specialBranches()).find((r) => r.shape === "family" && (r.name === prefix || r.legacy.includes(prefix))),
         declaredIn,
       };
     }

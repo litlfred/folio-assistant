@@ -7,15 +7,16 @@
  *   bun run subgraph:resolve --all [--json]
  *
  * Prints the declaring instance, the entry's path, the resolved source
- * (`directory` or `branch`, with the branch, its keying and its
- * special-branches row) and `declaredIn` — which layer answered: the
+ * (`directory`, `branch` with its keying, or a branch `family` with its
+ * prefix, key and repository) and `declaredIn` — which layer answered: the
  * declaration, a legacy `storage`, the instance config's override, or the
  * `directory` default. `branch-store mount`/`push` dispatch on the same
  * answer; this is the way to see it from a shell.
  *
  * Exit: 0 resolved; 1 no instance declares the id; 2 the declaration
  * contradicts itself (both `source` and `storage`, a tip-keyed `qa`), or a
- * branch source names a branch `special-branches.json` does not declare.
+ * declaration cannot be resolved. A branch source no longer needs a
+ * special-branches row: the declaration is the authority (bean rva2).
  *
  * @module scripts/resolve-subgraph
  */
@@ -33,8 +34,10 @@ function line(d: DeclaredSubgraph): string {
   const s = d.source;
   const where =
     s.kind === "branch"
-      ? `branch ${s.branch} (keyed by ${s.keyedBy}; ${s.special ? `special-branches row "${s.special.id}"` : "NOT declared in special-branches.json"}) mounted at ${s.path}`
-      : `directory ${s.path}`;
+      ? `branch ${s.branch} (keyed by ${s.keyedBy}) mounted at ${s.path}`
+      : s.kind === "family"
+        ? `branch family ${s.branchPrefix}<${s.keyFrom}>${s.repository ? ` on ${s.repository}` : ""} mounted at ${s.path}`
+        : `directory ${s.path}`;
   return `${d.id}: ${where} — declared by ${d.instanceName}, source from ${s.declaredIn}`;
 }
 
@@ -64,7 +67,6 @@ if (import.meta.main) {
       code = Math.max(code, 1);
       continue;
     }
-    if (d.source.kind === "branch" && d.source.special === undefined) code = Math.max(code, 2);
     if (json) out.push({ id: d.id, instance: d.instanceName, instanceRoot: d.instanceRoot, source: d.source });
     else console.log(line(d));
   }

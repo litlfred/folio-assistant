@@ -82,7 +82,7 @@
  * · 4 could not determine · 5 refused.
  */
 import { BranchStore, MANIFEST_FILE, MANIFEST_SCHEMA, type TreeEntry } from "./branch-store.ts";
-import { candidatesOf, specialBranches, type SpecialBranch } from "./state-drift.ts";
+import { candidatesOf, observedRows, type SpecialBranch } from "./state-drift.ts";
 
 /** What the manifest says, as far as a refresh needs it. */
 interface SeedManifest {
@@ -129,9 +129,14 @@ export type SeedResult =
     }
   | { state: "refused" | "unknown" | "failed"; branch: string; reason: string };
 
-/** The row named by `id`, or undefined. */
-export function rowFor(id: string, rows: SpecialBranch[] = specialBranches()): SpecialBranch | undefined {
-  return rows.find((r) => r.id === id);
+/**
+ * The branch named by `id`: a declared directory id, a branch name, or a
+ * branch's last segment (`beans` for `cat/cat-harness/beans`, the id the
+ * retired table used). Rows come from what the remote OBSERVABLY holds and what
+ * the declarations name (bean rva2), never from `special-branches.json`.
+ */
+export function rowFor(id: string, rows: SpecialBranch[] = observedRows() ?? []): SpecialBranch | undefined {
+  return rows.find((r) => r.id === id) ?? rows.find((r) => r.name === id) ?? rows.find((r) => r.name.endsWith(`/${id}`));
 }
 
 /**
@@ -331,12 +336,12 @@ if (import.meta.main) {
   };
   const id = named("--id");
   if (!id) {
-    console.error("usage: bun run state:seed --id <special-branch-id> [--from-manifest] [--authoritative] [--dry-run] [--json]");
+    console.error("usage: bun run state:seed --id <directory id or branch> [--from-manifest] [--authoritative] [--dry-run] [--json]");
     process.exit(5);
   }
   const row = rowFor(id);
   if (!row) {
-    console.error(`state-seed: no special-branches.json row has id ${id}; the rows are ${specialBranches().map((r) => r.id).join(", ")}`);
+    console.error(`state-seed: no declared directory or remote branch is named ${id}; the branches are ${(observedRows() ?? []).map((r) => r.name).join(", ")}`);
     process.exit(5);
   }
   const r = refreshSeed(row, {
