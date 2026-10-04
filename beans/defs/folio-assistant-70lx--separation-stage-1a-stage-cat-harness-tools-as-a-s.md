@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-01T19:46:46Z
+updated_at: 2026-10-04T15:59:51Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-pyds
@@ -49,3 +49,16 @@ Source: owner, session_01ToWZR4RgTRCWeSsgxsSQfT.
 - **Still open (not ruled):** how a sidecar's `source_file` is resolved; whether sci-bound files ride to tools in 1a.
 
 _2026-10-01T19:46:46Z_ — Claimed by claude/70lx-b0 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## 2026-10-04 — quiet claim taken; owner ruling; prep PR (session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi)
+
+**Claim taken** under `bean-coordination` §"A quiet claim": the holder `claude/70lx-b0` is merged into `main`, no open PR names `70lx`, and the bean was last touched 2026-10-01T19:46Z. Work continues on `claude/70lx-prep`.
+
+**Owner ruling, 2026-10-04** (chosen from options in this session): core's document adapter (`folio-assistant-core/adapters/document/index.ts`) **stays in folio-assistant-core** and imports the registration API from `cat-harness-tools`. That settles the C1-vs-w2gr-Q1 question the scoping left open.
+
+**Prep (no file moves), measured on `main` @ 0b7b9e4:**
+- **Trap 1 — the server's loader did not resolve through `needs`.** `check-tools` already used `resolveImplementingPath`, but `registerDeclaredToolGroups` did a plain `join(root, module)`, so every `src/tools/*` Tool node would have gone `absent` the moment its module moved. Fixed: own copy first, then the one implementer; two implementers is `failed` naming both. Tested on a scratch checkout, and the two decisive tests fail against the old loader.
+- **`no-content-adapter.ts` joins the move set** rather than needing a type split: its only importers are `src/index.ts` and `src/tool-groups.test.ts`, both moving, and it is the only staying-side importer of `src/types.ts`.
+
+**For B1 (the move):** `server.ts` passes `PLATFORM_ROOT` (its own instance) as the tool groups' root. After the move that must be the **declaring** root, `cat-harness` (where `tools/` lives), not `cat-harness-tools` — routes keep `PLATFORM_ROOT`, since they move with the server. `capture-mcp-tools.ts`'s `TOOL_MODULES` moves with the server and stays relative to it. Baseline to compare against: `bun run split:baseline:check` (pyds, #2101).
