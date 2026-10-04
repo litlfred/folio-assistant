@@ -1,0 +1,15 @@
+{
+  "$schema": "state-manifest/v1",
+  "keyedBy": "route",
+  "status": "seed",
+  "authoritative": false,
+  "seededFrom": "066efdbfa2eebfbc578e621312e823f34b4a0bf5",
+  "seededAt": "2026-10-04T05:33:56Z",
+  "bean": "folio-assistant-xsrv",
+  "directories": [
+    { "id": "uml-overview-pages", "path": "cat-harness/docs/uml/overview" },
+    { "id": "uml-overview-svgs", "path": "cat-harness/docs/assets/img/uml/overview" }
+  ],
+  "writer": "cat-harness/scripts/gen-uml-overview.ts",
+  "gate": "bun run uml:overview:check"
+}
