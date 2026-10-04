@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "skill",
+    "id": "test-engineer",
+    "path": "skills/sdlc/sdlc-core/test-engineer.md"
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/sdlc/sdlc-core/test-engineer.md",
+      "code": "cat-harness/skills/sdlc/sdlc-core/test-engineer.ts",
+      "prose_hash": "da1e38fafbcc",
+      "code_hash": "f881cc674866",
+      "by": "baseline"
+    }
+  ]
+}

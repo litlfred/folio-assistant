@@ -124,7 +124,7 @@ the work looks finished.
 | 7 | **Publication plan**: every identifier the content mints is a file some step publishes, at `/<version>/` and `/v<major>/` | `publication-manager` | `check:node-iris`; the site layout in [`instance-publication`](instance-publication.md) §"The release site" |
 | 8 | **Rehearse standalone**: copy content + tools alone into a temporary directory and run the tools' checks there | `build-pipeline` | green with nothing else on the path; an empty tree exits non-zero |
 | 9 | **Authorise** — report what moves, sizes, what breaks, and wait | `administrator` | the owner's answer ([`deletion-requires-confirmation`](deletion-requires-confirmation.md)) |
-| 10 | **Seed**: the owner creates the repositories; seed `main`, then the content and tools as reviewed PRs, with history | `administrator`, then `authoring-agent` | the seeding PRs reviewed and green |
+| 10 | **Seed**: the owner creates the repositories; once the source has settled, seed `main`, then the content and tools as reviewed PRs, with history | `administrator`, then `authoring-agent` | `bun run seed:ready --layer <name> --rehearse` answers `settled` for each layer, at seed time; then the seeding PRs reviewed and green |
 | 11 | **Parent consumes, additively**: pin (a SHA while staging, a version once released), repoint imports, keep the parent's copy | `platform-authoring-agent` | the parent green with the dependency declared; `check:published-refs` |
 | 12 | **First release**: tag, publish `/<version>/` and `/v<major>/` | `publication-manager` | `check:version-bump`; every identifier dereferences ([`publish-verification`](publish-verification.md)) |
 | 13 | **Cutover**: the one commit deleting the parent's copy | `administrator` | only after 11 and 12 are green |
@@ -133,6 +133,58 @@ the work looks finished.
 **Nothing is committed to the new repositories before stage 10**, and stage 10
 starts only when the owner says so. Until then the pair is staged as sibling
 directories in the parent (`bootstrap/`, `bootstrap-tools/`).
+
+### Ready to seed? — asked at seed time, not at rehearsal
+
+A seed is a snapshot: one commit that names the source sha, with no history
+(bean `iai8`). **Every open PR whose diff touches the layer when the snapshot
+is taken is orphaned into the monorepo**: after cutover its change is in
+neither the seed nor anywhere that reads it. Stage 8 asked whether the layer
+stands alone, but the tree has moved since. So `GW_SeedReady` sits between
+creating the repositories and seeding them, and asks again:
+
+```sh
+bun run seed:ready --layer cat-harness --rehearse --text   # exit 0 settled, 1 not yet, 2 unknown
+```
+
+| criterion | `not yet` when |
+|---|---|
+| heavy movers | an open PR labelled `heavy-mover` touches the layer or the next one up |
+| next layer | any open PR touches the next layer up, which imports this one |
+| layer load | more than five open PRs touch the layer |
+| moves | an open PR deletes a file in the layer, or renames one into or out of it |
+| standalone | `bun test` is red with only the layer and what it `needs` beside it, as sibling directories |
+| sibling discovery | an instance that `needs` the layer directly cannot be found by discovery in a sibling layout with no aggregate root |
+
+These were the steward's hand-applied criteria (2026-10-02), generalised per
+layer. Four things to keep straight:
+
+- **The layer map is read off the declarations**: `livesAt.path` is the
+  directory, the longest `needs` chain is the depth, and the next layer is
+  every instance one level up that needs this one. Nothing in the tool names
+  a directory.
+- **Every threshold is in the decision table**,
+  `decisions/seed-readiness-gate.dmn`. The script works out each criterion's
+  verdict by evaluating the table with the other facts at zero, so changing
+  "five" is a one-line edit to the table.
+- **`heavy-mover` is a label a person applies** (owner, 2026-10-02). With
+  none on the layer, the criterion passes. If the label cannot be read, the
+  answer is `could-not-determine`.
+- **The rehearsal runs only on request.** Owner, 2026-10-02: *"Optional, run
+  only on request with --rehearse."* It copies the layer and its `needs` into
+  a scratch workspace (~150 MB and ~8,000 tests for cat-harness) and refuses
+  to start with less than 3 GB free. Without `--rehearse`, the standalone
+  criterion is `could-not-determine`, so **`seed:ready` cannot answer
+  `settled` until a rehearsal has run.** That consequence is the one constant
+  `SETTLED_REQUIRES_REHEARSAL`.
+
+Could-not-determine is never clean. GitHub lists at most 3,000 files per PR,
+so a criterion that the unseen files could change is undetermined, and the
+gateway answers `unknown` and stops. An unknown only withholds `settled`, though.
+It never hides a finding that is already certain, so the table tests the
+`not yet` rows first. `not yet` goes to *Drain*: land, close or re-target the
+PRs it named, then ask again. The tool only reports. It never seeds, labels
+or comments.
 
 ## The owner's decisions
 
@@ -223,5 +275,5 @@ This skill has its own process: **[A knowledge graph leaves for its own reposito
 
 | process | step(s) that name it |
 |---|---|
-| [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | Measure the signals; Separate this graph?; 4 · Identity: version, iriBase, nodeSchemas; 5 · Move harness output about it to the host; 6 · Split content from tools; 8 · Rehearse standalone; Create the repositories; 10 · Seed both repositories |
+| [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | Measure the signals; Separate this graph?; 4 · Identity: version, iriBase, nodeSchemas; 5 · Move harness output about it to the host; 6 · Split content from tools; 8 · Rehearse standalone; Create the repositories; Drain: land, close or re-target the open PRs; 10 · Seed both repositories |
 

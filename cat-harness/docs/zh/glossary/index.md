@@ -25,7 +25,7 @@ The table's labels are in the source language: it reports counts per scheme, com
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2937</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2937</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>3169</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>3169</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -105,7 +105,7 @@ be a term this corpus is right to coin.</p>
 - `bootstrap--terms` — bootstrap/schemas/graph.schema.json
 - `cat-harness--platform` — folio-assistant-core/glossary/cat-harness.glossary.json
 - `folio-assistant-core--platform` — folio-assistant-core/glossary/folio-assistant-core.glossary.json
-- `who-style-guide--who-terms` — who-style-guide/glossary/who-style-guide.glossary.json
+- `who-iris--who-terms` — who-iris/glossary/who-iris.glossary.json
 
 ### 从知识图谱资产中提取
 

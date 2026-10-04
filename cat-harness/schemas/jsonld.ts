@@ -78,7 +78,7 @@ import type { ContributionRegistry } from "./contributions";
  */
 import { z } from "zod";
 
-import { CORE_NS, FOLIO_BASE } from "./namespaces";
+import { CORE_NS, FOLIO_BASE, ownNamespace } from "./namespaces";
 
 // Content terms are folio-assist-core's, so they hang off core's namespace —
 // the same layer that owns block kinds, voices and the library.
@@ -148,14 +148,39 @@ export { FOLIO_BASE };
 export const CONTENT_DOCUMENT_CONTEXT = [CONTENT_CONTEXT_URL, { "@base": FOLIO_BASE }] as const;
 
 /**
+ * The published docs site's root — `_config.yml` `url` + `baseurl`, from the
+ * own-namespaces code list (`docs-site`). The same value `library-iri.ts`
+ * mints library assets under.
+ */
+export const DOCS_SITE_BASE = ownNamespace("docs-site");
+
+/**
+ * The `@context` the DOCS SITE's own nodes carry (`gen-site-jsonld.ts`) —
+ * issue #1908.
+ *
+ * {@link FOLIO_BASE} is `https://litlfred.github.io/folio/`, which is not
+ * where anything is served, so a site node's `@id` named nothing a reader
+ * could open — and a todo's `target`, an IRI edge to that node, could not be
+ * followed. The site's nodes ARE published (at {@link siteNodeSitePath}), so
+ * their base is the site, and each `@id` is the address of its own JSON-LD:
+ * the `kg-viewer` rule from #1881, that an asset's IRI dereferences to it.
+ *
+ * Only the site's nodes move. The corpus and library documents keep
+ * {@link FOLIO_BASE} — thousands of committed files whose ids key summaries,
+ * LSI indexes and kg-qa sidecars, and none of which is a published file yet.
+ */
+export const SITE_DOCUMENT_CONTEXT = [CONTENT_CONTEXT_URL, { "@base": DOCS_SITE_BASE }] as const;
+
+/**
  * A content document's `@context`, as a record schema accepts it: the
- * two-part form above, or the bare URL that records written before bean
- * `bh4q` carry. Any other context would bind their keys to terms nobody
- * declared, so nothing else is accepted.
+ * two-part form above, the site form, or the bare URL that records written
+ * before bean `bh4q` carry. Any other context would bind their keys to terms
+ * nobody declared, so nothing else is accepted.
  */
 export const ContentContextSchema = z.union([
   z.literal(CONTENT_CONTEXT_URL),
   z.tuple([z.literal(CONTENT_CONTEXT_URL), z.object({ "@base": z.literal(FOLIO_BASE) }).strict()]),
+  z.tuple([z.literal(CONTENT_CONTEXT_URL), z.object({ "@base": z.literal(DOCS_SITE_BASE) }).strict()]),
 ]);
 
 // ── Block kind → RDF types ───────────────────────────────────────
@@ -220,16 +245,32 @@ export const SITE_NARRATIVE_TYPES = ["folio-assistant-core:Prose", "doco:Section
 export const SITE_ASSET_TYPES = ["folio-assistant-core:Figure", "doco:Figure"] as const;
 
 /**
- * Relative IRI for a docs-site node. `site/<slug>` for a page, and
- * `site/<slug>/nodes/<id>` for one of its children — the same
- * document/section/block shape `gen-library-jsonld` mints for an ingested
- * source, so both populations read the same way when the graph is walked.
+ * Relative IRI for a docs-site node, against {@link DOCS_SITE_BASE}:
+ * `site/<slug>.jsonld` for a page and `site/<slug>/nodes/<id>.jsonld` for one
+ * of its children — the same document/section/block shape `gen-library-jsonld`
+ * mints for an ingested source, so both populations read the same way when the
+ * graph is walked.
+ *
+ * It IS the node's published path ({@link siteNodeSitePath}), so the IRI
+ * dereferences to the node's JSON-LD (#1908; the `kg-viewer` rule of #1881).
+ * The rendering — `<slug>.html#<id>` — is a different resource, and the node
+ * does not name it.
  *
  * The slug keeps its slashes: `guides/writing-a-paper` publishes at that path
  * and an IRI that flattened it would no longer say where the page is.
  */
 export function siteIri(slug: string, nodeId?: string): string {
-  return nodeId ? `site/${slug}/nodes/${nodeId}` : `site/${slug}`;
+  return siteNodeSitePath(slug, nodeId);
+}
+
+/** Where a site node's JSON-LD is published, SITE-relative. One function names both the `@id` and the file. */
+export function siteNodeSitePath(slug: string, nodeId?: string): string {
+  return nodeId ? `site/${slug}/nodes/${encodeURIComponent(nodeId)}.jsonld` : `site/${slug}.jsonld`;
+}
+
+/** A site node's absolute IRI — what an edge from outside the site graph (a todo's `target`) points at. */
+export function siteNodeIri(slug: string, nodeId?: string): string {
+  return `${DOCS_SITE_BASE}${siteNodeSitePath(slug, nodeId)}`;
 }
 
 export const BLOCK_KIND_TO_DOCO_TYPE: Partial<Record<BlockKind, string>> = {

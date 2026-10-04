@@ -36,6 +36,72 @@ grown large, so it survives zooming out. Only `[x]` closes it.
 Collapsing them gives a board where a card can close itself with no action
 taken, and where `[x]` and a zoom-out are indistinguishable to the reader.
 
+### Semantic zoom is the GLASS's, not the board's — since 2026-10-02
+
+The owner, 2026-10-02, on the stickies panel (#1925), verbatim:
+
+> dont treat stickies differently. combine best of each. lower faded
+> avatar/theme looks nicer. upper smaller same size closed looks niceer. icons
+> are a mess on both. make compact underneath. [x] is what? send to fsh-guts?
+> make sure confirmed by user
+
+So every board slot — a landing sticky and a todo sticky alike — is **one
+component**: the same closed square tile (`--fa-sticky-tile-size`) with the
+theme's faded art, and the same compact icon row underneath it. A slot is its
+closed tile at **every** width, so there is no width at which a board slot
+shows more words, and **semantic zoom no longer runs on the board**. It still
+decides what a card shows **on the folio glass**, where a card is resized
+freely. Opening a tile is still the other mechanism — `[x]` closes the window,
+nothing automatic does.
+
+Do not re-add a width observer to the board grid: it would be a zoom with
+nothing to change, and the next agent would read it as the card's state.
+
+## One sticky, one icon row, in one order
+
+Under every sticky, on every panel: **view, edit, pin, send to fsh-guts**, as
+icon buttons. An icon-only control carries `aria-label` (what a screen reader
+announces) AND `title` (the same words on hover); they are not
+interchangeable. No control sits inside the card body. The open window's bar
+uses the same icons for the same acts — a reader who learned the row has
+learned the bar. A link the sticky cannot serve is absent, never dead (`pb04`).
+
+## Pin is a toggle onto the FOLIO glass
+
+The owner, 2026-10-02, verbatim: *"pin to glass should pin to folio glass. its
+not working right."*
+
+It was not working because Pin wrote a **second store** and cloned the card
+into the layer as a page-level floating copy, which was never a folio-glass
+item: no glass tools, no folio geometry, no shelve, special-cased by the glass
+filter and count. Two stores answering *"what is on my glass"* is the defect.
+
+So:
+
+- **Pin makes the sticky a folio asset** — `todo/<id>` (the key the glass's own
+  Todos panel pulls a todo out under, so the two ways onto the glass agree) or
+  `landing/<slot>` — with `shown: true`, drawn by the glass's own card path and
+  placed by `placeOnGlass`. A landing sticky's theme, picture URL and text
+  travel in the entry as data, never as stored markup.
+- **Unpin is `shelveFromGlass`** — the middle of the three states below. The
+  entry stays; the same pin puts it back, where the reader left it.
+- **The pressed state is the store's answer** (`folioStateOf(key) ===
+  "glass"`), never the button's memory. The glass's own × shelves too, and the
+  row's pin follows it.
+- The old pin store is migrated into the folio once, so no reader's pin is
+  lost; nothing writes it any more.
+
+## Send to fsh-guts asks first
+
+*"[x] is what? send to fsh-guts? make sure confirmed by user"* — a control a
+reader has to ask about has not said what it does. So discard is named for
+where it goes (**Send to fsh-guts**, the trashcan that is kept) and opens a
+confirmation that names the sticky, says it is restorable and per-browser, and
+says **where** it is restored from — the fish in the navbar's icon row. Focus
+starts on Cancel; Cancel and Escape do nothing but close it. A dialog whose
+dismissal performs the act did not ask. The window bar's send is the same act
+and takes the same confirmation. The inverse is Restore in fsh-guts (`l4zi`).
+
 ## The threshold is declared, inherited, and traceable
 
 `schemas/semantic-zoom.ts`: a **folio default** with a **per-kind override** —
@@ -96,6 +162,13 @@ rather than *"broken"*: **a control two clicks deep inside a collapsed launcher
 is a place a reader has to already know about.** So the inline board collapses
 to a control in its own position, and focus follows it — left alone, focus
 lands on `<body>` and the keyboard position is gone.
+
+**A default of "hidden" is allowed only with the inverse on screen.** The
+glass's tile strip starts slid away (owner, 2026-10-01), and that is
+acceptable for one reason: its "Show tiles (N)" tab stays in view, in the
+strip's own position, and the same tab hides the tiles again. A hidden default
+whose way back is anywhere else is this section's defect. See
+[`harness-tiles`](harness-tiles.md) §"The glass strip".
 
 ## The floor, which is not negotiable
 

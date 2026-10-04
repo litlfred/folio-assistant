@@ -256,6 +256,12 @@ the body changes. **A skill edit is three files:**
 | `test/results/kg-qa/.../<name>.kg-qa.json` | `bun run kg:audit` |
 | `docs/reference/skill-instructions/<name>.md` | `bun run cat-harness/scripts/gen-skill-docs.ts` |
 
+The `kg-qa` row is a derived QA result: its record is the commit-keyed entry
+the CI job `qa-publish` stores on the orphan `qa-reports` branch (arc `3fva`),
+and the committed copy goes when bean `5hox` removes it. Until then
+`kg:audit:check` still compares against it, so it is still regenerated here —
+and `bun run skill:register` does all of it in one command.
+
 **This paragraph said "at least two files" and was wrong on its first
 commit** — it named the sidecar and missed the generated docs, and
 `gen-skill-docs --check` duly failed, 1 of 60. Which is the lesson about
@@ -288,6 +294,19 @@ wrong". It means **you changed an input and did not regenerate**.
 So the fix is to run the generator and commit its output — never to hand-edit
 the artefact into agreement. Hand-editing makes this run green and the next
 regeneration noisy, and it silently detaches the artefact from its source.
+
+**QA gates are moving to a different shape, and their failure means something
+else.** Arc `3fva` takes derived QA results off `main`, so a gate over the
+`qa` graph cannot compare against a committed file for long. Those gates now
+**compute and judge**: `--check` writes nothing, and fails only on a finding
+that is **NEW** against a baseline — the committed working copy for now,
+`--against <ref>` on the `qa-reports` branch after. A missing baseline is
+**UNKNOWN**, printed and never a pass, never a fail. The four judge states are
+`ok` (0), `finding` (1), `unknown` and `error` (2) — `JUDGEMENT_EXIT` in
+`scripts/qa-results.ts`. A red one of THOSE is a real finding your change
+introduced; regenerating and committing does not clear it, fixing the subject
+does. Which gates have moved is in each script's own docblock; do not infer
+it from this paragraph.
 
 Each `*:check` script has a generator beside it under the same stem; `bun run
 gates:list` shows the check, and the script it checks is named in the check's
@@ -363,5 +382,6 @@ renamed or restructured and the reader needs fixing — not the gate list.
 | process | step(s) that name it |
 |---|---|
 | [Code change and review](../../processes/code-change-review.html) | Run the platform's own gates |
-| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Lean: no bare `import Mathlib` (HARD); Python: unused and wildcard imports (HARD); TypeScript: lint, types and tests (HARD); End-to-end + accessibility (HARD); Rust wildcard imports (WARN-ONLY); Dependency advisories (WARN-ONLY); Repository gates (HARD); Skill-registration chain (UNMASKED) |
+| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Import hygiene (HARD) and advisories (WARN-ONLY); TypeScript: lint, types and tests (HARD); End-to-end + accessibility (HARD); Repository gates (HARD); Registered gates that never run (HARD); Skill-registration chain (UNMASKED) |
+| [A merge train](../../processes/merge-train.html) | Run the gate set on the train (calls a sub-process) |
 

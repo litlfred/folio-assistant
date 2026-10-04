@@ -64,22 +64,6 @@
       "result": "fail",
       "findings": [
         {
-          "where": "Task_Sweep",
-          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Label",
-          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Close",
-          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Track",
-          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
           "where": "Task_Comment",
           "detail": "needs skill \"issue-working\", but its lane's role \"build-pipeline\" does not carry it."
         }
@@ -126,8 +110,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/pr-checks-present.yml",
+          "detail": ".github/workflows/pr-checks-present.yml changed since cat-harness/processes/sdlc/pr-checks-present.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -135,19 +124,9 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 2,
+    "pass": 14,
+    "fail": 3,
     "n/a": 8,
     "unknown": 0
-  },
-  "pair_attestations": [
-    {
-      "kind": "implements",
-      "prose": "cat-harness/processes/sdlc/pr-checks-present.bpmn",
-      "code": ".github/workflows/pr-checks-present.yml",
-      "prose_hash": "2f6986165c50",
-      "code_hash": "8893bfff8ee9",
-      "by": "baseline"
-    }
-  ]
+  }
 }

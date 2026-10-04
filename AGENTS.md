@@ -191,6 +191,11 @@ duplicate is fine while an unchecked one is not. In this instance
 `.beans.yml`, because the `beans` binary is third-party, and `WORKFLOW_DIR` in
 `workflow/store.ts`, because it is on the hot path of every workflow call.
 
+**QA results are not kept in a commit any more.** Derived verdicts go to the
+orphan `qa-reports` branch, keyed by commit, and judgements stay on `main` in
+the `attestations` graph (`test/attestations/`). The skill is
+[`qa-reports`](cat-harness/skills/sdlc/sdlc-core/qa-reports.md).
+
 These were `.beans/` and `.harness/workflow/` until 2026-09-18 (beans `8xzw`,
 `x89g`) — the two artefacts a person looks for first were the two hardest to
 find. **`.harness/` is now empty and gone** — 2026-09-20 finished the job:
@@ -361,9 +366,10 @@ without anybody deciding it.
 the repository. **`bun run audit:coverage` asks what is audited at all** — per
 declared graph kind, how many directories are declared, how many files they
 hold, how many `kg-audit` criteria reach the kind, and how many CI gates
-**declare** they cover it. Written as a committed sidecar under
-`cat-harness/test/results/`, because a printed verdict cannot tell "never
-audited" from "audited clean".
+**declare** they cover it. Written as a sidecar under
+`cat-harness/test/results/` and stored on `qa-reports`
+([`qa-reports`](cat-harness/skills/sdlc/sdlc-core/qa-reports.md)), because a
+printed verdict cannot tell "never audited" from "audited clean".
 
 It exists because the question got answered by inference instead. An agent
 counted `kg-qa` sidecars over the bean store, found zero, and reported beans
@@ -415,7 +421,7 @@ IS-A and static, the subprocess stack is scoped) and why merging them gives a
 closure too broad to fail an audit; the severity scale; and how to add a role.
 
 **The audit is `bun run kg:audit`** — one criterion per join, written as
-committed QA sidecars under `test/results/kg-qa/` in a tree that MIRRORS each
+QA sidecars under `test/results/kg-qa/` (stored on `qa-reports`) in a tree that MIRRORS each
 subject's path, because flat would collide (four basenames already occur twice).
 `kg:audit:check` fails on a `critical` finding or a stale sidecar;
 `kg:audit:strict` adds `major`. A sidecar rather than a console report for one

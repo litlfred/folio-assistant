@@ -3,13 +3,16 @@
  * current review exists; a rule judged `fail` is recorded, never a finding.
  */
 import { describe, expect, test } from "bun:test";
-import { mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 
 import {
   evaluateVoiceReviews,
+  evaluateVoiceReviewsFrom,
   fileHash,
+  readVoiceReviews,
+  recordReview,
   skillVoices,
   verdictProblems,
   type SkillVoice,
@@ -87,5 +90,62 @@ describe("whether a skill's review is current", () => {
       "r2: a fail verdict needs a note saying why",
     ]);
     expect(verdictProblems(voice, [...review().verdicts, { rule: "zz", result: "pass" }])).toEqual(["zz: not a skill rule of v"]);
+  });
+});
+
+// Bean `2gst`: reviews moved to the attestation store, and an unreadable store
+// answers `unknown`/`corrupt` — it used to answer `[]`, i.e. "never reviewed".
+describe("reviews in the attestation store", () => {
+  const voice: SkillVoice = { id: "v", instance: "i", rules: [{ id: "r1" }] as SkillVoice["rules"], hash: "vh" };
+  const subject = { kind: "skill", id: "a-skill", path: "skills/a-skill.md" };
+  const reviewOf = (skill: string): VoiceReview => ({
+    voice: "v",
+    instance: "i",
+    skill_hash: fileHash(skill)!,
+    voice_hash: "vh",
+    by: "agent",
+    at: "t",
+    verdicts: [{ rule: "r1", result: "pass" }],
+  });
+
+  test("an absent store takes the prior sidecar's reviews (ruling 2); a corrupt file is refused, not overwritten", () => {
+    const dir = mkdtempSync(join(tmpdir(), "voice-store-"));
+    const skill = join(dir, "a.md");
+    writeFileSync(skill, "# a\n");
+    const tree = join(dir, "att", "kg-qa");
+    const store = join(tree, "a.attestations.json");
+    const sidecar = join(dir, "a.kg-qa.json");
+    writeFileSync(sidecar, JSON.stringify({ $schema: "kg-qa/v1", subject, criteria: {}, totals: {}, voice_reviews: [reviewOf(skill)] }));
+    const read = readVoiceReviews(store, tree, sidecar);
+    expect(read.state).toBe("absent");
+    const r = evaluateVoiceReviewsFrom(skill, read, [voice]);
+    expect(r.entry.result).toBe("pass");
+    expect(r.reviews).toEqual([reviewOf(skill)]);
+
+    // Recording a NEW review on the first save moves the prior's judgements too.
+    const other = { ...reviewOf(skill), voice: "w" };
+    recordReview(store, tree, subject, other, sidecar);
+    const back = readVoiceReviews(store, tree);
+    expect(back.state).toBe("hit");
+    if (back.state === "hit") expect(back.reviews.map((x) => x.voice)).toEqual(["v", "w"]);
+    rmSync(store);
+
+    mkdirSync(tree, { recursive: true });
+    writeFileSync(store, "<<<<<<< ours\n");
+    expect(readVoiceReviews(store, tree).state).toBe("corrupt");
+    expect(() => recordReview(store, tree, subject, reviewOf(skill))).toThrow(/corrupt/);
+    expect(readFileSync(store, "utf-8")).toBe("<<<<<<< ours\n");
+  });
+
+  test("recordReview creates the subject's file, and the review then reads back current", () => {
+    const dir = mkdtempSync(join(tmpdir(), "voice-store-"));
+    const skill = join(dir, "a.md");
+    writeFileSync(skill, "# a\n");
+    const tree = join(dir, "att", "kg-qa");
+    const store = join(tree, "sub", "a.attestations.json");
+    recordReview(store, tree, subject, reviewOf(skill));
+    const read = readVoiceReviews(store, tree);
+    expect(read.state).toBe("hit");
+    expect(evaluateVoiceReviewsFrom(skill, read, [voice]).entry.result).toBe("pass");
   });
 });

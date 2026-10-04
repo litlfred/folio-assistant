@@ -41,6 +41,13 @@ Docker container** (`docker exec -w /work ig-run python3 …`), against `output/
 
 Steps 1–2 are two workflow steps with near-identical names; 3–4 share one step.
 
+**Steps 1–5 belong to `fhir-harness`, not to this overlay.** They only
+transform what the Publisher already emitted and add no constraint or profile.
+The two strippers were placed there first, and 3–5 followed on the owner's
+ruling of 2026-10-03. They stay in this table because upstream still runs them
+in this phase. `check:fhir-harness-exclusions` reads the table and lets the
+base name exactly these five. Steps 6–8 are the WHO surface.
+
 ## Step 8 is the seam, and it already does what we want
 
 `generate_smart_liquid.py` declares its own source of truth as *"IG Publisher
@@ -146,6 +153,51 @@ disagree with the details it counts; `files_missing` must be a subset of
 not-found; and `running` is never a pass — a script that died before writing
 anything has zero errors, and `qaReportVerdict` returns `unknown` for it rather
 than `ok`.
+
+## Binary artefacts on deploy and on release
+
+Measured 2026-10-02, owner: *"see what happens on smart-base with binary
+artefacts on release"*. The generic rule and the measuring Tool are
+[`ig-binary-artefacts`](../../../../fhir-harness/skills/fhir-ig-base/ig-binary-artefacts.md)
+and `ig-binary-audit`. What follows is what the WHO workflows actually do, read
+from `litlfred/smart-base@e151a4d` and `WorldHealthOrganization/smart-html@main`.
+
+**On every push, `ghbuild.yml` deploys `output/` with its binaries.** The only
+binary step is *"Delete files >100MB before deployment"*, and no Publisher
+binary is that large. A branch build deploys to `branches/<branch>/`, so each
+branch gets another full copy: 966.5 MB of binaries on `gh-pages`, 907.1 MB of
+them in 29 previews, `full-ig.zip` 644.7 MB in 30 copies.
+
+**On a GitHub release, `release.yml` hands off to smart-html.** It runs only
+if `publication-request.json` exists, then calls
+`WorldHealthOrganization/smart-html/.github/workflows/release.yml@main`.
+That workflow runs `scripts/ig_publisher.py` from smart-html's `main`, which:
+
+1. builds and publishes into the smart-html webroot;
+2. leaves `ig-build-zips/` out of the `sitepreview` copy and untracks it;
+3. moves **only files over 100 MB** into `release-assets/`, plus a copy of
+   `output/package.tgz`;
+4. uploads `release-assets/` to the release whose tag is `GITHUB_REF_NAME`.
+
+So a release gets `package.tgz` and, in practice, nothing else. Every other
+binary goes to the webroot.
+
+**`create_package_release.py` is not called by any workflow.** It is the
+script that would cut a release and move the 19 named binaries out of
+`output/`, so they don't bloat `gh-pages`. Nothing in `.github/` calls it.
+The two releases that exist on `litlfred/smart-base`, `v0.2.0` and
+`v0.2.0.0`, are from a March branch (`claude/fhir-package-binary-releases-4ngGj`)
+and carry 5 assets: `package.db`, `package.tgz`, `package.r4.tgz`,
+`package.r4b.tgz` and `ai.zip`.
+
+**`downloads.md` promises 19 release assets that no release carries.** It
+also leaves out `full-ig.zip`, which is the largest of them.
+`fix_release_links.py` rewrites its hard-coded
+`WorldHealthOrganization/smart-base` release links to the building repository,
+which is correct. The page's list is the part that drifted.
+
+None of this is changed here: the workflows live in the WHO repositories. Bean
+`b8ip` holds the proposed changes for the owner.
 
 ## Where the counterparts are
 

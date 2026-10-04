@@ -37,8 +37,10 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { join, relative, resolve } from "node:path";
 
 import { registerWorkflowTools } from "../../cat-harness/src/tools/workflow.ts";
+import { fshGutsDirectory } from "../../cat-harness/schemas/fsh-guts.ts";
+import { contentAt } from "../../cat-harness/scripts/branch-store.ts";
 import { positionOf } from "../../cat-harness/src/workflow/instance.ts";
-import { instanceId, loadInstance } from "../../cat-harness/src/workflow/store.ts";
+import { WORKFLOW_DIR, instanceId, loadInstance } from "../../cat-harness/src/workflow/store.ts";
 import { CatalogueNodeSchema, type CatalogueNode } from "../schemas/catalogue.js";
 import { PUBLICATION_GATES } from "../schemas/materialization.js";
 import { checkSampleImport, describeImportCheck } from "./sample-import-check.ts";
@@ -237,7 +239,12 @@ export async function runSampleImport(opts: RunOptions): Promise<RunResult> {
         note = "trial, per the scope";
         break;
       case "Task_Trial": {
-        const dir = join(root, "fsh-guts", "samples");
+        // Through the declaration, never `fsh-guts/` spelled (bean 9c7h). Once
+        // the trashcan is kept on its branch, a trial written to an unmounted
+        // path would land in no store at all, so refuse rather than write it.
+        const kept = contentAt("fsh-guts", root);
+        if (kept.state === "not-mounted") throw new Error(`sample-import trial: ${kept.reason}`);
+        const dir = join(fshGutsDirectory(root), "samples");
         mkdirSync(dir, { recursive: true });
         trialPath = join(dir, `${opts.subject}.md`);
         const check = checkSampleImport(instanceRoot, [opts.item]);
@@ -309,7 +316,7 @@ export async function runSampleImport(opts: RunOptions): Promise<RunResult> {
   const final = loadInstance(root, id)!;
   return {
     instanceId: id,
-    instancePath: join(root, "beans", "workflows", `${id}.json`),
+    instancePath: join(root, WORKFLOW_DIR, `${id}.json`), // the store's own constant, not a second spelling (bean `gz47`)
     trialPath,
     steps,
     status: final.status,

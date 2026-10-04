@@ -157,7 +157,74 @@ package "who-iris/who-iris-uploads" as pkg_who_iris_who_iris_uploads <<uploads>>
   }
 }
 package "who-iris/who-iris-skills" as pkg_who_iris_who_iris_skills <<skills>> {
-  note "skills: no node schema declared\n(no node here carries a $schema family skills names (4 named): could not determine)" as n_who_iris_who_iris_skills_skills
+  class "Source" as who_iris_who_iris_skills_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> #e8f0ee {
+    title [1] : string
+    instance [0..1] : string
+    libraryId [0..1] : string
+    path [0..1] : string
+    url [0..1] : string<uri>
+    year [0..1] : integer
+  }
+  class "Pattern" as who_iris_who_iris_skills_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> #e8f0ee {
+    regex [1] : string
+    caseSensitive [0..1] : boolean
+    message [1] : string
+  }
+  class "Terminology" as who_iris_who_iris_skills_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> #e8f0ee {
+    correct [1] : string
+    incorrect [1] : string | string[]
+    context [0..1] : string
+  }
+  class "Rule" as who_iris_who_iris_skills_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> #e8f0ee {
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    category [1] : enum(13)
+    severity [1] : critical | major | minor
+    source [1] : object
+    patterns [0..*] : Pattern[]
+    terminology [0..*] : Terminology[]
+    judgementOnly [0..1] : boolean
+    counterintuitive [0..1] : boolean
+    commonError [0..1] : string
+  }
+  class "folio-voice-skill/v1" as who_iris_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> #e8f0ee {
+    $schema [1] : 'folio-voice-skill/v1'
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    owner [0..1] : string
+    instructions [1] : object
+    sources [0..*] : Source[]
+    provenance [1] : assertion | evidence | house
+    rules [1..*] : Rule[]
+    overlaySeverity [0..1] : critical | major | minor
+    appliesTo [0..*] : list<enum(16) | docs | skill | readme | specification | code>
+    activeIn [0..1] : object
+    extends [0..1] : object
+    superseded [0..1] : object
+  }
+  class "Topic" as who_iris_who_iris_skills_skill_topics_v1_Topic <<json: SkillTopicsSchema>> #e8f0ee {
+    id [1] : string
+    path [1] : string
+    title [1] : string
+    description [1] : string
+  }
+  class "Directory" as who_iris_who_iris_skills_skill_topics_v1_Directory <<json: SkillTopicsSchema>> #e8f0ee {
+    id [1] : string
+    path [1] : string
+    subgraph [1] : true
+    graphKinds [1..*] : string[]
+  }
+  class "skill-topics/v1" as who_iris_who_iris_skills_skill_topics_v1_skill_topics_v1 <<json: SkillTopicsSchema>> #e8f0ee {
+    $schema [1] : 'skill-topics/v1'
+    _comment [0..1] : string
+    topics [0..*] : Topic[]
+    directories [0..*] : Directory[]
+  }
+}
+package "who-iris/glossary" as pkg_who_iris_glossary <<glossary>> {
+  note "glossary: no node schema declared\n(no validator registered: could not determine)" as n_who_iris_glossary_glossary
 }
 package "who-iris/who-iris-themes" as pkg_who_iris_who_iris_themes <<themes>> {
   class "Override" as who_iris_who_iris_themes_Override <<json: ThemeSchema>> #f4f4f1 {
@@ -211,41 +278,63 @@ package "who-iris/id-lookup" as pkg_who_iris_id_lookup <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_who_iris_id_lookup_code
 }
 package "who-iris/qa" as pkg_who_iris_qa <<qa>> {
-  class "Pair_attestation" as who_iris_qa_kg_qa_v1_Pair_attestation <<json: KgQaReportSchema>> #f4e6e6 {
-    kind [1] : implements | co-located
-    prose [1] : string
-    code [1] : string
-    prose_hash [1] : string
-    code_hash [1] : string
-    by [1] : baseline | agent | human
-    reason [0..1] : string
-  }
-  class "Verdict" as who_iris_qa_kg_qa_v1_Verdict <<json: KgQaReportSchema>> #f4e6e6 {
-    rule [1] : string
-    result [1] : pass | fail | n/a
-    note [0..1] : string
-  }
-  class "Voice_review" as who_iris_qa_kg_qa_v1_Voice_review <<json: KgQaReportSchema>> #f4e6e6 {
-    voice [1] : string
-    instance [1] : string
-    skill_hash [1] : string
-    voice_hash [1] : string
-    by [1] : agent | human
-    at [1] : string
-    verdicts [0..*] : Verdict[]
-  }
   class "kg-qa/v1" as who_iris_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa/v1'
     subject [1] : object
     source_hash [1] : string | null
     criteria [1] : map<object>
     totals [1] : map<number>
-    pair_attestations [0..*] : Pair_attestation[]
-    voice_reviews [0..*] : Voice_review[]
+    pair_attestations [0..1] : any
+    voice_reviews [0..1] : any
   }
   class "kg-qa-manifest/v1" as who_iris_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa-manifest/v1'
     auditor [1] : object
+  }
+}
+package "who-iris/voices" as pkg_who_iris_voices <<voices>> {
+  class "Source" as who_iris_voices_Source <<json: VoiceProfileSchema>> #e8f0ee {
+    title [1] : string
+    instance [0..1] : string
+    libraryId [0..1] : string
+    path [0..1] : string
+    url [0..1] : string<uri>
+    year [0..1] : integer
+  }
+  class "Pattern" as who_iris_voices_Pattern <<json: VoiceProfileSchema>> #e8f0ee {
+    regex [1] : string
+    caseSensitive [0..1] : boolean
+    message [1] : string
+  }
+  class "Terminology" as who_iris_voices_Terminology <<json: VoiceProfileSchema>> #e8f0ee {
+    correct [1] : string
+    incorrect [1] : string | string[]
+    context [0..1] : string
+  }
+  class "Rule" as who_iris_voices_Rule <<json: VoiceProfileSchema>> #e8f0ee {
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    category [1] : enum(13)
+    severity [1] : critical | major | minor
+    source [1] : object
+    patterns [0..*] : Pattern[]
+    terminology [0..*] : Terminology[]
+    judgementOnly [0..1] : boolean
+  }
+  class "VoiceProfile" as who_iris_voices_VoiceProfile <<json: VoiceProfileSchema>> #e8f0ee {
+    $schema [1] : 'folio-voice/v1' | 'folio-voice-skill/v1'
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    sources [1..*] : Source[]
+    rules [1..*] : Rule[]
+    overlaySeverity [0..1] : critical | major | minor
+    appliesTo [0..*] : list<enum(16) | docs | skill | readme | specification | code>
+    provenance [1] : assertion | evidence | house
+    extends [0..1] : object
+    activeIn [0..1] : object
+    superseded [0..1] : object
   }
 }
 
@@ -258,18 +347,27 @@ who_iris_who_iris_catalogue_folio_catalogue_node_v1_folio_catalogue_node_v1 *-- 
 who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Asset : assets
 who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Omitted : omitted
 who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" who_iris_who_iris_uploads_folio_intake_v1_File : files
+who_iris_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" who_iris_who_iris_skills_folio_voice_skill_v1_Source : sources
+who_iris_who_iris_skills_folio_voice_skill_v1_Rule *-- "0..*" who_iris_who_iris_skills_folio_voice_skill_v1_Pattern : patterns
+who_iris_who_iris_skills_folio_voice_skill_v1_Rule *-- "0..*" who_iris_who_iris_skills_folio_voice_skill_v1_Terminology : terminology
+who_iris_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" who_iris_who_iris_skills_folio_voice_skill_v1_Rule : rules
+who_iris_who_iris_skills_skill_topics_v1_skill_topics_v1 *-- "0..*" who_iris_who_iris_skills_skill_topics_v1_Topic : topics
+who_iris_who_iris_skills_skill_topics_v1_skill_topics_v1 *-- "0..*" who_iris_who_iris_skills_skill_topics_v1_Directory : directories
 who_iris_who_iris_themes_Theme *-- "0..*" who_iris_who_iris_themes_Override : overrides
 who_iris_who_iris_sources_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" who_iris_who_iris_sources_folio_source_descriptor_v1_Identifier : identifiers
-who_iris_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" who_iris_qa_kg_qa_v1_Pair_attestation : pair_attestations
-who_iris_qa_kg_qa_v1_Voice_review *-- "0..*" who_iris_qa_kg_qa_v1_Verdict : verdicts
-who_iris_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" who_iris_qa_kg_qa_v1_Voice_review : voice_reviews
-' grid: portrait, 3 column(s) — pkg_who_iris_library pkg_who_iris_who_iris_site pkg_who_iris_who_iris_catalogue pkg_who_iris_who_iris_uploads pkg_who_iris_who_iris_skills pkg_who_iris_who_iris_themes pkg_who_iris_who_iris_docs pkg_who_iris_who_iris_scripts pkg_who_iris_who_iris_sources pkg_who_iris_id_lookup pkg_who_iris_qa
+who_iris_voices_VoiceProfile *-- "1..*" who_iris_voices_Source : sources
+who_iris_voices_Rule *-- "0..*" who_iris_voices_Pattern : patterns
+who_iris_voices_Rule *-- "0..*" who_iris_voices_Terminology : terminology
+who_iris_voices_VoiceProfile *-- "1..*" who_iris_voices_Rule : rules
+' grid: portrait, 3 column(s) — pkg_who_iris_library pkg_who_iris_who_iris_site pkg_who_iris_who_iris_catalogue pkg_who_iris_who_iris_uploads pkg_who_iris_who_iris_skills pkg_who_iris_glossary pkg_who_iris_who_iris_themes pkg_who_iris_who_iris_docs pkg_who_iris_who_iris_scripts pkg_who_iris_who_iris_sources pkg_who_iris_id_lookup pkg_who_iris_qa pkg_who_iris_voices
 pkg_who_iris_library -[hidden]down- pkg_who_iris_who_iris_uploads
 pkg_who_iris_who_iris_site -[hidden]down- pkg_who_iris_who_iris_skills
-pkg_who_iris_who_iris_catalogue -[hidden]down- pkg_who_iris_who_iris_themes
-pkg_who_iris_who_iris_uploads -[hidden]down- pkg_who_iris_who_iris_docs
-pkg_who_iris_who_iris_skills -[hidden]down- pkg_who_iris_who_iris_scripts
+pkg_who_iris_who_iris_catalogue -[hidden]down- pkg_who_iris_glossary
+pkg_who_iris_who_iris_uploads -[hidden]down- pkg_who_iris_who_iris_themes
+pkg_who_iris_who_iris_skills -[hidden]down- pkg_who_iris_who_iris_docs
+pkg_who_iris_glossary -[hidden]down- pkg_who_iris_who_iris_scripts
 pkg_who_iris_who_iris_themes -[hidden]down- pkg_who_iris_who_iris_sources
 pkg_who_iris_who_iris_docs -[hidden]down- pkg_who_iris_id_lookup
 pkg_who_iris_who_iris_scripts -[hidden]down- pkg_who_iris_qa
+pkg_who_iris_who_iris_sources -[hidden]down- pkg_who_iris_voices
 @enduml

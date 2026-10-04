@@ -232,7 +232,7 @@ export function viewerPlacement(
  * It was the third of four selectors answering "did this generator write this
  * page, here?", and the bean's finding was that the multiplicity is the
  * defect. It is re-exported from here because `gen-library-viz.ts`,
- * `gen-docs-auto.ts` and the tests already import it from this module, and a
+ * `gen-auto-docs.ts` and the tests already import it from this module, and a
  * re-export keeps that a one-line change rather than a sweep.
  *
  * The leaf also exists so `state-visualizer.ts` can be a call site WITHOUT
@@ -241,7 +241,7 @@ export function viewerPlacement(
  * and for the same reason: a consumer should not have to load a page builder
  * to ask an ownership question. */
 import { orphanSubjectPages } from "./orphan-pages.ts";
-import { makeEmit, type ViewerNav, subjectSection } from "./viewer-page.ts";
+import { makeEmit, type ViewerNav, subjectNames, subjectSection } from "./viewer-page.ts";
 import { withRenders, withViewers } from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
@@ -1281,11 +1281,11 @@ if (import.meta.main) {
     { label: "Declarations", id: "list" },
     { label: "Detail", id: "detail" },
   ];
-  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
+  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions, subjectNames(nav.built, "schemas")) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
 
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions) })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
+    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions, subjectNames(nav.built, "schemas")) })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
   }
 
 

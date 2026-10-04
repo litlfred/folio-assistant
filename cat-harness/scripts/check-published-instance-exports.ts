@@ -58,17 +58,23 @@
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { basename, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 
 // `declarationPathIn` only, deliberately: it answers "is there a declaration
 // here" from the FILENAME convention and parses nothing, so this gate needs
 // no graph-kind registered to ask. `readDeclaration` would, and a gate that
 // throws on an unregistered kind reports a break it did not find.
 import { declarationPathIn } from "../schemas/cat-harness.js";
-import { qaResultPath, qaResultState, readQaResult, type QaResultState } from "./qa-results.js";
+import { againstRef, qaResultPath, qaResultState, readQaResult, type QaResultState } from "./qa-results.js";
+import { readQaTree } from "./qa-store.js";
+import { PUBLISHED_ELSEWHERE, declaredInstanceStubs, instanceExportPlan, type PlannedExport } from "./instance-exports.js";
 
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
 const WORKFLOW_DIR = join(REPO_ROOT, ".github", "workflows");
+/** The instance whose `kg-export.*.qa-results.json` sidecars this gate compares. */
+const QA_ROOT = join(REPO_ROOT, "cat-harness");
+/** Where those sidecars live — the one composition, `qaResultPath`'s. */
+const QA_DIR = dirname(qaResultPath(QA_ROOT, "x"));
 
 /**
  * A base a workflow supplies through a shell variable cannot be run verbatim,
@@ -101,6 +107,17 @@ const INVOCATION = /kg-export\.ts\s+--instance\s+(\S+)([^\n]*)/g;
  */
 const TOOLS_INVOCATION = /bootstrap-tools\/scripts\/export-graph\.ts\s+--root\s+(\S+)([^\n]*)/g;
 
+/**
+ * `instance-exports.ts --out-dir` — the DERIVED publisher (bean `4ak5`): one
+ * line that runs `kg-export --instance` for every declared instance not
+ * published elsewhere. Expanded into one invocation per planned instance, so
+ * each is run and its committed sidecar compared exactly as a literal line's.
+ */
+const PLAN_INVOCATION = /instance-exports\.ts\s+--out-dir\s+\S+([^\n]*)/g;
+
+/** The deploy: completeness is required of the site it builds (bean `4ak5` item 5). */
+export const DEPLOY_WORKFLOW = "docs-site.yml";
+
 export interface Invocation {
   /** The workflow file that runs it, basename only. */
   workflow: string;
@@ -112,6 +129,13 @@ export interface Invocation {
   tool?: "kg-export" | "export-graph";
 }
 
+/**
+ * Where an invocation came from. A workflow line is the deploy's own command.
+ * A committed sidecar is a subject that only the comparison has, which
+ * {@link committedSidecarSubjects} explains.
+ */
+export const COMMITTED_SIDECAR = "(committed sidecar)";
+
 export interface ExportResult {
   /** The workflow file that runs it, basename only. */
   workflow: string;
@@ -119,6 +143,8 @@ export interface ExportResult {
   instance: string;
   /** True when the workflow passes a `--base-url` this gate had to stand in for. */
   standInBase: boolean;
+  /** Which exporter ran, carried from the invocation. */
+  tool?: Invocation["tool"];
   /** Nodes the export emitted, when it said. Zero is a finding, not a pass. */
   nodes?: number;
   /** True when the export exited 0. */
@@ -147,6 +173,131 @@ export interface PublishedExportReport {
   unreadable?: string;
   /** How many workflow files were examined. Zero is a finding, not a clean run. */
   workflowsRead?: number;
+  /**
+   * Committed `kg-export.<stub>.qa-results.json` files that no workflow's
+   * `kg-export.ts --instance` produces. Each one is re-exported and COMPARED,
+   * so the committed file has a live reader. They are kept apart from
+   * `invocations`, so a workflow pattern that stops matching is still reported
+   * as "examined nothing". See {@link committedSidecarSubjects}.
+   */
+  sidecarSubjects?: Invocation[];
+  /**
+   * Bean `4ak5` item 5: declared instances a publishing workflow leaves with
+   * no export. Each entry names the workflow and why. Non-empty is a failure.
+   */
+  incomplete?: string[];
+  /**
+   * Why no committed sidecar could be LISTED, when none could — bean `id4s`.
+   * The QA results directory not being in the checkout (QA leaves `main` for
+   * the `qa-reports` branch) is not "there are no committed sidecars": the
+   * comparison's subjects are unknown, and the report says so instead of
+   * dropping the line.
+   */
+  sidecarSubjectsUnknown?: string;
+  /** The `--against` ref the committed sidecars were read from, when one was given. */
+  against?: string;
+}
+
+/**
+ * The comparison's own subjects: every committed foreign-instance
+ * `kg-export.<stub>.qa-results.json` that no workflow invocation covers.
+ *
+ * ## Why the gate needs subjects of its own (bean `r7v6`, C2)
+ *
+ * The comparison below (bean `ymsu`) ran only for a workflow `kg-export.ts
+ * --instance` line. Since 2026-09-30 both deploy workflows publish bootstrap
+ * through `bootstrap-tools`' `export-graph.ts`, which writes no QA sidecar. So
+ * `fresh` was always `undefined`, the comparison never ran, and
+ * `kg-export.bootstrap.qa-results.json` had no live reader. Measured: identical
+ * output with the file present and absent. When re-exported, that committed
+ * file turned out to be STALE: the producer's hash had changed, and so had the
+ * untagged-module count.
+ *
+ * So the subjects are read from the committed files themselves, the same
+ * derivation-over-listing rule this gate applies to workflows. A sidecar that
+ * nothing produces is still compared, and it is reported as having no workflow
+ * producer. Whether to keep it is a person's decision
+ * (`deletion-requires-confirmation`).
+ *
+ * `qaStem` mirrors `kg-export.ts`: `kg-export.<basename of the instance>`, and
+ * the host's own `kg-export.qa-results.json` carries no stub and is not a
+ * foreign export.
+ */
+export function committedSidecarSubjects(covered: readonly Invocation[], qaDir: string = QA_DIR): Invocation[] {
+  let names: string[];
+  try {
+    names = readdirSync(qaDir).map(String);
+  } catch {
+    return [];
+  }
+  return subjectsFrom(names, covered);
+}
+
+/**
+ * {@link committedSidecarSubjects}, from wherever the committed sidecars are:
+ * the working copy, or with `against` the `qa-reports` branch through
+ * qa-store (bean `id4s`). Four states: a listing that could not be made is
+ * `unknown` with its reason, never an empty list — an empty list would read
+ * as "no sidecar to compare", which is the C2 shape this gate was fixed for.
+ */
+export function sidecarSubjectsFrom(
+  covered: readonly Invocation[],
+  opts: { against?: string; qaDir?: string } = {},
+): { subjects: Invocation[]; unknown?: string } {
+  const qaDir = opts.qaDir ?? QA_DIR;
+  if (opts.against !== undefined) {
+    const t = readQaTree(opts.against, qaDir);
+    if (t.state !== "hit") return { subjects: [], unknown: `qa-reports:${opts.against} — ${t.state}: ${t.reason}` };
+    return { subjects: subjectsFrom([...t.files.keys()].map((p) => basename(p)), covered) };
+  }
+  if (!existsSync(qaDir)) {
+    return {
+      subjects: [],
+      unknown: `${qaDir.slice(REPO_ROOT.length + 1)} is not in this checkout — pass --against <ref> to compare the qa-reports copies`,
+    };
+  }
+  return { subjects: committedSidecarSubjects(covered, qaDir) };
+}
+
+function subjectsFrom(names: readonly string[], covered: readonly Invocation[]): Invocation[] {
+  const done = new Set(
+    covered.filter((i) => (i.tool ?? "kg-export") === "kg-export").map((i) => instanceStub(i.instance)),
+  );
+  const out: Invocation[] = [];
+  for (const n of [...names].sort()) {
+    const m = /^kg-export\.(.+)\.qa-results\.json$/.exec(n);
+    if (m === null || done.has(m[1]!)) continue;
+    out.push({ workflow: COMMITTED_SIDECAR, instance: instancePathForStub(m[1]!), standInBase: false, tool: "kg-export" });
+  }
+  return out;
+}
+
+/**
+ * The stub `kg-export` names an instance's sidecar with — the declaration's
+ * `stub ?? name` (`artefactStub`), read RAW so this gate needs no graph kind
+ * registered. It was `basename(path)`, which is the same answer for
+ * `./bootstrap` and the wrong one for `.`: the checkout root's directory is
+ * named after wherever it was cloned, while its stub is its declared name
+ * (bean `l4ay`, which added the root's export to the deploy).
+ */
+export function instanceStub(instance: string): string {
+  const abs = resolve(REPO_ROOT, instance);
+  const p = declarationPathIn(abs);
+  if (p !== undefined) {
+    try {
+      const d = JSON.parse(readFileSync(p, "utf-8")) as { name?: string; stub?: string };
+      const s = d.stub ?? d.name;
+      if (typeof s === "string" && s !== "") return s;
+    } catch {
+      // unreadable: fall back to the path, and the export itself will fail loudly
+    }
+  }
+  return basename(abs);
+}
+
+/** The repository-relative instance path whose stub is `stub` — `.` for the checkout root, else `./<stub>`. */
+function instancePathForStub(stub: string): string {
+  return instanceStub(".") === stub ? "." : `./${stub}`;
 }
 
 /**
@@ -156,8 +307,22 @@ export interface PublishedExportReport {
  * a workflow supplying one is testing a different command from a workflow
  * that does not, and the report must not present them as the same evidence.
  */
-export function publishedInstances(workflowText: string, workflow = ""): Invocation[] {
+export function publishedInstances(
+  workflowText: string,
+  workflow = "",
+  plan: () => readonly PlannedExport[] = () => instanceExportPlan(REPO_ROOT),
+): Invocation[] {
+  const planned = [...workflowText.matchAll(PLAN_INVOCATION)].flatMap((m) =>
+    plan().map((p) => ({
+      workflow,
+      instance: p.path,
+      // The publisher passes no base to an instance with its own canonical URL.
+      standInBase: /--base-url/.test(m[1] ?? "") && !p.ownCanonical,
+      tool: "kg-export" as const,
+    })),
+  );
   return [
+    ...planned,
     ...[...workflowText.matchAll(INVOCATION)].map((m) => ({
       workflow,
       instance: m[1]!,
@@ -192,7 +357,7 @@ function nodesEmitted(stdout: string): number | undefined {
   return m ? Number(m[1]) : undefined;
 }
 
-function runExport(inv: Invocation, outDir: string): ExportResult {
+function runExport(inv: Invocation, outDir: string, against?: string): ExportResult {
   // ── EXIT 0 IS NOT ENOUGH, and the falsification is what proved it ───────
   //
   // Pointing an invocation at `./no-such-instance` exited 0 and this gate
@@ -259,18 +424,45 @@ function runExport(inv: Invocation, outDir: string): ExportResult {
   // rule: the HOST keeps the bare stem, a foreign instance is qualified by its
   // stub. Composed here rather than parsed out of the export's output, because
   // a gate that reads a path off stdout breaks when a log line is reworded.
-  const qaStem = `kg-export.${basename(resolve(REPO_ROOT, inv.instance))}`;
-  const fresh = readQaResult(qaResultPath(outDir, qaStem));
-  const qaSidecar =
-    fresh === undefined
-      ? undefined
-      : qaResultState(qaResultPath(join(REPO_ROOT, "cat-harness"), qaStem), fresh);
+  const qaStem = `kg-export.${instanceStub(inv.instance)}`;
+  // The committed sidecar describes the DEPLOY's export, which passes no base.
+  // Its findings name nodes by absolute IRI, so a stand-in base can never
+  // agree with it: measured 2026-10-04, `folio-assistant-core` and
+  // `smart-base` came out STALE under the stand-in and CURRENT without one.
+  // So a stand-in run builds and counts the document and does not compare;
+  // the base-less invocation of the same instance is the one that does
+  // (bean `4ak5`).
+  const compares = !inv.standInBase;
+  // ONLY for a kg-export row (bean `0utt`). Every invocation shares `outDir`,
+  // so an `export-graph` row — which writes no sidecar — read the one a
+  // kg-export row had just written there and reported "QA sidecar current"
+  // for a comparison it never made. Latent while the kg-export row came LAST
+  // (it was only ever the committed-sidecar subject); exposed the moment a
+  // workflow line producing that sidecar sorted ahead of the deploys.
+  const fresh = (inv.tool ?? "kg-export") === "kg-export" ? readQaResult(qaResultPath(outDir, qaStem)) : undefined;
+  // Through qa-store's four states (bean `id4s`): the working copy, or the
+  // `qa-reports` branch with `--against`.
+  const qaSidecar = fresh === undefined || !compares ? undefined : qaResultState(qaResultPath(QA_ROOT, qaStem), fresh, { against });
   if (r.status === 0) {
     // A published graph with no nodes is not a graph. Reported as a failure
     // rather than a note: the deploy would write it, and a consumer cannot
     // tell an empty document from one whose subjects were never collected.
     if (nodes === 0) {
       return { ...inv, nodes, ok: false, qaSidecar, detail: "exported 0 nodes — an empty graph published under a name a consumer trusts" };
+    }
+    // `kg-export.ts` ALWAYS writes a sidecar under `--qa-root`. If it wrote
+    // none, nothing was compared. That is could-not-determine, and it must
+    // not share an exit with agreement (bean `r7v6`, C2). `export-graph.ts`
+    // writes no sidecar by design, so that row has nothing to compare.
+    if ((inv.tool ?? "kg-export") === "kg-export" && compares && fresh === undefined) {
+      return {
+        ...inv,
+        nodes,
+        ok: false,
+        detail:
+          `the export wrote no \`${qaStem}.qa-results.json\` under its --qa-root, so the committed one was ` +
+          "NOT compared. That is could-not-determine, not agreement",
+      };
     }
     // A STALE committed sidecar is a failure of this gate, and that placement
     // is deliberate rather than convenient: nothing else in the gate set
@@ -279,9 +471,12 @@ function runExport(inv: Invocation, outDir: string): ExportResult {
     // `e718627f198` — the committed hash was `b539167517cb` against a true
     // `0456470f68c8`, and every verdict in the run was green.
     //
-    // `absent` and `unreadable` are findings too, for the third-state reason:
-    // "there is no sidecar" and "the sidecar agrees" must not share an exit.
-    if (qaSidecar !== undefined && qaSidecar !== "current") {
+    // `absent`, `unreadable` and `unknown` are NOT failures any more (bean
+    // `id4s`): once QA results leave `main` a committed copy is absent by
+    // design, and proposal §2.3 rules a missing baseline `unknown` — reported,
+    // never a pass, not this change's defect. They still never share a line
+    // with agreement: the row carries the state and the report prints it.
+    if (qaSidecar === "stale") {
       return {
         ...inv,
         nodes,
@@ -308,7 +503,53 @@ function runExport(inv: Invocation, outDir: string): ExportResult {
   return { ...inv, nodes, ok: false, qaSidecar, detail: said || `exited ${String(r.status)} with no diagnosis` };
 }
 
-export function checkPublishedInstanceExports(): PublishedExportReport {
+/** A workflow's text with its comment lines removed, so prose naming a command is not the command. */
+function commands(text: string): string {
+  return text
+    .split("\n")
+    .filter((l) => !/^\s*#/.test(l))
+    .join("\n");
+}
+
+/**
+ * Bean `4ak5` item 5 — does every declared instance get a graph?
+ *
+ * The planned set is complete by construction, so what can go wrong is at its
+ * edges, and each edge is asked here:
+ *
+ * - the DEPLOY must run the derived publisher at all, or the site carries
+ *   only the instances somebody wrote a line for — the state this bean found;
+ * - every workflow that runs it must also run each exempt instance's own
+ *   publisher ({@link PUBLISHED_ELSEWHERE}), or the exemption outlives its
+ *   reason and the instance is published by nobody;
+ * - an exemption must name a DECLARED instance, or it exempts nothing and
+ *   hides a rename.
+ */
+export function incompleteExports(
+  workflows: ReadonlyMap<string, string>,
+  declaredStubs: ReadonlySet<string>,
+): string[] {
+  const out: string[] = [];
+  const running = [...workflows].filter(([, t]) => new RegExp(PLAN_INVOCATION.source).test(commands(t)));
+  if (!running.some(([f]) => f === DEPLOY_WORKFLOW)) {
+    out.push(
+      `${DEPLOY_WORKFLOW} does not run \`instance-exports.ts --out-dir\`: the site publishes only the instances a workflow line names`,
+    );
+  }
+  for (const [f, text] of running) {
+    for (const [stub, e] of Object.entries(PUBLISHED_ELSEWHERE)) {
+      if (!e.publisher.test(commands(text))) {
+        out.push(`${f}: \`${stub}\` is exempt from instance-exports.ts (${e.why}) but this workflow runs no publisher for it`);
+      }
+    }
+  }
+  for (const stub of Object.keys(PUBLISHED_ELSEWHERE)) {
+    if (!declaredStubs.has(stub)) out.push(`PUBLISHED_ELSEWHERE names \`${stub}\`, which no instance in this checkout declares`);
+  }
+  return out;
+}
+
+export function checkPublishedInstanceExports(opts: { against?: string } = {}): PublishedExportReport {
   let files: string[];
   try {
     files = readdirSync(WORKFLOW_DIR)
@@ -325,6 +566,7 @@ export function checkPublishedInstanceExports(): PublishedExportReport {
 
   const invocations: Invocation[] = [];
   const unreadable: string[] = [];
+  const texts = new Map<string, string>();
   for (const f of files) {
     const abs = join(WORKFLOW_DIR, f);
     if (!existsSync(abs)) continue;
@@ -338,20 +580,31 @@ export function checkPublishedInstanceExports(): PublishedExportReport {
       unreadable.push(`${f}: ${e instanceof Error ? e.message : String(e)}`);
       continue;
     }
+    texts.set(f, text);
     invocations.push(...publishedInstances(text, f));
   }
+  const declaredStubs = declaredInstanceStubs(REPO_ROOT);
+  const incomplete = incompleteExports(texts, declaredStubs);
 
   const base: PublishedExportReport = {
     invocations,
     results: [],
     workflowsRead: files.length - unreadable.length,
     ...(unreadable.length > 0 ? { unreadable: unreadable.join("; ") } : {}),
+    ...(incomplete.length > 0 ? { incomplete } : {}),
   };
   if (invocations.length === 0) return base;
 
+  const { subjects: sidecarSubjects, unknown } = sidecarSubjectsFrom(invocations, { against: opts.against });
   const outDir = mkdtempSync(join(tmpdir(), "published-instance-export-"));
   try {
-    return { ...base, results: invocations.map((i) => runExport(i, outDir)) };
+    return {
+      ...base,
+      sidecarSubjects,
+      ...(unknown !== undefined ? { sidecarSubjectsUnknown: unknown } : {}),
+      ...(opts.against !== undefined ? { against: opts.against } : {}),
+      results: [...invocations, ...sidecarSubjects].map((i) => runExport(i, outDir, opts.against)),
+    };
   } finally {
     rmSync(outDir, { recursive: true, force: true });
   }
@@ -373,9 +626,12 @@ export function formatReport(r: PublishedExportReport): string {
   }
 
   const workflows = new Set(r.invocations.map((i) => i.workflow));
+  const orphans = r.sidecarSubjects ?? [];
   out.push(
     `Published instance exports (${r.invocations.length} invocation(s) across ` +
-      `${workflows.size} workflow(s), of ${String(r.workflowsRead ?? 0)} read)`,
+      `${workflows.size} workflow(s), of ${String(r.workflowsRead ?? 0)} read` +
+      (orphans.length > 0 ? `; ${orphans.length} committed sidecar(s) compared` : "") +
+      ")",
   );
   if (r.unreadable !== undefined) {
     // Reported ABOVE the results, and it outranks them: a sweep blind on one
@@ -383,10 +639,28 @@ export function formatReport(r: PublishedExportReport): string {
     out.push(`  ? COULD NOT READ ${r.unreadable}. The results below are partial.`);
   }
 
+  for (const line of r.incomplete ?? []) out.push(`  ✗ NOT EXPORTED — ${line}`);
+
   const failed = r.results.filter((x) => !x.ok);
   for (const x of r.results) {
     const counted = x.nodes === undefined ? "" : ` — ${String(x.nodes)} node(s)`;
-    const note = (x.standInBase ? "  (its `--base-url` stood in)" : "") + counted;
+    const sidecar =
+      x.qaSidecar !== undefined
+        ? `; QA sidecar ${x.qaSidecar}`
+        : x.tool === "export-graph"
+          ? "; writes no QA sidecar"
+          : x.standInBase
+            ? "; QA sidecar not compared (it describes the base-less deploy)"
+          : "";
+    const note = (x.standInBase ? "  (its `--base-url` stood in)" : "") + counted + sidecar;
+    if (x.ok && x.qaSidecar !== undefined && x.qaSidecar !== "current") {
+      out.push(`  ✓ ${x.workflow}: ${x.instance}${note}`);
+      out.push(
+        `      ? UNKNOWN — no ${r.against ? `qa-reports:${r.against}` : "committed"} baseline to compare its sidecar with ` +
+          `(${x.qaSidecar}). NOT "current", and not gated (bean id4s, proposal §2.3)`,
+      );
+      continue;
+    }
     if (x.ok) {
       out.push(`  ✓ ${x.workflow}: ${x.instance}${note}`);
       continue;
@@ -395,8 +669,21 @@ export function formatReport(r: PublishedExportReport): string {
     for (const line of (x.detail ?? "").split("\n")) out.push(`      ${line.trim()}`);
   }
 
-  if (failed.length === 0 && r.unreadable === undefined) {
-    out.push("    every graph a workflow publishes builds, with dereferenceable `@id`s");
+  if (r.sidecarSubjectsUnknown !== undefined) {
+    // Said, never dropped: before bean `id4s` an absent results directory made
+    // the "committed sidecar(s) compared" line vanish while the gate exited 0.
+    out.push(`  ? UNKNOWN — the committed kg-export sidecars could not be listed: ${r.sidecarSubjectsUnknown}. Their comparison was NOT made`);
+  }
+  if (orphans.length > 0) {
+    // Reported, never deleted: no workflow produces these, so whether they are
+    // kept is the owner's call (`deletion-requires-confirmation`).
+    out.push(
+      `    no workflow runs \`kg-export.ts --instance\` for ${orphans.map((o) => o.instance).join(", ")}: ` +
+        "its committed sidecar is compared here, but only a manual run produces it. Keeping it is a person's decision",
+    );
+  }
+  if (failed.length === 0 && r.unreadable === undefined && (r.incomplete ?? []).length === 0) {
+    out.push("    every declared instance is published, and every graph a workflow publishes builds, with dereferenceable `@id`s");
     return out.join("\n");
   }
   if (failed.length === 0) return out.join("\n");
@@ -413,10 +700,18 @@ export function formatReport(r: PublishedExportReport): string {
 }
 
 if (import.meta.main) {
-  const report = checkPublishedInstanceExports();
+  let against: string | undefined;
+  try {
+    against = againstRef(process.argv.slice(2));
+  } catch (e) {
+    console.error(`check:published-instance-exports: ${(e as Error).message}`);
+    process.exit(2);
+  }
+  const report = checkPublishedInstanceExports({ against });
   const clean =
     report.unreadable === undefined &&
     report.invocations.length > 0 &&
+    (report.incomplete ?? []).length === 0 &&
     report.results.every((x) => x.ok);
   (clean ? console.log : console.error)(formatReport(report));
   process.exit(clean ? 0 : 1);

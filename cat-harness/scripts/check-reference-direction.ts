@@ -76,10 +76,14 @@
  * ### Freshness: `--check` grades the STATES, never the counts
  *
  * A committed sidecar goes stale, and the question every one of them has to
- * answer is what its `--check` fails on. This one fails on the **states**
- * disagreeing — the PENDING set, the entries that no longer qualify, the
- * multi-destination files nobody has listed, the instances that declare no
- * `needs`. Those move when a RULING moves: somebody adds a file with no single
+ * answer is what its `--check` fails on. This one fails on a graded **state**
+ * that is NEW against a baseline — an entry that no longer qualifies, a
+ * multi-destination file nobody has listed, an instance that declares no
+ * `needs`. Bean `0dav`: the baseline is the committed working copy until QA
+ * results leave `main`, and `--against <ref>` on the `qa-reports` branch
+ * after; a missing one is UNKNOWN and not gated (proposal §2.3). It used to
+ * fail on the committed states merely DISAGREEING, which has no subject once
+ * nothing is committed. Those move when a RULING moves: somebody adds a file with no single
  * destination, or an entry stops qualifying. That is exactly the diff a
  * reviewer has to see, and it is not produced by an unrelated merge.
  *
@@ -110,7 +114,8 @@
  *   bun run cat-harness/scripts/check-reference-direction.ts            # summary, and WRITE the sidecar
  *   … --findings           # every wrong-direction occurrence
  *   … --undetermined       # what it declined to judge, and why
- *   … --check              # do NOT write; fail ONLY if the committed states disagree
+ *   … --check              # do NOT write; fail ONLY on a graded state NEW against the baseline
+ *   … --check --against R  # ...the baseline read from the qa-reports branch (`main`, `<sha>`, `pr/<n>`)
  *   … --strict             # exit 1 on any wrong-direction occurrence
  *
  * @module scripts/check-reference-direction
@@ -144,13 +149,21 @@ import {
   type ReferenceExemption,
   type ReferenceVerdict,
 } from "../schemas/reference-direction.js";
-import { buildQaResult, QA_RESULTS_DIR, writeQaResult, type QaResult } from "./qa-results.js";
+import {
+  againstOrUsage,
+  buildQaResult,
+  judgeQaResult,
+  judgeUsage,
+  qaResultPath,
+  writeQaResult,
+  type QaResult,
+} from "./qa-results.js";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
 /**
  * The INSTANCE root, which is where the sidecar goes — never {@link REPO_ROOT}.
  *
- * `QA_RESULTS_DIR` mirrors this instance's `qa-results` declaration, and
+ * `qaResultPath` mirrors this instance's `qa-results` declaration, and
  * `audit-coverage.ts` paid for getting this wrong: its first version wrote to
  * `<repo>/test/results/`, a directory no declaration names, so every consumer
  * scanning the declared graphs read a clean run over the one file it exists to
@@ -934,7 +947,7 @@ export function directionSidecarState(
   instanceRoot: string,
   fresh: QaResult,
 ): "absent" | "stale" | "current" {
-  const p = join(instanceRoot, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`);
+  const p = qaResultPath(instanceRoot, SIDECAR_STEM);
   if (!existsSync(p)) return "absent";
   try {
     return comparableDirection(JSON.parse(readFileSync(p, "utf-8")) as QaResult) === comparableDirection(fresh)
@@ -947,12 +960,20 @@ export function directionSidecarState(
 
 // ── Reporting ───────────────────────────────────────────────────
 
+const GATE = "check:reference-direction";
+
 function main(): number {
   const args = process.argv.slice(2);
   // `--check` reads and compares; it never writes. Bean `ymsu` — a gate that
   // repairs the tree the rest of the run is judging makes a later gate's
   // verdict meaningless, and this repository has two of those already.
   const check = args.includes("--check");
+  if (check) {
+    const usage = judgeUsage(GATE, args, ["--against", "--findings", "--undetermined", "--strict"]);
+    if (usage !== undefined) return usage;
+  }
+  const { against, exit: badRef } = againstOrUsage(GATE, args);
+  if (badRef !== undefined) return badRef;
   const report = analyse();
 
   if (report.instances === 0) {
@@ -1048,8 +1069,7 @@ function main(): number {
     script: relative(REPO_ROOT, join(INSTANCE_ROOT, "scripts", "check-reference-direction.ts")),
     scriptAbsPath: join(INSTANCE_ROOT, "scripts", "check-reference-direction.ts"),
   });
-  const where = relative(REPO_ROOT, join(INSTANCE_ROOT, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`));
-  const state = directionSidecarState(INSTANCE_ROOT, fresh);
+  const where = relative(REPO_ROOT, qaResultPath(INSTANCE_ROOT, SIDECAR_STEM));
   if (!check) writeQaResult(INSTANCE_ROOT, SIDECAR_STEM, fresh);
   // The message names WHAT was compared. A `--check` that passed silently
   // would be read as a guarantee about the counts, which it is not and by
@@ -1060,20 +1080,24 @@ function main(): number {
       ` multi-destination files, the instances with no \`needs\`` +
       `\n    recorded, NOT graded — the verdict counts, which move whenever the corpus does`,
   );
-  if (state !== "current") {
-    const msg =
-      state === "absent" ? `no committed sidecar at ${where}` : `the committed sidecar at ${where} records different STATES from this run`;
-    console.log(check ? `\n✗ ${msg} — run \`bun run check:reference-direction\` and commit it.` : `\n· ${msg} — written.`);
-  }
-
-  // `--check` answers ONE question — is the committed ruling what this run
-  // computed — and answers only that. It does not also fail on the backlog,
-  // for `audit:coverage --check`'s reason: there, staleness is the half that
-  // can fail now and the findings are reported, because a gate that refused
-  // every push until somebody drained a backlog is a gate switched off within
-  // a week. The backlog exit below is the PLAIN form's, and it is loud on both
-  // forms — the `✗` lines above print either way, so a `--check` that returns
-  // 0 cannot be mistaken for a clean axis.
+  // `--check` answers ONE question, and since bean `0dav` it is: did THIS
+  // change add a graded state? — a file newly naming several instances above
+  // it without being listed, a `PENDING` entry newly no longer qualifying, an
+  // instance newly declaring no `needs`. Against a baseline: the committed
+  // working copy until QA leaves `main`, `--against <ref>` (a `qa-reports`
+  // ref) after. It used to be "is the committed ruling what this run
+  // computed", and that question has no subject once nothing is committed —
+  // a baseline that is not there is UNKNOWN, reported and not gated
+  // (proposal §2.3).
+  //
+  // `pending-held` is graded in the record but not here: membership moves only
+  // when somebody edits `PENDING`, and that edit is in the diff under review.
+  //
+  // It still does not fail on the backlog, for `audit-coverage --check`'s
+  // reason: a gate that refused every push until somebody drained a backlog is
+  // a gate switched off within a week. The backlog exit below is the PLAIN
+  // form's, and the `✗` lines above print either way, so a `--check` that
+  // returns 0 cannot be mistaken for a clean axis.
   if (check) {
     if (states.pendingStale.length > 0 || states.multiDestinationUnlisted.length > 0) {
       console.log(
@@ -1081,7 +1105,13 @@ function main(): number {
           ` \`bun run check:reference-direction\` is the form that exits 1 on them)`,
       );
     }
-    return state === "current" ? 0 : 1;
+    console.log("");
+    return judgeQaResult({
+      gate: `${GATE}:check`,
+      fresh,
+      failOnNew: ["multi-destination-unlisted", "pending-stale", "instances-undeclared"],
+      baseline: { root: INSTANCE_ROOT, stem: SIDECAR_STEM, writer: GATE, against },
+    }).exit;
   }
   // Unchanged, and deliberately so: recording a state is not resolving it.
   if (states.pendingStale.length > 0 || states.multiDestinationUnlisted.length > 0) return 1;

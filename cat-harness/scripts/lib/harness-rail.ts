@@ -87,6 +87,12 @@ export interface RailOptions {
    * `/todos/`. Absent on a mounted document, whose section is its "Contents".
    */
   visualiserLabel?: string;
+  /**
+   * What the home row is called — the site's title from `harness.json`, the
+   * same words the Jekyll sidebar's home row shows (bean `ob3m` finding 6).
+   * Absent falls back to `folio-assistant`.
+   */
+  homeLabel?: string;
 }
 
 /**
@@ -118,8 +124,25 @@ export function railModel(o: RailOptions): NavbarModel & { graphs: NavGroup } {
     // whenever a visualiser section is present.
     graphs: { label: "Graphs", icon: "\u25A4", items: o.links, collapsible: true, open: true },
     ...(harnesses ? { harnesses } : {}),
-    home: { href: `${o.toRoot}/`, label: "folio-assistant", icon: "\u2302" },
+    home: { href: `${o.toRoot}/`, label: o.homeLabel ?? "folio-assistant", icon: "\u2302" },
   };
+}
+
+const OPT_OUT_RE = /<meta\s+[^>]*name=["']folio-navbar["'][^>]*content=["']none["'][^>]*>/i;
+const OPT_OUT_RE_SWAPPED = /<meta\s+[^>]*content=["']none["'][^>]*name=["']folio-navbar["'][^>]*>/i;
+
+/**
+ * Does this page explicitly decline the navbar (`<meta name="folio-navbar"
+ * content="none">`, either attribute order)?
+ *
+ * HERE, beside {@link injectRail}, so that EVERY pass that injects a rail can
+ * ask it — the generator's own write (`viewer-page.ts`) and the post-build
+ * site walk (`railStandalonePages`). Until #1881 only the first asked, so a
+ * page that declined at generation was railed anyway by the second, in CI only:
+ * a 2.8 KB library entry shell published at 25 KB.
+ */
+export function declinesNavbar(html: string): boolean {
+  return OPT_OUT_RE.test(html) || OPT_OUT_RE_SWAPPED.test(html);
 }
 
 /**

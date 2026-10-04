@@ -27,10 +27,12 @@ import {
   expiredExceptions,
   sidecarDocument,
   sourceBlockOf,
+  sidecarStates,
   staleSidecars,
   ENTRY_DIRECTORIES,
   ENTRY_SIDECARS,
 } from "../check-l1-complete.ts";
+import { resolveQaLocation } from "../qa-store.ts";
 import { NARRATIVE_BEARING } from "../narratives.ts";
 import {
   OCR_THRESHOLD_CHARS,
@@ -398,10 +400,28 @@ describe("the verdict as a committed sidecar", () => {
     expect(staleSidecars(root, [checkEntry(entry())])[0]).toContain("no sidecar");
   });
 
-  test("the committed verdicts for the real corpus are current", () => {
+  test("the committed verdicts for the real corpus are current — or, when not committed, ABSENT and never current", () => {
+    // Bean 0dav: QA results leave `main` for the `qa-reports` branch, so the
+    // verdicts may legitimately not be in this checkout. Then every entry must
+    // read `absent` — never `current`, which would be a clean answer about
+    // a file that is not there.
     const root = join(import.meta.dir, "../..");
     const all = checkAll(root);
     expect(all, "no `library` declared — staleness over nothing proves nothing").toBeDefined();
+    const states = sidecarStates(root, all ?? []);
+    expect(states.length).toBeGreaterThan(0);
+    // Bean 5hox: the directory declares `storage`, so its working copy is not
+    // a record and, with no `--against`, every verdict reads UNKNOWN — present
+    // or absent, and never `current` about a copy nobody stored.
+    const results = join(root, "test", "results");
+    if (resolveQaLocation(join(root, "..")).directories.some((d) => d.absPath === results && d.storage)) {
+      expect(new Set(states.map((x) => x.state))).toEqual(new Set(["unknown"]));
+      return;
+    }
+    if (!existsSync(join(root, "test", "results", "library-qa"))) {
+      expect(new Set(states.map((x) => x.state))).toEqual(new Set(["absent"]));
+      return;
+    }
     expect(staleSidecars(root, all ?? [])).toEqual([]);
   });
 });
@@ -608,7 +628,7 @@ describe("refuse to promote — the gate between the arms and the library", () =
     // uploads/ -> library/ in two commands.
     const base = { rung: "pdf-pages" as const, why: "", steps: [["python3", "pdf-pages.py"]] };
     const armed = withDerivedArms(base, "/tmp/x.pdf", "/stage", "/stage/slug", "/lib");
-    expect(armed.steps).toHaveLength(5);
+    expect(armed.steps).toHaveLength(6);
     expect(armed.steps[1]).toEqual(["python3", expect.stringContaining("pdf-images.py"), "-o", "/stage", "/tmp/x.pdf"]);
     // The vector arm — bean `a8wy`. Same two arguments as the raster arm: it
     // reads the PDF, so it takes the source and the library ROOT.
@@ -619,11 +639,21 @@ describe("refuse to promote — the gate between the arms and the library", () =
       "/stage",
       "/tmp/x.pdf",
     ]);
-    expect(armed.steps[3]).toEqual(["bun", "run", expect.stringContaining("l1-blocks.ts"), "-o", "/stage/slug"]);
+    // The vector FIGURE arm — bean `ay3x`. Same arguments again, and it must
+    // precede the verdict arm, which re-applies the `vfig-` judgements its
+    // `"w"` open would otherwise erase.
+    expect(armed.steps[3]).toEqual([
+      "python3",
+      expect.stringContaining("pdf-vector-figures.py"),
+      "-o",
+      "/stage",
+      "/tmp/x.pdf",
+    ]);
+    expect(armed.steps[4]).toEqual(["bun", "run", expect.stringContaining("l1-blocks.ts"), "-o", "/stage/slug"]);
     // The verdict arm — bean `8suc`. It takes the ENTRY directory and the
     // DESTINATION LIBRARY, because the judgement lives in the library and a
     // staging directory does not say which one that is.
-    expect(armed.steps[4]).toEqual([
+    expect(armed.steps[5]).toEqual([
       "bun",
       "run",
       expect.stringContaining("apply-image-verdicts.ts"),

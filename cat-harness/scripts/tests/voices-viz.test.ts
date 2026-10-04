@@ -174,7 +174,7 @@ describe("the viewer page", () => {
 
   test("it names its own scope, which is what makes pruning safe", () => {
     expect(/var SCOPE = "";/.test(html)).toBe(true);
-    expect(/var SCOPE = "who-style-guide";/.test(viewerHtml("x", "who-style-guide"))).toBe(true);
+    expect(/var SCOPE = "who-iris";/.test(viewerHtml("x", "who-iris"))).toBe(true);
   });
 
   test("it fetches the projection at the href it was given", () => {

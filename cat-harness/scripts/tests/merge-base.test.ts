@@ -8,21 +8,168 @@
 import { describe, expect, test } from "bun:test";
 
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, relative, resolve } from "node:path";
 
-import { plan, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
+import { plan, resolutionFailure, resolveGitlink, stageGitlink, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
+import { parseLog } from "../merge-main-comment.js";
 import { plan as qaPlan } from "../qa-resolve-conflicts.ts";
 import { classify, PATTERNS, resolveGeneratedRegions } from "../merge-conflict-patterns.js";
+import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.js";
+
+/** This instance and the repository it sits in, for the filesystem-driven sweeps. */
+const INSTANCE = resolve(import.meta.dir, "..", "..");
+const REPO = repoRootFor(INSTANCE);
+
+/**
+ * The leading `---`-delimited front matter of a markdown file, or `""` when it
+ * has none.
+ *
+ * **Front matter ONLY, and that is not fussiness.** The first cut of
+ * `generatedDocsPages` tested the WHOLE file for `generated:
+ * scripts/gen-docs-pages.ts`, and the very first merge after it was written
+ * found an 18th subject: `docs/reference/skill-instructions/
+ * merge-conflict-patterns.md`, the generated body of the skill that DOCUMENTS
+ * this pattern, which quotes that front-matter line in a fenced code block. A
+ * detector that reads a quotation as a declaration finds its own
+ * documentation — *"a docblock that documents a tag necessarily contains the
+ * tag"* (`audit-coverage`). That page's own front matter names
+ * `gen-skill-docs.ts` and the `skill-instructions` pattern already owns it.
+ */
+function frontMatter(text: string): string {
+  if (!text.startsWith("---\n")) return "";
+  const end = text.indexOf("\n---", 3);
+  return end === -1 ? "" : text.slice(4, end + 1);
+}
+
+/**
+ * Every `.md` under this instance's site directory whose own front matter names
+ * `gen-docs-pages.ts` as its writer, repo-relative. Read from the TREE rather
+ * than listed, so a page added to `content/docs/` makes the `docs-pages` test
+ * fail until its slug is declared — the enumeration cannot go quietly stale.
+ */
+function generatedDocsPages(): string[] {
+  const out: string[] = [];
+  const walk = (abs: string): void => {
+    for (const e of readdirSync(abs, { withFileTypes: true })) {
+      if (e.name.startsWith(".") || e.name.startsWith("_")) continue;
+      const p = join(abs, e.name);
+      if (e.isDirectory()) {
+        if (e.name === "assets" || e.name === "vendor") continue;
+        walk(p);
+        continue;
+      }
+      if (!e.isFile() || !e.name.endsWith(".md")) continue;
+      if (/^generated:\s*scripts\/gen-docs-pages\.ts/m.test(frontMatter(readFileSync(p, "utf8")))) {
+        out.push(relative(REPO, p));
+      }
+    }
+  };
+  walk(join(INSTANCE, siteDirFor(INSTANCE)));
+  return out.sort();
+}
 
 describe("classify", () => {
   test("measured generated families resolve by their declared strategy", () => {
     expect(classify("cat-harness/test/results/skill-register.qa-results.json").pattern?.id).toBe("qa-results");
     expect(classify("cat-harness/test/results/lsi/cat-harness/skills.lsi.json").strategy).toBe("take-base");
-    expect(classify("cat-harness/docs/cat-harness/docs-auto/index/index.html").pattern?.id).toBe("docs-auto");
+    expect(classify("cat-harness/docs/cat-harness/auto-docs/index/index.html").pattern?.id).toBe("auto-docs");
     expect(classify("cat-harness/docs/glossary/index.md").pattern?.id).toBe("glossary");
     expect(classify("beans/README.md").strategy).toBe("generated-regions");
+  });
+
+  test("the three generated glossary/skill families classify, and their carry-forward neighbours do not", () => {
+    // Bean `8rff`: each was named by no pattern, so `merge:main` refused it
+    // and `merge:overlap` counted it as authored — 54 + 50 + 30 pair-path hits
+    // across 32 open PRs.
+    expect(classify("cat-harness/docs/assets/glossary/bootstrap--kg-skills.skos.jsonld").pattern?.id).toBe(
+      "skos-glossary-export",
+    );
+    expect(classify("folio-assistant-core/glossary/generated/cat-harness/kg-skills.glossary.json").pattern?.id).toBe(
+      "glossary-generated",
+    );
+    expect(classify("cat-harness/docs/reference/skill-instructions/bean-coordination.md").pattern?.id).toBe(
+      "skill-instructions",
+    );
+  });
+
+  test("the glossary LEDGER is refused: it is the one artefact that carries forward", () => {
+    // glossary-export.ts reads the prior ledger and preserves a concept's
+    // earlier names as skos:hiddenLabel (#1168 B10b). Taking one side would
+    // drop a term's history, so `glossary-generated`'s glob must stop at
+    // `generated/` and leave the sibling alone. This is the unsafe neighbour
+    // the skill's §"Adding a pattern" step 3 asks for.
+    expect(classify("cat-harness/glossary/glossary-ledger.json").strategy).toBe("refuse");
+    expect(classify("cat-harness/glossary/bootstrap/glossary-ledger.json").strategy).toBe("refuse");
+  });
+
+  test("a skill SOURCE is refused while its generated instruction page is taken", () => {
+    // The pair that makes `skill-instructions` safe: resolve the generated
+    // copy, never the authored skill it is generated from.
+    expect(classify("cat-harness/docs/reference/skill-instructions/merge-conflict-patterns.md").strategy).toBe(
+      "take-base",
+    );
+    expect(classify("cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md").strategy).toBe("refuse");
+  });
+
+  test("every generated docs page classifies to `docs-pages` — read from the tree, not listed", () => {
+    // Bean `8c6v`: 17 pages under `cat-harness/docs/` carry
+    // `generated: scripts/gen-docs-pages.ts — do not hand-edit` in their own
+    // front matter, and NONE was named by a pattern, so `merge:main` returned
+    // `refuse / — none —` and handed back for hand-editing the files that
+    // forbid it. `docs/publication-workflow.md` was one of the 2 refusals that
+    // blocked #1888 after 53 of its 55 conflicts had resolved.
+    const pages = generatedDocsPages();
+    expect(pages.length).toBeGreaterThanOrEqual(17);
+    // Deriving the subjects from the tree is the point: a page added to
+    // `content/docs/` lands here and fails until the glob names its slug.
+    const unmatched = pages.filter((p) => classify(p).pattern?.id !== "docs-pages");
+    expect(unmatched).toEqual([]);
+    expect(classify("cat-harness/docs/publication-workflow.md").pattern?.id).toBe("docs-pages");
+    expect(classify("cat-harness/docs/guides/writing-a-paper.md").pattern?.id).toBe("docs-pages");
+  });
+
+  test("the AUTHORED source a docs page is generated from is refused, and so are its authored siblings", () => {
+    // The pair that makes `docs-pages` safe, and step 3 of §"Adding a pattern":
+    // `gen-docs-pages.ts` READS the blocks under `content/docs/<slug>/`, which
+    // are hand-written and genuinely need a person. The glob must not reach
+    // them, nor the authored `docs/*.md` pages sitting beside the generated
+    // ones in the SAME directory — `cat-harness/docs/*.md` is a mix, which is
+    // why the 17 slugs are enumerated instead of globbed.
+    expect(
+      classify("cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md").strategy,
+    ).toBe("refuse");
+    for (const authored of [
+      "cat-harness/docs/architecture.md",
+      "cat-harness/docs/getting-started.md",
+      "cat-harness/docs/index.md",
+      "cat-harness/docs/guides/agent-onboarding.md",
+      "cat-harness/docs/guides/voices.md",
+    ]) {
+      expect(classify(authored).strategy).toBe("refuse");
+    }
+    // Nothing under `content/` may be claimed by it, at any depth.
+    const claimed = generatedDocsPages().filter((p) => p.includes("/content/"));
+    expect(claimed).toEqual([]);
+  });
+
+  test("a page that QUOTES the generated marker is not a subject of it", () => {
+    // Found on this branch's first merge of `main`: the generated body of the
+    // skill documenting `docs-pages` quotes `generated: scripts/gen-docs-pages.ts`
+    // in a code fence, so a whole-file detector counted an 18th page. Its OWN
+    // front matter names gen-skill-docs.ts, and `skill-instructions` — declared
+    // BEFORE `docs-pages`, so it wins the first match — already owns it.
+    const quoting = "cat-harness/docs/reference/skill-instructions/merge-conflict-patterns.md";
+    expect(readFileSync(join(REPO, quoting), "utf8")).toContain("generated: scripts/gen-docs-pages.ts");
+    expect(generatedDocsPages()).not.toContain(quoting);
+    expect(classify(quoting).pattern?.id).toBe("skill-instructions");
+  });
+
+  test("site-data still owns docs/assets JSON: the new SKOS entry did not widen it", () => {
+    // `.skos.jsonld` is not `*.json`, so the two cannot overlap — pinned
+    // because `8rff` flagged exactly this as the thing to confirm.
+    expect(classify("cat-harness/docs/assets/library/index.json").pattern?.id).toBe("site-data");
   });
 
   test("a kg-qa sidecar is delegated, not taken: it may carry an attestation", () => {
@@ -47,6 +194,10 @@ describe("classify", () => {
     expect(classify("cat-harness/docs/processes/merge-base.md").pattern?.id).toBe("viewer-pages");
     expect(classify("cat-harness/docs/translation-status/index.html").pattern?.id).toBe("viewer-pages");
     expect(classify("cat-harness/docs/methodologies/index.md").pattern?.id).toBe("viewer-pages");
+    expect(classify("cat-harness/docs/fsh-guts/index.md").pattern?.id).toBe("viewer-pages");
+    // ...but not the archive it renders: fsh-guts/ holds authored, kept content.
+    expect(classify("fsh-guts/uploads/Home-_-folio-assistant.md").strategy).toBe("refuse");
+    expect(classify("cat-harness/docs/fsh-guts/other.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/cat-harness/published-graphs.md").pattern?.id).toBe("handler-index");
     expect(classify("cat-harness/test/health/results/repository.health-report.json").pattern?.id).toBe("health-report");
     // Authored neighbours: a methodology page itself, and the health producer.
@@ -61,6 +212,39 @@ describe("classify", () => {
     expect(classify("cat-harness/docs/ar/index.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/fr/getting-started.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/de/glossary/index.md").strategy).toBe("refuse");
+  });
+
+  test("the PROV-O report is taken; the workflow instances it is derived FROM are refused", () => {
+    // The single unclassified path when the runner refused #1892 against 32 it
+    // resolved. Generated whole by `prov:qaqc` from the instances under
+    // `beans/workflows/`, so any branch that records one rewrites the index.
+    expect(classify("cat-harness/docs/prov-qaqc/index.md").pattern?.id).toBe("prov-qaqc");
+    expect(classify("cat-harness/docs/assets/prov/x.prov.jsonld").pattern?.id).toBe("prov-qaqc");
+    // Instance-agnostic, like `derived-results`: a dependent folio writes the
+    // same two shapes under its own root.
+    expect(classify("who-iris/docs/prov-qaqc/index.md").pattern?.id).toBe("prov-qaqc");
+    // The unsafe neighbours. The INPUT is committed workflow state, not a
+    // derivative of it, so taking base would discard a recorded instance.
+    expect(classify("beans/workflows/crdm-requirements-1.json").strategy).toBe("refuse");
+    // And the generator itself is authored source.
+    expect(classify("cat-harness/scripts/prov-qaqc.ts").strategy).toBe("refuse");
+  });
+
+  test("artefact-verification.json refuses BY NAME, which an unclassified path does not", () => {
+    // The distinction this entry exists for, and the reason it is declared
+    // rather than left to the default: a named refusal tells the next sweep WHY
+    // (bean `mjl3`), where "no declared pattern" reads as an omission. It looks
+    // generated — under scripts/, a .json, key set derived from package.json —
+    // and refused on two open PRs at once (#1958, #1955).
+    const named = classify("cat-harness/scripts/artefact-verification.json");
+    expect(named.strategy).toBe("refuse");
+    expect(named.pattern?.id).toBe("artefact-verification");
+
+    // A genuinely unclassified neighbour refuses with NO pattern. If these two
+    // ever report the same thing, the entry has stopped carrying its reason.
+    const unnamed = classify("cat-harness/scripts/sync-docs-harness.ts");
+    expect(unnamed.strategy).toBe("refuse");
+    expect(unnamed.pattern).toBeUndefined();
   });
 
   test("generated VIEWERS of uploads/ are taken; uploads/ itself stays refused", () => {
@@ -162,7 +346,7 @@ describe("resolveGeneratedRegions", () => {
 /**
  * A modify/delete conflict: `ours` changes the file, `theirs` (the base being
  * merged in) deletes it — or the reverse. Measured 2026-10-02 on #1805, where
- * main deleted docs-auto pages the branch had touched and `checkout --theirs`
+ * main deleted auto-docs pages the branch had touched and `checkout --theirs`
  * threw "does not have their version".
  */
 function modifyDelete(deletedBy: "theirs" | "ours"): string {
@@ -218,7 +402,7 @@ describe("take-base when one side deleted the file", () => {
 describe("modify/delete on DECLARED paths: generated resolves, authored refuses (#1854)", () => {
   // Real pattern paths rather than a bare `gen.html`, so classification and
   // the stage handling are exercised together on what git actually reports.
-  const GEN = "cat-harness/docs/cat-harness/docs-auto/index/index.html";
+  const GEN = "cat-harness/docs/cat-harness/auto-docs/index/index.html";
   const BEAN = "beans/defs/folio-assistant-x--y.md";
   const mk = (): string => {
     const dir = mkdtempSync(join(tmpdir(), "merge-base-md2-"));
@@ -250,7 +434,7 @@ describe("modify/delete on DECLARED paths: generated resolves, authored refuses 
       expect(conflicted).toEqual([BEAN, GEN].sort());
       const p = plan(conflicted);
       expect(p.resolvable.map((c) => c.path)).toEqual([GEN]);
-      expect(p.resolvable[0]!.pattern?.id).toBe("docs-auto");
+      expect(p.resolvable[0]!.pattern?.id).toBe("auto-docs");
       expect(p.refused.map((c) => c.path)).toEqual([BEAN]);
       expect(p.refused[0]!.pattern?.id).toBe("beans");
       for (const c of p.resolvable) takeBase(d, c.path);
@@ -272,5 +456,138 @@ describe("qa sidecars of a NESTED instance are in scope", () => {
     const [o] = qaPlan("/nonexistent", dirs, ["unrelated/x.json"]);
     expect(o!.action).toBe("skip");
     expect(o!.reason).toContain("who-iris/test/results/");
+  });
+});
+
+// Bean `wczm` item 2. Train 1 (#1869): a branch's submodule pin that
+// fast-forwarded main's was silently reverted by taking main's side. A gitlink
+// is resolved by ANCESTRY: the descendant wins, diverged pins and pins the
+// submodule does not have are refused.
+describe("a conflicted submodule gitlink is resolved by ancestry — bean wczm", () => {
+  const env = { ...process.env, GIT_AUTHOR_NAME: "t", GIT_AUTHOR_EMAIL: "t@invalid", GIT_COMMITTER_NAME: "t", GIT_COMMITTER_EMAIL: "t@invalid", GIT_ALLOW_PROTOCOL: "file" };
+  const g = (cwd: string, ...a: string[]) => execFileSync("git", ["-c", "protocol.file.allow=always", ...a], { cwd, env, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+
+  /** A super-repo whose `sub` pin is set to `oursPin` on a branch and `theirsPin` on main, then merged: a gitlink conflict. */
+  function conflict(build: (commit: (msg: string) => string, reset: (to: string) => void) => { base: string; ours: string; theirs: string }) {
+    const top = mkdtempSync(join(tmpdir(), "gitlink-"));
+    const subSrc = join(top, "sub-src");
+    mkdirSync(subSrc);
+    g(subSrc, "init", "-q", "-b", "main");
+    const commit = (msg: string) => { g(subSrc, "commit", "-q", "--allow-empty", "-m", msg); return g(subSrc, "rev-parse", "HEAD"); };
+    const reset = (to: string) => { g(subSrc, "checkout", "-q", "-B", `b-${to.slice(0, 7)}`, to); };
+    const pins = build(commit, reset);
+    const sup = join(top, "super");
+    mkdirSync(sup);
+    g(sup, "init", "-q", "-b", "main");
+    // SHALLOW, as this repository's submodules and CI's are: with the full
+    // history git resolves a fast-forward pin itself and nothing conflicts.
+    g(sup, "submodule", "add", "-q", "--depth", "1", `file://${subSrc}`, "sub");
+    const pin = (oid: string) => { g(join(sup, "sub"), "fetch", "-q", "--depth", "1", "origin", oid); g(join(sup, "sub"), "checkout", "-q", oid); g(sup, "add", "sub"); g(sup, "commit", "-q", "-m", `pin ${oid.slice(0, 7)}`); };
+    pin(pins.base);
+    g(sup, "checkout", "-q", "-b", "branch");
+    pin(pins.ours);
+    g(sup, "checkout", "-q", "main");
+    pin(pins.theirs);
+    g(sup, "checkout", "-q", "branch");
+    try { g(sup, "merge", "--no-ff", "--no-commit", "main"); } catch { /* the conflict is the point */ }
+    if (g(sup, "diff", "--name-only", "--diff-filter=U") !== "sub") throw new Error("fixture: expected a gitlink conflict on sub");
+    return { top, sup, ...pins };
+  }
+
+  test("the branch's pin fast-forwards main's: keep the branch's", () => {
+    const c = conflict((commit) => { const a = commit("a"); const b = commit("b"); const d = commit("c"); return { base: a, theirs: b, ours: d }; });
+    try {
+      const r = resolveGitlink(c.sup, "sub");
+      expect(r).toEqual({ take: "ours", pin: c.ours, why: "the branch's pin fast-forwards the base's" });
+      stageGitlink(c.sup, "sub", c.ours);
+      expect(g(c.sup, "diff", "--name-only", "--diff-filter=U")).toBe("");
+      expect(g(c.sup, "ls-files", "-s", "sub").split(/\s+/)[1]).toBe(c.ours);
+    } finally { rmSync(c.top, { recursive: true, force: true }); }
+  });
+
+  test("main's pin fast-forwards the branch's: take main's", () => {
+    const c = conflict((commit) => { const a = commit("a"); const b = commit("b"); const d = commit("c"); return { base: a, ours: b, theirs: d }; });
+    try {
+      expect(resolveGitlink(c.sup, "sub")).toEqual({ take: "theirs", pin: c.theirs, why: "the base's pin fast-forwards the branch's" });
+    } finally { rmSync(c.top, { recursive: true, force: true }); }
+  });
+
+  test("diverged pins are refused — either side drops the other's commits", () => {
+    const c = conflict((commit, reset) => { const a = commit("a"); const b = commit("b"); reset(a); const d = commit("c"); return { base: a, ours: b, theirs: d }; });
+    try {
+      const r = resolveGitlink(c.sup, "sub");
+      expect(r && "refuse" in r && r.refuse).toContain("diverged");
+    } finally { rmSync(c.top, { recursive: true, force: true }); }
+  });
+
+  test("a path that is not a gitlink is not this resolver's", () => {
+    const c = conflict((commit) => { const a = commit("a"); const b = commit("b"); const d = commit("c"); return { base: a, theirs: b, ours: d }; });
+    try {
+      expect(resolveGitlink(c.sup, ".gitmodules")).toBeUndefined();
+    } finally { rmSync(c.top, { recursive: true, force: true }); }
+  });
+});
+
+/**
+ * #1801, 2026-10-03: the branch adds `results/` to `.gitignore` while the
+ * files there stay tracked on both sides. git checks an UNMERGED path against
+ * `.gitignore` as if it were new, so a plain `git add` refused, and merge-main
+ * went red on every push to main ("exited 1 without a refusal").
+ */
+function ignoredTrackedConflict(): string {
+  const dir = mkdtempSync(join(tmpdir(), "merge-base-ign-"));
+  const g = (...a: string[]) => execFileSync("git", a, { cwd: dir, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] });
+  g("init", "-q", "-b", "branch");
+  g("config", "user.email", "t@example.invalid");
+  g("config", "user.name", "t");
+  mkdirSync(join(dir, "results"));
+  writeFileSync(join(dir, "results/x.json"), "{}\n");
+  g("add", ".");
+  g("commit", "-qm", "base");
+  g("checkout", "-q", "-b", "main");
+  writeFileSync(join(dir, "results/x.json"), "{\"main\":1}\n");
+  g("commit", "-qam", "main side");
+  g("checkout", "-q", "branch");
+  writeFileSync(join(dir, ".gitignore"), "results/\n");
+  writeFileSync(join(dir, "results/x.json"), "{\"branch\":1}\n");
+  g("add", ".gitignore");
+  g("commit", "-qam", "branch side: ignore results/, still tracked");
+  try { g("merge", "--no-commit", "main"); } catch { /* the conflict is the point */ }
+  return dir;
+}
+
+describe("a conflicted path the branch's .gitignore matches (#1801)", () => {
+  const dirs = [ignoredTrackedConflict(), ignoredTrackedConflict()];
+
+  test("the crash, reproduced: a plain `git add` exits 1 on the unmerged ignored path", () => {
+    // (git stages it all the same; only the exit status is the failure, and
+    // the resolver's git() helper throws on it.)
+    const dir = dirs[0]!;
+    expect([...unmergedStages(dir, "results/x.json")].sort()).toEqual([1, 2, 3]);
+    expect(() => execFileSync("git", ["add", "--", "results/x.json"], { cwd: dir, stdio: "pipe" })).toThrow();
+  });
+
+  test("takeBase stages the base's copy anyway, and nothing else", () => {
+    const dir = dirs[1]!;
+    expect([...unmergedStages(dir, "results/x.json")].sort()).toEqual([1, 2, 3]);
+    writeFileSync(join(dir, "results/untracked.json"), "{}\n");
+    takeBase(dir, "results/x.json");
+    expect(readFileSync(join(dir, "results/x.json"), "utf-8")).toBe("{\"main\":1}\n");
+    expect(execFileSync("git", ["diff", "--name-only", "--diff-filter=U"], { cwd: dir, encoding: "utf-8" })).toBe("");
+    // -f is scoped to the conflicted path: an ignored untracked neighbour stays out.
+    expect(execFileSync("git", ["ls-files", "--", "results/untracked.json"], { cwd: dir, encoding: "utf-8" })).toBe("");
+  });
+
+  test("cleanup", () => { for (const d of dirs) rmSync(d, { recursive: true, force: true }); });
+});
+
+describe("a resolution that fails is reported as a refusal, not an unexplained exit", () => {
+  test("the line has the refusal shape merge-main.yml and merge-main-comment read", () => {
+    const err = Object.assign(new Error("Command failed"), { stderr: "\nThe following paths are ignored by one of your .gitignore files:\nresults\n" });
+    const line = resolutionFailure("results/x.json", "derived-results", err);
+    expect(line).toBe("  ✗ results/x.json  [derived-results: could not resolve] — The following paths are ignored by one of your .gitignore files:");
+    // merge-main.yml: grep -qE '^  ✗ .*  \['
+    expect(/^ {2}✗ .* {2}\[/.test(line)).toBe(true);
+    expect(parseLog(`merge-base: 1 conflicted path(s)\n${line}\n`).refused).toContain("results/x.json");
   });
 });

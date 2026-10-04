@@ -43,15 +43,17 @@
  * written as a pass.
  *
  * @module scripts/kg-audit
- * @covers processes, scenarios, skills, tools, cat-harness — the graph kinds
- *   `KG_SUBJECT_GRAPH_KINDS` maps its seven subject kinds onto
+ * @covers processes, scenarios, skills, tools, cat-harness, attestations — the graph kinds
+ *   `KG_SUBJECT_GRAPH_KINDS` maps its seven subject kinds onto, plus the
+ *   attestation store it reads and `--check`s (bean `2gst`)
  */
 
 import { createHash } from "node:crypto";
 import { parse as parseYaml } from "yaml";
 import { defaultGraphKinds } from "../schemas/graph-kind-registry.js";
 import { contractFile, contractRefProblem, skillContracts } from "./skill-contracts.js";
-import { checkTestRuns } from "./test-run-conformance.js";
+import { checkTestRuns, testRunFiles } from "./test-run-conformance.js";
+import { auditTestPlans, jsonFilesUnder } from "./test-plan-audit.js";
 import { processArrowFindings, schemaArrowFindings } from "./arrow-direction.js";
 import { contentCodeFindings, contentInstanceCode } from "./content-holds-code.js";
 import { classifyName, diagramProse, generalDeclarationProse, namedFiles } from "./prose-names.js";
@@ -61,12 +63,23 @@ import { deriveAlternatives } from "../schemas/tool.js";
 import { tools, toolsOf } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { docsLayers } from "./compose-docs.js";
-import { PAIR_CRITERION, discoverPairs, evaluatePairs, readAttestations } from "./prose-code-pairs.js";
-import { VOICE_REVIEW_CRITERION, evaluateVoiceReviews, readVoiceReviews, skillVoices } from "./skill-voice-review.js";
+import { PAIR_CRITERION, discoverPairs, evaluatePairsFrom, readAttestations, type PairAttestation } from "./prose-code-pairs.js";
+import { VOICE_REVIEW_CRITERION, evaluateVoiceReviewsFrom, readVoiceReviews, skillVoices, type VoiceReview } from "./skill-voice-review.js";
+import {
+  ATTESTATIONS_SUFFIX,
+  attestationPathFor,
+  attestationsHomeFor,
+  KG_QA_SIDECAR_SUFFIX,
+  priorKgJudgements,
+  QA_ATTESTATIONS_SCHEMA,
+  readAttestationFile,
+  serialiseAttestations,
+  type KgAttestations,
+} from "../schemas/qa-attestations.js";
 import { claimsEntry, judgePair, rootScripts } from "./pair-claims.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
-import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync, writeSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { corpusPredicate } from "../schemas/git-corpus.ts";
@@ -75,6 +88,7 @@ import {
   KG_QA_SCHEMA,
   KG_QA_DIRNAME,
   kgQaSidecarPath,
+  partitionBySubjectOwner,
   sweepOrphans,
   type OrphanSidecar,
   KG_QA_MANIFEST_SCHEMA,
@@ -84,6 +98,7 @@ import {
   criteriaFor,
   tally,
   worstSeverity,
+  gradedKgFindings,
   type KgCriterionEntry,
   type KgFinding,
   type KgQaManifest,
@@ -105,6 +120,7 @@ import {
   type LoadedActor,
 } from "../schemas/role-graph.js";
 import { ANYONE, ODRL_ACTIONS, readPolicies, readPolicyGrants } from "../schemas/odrl.js";
+import { againstOrUsage, judgeSidecarTree, judgeUsage, qaStorageOf } from "./qa-results.ts";
 import { loadProcessModel, isActivity, isDecision, indistinctBranches, type ProcessModel } from "../src/workflow/process-model.js";
 import { reachability } from "../src/workflow/reachability.js";
 import { raciBreaches, raciRowsOf, type RaciBreachKind } from "./raci-chart.js";
@@ -118,8 +134,8 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "./skill-packages.js";
-import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, instanceDirectoriesForGraph, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
-import { toolDownstreamEntry, undeclaredDownstream } from "./downstream-runs.ts";
+import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, instanceDirectoriesForGraph, instanceRootsIn, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
+import { toolDownstreamEntry, undeclaredDownstreamEntry } from "./downstream-runs.ts";
 import { VERIFIERS } from "./publish-verify.ts";
 import { checkoutRootFor, orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
@@ -330,6 +346,26 @@ const INSTANCE_RUN = root !== AUDITOR_ROOT;
  */
 const QA_HOME = kgQaHomeFor(root, INSTANCE_RUN ? AUDITOR_ROOT : undefined);
 const KG_QA_TREE = join(QA_HOME.root, "kg-qa");
+
+/**
+ * Where this run's JUDGEMENTS live — pair attestations and voice reviews —
+ * apart from the derived sidecars above (bean `2gst`, owner ruling D2 (a)).
+ * The same own / hosted / convention answer as `QA_HOME`, from the
+ * `attestations` directory; the tree under it mirrors `KG_QA_TREE` exactly.
+ * See `schemas/qa-attestations.ts`.
+ */
+const ATT_HOME = attestationsHomeFor(root, INSTANCE_RUN ? AUDITOR_ROOT : undefined);
+const KG_ATT_TREE = join(ATT_HOME.root, "kg-qa");
+/** The declared directory whose absence makes every read `unknown` (never a re-baseline). */
+const ATT_STORE = ATT_HOME.storeRoot;
+/**
+ * Is the derived kg-qa tree STORED on `qa-reports` (bean `oqe3`)? Then its
+ * working copy is a measurement of the last run, not a record: a stale or
+ * orphaned sidecar there is advisory in judge mode. Unstored, it is still the
+ * committed record and both are findings, as they were.
+ */
+const derivedStored = qaStorageOf(KG_QA_TREE) !== undefined;
+
 
 /**
  * How many criteria this run did not evaluate because they are `repo`-scoped.
@@ -1306,8 +1342,15 @@ function auditTools(instance?: string): KgQaReport[] {
   const alternatives = deriveAlternatives(instance === undefined ? tools() : toolsOf(instance));
   const unreadable = new Set(check.unreadableContracts);
 
+  // SUBJECTS are this instance's own Tools, on every run. The CHECKS above
+  // still read the whole checkout on the default run, because a Tool here may
+  // name one there — resolution widens, coverage does not (`satisfiableSkills`
+  // in `check-tools.ts`, ruling `pve3`). Until 2026-10-01 the default run
+  // iterated `tools()`, so it wrote 29 sidecars about Tools that fhir-harness
+  // (19), folio-assistant-core (4) and smart-base (6) declare and audit
+  // themselves — a second copy of each verdict, free to drift (Q-A PR 4).
   const out: KgQaReport[] = [];
-  for (const t of instance === undefined ? tools() : toolsOf(instance)) {
+  for (const t of toolsOf(instance ?? root)) {
     const f = (rows: { detail: string }[] | undefined): KgFinding[] =>
       (rows ?? []).map((r) => ({ where: t.id, detail: r.detail }));
 
@@ -1735,6 +1778,23 @@ function testRunCriteria(skills: Set<string>): Record<string, KgCriterionEntry> 
     "test-run-conforms": entry(r.nonconforming, any),
     "test-run-checkable": entry(r.unchecked, any),
   };
+}
+
+/**
+ * The test process's four criteria (bean `3o5b`): plans, the runs that
+ * execute them and the reports they produce, followed to each other. The
+ * rules live in the schemas; `test-plan-audit.ts` follows the files.
+ */
+function testPlanCriteria(actors: LoadedActor[]): Record<string, KgCriterionEntry> {
+  return auditTestPlans({
+    root,
+    dmnBases: [WORKFLOW_DIR],
+    plans: jsonFilesUnder(instanceDirectoriesForGraph(root, "test-plan")),
+    // declared-path-literal: the conventional fallback when no declaration names the directory
+    runs: testRunFiles(ownDirectoryById(root, "qa", "test/results")),
+    reports: jsonFilesUnder(instanceDirectoriesForGraph(root, "test-report")),
+    actors,
+  });
 }
 
 /** One declared `satisfies` ref, and who declared it. */
@@ -2243,10 +2303,10 @@ function auditGraph(
       // somebody has to measure again.
       // A downstream tool with no declaration (bean `fq5u`). The family's
       // per-Tool verdict is `tool-downstream-fresh`, which generalises what
-      // `lsi-index-fresh` judged here for LSI alone.
-      "downstream-tool-declared": entry(
-        undeclaredDownstream(tools(), AUDITOR_ROOT, VERIFIERS.map((v) => ({ id: v.id, tool: v.tool }))),
-      ),
+      // `lsi-index-fresh` judged here for LSI alone. The entry is built there,
+      // not by `entry()`, because run records that are not in the checkout
+      // make it `unknown` rather than a pass (bean `oq1j`).
+      "downstream-tool-declared": undeclaredDownstreamEntry(tools(), AUDITOR_ROOT, VERIFIERS.map((v) => ({ id: v.id, tool: v.tool }))),
       "manifest-skill-exists": (() => {
         const remote = remotePackageSkills(root);
         return entry(
@@ -2316,6 +2376,7 @@ function auditGraph(
       "skill-graph-kinds-resolve": entry(unknownSkillGraphKinds()),
       "skill-contract-resolves": entry(brokenSkillContracts()),
       ...testRunCriteria(skills),
+      ...testPlanCriteria(actors),
       "arrow-direction": arrowDirection(),
       "prose-names-resolve": proseNamesResolve(),
       "skill-contract-claimed": entry(unclaimedSkillContracts()),
@@ -2358,6 +2419,11 @@ function sidecarPath(r: KgQaReport): string {
   return kgQaSidecarPath(root, dir, name, KG_QA_TREE);
 }
 
+/** The attestation store file for a report: its sidecar's mirror under `KG_ATT_TREE`. */
+function attestationPath(r: KgQaReport): string {
+  return attestationPathFor(sidecarPath(r), KG_QA_TREE, ATT_HOME.root, "kg-qa", KG_QA_SIDECAR_SUFFIX);
+}
+
 function serialise(r: KgQaReport): string {
   return `${JSON.stringify(r, null, 2)}\n`;
 }
@@ -2368,6 +2434,34 @@ const args = process.argv.slice(2);
 const check = args.includes("--check");
 const strict = args.includes("--strict");
 const asJson = args.includes("--json");
+/**
+ * Create the attestation store (the `attestations` directory) when it is
+ * absent, even with nothing to put in it. No longer required: since owner
+ * ruling 2 (2026-10-01) an absent store is `absent`, not `unknown`, and the
+ * first save creates it, moving whatever judgements the prior sidecars still
+ * carry. C4's loss came from re-baselining over judgements nobody read; a
+ * first save that READS the prior sidecar and writes what it holds to the
+ * store first cannot do that. Kept so scripts that pass it keep working.
+ */
+const initAttestations = args.includes("--init-attestations");
+if (initAttestations && check) {
+  console.error("--init-attestations starts a store; --check writes nothing. Run them separately.");
+  process.exit(2);
+}
+/**
+ * Judge mode's prelude (bean `oqe3`): an unknown flag is a usage error — a
+ * misspelt `--chek` would otherwise run the WRITER — and `--against <ref>`
+ * names the `qa-reports` baseline new findings are split from.
+ */
+const JUDGE_GATE = strict ? "kg:audit:strict" : "kg:audit:check";
+let against: string | undefined;
+if (check) {
+  const usage = judgeUsage(JUDGE_GATE, args, ["--instance", "--strict", "--json", "--against"]);
+  if (usage !== undefined) process.exit(usage);
+  const a = againstOrUsage(JUDGE_GATE, args);
+  if (a.exit !== undefined) process.exit(a.exit);
+  against = a.against;
+}
 
 const auditorHash = sha256(readFileSync(join(AUDITOR_ROOT, "scripts", "kg-audit.ts"), "utf-8"));
 const skills = knownSkills(root, corpusScopeFor(root));
@@ -2389,9 +2483,11 @@ const skills = knownSkills(root, corpusScopeFor(root));
  * correct.
  *
  * The auditor's own run already knew: `test/results/kg-qa/_external/smart-base/`
- * records `skill-ref-resolves` **pass (0)** for that same diagram, because from
+ * recorded `skill-ref-resolves` **pass (0)** for that same diagram, because from
  * here the skill is local. So the two runs disagreed about one file, and the
- * instance-scoped one was wrong.
+ * instance-scoped one was wrong. (That `_external/` copy was itself the
+ * defect's enabler — two verdicts about one subject — and was deleted with the
+ * other seven on 2026-10-01, Q-A PR 4; the owner's run now holds the only one.)
  *
  * ## This is the FIFTH cross-instance defect, and the only DOWNWARD one
  *
@@ -2613,6 +2709,33 @@ reports.push(...auditSkills());
 reports.push(auditGraph(graph, processes, actors, skills, stories, danglingSatisfies(requirements, satisfiers)));
 reports.push(...auditTools(INSTANCE_RUN ? root : undefined));
 
+/**
+ * Drop every subject ANOTHER instance owns — it audits that subject itself.
+ *
+ * The default run walks the CHECKOUT (`corpusScopeFor`), so it loads
+ * smart-base's, large-datasets' and folio-assistant-core's diagrams beside its
+ * own. Loading them is right: a call activity here may name one, and the
+ * graph-level criteria need the whole corpus. Writing a VERDICT about them is
+ * not — each owner's `kg:audit:all` run already writes one under its own
+ * `test/results/kg-qa/`, and until 2026-10-01 this run wrote a second under
+ * `_external/`. Eight duplicates, deleted with the owner's confirmation
+ * (Q-A PR 4, epic `7x5n`); `kgQaSidecarPath` now refuses the path, so this
+ * filter is what keeps the run from throwing rather than a courtesy.
+ *
+ * A subject outside this instance that NO checkout instance owns is refused
+ * loudly: dropping it would be a clean run over nothing (`dh4f`), and giving
+ * it a path is what `_external/` was.
+ */
+const ownership = partitionBySubjectOwner(reports, root, instanceRootsIn(checkoutRootFor(root)));
+if (ownership.unowned.length > 0) {
+  console.error(`${ownership.unowned.length} subject(s) lie outside ${root} and no instance in the checkout owns them:`);
+  for (const r of ownership.unowned) console.error(`  · ${r.subject.kind}:${r.subject.id}  ${r.subject.path}`);
+  console.error("This is NOT a pass. Nothing was written; declare the owning instance, or stop discovering the subject.");
+  process.exit(2);
+}
+reports.splice(0, reports.length, ...ownership.kept);
+const ownerAudited = ownership.skipped.length;
+
 // Write or compare.
 //
 // THE MANIFEST IS ONE FILE, AND THAT IS THE POINT. The auditor's hash used to
@@ -2622,6 +2745,8 @@ reports.push(...auditTools(INSTANCE_RUN ? root : undefined));
 // comment line in this script rewrote 218 sidecars with no verdict changed,
 // which is what made two concurrent branches conflict by construction.
 const stale: string[] = [];
+/** Committed attestation files this run would rewrite — gated in judge mode (bean `oqe3`). */
+const staleAttestations: string[] = [];
 
 const manifest: KgQaManifest = {
   $schema: KG_QA_MANIFEST_SCHEMA,
@@ -2718,15 +2843,39 @@ if (!check) {
   const moved = relocateSidecars(root, targets);
   for (const m of moved) {
     console.log(`  → moved ${m.from}\n      to ${m.to}  (${m.identity} relocated)`);
+    // The judgement follows its subject the same way, under the same three
+    // conditions `relocateSidecars` already checked — and only onto a vacant path.
+    const from = attestationPathFor(join(root, m.from), KG_QA_TREE, ATT_HOME.root, "kg-qa", KG_QA_SIDECAR_SUFFIX);
+    const to = attestationPathFor(join(root, m.to), KG_QA_TREE, ATT_HOME.root, "kg-qa", KG_QA_SIDECAR_SUFFIX);
+    if (existsSync(from) && !existsSync(to)) {
+      mkdirSync(dirname(to), { recursive: true });
+      renameSync(from, to);
+      console.log(`  → moved ${relative(root, from)}\n      to ${relative(root, to)}  (its attestations)`);
+    }
   }
 }
+if (initAttestations && !check && !existsSync(ATT_STORE)) {
+  mkdirSync(ATT_STORE, { recursive: true });
+  console.log(`  → started the attestation store at ${relative(root, ATT_STORE)} — declare it as an \`attestations\` directory`);
+}
+
+/**
+ * The judgements this run carries forward, per report. `undefined` for a half
+ * means its store could not be read (`corrupt` / `unknown`), and then NOTHING
+ * is written for that subject — a write would replace a judgement nobody read.
+ */
+const judgements = new Map<KgQaReport, { pairs: PairAttestation[] | undefined; reviews: VoiceReview[] | undefined }>();
+const judgementsOf = (r: KgQaReport) =>
+  judgements.get(r) ?? judgements.set(r, { pairs: [], reviews: [] }).get(r)!;
 
 // ── Declared prose ↔ code pairs (bean `cuxx`, issue #1042).
 //
 // Evaluated here rather than inside auditProcess/auditSkills because it is the
-// one criterion that READS the previous sidecar: its baseline is carried across
-// runs, the way a block-qa reviewer entry is. Done before the write loop so
-// `--check` regenerates the same text the writer would.
+// one criterion that READS a prior judgement: its baseline is carried across
+// runs, the way a block-qa reviewer entry is. The prior comes from the
+// attestation STORE, not the sidecar (bean `2gst`): a sidecar is derived and
+// leaves main, and an absent one used to re-baseline every pair (C4, 13 → 0).
+// Done before the write loop so `--check` regenerates the same text the writer would.
 {
   // `REPO_ROOT`, not `resolve(root, "..")` — see its declaration (bean `pgzn`).
   const repoRoot = REPO_ROOT;
@@ -2734,34 +2883,109 @@ if (!check) {
   for (const r of reports) {
     if (r.subject.kind !== "process" && r.subject.kind !== "skill") continue;
     const pairs = discoverPairs(r.subject, root, repoRoot);
-    const { entry: e, attestations } = evaluatePairs(pairs, readAttestations(sidecarPath(r)), repoRoot);
+    // On a store miss (or no store yet) the prior sidecar's own attestations
+    // are read instead, and moved into the store below (owner ruling 2).
+    const { entry: e, attestations } = evaluatePairsFrom(pairs, readAttestations(attestationPath(r), ATT_STORE, sidecarPath(r)), repoRoot);
     r.criteria[PAIR_CRITERION] = e;
     // Stage A (bean `ca4a`): what the prose says about the code, where it can be checked.
     r.criteria["prose-claims-resolve"] = claimsEntry(pairs.flatMap((p) => judgePair(repoRoot, p, scripts)));
     r.totals = tally(r.criteria);
-    if (attestations.length) r.pair_attestations = attestations;
+    judgementsOf(r).pairs = attestations;
   }
 }
 
 // ── Skills reviewed against the voices that judge skills (bean `rkqp`).
 //
-// The same shape as the pairs above: it READS the previous sidecar, because a
+// The same shape as the pairs above: it READS the attestation store, because a
 // review is carried across runs, so it runs before the write loop too.
 {
   const voices = skillVoices(resolve(root, ".."));
   for (const r of reports) {
     if (r.subject.kind !== "skill" || !r.subject.path) continue;
-    const { entry: e, reviews } = evaluateVoiceReviews(join(root, r.subject.path), readVoiceReviews(sidecarPath(r)), voices);
+    const { entry: e, reviews } = evaluateVoiceReviewsFrom(join(root, r.subject.path), readVoiceReviews(attestationPath(r), ATT_STORE, sidecarPath(r)), voices);
     r.criteria[VOICE_REVIEW_CRITERION] = e;
     r.totals = tally(r.criteria);
-    if (reviews.length) r.voice_reviews = reviews;
+    judgementsOf(r).reviews = reviews;
   }
+}
+
+// ── The judgements, to the attestation store (bean `2gst`).
+//
+// Written only where both halves were read (hit, miss or absent). A subject
+// whose computed set is EMPTY while a file exists is left as it is and
+// reported: emptying it would delete judgements, and that is a person's call.
+//
+// Owner ruling 2 (2026-10-01): where the store has no entry for a subject —
+// or there is no store yet — the judgements its PRIOR sidecar still carries
+// are moved here as this run saves, and the sidecar written after is clean.
+// Every moved entry lands in the store: one the evaluation above did not
+// carry forward (a pair no longer declared) is kept verbatim rather than
+// dropped with the sidecar's copy. A prior sidecar that will not parse while
+// the store has no entry may be holding judgements, so that subject is
+// UNKNOWN: neither file is written, and the run fails.
+//
+// The store is written BEFORE the sidecars, so a run that stops between the
+// two leaves the judgements in both places, never in neither.
+const attWritten = new Set<string>();
+const attKept: string[] = [];
+const attUnknown = new Set<KgQaReport>();
+let attMoved = 0;
+for (const r of reports) {
+  const p = attestationPath(r);
+  attWritten.add(resolve(p));
+  const read = readAttestationFile(p, ATT_STORE);
+  const prior = read.state === "miss" || read.state === "absent" ? priorKgJudgements(sidecarPath(r)) : ({ state: "none" } as const);
+  if (prior.state === "unknown") {
+    attUnknown.add(r);
+    console.error(`  ✗ UNKNOWN ${relative(root, sidecarPath(r))}: ${prior.reason}. The store has no entry for it, so neither file is written.`);
+    continue;
+  }
+  const j = judgements.get(r) ?? { pairs: [], reviews: [] };
+  if (j.pairs === undefined || j.reviews === undefined) continue;
+  let pairs = j.pairs;
+  let reviews = j.reviews;
+  {
+    if (prior.state === "found") {
+      attMoved += prior.pair_attestations.length + prior.voice_reviews.length;
+      const pairKey = (a: { kind?: unknown; prose?: unknown; code?: unknown }) => `${String(a.kind)}|${String(a.prose)}|${String(a.code)}`;
+      const havePairs = new Set(pairs.map(pairKey));
+      const haveVoices = new Set(reviews.map((v) => v.voice));
+      pairs = [...pairs, ...(prior.pair_attestations as PairAttestation[]).filter((a) => !havePairs.has(pairKey(a)))];
+      reviews = [...reviews, ...(prior.voice_reviews as VoiceReview[]).filter((v) => !haveVoices.has(v.voice))];
+    }
+  }
+  const file: KgAttestations = { $schema: QA_ATTESTATIONS_SCHEMA, family: "kg-qa", subject: r.subject };
+  if (pairs.length) file.pair_attestations = pairs;
+  if (reviews.length) file.voice_reviews = reviews;
+  if (!file.pair_attestations && !file.voice_reviews) {
+    if (existsSync(p)) attKept.push(relative(root, p));
+    continue;
+  }
+  const text = serialiseAttestations(file);
+  if (check) {
+    // The attestation store is COMMITTED content on main (ruling D2 (a)), not
+    // a derived file leaving it — so a store this run would rewrite is still
+    // a finding in judge mode (bean `oqe3`), unlike a derived sidecar.
+    const current = existsSync(p) ? readFileSync(p, "utf-8") : undefined;
+    if (current !== text) staleAttestations.push(relative(root, p));
+  } else {
+    mkdirSync(join(p, ".."), { recursive: true });
+    writeFileSync(p, text);
+  }
+}
+if (attMoved > 0) {
+  console.log(
+    `  ${check ? "would move" : "→ moved"} ${attMoved} judgement(s) from prior kg-qa sidecars into the attestation store ` +
+      `(${relative(root, ATT_STORE)}) — owner ruling 2: a first save moves them`,
+  );
 }
 
 const written = new Set<string>();
 for (const r of reports) {
   const p = sidecarPath(r);
   written.add(resolve(p));
+  // Never overwrite a sidecar whose judgements could not be moved.
+  if (attUnknown.has(r)) continue;
   const text = serialise(r);
   if (check) {
     const current = existsSync(p) ? readFileSync(p, "utf-8") : undefined;
@@ -2770,6 +2994,35 @@ for (const r of reports) {
     mkdirSync(join(p, ".."), { recursive: true });
     writeFileSync(p, text);
   }
+}
+if (attKept.length > 0) {
+  console.error(`\n  ${attKept.length} attestation file(s) left untouched: their subject declares no pair or review now.`);
+  for (const k of attKept) console.error(`    ${k}`);
+  console.error("    Kept, never emptied — removing a judgement is a person's call.");
+}
+
+/** Attestation files no report accounts for — the store's half of the orphan sweep below. */
+function attestationOrphans(): string[] {
+  const out: string[] = [];
+  const walk = (dir: string): void => {
+    if (!existsSync(dir)) return;
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const abs = join(dir, e.name);
+      if (e.isDirectory()) walk(abs);
+      else if (e.name.endsWith(ATTESTATIONS_SUFFIX) && !attWritten.has(resolve(abs))) out.push(relative(root, abs));
+    }
+  };
+  walk(KG_ATT_TREE);
+  return out.sort();
+}
+const attOrphans = attestationOrphans();
+if (attOrphans.length > 0) {
+  console.error(`\n\u2717 ${attOrphans.length} attestation file(s) judge a subject no report covers:`);
+  for (const o of attOrphans) {
+    const read = readAttestationFile(join(root, o), ATT_STORE);
+    console.error(`    ${o}${read.state === "hit" ? "" : `  (${read.state})`}`);
+  }
+  console.error("  Reported, never deleted — `deletion-requires-confirmation`. It fails `kg:audit:check`.");
 }
 
 // ── A SIDECAR NO REPORT ACCOUNTS FOR.
@@ -2838,7 +3091,10 @@ if (orphans.length > 0) {
 }
 
 if (asJson) {
-  console.log(JSON.stringify({ reports, stale }, null, 2));
+  // Written synchronously: the judge below ends in `process.exit`, and a
+  // multi-megabyte `console.log` to a PIPE is not flushed by then — the
+  // callers that parse this saw a truncated array (bean `oqe3`).
+  writeSync(1, JSON.stringify({ reports, stale }, null, 2) + "\n");
 } else {
   const rank: Record<KgSeverity, number> = { minor: 1, major: 2, critical: 3 };
   const counts: Record<KgResult, number> = { pass: 0, fail: 0, "n/a": 0, unknown: 0 };
@@ -2846,6 +3102,11 @@ if (asJson) {
 
   console.log(`Knowledge-graph audit  (${reports.length} subjects, ${skills.size} skills, ${graph?.roles.length ?? 0} roles)\n`);
   console.log(`  pass ${counts.pass}   fail ${counts.fail}   n/a ${counts["n/a"]}   unknown ${counts.unknown}\n`);
+  // Said, not silent: a subject left to its owner is still a subject this run
+  // saw, and a reader comparing counts across runs needs the difference named.
+  if (ownerAudited > 0) {
+    console.log(`  ${ownerAudited} subject(s) another instance owns were left to that instance's own audit.\n`);
+  }
   // The scope line, printed only when it has something to say. A run at the
   // auditor's own root suppresses nothing, so a `0 suppressed` line there would
   // be noise; an instance run states the number and where to read the argument,
@@ -2878,8 +3139,20 @@ if (asJson) {
   }
 
   if (check && stale.length) {
-    console.error(`${stale.length} sidecar(s) are stale. Run \`bun run kg:audit\` and commit:`);
-    for (const s of stale) console.error(`  · ${s}`);
+    // Bean `oqe3`: a derived sidecar that differs from this run is not a
+    // finding once its directory is stored — the record is rebuilt by
+    // `qa:refresh` in CI, not committed. Said, so a stale working copy is
+    // still SEEN, and gated only where the directory is not stored.
+    console.log(
+      `  ${derivedStored ? "advisory" : "✗"}: ${stale.length} derived sidecar(s) differ from this run's` +
+        (derivedStored ? " (not gated: the kg-qa tree is stored on qa-reports; judge, never compare)" : ". Run `bun run kg:audit`:"),
+    );
+    for (const s of stale.slice(0, derivedStored ? 5 : stale.length)) console.log(`    · ${s}`);
+    if (derivedStored && stale.length > 5) console.log(`    …and ${stale.length - 5} more`);
+  }
+  if (check && staleAttestations.length) {
+    console.error(`${staleAttestations.length} attestation file(s) are not what this run would write. Run \`bun run kg:audit\` and commit:`);
+    for (const s of staleAttestations) console.error(`  · ${s}`);
   }
 
   const worst = reports.map(worstSeverity).filter(Boolean) as KgSeverity[];
@@ -2889,10 +3162,58 @@ if (asJson) {
 
 if (check) {
   const gate: KgSeverity[] = strict ? ["critical", "major"] : ["critical"];
-  const tripped = reports.some((r) => {
-    const w = worstSeverity(r);
-    return w !== undefined && gate.includes(w);
+  // ── JUDGE MODE (bean `oqe3`): compute, judge, write nothing.
+  //
+  // The graded findings are every failing or unknown criterion at the gate's
+  // severity — what `tripped` below used to ask of `worstSeverity`, per entry
+  // rather than per report so a NEW finding in a subject that already had an
+  // old one is still new. Against `--against <ref>` only new ones fail; with
+  // no readable baseline every one fails, as before. "Stale" no longer fails a
+  // derived sidecar in a stored tree (there is nothing committed to be stale
+  // against once 5hox lands); what still fails is what is COMMITTED — an
+  // attestation file this run would rewrite, and an attestation no report
+  // covers — and, where the tree is not stored, a stale or orphaned sidecar.
+  const graded = (r: KgQaReport): unknown[] => gradedKgFindings(r, gate);
+  const derivedFailing = derivedStored ? 0 : stale.length + orphans.length;
+  const committed = staleAttestations.length + attOrphans.length;
+  // `--json` owns stdout: the report array is parsed whole by its callers
+  // (the needs-chain and Tool-subject tests), so the judge's lines go to
+  // stderr there. The verdict and the exit are the same either way.
+  if (asJson) console.log = console.error;
+  const verdict = judgeSidecarTree({
+    gate: JUDGE_GATE,
+    fresh: reports.map((r) => ({ path: sidecarPath(r), findings: graded(r) })),
+    findingsOf: (text) => {
+      try {
+        const prior = JSON.parse(text) as KgQaReport;
+        return prior?.$schema === KG_QA_SCHEMA && prior.criteria ? graded(prior) : undefined;
+      } catch {
+        return undefined;
+      }
+    },
+    mode: "absolute",
+    against,
+    label: (p) => relative(root, p),
+    extraFailing: {
+      count: committed + derivedFailing,
+      detail:
+        `${committed} committed attestation file(s) out of date or orphaned` +
+        (derivedFailing ? `, ${derivedFailing} stale or orphaned sidecar(s) in an unstored tree` : ""),
+    },
+    ...(attUnknown.size > 0 ? { undetermined: `${attUnknown.size} subject(s) whose judgements could not be read — nothing was written for them` } : {}),
   });
+  process.exit(verdict.exit);
+}
+// The history of the judge above, kept because each rule in it was paid for.
+//
+// Until bean `oqe3` the exit was `stale || tripped || orphans || attOrphans ||
+// attUnknown`, with `tripped` = some report's `worstSeverity` at the gate.
+// `stale` and sidecar orphans were about the COMMITTED derived tree; once that
+// tree is stored on `qa-reports` and rebuilt from empty by `qa:refresh`, a
+// stale or orphaned sidecar cannot reach the record, so in a stored tree both
+// are advisory. Everything below still holds where the tree is not stored,
+// and for the committed attestation store, which is why `attOrphans` gates.
+//
   // ORPHANS FAIL, and they did not until the count reached zero.
   //
   // The sweep printed its findings to stderr and `orphans` appeared nowhere in
@@ -2926,6 +3247,7 @@ if (check) {
   //   · Only `--check` gates. Bare `kg:audit` is the WRITER and still exits 0,
   //     or regenerating after a rename would fail the very command you run to
   //     fix it.
-  process.exit(stale.length || tripped || orphans.length > 0 ? 1 : 0);
-}
-process.exit(0);
+// A subject whose judgements could not be moved (ruling 2) was NOT written —
+// the writer says so with its exit code too, or a script running it would
+// read a refusal as a clean save.
+process.exit(attUnknown.size > 0 ? 4 : 0);

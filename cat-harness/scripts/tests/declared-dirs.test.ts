@@ -32,7 +32,9 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { auditInstance, resolveDeclaredPath } from "../check-declared-dirs.ts";
+import { auditInstance, auditNested, resolveDeclaredPath } from "../check-declared-dirs.ts";
+import { mayLeaveMain } from "../qa-results.ts";
+import { readDeclaration } from "../../schemas/cat-harness.ts";
 
 const REPO = resolve(import.meta.dir, "../../..");
 const made: string[] = [];
@@ -95,6 +97,99 @@ describe("absent and unexplained is a finding", () => {
   });
 });
 
+describe("an entry declared FROM WITHIN is checked too", () => {
+  /**
+   * An instance whose `processes/` exists and carries a `processes.json`
+   * declaring `nested` — the same from-within shape as `docs/docs.json` and
+   * `beans/beans.json`.
+   *
+   * **`processes` rather than `docs`, deliberately.** `walkNested` reads only
+   * the file a kind names as its `declarationFile`, and four kinds name one,
+   * so any of them exercises the mechanism. `docs` was the first choice and is
+   * the wrong one twice over: `check:site-dir-single-answer` refuses a source
+   * file that writes the output site root as the literal `"docs"` — rightly,
+   * since `siteDir()` is the single answer — and a docs-shaped fixture also
+   * reads as if the nesting were a docs feature. It is not.
+   */
+  const PARENT = { id: "processes", path: "processes/", graphKinds: ["processes"] };
+  const withNested = (nested: Array<Record<string, unknown>>, makeDirs: readonly string[] = []): string => {
+    const root = instance([PARENT]);
+    const under = join(root, PARENT.id);
+    mkdirSync(under, { recursive: true });
+    for (const d of makeDirs) mkdirSync(join(under, d), { recursive: true });
+    writeFileSync(join(under, "processes.json"), JSON.stringify({ name: "fixture", directories: nested }, null, 2));
+    return root;
+  };
+
+  const decl = { directories: [PARENT] };
+
+  test("absent and unexplained is a finding, where before it was invisible", () => {
+    // The measured gap: `auditInstance` read `decl.directories` — top-level
+    // only — so this entry was neither checked nor counted, and a path into
+    // thin air reported exit 0.
+    const root = withNested([{ id: "nested", path: "proposals", graphKinds: ["proposals"] }]);
+    const f = auditNested(root, REPO, decl);
+    expect(f).toHaveLength(1);
+    expect(f[0]!.kind).toBe("absent");
+    expect(f[0]!.id).toBe("processes/nested");
+  });
+
+  test("...and it is clean once the directory is there", () => {
+    const root = withNested([{ id: "nested", path: "proposals", graphKinds: ["proposals"] }], ["proposals"]);
+    expect(auditNested(root, REPO, decl)).toEqual([]);
+  });
+
+  test("`absent.reason` clears it, and an exemption that outlived its cause is caught", () => {
+    const excused = { id: "nested", path: "proposals", graphKinds: ["proposals"], absent: { reason: "why" } };
+    expect(auditNested(withNested([excused]), REPO, decl)).toEqual([]);
+    const stale = auditNested(withNested([excused], ["proposals"]), REPO, decl);
+    expect(stale).toHaveLength(1);
+    expect(stale[0]!.kind).toBe("stale-exemption");
+  });
+
+  test("the remedy names the DECLARING FILE, not the path's parent", () => {
+    // The defect the first version of `declaringFile` shipped: it stripped the
+    // last segment of the nested path, so a multi-segment path like
+    // `assets/img/uml/overview` sent the reader to `assets/img/uml/` — a
+    // directory holding no declaration at all. The parent's kind names the
+    // file, so it is asked rather than composed.
+    const root = withNested([{ id: "deep", path: "assets/img/uml/overview", graphKinds: ["auto-docs"] }]);
+    const f = auditNested(root, REPO, decl);
+    expect(f).toHaveLength(1);
+    expect(f[0]!.nestedIn?.file).toBe("processes/processes.json");
+    expect(f[0]!.nestedIn?.file).not.toBe("processes/assets/img/uml/");
+    expect(f[0]!.detail).toContain("processes/processes.json");
+  });
+
+  test("an off-checkout nested entry gets the SAME answer as a top-level one", () => {
+    // The divergence this test exists to stop, and the reason
+    // `offCheckoutFindings` is a function: the first version of `auditNested`
+    // wrote `if (contentIsOffCheckout(e)) continue`, so a nested stored
+    // directory got a silent skip while an identical top-level one got the
+    // three states from `tipPresence`. Two answers to one question, decided by
+    // where the entry happened to be declared.
+    //
+    // A `tip`-keyed entry is the one the keyings differ on, so it is the one
+    // worth pinning. `walkNested` carries `storage` through, which is what
+    // makes the nested side able to answer at all.
+    const stored = { id: "nested", path: "proposals", graphKinds: ["proposals"], storage: { branch: "cat/x", keyedBy: "tip" } };
+    const nestedF = auditNested(withNested([stored]), REPO, decl);
+    const topF = auditInstance(instance([{ id: "nested", path: "proposals", graphKinds: ["proposals"], storage: { branch: "cat/x", keyedBy: "tip" } }]), REPO);
+    // Same KINDS, whichever side declared it. Not the same ids or paths — those
+    // differ by construction — and not necessarily empty: what matters is that
+    // neither side silently returns nothing while the other reports.
+    expect(nestedF.map((f) => f.kind)).toEqual(topF.map((f) => f.kind));
+    expect(nestedF.length).toBeGreaterThan(0);
+  });
+
+  test("auditInstance now reaches nested entries, so the sweep cannot miss them", () => {
+    // The wiring, separately from the logic: a caller that only ever calls
+    // `auditInstance` must still see a nested finding.
+    const root = withNested([{ id: "nested", path: "proposals", graphKinds: ["proposals"] }]);
+    expect(auditInstance(root, REPO).filter((f) => f.id === "processes/nested")).toHaveLength(1);
+  });
+});
+
 describe("explained but present is ALSO a finding", () => {
   test("an exemption that outlived its cause", () => {
     // The direction that rots quietly: nothing goes wrong when it does, so
@@ -145,6 +240,17 @@ describe("the real corpus", () => {
     // over nothing, which is the shape this whole check exists to catch.
     expect(roots.length).toBeGreaterThan(1);
     const all = roots.flatMap((r) => auditInstance(r, REPO, roots));
-    expect(all).toEqual([]);
+    // Whether the derived QA corpus is in this checkout is not this test's
+    // question (bean `cxcn`, reader audit F7): it is leaving `main`. The GATE
+    // still reports an absent off-main directory that declares no `storage`
+    // — bean `16ei` kept that deliberately, and `5hox` adds the declaration —
+    // so only that one finding is set aside here, and only for those kinds.
+    const offMain = (f: (typeof all)[number]): boolean => {
+      if (f.kind !== "absent") return false;
+      const decl = readDeclaration(f.instance) as { directories?: Array<{ id: string; graphKinds?: string[] }> } | undefined;
+      const entry = decl?.directories?.find((d) => d.id === f.id);
+      return entry !== undefined && mayLeaveMain(entry);
+    };
+    expect(all.filter((f) => !offMain(f))).toEqual([]);
   });
 });

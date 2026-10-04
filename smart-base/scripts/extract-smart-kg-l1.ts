@@ -58,6 +58,7 @@
  *
  *   bun run smart-base/scripts/extract-smart-kg-l1.ts --entry smart-base/library/<id> [--validate <smart-kg>]
  *   bun run smart-base/scripts/extract-smart-kg-l1.ts --check [--entry <dir>]
+ *   bun run smart-base/scripts/extract-smart-kg-l1.ts --all    # rewrite every entry --check examines
  *
  * @module smart-base/scripts/extract-smart-kg-l1
  * @covers library
@@ -563,8 +564,12 @@ if (import.meta.main) {
   const check = args.includes("--check");
   const entryArg = opt("--entry");
   const checkout = opt("--validate");
-  if (!entryArg && !check) {
-    console.error("usage: extract-smart-kg-l1.ts --entry <library entry> [--validate <smart-kg checkout>] | --check [--entry <library entry>]");
+  // `--all` is the writer `--check` pairs with (bean `wczm` item 1): the same
+  // entries, rewritten. Without it the only writer took one `--entry` at a
+  // time, so `regen` had no command that repairs what the gate reports, and a
+  // merge train went red on it after `regen` called the tree current.
+  if (!entryArg && !check && !args.includes("--all")) {
+    console.error("usage: extract-smart-kg-l1.ts --entry <library entry> [--validate <smart-kg checkout>] | --all | --check [--entry <library entry>]");
     process.exit(2);
   }
   const dirs = entryArg ? [resolve(entryArg)] : entriesWithDocument();

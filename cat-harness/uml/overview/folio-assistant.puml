@@ -29,6 +29,9 @@ package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
     files [0..*] : File[]
     licence [0..1] : object
   }
+  class "spdx-3-1-rc1-machine-readable/schema.json" as folio_assistant_uploads_spdx_3_1_rc1_machine_readable_schema_json_spdx_3_1_rc1_machine_readable_schema_json <<schema: spdx-3-1-rc1-machine-readable/schema.json>> #f4f4f1 {
+    @context [1] : 'https://spdx.github.io/spdx-spec/v3.1-RC1/rdf/spdx-context.jsonld'
+  }
 }
 package "folio-assistant/root-tools" as pkg_folio_assistant_root_tools <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_root_tools_code
@@ -75,6 +78,19 @@ package "folio-assistant/beans" as pkg_folio_assistant_beans <<beans>> {
     by [1] : string
     commits [1] : integer
     axes [1..*] : Axe[]
+  }
+  class "folio-merge-queue-entry/v1" as folio_assistant_beans_folio_merge_queue_entry_v1_folio_merge_queue_entry_v1 <<json: MergeQueueEntrySchema>> #f6eedf {
+    $schema [1] : 'folio-merge-queue-entry/v1'
+    repository [1] : string
+    pr [1] : integer
+    placement [1] : object
+    reason [1] : string
+    decidedBy [1] : string
+    decidedAt [1] : string<date-time>
+    hold [0..1] : object
+    trainId [0..1] : string
+    ejection [0..1] : object
+    beans [0..*] : string[]
   }
 }
 package "folio-assistant/todos" as pkg_folio_assistant_todos <<todos>> {

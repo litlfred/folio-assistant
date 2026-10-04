@@ -51,6 +51,7 @@
  * | `stale`      | 1    | regenerate (`bun run check:source-licence`) and commit |
  * | `absent`     | 1    | nothing committed is nothing to compare — a vacuous pass otherwise (`dh4f`) |
  * | `unreadable` | 2    | the question could not be ASKED; 2 is this script's existing could-not-determine code |
+ * | `unknown`    | 2    | the store could not say (bean `c8uq`: a fetch miss is never a pass); could-not-determine, as `unreadable` |
  *
  * `malformed` keeps exit 1 in BOTH modes: it gates on CONTENT, `--check` gates
  * on FRESHNESS, and folding one into the other would hide either.
@@ -59,6 +60,14 @@
  *   bun run check:source-licence            # report, write the sidecar (the author's command)
  *   bun run check:source-licence:check      # the gate: compare, write nothing
  *   bun run check:source-licence -- --json  # print the sidecar document
+ *   bun run check:source-licence:check      # JUDGE: compute and judge, write nothing (the gate)
+ *
+ * Judge mode (`--check`, beans `bo44` and `i2kp`): 0 no malformed record · 1 a
+ * malformed record · 2 no library entry found (could not determine), an
+ * unknown flag, or the run threw. It judges the FRESH computation and writes
+ * nothing; it does not gate on whether the committed sidecar is current,
+ * because that copy leaves `main` with arc `3fva` (proposal §2.3). Staleness is
+ * printed as an advisory instead — see `concludeJudgement`.
  *
  * @module scripts/check-source-licence
  * @covers library, uploads
@@ -68,8 +77,21 @@ import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { repoRootFor } from "../schemas/cat-harness.ts";
 import { licenceProblem, type SourceLicence } from "../schemas/source-licence.ts";
+import { checkLicenceExpression, loadSpdxLicenseList, type SpdxLicenseList } from "../schemas/spdx-license-expression.ts";
 import { gitScan } from "../schemas/git-corpus.ts";
-import { buildQaResult, qaResultPath, qaResultState, writeQaResult, type QaResult, type QaResultState } from "./qa-results.ts";
+import {
+  buildQaResult,
+  concludeJudgement,
+  judgementOf,
+  judgeUsage,
+  judging,
+  qaResultPath,
+  qaResultState,
+  writeQaResult,
+  type Judgement,
+  type QaResult,
+  type QaResultState,
+} from "./qa-results.ts";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
@@ -82,13 +104,26 @@ export interface LicenceReport {
   unknown: { entry: string; searched: number; note?: string }[];
   notRecorded: { entry: string }[];
   malformed: { entry: string; problem: string }[];
+  /** Valid, but naming an id the pinned License List marks deprecated. Reported, not gated. */
+  deprecatedIds: { entry: string; ids: string[] }[];
+  /** Valid (ids match case-insensitively), but not written as the list spells them. Reported, not gated. */
+  recased: { entry: string; written: string; canonical: string }[];
+  /** Set when the pinned SPDX License List could not be loaded: could not determine, never a pass. */
+  listProblem?: string;
 }
 
 /** Moved to `schemas/source-licence.ts` (bean `7bg9`) so an intake record shares it; re-exported for existing callers. */
 export { licenceProblem };
 
-export function checkSourceLicence(root: string = REPO_ROOT): LicenceReport {
-  const r: LicenceReport = { entries: 0, stated: [], unknown: [], notRecorded: [], malformed: [] };
+/**
+ * Bean `sd5v`: a `stated` record's `id` must be a valid SPDX licence
+ * expression over the PINNED License List (`external-schemas/spdx-license-list.json`).
+ * Until 2026-10-03 the docblock said "SPDX where one exists" and nothing
+ * checked it. `list` is injectable so a test can supply an edition.
+ */
+export function checkSourceLicence(root: string = REPO_ROOT, list: SpdxLicenseList | string = loadSpdxLicenseList(REPO_ROOT)): LicenceReport {
+  const r: LicenceReport = { entries: 0, stated: [], unknown: [], notRecorded: [], malformed: [], deprecatedIds: [], recased: [] };
+  if (typeof list === "string") r.listProblem = list;
   // ASKED OF GIT, and the hand-written denylist is gone because git already
   // holds it: `node_modules` is `.gitignore:1` and `cat-harness/ingest-staging/`
   // is `.gitignore:219`. That denylist was an UNDER-APPROXIMATION of the real
@@ -112,7 +147,15 @@ export function checkSourceLicence(root: string = REPO_ROOT): LicenceReport {
       r.notRecorded.push({ entry });
       continue;
     }
-    const problem = licenceProblem(licence);
+    let problem = licenceProblem(licence);
+    if (!problem && licence.status === "stated" && typeof list !== "string") {
+      const x = checkLicenceExpression(licence.id!, list);
+      if (x.problem) problem = `\`id\` ${JSON.stringify(licence.id)} is not a valid SPDX licence expression: ${x.problem}`;
+      else {
+        if (x.deprecated.length > 0) r.deprecatedIds.push({ entry, ids: x.deprecated });
+        for (const [written, canonical] of x.recased) r.recased.push({ entry, written, canonical });
+      }
+    }
     if (problem) r.malformed.push({ entry, problem });
     else if (licence.status === "stated") r.stated.push({ entry, id: licence.id!, basis: licence.basis! });
     else r.unknown.push({ entry, searched: licence.searched!.length, ...(licence.note ? { note: licence.note } : {}) });
@@ -120,8 +163,13 @@ export function checkSourceLicence(root: string = REPO_ROOT): LicenceReport {
   return r;
 }
 
-/** The sidecar document for a report. One composition, used by the writer and by `--check`. */
-export function sourceLicenceDoc(r: LicenceReport): QaResult {
+/** Bean `bo44`'s four states over a report: only a malformed record is a finding. */
+export function judgeSourceLicence(r: LicenceReport): Judgement {
+  return judgementOf({ failing: r.malformed.length, undetermined: r.entries === 0 || r.listProblem !== undefined });
+}
+
+/** The sidecar document for a report. Pure, so the judge and the writer render ONE computation. */
+export function sourceLicenceDocument(r: LicenceReport): QaResult {
   return buildQaResult({
     script: "cat-harness/scripts/check-source-licence.ts",
     scriptAbsPath: fileURLToPath(import.meta.url),
@@ -139,15 +187,32 @@ export function sourceLicenceDoc(r: LicenceReport): QaResult {
         entries: r.notRecorded,
       },
       malformed: {
-        summary: "A licence record that claims something it cannot back. This is the only family that fails the check.",
+        summary:
+          "A licence record that claims something it cannot back — including a `stated` id that is not a valid SPDX " +
+          "licence expression over the pinned License List. This is the only family that fails the check.",
         entries: r.malformed,
+      },
+      "deprecated-id": {
+        summary:
+          "A valid expression naming an id the pinned SPDX License List marks deprecated. Still names a licence; " +
+          "prefer the current id when the record is next touched. Reported, not gated.",
+        entries: r.deprecatedIds,
+      },
+      "non-canonical-case": {
+        summary:
+          "A valid id written in a case other than the List's (ids match case-insensitively). The List's spelling is " +
+          "the one its URLs use. Reported, not gated.",
+        entries: r.recased,
       },
     },
   });
 }
 
+/** Bean `i2kp`'s name for {@link sourceLicenceDocument}. */
+export const sourceLicenceDoc = sourceLicenceDocument;
+
 /** Exit code for each freshness state, as tabled in the module docblock. */
-export const CHECK_EXIT: Readonly<Record<QaResultState, number>> = { current: 0, stale: 1, absent: 1, unreadable: 2 };
+export const CHECK_EXIT: Readonly<Record<QaResultState, number>> = { current: 0, stale: 1, absent: 1, unreadable: 2, unknown: 2 };
 
 /**
  * The `--check` decision: compare `doc` with the sidecar committed under
@@ -167,12 +232,44 @@ export function checkMode(
 }
 
 if (import.meta.main) {
+  const GATE = "check:source-licence";
+  if (judging()) {
+    // Judge mode: compute, judge, write NOTHING (beans `bo44`, `i2kp`).
+    const usage = judgeUsage(GATE, process.argv.slice(2), []);
+    if (usage !== undefined) process.exit(usage);
+    let jr: LicenceReport;
+    try {
+      jr = checkSourceLicence();
+    } catch (e) {
+      process.exit(concludeJudgement({ gate: GATE, judgement: "error", detail: (e as Error).message }));
+    }
+    for (const m of jr.malformed) console.error(`  ✗ ${m.entry}: ${m.problem}`);
+    if (jr.listProblem) console.error(`  ? UNDETERMINED: ${jr.listProblem}`);
+    process.exit(
+      concludeJudgement({
+        gate: GATE,
+        judgement: judgeSourceLicence(jr),
+        detail:
+          jr.entries === 0
+            ? "no library entry found"
+            : `${jr.entries} library entries: stated ${jr.stated.length} · unknown ${jr.unknown.length} · ` +
+              `not recorded ${jr.notRecorded.length} · malformed ${jr.malformed.length}`,
+        ...(jr.entries === 0
+          ? {}
+          : { committed: { root: INSTANCE_ROOT, stem: "source-licence", fresh: sourceLicenceDocument(jr), writer: GATE } }),
+      }),
+    );
+  }
   const r = checkSourceLicence();
+  if (r.listProblem) {
+    console.error(`UNDETERMINED: ${r.listProblem}. No licence id was validated; this is not a pass.`);
+    process.exit(2);
+  }
   if (r.entries === 0) {
     console.error("UNDETERMINED: no library entry found. This is not a pass; nothing was checked.");
     process.exit(2);
   }
-  const doc = sourceLicenceDoc(r);
+  const doc = sourceLicenceDocument(r);
   if (process.argv.includes("--json")) console.log(JSON.stringify(doc, null, 2));
   else if (process.argv.includes("--check")) {
     const { state, path, exit } = checkMode(INSTANCE_ROOT, r, doc);

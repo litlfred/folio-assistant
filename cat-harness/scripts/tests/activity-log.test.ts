@@ -8,7 +8,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, resolve, sep } from "node:path";
 
 import {
   LOG_CAPTURE,
@@ -21,6 +21,7 @@ import {
 } from "../../schemas/log-entry.ts";
 import { buildExport } from "../kg-export.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { fshGutsDirectory } from "../../schemas/fsh-guts.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -125,7 +126,9 @@ describe("capture is off by default and `unknown` is a real answer", () => {
 describe("persistence is off by default in the repository too", () => {
   test("fsh-guts/logs/ is git-ignored", () => {
     const ignore = readFileSync(join(repoRootFor(ROOT), ".gitignore"), "utf8");
-    expect(ignore).toContain("fsh-guts/logs/");
+    // The ignore file cannot read a declaration, so it names LOG_DIR's spelling;
+    // the test reads the same constant rather than repeating it (bean `gz47`).
+    expect(ignore).toContain(`${LOG_DIR}/`);
   });
 
   test("the REST of the trashcan is still committed", () => {
@@ -140,7 +143,7 @@ describe("persistence is off by default in the repository too", () => {
     // COMMITTED rather than ignored wholesale; `retired/` witnesses it just as
     // well and is the population that is actually retired material, which
     // `proposals/` never was.
-    expect(existsSync(join(repoRootFor(ROOT), "fsh-guts/retired"))).toBe(true);
+    expect(existsSync(join(fshGutsDirectory(repoRootFor(ROOT)), "retired"))).toBe(true);
   });
 });
 
@@ -159,6 +162,8 @@ describe("logs never reach a published graph", () => {
     // If someone moves logs out of fsh-guts, the assertion above keeps
     // passing (nothing would mention the old path) while the guarantee is
     // gone. This is what catches that.
-    expect(LOG_DIR.startsWith("fsh-guts/")).toBe(true);
+    // Inside the DECLARED trashcan, not merely spelled with its name (bean `gz47`).
+    const repo = repoRootFor(ROOT);
+    expect(resolve(repo, LOG_DIR).startsWith(fshGutsDirectory(repo) + sep)).toBe(true);
   });
 });

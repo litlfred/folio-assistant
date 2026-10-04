@@ -57,7 +57,12 @@ function viewerPages(dir: string, out: string[] = []): string[] {
   return out;
 }
 
-const SCRIPT = /<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g;
+// A DATA block (`type="application/json"`, `application/ld+json`) is not a
+// script and is not parsed as one: a library page carries its identity in one
+// since #1881, and `{"data": …}` is valid JSON and a syntax error as a body.
+const SCRIPT = /<script(?![^>]*\bsrc=)(?![^>]*\btype="application\/(?:ld\+)?json")[^>]*>([\s\S]*?)<\/script>/g;
+/** A page's `<script src>` that names a file of THIS site (relative), not a CDN. */
+const SCRIPT_SRC = /<script\b[^>]*\bsrc="(?![a-z]+:|\/\/)([^"]+)"/g;
 
 /** Does this text parse as a script? Uses the engine, not a regex. */
 function parses(source: string): string | undefined {
@@ -75,7 +80,7 @@ function parses(source: string): string | undefined {
 // DERIVED, not listed. The first version named `library` and `schemas` — the
 // two families that broke in PR #805 — and that is how a guard ends up
 // narrower than its own docstring: it said "every generated viewer" while
-// covering 12 of 25 pages, leaving `voices`, `uploads` and `docs-auto`
+// covering 12 of 25 pages, leaving `voices`, `uploads` and `auto-docs`
 // unexamined. Walking the generated tree means a new viewer family is covered
 // the day it is generated rather than the day somebody remembers. Bean `jfr6`.
 const pages = viewerPages(join(SITE, "cat-harness"));
@@ -94,6 +99,29 @@ describe("generated viewers ship JavaScript that is JavaScript", () => {
       for (const [, body] of html.matchAll(SCRIPT)) {
         const err = parses(body!);
         if (err) broken.push(`${relative(ROOT, page)}: ${err}`);
+      }
+    }
+    expect(broken).toEqual([]);
+  });
+
+  test("every SHARED script a generated viewer loads exists and parses", () => {
+    // A page that is a thin shell (#1881) holds no code of its own: its
+    // script is a shared asset beside its data, so the parse guard has to
+    // follow the reference or it examines nothing for those pages.
+    const broken: string[] = [];
+    const seen = new Set<string>();
+    for (const page of pages) {
+      const html = readFileSync(page, "utf-8");
+      for (const [, src] of html.matchAll(SCRIPT_SRC)) {
+        const file = resolve(join(page, ".."), src!);
+        if (seen.has(file)) continue;
+        seen.add(file);
+        if (!existsSync(file)) {
+          broken.push(`${relative(ROOT, page)}: ${src} does not exist`);
+          continue;
+        }
+        const err = parses(readFileSync(file, "utf-8"));
+        if (err) broken.push(`${relative(ROOT, file)}: ${err}`);
       }
     }
     expect(broken).toEqual([]);

@@ -363,6 +363,20 @@ posting is a reading of the licence, not of the bytes. `check:l1-complete`
 knows the kind, and **refuses** a `referenced` entry that holds `sections/`,
 `blocks/` or `images/`. That would be the copy this kind exists not to make.
 
+**A publication, not a file — an external reference (owner, 2026-10-02).** A
+FHIR implementation guide is a website and a package, not one PDF, so there are
+no bytes to hash. Its `referenced.json` takes the `published` variant of
+`source` (`schemas/referenced-source.ts`): `kind: "published"`, `url`,
+`canonical`, `package_id`, `version`, and `read_from` / `read_at` naming the
+local record the identity was read off — no `sha256`, rather than a made-up
+one. `links` names where a reader goes instead (the publisher's page, and a
+`site_path` on this site such as the instance's artefact index), and the
+library viewer shows them on the entry's row. Write it by hand — there is no
+file to run `referenced-source.py` on — then `gen-library-jsonld.ts --entry`
+for the manifest. The licence follows the usual rule: `stated` only with a
+basis, else `unknown` with where you looked. First case:
+`smart-base/library/smart-trust/`, the WHO SMART Trust IG.
+
 ## A source published as text in a repository — read it at a commit (bean `y4uj`)
 
 The Gherkin reference, the MCP specification, the `hmans/beans` README and
@@ -812,6 +826,28 @@ is the gate that refuses, not that script. An *orphaned* verdict — one naming
 an image the sidecar does not have — still fails, in either mode.
 
 Every narrative it writes lands as `draft`. Only a person confirms one.
+
+#### A role threshold is OPTIONAL, and its default is NONE
+
+Owner, 2026-10-03, verbatim: *"an optional one can be set, default none"*.
+That settles the second question bean `m4xy` held open: whether a coverage
+cutoff may sort images into roles (figure vs furniture).
+
+- **By default nothing is thresholded.** With no value supplied, every role
+  call comes from an inspection verdict as above, naming who looked.
+- **A caller may supply one.** An image whose role it decides must record
+  that basis: the value, and that the value was caller-supplied rather than
+  inspected. A thresholded role must never be readable as an inspected one,
+  for the same reason a silently placed image is the `d5f1` defect.
+- **Ship no number.** No config default, and no value in docs, tests or
+  examples presented as recommended. The evidence for that is measured, not
+  suspected (`m4xy`, `j820`, 29 documents in 5 libraries):
+  - per-image coverage does not separate the classes;
+  - the one empty stretch in the WHO corpus is specific to that corpus, so a
+    cutoff placed in it was fitted to these documents and says nothing about
+    others. `m4xy` records the figures.
+
+  A number chosen after seeing a corpus is a number chosen to fit the answer.
 
 #### Reading a figure: the text layer is not the figure
 

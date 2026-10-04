@@ -103,6 +103,20 @@ stand-alone question outright: detached from what they judge, they assert
 nothing. This is also why the `kg-qa/` tree **mirrors** each subject's path
 rather than being flat — a verdict's identity is partly the thing it is about.
 
+**`attestations` is `state` too, and it is the half of `qa` that stays on
+`main`.** Arc `3fva` split every QA verdict by whether it can be regenerated.
+The DERIVED half (`qa`, and `health` with it) is state a CI run writes, and
+its record now lives on the orphan `qa-reports` branch keyed by commit — the
+checkout's `test/results/` is a working copy, still committed until bean
+`5hox` removes it. The JUDGEMENT half — agent, human and baseline-pair
+attestations, `qa-attestations/v1` under `test/attestations/` — is written by
+a review step too, so it is `state` by the same question, but it is the one
+state graph here that **cannot be rebuilt by re-running its writer**. That is
+why it stays on `main` (owner ruling D2 (a)) and why a merge conflict in it
+is a person's to read rather than a generator's to repeat. The layer answers
+*who writes it*; where it is kept answers *can it be reproduced* — two
+questions, and the arc is what made the second one visible.
+
 **`uploads` is `state` and `library` is `content`.** The clearest proof the
 axis is not about file type: the same PDF is state in one directory and content
 in the other. `uploads/` is a queue, and ingestion writes and drains it; the
@@ -126,6 +140,82 @@ verdict.
 **Use `processMayWrite()` rather than `=== "state"`.** It is the question
 `isStateGraph` is usually being asked in service of, and naming it means a
 fourth layer is one edit rather than a search.
+
+## Where a graph is STORED — `storage.keyedBy`
+
+The layer says who may write a graph. The directory's `storage` field says
+where the graph lives when that is not `main`. The two are independent, but
+only process-written graphs are candidates for `storage`:
+
+| `keyedBy` | what the branch holds | for | API |
+|---|---|---|---|
+| `commit` | one entry per commit (`main/<sha>/`, `pr/<n>/<sha>/`) | `qa` — derived verdicts read against a baseline | `scripts/qa-store.ts` |
+| `tip` | ONE live copy; the tip IS the current state | beans, todos — `state` with one truth at a time | `scripts/branch-store.ts` |
+| `route` | one entry per published site route | the auto-doc page families — `derived`, regenerable | `scripts/branch-store.ts` |
+
+### `route` is not a synonym for `tip`, and the difference is REGENERABILITY
+
+Both live at a branch tip, so the temptation is to read them as one keying with
+two names. The question that separates them is the one §3.1 of the state-branch
+proposal already asks: **can this be recomputed from the tree?**
+
+- A bean cannot. It is somebody's decision, a lost write is lost work, so a
+  tip-keyed change carries `expect` (the blob its author read) and two sessions
+  editing one file is a **`conflict` the caller settles**.
+- A rendered page can. Nobody authored either side, the newer generation is
+  simply right, and a lost write costs a rerun. So a route-keyed write carries
+  **no `expect`** — and `branch-store.ts` **refuses** one that does rather than
+  honouring it.
+
+The refusal is the part to understand. Ignoring an `expect` here would let a
+caller believe it had the tip-keyed guarantee while getting last-write-wins,
+which is the vacuous-pass shape. And an `expect` arriving on a route-keyed
+write means the caller thinks the page has two writers — the premise of
+route-keying failing, which is worth a loud stop. **If a generated page really
+does have two writers, `route` is the wrong keying for it and `tip` is right.**
+
+Four rules (bean `2h76`, owner rulings 2026-10-02; `route` from bean `1j3q`,
+owner 2026-10-03 — *"Add route-keyed storage, then move it off main"*):
+
+- **One ref per state subgraph.** Beans are on `cat/cat-harness/beans` and
+  todos on `cat/cat-harness/todos`, not on one shared `state` branch. The owner:
+  *"go with cat/cat-harness/todos and cat/cat-harness/beans as their own named
+  sub-graph branches"*.
+- **Not every named subgraph gets a branch.** The owner: *"(not all named
+  subgraphs get own branch, especially not semi-static KG content)"*. Skills,
+  schemas, processes, roles and the declarations themselves are `content` or
+  `context`. They change by PR and stay on `main`.
+- **A `qa` directory is commit-keyed.** The schema refuses `keyedBy: "tip"`
+  **and `"route"`** on one, because either would be read as if it were keyed by
+  commit, and a verdict is addressed by the commit it judges — there is no route
+  to key it by. The guard names both values rather than only `tip`: one that
+  named a single keying would admit every keying added after it.
+- **The keying is PASSED to the store, never sniffed from the branch.** A
+  manifest whose `keyedBy` disagrees with what the caller opened for is
+  `corrupt`, in **both** directions. A store that adopted whatever the branch
+  claimed would read a route-keyed branch as state the moment somebody pushed
+  the wrong manifest.
+
+A branch-tip read is **hit / miss / corrupt / unknown**, and a branch without a
+`state-manifest/v1` root manifest is `corrupt`, not a hit — for a route-keyed
+branch too. The `$schema` string says `state-manifest` on both, and that is a
+choice: the two seeded branches already carry it, the format is identical in
+every field, and `keyedBy` **inside** the manifest is the discriminator, which
+is this repository's own rule that the file declares what it is. The name is
+historical; bean `1j3q` records it as such. A write is spliced
+onto the tip and pushed **without `-f`**, retrying when the tip moves. To edit
+a file somebody else may be editing, pass the blob you read as `expect`. A tip
+that disagrees then answers `conflict` and pushes nothing, so the edit is not
+silently lost.
+
+**Until a declaration sets `storage`, `main` is authoritative.** That holds for
+`route` too: no generator writes a route-keyed branch yet, and the first family
+(`docs/uml/`) is a follow-on bean to `1j3q` — deliberately separate, because 49
+of 94 gated checks write page files and a flip of all of them cannot be
+bisected. A directory
+with no `storage` field lives in the checkout, whatever branches exist. The
+seeded `cat/cat-harness/beans` and `cat/cat-harness/todos` say
+`authoritative: false` in their manifests until the steward-run flip on #1850.
 
 ## Adding a kind
 
@@ -200,6 +290,27 @@ separately. So the example is now history rather than a live gap, and it is
 kept because the rule it illustrates is not: **a directory of one kind may
 contain a node of another, and the containing declaration is not a claim about
 its contents.**
+
+## The layer is not the source — a branch is not "where state lives"
+
+A declared subgraph also says where its content COMES FROM — the checkout's
+directory or a declared repository branch, overridable by the instance config
+(`source`, [`directory-conventions`](directory-conventions.md) §"Where a
+subgraph gets its content"; bean `l4ay`). **That is a different axis from this
+one, and neither is derived from the other.**
+
+The temptation runs one way: beans and todos are `state` and are moving to
+their own branches, so "state lives on a branch" reads like a rule. It is not.
+`todos` is `state` while its source is `directory` on `main`, and stays `state`
+when the config mounts it from `cat/cat-harness/todos`. `qa` is `state` and is
+keyed by commit on its branch, never by tip. A `context` graph mounted from a
+branch is still read-only to every process, because what a step may do is
+`processMayWrite(kind)` — asked of the KIND, never of where the bytes came from.
+
+So: **ask `processMayWrite` for whether to write, and the resolved source for
+HOW to write** — a commit for `directory`, a spliced push for `branch`
+(`processes/kg/mount-subgraph.bpmn`). A consumer that branches on one to answer
+the other has merged two questions this repository keeps apart.
 
 ## A declared ASSET carries a layer too
 

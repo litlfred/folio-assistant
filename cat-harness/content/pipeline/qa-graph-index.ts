@@ -60,6 +60,19 @@
  * nothing looked at, which is the `dh4f` shape. Both are carried to the top
  * level so a reader sees them beside the families rather than instead of them.
  *
+ * ## And a fourth, one level up: the corpus is not here
+ *
+ * Bean `tfqf`, defect **C9**. With the results tree moved aside the projection
+ * went from *"965 document(s), 12 families"* to *"2 document(s), 1 family"* —
+ * the two witnesses the docs generator had just written itself — and the
+ * navbar tile would have published 2. Nothing failed: the projection is
+ * existence-gated. Once derived QA lives on the `qa-reports` branch an
+ * unfetched checkout is the NORMAL case, so {@link projectQaGraph} takes the
+ * caller's answer to "was the corpus here before you wrote anything?" and,
+ * when it was not, publishes {@link QaGraphUnknown}: no count, no families, no
+ * tile, and the reason. A count of what one build wrote is not a count of the
+ * graph.
+ *
  * @module folio-assistant/content/pipeline/qa-graph-index
  */
 
@@ -101,7 +114,26 @@ export interface QaFamily {
 }
 
 /**
- * The `qa` graph, projected.
+ * The `qa` graph, projected — a census ({@link QaGraphIndex}), or an honest
+ * "not available". A consumer of the published file must handle both, and the
+ * unknown carries no `files` for a careless reader to show as a count.
+ */
+export type QaGraphProjection = QaGraphIndex | QaGraphUnknown;
+
+/**
+ * The `qa` graph could not be read in this build. `availability` rather than
+ * `state`: a census carries no verdict field, and this is not one either — it
+ * says the census did not happen.
+ */
+export interface QaGraphUnknown {
+  $schema: typeof QA_GRAPH_INDEX_SCHEMA;
+  availability: "unknown";
+  /** Why, in words a reader of the published JSON can act on. */
+  reason: string;
+}
+
+/**
+ * The `qa` graph, counted.
  *
  * **There is no cross-family verdict field here and there must not be one.**
  * See the module note; `qa-graph-index.test.ts` asserts the absence.
@@ -166,6 +198,29 @@ export function rollUpFieldOf(doc: Record<string, unknown>): "totals" | "counts"
   if (doc["totals"] !== undefined && doc["totals"] !== null) return "totals";
   if (doc["counts"] !== undefined && doc["counts"] !== null) return "counts";
   return null;
+}
+
+/**
+ * The projection a build should publish. `corpusPresent` is the caller's
+ * answer, taken BEFORE it wrote into `dir` — see the module note.
+ */
+export function projectQaGraph(dir: string, corpusPresent: boolean, reason?: string): QaGraphProjection {
+  if (!corpusPresent) {
+    return {
+      $schema: QA_GRAPH_INDEX_SCHEMA,
+      availability: "unknown",
+      reason:
+        reason ??
+        "the derived QA corpus was not in this build (it lives on the `qa-reports` branch and was not fetched), " +
+          "so the qa graph was not counted",
+    };
+  }
+  return readQaGraph(dir);
+}
+
+/** Is this projection the "not available" one? */
+export function isQaGraphUnknown(ix: QaGraphProjection): ix is QaGraphUnknown {
+  return (ix as QaGraphUnknown).availability === "unknown";
 }
 
 /** Read the `qa` graph under `dir` and project it. */

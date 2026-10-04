@@ -89,7 +89,7 @@ export interface SchemaModule {
   kind: SchemaNodeKind;
   /** The reason given after `none —`, when one is. */
   reason?: string;
-  /** First prose line of the leading docblock, for the node's title. */
+  /** First prose line of the leading docblock, for the node's summary (D5). */
   summary?: string;
   /** True for `*.test.ts`: in the directory, not of the graph. */
   isTest: boolean;

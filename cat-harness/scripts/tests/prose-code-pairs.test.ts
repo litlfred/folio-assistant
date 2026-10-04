@@ -10,7 +10,10 @@ import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { attest, discoverPairs, evaluatePairs, readAttestations } from "../prose-code-pairs";
+import { attest, discoverPairs, evaluatePairs, evaluatePairsFrom, readAttestations } from "../prose-code-pairs";
+import { QA_ATTESTATIONS_SCHEMA, serialiseAttestations, type KgAttestations } from "../../schemas/qa-attestations";
+
+const SUBJECT = { kind: "skill", id: "s", path: "skills/pkg/s.md" };
 
 function repo(): { root: string; inst: string } {
   const root = mkdtempSync(join(tmpdir(), "pairs-"));
@@ -94,15 +97,113 @@ describe("attest — the re-review mark", () => {
     const { root, inst } = repo();
     const pairs = discoverPairs({ kind: "skill", path: "skills/pkg/s.md" }, inst, root);
     const first = evaluatePairs(pairs, [], root);
-    const sidecar = join(root, "s.kg-qa.json");
-    writeFileSync(sidecar, JSON.stringify({ criteria: {}, pair_attestations: first.attestations }));
+    const tree = join(root, "att", "kg-qa");
+    mkdirSync(tree, { recursive: true });
+    const store = join(tree, "s.attestations.json");
+    const file: KgAttestations = { $schema: QA_ATTESTATIONS_SCHEMA, family: "kg-qa", subject: SUBJECT, pair_attestations: first.attestations };
+    writeFileSync(store, serialiseAttestations(file));
     writeFileSync(join(inst, "skills/pkg/s.ts"), "export const s = 3;\n");
-    expect(evaluatePairs(pairs, readAttestations(sidecar), root).entry.result).toBe("fail");
+    expect(evaluatePairsFrom(pairs, readAttestations(store, tree), root).entry.result).toBe("fail");
 
-    expect(attest(sidecar, "human", "re-read against s = 3", root)).toBe(1);
-    const after = readAttestations(sidecar);
-    expect(after[0]).toMatchObject({ by: "human", reason: "re-read against s = 3" });
-    expect(evaluatePairs(pairs, after, root).entry.result).toBe("pass");
-    expect(readFileSync(sidecar, "utf-8").endsWith("\n")).toBe(true);
+    expect(attest(store, tree, "human", "re-read against s = 3", root)).toBe(1);
+    const after = readAttestations(store, tree);
+    expect(after.state).toBe("hit");
+    if (!("attestations" in after)) return;
+    expect(after.attestations[0]).toMatchObject({ by: "human", reason: "re-read against s = 3" });
+    expect(evaluatePairs(pairs, after.attestations, root).entry.result).toBe("pass");
+    expect(readFileSync(store, "utf-8").endsWith("\n")).toBe(true);
+  });
+
+  test("refuses a store file it cannot read, rather than overwriting it", () => {
+    const { root } = repo();
+    const tree = join(root, "att", "kg-qa");
+    mkdirSync(tree, { recursive: true });
+    const store = join(tree, "s.attestations.json");
+    writeFileSync(store, "<<<<<<< ours\n");
+    expect(() => attest(store, tree, "agent", "r", root)).toThrow(/corrupt/);
+    expect(readFileSync(store, "utf-8")).toBe("<<<<<<< ours\n");
+  });
+});
+
+// C4 and the `de9k` leftover: a store that cannot be read is NEVER "no prior".
+describe("the prior read — only a miss is first sight (bean 2gst)", () => {
+  const setup = () => {
+    const { root, inst } = repo();
+    const pairs = discoverPairs({ kind: "skill", path: "skills/pkg/s.md" }, inst, root);
+    const tree = join(root, "att", "kg-qa");
+    return { root, pairs, tree, store: join(tree, "s.attestations.json") };
+  };
+
+  // Owner ruling 2 (2026-10-01): an absent store is no longer a refusal. The
+  // judgements a prior sidecar still carries are read and moved on first save.
+  test("(a) no store, the prior sidecar holds an attestation: it is the prior, unchanged — drift still found", () => {
+    const { root, pairs, tree, store } = setup();
+    const was = evaluatePairs(pairs, [], root).attestations; // the baseline at s = 1
+    writeFileSync(join(root, "inst/skills/pkg/s.ts"), "export const s = 2;\n"); // code moved, prose did not
+    const sidecar = join(root, "s.kg-qa.json");
+    writeFileSync(sidecar, JSON.stringify({ $schema: "kg-qa/v1", subject: SUBJECT, criteria: {}, totals: {}, pair_attestations: was }));
+    const read = readAttestations(store, tree, sidecar);
+    expect(read.state).toBe("absent");
+    if (read.state !== "absent") return;
+    expect(read.moved).toBe(1);
+    const r = evaluatePairsFrom(pairs, read, root);
+    // NOT re-baselined: the drift the moved attestation recorded is still a finding.
+    expect(r.entry.result).toBe("fail");
+    expect(r.attestations).toEqual(was);
+  });
+
+  test("(a) no store and no prior sidecar: first sight, a baseline", () => {
+    const { root, pairs, tree, store } = setup();
+    const read = readAttestations(store, tree, join(root, "nothing-here.kg-qa.json"));
+    expect(read.state).toBe("absent");
+    expect(evaluatePairsFrom(pairs, read, root).attestations?.[0]?.by).toBe("baseline");
+  });
+
+  test("(b) no store entry and a prior sidecar that will not parse is UNKNOWN: nothing is re-baselined", () => {
+    const { root, pairs, tree, store } = setup();
+    const sidecar = join(root, "s.kg-qa.json");
+    writeFileSync(sidecar, "<<<<<<< ours\n");
+    const read = readAttestations(store, tree, sidecar);
+    expect(read.state).toBe("unknown");
+    const r = evaluatePairsFrom(pairs, read, root);
+    expect(r.entry.result).toBe("unknown");
+    expect(r.attestations).toBeUndefined();
+  });
+
+  test("(c) a store HIT is the source: the prior sidecar is never read for judgements", () => {
+    const { root, pairs, tree, store } = setup();
+    mkdirSync(tree, { recursive: true });
+    const held = evaluatePairs(pairs, [], root).attestations.map((a) => ({ ...a, by: "human" as const, reason: "the store's" }));
+    writeFileSync(store, serialiseAttestations({ $schema: QA_ATTESTATIONS_SCHEMA, family: "kg-qa", subject: SUBJECT, pair_attestations: held }));
+    // A sidecar that would fail to parse proves it is not read at all.
+    const sidecar = join(root, "s.kg-qa.json");
+    writeFileSync(sidecar, "<<<<<<< ours\n");
+    const read = readAttestations(store, tree, sidecar);
+    expect(read.state).toBe("hit");
+    if (read.state !== "hit") return;
+    expect(read.attestations).toEqual(held);
+  });
+
+  test("a corrupt store file is CORRUPT, never []", () => {
+    const { root, pairs, tree, store } = setup();
+    mkdirSync(tree, { recursive: true });
+    writeFileSync(store, "{ not json");
+    const read = readAttestations(store, tree);
+    expect(read.state).toBe("corrupt");
+    expect("attestations" in read).toBe(false);
+    expect(evaluatePairsFrom(pairs, read, root).attestations).toBeUndefined();
+  });
+
+  test("a present store with no file for the subject is a miss, and baselines", () => {
+    const { root, pairs, tree, store } = setup();
+    mkdirSync(tree, { recursive: true });
+    const r = evaluatePairsFrom(pairs, readAttestations(store, tree), root);
+    expect(r.entry.result).toBe("pass");
+    expect(r.attestations?.[0]?.by).toBe("baseline");
+  });
+
+  test("no declared pair is n/a whatever the store says", () => {
+    const { root, tree, store } = setup();
+    expect(evaluatePairsFrom([], readAttestations(store, tree), root).entry.result).toBe("n/a");
   });
 });

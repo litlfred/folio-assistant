@@ -56,25 +56,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Check",
-          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Label",
-          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Close",
-          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Track",
-          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -117,8 +100,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/ci-health.yml",
+          "detail": ".github/workflows/ci-health.yml changed since cat-harness/processes/sdlc/ci-health-watch.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -130,15 +118,5 @@
     "fail": 1,
     "n/a": 8,
     "unknown": 0
-  },
-  "pair_attestations": [
-    {
-      "kind": "implements",
-      "prose": "cat-harness/processes/sdlc/ci-health-watch.bpmn",
-      "code": ".github/workflows/ci-health.yml",
-      "prose_hash": "764b54e3b47d",
-      "code_hash": "9045170b93c5",
-      "by": "baseline"
-    }
-  ]
+  }
 }

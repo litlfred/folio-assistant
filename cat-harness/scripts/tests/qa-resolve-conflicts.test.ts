@@ -27,6 +27,7 @@ import {
   unmergedStages,
   type SideScan,
 } from "../qa-resolve-conflicts.ts";
+import { attestationKeyForDerived, attestationPath, writeCriteriaAttestations } from "../../schemas/qa-attestations.ts";
 
 const QA = "cat-harness/test/results/";
 
@@ -88,6 +89,70 @@ function conflicted(files: { path: string; ours: string; theirs: string }[]): st
 }
 afterAll(() => {
   for (const d of dirs) rmSync(d, { recursive: true, force: true });
+});
+
+describe("the guard reads the attestation store (bean 8wj1)", () => {
+  const path = `${QA}translation-qa/docs/x.fr.translation-qa.json`;
+  const agent = {
+    result: "pass",
+    reviewer: { kind: "agent", id: "voice-review" },
+    note: "adjudicated by hand — the string is a proper noun and is not translated",
+  };
+  /** Write the store into the merged working tree, as committed state on main would be. */
+  function seedStore(dir: string, entries: unknown[]): string {
+    const instance = join(dir, "cat-harness");
+    writeCriteriaAttestations(instance, attestationKeyForDerived(instance, join(dir, path))!, { "translation-coverage": entries });
+    return instance;
+  }
+
+  test("an agent verdict the store HOLDS no longer blocks regeneration", () => {
+    const dir = conflicted([{ path, ours: sidecar("warn", true), theirs: sidecar("fail", true) }]);
+    const instance = seedStore(dir, [agent]);
+    const [o] = plan(dir, QA, unmergedPaths(dir), instance);
+    expect(o!.action).toBe("resolve");
+    expect(o!.reason).toContain("attestation store");
+  });
+
+  test("...one it does NOT hold is still refused, with the command that fixes it", () => {
+    const dir = conflicted([{ path, ours: sidecar("warn", true), theirs: sidecar("fail", true) }]);
+    const instance = seedStore(dir, [{ ...agent, note: "a different verdict" }]);
+    const [o] = plan(dir, QA, unmergedPaths(dir), instance);
+    expect(o!.action).toBe("refuse");
+    expect(o!.reason).toContain("qa:attestations:migrate");
+  });
+
+  test("...and with no store at all, refused — never read as 'nothing to keep'", () => {
+    const dir = conflicted([{ path, ours: sidecar("warn", true), theirs: sidecar("fail", true) }]);
+    const [o] = plan(dir, QA, unmergedPaths(dir), join(dir, "cat-harness"));
+    expect(o!.action).toBe("refuse");
+  });
+
+  test("an unreadable store file refuses", () => {
+    const dir = conflicted([{ path, ours: sidecar("warn", true), theirs: sidecar("fail", true) }]);
+    const instance = seedStore(dir, [agent]);
+    writeFileSync(attestationPath(instance, attestationKeyForDerived(instance, join(dir, path))!), "{ nope");
+    const [o] = plan(dir, QA, unmergedPaths(dir), instance);
+    expect(o!.action).toBe("refuse");
+    expect(o!.reason).toContain("corrupt");
+  });
+
+  // Main walks EVERY declared qa directory (#1822); 2gst's store check must
+  // then ask the instance that owns the path's directory, not the root's.
+  test("with several qa directories, each path is checked against ITS instance's store", () => {
+    const iris = "who-iris/test/results/";
+    const irisPath = `${iris}translation-qa/docs/x.fr.translation-qa.json`;
+    const dir = conflicted([{ path: irisPath, ours: sidecar("warn", true), theirs: sidecar("fail", true) }]);
+    const irisInstance = join(dir, "who-iris");
+    writeCriteriaAttestations(irisInstance, attestationKeyForDerived(irisInstance, join(dir, irisPath))!, {
+      "translation-coverage": [agent],
+    });
+    const route = (p: string) => (p.startsWith(iris) ? irisInstance : join(dir, "cat-harness"));
+    const [o] = plan(dir, [QA, iris], unmergedPaths(dir), route);
+    expect(o!.action).toBe("resolve");
+    // ...and the root's store, which does not hold it, would have refused.
+    const [r] = plan(dir, [QA, iris], unmergedPaths(dir), join(dir, "cat-harness"));
+    expect(r!.action).toBe("refuse");
+  });
 });
 
 describe("the guard refuses what regeneration would destroy", () => {
@@ -315,6 +380,42 @@ describe("a modify/delete sidecar takes the base's side, never a side that is no
     expect(unmergedPaths(dir)).toEqual([]);
   });
 
+  test("a branch that gitignores the results directory can still have its sidecars staged", () => {
+    // Measured 2026-10-03 on run 37140844477: `merge:main` aborted for #1801
+    // with "qa:resolve-conflicts left 1 sidecar(s) conflicted". #1801 is the
+    // PR that takes the QA readers off committed results, so its `.gitignore`
+    // adds `cat-harness/test/results/` and nine siblings — and a plain
+    // `git add` refuses a path under an ignored directory even though that
+    // path is unmerged in the index, which is to say TRACKED.
+    const dir = conflicted([{ path, ours: sidecar("warn", false), theirs: sidecar("fail", false) }]);
+    writeFileSync(join(dir, ".gitignore"), `${QA}\n`);
+    expect([...unmergedStages(dir, path)].sort()).toEqual([1, 2, 3]);
+    takeProvisionalSide(dir, path);
+    expect(unmergedPaths(dir)).toEqual([]);
+    // Resolved means stage 0, which is the only thing to assert here: with all
+    // three stages present `provisionalSide` takes OURS, and ours is HEAD, so
+    // `git diff --cached` is correctly empty and says nothing either way.
+    expect(
+      execFileSync("git", ["ls-files", "-s", "--", path], { cwd: dir, encoding: "utf-8" }).trim(),
+    ).toMatch(/ 0\t/);
+  });
+
+  test("...and the plain `git add` it replaces does not merely fail — it COLLAPSES the stages", () => {
+    // The falsification, on its own repository because the reproduction is
+    // destructive: a reader could believe `-f` only silences a warning. It
+    // does not. The refused `add` leaves NO unmerged stages behind, so the
+    // `checkout --<side>` that follows fails with "is in the index, but not at
+    // stage N" and the resolver dies somewhere other than where the cause is.
+    // That is why `merge-base.ts` aborts and restores the tree rather than
+    // carrying on.
+    const dir = conflicted([{ path, ours: sidecar("warn", false), theirs: sidecar("fail", false) }]);
+    writeFileSync(join(dir, ".gitignore"), `${QA}\n`);
+    expect(() =>
+      execFileSync("git", ["add", "--", path], { cwd: dir, stdio: "pipe" }),
+    ).toThrow();
+    expect([...unmergedStages(dir, path)]).toEqual([]);
+  });
+
   test("deleted on the base, changed on the branch: the deletion is taken and staged", () => {
     const dir = modifyDelete(path, "theirs", sidecar("warn", false));
     expect([...unmergedStages(dir, path)].sort()).toEqual([1, 2]);
@@ -331,5 +432,19 @@ describe("a modify/delete sidecar takes the base's side, never a side that is no
     const [o] = plan(dir, QA, [path]);
     expect(o!.action).toBe("refuse");
     expect(o!.reason).toContain("agent");
+  });
+});
+
+describe("an unmerged sidecar under a directory the branch ignores (#1801)", () => {
+  test("takeProvisionalSide stages it; a plain `git add` would refuse", () => {
+    const p = "results/kg-qa/a.kg-qa.json";
+    const files = [{ path: p, ours: sidecar("warn", false), theirs: sidecar("fail", false) }];
+    // Ignore the directory in the working tree, with the file still tracked.
+    const [crash, dir] = [conflicted(files), conflicted(files)];
+    for (const d of [crash, dir]) writeFileSync(join(d, ".gitignore"), "results/\n");
+    expect(() => execFileSync("git", ["add", "--", p], { cwd: crash, stdio: "pipe" })).toThrow();
+    expect(unmergedPaths(dir)).toEqual([p]);
+    takeProvisionalSide(dir, p);
+    expect(unmergedPaths(dir)).toEqual([]);
   });
 });

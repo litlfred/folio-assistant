@@ -37,6 +37,8 @@ function report(over: Partial<LicenceReport> = {}): LicenceReport {
     unknown: [],
     notRecorded: [{ entry: "library/b" }],
     malformed: [],
+    deprecatedIds: [],
+    recased: [],
     ...over,
   };
 }
@@ -103,7 +105,7 @@ describe("--check decides each freshness state where it is decided", () => {
   });
 
   it("the exit table is the one the docblock states", () => {
-    expect(CHECK_EXIT).toEqual({ current: 0, stale: 1, absent: 1, unreadable: 2 });
+    expect(CHECK_EXIT).toEqual({ current: 0, stale: 1, absent: 1, unreadable: 2, unknown: 2 });
   });
 });
 

@@ -1,0 +1,20 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "process",
+    "id": "Process_MergeBase",
+    "path": "processes/sdlc/merge-base.bpmn"
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/sdlc/merge-base.bpmn",
+      "code": ".github/workflows/merge-main.yml",
+      "prose_hash": "f25810c60219",
+      "code_hash": "238306f5a491",
+      "by": "agent",
+      "reason": "Re-read merge-base.bpmn against the merge-main.yml change (bean o8s9). The change is to the per-PR merge job's concurrency key only: cancel-in-progress is now trigger-dependent so a push sweep queues rather than cancels. The diagram asserts nothing about concurrency or which of two runs survives — it describes the merge/classify/regen/commit path and its two committing gateways, all unchanged. Prose still holds."
+    }
+  ]
+}

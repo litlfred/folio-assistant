@@ -23,18 +23,18 @@
  *   `generated/<instance>/<type>.glossary.json`, beside the authored files and
  *   never over them, and the page shows them apart from authored terms.
  *
- * ## Why this, and not a `docs-auto` type
+ * ## Why this, and not a `auto-docs` type
  *
- * The owner framed piece 1 as one `docs-auto` auto-doc-type
- * (`cat-harness/docs-auto/glossary/<path>`), and `gen-docs-auto.ts` has that
+ * The owner framed piece 1 as one `auto-docs` auto-doc-type
+ * (`cat-harness/auto-docs/glossary/<path>`), and `gen-auto-docs.ts` has that
  * mechanism. It does not fit what was asked on 2026-09-23 (*"everything
- * extracted to glosasay / skos?"*): a docs-auto type returns `AutoDocItem[]`,
+ * extracted to glosasay / skos?"*): a auto-docs type returns `AutoDocItem[]`,
  * one row per artefact FILE for one sub-graph page, and emits no SKOS. The
  * extracted terms are per ELEMENT (one diagram holds dozens of activities),
  * need IRIs in the owning instance's namespace, and must land in the SKOS
  * this page already publishes. `index/skills` and `index/processes` already
- * list the same artefacts per sub-graph, so a docs-auto glossary type over
- * them would be a third rendering. The existing docs-auto `glossary` type
+ * list the same artefacts per sub-graph, so a auto-docs glossary type over
+ * them would be a third rendering. The existing auto-docs `glossary` type
  * stays what it is: the swimlane ledger per sub-graph, linked from here.
  *
  * ## One index, one page per asset type
@@ -76,7 +76,8 @@ import { instanceNamespace } from "../../cat-harness/schemas/instance-repositori
 import { GlossarySchema, schemeIri, toSkos, termIri, type AutomatedMatch, type Glossary, type LangText } from "../schemas/glossary.ts";
 import { addressBook } from "../../cat-harness/schemas/prov-jsonld.ts";
 import { ASSET_TYPES, EXTRACTED_PREFIX, assetTypeTitle, assetTypeWhat, extract, type AssetType } from "./glossary-extract.ts";
-import { termState, type SchemeState, type TermStateAnswer } from "../../cat-harness/scripts/check-term-mapping.ts";
+import { perScheme, run as runTermMapping, termState, type SchemeState, type TermStateAnswer } from "../../cat-harness/scripts/check-term-mapping.ts";
+import { MAPPING_TARGETS } from "../../cat-harness/schemas/term-mapping.ts";
 import { GLOSSARY_SUBDIR, potPath, sourceText, templateName, translationsDir } from "./glossary-pot.ts";
 import { parsePo } from "../../cat-harness/content/pipeline/po-inject.ts";
 
@@ -97,7 +98,7 @@ function generatedDir(): string {
   if (dir === undefined) throw new Error("folio-assistant-core declares no glossary directory to write extracted schemes into");
   return join(dir, "generated");
 }
-/** Where a reader follows a `source` to. The forge the repository is published on; the same base `gen-docs-auto.ts` links with. */
+/** Where a reader follows a `source` to. The forge the repository is published on; the same base `gen-auto-docs.ts` links with. */
 const FORGE = "https://github.com/litlfred/folio-assistant";
 /** A file's page on the forge — in its submodule's own repository when it sits in one. */
 const blobUrl = (path: string): string => {
@@ -638,37 +639,42 @@ function termEntry({ s, t, label }: Row, marks?: ReadonlyMap<string, string>): s
 }
 
 /**
- * What `check:term-mapping` found, read from the harness instance that wrote it.
+ * What `check:term-mapping` finds, COMPUTED by the gate's own functions.
  *
- * Bean `7wou`. The page SHOWS the three states; it does not compute them —
- * a second implementation of "is this term already somebody's concept" would
- * be free to disagree with the gate's, and the reader would have no way to
- * tell which was right.
+ * Bean `7wou`. The page SHOWS the three states; it does not have its own idea
+ * of them — a second implementation of "is this term already somebody's
+ * concept" would be free to disagree with the gate's, and the reader would
+ * have no way to tell which was right. So it calls the gate's `run` and
+ * `perScheme`: one implementation, two callers.
  *
- * The path is resolved through `instanceOwners`, not written down: the file
- * belongs to the instance DECLARED as `cat-harness`, and hardcoding
- * `cat-harness/test/results/` is how a consumer stops finding it the moment
- * the layout moves. Core may read it — core declares `needs: ["cat-harness"]`,
- * so this is the permitted direction.
+ * ## It used to READ the gate's committed sidecar, and that is bean `0dav`
  *
- * **Absent returns `undefined`, and the page then says the check has not
- * run.** Rendering "0 mapped" over a file nobody wrote would be `dh4f`
- * exactly: could-not-determine presented as a determined empty.
+ * Until 2026-10-01 this read `cat-harness/test/results/term-mapping.qa-results.json`.
+ * QA results leave `main` for the `qa-reports` branch (owner rulings D1/D4),
+ * and measured with `test/results/` moved aside the page rendered "Not
+ * checked" on six glossary pages and `check:glossary` failed on all six. A
+ * committed page cannot depend on a file that is not committed, and reading
+ * the branch from a page renderer would make `glossary:page` a network call.
+ * The computation is offline (`check-term-mapping`'s FHIR snapshot is pinned
+ * in the checkout), so computing it is both possible and cheaper than
+ * fetching it.
+ *
+ * **`undefined` still means "could not determine"**, and the page then says
+ * the check has not run: no `cat-harness` instance to compute from, or a run
+ * that threw. Rendering "0 mapped" over that would be `dh4f` exactly. A run
+ * whose TARGET could not be consulted is not undefined — each such row
+ * carries its `reason`, and the page shows it.
  */
 export function mappingStates(repo: string = REPO): SchemeState[] | undefined {
   const harness = instanceOwners(repo).find((o) => o.name === "cat-harness");
   if (!harness) return undefined;
-  const file = join(harness.root, "test", "results", "term-mapping.qa-results.json");
-  if (!existsSync(file)) return undefined;
   try {
-    const d = JSON.parse(readFileSync(file, "utf-8")) as {
-      families?: Record<string, { entries?: SchemeState[] }>;
-    };
-    const rows = Object.values(d.families ?? {}).flatMap((f) => f.entries ?? []);
+    const { mappings, scope } = runTermMapping(repo);
+    const rows = MAPPING_TARGETS.flatMap((t) => perScheme(mappings, t, scope));
     return rows.length ? rows : undefined;
   } catch {
-    // A result that will not parse is `check:term-mapping`'s finding, not
-    // this page's. Saying it twice would make one defect look like two.
+    // A run that throws is `check:term-mapping`'s finding, not this page's.
+    // Saying it twice would make one defect look like two.
     return undefined;
   }
 }
@@ -699,9 +705,9 @@ export function mappingBlock(states: SchemeState[] | undefined, schemes: readonl
   if (!states) {
     return [
       `<p class="fa-gloss-mapping fa-gloss-mapping--unrun">`,
-      `<strong>Not checked.</strong> No <code>term-mapping</code> result is committed, so whether `,
+      `<strong>Not checked.</strong> The <code>term-mapping</code> check could not be run here, so whether `,
       `these terms already exist in an authoritative vocabulary is <em>unknown</em> — which is not `,
-      `the same as “none do”. Run <code>bun run term:mapping</code>.`,
+      `the same as “none do”. Run <code>bun run term:mapping</code> to see why.`,
       `</p>`,
     ].join("");
   }
@@ -1200,14 +1206,14 @@ export function renderIndex(c: ReturnType<typeof collect>, typePages: ReadonlyMa
       (s) =>
         `<li><strong>${esc(s.glossary.title)}</strong> (${s.instance}, ${s.glossary.terms.length} term${s.glossary.terms.length === 1 ? "" : "s"}${s.glossary.members?.length ? `, ${s.glossary.members.length} external members` : ""}) · <a href="{{ '/${skosAsset(s)}' | relative_url }}">SKOS JSON-LD</a> · <code>${esc(s.file)}</code></li>`,
     ),
-    // `swimlane-glossary`, not `glossary`. `docs-auto` names its sub-page
+    // `swimlane-glossary`, not `glossary`. `auto-docs` names its sub-page
     // after the DECLARED ID, and this href carried the wrong one — a third
     // instance of `bsay`'s class, found because repointing the declaration
     // made `check:wireframes` name it. A composed path is not resolved by
     // anything, so the link 404ed on the published glossary the whole time.
     ...c.ledgers.map(
       (l) =>
-        `<li><strong>Swimlane roles</strong> (${l.instance}, ${l.terms} terms) · <a href="{{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>${esc(l.path)}</code></li>`,
+        `<li><strong>Swimlane roles</strong> (${l.instance}, ${l.terms} terms) · <a href="{{ '/cat-harness/auto-docs/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>${esc(l.path)}</code></li>`,
     ),
     ...c.external.map((e) => `<li><strong>${esc(e.title ?? e.id)}</strong> (external SKOS, referenced by ${e.instance}) · ${link(e.url)}</li>`),
   ];

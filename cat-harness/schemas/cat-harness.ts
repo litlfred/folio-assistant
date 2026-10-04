@@ -80,6 +80,7 @@ import {
 } from "./kg-node";
 import { NS_PREFIXES, propertyIri, termIri } from "./namespaces";
 import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
+import { KeyedBySchema, SubgraphSourceSchema, contentIsOffCheckout, type SubgraphSource } from "./subgraph-source";
 
 /**
  * The suffix every instance declaration carries — `<name>.config.json`.
@@ -527,6 +528,23 @@ export interface ContentDirectory extends GraphNodeDirectory {
    * `analyst`.
    */
   theme?: ThemeRef;
+
+  /**
+   * Where this subgraph gets its content. Absent is `{ kind: "directory" }`.
+   * Read it through `resolveSubgraphSource` (`schemas/subgraph-source.ts`),
+   * which applies the instance config's override by id.
+   */
+  source?: SubgraphSource;
+
+  /**
+   * This directory's contents are STORED on a branch, keyed by commit or tip, and the
+   * checkout holds at most a working copy. See {@link DirectoryStorageSchema}.
+   *
+   * The LEGACY spelling of `source: { kind: "branch", branch, keyedBy }`
+   * (bean `l4ay`): `resolveSubgraphSource` reads either and refuses both on
+   * one entry. New declarations use `source`.
+   */
+  storage?: DirectoryStorage;
 }
 
 /** An instance's root declaration. */
@@ -637,6 +655,8 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * through a truthiness test.
    */
   navbarIcons?: NavbarIcon[];
+  /** Which tiles the glass's bottom strip pins, in order — see `GlassStripSchema`. Absent inherits. */
+  glassStrip?: GlassStripPin[];
   /** The instance's name, e.g. `"agentic-harness"`. */
   name: string;
   /**
@@ -1031,7 +1051,7 @@ export const GraphNodeDirectorySchema = z.preprocess(acceptLegacyGraphsKey, Grap
  *
  * A visualisation that states only where it is rendered is **complete rather
  * than invalid** — the same rule `semantic-zoom.ts` encodes and for the same
- * reason. `title` falls back to the directory's id, `surfaces` to both, `theme`
+ * reason. `title` falls back to the directory's id, `surfaces` to every surface, `theme`
  * to the directory's, `hidden` to false. Requiring any of them would make every
  * existing declaration in this repository invalid on the commit that added the
  * field, which is the cost `dependents` already charged once.
@@ -1045,6 +1065,12 @@ export const GraphNodeDirectorySchema = z.preprocess(acceptLegacyGraphsKey, Grap
  * glass"*, and it is a SURFACE on the one declaration rather than a second
  * list of glass tiles — `harness-tiles`: one declaration, per-surface
  * visibility, never two registries.
+ *
+ * `board` is still a legal value and NOTHING RENDERS IT. Owner, 2026-10-02
+ * (issue #1905, bean `t6ht`): *"stickies panel shouldnt have all those
+ * icons"* — the sticky board's tile strip is gone. The value stays so no
+ * existing declaration naming it turns invalid; a declaration whose only
+ * surface is `board` parses and yields no tile.
  */
 export const TILE_SURFACES = ["navbar", "board", "glass"] as const;
 export type TileSurface = (typeof TILE_SURFACES)[number];
@@ -1052,7 +1078,14 @@ export type TileSurface = (typeof TILE_SURFACES)[number];
 export const VisualisationSchema = z.object({
   /** The page that renders it, **relative to the REPOSITORY root** — see {@link SubgraphCoverageSchema.visualiser}. */
   ref: z.string().min(1),
-  /** What a tile calls it. Absent falls back to the directory's id. */
+  /**
+   * What a tile calls it. Absent, the tile takes the display name of the
+   * directory's first graph kind (`kindTitle`, via `scripts/lib/nav-label.ts`),
+   * which is what every other surface calls that page. Declare one only when
+   * the page is not simply "the kind's viewer". Never add the harness as a
+   * suffix ("Docs — cat-harness"): the qualifier is appended by the surface
+   * (bean `ob3m` finding 6, "One name everywhere").
+   */
   title: z.string().min(1).optional(),
   /**
    * Where its tile appears. Absent means EVERY surface in {@link TILE_SURFACES}.
@@ -1362,6 +1395,100 @@ export type VisualiserKind = (typeof VISUALISER_KINDS)[number];
 export const TileSchema = VisualisationSchema.omit({ ref: true });
 export type Tile = z.infer<typeof TileSchema>;
 
+/**
+ * A directory whose contents live on a BRANCH — one tree per commit, or one
+ * live copy at the tip — with the
+ * checkout holding at most a working copy.
+ *
+ * Bean `16ei`, arc `3fva`, proposal
+ * `docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md` §2.4. The
+ * owner, 2026-10-01: *"do not pollute main with the QA subgraph; publish it on
+ * a dedicated branch, as caching is"* — ruling D1 (a), an orphan `qa-reports`
+ * branch keyed `main/<sha>/` and `pr/<n>/<head-sha>/`.
+ *
+ * ## What it changes, and for whom
+ *
+ * - **Writers** still write the declared path. It is the working copy, and
+ *   `qa:publish` (`scripts/qa-store.ts`) carries it to the branch.
+ * - **Readers** go through `qa-store`'s `readQa` / `readQaTree`, which answer
+ *   hit / miss / corrupt / unknown — never "the directory is empty, so clean".
+ * - **Presence checks** stop expecting the files in the checkout:
+ *   `check:declared-dirs` and `harness:dirs --check` do not report the
+ *   directory missing, `harness:dirs` does not create it empty (an empty
+ *   working copy is the `dh4f` shape, a scan of nothing reading as clean),
+ *   and `audit:coverage` reports the kind as `stored` rather than counting a
+ *   working copy whose size depends on whether somebody ran `qa:fetch`.
+ *
+ * ## `keyedBy` — three keyings, and a fourth is a schema change
+ *
+ * - `commit` — one entry per commit (`main/<sha>/`, `pr/<n>/<sha>/`), read
+ *   against a baseline. The QA branch (`scripts/qa-store.ts`).
+ * - `tip` — ONE live copy: the branch tip IS the current state, with paths
+ *   mirroring the checkout and a root `manifest.json` (`state-manifest/v1`).
+ *   Beans and todos, each on its own named-subgraph branch
+ *   (`cat/cat-harness/beans`, `cat/cat-harness/todos`; owner ruling
+ *   2026-10-02). Read and written through `scripts/branch-store.ts`, whose
+ *   writes splice onto the tip and never force-push.
+ * - `route` — one entry per published SITE ROUTE, each replaced wholesale by
+ *   the single generator that owns it. For REGENERABLE rendered output: the
+ *   auto-doc page families, whose content is a pure function of the source
+ *   tree. Bean `1j3q`, owner 2026-10-03 (*"Add route-keyed storage, then move
+ *   it off main"*).
+ *
+ *   **It is not a synonym for `tip`, and the difference is the write.** A
+ *   tip-keyed change carries `expect` (the blob id its author read), so two
+ *   sessions editing one bean is a `conflict` the caller must settle — a bean
+ *   is somebody's decision and a lost write is lost work. A generated page
+ *   authored by nobody has nothing to settle: the newer generation wins, the
+ *   unit replaced is the route, and a lost write costs a rerun. So a
+ *   route-keyed write carries NO `expect`, deliberately, and
+ *   `scripts/branch-store.ts` refuses one that does rather than honouring it
+ *   — an `expect` here would mean a page has two writers, which is the premise
+ *   failing rather than a collision to resolve.
+ *
+ *   The layer is `derived`, not `state`: the distinction §3.1 of
+ *   `docs/proposals/state-branch-2026-10-02.md` draws is **regenerability**,
+ *   and it is exactly what separates these two keyings.
+ *
+ * The field is an enum, not a string, so a fourth keying is a schema change
+ * somebody has to make rather than a reinterpretation of an existing value. The
+ * enum itself is `KeyedBySchema` in `schemas/subgraph-source.ts`, IMPORTED and
+ * not restated: this field held its own `z.enum(["commit","tip","route"])` until
+ * the two drifted — `route` was added here with bean `1j3q` and not there, so a
+ * route-keyed declaration parsed and then threw a ZodError inside
+ * `resolveSubgraphSource`. A schema change somebody has to make is only a guard
+ * if there is ONE schema to change.
+ * Not every named subgraph gets a branch — semi-static KG content (skills,
+ * schemas, processes) stays on `main` (owner, 2026-10-02).
+ *
+ * ## Set on every `qa` directory since bean `5hox`
+ *
+ * It was flipped only after every reader had migrated (proposal §4 Phase 3):
+ * setting it earlier would have told the presence checks to stop looking while
+ * the readers still read the checkout. Each stored working copy is ignored by
+ * version control, and `directory-storage.test.ts` keeps the two equal.
+ */
+export const DirectoryStorageSchema = z
+  .object({
+    /** The branch, e.g. `qa-reports`. A plain branch name: no `refs/`, no `..`, no leading `-`. */
+    branch: z
+      .string()
+      .regex(/^(?!-)(?!refs\/)[A-Za-z0-9._/-]+$/, "a plain branch name, e.g. qa-reports")
+      .refine(
+        (b) => !b.includes("..") && !b.includes("//") && !b.endsWith("/") && !b.endsWith(".lock") && !b.startsWith("/"),
+        "not a valid branch name",
+      ),
+    /**
+     * How entries are keyed on the branch: one entry per `commit`, one live
+     * copy at the `tip`, or one entry per published `route`. See
+     * {@link DirectoryStorageSchema}'s docblock for why `route` is not a
+     * synonym for `tip`.
+     */
+    keyedBy: KeyedBySchema,
+  })
+  .strict();
+export type DirectoryStorage = z.infer<typeof DirectoryStorageSchema>;
+
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
   coverage: SubgraphCoverageSchema.optional(),
   /** How this directory's tile looks. See {@link TileSchema}. */
@@ -1528,6 +1655,11 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    */
   kindRouteRedirect: z.boolean().optional(),
   /**
+   * Where this directory's contents are KEPT, when that is not the checkout.
+   * See {@link DirectoryStorageSchema} — bean `16ei`, arc `3fva`.
+   */
+  storage: DirectoryStorageSchema.optional(),
+  /**
    * This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the
    * Jekyll source instead of mounting its built output.
    *
@@ -1559,6 +1691,29 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    * catch it for you.
    */
   composed: z.boolean().optional(),
+  /**
+   * This directory's BYTES are published verbatim, at `/<instance>/<path>`, for
+   * the site's own pages to fetch.
+   *
+   * Owner, 2026-10-01: *"other goals of justthedocs rendering is to reduce the
+   * .html bloat.... lots of it can be loaded client side from the KG"*, then
+   * choosing to publish the graph directory itself rather than copy its files
+   * into `docs/` beside the pages that fetch them (bean `680p`,
+   * [`visualizer-loading`]). A copy is a second answer free to drift from the
+   * first; a served directory is the one answer, at a stable URL.
+   *
+   * **Served is not rendered.** `composed` puts markdown through Jekyll and a
+   * mount publishes a directory with its own front door; this publishes DATA,
+   * untouched — no Liquid, no layout, no index page — after Jekyll, by
+   * `mount-instance-docs.ts`. Nothing about the directory becomes navigable;
+   * a page that wants it fetches it.
+   *
+   * **Declared, never inferred**, and opt-in: publishing is outward-facing, so
+   * a directory's bytes reach the site only because its declaration says so.
+   * `withheld.json` still governs, as it does for every mount. Absent means
+   * not served.
+   */
+  served: z.boolean().optional(),
   /**
    * Which theme this subgraph renders on.
    *
@@ -1600,10 +1755,44 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    * cross-instance theme now says whose theme it is.
    */
   theme: ThemeRefSchema.optional(),
+  /**
+   * Where this subgraph gets its CONTENT — the checkout's own directory (the
+   * default, so absent means `{ kind: "directory" }`) or a declared repository
+   * branch, with room for a later kind. The instance config may override it
+   * by id. Resolve it with `resolveSubgraphSource`, never by reading this
+   * field: the override and #1764's `storage` are folded in there, once.
+   * See `schemas/subgraph-source.ts` — bean `l4ay`, owner 2026-10-03.
+   */
+  source: SubgraphSourceSchema.optional(),
 });
 
 /** As {@link GraphNodeDirectorySchema}, for an instance's own directories. */
-export const ContentDirectorySchema = z.preprocess(acceptLegacyGraphsKey, ContentDirectoryShape);
+export const ContentDirectorySchema = z.preprocess(
+  acceptLegacyGraphsKey,
+  // A `qa` directory is commit-keyed by construction: its readers compare one
+  // commit's verdicts against a baseline, and `qa-store.ts` implements only
+  // that layout. A tip-keyed `qa` store would be read as if it were keyed by
+  // commit, so it is refused here rather than at its first read (bean `2h76`).
+  //
+  // `route` is refused on the same directory for the same reason and a second
+  // one (bean `1j3q`): a QA verdict is addressed by the commit it judges, and
+  // there is no route to key it by. Checking the two values together rather
+  // than only `tip` is the point — a guard that named one keying would have
+  // admitted every keying added after it, which is how the next third value
+  // passes a test written for the second.
+  ContentDirectoryShape.refine(
+    (d) =>
+      !(
+        (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route") &&
+        (d.graphKinds as readonly string[] | undefined)?.includes("qa")
+      ),
+    {
+      message:
+        'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos) and `keyedBy: "route"` for regenerable rendered pages',
+      path: ["storage", "keyedBy"],
+    },
+  ),
+);
 
 // THERE IS NO `locale` FIELD HERE, and that is a decision rather than an
 // omission. A first draft of PR #351 added one, required on a
@@ -2411,21 +2600,72 @@ export function renderExemptionProblems(
  * from a dead link: a slot that renders nothing reads as a navbar that lost
  * something.
  *
- * ## SIX, and the cap is the owner's
+ * ## SEVEN, and the cap is the owner's
+ *
+ * It was six until 2026-10-02, when the owner added fsh-guts to the row
+ * rather than in place of anything: *"i wanted fsh guts icon here with the
+ * others"* (#1925). The cap moved with the ruling; it is still a cap.
  *
  * Refused rather than truncated. Truncating drops whichever the instance
  * listed last, silently, and an instance that declared seven has made a
  * decision the navbar would then be overruling without saying so.
  */
-export const NAVBAR_ICONS = ["close", "todos", "beans", "processes", "kg", "launcher"] as const;
+export const NAVBAR_ICONS = ["close", "todos", "beans", "processes", "kg", "fsh-guts", "launcher"] as const;
 
 export type NavbarIcon = (typeof NAVBAR_ICONS)[number];
 
 export const NavbarIconsSchema = z
   .array(z.enum(NAVBAR_ICONS))
-  .max(6, { message: "the navbar icon row holds at most 6 — the owner's cap" })
+  .max(7, { message: "the navbar icon row holds at most 7 — the owner's cap" })
   .refine((xs) => new Set(xs).size === xs.length, {
     message: "an icon listed twice is two slots doing one job",
+  });
+
+/**
+ * The glass's bottom strip — WHICH tiles are pinned to it, and in what order.
+ *
+ * Owner, 2026-10-01, ruling on bean `ob3m` finding 10, option 1 of 4:
+ * **"Pinned tiles first, plus '+N more'"** — the strip shows Todos, Settings
+ * and a few key kinds (library, processes, tools, skills), then one "+N more"
+ * tile that opens the full grid. *No tile may be silently off-screen.*
+ *
+ * ## Declared here, not hard-coded per surface
+ *
+ * The pinned set is a property of the instance, inherited like
+ * {@link NavbarIconsSchema} (absent inherits, `[]` pins nothing), so a folio
+ * that wants a different strip says so in its own declaration rather than in
+ * `docs-ui.js`.
+ *
+ * ## Two kinds of pin, because there are two kinds of tile
+ *
+ * - `{ "chrome": … }` — one of the glass's OWN controls ({@link GLASS_CHROME}),
+ *   which belong to no graph. A closed set: a free string could name a control
+ *   nothing draws.
+ * - `{ "kind": … }` — a graph KIND. It resolves to ONE tile, the first glass
+ *   tile whose directory holds that kind (`resolveGlassStrip` in
+ *   `scripts/graph-tiles.ts`), so a kind several harnesses publish gets one
+ *   slot on the strip and the rest wait in More with their qualifiers.
+ *   A kind is pinned rather than a tile id because ids are per-instance and a
+ *   kind is what the owner named.
+ *
+ * Neither is an ORDER the strip must fit. The strip shows as many as fit, in
+ * this order, and the "+N more" tile counts the rest.
+ */
+export const GLASS_CHROME = ["todos", "filter", "settings"] as const;
+
+export type GlassChrome = (typeof GLASS_CHROME)[number];
+
+export const GlassStripPinSchema = z.union([
+  z.object({ chrome: z.enum(GLASS_CHROME) }).strict(),
+  z.object({ kind: z.string().min(1) }).strict(),
+]);
+
+export type GlassStripPin = z.infer<typeof GlassStripPinSchema>;
+
+export const GlassStripSchema = z
+  .array(GlassStripPinSchema)
+  .refine((xs) => new Set(xs.map((x) => JSON.stringify(x))).size === xs.length, {
+    message: "a pin listed twice is two slots doing one job",
   });
 
 /**
@@ -2471,6 +2711,23 @@ export function resolveNavbarIcons(
   needs: ReadonlyMap<string, readonly string[] | undefined>,
   floor?: string,
 ): readonly NavbarIcon[] | undefined {
+  return resolveInherited(name, declared, needs, floor);
+}
+
+/**
+ * The walk {@link resolveNavbarIcons} documents, for ANY inherited list.
+ *
+ * Split out when `glassStrip` became the second property inherited the same
+ * way (bean `ob3m` finding 10). A second copy of the walk would be a second
+ * answer to "what is this instance built on", which is the drift the doc
+ * above warns about.
+ */
+export function resolveInherited<T>(
+  name: string,
+  declared: ReadonlyMap<string, T | undefined>,
+  needs: ReadonlyMap<string, readonly string[] | undefined>,
+  floor?: string,
+): T | undefined {
   const seen = new Set<string>();
   const queue: string[] = [name];
   while (queue.length > 0) {
@@ -2574,6 +2831,12 @@ export const CatHarnessDeclarationSchema = z.object({
    * that deliberately wants a bare navbar.
    */
   navbarIcons: NavbarIconsSchema.optional(),
+  /**
+   * Which tiles the glass's bottom strip pins, in order — see
+   * {@link GlassStripSchema}. Same three states as `navbarIcons`: absent
+   * inherits, `[]` pins nothing, a list is this instance's own answer.
+   */
+  glassStrip: GlassStripSchema.optional(),
   repository: RepoFullNameSchema.optional(),
   livesAt: InstanceLocationSchema.optional(),
   /**
@@ -5037,6 +5300,13 @@ export function materialiseDirectories(
     // the inherited subgraph exactly where it already exists, never created
     // empty (the `dh4f` rule); a repository-scoped entry has one location.
     if (dir.own !== true && (dir.scope === "repository" || !isPerInstance(dir))) continue;
+    // A STORED directory (`storage`, bean `16ei`) lives on its branch; the
+    // checkout holds at most a working copy that `qa:fetch` or a writer makes.
+    // Creating it empty here would manufacture the `dh4f` shape — a reader
+    // scanning an empty directory and reporting a clean run — and its absence
+    // is not "missing", so `--check` does not list it either.
+    // Any source off the checkout, not only `storage` (bean `l4ay`).
+    if (contentIsOffCheckout(dir)) continue;
     const base = rootForScope(rootAbs, dir.scope);
     const abs = resolve(base, dir.path);
     const rel = relative(base, abs);
@@ -5914,8 +6184,26 @@ export function nestedDirectories(
   root: string,
   decl: CatHarnessDeclaration,
   registry: GraphKindRegistry = defaultGraphKinds,
-): Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> {
-  const out: Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> = [];
+): Array<{
+  id: string;
+  path: string;
+  graphKinds: string[];
+  description?: string;
+  absent?: { reason: string };
+  storage?: unknown;
+  source?: unknown;
+  parentId: string;
+}> {
+  const out: Array<{
+  id: string;
+  path: string;
+  graphKinds: string[];
+  description?: string;
+  absent?: { reason: string };
+  storage?: unknown;
+  source?: unknown;
+  parentId: string;
+}> = [];
   for (const d of decl.directories ?? []) {
     const parent = d.path.replace(/\/+$/, "");
     walkNested(declaredKindsEntryRoot(root, d), parent, d.id, d.graphKinds ?? [], registry, out, new Set());
@@ -5938,7 +6226,16 @@ function walkNested(
   id: string,
   kinds: readonly string[],
   registry: GraphKindRegistry,
-  out: Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }>,
+  out: Array<{
+  id: string;
+  path: string;
+  graphKinds: string[];
+  description?: string;
+  absent?: { reason: string };
+  storage?: unknown;
+  source?: unknown;
+  parentId: string;
+}>,
   seen: Set<string>,
 ): void {
   if (seen.has(abs)) return;
@@ -5947,7 +6244,17 @@ function walkNested(
   for (const f of [...new Set(files)]) {
     const p = join(abs, f);
     if (!existsSync(p)) continue;
-    let nested: { directories?: Array<{ id?: string; path?: string; graphKinds?: string[]; description?: string }> };
+    let nested: {
+      directories?: Array<{
+        id?: string;
+        path?: string;
+        graphKinds?: string[];
+        description?: string;
+        absent?: { reason: string };
+        storage?: unknown;
+        source?: unknown;
+      }>;
+    };
     try {
       nested = JSON.parse(readFileSync(p, "utf-8"));
     } catch {
@@ -5961,6 +6268,20 @@ function walkNested(
         path: `${rel}/${sub}/`,
         graphKinds: nd.graphKinds ?? [],
         ...(nd.description ? { description: nd.description } : {}),
+        // Carried through, not dropped. `absent`, `storage` and `source` each
+        // say that the directory is NOT where its path says, or is not meant
+        // to be there at all — so a consumer that loses them asks "is it on
+        // disk?" and gets the wrong answer with no way to tell. Measured
+        // 2026-10-03 (bean `xsrv`): `check:declared-dirs`, extended to reach
+        // these entries, reported a nested entry carrying `absent.reason` as
+        // an unexplained absence, because the reason never arrived. The same
+        // loss would make an eventual `storage: { keyedBy: "route" }` on a
+        // nested entry read as a missing directory — `contentIsOffCheckout`
+        // cannot see a field it was not given. Latent until that test: no
+        // nested entry carries any of the three today.
+        ...(nd.absent ? { absent: nd.absent } : {}),
+        ...(nd.storage ? { storage: nd.storage } : {}),
+        ...(nd.source ? { source: nd.source } : {}),
         parentId: id,
       };
       out.push(entry);

@@ -39,7 +39,7 @@
  *   network and clock reads. Left out on purpose despite their cost:
  *   `uml:overview:check` (network and environment, via the PlantUML renderer),
  *   `kg:locale:check` and `translated-links:check` (environment),
- *   `library:viz:check`, `schema:viz:check` and `docs:auto:check` (network).
+ *   `library:viz:check`, `schema:viz:check` and `auto:docs:check` (network).
  * - `outputs: []` without `inputs`: every gate script that, run under
  *   `strace` on a clean tree, opened NOTHING for writing, created, renamed,
  *   removed or truncated nothing, inside or outside the repository (Bun's own
@@ -182,6 +182,7 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "check:source-licence": READ_ONLY,
   "check:stale-field-advice": READ_ONLY,
   "check:stale-paths": READ_ONLY,
+  "check:state-on-main": READ_ONLY,
   "check:structure-accessor": READ_ONLY,
   "check:subgraph-coverage": READ_ONLY,
   "check:subgraphs": READ_ONLY,
@@ -210,7 +211,7 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "code-lists:check": READ_ONLY,
   "vocab-mappings:check": READ_ONLY,
   "deps:python:check": READ_ONLY,
-  "docs:auto:check": READ_ONLY,
+  "auto:docs:check": READ_ONLY,
   "docs:harness:check": READ_ONLY,
   "docs:pages:check": READ_ONLY,
   "external-schemas:check": READ_ONLY,
@@ -241,7 +242,6 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "readme:audit": READ_ONLY,
   "readme:audit:root": READ_ONLY,
   "readme:sync:all:check": READ_ONLY,
-  "readme:sync:bootstrap:check": READ_ONLY,
   "readme:sync:check": READ_ONLY,
   "readme:sync:root:check": READ_ONLY,
   "root-scan-census:check": READ_ONLY,

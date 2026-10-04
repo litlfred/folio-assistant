@@ -144,6 +144,29 @@ interface DeclEntry {
  * consumer scans nothing and calls it clean, and "the directory is not there"
  * and "the directory is empty" are different facts.
  */
+/**
+ * The INSTANCE-scoped `docs` layer's directory — the base layer a generator
+ * writes its page into, as opposed to the repository overlay.
+ *
+ * This was copy-pasted IDENTICALLY into six callers until 2026-10-03
+ * (`gen-external-schemas-viz`, `gen-fsh-guts-viz`, `gen-processes-viz`,
+ * `gen-tools-viz`, `gen-methodologies-viz`, `lib/skill-pages`), each with this
+ * exact body. It belongs beside `docsLayers` because it is a *reading* of that
+ * resolver, and a reading of a declaration is the thing that must not have six
+ * independent copies: bean `06e3`'s move of derived pages to `auto-docs/`
+ * changes which layer a generator asks for, and six copies is six places to
+ * miss.
+ *
+ * It throws rather than defaulting, and that is deliberate: a generator with
+ * no declared docs layer has nowhere correct to write, and writing to a guessed
+ * path is the `dh4f` defect — a consumer that scans nothing and reports clean.
+ */
+export function baseDocsDir(repo = REPO): string {
+  const base = docsLayers(repo).layers.find((l) => !l.repositoryScoped);
+  if (base === undefined) throw new Error("no instance-scoped docs layer is declared");
+  return base.dir;
+}
+
 export function docsLayers(repo = REPO): { layers: DocsLayer[]; missing: DocsLayer[] } {
   const decl = JSON.parse(readFileSync(declarationPathIn(join(repo, "cat-harness"))!, "utf-8")) as {
     directories?: DeclEntry[];

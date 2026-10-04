@@ -83,8 +83,8 @@ export const PATTERNS: readonly ConflictPattern[] = [
     why: "LSI indexes, detangle sidecars and tool-run records (56 + 71 + 15). Recomputed from the whole corpus, so any concurrent skill or schema change touches them.",
   },
   {
-    id: "docs-auto",
-    globs: ["**/docs-auto/**"],
+    id: "auto-docs",
+    globs: ["**/auto-docs/**"],
     strategy: "take-base",
     why: "the generated docs index pages (352). Marked -merge in .gitattributes; one page per directory, so every new file anywhere changes one.",
   },
@@ -93,6 +93,21 @@ export const PATTERNS: readonly ConflictPattern[] = [
     globs: ["**/uml/**", "**/assets/img/uml/**"],
     strategy: "take-base",
     why: "generated overview diagrams and their SVGs (201). Recomputed from the declarations; any new node redraws them.",
+  },
+  {
+    id: "prov-qaqc",
+    // Instance-agnostic, like `derived-results` and unlike `glossary`: a
+    // dependent folio runs `prov:qaqc` over its own workflow instances and
+    // writes the same two shapes under its own root.
+    globs: ["**/docs/prov-qaqc/**", "**/docs/assets/prov/**"],
+    strategy: "take-base",
+    why:
+      "the PROV-O QA/QC report and its per-instance logs. Generated WHOLE from the workflow instances under " +
+      "`beans/workflows/` by `scripts/prov-qaqc.ts`, so any branch that records an instance — which every " +
+      "branch doing process work does — rewrites the index page and adds a `.prov.jsonld`. Added 2026-10-03 " +
+      "after it refused #1892 as the single unclassified path among 32 resolved by pattern: a file nobody " +
+      "authors, blocking a merge nobody can usefully resolve by hand. `take-base` then `regen`, which runs " +
+      "`prov:qaqc` because `check:prov-qaqc` is a workflow gate — so the pattern names no check of its own.",
   },
   {
     id: "glossary",
@@ -111,6 +126,7 @@ export const PATTERNS: readonly ConflictPattern[] = [
     globs: [
       "cat-harness/docs/external-schemas/index.md",
       "cat-harness/docs/methodologies/index.md",
+      "cat-harness/docs/tools/index.md",
       "cat-harness/docs/processes/*.md",
       "cat-harness/docs/qa/index.html",
       "cat-harness/docs/translation-status/index.html",
@@ -119,9 +135,12 @@ export const PATTERNS: readonly ConflictPattern[] = [
       // is the VIEWER of uploads/, not an upload: it must match here, before
       // the `uploads` refusal below catches it. Found 2026-10-01 on #1764.
       "cat-harness/docs/{beans,todos,health,issue-marks,swimlane-glossary,uploads}/index.html",
+      // fsh-guts:viz writes this page whole (writeFileSync) from fsh-guts/**;
+      // refused on #1766 2026-10-03 when main archived new uploads into fsh-guts/.
+      "cat-harness/docs/fsh-guts/index.md",
     ],
     strategy: "take-base",
-    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, processes:viz, state:visualizer, translation:status), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone.",
+    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, tools:viz, processes:viz, state:visualizer, translation:status, fsh-guts:viz), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone; tools/index.md (rendered-by tools-viewer) added 2026-10-03 after #1987 refused on it twice.",
   },
   {
     id: "viewer-namespace",
@@ -147,6 +166,41 @@ export const PATTERNS: readonly ConflictPattern[] = [
     globs: ["cat-harness/docs/cat-harness/published-graphs.md"],
     strategy: "take-base",
     why: "the handler's index of every published graph and declared viewer, written whole by gen-handler-index.ts (handler:index:check in CI). Any new graph or viewer anywhere rewrites it; found 2026-10-01 on #1754.",
+  },
+  {
+    id: "skos-glossary-export",
+    globs: ["**/docs/assets/glossary/*.skos.jsonld"],
+    strategy: "take-base",
+    why: "the published SKOS export, written whole by `glossary:export` (glossary-export.ts, `glossary:check`). Bean `8rff` measured 54 pair-path hits on it across 32 open PRs: every instance's export restamps when any declared role, skill or term moves. Deliberately NOT the ledger, which is the carry-forward artefact and stays refused — see the `glossary-ledger` note in the skill.",
+  },
+  {
+    id: "glossary-generated",
+    globs: ["**/glossary/generated/**"],
+    strategy: "take-base",
+    why: "the per-instance generated glossary JSON under `<instance>/glossary/generated/**`, same writer as `skos-glossary-export` and the same check. 50 pair-path hits (`8rff`). The glob stops at `generated/`, so the sibling `glossary-ledger.json` one level up is untouched.",
+  },
+  {
+    id: "skill-instructions",
+    globs: ["**/docs/reference/skill-instructions/**"],
+    strategy: "take-base",
+    why: "skill instruction bodies, written whole by `skills:docs` (gen-skill-docs.ts `OUT_DIR`, `skills:docs:check`). 30 pair-path hits (`8rff`), and AGENTS.md says never hand-edit the directory. Its `emit()` is compare-or-write with no merge, so nothing is carried forward. The SKILL SOURCE under `skills/**` is the authored neighbour and stays refused.",
+  },
+  {
+    id: "docs-pages",
+    // declared-path-literal: a GLOB matched against conflicted paths, not a
+    // directory read. The 17 slugs are ENUMERATED rather than globbed because
+    // `cat-harness/docs/*.md` is a MIX — measured 2026-10-03, 13 of its 31
+    // `.md` pages are generated and 18 are authored (`architecture.md`,
+    // `index.md`, `getting-started.md`, …), and `guides/` is 4 of 9 — so a
+    // directory glob such as `docs/*.md` would take a side on
+    // authored prose. A page added to `content/docs/` is refused until it is
+    // named here, which is the safe direction to be wrong in.
+    globs: [
+      "cat-harness/docs/{agentic-harness,beans-and-todos,content-types,crdm-methodology,document-ingestion,evidence,fhir-content,harness,harnessed-kg-overview,ig-publisher,knowledge-graph,managing-agent-context,publication-workflow}.md",
+      "cat-harness/docs/guides/{who-smart-dak,who-smart-ig,writing-a-document,writing-a-paper}.md",
+    ],
+    strategy: "take-base",
+    why: "the 17 whole-file docs pages gen-docs-pages.ts writes from the authored blocks under cat-harness/content/docs/<slug>/ (`docs:pages`, gated by `docs:pages:check`), each carrying `generated: scripts/gen-docs-pages.ts — do not hand-edit` in its own front matter. Bean `8c6v`: all 17 were named by NO pattern, so merge:main refused them and handed back for hand-editing the files that forbid it — docs/publication-workflow.md was one of the 2 refusals that blocked #1888 after 53 of its 55 conflicts resolved. Safe because `emit()` is compare-or-write and the only read of a prior page is inside its `--check` branch, so nothing is carried forward; and the `page` kind is gated on EXACT content, which makes regeneration the verifiable resolution. The AUTHORED SOURCES under cat-harness/content/docs/** are the neighbour and stay refused.",
   },
   {
     id: "health-report",
@@ -182,7 +236,25 @@ export const PATTERNS: readonly ConflictPattern[] = [
     id: "beans",
     globs: ["beans/defs/**"],
     strategy: "refuse",
-    why: "bean definitions (44). Authored work-plan state: two sessions editing one bean is a coordination question, and a duplicated updated_at from a careless resolution is check-bean-front-matter's recorded defect.",
+    why: "bean definitions (44). Authored work-plan state, so it is resolved by a person. It may be TWO sessions editing one bean, which is a coordination question — or ONE session whose claim went to the default branch while its completion stayed on the branch, which is `beans:claim`'s normal path and needs no coordination at all (bean `24fa`). Check which before looking for a sibling. Either way, do not union the front matter: a duplicated updated_at is check-bean-front-matter's recorded defect.",
+  },
+  {
+    id: "artefact-verification",
+    globs: ["**/scripts/artefact-verification.json"],
+    strategy: "refuse",
+    why:
+      "the per-check consumer-verification declaration. It READS like a generated sidecar — under `scripts/`, " +
+      "a `.json`, its key set DERIVED from `package.json` — and it is the only path that refused on two open " +
+      "PRs at once (#1958, #1955, swept 2026-10-03), so it is the one a sweep is most likely to glob by " +
+      "mistake. Two facts rule that out. `task-io.ts` classifies `check:artefact-verification` as `READ_ONLY`: " +
+      "NO script writes this file, so there is no writer for `regen` to run and `take-base` would be a silent " +
+      "discard rather than a resolution. And its own `_comment` requires every `none` entry to carry a REASON " +
+      "in prose and says the file may only SHRINK — so a branch that adds a gated check adds an authored " +
+      "sentence, which is exactly what taking base would drop. A conflict here is a genuine editorial merge " +
+      "(both reasons are wanted; which survives is a judgement), and human merge is the cost of the file's " +
+      "shape, not a hole in this catalogue. Bean `mjl3`, which also records the falsifier: if a `--write` is " +
+      "ever added that composes the derived keys and carries existing reasons forward, this becomes " +
+      "`take-base` and the pattern changes with it.",
   },
   {
     id: "uploads",

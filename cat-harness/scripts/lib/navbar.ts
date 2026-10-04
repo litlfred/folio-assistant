@@ -67,6 +67,14 @@ export interface NavItem {
   href?: string;
   /** What it is called. */
   label: string;
+  /**
+   * The harness this destination belongs to, APPENDED to {@link label} where
+   * the harness matters — "Schemas · C@T Harness" — and never folded into it.
+   * Bean `ob3m` finding 6, "One name everywhere": the label is the
+   * destination's one name on every surface, and this is the only part that
+   * may vary.
+   */
+  qualifier?: string;
   /** A single character or short glyph, shown while the navbar rests. */
   icon?: string;
   /**
@@ -246,6 +254,17 @@ export interface NavbarModel {
    * than empty — an empty disclosure invites a click that does nothing.
    */
   documentIndex?: NavGroup;
+  /**
+   * fsh-guts, the trashcan that is kept, as a control in the FIXED top — issue
+   * #1925, owner 2026-10-02: *"(also add fsh-guts icon to LHS top navbar)"*.
+   *
+   * It is where a sticky sent to fsh-guts is restored from, which is why it is
+   * on every page rather than inside a settings panel. Rendered `hidden`:
+   * the list, the count and the restore are all script (`docs-ui.js`
+   * `mountFshGutsNav`), so with no script it is absent rather than a button
+   * that does nothing. Absent from the model, nothing is rendered at all.
+   */
+  fshGuts?: { label: string };
   /**
    * The KG's own graphs — the scrollable middle, as ONE collapsible group.
    *
@@ -593,8 +612,10 @@ function itemHtml(i: NavItem, c: Ctx): string {
   // The description is INSIDE the label span's row but hidden visually, so it
   // joins the accessible name without widening the strip.
   const sr = i.description ? `<span class="fa-nav-sr"> — ${esc(i.description)}</span>` : "";
-  const body = `${mark(i, c)}<span class="fa-nav-label">${esc(i.label)}${sr}</span>`;
-  const title = i.description ? ` title="${esc(`${i.label} — ${i.description}`)}"` : "";
+  const q = i.qualifier ? `<span class="fa-nav-qualifier"> · ${esc(i.qualifier)}</span>` : "";
+  const body = `${mark(i, c)}<span class="fa-nav-label">${esc(i.label)}${q}${sr}</span>`;
+  const named = i.qualifier ? `${i.label} · ${i.qualifier}` : i.label;
+  const title = i.description ? ` title="${esc(`${named} — ${i.description}`)}"` : "";
   // Indent by PADDING rather than by a nested list: a nested `<ul>` would make
   // the document index a different shape from every other group here, and the
   // rows are links either way.
@@ -677,6 +698,29 @@ export function navbarOpenInputHtml(): string {
  * image is already silent — and the label's name is the instance, so a
  * screen reader hears "cat-harness" and the `title` says what a click does.
  */
+/** The dead fish (`7vhe`), the same drawing `docs-ui.js` uses for fsh-guts. */
+const FISH_SVG =
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+  '<path d="M2 12c3-4 7-6 11-6s7 2 9 6c-2 4-5 6-9 6s-8-2-11-6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>' +
+  '<path d="M22 12l-3-3v6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>' +
+  '<path d="M7.2 10.2l2 2m0-2l-2 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+
+/**
+ * The fsh-guts control. Its count starts `pending` and is written by the
+ * client, which knows the four states (`absent`, `zero`, `some`, `error`); a
+ * number baked here would be the build's, not this reader's.
+ */
+export function fshGutsHtml(f: { label: string }): string {
+  return (
+    `<button type="button" class="fa-nav-fsh-guts" data-fa-fsh-guts-open hidden ` +
+    `aria-label="${esc(f.label)}" data-fa-tip="${esc(f.label)}">` +
+    `<span class="fa-nav-glyph" aria-hidden="true">${FISH_SVG}</span>` +
+    `<span class="fa-nav-label">fsh-guts</span>` +
+    `<span class="fa-nav-count" data-fa-count-state="pending" aria-hidden="true">\u2026</span>` +
+    `</button>`
+  );
+}
+
 export function headHtml(m: NavbarModel, c: Ctx = { liquid: false }): string {
   const item: NavItem = { label: m.instance, ...(m.mark ?? {}) };
   return (
@@ -708,6 +752,7 @@ export function navbarRegionsHtml(m: NavbarModel): string {
     (m.head === "none" ? "" : headHtml(m, c)) +
     (m.root ? itemHtml(m.root, c) : "") +
     (m.documentIndex ? groupHtml(m.documentIndex, c) : "") +
+    (m.fshGuts ? fshGutsHtml(m.fshGuts) : "") +
     `</div>` +
     (m.graphs || m.visualiser
       ? `<div class="fa-nav-graphs">` +
@@ -809,6 +854,8 @@ export const VISUALISER_NAV_ATTR = "data-fa-visualiser-nav";
 /** One row of a declared visualiser section; `items` are its children. */
 export interface VisualiserNavEntry {
   label: string;
+  /** Appended to the label, as {@link NavItem.qualifier}. */
+  qualifier?: string;
   href?: string;
   items?: readonly { label: string; href?: string }[];
 }
@@ -860,11 +907,12 @@ export function visualiserNavOf(html: string, label: string): NavGroup | undefin
     return undefined;
   }
   if (!Array.isArray(raw)) return undefined;
-  type Entry = { href?: unknown; label?: unknown; items?: unknown };
+  type Entry = { href?: unknown; label?: unknown; qualifier?: unknown; items?: unknown };
   const row = (e: Entry, depth: number): NavItem | undefined =>
     typeof e?.label === "string" && e.label
       ? {
           label: e.label,
+          ...(typeof e.qualifier === "string" && e.qualifier ? { qualifier: e.qualifier } : {}),
           // A BULLET, not the row's initial. A letter per row read as a
           // column of unrelated marks (B, T, P, D — #1757 screenshot); the
           // initial is the mark for a harness, which these rows are not.

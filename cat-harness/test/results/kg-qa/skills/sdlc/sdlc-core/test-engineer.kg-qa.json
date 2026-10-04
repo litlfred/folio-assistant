@@ -5,7 +5,7 @@
     "id": "test-engineer",
     "path": "skills/sdlc/sdlc-core/test-engineer.md"
   },
-  "source_hash": "70591a247904",
+  "source_hash": "da1e38fafbcc",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
@@ -24,13 +24,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "cat-harness/skills/sdlc/sdlc-core/test-engineer.ts",
-          "detail": "cat-harness/skills/sdlc/sdlc-core/test-engineer.ts changed since cat-harness/skills/sdlc/sdlc-core/test-engineer.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -47,19 +42,9 @@
     }
   },
   "totals": {
-    "pass": 5,
-    "fail": 2,
+    "pass": 6,
+    "fail": 1,
     "n/a": 0,
     "unknown": 0
-  },
-  "pair_attestations": [
-    {
-      "kind": "co-located",
-      "prose": "cat-harness/skills/sdlc/sdlc-core/test-engineer.md",
-      "code": "cat-harness/skills/sdlc/sdlc-core/test-engineer.ts",
-      "prose_hash": "70591a247904",
-      "code_hash": "3b740ac68d0d",
-      "by": "baseline"
-    }
-  ]
+  }
 }

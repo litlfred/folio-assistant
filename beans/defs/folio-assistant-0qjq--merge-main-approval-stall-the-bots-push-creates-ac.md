@@ -4,9 +4,9 @@ title: 'MERGE-MAIN APPROVAL STALL — CORRECTED: already handled by design; the 
 status: todo
 type: bug
 priority: low
-parent: folio-assistant-d33q
 created_at: 2026-10-02T14:10:55Z
-updated_at: 2026-10-02T14:10:55Z
+updated_at: 2026-10-03T01:42:44Z
+parent: folio-assistant-d33q
 ---
 
 ## This bean was filed on a false premise — corrected 2026-10-02
@@ -105,3 +105,101 @@ run on a bot push should read `merge-main.yml`'s own comment first.
 
 Related: `d33q` (the bot), #1829 (credentials design, D1), `mc8h` (the
 merge-forward ruling this label exists to make cheap).
+
+
+## Measured 2026-10-02: the NOTIFICATION channel reports clean while 11 of 12 jobs never ran
+
+A new wrinkle on this bean's subject, and the reason it is worse than a stalled
+merge: **the event an agent is woken by can say "no failures" when nothing
+ran.**
+
+On PR #1889, head `cd643aa0b6d`, a `check_suite.completed` event arrived whose
+own guidance reads *"No third-party check suite on the PR's head_sha is still
+running or failed. If you were waiting on CI, continue with the next step."*
+Checking the PR directly at that head:
+
+| | |
+|---|---|
+| check runs present | **1** — `.jsonld siblings in sync with .ts manifests`, success |
+| check runs expected | **12** (the set that ran on `b51b16ad6b5`) |
+| missing | `Repository gates (hard)`, `TypeScript — tests, lint, types (hard)`, `Skill-registration chain, unmasked (hard)`, `End-to-end + accessibility (hard)`, the Python/Rust/Lean gates, Feature Staging |
+
+So "continue with the next step" was advice to proceed on a tree that **had
+not been gated**. The event is not wrong by its own terms — it covers
+third-party suites that ran, and its small print says *"suites with no runs …
+are not covered; verify the PR's overall state before acting"* — but the
+default reading is the dangerous one, and an agent that trusts the wake is
+exactly the `1xhc` failure: a gate that does not fire is indistinguishable
+from one that passed.
+
+**Corroborates the sibling agent's independent finding**, which this session
+first doubted and then retracted: `pull_request` runs on this branch complete
+with conclusion `action_required` and never execute, so its gate runs happened
+only because it dispatched them. Recorded here because this session's doubt
+was itself the error — the measurement above is what settled it.
+
+**The workaround that works**, and it needs no permissions beyond what an
+agent already has: `code-quality-gates.yml` carries `workflow_dispatch`
+(line 90), so the gates can be dispatched on the branch to turn an absence
+into a signal. Done on this head.
+
+**What this means for any agent reading PR events here:** the count of check
+runs on a head is the measurement, not the presence of a passing suite event.
+One job green out of twelve is `could not determine`, never `green` —
+`could-not-determine-is-a-third-state-everywhere` applied to the wake channel
+itself.
+
+
+## Caught in the wild on #1939, 2026-10-03 01:41 — minutes after the detection landed
+
+The Merge Manager was about to merge #1939 on `check-runs` reading **9 runs, 9 completed, 0
+not-success**, with `git merge-tree --write-tree origin/main <head>` at rc=0. The newly
+merged `check:head-has-run` refused it:
+
+    ✗ 915370757a — a required workflow run EXISTS but DID NOT EXECUTE.
+
+Primary data at that head, by event and actor:
+
+| event | conclusion | actor | workflow |
+|---|---|---|---|
+| `pull_request` | **`action_required`** | `github-actions[bot]` | Code-quality gates |
+| `pull_request` | **`action_required`** | `github-actions[bot]` | JSON-LD generated-file drift |
+| `pull_request` | **`action_required`** | `github-actions[bot]` | Feature Staging (GitHub Pages) |
+| `workflow_dispatch` | success | `github-actions[bot]` | Code-quality gates |
+| `workflow_dispatch` | success | `github-actions[bot]` | JSON-LD generated-file drift |
+
+**All three owed runs completed without executing, and every green came from
+`workflow_dispatch`.** So the detection shipped in #1942 paid for itself inside half an hour,
+on the merge steward's own PR, against the exact failure the steward had blocked #1819 and
+#1808 for.
+
+## The part that was reported as a pure win and is not
+
+`915370757a0` is the **`merge-main` bot's own merge commit**. The bot pushed it, so the actor
+is `github-actions[bot]` and the actor ≠ the PR author — which is this bean's condition. So:
+
+> **Every time the `merge-main` bot helps a PR, it voids that PR's owed `pull_request`
+> runs.** The workflow then dispatches `code-quality-gates.yml` itself, which is the masking
+> dispatch: a green appears, from the wrong event.
+
+The Merge Manager reported the bot as a cost-free win twice on 2026-10-03 (*"the one thing
+that cost me nothing all evening"*) before measuring this. It is not cost-free; it trades a
+merge-forward cycle for an unexecuted gate set, and the trade is invisible unless you read
+the run's event and conclusion rather than the check-run tally.
+
+**This raises the value of D1 (`MERGE_MAIN_TOKEN`) well above the two PRs counted earlier.**
+It is not two PRs — it is *every* PR the bot ever touches, present and future.
+`merge-main.yml` already carries the `HAS_TOKEN` branch, so setting the secret needs no code
+change. Owner-only.
+
+**Interim, for a steward:** a push by a human or session actor DOES produce executing runs
+(measured as the control for this bean). So a PR the bot has touched needs one real
+subsequent push before its gates mean anything — never an empty commit, which the merge
+rules forbid, and never a dispatch, which is the masking.
+
+## Independent evidence that #1939's tree is sound regardless
+
+The full local suite on `915370757a0`: **14,296 pass · 57 skip · 0 fail · 96,784 expect()
+calls across 701 files** (635s). So the content is verified; it is the *gate evidence* that
+is missing, and those are different claims. Recording both rather than letting the passing
+suite stand in for a gate run.

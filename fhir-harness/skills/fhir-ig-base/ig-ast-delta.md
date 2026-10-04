@@ -12,6 +12,8 @@ description: >
 
 > Skill id: `ig-ast-delta` · Package: `fhir-ig-base` · Instance:
 > `fhir-harness` · Bean `a9tx`
+> 
+> This is an instantiation of the general compiled-artefact-cache pattern. See `cat-harness/skills/process/process-core/compiled-artefact-cache.md` for the shared contract.
 
 An **IG AST** is a per-resource dump of what one IG Publisher build held in
 memory. It is written by the `ast-export` library, which is built **on top
@@ -40,8 +42,27 @@ exists only in a log or a JSON field does not meet it.
 |---|---|---|
 | `manifest.json` (`ig-ast/v1`) | `AstExportCli`, `AstMerger` | every resource with its key, the toolchain, the `inputs` the AST is valid for, and, on an incremental AST, `mixed: true` and `builtAt` per resource |
 | `dependencies.json` (`ig-ast-dependencies/v1`) | same | every edge, `resolved` to a resource in this IG or `null` when the target is elsewhere |
+| `fsh-index.json` | **SUSHI** (copied by `AstExportCli`) | the authoritative mapping from source `.fsh` file → output resource filename, with source line ranges. Written by SUSHI to `fsh-generated/data/fsh-index.json` on every run; the AST exporter copies it so a later delta can map even a file that has since been deleted |
 | `plan.json` (`ig-ast-plan/v1`) | `AstPlanCli` | what a delta of changed files means: rebuild, load from cache, remove, or a full build and why |
 | `delta.json` (`ig-ast-delta/v1`) | `ig-ast.ts diff` (here) | what changed between two ASTs |
+
+### The formats are declared once, and published as JSON Schema
+
+The three `ig-ast*` formats are declared in Zod in
+`fhir-harness/schemas/ig-ast.ts`, and `readAst` validates through it (bean
+`l0lq`). The JSON Schemas (draft-07) and a JSON-LD context are **generated**
+from that declaration and committed beside it:
+
+- `ig-ast.schema.json`
+- `ig-ast-dependencies.schema.json`
+- `ig-ast-plan.schema.json`
+- `ig-ast.context.jsonld`
+
+`bun run ig-ast:schema` regenerates them and `ig-ast:schema:check` is the CI
+gate. These are the files the Java writer, or any downstream consumer,
+validates against. Every object is open to fields the writer adds first;
+`authority` is the literal `"cache"`, and a manifest claiming anything else is
+refused.
 
 A resource's **key** is `canonical|version`, or `Type/id` when it has no
 canonical. Two ASTs are compared by key. **An incomplete AST is refused**: a
@@ -49,9 +70,9 @@ missing `dependencies.json` or a missing or unparsable resource file stops
 the command, because an empty substitute would diff as "no change" (review on
 #1708).
 
-## Four commands
+## Commands
 
-All four live in `fhir-harness/scripts/ig-ast.ts`, and each is declared as a
+All of them live in `fhir-harness/scripts/ig-ast.ts`, and each is declared as a
 Tool:
 
 ```sh
@@ -59,6 +80,7 @@ bun run fhir-harness/scripts/ig-ast.ts list <ast>
 bun run fhir-harness/scripts/ig-ast.ts validity <ast> --ig <root> [--toolchain "<ig-publisher X / core Y>"]
 bun run fhir-harness/scripts/ig-ast.ts diff <base-ast> <head-ast> [--plan plan.json] [--json delta.json] [--site <dir>]
 bun run fhir-harness/scripts/ig-ast.ts render <delta.json> --site <dir>
+bun run fhir-harness/scripts/ig-ast.ts jsonld <ast> > ast.jsonld
 ```
 
 ### `validity`: is this AST still the IG I have?
@@ -136,12 +158,23 @@ produced. The steps, in order:
 
 1. `validity` on the base AST. **`stale-inputs` or `cannot-tell` means no
    incremental build**; run a full one.
-2. `AstPlanCli` for the delta of changed files.
+2. `AstPlanCli` for the delta of changed files. The planner uses **two maps**:
+   - **Forward** (`fsh-index.json`, from SUSHI): which `.fsh` file produces
+     which FHIR resource. This is the authoritative answer — SUSHI already
+     writes it, and the AST exporter copies it.
+   - **Reverse** (`fsh-file-users/v1`, from `fsh-cone --file-users`): which
+     files depend on a given file. This is how a changed RuleSet- or
+     Alias-only file (which produces no resource itself) reaches the resources
+     it affects.
 3. `IncrementalBuildCli` (or a full build, if the plan says so).
 4. `diff base head --plan plan.json --site <site>/ast-delta/`.
 5. The reviewer reads the rendered delta. **A difference they cannot explain
    is a missed coupling** in the cone rules, not a curiosity. File it on bean
    `a9tx`, W8.
+
+**Measured 2026-10-01** on smart-trust (678 resources, one CodeSystem
+changed): the planner correctly identified a **2-resource cone** (0.3%) —
+`CodeSystem/Domains` and its dependent `ValueSet/Domains` — in 0.2 seconds.
 
 That diagram predates the AST work and is not yet edited to show these steps.
 Until it is, this section is where they are written down.

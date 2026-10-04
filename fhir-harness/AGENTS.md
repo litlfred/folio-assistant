@@ -7,9 +7,12 @@ guide.
 ## The one rule
 
 **Nothing here may know about WHO.** Not `dak.config.json`, not the DAK logical
-model, not `smart.who.int` canonicals, not the DAK API surface, not the
-pre/post-processing steps, and nothing from the
-`authoring-who-smart-guidelines` package.
+model, not `smart.who.int` canonicals, not the DAK API's names or the
+post-processing that produces it, not the pre/post-processing steps, and
+nothing from the `authoring-who-smart-guidelines` package. **Rendering** the
+sidecars an IG publishes is generic and is here, as the IG API
+(`ig-api-views.ts`; owner, 2026-10-03, bean `d313`); a WHO instance passes the
+"DAK API" names in as configuration.
 
 The import direction is the enforceable half: the WHO package may reference
 this layer, this layer may not reference it. A violation **fails nothing** —
@@ -17,6 +20,12 @@ the build stays green and the layer simply stops being usable for the non-WHO
 IG it exists for. That is why the refusal is written as a checkable list in
 [`skills/fhir-ig-base/ig-build-pipeline.md`](skills/fhir-ig-base/ig-build-pipeline.md)
 rather than left as an intention.
+
+**It is a gate since 2026-10-03: `bun run check:fhir-harness-exclusions`.** It
+is a ratchet over a baseline of the hits that were already here. A new one
+fails CI. The fix is to move the WHO part up into the overlay, never to widen
+the baseline. The skill above says what counts as a mention rather than a
+dependency.
 
 ## Where the layer sits
 

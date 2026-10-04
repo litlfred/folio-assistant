@@ -183,7 +183,7 @@ These are reported, not fixed: fixing them is what the chosen shape is for.
 | **D2** | `fsh-guts-export.ts:226` says it maps `name` and `description` *"exactly as the main export maps them"*. It does not. kg-export moved `description` to `dcterms:description` (bean `xsqm`), while fsh-guts still writes `rdfs:comment`. The comment went stale when kg-export changed. | 48, 53 |
 | **D3** | **The same IRI gets two naming predicates from two generators.** kg-export and glossary-export both mint a role as `makeIri(doc, "role", id)`. kg-export names it `dcterms:title` with `rdfs:label` = the id. glossary-export names it `skos:prefLabel` with `skos:notation` = the id. In a merged graph one node has `rdfs:label "reviewer"` and `skos:prefLabel "Reviewer"`, and `skos:prefLabel` is a sub-property of `rdfs:label`. That is the `sl9u` overlap again, on every role node rather than one, with nothing saying which is authoritative. | 1, 5, 49 |
 | **D4** | A licence is `dcterms:license` on a glossary (32) but an opaque `@json` literal on a library item (47), so an RDF reader can see one and not the other. Licence is one of the "other metadata" the owner named. | 32, 47 |
-| **D5** | A schema module's `summary` goes to `dcterms:title` (51), while every other node type sends `summary` to `rdfs:comment` (48). This may be deliberate, but no comment says so. | 48, 51 |
+| **D5** | A schema module's `summary` goes to `dcterms:title` (51), while every other node type sends `summary` to `rdfs:comment` (48). This may be deliberate, but no comment says so. **Ruled 2026-10-02 (owner): "Make it like the others"** — `summary` → `rdfs:comment`, title = module stem (bean `lodp`). | 48, 51 |
 
 ## 2. What to reuse, and what not to
 

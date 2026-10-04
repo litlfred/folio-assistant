@@ -5,7 +5,7 @@
     "id": "Process_MergeBase",
     "path": "processes/sdlc/merge-base.bpmn"
   },
-  "source_hash": "sha256:6315b7a2a250a2e19c162c4d10915b3bf178a2f4cfadb7f51b472ebef2b612e7",
+  "source_hash": "sha256:f25810c6021980011f60ca499ddd7677fa1cf35284262311df370a0097a29ea3",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -32,21 +32,8 @@
       "findings": []
     },
     "activity-skill-has-tool": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Classify",
-          "detail": "names skill \"merge-conflict-patterns\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "Task_Resolve",
-          "detail": "names skill \"merge-conflict-patterns\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "Task_Abort",
-          "detail": "names skill \"merge-conflict-patterns\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -72,20 +59,12 @@
       "result": "fail",
       "findings": [
         {
-          "where": "Task_Merge",
-          "detail": "needs skill \"prepare-merge\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
           "where": "Task_Classify",
           "detail": "needs skill \"merge-conflict-patterns\", but its lane's role \"build-pipeline\" does not carry it."
         },
         {
           "where": "Task_Resolve",
           "detail": "needs skill \"merge-conflict-patterns\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Regen",
-          "detail": "needs skill \"prepare-merge\", but its lane's role \"build-pipeline\" does not carry it."
         },
         {
           "where": "Task_Commit",
@@ -151,7 +130,7 @@
       "findings": [
         {
           "where": ".github/workflows/merge-main.yml",
-          "detail": ".github/workflows/merge-main.yml changed since cat-harness/processes/sdlc/merge-base.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+          "detail": ".github/workflows/merge-main.yml changed since cat-harness/processes/sdlc/merge-base.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
         }
       ]
     },
@@ -161,19 +140,9 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 4,
+    "pass": 14,
+    "fail": 3,
     "n/a": 8,
     "unknown": 0
-  },
-  "pair_attestations": [
-    {
-      "kind": "implements",
-      "prose": "cat-harness/processes/sdlc/merge-base.bpmn",
-      "code": ".github/workflows/merge-main.yml",
-      "prose_hash": "6315b7a2a250",
-      "code_hash": "946efc61097e",
-      "by": "baseline"
-    }
-  ]
+  }
 }

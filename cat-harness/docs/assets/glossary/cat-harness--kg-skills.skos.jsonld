@@ -181,11 +181,31 @@
       ],
       "skos:definition": [
         {
-          "@value": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the committed record holds the relation rather than the census."
+          "@value": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the stored record holds the relation rather than the census."
         }
       ],
       "skos:notation": "audit-coverage",
       "dcterms:source": "cat-harness/skills/kg/kg-core/audit-coverage.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/auto-docs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "auto-docs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it."
+        }
+      ],
+      "skos:notation": "auto-docs",
+      "dcterms:source": "cat-harness/skills/ui/ui-core/auto-docs.md",
       "skos:note": "candidate"
     },
     {
@@ -561,6 +581,26 @@
       ],
       "skos:notation": "communication-language",
       "dcterms:source": "cat-harness/skills/conduct/conduct-core/communication-language.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/compiled-artefact-cache",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "compiled-artefact-cache"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The general pattern for caching expensive compiled artefacts (Lean .oleans, FHIR ASTs) across builds. Defines branch-based storage, validity checking, exit code protocol, safety guards, and the restore→build→contribute loop."
+        }
+      ],
+      "skos:notation": "compiled-artefact-cache",
+      "dcterms:source": "cat-harness/skills/process/process-core/compiled-artefact-cache.md",
       "skos:note": "candidate"
     },
     {
@@ -1304,26 +1344,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/docs-auto",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "docs-auto"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it."
-        }
-      ],
-      "skos:notation": "docs-auto",
-      "dcterms:source": "cat-harness/skills/ui/ui-core/docs-auto.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/docs-generation",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1341,6 +1361,26 @@
       ],
       "skos:notation": "docs-generation",
       "dcterms:source": "cat-harness/skills/ui/ui-core/docs-generation.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/document-intake",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "document-intake"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects."
+        }
+      ],
+      "skos:notation": "document-intake",
+      "dcterms:source": "cat-harness/skills/library/library-core/document-intake.md",
       "skos:note": "candidate"
     },
     {
@@ -1686,6 +1726,26 @@
       ],
       "skos:notation": "graph-rendering",
       "dcterms:source": "cat-harness/skills/kg/graph-management/graph-rendering.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/handover-report",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "handover-report"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write a handover report: a templated snapshot of an agent's current state, committed as a bean note, so that a session or subagent that stalls, runs out of context, or loses its container can be picked up by another agent without re-deriving anything. Use it when you are told a stall is likely, at the end of every long arc, before a risky or long-running step, and whenever a steward asks for one. Its reader is `stalled-agent-triage`."
+        }
+      ],
+      "skos:notation": "handover-report",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/handover-report.md",
       "skos:note": "candidate"
     },
     {
@@ -2326,11 +2386,31 @@
       ],
       "skos:definition": [
         {
-          "@value": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn."
+          "@value": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn. Also governs what a merge steward does with a merge-train member it had to refuse: one deduplicated bean under the PR's own epic, a hand-back to the owning session with a fail condition, one dispatched agent when nobody owns it, one PR comment, and the close."
         }
       ],
       "skos:notation": "merge-conflict-patterns",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/merge-queue",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "merge-queue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Every merge goes through `merge:guard`. Use for \"merge the ready PRs\", \"land this PR\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size."
+        }
+      ],
+      "skos:notation": "merge-queue",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/merge-queue.md",
       "skos:note": "candidate"
     },
     {
@@ -2629,6 +2709,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/prepare-for-handover",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "prepare-for-handover"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Prepare for a handover: commit and push everything you hold, then write a handover report that cites the commits. Use it when told a stall, timeout or container loss is coming (\"you may stall in N minutes\"), before a long or risky step, or whenever a steward or the owner says \"prepare for handover\". It is the producing half; `handover-report` is the format and `stalled-agent-triage` is the reader."
+        }
+      ],
+      "skos:notation": "prepare-for-handover",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/prepare-merge",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2744,6 +2844,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/qa-reports",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "qa-reports"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where a QA result lives now. Derived verdicts go to the orphan `qa-reports` branch, keyed by commit, written by the CI job `qa-publish`. Judgements stay on main in the `attestations` graph. Gates compute and judge against a stored baseline, and a missing one is unknown. Read before you regenerate, commit, resolve, cite or delete anything under `test/results/` or `test/attestations/`."
+        }
+      ],
+      "skos:notation": "qa-reports",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/qa-reports.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/qa-witness",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2756,7 +2876,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The QA projections under `test/results/witnesses/` — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them."
+          "@value": "The QA projections written to `test/results/witnesses/` and stored on the `qa-reports` branch — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them."
         }
       ],
       "skos:notation": "qa-witness",
@@ -3344,6 +3464,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/stalled-agent-triage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "stalled-agent-triage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Triage incoming work from stalled agents. Given named agents or sessions, or a time window, find what they left (handover reports, open PRs, branches, beans, issue and PR discussions, workflow instances), collect as many handover reports as exist, reconstruct the rest, consolidate the workstreams into 2–4 themes, recommend how to fold them into the current or a new work plan, and coordinate open PRs with their owners (the merge steward above all). Use when a session or a swarm has stalled, timed out or lost its container, or when the owner says \"pick up what X was doing\"."
+        }
+      ],
+      "skos:notation": "stalled-agent-triage",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/stalled-agent-triage.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/surprise-to-corpus",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3531,6 +3671,26 @@
       ],
       "skos:notation": "test-engineer",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/test-engineer.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/test-plan-execution",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "test-plan-execution"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run a `test-plan/v1` against a system under test and take it to a certification decision — the five lanes of `test-plan-execution.bpmn` (requester, tester, untainted checker, certifier, attestation service), how the test data is bound, what the run and the report must record, the facts the certification table reads, and the four kg-audit criteria that judge a run afterwards. Read before executing a plan, re-executing a sample, or certifying a result."
+        }
+      ],
+      "skos:notation": "test-plan-execution",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/test-plan-execution.md",
       "skos:note": "candidate"
     },
     {
@@ -3766,7 +3926,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, and why an automated pass is not the standard."
+          "@value": "Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, why an automated pass is not the standard, and what a rendering built client-side owes a reader — there is no no-JavaScript floor here, and the two gates that look like one are narrower than their names."
         }
       ],
       "skos:notation": "ui-accessibility",
@@ -3971,6 +4131,26 @@
       ],
       "skos:notation": "visual-diff",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/visual-diff.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/visualizer-loading",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "visualizer-loading"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The general strategy for a complex visualizer: the generated page carries identity, layout and a pointer, and its bulky or repeated content is fetched from the Knowledge Graph in the browser rather than baked into every page. What must stay server-side, how to fetch, how to stay equivalent to the render being replaced, and how to verify a page whose content is not in its HTML. Read before generating any page that shows a KG node's data at length: an IG artefact view, a graph viewer, a schema or sidecar view."
+        }
+      ],
+      "skos:notation": "visualizer-loading",
+      "dcterms:source": "cat-harness/skills/ui/ui-core/visualizer-loading.md",
       "skos:note": "candidate"
     },
     {

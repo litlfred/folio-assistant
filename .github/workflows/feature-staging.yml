@@ -36,6 +36,12 @@ on:
       # this the pages are committed, gated, and never redeployed.
       - 'who-iris/docs/**'
       - 'who-iris/catalogue/**'
+      # The identifier lookup this workflow publishes (bean `1br0`): the
+      # script, its client, and each instance's generated index — a changed
+      # index must redeploy, or the search box links to a stale one.
+      - 'cat-harness-tools/scripts/**'
+      - 'cat-harness-tools/id-lookup/**'
+      - '*/id-lookup/**'
       # EVERY script, for the reason bean `tyyc` measured on `docs-site.yml`:
       # a named list of generators drifts, and the drift is invisible because
       # a preview that was never built looks exactly like one nobody opened.
@@ -190,6 +196,12 @@ jobs:
       - name: Install deps
         run: bun install --frozen-lockfile
 
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
       - name: Determine staging slug
         id: slug
         # `head.ref` is ATTACKER-CONTROLLED on a fork PR: a branch may be named
@@ -240,6 +252,28 @@ jobs:
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
           echo "Staging slug: $SLUG"
+
+      # WHERE THIS PREVIEW'S QA EVIDENCE COMES FROM — the same step as
+      # `docs-site.yml`, keyed by the pull request (bean `tfqf`, F6). The
+      # entry is `pr/<n>/<head sha>`, written by `code-quality-gates.yml`'s
+      # `qa:publish`; the PR's newest entry is the labelled fallback, because
+      # this preview usually races the job that publishes it. A dispatch run
+      # has no PR number and so no store key: it reads the checkout, or says
+      # the evidence is unavailable. The checkout wins while `test/results/`
+      # is committed; see the module note in `qa-site-assets.ts`.
+      - name: Fetch this preview's QA evidence from qa-reports
+        env:
+          PR: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if [ -n "$PR" ] && [ -n "$HEAD_SHA" ]; then
+            set -- --ref "pr/$PR/$HEAD_SHA" --fallback "pr/$PR"
+          else
+            set -- --ref main
+          fi
+          bun run cat-harness/scripts/qa-site-assets.ts fetch "$@" \
+            --results cat-harness/test/results \
+            --state "$RUNNER_TEMP/qa-site-assets.state.json"
 
       - name: Regenerate generated docs
         run: |
@@ -296,7 +330,18 @@ jobs:
         run: |
           ref=yes; api=yes; why="no pull request — carrying everything"
           if [ -n "$PR" ]; then
-            if files="$(gh pr view "$PR" --json files --jq '.files[].path' 2>/dev/null)" && [ -n "$files" ]; then
+            # `gh pr view --json files` returns at most the FIRST 100 files,
+            # silently. PR #1766 touched 2,523 and no `smart-trust/` path was
+            # in the first 100, so its preview dropped smart-trust's 2,000-odd
+            # artefact pages: a truncated list read as "nothing here touches
+            # them". The REST listing paginates (to the API's own 3,000 cap),
+            # and the list is used only when its length equals the PR's
+            # `changed_files` count; a list that is short of it is no evidence
+            # of absence and falls through to carrying everything.
+            total="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.changed_files' 2>/dev/null || true)"
+            files="$(gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR/files?per_page=100" --jq '.[].filename' 2>/dev/null || true)"
+            got="$(printf '%s\n' "$files" | grep -c . || true)"
+            if [ -n "$files" ] && [ -n "$total" ] && [ "$got" = "$total" ]; then
               # Written out for `compose-docs.ts --changed-files`, so the
               # composed-instance cut (bean `ga8a`) asks the API once rather
               # than twice. ONE lookup means ONE fall-through: if this step
@@ -315,7 +360,7 @@ jobs:
                 api=yes
               fi
             else
-              why="could not read the pull request's files — carrying everything"
+              why="could not read all of the pull request's files (read ${got:-0} of ${total:-?}) — carrying everything"
             fi
           fi
           echo "reference=$ref" >> "$GITHUB_OUTPUT"
@@ -563,6 +608,38 @@ jobs:
             bun run cat-harness/scripts/compose-docs.ts --out ./_docs --staging
           fi
 
+      # THE FULL IG PUBLISHER AST PIPELINE, rendered (bean wnhh, owner
+      # 2026-10-02: "build an updated web interface for smart trust testing
+      # full ast pipeline"). For each IG instance whose source repository
+      # carries a seeded `fhir-ast/*` cache, restore it, check it, derive its
+      # artefact index and draw the SAME pages the published-output index
+      # gets, at `/<instance>/ast/`, with the parity and validity reports
+      # beside them. Which IGs is DATA (`stage-ast-sites.ts`), so this names
+      # none. Best effort: the preview never fails on it, and every skip is
+      # printed by the lister.
+      - name: Render each IG from its IG Publisher AST cache
+        continue-on-error: true
+        run: |
+          bun run fhir-harness/scripts/stage-ast-sites.ts > ./_ast-list.txt
+          while IFS=$'\t' read -r INSTANCE URL LABEL CHROME; do
+            [ -n "$INSTANCE" ] || continue
+            SRC="./_ast-src/${INSTANCE}"
+            OUT="./_ast-out/${INSTANCE}"
+            rm -rf "$SRC" "$OUT"
+            GIT_LFS_SKIP_SMUDGE=1 git clone -q --depth 1 "$URL" "$SRC" || { echo "clone failed: $URL"; continue; }
+            CHROME_ARGS=()
+            [ "$CHROME" != "-" ] && CHROME_ARGS=(--chrome-owner "$CHROME")
+            bash fhir-harness/scripts/ig-ast-site.sh --ig-root "$SRC" --instance "$INSTANCE" \
+              --out "$OUT" --label "$LABEL" "${CHROME_ARGS[@]}" || { echo "AST pipeline failed: $INSTANCE"; continue; }
+            mkdir -p "./_docs/${INSTANCE}/ast"
+            cp -R "$OUT/docs/." "./_docs/${INSTANCE}/ast/"
+            # The resources the pages load in the browser, beside the pages.
+            rm -rf "./_docs/${INSTANCE}/ast-data" && cp -R "$OUT/ast-data" "./_docs/${INSTANCE}/ast-data"
+            cp "$OUT/validity.json" "./_docs/${INSTANCE}/ast/validity.json"
+            [ -f "$OUT/parity.json" ] && cp "$OUT/parity.json" "./_docs/${INSTANCE}/ast/parity.json"
+            echo "rendered ${INSTANCE} from its AST -> /${INSTANCE}/ast/"
+          done < ./_ast-list.txt
+
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
         with:
@@ -599,6 +676,18 @@ jobs:
             echo '{}' > "$DEST"
             echo "search-data.json: EMPTY — the page's banner says search is unavailable on this preview"
           fi
+
+      # The identifier lookup, as on deploy (bean `1br0`): before the split,
+      # which links the search box to it.
+      - name: Publish the identifier lookup
+        run: bun run cat-harness-tools/scripts/publish-id-lookup.ts --site ./_site
+
+      # Split the index THIS preview serves — the published one, or `{}` —
+      # never one built here: a preview's scopes must be cut from the same
+      # index its pages search, or `search-scopes` reports the split stale
+      # (issue #1972, bean `m7mn`).
+      - name: Split the served search index per scope
+        run: bun run cat-harness/scripts/search-split.ts --dir ./_site
 
       # Mount every OTHER instance's rendered content under the built site.
       #
@@ -950,6 +1039,23 @@ jobs:
           # cannot disagree about which build they came from.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
+          # The CHECKOUT ROOT instance's graph, as the deploy publishes it (bean
+          # `l4ay`): it declares `todos`, and `todos.jsonld`'s container IS its
+          # declared Subgraph node, so a preview without it names a node the
+          # preview does not serve.
+          ROOT_STUB=$(bun run cat-harness/scripts/print-stub.ts .)
+          mkdir -p "./_site/${ROOT_STUB}"
+          bun run cat-harness/scripts/kg-export.ts --instance . --base-url "$BASE" --out "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld"
+          cp "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld" "./_site/${ROOT_STUB}/${ROOT_STUB}.json"
+
+          # EVERY OTHER declared instance's graph, one document each — bean
+          # `4ak5` item 1. The set is derived from the declarations by the
+          # script, never listed here; the three instances above keep their
+          # own steps and are named, with why, in its PUBLISHED_ELSEWHERE.
+          # `check:published-instance-exports` runs the same plan, and fails if
+          # any declared instance is published by neither.
+          bun run cat-harness/scripts/instance-exports.ts --out-dir ./_site --base-url "$BASE"
+
           # THE NAMESPACE DOCUMENTS AND THE BOOTSTRAP GRAPH — bean `35kc`.
           #
           # Staging published NONE of these while the live site published all
@@ -1086,17 +1192,27 @@ jobs:
       # `assets/qa/witnesses/`. Mirrored in `feature-staging.yml`; a test
       # asserts both workflows carry it, because missing it in one publishes a
       # site whose evidence links are all dead.
+      #
+      # The copy is then JUDGED, as in `docs-site.yml` (bean `tfqf`, C10):
+      # a shortfall against what the source held fails the step, and
+      # `assets/qa/availability.json` names the source.
       - name: Publish the QA witnesses and results
         run: |
-          mkdir -p ./_site/assets
-          cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
+          mkdir -p ./_site/assets/qa
+          if [ -d cat-harness/test/results/witnesses ]; then
+            cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
+          fi
           # The RESULTS beside them. `kg-export` writes this during the export
           # step above, so the copy picks up THIS run's findings rather than
           # whatever was last committed. Since bean `2634` the published graph
           # no longer carries them, so this file is the only place a consumer
           # can see what the QA pass found about the document it just fetched.
-          find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
-          echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA document(s)"
+          if [ -d cat-harness/test/results ]; then
+            find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
+          fi
+          bun run cat-harness/scripts/qa-site-assets.ts verify \
+            --site ./_site --results cat-harness/test/results \
+            --state "$RUNNER_TEMP/qa-site-assets.state.json"
 
       # The same navbar-tile check `docs-site.yml` runs, mirrored here for the
       # same reason the witness copy above is: staging publishes the SAME
@@ -1126,6 +1242,27 @@ jobs:
       # published site's and only presence and parsing are asked (bean fq5u).
       - name: Verify the export before deploying the preview
         run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --search-index borrowed
+
+      # MINIFY LAST — the deploy's pass, mirrored here because
+      # `check:invocation-parity` requires it and because a preview whose
+      # bytes differ from the release's is not a preview of it. The reasoning
+      # (why a post-build pass and not a Jekyll plugin, and why this ordering
+      # is the correctness argument) is written out in `docs-site.yml` beside
+      # the same step and not repeated here.
+      #
+      # It matters more on a preview than on the deploy: every preview is a
+      # FULL copy of the site, so this is ~42 MiB off each one (measured on
+      # the published `STAGING/agy-wnhh-sushi-publisher-local`: 417.5 MiB of
+      # HTML, 10.0% of it comments and unrendered whitespace).
+      #
+      # The pass is asserted IDEMPOTENT (`minify-site.test.ts`) rather than
+      # merely expected to be, and the reason is this branch's publish model:
+      # `publish-gh-pages.sh` carries every other preview forward untouched,
+      # and a pass that drifted on re-entry would make each re-run rewrite
+      # bytes nothing asked it to — turning a one-directory preview update
+      # into a whole-tree diff.
+      - name: Minify the built pages
+        run: bun run cat-harness/scripts/minify-site.ts --site ./_site
 
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll
@@ -1468,6 +1605,13 @@ jobs:
       - name: Install deps
         working-directory: source
         run: bun install --frozen-lockfile
+
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        working-directory: source
+        run: bun run state:mount
 
       - name: Check out the publish branch
         uses: actions/checkout@v7
@@ -1825,6 +1969,13 @@ jobs:
       - name: Install deps
         working-directory: source
         run: bun install --frozen-lockfile
+
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        working-directory: source
+        run: bun run state:mount
 
       - name: Refuse to remove a preview that is still in use
         working-directory: source

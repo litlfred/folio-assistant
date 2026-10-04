@@ -56,13 +56,20 @@
 
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 
 import type { BlockQaReport, QaCriterionEntry } from "../../schemas/block-qa.ts";
-import { KG_QA_MANIFEST_PATH, kgQaSidecarPath } from "../../schemas/kg-qa.ts";
+import { KG_QA_MANIFEST_PATH, KG_QA_RESULTS_DIR, kgQaSidecarPath, owningInstanceOf, subjectEscapes } from "../../schemas/kg-qa.ts";
+import { instanceRootsIn } from "../../schemas/cat-harness.ts";
+import { checkoutRootFor } from "../../schemas/harness-config.ts";
 import type { KgQaManifest, KgQaReport } from "../../schemas/kg-qa.ts";
 import type { ScriptQaReport } from "../../schemas/script-qa.ts";
-import { existingBlockQaPath, translationQaPath } from "./qa-paths.ts";
+import {
+  BLOCK_QA_RESULTS_DIR,
+  TRANSLATION_QA_RESULTS_DIR,
+  existingBlockQaPath,
+  translationQaPath,
+} from "./qa-paths.ts";
 
 /** The QA sidecar families a subject can carry. */
 export const QA_FAMILIES = ["block", "translation", "script", "kg"] as const;
@@ -82,6 +89,41 @@ export const QA_FAMILY_LABEL: Record<QaFamily, { tag: string; label: string }> =
   script: { tag: "SC", label: "Script QA" },
   kg: { tag: "KG", label: "Knowledge-graph QA" },
 };
+
+/** One results tree a family's verdicts are read from, and whether it is here. */
+export interface QaCorpusTree {
+  family: "block" | "translation" | "kg";
+  /** Absolute. */
+  dir: string;
+  present: boolean;
+}
+
+/**
+ * Is the DERIVED QA corpus in this checkout at all?
+ *
+ * Bean `tfqf` (reader audit R51/R56, §4.2). A subject with no sidecar renders
+ * "not swept", which is true when somebody could have swept it and did not. It
+ * is NOT true when the whole results tree is absent — the state of every
+ * checkout once derived QA lives on the `qa-reports` branch and nobody ran
+ * `qa:fetch`. Measured before this: a write-mode docs build with the tree moved
+ * aside turned all 136 live badges into "not swept" and stayed green.
+ *
+ * So a caller asks this ONCE, before it writes anything into the tree (the
+ * docs generator recreates `witnesses/` itself, and asking afterwards would
+ * find its own output). `present` is true when ANY family's results tree is
+ * here: a folio with verdicts in one family has a corpus, and the families it
+ * never swept are honestly "not swept". The legacy sibling layout is not
+ * consulted here; `sidecarPaths` still finds those, so a legacy folio's
+ * swept blocks are never relabelled.
+ */
+export function qaCorpusAvailability(repoRoot: string): { present: boolean; trees: QaCorpusTree[] } {
+  const trees: QaCorpusTree[] = [
+    { family: "block", dir: join(repoRoot, BLOCK_QA_RESULTS_DIR), present: false },
+    { family: "translation", dir: join(repoRoot, TRANSLATION_QA_RESULTS_DIR), present: false },
+    { family: "kg", dir: join(repoRoot, KG_QA_RESULTS_DIR), present: false },
+  ].map((t) => ({ ...t, present: existsSync(t.dir) }) as QaCorpusTree);
+  return { present: trees.some((t) => t.present), trees };
+}
 
 /**
  * The roll-up state of one sidecar, for the icon.
@@ -339,6 +381,17 @@ export function sidecarPaths(family: QaFamily, subjectPath: string, repoRoot: st
       // The SAME function the auditor writes with. Composing the path here a
       // second time is how a reader ends up looking where nothing was
       // written — and finding nothing reads as "unaudited", a false pass.
+      //
+      // A subject OUTSIDE `repoRoot` has no sidecar in this tree: its owner
+      // audits it and holds the one verdict (Q-A PR 4, 2026-10-01), so the
+      // writer refuses the path. Read the OWNER's tree instead — the same
+      // function, rooted where the verdict actually is. No owner in the
+      // checkout means no verdict, which reads as unaudited, as it should.
+      if (subjectEscapes(repoRoot, dir)) {
+        const owner = owningInstanceOf(dir, instanceRootsIn(checkoutRootFor(repoRoot)));
+        if (owner === undefined || subjectEscapes(owner, dir)) return [];
+        return [kgQaSidecarPath(owner, dir, stem)].filter((p) => existsSync(p));
+      }
       return [kgQaSidecarPath(repoRoot, dir, stem)].filter((p) => existsSync(p));
   }
 }
@@ -515,7 +568,9 @@ export function readWitnessDoc(
 ): QaWitnessDoc | undefined {
   const paths = sidecarPaths(family, subjectPath, repoRoot);
   if (paths.length === 0) return undefined;
-  const rel = (p: string) => p.slice(repoRoot.length).replace(/^\//, "");
+  // `relative`, not a prefix slice: a kg sidecar can sit in the OWNER's tree
+  // (Q-A PR 4), outside `repoRoot`, and slicing would cut into its path.
+  const rel = (p: string) => relative(repoRoot, p);
   const dir = dirname(subjectPath);
   const stem = basename(subjectPath).replace(/\.[^.]+$/, "");
 

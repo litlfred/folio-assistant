@@ -104,15 +104,15 @@ rename a directory and the links follow.
 | `bootstrap-tools` | bootstrap-tools | [AGENTS.md](./bootstrap-tools/AGENTS.md) | [README](./bootstrap-tools/README.md) |
 | `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) |
 | `cat-harness-tools` | cat-harness-tools | [AGENTS.md](./cat-harness-tools/AGENTS.md) | [README](./cat-harness-tools/README.md) |
+| `cat-openapi` | cat-openapi | [AGENTS.md](./cat-openapi/AGENTS.md) | [README](./cat-openapi/README.md) |
 | `fhir-harness` | fhir-harness | [AGENTS.md](./fhir-harness/AGENTS.md) | [README](./fhir-harness/README.md) |
 | `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) | [README](./folio-assistant-core/README.md) |
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
-| `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) · [docs](./smart-base/docs/) |
+| `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) · [docs](./smart-base/docs/) · [docs](./smart-base/findings/) |
 | `smart-ig` | smart-ig | [AGENTS.md](./smart-ig/AGENTS.md) | [README](./smart-ig/README.md) |
 | `smart-immunizations` | smart-immunizations | [AGENTS.md](./smart-immunizations/AGENTS.md) | [README](./smart-immunizations/README.md) · [docs](./smart-immunizations/docs/) |
 | `smart-trust` | smart-trust | [AGENTS.md](./smart-trust/AGENTS.md) | [README](./smart-trust/README.md) · [docs](./smart-trust/docs/) |
 | `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |
-| `who-style-guide` | who-style-guide | [AGENTS.md](./who-style-guide/AGENTS.md) | [README](./who-style-guide/README.md) |
 
 > **8 of 14** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 

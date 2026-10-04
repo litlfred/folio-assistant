@@ -22,7 +22,35 @@ classDiagram
       pages [1] object[] | null
       undetermined_reason [0..1] string
     }
+    class smart_base_library_folio_vector_figures_v1_folio_vector_figures_v1["folio-vector-figures/v1"] {
+      <<json: VectorFiguresSidecarSchema>>
+      $schema [1] 'folio-vector-figures/v1'
+      doc_id [1] string
+      figures [1] object[] | null
+      undetermined_reason [0..1] string
+    }
+    class smart_base_library_folio_referenced_source_v1_Outline["Outline"] {
+      <<json: ReferencedSourceSchema>>
+      level [1] integer
+      title [1] string
+      page [1] integer | null
+    }
+    class smart_base_library_folio_referenced_source_v1_folio_referenced_source_v1["folio-referenced-source/v1"] {
+      <<json: ReferencedSourceSchema>>
+      $schema [1] 'folio-referenced-source/v1'
+      identity [1] object
+      source [1] object
+      outline [0..*] Outline[]
+      outline_source [1] embedded | none
+      materialization [1] object
+      withheld [1] object
+      links [0..*] object[]
+    }
   }
+  smart_base_library_folio_referenced_source_v1_folio_referenced_source_v1 *-- "0..*" smart_base_library_folio_referenced_source_v1_Outline : outline
   cssClass "smart_base_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "smart_base_library_folio_image_verdicts_v1" fa_uml_kind_library
   cssClass "smart_base_library_folio_vector_labels_v1_folio_vector_labels_v1" fa_uml_kind_library
+  cssClass "smart_base_library_folio_vector_figures_v1_folio_vector_figures_v1" fa_uml_kind_library
+  cssClass "smart_base_library_folio_referenced_source_v1_Outline" fa_uml_kind_library
+  cssClass "smart_base_library_folio_referenced_source_v1_folio_referenced_source_v1" fa_uml_kind_library

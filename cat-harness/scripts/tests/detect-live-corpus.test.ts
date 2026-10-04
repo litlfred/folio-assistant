@@ -53,14 +53,14 @@ describe("derivedWriters — no roster", () => {
       join(dir, "package.json"),
       JSON.stringify({
         scripts: {
-          "docs:auto": "x",
-          "docs:auto:check": "x",
+          "auto:docs": "x",
+          "auto:docs:check": "x",
           "lonely:check": "x", // a check with no writer
           solo: "x", // a writer with no check
         },
       }),
     );
-    expect(derivedWriters(dir)).toEqual(["docs:auto"]);
+    expect(derivedWriters(dir)).toEqual(["auto:docs"]);
     rmSync(dir, { recursive: true, force: true });
   });
 
@@ -71,6 +71,6 @@ describe("derivedWriters — no roster", () => {
     expect(writers.length).toBeGreaterThan(20);
     // And it finds itself, which is the point of deriving rather than listing:
     // the probe's own subject list grows when somebody adds a writer.
-    expect(writers).toContain("docs:auto");
+    expect(writers).toContain("auto:docs");
   });
 });

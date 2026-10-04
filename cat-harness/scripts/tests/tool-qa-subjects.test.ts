@@ -36,8 +36,7 @@
  * | restored | all pass |
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { resolve } from "node:path";
 
 import {
   KG_CRITERIA,
@@ -50,22 +49,47 @@ import { tools } from "../../tools/index.ts";
 import { deriveAlternatives } from "../../schemas/tool.js";
 
 const INSTANCE = resolve(import.meta.dir, "../..");
-const SIDECARS = join(INSTANCE, "test", "results", "kg-qa", "tools");
 
 const toolCriteria = KG_CRITERIA.filter((c) => c.applies.includes("tool"));
 
 /**
- * One sidecar, validated against the schema and returned as the typed report.
+ * The Tool reports of a FRESH audit, computed now — never the committed
+ * sidecars (bean `cxcn`, reader audit F7 R68: four tests here failed only
+ * because `test/results/kg-qa/tools/` was absent). `--check --json` computes
+ * every report and writes nothing, so the run cannot touch the checkout.
+ * Spawned once, at load, because `kg-audit.ts` is a script that runs on import.
+ */
+const FRESH: Map<string, KgQaReport> = (() => {
+  const run = Bun.spawnSync(["bun", "run", resolve(INSTANCE, "scripts", "kg-audit.ts"), "--check", "--json"], {
+    cwd: INSTANCE,
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+  const text = run.stdout.toString();
+  const at = text.indexOf("{");
+  let reports: KgQaReport[] = [];
+  try {
+    reports = (JSON.parse(at < 0 ? "{}" : text.slice(at)) as { reports?: KgQaReport[] }).reports ?? [];
+  } catch {
+    reports = [];
+  }
+  return new Map(reports.filter((r) => r.subject.kind === "tool").map((r) => [r.subject.id, r]));
+})();
+
+/**
+ * One fresh report, validated against the schema and returned as the typed
+ * report.
  *
  * The parse result is deliberately discarded. `KgQaReportSchema` infers
  * `totals` as a PARTIAL record — `z.record(z.enum(KG_RESULTS), number)` makes
  * every key optional — while `KgQaReport` declares it total, so the parse
  * output does not satisfy the interface `worstSeverity` takes. Validating and
- * then returning the raw object keeps both: the file is checked, and the value
- * has the type the consumer needs.
+ * then returning the raw object keeps both: the report is checked, and the
+ * value has the type the consumer needs.
  */
 const sidecar = (id: string): KgQaReport => {
-  const raw = JSON.parse(readFileSync(join(SIDECARS, `${id}.kg-qa.json`), "utf8")) as KgQaReport;
+  const raw = FRESH.get(id);
+  if (!raw) throw new Error(`the fresh audit produced no report for tool ${id}`);
   KgQaReportSchema.parse(raw);
   return raw;
 };
@@ -82,10 +106,16 @@ describe("the subject kind exists and is not empty", () => {
     expect(toolCriteria.length).toBeGreaterThan(0);
   });
 
-  test("every Tool node has a sidecar — all of them, not a sample", () => {
+  test("the fresh audit ran and reported on Tools at all", () => {
+    // The guard on the guard: every assertion below reads FRESH, so an audit
+    // that failed to run must fail here, not pass over an empty map.
+    expect(FRESH.size).toBeGreaterThan(0);
+  });
+
+  test("every Tool node gets a report — all of them, not a sample", () => {
     const missing = tools()
       .map((t) => t.id)
-      .filter((id) => !existsSync(join(SIDECARS, `${id}.kg-qa.json`)));
+      .filter((id) => !FRESH.has(id));
     expect(missing).toEqual([]);
   });
 });

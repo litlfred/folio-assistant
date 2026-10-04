@@ -21,7 +21,7 @@
  */
 
 import { readFileSync, existsSync, readdirSync, writeFileSync } from "fs";
-import { resolve, join, extname } from "path";
+import { resolve, join, extname, relative } from "path";
 import { references } from "./references-registry-di";
 import { findContentRepoRoot } from "./repo-root";
 import type { Data as CSLData, Person as CSLPerson } from "csl-json";
@@ -409,7 +409,9 @@ function localPdfPath(verif?: VerificationEntry, refId?: string): string | null 
     const uploads = directoryForGraph(REPO_ROOT, "uploads") ?? join(REPO_ROOT, "uploads");
     if (existsSync(uploads)) {
       for (const f of readdirSync(uploads)) {
-        if (f.startsWith(refId)) return `uploads/${f}`;
+        // The file's real location, repo-relative; `uploads/${f}` named the
+        // ROOT's queue whichever directory was declared (bean `gz47`).
+        if (f.startsWith(refId)) return relative(REPO_ROOT, join(uploads, f));
       }
     }
   }

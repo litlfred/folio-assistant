@@ -343,6 +343,27 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   renderable: { gloss: "Whether a directory's contents are published as a website." },
   scans: { gloss: "A directory an instance will look in." },
   scope: { gloss: "Which root a declared path resolves against — the instance's or the repository's." },
+  // A declared subgraph's content SOURCE (bean `l4ay`, owner 2026-10-03: "A sub
+  // graph declares where it's getting its content"). Three of the five are
+  // standard properties under a scoped name; two are minted because no
+  // published vocabulary says them. `schemas/subgraph-source.ts`.
+  contentSource: {
+    gloss:
+      "Where a declared subgraph gets its content — the checkout's own directory, a declared repository branch, or " +
+      "a later kind — as resolved after the instance config's override.",
+    replacedBy: "dcterms:source",
+  },
+  contentSourceKind: { gloss: "Which kind of content source: `directory` or `branch`.", replacedBy: "dcterms:type" },
+  contentSourceBranch: { gloss: "The repository branch a subgraph's content is read from.", replacedBy: "dcterms:identifier" },
+  keyedBy: {
+    gloss:
+      "How entries are keyed on a content branch: one entry per `commit`, or one live copy at the `tip`.",
+  },
+  sourceDeclaredIn: {
+    gloss:
+      "Which layer said where a subgraph's content comes from — the declaration, a legacy `storage` field, the " +
+      "instance config's override, or the `directory` default — so an override is never silent.",
+  },
   dependents: {
     gloss:
       "RETIRED 2026-09-30: whether an instance depending on this one materialised its own copy of a declared directory. " +
@@ -441,6 +462,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   instructionsPath: { gloss: "Where a skill's instruction body lives, relative to the instance root." },
   readmePath: { gloss: "Where a declared directory's README lives, relative to the instance root: the page a person reads about that directory." },
   instructionLines: { gloss: "How long a skill's instruction body is." },
+  fileCount: { gloss: "How many committed files a declared directory holds, at any depth: published here rather than in its README, where a count conflicted on every merge (bean ba9e)." },
   hasIOContract: { gloss: "Whether a skill declares input and output schemas." },
   inputSchema: { gloss: "The published schema a skill's input must satisfy." },
   outputSchema: { gloss: "The published schema a skill's output satisfies." },

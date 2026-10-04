@@ -31,6 +31,16 @@ import { RepoFullNameSchema } from "./repo-full-name.js";
 
 export const SUBSTRATE_SNAPSHOT_SCHEMA = "folio-substrate-snapshot/v1";
 
+/**
+ * The tag on a MATERIALISED PART's record — a subgraph or asset of a
+ * subscribed substrate, copied at the pin (slices 5 and 6). The record's full
+ * schema is `folio-assistant-core/schemas/kg-materialization.ts`, because it
+ * embeds core's `MaterializationSchema`, which this instance may not import.
+ * The tag lives HERE so the readers below core — the subscriptions page, and
+ * `check:materialized-fixity`'s walk — recognise a record without importing up.
+ */
+export const KG_PART_RECORD_SCHEMA = "folio-kg-materialization/v1";
+
 /** The graph kind of the directory an instance keeps its snapshots in. Found through the declaration, never by path. */
 export const SNAPSHOT_GRAPH_KIND = "substrate-snapshot";
 
