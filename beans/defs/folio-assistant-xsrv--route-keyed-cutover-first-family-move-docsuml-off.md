@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xsrv
 title: 'ROUTE-KEYED CUTOVER, FIRST FAMILY: move docs/uml/ off main onto a route-keyed branch — one generator, one gate, bisectable'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-03T13:28:54Z
-updated_at: 2026-10-04T05:37:22Z
+updated_at: 2026-10-04T13:47:14Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-1j3q
@@ -399,3 +399,5 @@ One more thing the writer question will reach: `offCheckoutFindings` in
 `not-cut-over` state `9ofm` added for `tip` — two copies and nothing saying which is
 authoritative. Extending it to `route` belongs with the flip, and the extraction done
 on #2032 means there is one place to do it.
+
+_2026-10-04T13:47:14Z_ — Claimed by claude/lucid-shannon-o8zop1-gz47-ruling — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
