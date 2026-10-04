@@ -272,7 +272,9 @@ export function auditInstance(
     // throw-free question: is this entry's content elsewhere at all. It is
     // asked FIRST so the common case costs nothing.
     if (contentIsOffCheckout(e)) {
-      findings.push(...offCheckoutFindings(e, abs, instanceRoot, repoRoot));
+      // An instance's OWN entry is listed under its own id, so the mount
+      // marker is keyed on exactly that.
+      findings.push(...offCheckoutFindings(e, abs, instanceRoot, repoRoot, e.id));
       continue;
     }
     if (!present && !e.absent) {
@@ -431,7 +433,7 @@ function offCheckoutFindings(
   /**
    * The id a MOUNT of this directory is keyed on, when that is not `e.id`.
    *
-   * `undefined` means "no mount can be keyed on this entry at all" — a nested
+   * `null` means "no mount can be keyed on this entry at all" — a nested
    * entry that is not `"subgraph": true`, which `resolveDirectories` does not
    * list, so `tipLocations` never sees it and `state:mount` cannot reach it.
    * That is a DIFFERENT finding from an unmounted one, because "mount it" is
@@ -444,8 +446,14 @@ function offCheckoutFindings(
    * find it — and only the caller knows which it is holding. Deriving the
    * marker id here from `e.id` is what produced the `najo` measurement: a
    * mounted graph read as `unmounted` because `markerPath` refuses a slash.
+   *
+   * REQUIRED, and `null` rather than `undefined`, because a default would be
+   * taken by a caller that passed `undefined` deliberately: `mountId = e.id`
+   * made the `unmountable` branch unreachable from `auditNested`, and the test
+   * for it failed with `unmounted` — which is the misdirecting remedy the
+   * branch exists to avoid.
    */
-  mountId: string | undefined = e.id,
+  mountId: string | null,
 ): DirFinding[] {
   let src: ResolvedSubgraphSource;
   try {
@@ -458,7 +466,7 @@ function offCheckoutFindings(
     return [{ instance: instanceRoot, id: e.id, path: e.path, kind: "unmounted", detail: (err as Error).message }];
   }
   if (src.kind !== "branch" || src.keyedBy !== "tip") return [];
-  if (mountId === undefined) {
+  if (mountId === null) {
     return [
       {
         instance: instanceRoot,
@@ -512,7 +520,7 @@ export function auditNested(
           abs,
           instanceRoot,
           repoRoot,
-          n.subgraph === true ? n.ownId : undefined,
+          n.subgraph === true ? n.ownId : null,
         ),
       );
       continue;
