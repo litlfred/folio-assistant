@@ -49,16 +49,6 @@ import { registerQaTools } from "./tools/qa.js";
 import { registerBibTools } from "./tools/bib.js";
 import { registerTransformTools } from "./tools/transform.js";
 import { registerDocumentAuditTools } from "./tools/audit.js";
-import { registerDepsTools } from "../../../cat-harness/src/tools/check-deps.js";
-import { registerPreferenceTools } from "../../../cat-harness/src/tools/preferences.js";
-import { registerPreviewTools } from "../../../cat-harness/src/tools/preview.js";
-import { registerSkillFetchTools } from "../../../cat-harness/src/tools/skill-fetch.js";
-import { registerSkillPrompts } from "../../../cat-harness/src/tools/skill-prompts.js";
-import { registerFolioInitTools } from "../../../cat-harness/src/tools/folio-init.js";
-import { registerReadmeSyncTools } from "../../../cat-harness/src/tools/readme-sync.js";
-import { registerRenderOrderTools } from "../../../cat-harness/src/tools/render-order.js";
-import { registerReadmeAuditTools } from "../../../cat-harness/src/tools/readme-audit.js";
-import { registerLsiQueryTools } from "../../../cat-harness/src/tools/lsi-query.js";
 import type { ContentAdapter, UserRole } from "../../../cat-harness/src/types.js";
 import { allows, forbidden } from "../../../cat-harness/src/core/rbac.js";
 import { DocumentContent, type ContentResult, type IncomingFile } from "./content.js";
@@ -520,47 +510,19 @@ End every response with suggested follow-ups:
   // ── MCP tool registration ──────────────────────────────────────
 
   /**
-   * Register every MCP tool a folio of this content type should expose.
+   * Register the MCP tools specific to this content type.
    *
-   * Split into two halves so a subclass can add to the content-specific one
-   * without restating the generic one. {@link PaperContentAdapter} overrides
-   * {@link registerContentTools} alone; if it had to override this method it
-   * would have to remember `registerDepsTools` and its three siblings, and
-   * the day someone adds a fifth generic tool is the day the paper adapter
-   * quietly stops offering it.
+   * The generic half used to be registered here too, which made every
+   * generic tool depend on loading an adapter from `folio-assistant-core`.
+   * It now comes from the server, read from the harness's Tool nodes (bean
+   * `zmdo`). {@link PaperContentAdapter} still overrides
+   * {@link registerContentTools} alone.
    */
   registerMcpTools(server: McpServer): void {
+    // Content tools only. The generic tools (`folio_init`, `skill_fetch`, the
+    // README tools, …) are registered by the SERVER from the harness's Tool
+    // nodes, for every instance whatever its adapter — bean `zmdo`.
     this.registerContentTools(server);
-
-    // Generic tools — every content type gets these.
-    registerDepsTools(server);
-    registerPreferenceTools(server);
-    registerPreviewTools(server);
-    registerSkillFetchTools(server);
-    // The person-facing half of the same skills: each `user_invocable` one as
-    // an MCP PROMPT, which a host lists for the person rather than offering to
-    // the model. Not a tool — bean `j6t3`, and the owner's "keep tools and
-    // skills separate!".
-    registerSkillPrompts(server);
-    // `folio_init` runs BEFORE a folio has a content type, so it has to be
-    // reachable whichever adapter a bare repo happened to fall back to.
-    registerFolioInitTools(server);
-    // A folio's README lists its papers and chapters whatever the content
-    // type, so the generated sections are generic too. A document folio simply
-    // never carries the Lean markers, so those sections never render.
-    registerReadmeSyncTools(server);
-    // Its read-only half: sync owns the generated regions, audit checks the
-    // links the author wrote. Between them nothing in the file is unaccounted
-    // for.
-    registerReadmeAuditTools(server);
-    // Where the README render SITS, and what else is derived from the same
-    // graph. Generic for the same reason: the order comes from the instance's
-    // declarations, and no block kind enters into it.
-    registerRenderOrderTools(server);
-    // Vocabulary-gap search over the declared prose graphs (bean `ansc`).
-    // Generic: a library, the skills and the beans exist whatever the
-    // content type, and no block kind enters into it.
-    registerLsiQueryTools(server);
   }
 
   /**
