@@ -1424,7 +1424,7 @@ export type Tile = z.infer<typeof TileSchema>;
  *   and `audit:coverage` reports the kind as `stored` rather than counting a
  *   working copy whose size depends on whether somebody ran `qa:fetch`.
  *
- * ## `keyedBy` — three keyings, and a fourth is a schema change
+ * ## `keyedBy` — four keyings, and a fifth is a schema change
  *
  * - `commit` — one entry per commit (`main/<sha>/`, `pr/<n>/<sha>/`), read
  *   against a baseline. The QA branch (`scripts/qa-store.ts`).
@@ -1455,14 +1455,23 @@ export type Tile = z.infer<typeof TileSchema>;
  *   `docs/proposals/state-branch-2026-10-02.md` draws is **regenerability**,
  *   and it is exactly what separates these two keyings.
  *
- * The field is an enum, not a string, so a fourth keying is a schema change
+ * - `route-family` — one entry per MEMBER of a family under the directory's
+ *   path, the member supplied at publish time rather than declared. Bean
+ *   `xp5j`. **Its reasoning lives with the enum**, in
+ *   `schemas/subgraph-source.ts`: a keying is documented where its one
+ *   definition is, which is the same rule that put the enum there (`1j3q`).
+ *   {@link RouteMemberSchema} there validates the untrusted member key.
+ *
+ * The field is an enum, not a string, so a FIFTH keying is a schema change
  * somebody has to make rather than a reinterpretation of an existing value. The
  * enum itself is `KeyedBySchema` in `schemas/subgraph-source.ts`, IMPORTED and
- * not restated: this field held its own `z.enum(["commit","tip","route"])` until
- * the two drifted — `route` was added here with bean `1j3q` and not there, so a
- * route-keyed declaration parsed and then threw a ZodError inside
- * `resolveSubgraphSource`. A schema change somebody has to make is only a guard
- * if there is ONE schema to change.
+ * not restated: this field held its own `z.enum([...])` until the two drifted —
+ * `route` was added here with bean `1j3q` and not there, so a route-keyed
+ * declaration parsed and then threw a ZodError inside `resolveSubgraphSource`.
+ * **A schema change somebody has to make is only a guard if there is ONE schema
+ * to change**, and `route-family` was added to `KeyedBySchema` for exactly that
+ * reason — this branch first restated the enum here and reproduced `1j3q` one
+ * keying later.
  * Not every named subgraph gets a branch — semi-static KG content (skills,
  * schemas, processes) stays on `main` (owner, 2026-10-02).
  *
@@ -1788,12 +1797,12 @@ export const ContentDirectorySchema = z.preprocess(
   ContentDirectoryShape.refine(
     (d) =>
       !(
-        (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route") &&
+        (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route" || d.storage?.keyedBy === "route-family") &&
         (d.graphKinds as readonly string[] | undefined)?.includes("qa")
       ),
     {
       message:
-        'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos) and `keyedBy: "route"` for regenerable rendered pages',
+        'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos), `keyedBy: "route"` for regenerable rendered pages, and `keyedBy: "route-family"` for a family of them named at publish time',
       path: ["storage", "keyedBy"],
     },
   ),
