@@ -5,7 +5,7 @@ status: in-progress
 type: milestone
 priority: high
 created_at: 2026-10-03T08:26:45Z
-updated_at: 2026-10-04T15:11:54Z
+updated_at: 2026-10-04T18:34:28Z
 ---
 
 ## There is no owner's quote on this bean, and that is deliberate
@@ -185,7 +185,7 @@ because a 7 % residual with no name is how the 62 % accumulated.
 - [x] the approved re-parents are applied by each epic's owner, or by this lane on the owner's explicit go
 - [x] `bun run check:bean-parents` and `check:bean-rollup` are green after the re-parents
 - [x] the residual (`slw1`, `0lmb`) has a stated home — a fifth milestone, or a row in the table above
-- [ ] this milestone's own scope sentence is replaced by the owner's words, or the derivation note above is confirmed as the record
+- [x] this milestone's own scope sentence is replaced by the owner's words, or the derivation note above is confirmed as the record — **confirmed by the owner 2026-10-04** ("Keep derived title")
 
 - **waits on:** the owner — approval of the 17-row table; nothing else in this bean can proceed without it
 - **since:** 2026-10-03
@@ -238,3 +238,9 @@ list: `3fva` (QA & test evidence off main, 25 open — the qa-reports arc `fs43`
 generalises) and `0ipy` (agentic SE literature, 11 open — the research behind
 `nok9` and `9v5a`). Put to the owner; **"Both to PLATFORM"**. Measured after:
 0 open beans without an open milestone ancestor.
+
+
+
+## Owner ruling on scope, 2026-10-04
+
+In session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi the owner was shown this milestone's derived title next to three alternative outcome sentences and chose **"Keep derived title"**. The title above is therefore the owner's record of this milestone's outcome, not only a derivation; the rule that the owner's framing wins still holds if they reword it later.
