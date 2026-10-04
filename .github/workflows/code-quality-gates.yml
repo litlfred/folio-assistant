@@ -1151,6 +1151,26 @@ jobs:
       - name: no module imports from an instance built on top of its own
         run: bun run check:import-direction --all
 
+      # fhir-harness knows nothing about WHO (bean `wm63`). The import check
+      # above cannot see this: a `smart.who.int` canonical, a DAK API sidecar
+      # name or a DAK step invoked from a Tool is a string, not a module. The
+      # gate lives in smart-base, which OWNS those names, so the list itself
+      # is not a breach. Ratchet over a committed baseline (owner, 2026-10-03):
+      # a hit above it fails, and so does a cleared hit the baseline still
+      # allows — clearing it is bean `veiu`.
+      - name: fhir-harness stays WHO-free
+        run: bun run check:fhir-harness-exclusions
+
+      # A process binds only skills it can reach: its own instance's, or one it
+      # needs (owner, 2026-10-03: "general rule, not just fhir-harness"). The
+      # import axis above cannot see it, because a BPMN `<skill ref>` is a name
+      # rather than a module. kg-audit's skill-ref-resolves cannot either: in
+      # this pre-split checkout it resolves against the whole checkout, so
+      # "resolves" meant "exists somewhere". Same allowedFromNeeds direction as
+      # the import and prose axes. Ratchet over a baseline of 33 (bean mlux).
+      - name: a process binds only skills its instance can reach
+        run: bun run check:process-bindings
+
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until
       # 2026-09-19 nothing served that stem at all — the dead-link walk in
@@ -2009,6 +2029,13 @@ jobs:
           # about whether an instance wants a mark at all, not a regression.
           # Same line `check:theme-art` drew above, for the same reason.
           bun run check:navbar-consistency:check
+          # One NAME per navigation destination, across the rail, the sidebar
+          # include, harness.json (harness rows, landing viewers, FOLDERS, the
+          # glass and Stickies tiles) and the sticky links. Owner, 2026-10-01,
+          # bean `ob3m` finding 6, "One name everywhere": a surface may only
+          # APPEND the harness as a qualifier. `:check` writes nothing and
+          # also fails a stale `nav-names.qa-results.json` sidecar.
+          bun run check:nav-names:check
           # Every instance declaring a `themes` graph: does it load, and does
           # each theme validate? The gate that TRULY covers the `themes` kind —
           # three others declared `@covers themes` while resolving no themes

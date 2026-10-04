@@ -70,27 +70,6 @@ Grouped and ordered as the IG's own `artifacts.html` groups them, with each arte
 description. Its canonical URL, published representations and whether it is held here are on
 its own page.
 
-<nav class="ig-toc" aria-label="Contents" markdown="1">
-
-**Contents**
-
-- [Knowledge Artifacts: Activity Definitions](#cat-Knowledge_Artifacts__Activity_Definitions) — 3
-- [Terminology: Code Systems](#cat-Terminology__Code_Systems) — 6
-- [Terminology: Concept Maps](#cat-Terminology__Concept_Maps) — 3
-- [Knowledge Artifacts: Libraries](#cat-Knowledge_Artifacts__Libraries) — 279
-- [Knowledge Artifacts: Measure](#cat-Knowledge_Artifacts__Measure) — 41
-- [Example: Example Instances](#cat-Example__Example_Instances) — 36
-- [Knowledge Artifacts: Plan Definitions](#cat-Knowledge_Artifacts__Plan_Definitions) — 138
-- [Structures: Questionnaires](#cat-Structures__Questionnaires) — 10
-- [Structures: Resource Profiles](#cat-Structures__Resource_Profiles) — 5
-- [Structures: Extension Definitions](#cat-Structures__Extension_Definitions) — 8
-- [Structures: Logical Models](#cat-Structures__Logical_Models) — 10
-- [Terminology: Structure Maps](#cat-Terminology__Structure_Maps) — 16
-- [Terminology: Value Sets](#cat-Terminology__Value_Sets) — 192
-- [Uncategorised](#cat--uncategorised) — 1
-
-</nav>
-
 <details markdown="1" id="cat-Knowledge_Artifacts__Activity_Definitions">
 <summary><strong>Knowledge Artifacts: Activity Definitions</strong> — 3</summary>
 
@@ -341,3 +320,6 @@ unreadable. Every one has its own page: **[browse all 192](./category/Terminolog
 | [Immunizations](./artifact/ImplementationGuide-smart.who.int.immunizations.html)<br>`ImplementationGuide/smart.who.int.immunizations` |  |
 
 </details>
+
+<footer id="ig-footer" data-next="artifact/ActivityDefinition-IMMZD2DTCR.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

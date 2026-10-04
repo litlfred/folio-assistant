@@ -187,6 +187,10 @@ export const RULES: Rule[] = [
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
       "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)
       "scripts/repo-partition.ts",           // this tool; platform meta
+      // HARNESS, by the same test as `check-ci-health.ts`: its subject is the
+      // forge's open PRs and this checkout's instance declarations, judged by
+      // a `kg-separation` decision table. It reads no folio material.
+      "scripts/seed-ready.ts",
       // HARNESS: the cross-instance half of check:declared-paths (bean `gz47`).
       // Its subject is every instance's declarations and source, read; it
       // reads no folio material.
@@ -218,6 +222,12 @@ export const RULES: Rule[] = [
       // `p11x`). Harness for the same reason: it reads declarations and module
       // specifiers, consumes the same `layer-direction.ts`, and no folio content.
       "scripts/check-import-direction.ts",
+      // The PROCESS-BINDING half of that arrow (owner, 2026-10-03): which
+      // instance a BPMN's `<skill ref>` reaches. Harness for the same reason —
+      // it reads declarations, BPMN extension elements and skill file names,
+      // consumes the same `layer-direction.ts`, and no folio content.
+      "scripts/check-process-bindings.ts",
+      "scripts/process-bindings.baseline.ts",
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
       // this repository's own Jekyll templates and the baseurl its site is
@@ -246,6 +256,12 @@ export const RULES: Rule[] = [
       // content — the declarations it reads are the harness's, and the glyph
       // registries it compares are the harness's own furniture.
       "scripts/check-navbar-consistency.ts",
+      // HARNESS on the same argument: its subjects are this repository's own
+      // generated navigation (`_data/harness.json`, the navbar include, the
+      // rail written into viewer pages) and its landing templates. It opens
+      // no folio content (bean `ob3m` finding 6).
+      "scripts/check-nav-names.ts",
+      "scripts/lib/nav-label.ts",
       // HARNESS for the same reason: it asks the runtime's own question
       // through `schemas/theme-by-ref.ts` over this repository's declared
       // instances. The THEMES it loads are an instance's subject matter,

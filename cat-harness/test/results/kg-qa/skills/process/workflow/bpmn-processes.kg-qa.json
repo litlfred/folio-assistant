@@ -5,15 +5,20 @@
     "id": "bpmn-processes",
     "path": "skills/process/workflow/bpmn-processes.md"
   },
-  "source_hash": "f0685a1f56d0",
+  "source_hash": "8aefb0670ba9",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
       "findings": []
     },
     "skill-is-brief": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/process/workflow/bpmn-processes.md",
+          "detail": "282 lines; p75 of the skill corpus is 279."
+        }
+      ]
     },
     "skill-not-a-document": {
       "result": "pass",
@@ -42,8 +47,8 @@
     }
   },
   "totals": {
-    "pass": 4,
-    "fail": 1,
+    "pass": 3,
+    "fail": 2,
     "n/a": 2,
     "unknown": 0
   }

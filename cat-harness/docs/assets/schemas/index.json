@@ -8820,7 +8820,7 @@
           "type": "z.string().min(1).optional()",
           "optional": true,
           "array": false,
-          "doc": "What a tile calls it. Absent falls back to the directory's id."
+          "doc": "What a tile calls it. Absent, the tile takes the display name of the"
         },
         {
           "name": "surfaces",
@@ -17519,6 +17519,13 @@
           "type": "string",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "What every navigation surface CALLS a destination of this kind: the"
         },
         {
           "name": "schema",

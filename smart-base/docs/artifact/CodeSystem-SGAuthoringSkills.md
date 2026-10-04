@@ -37,3 +37,6 @@ CodeSystem for SMART Guidelines authoring skill capabilities. Each code represen
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
+
+<footer id="ig-footer" data-prev="CodeSystem-SGAuthoringPersonaTypes.html" data-next="CodeSystem-SGPersonaTypes.html" class="st-ig"></footer>
+<script src="{{ '/smart-base/assets/ig-footer.js' | relative_url }}" defer></script>

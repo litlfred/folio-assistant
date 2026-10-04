@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 777,
+      "count": 781,
       "unit": "beans"
     }
   },
@@ -39,14 +39,14 @@
     {
       "id": "folio-assistant-06e3",
       "title": "docs-auto: a handler at cat-harness/docs-auto/<auto-doc-type>/<path> that derives documentation for a sub-graph — and the authoring rule that the author must summarise what it indexes",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:54:07Z",
-      "updatedAt": "2026-10-03T11:41:35Z",
+      "updatedAt": "2026-10-04T06:09:36Z",
       "preview": "Owner, 2026-09-20 (session_014HGPQoUnzXGqSspA8x6YyD), in three messages.\n\n## 1. The handler\n\n> in cat-harness needs to be harness/handler at `cat-harness/docs-auto/<auto-doc-type>/<path>`\n> defined. which will auto-generate extracatable documentation at `<path>` sub-graph.\n> extracablle = bpmn, tasks, glossary, etc. ther is a glosarry bean... this could\n> clarify it lives at `cat-harness/docs-auto",
       "file": "beans/defs/folio-assistant-06e3--docs-auto-a-handler-at-cat-harnessdocs-autoauto-do.md"
     },
@@ -5407,6 +5407,20 @@
       "file": "beans/defs/folio-assistant-hajp--interaction-the-asking-rule-is-enforced-by-three-l.md"
     },
     {
+      "id": "folio-assistant-hcpz",
+      "title": "seed:ready — per-layer seeding readiness gateway for kg-separation (Source settled?)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T17:22:19Z",
+      "updatedAt": "2026-10-02T22:27:27Z",
+      "preview": "Owner approved 2026-10-02: 'seed:ready: check skills/process to harness / KG separation and align.' The steward applied stability criteria by hand before a seeding review (heavy-mover PRs landed; no open PR touches the next layer; at most 5 touch the layer; none moves files in it). This bean makes that a DMN-backed gateway in kg-separation.bpmn, evaluated by bun run seed:ready --layer <name>, read",
+      "file": "beans/defs/folio-assistant-hcpz--seedready-per-layer-seeding-readiness-gateway-for.md"
+    },
+    {
       "id": "folio-assistant-hfag",
       "title": "Merge pipeline: train process, queue state, reprioritisation, gates",
       "status": "in-progress",
@@ -5701,6 +5715,20 @@
       "updatedAt": "2026-09-30T14:56:03Z",
       "preview": "Owner, 2026-09-22 (session_017nyJj3PsjvszpF3DyGeBgE), a side request, verbatim:\n\n> *\"when bootstrapo initailzies, if repo is empty, it should seed main then bootstrap\"*\n\n**Why it matters.** A brand-new GitHub repository has no commits and no `main`. Every later step assumes both:\n- a feature branch needs a base to branch from;\n- a PR needs a base branch to target;\n- staging compares against `main`",
       "file": "beans/defs/folio-assistant-izqr--bootstrap-on-an-empty-repo-seed-main-first-then-bo.md"
+    },
+    {
+      "id": "folio-assistant-izx8",
+      "title": "FHIR IG API: rename the DAK-named IG API parts in fhir-harness (dak-views, dak-api hub, templates) once #1766 lands",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-wm63",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T13:59:33Z",
+      "updatedAt": "2026-10-03T20:12:05Z",
+      "preview": "Owner, 2026-10-03, on #1766: \"2 but should be FHIR-IG-API, no DAK label/names\". So #1766 merges first and its DAK-named hits in fhir-harness are baselined in check:fhir-harness-exclusions (an explicit owner exception to the never-widen rule). The API SURFACE (per-artefact .schema.json / .displays.json / .openapi.json and a hub) is the generic FHIR IG API and stays in fhir-harness. Only the DAK nam",
+      "file": "beans/defs/folio-assistant-izx8--fhir-ig-api-rename-the-dak-named-ig-api-parts-in-f.md"
     },
     {
       "id": "folio-assistant-j0zs",
@@ -6459,6 +6487,20 @@
       "updatedAt": "2026-09-29T20:50:33Z",
       "preview": "_2026-09-19T00:41:01Z_ — Verified RESOLVED, 2026-09-19 on main at 17dc1e6. .github/workflows/feature-staging.yml exists with 32 STAGING references and is demonstrably working — it deployed previews for PRs #298 and #308 in this session, each commenting the STAGING URL. Note this bean has an EMPTY body: title and issue #215 only, no statement of what 'done' means, so this verification is against ob",
       "file": "beans/defs/folio-assistant-lx2s--feature-branch-staging-under-gh-pages-issue-215.md"
+    },
+    {
+      "id": "folio-assistant-m025",
+      "title": "IG pages: remove in-page Contents box; add Publisher footer from package metadata (#1901)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T05:35:04Z",
+      "updatedAt": "2026-10-04T06:05:02Z",
+      "preview": "Follow-up to #1970 on #1901. Owner 2026-10-02: TOC only in the LHS rail (done in #2020), so remove the Contents box #1970 added. Owner 2026-10-02 scope addition: Publisher footer — prev/top/next row; band 'IG © <publisher> ↗. Package <id>#<version> based on FHIR <v> ↗. Generated <date>'; Links: Table of Contents | QA Report | Version History | License. Values from the IG's own metadata (package.tg",
+      "file": "beans/defs/folio-assistant-m025--ig-pages-remove-in-page-contents-box-add-publisher.md"
     },
     {
       "id": "folio-assistant-m1k4",
@@ -7337,15 +7379,15 @@
     {
       "id": "folio-assistant-p3ny",
       "title": "STATE BRANCH P6: remove the moved state files from main — ONLY on the owner's explicit go",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T10:58:10Z",
-      "updatedAt": "2026-10-02T10:58:10Z",
-      "preview": "deletion-requires-confirmation. Not before every reader in P3 and gate in P4 is green on the branch.\n\n## Done when\n- [ ] owner's go recorded\n- [ ] files removed; beans/README.md count-line churn (y7b3) gone\n\nProposal: cat-harness/docs/proposals/state-branch-2026-10-02.md",
+      "updatedAt": "2026-10-04T06:10:27Z",
+      "preview": "deletion-requires-confirmation. Not before every reader in P3 and gate in P4 is green on the branch.\n\n## Done when\n- [ ] owner's go recorded\n- [ ] files removed; beans/README.md count-line churn (y7b3) gone\n\nProposal: cat-harness/docs/proposals/state-branch-2026-10-02.md\n\n_2026-10-04T06:10:27Z_ — Claimed by claude/beans-off-main-9ofm — pushed to main so sibling sessions see it before this branch h",
       "file": "beans/defs/folio-assistant-p3ny--state-branch-p6-remove-the-moved-state-files-from.md"
     },
     {
@@ -9317,6 +9359,20 @@
       "file": "beans/defs/folio-assistant-vbxp--direction-sidecar-checkreference-direction-printed.md"
     },
     {
+      "id": "folio-assistant-veiu",
+      "title": "FHIR-HARNESS: clear the exclusion-gate baseline to zero (wm63 stream 2)",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-wm63",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T08:54:49Z",
+      "updatedAt": "2026-10-03T08:54:49Z",
+      "preview": "The gate `check:fhir-harness-exclusions` (smart-base/scripts/) was turned on 2026-10-03 in ratchet mode over 9 file×rule pairs (20 graded hits) listed in smart-base/scripts/fhir-harness-exclusions.baseline.ts. Owner ruling 2026-10-03: gate now, clear the hits in a second stream (session https://claude.ai/code/session_01PpaL9j6AhiTfvqnkF7BiaG).\n\n## Done when\n\n- [ ] the WHO test fixtures (4 test fil",
+      "file": "beans/defs/folio-assistant-veiu--fhir-harness-clear-the-exclusion-gate-baseline-to.md"
+    },
+    {
       "id": "folio-assistant-vigi",
       "title": "JSON-LD is a CONVENTION here, not a construction: 28 deps, zero RDF/JSON-LD processors, nothing validates an @context",
       "status": "completed",
@@ -9818,7 +9874,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-10-03T08:47:15Z",
+      "updatedAt": "2026-10-03T09:07:44Z",
       "preview": "`fhir-harness` — the layer bean `nsbb` called \"the bare FHIR IG pipeline\", now\nnamed by the owner's stack ruling of 2026-09-22.\n\n## What it is\n\nSUSHI → IG Publisher → Jekyll → a pages branch. **No pre-processing and no\npost-processing.** This is how SMART Guidelines were built before the DAK\nphases were added, so it is a shape that demonstrably worked rather than one\nbeing invented.\n\n## The defini",
       "file": "beans/defs/folio-assistant-wm63--fhir-harness-the-bare-fhir-ig-pipeline-as-its-own.md"
     },
@@ -11001,14 +11057,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 7,
-        "total": 138,
-        "closed": 37,
-        "open": 101,
-        "inProgress": 55,
-        "todo": 46,
+        "total": 142,
+        "closed": 38,
+        "open": 104,
+        "inProgress": 56,
+        "todo": 48,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.26811594202898553
+        "share": 0.2676056338028169
       },
       {
         "id": "folio-assistant-yg29",
@@ -11027,8 +11083,8 @@
       }
     ],
     "orphanOpen": 302,
-    "openTotal": 463,
-    "coveredOpen": 157,
+    "openTotal": 466,
+    "coveredOpen": 160,
     "duplicateIds": 1
   }
 }

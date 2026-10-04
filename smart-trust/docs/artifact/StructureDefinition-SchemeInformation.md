@@ -43,3 +43,6 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://litlfred.github.io/smart-trust/StructureDefinition-SchemeInformation.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-SchemeInformation.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
+
+<footer id="ig-footer" data-prev="StructureDefinition-HCert.html" data-next="ValueSet-KeyUsage.html" class="st-ig"></footer>
+<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
