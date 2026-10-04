@@ -86,7 +86,7 @@ function fixture(
         {
           id: ID,
           path: ROUTE,
-          graphKinds: ["docs-auto"],
+          graphKinds: ["auto-docs"],
           ...(opts.storage === false ? {} : { storage: { branch: BRANCH, keyedBy: "route" } }),
         },
       ],

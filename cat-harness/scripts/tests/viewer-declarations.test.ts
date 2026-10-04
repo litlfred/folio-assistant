@@ -74,12 +74,12 @@ describe("writing and reading the declaration", () => {
 describe("choosing the page a directory's tile opens", () => {
   const kinds = new Map<string, readonly string[]>([
     ["library-viewer", ["library"]],
-    ["docs-auto-viewer", ["skills"]],
+    ["auto-docs-viewer", ["skills"]],
   ]);
   const pages = [
     { page: "site/library/index.html", renders: ["a/library", "b/library"], renderedBy: "library-viewer" },
     { page: "site/library/a/index.html", renders: ["a/library"], renderedBy: "library-viewer" },
-    { page: "site/index/library/a/index.html", renders: ["a/library"], renderedBy: "docs-auto-viewer" },
+    { page: "site/index/library/a/index.html", renders: ["a/library"], renderedBy: "auto-docs-viewer" },
     { page: "site/unsigned/index.html", renders: ["a/library"] },
   ];
 
@@ -152,10 +152,10 @@ describe("the corpus: viewers are read from the pages (#1168 B7a-2b)", () => {
     // `who-iris-library` was cat-harness's MIRROR of who-iris's own entry; the
     // mirror is gone (placement PR0) and the owner's entry resolves the same page.
     expect(resolveFor("who-iris", "library")).toBe("cat-harness/docs/cat-harness/library/who-iris/index.html");
-    expect(resolveFor("cat-harness", "skills")).toBe("cat-harness/docs/cat-harness/docs-auto/index/skills/skills/index.html");
+    expect(resolveFor("cat-harness", "skills")).toBe("cat-harness/docs/cat-harness/auto-docs/index/skills/skills/index.html");
     expect(resolveFor("folio-assistant", "beans")).toBe("cat-harness/docs/beans/index.html");
     // An index page that merely LISTS a directory is not its viewer: the
-    // docs-auto processes pages draw `cat-harness/processes` too, and lose.
+    // auto-docs processes pages draw `cat-harness/processes` too, and lose.
     expect(resolveFor("folio-assistant", "fsh-guts")).toBe("cat-harness/docs/fsh-guts/index.md");
   });
 

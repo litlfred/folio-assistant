@@ -2513,7 +2513,7 @@ jobs:
           # because it reads as current. It also reports an ORPHAN -- a
           # sub-graph page whose sub-graph now contributes nothing -- which is
           # `ankg`'s helper doing its job in a third generator.
-          bun run docs:auto:check
+          bun run auto:docs:check
           bun run gen:jsonld:check
           bun run readme:sync:check
           bun run avatars:css:check

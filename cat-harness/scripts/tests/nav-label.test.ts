@@ -108,7 +108,7 @@ describe("a viewer at the instance's own root is the harness's page", () => {
   // row and "FHIR artefact index" on the next.
   test("the row takes the harness's name and is listed once", () => {
     const rows: { kind: string; path?: string; label?: string; sameAs?: string }[] = [
-      { kind: "docs", path: "/cat-harness/docs-auto/index/docs/smart-base-docs/" },
+      { kind: "docs", path: "/cat-harness/auto-docs/index/docs/smart-base-docs/" },
       { kind: "fhir-artifact-index", path: "/smart-base/" },
       { kind: "qa" },
     ];

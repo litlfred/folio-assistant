@@ -388,7 +388,7 @@ describe("extracted KG terms", () => {
       lanes.get(p)!);
     const fromLanes = terms.filter(({ t }) => pathOf(t.source!).endsWith(".bpmn") && laneIds(pathOf(t.source!)).has(anchorOf(t.source!)!));
     expect(fromLanes.map(({ t }) => t.source)).toEqual([]);
-    expect(renderPages(c).get("index")).toContain("docs-auto/glossary/swimlane-glossary/");
+    expect(renderPages(c).get("index")).toContain("auto-docs/glossary/swimlane-glossary/");
   });
 
   test("the pages tell extracted from authored, and only authored terms reach schema.org", () => {
