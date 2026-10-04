@@ -1281,6 +1281,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "prints each instance's icon resolution and the two glyph registries' overlap; `check:navbar-consistency:check` is the gating form and is wired",
   },
   {
+    script: "check:nav-names",
+    kind: "report",
+    reason:
+      "rewrites `test/results/nav-names.qa-results.json` and prints every destination's names; `check:nav-names:check` is the gating form and is wired",
+  },
+  {
     script: "check:navbar-consistency:strict",
     kind: "report",
     reason:

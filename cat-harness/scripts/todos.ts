@@ -46,13 +46,39 @@ import { TODO_SCHEMA_TAG, TodoNodeSchema, type TodoNode } from "../schemas/todo.
 import { TODO_GRAPH_FILE, parseTodoGraph } from "../schemas/todo-graph.js";
 import { deferResolution, repoRootFor } from "../schemas/cat-harness.js";
 import { corpusDirectoryForGraph } from "../schemas/harness-config.js";
+import { graphReadPath } from "./graph-read.ts";
 
 export const ROOT = resolve(import.meta.dir, "..");
-// declared-path-literal: the convention fallback, at the call site so the choice is visible.
-export const TODO_ROOT = deferResolution(
-  () => corpusDirectoryForGraph(ROOT, "todos") ?? join(repoRootFor(ROOT), "todos"),
-  { moduleUrl: import.meta.url, what: "its todo directory", under: ROOT },
-);
+
+/**
+ * Where the todo graph is read from — the checkout, or its mount.
+ *
+ * Bean `9ofm` row D. `todos` is a declared tip-keyed candidate with its own
+ * seeded branch (`cat/cat-harness/todos`), so once it is cut over the
+ * directory is a mount rather than a path under the repository root.
+ * {@link graphReadPath} answers which, by the directory ID the declaration
+ * carries (`todos`), and **refuses** when it cannot — a path that merely
+ * happens not to exist would make every reader below report an empty todo
+ * list, and "you have no todos" is the one answer this graph must not invent.
+ *
+ * `corpusDirectoryForGraph` still answers the by-KIND question for the
+ * `undeclared` case. It lives in `schemas/`, which never imports `scripts/`,
+ * so the relocation cannot live there — it belongs at the reader.
+ */
+function todoRootNow(): string {
+  const repoRoot = repoRootFor(ROOT);
+  const where = graphReadPath("todos", repoRoot);
+  if (where.state === "refused") throw new Error(`cannot read the todo graph: ${where.reason}`);
+  if (where.state === "ok") return where.at;
+  // declared-path-literal: the convention fallback, at the call site so the choice is visible.
+  return corpusDirectoryForGraph(ROOT, "todos") ?? join(repoRoot, "todos");
+}
+
+export const TODO_ROOT = deferResolution(todoRootNow, {
+  moduleUrl: import.meta.url,
+  what: "its todo directory",
+  under: ROOT,
+});
 
 interface Block {
   fm: Record<string, unknown>;
