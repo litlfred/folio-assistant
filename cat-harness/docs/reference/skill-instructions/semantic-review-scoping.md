@@ -86,10 +86,3 @@ statement-level criteria.
 | `lean-proof-vacuity-audit`, `lean-proof-review` | The adjudicators this rations |
 | `delivery-summary` | Report coverage against headline theorems, not raw block counts |
 {% endraw %}
-
-## Processes that run this skill
-
-| process | step(s) that name it |
-|---|---|
-| [Content Change and Review](../../processes/content-change-review.html) | Detect change scope & impact |
-
