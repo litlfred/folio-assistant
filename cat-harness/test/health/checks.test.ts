@@ -22,7 +22,6 @@ import { repoRootFor } from "../../schemas/cat-harness.js";
 import { describe, expect, it } from "bun:test";
 
 import { HealthReportSchema, healthVerdict } from "../../schemas/health-report.ts";
-import { hasRenderedDecision } from "./probes.ts";
 import { MAX_PREVIEW_BYTES } from "../../scripts/staging-rotate.ts";
 import {
   BEAN_OPEN_LIMIT,
@@ -39,14 +38,18 @@ import {
   runHealthChecks,
   previewLiveness,
   stagingOrphanCheck,
+  specialBranchSizeCheck,
   stagingSizeCheck,
   stagingSlug,
   todoStoreCheck,
   type BeanEvidence,
   type BranchEvidenceSet,
   type HealthContext,
+  type SpecialBranchBudget,
+  type SpecialBranchMeasure,
   type StagingPreview,
 } from "./checks.ts";
+import { hasRenderedDecision, membersFor, readSpecialBranches, type SpecialBranchDecl } from "./probes.ts";
 
 const MB = 1024 * 1024;
 
@@ -67,6 +70,7 @@ function healthyContext(over: Partial<HealthContext> = {}): HealthContext {
       value: [{ id: "b1", title: "one", status: "todo" }],
     },
     todos: { state: "ok", value: [{ id: "t1", status: "open", createdAt: "2026-09-18" }] },
+    specialBranches: { state: "ok", value: { rows: [], command: "fixture" } },
     ...over,
   };
 }
@@ -1309,5 +1313,85 @@ describe("pages-publish-health — the split, bean `qj9a`", () => {
     // A check absent from the registry is a check that never fires — the
     // `1xhc` shape, and the reason this is asserted rather than assumed.
     expect(HEALTH_CHECKS.map((c) => c.id)).toContain("pages-publish-health");
+  });
+});
+
+describe("special-branch-size", () => {
+  const budget = (bytes: number, scope: "branch" | "family", stated: string): SpecialBranchBudget => ({ bytes, scope, stated, basis: "owner, fixture" });
+  const ctxWith = (rows: SpecialBranchMeasure[]) =>
+    healthyContext({ specialBranches: { state: "ok", value: { rows, command: "fixture" } } });
+
+  it("fires per branch over a `branch` budget, naming the branch and the owner's number", () => {
+    const r = specialBranchSizeCheck(ctxWith([
+      { id: "beans", name: "cat/cat-harness/beans", shape: "branch", budget: budget(100 * MB, "branch", "100mb"), state: "measured", resolved: "cat/cat-harness/beans", branches: [{ ref: "cat/cat-harness/beans", bytes: 120 * MB, files: 9 }] },
+      { id: "todos", name: "cat/cat-harness/todos", shape: "branch", budget: budget(100 * MB, "branch", "100mb"), state: "measured", resolved: "cat/cat-harness/todos", branches: [{ ref: "cat/cat-harness/todos", bytes: 1 * MB, files: 3 }] },
+    ]));
+    expect(r.state).toBe("finding");
+    expect(metrics(r)).toEqual(["special-branch-bytes:beans"]);
+    expect(r.findings[0].summary).toContain("120.0 MB");
+    expect(r.findings[0].summary).toContain("100mb");
+    expect(r.thresholds.map((t) => t.metric)).toEqual(["special-branch-bytes:beans", "special-branch-bytes:todos"]);
+  });
+
+  it("measures a `family` budget in TOTAL — no single cache branch is over, the family is", () => {
+    const each = 1.5 * 1024 * MB;
+    const r = specialBranchSizeCheck(ctxWith([
+      { id: "lake-cache", name: "cat/folio-assistant-sci/lake-cache/", shape: "family", budget: budget(4 * 1024 * MB, "family", "4gb"), state: "measured", resolved: "cat/folio-assistant-sci/lake-cache/", branches: [1, 2, 3].map((i) => ({ ref: `cat/folio-assistant-sci/lake-cache/p${i}`, bytes: each, files: 1 })) },
+    ]));
+    expect(r.state).toBe("finding");
+    expect(r.findings).toHaveLength(1);
+    expect(r.findings[0].summary).toContain("4.50 GB");
+  });
+
+  it("a family budgeted PER BRANCH fires on the branch that is over, not on the total", () => {
+    const r = specialBranchSizeCheck(ctxWith([
+      { id: "auto-docs", name: "cat/cat-harness/auto-docs/", shape: "family", budget: budget(1024 * MB, "branch", "1gb"), state: "measured", resolved: "cat/cat-harness/auto-docs/", branches: [{ ref: "cat/cat-harness/auto-docs/a", bytes: 900 * MB, files: 1 }, { ref: "cat/cat-harness/auto-docs/b", bytes: 1100 * MB, files: 1 }] },
+    ]));
+    expect(r.findings.map((f) => f.summary.split(" ")[0])).toEqual(["`cat/cat-harness/auto-docs/b`"]);
+  });
+
+  it("absent and unbudgeted are COUNTED and named, never read as within budget", () => {
+    const r = specialBranchSizeCheck(ctxWith([
+      { id: "auto-docs", name: "cat/cat-harness/auto-docs/", shape: "family", budget: budget(1024 * MB, "branch", "1gb"), state: "absent", branches: [] },
+      { id: "fsh-guts", name: "cat/cat-harness/fsh-guts", shape: "branch", state: "unbudgeted", resolved: "cat/cat-harness/fsh-guts", branches: [] },
+    ]));
+    expect(r.state).toBe("ok");
+    const m = Object.fromEntries(r.measurements.map((x) => [x.metric, x]));
+    expect(m["special-branches-absent"].value).toBe(1);
+    expect(m["special-branches-absent"].command).toContain("auto-docs");
+    expect(m["special-branches-unbudgeted"].value).toBe(1);
+    expect(m["special-branches-unbudgeted"].command).toContain("fsh-guts");
+  });
+
+  it("a probe that could not read the remote is `unknown`, never zero bytes", () => {
+    const r = specialBranchSizeCheck(healthyContext({ specialBranches: { state: "unknown", reason: "ls-remote refused" } }));
+    expect(r.state).toBe("unknown");
+    expect(r.reason).toContain("ls-remote refused");
+  });
+
+  it("the committed declaration budgets what the owner named, at the owner's numbers", () => {
+    const rows = readSpecialBranches(resolve(import.meta.dir, "..", "..", "scripts", "special-branches.json"));
+    const b = Object.fromEntries(rows.filter((x) => x.budget).map((x) => [x.id, [x.budget!.bytes, x.budget!.scope]]));
+    expect(b).toEqual({
+      "qa-reports": [500 * MB, "branch"],
+      "lake-cache": [4 * 1024 * MB, "family"],
+      beans: [100 * MB, "branch"],
+      todos: [100 * MB, "branch"],
+      "auto-docs": [1024 * MB, "branch"],
+    });
+  });
+});
+
+describe("membersFor — the table's resolution rule", () => {
+  const row = (shape: "branch" | "family", name: string, legacy: string[] = []): SpecialBranchDecl => ({ id: "x", shape, name, legacy });
+  it("prefers the new name, falls back to the first legacy name present", () => {
+    expect(membersFor(row("branch", "cat/cat-harness/qa-reports", ["qa-reports"]), ["qa-reports", "cat/cat-harness/qa-reports"])).toEqual({ resolved: "cat/cat-harness/qa-reports", refs: ["cat/cat-harness/qa-reports"] });
+    expect(membersFor(row("branch", "cat/cat-harness/qa-reports", ["qa-reports"]), ["qa-reports"])).toEqual({ resolved: "qa-reports", refs: ["qa-reports"] });
+  });
+  it("a family is every branch under its prefix, and the prefix itself is not a member", () => {
+    expect(membersFor(row("family", "cat/x/lake-cache/"), ["cat/x/lake-cache/b", "cat/x/lake-cache/a", "cat/x/lake-cachey", "main"])).toEqual({ resolved: "cat/x/lake-cache/", refs: ["cat/x/lake-cache/a", "cat/x/lake-cache/b"] });
+  });
+  it("nothing on the remote is a determined absence", () => {
+    expect(membersFor(row("family", "cat/x/auto-docs/"), ["main"])).toEqual({ refs: [] });
   });
 });

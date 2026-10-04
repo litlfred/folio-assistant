@@ -7,7 +7,8 @@
     "RESOLUTION, for readers AND writers: the new `name` if it exists on the remote; else the first `legacy` name that exists; else the new `name`. Writers follow the readers' rule on purpose: a writer that created a cat- branch while the legacy one still existed would make the owner's rename (POST /repos/{o}/{r}/branches/{old}/rename, which keeps a redirect for the web and API but NOT for git fetch/push) fail, because its target would already exist.",
     "REMOVING THE FALLBACK is bean folio-assistant-oycs: once every remote carrying a legacy name is renamed and one lake-cache-refresh cycle has run since, empty each `legacy` list and drop the fallback from each mirror.",
     "INTERIM: bean folio-assistant-rva2 (arc fs43 P7) plans to declare every special branch with the `storage` field arc 3fva introduces on ContentDirectory. When that field is on main, this table folds into it.",
-    "gh-pages is listed so 'is this branch special?' has one answer. It is never renamed: GitHub Pages serves it by name."
+    "gh-pages is listed so 'is this branch special?' has one answer. It is never renamed: GitHub Pages serves it by name.",
+    "BUDGETS (owner, 2026-10-04): a row may carry `budget` — `bytes` (binary: every byte formatter here divides by 1024, so \"4gb\" is 4 x 1024^3), `scope` (`branch`: each branch on its own; `family`: every branch of a family together), `stated` (the owner's words) and `basis`. `bun run health`'s `special-branch-size` check measures each budgeted branch's TIP TREE from the remote against it. A row without a budget is reported as unbudgeted, never as within budget. The preview budget on gh-pages is separate: `MAX_PREVIEW_BYTES` in staging-rotate.ts, which the rotation enforces."
   ],
   "branches": [
     {
@@ -26,7 +27,13 @@
       "legacy": ["cat-qa-reports", "qa-reports"],
       "holds": "derived QA verdicts, commit-keyed under main/<sha>/ and pr/<n>/<sha>/ (arc 3fva)",
       "writers": ["code-quality-gates.yml publish job via scripts/qa-store.ts — on PR #1764/#1801, not on main yet"],
-      "repos": "this repository (and, per #1801, each folio's own)"
+      "repos": "this repository (and, per #1801, each folio's own)",
+      "budget": {
+        "bytes": 524288000,
+        "scope": "branch",
+        "stated": "500 MB",
+        "basis": "Owner, 2026-10-04: \"cat/cat-harness/qa-reports should have its own branch + limit\", and chose 500 MB. Verdicts are commit-keyed and accumulate, so this is the number that says when the store needs pruning."
+      }
     },
     {
       "id": "lake-cache",
@@ -35,7 +42,13 @@
       "legacy": ["cat-lake-cache/", "lake-cache/"],
       "holds": "Lean .lake build caches, one branch per <package>-<toolchain-slug> (or toolchain-<slug>)",
       "writers": [".github/workflows/lake-cache-refresh.yml", "cat-harness/scripts/lake-cache.sh seed --push / contribute", "cat-harness/scripts/lake-cache-produce.py", "cat-harness/scripts/reseed-lean-cache.sh"],
-      "repos": "folio repositories with Lean (e.g. litlfred/qou); none in this repository"
+      "repos": "folio repositories with Lean (e.g. litlfred/qou); none in this repository",
+      "budget": {
+        "bytes": 4294967296,
+        "scope": "family",
+        "stated": "4gb",
+        "basis": "Owner, 2026-10-04, verbatim: \"also update healthchecks for limits on the other specal branches (e.g. lean cache 4gb, auto-docs 1gb, beans 100mb, todos 100mb)\"; asked per branch or for the whole family, they chose \"Whole family\". The family is what bounds a folio's clone, since a full clone fetches every cache branch."
+      }
     },
     {
       "id": "fhir-ast",
@@ -62,7 +75,13 @@
       "legacy": [],
       "holds": "the work plan (beans/), one live copy at the tip (`storage.keyedBy: tip`); seeded, not authoritative until the steward-run flip on #1850 (arc fs43, bean 2h76)",
       "writers": ["scripts/branch-store.ts, on PR #1937 — not on main yet"],
-      "repos": "this repository"
+      "repos": "this repository",
+      "budget": {
+        "bytes": 104857600,
+        "scope": "branch",
+        "stated": "100mb",
+        "basis": "Owner, 2026-10-04, verbatim: \"also update healthchecks for limits on the other specal branches (e.g. lean cache 4gb, auto-docs 1gb, beans 100mb, todos 100mb)\"."
+      }
     },
     {
       "id": "todos",
@@ -71,7 +90,13 @@
       "legacy": [],
       "holds": "agent todos (todos/), one live copy at the tip (`storage.keyedBy: tip`); seeded, not authoritative until the steward-run flip on #1850 (arc fs43, bean 2h76)",
       "writers": ["scripts/branch-store.ts, on PR #1937 — not on main yet"],
-      "repos": "this repository"
+      "repos": "this repository",
+      "budget": {
+        "bytes": 104857600,
+        "scope": "branch",
+        "stated": "100mb",
+        "basis": "Owner, 2026-10-04, verbatim: \"also update healthchecks for limits on the other specal branches (e.g. lean cache 4gb, auto-docs 1gb, beans 100mb, todos 100mb)\"."
+      }
     },
     {
       "id": "fsh-guts",
@@ -81,6 +106,21 @@
       "holds": "the kept trashcan (fsh-guts/: retired material, never rendered or published), one live copy at the tip; SEEDED 2026-10-03 (9c8828be, an orphan seed, tree = main's fsh-guts/ at 53ba9f55), not authoritative: main's fsh-guts/ stays the store until bean 9c7h moves every reader and writer onto it",
       "writers": ["none yet: bean 9c7h retargets the relocating processes onto scripts/branch-store.ts (PR #1937)"],
       "repos": "this repository"
+    },
+    {
+      "id": "auto-docs",
+      "shape": "family",
+      "name": "cat/cat-harness/auto-docs/",
+      "legacy": [],
+      "holds": "generated documentation (auto-docs, renamed from docs-auto), one branch per auto-doc type; NOT YET CREATED — bean 06e3 / PR #2049 owns the move and the docs-auto -> auto-docs rename (owner, 2026-10-04)",
+      "writers": ["none yet: bean 06e3 (#2049) and bean xsrv move generated docs off main"],
+      "repos": "this repository",
+      "budget": {
+        "bytes": 1073741824,
+        "scope": "branch",
+        "stated": "1gb",
+        "basis": "Owner, 2026-10-04, verbatim: \"there is a bean working on cat/cat-harness/auto-docs(/*)... all of these should be <= 1gb\" — each branch of the family, which the check reports as absent until bean 06e3 creates it."
+      }
     }
   ],
   "mirrors": [

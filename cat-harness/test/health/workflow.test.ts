@@ -174,6 +174,7 @@ describe("the issue body", () => {
       repoSize: { state: "unknown", reason: "git count-objects -v exited 128: not a git repository" },
       beans: { state: "ok", value: [{ id: "b1", title: "one", status: "todo" }] },
       todos: { state: "ok", value: [] },
+      specialBranches: { state: "ok", value: { rows: [], command: "fixture" } },
     };
   }
 
