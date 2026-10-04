@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yg29
 title: 'GOAL 3: showing who-iris with its existing materialised assets, through a themed harness'
-status: completed
+status: in-progress
 type: milestone
 priority: high
 created_at: 2026-09-20T18:48:29Z
-updated_at: 2026-10-04T18:31:38Z
+updated_at: 2026-10-04T18:34:12Z
 ---
 
 The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim:
@@ -233,13 +233,6 @@ Answering the goal review, the owner chose to keep GOAL 3 open with a harness-th
 The last box (`v8n5`) closed on evidence in session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi: #1611 and #1681 merged, its four boxes ticked, and the deployed landing page on `gh-pages` carries the `iris-sticky` card and the accent-band rule. **This milestone stays `in-progress`**: two children are still open — `kupb` (IRIS catalogue) and the who-style-guide fold into who-iris — and whether GOAL 3 is met with them open is the owner's sign-off, not a checker's.
 
 
-## 2026-10-04 (later) — no children left open; only the owner's sign-off remains
+## 2026-10-04 (later) — sign-off asked, and WITHDRAWN: GOAL 3 is not met
 
-The note above named two open children. Re-measured on `main` @ `d174883`: the who-style-guide fold (`qsx4`) landed in PR #1735, and `qsx4` and `kupb` are closed on evidence in this change. No open bean names `parent: folio-assistant-yg29`. **This milestone stays `in-progress`**, because closing a GOAL is the owner's call, not a checker's.
-
-Session: https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi
-
-
-## Owner sign-off, 2026-10-04 — GOAL 3 is met, closed
-
-In session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi, the owner was shown every Done-when box with its evidence re-measured on `main` @ `d174883` and asked *"Do you sign it off?"*. They chose **"Sign off — close it"**. As recorded above, the live github.io site was not fetched from the measuring container; the rendering boxes rest on `check:catalogue`, `iris:pages:check` and the generated pages.
+`qsx4` and `kupb` close on evidence in this change, so the who-iris catalogue work under this milestone is done. The owner was asked to sign GOAL 3 off and chose "Sign off — close it", then withdrew it in the same session (https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi): *"actually no, who-iris is missing top icon on LHS navbar. investigate why and if also try of other harnesses. all needs to be sconsisisten and consolidated"*. That defect is the new child `folio-assistant-2vpn`, and this milestone stays `in-progress` over it.
