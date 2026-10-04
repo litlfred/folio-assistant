@@ -1,11 +1,11 @@
 ---
 # folio-assistant-06e3
 title: 'docs-auto: a handler at cat-harness/docs-auto/<auto-doc-type>/<path> that derives documentation for a sub-graph — and the authoring rule that the author must summarise what it indexes'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-10-04T06:09:36Z
+updated_at: 2026-10-04T06:26:14Z
 parent: folio-assistant-0lmb
 ---
 
@@ -61,11 +61,14 @@ it, and refuses rather than rendering an empty table when the source moves.
 
 - [x] the handler exists and is declared, with the `auto-doc-type` set above and
       **no** `toc`
-- [ ] **`who-iris/docs` is the first real exercise, end to end** — owner,
+- [x] **`who-iris/docs` is the first real exercise, end to end** — owner,
       2026-09-20: *"try it out fully w/ who-iris docs, auto-docs."* Not a
       fixture and not a smoke test: the instance that already has a hand-built
       `docs/` is the one that will show whether a derived index and an authored
-      summary can sit in the same directory without fighting.
+      summary can sit in the same directory without fighting. **Run 2026-10-04,
+      PR #2049** — they do not fight on routes, overwrites or staleness, and
+      they fight on CLASSIFICATION: see §"THE EXERCISE, RUN END TO END" below
+      for the four findings and what each is evidenced by.
 - [x] the authoring rule lives in a skill with the reuse-not-restate clause
 - [x] `<harness>/docs` carries a per-process summary that references the derived
       index rather than duplicating it — `docs/platform.md`, 2026-10-03; see
@@ -878,3 +881,161 @@ grades it. §4(c) is reported with its premise measured so the next agent does
 not repeat the investigation.
 
 _2026-10-04T06:09:36Z_ — Claimed by claude/who-iris-docs-end-to-end-06e3 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## THE EXERCISE, RUN END TO END — 2026-10-04, PR #2049
+
+The one open `## Done when` item, ticked above. The owner **overrode the
+ordering** in `## Not started` on 2026-10-04 and dispatched this ahead of the
+three who-iris items it was queued behind (`7dek`, render-kg-to-cdn, is still
+`in-progress`). Recorded so the note does not read as missed.
+
+Run at `ed2f3f4467`: `docs:auto`, `readme:sync`, `handler:index`,
+`state:visualizer`, then `preview:site` and **a browser**.
+
+### The answer: they do NOT fight on the filesystem, and they DO fight on who-is-who
+
+Three things that could have collided and do not — verified rather than assumed,
+because "no collision" is the claim most easily made by not looking:
+
+| could collide | verdict | evidence |
+|---|---|---|
+| route | **no** | `/docs/who-iris/*` (the verbatim mount) and `/cat-harness/docs-auto/index/docs/who-iris-docs/` are disjoint, and the index's rows link `github.com/…/blob/main/…` SOURCE, never a published route |
+| overwrite / delete | **no** | `orphansIn(DOCS, OWNED_DOCS)` (`gen-iris-pages.ts:2545`) tests `^(index\|ingestion-notes\|kg-to-portal)\.html$` only; its comment: *"a page somebody hand-added, a `.nojekyll`, an asset directory, all survive"* |
+| staleness | **no** | `git status --porcelain` = **0 lines** after all four generators |
+
+What fights is the **classification** — who wrote which page — and everything
+downstream of it.
+
+### FIGHT 1 — the §4(b) check passes who-iris on documentation nobody authored
+
+`check:docs-populated` reports:
+
+> `✓ who-iris   who-iris/docs/kg-to-portal.html — 1491 words of prose`
+> `  14 authored, 0 generated  ·  who-iris/docs, who-iris/site`
+
+Measured truth, built from `gen-iris-pages.ts`'s own exported `OWNED_DOCS` /
+`OWNED_SITE` patterns and the `subgraph-readmes.ts` marker:
+
+| | pages |
+|---|---|
+| written by `gen-iris-pages.ts` | **12** |
+| written by `bootstrap-tools/scripts/subgraph-readmes.ts` | **2** |
+| **authored by a person** | **2** — `docs/style-guide.md`, `docs/style-guide-agents.md` |
+
+Corroborated independently: bare `bun run iris:pages:check` exits 0 with
+`12 page(s) up to date, no orphans.`
+
+So `0 generated` is wrong by twelve, and **the evidence page the check names is
+one of the twelve.** This is the defect this bean already recorded closing for
+cat-harness on 2026-09-21 — *"The check was passing the harness on documentation
+nobody authored, and neither the check nor anything else could have known"* —
+still live, on the instance this bean named as the first real exercise.
+
+**Cause, and it is two separate gaps.** `GENERATED_MARKERS`
+(`check-docs-populated.ts:136`) is three anchored patterns: `^var SCOPE = "…";$`,
+`Do not hand-edit`, `— do not edit here.`
+
+1. `gen-iris-pages.ts` **marks nothing it writes** — the same gap this bean
+   closed in `gen-docs-pages.ts`, in a different generator.
+2. `subgraph-readmes.ts` DOES mark, twice, and matches none of the three: it
+   writes *"— do not edit; change that entry"* and *"Do not edit it here;"*.
+   **It lives in the `bootstrap-tools` SUBMODULE**, so aligning its wording is a
+   cross-repo change, not an edit here.
+
+**The verdict is right by accident, which is why it is worth stating.** With the
+12 excluded, who-iris still passes: `style-guide.md` is 558 prose words and
+`style-guide-agents.md` 347, both over `MIN_PROSE_WORDS` (250). Only the
+evidence changes. A reader told *"✓ who-iris, 14 authored"* has no way to find
+that out.
+
+### FIGHT 2 — the derived index lists derived pages as authored
+
+`index/docs` promises, in its own `extracts` string rendered at the top of every
+page it writes: *"every AUTHORED documentation page an instance publishes"*.
+
+| page | rows | derived |
+|---|---|---|
+| `…/docs-auto/index/docs/who-iris-docs/` | 6 | **4** |
+| `…/docs-auto/index/docs/who-iris-site/` | 8 | **8 — zero authored** |
+
+The second is the sharper one: an index whose heading promises authored pages,
+listing eight, none of which is. It is a direct consequence of FIGHT 1 —
+`collect()` skips on `classify(abs, text) === "generated"`, imported from
+`check-docs-populated.ts` *"rather than re-derived"*, exactly as its comment
+intends. The reuse is right; the shared answer is wrong.
+
+### FIGHT 3 — the two genuinely authored pages are the two that do not render
+
+`who-iris.json`'s own `who-iris-catalogue` comment states the rule:
+
+> *"HTML rather than markdown because who-iris declares no `composed` directory
+> -- its docs are MOUNTED after Jekyll, so a .md here would be copied verbatim
+> and never rendered."*
+
+Bean `qsx4` then moved two `.md` files into that directory on 2026-10-01. In the
+built site:
+
+- `/docs/who-iris/style-guide.md` → **200**, raw markdown. Screenshotted: `#` and
+  `**` markers, unrendered pipe tables, `â€"` where em-dashes were.
+- `/docs/who-iris/style-guide.html` → **404**.
+- `docs/who-iris/index.html` — the generated landing page, section headed
+  **"Pages"** — lists exactly two, `ingestion-notes` and `kg-to-portal`. Its
+  `PAGES.docs.fixed` list predates `qsx4` and knows nothing of the other two.
+- Whole-site `grep -rho 'href="[^"]*style-guide[^"]*"'` over **4155** built
+  pages: **2 + 2 GitHub blob links and nothing else.**
+
+So the derived index is the **only** thing that reaches who-iris's authored
+documentation, and it reaches it as source on a forge. That is the inverse of
+the §2 worry: not an index crowding out prose, but prose that only the index can
+find.
+
+And the index can say nothing about it — `index/docs` reads `.md` summaries from
+front matter, and neither file has any, so both render *"no description in the
+artefact"*. Honest, and it is the whole of what a reader gets.
+
+### FIGHT 4 — a rendering defect no gate was red across. FIXED in #2049
+
+At 390 px on the who-iris-docs index, `.n` (`float: right`, emitted after the
+name and the path) wrapped onto a second line in a block `li` that does not
+contain a float, and rendered **in the next row**:
+
+    smart-trust-docs  li 721-756   its count 2153 at y 750-775
+    who-iris-docs     li 756-792   its count 6    at y 761-786
+
+smart-trust showed no count; who-iris read `6 2153`. `overflowX` was 0, no
+`pageerror`, every gate green. `display: flow-root` on `ul.subs li`; after:
+`721-781` / `781-816`, both contained. The 1280 px screenshots are byte-identical
+before and after.
+
+The phone-width block directly below that rule had already fixed this class for
+the `#da-index` TABLE (bean `n5be`, finding 4). The sub-graph LIST was not
+covered by it.
+
+### Two stale statements of fact, reported not fixed
+
+- `gen-docs-auto.ts:644` and `harness-tiles.ts:406`/`:502` each assert
+  *"`who-iris/docs/` holds FOUR pages and every one is `.html`"*, and use it as
+  the stated reason `index/docs` walks `.html`. It holds **3 `.html` + 3 `.md`**
+  since `qsx4`. The reason is still good; the number is not.
+- `who-iris.json` says *"TWELVE nodes today"* and the catalogue holds **13**
+  (`who-iris/catalogue/nodes/*.json`; `catalogue.json` `totalItemsUpstream` =
+  273559, which the rendered page quotes correctly). A count in prose, one
+  commit from wrong — the rule `bpmn-processes` states, in a declaration.
+
+### What this says about the bean's own question
+
+§2's rule — *the author references the index and writes what an index cannot
+contain* — is **not** what who-iris breaks. who-iris has no authored summary
+referencing its indexes at all; it has four generated pages that read as
+authored and two authored pages nothing links. The obstacle to §2 here is not
+discipline, it is that nothing in the corpus can currently tell the two apart.
+
+**So the ordering of the remaining work follows from the exercise rather than
+from taste:** marking is prior to everything. Until a generated page says so in
+its own bytes, neither the §4(b) gate nor the `index/docs` type nor an author
+deciding where to put a summary has a true answer to *who wrote this*.
+
+
+
+_2026-10-04_ — Claim released to `todo` after PR #2049. The canonical `## Done when` is now fully ticked, and the bean is deliberately NOT marked completed: §4(c) (the navbar over harnesses with a populated `docs/`), §5 (the KG viewer) and the declared-but-unbuilt types (`index`, `index/dmn` variants beyond those built, `glossary` beyond `swimlane-glossary`) are still open in their own sections above, and closing the bean would bury them. The question of whether those belong here or in beans of their own is the owner's — asked on #2049 rather than decided here.
