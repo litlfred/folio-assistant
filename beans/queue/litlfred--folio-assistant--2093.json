@@ -1,7 +1,7 @@
 {
   "$schema": "folio-merge-queue-entry/v1",
   "repository": "litlfred/folio-assistant",
-  "pr": 2090,
+  "pr": 2093,
   "placement": {
     "kind": "computed",
     "decision": "cat-harness/processes/sdlc/decisions/merge-priority.dmn#Decision_MergePriority",
@@ -9,9 +9,11 @@
     "class": "ci-not-green",
     "rank": 91
   },
-  "reason": "Owner-approved 2026-10-04 ~14:00Z (\"Approve all 6\"). Lands once green and conflict-free. (Previously: STATUS UNKNOWN on the 13:40Z all-PR review (open, not in the queue), triaged as: new, opened after the 13:15Z approvals; needs the owner's explicit approval. CI pending.)",
+  "reason": "ACK: Owner-approved 2026-10-04 ~14:00Z (\"Approve all 6\"). Lands once its owed CI is green and it merges cleanly with main.",
   "decidedBy": "https://claude.ai/code/session_019gRX6w8kzAX6wpHbgdyu3s",
   "decidedAt": "2026-10-04T14:00:00Z",
   "status": "active",
-  "beans": []
+  "beans": [
+    "folio-assistant-gz47"
+  ]
 }
