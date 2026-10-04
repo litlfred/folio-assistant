@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T17:42:33Z
-updated_at: 2026-10-04T19:21:42Z
+updated_at: 2026-10-04T19:26:13Z
 parent: folio-assistant-fs43
 ---
 
@@ -72,3 +72,19 @@ Left, and why:
 - `KIND_HEADINGS` is gone; it was the last per-kind table in cat-harness. `po-strings.ts` is a new leaf gettext reader. `declared-nodes.ts` gains `declaredDirectories`.
 - **One behaviour change:** `figure` had no row in any locale, so it fell back to English everywhere. It now takes `diagram`'s rendering, since both read "Figure": es "Figura", ru "Рисунок", zh "图", ar "شكل". The fr rendering is "Figure" either way.
 - **A precedent noted, not followed:** core's glossary catalogues sit in `cat-harness/translations/<lang>/glossary/`. These sit with their owners instead, per "Owners now" and "not centrally managed". Whether the glossary ones should move is the owner's call.
+
+
+## 2026-10-04: catalogues moved to the semantically appropriate place
+
+Owner, the same day: *"move things to semanticaly approropaite plce"*. This answers the glossary-precedent question left at step 2b.
+
+- A glossary scheme's `.pot`/`.po` now live in the OWNER instance's declared `translations/`:
+  - `folio-assistant-core--platform` and `glossary-page` (whose writer is core's `glossary-page.ts`) go to `folio-assistant-core/translations/<lang>/glossary/`;
+  - `who-iris--who-terms` goes to `who-iris/translations/<lang>/glossary/`, which who-iris now declares.
+  - All moves are `git mv`, so no strings changed.
+- `glossary-pot.ts` places each template with `catalogueDir(name)`: the owner's directory, falling back to the platform's. Its `--check` reports a misplaced file, and names every fallback.
+- `glossary-page.ts` reads every declared `translation-sources` directory.
+- **Kept in `cat-harness/translations/`**, named by the check:
+  - `bootstrap--terms`. bootstrap is a separate repository and declares no translation graph. Moving it needs a bootstrap PR, so it is not done from here.
+  - `cat-harness--platform`, which is cat-harness's own.
+- **Not yet moved:** the BPMN process catalogues (`cat-harness/translations/<lang>/processes/`) cover diagrams owned by several instances. The same rule applies, and they are next.
