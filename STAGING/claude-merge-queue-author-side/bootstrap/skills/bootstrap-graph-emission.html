@@ -13,10 +13,10 @@
 own Knowledge Graph, written out as one data file. <code>bootstrap.json</code> records
 that trade under <code>renderExemption</code>, and its <code>owes</code> field names this Skill. An
 exemption with nothing owed in its place would be a gap.</p><p>bootstrap runs nothing (FR-7 of the <a href="../README.html">README</a>), so the file is
-written by bootstrap-tools, bootstrap's own tools repository. It is the one
+written by bootstrap's toolset, a separate repository. It is the one
 file bootstrap publishes that names what wrote it, and it says so inside
 itself: an <code>rdfs:comment</code> that it is generated and not to be edited, and
-<code>prov:wasAttributedTo</code> naming bootstrap-tools. This Skill states what the file
+<code>prov:wasAttributedTo</code> naming the toolset's repository. This Skill states what the file
 must hold. Its shape is fixed by a schema, and the tool is tested against it.</p><h2>In whose terms</h2><p>Every class is one of bootstrap's own terms (<code>bootstrap:Skill</code>,
 <code>bootstrap:Process</code>, <code>bootstrap:Subgraph</code>, …), so the file names nothing above
 bootstrap. Every property is a published standard wherever one exists:

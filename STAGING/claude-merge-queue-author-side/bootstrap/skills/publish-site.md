@@ -41,7 +41,7 @@ it breaks with it.
 
 | step | done when |
 |---|---|
-| `site:workflow` | a workflow under `.github/workflows/` commits the rendering onto `gh-pages` — bootstrap's [`pages.yml`](../.github/workflows/pages.yml) is the pattern |
+| `site:workflow` | a workflow commits the rendering onto `gh-pages`: one under the instance's own `.github/workflows/`, or one in the toolset that publishes it from outside. bootstrap carries none; its site is published from outside, so it names no toolset |
 | `site:branch` | a `gh-pages` branch exists. **It must exist before Pages can be switched on** (owner, 2026-10-01: *"need to create gh-pages branch before can turn on"*); where it does not, the step says how to create it (an orphan branch with a placeholder page) |
 | `site:enabled` | Pages is on, serving `gh-pages` at `/`. Switched on only by an authenticated forge CLI once the branch exists; otherwise the person gets the one step below |
 | `site:live` | the address answers 200, and so does its README page, `README.html`. 404 after Pages is on usually means the workflow has not run yet. A 403, 407, 5xx or no answer is about the way from here: *could not determine*, never done |
@@ -53,8 +53,8 @@ followed without opening anything else:
 > Open `https://github.com/<owner>/<repo>/settings/pages`. Under "Build and
 > deployment", set **Source** to **Deploy from a branch**, branch
 > **`gh-pages`**, folder **`/ (root)`**. It is free for a public
-> repository. Then re-run the Pages workflow from the Actions tab, or push
-> to `main`.
+> repository. Then re-run the workflow that publishes the site from its
+> Actions tab.
 
 If Pages is already on but serves something else, **do not switch it
 yourself**: that changes how an existing site is built, so ask.
