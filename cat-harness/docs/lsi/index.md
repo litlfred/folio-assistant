@@ -25,7 +25,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>4</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>3102</b><span>units indexed</span></div>
+<div class="lv-stat"><b>3103</b><span>units indexed</span></div>
 <div class="lv-stat"><b>4</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**230** units · **6116** terms · k = **100** · retains **78.2 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**231** units · **6128** terms · k = **100** · retains **78.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.71 | instance, kind, session, directory, harness, page, merge, graph | *(none)* |
-| 2 | 21.88 | prs, watcher, queue, sibling, commits, merge, backlog, coordination | harness, instance, declaration, node, directories, directory, iri, graph |
-| 3 | 18.93 | steward, session, conflict, head, merge, train, green, conflicted | block, chapter, slot, project, formal, watcher, edges, proof |
-| 4 | 17.44 | page, tile, pdf, text, avatar, glass, card, sticky | subgraph, subdirectory, train, ledger, steward, members, sibling, renderable |
-| 5 | 15.80 | tile, glass, avatar, card, board, sticky, tiles, theme | steward, rung, train, member, pdf, manifest, owed, upload |
-| 6 | 15.43 | steward, tile, head, train, glass, board, avatar, card | task, cli, archive, beans, rung, requirement, process, goals |
-| 7 | 15.07 | queue, withheld, rung, arm, backlog, library, bytes, slide | lane, actor, edge, forward, edges, requirements, preview, feature |
-| 8 | 14.68 | preview, url, staging, phase, feature, feedback, language, page | slot, tile, glass, edges, forward, edge, avatar, role |
+| 1 | 46.70 | instance, kind, session, directory, harness, page, merge, graph | *(none)* |
+| 2 | 21.86 | prs, watcher, queue, sibling, commits, merge, coordination, backlog | harness, instance, declaration, node, directories, directory, iri, graph |
+| 3 | 18.92 | steward, session, conflict, head, train, merge, green, conflicted | block, chapter, slot, project, formal, watcher, edges, proof |
+| 4 | 17.40 | page, tile, pdf, avatar, text, glass, card, sticky | subgraph, subdirectory, train, ledger, steward, members, sibling, renderable |
+| 5 | 15.79 | tile, glass, avatar, card, board, sticky, tiles, theme | steward, rung, train, member, pdf, owed, manifest, upload |
+| 6 | 15.43 | steward, tile, head, train, glass, board, avatar, card | task, cli, archive, rung, beans, requirement, goals, goal |
+| 7 | 15.05 | queue, withheld, rung, arm, backlog, library, bytes, slide | lane, actor, edge, forward, edges, requirements, preview, feature |
+| 8 | 14.69 | preview, url, staging, feature, phase, feedback, language, page | slot, tile, glass, edges, avatar, forward, edge, claim |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

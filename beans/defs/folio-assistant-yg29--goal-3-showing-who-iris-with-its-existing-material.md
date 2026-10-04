@@ -5,7 +5,7 @@ status: in-progress
 type: milestone
 priority: high
 created_at: 2026-09-20T18:48:29Z
-updated_at: 2026-09-22T19:30:00Z
+updated_at: 2026-10-04T15:52:48Z
 ---
 
 The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim:
@@ -225,5 +225,9 @@ Closing a GOAL milestone is left to the owner. The goal review of 2026-09-30 put
 
 Answering the goal review, the owner chose to keep GOAL 3 open with a harness-theming bean over closing it. So *"themed harness"* covers the harness's own surfaces, not only the pages. That work is **`v8n5`**: the who-iris board tile, navbar and stickies render on the IRIS theme, resolved from `who-iris/themes/` and never copied into the platform.
 
-- [ ] `v8n5` — the harness surfaces render on the IRIS theme
+- [x] `v8n5` — the harness surfaces render on the IRIS theme
 
+
+## 2026-10-04 — every Done-when box ticked; closing is the owner's
+
+The last box (`v8n5`) closed on evidence in session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi: #1611 and #1681 merged, its four boxes ticked, and the deployed landing page on `gh-pages` carries the `iris-sticky` card and the accent-band rule. **This milestone stays `in-progress`**: two children are still open — `kupb` (IRIS catalogue) and the who-style-guide fold into who-iris — and whether GOAL 3 is met with them open is the owner's sign-off, not a checker's.

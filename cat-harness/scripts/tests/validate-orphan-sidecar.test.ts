@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "fs";
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, realpathSync } from "fs";
 import { tmpdir } from "os";
 import { join, basename } from "path";
 import { validateObjects } from "../../content/pipeline/validate";
@@ -9,7 +9,7 @@ import { validateObjects } from "../../content/pipeline/validate";
  * bare `sidecars` written with no manifest behind them.
  */
 function chapter(blocks: string[], sidecars: string[] = []): string {
-  const root = mkdtempSync(join(tmpdir(), "orphan-"));
+  const root = realpathSync(mkdtempSync(join(tmpdir(), "orphan-")));
   for (const b of blocks) {
     writeFileSync(
       join(root, `${b}.ts`),
@@ -199,7 +199,7 @@ describe("no-orphan-sidecar in the results tree", () => {
     chapters: Record<string, string[]>,
     verdicts: Record<string, string[]>,
   ): string {
-    const root = mkdtempSync(join(tmpdir(), "orphan-folio-"));
+    const root = realpathSync(mkdtempSync(join(tmpdir(), "orphan-folio-")));
     for (const [ch, blocks] of Object.entries(chapters)) {
       const dir = join(root, "folio", "demo", ch);
       mkdirSync(dir, { recursive: true });

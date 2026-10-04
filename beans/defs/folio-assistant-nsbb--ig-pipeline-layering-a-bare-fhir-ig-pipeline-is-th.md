@@ -48,7 +48,7 @@ So the proxy reaches TERMINOLOGY dependencies and structurally cannot reach the 
 ## Done when
 - [ ] the bare FHIR IG pipeline is defined as the base, with no WHO/DAK/SMART assumption in it
 - [ ] pre/post processing are expressed as overlays on that base, not baked in
-- [ ] the base is shown running for a non-WHO IG
+- [x] the base is shown running for a non-WHO IG (see note on `wm63` dated 2026-10-04)
 - [ ] the contradiction with #690 / #717 is resolved rather than left standing
 
 Related: qrnz (second-IG findings), hpo0 (IG Publisher micro-asks), rna3 (IG incremental build), gpdo (compiled-artefact caching).

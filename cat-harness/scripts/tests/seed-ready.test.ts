@@ -212,4 +212,26 @@ describe("the probes", () => {
     expect(none.state).toBe("error");
   });
 
+  test("a path into a seeding partner (`seedsWith`) is stated, not counted — and is counted without it", () => {
+    // Owner, 2026-10-04: cat-harness's Tool nodes resolve into
+    // cat-harness-tools (its implementer, "Trap 1"), and the two are seeded
+    // together. Both directions on the REAL checkout, so the exemption can
+    // neither hide a path into some other layer nor be vacuous.
+    const repoRoot = resolve(import.meta.dir, "../../..");
+    const decls = readLayers(repoRoot);
+    const withPair = probeUpwardPaths(repoRoot, "cat-harness", decls);
+    const alone = probeUpwardPaths(
+      repoRoot,
+      "cat-harness",
+      decls.map((d) => ({ ...d, seedsWith: undefined })),
+    );
+    expect(withPair.state).toBe("measured");
+    expect(alone.state).toBe("measured");
+    if (withPair.state !== "measured" || alone.state !== "measured") return;
+    expect(alone.count).toBeGreaterThan(0);
+    expect(alone.findings.every((f) => f.includes("resolves only in cat-harness-tools"))).toBe(true);
+    expect(withPair.count).toBe(0);
+    expect(withPair.note).toContain(`${alone.count} resolve into \`cat-harness-tools\``);
+  });
+
 });
