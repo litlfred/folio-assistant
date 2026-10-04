@@ -37,3 +37,6 @@ This library defines common terminologies and functions used throughout WHO SMAR
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="Library-IMMZIndicatorElements.html" data-next="Library-WHOConcepts.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

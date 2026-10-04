@@ -37,3 +37,6 @@ IMMZ.D18.S.Typhoid.ViPS schedule Unconjugated Vi polysaccharide (ViPS), 1 dose s
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="PlanDefinition-IMMZD18STyphoidTy21a.html" data-next="PlanDefinition-IMMZD18SVaricella1Dose.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

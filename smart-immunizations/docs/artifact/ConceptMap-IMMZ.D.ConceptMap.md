@@ -37,3 +37,6 @@ Mapping to and from IMMZ.D Data Dictionary to other codesystems.
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="ConceptMap-IMMZ.C.ConceptMap.html" data-next="ConceptMap-IMMZ.Z.ConceptMap.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
