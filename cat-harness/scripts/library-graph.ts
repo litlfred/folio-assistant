@@ -77,10 +77,10 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 
 import type { LibraryRef } from "./library-refs.ts";
-import { basename, dirname, extname, join, relative } from "node:path";
+import { dirname, extname, join, relative } from "node:path";
 import { createHash } from "node:crypto";
 
-import { directoriesForGraph, readDeclaration, repoRootFor, sourceLinks } from "../schemas/cat-harness.js";
+import { directoriesForGraph, repoRootFor, sourceLinks } from "../schemas/cat-harness.js";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { arxivId } from "./library-readmes.ts";
 
@@ -95,7 +95,7 @@ import { withheldEntryFor } from "./lib/withheld.ts";
 import { entryItems, type SummaryTally } from "./summaries.ts";
 import { ingestRungOf, type IngestRung } from "../content/pipeline/gen-library-jsonld.ts";
 import { pagesOf, readStructure, STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
-import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
+import { corpusDirectoriesForGraph, rootInstanceName } from "../schemas/harness-config.js";
 import { ReferencedSourceSchema } from "../schemas/referenced-source.ts";
 
 /**
@@ -449,13 +449,25 @@ function sha256(path: string): string {
  * `basename(repoRoot)` (bean `t5dm`): the root's basename is wherever the
  * repository was cloned — a worktree named `pr1290` published
  * `"uploadInstance": "pr1290"` — while a sub-instance's first path segment is
- * a path INSIDE the repository and the same in every clone. The basename is
- * the fallback only for a root that declares nothing.
+ * a path INSIDE the repository and the same in every clone.
+ *
+ * A root that declares nothing is NOT named after its folder any more (issue
+ * #1904): it belongs to the landing instance when exactly one harness is
+ * decided (`rootInstanceName`), and otherwise this throws, because a queue
+ * labelled with a guessed instance is the mislabelling above.
  */
 export function instanceOf(absDir: string, repoRoot: string): string {
   const rel = relative(repoRoot, absDir).split("\\").join("/");
   const parts = rel.split("/");
-  return parts.length > 1 ? parts[0]! : (readDeclaration(repoRoot)?.name ?? basename(repoRoot));
+  if (parts.length > 1) return parts[0]!;
+  const name = rootInstanceName(repoRoot);
+  if (name === undefined) {
+    throw new Error(
+      `${absDir} sits at the root of ${repoRoot}, which declares no instance and has no single landing harness ` +
+        `(issue #1904) — cannot say which instance it belongs to. Declare the root, or flag one harness's site.landing.`,
+    );
+  }
+  return name;
 }
 
 /**

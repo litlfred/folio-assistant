@@ -1581,6 +1581,7 @@ export const RULES: Rule[] = [
       "scripts/check-actor-reach.ts",       // reads role-graph
       "scripts/check-avatar-coverage.ts",   // avatars belong to roles
       "scripts/check-avatar-instances.ts",  // the same, on the INSTANCE axis
+      "scripts/check-landing-instance.ts",  // which instantiated harness is the site landing
       "scripts/check-declared-assets.ts",   // the instance declaration
       "scripts/check-declared-dirs.ts",     // the same declaration, its DIRECTORIES
       "scripts/check-fallback-roles.ts",    // reads role-graph

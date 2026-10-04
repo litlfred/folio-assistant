@@ -13,7 +13,7 @@ permalink: /glossary/schema-fields/f-l/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1758 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1751 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
@@ -22,7 +22,7 @@ One of 4 pages of this type, split by the first letter of the label: <a href="{{
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2010</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2010</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2003</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2003</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -913,6 +913,13 @@ HarnessConfig.interactivity <span class="fa-gloss-status">candidate, extracted</
 <dd>
 <p>Static, interactive, or undetermined — the FOURTH axis (issue #764, O1).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/harness-config.ts"><code>cat-harness/schemas/harness-config.ts#HarnessConfig.interactivity</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--harness-config.harnessconfig.site" data-fa-state="extracted" data-fa-gloss="">
+HarnessConfig.site <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What this instance asks of the published SITE — today only whether it is the landing page (issue #1904). See &#123;@link HarnessSiteSchema}.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/harness-config.ts"><code>cat-harness/schemas/harness-config.ts#HarnessConfig.site</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--harness-config.harnessconfig.subgraphsources" data-fa-state="extracted" data-fa-gloss="">
 HarnessConfig.subgraphSources <span class="fa-gloss-status">candidate, extracted</span>
@@ -2574,13 +2581,6 @@ LoadedActor.reach <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>What this participant can reach off its own machine.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#LoadedActor.reach</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--role-graph.loadedactor.systemundertest" data-fa-state="extracted" data-fa-gloss="">
-LoadedActor.systemUnderTest <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The system-under-test facet (bean <code>3o5b</code>) — present when the actor can be executed against a <code>test-plan/v1</code>. Beside <code>reach</code> for the same reason: it is a fact about the participant, not something its lane knows.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#LoadedActor.systemUnderTest</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--term-adjudication.localtermschema.concept" data-fa-state="extracted" data-fa-gloss="">
 LocalTermSchema.concept <span class="fa-gloss-status">candidate, extracted</span>
