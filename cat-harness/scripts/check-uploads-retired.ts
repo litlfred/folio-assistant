@@ -110,7 +110,7 @@ export const DEFAULT_ROOTS: readonly string[] = [ROOT, resolve(import.meta.dir, 
 // place, here, and the remedy lines this script prints are composed from it.
 // It is the owner's ruling of 2026-09-29 — *"archival … should be moved to
 // fsh-guts"* — with the sub-directory chosen on 2026-09-30 and recorded in
-// `library-ingestion` §"What happens to the upload after it is ingested".
+// `library-ingestion/uploads-retirement.md` §"What happens to the upload after it is ingested".
 /**
  * Where an archived upload lives: `uploads/` inside the DECLARED trashcan, one
  * place, named by the owner's ruling. Resolved through the `fsh-guts`
