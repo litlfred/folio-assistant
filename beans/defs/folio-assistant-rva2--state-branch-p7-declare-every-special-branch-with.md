@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rva2
 title: 'STATE BRANCH P7: declare every special branch with the same field — gh-pages (within folio, keyed by commit, back-link = build.json) and lake-cache/*'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-04T16:20:19Z
+updated_at: 2026-10-04T17:02:12Z
 parent: folio-assistant-fs43
 ---
 
@@ -80,3 +80,37 @@ two.
 ## 2026-10-04: route seeds are unmeasured by state-drift (from lehh)
 
 Both route-keyed seeds, cat/cat-harness/uml-overview and cat/fhir-harness/ig-docs, write `seededFrom` (a sha) and `directories[]` into their manifests, with no `source.ref` and no `graphs[]`. So state-drift reports neither (ig-docs has no row; a row would be the wrong direction under the 2026-10-03 ruling). When this bean moves the readers onto declarations, it should read a route seed as current with main by construction, compare `directories[].path`, and drop what the manifest's `excluded` globs name. A draft that did this over rows was written and dropped, unpushed, on the owner's correction. Measured by hand: ig-docs is in sync with main for all three IGs.
+
+_2026-10-04T17:01:12Z_ — Claimed by claude/gifted-fermi-t8k217 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## 2026-10-04: unblocked, claimed, and the owner's call — retire the table first
+
+The block above has cleared: `storage` is on main (DirectoryStorageSchema, with `commit | tip | route` and, since lehh, a `family` form with an optional remote `repository`). Asked which clean break comes first, the owner chose **retire special-branches.json** (option 1 of 4; the others were one spelling (`source` only), and dropping the legacy names, bean oycs).
+
+### Inventory, measured 2026-10-04 by `git ls-remote`
+- folio-assistant: cat/cat-harness/{beans,fsh-guts,merge-queue,qa-reports,state,todos,uml-overview}, cat/fhir-harness/ig-docs, gh-pages.
+- litlfred/smart-trust: cat/fhir-harness/fhir-ast/* and cat/fhir-harness/ig-docs. litlfred/smart-base: cat/fhir-harness/fhir-ast/*. litlfred/qou: none of either family.
+- **No legacy name exists on any of the four** (no cat-*, no bare qa-reports/state/fhir-ast/lake-cache). So the legacy fallback can go WITH the table rather than after it, on these four. Other folio repositories were not checked.
+- **cat/cat-harness/merge-queue exists and no row declares it**: the drift a central table invites, measured.
+
+### Row by row: where each goes
+| row | becomes |
+|---|---|
+| qa-reports | already `storage` on every qa directory; the row is dropped |
+| beans, todos, fsh-guts | already `storage` (tip); dropped |
+| state | retired branch, read by nothing; dropped (state-drift names it from its own manifest, not a row) |
+| fhir-ast | `family` storage on the consuming instance (smart-trust done in lehh; smart-base next) |
+| lake-cache | `family` storage in folio-assistant-sci. OPEN: a member mounts into `<lake root>/.lake/`, and the dot-prefix guard refuses a dot segment in a declared path |
+| gh-pages | the published site, declared with lehh's site graph |
+| merge-queue (no row today) | declared on the directory its writer, merge-queue.ts, owns |
+
+### Readers to move onto the one resolver
+TypeScript: subgraph-source (`special` field, specialBranchFor), state-drift (iterates rows), state-seed (keyed by row id), resolve-subgraph, tools/index. Shell and Python, which run without bun: lake-cache.sh, lake-cache-fetch(.sh, -multi.py), lake-cache-produce.py, reseed-lean-cache.sh, rename-special-branch.sh, the lake-cache-restore action and its paper template copy. Today special-branches.test.ts checks each shell `mirror` against the table; afterwards it checks them against the DECLARATION.
+
+### Order
+1. Declarations for every row that lacks one.
+2. TS readers onto declarations.
+3. Shell mirrors checked against declarations.
+4. Delete the table and its legacy fallback in one commit.
+
+Coordinated on #2055 (bean zxvh), which adds size budgets INTO the table; the suggestion there is `storage.budget`.
