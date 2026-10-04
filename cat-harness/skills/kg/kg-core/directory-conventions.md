@@ -116,8 +116,8 @@ decides it.
 | `schemas` | **harness** | schema definitions, self-declared in the smart-base manner | no |
 | `uml` | **harness** | UML class diagrams of every named sub-graph a harness declares (`uml/overview/<instance>/<sub-graph>.puml` and `.mmd`), written from one model by `scripts/gen-uml-overview.ts` and rendered on `docs/uml/overview/`. The groupings are the declaration entries; the classes are read from each graph kind's registered `validator`, so a kind with none is drawn as *could not determine*. `derived`: regenerated, never authored. | no |
 | `methodology` | **harness**, and any layer | judgement methodologies, one sub-graph each — a NAMED, EXTERNAL way of reaching a judgement, adopted whole. `kepner-tregoe` for a decision, `madr` for its record, `dmn` for the computable case, `grade` for certainty of evidence. They are **parallel rather than composable**: which applies is contextual, and blending them gives a house method that cites nobody. A separate kind from `cat-harness` for three properties a skill lacks — extractable (adopted work lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from `skill-is-brief`, since a faithful rendering of an external standard must not be truncated to a house limit. Any layer may declare one: the harness carries the domain-neutral methods, `smart-kg` carries GRADE. Governed by [`methodology-adoption`](../../process/process-core/methodology-adoption.md). | no |
-| `qa` | **harness** | QA verdicts and their projections under `test/results/` — **seven `$schema` families**, each named in the kind's `nodeSchemas` (see §"Node schemas, one per `$schema` family"): `kg-qa/v1`, `block-qa/v1` and `folio-test-run/v1` are Zod-validated, `qa-witness/v1`, `qa-results/v1` and `translation-qa/v1` are TypeScript shapes, and `folio-qa-index/v1` has no declared type at all. This row said "one `qa-witness/v1` document per subject" until 2026-09-23, when 591 of the 728 nodes were other families. Generated, never hand-edited. Read witnesses with the [`qa-witness`](../../sdlc/sdlc-core/qa-witness.md) skill. | no |
-| `attestations` | **harness** | the JUDGEMENT half of a QA verdict, kept apart from the derived half: one `qa-attestations/v1` file per subject at `test/attestations/<family>/<mirrored subject path>.attestations.json`, where `<family>` is the derived family it sits beside (`kg-qa`; `block-qa` and `translation-qa` are reserved for bean `8wj1`). Split out of `qa` by owner ruling D2 (a), 2026-10-01 (bean `2gst`): derived verdicts move to the `qa-reports` branch, and judgements stay on main, where a `git rm` of derived results cannot reach them. A separate kind because the two answer the deletion question differently: a `qa` file can be regenerated, an attestation cannot. Every entry pins the hash it attested, so a stale one is detectable. `state`, like `review-verdicts`. Reads answer hit / miss / corrupt / unknown, and an absent store is `unknown`, never "never attested". Shape in `schemas/qa-attestations.ts`. | no |
+| `qa` | **harness** | QA verdicts and their projections under `test/results/` — **seven `$schema` families**, each named in the kind's `nodeSchemas` (see §"Node schemas, one per `$schema` family"): `kg-qa/v1`, `block-qa/v1` and `folio-test-run/v1` are Zod-validated, `qa-witness/v1`, `qa-results/v1` and `translation-qa/v1` are TypeScript shapes, and `folio-qa-index/v1` has no declared type at all. This row said "one `qa-witness/v1` document per subject" until 2026-09-23, when 591 of the 728 nodes were other families. Generated, never hand-edited. **The checkout holds the WORKING COPY; the record is on the orphan `qa-reports` branch**, keyed `main/<sha>/` or `pr/<n>/<sha>/`, written by the CI job `qa-publish` through `scripts/qa-store.ts` (arc `3fva`) — see §"`storage` — a directory kept on a branch". Judgements are not here: they are the `attestations` kind. Read witnesses with the [`qa-witness`](../../sdlc/sdlc-core/qa-witness.md) skill. | no |
+| `attestations` | **harness** | the JUDGEMENT half of a QA verdict, kept apart from the derived half: one `qa-attestations/v1` file per subject at `test/attestations/<family>/<mirrored subject path>.attestations.json`, where `<family>` is the derived family it sits beside (`kg-qa`, bean `2gst`; `block-qa` and `translation-qa`, bean `8wj1` — whose derived reports keep a projection composed from the store). Split out of `qa` by owner ruling D2 (a), 2026-10-01 (bean `2gst`): derived verdicts move to the `qa-reports` branch, and judgements stay on main, where a `git rm` of derived results cannot reach them. A separate kind because the two answer the deletion question differently: a `qa` file can be regenerated, an attestation cannot. Every entry pins the hash it attested, so a stale one is detectable. `state`, like `review-verdicts`. Reads answer hit / miss / absent / corrupt / unknown. On a miss or an absent store a WRITER moves the judgements a prior derived file still carries into the store as it saves (owner ruling 2, 2026-10-01); a corrupt or unreadable store is `unknown` and refused. Shape in `schemas/qa-attestations.ts`. | no |
 | `code` | **harness**, and any layer | Source code — the modules, scripts and entry points an instance holds. Registered 2026-09-22 (bean `ylj7`) after a measurement: most of this repository's `.ts` files sat in no declared directory — **re-derive it with `bun run check:code-accounting` rather than reading a number here, because it moves every round** — so the one property every checker here depends on — *an undeclared file is one no checker has a reason to look at* (`v8gh`) — did not hold for most of the code. The owner's first proposal was to move everything under `<stub>/src`; the measurement confirmed the **mechanism** and argued against the **destination**, because `schemas/` is already a declared graph, `content/pipeline/` is core's subject, and `scripts/` are entry points named **by path** in `package.json` and CI. So they are declared where they are, and `<stub>/src` is the convention for new instances. `content`: authored with an intention, re-authored rather than regenerated, and it stands on its own. **Not renderable** — `renderable` asks whether the graph is wired to the site build as pages, and the generated references are built from schemas and skills, not from this. Being declared says nothing about whether a Tool node **claims** the code; that is a second axis, and beans `d308` and `ce65` own it. `check:code-accounting` reports both and refuses to average them. | no |
 | `qa-report` | **harness** | QA reports — one `qa-report/v1` document per TOOL RUN, carrying that run's own successes, warnings and errors, the files it processed, the files it **expected** and the ones that were missing, plus the provenance and toolchain versions upstream records nowhere. A third subject beside its two neighbours, and that is the whole reason it is a separate kind: a `qa` witness judges an **artefact**, a `health` report judges the **repository**, a `qa-report` records an **execution**. Registered 2026-09-22 on evidence rather than design — every DAK pre/post script already writes exactly this document and the IG Publisher already writes `qa.json`, and nothing downstream read either. Upstream's snake_case field names are kept deliberately, so an upstream report validates byte for byte and a change upstream fails instead of being quietly re-mapped. `state`: a running process writes it. Three rules are structural rather than left to a checker — a summary may not disagree with the details it counts, `files_missing` must be a subset of `files_expected`, and `running` is never a pass. Shape in `schemas/qa-report.ts`. | no |
 | `health` | **harness** | repository health reports — one `"$schema": "health-report/v1"` document per sweep, carrying each check's three-state verdict, the thresholds it applied and the **basis** each threshold was chosen on. A separate kind from `qa` because the SUBJECT differs, not the producer: a QA verdict judges an artefact this instance produced, a health report judges the instance itself — its size, its publish branch, its work plan. Generated by `test/health/run.ts`; never hand-edited. Shape in `schemas/health-report.ts`. | no |
@@ -911,6 +911,41 @@ declares nothing it does not have. A `library` entry appears in `who-iris`'s
 declaration only when the corpus moves there, because a declared-but-absent
 directory makes every consumer scan nothing and report a clean run over it.
 
+## `storage` — a directory kept on a branch
+
+A `ContentDirectory` may declare where its contents are KEPT when that is not
+the checkout (bean `16ei`, arc `3fva`; schema `DirectoryStorageSchema` in
+`schemas/cat-harness.ts`):
+
+```jsonc
+{ "id": "qa", "path": "test/results", "graphKinds": ["qa"],
+  "storage": { "branch": "qa-reports", "keyedBy": "commit" } }
+```
+
+- **Writers still write the declared path** — it is the working copy — and
+  `bun run qa:publish` carries it to the branch under `main/<sha>/` or
+  `pr/<n>/<sha>/`. In CI that is the `qa-publish` job, which runs after the
+  gates and is not one.
+- **Readers go through `qa-store`** (`readQa`, `bun run qa:fetch`), which
+  answers hit / miss / corrupt / unknown. **A miss is never read as an empty,
+  clean directory** — that is `dh4f` again, with a branch in place of a path.
+- **Presence checks stop expecting the files**: a stored directory absent
+  from the checkout is not "declared but absent", and `harness:dirs` does not
+  create it empty. `audit:coverage` reads its kind as `stored`.
+
+Two facts to hold while the arc is in flight. **Every `qa` directory declares
+`storage` since bean `5hox`**, and only after every reader had migrated —
+flipping one earlier would have told the presence checks to stop looking while
+readers still read the checkout. Each stored working copy is ignored by
+version control, one line per declared directory, kept equal to the
+declarations by `directory-storage.test.ts`. And the derived files are
+**committed on `main`** until bean `5hox`'s removal lands; until then, and
+after, a directory whose every kind is one the arc moves off `main`
+(`qa`, `health` — `mayLeaveMain` in `scripts/qa-results.ts`) may be absent
+from a checkout without that being a finding. **Judgements never move**: they
+are the `attestations` kind at `test/attestations/`, on `main`, because a
+regenerated file cannot reproduce them (owner ruling D2 (a)).
+
 ## Authoring an entry — the checklist
 
 The rules are argued elsewhere in this skill and its neighbours; this is the
@@ -950,9 +985,9 @@ one is argued.
    ([`readme-sections`](../../ui/ui-core/readme-sections.md)) or a header naming the command
    that wrote it, is never hand-edited, and has a `--check` twin in CI.
 8. **A missing fact is a QA finding, never a blank or a guess** — the three
-   states of §"Three states, as everywhere else here". Record it in a
-   committed sidecar under `test/results/`; do not fill it with a plausible
-   default.
+   states of §"Three states, as everywhere else here". Record it as a QA
+   result under `test/results/` (the working copy `qa-publish` stores on the
+   `qa-reports` branch); do not fill it with a plausible default.
 9. **Then regenerate**: `bun run readme:subgraphs` renders the directory's
    README from this entry ([`liquid-templates`](../../ui/ui-core/liquid-templates.md)), and
    `bun run kg:export` publishes the entry as a Directory node

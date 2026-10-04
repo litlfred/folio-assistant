@@ -4,14 +4,13 @@
  */
 import { describe, expect, test } from "bun:test";
 import { HARNESS_ROOT } from "../scripts/lib/roots.ts";
-import { readdirSync, readFileSync, existsSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 
 import {
   KG_CRITERIA,
   KG_CRITERIA_BY_ID,
   KG_QA_SCHEMA,
-  KgQaReportSchema,
   criteriaFor,
   tally,
   worstSeverity,
@@ -121,68 +120,13 @@ describe("tally and worstSeverity", () => {
   });
 });
 
-describe("the sidecars committed in this repository", () => {
-  // The results tree, walked recursively and derived from the SAME constant
-  // the auditor writes with — three hardcoded roots is how this test came to
-  // read an empty set when the corpus moved, which its own "there are some"
-  // guard then caught. The tree mirrors each subject's path, so it nests.
-  const root = join(HARNESS_ROOT, KG_QA_RESULTS_DIR);
-  const walk = (d: string): string[] =>
-    !existsSync(d)
-      ? []
-      : readdirSync(d, { withFileTypes: true }).flatMap((e) =>
-          e.isDirectory()
-            ? walk(join(d, e.name))
-            : e.name.endsWith(".kg-qa.json")
-              ? [join(d, e.name)]
-              : [],
-        );
-  const files = walk(root);
-
-  test("there are some", () => {
-    expect(files.length).toBeGreaterThan(0);
-  });
-
-  test("every one validates against the schema", () => {
-    for (const f of files) {
-      const parsed = KgQaReportSchema.safeParse(JSON.parse(readFileSync(f, "utf-8")));
-      if (!parsed.success) throw new Error(`${f}: ${parsed.error.message}`);
-    }
-  });
-
-  test("every criterion key is a registered criterion, and applies to that subject kind", () => {
-    for (const f of files) {
-      const r = JSON.parse(readFileSync(f, "utf-8")) as KgQaReport;
-      const allowed = new Set(criteriaFor(r.subject.kind).map((c) => c.id));
-      for (const id of Object.keys(r.criteria)) {
-        expect(KG_CRITERIA_BY_ID[id], `${f}: unknown criterion ${id}`).toBeDefined();
-        expect(allowed.has(id), `${f}: ${id} does not apply to ${r.subject.kind}`).toBe(true);
-      }
-    }
-  });
-
-  test("no sidecar records a `fail` with no findings — a failure a reader cannot act on", () => {
-    for (const f of files) {
-      const r = JSON.parse(readFileSync(f, "utf-8")) as KgQaReport;
-      for (const [id, e] of Object.entries(r.criteria)) {
-        if (e.result === "fail") expect(e.findings.length, `${f}: ${id}`).toBeGreaterThan(0);
-      }
-    }
-  });
-
-  test("no critical criterion is failing on main", () => {
-    const bad: string[] = [];
-    for (const f of files) {
-      const r = JSON.parse(readFileSync(f, "utf-8")) as KgQaReport;
-      for (const [id, e] of Object.entries(r.criteria)) {
-        if (e.result !== "pass" && e.result !== "n/a" && KG_CRITERIA_BY_ID[id]?.severity === "critical") {
-          bad.push(`${r.subject.kind}:${r.subject.id} ${id}=${e.result}`);
-        }
-      }
-    }
-    expect(bad).toEqual([]);
-  });
-});
+// The committed sidecars are no longer read here (bean `cxcn`, reader audit
+// F7). "every one validates", "every criterion key is registered", "no `fail`
+// without findings" and "no critical criterion is failing" are corpus
+// validation, and a test that reads the corpus either fails for a reason that
+// is not a defect once it leaves `main`, or iterates over nothing and passes.
+// They are `bun run check:qa-corpus` now, over the tree `qa:fetch`
+// materialises, and it walks the HOSTED homes this walk never reached.
 
 describe("reachability reads the serving registry, not just manifests", () => {
   test("`skill-servable` is major — a body nobody can fetch is a real gap, not a broken link", () => {
@@ -326,7 +270,8 @@ describe("where an instance's verdicts live (kgQaHomeFor)", () => {
     expect(home).toEqual({ root: join(harness, "test", "results", "bootstrap"), by: "hosted" });
     // Beside, never inside: the host's orphan sweep walks only its own kg-qa/.
     expect(home.root.startsWith(join(harness, KG_QA_RESULTS_DIR))).toBe(false);
-    expect(existsSync(join(home.root, "kg-qa.manifest.json"))).toBe(true);
+    // Whether the hosted home HOLDS a manifest is a fact about the corpus, and
+    // `check:qa-corpus` judges it (`manifest-missing`) — not this test.
   });
 
   test("with no host, an instance without a qa directory falls back to the convention", () => {
@@ -337,37 +282,12 @@ describe("where an instance's verdicts live (kgQaHomeFor)", () => {
     expect(existsSync(join(bootstrap, "test"))).toBe(false);
   });
 
-  // Bean de9k (C1): the walk above reads only cat-harness's own `kg-qa/`, so
-  // three conflict-marked sidecars in the HOSTED homes went unseen. Every
-  // instance's home is resolved the way the auditor resolves it, and every
-  // sidecar there must parse and validate.
-  test("every instance's sidecars validate, hosted homes included", () => {
+  // Bean de9k (C1) added a walk of every instance's home here. It read the
+  // committed corpus, so it moved to `check:qa-corpus` with the rest (bean
+  // `cxcn`); the RESOLUTION it relied on stays asserted.
+  test("every instance's home resolves, and bootstrap's is the hosted one", () => {
     const homes = new Set<string>();
-    for (const inst of instanceRootsIn(repo)) homes.add(join(kgQaHomeFor(inst, harness).root, "kg-qa"));
-    expect(homes.has(join(harness, "test", "results", "bootstrap", "kg-qa"))).toBe(true);
-    const walk = (d: string): string[] =>
-      !existsSync(d)
-        ? []
-        : readdirSync(d, { withFileTypes: true }).flatMap((e) =>
-            e.isDirectory() ? walk(join(d, e.name)) : e.name.endsWith(".kg-qa.json") ? [join(d, e.name)] : [],
-          );
-    const bad: string[] = [];
-    let seen = 0;
-    for (const home of homes) {
-      for (const f of walk(home)) {
-        seen += 1;
-        let doc: unknown;
-        try {
-          doc = JSON.parse(readFileSync(f, "utf-8"));
-        } catch (err) {
-          bad.push(`${f}: does not parse (${(err as Error).message})`);
-          continue;
-        }
-        const parsed = KgQaReportSchema.safeParse(doc);
-        if (!parsed.success) bad.push(`${f}: ${parsed.error.message}`);
-      }
-    }
-    expect(seen).toBeGreaterThan(0);
-    expect(bad).toEqual([]);
+    for (const inst of instanceRootsIn(repo)) homes.add(kgQaHomeFor(inst, harness).root);
+    expect(homes.has(join(harness, "test", "results", "bootstrap"))).toBe(true);
   });
 });

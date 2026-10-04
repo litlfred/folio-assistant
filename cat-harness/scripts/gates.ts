@@ -168,6 +168,18 @@ export interface StepExemption {
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
   {
+    // Bean `9c7h`: fsh-guts is kept on `cat/cat-harness/fsh-guts`, so every
+    // job that reads the repository mounts it after `bun install`. A SETUP
+    // step: it fetches over the network and has no verdict of its own; the
+    // readers it serves refuse an unmounted copy (exit 2), and the mount
+    // logic is asserted by state-mount.test.ts and branch-mount.test.ts.
+    match: "bun run state:mount",
+    kind: "ci-only",
+    reason:
+      "a SETUP step, not a check: it mounts the subgraphs kept on branches (fsh-guts) so the gates that follow " +
+      "read real content; a contributor's session-start hook runs the same command",
+  },
+  {
     // Bean `wnhh`: each IG whose repository carries a seeded `fhir-ast/*`
     // cache is rendered from it into the preview at `/<instance>/ast/`. The
     // lister asks each IG repository over the network (`git ls-remote`).
@@ -241,6 +253,30 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason:
       "a scheduled WRITE to the qa-reports branch, not a check; its retention rule and its " +
       "tip-only rewrite are covered by qa-store.test.ts in `bun test`",
+  },
+  {
+    // Bean `tfqf`. The site builds' QA evidence: `fetch` reads the
+    // `qa-reports` entry for THIS run's ref (`main/<sha>`, `pr/<n>/<sha>`)
+    // over the network and may materialise it into the checkout; `verify`
+    // judges the built `./_site/assets/qa/`, which only the deploy and
+    // staging jobs produce. Run locally with no ref and no site it has no
+    // verdict to give. Its decisions are pinned by qa-site-assets.test.ts in
+    // `bun test`, and `bun run preview:site` runs both halves on a real build.
+    match: "scripts/qa-site-assets.ts",
+    kind: "ci-only",
+    reason:
+      "a build step keyed by the run's own ref (network fetch) and the built ./_site; its source " +
+      "decision and shrink judgement are covered by qa-site-assets.test.ts in `bun test`",
+  },
+  {
+    // Bean `tfqf`. `folio-staging.yml` reads the FOLIO's own `qa-reports`
+    // entry for its PR before sweeping. A read keyed by a downstream PR
+    // number; the read path is pinned by qa-store.test.ts in `bun test`.
+    match: "qa-store.ts\" fetch",
+    kind: "ci-only",
+    reason:
+      "a network read of a downstream folio's qa-reports entry keyed by its PR number; the read " +
+      "path is covered by qa-store.test.ts in `bun test`",
   },
   {
     // Bean `uknu`. It reads a BUILT Jekyll site, which only the staging job
@@ -348,6 +384,14 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     match: "scripts/gen-docs-pages.ts",
     kind: "covered-by",
     reason: "`gen-docs-pages.ts --check` is in the gate set; the site build runs the writer",
+  },
+  {
+    // Bean `5hox` prep, owner ruling 2026-10-01: the /qa/ page is regenerated
+    // from the QA results the site build fetched, so it cannot freeze once QA
+    // leaves `main`.
+    match: "bun run state:visualizer",
+    kind: "covered-by",
+    reason: "`state:visualizer:check` is in the gate set; the site build runs the writer over the results it fetched",
   },
   // The two projection writers are run by the SITE BUILD and by nothing else.
   //

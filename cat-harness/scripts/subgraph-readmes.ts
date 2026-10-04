@@ -27,13 +27,18 @@
  * - **recording the findings** as the committed QA sidecar
  *   `test/results/subgraph-readmes.qa-results.json`. Reported, not failed: a
  *   gap in a declaration is its owner's to fill, and failing on it would block
- *   every commit on a backlog. What `--check` FAILS on is a stale README or a
- *   stale sidecar.
+ *   every commit on a backlog. What `--check` FAILS on is a stale README, or
+ *   a declared directory newly absent / a process newly unresolved against a
+ *   baseline (bean `0dav`: the committed working copy until QA results leave
+ *   `main`, `--against <ref>` after; a missing baseline is UNKNOWN and not
+ *   gated). It used to fail on a stale sidecar, which has no subject once the
+ *   sidecar is not committed. A `qa` or `health` directory that is not in the
+ *   checkout is not `absent-directory` either: those kinds leave `main`.
  *
  * Usage: `bun run readme:subgraphs` · `bun run readme:subgraphs:check`
  */
 import { existsSync, readFileSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { join, resolve } from "node:path";
 
 import {
   apply,
@@ -44,8 +49,9 @@ import {
 } from "../../bootstrap-tools/scripts/subgraph-readmes.ts";
 import { instanceDirectories, declaredAssetPath, INSTANCE_README_ROLE, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
 import { defaultGraphKinds, type GraphKindRegistry } from "../schemas/graph-kind-registry.ts";
+import { contentIsOffCheckout } from "../schemas/subgraph-source.ts";
 import { forDirectory, processIndex, resolveProcess, type ProcessIndex } from "./governing-process.ts";
-import { buildQaResult, writeQaResult } from "./qa-results.ts";
+import { againstOrUsage, buildQaResult, judgeQaResult, judgeUsage, mayLeaveMain, writeQaResult } from "./qa-results.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(ROOT);
@@ -60,11 +66,12 @@ const REPO = repoRootFor(ROOT);
  * directory's graph (`beans.json`'s `defs`), and they are what the README's
  * table names; a `subgraph: true` entry is promoted to an instance directory
  * of its own (`skills.json`'s `voices`) and describes itself under its own
- * heading. The two partition, so a promoted directory's row keeps the count.
+ * heading. The two partition, so a promoted directory's row borrows nothing.
  *
  * Only a single-segment `path` names a row — `defs/archive` is a directory
  * inside a row, not one. A missing, unparseable or description-less
- * declaration supplies nothing and the row falls back to the file count:
+ * declaration supplies nothing and the row says nothing declares it (no
+ * count since bean `ba9e`):
  * absent stays absent rather than being invented. An unparseable file is
  * `check:harness-dirs`'s finding, not this one's.
  */
@@ -101,6 +108,12 @@ export function subdirDescriptions(
   return out;
 }
 
+/** Does a directory declaration carry `storage` — its record lives on a branch, not in the checkout? */
+export function isStored(d: unknown): boolean {
+  const s = (d as { storage?: { branch?: unknown } }).storage;
+  return typeof s === "object" && s !== null && typeof s.branch === "string" && s.branch !== "";
+}
+
 /**
  * Every instance under `repo`, with this harness's Extensions resolved: the
  * declared README (scope-aware), each directory's real location, and whether
@@ -129,7 +142,22 @@ export function harnessInstances(repo: string): InstanceInput[] {
       // Own entries AND those declared from within (bean `cmsl`): the five
       // `voices/` READMEs dropped out of coverage when the entries moved into
       // `skills/skills.json` (75 → 70, measured 2026-09-30, bean `2j2r`).
-      dirs: instanceDirectories(inst, decl).map((d) => {
+      //
+      // A STORED directory (`storage`, bean `16ei`) is skipped — bean `f3bh`.
+      // Its contents live on their branch and the checkout holds at most a
+      // working copy, so a README written from it, and the findings about it,
+      // would depend on whether this contributor ran `qa:fetch`: the 12 `qa`
+      // directories added 12 READMEs and 12 `no-title` findings when present
+      // and none when absent. The parent's README already omits them, because
+      // `.gitignore` lists every working copy and the writer lists only what
+      // git would commit; `directory-storage.test.ts` keeps that list equal to
+      // the declarations.
+      //
+      // The same holds for a `source`-declared branch (bean `9c7h`: fsh-guts),
+      // which `isStored` does not see because it reads only `storage`:
+      // counting the files git tracks here would rewrite its README as "holds
+      // no files" — true of main, false of the subgraph.
+      dirs: instanceDirectories(inst, decl).filter((d) => !isStored(d) && !contentIsOffCheckout(d)).map((d) => {
         const base = (d as { scope?: string }).scope === "repository" ? repo : inst;
         const abs = resolve(base, d.path);
         // Absent declaration means the writer gets nothing and prints no
@@ -145,7 +173,9 @@ export function harnessInstances(repo: string): InstanceInput[] {
           title: (d as { title?: string }).title,
           description: (d as { description?: string }).description,
           graphKinds: d.graphKinds as string[],
-          mayBeAbsent: Boolean((d as { absent?: unknown }).absent),
+          // `absent` declared, OR a kind the qa-reports arc moves off `main`
+          // (bean `0dav`): its working copy being missing is not a finding.
+          mayBeAbsent: Boolean((d as { absent?: unknown }).absent) || mayLeaveMain(d as { graphKinds?: string[]; storage?: unknown }),
           ...(Object.keys(subdirs).length > 0 ? { subdirs } : {}),
           ...(declared !== undefined
             ? { process: forDirectory(resolveProcess(index(), declared), repo, abs) }
@@ -199,23 +229,28 @@ export function qaResult(p: Plan) {
   });
 }
 
+const GATE = "readme:subgraphs";
+
 if (import.meta.main) {
-  const check = process.argv.includes("--check");
+  const argv = process.argv.slice(2);
+  const check = argv.includes("--check");
+  if (check) {
+    const usage = judgeUsage(GATE, argv, ["--against"]);
+    if (usage !== undefined) process.exit(usage);
+  }
+  const { against, exit: badRef } = againstOrUsage(GATE, argv);
+  if (badRef !== undefined) process.exit(badRef);
   const p = await harnessPlan(REPO);
   const { stale: staleFiles, wrote } = apply(p, check, REPO);
   for (const f of staleFiles) console.error(`  ✗ ${f} is stale`);
-  let stale = staleFiles.length;
+  const stale = staleFiles.length;
   const result = qaResult(p);
-  const sidecar = join(ROOT, "test/results/subgraph-readmes.qa-results.json");
-  if (check) {
-    const prior = existsSync(sidecar) ? JSON.parse(readFileSync(sidecar, "utf-8")) : undefined;
-    const strip = (r: unknown) => JSON.stringify({ ...(r as object), updated_at: undefined });
-    if (!prior || strip(prior) !== strip(result)) {
-      console.error(`  ✗ ${relative(REPO, sidecar)} is stale`);
-      stale++;
-    }
-  } else {
-    writeQaResult(ROOT, "subgraph-readmes", result);
+  if (!check) writeQaResult(ROOT, "subgraph-readmes", result);
+  // PRINTED, never recorded (bean `ba9e`). A finding that depends on the
+  // worktree would make the recorded result depend on it too — the defect
+  // counting the committed tree exists to remove.
+  for (const u of p.findings["untracked-not-counted"]) {
+    console.warn(`  ! untracked, so not counted or listed in ${u.directory}'s README until staged: ${u.path}`);
   }
   const f = p.findings;
   console.log(
@@ -225,8 +260,17 @@ if (import.meta.main) {
       `${f["absent-directory"].length} absent, ${f["unmarked-readme"].length} unmarked, ` +
       `${f["unresolved-process"].length} unresolved process.`,
   );
-  if (check && stale) {
-    console.error("\nRun `bun run readme:subgraphs` and commit.");
-    process.exit(1);
+  if (check) {
+    // The READMEs are committed docs and stay a comparison; the sidecar is a QA
+    // record and is JUDGED (bean `0dav`): a directory newly absent, or a
+    // process newly unresolved, fails; the description backlog never did.
+    const judged = judgeQaResult({
+      gate: `${GATE}:check`,
+      fresh: result,
+      failOnNew: ["absent-directory", "unresolved-process"],
+      baseline: { root: ROOT, stem: "subgraph-readmes", writer: GATE, against },
+    });
+    if (stale) console.error("\nRun `bun run readme:subgraphs` and commit.");
+    process.exit(stale ? 1 : judged.exit);
   }
 }

@@ -106,18 +106,25 @@
  *
  * ## What `--check` fails on, and why it is NOT the findings
  *
- * `--check` fails on a **stale sidecar** — the committed record disagreeing with
- * what the corpus now says. The findings themselves are reported and do not
- * fail, which is `check:kind-validators`'s state 2 for the same reason: 4 kinds
- * hold files nothing audits today, and a gate that refused every push until
- * somebody wrote criteria for `interaction/` would be switched off within a
- * week. `--strict` is the flag for the day that gap is meant to be closed.
+ * `--check` fails on a finding that is **NEW** against a baseline — a kind that
+ * lost its audit, a gate that stopped declaring, in the commit under review.
+ * The standing findings are reported and do not fail, which is
+ * `check:kind-validators`'s state 2 for the same reason: a gate that refused
+ * every push until somebody wrote criteria for `interaction/` would be switched
+ * off within a week. `--strict` is the flag for the day that gap is meant to
+ * be closed.
  *
- * Staleness is the half that CAN fail now, and it is the half that matters for
- * review: the whole argument for a committed sidecar over a printed verdict is
- * that a reader can tell "this kind has never been audited" from "this kind
- * lost its audit in the commit under review". A sidecar nobody regenerates
- * cannot do that.
+ * It used to fail on a **stale sidecar** instead, and that stopped being a
+ * question the day QA results leave `main` for the `qa-reports` branch (owner
+ * rulings D1/D4, bean `0dav`): nothing committed is left to be stale, and a
+ * gate that failed on its own record being absent would be red for nobody's
+ * defect. The baseline is the committed working copy until then, and
+ * `--against <ref>` (a `qa-reports` ref) after; a baseline that is not there
+ * is UNKNOWN — reported, never a pass, never a failure (proposal §2.3).
+ *
+ * The same move fixed **C8**: a declared directory not in the checkout used to
+ * census as zero, so `qa` read `empty` the moment `test/results/` was absent.
+ * It is the `unknown` state now.
  *
  * **And `--check` does NOT write.** The first version did, and the
  * falsification pass is what caught it: the gate repaired the staleness it was
@@ -129,7 +136,8 @@
  *
  * Usage:
  *   bun run audit:coverage                 # print the report, write the sidecar
- *   bun run audit:coverage --check         # ...and fail if the committed sidecar is stale
+ *   bun run audit:coverage --check         # judge, write nothing; fail on a NEW finding
+ *   bun run audit:coverage --check --against main   # ...new against the qa-reports branch
  *   bun run audit:coverage --strict        # ...and fail on a kind nothing JUDGES
  *                                          #    (unaudited or typed-only alike)
  *   bun run audit:coverage --require-all   # ...and on any gate that has not declared
@@ -157,7 +165,14 @@ import { contentIsOffCheckout, resolveSubgraphSource, type SubgraphSource } from
 // disagree about whether a tip-keyed graph is readable here (bean `9ofm`).
 import { tipPresence } from "./check-declared-dirs.ts";
 import { loadGatesCiRuns } from "./gates.js";
-import { QA_RESULTS_DIR, buildQaResult, writeQaResult, type QaResult } from "./qa-results.js";
+import {
+  againstOrUsage,
+  buildQaResult,
+  judgeQaResult,
+  judgeUsage,
+  qaResultPath,
+  writeQaResult,
+} from "./qa-results.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 const ROOT = resolve(import.meta.dir, "..");
@@ -199,6 +214,22 @@ export type KindState =
    * in the checkout". Not a finding, and not covered either.
    */
   | "stored"
+  /**
+   * A directory of this kind is declared, does NOT declare `storage`, and is
+   * not in the checkout, and nothing else of the kind was counted — so the
+   * census could not be taken. Bean `0dav`, the readers-audit's **C8**: before
+   * this state the `qa` row went from `covered`, 278 files, to `empty`, 0, the
+   * moment `test/results/` was absent, and `health` with it. That is `dh4f`:
+   * an absent answer printed as a determined zero.
+   *
+   * Two causes look identical from here — QA results kept off `main` on the
+   * `qa-reports` branch (owner rulings D1/D4) before the declaration says so,
+   * or a declared directory that does not exist — and this report does not
+   * guess between them; `check:harness-dirs` owns the second. Reported, never
+   * gated: proposal §2.3, a record that is not here is `unknown`, not a pass
+   * and not this change's defect.
+   */
+  | "unknown"
   /**
    * A directory of this kind is kept at a branch TIP that this checkout
    * cannot read — not cut over, or cut over and not mounted.
@@ -292,7 +323,7 @@ function isSidecar(name: string): boolean {
  * DERIVED from the same constants that write the file rather than spelled out, so
  * relocating the results directory cannot leave the exclusion pointing elsewhere.
  */
-const SELF_SIDECAR = join(ROOT, QA_RESULTS_DIR, "audit-coverage.qa-results.json");
+const SELF_SIDECAR = qaResultPath(ROOT, "audit-coverage");
 
 /**
  * Files and sidecars under `dir` that GIT accounts for. Unreadable is zero,
@@ -363,6 +394,11 @@ export function census(dir: string, skip: ReadonlySet<string> = new Set([SELF_SI
  *   this means "could not read the files", and a caller that cannot tell those
  *   apart will read a lower bound as a measurement.
  *
+ * `uncounted` is the third answer (bean `0dav`, C8): a directory that is NOT
+ * stored, not tip-keyed, and not in the checkout either. Its zero is not a
+ * measurement, so it is counted apart and a caller can tell "examined, empty"
+ * from "not here".
+ *
  * So `stored` tells "all stored" from "all empty", and `undetermined` tells
  * both from "could not say".
  *
@@ -373,11 +409,12 @@ export function censusDirectories(
   dirs: ReadonlyArray<{ id?: string; absPath: string; storage?: { branch: string; keyedBy?: string }; source?: SubgraphSource }>,
   skip?: ReadonlySet<string>,
   repoRoot: string = process.cwd(),
-): { files: number; sidecars: number; stored: number; undetermined: number } {
+): { files: number; sidecars: number; stored: number; undetermined: number; uncounted: number } {
   let files = 0;
   let sidecars = 0;
   let stored = 0;
   let undetermined = 0;
+  let uncounted = 0;
   for (const d of dirs) {
     let at = d.absPath;
     if (contentIsOffCheckout(d)) {
@@ -402,10 +439,14 @@ export function censusDirectories(
       at = t.into;
     }
     const c = census(at, skip);
+    if (!c.readable) {
+      uncounted++;
+      continue;
+    }
     files += c.files;
     sidecars += c.sidecars;
   }
-  return { files, sidecars, stored, undetermined };
+  return { files, sidecars, stored, undetermined, uncounted };
 }
 
 /**
@@ -594,7 +635,7 @@ export function coverage(repo: string): { rows: KindCoverage[]; gates: GateCover
       }
     }
     const dirs = new Set(resolved.keys());
-    const { files, sidecars, stored, undetermined } = censusDirectories([...resolved.values()], undefined, repo);
+    const { files, sidecars, stored, undetermined, uncounted } = censusDirectories([...resolved.values()], undefined, repo);
     const crit = criteriaByGraph.get(kind);
     const gs = gatesByKind.get(kind) ?? [];
     const def = defaultGraphKinds.get(kind);
@@ -611,6 +652,8 @@ export function coverage(repo: string): { rows: KindCoverage[]; gates: GateCover
           ? "undetermined"
           : stored === dirs.size
             ? "stored"
+            : files === 0 && uncounted > 0
+            ? "unknown"
             : files === 0
             ? "empty"
             : judged
@@ -633,32 +676,19 @@ export function coverage(repo: string): { rows: KindCoverage[]; gates: GateCover
   return { rows, gates, universe };
 }
 
-/** The staleness key: the whole result (it carries no timestamp since `y7b3`). */
-function comparable(r: QaResult): string {
-  return JSON.stringify(r);
-}
-
-/**
- * Is the committed sidecar what this run computed?
- *
- * `absent` is deliberately its own answer. A missing sidecar under `--check` is
- * the `dh4f` case — no record at all reads identically to a clean one if both
- * are reported as "not stale".
- */
-export function sidecarState(instanceRoot: string, fresh: QaResult): "absent" | "stale" | "current" {
-  const p = join(instanceRoot, QA_RESULTS_DIR, "audit-coverage.qa-results.json");
-  if (!existsSync(p)) return "absent";
-  try {
-    return comparable(JSON.parse(readFileSync(p, "utf-8")) as QaResult) === comparable(fresh) ? "current" : "stale";
-  } catch {
-    return "stale";
-  }
-}
+const GATE = "audit:coverage";
 
 function main(): number {
-  const check = process.argv.includes("--check");
-  const strict = process.argv.includes("--strict");
-  const requireAll = process.argv.includes("--require-all");
+  const argv = process.argv.slice(2);
+  const check = argv.includes("--check");
+  const strict = argv.includes("--strict");
+  const requireAll = argv.includes("--require-all");
+  if (check) {
+    const usage = judgeUsage(GATE, argv, ["--strict", "--require-all", "--against"]);
+    if (usage !== undefined) return usage;
+  }
+  const { against, exit: badRef } = againstOrUsage(GATE, argv);
+  if (badRef !== undefined) return badRef;
   const { rows, gates, universe } = coverage(REPO);
 
   // §1.2a of `generalise-the-fix`: a sweep prints its own denominator. A
@@ -698,7 +728,9 @@ function main(): number {
             ? "?"
             : r.state === "covered"
               ? "✓"
-              : "·";
+              : r.state === "unknown"
+                ? "?"
+                : "·";
     console.log(
       `  ${mark} ${pad(r.kind, 20)} ${num(r.files, 6)} ${num(r.criteria.length, 5)} ${num(r.gates.length, 6)} ${num(r.sidecars, 9)}  ${r.state}`,
     );
@@ -707,6 +739,18 @@ function main(): number {
 
   const unaudited = byState("unaudited");
   const typedOnly = byState("typed-only");
+  const uncensused = byState("unknown");
+  // C8, said where a reader of the table looks. NOT "empty": the directories
+  // are not in this checkout, so there is no count to be zero.
+  const unknownLines = uncensused.map(
+    (r) =>
+      `${r.kind}: no census — its declared director${r.directories.length === 1 ? "y is" : "ies are"} not in this checkout ` +
+      `(${r.directories.join(", ")}) and none declares \`storage\`. NOT empty, and NOT a pass for this kind`,
+  );
+  if (uncensused.length > 0) {
+    console.log(`? ${uncensused.length} kind(s) could not be census-ed — UNKNOWN, never "empty":`);
+    for (const l of unknownLines) console.log(`    · ${l}`);
+  }
   if (unaudited.length > 0) {
     console.log(`✗ ${unaudited.length} kind(s) hold files that NOTHING reaches — no criterion, no gate, not even a validator:`);
     for (const r of unaudited) console.log(`    · ${r.kind}: ${r.files} file(s) under ${r.directories.join(", ")}`);
@@ -783,6 +827,13 @@ function main(): number {
           "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
         entries: byState("empty").map((r) => ({ kind: r.kind, directories: r.directories })),
       },
+      "kinds-unknown": {
+        summary:
+          "A declared directory of this kind is not in the checkout and declares no `storage`, and nothing " +
+          "else of the kind was counted — the census was not taken (bean `0dav`, readers-audit C8). Never " +
+          "`empty`: that would print an absent answer as a determined zero. Not gated: proposal §2.3.",
+        entries: uncensused.map((r) => ({ kind: r.kind, directories: r.directories })),
+      },
       "gates-undeclared": {
         summary:
           `A gate CI runs whose script carries no @covers line. Reported and never failed by ` +
@@ -806,31 +857,48 @@ function main(): number {
     },
   });
 
-  // Read the committed state BEFORE writing, and under `--check` do not write
-  // at all — see the docblock. The writer is `audit:coverage`; this is the gate.
-  // The INSTANCE root, not the repository root. `QA_RESULTS_DIR` is declared as
-  // this instance's `qa-results` graph, and `check:undeclared-files` is what
-  // caught the first version writing to `<repo>/test/results/` — a directory no
-  // declaration names, so every consumer scanning the declared graphs would have
-  // read a clean run over the one file this script exists to produce. The `dh4f`
-  // defect, committed by the script whose whole subject is coverage.
-  const state = sidecarState(ROOT, result);
-  if (!check) writeQaResult(ROOT, "audit-coverage", result);
-  if (state !== "current") {
-    const where = relative(REPO, join(ROOT, QA_RESULTS_DIR, "audit-coverage.qa-results.json"));
-    const msg = state === "absent" ? `no committed sidecar at ${where}` : `the committed sidecar at ${where} disagrees with this run`;
-    console.log(check ? `\n✗ ${msg} — run \`bun run audit:coverage\` and commit it.` : `\n· ${msg} — written.`);
+  // ── The gate: COMPUTE AND JUDGE, write nothing (bean `0dav`) ────────────
+  //
+  // It used to fail `--check` on its own committed sidecar being stale or
+  // absent — and absent is the state QA results are in once they leave
+  // `main` (owner rulings D1/D4), so the gate would have been red on every
+  // run for a reason that is nobody's defect. Now:
+  //
+  // - `--strict` fails on every kind nothing reaches or nothing judges, and
+  //   `--require-all` on every undeclared gate — as before.
+  // - plain `--check` fails on what is NEW in those three families against a
+  //   baseline: the committed working copy today, `--against <ref>` on the
+  //   `qa-reports` branch after the move. That is what "stale" used to catch
+  //   and the only part of it that was ever a finding.
+  // - a missing baseline, and a kind with no census, are UNKNOWN: printed,
+  //   never a pass, never a failure (proposal §2.3).
+  //
+  // The INSTANCE root, not the repository root: `check:undeclared-files`
+  // caught the first version writing to `<repo>/test/results/`, a directory no
+  // declaration names — the `dh4f` defect, committed by the script whose whole
+  // subject is coverage.
+  if (!check) {
+    const out = writeQaResult(ROOT, "audit-coverage", result);
+    console.log(`\n· ${relative(REPO, out)} — written.`);
+    if (strict && (unaudited.length > 0 || typedOnly.length > 0 || undet.length > 0)) return 1;
+    if (requireAll && undeclared.length > 0) return 1;
+    return 0;
   }
-
-  if (check && state !== "current") return 1;
-  // `typed-only` fails `--strict` too. It is a finding, so a flag that passed
-  // over it would launder the gap the state was introduced to make visible.
+  console.log("");
   // `undetermined` fails `--strict` for a stronger reason than either: it is
   // not a known gap but an UNKNOWN, and a strict run that passed over it would
   // certify coverage of files it never read (bean `9ofm`).
-  if (strict && (unaudited.length > 0 || typedOnly.length > 0 || undet.length > 0)) return 1;
-  if (requireAll && undeclared.length > 0) return 1;
-  return 0;
+  if (strict && undet.length > 0) return 1;
+  return judgeQaResult({
+    gate: `${GATE}${strict ? ":strict" : requireAll ? ":require-all" : ":check"}`,
+    fresh: result,
+    // `typed-only` fails `--strict` too. It is a finding, so a flag that passed
+    // over it would launder the gap the state was introduced to make visible.
+    failOn: [...(strict ? ["kinds-unaudited", "kinds-typed-only"] : []), ...(requireAll ? ["gates-undeclared"] : [])],
+    failOnNew: ["kinds-unaudited", "kinds-typed-only", "gates-undeclared"],
+    unknowns: unknownLines,
+    baseline: { root: ROOT, stem: "audit-coverage", writer: "audit:coverage", against },
+  }).exit;
 }
 
 if (import.meta.main) process.exit(main());

@@ -889,6 +889,18 @@ export function qaPanels(id: string, src: string): string {
   } catch {
     return `<p>The projection at <a href="${src}">${esc(src)}</a> could not be read.</p>`;
   }
+  // The build had no QA corpus to count (bean `tfqf`, C9). Said, with its
+  // reason, rather than rendered as "Families — 0, over 0 document(s)", which
+  // would be a census of nothing.
+  const unknown = ix as { availability?: string; reason?: string };
+  if (unknown.availability === "unknown") {
+    return (
+      `<h2 class="sv-h2">Not available in this build</h2>` +
+      `<p class="sv-sub">${esc(unknown.reason ?? "No reason was recorded")}. ` +
+      `This is <strong>unknown</strong>, not zero.</p>` +
+      `<p class="sv-sub">The data is <a href="${src}">a plain JSON file</a>.</p>`
+    );
+  }
   const families = ix.families ?? [];
   const panels = families
     .map((f) => {

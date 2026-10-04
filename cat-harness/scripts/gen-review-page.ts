@@ -395,6 +395,11 @@ const SCRIPT = `
       OUTLINE = both[5];
       var blocksFile = both[3];
       var qaFile = both[4];
+      // A summary that found NO verdict corpus (bean tfqf): every block in it
+      // reads "unaudited", which is not what happened. The heat map gets no
+      // QA data and the page says why, instead of a column of unaudited blocks.
+      var qaUnavailable = !!(qaFile && qaFile.corpus && qaFile.corpus.state === "absent");
+      if (qaUnavailable) qaFile = null;
       var st = both[0];
       var rc = both[1];
       var txt = both[2];
@@ -535,6 +540,7 @@ const SCRIPT = `
           if (t) { t.focus(); t.scrollIntoView({ block: "start" }); }
         }));
         wrap.appendChild(el("p", "Review coverage counts a changed block as reviewed only when a reviewer recorded a verdict on its current version: an edit after the verdict reopens it, and resolved comments are not a verdict. QA counts a block as failing only on a verdict newer than the block; an older verdict is counted as stale.", "muted"));
+        if (qaUnavailable) wrap.appendChild(el("p", "QA not available for this build: the build found no QA results (its qa-reports fetch missed and no verdicts were in the checkout), so whether any block was audited is unknown. The QA column says \u201cnot published\u201d for that reason, not because nothing was checked.", "muted"));
       }
       // Navigation pane (eb4l): outline and minimap, when the build published an outline.
       var navPane = document.getElementById("navpane");
