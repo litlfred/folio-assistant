@@ -124,7 +124,7 @@ adapter-scoped tool would be unreachable in exactly the case it exists for.
 bun install                 # install deps
 bun run gates               # EVERY fast gate CI runs — run this before you push
 bun run gates --all         # ...plus the browser jobs
-bun run cat-harness/src/index.ts --http # run the assistant (HTTP); --stdio for stdio MCP
+bun run cat-harness-tools/src/index.ts --http # run the assistant (HTTP); --stdio for stdio MCP
 bun test                    # unit tests
 bunx playwright test        # e2e tests   (npm script: test:e2e)
 eslint .                    # lint
