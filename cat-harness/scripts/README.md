@@ -8,7 +8,7 @@ The platform's executable surface -- generators, checkers and the gate runner. T
 
 Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-scripts`, holding `code`.
 
-_476 files directly here, too many to list: 346 .ts, 45 .sh, 34 .bat, 32 .py, 16 .json, 1 .txt, 1 .ps1, 1 .mjs._
+_477 files directly here, too many to list: 347 .ts, 45 .sh, 34 .bat, 32 .py, 16 .json, 1 .txt, 1 .ps1, 1 .mjs._
 
 | file | what it is | used by |
 |---|---|---|
@@ -17,10 +17,10 @@ _476 files directly here, too many to list: 346 .ts, 45 .sh, 34 .bat, 32 .py, 16
 | [`eval/`](eval/) | 2 files | |
 | [`git-hooks/`](git-hooks/) | 5 files | |
 | [`knot-plots/`](knot-plots/) | 10 files | |
-| [`lib/`](lib/) | 14 files | |
+| [`lib/`](lib/) | 15 files | |
 | [`partition/`](partition/) | 2 files | |
 | [`render-tex/`](render-tex/) | 2 files | |
 | [`templates/`](templates/) | 1 file | |
-| [`tests/`](tests/) | 563 files | |
+| [`tests/`](tests/) | 565 files | |
 | [`translation/`](translation/README.md) | 14 files | |
 <!-- kg:subgraph:end -->
