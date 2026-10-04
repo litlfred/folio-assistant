@@ -315,6 +315,36 @@ export function trackedQaFiles(repoRoot: string, roots: readonly string[]): stri
   return git(repoRoot, ["ls-files", "-z", "--", ...roots]).split("\0").filter(Boolean);
 }
 
+/** Tracked paths that differ from HEAD, in the index or the working tree. */
+function dirtyTracked(repoRoot: string): Set<string> {
+  return new Set(
+    git(repoRoot, ["status", "--porcelain=v1", "-z", "--untracked-files=no"])
+      .split("\0")
+      .filter(Boolean)
+      .map((l) => l.slice(3)),
+  );
+}
+
+/**
+ * Tracked files a writer rewrote that were clean before it ran — the paths to
+ * restore. Pure, so the rule is tested without a checkout.
+ *
+ * The working copy is the IGNORED tree under the `qa` roots, and producing it
+ * must leave every committed file as the commit has it. Several writers render
+ * more than their QA output: `docs:pages` regenerates the docs projections
+ * (`docs/assets/beans/index.json`, `docs/assets/qa/index.json`) alongside the
+ * witnesses it is listed for, and `qa-sweep` restamps the script sidecars.
+ * Left in place, those edits make the gates that read the committed tree
+ * judge a tree nobody committed: measured 2026-10-04 on #2080, the beans tile
+ * count moved 796 → 805 and `docs:harness:check` went red in CI and green on
+ * every checkout that had not run the working copy (bean `72a8`).
+ *
+ * A path that was already dirty is the person's own edit and is never touched.
+ */
+export function writerSideEffects(before: ReadonlySet<string>, after: ReadonlySet<string>): string[] {
+  return [...after].filter((p) => !before.has(p)).sort();
+}
+
 /** Run one writer from the repository root; its output streams through. */
 function runWriter(repoRoot: string, w: QaWriter): WriterRun {
   const t = Date.now();
@@ -363,7 +393,13 @@ function main(argv: string[]): number {
         "so no writer runs (5hox's hash check needs main/<sha> byte-identical to it)",
     );
   } else {
+    const before = dirtyTracked(repoRoot);
     for (const w of QA_WRITERS) runs.push(runWriter(repoRoot, w));
+    const restore = writerSideEffects(before, dirtyTracked(repoRoot));
+    if (restore.length) {
+      git(repoRoot, ["checkout", "--", ...restore]);
+      console.log(`qa:refresh: restored ${restore.length} committed file(s) a writer rewrote (first: ${restore[0]}) — the working copy adds only ignored files`);
+    }
   }
   const report = assess({ mode, inventory: movedInventory(repoRoot, roots), runs, commit });
   const out = resolve(one("report") ?? join(repoRoot, "build", "qa-refresh.json"));
