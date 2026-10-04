@@ -307,6 +307,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     reads: "a signed sheet — a judgement somebody recorded, kept apart from what a script derives",
   },
 
+  "block-kinds": {
+    // Three stacked blocks with a tag on the top one: each kind a node,
+    // labelled by its prefix. Bean riit, step 2.
+    glyph: "M5 15h14v4H5zM5 10h14v4H5zM5 5h9v4H5zM16 5l3 2-3 2",
+    tone: 32,
+    reads: "stacked blocks, the top one tagged — block kinds, each declared by the harness that owns it",
+  },
   validators: {
     // A check mark inside a shield: code that judges a node, declared as a node.
     // Bean riit.

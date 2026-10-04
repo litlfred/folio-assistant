@@ -35,6 +35,14 @@
   ],
   "directories": [
     {
+      "id": "folio-assistant-sci-block-kinds",
+      "path": "block-kinds/",
+      "description": "The paper adapter's math block kinds — the ones whose assertion is a formal mathematical claim (definition, theorem, lemma, proposition, corollary, conjecture, proof), one folio-block-kind/v1 node per file (bean riit, step 2). Owner, 2026-10-04: kinds are discoverable and not centrally managed; cat-harness/schemas/block-kinds.ts finds these by scanning every instance's declared block-kinds graph, and the seven parallel tables they replace are gone.",
+      "graphKinds": [
+        "block-kinds"
+      ]
+    },
+    {
       "id": "folio-assistant-sci-kinds",
       "path": "kinds/",
       "description": "The graph kinds folio-assistant-sci owns, one folio-graph-kind/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph.",

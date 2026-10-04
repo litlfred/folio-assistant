@@ -1334,6 +1334,8 @@ export const RULES: Rule[] = [
       // graph-kind node schema. Harness for the same reason as their importers.
       "schemas/instance-roots.ts",
       "schemas/graph-kind-node.ts",
+      "schemas/declared-nodes.ts",
+      "schemas/validator-node.ts",
       // Roles, actors and the KG audit sidecar are harness-layer for the same
       // reason and on the same terms: `role-graph.ts` imports only
       // `namespaces.ts`, `kg-qa.ts` imports zod and `portable-path.ts` below.

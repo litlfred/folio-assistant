@@ -68,6 +68,7 @@
  * @graphNode schema
  */
 
+import { BLOCK_KIND_NODES } from "./block-kinds";
 import { z } from "zod";
 
 // ── BCP 47 locale tag ────────────────────────────────────────────
@@ -396,23 +397,8 @@ export const TranslationConfigSchema = z.object({
  * convention (the kind name itself, title-cased).
  */
 export const KIND_HEADINGS: Record<string, Record<string, string>> = {
-  en: {
-    definition: "Definition",
-    theorem: "Theorem",
-    lemma: "Lemma",
-    proposition: "Proposition",
-    corollary: "Corollary",
-    algorithm: "Algorithm",
-    conjecture: "Conjecture",
-    example: "Example",
-    remark: "Remark",
-    proof: "Proof",
-    simulator: "Simulator",
-    equation: "Equation",
-    diagram: "Figure",
-    table: "Table",
-    prose: "",
-  },
+  // English is each discovered node's own `heading` (bean riit, step 2).
+  en: Object.fromEntries(BLOCK_KIND_NODES.map((n) => [n.kind, n.heading])),
   fr: {
     definition: "Définition",
     theorem: "Théorème",

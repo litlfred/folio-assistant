@@ -49,7 +49,7 @@ The owner chose to keep sod4 open as the parent, with one row per finding, ticke
 The open question is answered: **every contribution is a node, and validators are KG nodes too**. That work is bean folio-assistant-riit, and #1 (block kinds) lands inside it.
 
 ## Findings
-- [ ] #1 paper block kinds as nodes in folio-assistant-core, replacing ~7 parallel tables (FIRST; via folio-assistant-riit)
+- [ ] #1 paper block kinds as nodes: DISCOVERED from core (9 document kinds) and sci (7 math kinds), owner 2026-10-04 "2. Owners now"; the data tables are gone (riit step 2a). Left: non-English headings into the translation graph (2b)
 - [ ] #2 folio-specific and DAK QA criteria to their owners as criterion nodes
 - [ ] #3 qou's 39-entry chapter profiles to the qou folio as data (math repo: ask before any PR)
 - [ ] #4 avatars on the owning nodes: kind avatars done for moved kinds (dmx1); instance avatars into each `<instance>.json`

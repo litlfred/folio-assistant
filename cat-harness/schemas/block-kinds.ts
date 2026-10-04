@@ -11,54 +11,88 @@
  * That is why `constraints.ts` spelled its kind lists out by hand, and
  * why several of them ended up narrower than the rule they gated: a
  * kind missing from `appliesTo` is skipped by `validate.ts` without a
- * word. This module imports nothing, so there is no longer a reason for
- * any list of kinds to be written out anywhere.
+ * word. This module imports only leaves (the filesystem scan, the node
+ * schema, and `types.ts` for a TYPE, which is erased), so there is no
+ * reason for any list of kinds to be written out anywhere — and since bean
+ * riit, step 2, none is: the kinds are DISCOVERED from the `block-kinds/`
+ * graphs their owning harnesses declare.
  *
  * `types.ts` re-exports `BLOCK_KINDS` and `BlockKind`, so existing
- * importers are unaffected, and keeps the compile-time proof that this
- * array and the `Block` union cover each other — that check needs the
- * union, which necessarily lives with the types.
+ * importers are unaffected. The compile-time proof that a list and the
+ * `Block` union cover each other is gone with the list: `BlockKind` IS
+ * `Block["kind"]`, and the runtime half (every typed kind discovered, every
+ * discovered kind typed) is `block-kind-nodes.test.ts`.
  *
  * @module schemas/block-kinds
  * @graphNode schema
  */
 
-/**
- * Every block kind, as a RUNTIME value.
- *
- * `Block` is a type and is erased at compile time, so anything that has
- * to recognise a block by reading its source — the QA pipeline's block
- * discovery, the propagation sweeps, the viewer registry, the constraint
- * table — needs a list it can actually iterate. Seven such lists existed,
- * hand-maintained and independent, and every one of them was short.
- *
- * The cost was silent. `readBlockManifest` returns `undefined` for an
- * unrecognised builder and `walkBlocks` skips whatever it returns
- * `undefined` for, so on the qou corpus 461 blocks — 445 `table`, 16
- * `algorithm` — were never yielded, never swept, and never audited.
- * Roughly 13% of the corpus, excluded by a stale regex rather than by
- * any decision.
- */
-export const BLOCK_KINDS = [
-  "definition",
-  "theorem",
-  "lemma",
-  "proposition",
-  "corollary",
-  "algorithm",
-  "conjecture",
-  "example",
-  "remark",
-  "proof",
-  "simulator",
-  "prose",
-  "equation",
-  "diagram",
-  "table",
-  "figure",
-] as const;
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
-export type BlockKind = (typeof BLOCK_KINDS)[number];
+import { BlockKindNodeSchema, builderOf, type BlockKindNode } from "./block-kind-node";
+import { declaredNodeFiles } from "./declared-nodes";
+import type { Block } from "./types";
+
+/**
+ * Every block kind, as a RUNTIME value — DISCOVERED, not listed.
+ *
+ * Owner, 2026-10-04: *"kinds need to be discoverable … not centrally
+ * managed"* (bean riit, step 2; sod4 finding #1). Each kind is a
+ * `folio-block-kind/v1` node in a `block-kinds/` graph its OWNING harness
+ * declares — document kinds in folio-assistant-core, the math kinds in
+ * folio-assistant-sci — and this module scans every instance's declaration
+ * for them. Adding a kind is adding a node; nothing here changes.
+ *
+ * Why a runtime list matters at all: `Block` is a type and is erased, so
+ * anything that recognises a block by reading its source needs a list it can
+ * iterate. Seven such lists existed, hand-maintained and independent, and
+ * every one was short — on the qou corpus 461 blocks (445 `table`, 16
+ * `algorithm`) were never yielded, swept or audited, excluded by a stale
+ * regex rather than by any decision. Seven tables kept in step by hand were
+ * the same defect in a wider form, which is what one node per kind removes.
+ *
+ * Sorted by kind, so the order is a property of the set and not of which
+ * instance was scanned first.
+ */
+export function discoverBlockKinds(repoRoot: string = PLATFORM_ROOT): BlockKindNode[] {
+  const byKind = new Map<string, { file: string; node: BlockKindNode }>();
+  for (const { file, raw } of declaredNodeFiles(repoRoot, "block-kinds")) {
+    const parsed = BlockKindNodeSchema.safeParse(raw);
+    if (!parsed.success) throw new Error(`${file} is not a folio-block-kind/v1 node: ${parsed.error.message}`);
+    const prior = byKind.get(parsed.data.kind);
+    if (prior) throw new Error(`block kind "${parsed.data.kind}" is declared twice: ${prior.file} and ${file}`);
+    byKind.set(parsed.data.kind, { file, node: parsed.data });
+  }
+  if (byKind.size === 0) {
+    throw new Error(`no block kinds discovered under ${repoRoot}: no instance declares a readable block-kinds graph`);
+  }
+  return [...byKind.values()].map((v) => v.node).sort((a, b) => a.kind.localeCompare(b.kind));
+}
+
+/** The platform checkout this module sits in — where its instances are scanned from. */
+const PLATFORM_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
+
+/** Every discovered block-kind node, sorted by kind. */
+export const BLOCK_KIND_NODES: readonly BlockKindNode[] = discoverBlockKinds();
+
+const NODE_OF: ReadonlyMap<string, BlockKindNode> = new Map(BLOCK_KIND_NODES.map((n) => [n.kind, n]));
+
+/** The discovered node for `kind`, or `undefined` for a kind no instance declares. */
+export function blockKindNode(kind: string): BlockKindNode | undefined {
+  return NODE_OF.get(kind);
+}
+
+/**
+ * The kinds the `Block` union types. A type, so it comes from the TYPED
+ * interfaces in `types.ts` (a type-only import, erased at runtime, so no
+ * cycle) rather than from a list; `block-kind-nodes.test.ts` asserts every
+ * typed kind is discovered and every discovered kind is typed.
+ */
+export type BlockKind = Block["kind"];
+
+/** Every discovered kind. Typed as a non-empty tuple so `z.enum` accepts it. */
+export const BLOCK_KINDS = BLOCK_KIND_NODES.map((n) => n.kind) as unknown as readonly [BlockKind, ...BlockKind[]];
 
 /**
  * `BLOCK_KINDS` as a regex alternation, for the several places that
@@ -102,7 +136,9 @@ export type ContentAdapter = (typeof CONTENT_ADAPTERS)[number];
  * union. Duplicating it here is precisely the drift this module exists to
  * prevent.
  */
-export const PAPER_BLOCK_KINDS = BLOCK_KINDS;
+export const PAPER_BLOCK_KINDS: readonly BlockKind[] = BLOCK_KIND_NODES.filter((n) => n.adapter === "paper").map(
+  (n) => n.kind as BlockKind,
+);
 
 // ── Content profiles ─────────────────────────────────────────────
 
@@ -223,42 +259,37 @@ export type ContentInteractivity = (typeof CONTENT_INTERACTIVITY)[number];
 /**
  * The kinds whose assertion *is* a formal mathematical claim.
  *
- * Written out rather than derived, because the criterion ("the block asserts
- * mathematics") is a judgement about meaning that no field on the type
- * exposes. What *is* derived is its complement — see
- * {@link DOCUMENT_BLOCK_KINDS} — so the two can never overlap or leave a kind
- * unclassified, which is the failure a second hand-written list would invite.
+ * The criterion ("the block asserts mathematics") is a judgement about
+ * meaning that no field on the TYPE exposes, so it is a field on each NODE:
+ * `profile: "paper"`, the narrowest profile admitting the kind. `profile` is a
+ * required two-valued field, so this and {@link DOCUMENT_BLOCK_KINDS} can
+ * never overlap or leave a kind unclassified.
  */
-export const MATH_BLOCK_KINDS = [
-  "definition",
-  "theorem",
-  "lemma",
-  "proposition",
-  "corollary",
-  "conjecture",
-  "proof",
-] as const satisfies readonly BlockKind[];
+export const MATH_BLOCK_KINDS: readonly BlockKind[] = BLOCK_KIND_NODES.filter((n) => n.profile === "paper").map(
+  (n) => n.kind as BlockKind,
+);
 
-export type MathBlockKind = (typeof MATH_BLOCK_KINDS)[number];
+/** A math kind. The split is DATA (each node's `profile`), so the type cannot narrow below {@link BlockKind}. */
+export type MathBlockKind = BlockKind;
 
 /**
  * Everything a document folio may contain: the paper vocabulary minus
  * {@link MATH_BLOCK_KINDS}.
  *
- * Derived, so a kind added to `BLOCK_KINDS` lands here automatically. That
- * default is the permissive one, which is the opposite of the choice made for
+ * Every node whose `profile` is `document`. A new kind's author must say which
+ * (the field is required); `document` is the permissive answer, which is the opposite of the choice made for
  * QA criterion scoping — deliberately. A criterion misfiring on a kind it was
  * never written for reads as a real finding and wastes a reviewer; a new kind
  * being *offerable* in a document folio at worst offers something nobody
  * wants, and the profile test names every member so the classification is
  * reviewed rather than inherited silently.
  */
-export const DOCUMENT_BLOCK_KINDS = BLOCK_KINDS.filter(
-  (k): k is Exclude<BlockKind, MathBlockKind> =>
-    !(MATH_BLOCK_KINDS as readonly string[]).includes(k),
+export const DOCUMENT_BLOCK_KINDS: readonly BlockKind[] = BLOCK_KIND_NODES.filter((n) => n.profile === "document").map(
+  (n) => n.kind as BlockKind,
 );
 
-export type DocumentBlockKind = (typeof DOCUMENT_BLOCK_KINDS)[number];
+/** A document kind; see {@link MathBlockKind} for why it is not narrower. */
+export type DocumentBlockKind = BlockKind;
 
 /** Which kinds each profile admits. */
 export const PROFILE_BLOCK_KINDS: Record<ContentProfile, readonly BlockKind[]> = {
@@ -376,7 +407,7 @@ export function adapterForKind(kind: string): ContentAdapter | undefined {
  * this map is never derived by string munging.
  */
 const BUILDER_TO_KIND: ReadonlyMap<string, string> = new Map(
-  PAPER_BLOCK_KINDS.map((k) => [k, k] as [string, string]),
+  BLOCK_KIND_NODES.map((n) => [builderOf(n), n.kind] as [string, string]),
 );
 
 /** Is `builder` the name of a BUILT-IN kind's builder? */

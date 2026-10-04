@@ -607,6 +607,23 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "The validators a harness's code provides, one node each naming the graph kind and $schema " +
       "family it checks and the Zod export that checks it, joined onto the kinds on first use.",
   },
+  // The third META-KIND (bean riit, step 2): a directory of graph kind
+  // `block-kinds` holds the block kinds a harness's adapter owns, one
+  // `folio-block-kind/v1` node each. `block-kinds.ts` DISCOVERS them across
+  // every instance; no module lists them.
+  "block-kinds": {
+    description:
+      "the block kinds a harness's content adapter owns, one `folio-block-kind/v1` node each (`schemas/block-kind-node.ts`): the kind string, its adapter and narrowest profile, label prefix, RDF types, builder and English heading. `schemas/block-kinds.ts` discovers them across every instance's declared graph, so no module lists the kinds. Owner, 2026-10-04: *\"kinds need to be discoverable … not centrally managed\"*; document kinds live in folio-assistant-core and the math kinds in folio-assistant-sci (option 2 of 3). Bean `riit`, step 2; sod4 finding #1.",
+    title: "Block kinds",
+    renderable: false,
+    holds: "content",
+    nodeSchemas: {
+      "folio-block-kind/v1": {},
+    },
+    summary:
+      "The block kinds a harness's adapter owns, one node per kind carrying its label prefix, " +
+      "RDF types, profile and builder. Discovered across the instances; no module lists them.",
+  },
   tools: {
     description:
       "Tool definitions, themselves nodes in the KG",

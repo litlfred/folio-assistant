@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T17:42:33Z
-updated_at: 2026-10-04T17:53:12Z
+updated_at: 2026-10-04T18:51:01Z
 parent: folio-assistant-fs43
 ---
 
@@ -35,3 +35,29 @@ The proposal is `cat-harness/docs/proposals/contributions-as-nodes-2026-10-04.md
 3. locale headings live in the translation graph, so a block-kind node carries only its English heading.
 
 The order: validators, then block kinds and the adapter (sod4 #1), then checkers, renderers and pipeline plugins, then MCP tools, then delete the contributions.ts modules.
+
+
+## 2026-10-04: step 2a — block kinds are discovered nodes (sod4 #1)
+
+Owner rulings this step:
+- Where the nodes live: *"2. Owners now"*. The 9 document kinds are in `folio-assistant-core/block-kinds/` and the 7 math kinds in `folio-assistant-sci/block-kinds/`. cat-harness's schemas read them upward through discovery; the alternative was keeping them in cat-harness until the schemas move.
+- *"kinds need to be discoverable"* and *"not centrally managed"*.
+
+What changed:
+- `folio-block-kind/v1` (`schemas/block-kind-node.ts`) carries `kind`, `adapter`, `profile`, `builder?`, `labelPrefix`, `prefixEnforced`, `provable`, `folioType`, `docoType?`, `heading`, `headingPlural` and `indexRank?`.
+- `block-kinds` is a meta-kind in BASE, with an avatar and the validator node `cat-harness/validators/block-kind-node.json`.
+- `block-kinds.ts` DISCOVERS the kinds, and `BLOCK_KINDS` is no longer a literal. A kind two files declare is refused, naming both. A checkout with none is refused.
+- `BlockKind` is now `Block["kind"]`, the TYPE read from code. The compile-time list proof is gone with the list. `block-kind-nodes.test.ts` checks that the typed kinds (BlockSchema's union members) equal the discovered kinds.
+- Tables now read off the nodes:
+  - `BLOCK_KINDS`, `MATH_BLOCK_KINDS` and `DOCUMENT_BLOCK_KINDS` (from `profile`), and `PAPER_BLOCK_KINDS`.
+  - The builder map; `LABEL_PREFIXES` and `KNOWN_LABEL_PREFIXES`; `PROVABLE_LABEL_PREFIXES`.
+  - jsonld's `BLOCK_KIND_TO_FOLIO_TYPE` and `BLOCK_KIND_TO_DOCO_TYPE`, and `KIND_PREFIXES`.
+  - The English `KIND_HEADINGS`.
+  - generate-index's plural headings, its INDEXED_KINDS and its reading order (`indexRank`).
+- Behaviour kept: `prose` was never in LABEL_PREFIXES, so `prefixEnforced: false`. `figure` had no English heading row and fell back to "Figure", which the node now states.
+
+Left, and why:
+- **2b:** the five non-English heading locales move to the translation graph (owner's option 1).
+- The per-kind Zod schemas and `BlockSchema`'s union are CODE in cat-harness/schemas/constraints.ts (option 3, not taken).
+- About 6 pipeline audits spell `"thm:"`-style prefixes inline: conditional-class-banner-audit, audit-wiring, conjectural-propagation-audit and others.
+- `CONTENT_ADAPTERS` and `ADAPTER_COMPANION_ROLES` belong to the adapter-node step.
