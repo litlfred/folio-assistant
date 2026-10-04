@@ -1,0 +1,18 @@
+{
+  "$schema": "folio-merge-queue-entry/v1",
+  "repository": "litlfred/folio-assistant",
+  "pr": 2083,
+  "placement": {
+    "kind": "computed",
+    "decision": "cat-harness/processes/sdlc/decisions/merge-priority.dmn#Decision_MergePriority",
+    "rule": "Rule_HeadNotGreen",
+    "class": "ci-not-green",
+    "rank": 91
+  },
+  "reason": "ACK: received into the queue at the 13:09Z sweep; owner-approved 2026-10-04 (\"Approve all 4\"). Waiting on the jsonld-gen-check run on its head.",
+  "decidedBy": "https://claude.ai/code/session_019gRX6w8kzAX6wpHbgdyu3s",
+  "decidedAt": "2026-10-04T13:20:00Z",
+  "beans": [
+    "folio-assistant-rc1e"
+  ]
+}

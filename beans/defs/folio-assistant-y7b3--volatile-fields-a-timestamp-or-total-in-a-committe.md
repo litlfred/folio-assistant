@@ -39,7 +39,7 @@ writeQaResult already refuses to restamp unchanged findings (ymsu). The collisio
 - [x] line-level measurement recorded
 - [x] owner decides which fix: "remove volatile fields" (2026-09-30)
 - [x] part 1: qa-results carry no updated_at (#1714)
-- [ ] part 2: subdirectory file counts in generated READMEs — OPEN, owner chose "decide later" (2026-09-30)
+- [x] part 2: subdirectory file counts in generated READMEs — answered by bean `ba9e` (counts off `main`, into the KG JSON-LD; owner 2026-10-02)
 
 ## Part 2 — open, deliberately
 

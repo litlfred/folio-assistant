@@ -57,7 +57,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, wri
 
 import { gitCorpus } from "../schemas/git-corpus.ts";
 import { dirname, join, relative, resolve, sep } from "node:path";
-import type { z } from "zod";
+import { z } from "zod";
 
 import { toJsonSchema } from "../schemas/to-json-schema.js";
 
@@ -238,7 +238,12 @@ function drawFamily(
 ): void {
   const title = f.tag;
   if (f.state === "resolved") {
-    const json = toJsonSchema(f.schema as z.ZodType) as Json;
+    // A validator written as a guard piped into a strict object (the merge
+    // queue's: `looseObject` refusing GitHub facts by name, then the entry)
+    // has an INPUT side with no properties. Draw the shape it produces, which
+    // is the class a reader means.
+    const schema = f.schema instanceof z.ZodPipe ? (f.schema.out as z.ZodType) : (f.schema as z.ZodType);
+    const json = toJsonSchema(schema) as Json;
     decompose(json, title, `json: ${f.ref.exportName}`, kind, `${prefix}_${safeId(f.tag)}`, acc);
   } else if (f.state === "shape") {
     acc.classes.push({

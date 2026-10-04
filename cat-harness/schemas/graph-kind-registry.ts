@@ -1429,6 +1429,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // Runnable, unlike its neighbour: `SessionSurveySchema` is a Zod schema,
       // so a published survey is PARSED rather than merely typed.
       "folio-session-survey/v1": { validator: "schemas/session-survey.ts#SessionSurveySchema" },
+      // `merge-queue`'s family, missing for the same reason as the survey's:
+      // no queue entry existed until the steward's first ACKs on 2026-10-04,
+      // and the first one made `check:kind-validators:require-all` red. The
+      // SAME validator the child declares, so the two cannot disagree.
+      "folio-merge-queue-entry/v1": { validator: "schemas/merge-queue.ts#MergeQueueEntrySchema" },
     },
     recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:

@@ -17,6 +17,8 @@ import {
   WRITER_OVERRIDES,
   exitCodeFor,
   maxPassesFromArgv,
+  REGEN_VERDICT_TAG,
+  regenExitMeaning,
   regenPass,
   regenToFixpoint,
   relabelForMissingBrowser,
@@ -606,5 +608,93 @@ describe("a NEW outcome cannot quietly become clean — bean `g5kt` x `i1q7`", (
     expect(v.code).toBe(1);
     expect(v.message).toContain("cannot fix a defect");
     expect(v.message).toContain("COULD NOT BE DETERMINED");
+  });
+});
+
+describe("a caller holding only regen's exit CODE is told the truth (task #62)", () => {
+  // The defect this pins: `merge-base.ts` had ONE message for every non-zero
+  // exit — "the gate set could not reproduce the resolution (regen reported
+  // unrepaired checks)". `exitCodeFor` above returns three distinct verdicts,
+  // so that sentence was false in three of the four cases a caller can see.
+  // The abort was right every time; only the recorded reason was wrong, and
+  // the abort line is the one place the reason is written down.
+
+  test("exit 2 is COULD NOT DETERMINE, and says regen reported no unrepaired check", () => {
+    const m = regenExitMeaning(2);
+    expect(m.verdict).toBe("not-settled");
+    expect(m.determined).toBe(false);
+    expect(m.why).toContain("COULD NOT DETERMINE");
+    // The precise falsehood being removed: the old message asserted unrepaired
+    // checks for exactly this exit, where regen reported none.
+    expect(m.why).toContain("NO unrepaired check");
+  });
+
+  test("exit 1 does not name ONE kind, because the code cannot tell them apart", () => {
+    const m = regenExitMeaning(1);
+    expect(m.verdict).toBe("not-staleness");
+    expect(m.determined).toBe(true);
+    // All four kinds are named, so a caller cannot honestly report one of them
+    // as the cause: `no-browser` is a could-not-determine and `writer-failed`
+    // is a verdict about the tool, not the tree (bean `i1q7`).
+    for (const kind of ["unrepaired", "no-writer", "writer-failed", "no-browser"]) {
+      expect(m.why).toContain(kind);
+    }
+  });
+
+  test("an exit outside regen's own three verdicts is a CRASH, not a measurement", () => {
+    for (const code of [3, 127, 137]) {
+      const m = regenExitMeaning(code);
+      expect(m.verdict).toBe("crashed");
+      expect(m.determined).toBe(false);
+      expect(m.why).toContain(String(code));
+      expect(m.why).toContain("nothing was measured");
+    }
+  });
+
+  test("a signal (status null) is a crash too, and does not read as code 0", () => {
+    const m = regenExitMeaning(null);
+    expect(m.verdict).toBe("crashed");
+    expect(m.determined).toBe(false);
+    expect(m.why).toContain("on a signal");
+  });
+
+  test("exit 0 is the only clean verdict", () => {
+    const m = regenExitMeaning(0);
+    expect(m.verdict).toBe("clean");
+    expect(m.determined).toBe(true);
+  });
+
+  test("every code exitCodeFor can return decodes to the reason that produced it", () => {
+    // The two functions are inverses over the codes `exitCodeFor` actually
+    // emits, which is the property that keeps a caller's report true as the
+    // verdict set grows. Each case is built from `exitCodeFor` rather than
+    // from a literal, so adding a verdict there fails HERE.
+    const cases = [
+      { run: { results: [], settled: true }, expect: "clean" },
+      {
+        run: { results: [{ check: "a:check", writer: "a", outcome: "unrepaired" as Outcome }], settled: true },
+        expect: "not-staleness",
+      },
+      { run: { results: [], settled: false }, expect: "not-settled" },
+    ] as const;
+    for (const c of cases) {
+      expect(regenExitMeaning(exitCodeFor(c.run).code).verdict).toBe(c.expect);
+    }
+  });
+
+  test("merge-base composes its abort from the TAG, not from matched prose", () => {
+    // The verdict crosses a module boundary: merge-base prints it and
+    // merge-main-comment reads it back out of the captured log to decide
+    // whether the PR's comment says "Error" or "Could not determine". If
+    // somebody hand-writes the sentence again the pair breaks silently, so
+    // the pairing is pinned at the source.
+    const mergeBase = readFileSync(join(import.meta.dir, "..", "merge-base.ts"), "utf-8");
+    expect(mergeBase).toContain("REGEN_VERDICT_TAG");
+    expect(mergeBase).toContain("regenExitMeaning");
+    // And the false sentence does not come back.
+    expect(mergeBase).not.toContain("regen reported unrepaired checks)");
+    const comment = readFileSync(join(import.meta.dir, "..", "merge-main-comment.ts"), "utf-8");
+    expect(comment).toContain("REGEN_VERDICT_TAG");
+    expect(REGEN_VERDICT_TAG).toBe("regen-verdict:");
   });
 });
