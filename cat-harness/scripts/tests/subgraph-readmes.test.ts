@@ -271,6 +271,17 @@ describe("subdirectory rows — described from the declaration, or saying nothin
   });
 });
 
+describe("a subgraph kept OFF the checkout is not described from it (bean 9c7h)", () => {
+  test("fsh-guts, kept on its branch, is not among the directories whose README this tree writes", () => {
+    // Counting the files git tracks here would rewrite its README as "holds
+    // no files" — true of main, false of the subgraph, whose README lives on
+    // `cat/cat-harness/fsh-guts` with its content.
+    const ids = harnessInstances(REPO).flatMap((i) => i.dirs.map((d) => d.id));
+    expect(ids.length).toBeGreaterThan(20);
+    expect(ids).not.toContain("fsh-guts");
+  });
+});
+
 /**
  * A STORED directory is skipped — bean `f3bh`.
  *
