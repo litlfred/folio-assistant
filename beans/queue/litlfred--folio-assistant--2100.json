@@ -1,0 +1,20 @@
+{
+  "$schema": "folio-merge-queue-entry/v1",
+  "repository": "litlfred/folio-assistant",
+  "pr": 2100,
+  "placement": {
+    "kind": "computed",
+    "decision": "cat-harness/processes/sdlc/decisions/merge-priority.dmn#Decision_MergePriority",
+    "rule": "Rule_NotReady",
+    "class": "hand-back",
+    "rank": 92
+  },
+  "reason": "ACK: new at 14:25Z (throttle merge-guard.yml: about 25 runs per 6 min since #2000; closes #2099). Green and conflict-free, but not signed (merge:guard checks 3 and 4). Awaiting the owner's explicit approval.",
+  "decidedBy": "https://claude.ai/code/session_019gRX6w8kzAX6wpHbgdyu3s",
+  "decidedAt": "2026-10-04T14:55:00Z",
+  "status": "unknown",
+  "beans": [
+    "folio-assistant-ns96",
+    "folio-assistant-uoob"
+  ]
+}
