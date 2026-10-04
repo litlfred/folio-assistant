@@ -101,6 +101,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`state-seed.ts`](state-seed.ts) | a file |  |
 | [`state-store.ts`](state-store.ts) | a file |  |
 | [`vocab-mappings.ts`](vocab-mappings.ts) | a file |  |
+| [`witness-conformance.ts`](witness-conformance.ts) | a file |  |
 | [`docker-latex-build/`](docker-latex-build/) | _nothing declares what this holds_ | |
 | [`lib/`](lib/) | _nothing declares what this holds_ | |
 | [`tests/`](tests/) | _nothing declares what this holds_ | |
