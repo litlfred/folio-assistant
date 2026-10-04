@@ -228,6 +228,10 @@ export const RULES: Rule[] = [
       // consumes the same `layer-direction.ts`, and no folio content.
       "scripts/check-process-bindings.ts",
       "scripts/check-document-kind-sources.ts",
+      // HARNESS, for the same reason: it judges directory declarations'
+      // `derivedFrom` edges with the same reach, and reads no folio content.
+      "scripts/check-derived-from.ts",
+      "scripts/derived-from.baseline.ts",
       "scripts/process-bindings.baseline.ts",
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
