@@ -1707,6 +1707,7 @@ export const RULES: Rule[] = [
       "scripts/html-comments.ts",           // the one "is this inside a comment" scan the banner's body-finder and the folio mount's marker check share (bean `ur84`)
       "scripts/folio-mount.ts",             // the fragment that carries the reader's folio onto a library page — machinery, not a content model (bean `jpjt`)
       "scripts/check-folio-mount.ts",       // ...and the gate that every declared page carries it
+      "scripts/pdf-viewer.ts",              // the pinned pdf.js viewer installed into a built site, and the fragment that embeds it — machinery over the TREE and a URL, no content model (bean `folio-assistant-5ea6`)
       "scripts/backoff-sleep.ts",           // the one retry wait (bean `06kg`)
       "src/logging/log-writer.ts",
       "src/logging/log-sweep.ts",

@@ -45,6 +45,8 @@
  * `/folio-assistant/who-iris/`, `/STAGING/<branch>/who-iris/`), so a relative
  * or absolute viewer URL is right on at most one of them. The caller passes
  * the route pattern; `siteRootOf` and the inlined client apply the same one.
+ *
+ * @covers none — a build step that installs third-party bytes, not an audit of a declared graph
  */
 
 import { createHash } from "crypto";

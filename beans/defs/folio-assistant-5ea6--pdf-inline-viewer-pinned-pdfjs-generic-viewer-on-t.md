@@ -3,8 +3,10 @@
 title: 'PDF INLINE VIEWER: pinned pdf.js generic viewer on the site, embed on who-iris item pages, as skill + Tool node'
 status: in-progress
 type: feature
+priority: normal
 created_at: 2026-10-04T18:40:22Z
-updated_at: 2026-10-04T18:40:22Z
+updated_at: 2026-10-04T19:16:24Z
+parent: folio-assistant-o3xy
 ---
 
 Owner request 2026-10-04: lightweight inline PDF viewer (search, scroll, jump to page, print, download) for CDN-hosted PDFs, e.g. who-iris item pages. Owner chose option 2 (pdf.js generic viewer copied onto the site) and asked for it as a skill and a tool.
