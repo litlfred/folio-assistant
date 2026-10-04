@@ -17,19 +17,21 @@
  *     [--notes    "<fix applied / fix proposed / scope note>"]
  *     [--id       <reviewer id>]               (default: agent:session)
  *
- * The field_hash is computed from the block's CURRENT .md/.ts content,
+ * The field_hash is computed from the block's CURRENT .md/.ts/.lean content,
  * so run this AFTER any prose fix, and the entry certifies the fixed
  * state.
  *
  * @module content/pipeline/qa-agent-entry
  */
-import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
-import { basename, dirname, join, relative } from "node:path";
-import { blockQaPath, existingBlockQaPath } from "./qa-paths";
+import { basename, dirname, join, relative, resolve } from "node:path";
+import { blockQaPath, existingBlockQaPath, findContentRepoRoot } from "./qa-paths";
 import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../../schemas/qa-attestations.ts";
-import { findContentRepoRoot } from "./repo-root";
+import { hashBlockFiles, resolveCanonicalLean } from "./qa-utils";
+
+/** The platform checkout: the fallback anchor when no content repo encloses the block. */
+const PLATFORM_ROOT = resolve(import.meta.dir, "../..");
 
 function arg(name: string): string | undefined {
   const i = process.argv.indexOf(`--${name}`);
@@ -60,6 +62,18 @@ if (!existsSync(blockMd)) {
   console.error(`no such block .md: ${blockMd}`);
   process.exit(2);
 }
+// A `fail` or `warn` asserts a violation, and the block-qa schema says the
+// evidence must cite it. Without this guard such a verdict was written with an
+// empty reason: a failure recorded nowhere but in its result field, which no
+// reader can check. Upstreamed from litlfred/qou's fork (2026-10-04, the T11
+// fork audit, owner-approved). `pass` and `n/a` need no evidence.
+if ((result === "fail" || result === "warn") && !evidence?.trim()) {
+  console.error(
+    `--result ${result} requires --evidence: a verdict that asserts a violation ` +
+      "must say what was found, or a reader cannot check it",
+  );
+  process.exit(2);
+}
 
 const dir = dirname(blockMd);
 const root = basename(blockMd, ".md");
@@ -74,13 +88,17 @@ const tsPath = join(dir, `${root}.ts`);
 // The write never falls back. It lands in the results tree, which is what
 // makes running this once a MIGRATION rather than a fork: after it, the block
 // has exactly one verdict and it is in the new place.
-const repoRoot = findContentRepoRoot();
+// Anchored on the BLOCK, not the cwd, exactly as `src/qa-agent-write.ts` and
+// `qa-sweep` anchor it (`qa-paths.findContentRepoRoot`): the block's own
+// content repository, with the platform checkout only as the last resort.
+// This used the cwd-only `repo-root.findContentRepoRoot()`, which fell back to
+// the PLATFORM checkout whenever the cwd held no folio declaration, so one
+// verdict landed in different trees depending on where the command was run,
+// including the platform's own working tree.
 const blockRoot = join(dir, root);
+const repoRoot = findContentRepoRoot(resolve(blockRoot), PLATFORM_ROOT);
 const qaReadPath = existingBlockQaPath(repoRoot, blockRoot);
 const qaPath = blockQaPath(repoRoot, blockRoot);
-
-const sha12 = (s: string) =>
-  createHash("sha256").update(s).digest("hex").slice(0, 12);
 
 let reviewedSha = "unknown";
 try {
@@ -90,7 +108,7 @@ try {
 }
 
 interface QaEntry {
-  field_hash: { md: string; ts?: string };
+  field_hash: { md?: string; ts?: string; lean?: string; lean_statement?: string };
   result: string;
   severity?: string;
   evidence?: string;
@@ -129,11 +147,23 @@ doc.$schema ??= "block-qa/v1";
 doc.criteria ??= {};
 doc.criteria[criterion] ??= [];
 
+// Hash the block's Lean too, found the way `src/qa-agent-write.ts` and the
+// staleness reader find it: the sibling `<root>.lean`, else the declaration
+// its `lean.ref` names. This entry point used to hash only md and ts, so a
+// verdict on a Lean-reading criterion carried no `lean`/`lean_statement` key
+// and the reader, which DOES hash the Lean, could never call it fresh: the
+// block re-queued forever. Upstreamed from litlfred/qou's fork (2026-10-04).
+let leanPath: string | undefined = existsSync(join(dir, `${root}.lean`)) ? join(dir, `${root}.lean`) : undefined;
+if (!leanPath && existsSync(tsPath)) {
+  const refMatch = readFileSync(tsPath, "utf8").match(/ref:\s*["']([^"']+)["']/);
+  leanPath = resolveCanonicalLean(refMatch?.[1], repoRoot);
+}
 const entry: QaEntry = {
-  field_hash: {
-    md: sha12(readFileSync(blockMd, "utf8")),
-    ...(existsSync(tsPath) ? { ts: sha12(readFileSync(tsPath, "utf8")) } : {}),
-  },
+  field_hash: hashBlockFiles({
+    md: blockMd,
+    ...(existsSync(tsPath) ? { ts: tsPath } : {}),
+    ...(leanPath ? { lean: leanPath } : {}),
+  }) as QaEntry["field_hash"],
   result,
   reviewer: { kind: "agent", id: reviewerId, version: "v1" },
   reviewed_at: new Date().toISOString(),
