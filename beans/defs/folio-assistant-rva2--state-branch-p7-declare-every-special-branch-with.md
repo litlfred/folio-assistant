@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-04T17:02:12Z
+updated_at: 2026-10-04T17:04:32Z
 parent: folio-assistant-fs43
 ---
 
@@ -116,3 +116,9 @@ TypeScript: subgraph-source (`special` field, specialBranchFor), state-drift (it
 Coordinated on #2055 (bean zxvh), which adds size budgets INTO the table; the suggestion there is `storage.budget`.
 
 _2026-10-04T17:01:12Z_ — Claimed by claude/gifted-fermi-t8k217 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## 2026-10-04: the owner's sharper ruling — the table leaves infrastructure; it may survive only as a health check
+
+Owner, verbatim: *"i want to retire special-branches.json from being in infrastructure. it can be in health checks. there should not be a central registry for declaring mount tools and subgraph types"*.
+
+So the end state is **no reader resolves a branch name through a central file.** Declarations are the only source. Whatever survives belongs under `test/health/` and is OBSERVED, not declared: a check that lists the special branches on each remote (`git ls-remote`) and compares them with the declarations. It reports an undeclared branch, a declared one that is absent, and a legacy name still present. That check would have reported today's finding, `cat/cat-harness/merge-queue` (on the remote, declared nowhere), which no table did. Siblings: folio-assistant-dmx1 (graph kinds declared per harness) and folio-assistant-j9cs (mount tools declared on storage). The row-by-row plan above stands; step 4 becomes 'delete the table, and add the health check in its place'.
