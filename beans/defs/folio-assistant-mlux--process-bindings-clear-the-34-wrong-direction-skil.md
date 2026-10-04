@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-03T10:38:18Z
-updated_at: 2026-10-04T07:12:12Z
+updated_at: 2026-10-04T12:13:59Z
 parent: folio-assistant-vke6
 ---
 
@@ -20,7 +20,7 @@ Root cause the gate fixes: kg-audit's skill-ref-resolves resolves against knownS
 - [x] folio-assistant-core content-change-review.bpmn Task_DetectScope → folio-assistant-sci's semantic-review-scoping
 - [x] folio-assistant-core draft-to-publication.bpmn Task_PublishRelease → fhir-harness's ig-publication
 - [ ] fhir-harness l3-fhir-pipeline.bpmn Task_MapL2 → smart-base's l2-dak-authoring: cleared by veiu (#1964, the BPMN moves up to smart-base)
-- [ ] kg-audit skill-ref-resolves gets an instance-scoped resolvable set, or explicitly defers to this gate (follow-up, ask the owner)
+- [x] kg-audit skill-ref-resolves gets an instance-scoped resolvable set, or explicitly defers to this gate (follow-up, ask the owner)
 - [ ] BASELINE is [] and the gate passes
 - [x] (minor) document-ingestion.bpmn Task_Citeable carries the same skill ref three times
 
@@ -49,3 +49,9 @@ Worked by session https://claude.ai/code/session_01Vmo3FY8yc8ouQ8qiWsEAfw on bra
 ## 2026-10-04: baseline shrunk (PR #2027)
 
 After #1968 merged, `check:process-bindings --shrink` dropped 32 entries. The baseline now holds only veiu's `l3-fhir-pipeline → l2-dak-authoring`, which veiu clears in #1964. When #2027 merges, the bean has two items left: "BASELINE is []" (waits on veiu) and the kg-audit `skill-ref-resolves` follow-up (an owner question).
+
+## 2026-10-04: the kg-audit follow-up, decided (wm63 session)
+
+Owner, option 1 of 3: `skill-ref-resolves` DEFERS to this gate rather than re-implementing direction. Its summary in `schemas/kg-qa.ts` now says it checks existence only and names `check:process-bindings` for direction. `bpmn-processes` says the same. A second instance-aware implementation was option 2, rejected as two answers to one question.
+
+Remaining: veiu's l2-dak-authoring entry (#1964), then BASELINE is [].

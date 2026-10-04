@@ -177,16 +177,49 @@ function platformDir(assistant: string): string {
 function adapterModulePath(assistant: string, contentType: string): string {
   const declared = BUILTIN_ADAPTERS.find((a) => a.contentType === contentType);
   const rel = declared ? declared.module : `adapters/${contentType}/index.ts`;
-  // POSIX-normalised by hand: this string goes into a JSON config read on
-  // every platform, and `join` from `node:path` would emit backslashes on
-  // Windows.
+  return `./${posixSegments(`${platformDir(assistant)}/${rel}`).join("/")}`;
+}
+
+/**
+ * A path's segments, `.` and `..` folded, POSIX by hand: these strings go into
+ * a JSON config read on every platform, and `join` from `node:path` would emit
+ * backslashes on Windows.
+ */
+function posixSegments(path: string): string[] {
   const segments: string[] = [];
-  for (const part of `${platformDir(assistant)}/${rel}`.split("/")) {
+  for (const part of path.split("/")) {
     if (part === "." || part === "") continue;
     if (part === ".." && segments.length > 0 && segments[segments.length - 1] !== "..") segments.pop();
     else segments.push(part);
   }
-  return `./${segments.join("/")}`;
+  return segments;
+}
+
+/**
+ * The layer a new instance STANDS ON, as a config dependency (bean `zmdo`).
+ *
+ * Without it the scaffolded instance's declaration chain is the instance alone:
+ * measured 2026-10-04 in a sibling layout, a fresh instance — and a fresh
+ * document folio — reached **0** skill directories, so it could not read the
+ * conventions it was scaffolded to follow. One entry is enough: the layer's own
+ * `needs` carry the rest of the stack (`bootstrap ← bootstrap-tools ←
+ * cat-harness ← …`), measured the same day.
+ *
+ * Which layer is DERIVED, never asked for: a folio stands on its adapter's
+ * instance (`BUILTIN_ADAPTERS[].instance`), and a contentless instance on the
+ * harness whose scaffolder wrote it. A `--layer` flag was rejected for `mer2`
+ * and is not reintroduced here.
+ */
+function standsOn(assistant: string, contentType: InitFolioOptions["contentType"] | undefined): { name: string; path: string } {
+  const harness = { name: HARNESS_SUBDIR, path: posixSegments(platformDir(assistant)).join("/") };
+  if (contentType === undefined) return harness;
+  const declared = BUILTIN_ADAPTERS.find((a) => a.contentType === contentType);
+  if (!declared) return harness;
+  // The adapter's module is relative to the harness directory and passes
+  // through its instance's directory: `../folio-assistant-core/adapters/…`.
+  const segments = posixSegments(`${platformDir(assistant)}/${declared.module}`);
+  const at = segments.lastIndexOf(declared.instance);
+  return at < 0 ? harness : { name: declared.instance, path: segments.slice(0, at + 1).join("/") };
 }
 
 // ── Templates ────────────────────────────────────────────────────
@@ -281,6 +314,7 @@ function instanceConfig(o: MaybeFolio, assistant: string): string {
         adapter: o.contentType,
         adapterModule: adapterModulePath(assistant, o.contentType),
       }),
+      dependencies: { folioAssistant: [standsOn(assistant, o.contentType)] },
       feedbackDir: ".folio-feedback",
       skills: ".claude/skills/local",
       viewer: { dir: `${platformDir(assistant)}/viewer`, port: 8080 },

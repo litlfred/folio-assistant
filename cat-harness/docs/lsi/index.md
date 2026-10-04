@@ -128,8 +128,8 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 3 | 18.44 | block, chapter, slot, project, edges, formal, watcher, proof | session, conflict, push, green, steward, merge, minutes, head |
 | 4 | 17.38 | page, pdf, text, manifest, tile, images, avatar, blocks | subdirectory, ledger, sibling, subgraph, train, plan, renderable, sub |
 | 5 | 15.93 | tile, glass, avatar, board, card, sticky, theme, tiles | slice, payloads, payload, manifest, heavy, export, sha, processor |
-| 6 | 15.45 | preview, deploy, tile, iri, staging, payload, slice, build | rung, licence, archive, ingest, archived, arxiv, sniff, zip |
-| 7 | 15.14 | lane, actor, requirements, task, process, skills, role, options | steward, queue, sha, train, slide, member, head, backlog |
+| 6 | 15.46 | preview, deploy, tile, iri, staging, payload, slice, build | rung, licence, archive, ingest, archived, arxiv, sniff, zip |
+| 7 | 15.14 | lane, actor, requirements, task, process, skills, role, slice | steward, queue, sha, train, slide, member, head, rung |
 | 8 | 14.74 | forward, translation, steward, locale, merge, chapter, backward, edges | slice, payloads, bytes, withheld, iri, heavy, backlog, subgraph |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
