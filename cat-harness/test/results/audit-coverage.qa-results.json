@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "210698b89d33"
+    "script_hash": "8f400c55fe87"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 58 of 58 declared kind(s), 230 gate(s), 77 criteria.",
-      "count": 58,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 63 of 63 declared kind(s), 231 gate(s), 77 criteria.",
+      "count": 63,
       "entries": [
         {
           "kind": "attestations",
@@ -439,7 +439,7 @@
         },
         {
           "kind": "fsh-guts",
-          "state": "undetermined",
+          "state": "empty",
           "directories": [
             "fsh-guts"
           ],
@@ -468,7 +468,7 @@
             "bun run glossary:pot:check",
             "bun run lsi:skills:check"
           ],
-          "typed": false,
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -486,6 +486,18 @@
           "hasFiles": true
         },
         {
+          "kind": "ig-ast",
+          "state": "stored",
+          "directories": [
+            "smart-trust/fhir-ast"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "hasFiles": false
+        },
+        {
           "kind": "ig-metadata-index",
           "state": "no-directory",
           "directories": [],
@@ -494,6 +506,24 @@
           "gates": [],
           "typed": true,
           "hasFiles": false
+        },
+        {
+          "kind": "ig-pages",
+          "state": "covered",
+          "directories": [
+            "smart-base/docs",
+            "smart-immunizations/docs",
+            "smart-trust/docs"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run smart-base:pages:check",
+            "bun run smart-immunizations:pages:check",
+            "bun run smart-trust:pages:check"
+          ],
+          "typed": false,
+          "hasFiles": true
         },
         {
           "kind": "interaction",
@@ -522,6 +552,33 @@
           ],
           "typed": true,
           "hasFiles": true
+        },
+        {
+          "kind": "kinds",
+          "state": "covered",
+          "directories": [
+            "cat-openapi/kinds",
+            "fhir-harness/kinds",
+            "folio-assistant-core/kinds",
+            "folio-assistant-sci/kinds"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run kind:register:check"
+          ],
+          "typed": true,
+          "hasFiles": true
+        },
+        {
+          "kind": "lake-cache",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": false,
+          "hasFiles": false
         },
         {
           "kind": "library",
@@ -1132,6 +1189,21 @@
           "hasFiles": true
         },
         {
+          "kind": "validators",
+          "state": "typed-only",
+          "directories": [
+            "cat-harness/validators",
+            "cat-openapi/validators",
+            "fhir-harness/validators",
+            "folio-assistant-core/validators"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "hasFiles": true
+        },
+        {
           "kind": "vocab-mapping",
           "state": "covered",
           "directories": [
@@ -1210,12 +1282,19 @@
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "kind": "fsh-guts",
+          "directories": [
+            "fsh-guts"
+          ]
+        }
+      ]
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 20,
+      "count": 21,
       "entries": [
         {
           "kind": "auto-docs",
@@ -1267,6 +1346,11 @@
         },
         {
           "kind": "ig-metadata-index",
+          "criteria": 0,
+          "gates": []
+        },
+        {
+          "kind": "lake-cache",
           "criteria": 0,
           "gates": []
         },
@@ -1345,11 +1429,21 @@
     },
     "kinds-typed-only": {
       "summary": "A declared kind whose nodes a declared validator TYPES and no criterion or gate JUDGES. Kept apart from kinds-unaudited because they are different pieces of work, and still a finding — `--strict` fails on it. Typing is not judging: a kind can parse perfectly against its schema while nothing has an opinion about what it says.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "kind": "validators",
+          "directories": [
+            "cat-harness/validators",
+            "cat-openapi/validators",
+            "fhir-harness/validators",
+            "folio-assistant-core/validators"
+          ]
+        }
+      ]
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 230 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 231 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     },
@@ -1359,5 +1453,5 @@
       "entries": []
     }
   },
-  "total": 78
+  "total": 86
 }

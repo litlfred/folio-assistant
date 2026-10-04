@@ -16,7 +16,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 79,
+      "count": 82,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -52,6 +52,21 @@
           "instance": "folio-assistant",
           "directory": "root-docs",
           "path": "docs"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "processes",
+          "path": "bootstrap/processes"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "models",
+          "path": "bootstrap/models"
+        },
+        {
+          "instance": "bootstrap-tools",
+          "directory": "bootstrap-tools-scripts",
+          "path": "bootstrap-tools/scripts"
         },
         {
           "instance": "cat-harness",
@@ -417,8 +432,13 @@
     },
     "no-description": {
       "summary": "Declared directories with no `description`: their README says so instead of saying what they hold.",
-      "count": 1,
+      "count": 2,
       "entries": [
+        {
+          "instance": "bootstrap",
+          "directory": "skills",
+          "path": "bootstrap/skills"
+        },
         {
           "instance": "who-iris",
           "directory": "who-iris-themes",
@@ -428,7 +448,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 106,
+      "count": 111,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -469,6 +489,31 @@
           "instance": "folio-assistant",
           "directory": "root-docs",
           "path": "docs"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "skills",
+          "path": "bootstrap/skills"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "schemas",
+          "path": "bootstrap/schemas"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "scenarios",
+          "path": "bootstrap/scenarios"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "processes",
+          "path": "bootstrap/processes"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "models",
+          "path": "bootstrap/models"
         },
         {
           "instance": "cat-harness",
@@ -984,5 +1029,5 @@
       "entries": []
     }
   },
-  "total": 188
+  "total": 197
 }

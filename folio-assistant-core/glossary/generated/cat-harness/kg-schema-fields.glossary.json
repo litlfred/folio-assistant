@@ -11690,6 +11690,34 @@
       "status": "candidate"
     },
     {
+      "id": "validator-node.validatornodeschema.id",
+      "prefLabel": "ValidatorNodeSchema.id",
+      "definition": "This validator's own name, as its file is named.",
+      "source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "validator-node.validatornodeschema.rationale",
+      "prefLabel": "ValidatorNodeSchema.rationale",
+      "definition": "Why this validator is the one, when that is not obvious from the code.",
+      "source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.rationale",
+      "status": "candidate"
+    },
+    {
+      "id": "validator-node.validatornodeschema.schema",
+      "prefLabel": "ValidatorNodeSchema.schema",
+      "definition": "The Zod export, `<harness>:<path>#<Export>` (or instance-relative `<path>#<Export>`).",
+      "source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.schema",
+      "status": "candidate"
+    },
+    {
+      "id": "validator-node.validatornodeschema.validates",
+      "prefLabel": "ValidatorNodeSchema.validates",
+      "definition": "What it validates: a graph kind, and the `$schema` family within it when the kind has several.",
+      "source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.validates",
+      "status": "candidate"
+    },
+    {
       "id": "vector-figure.assemblybasisschema.by",
       "prefLabel": "AssemblyBasisSchema.by",
       "definition": "The script, as a `script` attribution — what looked.",

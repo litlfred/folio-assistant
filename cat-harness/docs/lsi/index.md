@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.78 | instance, kind, directory, session, page, harness, merge, graph | *(none)* |
-| 2 | 21.91 | prs, watcher, queue, sibling, commits, coordination, merge, backlog | harness, instance, declaration, node, directories, subgraph, directory, bootstrap |
-| 3 | 18.84 | steward, session, head, conflict, merge, green, conflicted, bot | block, chapter, slot, project, formal, watcher, edges, proof |
-| 4 | 17.43 | page, tile, pdf, text, avatar, images, card, glass | subgraph, subdirectory, ledger, train, steward, sibling, prs, sub |
+| 1 | 46.80 | instance, kind, directory, session, page, harness, merge, graph | *(none)* |
+| 2 | 21.91 | prs, watcher, queue, sibling, commits, coordination, merge, backlog | harness, instance, declaration, node, directories, subgraph, bootstrap, directory |
+| 3 | 18.84 | steward, session, head, conflict, green, merge, conflicted, bot | block, chapter, slot, project, formal, watcher, edges, proof |
+| 4 | 17.45 | page, tile, pdf, text, avatar, images, card, glass | subgraph, subdirectory, train, ledger, steward, sibling, prs, plan |
 | 5 | 15.77 | tile, glass, avatar, card, board, sticky, tiles, theme | steward, rung, pdf, member, upload, manifest, arxiv, owed |
 | 6 | 15.40 | steward, head, preview, merge, train, tile, staging, dispatch | task, cli, beans, requirement, process, goal, goals, methodology |
-| 7 | 15.04 | queue, withheld, rung, arm, backlog, tile, library, glass | lane, actor, preview, requirements, edge, feature, forward, edges |
-| 8 | 14.68 | preview, url, phase, staging, feature, feedback, pages, language | slot, tile, glass, edges, forward, avatar, edge, card |
+| 7 | 15.04 | queue, withheld, rung, arm, backlog, tile, library, glass | lane, actor, preview, edge, requirements, feature, forward, edges |
+| 8 | 14.68 | preview, url, phase, staging, feature, feedback, pages, pdf | slot, tile, glass, edges, forward, avatar, edge, card |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

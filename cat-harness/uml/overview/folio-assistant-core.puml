@@ -8,6 +8,15 @@ skinparam shadowing false
 skinparam packageStyle rectangle
 hide empty methods
 
+package "folio-assistant-core/folio-assistant-core-validators" as pkg_folio_assistant_core_folio_assistant_core_validators <<validators>> {
+  class "folio-validator/v1" as folio_assistant_core_folio_assistant_core_validators_folio_validator_v1_folio_validator_v1 <<json: ValidatorNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-validator/v1'
+    id [1] : string
+    validates [1] : object
+    schema [1] : string
+    rationale [0..1] : string
+  }
+}
 package "folio-assistant-core/folio-assistant-core-kinds" as pkg_folio_assistant_core_folio_assistant_core_kinds <<kinds>> {
   class "folio-graph-kind/v1" as folio_assistant_core_folio_assistant_core_kinds_folio_graph_kind_v1_folio_graph_kind_v1 <<json: GraphKindNodeSchema>> #f4f4f1 {
     $schema [1] : 'folio-graph-kind/v1'
@@ -119,7 +128,39 @@ package "folio-assistant-core/folios" as pkg_folio_assistant_core_folios <<folio
   note "folio: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_folios_folio
 }
 package "folio-assistant-core/glossary" as pkg_folio_assistant_core_glossary <<glossary>> {
-  note "glossary: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_glossary_glossary
+  class "Term" as folio_assistant_core_glossary_folio_glossary_v1_Term <<json: GlossarySchema>> #e8f0ee {
+    id [1] : string
+    prefLabel [1] : string | map<string>
+    altLabel [0..*] : string[]
+    definition [0..1] : string | map<string>
+    notation [0..1] : string
+    scopeNote [0..1] : string
+    broader [0..*] : string[]
+    related [0..*] : string[]
+    exactMatch [0..*] : string[]
+    closeMatch [0..*] : string[]
+    broadMatch [0..*] : string[]
+    narrowMatch [0..*] : string[]
+    requires [0..*] : string[]
+    isDefinedBy [0..1] : string
+    iri [0..1] : string
+    source [0..1] : string
+    status [1] : authored | candidate | could-not-extract
+    reason [0..1] : string
+  }
+  class "folio-glossary/v1" as folio_assistant_core_glossary_folio_glossary_v1_folio_glossary_v1 <<json: GlossarySchema>> #e8f0ee {
+    $schema [1] : 'folio-glossary/v1'
+    id [1] : string
+    title [1] : string
+    description [0..1] : string
+    hasVersion [0..1] : string
+    modified [0..1] : string
+    source [0..1] : string
+    license [0..1] : string
+    terms [0..*] : Term[]
+    ordered [0..1] : boolean
+    members [0..*] : string[]
+  }
 }
 package "folio-assistant-core/core-tools" as pkg_folio_assistant_core_core_tools <<tools>> {
   class "Maintain" as folio_assistant_core_core_tools_Maintain <<json: ToolDefinitionSchema>> #eee9f5 {
@@ -321,6 +362,7 @@ package "folio-assistant-core/voices" as pkg_folio_assistant_core_voices <<voice
 
 folio_assistant_core_core_schemas_skills_document_publishing_output_schema_json_Document_Publishing_Output *-- "0..*" folio_assistant_core_core_schemas_skills_document_publishing_output_schema_json_Issue : issues
 folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Quality_Control_Output *-- "0..*" folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Finding : findings
+folio_assistant_core_glossary_folio_glossary_v1_folio_glossary_v1 *-- "0..*" folio_assistant_core_glossary_folio_glossary_v1_Term : terms
 folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
 folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_assistant_core_core_skills_folio_voice_v1_Source : sources
 folio_assistant_core_core_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_core_core_skills_folio_voice_v1_Pattern : patterns
@@ -332,7 +374,8 @@ folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern : patterns
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Terminology : terminology
 folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Rule : rules
-' grid: portrait, 3 column(s) — pkg_folio_assistant_core_folio_assistant_core_kinds pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_glossary pkg_folio_assistant_core_core_tools pkg_folio_assistant_core_core_adapters pkg_folio_assistant_core_core_src pkg_folio_assistant_core_core_scripts pkg_folio_assistant_core_core_library pkg_folio_assistant_core_core_methodologies pkg_folio_assistant_core_core_skills pkg_folio_assistant_core_core_processes pkg_folio_assistant_core_qa pkg_folio_assistant_core_voices
+' grid: portrait, 3 column(s) — pkg_folio_assistant_core_folio_assistant_core_validators pkg_folio_assistant_core_folio_assistant_core_kinds pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_glossary pkg_folio_assistant_core_core_tools pkg_folio_assistant_core_core_adapters pkg_folio_assistant_core_core_src pkg_folio_assistant_core_core_scripts pkg_folio_assistant_core_core_library pkg_folio_assistant_core_core_methodologies pkg_folio_assistant_core_core_skills pkg_folio_assistant_core_core_processes pkg_folio_assistant_core_qa pkg_folio_assistant_core_voices
+pkg_folio_assistant_core_folio_assistant_core_validators -[hidden]down- pkg_folio_assistant_core_folios
 pkg_folio_assistant_core_folio_assistant_core_kinds -[hidden]down- pkg_folio_assistant_core_glossary
 pkg_folio_assistant_core_core_schemas -[hidden]down- pkg_folio_assistant_core_core_tools
 pkg_folio_assistant_core_folios -[hidden]down- pkg_folio_assistant_core_core_adapters

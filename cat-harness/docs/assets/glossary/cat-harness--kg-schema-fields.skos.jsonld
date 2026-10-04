@@ -31725,6 +31725,82 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/validator-node.validatornodeschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ValidatorNodeSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "This validator's own name, as its file is named."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/validator-node.validatornodeschema.rationale",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ValidatorNodeSchema.rationale"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why this validator is the one, when that is not obvious from the code."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.rationale",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/validator-node.validatornodeschema.schema",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ValidatorNodeSchema.schema"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The Zod export, `<harness>:<path>#<Export>` (or instance-relative `<path>#<Export>`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.schema",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/validator-node.validatornodeschema.validates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ValidatorNodeSchema.validates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What it validates: a graph kind, and the `$schema` family within it when the kind has several."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.validates",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.assemblybasisschema.by",
       "@type": "skos:Concept",
       "skos:inScheme": {

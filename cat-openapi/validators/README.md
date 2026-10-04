@@ -8,5 +8,7 @@ The validators cat-openapi's code provides, one folio-validator/v1 node each nam
 
 Part of [C@T OpenAPI](../README.md) 0.1.0, declared as `cat-openapi-validators`, holding `validators`.
 
-_This directory holds no files yet._
+| file | what it is | used by |
+|---|---|---|
+| [`open-api-provenance.json`](open-api-provenance.json) | data |  |
 <!-- kg:subgraph:end -->

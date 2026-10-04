@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 214,
+      "count": 216,
       "unit": "modules"
     }
   },
@@ -305,6 +305,14 @@
       "name": "decision-request",
       "graphNode": "schema",
       "summary": "A decision handed to a person, as a shape rather than as a habit.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/declared-nodes.ts",
+      "instance": "cat-harness",
+      "name": "declared-nodes",
+      "graphNode": "undeclared",
+      "summary": "The files of every declared directory of one graph kind, across the",
       "isTest": false
     },
     {
@@ -1617,6 +1625,14 @@
       "name": "user-story",
       "graphNode": "schema",
       "summary": "User stories — what a reader acting in a role is trying to do.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/validator-node.ts",
+      "instance": "cat-harness",
+      "name": "validator-node",
+      "graphNode": "undeclared",
+      "summary": "A VALIDATOR as a node of the knowledge graph (bean riit). Owner, 2026-10-04:",
       "isTest": false
     },
     {
@@ -41923,6 +41939,70 @@
       ],
       "unresolved": [],
       "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/validator-node.ts#ValidatorNode",
+      "name": "ValidatorNode",
+      "module": "cat-harness/schemas/validator-node.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema",
+      "name": "ValidatorNodeSchema",
+      "module": "cat-harness/schemas/validator-node.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(VALIDATOR_NODE_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z][a-z0-9-]*$/, \"a lower-case id, e.g. ig-ast-manifest\")",
+          "optional": false,
+          "array": false,
+          "doc": "This validator's own name, as its file is named."
+        },
+        {
+          "name": "validates",
+          "type": "z .object({ kind: z.string().min(1), family: z.string().min(1).optional(), }) .strict()",
+          "optional": false,
+          "array": false,
+          "doc": "What it validates: a graph kind, and the `$schema` family within it when the kind has several."
+        },
+        {
+          "name": "schema",
+          "type": "z.string().regex(/#[A-Za-z_$][\\w$]*$/, \"a reference ending in #Export\")",
+          "optional": false,
+          "array": false,
+          "doc": "The Zod export, `<harness>:<path>#<Export>` (or instance-relative `<path>#<Export>`)."
+        },
+        {
+          "name": "rationale",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why this validator is the one, when that is not obvious from the code."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "VALIDATOR_NODE_TAG",
         "z"
       ],
       "exported": true

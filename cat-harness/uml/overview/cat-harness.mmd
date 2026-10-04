@@ -1,5 +1,15 @@
 classDiagram
   direction LR
+  namespace cat_harness__cat_harness_validators {
+    class cat_harness_cat_harness_validators_folio_validator_v1_folio_validator_v1["folio-validator/v1"] {
+      <<json: ValidatorNodeSchema>>
+      $schema [1] 'folio-validator/v1'
+      id [1] string
+      validates [1] object
+      schema [1] string
+      rationale [0..1] string
+    }
+  }
   namespace cat_harness__tools {
     class cat_harness_tools_Maintain["Maintain"] {
       <<json: ToolDefinitionSchema>>
@@ -1268,6 +1278,7 @@ classDiagram
       superseded [0..1] object
     }
   }
+  cssClass "cat_harness_cat_harness_validators_folio_validator_v1_folio_validator_v1" fa_uml_kind_validators
   cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains
   cssClass "cat_harness_tools_Maintain" fa_uml_kind_tools
   cssClass "cat_harness_tools_ToolDefinition" fa_uml_kind_tools

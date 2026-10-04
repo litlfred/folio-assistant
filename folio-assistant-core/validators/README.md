@@ -10,5 +10,12 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `folio-assistant
 
 | file | what it is | used by |
 |---|---|---|
+| [`catalogue-dublin-core-record.json`](catalogue-dublin-core-record.json) | data |  |
+| [`catalogue-node.json`](catalogue-node.json) | data |  |
+| [`catalogue.json`](catalogue.json) | data |  |
+| [`extraction.json`](extraction.json) | data |  |
 | [`glossary.json`](glossary.json) | data |  |
+| [`intake.json`](intake.json) | data |  |
+| [`review-verdict.json`](review-verdict.json) | data |  |
+| [`uploads-dublin-core-record.json`](uploads-dublin-core-record.json) | data |  |
 <!-- kg:subgraph:end -->

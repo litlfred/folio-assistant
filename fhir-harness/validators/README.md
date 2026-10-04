@@ -8,5 +8,15 @@ The validators fhir-harness's code provides, one folio-validator/v1 node each na
 
 Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-harness-validators`, holding `validators`.
 
-_This directory holds no files yet._
+| file | what it is | used by |
+|---|---|---|
+| [`ast-dependencies.json`](ast-dependencies.json) | data |  |
+| [`ast-manifest.json`](ast-manifest.json) | data |  |
+| [`ast-plan.json`](ast-plan.json) | data |  |
+| [`fhir-artifact-index.json`](fhir-artifact-index.json) | data |  |
+| [`ig-chrome.json`](ig-chrome.json) | data |  |
+| [`ig-identity.json`](ig-identity.json) | data |  |
+| [`ig-menu.json`](ig-menu.json) | data |  |
+| [`ig-metadata-index.json`](ig-metadata-index.json) | data |  |
+| [`ig-releases.json`](ig-releases.json) | data |  |
 <!-- kg:subgraph:end -->

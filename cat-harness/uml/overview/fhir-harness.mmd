@@ -1,5 +1,15 @@
 classDiagram
   direction LR
+  namespace fhir_harness__fhir_harness_validators {
+    class fhir_harness_fhir_harness_validators_folio_validator_v1_folio_validator_v1["folio-validator/v1"] {
+      <<json: ValidatorNodeSchema>>
+      $schema [1] 'folio-validator/v1'
+      id [1] string
+      validates [1] object
+      schema [1] string
+      rationale [0..1] string
+    }
+  }
   namespace fhir_harness__fhir_harness_kinds {
     class fhir_harness_fhir_harness_kinds_folio_graph_kind_v1_folio_graph_kind_v1["folio-graph-kind/v1"] {
       <<json: GraphKindNodeSchema>>
@@ -114,6 +124,7 @@ classDiagram
       auditor [1] object
     }
   }
+  cssClass "fhir_harness_fhir_harness_validators_folio_validator_v1_folio_validator_v1" fa_uml_kind_validators
   cssClass "fhir_harness_fhir_harness_kinds_folio_graph_kind_v1_folio_graph_kind_v1" fa_uml_kind_kinds
   cssClass "fhir_harness_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "n_fhir_harness_fhir_ig_skills_skills" fa_uml_kind_skills

@@ -76,9 +76,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `code`
 
-0 of 9 published.
+0 of 10 published.
 {: .fa-hx-dim }
 
+- Bootstrap tools — *declared, not published*
 - C@T Harness — *declared, not published*
 - C@T Harness Tools — *declared, not published*
 - C@T OpenAPI — *declared, not published*
@@ -231,6 +232,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [folio-assistant-sci]({{ '/methodologies/' | relative_url }})
 - [SMART Base]({{ '/methodologies/' | relative_url }})
 
+### `models`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- Bootstrap — *declared, not published*
+
 ### `openapi`
 
 0 of 1 published.
@@ -247,9 +255,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `processes`
 
-5 of 5 published.
+7 of 7 published.
 {: .fa-hx-dim }
 
+- [Bootstrap]({{ '/processes/' | relative_url }})
+- [Bootstrap tools]({{ '/processes/' | relative_url }})
 - [C@T Harness]({{ '/processes/' | relative_url }})
 - [FHIR IG Harness]({{ '/processes/' | relative_url }})
 - [folio-assistant-core]({{ '/processes/' | relative_url }})
@@ -287,16 +297,20 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `scenarios`
 
-0 of 1 published.
+0 of 3 published.
 {: .fa-hx-dim }
 
+- Bootstrap — *declared, not published*
+- Bootstrap tools — *declared, not published*
 - C@T Harness — *declared, not published*
 
 ### `schemas`
 
-5 of 5 published.
+5 of 7 published.
 {: .fa-hx-dim }
 
+- Bootstrap — *declared, not published*
+- Bootstrap tools — *declared, not published*
 - [C@T Harness]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
 - [C@T OpenAPI]({{ '/cat-harness/schemas/cat-openapi/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }})
@@ -305,9 +319,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `skills`
 
-4 of 5 published.
+4 of 7 published.
 {: .fa-hx-dim }
 
+- Bootstrap — *declared, not published*
+- Bootstrap tools — *declared, not published*
 - [C@T Harness]({{ '/cat-harness/auto-docs/index/skills/skills/' | relative_url }})
 - [FHIR IG Harness]({{ '/cat-harness/auto-docs/index/skills/fhir-ig-skills/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/auto-docs/index/skills/core-skills/' | relative_url }})
