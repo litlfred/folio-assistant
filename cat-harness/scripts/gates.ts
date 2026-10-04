@@ -1185,6 +1185,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "SUBSUMED by `check:kind-validators:require-all`, which CI runs: the same script with a flag that adds one assertion — that no kind has stayed silent about a validator — and performs this one's entire job besides. Kept as a script because the bare form is the REPORT, and a contributor adding a kind wants to read the three states without the non-zero exit while they are still deciding which one applies. Bean `rj0n`",
   },
   {
+    script: "kind:table:check",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `kind:register:check`, which CI runs: its first STEP is exactly `kind:table:check` (cat-harness-tools/scripts/kind-register.ts), so the generated kind table in directory-conventions.md is checked on every push through the command that owns every artefact a kind owes. Kept as a script because a contributor editing one kind node wants the table's answer alone, without the other steps. Bean `dmx1`",
+  },
+  {
     script: "check:harness-state",
     kind: "covered-by",
     reason:

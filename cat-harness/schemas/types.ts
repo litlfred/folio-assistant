@@ -14,7 +14,6 @@ export { isCrossPaperRef, KNOWN_LABEL_PREFIXES } from "./constraints.js";
  * @graphNode schema
  */
 
-import type { BlockKind } from "./block-kinds.js";
 import type { Narrative } from "./narrative.ts";
 
 // The skill-framework vocabulary moved to `skill-package.ts` — see that
