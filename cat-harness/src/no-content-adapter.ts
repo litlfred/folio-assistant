@@ -9,6 +9,9 @@
  * workflow tools over MCP. Measured by bean `zmdo`'s rehearsal; the owner
  * ruled the same day that the server starts with the generic tools only.
  *
+ * It registers no MCP tools of its own: the generic ones come from the
+ * server, which reads them from the harness's Tool nodes.
+ *
  * Every content read answers EMPTY (no items, no outline), and every content
  * write or analysis REFUSES with a message naming why. Empty for reads,
  * because "this instance lists no documents" is true; a refusal for writes,
@@ -17,8 +20,6 @@
  * @module cat-harness/src/no-content-adapter
  */
 
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { registerGenericTools } from "./tools/generic.js";
 import type {
   BranchCharacterization,
   ChapterDetail,
@@ -61,8 +62,4 @@ export class NoContentAdapter implements ContentAdapter {
 
   async handleGet(): Promise<Response | null> { return null; }
   async handlePost(): Promise<Response | null> { return null; }
-
-  registerMcpTools(server: McpServer): void {
-    registerGenericTools(server);
-  }
 }

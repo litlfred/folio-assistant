@@ -49,7 +49,6 @@ import { registerQaTools } from "./tools/qa.js";
 import { registerBibTools } from "./tools/bib.js";
 import { registerTransformTools } from "./tools/transform.js";
 import { registerDocumentAuditTools } from "./tools/audit.js";
-import { registerGenericTools } from "../../../cat-harness/src/tools/generic.js";
 import type { ContentAdapter, UserRole } from "../../../cat-harness/src/types.js";
 import { allows, forbidden } from "../../../cat-harness/src/core/rbac.js";
 import { DocumentContent, type ContentResult, type IncomingFile } from "./content.js";
@@ -511,20 +510,19 @@ End every response with suggested follow-ups:
   // ── MCP tool registration ──────────────────────────────────────
 
   /**
-   * Register every MCP tool a folio of this content type should expose.
+   * Register the MCP tools specific to this content type.
    *
-   * Split into two halves so a subclass can add to the content-specific one
-   * without restating the generic one. {@link PaperContentAdapter} overrides
-   * {@link registerContentTools} alone; if it had to override this method it
-   * would have to remember `registerDepsTools` and its three siblings, and
-   * the day someone adds a fifth generic tool is the day the paper adapter
-   * quietly stops offering it.
+   * The generic half used to be registered here too, which made every
+   * generic tool depend on loading an adapter from `folio-assistant-core`.
+   * It now comes from the server, read from the harness's Tool nodes (bean
+   * `zmdo`). {@link PaperContentAdapter} still overrides
+   * {@link registerContentTools} alone.
    */
   registerMcpTools(server: McpServer): void {
+    // Content tools only. The generic tools (`folio_init`, `skill_fetch`, the
+    // README tools, …) are registered by the SERVER from the harness's Tool
+    // nodes, for every instance whatever its adapter — bean `zmdo`.
     this.registerContentTools(server);
-    // Generic tools — every content type gets these, and an instance with no
-    // content type gets only these (`cat-harness/src/tools/generic.ts`).
-    registerGenericTools(server);
   }
 
   /**

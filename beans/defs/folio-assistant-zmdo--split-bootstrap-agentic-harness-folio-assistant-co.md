@@ -233,3 +233,18 @@ Before the fix, BOTH scaffolds produced a config with no `dependencies`, so the 
 
 - The real empty-repo run in `litlfred/cat-harness-test` / `litlfred/folio-test` (ruled 2026-10-04) — after the open question, since condition 3 would fail there for the same reason.
 - `seed:ready --rehearse` (the layer's own test suite standalone; `ho66` measured 472 failing for `cat-harness`) — that is the layer's health, a separate question from whether a NEW instance can stand on it.
+
+## RULED + DONE 2026-10-04 — the server serves what the KG declares
+
+Owner, choosing from three options: **start with the generic tools** when no adapter is installed. Then, on seeing the first shape (a hand-written `registerGenericTools` list): *"isn't it just presence in the KG?"* — and chose, from three options, **the server reads the Tool nodes**.
+
+Checked first: every in-process harness tool was ALREADY a Tool node in `cat-harness/tools/` (module + MCP name), and `ToolInvoke.inProcess.register` already existed for this purpose. The same fact was restated by hand twice — `SERVER_TOOL_GROUPS` in `server.ts` and the "generic tools" inline in `folio-assistant-core`'s document adapter — and the second copy was why `cat-harness` alone could not start: no adapter, no generic tools, refusal.
+
+Now: `toolGroupsFromNodes(tools())` derives the server's groups; a module with no single `register…` export is REPORTED as failed. The document adapter registers content tools only; `NoContentAdapter` (harness) registers none. `registerSkillPrompts` stays a direct server call, because prompts are not Tool nodes (`j6t3`).
+
+Measured:
+- Aggregate checkout, `main` vs this branch: **identical** tool set (45) and prompts (44).
+- `cat-harness` alone: MCP serves **23 tools** (was: refused to start). With that, all four `tndo` conditions hold locally for BOTH layers.
+- `tool-groups.test.ts`: each module registers exactly the MCP names its Tool nodes declare — so a tool can be neither declared-and-unserved nor served-and-undeclared.
+
+Next: the real empty-repo run in `litlfred/cat-harness-test` / `litlfred/folio-test`.
