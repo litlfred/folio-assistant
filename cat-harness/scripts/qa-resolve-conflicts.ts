@@ -131,9 +131,13 @@ export function takeProvisionalSide(repoRoot: string, path: string): void {
     return;
   }
   git(repoRoot, ["checkout", `--${side}`, "--", path]);
-  // `-f`: an unmerged path is checked against `.gitignore` as if new, and a
-  // branch that ignores a still-tracked results directory made this throw
-  // (#1801, 2026-10-03). The path is one git listed as unmerged, so tracked.
+  // `-f`: a path unmerged in the index is TRACKED by definition, so an ignore
+  // rule must not decide whether its resolution can be staged. A branch that
+  // newly gitignores a results directory — #1801 adds
+  // `cat-harness/test/results/` and nine siblings — otherwise makes every
+  // sidecar under it unstageable, and `git add` fails the whole resolution
+  // with "paths are ignored by one of your .gitignore files" (measured
+  // 2026-10-03 on run 37140844477, which aborted merge:main for that PR).
   git(repoRoot, ["add", "-f", "--", path]);
 }
 
@@ -404,7 +408,8 @@ if (import.meta.main) {
   // A sidecar taken as a deletion and not recreated is already staged by
   // `git rm`; naming it to `git add` would fail on a path that is gone.
   const present = resolve.map((o) => o.path).filter((p) => existsSync(join(repoRoot, p)));
-  // `-f` for the same reason as in takeProvisionalSide: every path here was unmerged.
+  // `-f` for the same reason as `takeProvisionalSide`: these are the paths
+  // this run resolved, so each was unmerged and is tracked.
   if (present.length > 0) git(repoRoot, ["add", "-f", "--", ...present]);
   console.log(`\n  ✓ ${resolve.length} sidecar(s) regenerated and staged.`);
   for (const o of refuse) console.log(`  ✗ ${o.path} left conflicted — ${o.reason}`);

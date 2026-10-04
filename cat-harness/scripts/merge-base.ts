@@ -117,8 +117,8 @@ export function takeBase(root: string, path: string): void {
 /**
  * The refusal line for a path whose declared resolution FAILED. It has the
  * shape of a planned refusal (`  ✗ <path>  [<pattern>: …]`), which is what
- * merge-main.yml and merge-main-comment.ts read: the PR is labelled
- * needs-merge-human and told which path and why, instead of a red job with
+ * merge-main.yml and merge-main-comment.ts read: the job stays green and the
+ * bot's comment names the path and why, instead of a red job with
  * "exited 1 without a refusal". The error's first line is kept verbatim.
  */
 export function resolutionFailure(path: string, patternId: string, err: unknown): string {
@@ -216,7 +216,7 @@ if (import.meta.main) {
     const still = git(root, "diff", "--name-only", "--diff-filter=U").split("\n").filter(Boolean);
     const qaLeft = p.resolvable.filter((c) => c.strategy === "qa-sidecar" && still.includes(c.path));
     if (qa.status !== 0 || qaLeft.length) {
-      // Report as refusals (see resolutionFailure), so the PR is labelled.
+      // Report as refusals (see resolutionFailure), so the bot's comment names them.
       for (const c of qaLeft) console.log(`  ✗ ${c.path}  [${c.pattern?.id ?? "qa-sidecar"}: could not resolve] — left conflicted by qa:resolve-conflicts`);
       if (!qaLeft.length) console.log(`  ✗ qa:resolve-conflicts  [qa-sidecar: could not resolve] — exited ${qa.status} (see its output above)`);
       abort(`qa:resolve-conflicts left ${qaLeft.length} sidecar(s) conflicted`);

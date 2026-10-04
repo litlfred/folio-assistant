@@ -473,6 +473,7 @@ export const RULES: Rule[] = [
       "scripts/merge-conflict-patterns.ts",  // the declared patterns that merge reads
       "scripts/merge-main-comment.ts",       // the merge-main bot's PR comment, composed and tested (#1854)
       "scripts/merge-queue.ts",              // the merge train's order: live facts in, merge-priority.dmn's placement out (bean hfag)
+      "scripts/merge-steward.ts",            // the command that CALLS merge-queue.ts — the entry point it was written for and never had
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
       // INSTANCE's declaration and the published viewer tree, and asks which
@@ -1128,6 +1129,14 @@ export const RULES: Rule[] = [
       // half asks the forge which PRs are open, and a PR is a fact about
       // this checkout and the forge, not about any folio's material.
       "scripts/check-bean-rollup.ts",
+      // The milestone closure, HARNESS for the same reason as its neighbours
+      // and not for the one that suggests itself. It is a pure function with
+      // no forge call and no path literal, so "generic" is tempting — but the
+      // block above settles it by SUBJECT: `beans/` is the agent work plan the
+      // harness declares, and a folio's content has no bean store to roll up.
+      // Genericity is about whether swapping the content changes the answer;
+      // this reads a graph a folio does not have.
+      "scripts/milestone-rollup.ts",
       "scripts/check-ready-to-close.ts",
       "scripts/check-waivers.ts",
       "scripts/check-declared-paths.ts",
@@ -1165,7 +1174,7 @@ export const RULES: Rule[] = [
       // exactly that reason. A folio has no bean store of its own to roll
       // over, so swapping the content could not make it answer differently.
       "scripts/bean-rollover.ts",
-      // `mvp-status` is the same test again, and the clearest case of it: it
+      // `milestone-status` is the same test again, and the clearest case of it: it
       // asks how far THIS repository is from its own separation point, and
       // every gate it reports is a fact about this repository — whether the
       // beans that define the plan are on its `main`, how many of its open
@@ -1175,7 +1184,14 @@ export const RULES: Rule[] = [
       // answer differently. It composes the four above rather than
       // re-measuring, which is why it belongs with them and not beside the
       // generic reporters.
-      "scripts/mvp-status.ts",
+      //
+      // Its MILESTONE half is in its own module, `milestone-rollup.ts`,
+      // classified with the other bean-store readers above: the plan is the
+      // harness's, not any folio's. What makes THIS module instance-specific
+      // is the readiness half — `cat-harness-tools`, this repository's open
+      // PRs, its own separation point — and a module is placed by the
+      // question it cannot be asked anywhere else.
+      "scripts/milestone-status.ts",
       // Their two shared modules, classified with them rather than beside
       // the generic path helpers: `merge-pipeline-paths` reads path classes
       // out of this repository's `PATTERNS` declaration, and

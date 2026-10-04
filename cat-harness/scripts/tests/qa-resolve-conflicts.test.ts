@@ -315,6 +315,42 @@ describe("a modify/delete sidecar takes the base's side, never a side that is no
     expect(unmergedPaths(dir)).toEqual([]);
   });
 
+  test("a branch that gitignores the results directory can still have its sidecars staged", () => {
+    // Measured 2026-10-03 on run 37140844477: `merge:main` aborted for #1801
+    // with "qa:resolve-conflicts left 1 sidecar(s) conflicted". #1801 is the
+    // PR that takes the QA readers off committed results, so its `.gitignore`
+    // adds `cat-harness/test/results/` and nine siblings — and a plain
+    // `git add` refuses a path under an ignored directory even though that
+    // path is unmerged in the index, which is to say TRACKED.
+    const dir = conflicted([{ path, ours: sidecar("warn", false), theirs: sidecar("fail", false) }]);
+    writeFileSync(join(dir, ".gitignore"), `${QA}\n`);
+    expect([...unmergedStages(dir, path)].sort()).toEqual([1, 2, 3]);
+    takeProvisionalSide(dir, path);
+    expect(unmergedPaths(dir)).toEqual([]);
+    // Resolved means stage 0, which is the only thing to assert here: with all
+    // three stages present `provisionalSide` takes OURS, and ours is HEAD, so
+    // `git diff --cached` is correctly empty and says nothing either way.
+    expect(
+      execFileSync("git", ["ls-files", "-s", "--", path], { cwd: dir, encoding: "utf-8" }).trim(),
+    ).toMatch(/ 0\t/);
+  });
+
+  test("...and the plain `git add` it replaces does not merely fail — it COLLAPSES the stages", () => {
+    // The falsification, on its own repository because the reproduction is
+    // destructive: a reader could believe `-f` only silences a warning. It
+    // does not. The refused `add` leaves NO unmerged stages behind, so the
+    // `checkout --<side>` that follows fails with "is in the index, but not at
+    // stage N" and the resolver dies somewhere other than where the cause is.
+    // That is why `merge-base.ts` aborts and restores the tree rather than
+    // carrying on.
+    const dir = conflicted([{ path, ours: sidecar("warn", false), theirs: sidecar("fail", false) }]);
+    writeFileSync(join(dir, ".gitignore"), `${QA}\n`);
+    expect(() =>
+      execFileSync("git", ["add", "--", path], { cwd: dir, stdio: "pipe" }),
+    ).toThrow();
+    expect([...unmergedStages(dir, path)]).toEqual([]);
+  });
+
   test("deleted on the base, changed on the branch: the deletion is taken and staged", () => {
     const dir = modifyDelete(path, "theirs", sidecar("warn", false));
     expect([...unmergedStages(dir, path)].sort()).toEqual([1, 2]);
