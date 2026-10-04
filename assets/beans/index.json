@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 805,
+      "count": 807,
       "unit": "beans"
     }
   },
@@ -3805,14 +3805,14 @@
     {
       "id": "folio-assistant-ba9e",
       "title": "Generated README subdirectory counts: 207 volatile integers across 54 READMEs — move them to the _data layer",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T22:34:28Z",
-      "updatedAt": "2026-10-04T07:38:21Z",
+      "updatedAt": "2026-10-04T12:13:31Z",
       "preview": "Child of `y7b3` part 2, which the owner left as \"decide later\" on 2026-09-30\nwith three options on the table (band the count, drop it, keep it exact).\n**Owner chose a fourth on 2026-10-02: pull the count dynamically from the KG\nJSON-LD rather than freeze it into committed markdown.**\n\n## Why that is the right answer and the other three are not\n\nThe repository had already reached this conclusion fr",
       "file": "beans/defs/folio-assistant-ba9e--generated-readme-subdirectory-counts-207-volatile.md"
     },
@@ -4587,6 +4587,20 @@
       "updatedAt": "2026-09-20T17:13:19Z",
       "preview": "Owner, 2026-09-20, verbatim:\n\n> in genreal when browsing a conformant KG, user can borwse, try to\n> materialise assets, instantate (and make use of tooling), copy assets into\n> their own folio to edit/comment-todos on, etc... bpmn process aroiund folio,\n> doc ignestion in cat-harness.  as skills., bean up\n\n## What this names: the VERBS of a conformant KG\n\nEvery visualiser bean so far has been abou",
       "file": "beans/defs/folio-assistant-dp1j--kg-affordances-browse-materialise-instantiate-copy.md"
+    },
+    {
+      "id": "folio-assistant-dqir",
+      "title": "MERGE GUARD: merge:guard is the single way a steward lands a PR; a required merge-guard status backs it",
+      "status": "scrapped",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T13:53:48Z",
+      "updatedAt": "2026-10-03T14:17:51Z",
+      "preview": "Owner ruling 2026-10-03 (option 1): build an enforced merge guard, as a DRAFT PR for the owner to review.\n\nThree PRs were merged unfinished by the Merge Manager steward via a direct `PUT pulls/<n>/merge` with the owner's token:\n- #1937 into a stale base (claude/quirky-davinci-ixuymr, after #1764 merged), on a head newer than its ready: comment, with needs-merge-human present, and its own pull_requ",
+      "file": "beans/defs/folio-assistant-dqir--merge-guard-mergeguard-is-the-single-way-a-steward.md"
     },
     {
       "id": "folio-assistant-dt15",
@@ -6075,6 +6089,20 @@
       "updatedAt": "2026-10-01T16:32:32Z",
       "preview": "Found while writing the three W3C methodology nodes (bean 6306, PR #1769), each quoted against the HELD spec in cat-harness/library/. None is fixed: each needs a decision, not a mechanical edit.\n\n1. **PROV_CONTEXT** (cat-harness/schemas/prov.ts:29) = \"http://www.w3.org/ns/prov-o\". That IRI is the PROV-O OWL ontology document; the namespace is http://www.w3.org/ns/prov# and W3C's JSON-LD context is",
       "file": "beans/defs/folio-assistant-jcet--standards-mismatches-the-w3c-methodology-nodes-rec.md"
+    },
+    {
+      "id": "folio-assistant-jd1e",
+      "title": "A CALLER UNDID g5kt: merge-base reported regen's three verdicts as one, so could-not-determine reached the author as a defect in their branch",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T13:11:35Z",
+      "updatedAt": "2026-10-04T13:13:49Z",
+      "preview": "Found while re-measuring my own four claims about the `merge:main` defect class\n(PR #2086). THREE OF THE FOUR did not survive measurement; this is the one that\ndid, and it was not where I said it was.\n\n## The defect\n\n`merge-base.ts` had ONE message for every non-zero `regen` exit:\n\n    if (regen.status !== 0) abort(\"the gate set could not reproduce the\n      resolution (regen reported unrepaired c",
+      "file": "beans/defs/folio-assistant-jd1e--a-caller-undid-g5kt-merge-base-reported-regens-thr.md"
     },
     {
       "id": "folio-assistant-jg8s",
@@ -9471,12 +9499,12 @@
       "title": "MERGE GATE (f): refuse an unfinished PR — no current ready marker, or a base branch whose PR already merged",
       "status": "in-progress",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-nok9",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:53:29Z",
-      "updatedAt": "2026-10-03T14:17:55Z",
+      "updatedAt": "2026-10-03T14:18:25Z",
       "preview": "Owner ruling 2026-10-03: BOTH guards (option 1 of 4, asked by the Parcel B session; proposed by session 01CbYZTA). Three merges on 2026-10-03 landed work in a state its author had not finished, and nothing in the pipeline asked:\n\n- **#1937** merged into its stale base `claude/quirky-davinci-ixuymr` after #1764 had already landed, so the branch-store never reached main (re-opened as #1978).\n- **#19",
       "file": "beans/defs/folio-assistant-uoob--merge-gate-f-refuse-an-unfinished-pr-no-current-re.md"
     },
@@ -10593,14 +10621,14 @@
     {
       "id": "folio-assistant-xsrv",
       "title": "ROUTE-KEYED CUTOVER, FIRST FAMILY: move docs/uml/ off main onto a route-keyed branch — one generator, one gate, bisectable",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:28:54Z",
-      "updatedAt": "2026-10-04T05:37:22Z",
+      "updatedAt": "2026-10-04T13:47:14Z",
       "preview": "The follow-on to `1j3q` (PR #1996), which built `storage.keyedBy: \"route\"` and\ndeliberately flipped nothing. This is the first family that uses it.\n\n## Why `docs/uml/` and not the other 48\n\n**A-narrow, chosen over A-full.** Measured on #1966: **49 of 94** gated checks\nwrite page files. Flipping them together cannot be bisected — a red tells you\n\"some page moved wrong\" and nothing more. `docs/uml/`",
       "file": "beans/defs/folio-assistant-xsrv--route-keyed-cutover-first-family-move-docsuml-off.md"
     },

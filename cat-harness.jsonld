@@ -312,10 +312,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-04T13:24:50.731Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/63ec4fffc4bf0c38ed6f49b09a590c09eb5255a0",
-  "sourceCommitSha": "63ec4fffc4bf0c38ed6f49b09a590c09eb5255a0",
-  "sourceCommitAt": "2026-10-04T15:17:14+02:00",
+  "generatedAt": "2026-10-04T14:01:21.438Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9c78b354e8cf2e6819eeac70e8e7d7ce3057fec8",
+  "sourceCommitSha": "9c78b354e8cf2e6819eeac70e8e7d7ce3057fec8",
+  "sourceCommitAt": "2026-10-04T15:52:06+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -2614,12 +2614,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "merge-queue",
       "title": "Merge queue — what lands next, and as what",
-      "description": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Use for \"merge the ready PRs\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size.",
+      "description": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Every merge goes through `merge:guard`. Use for \"merge the ready PRs\", \"land this PR\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
-      "instructionLines": 554,
+      "instructionLines": 724,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -50572,7 +50572,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 1140,
+      "fileCount": 1148,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
     {
@@ -50691,8 +50691,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "63ec4fffc4bf0c38ed6f49b09a590c09eb5255a0",
+    "sha": "9c78b354e8cf2e6819eeac70e8e7d7ce3057fec8",
     "pr": "main",
-    "run": "37205081156"
+    "run": "37207159784"
   }
 }
