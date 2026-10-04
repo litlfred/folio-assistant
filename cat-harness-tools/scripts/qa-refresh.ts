@@ -95,6 +95,7 @@ export interface QaWriter {
   because: string;
 }
 
+// declared-path-literal: the HARNESS's qa tree, as the repo-relative key every writer below is keyed by. This script moved up to cat-harness-tools in 70lx B2 and drives its implementer's writers (downward); it was an own-instance path until the move.
 const R = "cat-harness/test/results";
 
 /**

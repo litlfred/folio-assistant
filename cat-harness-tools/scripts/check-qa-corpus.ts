@@ -135,6 +135,7 @@ export interface CorpusReport {
 }
 
 /** The tree-relative directory the docs build copies to `_site/assets/qa/`. */
+// declared-path-literal: the HARNESS's witness tree, named as the repo-relative key the docs build copies from. This script moved up to cat-harness-tools in 70lx B2 and reads its implementer's tree, which is the downward direction; it was an own-instance path until the move.
 export const WITNESS_TREE = "cat-harness/test/results/witnesses";
 
 /** A generated page carrying QA badges: its path (for messages) and text. */

@@ -32,6 +32,7 @@ import { HARNESS_ROOT } from "../lib/roots.ts";
 
 // The harness whose docs it translates; the script moved up in 70lx B2.
 const ROOT = HARNESS_ROOT;
+// declared-path-literal: a page of the HARNESS's docs, joined onto HARNESS_ROOT below, not onto the repository. The checker reads it as the aggregate root's docs/; the script moved up in 70lx B2.
 const DEFAULT_PAGE = "docs/guides/agent-onboarding.md";
 const TARGET_LOCALE = "fr";
 const OUTPUT_DIR = deferResolution(() => join(directoryForGraph(ROOT, "translation-sources") ?? join(ROOT, "translations"), TARGET_LOCALE), {
