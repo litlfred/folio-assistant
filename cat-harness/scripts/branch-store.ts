@@ -1198,6 +1198,130 @@ export function pushMount(id: string, message: string, opts: MountOptions = {}):
 // ── CLI ──────────────────────────────────────────────────────────────────
 
 /** hit 0, miss 1, usage 2, corrupt 3, unknown 4 — qa-store's and lake-cache's numbers. */
+/** What a route publish did, beyond the push itself. */
+export interface PublishCounts {
+  /** Files written because their bytes differ from the tip, or are new. */
+  written: number;
+  /** Files REMOVED because the generator no longer produces them. */
+  deleted: number;
+  /** Files already byte-identical at the tip, so not in the push at all. */
+  unchanged: number;
+}
+export type PublishResult = (WriteResult & { counts: PublishCounts }) | { state: "refused"; reason: string };
+
+/**
+ * Replace a ROUTE-keyed directory on its branch with what the checkout holds —
+ * the writer a route-keyed store needs, and had none of (bean `xsrv`).
+ *
+ * ## Why `mount` + `push` could not serve this
+ *
+ * Measured against the real `cat/cat-harness/uml-overview`: `mountTip` returns
+ * **`corrupt`** — *"is keyed by route, not tip"* — because it opens the store
+ * with no `keyedBy` and defaults to `tip`. That is `verifiedTip` doing its job
+ * rather than a bug to route around, and the pair is tip-shaped all the way
+ * down: a marker, an `expect` taken from the mounted tip, and a refusal while
+ * *"the path is still tracked on this checkout's branch"*.
+ *
+ * Every one of those is wrong here, and the last is exactly backwards:
+ * **publish requires the checkout to hold the files.** A route is published
+ * FROM the working tree, by the one generator that owns it, during the whole
+ * period before the files come off `main` — and that period ends with a
+ * deletion only a person may authorise. Owner's choice, 2026-10-04, of three
+ * shapes put to them.
+ *
+ * ## Wholesale, which `write` on its own is not
+ *
+ * `write` is a SPLICE: *"every path not named is carried across untouched."*
+ * Right for a tip store, wrong for a route, whose contract is *"one entry per
+ * published site route, each replaced wholesale by the single generator that
+ * owns it"*. A generator that stops emitting a page must stop publishing it, so
+ * this computes `content: null` for every path on the tip that the checkout no
+ * longer holds. Omit that half and an orphaned page is served forever, which is
+ * the one defect nobody would see — the page still renders.
+ *
+ * Unchanged files are left out of the push entirely, so `unchanged` is a
+ * reachable state rather than a push of identical bytes every run.
+ *
+ * ## What it refuses, and never papers over
+ *
+ * - a directory that is not `route`-keyed — by keying, naming both
+ * - a branch that does not exist: seeding carries the manifest and is a steward
+ *   act, so no writer creates one
+ * - a tip it cannot read, or whose manifest disagrees — `corrupt` and `unknown`
+ *   are returned as themselves, never folded into "nothing to publish"
+ *
+ * `expect` is never sent. {@link BranchStore.write} would refuse it, and the
+ * reason is the point: an `expect` here would mean the caller thinks the page
+ * has two writers.
+ */
+export function publishRoute(id: string, message: string, opts: MountOptions = {}): PublishResult {
+  const repoRoot = opts.repoRoot ?? gitTopLevel();
+  let loc: TipLocation;
+  try {
+    loc = resolveTipLocation(id, repoRoot, "route");
+  } catch (e) {
+    return { state: "refused", reason: String(e instanceof Error ? e.message : e) };
+  }
+  const store = BranchStore.open(loc.branch, { repoRoot, ...opts.store, keyedBy: "route" });
+
+  const abs = join(repoRoot, loc.path);
+  if (!existsSync(abs)) {
+    return {
+      state: "refused",
+      reason:
+        `${loc.path} is not in this checkout, so there is nothing to publish. A route is published FROM the ` +
+        `working tree by the generator that owns it; run that generator first.`,
+    };
+  }
+
+  // The tip's current contents under the route. A `miss` is the first publish of
+  // this prefix and is not an error; everything else is returned as itself.
+  const at = store.readTreeEntries(loc.path);
+  if (at.state !== "hit" && at.state !== "miss") return { state: "refused", reason: `${loc.branch}: ${at.state}: ${at.reason}` };
+  const onTip = at.state === "hit" ? at.files : new Map<string, { blob: string; mode: string; bytes: Buffer }>();
+
+  // `walkFiles` yields names relative to the directory it was given, and
+  // `ignoredByCheckout` wants them in the same frame, so both stay ROUTE-relative
+  // until the change is composed. Getting that wrong is not subtle: the first
+  // version joined them onto `repoRoot` and opened `<repo>/a.md`, which the tests
+  // caught as ENOENT on five of seven.
+  const names = walkFiles(abs);
+  // The checkout's own ignore rules, as `pushMount` honours them: generated
+  // scratch under a published route is still scratch.
+  const ignored = ignoredByCheckout(repoRoot, abs, names);
+
+  const changes: Change[] = [];
+  const counts: PublishCounts = { written: 0, deleted: 0, unchanged: 0 };
+  const seen = new Set<string>();
+  for (const name of names) {
+    if (ignored.has(name)) continue;
+    const rel = `${loc.path}/${name}`;
+    seen.add(rel);
+    // `localEntry`, not `readFileSync`: a symlink is its target at mode 120000 and
+    // an executable stays executable, which a byte read would silently flatten.
+    const { bytes, mode } = localEntry(join(abs, name));
+    const tip = onTip.get(rel);
+    if (tip && tip.bytes.equals(bytes) && tip.mode === mode) {
+      counts.unchanged += 1;
+      continue;
+    }
+    changes.push({ path: rel, content: bytes, mode });
+    counts.written += 1;
+  }
+  for (const rel of onTip.keys()) {
+    if (seen.has(rel)) continue;
+    // The wholesale half. Without it a page the generator stopped emitting is
+    // served for ever, and renders perfectly while doing it.
+    changes.push({ path: rel, content: null });
+    counts.deleted += 1;
+  }
+
+  if (changes.length === 0) {
+    return { state: "unchanged", reason: `${loc.path} on ${loc.branch} already holds exactly this`, branch: loc.branch, attempts: 0, counts };
+  }
+  return { ...store.write(changes, message), counts };
+}
+
 export const EXIT = { hit: 0, miss: 1, usage: 2, corrupt: 3, unknown: 4 } as const;
 /** `mount`: the read codes above, plus `refused` (it would clobber, or the directory is not cut over). */
 export const MOUNT_EXIT = { refused: 5 } as const;
@@ -1239,6 +1363,22 @@ export function main(argv: string[]): number {
       if (r.state === "pushed" || r.state === "unchanged") console.log(line);
       else console.error(line);
       if ("conflicts" in r && r.conflicts) for (const c of r.conflicts) console.error(`  ${c.path}: mounted ${c.expected ?? "(absent)"}, tip ${c.actual ?? "(absent)"}`);
+      return PUSH_EXIT[r.state];
+    }
+    if (cmd === "publish") {
+      const id = named.get("id");
+      if (!id) throw new BranchStoreUsageError("publish needs --id <directory-id>");
+      const r = publishRoute(id, named.get("message") ?? `${id}: publish the route from the checkout`);
+      if (r.state === "refused") {
+        console.error(`branch-store: publish ${id}: refused: ${r.reason}`);
+        return MOUNT_EXIT.refused;
+      }
+      const c = r.counts;
+      const line =
+        `branch-store: publish ${id}: ${r.state}: ${r.reason} ` +
+        `(${c.written} written, ${c.deleted} removed, ${c.unchanged} unchanged)`;
+      if (r.state === "pushed" || r.state === "unchanged") console.log(line);
+      else console.error(line);
       return PUSH_EXIT[r.state];
     }
     const branch = named.get("branch");
