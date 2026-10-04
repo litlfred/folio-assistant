@@ -2,7 +2,7 @@
 /**
  * A layer's tests run standing alone, judged against a committed baseline.
  *
- * @module cat-harness/scripts/check-standalone
+ * @module cat-harness-tools/scripts/check-standalone
  * @covers code — the layer's own tests, run where only its declared closure sits beside it
  *
  * Stage 2 of the split (bean `ho66`). `probeStandalone` (seed-ready.ts) does
@@ -37,7 +37,7 @@
  * - **could not determine** (2): the probe could not produce a summary, or no
  *   baseline is committed. Never rendered as held.
  *
- * Usage: bun run cat-harness/scripts/check-standalone.ts --layer <instance> [--update]
+ * Usage: bun run cat-harness-tools/scripts/check-standalone.ts --layer <instance> [--update]
  */
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { relative, resolve } from "node:path";
@@ -114,7 +114,7 @@ export function judge(probe: Probe, baseline: Baseline | undefined): Judgement {
 }
 
 const BASELINE_COMMENT =
-  "Tests that fail when a layer runs alone beside its declared closure (bean `ho66`), keyed `<test file> > <test>`, with `bun test`'s own fail count, which also counts errors between tests. A RATCHET: a failure not listed here is red; a listed one that now passes is reported, with this command, so the list only goes down. WRITTEN by `bun run standalone:baseline`; a longer list is a diff somebody reviews. See the module header of cat-harness/scripts/check-standalone.ts.";
+  "Tests that fail when a layer runs alone beside its declared closure (bean `ho66`), keyed `<test file> > <test>`, with `bun test`'s own fail count, which also counts errors between tests. A RATCHET: a failure not listed here is red; a listed one that now passes is reported, with this command, so the list only goes down. WRITTEN by `bun run standalone:baseline`; a longer list is a diff somebody reviews. See the module header of cat-harness-tools/scripts/check-standalone.ts.";
 
 interface BaselineFile {
   _comment: string;
