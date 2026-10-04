@@ -168,6 +168,24 @@ function ciFor(headSha: string): { ownCi: NonNullable<LivePr["ownCi"]>; missing:
   return { ownCi: missing.length > 0 ? "missing-required" : "green", missing };
 }
 
+/**
+ * The open hand-back bean for a PR, by the title `merge-conflict-patterns`
+ * prescribes ("Merge refused: #<n> …"), or null when there is none.
+ *
+ * Owner, 2026-10-04, after a steward handed back a dozen PRs with a PR
+ * comment and a queue entry but no bean: *"why did you have a process failure
+ * here?"*, then "Backfill + enforce". A hand-back the work plan cannot see is
+ * one the submitting role never picks up, so the table now names the gap
+ * instead of trusting the steward to remember it.
+ */
+export function handBackBeanFor(store: ReturnType<typeof readBeanStore>, pr: number): string | null {
+  if (store.state !== "read") return null;
+  const hit = store.beans.find(
+    (b) => b.title.startsWith(`Merge refused: #${pr} `) && b.status !== "completed" && b.status !== "scrapped",
+  );
+  return hit ? hit.id : null;
+}
+
 /** Bean ids a PR body names, in this repo's `folio-assistant-xxxx` form. */
 function beansNamed(body: string): string[] {
   return [...new Set((body.match(/folio-assistant-[0-9a-z]{4}/g) ?? []))];
@@ -243,6 +261,8 @@ async function main(): Promise<void> {
     mvpLabels: ["mvp", "milestone:status", "ready-to-merge"],
   });
   const ordered = orderQueue(placeAll(await loadPriorityTable(), facts));
+  const handBack = new Map<number, string | null>();
+  for (const p of ordered) if (p.route === "hand back") handBack.set(p.pr, handBackBeanFor(store, p.pr));
 
   if (json) {
     console.log(
@@ -256,6 +276,7 @@ async function main(): Promise<void> {
             conflict: conflictState.get(p.pr),
             ownCi: prs.find((q) => q.pr === p.pr)?.ownCi,
             missingGating: missingByPr.get(p.pr) ?? [],
+            ...(handBack.has(p.pr) ? { handBackBean: handBack.get(p.pr) } : {}),
           })),
         },
         null,
@@ -278,6 +299,16 @@ async function main(): Promise<void> {
     console.log(
       `  ${String(p.pr).padEnd(6)}${String(p.route).padEnd(11)}${String(p.class).padEnd(13)}${String(p.rank).padEnd(6)}${String(p.train ?? "-").padEnd(7)}${String(conflictState.get(p.pr)).padEnd(11)}${ciText.padEnd(17)}${p.rule}`,
     );
+  }
+  console.log("");
+  const missingHandBack = [...handBack].filter(([, id]) => id === null).map(([pr]) => pr);
+  if (store.state !== "read") {
+    console.log(`  ? hand-back beans could not be checked: the bean store reads \`${store.state}\``);
+  } else if (missingHandBack.length > 0) {
+    console.log(`  ✗ handed back with NO open hand-back bean: ${missingHandBack.map((n) => `#${n}`).join(", ")}`);
+    console.log("    Each needs one: merge-conflict-patterns §\"When a merge-train member is refused\" (title \"Merge refused: #<n> …\").");
+  } else if (handBack.size > 0) {
+    console.log(`  ✓ every handed-back PR (${handBack.size}) has an open hand-back bean`);
   }
   console.log("");
   console.log("`conflict`: clean | declared (merge:main resolves it) | refused (authored) | unknown.");

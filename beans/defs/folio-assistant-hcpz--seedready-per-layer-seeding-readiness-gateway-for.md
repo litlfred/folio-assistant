@@ -65,3 +65,7 @@ Next:
 
 ## Holder 2026-10-02 22:55Z
 Driven by https://claude.ai/code/session_01SmeBn6QZsDFaNQ4GtuC2sd (Parcel B): main merged in, regenerated, gates. Re-measured the handover's '2 real test failures' first: both were already fixed in f388822; the full suite on that head had no failures of its own.
+
+## 2026-10-04 — the sibling-discovery criterion is replaced (bean `k9mv`)
+
+The note above (*"separate work needs to make discovery work without the aggregate root"*) was resolved the other way, on the owner's choice: discovery stays checkout-local (`cmsl`), and the criterion now counts **paths declared in the layer that resolve only above it** — `upward-paths`. cat-harness: 0 of 134.

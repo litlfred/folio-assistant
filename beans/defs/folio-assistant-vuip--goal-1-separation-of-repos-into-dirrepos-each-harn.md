@@ -130,7 +130,7 @@ way that produced a clean, plausible, alarming number — the same shape this
 goal's sibling bean `k59d` is about, one layer down.
 
 **GOAL 1 now has ONE open box**: a new empty repository bootstrapping an
-instance, blocked on `zmdo` (`todo`), which is unchanged and re-checked.
+instance, then waiting on `zmdo` (`todo` at the time; proven and completed 2026-10-04 — see §"The last box: evidence for the owner").
 
 ## Box 2 — the owner's ruling, 2026-09-25
 
@@ -266,3 +266,12 @@ done?" has an answer with a named blocker rather than a shrug.
 - [x] The initiation steps are skilled, tooled and tested: a skill that
       governs them, a Tool node that performs them, and a test that fails
       when they do not run — **re-derived 2026-09-26**, see §"Box 3 closes"
+
+## The last box: evidence for the owner, 2026-10-04
+
+`zmdo`'s acceptance test — the falsifier named in box 1 — ran and passed, in real empty repositories on GitHub Actions against folio-assistant@8ea9e47:
+
+- `cat-harness` alone → [litlfred/cat-harness-test run 37206112987](https://github.com/litlfred/cat-harness-test/actions/runs/37206112987): instance-init, declaration resolves, skills readable, beans usable, MCP serves 23 tools.
+- `folio-assistant-core` alone → [litlfred/folio-test `zmdo-proof` run 37206115053](https://github.com/litlfred/folio-test/actions/runs/37206115053): a document folio, MCP serves 45 tools, it renders.
+
+**The box is left unticked on purpose.** A goal is the owner's to call met, and the proof differs from the box's wording in one way the owner should weigh: the platform reaches the empty repository as a sparse checkout of `litlfred/folio-assistant` holding only the layer and its `needs`, because the layer repositories themselves (`litlfred/cat-harness`, `litlfred/folio-assistant-core`) are empty — seeding them is `smbc`. Recorded by session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi.
