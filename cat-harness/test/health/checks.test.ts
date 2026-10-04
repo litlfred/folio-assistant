@@ -33,6 +33,7 @@ import {
   TRACKED_MAJOR_BYTES,
   TRACKED_WARN_BYTES,
   beanStoreCheck,
+  sessionLogRootBeans,
   formatBytes,
   repositorySizeCheck,
   runHealthChecks,
@@ -635,6 +636,48 @@ describe("bean-store", () => {
     title: `title ${o.id}`,
     status: "todo",
     ...o,
+  });
+
+  // ── Bean `8unf`: a session is a LOG, not a roadmap root ──────────────
+  //
+  // qou, 2026-10-04: 292 of 353 epics were "Session:" logs, because two
+  // skills told every session to mint one. Report-only, OPEN beans only.
+  describe("bean-session-log-roots", () => {
+    const run = (value: BeanEvidence[]) => beanStoreCheck(healthyContext({ beans: { state: "ok", value } }));
+
+    it("flags an open Session/Handoff epic or milestone", () => {
+      const r = run([
+        bean({ id: "s1", title: "Session: claude/foo — fix bar", type: "milestone", status: "in-progress" }),
+        bean({ id: "s2", title: "SESSION 3 - lean sweep", type: "epic" }),
+        bean({ id: "h1", title: "Handoff: lean build arc", type: "epic" }),
+        bean({ id: "h2", title: "Handover — Q4", type: "milestone" }),
+      ]);
+      const f = r.findings.filter((x) => x.metric === "bean-session-log-roots");
+      expect(f.map((x) => x.summary.slice(1, 3)).sort()).toEqual(["h1", "h2", "s1", "s2"]);
+      expect(f.every((x) => x.severity === "minor")).toBe(true);
+      expect(f[0].action).toContain("never `beans delete`");
+      expect(r.measurements.find((m) => m.metric === "bean-session-log-roots")?.value).toBe(4);
+    });
+
+    it("does not flag a session-titled TASK, a closed log, a mid-title 'session', or an untyped bean", () => {
+      const r = run([
+        bean({ id: "t1", title: "Session: notes", type: "task" }),
+        bean({ id: "c1", title: "Session: old", type: "epic", status: "completed" }),
+        bean({ id: "c2", title: "Session: rejected", type: "milestone", status: "scrapped" }),
+        bean({ id: "m1", title: "PROCESS: the session-start sweep", type: "epic" }),
+        bean({ id: "u1", title: "Session: untyped" }),
+      ]);
+      expect(metrics(r)).not.toContain("bean-session-log-roots");
+      expect(r.measurements.find((m) => m.metric === "bean-session-log-roots")?.value).toBe(0);
+    });
+
+    it("sessionLogRootBeans is the same answer the check gives", () => {
+      const beans = [
+        bean({ id: "s1", title: "Session: x", type: "epic" }),
+        bean({ id: "e1", title: "QA: verdicts", type: "epic" }),
+      ];
+      expect(sessionLogRootBeans(beans).map((b) => b.id)).toEqual(["s1"]);
+    });
   });
 
   // ── Bean `thux`: a claim worked through its CHILDREN is not quiet ─────

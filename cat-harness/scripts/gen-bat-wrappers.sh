@@ -33,7 +33,7 @@ WRAPPED=(
   cat-harness/scripts/check-todos.sh
   cat-harness/scripts/check-upstream.sh
   cat-harness/scripts/delivery-summary.sh
-  cat-harness/scripts/feature-build.sh
+  folio-assistant-sci/adapters/paper/latex/feature-build.sh
   cat-harness/scripts/folio-port.sh
   cat-harness/scripts/git-hooks/install.sh
   cat-harness/scripts/google-drive-mcp.sh

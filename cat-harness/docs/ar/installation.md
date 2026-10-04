@@ -107,7 +107,7 @@ Live أيضًا. كلاهما لم يكن موثقًا حتى 2026-09-21
 تلميح تثبيت لأي شيء مفقود:
 
 ```sh
-bun run cat-harness/src/index.ts --check-deps
+bun run cat-harness-tools/src/index.ts --check-deps
 # or via the npm script
 bun run check-deps
 ```
@@ -118,13 +118,13 @@ bun run check-deps
 
 ```sh
 # stdio transport — what LLM harnesses (Claude Code, etc.) launch
-bun run cat-harness/src/index.ts --stdio
+bun run cat-harness-tools/src/index.ts --stdio
 
 # HTTP transport — for a long-running shared instance / the web UI
-bun run cat-harness/src/index.ts --http
+bun run cat-harness-tools/src/index.ts --http
 
 # point it at the content repo you are authoring (defaults to ../.. )
-bun run cat-harness/src/index.ts --stdio --repo /path/to/your/content-repo
+bun run cat-harness-tools/src/index.ts --stdio --repo /path/to/your/content-repo
 ```
 
 توجد برامج نصية للملاءمة في `package.json`:
@@ -182,7 +182,7 @@ cp harness.config.example.json /path/to/your/content-repo/<your-name>.config.jso
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness-tools/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }
@@ -191,7 +191,7 @@ cp harness.config.example.json /path/to/your/content-repo/<your-name>.config.jso
 أو سجّله من واجهة سطر الأوامر (CLI):
 
 ```sh
-claude mcp add folio-assistant -- bun run /path/to/folio-assistant/cat-harness/src/index.ts --stdio --repo .
+claude mcp add folio-assistant -- bun run /path/to/folio-assistant/cat-harness-tools/src/index.ts --stdio --repo .
 ```
 
 يقرأ Claude Code أيضًا `AGENTS.md` / `CLAUDE.md` بشكل أصيل ويلتزم
@@ -209,7 +209,7 @@ claude mcp add folio-assistant -- bun run /path/to/folio-assistant/cat-harness/s
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness-tools/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }
@@ -230,7 +230,7 @@ claude mcp add folio-assistant -- bun run /path/to/folio-assistant/cat-harness/s
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness-tools/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }

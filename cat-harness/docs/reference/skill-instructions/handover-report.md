@@ -20,7 +20,7 @@ next agent starts from fact rather than from guesswork.
 
 To produce one under time pressure, follow [`prepare-for-handover`](prepare-for-handover.md): it commits and pushes first, then writes this report citing the pushed SHAs.
 
-This skill is not `agent-handoff` (PR #1884), which hands
+This skill is not [`agent-handoff`](agent-handoff.md), which hands
 **one task** to a named agent in another environment. A handover report is a
 **snapshot of everything one agent is holding**, written for whoever turns up
 next, which may be no one in particular.

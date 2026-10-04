@@ -293,7 +293,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `skills`
 
-4 of 7 published.
+5 of 7 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
@@ -301,7 +301,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [C@T Harness]({{ '/cat-harness/auto-docs/index/skills/skills/' | relative_url }})
 - [FHIR IG Harness]({{ '/cat-harness/auto-docs/index/skills/fhir-ig-skills/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/auto-docs/index/skills/core-skills/' | relative_url }})
-- folio-assistant-sci — *declared, not published*
+- [folio-assistant-sci]({{ '/cat-harness/auto-docs/index/skills/folio-assistant-sci-skills/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/auto-docs/index/skills/who-iris-skills/' | relative_url }})
 
 ### `substrate-snapshot`
@@ -335,12 +335,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `tools`
 
-1 of 4 published.
+1 of 5 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/tools/' | relative_url }})
 - FHIR IG Harness — *declared, not published*
 - folio-assistant-core — *declared, not published*
+- folio-assistant-sci — *declared, not published*
 - SMART Base — *declared, not published*
 
 ### `translation-sources`

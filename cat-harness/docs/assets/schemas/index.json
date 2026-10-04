@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 215,
+      "count": 210,
       "unit": "modules"
     }
   },
@@ -644,14 +644,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/landing-instance.test.ts",
-      "instance": "cat-harness",
-      "name": "landing-instance.test",
-      "graphNode": "undeclared",
-      "summary": "`resolveLandingInstance` and `check:landing-instance` (issue #1904).",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/landing-sticky.test.ts",
       "instance": "cat-harness",
       "name": "landing-sticky.test",
@@ -937,14 +929,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/qa-attestations-criteria.test.ts",
-      "instance": "cat-harness",
-      "name": "qa-attestations-criteria.test",
-      "graphNode": "undeclared",
-      "summary": "The attestation store's block-qa and translation-qa families (bean `8wj1`,",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/qa-attestations.test.ts",
       "instance": "cat-harness",
       "name": "qa-attestations.test",
@@ -1006,22 +990,6 @@
       "name": "reader-filter",
       "graphNode": "schema",
       "summary": "The filter a READER applies to a board, which commits nothing.",
-      "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/ref-window.test.ts",
-      "instance": "cat-harness",
-      "name": "ref-window.test",
-      "graphNode": "undeclared",
-      "summary": "A ref window's reason to exist is that a HANDOVER must not double-push, so",
-      "isTest": true
-    },
-    {
-      "module": "cat-harness/schemas/ref-window.ts",
-      "instance": "cat-harness",
-      "name": "ref-window",
-      "graphNode": "schema",
-      "summary": "A COALESCING WINDOW over a watched ref — the writes a steward batched into",
       "isTest": false
     },
     {
@@ -1112,14 +1080,6 @@
       "graphNode": "schema",
       "summary": "Actors, Roles and Skills — who does a BPMN task, and what they need to know.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/route-member.test.ts",
-      "instance": "cat-harness",
-      "name": "route-member.test",
-      "graphNode": "undeclared",
-      "summary": "`RouteMemberSchema` validates UNTRUSTED input, so these are adversarial",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/safe-url.test.ts",
@@ -6861,6 +6821,13 @@
           "doc": "Which half of a kg-separation pair the planned {@link repository} is —"
         },
         {
+          "name": "seedsWith",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "Instances this one is seeded together with — see `seedsWith` on"
+        },
+        {
           "name": "stub",
           "type": "string",
           "optional": true,
@@ -7084,6 +7051,13 @@
           "optional": true,
           "array": false,
           "doc": "Which half of a kg-separation pair this instance's planned `repository`"
+        },
+        {
+          "name": "seedsWith",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Instances this one is SEEDED TOGETHER with: the same seeding step creates"
         },
         {
           "name": "stub",
@@ -21519,6 +21493,13 @@
           "array": false
         },
         {
+          "name": "status",
+          "type": "QueueStatusSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The steward's triage verdict (see {@link QUEUE_STATUSES}). Absent on entries written before it existed."
+        },
+        {
           "name": "beans",
           "type": "z.array(BeanIdSchema).default([])",
           "optional": true,
@@ -21534,7 +21515,8 @@
         "cat-harness/schemas/merge-queue.ts#HoldSchema",
         "cat-harness/schemas/merge-queue.ts#Instant",
         "cat-harness/schemas/merge-queue.ts#NonBlank",
-        "cat-harness/schemas/merge-queue.ts#PlacementSchema"
+        "cat-harness/schemas/merge-queue.ts#PlacementSchema",
+        "cat-harness/schemas/merge-queue.ts#QueueStatusSchema"
       ],
       "unresolved": [],
       "external": [
@@ -21828,6 +21810,32 @@
     {
       "id": "cat-harness/schemas/merge-queue.ts#PriorityClassSchema",
       "name": "PriorityClassSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#QueueStatus",
+      "name": "QueueStatus",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#QueueStatusSchema",
+      "name": "QueueStatusSchema",
       "module": "cat-harness/schemas/merge-queue.ts",
       "kind": "zod-enum",
       "fields": [],
@@ -25921,212 +25929,6 @@
       "refs": [],
       "unresolved": [],
       "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/ref-window.ts#Instant",
-      "name": "Instant",
-      "module": "cat-harness/schemas/ref-window.ts",
-      "kind": "undetermined",
-      "note": "z.iso.datetime({ offset: true })",
-      "doc": "An ISO-8601 timestamp with a zone, as everywhere else in the work plan.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/ref-window.ts#NonBlank",
-      "name": "NonBlank",
-      "module": "cat-harness/schemas/ref-window.ts",
-      "kind": "zod-scalar",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/ref-window.ts#RefWindow",
-      "name": "RefWindow",
-      "module": "cat-harness/schemas/ref-window.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
-      "name": "RefWindowObjectSchema",
-      "module": "cat-harness/schemas/ref-window.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(REF_WINDOW_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "ref",
-          "type": "WatchedRefSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "heldBy",
-          "type": "NonBlank",
-          "optional": false,
-          "array": false,
-          "doc": "Who holds the window — a session URL, `owner`, or an actor id."
-        },
-        {
-          "name": "since",
-          "type": "Instant",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "expires",
-          "type": "Instant",
-          "optional": false,
-          "array": false,
-          "doc": "The hard close. Set once, at open: there is no extend, because a window"
-        },
-        {
-          "name": "handoff",
-          "type": "NonBlank",
-          "optional": false,
-          "array": false,
-          "doc": "Who takes this window if the holder stops — the field that makes a"
-        },
-        {
-          "name": "requests",
-          "type": "z.array(WriteRequestSchema).default([])",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "closedAt",
-          "type": "Instant.optional()",
-          "optional": true,
-          "array": false,
-          "doc": "When the steward actually performed the single write, if it has."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/ref-window.ts#Instant",
-        "cat-harness/schemas/ref-window.ts#NonBlank",
-        "cat-harness/schemas/ref-window.ts#WatchedRefSchema",
-        "cat-harness/schemas/ref-window.ts#WriteRequestSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "REF_WINDOW_TAG",
-        "z"
-      ],
-      "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/ref-window.ts#RefWindowSchema",
-      "name": "RefWindowSchema",
-      "module": "cat-harness/schemas/ref-window.ts",
-      "kind": "zod-object",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/ref-window.ts#WatchedRefSchema",
-      "name": "WatchedRefSchema",
-      "module": "cat-harness/schemas/ref-window.ts",
-      "kind": "zod-object",
-      "doc": "A watched ref, as `scripts/special-branches.json` spells it.",
-      "fields": [],
-      "extendsNames": [
-        "NonBlank"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/ref-window.ts#NonBlank"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/ref-window.ts#WriteRequest",
-      "name": "WriteRequest",
-      "module": "cat-harness/schemas/ref-window.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/ref-window.ts#WriteRequestSchema",
-      "name": "WriteRequestSchema",
-      "module": "cat-harness/schemas/ref-window.ts",
-      "kind": "zod-object",
-      "doc": "One write somebody asked for while the window was open.",
-      "fields": [
-        {
-          "name": "route",
-          "type": "NonBlank",
-          "optional": false,
-          "array": false,
-          "doc": "The route this write owns — `/` for the published site, `STAGING/<slug>/`"
-        },
-        {
-          "name": "requestedBy",
-          "type": "NonBlank",
-          "optional": false,
-          "array": false,
-          "doc": "Who asked — a workflow file, a session URL, or an actor id."
-        },
-        {
-          "name": "requestedAt",
-          "type": "Instant",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "authored",
-          "type": "z.boolean().default(false)",
-          "optional": true,
-          "array": false,
-          "doc": "Whether an AUTHOR wrote this route's content, as opposed to a generator"
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/ref-window.ts#Instant",
-        "cat-harness/schemas/ref-window.ts#NonBlank"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
       "exported": true
     },
     {
@@ -32674,14 +32476,13 @@
       "name": "KeyedBySchema",
       "module": "cat-harness/schemas/subgraph-source.ts",
       "kind": "zod-enum",
-      "doc": "The ONE keying enum. `DirectoryStorageSchema.keyedBy` in `cat-harness.ts`",
+      "doc": "How entries are keyed on a branch: one per `commit`, one live copy at the",
       "fields": [],
       "extendsNames": [],
       "values": [
         "commit",
         "tip",
-        "route",
-        "route-family"
+        "route"
       ],
       "refs": [],
       "unresolved": [],
@@ -32723,33 +32524,6 @@
       "name": "ResolvedSubgraphSource",
       "module": "cat-harness/schemas/subgraph-source.ts",
       "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-source.ts#RouteMember",
-      "name": "RouteMember",
-      "module": "cat-harness/schemas/subgraph-source.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-source.ts#RouteMemberSchema",
-      "name": "RouteMemberSchema",
-      "module": "cat-harness/schemas/subgraph-source.ts",
-      "kind": "zod-scalar",
-      "doc": "A `route-family` MEMBER key — one path segment, from untrusted input.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -42537,7 +42311,8 @@
         "single-open",
         "no-redundant-toggle",
         "rail-tips",
-        "harnesses-at-rest"
+        "harnesses-at-rest",
+        "declared-mark"
       ],
       "refs": [],
       "unresolved": [],
@@ -55139,6 +54914,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#QueueStatusSchema",
+      "via": "status",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/merge-queue.ts#HoldSchema",
       "to": "cat-harness/schemas/merge-queue.ts#Instant",
       "via": "expires",
@@ -55686,94 +55469,6 @@
       "from": "cat-harness/schemas/qa-review.ts#ReviewerRef",
       "to": "cat-harness/schemas/block-qa.ts#QaReviewerKind",
       "via": "kind",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
-      "to": "cat-harness/schemas/ref-window.ts#Instant",
-      "via": "closedAt",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
-      "to": "cat-harness/schemas/ref-window.ts#Instant",
-      "via": "expires",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
-      "to": "cat-harness/schemas/ref-window.ts#Instant",
-      "via": "since",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
-      "to": "cat-harness/schemas/ref-window.ts#NonBlank",
-      "via": "handoff",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
-      "to": "cat-harness/schemas/ref-window.ts#NonBlank",
-      "via": "heldBy",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
-      "to": "cat-harness/schemas/ref-window.ts#WatchedRefSchema",
-      "via": "ref",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
-      "to": "cat-harness/schemas/ref-window.ts#WriteRequestSchema",
-      "via": "requests",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/ref-window.ts#WatchedRefSchema",
-      "to": "cat-harness/schemas/ref-window.ts#NonBlank",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/ref-window.ts#WriteRequestSchema",
-      "to": "cat-harness/schemas/ref-window.ts#Instant",
-      "via": "requestedAt",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/ref-window.ts#WriteRequestSchema",
-      "to": "cat-harness/schemas/ref-window.ts#NonBlank",
-      "via": "requestedBy",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/ref-window.ts#WriteRequestSchema",
-      "to": "cat-harness/schemas/ref-window.ts#NonBlank",
-      "via": "route",
       "kind": "field",
       "optional": false,
       "array": false
