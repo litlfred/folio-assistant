@@ -1,146 +1,138 @@
 /**
- * state-mount on REAL repositories: a `file://` remote, a real worktree, no
+ * state-mount on REAL repositories: a `file://` remote, real checkouts, no
  * mocks. The failure this module exists for is a FETCH that does not happen,
- * so a stubbed fetch would test the stub.
+ * so a stubbed fetch would test the stub. Since bean `nij4` the mounting is
+ * branch-store's `mountTip`; these pin what `state:mount` adds over it — the
+ * dispatch on the declared source, the three-state report, and that a dirty
+ * mount is never re-read over.
  *
  * @module scripts/tests/state-mount
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { dirname, join } from "node:path";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
-import { MOUNT_DIR, mountState, report, type MountResult } from "../state-mount.js";
+import { resolveTipLocation, tipLocations } from "../branch-store.js";
+import { mountState, report } from "../state-mount.js";
+import { cleanup, git, MANIFEST, stateFixture, TIP_SOURCE, BRANCH } from "./state-fixture.js";
 
-/**
- * The tip of a single-worktree mount. The narrowing is explicit because the
- * result type only carries a tip on a graph whose own state is `mounted` —
- * which is the point: nothing can read a tip off a graph that has none.
- */
-function soleTip(r: MountResult): string {
-  if (r.state !== "mounted") throw new Error(`not mounted: ${r.reason}`);
-  const g = r.graphs[0];
-  if (!g || g.state !== "mounted") throw new Error(`the sole graph is not mounted: ${g?.reason ?? "(no graph)"}`);
-  return g.tip;
-}
-
-const NOGPG = ["-c", "commit.gpgsign=false", "-c", "user.name=t", "-c", "user.email=t@t"];
-const BRANCH = "cat/cat-harness/state";
-const MANIFEST = JSON.stringify({ $schema: "state-manifest/v1", status: "seed", authoritative: false, keyedBy: "tip" });
-
-function git(cwd: string, ...args: string[]): string {
-  const r = spawnSync("git", [...NOGPG, ...args], { cwd, encoding: "utf-8" });
-  if (r.status !== 0) throw new Error(`git ${args.join(" ")} → ${r.status}\n${r.stderr}`);
-  return r.stdout;
-}
-
-const made: string[] = [];
-afterEach(() => {
-  for (const d of made.splice(0)) rmSync(d, { recursive: true, force: true });
-});
-
-function fixture(files: Record<string, string> | null = { "manifest.json": MANIFEST, "beans/defs/a.md": "A\n" }) {
-  const base = mkdtempSync(join(tmpdir(), "state-mount-t-"));
-  made.push(base);
-  const bare = join(base, "remote.git");
-  git(base, "init", "-q", "--bare", "-b", "main", bare);
-  const url = `file://${bare}`;
-  const work = join(base, "work");
-  mkdirSync(work);
-  git(work, "init", "-q", "-b", "main");
-  writeFileSync(join(work, "README.md"), "root\n");
-  git(work, "add", "-A");
-  git(work, "commit", "-q", "-m", "root");
-  git(work, "remote", "add", "origin", url);
-  if (files) {
-    const seed = join(base, "seed");
-    mkdirSync(seed);
-    git(seed, "init", "-q", "-b", "seed");
-    for (const [p, t] of Object.entries(files)) {
-      mkdirSync(dirname(join(seed, p)), { recursive: true });
-      writeFileSync(join(seed, p), t);
-    }
-    git(seed, "add", "-A");
-    git(seed, "commit", "-q", "-m", "seed");
-    git(seed, "push", "-q", url, `HEAD:refs/heads/${BRANCH}`);
-  }
-  return { base, bare, url, work };
-}
+afterEach(cleanup);
 
 describe("inert until the cutover", () => {
-  test("no tip-keyed declaration is `not-enabled`, not a failure", () => {
-    const f = fixture();
-    const r = mountState({ repoRoot: f.work });
+  test("a directory-sourced subgraph is `not-enabled`, not a failure", () => {
+    const { root, store } = stateFixture("state-mount-t-").checkout("a", { kind: "directory" });
+    const r = mountState({ repoRoot: root, store });
     expect(r.state).toBe("not-enabled");
-    expect(existsSync(join(f.work, MOUNT_DIR))).toBe(false);
+    expect(existsSync(join(root, "todos"))).toBe(false);
     // The report must NOT shout: crying wolf here is what teaches an agent to ignore the loud case.
     expect(report(r)).not.toContain("🛑");
     expect(report(r)).toContain("read from the checkout");
   });
+
+  test("a commit-keyed branch is qa-store's, not a mount's", () => {
+    const { root, store } = stateFixture("state-mount-t-").checkout("a", { ...TIP_SOURCE, keyedBy: "commit" });
+    expect(mountState({ repoRoot: root, store }).state).toBe("not-enabled");
+  });
 });
 
-describe("mounting", () => {
-  test("--force mounts the branch DETACHED, so there is no branch to push from", () => {
-    const f = fixture();
-    const r = mountState({ repoRoot: f.work, force: true, branch: BRANCH });
+describe("mounting, dispatched on the declared source", () => {
+  test("a tip-keyed branch source is mounted at the declared path", () => {
+    const { root, store } = stateFixture("state-mount-t-").checkout("a");
+    const r = mountState({ repoRoot: root, store });
     expect(r.state).toBe("mounted");
-    const path = join(f.work, MOUNT_DIR);
-    expect(readFileSync(join(path, "beans/defs/a.md"), "utf-8")).toBe("A\n");
-    // Detached: no symbolic HEAD.
-    expect(spawnSync("git", ["symbolic-ref", "-q", "HEAD"], { cwd: path }).status).not.toBe(0);
-    // The tip is reported PER GRAPH, where it is required — there is no
-    // top-level one, because a fan-out over several branches has no single tip.
-    expect(git(path, "rev-parse", "HEAD").trim()).toBe(soleTip(r));
-  });
-
-  test("a second mount at the same tip is a no-op", () => {
-    const f = fixture();
-    expect(mountState({ repoRoot: f.work, force: true, branch: BRANCH }).state).toBe("mounted");
-    const again = mountState({ repoRoot: f.work, force: true, branch: BRANCH });
-    expect(again.state).toBe("mounted");
-    if (again.state === "mounted") expect(again.reason).toContain("already at");
+    expect(r.graphs).toMatchObject([{ id: "todos", state: "mounted", branch: BRANCH, files: 2 }]);
+    expect(readFileSync(join(root, "todos/a.md"), "utf-8")).toBe("A\n");
+    // Only the subgraph's own files: the branch root's manifest stays on the branch.
+    expect(existsSync(join(root, "todos/manifest.json"))).toBe(false);
+    expect(report(r)).toContain("bun run state:push");
   });
 
   test("a clean mount behind the branch is moved forward", () => {
-    const f = fixture();
-    const first = mountState({ repoRoot: f.work, force: true, branch: BRANCH });
-    if (first.state !== "mounted") throw new Error("first mount failed");
-    // The branch moves on the remote.
-    const seed2 = join(f.base, "seed2");
-    mkdirSync(seed2);
-    git(seed2, "clone", "-q", f.url, "--branch", BRANCH, seed2);
-    writeFileSync(join(seed2, "beans/defs/b.md"), "B\n");
-    git(seed2, "add", "-A");
-    git(seed2, "commit", "-q", "-m", "more");
-    git(seed2, "push", "-q", "origin", `HEAD:refs/heads/${BRANCH}`);
+    const f = stateFixture("state-mount-t-");
+    const { root, store } = f.checkout("a");
+    const first = mountState({ repoRoot: root, store });
+    expect(first.state).toBe("mounted");
+    expect(f.sibling("s", root).write([{ path: "todos/b.md", content: "B\n", expect: null }], "more").state).toBe("pushed");
 
-    const moved = mountState({ repoRoot: f.work, force: true, branch: BRANCH });
+    const moved = mountState({ repoRoot: root, store });
     expect(moved.state).toBe("mounted");
-    expect(soleTip(moved)).not.toBe(soleTip(first));
-    expect(existsSync(join(f.work, MOUNT_DIR, "beans/defs/b.md"))).toBe(true);
+    const tipOf = (r: typeof moved) => {
+      const g = r.graphs[0];
+      return g?.state === "mounted" ? g.tip : "";
+    };
+    expect(tipOf(moved)).not.toBe(tipOf(first));
+    expect(readFileSync(join(root, "todos/b.md"), "utf-8")).toBe("B\n");
+  });
+
+  test("--id narrows to one subgraph, and an id kept on no branch is a failure", () => {
+    const { root, store } = stateFixture("state-mount-t-").checkout("a");
+    expect(mountState({ repoRoot: root, store, id: "todos" }).state).toBe("mounted");
+    const r = mountState({ repoRoot: root, store, id: "nope" });
+    expect(r.state).toBe("failed");
+    expect(r.reason).toContain("nope");
   });
 });
 
 describe("it never discards work", () => {
-  test("a dirty mount is reported and left exactly as it is", () => {
-    const f = fixture();
-    expect(mountState({ repoRoot: f.work, force: true, branch: BRANCH }).state).toBe("mounted");
-    const edited = join(f.work, MOUNT_DIR, "beans/defs/a.md");
+  test("a mount with unpushed edits is reported stale and left exactly as it is", () => {
+    const { root, store } = stateFixture("state-mount-t-").checkout("a");
+    expect(mountState({ repoRoot: root, store }).state).toBe("mounted");
+    const edited = join(root, "todos/a.md");
     writeFileSync(edited, "EDITED IN FLIGHT\n");
 
-    const r = mountState({ repoRoot: f.work, force: true, branch: BRANCH });
-    expect(r.state).toBe("dirty");
-    // The edit survives — `worktree remove --force` here would be silent data loss.
+    const r = mountState({ repoRoot: root, store });
+    // Still on disk and readable: present, so the sweep is not failed over it.
+    expect(r.state).toBe("mounted");
+    expect(r.graphs[0]).toMatchObject({ id: "todos", state: "stale" });
     expect(readFileSync(edited, "utf-8")).toBe("EDITED IN FLIGHT\n");
     expect(report(r)).toContain("Nothing was discarded");
+  });
+
+  test("a directory the checkout still tracks is refused, never overwritten, and NOT read as stale", () => {
+    const { root, store } = stateFixture("state-mount-t-").checkout("a");
+    // `todos/` tracked on this branch: the cutover has not happened here.
+    mkdirSync(join(root, "todos"));
+    writeFileSync(join(root, "todos/local.md"), "main's copy\n");
+    git(root, "add", "-A");
+    git(root, "commit", "-q", "-m", "tracked");
+    const r = mountState({ repoRoot: root, store });
+    expect(r.state).toBe("failed");
+    expect(r.graphs[0]).toMatchObject({ state: "refused" });
+    expect(readFileSync(join(root, "todos/local.md"), "utf-8")).toBe("main's copy\n");
+  });
+});
+
+describe("stale is ASKED, never inferred from a refusal plus a marker", () => {
+  test("a mounted graph whose path the checkout then tracks is refused, not stale — it exits non-zero", () => {
+    const { root, store } = stateFixture("state-mount-t-").checkout("a");
+    expect(mountState({ repoRoot: root, store }).state).toBe("mounted");
+    // The marker stays; the path is now tracked, so mountTip refuses it.
+    git(root, "add", "-A");
+    git(root, "commit", "-q", "-m", "tracked after mounting");
+    const r = mountState({ repoRoot: root, store });
+    expect(r.graphs[0]?.state).toBe("refused");
+    expect(r.state).toBe("failed");
+  });
+});
+
+describe("the resolved source, not only legacy storage (bean doy3)", () => {
+  test("a graph declared with `source` is found by tipLocations and resolveTipLocation", () => {
+    const { root } = stateFixture("state-mount-t-").checkout("a");
+    expect(tipLocations(root)).toEqual([{ id: "todos", path: "todos", branch: BRANCH, keyedBy: "tip" }]);
+    expect(resolveTipLocation("todos", root)).toEqual({ id: "todos", path: "todos", branch: BRANCH, keyedBy: "tip" });
+  });
+
+  test("a directory source is the checkout itself: not a tip location, and resolveTipLocation says so", () => {
+    const { root } = stateFixture("state-mount-t-").checkout("a", { kind: "directory" });
+    expect(tipLocations(root)).toEqual([]);
+    expect(() => resolveTipLocation("todos", root)).toThrow("kept in the checkout");
   });
 });
 
 describe("failure is LOUD, and says what not to believe", () => {
   test("an absent branch fails, and the report warns against trusting an empty work-plan", () => {
-    const f = fixture(null); // nothing pushed: the branch does not exist
-    const r = mountState({ repoRoot: f.work, force: true, branch: BRANCH });
+    const { root, store } = stateFixture("state-mount-t-", null).checkout("a");
+    const r = mountState({ repoRoot: root, store });
     expect(r.state).toBe("failed");
     const text = report(r);
     expect(text).toContain("🛑");
@@ -149,31 +141,26 @@ describe("failure is LOUD, and says what not to believe", () => {
   });
 
   test("a branch without the manifest is not a state branch", () => {
-    const f = fixture({ "beans/defs/a.md": "A\n" }); // no manifest.json
-    const r = mountState({ repoRoot: f.work, force: true, branch: BRANCH });
+    const { root, store } = stateFixture("state-mount-t-", { "todos/a.md": "A\n" }).checkout("a");
+    const r = mountState({ repoRoot: root, store });
     expect(r.state).toBe("failed");
-    if (r.state === "failed") expect(r.reason).toContain("no root manifest.json");
-    expect(existsSync(join(f.work, MOUNT_DIR))).toBe(false);
-  });
-
-  test("a commit-keyed manifest is refused — the keying is the contract, not the name", () => {
-    const f = fixture({ "manifest.json": JSON.stringify({ $schema: "state-manifest/v1", keyedBy: "commit" }), "x.md": "x" });
-    const r = mountState({ repoRoot: f.work, force: true, branch: BRANCH });
-    expect(r.state).toBe("failed");
-    if (r.state === "failed") expect(r.reason).toContain("keyed by commit");
+    expect(r.graphs[0]?.state).toBe("corrupt");
+    expect(existsSync(join(root, "todos/a.md"))).toBe(false);
   });
 
   test("a foreign manifest schema is refused", () => {
-    const f = fixture({ "manifest.json": JSON.stringify({ $schema: "qa-reports-manifest/v1", keyedBy: "tip" }), "x.md": "x" });
-    const r = mountState({ repoRoot: f.work, force: true, branch: BRANCH });
+    const foreign = JSON.stringify({ ...JSON.parse(MANIFEST), $schema: "qa-reports-manifest/v1" });
+    const { root, store } = stateFixture("state-mount-t-", { "manifest.json": foreign, "todos/a.md": "A\n" }).checkout("a");
+    const r = mountState({ repoRoot: root, store });
     expect(r.state).toBe("failed");
-    if (r.state === "failed") expect(r.reason).toContain("not state-manifest/v1");
+    expect(r.graphs[0]?.reason).toContain("not state-manifest/v1");
   });
 
-  test("unparseable JSON is a failure, not an empty mount", () => {
-    const f = fixture({ "manifest.json": "{ not json", "x.md": "x" });
-    const r = mountState({ repoRoot: f.work, force: true, branch: BRANCH });
+  test("a commit-keyed manifest is refused — the keying is the contract, not the name", () => {
+    const commitKeyed = JSON.stringify({ ...JSON.parse(MANIFEST), keyedBy: "commit" });
+    const { root, store } = stateFixture("state-mount-t-", { "manifest.json": commitKeyed, "todos/a.md": "A\n" }).checkout("a");
+    const r = mountState({ repoRoot: root, store });
     expect(r.state).toBe("failed");
-    if (r.state === "failed") expect(r.reason).toContain("does not parse");
+    expect(r.graphs[0]?.reason).toContain("keyed by commit");
   });
 });
