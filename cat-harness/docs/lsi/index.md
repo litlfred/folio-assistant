@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**230** units · **6117** terms · k = **100** · retains **78.1 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**230** units · **6117** terms · k = **100** · retains **78.2 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -124,13 +124,13 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
 | 1 | 46.64 | instance, kind, directory, harness, session, page, graph, merge | *(none)* |
-| 2 | 21.85 | watcher, prs, queue, sibling, commits, backlog, coordination, slot | harness, instance, declaration, node, directories, iri, directory, subgraph |
+| 2 | 21.85 | watcher, prs, queue, sibling, commits, backlog, coordination, slot | harness, instance, declaration, node, directories, directory, iri, subgraph |
 | 3 | 18.65 | chapter, block, slot, project, formal, edges, watcher, proof | steward, session, conflict, head, green, merge, push, conflicted |
 | 4 | 17.43 | page, tile, pdf, text, avatar, images, glass, card | subgraph, subdirectory, ledger, sibling, train, steward, prs, sub |
-| 5 | 15.74 | tile, glass, avatar, card, board, sticky, tiles, theme | rung, steward, pdf, upload, member, arxiv, sniff, archive |
-| 6 | 15.40 | steward, head, preview, merge, train, staging, tile, red | task, process, plan, requirement, requirements, beans, methodology, cli |
+| 5 | 15.74 | tile, glass, avatar, card, board, sticky, tiles, theme | rung, steward, pdf, upload, arxiv, member, sniff, archive |
+| 6 | 15.41 | steward, head, preview, merge, train, staging, tile, red | task, process, plan, requirement, requirements, beans, methodology, cli |
 | 7 | 15.07 | queue, withheld, rung, arm, backlog, tile, library, glass | lane, preview, actor, forward, edge, edges, feature, requirements |
-| 8 | 14.68 | phase, url, feedback, feature, staging, preview, pages, pdf | slot, edges, forward, tile, edge, glass, logical, avatar |
+| 8 | 14.67 | phase, url, feedback, feature, preview, staging, pages, pdf | slot, edges, forward, tile, edge, glass, logical, avatar |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
