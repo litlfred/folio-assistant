@@ -95,7 +95,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Publishing the docs site, and keeping the previews alive](docs-site-publish.html) | 8 | — |
 | [Staging a feature branch preview, and taking it down](feature-staging.html) | 12 | — |
 | [Are the .jsonld siblings still in sync with their .ts manifests?](jsonld-drift-check.html) | 1 | — |
-| [Merge the base branch in](merge-base.html) | 7 | 2 |
+| [Merge the base branch in](merge-base.html) | 8 | 2 |
 | [A refused merge-train member](merge-refusal.html) | 10 | 2 |
 | [A merge train](merge-train.html) | 16 | — |
 | [Prose and the code it describes](narrative-code-review.html) | 5 | — |
@@ -151,7 +151,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`board-windows`](../reference/skill-instructions/board-windows.html) | [`board-open-close.bpmn`](board-open-close.html), [`board-relocate.bpmn`](board-relocate.html) |
 | `bootstrap-kg-navigation` | [`complete-initialization.bpmn`](complete-initialization.html), [`initialize-harness.bpmn`](initialize-harness.html) |
 | [`bpmn-authoring`](../reference/skill-instructions/bpmn-authoring.html) | [`crdm-requirements-definition.bpmn`](crdm-requirements-definition.html), [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
-| [`ci-health`](../reference/skill-instructions/ci-health.html) | [`ci-health-watch.bpmn`](ci-health-watch.html), [`code-change-review.bpmn`](code-change-review.html), [`merge-train.bpmn`](merge-train.html), [`pr-checks-present.bpmn`](pr-checks-present.html), [`repository-health-watch.bpmn`](repository-health-watch.html) |
+| [`ci-health`](../reference/skill-instructions/ci-health.html) | [`ci-health-watch.bpmn`](ci-health-watch.html), [`code-change-review.bpmn`](code-change-review.html), [`merge-base.bpmn`](merge-base.html), [`merge-train.bpmn`](merge-train.html), [`pr-checks-present.bpmn`](pr-checks-present.html), [`repository-health-watch.bpmn`](repository-health-watch.html) |
 | [`code-node-review`](../reference/skill-instructions/code-node-review.html) | [`review-code.bpmn`](review-code.html), [`code-change-review.bpmn`](code-change-review.html) |
 | `confirm-harness` | [`discussion.bpmn`](discussion.html), [`initialize-harness.bpmn`](initialize-harness.html) |
 | [`content-acquisition`](../reference/skill-instructions/content-acquisition.html) | [`content-acquisition.bpmn`](content-acquisition.html) |

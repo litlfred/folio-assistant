@@ -768,6 +768,20 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     kind: "covered-by",
     reason: "`bun test` is in the gate set and runs every test file, this one included",
   },
+  {
+    // Bean `03nl`. The merge-main bot's one notification per run: it reads
+    // THIS RUN's per-PR verdicts out of its own artifacts and decides whether
+    // anything in them is new. There is no tree to judge and no verdict a
+    // contributor could get from it — outside a run there are no artifacts to
+    // read, and inside one the answer is about that run. Its branches are
+    // pinned by `merge-main-workflow.test.ts` in `bun test`: every verdict
+    // class, the three conditions that notify, and the quiet ones.
+    match: "merge-main-comment.ts --aggregate",
+    kind: "ci-only",
+    reason:
+      "reads this run's own per-PR verdict artifacts and decides whether any of them is new; nothing " +
+      "to run outside a run, and its branches are pinned by merge-main-workflow.test.ts in `bun test`",
+  },
 ];
 
 /** The exemption covering this command, if any. */
