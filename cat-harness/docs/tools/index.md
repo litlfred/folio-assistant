@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>121</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>122</b><span>Tool nodes</span></div>
 <div class="tg-stat"><b>70</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>99</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>100</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,19 +48,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 99 |
+| <span class="tg-tag tg-shell">shell</span> | 100 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 25 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 7 |
 
 | installation | tools |
 |---|---|
-| `none` | 112 |
+| `none` | 113 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **70** skills named across **121** tools resolve to a
+Yes — all **70** skills named across **122** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
