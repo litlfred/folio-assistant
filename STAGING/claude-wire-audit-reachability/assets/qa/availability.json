@@ -1,0 +1,17 @@
+{
+  "$schema": "folio-qa-availability/v1",
+  "source": "checkout",
+  "requested": [
+    "pr/2071/2d382ae91a69322e83380de5aadeeef037991fd0",
+    "pr/2071"
+  ],
+  "reason": "the checkout holds the QA corpus (still committed), so it is published as checked out; qa-reports had no entry for this build's ref",
+  "expected": {
+    "witnesses": 170,
+    "results": 20
+  },
+  "published": {
+    "witnesses": 170,
+    "results": 20
+  }
+}
