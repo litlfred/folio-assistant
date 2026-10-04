@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 772,
+      "count": 774,
       "unit": "beans"
     }
   },
@@ -4449,6 +4449,20 @@
       "file": "beans/defs/folio-assistant-do70--translation-siblings-adding-a-po-catalogue-stales.md"
     },
     {
+      "id": "folio-assistant-doy3",
+      "title": "tipLocations/resolveTipLocation read only legacy storage — a source-declared branch subgraph is invisible to branch-store's CLI and StateStore",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T15:53:53Z",
+      "updatedAt": "2026-10-03T15:53:53Z",
+      "preview": "Found 2026-10-03 while building nij4 (#1997), measured on a fixture: a directory declared `source: { kind: \"branch\", keyedBy: \"tip\" }` makes `declaredSubgraph(...).source` a branch, but `tipLocations(root)` returns [] for it and `resolveTipLocation(id)` throws 'declares no storage'. Both walk `resolveDirectories` and read `d.storage` only, while `declaredSubgraph` folds config override → source → ",
+      "file": "beans/defs/folio-assistant-doy3--tiplocationsresolvetiplocation-read-only-legacy-st.md"
+    },
+    {
       "id": "folio-assistant-dp1j",
       "title": "KG AFFORDANCES: browse, materialise, instantiate, copy-into-my-folio — as processes and skills, gated by write capability",
       "status": "todo",
@@ -5279,7 +5293,7 @@
     {
       "id": "folio-assistant-gz47",
       "title": "Audit every declared subgraph for literal paths in tests and consumers: check:declared-paths sees only cat-harness's own declarations and code",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-7x5n",
@@ -6853,6 +6867,20 @@
       "updatedAt": "2026-09-26T14:28:56Z",
       "preview": "## NOT a claim on `t8g3`'s work\n\nThis bean is the **gate blocker and the measurement**, not the translation work.\n`t8g3` (issue #206) is `in-progress` and its campaign is somebody else's to run;\n`bean-coordination` §\"Mid-flight is still off limits\" applies and nothing here\nmay be closed by producing catalogues on their behalf. It exists so the next\nagent hitting a red queue finds the measurement i",
       "file": "beans/defs/folio-assistant-ngxj--translation-catalogues-five-pages-shipped-md-only.md"
+    },
+    {
+      "id": "folio-assistant-nij4",
+      "title": "MOUNT/PUSH: one implementation — state:mount/state:push rebuilt on branch-store's byte- and mode-preserving mount/push, dispatching on the declared subgraph source",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T13:50:12Z",
+      "updatedAt": "2026-10-03T13:50:12Z",
+      "preview": "Owner ruling 2026-10-03 (option 1 of 4, asked by the Parcel B session): main carries TWO mount/push implementations after #1982 and #1957 both merged — `state-mount.ts`/`state-push.ts` (#1982; reads the mount as utf-8 text, so binary files are corrupted and modes/symlinks lost, fixed separately by #1989) and `branch-store.ts mount --id`/`push --id` (#1957; bytes, modes and symlinks round-trip, 15 ",
+      "file": "beans/defs/folio-assistant-nij4--mountpush-one-implementation-statemountstatepush-r.md"
     },
     {
       "id": "folio-assistant-nm7l",

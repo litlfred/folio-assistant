@@ -862,6 +862,34 @@ a container written to `<dir>/<id>.json`. A file whose `name` equals its stem
 is what `findDeclarationFile` reads as an INSTANCE declaration, and the site
 directory became an instance root that hid the checkout from every resolver.
 
+### A consumer never spells a declared directory's path (bean `gz47`, ENFORCED)
+
+Because a subgraph's source can move — from a directory to a branch, and then
+somewhere else, overridable per instance — a literal `"fsh-guts/…"` or
+`join(root, "beans", "defs")` breaks on the move, or goes vacuous and reads
+nothing. So read the location through its resolver (`directoryForGraph`,
+`fshGutsDirectory`, `beanDefsDir`, `declaredSubgraph`, …). Two ratchets
+enforce this, and neither fails just because a count goes down:
+
+| gate | what it scans | baseline |
+|---|---|---|
+| `check:declared-paths` | an instance's literals into its OWN declared directories | `cat-harness/scripts/declared-path-baseline.json` |
+| `check:foreign-paths` | an instance's literals into ANOTHER instance's directories, across the whole checkout | `cat-harness/scripts/foreign-path-baseline.json` — **empty since 2026-10-03** |
+
+- **Classify a hit by what it READS, not by how it is spelled.** A name counts
+  as foreign only if the scanning instance does not declare the same name. A
+  `docs/` joined onto a STAGED instance's root, or matched inside that
+  instance's own declaration, belongs to that instance even though the name
+  coincides.
+- **A site that cannot read a declaration says why**, on the line above:
+  `// declared-path-literal: <reason>`. The reason is required. A marked site
+  is still reported, just not counted. Legitimate cases: the convention
+  fallback for an instance that declares nothing, an ignore file, and a path
+  inside another instance's declaration.
+- **The known blind spot:** only the first literal of a path call is read, so
+  `resolve(opt("todos") ?? "todos")` hides its default. Review such a default
+  by hand.
+
 ## Three states, as everywhere else here
 
 - **No declaration** → `readDeclaration` returns `undefined`. An
