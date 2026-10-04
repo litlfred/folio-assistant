@@ -240,6 +240,17 @@ export interface ComputationWitness {
    * (e.g. ``"docs/audits/2026-05-06-path-b-evacuation.md"``).
    */
   auditOnly?: string;
+  /**
+   * The producer, its content hash, and the commit that last changed it —
+   * written by ``WitnessBuilder`` on every witness and missing from this
+   * interface until 2026-10-04 (`scripts/witness-audit.ts` recorded the
+   * drift). ``scriptHash`` is what staleness keys on; ``scriptCommitSha`` is
+   * provenance only, because a rebase-merge rewrites it. The runtime schema is
+   * ``schemas/computation-witness.ts``.
+   */
+  scriptFile?: string;
+  scriptHash?: string;
+  scriptCommitSha?: string;
 }
 
 /**
@@ -1122,6 +1133,13 @@ export function extractBlockLabel(block: Block): string | undefined {
 export interface Section {
   title: string;
   label?: string;
+  /**
+   * A chapter's LEAD: the text between the chapter heading and its first
+   * section (an executive summary has nothing else). It keeps a title, for
+   * outlines and the review page, but renders without a heading of its own,
+   * because the chapter heading directly above already says it.
+   */
+  lead?: boolean;
   /** Ordered list of block root names (resolved to .ts files in section/chapter dir). */
   blocks: string[];
   /** Subsections (inline or referenced). */

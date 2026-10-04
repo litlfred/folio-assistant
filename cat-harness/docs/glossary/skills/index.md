@@ -12,14 +12,14 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 227 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 13 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 7 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 228 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 13 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 323 terms and is 245 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 325 terms and is 247 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>323</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>323</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>325</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>325</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">323</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">325</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1645,6 +1645,13 @@ proposition-consolidation-audit <span class="fa-gloss-status">candidate, extract
 <p>Scan a chapter (or the whole paper) for propositions/theorems/lemmas that overlap structurally — same boxed equation under different parametrisations, near-identical proof skeletons, explicit &quot;specialisation of&quot;/&quot;case of&quot;/&quot;corollary of&quot; wording in <code>.md</code>, or high-overlap on (uses, cites, tags). Reports candidates for consolidation: parent → corollary, true duplicates, mergeable statements. Run after large-scale chapter work or when the user notices the exposition has accreted special cases.</p>
 <p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/proposition-consolidation-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/proposition-consolidation-audit.md</code></a></p>
 </dd>
+<dt id="folio-assistant-core--kg-skills--public-comment" data-fa-state="extracted" data-fa-gloss="">
+public-comment <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><em>The asset carries no description.</em></p>
+<p class="fa-gloss-meta">Skills of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/content/folio-document-adapter/public-comment.md"><code>folio-assistant-core/skills/content/folio-document-adapter/public-comment.md</code></a></p>
+</dd>
 <dt id="bootstrap--kg-skills--publish-documents" data-fa-state="extracted" data-fa-gloss="">
 publish-documents <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1729,6 +1736,13 @@ readme-sections <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>A folio's README is the author's file; the platform owns only the marked regions it generates. How the sync/audit split works, why the whole-file generator it replaced could not, and the third state both tools must report.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/readme-sections.md"><code>cat-harness/skills/ui/ui-core/readme-sections.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--ref-stewardship" data-fa-state="extracted" data-fa-gloss="">
+ref-stewardship <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Steward a WATCHED REF — a long-lived branch many processes write and one consumer serialises. Covers what makes a ref need a steward at all, why a coalescing window is a different object from a hold, the four durable fields a window needs so a handover cannot double-push, and the rule that a steward stores decisions and reads facts live. Use for &quot;gh-pages is cancelling its own deployments&quot;, &quot;two sessions pushed the same store branch&quot;, &quot;who owns writes to this branch&quot;, &quot;coalesce these pushes&quot;, and before giving any ref a concurrency policy.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/ref-stewardship.md"><code>cat-harness/skills/sdlc/sdlc-core/ref-stewardship.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--reference-dataset-ingestion" data-fa-state="extracted" data-fa-gloss="">
 reference-dataset-ingestion <span class="fa-gloss-status">candidate, extracted</span>

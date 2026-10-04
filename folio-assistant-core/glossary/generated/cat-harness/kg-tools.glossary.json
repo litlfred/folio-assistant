@@ -919,6 +919,14 @@
       "status": "candidate"
     },
     {
+      "id": "witness-conformance",
+      "prefLabel": "Witness conformance report",
+      "definition": "Check every `*.witness.json` in the folio's declared `computation-witness` directories against the two schemas in `schemas/computation-witness.ts`: the envelope every witness should meet (a failure is a malformed file) and the producer contract (a failure is a finding against the producer, grouped by the fields at fault). Also lists files that are not strict JSON, which Python's reader accepts and every other consumer rejects. Report-only: it never edits a witness, which is generator output.",
+      "notation": "witness-conformance",
+      "source": "cat-harness/tools/index.ts#witness-conformance",
+      "status": "candidate"
+    },
+    {
       "id": "work-plan-prime",
       "prefLabel": "Prime the work plan",
       "definition": "Load the current work plan for this session — the same committed beans store the CLI reads, so a fresh container starts from the plan rather than from nothing.",
