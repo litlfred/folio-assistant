@@ -44,6 +44,7 @@ import { resolve } from "node:path";
 
 import { probeBeans, beanDefsDirRelative } from "../test/health/probes";
 import { claimPopulations } from "../test/health/checks";
+import { isAncestor } from "./git-ancestry.ts";
 
 export const SIGNALS = ["open-pr", "unmerged-branch"] as const;
 export type Signal = (typeof SIGNALS)[number];
@@ -287,12 +288,19 @@ export function refsChangingBeans(root: string, base: string, beansDir: string):
     const [ref, unix] = line.split("\t");
     if (!ref || ref === "origin/HEAD" || ref === base || ref === "origin/gh-pages") continue;
     // A merged ref is not live work — its commits are in the default branch.
-    try {
-      git(root, ["merge-base", "--is-ancestor", ref, base]);
-      continue;
-    } catch {
-      // Not an ancestor, so it carries unmerged work. Fall through.
-    }
+    //
+    // NOT a `try`/`catch` around the bare call. `--is-ancestor` throws for two
+    // different reasons, and catching both reads a MERGED ref as live: on a
+    // shallow clone a missing commit exits 128, not 1. The consequence here is
+    // a dead claim reported as live work, which is the opposite of this
+    // check's purpose. `isAncestor` deepens before answering.
+    //
+    // `unknown` falls through deliberately, and the direction is the safe one:
+    // a ref we cannot judge is examined further rather than silently dropped
+    // from the listing. A missed ref would be a claim this check never looks
+    // at; an extra one only costs the diff below.
+    const merged = isAncestor(root, ref, base);
+    if (merged.known && merged.ancestor) continue;
     let mb: string;
     try {
       mb = git(root, ["merge-base", ref, base]).trim();

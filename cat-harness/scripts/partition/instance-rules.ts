@@ -486,6 +486,7 @@ export const RULES: Rule[] = [
       // it classifies conflicted PATHS against declared patterns and proves
       // the result through `regen`. A folio could not make it resolve
       // differently, only give it more generated files (bean `d33q`).
+      "scripts/git-ancestry.ts",             // is A an ancestor of B — with "cannot tell" as its own answer, deepened before it says no
       "scripts/merge-base.ts",               // merge the base in, resolve only declared patterns, prove
       "scripts/merge-conflict-patterns.ts",  // the declared patterns that merge reads
       "scripts/merge-main-comment.ts",       // the merge-main bot's PR comment, composed and tested (#1854)
