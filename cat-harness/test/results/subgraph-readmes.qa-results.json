@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "085baa7c29a8"
+    "script_hash": "30ce8b4d2652"
   },
   "subject": {
     "kind": "graph",
@@ -16,7 +16,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 86,
+      "count": 83,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -215,11 +215,6 @@
         },
         {
           "instance": "folio-assistant-core",
-          "directory": "folio-assistant-core-translations",
-          "path": "folio-assistant-core/translations"
-        },
-        {
-          "instance": "folio-assistant-core",
           "directory": "folios",
           "path": "folio-assistant-core/folios"
         },
@@ -262,11 +257,6 @@
           "instance": "folio-assistant-core",
           "directory": "voices",
           "path": "folio-assistant-core/skills/voices"
-        },
-        {
-          "instance": "folio-assistant-sci",
-          "directory": "folio-assistant-sci-translations",
-          "path": "folio-assistant-sci/translations"
         },
         {
           "instance": "folio-assistant-sci",
@@ -315,8 +305,8 @@
         },
         {
           "instance": "smart-base",
-          "directory": "smart-base-block-kinds",
-          "path": "smart-base/block-kinds"
+          "directory": "smart-base-docs",
+          "path": "smart-base/docs"
         },
         {
           "instance": "smart-base",
@@ -350,11 +340,6 @@
         },
         {
           "instance": "smart-base",
-          "directory": "smart-base-docs",
-          "path": "smart-base/docs"
-        },
-        {
-          "instance": "smart-base",
           "directory": "smart-base-findings",
           "path": "smart-base/findings"
         },
@@ -365,13 +350,13 @@
         },
         {
           "instance": "smart-immunizations",
-          "directory": "smart-immunizations-artifact-index",
-          "path": "smart-immunizations/fhir-artifact-index"
+          "directory": "smart-immunizations-docs",
+          "path": "smart-immunizations/docs"
         },
         {
           "instance": "smart-immunizations",
-          "directory": "smart-immunizations-docs",
-          "path": "smart-immunizations/docs"
+          "directory": "smart-immunizations-artifact-index",
+          "path": "smart-immunizations/fhir-artifact-index"
         },
         {
           "instance": "smart-trust",
@@ -468,7 +453,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 123,
+      "count": 105,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -534,11 +519,6 @@
           "instance": "bootstrap",
           "directory": "models",
           "path": "bootstrap/models"
-        },
-        {
-          "instance": "cat-harness",
-          "directory": "cat-harness-validators",
-          "path": "cat-harness/validators"
         },
         {
           "instance": "cat-harness",
@@ -702,16 +682,6 @@
         },
         {
           "instance": "cat-openapi",
-          "directory": "cat-openapi-validators",
-          "path": "cat-openapi/validators"
-        },
-        {
-          "instance": "cat-openapi",
-          "directory": "cat-openapi-kinds",
-          "path": "cat-openapi/kinds"
-        },
-        {
-          "instance": "cat-openapi",
           "directory": "cat-openapi-schemas",
           "path": "cat-openapi/schemas"
         },
@@ -719,21 +689,6 @@
           "instance": "cat-openapi",
           "directory": "cat-openapi-scripts",
           "path": "cat-openapi/scripts"
-        },
-        {
-          "instance": "fhir-harness",
-          "directory": "fhir-harness-translations",
-          "path": "fhir-harness/translations"
-        },
-        {
-          "instance": "fhir-harness",
-          "directory": "fhir-harness-validators",
-          "path": "fhir-harness/validators"
-        },
-        {
-          "instance": "fhir-harness",
-          "directory": "fhir-harness-kinds",
-          "path": "fhir-harness/kinds"
         },
         {
           "instance": "fhir-harness",
@@ -759,26 +714,6 @@
           "instance": "fhir-harness",
           "directory": "fhir-harness-processes",
           "path": "fhir-harness/processes"
-        },
-        {
-          "instance": "folio-assistant-core",
-          "directory": "folio-assistant-core-translations",
-          "path": "folio-assistant-core/translations"
-        },
-        {
-          "instance": "folio-assistant-core",
-          "directory": "folio-assistant-core-block-kinds",
-          "path": "folio-assistant-core/block-kinds"
-        },
-        {
-          "instance": "folio-assistant-core",
-          "directory": "folio-assistant-core-validators",
-          "path": "folio-assistant-core/validators"
-        },
-        {
-          "instance": "folio-assistant-core",
-          "directory": "folio-assistant-core-kinds",
-          "path": "folio-assistant-core/kinds"
         },
         {
           "instance": "folio-assistant-core",
@@ -842,31 +777,6 @@
         },
         {
           "instance": "folio-assistant-sci",
-          "directory": "folio-assistant-sci-qa-checkers",
-          "path": "folio-assistant-sci/qa-checkers"
-        },
-        {
-          "instance": "folio-assistant-sci",
-          "directory": "folio-assistant-sci-pipeline-plugins",
-          "path": "folio-assistant-sci/pipeline-plugins"
-        },
-        {
-          "instance": "folio-assistant-sci",
-          "directory": "folio-assistant-sci-translations",
-          "path": "folio-assistant-sci/translations"
-        },
-        {
-          "instance": "folio-assistant-sci",
-          "directory": "folio-assistant-sci-block-kinds",
-          "path": "folio-assistant-sci/block-kinds"
-        },
-        {
-          "instance": "folio-assistant-sci",
-          "directory": "folio-assistant-sci-kinds",
-          "path": "folio-assistant-sci/kinds"
-        },
-        {
-          "instance": "folio-assistant-sci",
           "directory": "library",
           "path": "folio-assistant-sci/library"
         },
@@ -884,6 +794,11 @@
           "instance": "folio-assistant-sci",
           "directory": "sci-adapters",
           "path": "folio-assistant-sci/adapters"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-tools",
+          "path": "folio-assistant-sci/tools"
         },
         {
           "instance": "folio-assistant-sci",
@@ -917,18 +832,8 @@
         },
         {
           "instance": "smart-base",
-          "directory": "smart-base-qa-checkers",
-          "path": "smart-base/qa-checkers"
-        },
-        {
-          "instance": "smart-base",
-          "directory": "smart-base-block-kinds",
-          "path": "smart-base/block-kinds"
-        },
-        {
-          "instance": "smart-base",
-          "directory": "smart-base-translations",
-          "path": "smart-base/translations"
+          "directory": "smart-base-docs",
+          "path": "smart-base/docs"
         },
         {
           "instance": "smart-base",
@@ -967,11 +872,6 @@
         },
         {
           "instance": "smart-base",
-          "directory": "smart-base-docs",
-          "path": "smart-base/docs"
-        },
-        {
-          "instance": "smart-base",
           "directory": "smart-base-document-kinds",
           "path": "smart-base/document-kinds"
         },
@@ -992,13 +892,13 @@
         },
         {
           "instance": "smart-immunizations",
-          "directory": "smart-immunizations-artifact-index",
-          "path": "smart-immunizations/fhir-artifact-index"
+          "directory": "smart-immunizations-docs",
+          "path": "smart-immunizations/docs"
         },
         {
           "instance": "smart-immunizations",
-          "directory": "smart-immunizations-docs",
-          "path": "smart-immunizations/docs"
+          "directory": "smart-immunizations-artifact-index",
+          "path": "smart-immunizations/fhir-artifact-index"
         },
         {
           "instance": "smart-trust",
@@ -1019,11 +919,6 @@
           "instance": "smart-trust",
           "directory": "smart-trust-scripts",
           "path": "smart-trust/scripts"
-        },
-        {
-          "instance": "who-iris",
-          "directory": "who-iris-translations",
-          "path": "who-iris/translations"
         },
         {
           "instance": "who-iris",
@@ -1109,5 +1004,5 @@
       "entries": []
     }
   },
-  "total": 213
+  "total": 192
 }

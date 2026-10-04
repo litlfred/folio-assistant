@@ -935,6 +935,14 @@ enforce this, and neither fails just because a count goes down:
   is still reported, just not counted. Legitimate cases: the convention
   fallback for an instance that declares nothing, an ignore file, and a path
   inside another instance's declaration.
+- **A file that exists today is not a stable path** (owner ruling 2026-10-04).
+  `check:declared-paths` used to accept any literal naming an existing file,
+  and only fired once that file moved. Under the content-source ruling the
+  move is the expected case, so the exemption is now a one-way baseline. The
+  witnesses recorded on 2026-10-04 stay. A NEW literal naming an existing file
+  fails the gate. `--update` may drop a witness but refuses to add one, so the
+  list only shrinks. Four such literals had landed unnoticed before the
+  baseline was frozen.
 - **The known blind spot:** only the first literal of a path call is read, so
   `resolve(opt("todos") ?? "todos")` hides its default. Review such a default
   by hand.

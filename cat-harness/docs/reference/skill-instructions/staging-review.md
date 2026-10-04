@@ -522,10 +522,14 @@ commit instead, stop: that is the unilateral removal
 [`deletion-requires-confirmation`](deletion-requires-confirmation.md) exists to
 stop, and option 2 exists so you do not have to.
 
-### The cap — at most ten previews, the oldest rotated off
+### The cap — 3 GB of previews in total, the oldest rotated off
 
 **Owner ruling, 2026-10-02 (issue #1868):** *"for going forward, we should cap
-the maximum number of previews (<= 10) and rotate old ones off."*
+the maximum number of previews (<= 10) and rotate old ones off."* **Amended
+2026-10-04: "Cap by size, not count", budget "3gb".** Previews had grown to
+200–780 MB each, so ten of them came to 3–5 GB and any one lasted an hour or
+two; a count bounds the total only while preview size holds still, and it did
+not.
 
 Why a cap rather than a better threshold: GitHub Pages deploys `gh-pages`
 as-is, every preview is a full copy of the site (~200–500 MB by then, not the
@@ -536,10 +540,13 @@ event-driven; none bounds the total, which is the quantity the limit is about.
 
 What the `stage` job now does, on every deploy, before its one push:
 
-- **Counts the previews under `STAGING/`, including the one it is staging,
-  and keeps at most ten.** The number lives once, as `MAX_PREVIEWS` in
-  `cat-harness/scripts/staging-rotate.ts`.
-- **Removes the least recently updated beyond that.** "Last updated" is the
+- **Sums the size of the previews under `STAGING/`, including the one it is
+  staging, and keeps them within 3 GB.** The number lives once, as
+  `MAX_PREVIEW_BYTES` in `cat-harness/scripts/staging-rotate.ts`.
+- **Keeps the newest that fit and removes the rest, oldest first — strictly by
+  recency.** An older small preview never outlives a newer one that did not
+  fit, so a preview's age alone says whether it is still there. One 780 MB
+  preview displaces several small ones; that is what a size budget means. "Last updated" is the
   `STAGING/<slug>/.staged-at` stamp the job writes on every stage, falling back
   to the latest `rendered` render-log entry, then the record's `builtAt`, then
   git. The preview being staged is never removed.
