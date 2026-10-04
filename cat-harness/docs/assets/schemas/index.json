@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 210,
+      "count": 211,
       "unit": "modules"
     }
   },
@@ -642,6 +642,14 @@
       "graphNode": "schema",
       "summary": "Resolving a graph kind's **validator** — the one parameter that turns",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/landing-instance.test.ts",
+      "instance": "cat-harness",
+      "name": "landing-instance.test",
+      "graphNode": "undeclared",
+      "summary": "`resolveLandingInstance` and `check:landing-instance` (issue #1904).",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/landing-sticky.test.ts",
@@ -17795,6 +17803,13 @@
           "doc": "Cross-folio dependencies."
         },
         {
+          "name": "site",
+          "type": "HarnessSite",
+          "optional": true,
+          "array": false,
+          "doc": "What this instance asks of the published SITE — today only whether it is"
+        },
+        {
           "name": "subgraphSources",
           "type": "SubgraphSourceOverrides",
           "optional": true,
@@ -17806,6 +17821,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/harness-config.ts#HarnessConfigDependencies",
+        "cat-harness/schemas/harness-config.ts#HarnessSite",
         "cat-harness/schemas/harness-config.ts#TranslationConfig",
         "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverrides"
       ],
@@ -17917,6 +17933,12 @@
           "array": false
         },
         {
+          "name": "site",
+          "type": "HarnessSiteSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
           "name": "subgraphSources",
           "type": "SubgraphSourceOverridesSchema.optional()",
           "optional": true,
@@ -17929,6 +17951,7 @@
       "refs": [
         "cat-harness/schemas/harness-config.ts#HarnessConfigDependenciesSchema",
         "cat-harness/schemas/harness-config.ts#HarnessDirsSchema",
+        "cat-harness/schemas/harness-config.ts#HarnessSiteSchema",
         "cat-harness/schemas/harness-config.ts#TranslationConfigSchema",
         "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverridesSchema"
       ],
@@ -17961,6 +17984,42 @@
         {
           "name": "interaction",
           "type": "z.string().default(\"interaction/interaction.json\")",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#HarnessSite",
+      "name": "HarnessSite",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#HarnessSiteSchema",
+      "name": "HarnessSiteSchema",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "zod-object",
+      "doc": "`site` in `<name>.config.json` — what an instantiated harness asks of the",
+      "fields": [
+        {
+          "name": "landing",
+          "type": "z.boolean().optional()",
           "optional": true,
           "array": false
         }
@@ -18024,6 +18083,20 @@
       "module": "cat-harness/schemas/harness-config.ts",
       "kind": "type-alias",
       "doc": "Something wrong with an instance's dependency graph.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#LandingInstance",
+      "name": "LandingInstance",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "type-alias",
+      "doc": "Which harness the published site puts at `/`.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -53453,6 +53526,14 @@
     },
     {
       "from": "cat-harness/schemas/harness-config.ts#HarnessConfig",
+      "to": "cat-harness/schemas/harness-config.ts#HarnessSite",
+      "via": "site",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#HarnessConfig",
       "to": "cat-harness/schemas/harness-config.ts#TranslationConfig",
       "via": "translation",
       "kind": "field",
@@ -53495,6 +53576,14 @@
       "from": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema",
       "to": "cat-harness/schemas/harness-config.ts#HarnessDirsSchema",
       "via": "harness",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema",
+      "to": "cat-harness/schemas/harness-config.ts#HarnessSiteSchema",
+      "via": "site",
       "kind": "field",
       "optional": true,
       "array": false
