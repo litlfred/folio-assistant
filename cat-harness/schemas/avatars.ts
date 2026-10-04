@@ -143,8 +143,11 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   },
   "who-iris": {
     // An open book with a band across it — a repository of published
-    // documents, which is what IRIS is. Deliberately NOT the emblem: the
-    // owner asked for the colour without the logo.
+    // documents, which is what IRIS is. The FALLBACK mark since 2026-10-04:
+    // the owner restored the WHO emblem as who-iris's declared `icon`
+    // (bean `2vpn`), which `harness-tiles.ts` prefers; this glyph draws only
+    // where the emblem cannot. It was the mark itself from 2026-09-23, when
+    // the owner asked for the colour without the logo.
     glyph: "M4 6h6a2 2 0 012 2v10a2 2 0 00-2-2H4zM20 6h-6a2 2 0 00-2 2v10a2 2 0 012-2h6zM4 6v10M20 6v10",
     tone: 199,
     reads: "an open book — a repository of published documents, in WHO blue",

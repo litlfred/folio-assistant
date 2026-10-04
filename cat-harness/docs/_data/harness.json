@@ -950,6 +950,10 @@
         "fhir-harness"
       ],
       "icon": null,
+      "mark": {
+        "glyph": "M3 18h18M6 14h12M9 10h6M11 6h2",
+        "title": "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue"
+      },
       "tone": 199,
       "toneFrom": "avatar",
       "reads": "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
@@ -1163,7 +1167,32 @@
       "needs": [
         "folio-assistant-core"
       ],
-      "icon": null,
+      "icon": {
+        "src": "/docs/who-iris/assets/img/who-emblem.svg",
+        "title": "WHO emblem",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "w": 0.3064,
+          "h": 1
+        }
+      },
+      "mark": {
+        "src": "/docs/who-iris/assets/img/who-emblem.svg",
+        "title": "WHO emblem",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "w": 0.3064,
+          "h": 1
+        },
+        "crop": {
+          "width": 326.3708,
+          "height": 100,
+          "left": 0,
+          "top": 0
+        }
+      },
       "tone": 198,
       "toneFrom": "theme",
       "reads": "an open book — a repository of published documents, in WHO blue",
@@ -3895,6 +3924,10 @@
           {
             "key": "assets",
             "summary": "2: agent-instructions, readme"
+          },
+          {
+            "key": "icon",
+            "summary": "who-emblem"
           },
           {
             "key": "repository",

@@ -106,6 +106,7 @@ import { dirname, isAbsolute, join, posix, relative, resolve, sep } from "path";
 import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
 import { instanceDirectories, declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
 import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js";
+import { navMarkFields, type HarnessMark } from "./lib/harness-mark.js";
 import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
 import { kindTitle } from "./lib/nav-label.js";
 import { viewersOf } from "./viewer-declarations.js";
@@ -573,7 +574,7 @@ export function instantiatedHarnesses(built: string, toRoot: string): NavItem[] 
   if (prefix === undefined) return undefined;
   const data = join(REPO, prefix, "_data", "harness.json");
   if (!existsSync(data)) return undefined;
-  let d: { harnesses?: { name?: string; label?: string; title?: string; href?: string | null; instantiated?: boolean; tone?: number; icon?: { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } } | null }[] };
+  let d: { harnesses?: { name?: string; label?: string; title?: string; href?: string | null; instantiated?: boolean; tone?: number; mark?: HarnessMark | null }[] };
   try {
     d = JSON.parse(readFileSync(data, "utf-8"));
   } catch {
@@ -587,21 +588,13 @@ export function instantiatedHarnesses(built: string, toRoot: string): NavItem[] 
       // A site-absolute href has to be re-based for a page that is not at the
       // root. `/who-iris/` from `/docs/who-iris/index.html` is `../../who-iris/`.
       const href = h.href ? `${toRoot}${h.href}` : undefined;
-      const avatar = h.icon?.src
-        ? {
-            src: `${toRoot}${h.icon.src}`,
-            ...(h.icon.title ? { title: h.icon.title } : {}),
-            // `603s`'s declared crop, when the icon image carries one.
-            // `harness-tiles.ts` puts it here; nothing in this file decides a
-            // box, which is the point of declaring it.
-            ...(h.icon.region ? { region: h.icon.region } : {}),
-          }
-        : undefined;
+      // The row's RESOLVED mark, never its `icon` (bean `2vpn`): reading
+      // `icon` here dropped every theme avatar and every glyph, so only an
+      // instance with a declared image ever drew one on a mounted page.
       return {
         label,
         ...(href ? { href } : {}),
-        ...(avatar ? { avatar } : {}),
-        ...(h.tone ? { tone: h.tone } : {}),
+        ...navMarkFields(h.mark, h.tone, (src) => `${toRoot}${src}`),
       };
     });
 }
@@ -642,29 +635,32 @@ export function railNames(built: string, instance: string): { harness?: string; 
  * whether it belongs in the harnesses list. Absent, the header draws the
  * instance's initial — never a `☰` (#1757).
  */
-export function instanceMark(built: string, instance: string, toRoot: string): Pick<NavItem, "avatar" | "tone"> | undefined {
+export function instanceMark(
+  built: string,
+  instance: string,
+  toRoot: string,
+): Pick<NavItem, "avatar" | "glyphPath" | "tone"> | undefined {
   const prefix = publishedDocsPrefix(REPO, built);
   if (prefix === undefined) return undefined;
   const data = join(REPO, prefix, "_data", "harness.json");
   if (!existsSync(data)) return undefined;
-  type Icon = { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } };
-  let d: { name?: string; icon?: Icon | null; harnesses?: { name?: string; tone?: number; icon?: { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } } | null }[] };
+  let d: { name?: string; icon?: HarnessMark | null; harnesses?: { name?: string; tone?: number; mark?: HarnessMark | null }[] };
   try {
     d = JSON.parse(readFileSync(data, "utf-8"));
   } catch {
     return undefined;
   }
   const h = d.harnesses?.find((x) => x.name === instance);
-  const icon = h?.icon ?? (d.name === instance ? d.icon : undefined);
-  const avatar = icon?.src
-    ? {
-        src: `${toRoot}${icon.src}`,
-        ...(icon.title ? { title: icon.title } : {}),
-        ...(icon.region ? { region: icon.region } : {}),
-      }
-    : undefined;
-  if (!avatar && !h?.tone) return undefined;
-  return { ...(avatar ? { avatar } : {}), ...(h?.tone ? { tone: h.tone } : {}) };
+  // The same resolved mark the sidebar row draws (bean `2vpn`): theme
+  // avatar, then declared icon, then registry glyph — resolved ONCE, in
+  // `harness-tiles.ts`. Only an instance with NO row falls back to the site's
+  // own `icon`, and only when the site is that instance.
+  const fields = h
+    ? navMarkFields(h.mark, h.tone, (src) => `${toRoot}${src}`)
+    : d.name === instance
+      ? navMarkFields(d.icon, undefined, (src) => `${toRoot}${src}`)
+      : {};
+  return Object.keys(fields).length > 0 ? fields : undefined;
 }
 
 /**
