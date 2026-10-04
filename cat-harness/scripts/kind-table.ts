@@ -128,7 +128,10 @@ export function writeKindTable(check: boolean, root: string = KIND_TABLE_ROOT): 
   if (b < 0 || e < b || text.indexOf(KIND_TABLE_BEGIN, b + 1) >= 0) {
     throw new Error(`${KIND_TABLE_DOC}: expected one generated kind-table region between its markers`);
   }
-  const next = `${text.slice(0, b + KIND_TABLE_BEGIN.length)}\n${renderKindTable(root)}\n${text.slice(e)}`;
+  // A BLANK LINE each side of the table. Without one, kramdown reads the table
+  // as part of the marker comment's HTML block and publishes its rows as
+  // pipes — `check:escaped-markup` caught it on the built skill page.
+  const next = `${text.slice(0, b + KIND_TABLE_BEGIN.length)}\n\n${renderKindTable(root)}\n\n${text.slice(e)}`;
   if (next === text) return true;
   if (!check) writeFileSync(path, next);
   return false;
