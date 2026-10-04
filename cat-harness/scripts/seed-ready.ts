@@ -31,7 +31,7 @@
  * | `layerPrs`         | open PRs touching L                                          |
  * | `layerMovingPrs`   | open PRs that delete a file in L, or rename one into or out of it |
  * | `standaloneRed`    | failing tests when L and what it needs run as sibling clones |
- * | `siblingDiscoveryMisses` | instances needing L directly that discovery cannot find in a sibling layout |
+ * | `upwardPaths`      | paths DECLARED in L that resolve only in an instance above L |
  * | `undetermined`     | criteria this run could not decide                           |
  *
  * The first four ask whether the SOURCE is still moving; the last two re-ask,
@@ -82,17 +82,19 @@ import {
   existsSync,
   mkdirSync,
   mkdtempSync,
-  readdirSync,
   readFileSync,
   rmSync,
   statfsSync,
   symlinkSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
-import { basename, dirname, join, relative, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 
 import { instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
-import { clearCheckoutCache, implementingInstancesOf } from "../schemas/harness-config.js";
+import { clearCheckoutCache, resolveImplementingPath } from "../schemas/harness-config.js";
+import { toolsOf } from "../tools/discover.js";
+import { QA_CRITERIA_BY_ID, getCriterionSourceFile } from "../content/pipeline/qa-criteria-registry.js";
+import { RENDER_TARGETS } from "../schemas/render-targets.js";
 import { evaluate, loadDecisionTable, type DecisionTable } from "../src/workflow/decision-table.js";
 import { workflowFile } from "./known-skills.js";
 
@@ -135,6 +137,8 @@ export interface LayerDecl {
   stagedIn?: string;
   /** Absolute path of the directory the declaration was read from. */
   root?: string;
+  /** Instances this one is seeded together with (`seedsWith`); absent is "alone". */
+  seedsWith?: string[];
 }
 
 /**
@@ -157,6 +161,7 @@ export function readLayers(repoRoot: string): LayerDecl[] {
       needs: d.needs ?? [],
       stagedIn: d.livesAt?.repository,
       root: resolve(at),
+      ...(d.seedsWith ? { seedsWith: d.seedsWith } : {}),
     });
   }
   return out;
@@ -326,14 +331,14 @@ export interface Offender {
   pathCount: number;
 }
 
-export type CriterionId = "heavy-movers" | "next-layer" | "layer-load" | "layer-moves" | "standalone" | "sibling-discovery";
+export type CriterionId = "heavy-movers" | "next-layer" | "layer-load" | "layer-moves" | "standalone" | "upward-paths";
 export type Fact =
   | "heavyMoversOpen"
   | "nextLayerPrs"
   | "layerPrs"
   | "layerMovingPrs"
   | "standaloneRed"
-  | "siblingDiscoveryMisses";
+  | "upwardPaths";
 
 export interface CriterionReport {
   id: CriterionId;
@@ -364,7 +369,7 @@ export type Probe =
 
 export interface Probes {
   standalone: Probe;
-  discovery: Probe;
+  upward: Probe;
 }
 
 export interface ReadinessReport {
@@ -423,7 +428,7 @@ export const CLEAN: Record<Fact | "undetermined", number> = {
   layerPrs: 0,
   layerMovingPrs: 0,
   standaloneRed: 0,
-  siblingDiscoveryMisses: 0,
+  upwardPaths: 0,
   undetermined: 0,
 };
 
@@ -442,7 +447,7 @@ export function assess(
   table: DecisionTable,
   probes: Probes = {
     standalone: { state: "not-run", note: "rehearsal not requested (--rehearse)" },
-    discovery: { state: "not-run", note: "sibling discovery not probed" },
+    upward: { state: "not-run", note: "upward paths not probed" },
   },
   decision = `${SEED_READINESS_DMN_NAME}#${SEED_READINESS_DECISION}`,
 ): ReadinessReport {
@@ -530,8 +535,8 @@ export function assess(
     }
   };
   probeCriterion(4, probes.standalone, SETTLED_REQUIRES_REHEARSAL);
-  // Discovery is cheap and the CLI always probes it; not probing it is never a pass.
-  probeCriterion(5, probes.discovery, true);
+  // Upward paths are cheap and the CLI always probes them; not probing them is never a pass.
+  probeCriterion(5, probes.upward, true);
 
   const facts: Record<string, number> = { ...CLEAN };
   for (const c of criteria) facts[c.fact] = c.count;
@@ -563,9 +568,9 @@ function STATEMENTS(plan: LayerPlan): [CriterionId, Fact, string][] {
     ["layer-moves", "layerMovingPrs", `no open PR renames or deletes a file in ${L}`],
     ["standalone", "standaloneRed", `${L} is green with only what it needs beside it, as sibling clones`],
     [
-      "sibling-discovery",
-      "siblingDiscoveryMisses",
-      `in a sibling layout with no aggregate root, discovery finds every instance that needs ${L} directly`,
+      "upward-paths",
+      "upwardPaths",
+      `every path declared in ${L} resolves inside ${L} — none only in an instance above it`,
     ],
   ];
 }
@@ -577,63 +582,115 @@ const rootOf = (repoRoot: string, d: LayerDecl): string => d.root ?? resolve(rep
 
 const message = (e: unknown): string => (e instanceof Error ? e.message : String(e)).trim().split("\n")[0]!;
 
-/**
- * Lay every declared instance out as a sibling of every other, in a scratch
- * directory with NO declaration at its root — the workspace of separate
- * clones the seeded repositories will live in — and ask discovery which
- * instances implement this layer there.
- *
- * Only the instances' top-level `.json` files are copied: discovery reads
- * declarations and nothing else, so this costs kilobytes. The expected set is
- * every instance whose own `needs` names the layer, which is exactly what
- * `implementingInstancesOf` answers in the monorepo; each one it cannot find
- * in the sibling layout is a path resolved through it that fails the day the
- * layer is seeded.
- */
-export function probeSiblingDiscovery(repoRoot: string, layerName: string, decls: LayerDecl[]): Probe {
-  const expected = decls
-    .filter((d) => d.name !== layerName && d.needs.includes(layerName))
-    .map((d) => d.name)
-    .sort();
-  if (expected.length === 0) {
-    return { state: "measured", count: 0, findings: [], note: "no instance needs this layer directly" };
-  }
-  const names = new Map<string, string>();
-  for (const d of decls) {
-    const b = basename(rootOf(repoRoot, d));
-    const other = names.get(b);
-    if (other !== undefined) {
-      return { state: "error", note: `${other} and ${d.name} share the directory name \`${b}\`; they cannot be siblings` };
-    }
-    names.set(b, d.name);
-  }
+/** One path a layer DECLARES and something resolves through `resolveImplementingPath`. */
+export interface DeclaredPath {
+  kind: "tool-module" | "criterion-source" | "render-target";
+  /** The Tool id, criterion id or content profile that declares it. */
+  owner: string;
+  path: string;
+}
 
-  let ws: string | undefined;
-  try {
-    ws = mkdtempSync(join(tmpdir(), "seed-ready-siblings-"));
-    for (const d of decls) {
-      const src = rootOf(repoRoot, d);
-      const dst = join(ws, basename(src));
-      mkdirSync(dst, { recursive: true });
-      for (const f of readdirSync(src)) if (f.endsWith(".json")) copyFileSync(join(src, f), join(dst, f));
+/**
+ * Every path declared in this layer that a reader resolves through
+ * `resolveImplementingPath` — the three registries whose callers do so today
+ * (`check-tools`, `script-sweep`/`criterion-source`, `render-discovery`).
+ *
+ * Tool modules are read per declaring instance (`toolsOf`); the QA criteria
+ * and render targets are the harness's own registries, so they are declared
+ * by `cat-harness` and by no other layer.
+ */
+export function declaredPathsOf(layerRoot: string): DeclaredPath[] {
+  const out: DeclaredPath[] = [];
+  for (const t of toolsOf(layerRoot)) {
+    const inv = t.invoke as Record<string, unknown> | undefined;
+    for (const arm of ["inProcess", "container", "mcp"]) {
+      const a = inv?.[arm] as { module?: unknown } | undefined;
+      if (a && typeof a.module === "string") out.push({ kind: "tool-module", owner: t.id, path: a.module });
     }
-    const layer = decls.find((d) => d.name === layerName);
-    if (!layer) return { state: "error", note: `no declaration named \`${layerName}\`` };
-    clearCheckoutCache();
-    const found = new Set(implementingInstancesOf(join(ws, basename(rootOf(repoRoot, layer)))).map((i) => i.name));
-    const missed = expected.filter((n) => !found.has(n));
-    return {
-      state: "measured",
-      count: missed.length,
-      findings: missed.map((n) => `${n} needs ${layerName} directly, and discovery does not find it beside it`),
-      note: `expected ${expected.length}: ${expected.join(", ")}`,
-    };
+  }
+  if (resolve(layerRoot) === INSTANCE_ROOT) {
+    for (const [id, def] of Object.entries(QA_CRITERIA_BY_ID)) {
+      // A contributed checker is resolved through the contribution registry,
+      // not through this path; `getCriterionSourceFile` refuses it by design.
+      if (def.checker_contributed) continue;
+      out.push({ kind: "criterion-source", owner: id, path: getCriterionSourceFile(id) });
+    }
+    for (const [profile, decl] of Object.entries(RENDER_TARGETS)) {
+      if (decl?.module) out.push({ kind: "render-target", owner: profile, path: decl.module });
+    }
+  }
+  return out;
+}
+
+/**
+ * Paths declared in this layer that resolve ONLY in an instance above it.
+ *
+ * ## Why this replaced "sibling discovery" (owner, 2026-10-04)
+ *
+ * The criterion it replaces counted the instances that `needs` L which
+ * discovery could not find in a workspace of sibling clones. Two things were
+ * wrong with that count. Discovery is checkout-local ON PURPOSE — `cmsl`:
+ * *"the tool sees what the checkout contains, not what the platform
+ * remembers having been next to"* — so a seeded layer can never discover its
+ * dependents, and the criterion could never pass. And the count was of
+ * INSTANCES, while the risk it named was PATHS: *"each one it cannot find …
+ * is a path resolved through it that fails the day the layer is seeded."*
+ * Measured that day on cat-harness: 3 instances missed, and **0** declared
+ * paths resolving through any of them (25 of 25 in-process Tool modules, and
+ * all 8 distinct QA criterion source files, resolve inside cat-harness).
+ *
+ * So this counts the paths themselves. A path resolving `via: "needs"` is one
+ * that breaks when L stands alone — UNLESS the instance holding it declares
+ * `seedsWith: [L]`, in which case the same seeding step creates both and the
+ * path is stated in the note rather than counted (owner, 2026-10-04: the
+ * harness's Tool nodes resolving into cat-harness-tools are a seeding pair); `ambiguous` counts too, since two
+ * implementers above L is the same dependence twice. A `missing` path is not
+ * counted here — it is broken in the monorepo already, and `check:tools`
+ * owns that.
+ */
+export function probeUpwardPaths(repoRoot: string, layerName: string, decls: LayerDecl[]): Probe {
+  const layer = decls.find((d) => d.name === layerName);
+  if (!layer) return { state: "error", note: `no declaration named \`${layerName}\`` };
+  const root = rootOf(repoRoot, layer);
+  let paths: DeclaredPath[];
+  try {
+    paths = declaredPathsOf(root);
   } catch (e) {
-    return { state: "error", note: `sibling discovery could not be probed: ${message(e)}` };
+    return { state: "error", note: `the declared paths could not be read: ${message(e)}` };
+  }
+  const upward: string[] = [];
+  // Declared by the instance ABOVE (`seedsWith`): one seeding step creates
+  // both, so a path into it cannot break on the day L is seeded (owner,
+  // 2026-10-04). Counted and stated, never silently dropped.
+  const partners = new Set(decls.filter((d) => d.seedsWith?.includes(layerName)).map((d) => d.name));
+  const intoPartner = new Map<string, number>();
+  try {
+    clearCheckoutCache();
+    for (const p of paths) {
+      const r = resolveImplementingPath(root, p.path);
+      if (r.state === "found" && r.via === "needs" && partners.has(r.instance)) {
+        intoPartner.set(r.instance, (intoPartner.get(r.instance) ?? 0) + 1);
+      } else if (r.state === "found" && r.via === "needs") {
+        upward.push(`${p.kind} ${p.owner}: ${p.path} resolves only in ${r.instance}, above ${layerName}`);
+      } else if (r.state === "ambiguous") {
+        upward.push(`${p.kind} ${p.owner}: ${p.path} is held by ${r.candidates.map((c) => c.name).join(" and ")}, above ${layerName}`);
+      }
+    }
+  } catch (e) {
+    return { state: "error", note: `upward paths could not be probed: ${message(e)}` };
   } finally {
     clearCheckoutCache();
-    if (ws) rmSync(ws, { recursive: true, force: true });
   }
+  return {
+    state: "measured",
+    count: upward.length,
+    findings: upward,
+    // The Tool count is stated so that "0 paths" over a layer whose Tools are
+    // all shell-invoked reads as determined, not as a probe that read nothing.
+    note:
+      `${paths.length} declared path(s) checked — tool modules (from ${toolsOf(root).length} Tool node(s)), QA criterion sources, render targets` +
+      [...intoPartner].map(([name, n]) => `; ${n} resolve into \`${name}\`, which is seeded with ${layerName} (seedsWith)`).join(""),
+  };
 }
 
 /** Free space the rehearsal insists on before copying a layer. */
@@ -754,7 +811,7 @@ export function renderText(r: ReadinessReport): string {
   lines.push(`gateway "Ready to seed?" → ${r.outcome}   [${r.rule}]`);
   lines.push("");
   for (const c of r.criteria) {
-    const unit = c.id === "standalone" ? "failing test(s)" : c.id === "sibling-discovery" ? "missed" : "PR(s)";
+    const unit = c.id === "standalone" ? "failing test(s)" : c.id === "upward-paths" ? "path(s)" : "PR(s)";
     lines.push(`  ${c.verdict.padEnd(19)} ${c.statement} — ${c.count} ${unit}`);
     for (const f of (c.findings ?? []).slice(0, 10)) lines.push(`      ${f}`);
     if ((c.findings?.length ?? 0) > 10) lines.push(`      (+${c.findings!.length - 10} more)`);
@@ -811,7 +868,7 @@ async function main(argv: string[]): Promise<number> {
     standalone: argv.includes("--rehearse")
       ? probeStandalone(repoRoot, name, decls)
       : { state: "not-run", note: "run only on request: pass --rehearse (owner, 2026-10-02)" },
-    discovery: probeSiblingDiscovery(repoRoot, name, decls),
+    upward: probeUpwardPaths(repoRoot, name, decls),
   };
 
   const dmn = seedReadinessDmn();

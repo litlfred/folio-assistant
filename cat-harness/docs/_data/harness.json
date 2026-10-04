@@ -1740,7 +1740,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 12
+          "value": 13
         },
         {
           "id": "kinds",
@@ -1857,6 +1857,14 @@
           ],
           "where": "local",
           "path": "folio-assistant-core/adapters/"
+        },
+        {
+          "id": "core-src",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/src/"
         },
         {
           "id": "core-scripts",
@@ -2028,7 +2036,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 6
         },
         {
           "id": "kinds",
@@ -2088,6 +2096,14 @@
           ],
           "where": "local",
           "path": "cat-harness-tools/test/"
+        },
+        {
+          "id": "cat-harness-tools-src",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness-tools/src/"
         }
       ],
       "findings": [
@@ -3414,6 +3430,15 @@
         ]
       },
       {
+        "key": "seedsWith",
+        "skills": [
+          {
+            "name": "kg-separation",
+            "path": "/reference/skill-instructions/kg-separation.html"
+          }
+        ]
+      },
+      {
         "key": "stub",
         "skills": [
           {
@@ -4035,7 +4060,7 @@
           },
           {
             "key": "directories",
-            "summary": "11: core-schemas, folios, glossary, core-tools, core-adapters, core-scripts, core-library, co…"
+            "summary": "12: core-schemas, folios, glossary, core-tools, core-adapters, core-src, core-scripts, core-l…"
           },
           {
             "key": "stickies",
@@ -4138,12 +4163,16 @@
             "summary": "{ repository, path }"
           },
           {
+            "key": "seedsWith",
+            "summary": "cat-harness"
+          },
+          {
             "key": "canonicalUrl",
             "summary": "https://litlfred.github.io/folio-assistant/cat-harness-tools"
           },
           {
             "key": "directories",
-            "summary": "5: cat-harness-tools-adapters, cat-harness-tools-schemas, cat-harness-tools-scripts, cat-har…"
+            "summary": "6: cat-harness-tools-adapters, cat-harness-tools-schemas, cat-harness-tools-scripts, cat-har…"
           },
           {
             "key": "needs",

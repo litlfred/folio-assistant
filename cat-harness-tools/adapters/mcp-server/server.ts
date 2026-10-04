@@ -25,7 +25,7 @@ import { FeedbackItemSchema } from "../../../cat-harness/schemas/constraints";
 import {
   INVALID_ENUM, parseTodoPriority, parseTodoStatus, TODO_PRIORITIES, TODO_STATUSES,
 } from "../../../cat-harness/src/core/feedback.js";
-import { allows, forbidden, getUserEmail, getUserName, getUserRole } from "../../../cat-harness/src/core/rbac.js";
+import { allows, forbidden, getUserEmail, getUserName, getUserRole } from "../../src/core/rbac.js";
 // `renderBlock` was reached through `await import(join(REPO_ROOT, …))`, which
 // types as `any` — so nothing checked what was handed to it, and a
 // `ResolvedBlock` went in for two years where a `Block` was declared. The

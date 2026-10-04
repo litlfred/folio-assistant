@@ -114,6 +114,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [Artefact reachability](artefact-reachability.html) | `artefact-reachability` | — | **A declared executable artefact that nothing can reach is indistinguishable, |
 | [Associate a harness](associate-harness.html) | `associate-harness` | — | The owner, 2026-09-23, on the ihris folio: |
 | [Audit coverage](audit-coverage.html) | `audit-coverage` | — | **A sidecar count is a fine measurement of sidecars and says nothing about |
 | [Code node review](code-node-review.html) | `code-node-review` | — |  |

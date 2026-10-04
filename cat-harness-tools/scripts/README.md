@@ -11,9 +11,12 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | file | what it is | used by |
 |---|---|---|
 | [`bench-id-lookup.ts`](bench-id-lookup.ts) | a file |  |
+| [`capture-mcp-tools.ts`](capture-mcp-tools.ts) | a file |  |
 | [`extract-assets.ts`](extract-assets.ts) | a file |  |
 | [`gen-id-lookup.ts`](gen-id-lookup.ts) | a file |  |
 | [`publish-id-lookup.ts`](publish-id-lookup.ts) | a file |  |
+| [`split-baseline.json`](split-baseline.json) | data |  |
+| [`split-baseline.ts`](split-baseline.ts) | a file |  |
 | [`lib/`](lib/) | _nothing declares what this holds_ | |
 | [`tests/`](tests/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

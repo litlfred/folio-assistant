@@ -37,3 +37,9 @@ Landed this session: #2069, #2068, #2059, #2073, #2062, #2070, #2052, #2079.
 - "zmdo session drafts it": the typed record of the human merge decision (`release` on the queue entry: `releasedSha`, `merge:queue:decide`, `merge:guard` read-back). session_01Ga3HjmX3ag9vTgZWDSmsFi drafts it against #2065's branch.
 
 Landed since: #2076 (`d2432b1`) and #1581 (`df31bb2`).
+
+## 14:00Z: all-PR review, and owner answers
+
+- Review: 26 open, 8 in the queue. Every open PR now has an entry with a `status` (#2096).
+- "Approve all 6": #2089, #2090, #2093, #2094, #2095, and #2082 re-approved WITH its new scope (it had grown from a bean close into an 11-file code change after the first approval).
+- On the 6 stale PRs (#1802, #1809, #1860, #1884, #1918, #1964), verbatim: "assume authors stalled out.  show detailed anayslis of what was supersceded.  anything salvagable?" Read-only analysis agents dispatched.
