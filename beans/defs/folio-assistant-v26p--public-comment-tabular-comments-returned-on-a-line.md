@@ -25,8 +25,8 @@ Found by the q4jm roast (R9). The plan as first written had only in-page comment
 The page/line provenance for INGEST is xtpc (the other half of #197).
 
 ## Done when
-- [ ] a line-numbered draft render emits the page/line → block map
-- [ ] a CSV and an XLSX of comments import as Findings, with unplaced rows kept
+- [x] a line-numbered draft render emits the page/line → block map
+- [x] a CSV and an XLSX of comments import as Findings, with unplaced rows kept
 - [ ] the five operations are Tool nodes, each with a test
 - [ ] the Public Comment sub-process is in the lifecycle BPMN, and #197 is updated each round
 
@@ -45,9 +45,9 @@ First customer: the DPI-H Reference Architecture public review in litlfred/smart
 - Skill `public-comment` (folio-document-adapter).
 - Tests: 21 in public-comment.test.ts; every transition's task exists in the diagram.
 
-**Done when, status**
-- [x] a line-numbered draft render emits the page/line → block map (from the frozen PDF the reviewers read, rather than a render)
-- [x] an XLSX and a CSV import as Findings, with unplaced rows kept
-- [x] the operations each have a test (one CLI tool, `public-comment.ts`; separate Tool nodes not yet declared)
-- [x] the Public Comment sub-process is in the lifecycle BPMN
-- [ ] the review/ page and heat map show imported comments (smart-ra dashboard first; platform review page next round)
+**Done when, measured this round**
+- page/line map: done, built from the frozen PDF the reviewers read, rather than from a render.
+- CSV and XLSX import with unplaced rows kept: done (tests).
+- The five operations: one CLI tool with a test per operation. They are not yet declared as separate Tool nodes, so that item stays open.
+- Public Comment sub-process: in `draft-to-publication.bpmn`. #197 must still be updated each round, so that item stays open.
+- review/ page and heat map: the smart-ra dashboard is built (`public-comment-site.ts`). The platform review page does not show public comments yet.
