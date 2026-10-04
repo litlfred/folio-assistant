@@ -512,6 +512,16 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
+      - name: Produce the QA working copy this job reads (bean 72a8)
+        # The derived QA results are not committed (bean `5hox`): their record is
+        # the `qa-reports` branch and `test/results/` is gitignored. The gates and
+        # tests below READ that tree, so it is computed here first, exactly as
+        # `qa-publish` computes it: the external bootstrap export, then every
+        # declared writer (`qa:refresh`) — `qa:working-copy` is the two. Without
+        # it they report could-not-determine. `gates.ts` runs the same script as
+        # a precondition locally, and so does not list it as a gate.
+        run: bun run qa:working-copy
+
       # NO `--parallel` — measured, and the failure is a hang, not a slowdown.
       # Bun's in-process worker pool (1.3.14) left one worker spinning at
       # ~97 % CPU until the job cap: on 2026-10-03 shard 1/2 of a 4-worker run
@@ -657,6 +667,16 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
+
+      - name: Produce the QA working copy this job reads (bean 72a8)
+        # The derived QA results are not committed (bean `5hox`): their record is
+        # the `qa-reports` branch and `test/results/` is gitignored. The gates and
+        # tests below READ that tree, so it is computed here first, exactly as
+        # `qa-publish` computes it: the external bootstrap export, then every
+        # declared writer (`qa:refresh`) — `qa:working-copy` is the two. Without
+        # it they report could-not-determine. `gates.ts` runs the same script as
+        # a precondition locally, and so does not list it as a gate.
+        run: bun run qa:working-copy
 
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks
@@ -1868,6 +1888,16 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
+      - name: Produce the QA working copy this job reads (bean 72a8)
+        # The derived QA results are not committed (bean `5hox`): their record is
+        # the `qa-reports` branch and `test/results/` is gitignored. The gates and
+        # tests below READ that tree, so it is computed here first, exactly as
+        # `qa-publish` computes it: the external bootstrap export, then every
+        # declared writer (`qa:refresh`) — `qa:working-copy` is the two. Without
+        # it they report could-not-determine. `gates.ts` runs the same script as
+        # a precondition locally, and so does not list it as a gate.
+        run: bun run qa:working-copy
+
       - name: gates that were registered and never run
         run: |
           set -e
@@ -2848,6 +2878,16 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
+
+      - name: Produce the QA working copy this job reads (bean 72a8)
+        # The derived QA results are not committed (bean `5hox`): their record is
+        # the `qa-reports` branch and `test/results/` is gitignored. The gates and
+        # tests below READ that tree, so it is computed here first, exactly as
+        # `qa-publish` computes it: the external bootstrap export, then every
+        # declared writer (`qa:refresh`) — `qa:working-copy` is the two. Without
+        # it they report could-not-determine. `gates.ts` runs the same script as
+        # a precondition locally, and so does not list it as a gate.
+        run: bun run qa:working-copy
 
       # THE ORIGINAL JUSTIFICATION IS GONE, and saying so is the point. This
       # job was added because all six of these checks lived in the `typescript`

@@ -56,12 +56,14 @@
  * @module scripts/gates
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import { join, resolve } from "node:path";
 
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { parse } from "yaml";
 
 import { distortions } from "./check-environment.ts";
+import { movedInventory, movedRoots } from "./qa-verify-moved.ts";
 
 import {
   diffReadings,
@@ -165,6 +167,15 @@ export interface StepExemption {
   kind: "covered-by" | "ci-only" | "no-folio";
   reason: string;
 }
+
+/**
+ * Workflow steps this runner performs as a PRECONDITION rather than as gates.
+ * `qa:working-copy` (bean `72a8`) computes the QA tree every reading gate
+ * judges; CI runs it as a step before them, and `main` runs it first when the
+ * copy is absent. As a gate it would run in the pool beside the gates that
+ * read its output — a race — and a second time on every run.
+ */
+export const PRECONDITION_STEPS: readonly string[] = ["bun run qa:working-copy"];
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
   {
@@ -994,7 +1005,9 @@ export function loadGates(root: string, opts: { all?: boolean } = {}): Gate[] {
   // a command referencing a shell variable this reader discarded cannot be run
   // as written, but CI does run it, and `gatesFrom` is what the accounting
   // checks read as "what CI runs". `reportUnresolved` prints what this drops.
-  const gates = runnableGatesFrom(readFileSync(path, "utf-8"), { ...opts, skipPublishers: true });
+  const gates = runnableGatesFrom(readFileSync(path, "utf-8"), { ...opts, skipPublishers: true }).filter(
+    (g) => !PRECONDITION_STEPS.includes(g.command),
+  );
   if (gates.length === 0) throw new NoGatesFound(GATES_WORKFLOW);
   if (!opts.all) return gates;
 
@@ -1624,6 +1637,36 @@ if (import.meta.main) {
         "reports the same thing without running any gate.",
     );
     process.exit(2);
+  }
+
+  // ── Is there a QA working copy to judge? (bean `72a8`) ─────────────────
+  //
+  // After `5hox` the derived QA results are no longer committed: their record
+  // is the `qa-reports` branch and a checkout's `test/results/` is
+  // `.gitignore`d. Gates that READ that tree then exit 2 on a fresh clone —
+  // correctly, they could not determine — and a whole local run reports
+  // "could not determine" for a reason nobody's change caused. So the tree is
+  // PRODUCED first, exactly as CI produces it before its gates: the external
+  // bootstrap export, then `qa:refresh`, which runs every declared QA writer.
+  // Only when the copy is absent: a working copy already present is the one
+  // the writers last produced here, and re-running ~30 writers on every local
+  // run would be minutes spent re-deriving what is on disk.
+  const qaRoots = movedRoots(ROOT);
+  if (qaRoots.length > 0 && movedInventory(ROOT, qaRoots).files === 0) {
+    console.log("No QA working copy under the declared qa directories — producing it first, as CI does:\n");
+    for (const cmd of [["bun", "run", "qa:working-copy"]]) {
+      console.log(`$ ${cmd.join(" ")}`);
+      const r = spawnSync(cmd[0]!, cmd.slice(1), { cwd: ROOT, stdio: "inherit" });
+      if (r.status !== 0) {
+        console.error(
+          `\nREFUSING TO RUN — \`${cmd.slice(1).join(" ")}\` exited ${r.status ?? "on a signal"}, so there is no QA ` +
+            "working copy, and every gate that reads one would report could-not-determine. Fix that first, or " +
+            "materialise a published entry with `bun run qa:fetch --ref main`.",
+        );
+        process.exit(2);
+      }
+    }
+    console.log("");
   }
 
   const scope = all

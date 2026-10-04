@@ -12,7 +12,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import {
+import { PRECONDITION_STEPS,
   carriesUnexpandedVariable,
   GATES_WORKFLOW,
   NoCheckScriptsFound,
@@ -250,6 +250,9 @@ describe("a strict reader and a loose one agree", () => {
     const found = new Set([
       ...loadGates(ROOT, { all: true }).map((g) => g.command),
       ...loadUnresolved(ROOT, { all: true }).map((g) => g.command),
+      // The third stated bucket (bean `72a8`): steps the runner performs as a
+      // PRECONDITION — once, before the pool — rather than as gates in it.
+      ...PRECONDITION_STEPS,
     ]);
     // A PUBLISHER job's lines are dropped on purpose, by `publishes` (bean
     // `16ei`): a job holding `contents: write` is not a gate, and `bun run

@@ -122,8 +122,17 @@ export const QA_WRITERS: readonly QaWriter[] = [
       `${R}/bootstrap/**`,
       `${R}/bootstrap-tools/**`,
       `${R}/cat-harness-tools/**`,
+      // ANY instance hosted here, not a list of them. An instance that
+      // declares no `qa` directory of its own has its KG verdicts written
+      // under this root's `test/results/<instance>/`, and naming the hosted
+      // homes one by one missed the first two instances added after the list
+      // was written (`cat-openapi`, `folio-assistant`; measured 2026-10-04,
+      // bean `72a8`). Scoped to the kg-qa files, so it can claim nothing
+      // another writer owns.
+      `${R}/*/kg-qa/**`,
+      `${R}/*/kg-qa.manifest.json`,
     ],
-    because: "every declared instance's KG verdicts, hosted homes included (bootstrap, bootstrap-tools, cat-harness-tools)",
+    because: "every declared instance's KG verdicts, hosted homes included (bootstrap, bootstrap-tools, cat-harness-tools, and any instance without a `qa` directory of its own)",
   },
   { id: "kg:detangle", run: ["kg:detangle"], writes: [`${R}/detangle/**`], because: "detangle measurements per instance graph" },
   { id: "translation:block-qa", run: ["translation:block-qa"], writes: [`${R}/translation-qa/**`], because: "translation verdicts; read by the witnesses below" },
@@ -134,6 +143,12 @@ export const QA_WRITERS: readonly QaWriter[] = [
     because: "script block verdicts over the docs tree; agent verdicts are composed from test/attestations/, which stays on main. Read by the witnesses below",
   },
   { id: "check:l1-complete", run: ["check:l1-complete", "--write"], writes: [`${R}/library-qa/**`], because: "per-library-entry L1 completeness; `--write` is its writer form" },
+  {
+    id: "p2:refusals",
+    run: ["p2:refusals"],
+    writes: ["*/test/results/p2-refusals.qa-results.json"],
+    because: "each IG instance's record of the Publisher pages refused under P2 (bean `jut3`), derived from its artefact index; missing from this list until bean `72a8`, so a computed tree lacked it and `p2:refusals:check` failed",
+  },
   { id: "lsi:index:cat-harness:skills", run: ["lsi:skills"], writes: [`${R}/lsi/cat-harness/skills.lsi.json`, `${R}/tool-runs/lsi-index/cat-harness/skills.tool-run.json`], because: "the skills graph's LSI index and its run record" },
   ...(["cat-harness", "smart-base", "who-iris"] as const).map(
     (inst): QaWriter => ({
