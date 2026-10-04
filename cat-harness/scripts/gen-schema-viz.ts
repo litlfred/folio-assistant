@@ -232,7 +232,7 @@ export function viewerPlacement(
  * It was the third of four selectors answering "did this generator write this
  * page, here?", and the bean's finding was that the multiplicity is the
  * defect. It is re-exported from here because `gen-library-viz.ts`,
- * `gen-docs-auto.ts` and the tests already import it from this module, and a
+ * `gen-auto-docs.ts` and the tests already import it from this module, and a
  * re-export keeps that a one-line change rather than a sweep.
  *
  * The leaf also exists so `state-visualizer.ts` can be a call site WITHOUT

@@ -268,18 +268,18 @@ describe("writing", () => {
 // both sides — a route store must refuse `expect`, and must still accept a
 // same-path overwrite that a tip store would have called a `conflict`.
 
-const ROUTE_BRANCH = "cat/cat-harness/docs-auto";
+const ROUTE_BRANCH = "cat/cat-harness/auto-docs";
 const ROUTE_MANIFEST = JSON.stringify({
   $schema: MANIFEST_SCHEMA,
   status: "seed",
   authoritative: false,
-  subgraph: "docs-auto",
+  subgraph: "auto-docs",
   keyedBy: "route",
 });
 
 function seededRoute(f: Fixture): string {
   return f.seed(ROUTE_BRANCH, {
-    "README.md": "# docs-auto\n",
+    "README.md": "# auto-docs\n",
     "manifest.json": ROUTE_MANIFEST,
     "uml/overview/index.html": "<p>old</p>\n",
   });

@@ -506,6 +506,11 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      # The same mount as the gates job, for the same reason one level down:
+      # the test files that read the LIVE store (`bean-store-hygiene`,
+      # `bean-front-matter`, `survey`, `merge-train`, …) assert over whatever
+      # `resolveBeanDefs` hands them, and after the cutover that is the mount.
+      # Inert while nothing is tip-keyed. Bean `9ofm`.
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
@@ -652,6 +657,30 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      # EVERY declared tip-keyed graph on disk before any gate reads one —
+      # bean `9ofm`, the §4 `gates` row, and the answer to "which gates stop
+      # covering the store when it moves".
+      #
+      # Nine bean gates run in this job (`check:bean-parents`, `bean-blocks`,
+      # `bean-rollup`, `bean-bodies`, `bean-front-matter`, `bean-issue-links`,
+      # `bean-archive`, `bean-parent-prose`, `bean-restates-skill`), and so do
+      # `check:harness-dirs`, `check:harness-state`, `kg:audit` and
+      # `audit:coverage`. Once `beans/` is kept at the tip of its own branch
+      # the checkout no longer carries it, and a gate that joined the path
+      # would judge an absent directory — `1xhc`, a step that did not fire
+      # looking exactly like one that passed, over the store eight of those
+      # gates exist to judge.
+      #
+      # It is INERT today and that is deliberate: while no declaration keeps a
+      # graph at a branch tip, `state:mount` reports `not-enabled` and exits 0
+      # (measured). It is added BEFORE the cutover rather than with it so that
+      # the one irreversible commit is the declaration and the `git rm`, and
+      # not also the CI change that has to be right for them.
+      #
+      # A failed mount fails the job, and must: `state-mount.ts` keeps "could
+      # not determine" apart from "determined absent" and exits non-zero for
+      # either, so the gates below never run over a store this runner could
+      # not reach.
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
@@ -1862,6 +1891,14 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      # THE job that runs the nine bean gates — they moved here with the rest
+      # of the block when `dlqu` split this job out of `gates`, so this is
+      # where the mount has to be. I put it in `gates` and the test shards
+      # first and `check:workflows`' new `bean-gate-unmounted` rule caught the
+      # miss on the first run, which is the whole argument for the rule being
+      # a rule rather than a careful reading: the mount is PER JOB, and a job
+      # named for what it runs rather than for what it reads does not say so.
+      # Inert while nothing is tip-keyed. Bean `9ofm`.
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
@@ -2513,7 +2550,7 @@ jobs:
           # because it reads as current. It also reports an ORPHAN -- a
           # sub-graph page whose sub-graph now contributes nothing -- which is
           # `ankg`'s helper doing its job in a third generator.
-          bun run docs:auto:check
+          bun run auto:docs:check
           bun run gen:jsonld:check
           bun run readme:sync:check
           bun run avatars:css:check
