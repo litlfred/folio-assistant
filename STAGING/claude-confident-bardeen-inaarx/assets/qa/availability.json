@@ -1,0 +1,18 @@
+{
+  "$schema": "folio-qa-availability/v1",
+  "source": "checkout",
+  "requested": [
+    "pr/2221/55b2f907ee56d0092953e2378770766fe6271ef5",
+    "pr/2221"
+  ],
+  "key": "pr/2221/07f63441a8e3ed1890ed41d5e9c8a1f6cc66284a",
+  "reason": "the checkout holds the QA corpus (still committed), so it is published as checked out; qa-reports also has pr/2221/07f63441a8e3ed1890ed41d5e9c8a1f6cc66284a",
+  "expected": {
+    "witnesses": 171,
+    "results": 21
+  },
+  "published": {
+    "witnesses": 171,
+    "results": 21
+  }
+}
