@@ -340,15 +340,15 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T16:38:29.648Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/009ad093e112db65a9b6f851d05aeeedff649957",
-  "sourceCommitSha": "009ad093e112db65a9b6f851d05aeeedff649957",
-  "sourceCommitAt": "2026-10-05T18:32:22+02:00",
+  "generatedAt": "2026-10-05T17:09:00.056Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/63138b9aabaf06b298082f5f105696cfb90ff0d6",
+  "sourceCommitSha": "63138b9aabaf06b298082f5f105696cfb90ff0d6",
+  "sourceCommitAt": "2026-10-05T18:58:55+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
     "Skill": 3,
-    "GraphKind": 18,
+    "GraphTypology": 18,
     "Subgraph": 8,
     "Asset": 2
   },
@@ -388,127 +388,127 @@
       "ambiguous": false
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "docs",
       "renderable": true,
       "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "code",
       "renderable": false,
       "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/beans",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/beans",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "beans",
       "renderable": false,
       "summary": "The work plan — what is being worked on, and where each running BPMN instance got to. Its inner directories are declared by `beans/beans.json`."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/bean-defs",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/bean-defs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "bean-defs",
       "renderable": false,
       "summary": "Work items — one Markdown file each, in the layout the `beans` CLI reads. Authored and edited by people and agents."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/bean-notes",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/bean-notes",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "bean-notes",
       "renderable": false,
       "summary": "Bean notes — one Markdown file per pull request per bean, `$schema: folio-bean-note/v1` in its front matter, named `<bean>--<date>--<branch>.md` so two pull requests never write one path. Indexed by a generated README."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/session-survey",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/session-survey",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "session-survey",
       "renderable": false,
       "summary": "Published surveys of a commit window — one JSON file each, carrying `\"$schema\": \"folio-session-survey/v1\"` and the window's two edge commits, so a later session can compute what it is NOT covered for instead of re-deriving the whole range (bean `6ptx`)."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/workflow-state",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/workflow-state",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "workflow-state",
       "renderable": false,
       "summary": "Running BPMN instances — one JSON file each, carrying `\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/merge-queue",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/merge-queue",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "merge-queue",
       "renderable": false,
       "summary": "A merge steward's DECISIONS about an open pull request — priority, rank or override with its reason, a hold with its expiry, the train it joined, an ejection with its evidence. Never a fact GitHub owns: CI, mergeability, labels and the head SHA are read live and refused by name here."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/todos",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/todos",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "todos",
       "renderable": false,
       "summary": "Human actors' outstanding work — content, owned by the folio, tagged by role, process, task and identity. Its inner directories are declared by `todos/todos.json`."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/boards",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/boards",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "boards",
       "renderable": false,
       "summary": "Boards — one JSON file each, carrying `\"$schema\": \"folio-board/v1\"`. A board is a diagram OF a folio: it declares what it shows, and a folio with no board is complete. Schema: `schemas/board.ts`."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/board-positions",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/board-positions",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "board-positions",
       "renderable": false,
       "summary": "Where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The layout layer, which points at notes and is never pointed back at. Schema: `schemas/board-positions.ts`."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/todo-items",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/todo-items",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "todo-items",
       "renderable": false,
       "summary": "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. Authored by people and by agents on their behalf."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/uploads",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/uploads",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "uploads",
       "renderable": false,
       "summary": "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus: a document here reads as absent to every consumer."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/todo-feedback",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/todo-feedback",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "todo-feedback",
       "renderable": false,
       "summary": "Feedback items — todos raised against a specific block, carrying the submitter's identity. Read by the `todo-review` skill."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/interaction",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/interaction",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "interaction",
       "renderable": false,
       "summary": "How a person wants to be asked — read at session start, never written by a process."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/issue-marks",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/issue-marks",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "issue-marks",
       "renderable": false,
       "summary": "How far an agent has read an issue — the comment id and the edit time it accounted for."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/memory",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/memory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "memory",
       "renderable": false,
       "summary": "Durable facts an agent carries between sessions. Read during a process, never written by one."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/waiver",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/waiver",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "waiver",
       "renderable": false,
       "summary": "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring."
@@ -523,7 +523,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/uploads"
+        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/uploads"
       ],
       "description": "The incoming queue of the document-ingestion pipeline for THIS checkout — raw files as dropped, before ingestion. Distinct from `cat-harness/uploads/`, which is the harness layer's own queue: the two are different instances' directories that happen to share an id, not one directory declared twice. NOT L1 and NOT greppable as corpus; a source sitting here reads as absent to every consumer while the file is on disk.",
       "readmePath": "uploads/README.md",
@@ -540,7 +540,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
       "description": "The Tool-node barrel. `index.ts` merges every instance's `<stub>/tools/*.ts` into the one import five consumers use -- `check-tools`, `kg-export`, `harness-schema-export`, `tool-coverage` and the MCP projection -- so adding an instance is one line here rather than a path baked into five call sites. Declared by the ROOT rather than by `cat-harness` with repository scope: it is the checkout's own barrel over every instance, and repository-scoped entries from `cat-harness` are what put 15 paths under two declarations each.",
       "readmePath": "tools/README.md",
@@ -557,7 +557,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/beans"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/beans"
       ],
       "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state). REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "readmePath": "beans/README.md",
@@ -574,7 +574,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/todos"
+        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/todos"
       ],
       "description": "A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management. Not a second work plan: the two sit in different quadrants of one 2x2 (memory vs workflow management, human vs agent), and human workflow management is EMPTY, deliberately. `todos/todos.json` declares its nodes — `items` (raised about anything) and `feedback` (raised against a specific block, carrying the submitter's identity) — the same shape as `beans/beans.json`. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "readmePath": "todos/README.md",
@@ -591,8 +591,8 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/memory",
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/waiver"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/memory",
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/waiver"
       ],
       "description": "Agent memory — durable facts an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each, assembled into `.claude/agent-memory/<agent>/MEMORY.md`. `context` by the axis bean `mhh9` settled: read during a process, never written by one; it changes when a human directs an authoring agent. It sat in `skills/memory/` until 2026-09-20 — inside the `cat-harness` directory, which is `content` — so the CONTAINING kind and the contents were on opposite layers, and a nested declaration is the defect #263 names. Moving it was held back from the classification change on purpose (#395's rule, and bean `auap`'s precedent: a relocation is its own change) and is bean `07xs`. SCOPE IS `repository`, like `beans/`: these are facts about this REPOSITORY carried by the agents working in it, and `.claude/agents/` — the consumers — sit at the repository root too.",
       "readmePath": "memory/README.md",
@@ -609,7 +609,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/interaction"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/interaction"
       ],
       "description": "How a PERSON wants to be asked — committed, read at session start by every agent. `context` by the same test as agent memory: read during a process, never written by one, changed when a person states a preference. It sat in `.harness/`, undeclared, until 2026-09-20, which this repository's own dot-prefix guard forbids: a dot-prefixed directory is absent from a plain `ls`, from most file browsers and from a forge's web tree, and the file read at the start of every session was in the one place the conventions reject. The path is also `harness.config.json`'s `interaction` key, which defaults here — the declaration and the config now name the same place instead of one of them being a literal nobody checks. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code.",
       "readmePath": "interaction/README.md",
@@ -626,7 +626,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/issue-marks"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/issue-marks"
       ],
       "description": "How far an agent has read an issue: `lastCommentId`, `lastUpdatedAt` and `checkedAt`, one file per issue. NOT the comments — the marks say what was seen, and one of the two files here says so in its own note. Two marks rather than one because a comment EDITED after being read keeps its id, so the id alone would call it seen and an edited requirement is a changed requirement (`issue-working`). `state`: a running process writes one each time it checks. Moved out of `.harness/issue-comments/` on 2026-09-20 for the reason `.beans/` and `.harness/workflow/` moved on 2026-09-18 — the artefacts a person looks for first were the hardest to find. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code.",
       "readmePath": "issue-marks/README.md",
@@ -643,7 +643,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs"
       ],
       "description": "THE REPOSITORY ROOT'S DOCUMENTATION OVERLAY, managed by this instance. Owner's ruling, 2026-09-21, answering whether the root declares its own docs: \"harness can have docs/ which then get listed under cat-harness/docs/<harness>, there is also docs/ dir in repo root managed by cat-harness. other harness augment or overlay ontop of that (content and behviors)\". SEPARATE FROM THE `docs` ENTRY ABOVE, AND IT HAS TO BE. That one is instance-scoped and `reproduce`, which is what makes a DEPENDENT materialise its own docs/ (bean n0nf slice 1). This one is `scope: \"repository\"`, and a repository-scoped entry is filtered out for dependencies -- cat-harness.ts:3261 and :3507 both skip it unless `link.own`. Re-scoping the existing entry instead of adding this one would therefore have UNDONE slice 1 silently: a dependent would simply stop getting a docs/ and nothing would fail. Two directories answering two questions, so two entries, with distinct ids -- the convention `who-iris-docs` already follows. `dependents` is `skip` for the same reason every other cross-instance repository-scoped entry here is: a dependent never reaches this one at all, and claiming it reproduces would be a promise the resolver does not keep. WHAT MAKES IT NOT `dh4f`: a declared directory that nothing reads is this repository's most-paid-for defect, and an empty overlay is exactly that shape. It is consumed by the site build, which composes it OVER cat-harness/docs/ -- so what it contributes today is nothing VERIFIABLY, pinned by a test asserting an empty overlay produces a byte-identical site, rather than nothing unnoticed.",
       "readmePath": "docs/README.md",
@@ -671,8 +671,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "009ad093e112db65a9b6f851d05aeeedff649957",
+    "sha": "63138b9aabaf06b298082f5f105696cfb90ff0d6",
     "pr": "main",
-    "run": "37341616308"
+    "run": "37344976607"
   }
 }

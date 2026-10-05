@@ -51,10 +51,10 @@ drawn below links to its drawing.
 | 4 | <a id="node-kind"></a>**Node Kind** | A name paired with a Node Schema. | [Node Schema](#node-schema) | [src](graph.schema.json#/properties/nodeSchemas) |
 | 5 | <a id="subkind"></a>**Subkind** | A Node Kind whose Node Schema requires everything another Node Kind's does, so every Node that satisfies it satisfies the other too. | [Node Kind](#node-kind), [Node Schema](#node-schema), [Node](#node) | [src](graph.schema.json#/$defs/Subkind) |
 | 6 | <a id="node-instance"></a>**Node Instance** | A Node that names its Node Kind, in `$schema` or front matter, and satisfies that kind's Node Schema. | [Node](#node), [Node Kind](#node-kind), [Node Schema](#node-schema) | [src](graph.schema.json#/$defs/NodeInstance) |
-| 7 | <a id="graph-kind"></a>**Graph Kind** | A named set of Node Kinds. | [Node Kind](#node-kind) | [src](graph.schema.json#/$defs/GraphKind) |
+| 7 | <a id="graph-typology"></a>**Graph Typology** | A named set of Node Kinds. | [Node Kind](#node-kind) | [src](graph.schema.json#/$defs/GraphTypology) |
 | 8 | <a id="declaration"></a>**Declaration** | A JSON document, `<name>.json`, that gives a name and lists directory entries and file entries. | — | [src](graph.schema.json#/$defs/Declaration) |
 | 9 | <a id="extension"></a>**Extension** | A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning. | [Declaration](#declaration) | [src](graph.schema.json#/$defs/Extension) |
-| 10 | <a id="subgraph"></a>**Subgraph** | A directory entry of a Declaration: an id, a directory, and the Graph Kinds its Node Instances' kinds belong to. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). | [Declaration](#declaration), [Graph Kind](#graph-kind), [Node Instance](#node-instance) | [src](graph.schema.json#/$defs/Subgraph) |
+| 10 | <a id="subgraph"></a>**Subgraph** | A directory entry of a Declaration: an id, a directory, and the Graph Typologies its Node Instances' kinds belong to. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). | [Declaration](#declaration), [Graph Typology](#graph-typology), [Node Instance](#node-instance) | [src](graph.schema.json#/$defs/Subgraph) |
 | 11 | <a id="asset"></a>**Asset** | A file entry of a Declaration: one file about the repository itself, whose `role` field says what it is for. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). | [Declaration](#declaration) | [src](graph.schema.json#/$defs/Asset) |
 | 12 | <a id="knowledge-graph"></a>**Knowledge Graph** | The Node Schemas, Node Instances and Assets one Declaration lists, as of one version of the repository. Published as JSON-LD, the statements of each Subgraph's Node Instances form one named graph. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). | [Node Schema](#node-schema), [Node Instance](#node-instance), [Asset](#asset), [Declaration](#declaration), [Subgraph](#subgraph) | [src](graph.schema.json#/$defs/KnowledgeGraph) |
 | 13 | <a id="dependency"></a>**Dependency** | A Declaration's `needs` entry naming another Knowledge Graph. References may point from this graph's Node Instances into the named one, never back. | [Declaration](#declaration), [Knowledge Graph](#knowledge-graph), [Reference](#reference), [Node Instance](#node-instance) | [src](graph.schema.json#/$defs/Dependency) |
@@ -171,15 +171,15 @@ A Declaration. Any field not listed here is an Extension: A field of a Declarati
 |   assets       [0..*]  Asset list           |
 +---------------------------------------------+
   |
-  +-- directories (each item) --> +---------------------------------------------------------------------------------------------------------------+
-  |                               | Subgraph                                                                                                      |
-  |                               +---------------------------------------------------------------------------------------------------------------+
-  |                               | * id           [1]     string                                                                                 |
-  |                               | * path         [1]     string                                                                                 |
-  |                               | * graphKinds   [1..*]  list of = "skills" | = "schemas" | = "scenarios" | = "processes" | = "models" | string |
-  |                               |   title        [0..1]  string                                                                                 |
-  |                               |   description  [0..1]  string                                                                                 |
-  |                               +---------------------------------------------------------------------------------------------------------------+
+  +-- directories (each item) --> +-------------------------------------------------------------------------------------------------------------------+
+  |                               | Subgraph                                                                                                          |
+  |                               +-------------------------------------------------------------------------------------------------------------------+
+  |                               | * id               [1]     string                                                                                 |
+  |                               | * path             [1]     string                                                                                 |
+  |                               | * graphTypologies  [1..*]  list of = "skills" | = "schemas" | = "scenarios" | = "processes" | = "models" | string |
+  |                               |   title            [0..1]  string                                                                                 |
+  |                               |   description      [0..1]  string                                                                                 |
+  |                               +-------------------------------------------------------------------------------------------------------------------+
   |
   +-- assets (each item) --> +---------------------+
                              | Asset               |

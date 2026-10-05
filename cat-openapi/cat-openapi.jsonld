@@ -340,42 +340,42 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T16:38:33.668Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/009ad093e112db65a9b6f851d05aeeedff649957",
-  "sourceCommitSha": "009ad093e112db65a9b6f851d05aeeedff649957",
-  "sourceCommitAt": "2026-10-05T18:32:22+02:00",
+  "generatedAt": "2026-10-05T17:09:06.777Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/63138b9aabaf06b298082f5f105696cfb90ff0d6",
+  "sourceCommitSha": "63138b9aabaf06b298082f5f105696cfb90ff0d6",
+  "sourceCommitAt": "2026-10-05T18:58:55+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "GraphKind": 4,
+    "GraphTypology": 4,
     "Subgraph": 4,
     "Asset": 2
   },
   "@graph": [
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/kinds",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "kinds",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/typologies",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "typologies",
       "renderable": false,
-      "summary": "The graph kinds a harness declares it owns, one node per kind, so no central registry names another harness's subgraph types. Loaded across the instances on first use."
+      "summary": "The graph typologies a harness declares it owns, one node per kind, so no central registry names another harness's subgraph types. Loaded across the instances on first use."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/validators",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/validators",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "validators",
       "renderable": false,
-      "summary": "The validators a harness's code provides, one node each naming the graph kind and $schema family it checks and the Zod export that checks it, joined onto the kinds on first use."
+      "summary": "The validators a harness's code provides, one node each naming the graph typology and $schema family it checks and the Zod export that checks it, joined onto the kinds on first use."
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/schemas",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/schemas",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "schemas",
       "renderable": false,
       "summary": "A Subgraph of Node Schemas: files that state the shape other files must have."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "code",
       "renderable": false,
       "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
@@ -390,29 +390,29 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/validators"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/validators"
       ],
-      "description": "The validators cat-openapi's code provides, one folio-validator/v1 node each naming the graph kind and $schema family it checks (bean riit). Owner, 2026-10-04: validators are KG nodes, and the validator names the family.",
+      "description": "The validators cat-openapi's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit). Owner, 2026-10-04: validators are KG nodes, and the validator names the family.",
       "readmePath": "validators/README.md",
       "fileCount": 2,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-openapi/cat-openapi.jsonld#directory/cat-openapi-validators"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-openapi/cat-openapi.jsonld#directory/cat-openapi-kinds",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-openapi/cat-openapi.jsonld#directory/cat-openapi-typologies",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
-      "name": "cat-openapi-kinds",
-      "path": "kinds/",
+      "name": "cat-openapi-typologies",
+      "path": "typologies/",
       "contentSource": {
         "kind": "directory",
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/kinds"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/typologies"
       ],
-      "description": "The graph kinds cat-openapi owns, one folio-graph-kind/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph. Moved here from cat-harness/schemas/graph-kind-registry.ts, with each entry's code comments kept as its rationale.",
-      "readmePath": "kinds/README.md",
+      "description": "The graph typologies cat-openapi owns, one folio-graph-typology/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph. Moved here from cat-harness/schemas/graph-typology-registry.ts, with each entry's code comments kept as its rationale.",
+      "readmePath": "typologies/README.md",
       "fileCount": 2,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-openapi/cat-openapi.jsonld#directory/cat-openapi-kinds"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-openapi/cat-openapi.jsonld#directory/cat-openapi-typologies"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-openapi/cat-openapi.jsonld#directory/cat-openapi-schemas",
@@ -424,7 +424,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/schemas"
+        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/schemas"
       ],
       "description": "The harness's shapes: `cat-openapi.config.json` (what an instance names), the ingest's provenance node, the subset of OpenAPI 3 the pages read, and how an operation's id is derived.",
       "readmePath": "schemas/README.md",
@@ -441,7 +441,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
       "description": "The rendering sub-pipeline: `ingest-openapi.ts` copies a configured document in verbatim with its provenance; `gen-openapi-pages.ts` writes a JSON-LD node and a thin page per document and per operation; `templates/` holds the one shared loader that draws them in the browser.",
       "readmePath": "scripts/README.md",
@@ -469,8 +469,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "009ad093e112db65a9b6f851d05aeeedff649957",
+    "sha": "63138b9aabaf06b298082f5f105696cfb90ff0d6",
     "pr": "main",
-    "run": "37341616308"
+    "run": "37344976607"
   }
 }

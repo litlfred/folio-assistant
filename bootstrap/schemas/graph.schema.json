@@ -43,7 +43,7 @@
             "minLength": 1,
             "description": "The directory, relative to the declaration."
           },
-          "graphKinds": {
+          "graphTypologies": {
             "minItems": 1,
             "type": "array",
             "items": {
@@ -76,12 +76,12 @@
                 {
                   "type": "string",
                   "minLength": 1,
-                  "description": "A Graph Kind a Harness defines. To a reader that knows only bootstrap it is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning."
+                  "description": "A Graph Typology a Harness defines. To a reader that knows only bootstrap it is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning."
                 }
               ],
               "description": "A named set of Node Kinds."
             },
-            "description": "The Graph Kinds it holds."
+            "description": "The Graph Typologies it holds."
           },
           "title": {
             "description": "A short name for people, shown as its README's heading.",
@@ -95,10 +95,10 @@
         "required": [
           "id",
           "path",
-          "graphKinds"
+          "graphTypologies"
         ],
         "additionalProperties": {},
-        "description": "A directory entry of a Declaration: an id, a directory, and the Graph Kinds its Node Instances' kinds belong to."
+        "description": "A directory entry of a Declaration: an id, a directory, and the Graph Typologies its Node Instances' kinds belong to."
       }
     },
     "needs": {
@@ -207,8 +207,8 @@
       ],
       "isDefinedBy": "#/$defs/NodeInstance"
     },
-    "GraphKind": {
-      "title": "GraphKind",
+    "GraphTypology": {
+      "title": "GraphTypology",
       "anyOf": [
         {
           "type": "string",
@@ -238,14 +238,14 @@
         {
           "type": "string",
           "minLength": 1,
-          "description": "A Graph Kind a Harness defines. To a reader that knows only bootstrap it is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning."
+          "description": "A Graph Typology a Harness defines. To a reader that knows only bootstrap it is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning."
         }
       ],
       "description": "A named set of Node Kinds.",
       "uses": [
         "NodeKind"
       ],
-      "isDefinedBy": "#/$defs/GraphKind"
+      "isDefinedBy": "#/$defs/GraphTypology"
     },
     "Declaration": {
       "title": "Declaration",
@@ -275,7 +275,7 @@
           "minLength": 1,
           "description": "The directory, relative to the declaration."
         },
-        "graphKinds": {
+        "graphTypologies": {
           "minItems": 1,
           "type": "array",
           "items": {
@@ -308,12 +308,12 @@
               {
                 "type": "string",
                 "minLength": 1,
-                "description": "A Graph Kind a Harness defines. To a reader that knows only bootstrap it is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning."
+                "description": "A Graph Typology a Harness defines. To a reader that knows only bootstrap it is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning."
               }
             ],
             "description": "A named set of Node Kinds."
           },
-          "description": "The Graph Kinds it holds."
+          "description": "The Graph Typologies it holds."
         },
         "title": {
           "description": "A short name for people, shown as its README's heading.",
@@ -327,13 +327,13 @@
       "required": [
         "id",
         "path",
-        "graphKinds"
+        "graphTypologies"
       ],
       "additionalProperties": {},
-      "description": "A directory entry of a Declaration: an id, a directory, and the Graph Kinds its Node Instances' kinds belong to.",
+      "description": "A directory entry of a Declaration: an id, a directory, and the Graph Typologies its Node Instances' kinds belong to.",
       "uses": [
         "Declaration",
-        "GraphKind",
+        "GraphTypology",
         "NodeInstance"
       ],
       "isDefinedBy": "#/$defs/Subgraph"

@@ -340,21 +340,21 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T16:38:32.377Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/009ad093e112db65a9b6f851d05aeeedff649957",
-  "sourceCommitSha": "009ad093e112db65a9b6f851d05aeeedff649957",
-  "sourceCommitAt": "2026-10-05T18:32:22+02:00",
+  "generatedAt": "2026-10-05T17:09:04.662Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/63138b9aabaf06b298082f5f105696cfb90ff0d6",
+  "sourceCommitSha": "63138b9aabaf06b298082f5f105696cfb90ff0d6",
+  "sourceCommitAt": "2026-10-05T18:58:55+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "GraphKind": 1,
+    "GraphTypology": 1,
     "Subgraph": 6,
     "Asset": 2
   },
   "@graph": [
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "code",
       "renderable": false,
       "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
@@ -369,7 +369,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
       "description": "The standalone MCP server (`adapters/mcp-server/`): its tool registrars, the declared tool groups that load them, and the Dockerfile that packages it. Moved from `cat-harness/adapters/mcp-server/` (bean `w2gr`, step 3a) because it is a server, and the owner ruled that tool implementations live here while their definitions stay in cat-harness.",
       "readmePath": "adapters/README.md",
@@ -386,7 +386,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
       "description": "Tests of cat-harness's schemas that exercise tools code: the sixteen `cat-harness/schemas/*.test.ts` files that imported `scripts/`, `src/`, `content/pipeline/` or `test/support/`, moved first (bean `70lx`, batch B0) so that no later batch of the code move leaves a harness file importing into this layer. The Zod sources they test stay in cat-harness and follow in stage 1b (bean `8lcl`). `code`, not `schemas`: nothing here is a schema definition.",
       "readmePath": "schemas/README.md",
@@ -403,7 +403,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
       "description": "Scripts this layer runs. Holds `lib/roots.ts`, the one place that names the three roots a moved file can mean (HARNESS_ROOT, TOOLS_ROOT, REPO_ROOT), and its test; the harness's own `scripts/` arrives here batch by batch in the code move (bean `70lx`). Also the identifier lookup's pair, moved here from large-datasets when it dissolved into cat-harness (bean `j7ql`, 2026-10-01; D1: code goes to cat-harness-tools): `gen-id-lookup.ts` builds the prefix-sharded lookup over a catalogue's REFERENCED nodes for every instance that declares an `id-lookup` directory, and writes it THERE (`bun run id-lookup`, gated by `id-lookup:check`); `bench-id-lookup.ts` measures it at full catalogue scale on a seeded synthetic corpus (bean `4pm8`). Neither names a corpus: both read the checkout's declarations. And `extract-assets.ts`, the tool behind the harness's `asset-extraction` skill: a container's INDEX into a `folio-extraction/v1` record, moved down from `folio-assistant-core/scripts/` with its contract `cat-harness/schemas/extraction.ts` (bean `tlat`, placement PR5, owner ruling 2 of 2026-09-30).",
       "readmePath": "scripts/README.md",
@@ -420,7 +420,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
       "description": "The identifier-lookup CLIENT a reader's browser runs: `lookup.js` (plain ES module, no dependencies) with its hand-written `lookup.d.ts`, and a one-form `index.html` told which index to open by `?index=<directory>`. The indexes themselves are generated output hosted by the instance each is about (`who-iris/id-lookup/`), never here. JavaScript, so it never sits under the plain docs pipeline. Moved from large-datasets (bean `j7ql`).",
       "readmePath": "id-lookup/README.md",
@@ -437,7 +437,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
       "description": "Tests of the code this layer holds, moved with their subjects so the harness keeps no test importing upward into this layer: `composition-roots` (the declared tool groups and route mounting) and `mcp-graph-tools`.",
       "readmePath": "test/README.md",
@@ -454,7 +454,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
       "description": "The MCP and HTTP server — what `bun run start` and `.mcp.json` start, from `src/index.ts`: the composition roots (`server.ts`, `route-groups.ts`, `tool-groups.ts`), the plug-in contract `types.ts`, the MCP tool registrars (`tools/`), the harness's own routes (`routes/branches.ts`, `routes/chat.ts`), authentication (`auth/`, `core/github-auth.ts`), access control (`core/rbac.ts`), the MCP projection (`mcp/`) and the no-content adapter. Moved from `cat-harness/src/` in stage 1a's first batch (bean `70lx`, B1). The Tool nodes it serves stay DECLARED in `cat-harness/tools/` with their original `src/tools/*` paths, and the loader finds each module here through `needs` (owner ruling \"Trap 1\"); the content routes (feedback, glossary, relevance) went UP to the content layer that owns their content instead, and the route loader finds them the same way (owner, 2026-10-04).",
       "readmePath": "src/README.md",
@@ -482,8 +482,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "009ad093e112db65a9b6f851d05aeeedff649957",
+    "sha": "63138b9aabaf06b298082f5f105696cfb90ff0d6",
     "pr": "main",
-    "run": "37341616308"
+    "run": "37344976607"
   }
 }

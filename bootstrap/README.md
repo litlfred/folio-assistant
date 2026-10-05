@@ -257,7 +257,7 @@ Process that reads a file, where a diagram says so.
 |---|---|---|
 | [`AGENTS.md`](AGENTS.md) | Phase one of two. |  |
 | [`README.md`](README.md) | The flow, with every term linked to the schema that defines it. |  |
-| [`ns.jsonld`](ns.jsonld) | Every term bootstrap defines, in order, and every Graph Kind it defines, as RDF and SKOS — the document bootstrap's namespace resolves to. |  |
+| [`ns.jsonld`](ns.jsonld) | Every term bootstrap defines, in order, and every Graph Typology it defines, as RDF and SKOS — the document bootstrap's namespace resolves to. |  |
 | [`bootstrap.json`](bootstrap.json) | Bootstrap |  |
 
 **[`skills/`](skills/README.md)**

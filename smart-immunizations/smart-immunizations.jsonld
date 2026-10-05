@@ -340,42 +340,42 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T16:38:43.186Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/009ad093e112db65a9b6f851d05aeeedff649957",
-  "sourceCommitSha": "009ad093e112db65a9b6f851d05aeeedff649957",
-  "sourceCommitAt": "2026-10-05T18:32:22+02:00",
+  "generatedAt": "2026-10-05T17:09:22.238Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/63138b9aabaf06b298082f5f105696cfb90ff0d6",
+  "sourceCommitSha": "63138b9aabaf06b298082f5f105696cfb90ff0d6",
+  "sourceCommitAt": "2026-10-05T18:58:55+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphKind": 4,
+    "GraphTypology": 4,
     "Subgraph": 3,
     "Asset": 2
   },
   "@graph": [
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "docs",
       "renderable": true,
       "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "qa",
       "renderable": false,
       "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/fhir-artifact-index",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/fhir-artifact-index",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "fhir-artifact-index",
       "renderable": false,
       "summary": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/ig-pages",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/ig-pages",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "ig-pages",
       "renderable": false,
       "summary": "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived."
@@ -390,7 +390,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/fhir-artifact-index"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/fhir-artifact-index"
       ],
       "description": "The reconstructed artefact index and the DAK API surface it points at. 40.6 MB of sidecars, materialised on the owner's explicit choice of 'everything' over the 11.3 MB schema+jsonld subset — 133x smart-trust's 332 KB, because this IG publishes 198 schemas and 188 display files against smart-trust's 19 and 14. `index.json` carries a `provenance` block naming the published file every field came out of, and `dakUnbound` records any sidecar an enumeration listed that bound to no artefact.",
       "readmePath": "fhir-artifact-index/README.md",
@@ -407,8 +407,8 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs",
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/ig-pages"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs",
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/ig-pages"
       ],
       "description": "The reader-facing pages, and the landing page `/smart-immunizations/` serves. Generated by `smart-immunizations:pages` (`fhir-harness/scripts/gen-ig-pages.ts --summary`) from `fhir-artifact-index/index.json`: the instance's own harness section, then every artefact with its canonical URL, published representations and sidecars. The index page declares itself the `fhir-artifact-index` viewer (`rendered-by: ig-pages`). WHY: until stage C of #1767 this IG's artefact index had no published viewer at all. NOTHING HERE IS AUTHORED; `smart-immunizations:pages:check` is the gate.",
       "readmePath": "docs/README.md",
@@ -428,7 +428,7 @@
         "declaredIn": "storage"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa"
       ],
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 1 file across scenarios (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "readmePath": "test/results/README.md",
@@ -456,8 +456,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "009ad093e112db65a9b6f851d05aeeedff649957",
+    "sha": "63138b9aabaf06b298082f5f105696cfb90ff0d6",
     "pr": "main",
-    "run": "37341616308"
+    "run": "37344976607"
   }
 }

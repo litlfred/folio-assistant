@@ -90,8 +90,8 @@
   "title": "Bootstrap",
   "description": "The graph an agent reads before it knows what this repository is.",
   "versionInfo": "0.1.0",
-  "generatedAtTime": "2026-10-05T16:38:28.305Z",
-  "wasDerivedFrom": "git:57612044968633cc2892d58386d37600eed9e747",
+  "generatedAtTime": "2026-10-05T17:08:57.834Z",
+  "wasDerivedFrom": "git:e2d5ae642f30333eabd06972984ef2ab29fa5ca0",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#asset/agent-instructions",
@@ -116,7 +116,7 @@
       "@type": "bootstrap:Asset",
       "label": "vocabulary",
       "title": "bootstrap vocabulary",
-      "description": "Every term bootstrap defines, in order, and every Graph Kind it defines, as RDF and SKOS — the document bootstrap's namespace resolves to. Generated from bootstrap's own terms by its toolset; each term links to the schema that defines it.",
+      "description": "Every term bootstrap defines, in order, and every Graph Typology it defines, as RDF and SKOS — the document bootstrap's namespace resolves to. Generated from bootstrap's own terms by its toolset; each term links to the schema that defines it.",
       "source": "ns.jsonld",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld"
     },
@@ -126,7 +126,7 @@
       "label": "models",
       "description": "Which languages a model is good at, and whether anybody checked. In BOOTSTRAP for the reason everything else here is: an agent reaching for the language it should communicate in has not yet loaded the harness that would otherwise answer, so a registry one layer up would be unreachable in exactly the case it exists for. `context`: read when a session opens, never written by a process — a person grants a validation, an agent never does, because a model's own claim about its languages is the thing the validation state exists to distrust.",
       "type": [
-        "bootstrap:graphKind/models"
+        "bootstrap:graphTypology/models"
       ],
       "source": "models/",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld"
@@ -137,7 +137,7 @@
       "label": "processes",
       "description": "bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to determine the harness and repositories; `human-agent-discussion.bpmn`, the reusable discussion every diagram calls to ask a person anything; `complete-initialization.bpmn`, which checks every initialization step the declarations name; and `log-message.bpmn`, which any step may call to record what it is doing. `ns.jsonld` defines the elements these diagrams add to BPMN (skill, role, precondition), written with the prefix `bootstrap.processes:`.",
       "type": [
-        "bootstrap:graphKind/processes"
+        "bootstrap:graphTypology/processes"
       ],
       "source": "processes/",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld"
@@ -148,7 +148,7 @@
       "label": "scenarios",
       "description": "bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.",
       "type": [
-        "bootstrap:graphKind/scenarios"
+        "bootstrap:graphTypology/scenarios"
       ],
       "source": "scenarios/",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld"
@@ -159,7 +159,7 @@
       "label": "schemas",
       "description": "The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and output of the discussion Process. Their published `$id`s do not change when a file moves.",
       "type": [
-        "bootstrap:graphKind/schemas"
+        "bootstrap:graphTypology/schemas"
       ],
       "source": "schemas/",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld"
@@ -169,7 +169,7 @@
       "@type": "bootstrap:Subgraph",
       "label": "skills",
       "type": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "source": "skills/",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld"

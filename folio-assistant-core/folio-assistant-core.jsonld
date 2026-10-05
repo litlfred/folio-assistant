@@ -340,10 +340,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T16:38:37.707Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/009ad093e112db65a9b6f851d05aeeedff649957",
-  "sourceCommitSha": "009ad093e112db65a9b6f851d05aeeedff649957",
-  "sourceCommitAt": "2026-10-05T18:32:22+02:00",
+  "generatedAt": "2026-10-05T17:09:13.576Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/63138b9aabaf06b298082f5f105696cfb90ff0d6",
+  "sourceCommitSha": "63138b9aabaf06b298082f5f105696cfb90ff0d6",
+  "sourceCommitAt": "2026-10-05T18:58:55+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -353,7 +353,7 @@
     "SequenceFlow": 275,
     "Lane": 62,
     "ProcessNode": 250,
-    "GraphKind": 16,
+    "GraphTypology": 16,
     "Subgraph": 16,
     "Asset": 2
   },
@@ -9064,113 +9064,113 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/kinds",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "kinds",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/typologies",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "typologies",
       "renderable": false,
-      "summary": "The graph kinds a harness declares it owns, one node per kind, so no central registry names another harness's subgraph types. Loaded across the instances on first use."
+      "summary": "The graph typologies a harness declares it owns, one node per kind, so no central registry names another harness's subgraph types. Loaded across the instances on first use."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/validators",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/validators",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "validators",
       "renderable": false,
-      "summary": "The validators a harness's code provides, one node each naming the graph kind and $schema family it checks and the Zod export that checks it, joined onto the kinds on first use."
+      "summary": "The validators a harness's code provides, one node each naming the graph typology and $schema family it checks and the Zod export that checks it, joined onto the kinds on first use."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/block-kinds",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/block-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "block-kinds",
       "renderable": false,
       "summary": "The block kinds a harness's adapter owns, one node per kind carrying its label prefix, RDF types, profile and builder. Discovered across the instances; no module lists them."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/tools",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/tools",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "tools",
       "renderable": false,
       "summary": "Tool definitions — themselves nodes in the KG, per the repo taxonomy."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/cat-harness",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/cat-harness",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "cat-harness",
       "renderable": false,
       "summary": "A Subgraph holding a Harness's own parts, such as Skills, Processes and Roles, where one directory holds more than one of them."
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/skills",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/skills",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "skills",
       "renderable": false,
       "summary": "A Subgraph of Skills: the instructions an Actor follows to carry out a Task."
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/processes",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/processes",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "processes",
       "renderable": false,
       "summary": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/methodology",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/methodology",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "methodology",
       "renderable": false,
       "summary": "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context."
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/schemas",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/schemas",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "schemas",
       "renderable": false,
       "summary": "A Subgraph of Node Schemas: files that state the shape other files must have."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "qa",
       "renderable": false,
       "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "code",
       "renderable": false,
       "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/library",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "library",
       "renderable": false,
       "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/voices",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/voices",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "voices",
       "renderable": false,
       "summary": "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. Every rule cites the ingested source or KG node it was derived from. Opt-in per folio."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/translation-sources",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/translation-sources",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "translation-sources",
       "renderable": false,
       "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/folio",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/folio",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "folio",
       "renderable": true,
       "summary": "Authored content, rendered to a website by the just-the-docs pipeline."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/glossary",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/glossary",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "glossary",
       "renderable": false,
       "summary": "SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS schemes by exactMatch rather than copied. Rendered on the glossary/ page."
@@ -9185,7 +9185,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/translation-sources"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/translation-sources"
       ],
       "description": "The gettext side of folio-assistant-core's own strings, one directory per target locale. Today: `block-kinds.pot`/`.po`, the headings of the block kinds this instance declares in block-kinds/, keyed `msgctxt \"block-kind:<kind>\"` with the node's English `heading` as msgid (bean riit, step 2b). Owner, 2026-10-04: locale headings live in the translation graph (option 1 of 2), and kinds are not centrally managed, so the catalogue sits with the kinds rather than in cat-harness/translations/.",
       "readmePath": "translations/README.md",
@@ -9193,21 +9193,21 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-translations"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-block-kinds",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-block-typologies",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
-      "name": "folio-assistant-core-block-kinds",
+      "name": "folio-assistant-core-block-typologies",
       "path": "block-kinds/",
       "contentSource": {
         "kind": "directory",
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/block-kinds"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/block-kinds"
       ],
       "description": "The document profile's block kinds (prose, example, remark, algorithm, simulator, equation, diagram, table, figure), one folio-block-kind/v1 node per file (bean riit, step 2). Owner, 2026-10-04: kinds are discoverable and not centrally managed; cat-harness/schemas/block-kinds.ts finds these by scanning every instance's declared block-kinds graph, and the seven parallel tables they replace are gone.",
       "readmePath": "block-kinds/README.md",
       "fileCount": 10,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-block-kinds"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-block-typologies"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-validators",
@@ -9219,29 +9219,29 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/validators"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/validators"
       ],
-      "description": "The validators folio-assistant-core's code provides, one folio-validator/v1 node each naming the graph kind and $schema family it checks (bean riit).",
+      "description": "The validators folio-assistant-core's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit).",
       "readmePath": "validators/README.md",
       "fileCount": 9,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-validators"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-kinds",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-typologies",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
-      "name": "folio-assistant-core-kinds",
-      "path": "kinds/",
+      "name": "folio-assistant-core-typologies",
+      "path": "typologies/",
       "contentSource": {
         "kind": "directory",
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/kinds"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/typologies"
       ],
-      "description": "The graph kinds folio-assistant-core owns, one folio-graph-kind/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph. Moved here from cat-harness/schemas/graph-kind-registry.ts, with each entry's code comments kept as its rationale.",
-      "readmePath": "kinds/README.md",
+      "description": "The graph typologies folio-assistant-core owns, one folio-graph-typology/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph. Moved here from cat-harness/schemas/graph-typology-registry.ts, with each entry's code comments kept as its rationale.",
+      "readmePath": "typologies/README.md",
       "fileCount": 3,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-kinds"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-typologies"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-schemas",
@@ -9253,8 +9253,8 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/schemas",
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/cat-harness"
+        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/schemas",
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/cat-harness"
       ],
       "description": "The schemas of the content layer's Node Kinds, kept as their own Subgraph until this repository is split.",
       "readmePath": "schemas/README.md",
@@ -9271,7 +9271,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/folio"
+        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/folio"
       ],
       "description": "What an AUTHOR creates using the graph -- a note, a visualization, a paper. Owner, 2026-09-20: 'folios/ would be a note, visualization, paper etc that user/author is creating referencing the KG... folios in f-a-core as it is about KG management workflows built on cat-harness document rendering justthedocs simple rendering.' It declares the EXISTING `folio` kind rather than a new one: `folio` is already 'authored content, rendered to a website', registered by core because only core can render it, and a second kind for the same thing would be two spellings of one concept. The contrast is with `docs` in cat-harness, whose subject is the harness itself. Worked example of the distinction: the who-iris catalogue goes in `library/` or is referenced remotely; a note ABOUT it is a folio; the page explaining how ingestion works is docs.",
       "readmePath": "folios/README.md",
@@ -9288,9 +9288,9 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/glossary"
+        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/glossary"
       ],
-      "description": "Core's glossary (owner, 2026-09-23: \"put glossary into folio-assistant-core\", \"part of general pracice w/ glossary/ page\"): folio-glossary/v1 documents, each a SKOS concept scheme of local terms linked to external SKOS concepts by exactMatch/closeMatch, plus external concepts listed as members without being copied. A whole external scheme is referenced through remoteGraphs with graphKinds [\"glossary\"]. `dependents: reproduce` so every folio built on core gets its own glossary/, which is what makes a glossary general practice rather than a harness feature. Rendered on the glossary/ page with the swimlane ledger (cat-harness's `swimlane-glossary`) as one more source; checked by `check:glossary`.",
+      "description": "Core's glossary (owner, 2026-09-23: \"put glossary into folio-assistant-core\", \"part of general pracice w/ glossary/ page\"): folio-glossary/v1 documents, each a SKOS concept scheme of local terms linked to external SKOS concepts by exactMatch/closeMatch, plus external concepts listed as members without being copied. A whole external scheme is referenced through remoteGraphs with graphTypologies [\"glossary\"]. `dependents: reproduce` so every folio built on core gets its own glossary/, which is what makes a glossary general practice rather than a harness feature. Rendered on the glossary/ page with the swimlane ledger (cat-harness's `swimlane-glossary`) as one more source; checked by `check:glossary`.",
       "readmePath": "glossary/README.md",
       "fileCount": 32,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/glossary"
@@ -9305,7 +9305,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/tools"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/tools"
       ],
       "description": "The content layer's Tool nodes. Declared 2026-09-22 with the first one, `folio-changeset` (bean jwox, epic q4jm), which exposes `schemas/changeset.ts`. Reached by the harness through tool auto-discovery (bean p0za, owner ruling 2026-09-22), never by an import: the harness may not import core, and a Tool node is a declaration loaded by path.",
       "readmePath": "tools/README.md",
@@ -9322,7 +9322,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
       "description": "The content layer's own ContentAdapters. `document/` arrived 2026-09-30 as step 2 of the adapters closure (bean `ybp4`, planned in `r0tm`, ruled by the owner as option A: two PRs, paper first). It took the `cat-harness ->` sibling-import count from 2 to 0 — the last two escapes were `intake-records.ts` and its test, both importing `schemas/dublin-core.js` UP out of the harness, and both are now intra-instance. The remedy is `yj6r`'s throughout: the CONSUMER moves up and the schema stays; no schema moved down into `cat-harness/schemas/`, which that bean forbids as buying a green gate by relocating the boundary the gate protects. The directory's own imports into `cat-harness/src/`, `cat-harness/schemas/` and `cat-harness/content/pipeline/` are DOWNWARD and therefore legal — core declares `needs: [\"cat-harness\"]`. Its six consuming tests moved with it into `scripts/tests/`, because a test does not leave its subject to make a count fall. Three things shipped in the same commit because each fails SILENTLY rather than loudly: this declaration, `tsconfig.json`'s `include` entry (without it `bun run typecheck` goes green while covering twelve fewer files, and no gate reports a shrinking program), and the `BUILTIN_ADAPTERS` module path — which is resolved by VARIABLE specifier, so no static-import gate would have caught it. `paper/` is not here: it is the science layer's and lives in `folio-assistant-sci/adapters/paper/` since bean `y5si`, step 1 of the same closure.",
       "readmePath": "adapters/README.md",
@@ -9339,7 +9339,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
       "description": "Core's own server half: the HTTP routes that act on a folio's CONTENT — `routes/feedback.ts` (its feedback items), `routes/glossary.ts` (its glossary candidates), `routes/relevance.ts` (its bibliography relevance). Moved up from `cat-harness/src/routes/` when the server moved to `cat-harness-tools` (bean `70lx`, B1; owner, 2026-10-04: a content package's server half lives with its content). The server declares them by their `src/routes/*` path and finds them here through `needs`, since core needs `cat-harness-tools`; they import the server's contract (`route-groups`, `types`, `core/rbac`) DOWN from it.",
       "readmePath": "src/README.md",
@@ -9356,7 +9356,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
       ],
       "description": "Core's own executable surface, with every test beside its subject: the review-comment Tool and its move helper, the glossary extractors, the sample-import pair, and — since bean `yj6r`, 2026-09-30 — two tranches of escapes that moved UP out of `cat-harness/`. The materialisation trio (`check-materialized-fixity`, `backfill-materialized-fixity`, `cache-index`) and the FHIR IG artefact-index pair (`ingest-ig-artifacts`, `check-artifact-index`) came first, to sit beside the `schemas/materialization.ts` and `schemas/fhir-artifact-index.ts` they read. The glossary CLUSTER followed — `build-glossary.ts`, its `:refterm` codemod `codemod-refterm.ts`, and all three of their tests — because walking a paper's blocks to collect `defines[]` and emit a `folio-glossary/v1` scheme is CONTENT machinery, and the harness (`needs: [\"bootstrap\"]`) was importing upward into this instance's `schemas/glossary.ts` and `scripts/glossary-page.ts` — an import against its own declaration, and a circular dependency between repositories after the split. The partition rules already classified `content/pipeline/` as core, so the classification did not change; the DIRECTORY caught up with it. They are still addressed as pipeline scripts by id, and `resolvePipelineScript` searches the folio, then the platform, then here. The LAST FOUR clusters followed on the same day and in the same tranche, taking the `cat-harness ->` sibling-import count from 5 to 2: `extract-assets.ts` (a container a folio was given → a `folio-extraction/v1` record, reading `schemas/extraction.ts` — both moved DOWN again on 2026-10-02 by owner ruling 2 of the placement proposal, bean `tlat`: the script to `cat-harness-tools/scripts/`, the schema to `cat-harness/schemas/`, as the tool behind the harness's own `asset-extraction` skill), `check-voices.ts` (every voice rule's citation resolved through `schemas/library-ref.ts` into a folio's `library/`), and `build-document-site.ts` WITH its test, which reads `schemas/changeset.ts`. The last is the one with an invocation surface: a DOCUMENT folio's generated staging workflow names it by path, so `init-folio.ts` now writes `folio-assistant-core/scripts/build-document-site.ts` and `init-folio.test.ts` pins that string — the same instance-relative property this entry records for `review-comments.ts`, arrived at from the other direction. The partition rules had already classified all four `core` by exact entry, so again only the DIRECTORY moved; each dead entry was removed with its reasoning kept in place, because a rule naming a path its own scan can no longer see fires on nothing while reading as an adjudication. The adapters closure followed on the same day: `adapters/document/` and its SIX consuming tests are now here and in `adapters/`, taking the count 2 -> 0 (bean `ybp4`). This sentence previously read \"What did NOT move, and deliberately\" of those two files, and recorded that the closure \"needs its own ruling\" — it got one, and `r0tm`'s re-derivation also corrected the deterrent measurement: the 15 created escapes were 16, and paper-first is FREE, which is what turned an all-or-nothing three-instance move into two ordinary steps. This sentence listed only the review-comment pair until then, by which point four other tools were already here — a directory description that names its founding file rather than its contents goes stale the first time anything lands. Core declared its `schemas/`, its `folios/`, its `voices/` and its `tools/` and left `scripts/` undeclared, which is the `ylj7` shape: the directories that hold what is DESCRIBED were declared and the one holding what RUNS was not. Declared where it is: `review-comments.ts` is invoked by path from `folio-staging.yml`, so relocating it is an invocation surface `check:workflow-paths` would have to re-guard for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
@@ -9373,7 +9373,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/library"
+        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library"
       ],
       "description": "L1 source content this LAYER owns — the publications core's own vocabulary is derived FROM, one `<bib-slug>/` per ingested document. Declared 2026-09-23 on the owner's ruling that Doc-Researcher (arXiv:2510.21603v1) is part of the f-a-c subgraph, and declared rather than borrowed for the reason `methodology-adoption` §4 gives: a method is placed by OWNERSHIP so that extraction is literal, and a paper core's methodology cites from another instance's library would not lift out with it. `ingest-document.ts` refuses to guess a destination when several are declared, which is what surfaced the absence. `dependents: skip` because these are THIS layer's sources; a downstream folio's library is its own and reproducing these would hand it somebody else's corpus.",
       "readmePath": "library/README.md",
@@ -9390,7 +9390,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/methodology"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/methodology"
       ],
       "description": "The methodologies core adopts from its own corpus. Separate from `cat-harness/methodologies/` for the reason `smart-base-methodologies` is separate from both: a method belongs to the layer whose job it describes, so the directory lifts out with this instance and nothing else moves. Core's job, per this instance's AGENTS.md, is what a folio HOLDS, where it CAME FROM and how much is PRESENT — which is why a document-ingestion method is core's and not the harness's.",
       "readmePath": "methodologies/README.md",
@@ -9407,7 +9407,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/skills"
+        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/skills"
       ],
       "description": "The skills core owns. `skills/voices/` is declared separately above as the `voices` kind: a voice partitions how prose READS and is a different graph from an instruction body, so the nesting is two kinds in one place rather than one kind declared twice.",
       "readmePath": "skills/README.md",
@@ -9424,7 +9424,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/processes"
+        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/processes"
       ],
       "description": "The BPMN core owns -- `deep-document-research`, Doc-Researcher's iterative loop as an executable process. A TOP-LEVEL directory rather than `methodologies/processes/`, which is where it was first put: `check:layout-norms` refused that as a package subdirectory of an already-declared graph, declaring the same directory twice. `smart-base` carries the nested shape and is baselined, but the harness's own diagrams live in a top-level `processes/` and so do these. That satisfies bean `g43o` -- `workflowDirs` resolves from a DECLARED directory -- without the double declaration, which is strictly better than baselining a third instance of a tolerated exception.",
       "readmePath": "processes/README.md",
@@ -9444,7 +9444,7 @@
         "declaredIn": "storage"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa"
       ],
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 7 files across processes (1), scenarios (1), skills (1), tools (4). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "readmePath": "test/results/README.md",
@@ -9472,8 +9472,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "009ad093e112db65a9b6f851d05aeeedff649957",
+    "sha": "63138b9aabaf06b298082f5f105696cfb90ff0d6",
     "pr": "main",
-    "run": "37341616308"
+    "run": "37344976607"
   }
 }

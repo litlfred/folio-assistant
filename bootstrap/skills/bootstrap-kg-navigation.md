@@ -49,7 +49,7 @@ there rather than trusting a copy.
 
 1. **Read the repository's declaration.** If there is none, this repository is not
    an instance yet, and that is the case bootstrap exists for.
-2. **Find the entry whose `graphKinds` name the kind you want.** In
+2. **Find the entry whose `graphTypologies` name the kind you want.** In
    bootstrap they are named for what they hold: `skills`, `processes`,
    `scenarios` (the Roles) and `schemas`. The entry's `path` is relative to
    the declaration.

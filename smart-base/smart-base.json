@@ -340,10 +340,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T16:38:40.649Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/009ad093e112db65a9b6f851d05aeeedff649957",
-  "sourceCommitSha": "009ad093e112db65a9b6f851d05aeeedff649957",
-  "sourceCommitAt": "2026-10-05T18:32:22+02:00",
+  "generatedAt": "2026-10-05T17:09:18.111Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/63138b9aabaf06b298082f5f105696cfb90ff0d6",
+  "sourceCommitSha": "63138b9aabaf06b298082f5f105696cfb90ff0d6",
+  "sourceCommitAt": "2026-10-05T18:58:55+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -352,7 +352,7 @@
     "SequenceFlow": 35,
     "Lane": 7,
     "ProcessNode": 29,
-    "GraphKind": 15,
+    "GraphTypology": 15,
     "Subgraph": 16,
     "Asset": 2
   },
@@ -1463,106 +1463,106 @@
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa-checkers",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa-checkers",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "qa-checkers",
       "renderable": false,
       "summary": "The QA checkers a harness provides, one node per criterion naming the table that holds the code; registered for a folio through its dependency tree."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/block-kinds",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/block-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "block-kinds",
       "renderable": false,
       "summary": "The block kinds a harness's adapter owns, one node per kind carrying its label prefix, RDF types, profile and builder. Discovered across the instances; no module lists them."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/content-adapters",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/content-adapters",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "content-adapters",
       "renderable": false,
       "summary": "The block vocabularies a harness owns, one node per vocabulary carrying its companion roles and whether the platform's code types it. Discovered across the instances; no module lists them."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/tools",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/tools",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "tools",
       "renderable": false,
       "summary": "Tool definitions — themselves nodes in the KG, per the repo taxonomy."
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/processes",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/processes",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "processes",
       "renderable": false,
       "summary": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/methodology",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/methodology",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "methodology",
       "renderable": false,
       "summary": "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "docs",
       "renderable": true,
       "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/external-schema",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/external-schema",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "external-schema",
       "renderable": false,
       "summary": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed; and, beside a record, the pinned edition's own codes where something resolves against them."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "qa",
       "renderable": false,
       "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/library",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "library",
       "renderable": false,
       "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/themes",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/themes",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "themes",
       "renderable": false,
       "summary": "Themes derived from an instance's own sources — one Theme node each, carrying `kind: sticky | webpage | publication`. The palette vocabulary is shared across every kind and only the geometry varies; every value cites where it was measured."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/document-kinds",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/document-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "document-kinds",
       "renderable": false,
       "summary": "Document kinds — named structures of sections (fixed or semi-fixed) that a document authored with a harness follows, one `folio-document-kind/v1` JSON each, plus computed `folio-document-kind-coverage/v1` reports of how a subject realises one. Every kind and section names its sources; `computedFrom` names the declared graphs a section derives from."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/translation-sources",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/translation-sources",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "translation-sources",
       "renderable": false,
       "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/fhir-artifact-index",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/fhir-artifact-index",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "fhir-artifact-index",
       "renderable": false,
       "summary": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/ig-pages",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/ig-pages",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "ig-pages",
       "renderable": false,
       "summary": "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived."
@@ -1577,7 +1577,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa-checkers"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa-checkers"
       ],
       "description": "The dak adapter's automated QA checkers, one folio-qa-checker/v1 node per criterion, naming DAK_AUTOMATED_CHECKERS in content/pipeline/qa-checkers-dak.ts (bean riit, step 3b). Registered for a folio by loadContributions through its dependency tree; they replace the qaCheckers array contributions.ts returned.",
       "readmePath": "qa-checkers/README.md",
@@ -1594,7 +1594,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/block-kinds"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/block-kinds"
       ],
       "description": "The `dak` adapter's 21 block kinds, one folio-block-kind/v1 node per file (bean riit, step 3): kind, builder, label prefix and RDF types. Read off these nodes by smart-base/schemas/dak-kinds.ts and dak-jsonld.ts, and registered for a folio by loadContributions only when the folio's dependency tree includes smart-base (owner, 2026-10-04: a folio sees the nodes of the instances it depends on, option 1 of 3). They replace the blockKinds array contributions.ts returned.",
       "readmePath": "block-kinds/README.md",
@@ -1611,7 +1611,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/content-adapters"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/content-adapters"
       ],
       "description": "The dak block VOCABULARY's node, folio-content-adapter/v1 (bean riit, step 5): its name, its companion roles, and its vocabulary module schemas/dak-blocks.ts. It is untyped by cat-harness, so loadContributions registers it for a folio only through that folio's dependency tree. It replaces the adapter contributions.ts returned in code.",
       "readmePath": "content-adapters/README.md",
@@ -1628,7 +1628,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/translation-sources"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/translation-sources"
       ],
       "description": "The gettext side of smart-base's own strings, one directory per target locale: today the `processes/` templates of the BPMN diagrams this instance draws. Moved here from cat-harness/translations/ on the owner's ruling of 2026-10-04, \"move things to semantically appropriate place\" (bean riit): a diagram's templates sit with the instance that draws it.",
       "readmePath": "translations/README.md",
@@ -1645,7 +1645,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/library"
+        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library"
       ],
       "description": "L1 source content: one `<bib-slug>/` per ingested WHO publication, holding `sections/*.md` and `structure.json`. Every knowledge-graph reference to one of these sources resolves through here, never to a loose path or a bare URL — which is the whole reason the bytes could not stay in `uploads/`. The corpus-grep checklist searches `library/` ONLY, so a publication left in the incoming queue does not merely go unread: it makes a clean grep mean \"nobody has done this\" while the source sits right there. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it — overrides match on id and never on path, and a distinct id at the same path yields two entries for one directory that every fan-out consumer then scans twice.",
       "readmePath": "library/README.md",
@@ -1662,7 +1662,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/methodology"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/methodology"
       ],
       "description": "Methodologies adopted from the WHO digital-health corpus in `library/` -- somebody else's work, adopted whole, never a house process with a citation bolted on. `diig.md` is the first. Declared in the commit that created its content rather than ahead of it: a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it. `skip` rather than `reproduce` because a downstream instance inherits the METHOD by depending on this layer, not by copying the directory.",
       "readmePath": "methodologies/README.md",
@@ -1679,9 +1679,9 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/processes"
+        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/processes"
       ],
-      "description": "The executable half of this layer's methodologies -- `diig-investment-path.bpmn` renders DIIG's own nine chapters as a process with its two progress checks as gateways. A SEPARATE declaration from `methodologies/` even though it nests inside it, because `processes` and `methodology` are different graph kinds and a directory entry names one graph: the prose node says what the method IS, the diagram says how it RUNS. Bean `x4v4` raised whether `methodologies/` is a graph or a folder; this follows the shape already on main, where `methodology-crdm-processes` is declared beside `methodologies/` rather than inferred from it. Issue #877, bean `qnvy`.",
+      "description": "The executable half of this layer's methodologies -- `diig-investment-path.bpmn` renders DIIG's own nine chapters as a process with its two progress checks as gateways. A SEPARATE declaration from `methodologies/` even though it nests inside it, because `processes` and `methodology` are different graph typologies and a directory entry names one graph: the prose node says what the method IS, the diagram says how it RUNS. Bean `x4v4` raised whether `methodologies/` is a graph or a folder; this follows the shape already on main, where `methodology-crdm-processes` is declared beside `methodologies/` rather than inferred from it. Issue #877, bean `qnvy`.",
       "readmePath": "methodologies/processes/README.md",
       "fileCount": 2,
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
@@ -1696,7 +1696,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/processes"
+        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/processes"
       ],
       "description": "The BPMN this layer OWNS as a house process, as against `methodologies/processes/`, which holds the executable half of a methodology adopted whole from the corpus. `l2-dak-authoring.bpmn` is the first: moved here from cat-harness/processes/ on 2026-10-01 by owner ruling (issue #1772 item 3), because placement PR1 had moved its `l2-dak-authoring` skill into `skills/content/authoring-who-smart-guidelines/` and the three activities naming it no longer resolved from cat-harness, which cannot reach this layer. Here the skill sits beside the diagram; the remaining refs (`content-plan`, `todo-manager`, `bpmn-authoring`, `dmn-authoring`, `content-review`, `content-validate`, `terminology-management`) point down, through `fhir-harness`. A TOP-LEVEL directory rather than a second file in `methodologies/processes/`, for the reason `folio-assistant-core-processes` gives: that nested shape is a baselined `check:layout-norms` exception, and a house process is not a methodology read out of `library/`. Declared WITH its file in one commit, per bean `dh4f`.",
       "readmePath": "processes/README.md",
@@ -1713,7 +1713,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/fhir-artifact-index"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/fhir-artifact-index"
       ],
       "description": "The published IG's artefact index, reconstructed by `ingest:ig` from smart.who.int.base v0.3.0 (FHIR 4.0.1). 225 artefacts known, 47 materialized -- the DAK API surface, whose JSON Schemas and OpenAPI have no other home, against resource JSON that does. `dak/` sits INSIDE this directory rather than beside it, so one entry covers both the index and the bytes it points at; a sibling would be an undeclared directory holding the very bytes the index claims to have, which is the `dh4f` shape. NOTHING HERE IS AUTHORED: `ingest:ig:check` re-derives it and a hand-edit is a defect the next check either overwrites or reports. The four CDHI/CDSC ConceptMaps -- the v1-to-v2 crosswalks and the two hierarchy maps -- are indexed `referenced`: the index says where they are and holds none of their rows. Materializing one is `materialize-remote.bpmn`, not a flag. Issue #877, bean `cpmo`. UNTIL plan Q4 (bean `rbz3`, 2026-10-02) IT ALSO HELD `chrome.json`; the chrome is the TEMPLATE's styling, so it now lives in `themes/` beside the template's theme, and ships with the harness. When it was here, it was a THIRD provenance in one directory rather than a second copy of an existing one: `index.json` is harvested from an IG's published output, `menu.json` (smart-trust's) is read from its `sushi-config.yaml`, and `chrome.json` is resolved from the `fhir.template` packages its `ig.ini` names -- `fhir.base.template` and `who.template.root`, separate repositories the IG merely depends on. An IG declares its appearance in NO file it owns, which is why the chrome could not be folded into either of the other two. It lives at smart-base so every WHO SMART IG (through `smart-ig`) inherits one answer instead of each re-copying it; `schemas/ig-chrome.ts` carries why the consumer NAMES this instance rather than walking `needs` to it, and the layering gap that forces it, which is `nsbb`'s.",
       "readmePath": "fhir-artifact-index/README.md",
@@ -1730,7 +1730,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/tools"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/tools"
       ],
       "description": "smart-base's Tool nodes. The owner, 2026-09-22: \"things like dmn -> fhir questionnaire should be a tool. the skill/tools under smart-base should consolidate under the smart-base/tools/ directory under this repo\", serving \"want to slowly get smart-base back to a more conventional IG state w/o tooling\". THIS REVERSES NOTHING THIS FILE'S HEADER SAYS: the header refuses to VENDOR the upstream Python, and a Tool node is a declaration -- what the capability consumes, what it produces, which skill it satisfies -- not a copy of a line of it. Declare here, execute upstream, until the execution moves too. The two Library strippers are deliberately NOT here: they are not DAK-shaped and belong to `fhir-harness` by the placement question in `smart-stack-layering`, and filing them here to tidy the list would be a step's own name overruling the layering rule.",
       "readmePath": "tools/README.md",
@@ -1750,7 +1750,7 @@
         "declaredIn": "storage"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa"
       ],
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 12 files across methodologies (1), scenarios (1), skills (1), tools (9). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "readmePath": "test/results/README.md",
@@ -1767,7 +1767,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/themes"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/themes"
       ],
       "description": "The WHO SMART IG template's web theme, measured from `who.template.root`'s own `who.css` and pinned by commit. Colour and geometry only: the IG's top navbar is deliberately not reproduced, because the owner asked for the nav to stay on the LEFT (2026-09-30). `upstream/who.css` is the vendored source the tests re-read, CC0-1.0.",
       "readmePath": "themes/README.md",
@@ -1784,8 +1784,8 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs",
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/ig-pages"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs",
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/ig-pages"
       ],
       "description": "The reader-facing pages, and the landing page `/smart-base/` serves. Generated by `smart-base:pages` (`fhir-harness/scripts/gen-ig-pages.ts --summary`) from `fhir-artifact-index/index.json` plus this declaration: the index page opens with this instance's own description and every declared graph with its viewer (the `harness_details.html` include over `site.data.harness`), then the artefact index. WHY IT EXISTS: before it, smart-base declared no renderable graph, so `/smart-base/` published nothing and the navbar tile fell back to the library viewer -- `harness-tiles.ts` reported that as a finding. Owner, 2026-10-01 (#1767): \"smart-base/ needs a landing page\". NOTHING HERE IS AUTHORED; `smart-base:pages:check` is the gate. The banner names THIS IG (`smart.who.int.base`) from the index, not the IG the chrome was ingested from, and draws no status watermark because the chrome's status is smart-trust's (bean `bamf`).",
       "readmePath": "docs/README.md",
@@ -1802,7 +1802,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/document-kinds"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/document-kinds"
       ],
       "description": "WHO SMART document kinds: the DAK (a fixed structure, the ten components) and, to follow, L1 (semi-fixed) and the Digital Transformation Handbook (an L1 subtype).",
       "readmePath": "document-kinds/README.md",
@@ -1819,7 +1819,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs"
       ],
       "description": "Findings about the WHO digital-health corpus in `library/` that are recorded for the owner rather than adopted: where sources disagree, each version kept as an alternative with its citation. `dth-term-alternatives.json` is authored (the one DIIG phase figure and its reproductions, approaches recorded as alternatives, and what \"actor\" means in the RA, SMART Guidelines and folio-assistant, with one proposal per layer); `dth-terms.md` is GENERATED from it and the DTH candidate list by `smart-base:dth-terms` (`smart-base/scripts/gen-dth-term-findings.ts`), and `smart-base:dth-terms:check` fails on a stale page or on a quote that no longer matches its source. A SEPARATE directory from `docs/` because `docs/` is wholly generated by `smart-base:pages`, whose check reports any other file there as an orphan. Owner, 2026-10-03 (#1984, bean `5blc`): \"make a docs page under smart-base showing the glossary/terms differences findings\".",
       "readmePath": "findings/README.md",
@@ -1836,7 +1836,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/external-schema"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/external-schema"
       ],
       "description": "Specifications smart-base depends on and does not hold: the smart-kg ontology (L1 and L2 class vocabulary), pinned by commit.",
       "readmePath": "external-schemas/README.md",
@@ -1864,8 +1864,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "009ad093e112db65a9b6f851d05aeeedff649957",
+    "sha": "63138b9aabaf06b298082f5f105696cfb90ff0d6",
     "pr": "main",
-    "run": "37341616308"
+    "run": "37344976607"
   }
 }
