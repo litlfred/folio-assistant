@@ -18,7 +18,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.js";
-import { builtDocsRoute, DOCS_KIND, docsRouteFor, upFromDocs } from "../docs-route.ts";
+import { builtDocsRoute, DOCS_KIND, docsRelativeSitePath, docsRouteFor, upFromDocs } from "../docs-route.ts";
 import { hoist, isSelfAddressed, rootAddressOf, SITE_ROOT_IRI } from "../hoist-addressed-documents.ts";
 import { documentationRoutes, landingHtml } from "../root-landing.ts";
 
@@ -33,6 +33,17 @@ describe("the route", () => {
 
   test("climbing out of it takes one `..` per segment", () => {
     expect(upFromDocs("docs/cat-harness")).toBe("../..");
+  });
+
+  test("an authored site path climbs out only when it names a mount at the site root", () => {
+    const mounts = ["who-iris", "docs/who-iris"];
+    expect(docsRelativeSitePath("/who-iris/", "docs/cat-harness", mounts)).toBe("/../../who-iris/");
+    expect(docsRelativeSitePath("/docs/who-iris/x.html", "docs/cat-harness", mounts)).toBe("/../../docs/who-iris/x.html");
+    // Inside the docs tree, a prefix that is not a whole segment, and anything not site-absolute: unchanged.
+    expect(docsRelativeSitePath("/architecture.html", "docs/cat-harness", mounts)).toBe("/architecture.html");
+    expect(docsRelativeSitePath("/who-iris-notes/", "docs/cat-harness", mounts)).toBe("/who-iris-notes/");
+    expect(docsRelativeSitePath("https://x.org/who-iris/", "docs/cat-harness", mounts)).toBe("https://x.org/who-iris/");
+    expect(docsRelativeSitePath("//x.org/who-iris/", "docs/cat-harness", mounts)).toBe("//x.org/who-iris/");
   });
 
   test("_config.yml's baseurl is site_root plus the route — the literal agrees with the declaration", () => {

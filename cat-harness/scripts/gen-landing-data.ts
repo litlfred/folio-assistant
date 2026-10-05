@@ -49,6 +49,14 @@ import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { themeByRef } from "../schemas/theme-by-ref.js";
 import { readLandingStickies } from "./ensure-landing-sticky.js";
 import { isExternalLink } from "../schemas/landing-sticky.js";
+import { builtDocsRoute, docsRelativeSitePath } from "./docs-route.ts";
+import { mountRoutes } from "./mount-instance-docs.ts";
+
+/** The built docs tree's route and the routes mounted at the site root, read once. */
+let docsRouteCache: string | undefined;
+let mountsCache: string[] | undefined;
+const DOCS_ROUTE = (): string => (docsRouteCache ??= builtDocsRoute("cat-harness"));
+const MOUNTS = (): string[] => (mountsCache ??= mountRoutes("cat-harness"));
 
 const ROOT = instanceRootFor(import.meta.dir);
 
@@ -224,7 +232,9 @@ const stickies = readLandingStickies(ROOT).map((st) => {
     // cannot disagree with the value the way a hand-set flag can.
     links: st.links.map((l) => ({
       label: l.label,
-      href: l.href,
+      // An authored SITE path, published into the docs tree's data, so a link
+      // to an instance mounted at the site root climbs out of it (issue #2188).
+      href: isExternalLink(l) ? l.href : docsRelativeSitePath(l.href, DOCS_ROUTE(), MOUNTS()),
       note: l.note ?? "",
       external: isExternalLink(l),
     })),
