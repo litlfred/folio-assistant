@@ -367,6 +367,7 @@ export const RULES: Rule[] = [
       "scripts/qa-store.ts",                 // the qa-reports branch: readQa / publishQa / pruneQa
       "scripts/qa-verify-moved.ts",          // bean 5hox: hash-verify the moved QA files against a qa-reports entry
       "scripts/qa-site-assets.ts",           // a site build's QA evidence: fetch from qa-reports, verify the copy (tfqf)
+      "scripts/qa-result-link.ts",           // the ONE address of a QA result file: main or qa-reports entry, by declaration (bejf)
       // Its generalisation (bean `2h76`): the same branch-kept store for ANY
       // directory declaring `storage.keyedBy: "tip"`. Harness-level for the
       // same reason as `qa-store` — it reads the declaration and git, and no
