@@ -13,7 +13,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 Cette page constitue la liste de référence de chaque **compétence** et **rôle** dans folio-assistant,
 et explique comment ils s'articulent avec le LLM. Pour le contrat d'entrée/sortie typé
-de chaque compétence, consultez la [référence des schémas de compétences](../reference/skills/).
+de chaque compétence, consultez la [référence des schémas de compétences]({{ '/reference/skills/' | relative_url }}).
 
 1. TOC
 {:toc}
@@ -39,14 +39,14 @@ flowchart TD
 1. **Compétence** — une unité de travail documentée et délimitée par un schéma (par ex.
    `lean-formalization`). L'agent découvre les compétences grâce à l'outil MCP `skill_list`
    et charge les instructions d'une compétence avec `skill_fetch`. Chaque compétence possède un
-   [contrat d'entrée/sortie](../reference/skills/) typé.
+   [contrat d'entrée/sortie]({{ '/reference/skills/' | relative_url }}) typé.
 2. **Paquet de compétences** — un groupe de compétences associées qui déclare également
    ses dépendances Docker/d'exécution (`package-manifest.json`).
 3. **Rôle (acteur)** — *qui* l'agent incarne. Un **acteur** assume un
    **rôle** en fonction du couloir BPMN dans lequel il opère. Ce que l'acteur peut **faire** relève d'une
    politique ODRL du W3C dans `policies/`, et non d'une propriété du rôle. Avant chaque tâche,
    l'exécuteur vérifie l'authentification, l'attribution du rôle, la politique et l'accès
-   au contenu ([`task-authorization`](../reference/skill-instructions/task-authorization.html)) ;
+   au contenu ([`task-authorization`]({{ '/reference/skill-instructions/task-authorization.html' | relative_url }})) ;
    les routes HTTP interrogent les mêmes politiques via `src/core/rbac.ts`.
 4. **Capacité** — une aptitude concrète de l'environnement (par ex. `latex-compiler`,
    `lean-toolchain`). Les compétences requièrent des capacités ; `check_dependencies` les
@@ -70,8 +70,8 @@ Une compétence est définie à travers plusieurs couches — et non dans un seu
 | Couche | Emplacement | État |
 |--------|-------------|------|
 | **Définition** (rôles, capacités requises, exigences, modèles de routage, étapes du cycle de vie, réf. de schéma) | `.claude/skills/local/<skill>.json` | ✅ les 22 compétences de rédaction — validées en CI par `scripts/validate-skills.ts` |
-| **Contrat typé** (JSON Schema d'entrée/sortie) | `schemas/skills/<skill>/` | ✅ les 22 — voir la [référence](../reference/skills/) |
-| **Corps d'instructions** (guide textuel que le LLM charge) — parcourez-les dans la référence des [instructions de compétences](../reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ compétences de cycle de vie, d'agent, du lot de plateforme et de **folio-document-adapter** ; ⏳ **les corps pour authoring-math / authoring-who-smart-guidelines sont à venir** (ces paquets fournissent le manifeste + les définitions JSON) |
+| **Contrat typé** (JSON Schema d'entrée/sortie) | `schemas/skills/<skill>/` | ✅ les 22 — voir la [référence]({{ '/reference/skills/' | relative_url }}) |
+| **Corps d'instructions** (guide textuel que le LLM charge) — parcourez-les dans la référence des [instructions de compétences]({{ '/reference/skill-instructions/' | relative_url }}) | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ compétences de cycle de vie, d'agent, du lot de plateforme et de **folio-document-adapter** ; ⏳ **les corps pour authoring-math / authoring-who-smart-guidelines sont à venir** (ces paquets fournissent le manifeste + les définitions JSON) |
 | **Paquet** (dépendances Docker / exécution) | `skills/<package>/package-manifest.json` | ✅ les quatre paquets |
 
 Ainsi, *oui, les compétences existent* — sous forme de définitions structurées et de schémas typés, avec des corps
@@ -86,31 +86,31 @@ Les étapes du cycle de vie qui s'appliquent à **chaque** type de contenu :
 
 | Compétence | Étape | Objectif |
 |------------|-------|----------|
-| [`content-plan`](../reference/skills/content-plan.html) | plan | Périmètre, équipe, calendrier, gouvernance |
-| [`content-author`](../reference/skills/content-author.html) | author | Créer des artefacts structurés |
-| [`content-validate`](../reference/skills/content-validate.html) | validate | Vérifier le schéma + les contraintes |
-| [`content-review`](../reference/skills/content-review.html) | review | Relecture formelle et approbation |
-| [`content-test`](../reference/skills/content-test.html) | test | QA de bout en bout / compilation au vert |
-| [`content-publish`](../reference/skills/content-publish.html) | publish | Rendu et déploiement |
-| [`content-feedback`](../reference/skills/content-feedback.html) | feedback | Recueillir et trier les retours |
+| [`content-plan`]({{ '/reference/skills/content-plan.html' | relative_url }}) | plan | Périmètre, équipe, calendrier, gouvernance |
+| [`content-author`]({{ '/reference/skills/content-author.html' | relative_url }}) | author | Créer des artefacts structurés |
+| [`content-validate`]({{ '/reference/skills/content-validate.html' | relative_url }}) | validate | Vérifier le schéma + les contraintes |
+| [`content-review`]({{ '/reference/skills/content-review.html' | relative_url }}) | review | Relecture formelle et approbation |
+| [`content-test`]({{ '/reference/skills/content-test.html' | relative_url }}) | test | QA de bout en bout / compilation au vert |
+| [`content-publish`]({{ '/reference/skills/content-publish.html' | relative_url }}) | publish | Rendu et déploiement |
+| [`content-feedback`]({{ '/reference/skills/content-feedback.html' | relative_url }}) | feedback | Recueillir et trier les retours |
 | `content-retire` | retire | Déprécier / archiver |
 
 ### Documents et directives politiques : `folio-document-adapter`
 
 | Compétence | Objectif |
 |------------|----------|
-| [`document-authoring`](../reference/skills/document-authoring.html) | Créer et réviser des blocs dans un folio de prose |
-| [`document-structure`](../reference/skills/document-structure.html) | Chapitres et sections — ajouter, supprimer, réordonner |
-| [`normative-statements`](../reference/skills/normative-statements.html) | Porter une recommandation, une exigence ou une règle |
-| [`document-publishing`](../reference/skills/document-publishing.html) | Markdown → HTML / PDF, sans TeX |
+| [`document-authoring`]({{ '/reference/skills/document-authoring.html' | relative_url }}) | Créer et réviser des blocs dans un folio de prose |
+| [`document-structure`]({{ '/reference/skills/document-structure.html' | relative_url }}) | Chapitres et sections — ajouter, supprimer, réordonner |
+| [`normative-statements`]({{ '/reference/skills/normative-statements.html' | relative_url }}) | Porter une recommandation, une exigence ou une règle |
+| [`document-publishing`]({{ '/reference/skills/document-publishing.html' | relative_url }}) | Markdown → HTML / PDF, sans TeX |
 
 ### Articles scientifiques et livres : `authoring-math`
 
 | Compétence | Objectif |
 |------------|----------|
-| [`lean-formalization`](../reference/skills/lean-formalization.html) | Formaliser des énoncés/preuves en Lean 4 |
-| [`latex-authoring`](../reference/skills/latex-authoring.html) | Rédiger des documents LaTeX |
-| [`proof-verification`](../reference/skills/proof-verification.html) | Vérifier les preuves, auditer les `sorry`/axiomes |
+| [`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}) | Formaliser des énoncés/preuves en Lean 4 |
+| [`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}) | Rédiger des documents LaTeX |
+| [`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }}) | Vérifier les preuves, auditer les `sorry`/axiomes |
 | `scientific-visualization` | Figures et diagrammes |
 | `hypothesis-generation` | Proposer des conjectures / orientations |
 | `scientific-critical-thinking` | Examen contradictoire des arguments |
@@ -119,14 +119,14 @@ Les étapes du cycle de vie qui s'appliquent à **chaque** type de contenu :
 
 | Compétence | Objectif |
 |------------|----------|
-| [`l2-dak-authoring`](../reference/skills/l2-dak-authoring.html) | Artefacts DAK L2 (dictionnaire de données, etc.) |
-| [`l3-fhir-authoring`](../reference/skills/l3-fhir-authoring.html) | Ressources FHIR L3 via FSH |
-| [`bpmn-authoring`](../reference/skills/bpmn-authoring.html) | Processus métier BPMN 2.0 |
-| [`dmn-authoring`](../reference/skills/dmn-authoring.html) | Tables de décision DMN |
-| [`terminology-management`](../reference/skills/terminology-management.html) | Systèmes de codage / jeux de valeurs |
-| [`fhir-validation`](../reference/skills/fhir-validation.html) | Valider par rapport aux profils FHIR |
-| [`ig-publication`](../reference/skills/ig-publication.html) | Compiler et publier l'IG |
-| [`quality-control`](../reference/skills/quality-control.html) | Points de contrôle QA (QA gates) |
+| [`l2-dak-authoring`]({{ '/reference/skills/l2-dak-authoring.html' | relative_url }}) | Artefacts DAK L2 (dictionnaire de données, etc.) |
+| [`l3-fhir-authoring`]({{ '/reference/skills/l3-fhir-authoring.html' | relative_url }}) | Ressources FHIR L3 via FSH |
+| [`bpmn-authoring`]({{ '/reference/skills/bpmn-authoring.html' | relative_url }}) | Processus métier BPMN 2.0 |
+| [`dmn-authoring`]({{ '/reference/skills/dmn-authoring.html' | relative_url }}) | Tables de décision DMN |
+| [`terminology-management`]({{ '/reference/skills/terminology-management.html' | relative_url }}) | Systèmes de codage / jeux de valeurs |
+| [`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) | Valider par rapport aux profils FHIR |
+| [`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}) | Compiler et publier l'IG |
+| [`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}) | Points de contrôle QA (QA gates) |
 
 ### Compétences d'agent/de plateforme (`src/skills`)
 
@@ -157,7 +157,7 @@ de contenu, et non des alternatives entre lesquelles choisir.
 ### Lots de compétences de plateforme (`skills/folio-core`, `folio-assistant-core/skills/content/folio-document-adapter`, `folio-assistant-sci/skills/content/folio-paper-adapter`)
 
 Des **lots de plateforme** plus importants, dont deux ont été migrés depuis le dépôt de contenu qou (voir le
-[registre de migration](migrations/2026-06-29-platform-skills-migration.html) et
+[registre de migration]({{ '/fr/migrations/2026-06-29-platform-skills-migration.html' | relative_url }}) et
 le ticket [#27](https://github.com/litlfred/folio-assistant/issues/27)). Ils sont
 indépendants du contenu et conçus pour être synchronisés dans n'importe quel folio :
 
@@ -171,7 +171,7 @@ Les compétences physiques irréductibles de QOU ont été ignorées ; les exemp
 ont été généralisés. Chaque lot inclut un fichier `package-manifest.json`.
 
 > Les **schémas** de compétences (entrée/sortie typée pour les compétences de rédaction) sont générés
-> dans la [référence des schémas de compétences](../reference/skills/) — ne déviez jamais de ce que
+> dans la [référence des schémas de compétences]({{ '/reference/skills/' | relative_url }}) — ne déviez jamais de ce que
 > le cadre valide.
 
 ---
@@ -255,8 +255,8 @@ Les **exigences** (requirements) sont des points de contrôle (gates) qui doiven
 ## Voir aussi
 
 - [Flux de publication](publication-workflow.html) — Couloirs BPMN : quelle compétence s'exécute à quelle étape, et qui décide
-- [Instructions des compétences](../reference/skill-instructions/) — les corps textuels explicatifs que le LLM charge
-- [Référence des schémas de compétences](../reference/skills/) — entrée/sortie typée pour chaque compétence
+- [Instructions des compétences]({{ '/reference/skill-instructions/' | relative_url }}) — les corps textuels explicatifs que le LLM charge
+- [Référence des schémas de compétences]({{ '/reference/skills/' | relative_url }}) — entrée/sortie typée pour chaque compétence
 - [Types de contenu](content-types.html) — les compétences utilisées par chaque type de contenu
 - [Architecture](architecture.html) — RBAC, adaptateurs et serveur MCP
 - [Premiers pas](getting-started.html) — exécuter votre première compétence

@@ -28,8 +28,8 @@ and a typed content-object model.
   note — authored content on one page, not chrome — and the forge remains
   reachable from the navbar's Source tile regardless.
 -->
-[Get started]({{ '/getting-started.html' | relative_url }}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[Install](installation.html){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Get started]({{ '/docs/cat-harness/getting-started.html' | relative_url }}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Install]({{ '/docs/cat-harness/installation.html' | relative_url }}){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [View on GitHub](https://github.com/litlfred/folio-assistant){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 {% include harness_details.html %}
@@ -39,7 +39,7 @@ and a typed content-object model.
 ## Four things, in order
 
 **1. The work plan is where you say what you are doing.**
-Not a chat message, not a comment — [beans]({{ '/beans-and-todos.html' | relative_url }}), a committed
+Not a chat message, not a comment — [beans]({{ '/docs/cat-harness/beans-and-todos.html' | relative_url }}), a committed
 store any session or agent can read. Claim before you work so a sibling session
 does not pick up the same item; a bean that turns out not to be wanted is
 `scrapped`, with its reasons, never deleted.
@@ -59,16 +59,16 @@ agent files and the link back here:
 bun run init-folio --help
 ```
 
-Then [Get started](getting-started.html) walks the first block through validate,
+Then [Get started]({{ '/docs/cat-harness/getting-started.html' | relative_url }}) walks the first block through validate,
 render and review.
 
 **3. Know which kind of thing you are writing.** A *document* is structured
 prose; a *paper* is that plus the block kinds whose assertion is a formal claim,
 backed by Lean and typeset through LaTeX. The choice decides which blocks are
-legal and which gates run: [Content types]({{ '/content-types.html' | relative_url }}).
+legal and which gates run: [Content types]({{ '/docs/cat-harness/content-types.html' | relative_url }}).
 
 **4. The documentation you will never read.**
-[All of it]({{ '/guides/index.html' | relative_url }}) — the authoring guides, the architecture, the
+[All of it]({{ '/docs/cat-harness/guides/index.html' | relative_url }}) — the authoring guides, the architecture, the
 publication workflow, the generated schema and skill reference. It is here, it
 is thorough, and the honest expectation is that you will arrive at it from a
 search engine at the exact moment something breaks. That is a fine way to use
@@ -76,7 +76,7 @@ it. The three steps above are the ones worth reading now.
 
 When it is the *machinery* that has you puzzled rather than the authoring —
 who does a thing, under which process, using which skill — start at
-[The platform]({{ '/platform.html' | relative_url }}). One sentence there
+[The platform]({{ '/docs/cat-harness/platform.html' | relative_url }}). One sentence there
 carries the whole model, and every word in it is a separately declared
 object.
 
@@ -112,31 +112,31 @@ folio-assistant is **pluggable** — each content type is handled by a content
 
 | Content type | Artifacts | Skill package |
 |--------------|-----------|---------------|
-| **Scientific papers & books** | Lean 4 formalization + LaTeX/Markdown | [`authoring-math`](content-types.html#scientific-papers--books) |
-| **WHO SMART Guidelines DAKs** | L2 artifacts — BPMN, DMN, Excel data dictionaries, personas | [`authoring-who-smart-guidelines`](content-types.html#who-smart-guidelines-daks-l2) |
-| **WHO SMART Implementation Guides** | L3 FHIR resources, FSH, IG Publisher output | [`authoring-who-smart-guidelines`](content-types.html#who-smart-implementation-guides-l3) |
-| **Others** | Pluggable — add a new adapter + skill package | [Adding a content type](guides/new-content-type.html) |
+| **Scientific papers & books** | Lean 4 formalization + LaTeX/Markdown | [`authoring-math`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#scientific-papers--books) |
+| **WHO SMART Guidelines DAKs** | L2 artifacts — BPMN, DMN, Excel data dictionaries, personas | [`authoring-who-smart-guidelines`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#who-smart-guidelines-daks-l2) |
+| **WHO SMART Implementation Guides** | L3 FHIR resources, FSH, IG Publisher output | [`authoring-who-smart-guidelines`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#who-smart-implementation-guides-l3) |
+| **Others** | Pluggable — add a new adapter + skill package | [Adding a content type]({{ '/docs/cat-harness/guides/new-content-type.html' | relative_url }}) |
 
-The cross-cutting [`content-lifecycle`](content-types.html#the-content-lifecycle)
+The cross-cutting [`content-lifecycle`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#the-content-lifecycle)
 package (plan → author → validate → review → test → publish → feedback → retire)
 applies to every content type. The
-[publication workflow](publication-workflow.html) models it properly — as BPMN
+[publication workflow]({{ '/docs/cat-harness/publication-workflow.html' | relative_url }}) models it properly — as BPMN
 swimlanes, with the roles, the HCI validation gate, and the shared work plan.
 
 ## Where to go next
 
-- **[Installation](installation.html)** — prerequisites, clone, `bun install`, capability check.
-- **[Getting started](getting-started.html)** — connect the MCP server to your LLM and run your first skill.
-- **[Tutorial: Writing a paper with folio-assistant](guides/writing-a-paper.html)** — a full, LLM-driven walk-through with a mock chat session.
-- **[Content types](content-types.html)** — the formalism of each authoring domain.
-- **[Publication workflow](publication-workflow.html)** — BPMN swimlane diagrams of the editing and publication processes: the HCI validation gate, who reviews what, and the shared work plan.
-- **[Agent onboarding](guides/agent-onboarding.html)** — orientation for an LLM agent dropped into a folio: first steps, finding skills, the content-object model, QA sidecars.
-- **[Skills & roles](skills.html)** — every skill and role, and how they work together with the LLM.
+- **[Installation]({{ '/docs/cat-harness/installation.html' | relative_url }})** — prerequisites, clone, `bun install`, capability check.
+- **[Getting started]({{ '/docs/cat-harness/getting-started.html' | relative_url }})** — connect the MCP server to your LLM and run your first skill.
+- **[Tutorial: Writing a paper with folio-assistant]({{ '/docs/cat-harness/guides/writing-a-paper.html' | relative_url }})** — a full, LLM-driven walk-through with a mock chat session.
+- **[Content types]({{ '/docs/cat-harness/content-types.html' | relative_url }})** — the formalism of each authoring domain.
+- **[Publication workflow]({{ '/docs/cat-harness/publication-workflow.html' | relative_url }})** — BPMN swimlane diagrams of the editing and publication processes: the HCI validation gate, who reviews what, and the shared work plan.
+- **[Agent onboarding]({{ '/docs/cat-harness/guides/agent-onboarding.html' | relative_url }})** — orientation for an LLM agent dropped into a folio: first steps, finding skills, the content-object model, QA sidecars.
+- **[Skills & roles]({{ '/docs/cat-harness/skills.html' | relative_url }})** — every skill and role, and how they work together with the LLM.
 - **[Skill schema reference](reference/skills/)** — generated input/output contracts for every skill.
 - **[TypeScript API reference](api/)** — the content-object model (`Block`, `Chapter`, `Paper`, builders, Zod constraints).
-- **[Architecture](architecture.html)** — adapters, MCP server, RBAC, the block model.
-- **[The Knowledge Graph](knowledge-graph.html)** — the subgraph taxonomy, which way the references run, and how repositories divide the work.
-- **[The Harness](harness.html)** — instantiation, the dependency walk, and what harnessing a directory obliges.
+- **[Architecture]({{ '/docs/cat-harness/architecture.html' | relative_url }})** — adapters, MCP server, RBAC, the block model.
+- **[The Knowledge Graph]({{ '/docs/cat-harness/knowledge-graph.html' | relative_url }})** — the subgraph taxonomy, which way the references run, and how repositories divide the work.
+- **[The Harness]({{ '/docs/cat-harness/harness.html' | relative_url }})** — instantiation, the dependency walk, and what harnessing a directory obliges.
 
 Two Skills are worth reading before the pages above, because everything else
 assumes them: [`getting-started`](reference/skill-instructions/getting-started.html)

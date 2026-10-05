@@ -66,6 +66,7 @@ import { THEMES } from "../schemas/themes.js";
 import type { ImageRegion, KgImage } from "../schemas/kg-node.js";
 import { avatarClip, dataUri } from "./render-avatar-crops.js";
 import { declaredContributions } from "./ensure-landing-sticky.js";
+import { publishedPagePath } from "./lib/jekyll-permalink.ts";
 
 /** The AAA floor. A value below it is not a worse theme; it is a failing one. */
 export const AAA = 7;
@@ -360,7 +361,7 @@ ${LEDE}
 **${body.themes} theme(s)**, ${withArt} with art. A theme is chosen per note by whoever authors it — there is
 no mapping from a role or a kind to a theme — so "worn by" lists the landing-board cards that chose it,
 not every place it may appear. How themes are split into skills, and why contrast is measured over pure
-black, is on the [theming page]({{ '/architecture/theming.html' | relative_url }}).
+black, is on the [theming page]({{ '/${publishedPagePath(resolve(root, siteDirFor(root)), "architecture/theming")}' | relative_url }}).
 
 ${body.html}
 `;

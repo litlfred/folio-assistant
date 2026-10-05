@@ -16,7 +16,7 @@ En el [issue #232](https://github.com/litlfred/folio-assistant/issues/232) se pl
 1. ¿Cuáles son las opciones de soporte para discapacidades aquí y cuál es la mejor práctica?
 2. ¿Cuáles son las opciones para forzar las preguntas y respuestas agénticas (Q&A) hacia preguntas guiadas que sigan la lógica DMN y puedan servir a diversas modalidades de interacción?
 
-Resulta que son la misma pregunta formulada desde dos extremos, razón por la cual comparten página. La habilidad que lo implementa es [`interaction-modality`](../reference/skill-instructions/interaction-modality.html).
+Resulta que son la misma pregunta formulada desde dos extremos, razón por la cual comparten página. La habilidad que lo implementa es [`interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }}).
 
 1. TOC
 {:toc}
@@ -89,7 +89,7 @@ Vale la pena detenerse en la Parte B de ATAG, porque es la parte que una platafo
 | | dónde |
 |---|---|
 | Preferencias orientadas al agente, guardadas en el repositorio (committed), leídas al inicio de la sesión | `interaction/interaction.json`, expuestas por `scripts/session-start-coord-sweep.sh` |
-| Las reglas que sigue un agente al preguntar | [`interaction-modality`](../reference/skill-instructions/interaction-modality.html) |
+| Las reglas que sigue un agente al preguntar | [`interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }}) |
 | Controles para el lector en este sitio | el engranaje en el encabezado de la barra lateral —texto más grande, mayor contraste, enlaces subrayados, movimiento reducido |
 | Movimiento reducido respetado sin tener que solicitarlo | media query `prefers-reduced-motion`, que inicializa el valor predeterminado del panel |
 
@@ -150,6 +150,6 @@ Cuatro formas de hacer esto, en orden creciente de ambición. Solo la primera es
 ## Véase también
 
 - [Primeros pasos](getting-started.html) — la tabla de decisiones de intención en uso
-- [Habilidad `interaction-modality`](../reference/skill-instructions/interaction-modality.html)
+- [Habilidad `interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }})
 - [Flujo de publicación](publication-workflow.html) — cada proceso en el repositorio
-- [Opciones para el estado del flujo de trabajo en beans](../proposals/workflow-state-in-beans.html)
+- [Opciones para el estado del flujo de trabajo en beans]({{ '/proposals/workflow-state-in-beans.html' | relative_url }})

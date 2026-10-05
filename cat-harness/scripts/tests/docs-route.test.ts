@@ -1,140 +1,164 @@
 /**
- * The docs tree's place under the site — one answer, checked where it is
- * written twice.
+ * Which pages publish under `/docs/cat-harness/`, and that every generator
+ * agrees with Jekyll about it.
  *
- * Owner, 2026-10-05 (issue #2188, bean `kc7k`): cat-harness's documentation
- * publishes under `<base-url>/docs/cat-harness/`, a clean break with no
- * redirects. The route is read from the declaration by `docs-route.ts`; the one
- * place it must ALSO be a literal is `_config.yml`'s `baseurl`, because Jekyll
- * reads nothing else. This holds the two together, and pins the three scripts
- * that make the move safe: the hoist that keeps every root-addressed `@id`
- * dereferenceable, and the landing that gives the root a page of its own.
+ * Owner, 2026-10-05 (issue #2188, PR #2189, bean `kc7k`): ONLY cat-harness's
+ * own docs-folder pages move — `architecture.md` to
+ * `/docs/cat-harness/architecture.html`, its locale copies with it — with no
+ * redirects. Every harness landing page, the viewers under `/cat-harness/`, the
+ * kind directories and the root exports keep their URLs. The move is a set of
+ * `permalink` defaults in `_config.yml`; this holds that list to the route
+ * `docs-route.ts` reads from the declaration, and checks the coverage both
+ * ways — nothing authored left behind, no landing page or kind directory
+ * swept along.
  *
  * @module scripts/tests/docs-route
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { parse as parseYaml } from "yaml";
+
 import { siteDirFor } from "../../schemas/cat-harness.js";
-import { builtDocsRoute, DOCS_KIND, docsRelativeSitePath, docsRouteFor, upFromDocs } from "../docs-route.ts";
-import { hoist, isSelfAddressed, rootAddressOf, SITE_ROOT_IRI } from "../hoist-addressed-documents.ts";
-import { documentationRoutes, landingHtml } from "../root-landing.ts";
+import { builtDocsRoute, docsRouteFor } from "../docs-route.ts";
+import {
+  pagePermalink,
+  permalinkDefaults,
+  permalinkDefaultsIn,
+  publishedHref,
+  publishedPagePath,
+  scopeApplies,
+} from "../lib/jekyll-permalink.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 const INSTANCE = join(REPO, "cat-harness");
+const SITE = join(INSTANCE, siteDirFor(INSTANCE));
+const ROUTE = builtDocsRoute("cat-harness", REPO);
+const DEFAULTS = permalinkDefaultsIn(SITE);
+const config = parseYaml(readFileSync(join(SITE, "_config.yml"), "utf-8")) as {
+  baseurl: string;
+  available_locales?: unknown;
+};
+const LOCALES = ["ar", "es", "fr", "ru", "zh"];
+
+const url = (rel: string): string => {
+  const text = readFileSync(join(SITE, rel), "utf-8");
+  const m = /^---\r?\n([\s\S]*?)\r?\n---/.exec(text);
+  const fm = m ? ((parseYaml(m[1]!) as Record<string, unknown>) ?? {}) : {};
+  return pagePermalink(rel, fm, DEFAULTS);
+};
 
 describe("the route", () => {
   test("is the docs kind and the built instance's declared name", () => {
-    expect(builtDocsRoute("cat-harness", REPO)).toBe("docs/cat-harness");
+    expect(ROUTE).toBe("docs/cat-harness");
     expect(docsRouteFor("who-iris")).toBe("docs/who-iris");
   });
 
-  test("climbing out of it takes one `..` per segment", () => {
-    expect(upFromDocs("docs/cat-harness")).toBe("../..");
+  test("baseurl is the SITE's — the move is per page, not per tree", () => {
+    expect(config.baseurl).toBe("/folio-assistant");
   });
 
-  test("an authored site path climbs out only when it names a mount at the site root", () => {
-    const mounts = ["who-iris", "docs/who-iris"];
-    expect(docsRelativeSitePath("/who-iris/", "docs/cat-harness", mounts)).toBe("/../../who-iris/");
-    expect(docsRelativeSitePath("/docs/who-iris/x.html", "docs/cat-harness", mounts)).toBe("/../../docs/who-iris/x.html");
-    // Inside the docs tree, a prefix that is not a whole segment, and anything not site-absolute: unchanged.
-    expect(docsRelativeSitePath("/architecture.html", "docs/cat-harness", mounts)).toBe("/architecture.html");
-    expect(docsRelativeSitePath("/who-iris-notes/", "docs/cat-harness", mounts)).toBe("/who-iris-notes/");
-    expect(docsRelativeSitePath("https://x.org/who-iris/", "docs/cat-harness", mounts)).toBe("https://x.org/who-iris/");
-    expect(docsRelativeSitePath("//x.org/who-iris/", "docs/cat-harness", mounts)).toBe("//x.org/who-iris/");
-  });
-
-  test("_config.yml's baseurl is site_root plus the route — the literal agrees with the declaration", () => {
-    const cfg = readFileSync(join(INSTANCE, siteDirFor(INSTANCE), "_config.yml"), "utf-8");
-    const root = /^site_root:\s*"?([^"\n]*)"?/m.exec(cfg)?.[1];
-    const base = /^baseurl:\s*"?([^"\n]*)"?/m.exec(cfg)?.[1];
-    expect(root, "_config.yml declares no site_root").toBeDefined();
-    expect(base).toBe(`${root}/${builtDocsRoute("cat-harness", REPO)}`);
-  });
-
-  test("the site-root IRI namespace is the site root, not the docs tree — identifiers did not move", () => {
-    const cfg = readFileSync(join(INSTANCE, siteDirFor(INSTANCE), "_config.yml"), "utf-8");
-    const url = /^url:\s*"?([^"\n]+)"?/m.exec(cfg)?.[1];
-    const root = /^site_root:\s*"?([^"\n]*)"?/m.exec(cfg)?.[1];
-    expect(SITE_ROOT_IRI).toBe(`${url}${root}/`);
+  test("every permalink default either publishes under the route or pins a locale landing page where it was", () => {
+    expect(DEFAULTS.length).toBeGreaterThan(0);
+    for (const d of DEFAULTS) {
+      const landing = /^([a-z]{2})\/index\.md$/.exec(d.path);
+      if (landing) expect(d.permalink).toBe(`/${landing[1]}/`);
+      else expect(d.permalink.startsWith(`/${ROUTE}/`), `${d.path} → ${d.permalink}`).toBe(true);
+    }
   });
 });
 
-describe("which documents are root-addressed", () => {
-  const R = "https://example.org/site/";
-  test("an absolute @id under the root, fragment dropped", () => {
-    expect(rootAddressOf({ "@id": `${R}todos/a.jsonld#x` }, R)).toBe("todos/a.jsonld");
+describe("what moves and what stays — read off the real tree", () => {
+  const topLevel = readdirSync(SITE).filter((f) => f.endsWith(".md") && f !== "README.md");
+
+  test("every top-level page but the landing page moves", () => {
+    for (const f of topLevel) {
+      if (f === "index.md") expect(url(f)).toBe("/");
+      else if (/^---/.test(readFileSync(join(SITE, f), "utf-8"))) {
+        expect(url(f)).toBe(`/${ROUTE}/${f.replace(/\.md$/, ".html")}`);
+      }
+    }
+    expect(url("architecture.md")).toBe(`/${ROUTE}/architecture.html`);
   });
-  test("a relative @id against the @base its context declares", () => {
-    expect(rootAddressOf({ "@context": ["ctx", { "@base": R }], "@id": "site/p.jsonld" }, R)).toBe("site/p.jsonld");
+
+  test("each locale's pages move with their source, and its landing page stays", () => {
+    for (const l of LOCALES) {
+      expect(url(`${l}/architecture.md`)).toBe(`/${ROUTE}/${l}/architecture.html`);
+      expect(url(`${l}/index.md`)).toBe(`/${l}/`);
+    }
   });
-  test("a relative @id with no @base is addressed by wherever it sits — not hoisted", () => {
-    expect(rootAddressOf({ "@id": "site/p.jsonld" }, R)).toBeUndefined();
+
+  test("the authored sections move", () => {
+    expect(url("guides/agent-onboarding.md")).toBe(`/${ROUTE}/guides/agent-onboarding.html`);
+    expect(url("architecture/theming.md")).toBe(`/${ROUTE}/architecture/theming.html`);
   });
-  test("another host is not ours", () => {
-    expect(rootAddressOf({ "@id": "https://elsewhere.org/x.jsonld" }, R)).toBeUndefined();
-  });
-  test("a file IS its address: itself, its `.json` alias, or its directory's index", () => {
-    expect(isSelfAddressed("todos/a.jsonld", "todos/a.jsonld")).toBe(true);
-    expect(isSelfAddressed("todos/a.json", "todos/a.jsonld")).toBe(true);
-    expect(isSelfAddressed("subgraph/x/index.jsonld", "subgraph/x/")).toBe(true);
-    expect(isSelfAddressed("subgraph/x/index.hydrated.jsonld", "subgraph/x/")).toBe(true);
-    expect(isSelfAddressed("todos/a.jsonld", "todos/b.jsonld")).toBe(false);
-    expect(isSelfAddressed("todos.jsonld", "folio-assistant/folio-assistant.jsonld")).toBe(false);
+
+  test("kind directories and viewers stay where they are", () => {
+    for (const rel of [
+      "processes/index.md",
+      "glossary/index.md",
+      "proposals/index.md",
+      "requirements/index.md",
+      "bootstrap/initialization.md",
+      "fr/glossary/index.md",
+    ]) {
+      expect(url(rel).startsWith(`/${ROUTE}/`), rel).toBe(false);
+    }
   });
 });
 
-describe("the hoist", () => {
-  const R = "https://example.org/site/";
-  function site(): string {
-    const s = mkdtempSync(join(tmpdir(), "hoist-"));
-    const d = join(s, DOCS_KIND, "x");
-    mkdirSync(join(d, "site", "p", "nodes"), { recursive: true });
-    mkdirSync(join(d, "todos", "a"), { recursive: true });
-    writeFileSync(join(d, "site", "p.jsonld"), JSON.stringify({ "@context": [{ "@base": R }], "@id": "site/p.jsonld" }));
-    writeFileSync(join(d, "site", "p", "nodes", "n.jsonld"), JSON.stringify({ "@context": [{ "@base": R }], "@id": "site/p/nodes/n.jsonld" }));
-    writeFileSync(join(d, "todos", "a.jsonld"), JSON.stringify({ "@id": `${R}todos/a.jsonld` }));
-    writeFileSync(join(d, "todos", "a.json"), JSON.stringify({ "@id": `${R}todos/a.jsonld` }));
-    writeFileSync(join(d, "todos", "a", "index.html"), "<p>the todo's PAGE stays with the docs</p>");
-    writeFileSync(join(d, "todos.jsonld"), JSON.stringify({ "@id": `${R}elsewhere.jsonld#todos` }));
-    return s;
-  }
-
-  test("moves exactly the root-addressed documents, and leaves pages and other data with the docs", () => {
-    const s = site();
-    const r = hoist(s, "docs/x", R);
-    expect(r.collisions).toEqual([]);
-    expect(r.hoisted.sort()).toEqual(["site/p.jsonld", "site/p/nodes/n.jsonld", "todos/a.json", "todos/a.jsonld"]);
-    expect(existsSync(join(s, "site", "p", "nodes", "n.jsonld"))).toBe(true);
-    expect(existsSync(join(s, DOCS_KIND, "x", "todos", "a", "index.html"))).toBe(true);
-    expect(existsSync(join(s, DOCS_KIND, "x", "todos.jsonld"))).toBe(true);
-    // The emptied directories are pruned, the page's is not.
-    expect(existsSync(join(s, DOCS_KIND, "x", "site"))).toBe(false);
+describe("the permalink rule", () => {
+  const D = permalinkDefaults({
+    defaults: [
+      { scope: { path: "*.md" }, values: { permalink: "/d/:path/:basename:output_ext" } },
+      { scope: { path: "g" }, values: { permalink: "/d/:path/:basename:output_ext" } },
+      { scope: { path: "fr/*.md" }, values: { permalink: "/d/:path/:basename:output_ext" } },
+      { scope: { path: "fr/index.md" }, values: { permalink: "/fr/" } },
+      { scope: { path: "" }, values: { layout: "page" } },
+    ],
   });
 
-  test("refuses a root address something else already holds — never overwrites", () => {
-    const s = site();
-    mkdirSync(join(s, "todos"), { recursive: true });
-    writeFileSync(join(s, "todos", "a.jsonld"), "{}");
-    const r = hoist(s, "docs/x", R);
-    expect(r.collisions).toEqual(["todos/a.jsonld"]);
-    expect(readFileSync(join(s, "todos", "a.jsonld"), "utf-8")).toBe("{}");
+  test("a scope with no permalink is not a permalink rule", () => {
+    expect(D).toHaveLength(4);
+  });
+
+  test("the page's own permalink wins over every default", () => {
+    expect(pagePermalink("index.md", { permalink: "/" }, D)).toBe("/");
+  });
+
+  test("the LONGER scope path wins, as Jekyll's has_precedence? decides", () => {
+    expect(pagePermalink("fr/index.md", {}, D)).toBe("/fr/");
+    expect(pagePermalink("fr/a.md", {}, D)).toBe("/d/fr/a.html");
+  });
+
+  test("a glob covers files at its own depth only; a prefix covers the subtree", () => {
+    expect(scopeApplies("*.md", "a.md")).toBe(true);
+    expect(scopeApplies("*.md", "x/a.md")).toBe(false);
+    expect(scopeApplies("g", "g/h/a.md")).toBe(true);
+    expect(scopeApplies("g", "gg/a.md")).toBe(false);
+    expect(pagePermalink("x/a.md", {}, D)).toBe("/x/a.html");
+  });
+
+  test("a scope by another type, and an unknown placeholder, are refused rather than mismodelled", () => {
+    expect(() => permalinkDefaults({ defaults: [{ scope: { path: "", type: "posts" }, values: { permalink: "/x" } }] })).toThrow();
+    expect(() => pagePermalink("a.md", {}, [{ path: "", permalink: "/:year/:basename" }])).toThrow();
   });
 });
 
-describe("the root landing", () => {
-  test("lists every built docs route with a front door, the built one first, and is not a redirect", () => {
-    const s = mkdtempSync(join(tmpdir(), "landing-"));
-    for (const n of ["who-iris", "cat-harness", "empty"]) mkdirSync(join(s, DOCS_KIND, n), { recursive: true });
-    writeFileSync(join(s, DOCS_KIND, "who-iris", "index.html"), "");
-    writeFileSync(join(s, DOCS_KIND, "cat-harness", "index.html"), "");
-    const routes = documentationRoutes(s, "docs/cat-harness");
-    expect(routes).toEqual(["docs/cat-harness", "docs/who-iris"]);
-    const html = landingHtml("t", routes, true);
-    expect(html).toContain('href="docs/cat-harness/"');
-    expect(html).toContain('<html lang="en">');
-    expect(html).not.toMatch(/http-equiv="refresh"|location\.(href|replace)/);
+describe("the helpers generators use", () => {
+  test("publishedPagePath reads the site's own config and front matter", () => {
+    expect(publishedPagePath(SITE, "content-types")).toBe(`${ROUTE}/content-types.html`);
+    expect(publishedPagePath(SITE, "index")).toBe("");
+    expect(publishedPagePath(SITE, "processes/index")).toBe("processes/index.html");
+  });
+
+  test("publishedHref rewrites a page authored at its source location, and nothing else", () => {
+    expect(publishedHref(SITE, "/content-types.html#x")).toBe(`/${ROUTE}/content-types.html#x`);
+    expect(publishedHref(SITE, "/guides/index.html")).toBe(`/${ROUTE}/guides/index.html`);
+    expect(publishedHref(SITE, "/guides/")).toBe(`/${ROUTE}/guides/index.html`);
+    expect(publishedHref(SITE, "/processes/")).toBe("/processes/");
+    expect(publishedHref(SITE, "/cat-harness/catalogue/")).toBe("/cat-harness/catalogue/");
+    expect(publishedHref(SITE, "https://example.org/a.html")).toBe("https://example.org/a.html");
   });
 });

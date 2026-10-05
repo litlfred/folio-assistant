@@ -15,7 +15,7 @@ nav_order: 13
 > **Started, not finished.** [#223 comment 14:48](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5731729871)
 > asks for a whole skill set covering model levels, swarm size and CPU, and for
 > this page to exist. The skill is
-> [`swarm-management`](reference/skill-instructions/swarm-management.html);
+> [`swarm-management`]({{ '/reference/skill-instructions/swarm-management.html' | relative_url }});
 > this page is the reader-facing summary and the record of what is **not** yet
 > built.
 

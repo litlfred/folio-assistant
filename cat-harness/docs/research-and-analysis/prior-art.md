@@ -17,7 +17,7 @@ summary: >-
 > **What this page is, and what it is not.** It answers one question — *who
 > else is doing something like this?* — for a reader deciding whether to
 > build, borrow or adopt. It is **not** the list of methodologies this
-> repository has adopted; that is [Methodologies](../methodologies/), and a
+> repository has adopted; that is [Methodologies]({{ '/methodologies/' | relative_url }}), and a
 > project moves there only when something from it is actually taken on.
 > Each entry was checked against the project's own repository on
 > **2026-09-23** (bean `vq8o`). Licences and star counts move; re-check before
@@ -109,7 +109,7 @@ step that is not enabled.
   embedded by default) and synced through git remotes (`refs/dolt/data`).
 
 **Difference.** Both are the store. What folio-assistant adds on top is the
-coordination discipline ([bean-coordination](../reference/skill-instructions/bean-coordination.html):
+coordination discipline ([bean-coordination]({{ '/reference/skill-instructions/bean-coordination.html' | relative_url }}):
 claim before you work, a claim announces rather than reserves, never delete a
 bean) and the link between a bean and a running process instance.
 Beads' atomic claim (and, from v1.3, leases) is the stronger primitive where
@@ -151,7 +151,7 @@ allowed, "BMad" in a product name is not.
 **Closest to the role model.** **Difference:** a BMAD agent *is* a persona;
 here nothing *is* a reviewer — an actor *acts as* a role for the duration of
 a lane, and its permissions sit on the actor, not the role
-([role-model](../reference/skill-instructions/role-model.html)). BMAD's gating is
+([role-model]({{ '/reference/skill-instructions/role-model.html' | relative_url }})). BMAD's gating is
 prose plus a front-matter state machine in its unattended loop; here a step is
 enabled or refused by the BPMN engine. **Worth borrowing:** the
 scale-adaptive path choice, and regenerating a status file from the artefacts
@@ -205,7 +205,7 @@ stating precisely: leanblueprint's `\uses` is authored and serves as the
 dependency graph, whereas here the **editorial** relation (`uses[]`, what a
 reader must have read) and the **formal** one (derived from `lean.ref`) are
 kept apart, and `uses[]` is never populated from Lean
-([uses-editorial-review](../reference/skill-instructions/uses-editorial-review.html)).
+([uses-editorial-review]({{ '/reference/skill-instructions/uses-editorial-review.html' | relative_url }})).
 
 ### Verso
 
@@ -229,7 +229,7 @@ that agents read and write over MCP.
 **Difference:** Basic Memory is one general-purpose memory graph. Here each
 directory declares the *kind* of graph it holds and whether a process
 produces, reads or writes it
-([content, context and state graphs](../reference/skill-instructions/content-context-and-state-graphs.html)).
+([content, context and state graphs]({{ '/reference/skill-instructions/content-context-and-state-graphs.html' | relative_url }})).
 
 ## General agent frameworks
 

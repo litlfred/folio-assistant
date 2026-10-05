@@ -16,7 +16,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 1. Каковы здесь варианты поддержки людей с инвалидностью и что считается лучшей практикой?
 2. Каковы варианты сведения агентных вопросов и ответов (Q&A) к направляемым вопросам, которые следуют логике DMN и могут обслуживать несколько модальностей взаимодействия?
 
-Оказывается, это один и тот же вопрос, заданный с двух сторон, поэтому они объединены на одной странице. Реализующий навык — [`interaction-modality`](../reference/skill-instructions/interaction-modality.html).
+Оказывается, это один и тот же вопрос, заданный с двух сторон, поэтому они объединены на одной странице. Реализующий навык — [`interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }}).
 
 1. TOC
 {:toc}
@@ -89,7 +89,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 | | где |
 |---|---|
 | Настройки для агента, зафиксированные в репозитории, считываемые в начале сессии | `interaction/interaction.json`, передаются через `scripts/session-start-coord-sweep.sh` |
-| Правила, которым следует агент при формулировании вопросов | [`interaction-modality`](../reference/skill-instructions/interaction-modality.html) |
+| Правила, которым следует агент при формулировании вопросов | [`interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }}) |
 | Элементы управления для читателя на этом сайте | шестеренка в шапке боковой панели — увеличенный текст, повышенный контраст, подчеркнутые ссылки, уменьшение анимации |
 | Учет предпочтения об уменьшении анимации без явного запроса | медиа-запрос `prefers-reduced-motion`, определяющий значение по умолчанию в панели |
 
@@ -150,6 +150,6 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ## См. также
 
 - [Начало работы](getting-started.html) — таблица решений о намерениях в действии
-- [Навык `interaction-modality`](../reference/skill-instructions/interaction-modality.html)
+- [Навык `interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }})
 - [Процесс публикации](publication-workflow.html) — каждый процесс в репозитории
-- [Варианты состояния рабочего процесса в beans](../proposals/workflow-state-in-beans.html)
+- [Варианты состояния рабочего процесса в beans]({{ '/proposals/workflow-state-in-beans.html' | relative_url }})

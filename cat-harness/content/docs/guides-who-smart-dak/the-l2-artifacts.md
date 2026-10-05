@@ -1,10 +1,10 @@
 | Artifact | Skill | Format |
 |----------|-------|--------|
-| Business processes | [`bpmn-authoring`](../reference/skills/bpmn-authoring.html) | BPMN 2.0 XML |
-| Decision logic | [`dmn-authoring`](../reference/skills/dmn-authoring.html) | DMN tables |
-| Data dictionary | [`l2-dak-authoring`](../reference/skills/l2-dak-authoring.html) | Excel / structured |
-| Terminology | [`terminology-management`](../reference/skills/terminology-management.html) | code systems / value sets |
-| Review | [`content-review`](../reference/skills/content-review.html) | criteria-based |
+| Business processes | [`bpmn-authoring`]({{ '/reference/skills/bpmn-authoring.html' | relative_url }}) | BPMN 2.0 XML |
+| Decision logic | [`dmn-authoring`]({{ '/reference/skills/dmn-authoring.html' | relative_url }}) | DMN tables |
+| Data dictionary | [`l2-dak-authoring`]({{ '/reference/skills/l2-dak-authoring.html' | relative_url }}) | Excel / structured |
+| Terminology | [`terminology-management`]({{ '/reference/skills/terminology-management.html' | relative_url }}) | code systems / value sets |
+| Review | [`content-review`]({{ '/reference/skills/content-review.html' | relative_url }}) | criteria-based |
 
 The table is the authoring skills, not the DAK. A DAK has **ten components**
 (owner, 2026-09-30): the original eight, plus **scheduling logic**, split out

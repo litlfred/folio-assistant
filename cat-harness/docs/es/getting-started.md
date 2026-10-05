@@ -211,7 +211,7 @@ Nada se mueve hasta responder la pregunta 3. Ese paso está marcado como
 `relaxable="false"` en el BPMN, por lo que ningún paquete de contenido puede omitirlo mediante declaración.
 
 Disciplina completa: la
-habilidad [`repo-conversion`](../reference/skill-instructions/repo-conversion.html).
+habilidad [`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }}).
 
 ## 7. Verlo publicado
 
@@ -337,7 +337,7 @@ beans <id> --status in-progress   # reclama un elemento
 > no elimina duplicados bajo ningún criterio. Volver a ejecutar un paso automatizado sin una comprobación
 > de existencia produjo **14,688** beans duplicados en un folio durante una sola tarde. La
 > verificación se encuentra en la habilidad
-> [`todo-manager`](../reference/skill-instructions/todo-manager.html).
+> [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}).
 
 El hook `SessionStart` presenta el plan al inicio de cada sesión, y la herramienta
 MCP `work_plan_prime` expone la misma interfaz a cualquier agente conectado.

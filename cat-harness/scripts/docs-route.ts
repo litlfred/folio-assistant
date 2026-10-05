@@ -72,36 +72,6 @@ export function builtDocsRoute(built: string, repo = REPO): string {
   return docsRouteFor(typeof name === "string" && name ? name : built);
 }
 
-/**
- * The path from the docs tree back up to the site root — `../..` for
- * `docs/cat-harness`. For a page generated INTO the docs tree that must name
- * something published at the root (a JSON-LD document whose `@id` is a root
- * address, see `hoist-addressed-documents.ts`).
- */
-export function upFromDocs(route: string): string {
-  return route.split("/").filter(Boolean).map(() => "..").join("/");
-}
-
-/**
- * An AUTHORED site path (`/who-iris/`, written in a node by someone who means
- * "this site"), as a path against the DOCS base that every generated data file
- * here is composed with.
- *
- * Inside the docs tree it is unchanged. When it names something published at
- * the SITE root — one of `outside`, the mount routes `mount-instance-docs`
- * owns (`who-iris`, `docs/who-iris`, …) — it climbs out of the docs tree:
- * `/../../who-iris/`. `relative_url`, `withBase` and a browser all resolve that
- * to `<base>/who-iris/` under any base, staging included, so no consumer has
- * to know which side a path is on. An author never writes the climb; the
- * generator that publishes the path does, here.
- */
-export function docsRelativeSitePath(path: string, route: string, outside: readonly string[]): string {
-  if (!path.startsWith("/") || path.startsWith("//")) return path;
-  const rel = path.slice(1);
-  const atRoot = outside.some((r) => rel === r || rel === `${r}/` || rel.startsWith(`${r}/`));
-  return atRoot ? `/${upFromDocs(route)}${path}` : path;
-}
-
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const i = argv.indexOf("--built");

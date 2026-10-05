@@ -75,6 +75,7 @@ import {
   frontMatter,
   pageKey,
   pageUrl,
+  permalinkDefaultsIn,
   sourceLocale,
   SITE_DIR,
   type IndexFinding,
@@ -186,7 +187,7 @@ export function availableLocaleClaims(): Report {
     if (!Array.isArray(claims)) continue;
     report.declaring++;
 
-    const own = pageKey(pageUrl(relative(siteAbs, join(REPO_ROOT, file)), front ?? {}));
+    const own = pageKey(pageUrl(relative(siteAbs, join(REPO_ROOT, file)), front ?? {}, permalinkDefaultsIn(siteAbs)));
     const sourceKey = bySource.get(own);
     if (sourceKey === undefined) report.sourcePages++;
     else report.translations++;

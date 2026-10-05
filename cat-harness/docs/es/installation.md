@@ -17,11 +17,11 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 > Instalar es la parte fácil. Lo que debes ejecutar **antes de hacer push** es
-> [`platform-gates`](../reference/skill-instructions/platform-gates.html) —
+> [`platform-gates`]({{ '/reference/skill-instructions/platform-gates.html' | relative_url }}) —
 > que `bun test` pase no significa que los gates hayan pasado, y la lista se deriva del
 > flujo de trabajo de CI en lugar de estar fijada por escrito. Si estás incorporando folio-assistant sobre
 > un repositorio que ya existe, lee primero
-> [`repo-conversion`](../reference/skill-instructions/repo-conversion.html).
+> [`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }}).
 
 ## Requisitos previos
 

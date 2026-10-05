@@ -8,7 +8,7 @@ summary: >-
 # Research and analysis
 
 Findings gathered to inform a decision, **not** a proposal of what to build.
-The sibling [Proposals](../proposals/) section sets out options and what each
+The sibling [Proposals]({{ '/proposals/' | relative_url }}) section sets out options and what each
 costs; this one records what was found out — about other projects, about
 tools a skill could be satisfied by, about the repository itself — so the
 proposal that later cites it does not have to redo the looking.

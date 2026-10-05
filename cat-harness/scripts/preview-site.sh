@@ -96,8 +96,21 @@ echo "preview-site: using $jekyll ($("$jekyll" --version 2>/dev/null))"
 # looked like they scrolled sideways at 390 px were this and nothing else.
 # Front-matter defaults apply only where a page sets no layout, which is the
 # same scope as the plugin's.
+#
+# MERGED into the config's own `defaults`, not appended as a second key: since
+# 2026-10-05 `_config.yml` declares `defaults` itself (the permalinks that put
+# the docs-folder pages under /docs/cat-harness/, bean `kc7k`), and a second
+# top-level `defaults:` would silently replace that list — every page would
+# build at its old address and the preview would show a layout CI does not.
 default_layout() {
-  printf 'defaults:\n  - scope: { path: "" }\n    values: { layout: page }\n'
+  bun -e '
+    const { readFileSync, writeFileSync } = require("node:fs");
+    const { parse, stringify } = require("yaml");
+    const f = process.argv[1];
+    const c = parse(readFileSync(f, "utf-8")) ?? {};
+    c.defaults = [{ scope: { path: "" }, values: { layout: "page" } }, ...(c.defaults ?? [])];
+    writeFileSync(f, stringify(c));
+  ' "$1"
 }
 
 # A config with the remote theme stripped and the local gem used instead —
@@ -107,7 +120,7 @@ cfg="$(mktemp /tmp/preview-config-XXXXXX.yml)"
 grep -v '^remote_theme:' "$docs/_config.yml" \
   | sed 's/^\(\s*\)- jekyll-remote-theme$/\1- jekyll-seo-tag/' > "$cfg"
 echo "theme: just-the-docs" >> "$cfg"
-default_layout >> "$cfg"
+default_layout "$cfg"
 
 # THE COMPOSED TREE, because that is what CI builds FROM.
 #
@@ -129,7 +142,7 @@ if bun run "$here/compose-docs.ts" --out "$composed" >/dev/null 2>&1 && [ -f "$c
   grep -v '^remote_theme:' "$composed/_config.yml" \
     | sed 's/^\(\s*\)- jekyll-remote-theme$/\1- jekyll-seo-tag/' > "$cfg"
   echo "theme: just-the-docs" >> "$cfg"
-  default_layout >> "$cfg"
+  default_layout "$cfg"
   echo "preview-site: composed the docs layers -> $composed"
 else
   # A compose failure is REPORTED, not swallowed: the build still works off the

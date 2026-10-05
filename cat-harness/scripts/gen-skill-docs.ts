@@ -32,6 +32,7 @@ import { processRows, type ProcessRow } from "./gen-processes-viz.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
 import { stripInlineCode } from "../schemas/inline-code.ts";
 import { wrapRaw } from "./lib/liquid-raw.ts";
+import { publishedPagePath } from "./lib/jekyll-permalink.ts";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
@@ -854,8 +855,10 @@ function publishedLocation(
   //    `.md` only: an asset under the site tree is served at its own path.
   const fromSite = relative(SITE_ROOT, abs).split(sep).join("/");
   if (!fromSite.startsWith("../")) {
+    // A page's PUBLISHED path is Jekyll's answer, not its source path: the
+    // docs-folder pages publish under `docs/<instance>/` (bean `kc7k`).
     return fromSite.endsWith(".md")
-      ? `../../${fromSite.slice(0, -".md".length)}.html`
+      ? `../../${publishedPagePath(SITE_ROOT, fromSite)}`
       : `../../${fromSite}`;
   }
 

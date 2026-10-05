@@ -19,13 +19,13 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ## 概述
 
 > **本页背后的规则。** 架构描述形态；技能掌管决策。针对画像的适配器 ——
-> [`content-profiles`](../reference/skill-instructions/content-profiles.html)。
+> [`content-profiles`]({{ '/reference/skill-instructions/content-profiles.html' | relative_url }})。
 > 在创建新节点之前确定其归属 ——
-> [`placement`](../reference/skill-instructions/placement.html)。仓库布局及每种图类型 ——
-> [`directory-conventions`](../reference/skill-instructions/directory-conventions.html)。
+> [`placement`]({{ '/reference/skill-instructions/placement.html' | relative_url }})。仓库布局及每种图类型 ——
+> [`directory-conventions`]({{ '/reference/skill-instructions/directory-conventions.html' | relative_url }})。
 > 组装并验证 MCP 接口界面 ——
-> [`mcp-assembly`](../reference/skill-instructions/mcp-assembly.html) 与
-> [`mcp-contract`](../reference/skill-instructions/mcp-contract.html)。
+> [`mcp-assembly`]({{ '/reference/skill-instructions/mcp-assembly.html' | relative_url }}) 与
+> [`mcp-contract`]({{ '/reference/skill-instructions/mcp-contract.html' | relative_url }})。
 > 当本页面与某项技能存在分歧时，以技能为准。
 
 folio-assistant 是一个 **MCP 服务器**，具备可插拔的**内容适配器**层、**技能**系统、类型化**内容对象模型**、**RBAC** 以及部署方案。它所操作的内容存放在*独立的*仓库中 —— 平台本身与内容无关。
@@ -92,7 +92,7 @@ flowchart TD
 
 ## 技能与技能包
 
-**技能**（skill）是一个经过文档记录、受模式（schema）约束的工作单元（例如 `lean-formalization`）。多项技能组合为**技能包**（packages），技能包通过 `package-manifest.json` 声明其 Docker/运行时依赖。LLM 通过 `skill_list` 发现技能，并通过 `skill_fetch` 加载指令。完整的技能与角色列表 —— 以及它们如何与 LLM 组合协同（RBAC、能力、需求） —— 详见[技能与角色](skills.html)页面；每项技能的输入/输出契约发布在[技能模式参考](../reference/skills/)中。
+**技能**（skill）是一个经过文档记录、受模式（schema）约束的工作单元（例如 `lean-formalization`）。多项技能组合为**技能包**（packages），技能包通过 `package-manifest.json` 声明其 Docker/运行时依赖。LLM 通过 `skill_list` 发现技能，并通过 `skill_fetch` 加载指令。完整的技能与角色列表 —— 以及它们如何与 LLM 组合协同（RBAC、能力、需求） —— 详见[技能与角色](skills.html)页面；每项技能的输入/输出契约发布在[技能模式参考]({{ '/reference/skills/' | relative_url }})中。
 
 ## 内容对象模型
 
@@ -102,7 +102,7 @@ flowchart TD
 - `schemas/constraints.ts` —— Zod 模式与约束规则
 - `schemas/builders.ts` —— 经过验证的构造函数（`definition()`、`theorem()` 等）
 
-这些内容记录在自动生成的 [TypeScript API 参考](api/)中。
+这些内容记录在自动生成的 [TypeScript API 参考]({{ '/zh/api/' | relative_url }})中。
 
 ## 访问控制 —— ODRL，在每项任务前执行检查
 
@@ -111,7 +111,7 @@ flowchart TD
 - **BPMN 执行器**，在每项任务和决策前调用（`src/workflow/authorize.ts`）：参与者是否已认证、是否具备泳道角色的资质、是否被允许在此处执行 `perform-task`，以及是否被允许触碰该内容？目前属于建议性质：若结果为 `deny` 或角色不匹配则拒绝，若为 `unknown` 则予以记录。
 - **HTTP 路由**，通过 `src/core/rbac.ts` 调用：每个路由指明其执行的操作（`content-authoring`、`review-comments`、`adjudication`），且认证网关的会话被声明为参与者，其授权规则来自 `policies/http-gateway.jsonld`。在此处，`unknown` 会被拒绝。
 
-在 issue #1207（2026-09-23）之前，`rbac.ts` 是一套独立的 viewer < collaborator < owner 阶梯式权限，而执行器不做任何检查。现在的规范原则见 [`task-authorization`](../reference/skill-instructions/task-authorization.html) 技能。
+在 issue #1207（2026-09-23）之前，`rbac.ts` 是一套独立的 viewer < collaborator < owner 阶梯式权限，而执行器不做任何检查。现在的规范原则见 [`task-authorization`]({{ '/reference/skill-instructions/task-authorization.html' | relative_url }}) 技能。
 
 ## 工作计划引导（跨 harness）
 

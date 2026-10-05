@@ -19,7 +19,7 @@ layer — and therefore minus the two toolchains that serve it.
   field or a `.lean` sibling, and runs on every `content_validate`.
 
 Relevant skill schemas:
-[`document-authoring`](reference/skills/document-authoring.html),
-[`document-structure`](reference/skills/document-structure.html),
-[`normative-statements`](reference/skills/normative-statements.html),
-[`document-publishing`](reference/skills/document-publishing.html).
+[`document-authoring`]({{ '/reference/skills/document-authoring.html' | relative_url }}),
+[`document-structure`]({{ '/reference/skills/document-structure.html' | relative_url }}),
+[`normative-statements`]({{ '/reference/skills/normative-statements.html' | relative_url }}),
+[`document-publishing`]({{ '/reference/skills/document-publishing.html' | relative_url }}).

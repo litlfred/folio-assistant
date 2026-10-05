@@ -17,11 +17,11 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 > Установка — это более простая половина. То, что нужно запустить **перед push**, — это
-> [`platform-gates`](../reference/skill-instructions/platform-gates.html) —
+> [`platform-gates`]({{ '/reference/skill-instructions/platform-gates.html' | relative_url }}) —
 > успешное прохождение `bun test` не означает прохождение гейтов платформы, а сам их список выводится из
 > рабочего процесса CI, а не просто где-то записан. Если вы разворачиваете folio-assistant
 > поверх уже существующего репозитория, сначала прочитайте
-> [`repo-conversion`](../reference/skill-instructions/repo-conversion.html).
+> [`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }}).
 
 ## Предварительные требования
 

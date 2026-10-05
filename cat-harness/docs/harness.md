@@ -159,7 +159,7 @@ a different store without rewriting a Skill.
 **Declaring a directory is a promise.** It says this instance holds a graph of
 that kind and a consumer may scan it, and the obligations below are what make
 the promise keepable. They are stated in full by
-[`harness-requirements`](reference/skill-instructions/harness-requirements.html)
+[`harness-requirements`]({{ '/reference/skill-instructions/harness-requirements.html' | relative_url }})
 and measured by `check:subgraph-coverage`; this section says what they are and
 why two of them are ranked differently.
 
@@ -305,10 +305,10 @@ this page disagree, **the Skill wins and this page is wrong**.
 | question | where it is answered |
 |---|---|
 | What the Knowledge Graph is, and which way its references run | [The Knowledge Graph](knowledge-graph.html) |
-| How an instance declares its directories, and every graph typology | [`directory-conventions`](reference/skill-instructions/directory-conventions.html) |
+| How an instance declares its directories, and every graph typology | [`directory-conventions`]({{ '/reference/skill-instructions/directory-conventions.html' | relative_url }}) |
 | What a visualiser owes a declared directory | [Subgraph viewers](subgraph-viewers.html) |
-| What a Skill states and what a Tool supplies | [`skills-and-tools`](reference/skill-instructions/skills-and-tools.html) |
-| Why a tile belongs to the Harness rather than to a node | [`harness-tiles`](reference/skill-instructions/harness-tiles.html) |
+| What a Skill states and what a Tool supplies | [`skills-and-tools`]({{ '/reference/skill-instructions/skills-and-tools.html' | relative_url }}) |
+| Why a tile belongs to the Harness rather than to a node | [`harness-tiles`]({{ '/reference/skill-instructions/harness-tiles.html' | relative_url }}) |
 | Context Overlays, and how an Agent's conditions are set | [Managing agent context](managing-agent-context.html) |
 
 The declaration schema, including `needs`, `remoteGraphs`, `renderExemption`

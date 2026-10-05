@@ -162,7 +162,7 @@ bun run scan:repo -- --json  # 相同内容，以事实形式输出
 
 在问题 3 得到回答之前，任何文件都不会被移动。在 BPMN 中，该步骤被标记为 `relaxable="false"`，因此没有任何内容包可以将其随意忽略。
 
-完整规程请参阅 [`repo-conversion`](../reference/skill-instructions/repo-conversion.html) 技能。
+完整规程请参阅 [`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }}) 技能。
 
 ## 7. 查看已发布的成果
 
@@ -254,7 +254,7 @@ beans create "draft chapter 1"    # 开启一个事项
 beans <id> --status in-progress   # 认领一个事项
 ```
 
-> **创建前务必检查。** `beans create` 每次调用都会生成一个全新 ID，且不进行任何去重。在未进行存在性检查的情况下重复执行脚本步骤，曾在短短一下午内于一个 folio 中生成了 **14,688** 个重复的 bean。检查逻辑已包含在 [`todo-manager`](../reference/skill-instructions/todo-manager.html) 技能中。
+> **创建前务必检查。** `beans create` 每次调用都会生成一个全新 ID，且不进行任何去重。在未进行存在性检查的情况下重复执行脚本步骤，曾在短短一下午内于一个 folio 中生成了 **14,688** 个重复的 bean。检查逻辑已包含在 [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}) 技能中。
 
 `SessionStart` 钩子会在每次会话开始时呈现该计划，而 `work_plan_prime` MCP 工具则将相同的视图暴露给任何已连接的智能体。
 

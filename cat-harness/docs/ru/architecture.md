@@ -20,14 +20,14 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 > **Правила, стоящие за этой страницей.** Архитектура описывает форму; Навыки
 > определяют решения. Адаптеры относительно профилей —
-> [`content-profiles`](../reference/skill-instructions/content-profiles.html).
+> [`content-profiles`]({{ '/reference/skill-instructions/content-profiles.html' | relative_url }}).
 > Куда относится новый узел до его создания —
-> [`placement`](../reference/skill-instructions/placement.html). Структура
+> [`placement`]({{ '/reference/skill-instructions/placement.html' | relative_url }}). Структура
 > репозитория и каждый вид графа —
-> [`directory-conventions`](../reference/skill-instructions/directory-conventions.html).
+> [`directory-conventions`]({{ '/reference/skill-instructions/directory-conventions.html' | relative_url }}).
 > Формирование и верификация поверхности MCP —
-> [`mcp-assembly`](../reference/skill-instructions/mcp-assembly.html) и
-> [`mcp-contract`](../reference/skill-instructions/mcp-contract.html).
+> [`mcp-assembly`]({{ '/reference/skill-instructions/mcp-assembly.html' | relative_url }}) и
+> [`mcp-contract`]({{ '/reference/skill-instructions/mcp-contract.html' | relative_url }}).
 > При разногласиях между этой страницей и Навыком приоритет имеет Навык.
 
 folio-assistant — это **MCP-сервер** с подключаемым уровнем **адаптеров контента**,
@@ -118,7 +118,7 @@ flowchart TD
 список навыков и ролей — а также то, как они компонуются с LLM (RBAC, возможности,
 требования), — находится на странице [Навыки и роли](skills.html); контракт
 входных/выходных данных каждого навыка опубликован в
-[Справочнике схем навыков](../reference/skills/).
+[Справочнике схем навыков]({{ '/reference/skills/' | relative_url }}).
 
 ## Объектная модель контента
 
@@ -128,7 +128,7 @@ flowchart TD
 - `schemas/constraints.ts` — схемы Zod и правила ограничений
 - `schemas/builders.ts` — валидируемые конструкторы (`definition()`, `theorem()`, …)
 
-Они задокументированы в сгенерированном [Справочнике по TypeScript API](api/).
+Они задокументированы в сгенерированном [Справочнике по TypeScript API]({{ '/ru/api/' | relative_url }}).
 
 ## Управление доступом — ODRL, проверка перед каждой задачей
 
@@ -150,7 +150,7 @@ flowchart TD
 Вплоть до issue #1207 (2026-09-23) файл `rbac.ts` представлял собой отдельную
 иерархическую лестницу viewer < collaborator < owner, а исполнитель ничего не проверял. Данный
 регламент закреплен в навыке
-[`task-authorization`](../reference/skill-instructions/task-authorization.html).
+[`task-authorization`]({{ '/reference/skill-instructions/task-authorization.html' | relative_url }}).
 
 ## Прайминг плана работы (между харнессами)
 

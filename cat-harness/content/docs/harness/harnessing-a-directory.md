@@ -7,7 +7,7 @@ a different store without rewriting a Skill.
 **Declaring a directory is a promise.** It says this instance holds a graph of
 that kind and a consumer may scan it, and the obligations below are what make
 the promise keepable. They are stated in full by
-[`harness-requirements`](reference/skill-instructions/harness-requirements.html)
+[`harness-requirements`]({{ '/reference/skill-instructions/harness-requirements.html' | relative_url }})
 and measured by `check:subgraph-coverage`; this section says what they are and
 why two of them are ranked differently.
 

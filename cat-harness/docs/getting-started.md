@@ -208,7 +208,7 @@ Nothing moves until question 3 is answered. That step is marked
 `relaxable="false"` in the BPMN, so no content package can declare it away.
 
 Full discipline: the
-[`repo-conversion`](reference/skill-instructions/repo-conversion.html) skill.
+[`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }}) skill.
 
 ## 7. Seeing it published
 
@@ -334,7 +334,7 @@ beans <id> --status in-progress   # claim an item
 > dedupes on nothing. Re-entering a scripted step without an existence check
 > produced **14,688** duplicate beans in one folio on a single afternoon. The
 > check is in the
-> [`todo-manager`](reference/skill-instructions/todo-manager.html) skill.
+> [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}) skill.
 
 The `SessionStart` hook surfaces the plan at the start of every session, and the
 `work_plan_prime` MCP tool exposes the same surface to any connected agent.

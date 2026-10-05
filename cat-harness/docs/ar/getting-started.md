@@ -212,7 +212,7 @@ bun run scan:repo -- --json  # the same, as facts
 `relaxable="false"` في مخطط BPMN، فلا يمكن لأي حزمة محتوى إسقاطها.
 
 الانضباط الكامل: مهارة
-[`repo-conversion`](../reference/skill-instructions/repo-conversion.html).
+[`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }}).
 
 ## 7. رؤيته منشورًا
 
@@ -338,7 +338,7 @@ beans <id> --status in-progress   # claim an item
 > يزيل التكرار أبدًا. وإعادة تنفيذ خطوة برمجية دون التحقق من الوجود المسبق
 > أنتج **14,688** عنصر bean مكرر في folio واحد خلال ظهيرة يوم واحد. ويوجد
 > التحقق في مهارة
-> [`todo-manager`](../reference/skill-instructions/todo-manager.html).
+> [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}).
 
 يُظهر خطاف `SessionStart` الخطة في بداية كل جلسة، وتُتيح أداة
 `work_plan_prime` في MCP الواجهة نفسها لأي وكيل متصل.

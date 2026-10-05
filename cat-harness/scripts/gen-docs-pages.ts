@@ -64,6 +64,7 @@ import { isTodoPage, todoPageHtml } from "./todo-page.ts";
 import { beanDefsDir, beanFindings, blockEdges, blockedBy, blocksOf, readBeans } from "./beans.js";
 import { milestoneRollup } from "./milestone-rollup.js";
 import { missingTopLevelKeys } from "./lib/json-shape.ts";
+import { publishedPagePath } from "./lib/jekyll-permalink.ts";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { THEMES, themeById } from "../schemas/themes.js";
@@ -101,6 +102,7 @@ const SOURCE_LOCALE = sourceLocale(INSTANCE_ROOT);
 // `content/` — without tripping the folio-emptiness gate.
 const SRC_DIR = join(INSTANCE_ROOT, "content", "docs");
 const OUT_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT));
+
 /**
  * The forge this checkout points at.
  *
@@ -1481,7 +1483,7 @@ function processHierarchy(): Record<string, string[]> {
         // `href="{{ "/x.html" | ... }}"`, which terminates the attribute at
         // the second character of the Liquid tag — valid Liquid, broken HTML,
         // and it renders as a link to the empty string.
-        pageHref: (page, node) => `{{ '/${page}.html' | relative_url }}#${node}`,
+        pageHref: (page, node) => `{{ '/${publishedPagePath(OUT_DIR, page)}' | relative_url }}#${node}`,
         // Each todo's own page (#1908) — a directory, so the href ends in `/`.
         todoPageHref: (id) => `{{ '/${todoPageSitePath(id)}' | relative_url }}`,
       }),
@@ -1527,7 +1529,7 @@ function processHierarchy(): Record<string, string[]> {
         todoPageHtml(item, {
           // The block's RENDERING, from the todo page two levels down. A fact
           // about renderings, so it lives on the page and never on the todo.
-          ...(item.target ? { targetHref: `../../${item.target.page}.html#${item.target.node}` } : {}),
+          ...(item.target ? { targetHref: `../../${publishedPagePath(OUT_DIR, item.target.page)}#${item.target.node}` } : {}),
         }),
         "data",
       );

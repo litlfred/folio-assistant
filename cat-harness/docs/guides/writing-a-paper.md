@@ -176,7 +176,7 @@ Two deliberate exclusions:
 > ```
 
 Each block carries typed front-matter validated against the
-[content-object model](../api/). A definition block, for example:
+[content-object model]({{ '/api/' | relative_url }}). A definition block, for example:
 
 ```markdown
 ---
@@ -204,7 +204,7 @@ Ask the agent to draft prose and statements; review and refine conversationally.
 
 A mock of the chat-driven authoring session:
 
-![Mock chat: the author and the assistant drafting blocks](../assets/img/mock-chat.svg)
+![Mock chat: the author and the assistant drafting blocks]({{ '/assets/img/mock-chat.svg' | relative_url }})
 
 ## Step 4 — Formalize in Lean
 {: #step-4-formalize-in-lean data-fa-label="sec:guides-writing-a-paper-step-4-formalize-in-lean" }
@@ -278,7 +278,7 @@ The agent renders a PDF (and/or HTML) with the paper adapter.
 > **Assistant:** *(calls `paper_render_pdf`, then `paper_preview`)* Rendered
 > `harmonic-series.pdf` (3 pages). Preview below.
 
-![Mock screenshot: rendered PDF preview in the viewer](../assets/img/mock-viewer.svg)
+![Mock screenshot: rendered PDF preview in the viewer]({{ '/assets/img/mock-viewer.svg' | relative_url }})
 
 You can set rendering preferences (engine, scope, math renderer) via the
 `paper_preferences` tool:
@@ -337,10 +337,10 @@ beans <id> --status resolved
 
 - [Content types — papers & books](../content-types.html#scientific-papers--books)
 - Skill contracts:
-  [`latex-authoring`](../reference/skills/latex-authoring.html),
-  [`lean-formalization`](../reference/skills/lean-formalization.html),
-  [`proof-verification`](../reference/skills/proof-verification.html)
-- [TypeScript API reference](../api/) — the block model in detail
+  [`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}),
+  [`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}),
+  [`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }})
+- [TypeScript API reference]({{ '/api/' | relative_url }}) — the block model in detail
 - [Architecture](../architecture.html) — how the paper adapter is wired
 
 > **Note on the screenshots.** The images above are *mockups* illustrating the

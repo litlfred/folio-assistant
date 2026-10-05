@@ -209,7 +209,7 @@ bun run scan:repo -- --json  # то же самое в виде фактов
 как `relaxable="false"` в BPMN, поэтому никакой пакет контента не может отменить его через декларацию.
 
 Полный регламент: навык
-[`repo-conversion`](../reference/skill-instructions/repo-conversion.html).
+[`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }}).
 
 ## 7. Просмотр опубликованного результата
 
@@ -335,7 +335,7 @@ beans <id> --status in-progress   # зарезервировать задачу
 > ничего не дедуплицирует. Повторный запуск автоматизированного шага без проверки существования
 > привел к появлению **14 688** дубликатов задач beans в одном фолио всего за один день. Проверка
 > описана в навыке
-> [`todo-manager`](../reference/skill-instructions/todo-manager.html).
+> [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}).
 
 Хук `SessionStart` отображает план в начале каждой сессии, а инструмент
 MCP `work_plan_prime` предоставляет этот же интерфейс любому подключенному агенту.

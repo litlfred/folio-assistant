@@ -19,7 +19,7 @@ A feature request turned into agreed, signed-off requirements and delivered, wit
 
 - **Called by:** no call activity names this process
 - **Calls:** [CRDM close-out](crdm-close.html), [CRDM data model](crdm-data-model.html), [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html), [CRDM — link the work to an issue](crdm-issue-linking.html), [CRDM Phase 1 — needs](crdm-needs.html), [CRDM Phases 2–4 — BPA and requirements](crdm-requirements-definition.html), [CRDM Phase 5 — beans and sign-off](crdm-signoff.html)
-- **Presented on:** [CRDM methodology — The process](../crdm-methodology.html#the-process)
+- **Presented on:** [CRDM methodology — The process](../docs/cat-harness/crdm-methodology.html#the-process)
 
 ## Lanes — who acts
 

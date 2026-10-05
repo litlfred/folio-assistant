@@ -17,11 +17,11 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 > التثبيت هو النصف الأسهل. ما يجب تشغيله **قبل أن تدفع (push)** هو
-> [`platform-gates`](../reference/skill-instructions/platform-gates.html) —
+> [`platform-gates`]({{ '/reference/skill-instructions/platform-gates.html' | relative_url }}) —
 > فاجتياز `bun test` ليس هو اجتياز البوابات، وتُستمد القائمة من
 > سير عمل CI بدلاً من أن تكون مكتوبة نصيًا. وإذا كنت تضع folio-assistant
 > فوق مستودع موجود بالفعل، فاقرأ
-> [`repo-conversion`](../reference/skill-instructions/repo-conversion.html) أولاً.
+> [`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }}) أولاً.
 
 ## المتطلبات الأساسية
 

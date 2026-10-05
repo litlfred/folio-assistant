@@ -53,6 +53,8 @@ import "../schemas/glossary-graph-typology.js";
 import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer, replacementIri, termIri } from "../schemas/namespaces.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import { gitFiles } from "../schemas/git-corpus.ts";
+import { siteDirFor } from "../schemas/cat-harness.js";
+import { publishedHref } from "./lib/jekyll-permalink.ts";
 import {
   CLASS_GLOSSES,
   PROPERTY_GLOSSES,
@@ -287,7 +289,11 @@ export function buildVocabulary(
       // (owner, bean `xsqm`), and a definition has one home per layer.
       isDefinedBy: conceptSchemeIri(l),
       layer: l,
-      ...(g.seeAlso ? { seeAlso: new URL(g.seeAlso, `${vocabularyIri().replace(/\/ns$/, "/")}`).href } : {}),
+      // `seeAlso` is authored as the page's SOURCE location; where Jekyll
+      // publishes it differs for the docs-folder pages (bean `kc7k`).
+      ...(g.seeAlso
+        ? { seeAlso: new URL(publishedHref(join(ROOT, siteDirFor(ROOT)), g.seeAlso).replace(/^\//, ""), `${vocabularyIri().replace(/\/ns$/, "/")}`).href }
+        : {}),
       // A term that restated a published standard: still defined, so data
       // carrying its IRI resolves, and saying which property replaced it
       // (owner, 2026-09-30, bean `xsqm`).

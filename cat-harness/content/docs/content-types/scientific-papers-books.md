@@ -15,7 +15,7 @@ machine-checked **Lean 4** formalization and rendered through **LaTeX**.
 
 - **Source model** — content is a tree of typed *blocks* (`definition`,
   `theorem`, `lemma`, `proof`, `equation`, `prose`, …). See the
-  [TypeScript API reference](api/) for `Block`, `Chapter`, and `Paper`.
+  [TypeScript API reference]({{ '/api/' | relative_url }}) for `Block`, `Chapter`, and `Paper`.
 - **Formalization** — `lean-formalization` and `proof-verification` skills drive
   Lean; each theorem-like block can be tracked against its Lean counterpart, and
   every `sorry` is auditable.
@@ -47,8 +47,8 @@ permits what the profile forbids, which is why `content_profile_check` has a
 second rule beyond "is this kind allowed".
 
 Relevant skill schemas:
-[`latex-authoring`](reference/skills/latex-authoring.html),
-[`lean-formalization`](reference/skills/lean-formalization.html),
-[`proof-verification`](reference/skills/proof-verification.html).
+[`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}),
+[`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}),
+[`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }}).
 
 ---

@@ -89,8 +89,8 @@ start:
 
 | Where | What it gives you |
 |---|---|
-| [Skill schema reference](../reference/skills/) | generated input/output contract per skill |
-| [Skill instructions](../reference/skill-instructions/) | generated full instruction bodies |
+| [Skill schema reference]({{ '/reference/skills/' | relative_url }}) | generated input/output contract per skill |
+| [Skill instructions]({{ '/reference/skill-instructions/' | relative_url }}) | generated full instruction bodies |
 | [Skills & roles](../skills.html) | how skills, roles, and capabilities compose |
 
 Both `reference/` directories are **generated** — never hand-edit them.
@@ -216,8 +216,8 @@ Watching a sibling PR: `/watch <pr|branch>`.
 | Question | Answer |
 |---|---|
 | Project commands, conventions | `AGENTS.md` (the agent-generic source of truth) |
-| What a skill does | `skills/**/`, or the generated [instruction bodies](../reference/skill-instructions/) |
-| A skill's typed contract | [Skill schema reference](../reference/skills/) |
+| What a skill does | `skills/**/`, or the generated [instruction bodies]({{ '/reference/skill-instructions/' | relative_url }}) |
+| A skill's typed contract | [Skill schema reference]({{ '/reference/skills/' | relative_url }}) |
 | What a QA criterion means | `content/pipeline/qa-criteria-registry.ts` — descriptions are the spec |
 | The block schema | `schemas/types.ts` |
 | The QA sidecar schema | `schemas/block-qa.ts` |

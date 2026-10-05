@@ -9,7 +9,7 @@ how to describe a declaration, a directory and a kind; everything else is
 contributed by the layer that introduces it. A harness that adds a content kind
 adds its Schema in the same change, or the kind is unvalidated and its documents
 are told apart by shape — which is the failure
-[`directory-conventions`](reference/skill-instructions/directory-conventions.html)
+[`directory-conventions`]({{ '/reference/skill-instructions/directory-conventions.html' | relative_url }})
 names when it says **the files declare what they are**.
 
 *Used for*: validation at read time, the generated schema reference, and the

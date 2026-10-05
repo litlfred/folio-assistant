@@ -11,7 +11,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 # 技能与角色
 {: .no_toc }
 
-本页面是 folio-assistant 中所有**技能**（skill）与**角色**（role）的总览清单，并阐述了它们如何与大语言模型（LLM）协同工作。关于各个技能的类型化输入/输出契约，请参阅[技能模式参考](../reference/skills/)。
+本页面是 folio-assistant 中所有**技能**（skill）与**角色**（role）的总览清单，并阐述了它们如何与大语言模型（LLM）协同工作。关于各个技能的类型化输入/输出契约，请参阅[技能模式参考]({{ '/reference/skills/' | relative_url }})。
 
 1. TOC
 {:toc}
@@ -33,9 +33,9 @@ flowchart TD
     Cap --> Req[要求<br/>必须满足的门禁条件]
 ```
 
-1. **技能（Skill）** — 具备文档记录且受模式（schema）约束的工作单元（例如 `lean-formalization`）。智能体使用 `skill_list` MCP 工具发现技能，并使用 `skill_fetch` 加载技能的操作指南。每项技能都有类型化的[输入/输出契约](../reference/skills/)。
+1. **技能（Skill）** — 具备文档记录且受模式（schema）约束的工作单元（例如 `lean-formalization`）。智能体使用 `skill_list` MCP 工具发现技能，并使用 `skill_fetch` 加载技能的操作指南。每项技能都有类型化的[输入/输出契约]({{ '/reference/skills/' | relative_url }})。
 2. **技能包（Skill package）** — 一组相关技能的集合，同时声明了其 Docker/运行时依赖项（`package-manifest.json`）。
-3. **角色（参与者）／Role (actor)** — 智能体*代表谁*行动。**参与者**（actor）由于其所在的 BPMN 泳道而承担某种**角色**（role）。参与者可以**做什么**由 `policies/` 中的 W3C ODRL 策略定义，而非角色本身的固有属性。在每个任务开始前，执行器都会检查身份验证、角色分配、策略及内容访问权限（[`task-authorization`](../reference/skill-instructions/task-authorization.html)）；HTTP 路由也通过 `src/core/rbac.ts` 查询相同的策略。
+3. **角色（参与者）／Role (actor)** — 智能体*代表谁*行动。**参与者**（actor）由于其所在的 BPMN 泳道而承担某种**角色**（role）。参与者可以**做什么**由 `policies/` 中的 W3C ODRL 策略定义，而非角色本身的固有属性。在每个任务开始前，执行器都会检查身份验证、角色分配、策略及内容访问权限（[`task-authorization`]({{ '/reference/skill-instructions/task-authorization.html' | relative_url }})）；HTTP 路由也通过 `src/core/rbac.ts` 查询相同的策略。
 4. **能力（Capability）** — 具体的运行环境能力（例如 `latex-compiler`、`lean-toolchain`）。技能需要特定能力支持；`check_dependencies` 会对这些能力进行探测检测。
 5. **门禁要求（Requirement）** — 在阶段推进之前或推进期间必须满足的门禁关卡（例如 `commit-hygiene`、`lean-verification`）。
 
@@ -52,8 +52,8 @@ flowchart TD
 | 层次 | 位置 | 状态 |
 |-------|----------|--------|
 | **定义**（角色、所需能力、门禁要求、路由模式、生命周期阶段、模式引用） | `.claude/skills/local/<skill>.json` | ✅ 全部 22 项创作技能 — 由 `scripts/validate-skills.ts` 在 CI 中验证 |
-| **类型化契约**（输入/输出 JSON Schema） | `schemas/skills/<skill>/` | ✅ 全部 22 项 — 参见[参考](../reference/skills/) |
-| **指令正文**（LLM 加载的文字操作指南） — 可在[技能指令](../reference/skill-instructions/)参考中查阅 | `skills/authoring/content-lifecycle/*.md`、`skills/folio-*-adapter/*.md`、`src/skills/*.md` | ✅ lifecycle、agent、platform-bundle 以及 **folio-document-adapter** 技能；⏳ **authoring-math / authoring-who-smart-guidelines 正文待补充**（这些技能包已提供清单 + JSON 定义） |
+| **类型化契约**（输入/输出 JSON Schema） | `schemas/skills/<skill>/` | ✅ 全部 22 项 — 参见[参考]({{ '/reference/skills/' | relative_url }}) |
+| **指令正文**（LLM 加载的文字操作指南） — 可在[技能指令]({{ '/reference/skill-instructions/' | relative_url }})参考中查阅 | `skills/authoring/content-lifecycle/*.md`、`skills/folio-*-adapter/*.md`、`src/skills/*.md` | ✅ lifecycle、agent、platform-bundle 以及 **folio-document-adapter** 技能；⏳ **authoring-math / authoring-who-smart-guidelines 正文待补充**（这些技能包已提供清单 + JSON 定义） |
 | **技能包**（Docker/运行时依赖项） | `skills/<package>/package-manifest.json` | ✅ 全部四个技能包 |
 
 所以，*是的，这些技能确实存在* — 表现为结构化定义与类型化模式，且生命周期和智能体技能已随附详细的文本指南。`skill_fetch` MCP 工具当前提供 `src/skills/*.md` 指令正文；创作技能的文本正文是后续待补充的内容（它们所属的定义和契约均已就绪）。
@@ -64,31 +64,31 @@ flowchart TD
 
 | 技能 | 阶段 | 用途 |
 |-------|-------|---------|
-| [`content-plan`](../reference/skills/content-plan.html) | plan | 范围、团队、时间线、治理 |
-| [`content-author`](../reference/skills/content-author.html) | author | 创建结构化制品 |
-| [`content-validate`](../reference/skills/content-validate.html) | validate | 检查模式（schema）与约束 |
-| [`content-review`](../reference/skills/content-review.html) | review | 正式审阅与批准 |
-| [`content-test`](../reference/skills/content-test.html) | test | 端到端 QA / 构建绿灯（build green） |
-| [`content-publish`](../reference/skills/content-publish.html) | publish | 渲染与部署 |
-| [`content-feedback`](../reference/skills/content-feedback.html) | feedback | 收集与分流反馈 |
+| [`content-plan`]({{ '/reference/skills/content-plan.html' | relative_url }}) | plan | 范围、团队、时间线、治理 |
+| [`content-author`]({{ '/reference/skills/content-author.html' | relative_url }}) | author | 创建结构化制品 |
+| [`content-validate`]({{ '/reference/skills/content-validate.html' | relative_url }}) | validate | 检查模式（schema）与约束 |
+| [`content-review`]({{ '/reference/skills/content-review.html' | relative_url }}) | review | 正式审阅与批准 |
+| [`content-test`]({{ '/reference/skills/content-test.html' | relative_url }}) | test | 端到端 QA / 构建绿灯（build green） |
+| [`content-publish`]({{ '/reference/skills/content-publish.html' | relative_url }}) | publish | 渲染与部署 |
+| [`content-feedback`]({{ '/reference/skills/content-feedback.html' | relative_url }}) | feedback | 收集与分流反馈 |
 | `content-retire` | retire | 弃用 / 归档 |
 
 ### 文档与政策指南：`folio-document-adapter`
 
 | 技能 | 用途 |
 |-------|---------|
-| [`document-authoring`](../reference/skills/document-authoring.html) | 在纯文本（prose）folio 中创建并修订块 |
-| [`document-structure`](../reference/skills/document-structure.html) | 章节与小节 — 添加、删除、重新排序 |
-| [`normative-statements`](../reference/skills/normative-statements.html) | 承载建议、要求或规则 |
-| [`document-publishing`](../reference/skills/document-publishing.html) | Markdown → HTML / PDF，无需 TeX |
+| [`document-authoring`]({{ '/reference/skills/document-authoring.html' | relative_url }}) | 在纯文本（prose）folio 中创建并修订块 |
+| [`document-structure`]({{ '/reference/skills/document-structure.html' | relative_url }}) | 章节与小节 — 添加、删除、重新排序 |
+| [`normative-statements`]({{ '/reference/skills/normative-statements.html' | relative_url }}) | 承载建议、要求或规则 |
+| [`document-publishing`]({{ '/reference/skills/document-publishing.html' | relative_url }}) | Markdown → HTML / PDF，无需 TeX |
 
 ### 论文与专著：`authoring-math`
 
 | 技能 | 用途 |
 |-------|---------|
-| [`lean-formalization`](../reference/skills/lean-formalization.html) | 在 Lean 4 中形式化陈述与证明 |
-| [`latex-authoring`](../reference/skills/latex-authoring.html) | 撰写 LaTeX 文档 |
-| [`proof-verification`](../reference/skills/proof-verification.html) | 验证证明，审计 `sorry` / 公理 |
+| [`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}) | 在 Lean 4 中形式化陈述与证明 |
+| [`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}) | 撰写 LaTeX 文档 |
+| [`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }}) | 验证证明，审计 `sorry` / 公理 |
 | `scientific-visualization` | 图表与示意图 |
 | `hypothesis-generation` | 提出猜想与研究方向 |
 | `scientific-critical-thinking` | 对论证进行对抗性审阅（adversarial review） |
@@ -97,14 +97,14 @@ flowchart TD
 
 | 技能 | 用途 |
 |-------|---------|
-| [`l2-dak-authoring`](../reference/skills/l2-dak-authoring.html) | L2 DAK 制品（数据字典等） |
-| [`l3-fhir-authoring`](../reference/skills/l3-fhir-authoring.html) | 通过 FSH 编写 L3 FHIR 资源 |
-| [`bpmn-authoring`](../reference/skills/bpmn-authoring.html) | BPMN 2.0 业务流程 |
-| [`dmn-authoring`](../reference/skills/dmn-authoring.html) | DMN 决策表 |
-| [`terminology-management`](../reference/skills/terminology-management.html) | 代码系统（code systems）与值集（value sets） |
-| [`fhir-validation`](../reference/skills/fhir-validation.html) | 对照 FHIR Profile（配置文件）进行验证 |
-| [`ig-publication`](../reference/skills/ig-publication.html) | 构建并发布 IG（实施指南） |
-| [`quality-control`](../reference/skills/quality-control.html) | 质量保证（QA）门禁 |
+| [`l2-dak-authoring`]({{ '/reference/skills/l2-dak-authoring.html' | relative_url }}) | L2 DAK 制品（数据字典等） |
+| [`l3-fhir-authoring`]({{ '/reference/skills/l3-fhir-authoring.html' | relative_url }}) | 通过 FSH 编写 L3 FHIR 资源 |
+| [`bpmn-authoring`]({{ '/reference/skills/bpmn-authoring.html' | relative_url }}) | BPMN 2.0 业务流程 |
+| [`dmn-authoring`]({{ '/reference/skills/dmn-authoring.html' | relative_url }}) | DMN 决策表 |
+| [`terminology-management`]({{ '/reference/skills/terminology-management.html' | relative_url }}) | 代码系统（code systems）与值集（value sets） |
+| [`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) | 对照 FHIR Profile（配置文件）进行验证 |
+| [`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}) | 构建并发布 IG（实施指南） |
+| [`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}) | 质量保证（QA）门禁 |
 
 ### 智能体／平台技能（`src/skills`）
 
@@ -128,7 +128,7 @@ LLM 在仓库中高效工作所使用的技能（通过 `skill_fetch` 加载，�
 
 ### 平台技能包（`skills/folio-core`、`folio-assistant-core/skills/content/folio-document-adapter`、`folio-assistant-sci/skills/content/folio-paper-adapter`）
 
-更大型的**平台技能包**（platform bundles），其中两个从 qou 内容仓库迁移而来（参见[迁移记录](migrations/2026-06-29-platform-skills-migration.html)以及 issue [#27](https://github.com/litlfred/folio-assistant/issues/27)）。它们与具体内容无关，旨在同步到任何 folio 中：
+更大型的**平台技能包**（platform bundles），其中两个从 qou 内容仓库迁移而来（参见[迁移记录]({{ '/zh/migrations/2026-06-29-platform-skills-migration.html' | relative_url }})以及 issue [#27](https://github.com/litlfred/folio-assistant/issues/27)）。它们与具体内容无关，旨在同步到任何 folio 中：
 
 | 技能包 | 技能数 | 范围 |
 |--------|-------:|-------|
@@ -138,7 +138,7 @@ LLM 在仓库中高效工作所使用的技能（通过 `skill_fetch` 加载，�
 
 不可削减的 QOU 物理专用技能已被跳过；其余技能中特定于 QOU 的示例均已完成通用化。每个技能包都附带一份 `package-manifest.json`。
 
-> 技能**模式（schema）**（创作技能的类型化输入/输出）自动生成到[技能模式参考](../reference/skills/)中 — 绝不会与框架验证的规则脱节。
+> 技能**模式（schema）**（创作技能的类型化输入/输出）自动生成到[技能模式参考]({{ '/reference/skills/' | relative_url }})中 — 绝不会与框架验证的规则脱节。
 
 ---
 
@@ -213,8 +213,8 @@ flowchart LR
 ## 另请参阅
 
 - [发布工作流](publication-workflow.html) — BPMN 泳道：哪个步骤运行哪项技能，以及由谁做出决策
-- [技能指令](../reference/skill-instructions/) — LLM 加载的文本指南正文
-- [技能模式参考](../reference/skills/) — 每项技能的类型化输入/输出
+- [技能指令]({{ '/reference/skill-instructions/' | relative_url }}) — LLM 加载的文本指南正文
+- [技能模式参考]({{ '/reference/skills/' | relative_url }}) — 每项技能的类型化输入/输出
 - [内容类型](content-types.html) — 每种内容类型使用的技能
 - [架构](architecture.html) — RBAC、适配器与 MCP 服务器
 - [入门指南](getting-started.html) — 运行您的第一项技能

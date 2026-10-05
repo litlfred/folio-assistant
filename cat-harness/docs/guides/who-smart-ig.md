@@ -67,10 +67,10 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 
 | Step | Skill |
 |------|-------|
-| Author FSH (profiles, extensions, value sets, examples) | [`l3-fhir-authoring`](../reference/skills/l3-fhir-authoring.html) |
-| Validate against FHIR profiles | [`fhir-validation`](../reference/skills/fhir-validation.html) |
-| QC gates | [`quality-control`](../reference/skills/quality-control.html) |
-| Publish the IG | [`ig-publication`](../reference/skills/ig-publication.html) |
+| Author FSH (profiles, extensions, value sets, examples) | [`l3-fhir-authoring`]({{ '/reference/skills/l3-fhir-authoring.html' | relative_url }}) |
+| Validate against FHIR profiles | [`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) |
+| QC gates | [`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}) |
+| Publish the IG | [`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}) |
 
 ## Workflow
 {: #workflow data-fa-label="sec:guides-who-smart-ig-workflow" }
@@ -101,10 +101,10 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 
 Every trigger in a DAK repository — a push to a PR branch, `/validate`, `/deploy`, a
 push to `main`, a release — runs the same full IG Publisher build, and a one-line edit to
-one profile costs all of it. [Proposal: incremental IG build](../proposals/ig-incremental-build.html)
+one profile costs all of it. [Proposal: incremental IG build]({{ '/proposals/ig-incremental-build.html' | relative_url }})
 measures why that is avoidable: on `smart-immunizations` the median artefact has no
 dependents and the 90th percentile has six, so almost every edit invalidates a handful
-of resources and the index. [Its overview](../proposals/ig-incremental-build-overview.html)
+of resources and the index. [Its overview]({{ '/proposals/ig-incremental-build-overview.html' | relative_url }})
 lists the eleven changes and pins each to the stage of the review and publish pipeline
 where it runs.
 
@@ -119,9 +119,9 @@ to today's full build, and only a green build of `main` or a release seeds the c
 |------|----------------|
 | Restore and seed the derived state | `ig-cache.sh` (proposed; the `lake-cache.sh` contract) |
 | Compute the cone of the change | [`content/pipeline/fsh-cone.ts`](https://github.com/litlfred/folio-assistant/blob/main/content/pipeline/fsh-cone.ts) |
-| Validate the cone | [`fhir-validation`](../reference/skills/fhir-validation.html) over the warm validator service (proposed MCP tools) |
-| Rebuild the meta-index, assemble the site | `ig_metaindex_rebuild` (proposed), [`ig-publication`](../reference/skills/ig-publication.html) |
-| QC gates, deploy | [`quality-control`](../reference/skills/quality-control.html), [`content-publish`](../reference/skills/content-publish.html) |
+| Validate the cone | [`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) over the warm validator service (proposed MCP tools) |
+| Rebuild the meta-index, assemble the site | `ig_metaindex_rebuild` (proposed), [`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}) |
+| QC gates, deploy | [`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}), [`content-publish`]({{ '/reference/skills/content-publish.html' | relative_url }}) |
 
 ## A mock session
 {: #a-mock-session data-fa-label="sec:guides-who-smart-ig-a-mock-session" }

@@ -1,6 +1,8 @@
 # Jekyll configuration for the folio-assistant documentation site.
 #
-# Published to GitHub Pages at https://litlfred.github.io/folio-assistant/
+# Published to GitHub Pages at https://litlfred.github.io/folio-assistant/ — the
+# pages authored in this folder at .../folio-assistant/docs/cat-harness/ (see
+# `defaults` below).
 # Built and deployed by .github/workflows/docs-site.yml.
 #
 # Theme: just-the-docs (via remote_theme — the jekyll-remote-theme plugin is
@@ -46,6 +48,63 @@ remote_theme: just-the-docs/just-the-docs@v0.12.0
 # Site lives under /folio-assistant/ on litlfred.github.io.
 baseurl: "/folio-assistant"
 url: "https://litlfred.github.io"
+
+# THE PAGES AUTHORED IN THIS FOLDER publish under /docs/cat-harness/; EVERYTHING
+# ELSE THIS TREE BUILDS KEEPS ITS ADDRESS.
+#
+# Owner, 2026-10-05 (issue #2188, PR #2189, bean `kc7k`): cat-harness's own
+# docs-folder pages move — `architecture.md` → `/docs/cat-harness/architecture.html`,
+# `fr/architecture.md` → `/docs/cat-harness/fr/architecture.html` — with no
+# redirects at the old addresses ("clean break/migration"). Every harness
+# LANDING page keeps its URL: `index.md` (`permalink: /`) and each locale's
+# `index.md` below; the composed instances (`/smart-base/` …); cat-harness's
+# viewers under `/cat-harness/`; and the kind directories this tree publishes
+# (`/processes/`, `/beans/`, `/glossary/`, `/qa/`, `/reference/`, `/uml/`,
+# `/slices/` …), which are not docs-folder pages. `proposals/` and
+# `requirements/` ARE authored here, but each is also a declared graph kind
+# with its own navbar tile at `/proposals/` and `/requirements/`, so they stay.
+# `bootstrap/` stays because `/bootstrap/` is a harness landing path.
+#
+# A permalink, not a second build or a post-build move: `baseurl` stays the
+# SITE's, so every `relative_url` in every page still resolves, and Jekyll's
+# own `page.url` — which the nav, search and `relative_url` all read — is the
+# one answer to where a page is. A page that sets its own `permalink` keeps it.
+#
+# The route `docs/cat-harness` is the `docs` kind and this instance's declared
+# name (`scripts/docs-route.ts`); `docs-route.test.ts` holds every permalink
+# here to it, and checks that every authored page is covered and no landing
+# page is. Precedence: Jekyll applies the scope with the LONGER path, so
+# `fr/index.md` beats `fr/*.md`. An overlay `_config.yml` that sets `defaults`
+# REPLACES this list (`compose-docs.ts`: lists replace), so it must restate it.
+defaults:
+  - scope: { path: "*.md" }
+    values: { permalink: "/docs/cat-harness/:path/:basename:output_ext" }
+  - scope: { path: "guides" }
+    values: { permalink: "/docs/cat-harness/:path/:basename:output_ext" }
+  - scope: { path: "architecture" }
+    values: { permalink: "/docs/cat-harness/:path/:basename:output_ext" }
+  - scope: { path: "research-and-analysis" }
+    values: { permalink: "/docs/cat-harness/:path/:basename:output_ext" }
+  - scope: { path: "ar/*.md" }
+    values: { permalink: "/docs/cat-harness/:path/:basename:output_ext" }
+  - scope: { path: "ar/index.md" }
+    values: { permalink: "/ar/" }
+  - scope: { path: "es/*.md" }
+    values: { permalink: "/docs/cat-harness/:path/:basename:output_ext" }
+  - scope: { path: "es/index.md" }
+    values: { permalink: "/es/" }
+  - scope: { path: "fr/*.md" }
+    values: { permalink: "/docs/cat-harness/:path/:basename:output_ext" }
+  - scope: { path: "fr/index.md" }
+    values: { permalink: "/fr/" }
+  - scope: { path: "ru/*.md" }
+    values: { permalink: "/docs/cat-harness/:path/:basename:output_ext" }
+  - scope: { path: "ru/index.md" }
+    values: { permalink: "/ru/" }
+  - scope: { path: "zh/*.md" }
+    values: { permalink: "/docs/cat-harness/:path/:basename:output_ext" }
+  - scope: { path: "zh/index.md" }
+    values: { permalink: "/zh/" }
 
 # just-the-docs options
 search_enabled: true

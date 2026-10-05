@@ -10,7 +10,7 @@ The *L3* layer turns an L2 DAK into a computable **FHIR Implementation Guide**:
 - **Quality control** gates (`quality-control`)
 
 Relevant skill schemas:
-[`l3-fhir-authoring`](reference/skills/l3-fhir-authoring.html),
-[`fhir-validation`](reference/skills/fhir-validation.html),
-[`ig-publication`](reference/skills/ig-publication.html),
-[`quality-control`](reference/skills/quality-control.html).
+[`l3-fhir-authoring`]({{ '/reference/skills/l3-fhir-authoring.html' | relative_url }}),
+[`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}),
+[`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}),
+[`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}).

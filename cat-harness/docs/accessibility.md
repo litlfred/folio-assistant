@@ -19,7 +19,7 @@ page answers them:
 
 They turn out to be the same question asked from two ends, which is why they
 share a page. The implementing skill is
-[`interaction-modality`](reference/skill-instructions/interaction-modality.html).
+[`interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }}).
 
 1. TOC
 {:toc}
@@ -121,7 +121,7 @@ of making the editor accessible substitutes for them.
 | | where |
 |---|---|
 | Agent-facing preferences, committed, read at session start | `interaction/interaction.json`, surfaced by `scripts/session-start-coord-sweep.sh` |
-| The rules an agent follows when asking | [`interaction-modality`](reference/skill-instructions/interaction-modality.html) |
+| The rules an agent follows when asking | [`interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }}) |
 | Reader-facing controls on this site | the gear in the sidebar header — larger text, higher contrast, underlined links, reduced motion |
 | Reduced motion honoured without being asked | `prefers-reduced-motion` media query, and it seeds the panel's default |
 
@@ -216,6 +216,6 @@ Four ways to do this, in increasing order of ambition. Only the first is built.
 ## See also
 
 - [Getting started](getting-started.html) — the intent decision table in use
-- [`interaction-modality` skill](reference/skill-instructions/interaction-modality.html)
+- [`interaction-modality` skill]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }})
 - [Publication workflow](publication-workflow.html) — every process in the repo
-- [Options for workflow state in beans](proposals/workflow-state-in-beans.html)
+- [Options for workflow state in beans]({{ '/proposals/workflow-state-in-beans.html' | relative_url }})

@@ -538,5 +538,5 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 ---
 
 Looking for what the platform *is* rather than what it publishes?
-[The platform]({{ '/platform.html' | relative_url }}) carries the actor, role,
+[The platform]({{ '/docs/cat-harness/platform.html' | relative_url }}) carries the actor, role,
 process and skill model.

@@ -20,14 +20,14 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 > **القواعد الكامنة وراء هذه الصفحة.** تصف الهندسة المعمارية الهيكل؛ بينما تحكم
 > المهارات القرارات. المحولات مقابل ملفات التعريف —
-> [`content-profiles`](../reference/skill-instructions/content-profiles.html).
+> [`content-profiles`]({{ '/reference/skill-instructions/content-profiles.html' | relative_url }}).
 > أين تنتمي العقدة الجديدة قبل إنشائها —
-> [`placement`](../reference/skill-instructions/placement.html). وتخطيط المستودع
+> [`placement`]({{ '/reference/skill-instructions/placement.html' | relative_url }}). وتخطيط المستودع
 > وكل نوع من أنواع الرسوم البيانية —
-> [`directory-conventions`](../reference/skill-instructions/directory-conventions.html).
+> [`directory-conventions`]({{ '/reference/skill-instructions/directory-conventions.html' | relative_url }}).
 > وتركيب واجهة MCP والتحقق منها —
-> [`mcp-assembly`](../reference/skill-instructions/mcp-assembly.html) و
-> [`mcp-contract`](../reference/skill-instructions/mcp-contract.html).
+> [`mcp-assembly`]({{ '/reference/skill-instructions/mcp-assembly.html' | relative_url }}) و
+> [`mcp-contract`]({{ '/reference/skill-instructions/mcp-contract.html' | relative_url }}).
 > وحيثما تختلف هذه الصفحة مع إحدى المهارات، فإن المهارة هي التي تسود.
 
 إن folio-assistant هو **خادم MCP** يضم طبقة **محولات محتوى** قابلة للتوصيل،
@@ -97,7 +97,7 @@ flowchart TD
 
 ## المهارات وحزم المهارات
 
-الـ **مهارة** (skill) هي وحدة عمل موثقة ومقيدة بمخطط بياني (مثل `lean-formalization`). وتُجمع المهارات في **حزم** تعلن عن تبعات Docker وبيئة التشغيل الخاصة بها عبر ملف `package-manifest.json`. ويكتشف النموذج اللغوي الكبير (LLM) المهارات عبر `skill_list` ويحمّل التعليمات عبر `skill_fetch`. وتوجد القائمة الكاملة للمهارات والأدوار — وكيفية تكاملها مع النموذج اللغوي الكبير (RBAC، والقدرات، والمتطلبات) — في صفحة [المهارات والأدوار](skills.html)؛ كما يُنشر عقد المدخلات/المخرجات لكل مهارة في [مرجع مخططات المهارات](../reference/skills/).
+الـ **مهارة** (skill) هي وحدة عمل موثقة ومقيدة بمخطط بياني (مثل `lean-formalization`). وتُجمع المهارات في **حزم** تعلن عن تبعات Docker وبيئة التشغيل الخاصة بها عبر ملف `package-manifest.json`. ويكتشف النموذج اللغوي الكبير (LLM) المهارات عبر `skill_list` ويحمّل التعليمات عبر `skill_fetch`. وتوجد القائمة الكاملة للمهارات والأدوار — وكيفية تكاملها مع النموذج اللغوي الكبير (RBAC، والقدرات، والمتطلبات) — في صفحة [المهارات والأدوار](skills.html)؛ كما يُنشر عقد المدخلات/المخرجات لكل مهارة في [مرجع مخططات المهارات]({{ '/reference/skills/' | relative_url }}).
 
 ## نموذج كائنات المحتوى
 
@@ -107,7 +107,7 @@ flowchart TD
 - `schemas/constraints.ts` — مخططات Zod وقواعد القيود
 - `schemas/builders.ts` — بناة الكائنات التي تم التحقق منها (`definition()`، و`theorem()`، …)
 
-وهذه العناصر موثقة في [مرجع واجهة برمجة تطبيقات TypeScript](api/) المُولّد.
+وهذه العناصر موثقة في [مرجع واجهة برمجة تطبيقات TypeScript]({{ '/ar/api/' | relative_url }}) المُولّد.
 
 ## التحكم في الوصول — ODRL، يتم التحقق منه قبل كل مهمة
 
@@ -116,7 +116,7 @@ flowchart TD
 - **مُنفِّذ BPMN**، قبل كل مهمة وقرار (`src/workflow/authorize.ts`): هل الفاعل موثق، ومؤهل لدور المسار (lane)، ومصرح له بـ `perform-task` هنا، ومسموح له بلمس المحتوى؟ وهو استشاري اليوم: فالرفض `deny` أو عدم تطابق الدور يؤدي إلى الرفض، ويتم تسجيل الحالة `unknown`.
 - **مسارات HTTP**، من خلال `src/core/rbac.ts`: يحدد كل مسار الإجراء الذي ينفذه (`content-authoring`، و`review-comments`، و`adjudication`)، وتُعد جلسات بوابة المصادقة (auth-gateway) فاعلين معلنين تكمن منحهم في `policies/http-gateway.jsonld`. وهنا تؤدي الحالة `unknown` إلى الرفض.
 
-حتى المسألة #1207 (2026-09-23)، كان `rbac.ts` سلمًا منفصلاً من viewer < collaborator < owner، ولم يكن المنفذ يتحقق من أي شيء. والانضباط المتبع هو مهارة [`task-authorization`](../reference/skill-instructions/task-authorization.html).
+حتى المسألة #1207 (2026-09-23)، كان `rbac.ts` سلمًا منفصلاً من viewer < collaborator < owner، ولم يكن المنفذ يتحقق من أي شيء. والانضباط المتبع هو مهارة [`task-authorization`]({{ '/reference/skill-instructions/task-authorization.html' | relative_url }}).
 
 ## تهيئة خطة العمل (عبر أطر العمل المختلفة)
 

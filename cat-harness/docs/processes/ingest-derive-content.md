@@ -27,7 +27,7 @@ work plan in beans/.
 
 - **Called by:** [L1 document ingestion — a document to the L1 source knowledge graph](l1-document-ingestion.html)
 - **Calls:** none
-- **Presented on:** [Document ingestion — Derive content](../document-ingestion.html#derive-content)
+- **Presented on:** [Document ingestion — Derive content](../docs/cat-harness/document-ingestion.html#derive-content)
 
 ## Lanes — who acts
 

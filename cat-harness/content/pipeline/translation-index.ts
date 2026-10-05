@@ -73,6 +73,11 @@ import { dirname, extname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse as parseYaml } from "yaml";
 
+import { pagePermalink, permalinkDefaultsIn, type PermalinkDefault } from "../../scripts/lib/jekyll-permalink.ts";
+
+/** Re-exported so a caller that already reads pages through this module needs no second import. */
+export { permalinkDefaultsIn };
+
 import { LOCALE_RTL, UN_LOCALES } from "../../schemas/translation.ts";
 import { isTranslatable } from "../../schemas/translation-tools.ts";
 import { ownDirectoryById, siteDirFor } from "../../schemas/cat-harness.ts";
@@ -220,13 +225,19 @@ export function pageKey(url: string): string {
  *
  * `permalink` wins when the page declares one — `docs/index.md` declares `/`,
  * and composing `/index.html` for it instead would key the home page under
- * something the nav never links to. Otherwise it is the default page
- * permalink style, `/:path/:basename.html`.
+ * something the nav never links to. Next, the `_config.yml` `defaults` entry
+ * that covers the page, which is how cat-harness's docs-folder pages publish
+ * under `/docs/cat-harness/` (bean `kc7k`) — pass them as `defaults`, read
+ * with `permalinkDefaultsIn(site)`. Otherwise it is the default page
+ * permalink style, `/:path/:basename.html`. The rule itself lives in
+ * `scripts/lib/jekyll-permalink.ts`, so this and every other generator agree.
  */
-export function pageUrl(relPathFromSite: string, frontMatter: Record<string, unknown>): string {
-  const pm = frontMatter.permalink;
-  if (typeof pm === "string" && pm.length > 0) return pm.startsWith("/") ? pm : `/${pm}`;
-  return "/" + relPathFromSite.split(sep).join("/").replace(/\.md$/i, ".html");
+export function pageUrl(
+  relPathFromSite: string,
+  frontMatter: Record<string, unknown>,
+  defaults: readonly PermalinkDefault[] = [],
+): string {
+  return pagePermalink(relPathFromSite.split(sep).join("/"), frontMatter, defaults);
 }
 
 // ── Front matter ────────────────────────────────────────────────
@@ -461,6 +472,9 @@ export function buildTranslationIndex(instanceRoot: string): BuildResult {
     url: string;
     title: string;
   }
+  // The site's own permalink defaults: where a page is published is Jekyll's
+  // answer, not the source path's (bean `kc7k`).
+  const permalinks = permalinkDefaultsIn(site);
   const sources = new Map<string, Page>();
   const translations: Page[] = [];
   const unreadable = new Map<string, string>();
@@ -491,7 +505,7 @@ export function buildTranslationIndex(instanceRoot: string): BuildResult {
       rel,
       fm,
       lang,
-      url: pageUrl(rel, fm),
+      url: pageUrl(rel, fm, permalinks),
       title: typeof fm.title === "string" ? fm.title : rel,
     };
     if (lang === src) sources.set(pageKey(page.url), page);
@@ -572,7 +586,7 @@ export function buildTranslationIndex(instanceRoot: string): BuildResult {
     } catch {
       sfm = {};
     }
-    const key = pageKey(pageUrl(sourceRel, sfm));
+    const key = pageKey(pageUrl(sourceRel, sfm, permalinks));
     const known = sources.get(key);
     if (!known) {
       findings.push({

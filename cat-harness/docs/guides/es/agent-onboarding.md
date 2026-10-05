@@ -72,8 +72,8 @@ a mano, compruebe si ya existe uno.
 | `skills/folio-core/` | independiente del contenido: coordinación, observadores (watchers), QA, renderizado, bibliografía |
 | `folio-assistant-sci/skills/content/folio-paper-adapter/` | artículos: Lean, LaTeX, demostraciones, simuladores |
 | `smart-base/skills/content/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
-| [Referencia de esquemas de habilidades](../../reference/skills/) | contrato de entrada/salida generado por habilidad |
-| [Instrucciones de habilidades](../../reference/skill-instructions/) | cuerpos de instrucciones completos generados |
+| [Referencia de esquemas de habilidades]({{ '/reference/skills/' | relative_url }}) | contrato de entrada/salida generado por habilidad |
+| [Instrucciones de habilidades]({{ '/reference/skill-instructions/' | relative_url }}) | cuerpos de instrucciones completos generados |
 | [Habilidades y roles](../../skills.html) | cómo se componen las habilidades, los roles y las capacidades |
 
 Ambos directorios `reference/` son **generados** — nunca los edite a mano.
@@ -187,8 +187,8 @@ Monitorear un PR hermano: `/watch <pr|branch>`.
 | Pregunta | Respuesta |
 |---|---|
 | Comandos del proyecto, convenciones | `AGENTS.md` (la fuente de verdad genérica para agentes) |
-| Qué hace una habilidad | `skills/**/`, o los [cuerpos de instrucciones](../../reference/skill-instructions/) generados |
-| El contrato tipado de una habilidad | [Referencia de esquemas de habilidades](../../reference/skills/) |
+| Qué hace una habilidad | `skills/**/`, o los [cuerpos de instrucciones]({{ '/reference/skill-instructions/' | relative_url }}) generados |
+| El contrato tipado de una habilidad | [Referencia de esquemas de habilidades]({{ '/reference/skills/' | relative_url }}) |
 | Qué significa un criterio de QA | `content/pipeline/qa-criteria-registry.ts` — las descripciones son la especificación |
 | El esquema de bloques | `schemas/types.ts` |
 | El esquema del sidecar de QA | `schemas/block-qa.ts` |
