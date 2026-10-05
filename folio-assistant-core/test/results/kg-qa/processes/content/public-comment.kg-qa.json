@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_Publication",
-    "path": "processes/content/draft-to-publication.bpmn"
+    "id": "Process_PublicComment",
+    "path": "processes/content/public-comment.bpmn"
   },
-  "source_hash": "sha256:52a8edac070c300145782ec1e0ed352dfb5f8761fea73b742b6a51a9ca2d5eca",
+  "source_hash": "sha256:e33f5f51da6ad3d4092dbba24121bd14715131c2f1610807e63d28678fbc8489",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -35,49 +35,41 @@
       "result": "fail",
       "findings": [
         {
-          "where": "Task_BuildDraft",
-          "detail": "names skill \"content-publish\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "Task_PublicationQa",
-          "detail": "names skill \"quality-control\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "CallActivity_Editing",
-          "detail": "names skill \"content-author\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "Task_CirculateDraft",
-          "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "CallActivity_PublicComment",
+          "where": "Task_Ingest",
           "detail": "names skill \"public-comment\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_ReviewDraft",
-          "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+          "where": "Task_Triage",
+          "detail": "names skill \"public-comment\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_SmeSignoff",
-          "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+          "where": "Task_Assign",
+          "detail": "names skill \"public-comment\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_OpenChangeBeans",
-          "detail": "names skill \"content-feedback\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+          "where": "Task_CommitteeRecommends",
+          "detail": "names skill \"public-comment\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_AuthorizeRelease",
-          "detail": "names skill \"content-publish\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+          "where": "Task_EditorDecides",
+          "detail": "names skill \"public-comment\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_PublishRelease",
-          "detail": "names skill \"content-publish\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+          "where": "Task_AuthorEdits",
+          "detail": "names skill \"public-comment\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Incorporate",
+          "detail": "names skill \"public-comment\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Withdraw",
+          "detail": "names skill \"public-comment\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         }
       ]
     },
     "decision-ref-resolves": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     },
     "role-ref-resolves": {
@@ -125,8 +117,17 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Gateway_Triage",
+          "detail": "\"Duplicate, plain editorial, or to be weighed?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        },
+        {
+          "where": "Gateway_ChangesDocument",
+          "detail": "\"Does the decision change the document?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -150,9 +151,9 @@
     }
   },
   "totals": {
-    "pass": 16,
-    "fail": 1,
-    "n/a": 8,
+    "pass": 14,
+    "fail": 2,
+    "n/a": 9,
     "unknown": 0
   }
 }
