@@ -154,12 +154,15 @@ export const PATTERNS: readonly ConflictPattern[] = [
       // above refused a merge of #2082 on 2026-10-04 with "no declared
       // pattern"; the per-instance smart-base page refused the next one.
       "cat-harness/docs/cat-harness/document-kinds/**/index.html",
+      // node-kind:pages writes these whole from the node-kind index and the
+      // nodes the typologies' directories hold (#2195): /<locale>/<declaring>/<kind>/.
+      "cat-harness/docs/en/**/index.html",
       // NOT cat-harness/docs/fsh-guts/index.md any more: it is derived from a
       // graph kept on a branch, so it is built at publish and never committed
       // (bean 0b8c, #2230), and a merge can no longer meet it.
     ],
     strategy: "take-base",
-    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, tools:viz, processes:viz, state:visualizer, translation:status, document-kinds:viz), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone; tools/index.md (rendered-by tools-viewer) added 2026-10-03 after #1987 refused on it twice.",
+    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, tools:viz, processes:viz, state:visualizer, translation:status, document-kinds:viz, node-kind:pages), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone; tools/index.md (rendered-by tools-viewer) added 2026-10-03 after #1987 refused on it twice.",
   },
   {
     id: "viewer-namespace",
