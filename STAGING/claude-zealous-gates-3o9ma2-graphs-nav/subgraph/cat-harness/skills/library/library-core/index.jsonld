@@ -1,0 +1,152 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/library/library-core/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+      "@type": "cat-harness:SkillPackage",
+      "name": "library-core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adopt-methodology-from-source",
+      "@type": "bootstrap:Skill",
+      "name": "adopt-methodology-from-source",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e60155c5e05004bfa4a91656bc0c65c9b1462943bbabc0c0d682cbc4a48160e8",
+        "bytes": 3574,
+        "sha256": "e60155c5e05004bfa4a91656bc0c65c9b1462943bbabc0c0d682cbc4a48160e8"
+      },
+      "title": "Adopt a methodology from a source document"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/asset-extraction",
+      "@type": "bootstrap:Skill",
+      "name": "asset-extraction",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6ca7d262b77db27d5d30792328470d3b428ac02d6188e14be2c0bd0a716af6fb",
+        "bytes": 8978,
+        "sha256": "6ca7d262b77db27d5d30792328470d3b428ac02d6188e14be2c0bd0a716af6fb"
+      },
+      "title": "Asset extraction — the index goes in, the contents do not"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-lists",
+      "@type": "bootstrap:Skill",
+      "name": "code-lists",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a3d0f1f2a03fe169bcaa4373ebe5f41680c796ae358c4f2fa1a10d281f70a11c",
+        "bytes": 2692,
+        "sha256": "a3d0f1f2a03fe169bcaa4373ebe5f41680c796ae358c4f2fa1a10d281f70a11c"
+      },
+      "title": "Code lists"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-acquisition",
+      "@type": "bootstrap:Skill",
+      "name": "content-acquisition",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6653b52382b04b008ddcac69a3bf51bbec32e5b39d25a1a06db8781504ed4a39",
+        "bytes": 5211,
+        "sha256": "6653b52382b04b008ddcac69a3bf51bbec32e5b39d25a1a06db8781504ed4a39"
+      },
+      "title": "Acquisition is the step before ingestion, and it had no home"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-terms",
+      "@type": "bootstrap:Skill",
+      "name": "glossary-terms",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/70d4536bab2258800a7f7f58f2cee35fc6e637730917a34ac223e6937ffd0a91",
+        "bytes": 13800,
+        "sha256": "70d4536bab2258800a7f7f58f2cee35fc6e637730917a34ac223e6937ffd0a91"
+      },
+      "title": "Glossary terms"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/library-ingestion",
+      "@type": "bootstrap:Skill",
+      "name": "library-ingestion",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/84b6a8e089337f24f52c4086d25247326ef5b2dbbb090ef9871be153736524bf",
+        "bytes": 7636,
+        "sha256": "84b6a8e089337f24f52c4086d25247326ef5b2dbbb090ef9871be153736524bf"
+      },
+      "title": "Library ingestion — the basic flow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/literature-search",
+      "@type": "bootstrap:Skill",
+      "name": "literature-search",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/60105da32f942ac7da3398115ba0b7c27eafb2528dfa5d948bf926c47a9e8fc0",
+        "bytes": 7897,
+        "sha256": "60105da32f942ac7da3398115ba0b7c27eafb2528dfa5d948bf926c47a9e8fc0"
+      },
+      "title": "Literature search — finding the source a citation points at"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/term-disagreement",
+      "@type": "bootstrap:Skill",
+      "name": "term-disagreement",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/59d771a0118b0734847bd9539facc5fba3407aa523319657ee685da9fda40ca9",
+        "bytes": 7473,
+        "sha256": "59d771a0118b0734847bd9539facc5fba3407aa523319657ee685da9fda40ca9"
+      },
+      "title": "Term disagreement — the extractor and the terminology disagree"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/translation-manager",
+      "@type": "bootstrap:Skill",
+      "name": "translation-manager",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9c51de21e1f9b1bb5959765badf3bd4ab59700e24b1f0aae04c7303fa9a16451",
+        "bytes": 32316,
+        "sha256": "9c51de21e1f9b1bb5959765badf3bd4ab59700e24b1f0aae04c7303fa9a16451"
+      },
+      "title": "Translation manager"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-naming",
+      "@type": "bootstrap:Skill",
+      "name": "upload-naming",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1566e13c2876b202a7b618c0185e61cb78808dac48b393c9dc346b1a1472c6f7",
+        "bytes": 10979,
+        "sha256": "1566e13c2876b202a7b618c0185e61cb78808dac48b393c9dc346b1a1472c6f7"
+      },
+      "title": "Upload naming — the name is normalised, not the link escaped"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-routes",
+      "@type": "bootstrap:Skill",
+      "name": "upload-routes",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/99be9306c20748dc836fd690092ece23feefc4463e9109611ad7272239edaa71",
+        "bytes": 10332,
+        "sha256": "99be9306c20748dc836fd690092ece23feefc4463e9109611ad7272239edaa71"
+      },
+      "title": "Two mechanisms and a persona"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uploads-watch",
+      "@type": "bootstrap:Skill",
+      "name": "uploads-watch",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2be82b12bf3dd96b9daa3f3d617deea056fb7a6ccb22b06adb29c4f489510ddd",
+        "bytes": 2717,
+        "sha256": "2be82b12bf3dd96b9daa3f3d617deea056fb7a6ccb22b06adb29c4f489510ddd"
+      },
+      "title": "Watching the queue"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/library/library-core/library-ingestion/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/library/library-core",
+  "path": "skills/library/library-core/"
+}
