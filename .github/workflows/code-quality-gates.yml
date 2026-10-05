@@ -602,9 +602,77 @@ jobs:
     # `continue-on-error` precisely because it changes nothing about what is
     # asserted — the drift still fails, in its own lane.
     #
-    # Adding a gate step here rather than to `typescript` is the default now.
-    # `typescript` is the three checks its name promises; everything else is a
-    # repository gate and belongs in this job.
+    # Adding a gate step to the repository gates rather than to `typescript` is
+    # the default now. `typescript` is the three checks its name promises;
+    # everything else is a repository gate and belongs in `gates-kg` or
+    # `gates-docs` below — whichever is SHORTER on the last run, since the
+    # slower of the two is what this check waits for.
+    #
+    # ## Why this job runs nothing itself — bean `doxj`
+    #
+    # It was ONE job of 85 sequential steps, and at 8m33s (main run
+    # 37253911158, 2026-10-05) it was the workflow's critical path: every
+    # other job had finished minutes earlier. One step was 4m09s of that —
+    # `check:cat-harness-standalone`, a whole `bun test` of cat-harness in a
+    # rehearsed layout (#1977) — and the other ~80 added up to about as much
+    # again. A job is as slow as the SUM of its steps; parallel jobs are as
+    # slow as the LONGEST. So the steps run as three parts on three machines:
+    #
+    #   gates-kg          workflow, process, skill and knowledge-graph gates
+    #   gates-docs        instance boundaries, generated docs, READMEs and
+    #                     translations — with `translation:drift:check` LAST
+    #   gates-standalone  the cat-harness standalone ratchet, alone
+    #
+    # Moved whole and unchanged, in their original order inside each part;
+    # every step is a read-only judgement of the checked-out tree (judge mode
+    # writes nothing — see `qa-publish`), so no step reads what an earlier one
+    # wrote and the split cannot reorder a dependency. It also SHRINKS the
+    # masking `om30` was about: a red step now skips only the rest of its own
+    # part, not of all 85.
+    #
+    # This job keeps the check NAME — `Repository gates (hard)` is what branch
+    # protection, the beans and `check-verdict.ts` cite — and is green only
+    # when all three parts SUCCEEDED. `if: always()` so a failed or cancelled
+    # part turns it red rather than SKIPPING it, the vacuous pass bean `0qjq`
+    # measured. The same shape as the `typescript` and `e2e` roll-ups.
+    needs: [gates-kg, gates-docs, gates-standalone]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: every part of the repository gates succeeded
+        env:
+          KG: ${{ needs.gates-kg.result }}
+          DOCS: ${{ needs.gates-docs.result }}
+          STANDALONE: ${{ needs.gates-standalone.result }}
+        # No `gate-shell.sh` here: this job never checks out, so the wrapper
+        # does not exist for it. See the `typescript` rollup (bean `yqc4`).
+        run: |
+          echo "kg: $KG   docs: $DOCS   standalone: $STANDALONE"
+          if [ "$KG" != "success" ] || [ "$DOCS" != "success" ] || [ "$STANDALONE" != "success" ]; then
+            {
+              echo "### ✗ Repository gates"
+              echo
+              echo "| part | result |"
+              echo "| --- | --- |"
+              echo "| workflows, skills, knowledge graph (\`gates-kg\`) | \`$KG\` |"
+              echo "| instances, docs, translations (\`gates-docs\`) | \`$DOCS\` |"
+              echo "| cat-harness standalone ratchet (\`gates-standalone\`) | \`$STANDALONE\` |"
+              echo
+              echo "This job runs nothing itself — it is red because a part above is."
+              echo "\`cancelled\` or \`skipped\` is NOT a pass: a skipped required check"
+              echo "reads as neither red nor green, which is the vacuous pass bean"
+              echo "\`0qjq\` measured. Open the named job for its own summary."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+  gates-kg:
+    # bpmn-node: Task_RepositoryGates
+    name: Repository gates — workflows, skills, knowledge graph (hard)
+    #
+    # Part 1 of 3 of `Repository gates (hard)` — bean `doxj`; the `gates`
+    # roll-up above says why the job is split and carries the check name.
+    # No `needs:` in any part, for the reason `gates` gives about `typescript`.
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -1175,6 +1243,95 @@ jobs:
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
+  gates-docs:
+    # bpmn-node: Task_RepositoryGates
+    name: Repository gates — instances, docs, translations (hard)
+    #
+    # Part 2 of 3 of `Repository gates (hard)` — bean `doxj`. Ends with
+    # `translation:drift:check`, which may be red by decision and so must be
+    # its job's last step (`check:red-gate-is-last`, bean `cpss`).
+    runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      # `check:published-packages`, below, is the one gate in this job that
+      # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
+      # beside its npm one, and a package this repository publishes has to
+      # work in both languages or neither. The gate installs that package's
+      # OWN declared test extras itself, so nothing about it is named here —
+      # but it cannot conjure an interpreter, and it treats an absent one as
+      # a FINDING rather than a skip, so this step is what keeps that finding
+      # from being the normal state. Bean `1s5s`.
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # EVERY declared tip-keyed graph on disk before any gate reads one —
+      # bean `9ofm`, the §4 `gates` row, and the answer to "which gates stop
+      # covering the store when it moves".
+      #
+      # Nine bean gates run in this job (`check:bean-parents`, `bean-blocks`,
+      # `bean-rollup`, `bean-bodies`, `bean-front-matter`, `bean-issue-links`,
+      # `bean-archive`, `bean-parent-prose`, `bean-restates-skill`), and so do
+      # `check:harness-dirs`, `check:harness-state`, `kg:audit` and
+      # `audit:coverage`. Once `beans/` is kept at the tip of its own branch
+      # the checkout no longer carries it, and a gate that joined the path
+      # would judge an absent directory — `1xhc`, a step that did not fire
+      # looking exactly like one that passed, over the store eight of those
+      # gates exist to judge.
+      #
+      # It is INERT today and that is deliberate: while no declaration keeps a
+      # graph at a branch tip, `state:mount` reports `not-enabled` and exits 0
+      # (measured). It is added BEFORE the cutover rather than with it so that
+      # the one irreversible commit is the declaration and the `git rm`, and
+      # not also the CI change that has to be right for them.
+      #
+      # A failed mount fails the job, and must: `state-mount.ts` keeps "could
+      # not determine" apart from "determined absent" and exits non-zero for
+      # either, so the gates below never run over a store this runner could
+      # not reach.
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
       # The same audit, over EVERY declared instance rather than the root alone.
       #
       # Not a second answer to the step above — it is the step above, with its
@@ -1477,17 +1634,6 @@ jobs:
       # anything only the monorepo has. Its first run found two such reads.
       - name: bootstrap-tools passes standing alone beside bootstrap
         run: bun run check:bootstrap-standalone
-
-      # cat-harness rehearsed the same way (bean `ho66`): its tracked files and
-      # its declared closure, laid out as sibling git repositories, `bun test`
-      # run in cat-harness. 459 tests fail there today, most of them correct
-      # tests in the wrong layer, so this is a RATCHET over the committed
-      # baseline `cat-harness-tools/scripts/standalone-baseline.json`: a new
-      # standalone failure is red; a listed one that now passes is printed with
-      # `bun run standalone:baseline`, which lowers the list, and is not red
-      # (an unstable listed test must not flip CI either way).
-      - name: cat-harness fails standalone no more than its baseline
-        run: bun run check:cat-harness-standalone
 
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
@@ -1913,6 +2059,109 @@ jobs:
       # told, while "the deliberate red is last" is a rule the file enforces.
       - name: translations have not drifted from their source
         run: bun run translation:drift:check
+
+  gates-standalone:
+    # bpmn-node: Task_RepositoryGates
+    name: Repository gates — cat-harness standalone ratchet (hard)
+    #
+    # Part 3 of 3 of `Repository gates (hard)` — bean `doxj`. ONE step,
+    # alone, because it is half the old job's wall-clock by itself: 4m09s of
+    # 8m33s on main run 37253911158. It runs a whole `bun test` of
+    # cat-harness in a rehearsed sibling layout, so it is as long as the
+    # suite it runs; in its own job that time overlaps the other parts
+    # instead of adding to them.
+    runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      # `check:published-packages`, below, is the one gate in this job that
+      # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
+      # beside its npm one, and a package this repository publishes has to
+      # work in both languages or neither. The gate installs that package's
+      # OWN declared test extras itself, so nothing about it is named here —
+      # but it cannot conjure an interpreter, and it treats an absent one as
+      # a FINDING rather than a skip, so this step is what keeps that finding
+      # from being the normal state. Bean `1s5s`.
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # EVERY declared tip-keyed graph on disk before any gate reads one —
+      # bean `9ofm`, the §4 `gates` row, and the answer to "which gates stop
+      # covering the store when it moves".
+      #
+      # Nine bean gates run in this job (`check:bean-parents`, `bean-blocks`,
+      # `bean-rollup`, `bean-bodies`, `bean-front-matter`, `bean-issue-links`,
+      # `bean-archive`, `bean-parent-prose`, `bean-restates-skill`), and so do
+      # `check:harness-dirs`, `check:harness-state`, `kg:audit` and
+      # `audit:coverage`. Once `beans/` is kept at the tip of its own branch
+      # the checkout no longer carries it, and a gate that joined the path
+      # would judge an absent directory — `1xhc`, a step that did not fire
+      # looking exactly like one that passed, over the store eight of those
+      # gates exist to judge.
+      #
+      # It is INERT today and that is deliberate: while no declaration keeps a
+      # graph at a branch tip, `state:mount` reports `not-enabled` and exits 0
+      # (measured). It is added BEFORE the cutover rather than with it so that
+      # the one irreversible commit is the declaration and the `git rm`, and
+      # not also the CI change that has to be right for them.
+      #
+      # A failed mount fails the job, and must: `state-mount.ts` keeps "could
+      # not determine" apart from "determined absent" and exits non-zero for
+      # either, so the gates below never run over a store this runner could
+      # not reach.
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
+      # cat-harness rehearsed the same way (bean `ho66`): its tracked files and
+      # its declared closure, laid out as sibling git repositories, `bun test`
+      # run in cat-harness. 459 tests fail there today, most of them correct
+      # tests in the wrong layer, so this is a RATCHET over the committed
+      # baseline `cat-harness-tools/scripts/standalone-baseline.json`: a new
+      # standalone failure is red; a listed one that now passes is printed with
+      # `bun run standalone:baseline`, which lowers the list, and is not red
+      # (an unstable listed test must not flip CI either way).
+      - name: cat-harness fails standalone no more than its baseline
+        run: bun run check:cat-harness-standalone
 
   gates-unrun:
     # bpmn-node: Task_UnrunGates
@@ -2830,6 +3079,24 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
+      # Chromium's download, cached across shards and runs — bean `doxj`.
+      # "Install Chromium" measured 22 s in EACH of the three shards (main run
+      # 37253911158). Keyed on the EXACT `@playwright/test` version package.json
+      # pins, because a Playwright release expects one browser build: a key on
+      # anything looser could restore a browser this Playwright does not drive.
+      # The install step below still runs on a hit — `--with-deps` installs the
+      # OS libraries, which no cache holds, and `install` itself skips a browser
+      # already present — so a miss and a hit run the same command.
+      - name: Playwright version, for the browser cache key
+        id: playwright
+        run: echo "version=$(jq -r '.devDependencies["@playwright/test"] // .dependencies["@playwright/test"]' package.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright's Chromium
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+
       - name: Install Chromium
         run: npx --yes playwright install --with-deps chromium
 
@@ -3012,6 +3279,15 @@ jobs:
     # what keeps a red publish from masking a gate: it fails in its own lane
     # and the gates' verdict is untouched.
     #
+    # It waits for the two CORPUS parts of the repository gates (`gates-kg`,
+    # `gates-docs`) and not for the `gates` roll-up, bean `doxj`: the roll-up
+    # also waits for `gates-standalone`, a ~4-minute `bun test` of cat-harness
+    # in a rehearsed layout that judges no QA corpus and writes nothing this
+    # job publishes. Waiting on it would put this job's ~45 s back on the
+    # critical path for nothing. So the recorded result is the two parts'
+    # combined one — `success` only when both succeeded — and the standalone
+    # ratchet's verdict stays where it is decided, on `Repository gates (hard)`.
+    #
     # ## It is not a gate, and `gates.ts` knows it
     #
     # This is the only job here with `contents: write`, and `gates.ts` skips a
@@ -3035,7 +3311,7 @@ jobs:
     # leaves a writer failed, a family empty or a file unclaimed is INCOMPLETE,
     # this job fails, and `qa:publish --completeness` refuses to store it — a
     # partial entry is never published as if it were the commit's record.
-    needs: [gates]
+    needs: [gates-kg, gates-docs]
     if: ${{ always() && (github.event_name == 'push' || github.event_name == 'pull_request') }}
     runs-on: ubuntu-latest
     permissions:
@@ -3114,7 +3390,9 @@ jobs:
 
       - name: Publish this run's QA results (skips fork PRs with a notice)
         env:
-          GATES_RESULT: ${{ needs.gates.result }}
+          # The worst of the two parts: failure, then cancelled, then skipped,
+          # else success — one word, as `needs.gates.result` was.
+          GATES_RESULT: ${{ contains(join(needs.*.result, ','), 'failure') && 'failure' || (contains(join(needs.*.result, ','), 'cancelled') && 'cancelled' || (contains(join(needs.*.result, ','), 'skipped') && 'skipped' || 'success')) }}
         run: bun run qa:publish --github --completeness "$RUNNER_TEMP/qa-refresh.json" --gates-result "$GATES_RESULT"
 
       # Bean `cxcn` (reader audit F7): the corpus VALIDATION the unit tests did

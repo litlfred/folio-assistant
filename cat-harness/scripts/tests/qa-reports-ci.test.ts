@@ -61,7 +61,9 @@ describe("the publish job", () => {
   const job = doc.jobs["qa-publish"]!;
 
   test("is a separate job after the gates, run whatever they concluded, on push and pull_request", () => {
-    expect(job.needs).toEqual(["gates"]);
+    // The two corpus parts of the repository gates, not the `gates` roll-up,
+    // which also waits for the standalone ratchet (bean `doxj`).
+    expect(job.needs).toEqual(["gates-kg", "gates-docs"]);
     expect(job.if).toContain("always()");
     expect(job.if).toContain("'push'");
     expect(job.if).toContain("'pull_request'");
@@ -77,7 +79,7 @@ describe("the publish job", () => {
     expect(publishes({})).toBe(false);
     for (const all of [false, true]) {
       expect(loadGates(REPO, { all }).filter((g) => g.command.includes("qa:publish"))).toEqual([]);
-      expect(loadGates(REPO, { all }).some((g) => g.job === "gates")).toBe(true);
+      expect(loadGates(REPO, { all }).some((g) => g.job === "gates-kg")).toBe(true);
     }
     // Scoped to the gates workflow: the raw reader still SEES the line, so a
     // caller asking "what does CI run" (commandsCiRuns) is not blinded.
