@@ -482,7 +482,7 @@
     for (var i = 0; i < terms.length; i++) {
       var t = terms[i];
       if (!t) continue;
-      var regex = new RegExp("(" + t.replace(/[.*+?^${}()|[\]\]/g, "\\$&") + ")", "gi");
+      var regex = new RegExp("(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi");
       escaped = escaped.replace(regex, "<mark class=\"search-mark\">$1</mark>");
     }
     return escaped;
