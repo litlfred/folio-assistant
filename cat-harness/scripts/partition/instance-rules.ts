@@ -286,6 +286,13 @@ export const RULES: Rule[] = [
       // which instance it is writing for either.
       "scripts/lib/navbar-geometry.ts",
       "scripts/gen-navbar-geometry-css.ts",
+      // The rail's shared assets (bean `lnoy`): `navbar.css` from `navbarCss()`
+      // and `navbar.js` bundled from `navbar-client.ts`, the browser half of
+      // `renderRailRegions`. HARNESS for the same reason as `navbar.ts`: the
+      // platform's chrome on every instance's pages, written into the site's
+      // own asset directory through `siteDirFor`.
+      "scripts/gen-navbar-assets.ts",
+      "scripts/navbar-client.ts",
       // Its sibling: same question, same answer. `compose-docs.ts` reads the
       // `docs` declarations, works out which is the base and which the
       // overlay from `scope`, and lays them down in order. Every decision it
