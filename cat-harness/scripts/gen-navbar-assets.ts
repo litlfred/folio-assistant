@@ -21,11 +21,11 @@
  *
  * @module cat-harness/scripts/gen-navbar-assets
  */
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { siteDirFor } from "../schemas/cat-harness.ts";
-import { NAVBAR_JS } from "./lib/harness-rail.ts";
+import { NAVBAR_JS, RAIL_DATA_DIR, railPageOf } from "./lib/harness-rail.ts";
 import { NAVBAR_CSS, navbarCss } from "./lib/navbar.ts";
 
 const ROOT = join(import.meta.dir, "..");
@@ -71,6 +71,27 @@ if (import.meta.main) {
     } else {
       writeFileSync(paths[k], want[k]);
       console.log(`✓ wrote ${paths[k]}`);
+    }
+  }
+  // Rail data no committed page names any more: this generator family's own
+  // stale output (a changed rail moves its pages to a new content-named file).
+  const site = paths.js.slice(0, paths.js.length - NAVBAR_JS.length);
+  const dataDir = join(site, RAIL_DATA_DIR);
+  if (existsSync(dataDir)) {
+    const named = new Set<string>();
+    for (const rel of new Bun.Glob("**/*.html").scanSync({ cwd: site })) {
+      const page = railPageOf(readFileSync(join(site, rel), "utf-8"));
+      if (page) named.add(page.data);
+    }
+    for (const f of readdirSync(dataDir)) {
+      if (!/^rail-[a-z0-9]+\.js$/.test(f) || named.has(f.replace(/\.js$/, ""))) continue;
+      if (check) {
+        console.error(`✗ ${join(RAIL_DATA_DIR, f)} is named by no page — run \`bun run navbar:assets\``);
+        stale++;
+      } else {
+        rmSync(join(dataDir, f));
+        console.log(`✓ removed ${join(RAIL_DATA_DIR, f)} — no page names it`);
+      }
     }
   }
   if (check && stale) process.exit(1);

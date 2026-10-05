@@ -81,3 +81,37 @@ describe("a page railed from shared data", () => {
     expect(nav).toContain('href="../cat-harness/schemas/"');
   });
 });
+
+describe("the committed rail data and the pages that name it agree (bean lnoy)", () => {
+  // Every viewer generator writes the shared file its pages name, and the
+  // file is named by its content — so when a rail changes, the pages move to
+  // a new name and the old file is left behind. Neither direction may drift:
+  // a page naming a missing file draws only its Home link; a file no page
+  // names is stale output. `bun run navbar:assets` removes the latter.
+  const { js } = navbarAssetPaths();
+  const site = js.slice(0, js.length - NAVBAR_JS.length);
+  const dataDir = site + RAIL_DATA_DIR;
+  const files = new Set(
+    existsSync(dataDir) ? [...new Bun.Glob("rail-*.js").scanSync({ cwd: dataDir })].map((f) => f.replace(/\.js$/, "")) : [],
+  );
+  const named = new Set<string>();
+  const missing: string[] = [];
+  for (const rel of new Bun.Glob("**/*.html").scanSync({ cwd: site })) {
+    const page = railPageOf(readFileSync(site + rel, "utf-8"));
+    if (!page) continue;
+    named.add(page.data);
+    if (!files.has(page.data)) missing.push(`${rel} names ${page.data}`);
+  }
+
+  test("there are pages railed from shared data — an empty scan is not a clean one", () => {
+    expect(named.size).toBeGreaterThan(0);
+  });
+
+  test("every page's shared data is committed", () => {
+    expect(missing).toEqual([]);
+  });
+
+  test("every committed data file is named by a page — run `bun run navbar:assets` to remove the rest", () => {
+    expect([...files].filter((f) => !named.has(f))).toEqual([]);
+  });
+});
