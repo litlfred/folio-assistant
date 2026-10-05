@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-05T14:11:27Z
+updated_at: 2026-10-05T16:45:24Z
 parent: folio-assistant-fs43
 ---
 
@@ -145,3 +145,5 @@ So the end state is **no reader resolves a branch name through a central file.**
 So the cutover never happened, or it was reverted, and the branch's manifest overstates its role. Fixing this belongs to the merge-pipeline owner (hfag/najo): either cut over (stop tracking on main and declare the source), or mark the branch seed-only. Not done here.
 
 Separately: `state-drift.declaredBranches` read only top-level instance entries, so a store declared on a NESTED entry (`beans/beans.json`) would still read as undeclared. It now reads `nestedDirectories` too, the same set `state:mount`'s resolver already sees.
+
+_2026-10-05_ — Step 3 begun on #2192. The two shell mirrors read the CONSUMING folio's declaration (a directory with graphKind `lake-cache` and `storage.keyedBy: "family"` in its `<instance>.json`): `lake-cache.sh` (d9dc953a83b6) makes the declared prefix primary and the built-in name the newest legacy; `lake-cache-fetch.sh` (02cab3614eae) tries the declared candidate first. qou declares it since litlfred/qou#7523 (merged 7eff5e5c3). Still on the central table: the two Python mirrors, both restore actions and lake-cache-refresh.yml. Step 4 (delete the table) still waits on qou having new-name branches.
