@@ -10,10 +10,10 @@
  */
 import { afterEach, describe, expect, test } from "bun:test";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 
 import { contentAt, resolveTipLocation, tipLocations } from "../branch-store.js";
-import { mountState, report } from "../state-mount.js";
+import { delegatedReport, delegatedStores, mountState, report } from "../state-mount.js";
 import { cleanup, git, MANIFEST, stateFixture, TIP_SOURCE, BRANCH } from "./state-fixture.js";
 
 afterEach(cleanup);
@@ -179,5 +179,21 @@ describe("failure is LOUD, and says what not to believe", () => {
     const r = mountState({ repoRoot: root, store });
     expect(r.state).toBe("failed");
     expect(r.graphs[0]?.reason).toContain("keyed by commit");
+  });
+});
+
+describe("a store state:mount does not mount names the Tool that does (bean j9cs)", () => {
+  test("this repository's family and route stores each name their Tool", () => {
+    const stores = delegatedStores(resolve(import.meta.dir, "..", "..", ".."));
+    const site = stores.find((s) => s.id === "site");
+    expect(site).toMatchObject({ keyedBy: "route", branch: "gh-pages", tool: "gh-pages" });
+    const ast = stores.find((s) => s.id === "smart-trust-ast");
+    expect(ast).toMatchObject({ keyedBy: "family", tool: "ig-cache", invoke: "fhir-harness/scripts/ig-cache.sh" });
+  });
+
+  test("a store with no declared Tool says so rather than leaving the cell blank", () => {
+    const out = delegatedReport([{ id: "x", path: "x/", branch: "p/", keyedBy: "family" }]);
+    expect(out).toContain("none declared");
+    expect(delegatedReport([])).toBe("");
   });
 });

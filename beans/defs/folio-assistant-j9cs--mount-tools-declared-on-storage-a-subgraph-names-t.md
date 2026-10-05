@@ -21,7 +21,7 @@ A directory's `storage` names the Tool that mounts it, as a declared Tool node (
 ## Done when
 - [x] `storage` carries the mounting Tool's id, and a check refuses an id that names no declared Tool. `storage.tool`; `check:tools` (#2192). smart-trust's AST names `ig-cache`, and the site names `gh-pages`.
 - [ ] ig-cache.sh and lake-cache.sh are declared Tool nodes in the harnesses that own them, named by the fhir-ast and lake-cache declarations
-- [ ] `state:mount` dispatches through the declaration for every keying it does not implement itself
+- [x] `state:mount` dispatches through the declaration for every keying it does not implement itself. It lists each family and route store with the Tool its `storage.tool` names and that Tool's command (#2192). It does not RUN them, because a family member is chosen by a key only the caller knows.
 - [ ] the shell and Python mirrors read the prefix from the declaration (rva2), not from a central table
 
 _2026-10-05T14:33:45Z_ — Claimed by claude/gifted-fermi-t8k217 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
