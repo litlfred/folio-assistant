@@ -21,12 +21,13 @@
                   exporter="folio-assistant" exporterVersion="1">
 
   <bpmn:import namespace="https://litlfred.github.io/folio-assistant/workflows" location="editing-hci-validation.bpmn" importType="http://www.omg.org/spec/BPMN/20100524/MODEL" />
+  <bpmn:import namespace="https://litlfred.github.io/folio-assistant/workflows" location="public-comment.bpmn" importType="http://www.omg.org/spec/BPMN/20100524/MODEL" />
   <bpmn:collaboration id="Collaboration_FolioPublication">
     <bpmn:participant id="Participant_FolioPublication" name="Folio publication — one release of the folio" processRef="Process_Publication" />
   </bpmn:collaboration>
   <bpmn:process id="Process_Publication" name="Draft, review and publish" isExecutable="false">
     <bpmn:documentation>
-      folio-assistant — corpus to draft publication to officially published.
+      How the corpus becomes an officially published folio: a draft publication, its review, and the release authority's decision. folio-assistant — corpus to draft publication to officially published.
       Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
       BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
       by `bun run render:bpmn` — never hand-edit the SVG.
@@ -73,6 +74,11 @@
         <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_ReviewDraft</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_ReviewOutcome</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_PublicReview" name="Public review (commenters, review committee, editor)">
+        <bpmn:documentation>Runs in parallel with the review team and the SMEs when a draft goes out for PUBLIC comment: the circulated draft is the frozen, line-numbered review version, and every comment that comes back is placed, triaged, weighed and decided in Process_PublicComment. Like Lane_Sme it feeds the join and does not own the approve/reject gateway; an accepted comment reaches the document through its own change set, not through this gateway.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="review-coordinator"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>CallActivity_PublicComment</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Sme" name="Clinical / scientific SMEs">
         <bpmn:documentation>Runs in parallel with Lane_ReviewTeam, not after it — Gateway_ReviewJoin waits on both — but does not own the approve/reject gateway that follows: sign-off here is necessary for the join to complete and nothing more, which keeps a clinical judgement from also becoming the phase-gate call.</bpmn:documentation>
@@ -151,7 +157,16 @@
       <bpmn:incoming>G09</bpmn:incoming>
       <bpmn:outgoing>G10</bpmn:outgoing>
       <bpmn:outgoing>G11</bpmn:outgoing>
+      <bpmn:outgoing>G21</bpmn:outgoing>
     </bpmn:parallelGateway>
+    <bpmn:callActivity id="CallActivity_PublicComment" name="Public comment on the review version" calledElement="Process_PublicComment">
+      <bpmn:documentation>When the draft is released for public comment: comments returned on the frozen, line-numbered review version are placed, triaged, recommended on by the review committee and decided by the editor (public-comment.bpmn). Bean v26p, issue #197.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="public-comment" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>G21</bpmn:incoming>
+      <bpmn:outgoing>G22</bpmn:outgoing>
+    </bpmn:callActivity>
     <bpmn:userTask id="Task_ReviewDraft" name="Review the draft publication&#10;[content-review]">
       <bpmn:documentation>Content reviewer, QC reviewer and technical officer review the draft as a whole — coherence, phase-gate criteria, breaking vs non-breaking change.</bpmn:documentation>
       <bpmn:extensionElements>
@@ -171,6 +186,7 @@
     <bpmn:parallelGateway id="Gateway_ReviewJoin" name="">
       <bpmn:incoming>G12</bpmn:incoming>
       <bpmn:incoming>G13</bpmn:incoming>
+      <bpmn:incoming>G22</bpmn:incoming>
       <bpmn:outgoing>G14</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:exclusiveGateway id="Gateway_ReviewOutcome" name="Approved?">
@@ -235,6 +251,8 @@
     <bpmn:sequenceFlow id="G11" sourceRef="Gateway_ReviewFork" targetRef="Task_SmeSignoff" />
     <bpmn:sequenceFlow id="G12" sourceRef="Task_ReviewDraft" targetRef="Gateway_ReviewJoin" />
     <bpmn:sequenceFlow id="G13" sourceRef="Task_SmeSignoff" targetRef="Gateway_ReviewJoin" />
+    <bpmn:sequenceFlow id="G21" sourceRef="Gateway_ReviewFork" targetRef="CallActivity_PublicComment" />
+    <bpmn:sequenceFlow id="G22" sourceRef="CallActivity_PublicComment" targetRef="Gateway_ReviewJoin" />
     <bpmn:sequenceFlow id="G14" sourceRef="Gateway_ReviewJoin" targetRef="Gateway_ReviewOutcome" />
     <bpmn:sequenceFlow id="G15" name="no" sourceRef="Gateway_ReviewOutcome" targetRef="Task_OpenChangeBeans" />
     <bpmn:sequenceFlow id="G16" name="yes" sourceRef="Gateway_ReviewOutcome" targetRef="Task_AuthorizeRelease" />
@@ -246,7 +264,7 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_FolioPublication">
       <bpmndi:BPMNShape id="Participant_FolioPublication_di" bpmnElement="Participant_FolioPublication" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="2480" height="1050" />
+        <dc:Bounds x="160" y="80" width="2480" height="1200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_Editors_di" bpmnElement="Lane_Editors" isHorizontal="true">
         <dc:Bounds x="190" y="80" width="2450" height="150" />
@@ -266,8 +284,24 @@
       <bpmndi:BPMNShape id="Lane_Sme_di" bpmnElement="Lane_Sme" isHorizontal="true">
         <dc:Bounds x="190" y="830" width="2450" height="150" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_ProgMgr_di" bpmnElement="Lane_ProgMgr" isHorizontal="true">
+      <bpmndi:BPMNShape id="Lane_PublicReview_di" bpmnElement="Lane_PublicReview" isHorizontal="true">
         <dc:Bounds x="190" y="980" width="2450" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_PublicComment_di" bpmnElement="CallActivity_PublicComment">
+        <dc:Bounds x="1495" y="1010" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="G21_di" bpmnElement="G21">
+        <di:waypoint x="1400" y="630" />
+        <di:waypoint x="1400" y="1055" />
+        <di:waypoint x="1495" y="1055" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="G22_di" bpmnElement="G22">
+        <di:waypoint x="1625" y="1055" />
+        <di:waypoint x="1720" y="1055" />
+        <di:waypoint x="1720" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Lane_ProgMgr_di" bpmnElement="Lane_ProgMgr" isHorizontal="true">
+        <dc:Bounds x="190" y="1130" width="2450" height="150" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_CorpusUpdated_di" bpmnElement="StartEvent_CorpusUpdated">
         <dc:Bounds x="262" y="437" width="36" height="36" />
@@ -324,7 +358,7 @@
         <dc:Bounds x="1975" y="260" width="130" height="90" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_AuthorizeRelease_di" bpmnElement="Task_AuthorizeRelease">
-        <dc:Bounds x="1975" y="1010" width="130" height="90" />
+        <dc:Bounds x="1975" y="1160" width="130" height="90" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_PublishRelease_di" bpmnElement="Task_PublishRelease">
         <dc:Bounds x="2135" y="560" width="130" height="90" />
@@ -422,8 +456,8 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="G16_di" bpmnElement="G16">
         <di:waypoint x="1880" y="780" />
-        <di:waypoint x="1880" y="1055" />
-        <di:waypoint x="1975" y="1055" />
+        <di:waypoint x="1880" y="1205" />
+        <di:waypoint x="1975" y="1205" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1886" y="960" width="25" height="27" />
         </bpmndi:BPMNLabel>
@@ -434,8 +468,8 @@
         <di:waypoint x="985" y="155" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="G18_di" bpmnElement="G18">
-        <di:waypoint x="2105" y="1055" />
-        <di:waypoint x="2200" y="1055" />
+        <di:waypoint x="2105" y="1205" />
+        <di:waypoint x="2200" y="1205" />
         <di:waypoint x="2200" y="650" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="G19_di" bpmnElement="G19">

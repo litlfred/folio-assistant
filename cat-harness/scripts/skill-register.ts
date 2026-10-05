@@ -74,7 +74,7 @@
  * **Only an isolated run of one check against a known tree measures anything**,
  * which is why the table below cites per-check runs and not a `gates` summary.
  *
- * ## The seven, each measured alone, red before and green after
+ * ## The chain, each step measured alone, red before and green after
  *
  * | writer | the check it clears |
  * |---|---|
@@ -85,6 +85,22 @@
  * | `kg:audit` | `kg:audit:check` |
  * | `kg:detangle` | `kg:detangle:check` |
  * | `uml:overview` | `uml:overview:check` |
+ * | `subgraph:jsonld` | `subgraph:jsonld:check` — added 2026-10-05 (`8qyc`), below |
+ *
+ * **`subgraph:jsonld` is measured, not recalled.** #2139 went red in CI after
+ * editing three skills, on `subgraph:jsonld:check`: a skill's body is published
+ * as a content-addressed PAYLOAD (`docs/payload/sha256/<hex>`) that its
+ * subgraph index points at, so editing the body moves the hash. Measured
+ * 2026-10-05 on `main` at `da10ede3d3`, where `merge-conflict-patterns.md` had
+ * been edited without it: `subgraph:jsonld:check` exit 1 alone (2 stale
+ * payloads, 4 subgraph files); `bun run subgraph:jsonld` (28 s under load 15);
+ * then exit 0. `slice:sqlite:check` was red on the same tree for the same
+ * missing payload and went green from that one write, with no slice writer
+ * run, so it is downstream of this step rather than a step. Of the chain's
+ * other checks, `auto:docs:check`, `readme:subgraphs:check`, `docs:pages:check`
+ * and `check:undeclared-files:check` were green before and after, so the new
+ * payload files stale nothing else. It is LAST because it reads the graph
+ * the steps above write into.
  *
  * `check:ci-invocations` also goes green, and is not a step of its own: it
  * re-runs the CI invocations, one of which is step 1, so it is downstream of it.
@@ -507,7 +523,8 @@ export const STEPS: readonly Step[] = [
     write: ["lsi:viz"],
     verify: ["lsi:viz:check"],
     because:
-      "the LSI index's VIEWER PAGE, which `lsi:skills` above stales and nothing here regenerated until 2026-09-30. Measured: adding one skill left `cat-harness/docs/lsi/index.md` stale while this chain reported \"8 artefact(s) current\" — so the claim to be at a fixed point was false in exactly the way this chain exists to prevent, and it reddened `main` through `lsi:viz:check` in the Repository-gates job. The index and its page are two artefacts, and a chain that writes one and verifies only the other is a chain with a hole in it",
+      "the LSI index's VIEWER PAGE, which `lsi:skills` above stales and nothing here regenerated until 2026-09-30. Measured: adding one skill left `cat-harness/docs/lsi/index.md` stale while this chain reported \"8 artefact(s) current\" — so the claim to be at a fixed point was false in exactly the way this chain exists to prevent, and it reddened `main` through `lsi:viz:check` in the Repository-gates job. The index and its page are two artefacts, and a chain that writes one and verifies only the other is a chain with a hole in it. " +
+      "Since bean `tqjj` (2026-10-04) that measurement is the ARGUMENT RATHER THAN THE SYMPTOM, and the repair was to the PAGE rather than to this chain: the half of it that one skill edit moved — each index's size, retained share, dimension poles and findings — is no longer committed, and the docs-site build adds it with `--detail`. What `lsi:viz` writes and this step verifies is now a function of the TREE alone, so one pass settles it instead of chasing whatever was published last",
   },
   {
     write: ["kg:audit"],
@@ -523,6 +540,13 @@ export const STEPS: readonly Step[] = [
     write: ["uml:overview"],
     verify: ["uml:overview:check"],
     because: "the UML overview renders the QA tree the two steps above just wrote",
+  },
+  {
+    write: ["subgraph:jsonld"],
+    verify: ["subgraph:jsonld:check"],
+    because:
+      "a skill's BODY is a content-addressed payload its subgraph index points at, so editing it moves the hash " +
+      "(#2139 went red on exactly this); `slice:sqlite:check` reads the same payload tree and follows from this write",
   },
 ];
 
@@ -618,6 +642,18 @@ export interface Flags {
   json: boolean;
   /** Skip the committed QA sidecar. For a scratch tree that must not be dirtied. */
   noReport: boolean;
+  /**
+   * With `--check` only: judge the DECLARATIONS and the third states, and run
+   * none of the chain's checks (bean `8qyc`).
+   *
+   * For `regen`, which asks every one of {@link CHECKS} as a pair of its own:
+   * re-running them here doubled the most expensive part of the run (107 s of
+   * 637 s, measured 2026-10-05). `regen` derives this gate's verdict as this
+   * residual AND those pairs' verdicts on the same tree — the same programs,
+   * spelt the same way, so the conjunction is the gate's answer. It is never
+   * what CI runs: CI runs the whole `--check`.
+   */
+  declarationsOnly: boolean;
 }
 
 /**
@@ -640,6 +676,7 @@ export function parseFlags(argv: readonly string[]): Flags {
     dryRun: argv.includes("--dry-run"),
     json: argv.includes("--json"),
     noReport: argv.includes("--no-report"),
+    declarationsOnly: argv.includes("--declarations-only"),
   };
 }
 
@@ -743,7 +780,10 @@ const HELP =
   `  bun run skill:register --check      verify only, write nothing (not even the QA sidecar) — what CI runs\n` +
   `  bun run skill:register --dry-run    print the chain; write and verify nothing\n` +
   `  bun run skill:register --json       emit the verdicts as JSON\n` +
-  `  bun run skill:register --no-report  skip the committed QA sidecar\n\n` +
+  `  bun run skill:register --no-report  skip the committed QA sidecar\n` +
+  `  bun run skill:register --check --declarations-only\n` +
+  `                                      the declarations only, none of the chain's checks — for regen,\n` +
+  `                                      which asks each of those as a pair of its own. Not a gate.\n\n` +
   `It deliberately does NOT add a package-manifest entry: which package a\n` +
   `file belongs to is your assertion, not a derivable fact.\n\n` +
   `Exit 2 is a THIRD STATE, never a pass and never a finding: no package\n` +
@@ -778,6 +818,13 @@ async function main(): Promise<number> {
   if (process.argv.includes("--help")) {
     console.log(HELP);
     return 0;
+  }
+
+  if (flags.declarationsOnly && (!checking || flags.dryRun || flags.json)) {
+    // Refused rather than ignored: without `--check` the flag would silently
+    // run the WRITER, and a residual that wrote would not be a residual.
+    console.error("skill-register: --declarations-only is a --check form; it takes no --dry-run or --json.");
+    return 2;
   }
 
   const f = audit();
@@ -879,6 +926,13 @@ async function main(): Promise<number> {
         return rc;
       }
     }
+  }
+
+  if (flags.declarationsOnly) {
+    // The residual: everything above, none of the chain's checks. Its caller
+    // owns asking those (see {@link Flags.declarationsOnly}).
+    console.log(`  (--declarations-only: the ${STEPS.length} chain check(s) were NOT run; the caller asks them)`);
+    return problems > 0 ? 1 : 0;
   }
 
   // Verification is the point. The list above is hand-maintained and so can

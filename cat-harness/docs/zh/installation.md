@@ -80,7 +80,7 @@ cat-harness\scripts\upload-to-uploads.bat https://example.org/guideline.pdf
 `--check-deps` 探测会报告当前具备哪些能力，并为缺失的任何组件提供安装提示：
 
 ```sh
-bun run cat-harness/src/index.ts --check-deps
+bun run cat-harness-tools/src/index.ts --check-deps
 # 或通过 npm 脚本
 bun run check-deps
 ```
@@ -91,13 +91,13 @@ folio-assistant 是一个 MCP 服务器。它支持两种传输协议：
 
 ```sh
 # stdio 传输 —— LLM harness（Claude Code 等）所启动的协议
-bun run cat-harness/src/index.ts --stdio
+bun run cat-harness-tools/src/index.ts --stdio
 
 # HTTP 传输 —— 适用于长期运行的共享实例 / Web UI
-bun run cat-harness/src/index.ts --http
+bun run cat-harness-tools/src/index.ts --http
 
 # 将其指向你正在创作的内容仓库（默认为 ../.. ）
-bun run cat-harness/src/index.ts --stdio --repo /path/to/your/content-repo
+bun run cat-harness-tools/src/index.ts --stdio --repo /path/to/your/content-repo
 ```
 
 `package.json` 中提供了便捷脚本：
@@ -148,7 +148,7 @@ folio-assistant 通过 MCP 暴露其工具，因此任何支持 MCP 的智能体
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness-tools/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }
@@ -157,7 +157,7 @@ folio-assistant 通过 MCP 暴露其工具，因此任何支持 MCP 的智能体
 或者从 CLI 注册：
 
 ```sh
-claude mcp add folio-assistant -- bun run /path/to/folio-assistant/cat-harness/src/index.ts --stdio --repo .
+claude mcp add folio-assistant -- bun run /path/to/folio-assistant/cat-harness-tools/src/index.ts --stdio --repo .
 ```
 
 Claude Code 也会原生读取 `AGENTS.md` / `CLAUDE.md` 并响应 `.claude/settings.json` 中的 `SessionStart` 钩子 —— 这样当会话启动时，工作计划启动引导（work-plan primer）就会自动运行。
@@ -171,7 +171,7 @@ Antigravity 原生读取 `AGENTS.md`，并支持 MCP 服务器和 `SessionStart`
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness-tools/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }
@@ -188,7 +188,7 @@ Gemini CLI 原生读取 `AGENTS.md` / `GEMINI.md`。在其设置中注册该 MCP
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness-tools/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }

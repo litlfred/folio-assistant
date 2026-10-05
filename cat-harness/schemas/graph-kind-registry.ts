@@ -44,6 +44,12 @@
  * @module schemas/graph-kind-registry
  * @graphNode schema
  */
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import { declaredNodeFiles } from "./declared-nodes";
+import { GraphKindNodeSchema, kindDefOf } from "./graph-kind-node";
+import { ValidatorNodeSchema, type ValidatorNode } from "./validator-node";
 import { namespaceForLayer } from "./namespaces";
 import { BOOTSTRAP_GRAPH_KINDS } from "../../bootstrap-tools/schemas/graph";
 
@@ -135,6 +141,10 @@ export type NodeSchemaRef = (
   | { validator: string; shape?: never; external?: never }
   | { shape: string; validator?: never; external?: never }
   | { external: string; validator?: never; shape?: never }
+  // A family LISTED with no code of its own: its validator is a
+  // `folio-validator/v1` node that names it (bean riit, owner 2026-10-04: the
+  // validator names the family). The registry fills `validator` in from it.
+  | { validator?: never; shape?: never; external?: never }
 ) & {
   /**
    * Files of this family are GENERATOR OUTPUT — a script writes every one, so
@@ -488,6 +498,27 @@ export interface GraphKindDef {
    * `beans/workflow/` history above is exactly that confusion).
    */
   within?: string;
+  /**
+   * The kind's mark, when the kind is DECLARED as a node (bean dmx1) rather
+   * than listed here: it travels with the kind, so `schemas/avatars.ts` does
+   * not have to be a second central table. A kind listed here keeps its entry
+   * in `AVATARS`.
+   */
+  avatar?: { glyph: string; tone: number; reads: string };
+  /** The navbar tile icon for a DECLARED kind (bean dmx1); cat-harness's own kinds keep theirs in graph-tiles.ts. */
+  tileIcon?: string;
+  /**
+   * What a directory of this kind HOLDS, as the kind table states it: the
+   * editorial prose that used to be hand-written in that table's `contents`
+   * column (owner, 2026-10-04: the prose moves onto the kind, and the table is
+   * generated from it). Longer and more careful than `summary`, which stays
+   * the one line a tile or a tooltip shows.
+   */
+  description?: string;
+  /** A remark the table's `renderable` column carries beside yes/no ("the plain just-the-docs pipeline"). */
+  renderableNote?: string;
+  /** A directory of this kind may be declared by ANY layer, not only the kind's owner (the table's "and any layer"). */
+  anyLayer?: true;
 }
 
 /**
@@ -540,7 +571,108 @@ export interface GraphKindDef {
  * the consumer that must not be handed instance state asks for a node by name.
  */
 export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
+  // The META-KIND (bean dmx1): a directory of graph kind `kinds` holds the
+  // harness's own graph kinds, one `folio-graph-kind/v1` node per file. Owner,
+  // 2026-10-04: no central registry for subgraph types; a `kinds/` graph
+  // (option 1 of 3). The base layer declares this one kind in code because a
+  // reader needs it to find all the others.
+  kinds: {
+    description:
+      "the graph kinds a harness declares it OWNS, one `folio-graph-kind/v1` node per file (`schemas/graph-kind-node.ts`), loaded by the registry on first use across every instance; a name two files declare is refused. Owner, 2026-10-04: *\"there should not be a central registry for declaring mount tools and subgraph types\"*, and a `kinds/` graph rather than a contributions hook or a field in `<instance>.json` (option 1 of 3). The base layer lists only this one kind in code, because a reader needs it to find the rest. Bean `dmx1`.",
+    title: "Graph kinds",
+    renderable: false,
+    holds: "content",
+    nodeSchemas: {
+      "folio-graph-kind/v1": {},
+    },
+    summary:
+      "The graph kinds a harness declares it owns, one node per kind, so no central registry " +
+      "names another harness's subgraph types. Loaded across the instances on first use.",
+  },
+  // The second META-KIND (bean riit): a directory of graph kind `validators`
+  // holds the validators a harness's code provides, one `folio-validator/v1`
+  // node each, naming the kind and family it validates. The registry joins them
+  // onto the kinds. Owner, 2026-10-04: validators are KG nodes, and the
+  // validator names the family.
+  validators: {
+    description:
+      "the validators a harness's code provides, one `folio-validator/v1` node each (`schemas/validator-node.ts`), naming the graph kind and `$schema` family it checks and the Zod export that checks it; the registry joins each onto its kind on first use, and refuses a second answer for one family. Owner, 2026-10-04: validators are KG nodes, and the validator names the family (option 1 of 2). Bean `riit`.",
+    title: "Validators",
+    renderable: false,
+    holds: "content",
+    nodeSchemas: {
+      "folio-validator/v1": {},
+    },
+    summary:
+      "The validators a harness's code provides, one node each naming the graph kind and $schema " +
+      "family it checks and the Zod export that checks it, joined onto the kinds on first use.",
+  },
+  // The fourth and fifth META-KINDS (bean riit, step 3b): a harness's QA
+  // checkers and pipeline-plugin implementations, one node each, registered
+  // for a folio through its dependency tree. Owner, 2026-10-04: every
+  // contribution is a node, one graph per contribution type.
+  "qa-checkers": {
+    description:
+      "the QA checkers a harness's code provides, one `folio-qa-checker/v1` node each (`schemas/contribution-nodes.ts`): the criterion it answers, and the dispatch table (`path#Export`, keyed by the criterion) that holds the code. `loadContributions` registers them for every folio whose dependency tree includes the harness. Owner, 2026-10-04: every contribution is a node, one graph per type (option 1 of 2), scoped by the dependency tree (option 1 of 3). Bean `riit`, step 3b.",
+    title: "QA checkers",
+    renderable: false,
+    holds: "content",
+    nodeSchemas: {
+      "folio-qa-checker/v1": {},
+    },
+    summary:
+      "The QA checkers a harness provides, one node per criterion naming the table that holds the code; " +
+      "registered for a folio through its dependency tree.",
+  },
+  "pipeline-plugins": {
+    description:
+      "the generic pipeline's slots a harness fills, one `folio-pipeline-plugin/v1` node each (`schemas/contribution-nodes.ts`): the slot (`content/pipeline/pipeline-plugins.ts`), and the table of implementations (`path#Export`, keyed by slot, typed against the slots' contract). `loadContributions` registers them for every folio whose dependency tree includes the harness. Bean `riit`, step 3b; the slots themselves are bean `squu`'s.",
+    title: "Pipeline plugins",
+    renderable: false,
+    holds: "content",
+    nodeSchemas: {
+      "folio-pipeline-plugin/v1": {},
+    },
+    summary:
+      "The generic pipeline slots a harness fills, one node per slot naming the table of implementations; " +
+      "registered for a folio through its dependency tree.",
+  },
+  // The third META-KIND (bean riit, step 2): a directory of graph kind
+  // `block-kinds` holds the block kinds a harness's adapter owns, one
+  // `folio-block-kind/v1` node each. `block-kinds.ts` DISCOVERS them across
+  // every instance; no module lists them.
+  "block-kinds": {
+    description:
+      "the block kinds a harness's content adapter owns, one `folio-block-kind/v1` node each (`schemas/block-kind-node.ts`): the kind string, its adapter and narrowest profile, label prefix, RDF types, builder and English heading. `schemas/block-kinds.ts` discovers them across every instance's declared graph, so no module lists the kinds. Owner, 2026-10-04: *\"kinds need to be discoverable … not centrally managed\"*; document kinds live in folio-assistant-core and the math kinds in folio-assistant-sci (option 2 of 3). Bean `riit`, step 2; sod4 finding #1.",
+    title: "Block kinds",
+    renderable: false,
+    holds: "content",
+    nodeSchemas: {
+      "folio-block-kind/v1": {},
+    },
+    summary:
+      "The block kinds a harness's adapter owns, one node per kind carrying its label prefix, " +
+      "RDF types, profile and builder. Discovered across the instances; no module lists them.",
+  },
+  // A content adapter's block VOCABULARY (bean riit, step 5): one
+  // `folio-content-adapter/v1` node per vocabulary. `block-kinds.ts` derives
+  // CONTENT_ADAPTERS from the typed ones; no module lists the vocabularies.
+  "content-adapters": {
+    description:
+      "the block VOCABULARIES a harness owns, one `folio-content-adapter/v1` node each (`schemas/content-adapter-node.ts`): the name every block-kind node's `adapter` names, the companion roles its blocks can have, whether cat-harness's code types it, and for an untyped one its vocabulary module. `schemas/block-kinds.ts` derives `CONTENT_ADAPTERS` from the typed nodes and `schemas/block-qa.ts` derives `ADAPTER_COMPANION_ROLES`; an untyped vocabulary reaches a folio through its dependency tree. Owner, 2026-10-05, option 1 of 3: the vocabulary is a node and the server adapter CLASS is not, since the two do not line up (`document` has a class and no vocabulary, `dak` a vocabulary and no class). Bean `riit`, step 5.",
+    title: "Content adapters",
+    renderable: false,
+    holds: "content",
+    nodeSchemas: {
+      "folio-content-adapter/v1": {},
+    },
+    summary:
+      "The block vocabularies a harness owns, one node per vocabulary carrying its companion roles " +
+      "and whether the platform's code types it. Discovered across the instances; no module lists them.",
+  },
   tools: {
+    description:
+      "Tool definitions, themselves nodes in the KG",
     title: "Tools",
     renderable: false,
     // A Tool node is an authored definition of a mechanism. It says what this
@@ -548,7 +680,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
-    validator: "schemas/tool.ts#ToolDefinitionSchema",
     summary: "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
   },
   // Named for the LAYER that defines it, like every other harness concept.
@@ -562,6 +693,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   //
   // `kg` remains readable as a deprecated alias — see GRAPH_KIND_ALIASES.
   "cat-harness": {
+    description:
+      "the harness layer's own knowledge graph, where a directory holds MORE THAN ONE of its parts — in practice the `[\"schemas\", \"cat-harness\"]` entries, where it means \"a schema IS a knowledge-graph node\". Renamed from `kg` on 2026-09-19; `kg` still reads, deprecated. **Not itself deprecated** by the 2026-09-21 split: an alias maps one name to one name, and this would have to become three. A downstream declaration still saying `[\"cat-harness\"]` keeps parsing and keeps being scanned for skills; what it loses is the finer query, which it never had.",
     title: "Harness graph",
     // Its identity is its individual, `…/cat-harness/ns#graphKind/cat-harness`
     // (`graphKindIri`). It was also a class, `KGraph`, from 2026-09-21 until
@@ -606,6 +739,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // A downstream declaration still saying `["cat-harness"]` therefore keeps
   // parsing. What it loses is the finer query, which is the thing it never had.
   skills: {
+    anyLayer: true,
+    description:
+      "Skill packages — the authored instruction bodies an Actor performs a Task from. A Skill is a **Capability with defined inputs and outputs**, stated generically so it is portable across forges, binaries and machines. Split out of `cat-harness` on 2026-09-21.",
     title: "Skills",
     // THE FROM-WITHIN NODE for a skills directory (bean cmsl, owner
     // 2026-09-30, round 4): `skills/skills.json` names the instance
@@ -622,17 +758,20 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "folio-voice/v1": { validator: "schemas/voices.ts#VoiceProfileSchema" },
-      "folio-voice-skill/v1": { validator: "schemas/voice-skill.ts#VoiceSkillSchema" },
+      "folio-voice/v1": {},
+      "folio-voice-skill/v1": {},
       // A synced remote skill's pinned, per-file fixity record (issue #556).
-      "folio-remote-skill/v1": { validator: "schemas/skill-package.ts#RemoteSkillRecordSchema" },
+      "folio-remote-skill/v1": {},
       // `skills.json`, the node that names a skills directory's TOPICS (bean `9umr`).
-      "skill-topics/v1": { validator: "schemas/skill-topics.ts#SkillTopicsSchema" },
+      "skill-topics/v1": {},
     },
     // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
     summary: BOOTSTRAP_GRAPH_KINDS["skills"],
   },
   processes: {
+    anyLayer: true,
+    description:
+      "Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth rather than illustrations of one. **Where a running instance GOT TO is not here** — that is `workflow-state`, which is `state` rather than `content`. Two questions, two graphs. Split out of `cat-harness` on 2026-09-21.",
     title: "Processes",
     // Grouped by concern from within: `processes/processes.json` names the
     // groups, `processes/<group>/` holds them, a DMN under
@@ -660,6 +799,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: BOOTSTRAP_GRAPH_KINDS["processes"],
   },
   scenarios: {
+    anyLayer: true,
+    description:
+      "Actors, the Roles they take on, and the User Stories those Roles serve. `roles.json` and `stories.json`; a User Story points at its Role (#1168), where it was once free text on the role. Split out of `cat-harness` on 2026-09-21.",
     title: "Scenarios",
     renderable: false,
     // Actors, the Roles they take, and the User Stories those Roles serve.
@@ -670,7 +812,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
-    validator: "schemas/role-graph.ts#RoleGraphSchema",
     // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
     summary: BOOTSTRAP_GRAPH_KINDS["scenarios"],
   },
@@ -681,12 +822,14 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // authored, and is true whether or not anything reads it, so it `holds`
   // content like the role graph beside it: it owes no viewer.
   policies: {
+    anyLayer: true,
+    description:
+      "What an Actor may DO: W3C ODRL 2.2 policies (issue #1180). One rule per (assignee, action), scoped by `cat-harness:process`, `cat-harness:task` and `cat-harness:role` constraints when it needs to be; actions are the profile in `skills/permissions/permissions.json`, inheriting through `includedIn`. A downstream instance inherits these with ODRL's `inheritFrom` instead of copying them. No login is ever written here: identity is the data store's.",
     title: "Policies",
     renderable: false,
     holds: "content",
     schema: "schemas/odrl.ts",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "schemas/odrl.ts#OdrlPolicySchema",
     summary:
       "W3C ODRL 2.2 policies: which Actor may do which action, scoped by Process, Task and Role " +
       "constraints. Actions are the folio profile in skills/permissions/permissions.json.",
@@ -720,6 +863,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // Doc-Researcher. GRADE is not a methodology node: since 2026-09-24 (bean
   // `wg7r`) it is the `grade` skill with its vocabularies as code lists.
   methodology: {
+    anyLayer: true,
+    description:
+      "judgement methodologies, one sub-graph each — a NAMED, EXTERNAL way of reaching a judgement, adopted whole. `kepner-tregoe` for a decision, `madr` for its record, `dmn` for the computable case, `grade` for certainty of evidence. They are **parallel rather than composable**: which applies is contextual, and blending them gives a house method that cites nobody. A separate kind from `cat-harness` for three properties a skill lacks — extractable (adopted work lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from `skill-is-brief`, since a faithful rendering of an external standard must not be truncated to a house limit. Any layer may declare one: the harness carries the domain-neutral methods, `smart-kg` carries GRADE. Governed by [`methodology-adoption`](../../process/process-core/methodology-adoption.md).",
     title: "Methodologies",
     renderable: false,
     // `context`, by the axis's own criterion and not by resemblance: read
@@ -772,6 +918,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // moment a `docs` page needs a block viewer, a LaTeX pass, a QA badge or a
   // translation overlay, it is describing authored CONTENT and is a `folio`.
   docs: {
+    description:
+      "documentation **about** the knowledge graph — how the harness works, what its directories hold, how a process runs. Distinct from `folio` by its SUBJECT, not its format. Added 2026-09-20: this table carried no renderable harness kind until the harness gained a plain just-the-docs renderer, and the rule reads in its true form — a layer owns the kinds it CAN render.",
+    renderableNote: "the plain just-the-docs pipeline, no extensions",
     title: "Docs",
     perInstance: true,
     renderable: true,
@@ -790,22 +939,26 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "folio-todo-index/v1": { validator: "schemas/todo-index.ts#TodoIndexSchema" },
-      "folio-semantic-zoom/v1": { validator: "schemas/semantic-zoom.ts#SemanticZoomSchema" },
+      "folio-todo-index/v1": {},
+      "folio-semantic-zoom/v1": {},
       "folio-qa-graph/v1": { shape: "content/pipeline/qa-graph-index.ts#QaGraphIndex" },
       "folio-translation-index/v1": { shape: "content/pipeline/translation-index.ts#TranslationIndex" },
-      "folio-bean-index/v1": { validator: "schemas/site-indexes.ts#BeanIndexSchema", generated: true },
-      "folio-translation-status/v1": { validator: "schemas/site-indexes.ts#TranslationStatusSchema", generated: true },
-      "folio-schema-graph/v1": { validator: "schemas/site-indexes.ts#SchemaGraphIndexSchema", generated: true },
-      "folio-library-index/v1": { validator: "schemas/site-indexes.ts#LibraryIndexSchema", generated: true },
+      "folio-bean-index/v1": { generated: true },
+      "folio-translation-status/v1": { generated: true },
+      "folio-schema-graph/v1": { generated: true },
+      "folio-library-index/v1": { generated: true },
       // The per-entry block graph, one file per library entry (bean `7nvr`).
       // Same writer as the index and deliberately a SEPARATE family: the index
       // answers "what entries are there" and this answers "what is in one",
       // and the corpus holds 1715 blocks over ~1 MB against a 44 KB index, so
       // they are fetched at different times by different questions.
-      "folio-library-entry/v1": { validator: "schemas/site-indexes.ts#LibraryEntrySchema", generated: true },
-      "folio-voices-index/v1": { validator: "schemas/site-indexes.ts#VoicesIndexSchema", generated: true },
-      "folio-graph-projection/v1": { validator: "schemas/site-indexes.ts#FolioGraphProjectionSchema", generated: true },
+      "folio-library-entry/v1": { generated: true },
+      "folio-voices-index/v1": { generated: true },
+      "folio-graph-projection/v1": { generated: true },
+      // The media-type sidecar beside each content-addressed payload under
+      // docs/payload/sha256/ (bean `f233`), written by gen-subgraph-jsonld.
+      // Its validator is the node `validators/payload-sidecar.json`.
+      "cat-harness-payload/v1": { generated: true },
     },
     summary:
       "Documentation ABOUT the knowledge graph — how the harness works, what its " +
@@ -815,6 +968,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "catalogue is `library/`; a note about it is a `folio`; the page explaining " +
       "how ingestion works is `docs`.",
   },
+
   // ── SUB-GRAPHS OF `docs` — issue #1164 ──────────────────────────────────
   //
   // A harness feature's documents move through two places, and the move is the
@@ -826,6 +980,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // handed arguments that were never agreed — the same reason `beans` does
   // not mix the work plan with instance state.
   proposals: {
+    description:
+      "proposals for the harness's own features — initial analysis, MVP, options — argued before they are agreed. A **sub-graph of `docs`** (`within: \"docs\"`), declared from within by `docs/docs.json`; the navbar folds it under Docs. Issue #1164.",
+    renderableNote: "its pages are built by `docs`",
     title: "Proposals",
     // NOT a site of its own: its pages are built by `docs`, which it is
     // `within`. The harness still owns exactly one renderable kind.
@@ -844,6 +1001,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "against the `Requirement` schema.",
   },
   requirements: {
+    description:
+      "what the harness promises, one page per shipped feature: a proposal MOVED here on ship, its front matter a `Requirement` (`bootstrap/schemas/requirement.schema.json`), checked by `check:requirements`. A **sub-graph of `docs`**, declared from within. Issue #1164.",
+    renderableNote: "its pages are built by `docs`",
     title: "Requirements",
     // NOT a site of its own: its pages are built by `docs`, which it is
     // `within`. The harness still owns exactly one renderable kind.
@@ -861,6 +1021,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "at these statements by `req:<slug>#<key>`.",
   },
   "auto-docs": {
+    description:
+      "derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH that type reaches, written by `scripts/gen-auto-docs.ts` and never by hand. A **sub-graph of `docs`** (`within: \"docs\"`), declared from within by `docs/docs.json`; its own sub-sub-graphs are named one level further down by `auto-docs.json`, which is GENERATED from that script's `TYPES` because they carry `collect()` functions that cannot live in JSON. `derived`, and the question that settles it against its parent is the same one everywhere: a `docs` page is RE-AUTHORED, an index is REGENERATED. Bean `xsrv`, owner 2026-10-03.",
+    renderableNote: "its pages are built by `docs`",
     // NOT a site of its own: its pages are built by `docs`, which it is
     // `within`. The harness still owns exactly one renderable kind — the same
     // reason `proposals` and `requirements` are false above.
@@ -905,6 +1068,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "an index is regenerated.",
   },
   "external-schema": {
+    description:
+      "the specifications this instance depends on (`external-schemas/`) — one record per specification, pinning the EDITION in use, with the operative terms DERIVED from the corpus rather than hand-listed. `content`, and the call goes against the obvious reading: a process DOES write these files (`external-schemas.ts --write` refreshes `terms[]`), which sounds like `state`, but the axis asks what the graph IS and the subject matter here is a DECISION — which specifications we depend on, at which edition, and what each term operatively means. `derived` would be destructive: it says \"regenerate it\", and regenerating a deleted record recovers neither the authored edition, nor the `usedBy` blast radius, nor a line of the `operative` prose. UNDECLARED until 2026-09-22, which is `dh4f` inverted — a held directory nothing declares, so every consumer fanning out over declared directories skipped a registry pinning four external namespaces. Governed by [`vocabulary-authority`](vocabulary-authority.md) and [`schema-management`](schema-management.md).",
     title: "External schemas",
     perInstance: true,
     renderable: false,
@@ -923,7 +1088,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // are not derivable (`prior.get(term)` in the `--write` path).
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "cat-harness:schemas/external-schema.ts#ExternalSchemaSchema",
     // A SECOND family in the same directory — bean `7wou`. A record pins an
     // edition; this is that edition's CONTENT, snapshotted so
     // `check:term-mapping`'s fhir half can assert "this code is in the
@@ -936,12 +1100,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // family as unmapped, which is the right answer and the reason the
     // kind-level `validator` above is not a fallback.
     nodeSchemas: {
-      "folio-external-schema/v1": {
-        validator: "schemas/external-schema.ts#ExternalSchemaSchema",
-      },
-      "folio-pinned-terminology/v1": {
-        validator: "schemas/pinned-terminology.ts#PinnedTerminologySchema",
-      },
+      "folio-external-schema/v1": {},
+      "folio-pinned-terminology/v1": {},
     },
     summary:
       "The specifications this instance depends on — one record per specification, pinning the " +
@@ -956,11 +1116,12 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // an adjudication may give, which namespaces are ours — and a person makes
   // it. Diagrams and `schemas/namespaces.ts` READ these; nothing writes them.
   "code-list": {
+    description:
+      "closed sets of codes (`code-lists/`) — one `folio-code-list/v1` file per list, each code with a label, a definition, a source and, where it stands for one, a value; published as SKOS concept schemes. `content`, by the same argument as `external-schema`: the subject matter is a DECISION — which answers an adjudication may give, which namespaces are ours — and a person makes it. Diagrams (`<cat-harness.processes:adjudication list>`) and `schemas/namespaces.ts` READ these. Owner, 2026-09-23. Governed by [`code-lists`](../../library/library-core/code-lists.md).",
     title: "Code lists",
     renderable: false,
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "schemas/code-list.ts#CodeListSchema",
     summary:
       "Closed sets of codes — adjudication answers, the namespaces this project mints — one file " +
       "per list, every code carrying its definition and source, published as SKOS.",
@@ -973,16 +1134,19 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // is authoritative, is a DECISION somebody makes. Generators read these
   // through the `vocab-map` Tool; nothing writes them.
   "vocab-mapping": {
+    description:
+      "vocabulary mapping tables (`vocab-mappings/`) — one `folio-vocab-mapping/v1` table per source content type and target node, saying which source field becomes which target predicate and with what relationship. Shaped like a FHIR ConceptMap: an existing ConceptMap is representable here, and a table can be produced as one with every loss reported (`schemas/vocab-mapping-fhir.ts`). `content`, by the `code-list` argument: which predicate a field becomes, and which of two is authoritative, is a DECISION. Generators READ these through the `vocab-map` Tool; nothing writes them. Owner, 2026-10-02 (bean `k74z`). Governed by [`vocabulary-authority`](vocabulary-authority.md).",
     renderable: false,
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "schemas/vocab-mapping.ts#VocabMappingSchema",
     summary:
       "Vocabulary mappings — which source field becomes which target predicate, with its stated " +
       "relationship, one ConceptMap-shaped table per source and target; representable from and " +
       "producible as a FHIR ConceptMap.",
   },
   schemas: {
+    description:
+      "schema definitions, self-declared in the smart-base manner",
     title: "Schemas",
     // Grouped by concern from within (`schemas/schemas.json`), PR0c.
     declarationFile: "schemas.json",
@@ -995,10 +1159,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     nodeSchemas: {
       // The FROM-WITHIN node naming this directory's concern groups
       // (placement PR0c): `concern-groups/v1`.
-      "concern-groups/v1": { validator: "schemas/concern-groups.ts#ConcernGroupsSchema" },
+      "concern-groups/v1": {},
       "http://json-schema.org/draft-07/schema#": { external: "JSON Schema draft-07" },
       "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
-      "folio-source-descriptor/v1": { validator: "cat-harness:schemas/source-descriptor.ts#SourceDescriptorSchema" },
+      "folio-source-descriptor/v1": {},
     },
     // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
     summary: BOOTSTRAP_GRAPH_KINDS["schemas"],
@@ -1008,6 +1172,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // `scripts/gen-uml-overview.ts`. `derived`: regenerated, never authored, so
   // a finding against one is a finding against the generator or its inputs.
   uml: {
+    description:
+      "UML class diagrams of every named sub-graph a harness declares (`uml/overview/<instance>/<sub-graph>.puml` and `.mmd`), written from one model by `scripts/gen-uml-overview.ts` and rendered on `docs/uml/overview/`. The groupings are the declaration entries; the classes are read from each graph kind's registered `validator`, so a kind with none is drawn as *could not determine*. `derived`: regenerated, never authored.",
     title: "UML",
     // Grouped by concern from within (`uml/uml.json`), PR0c — one generated
     // pair per declared sub-subgraph, so the grouping is the generator's input.
@@ -1042,6 +1208,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // declaration mentioned, so a consumer scanning the declared directories saw
   // none of them and reported a clean run over the lot.
   qa: {
+    description:
+      "QA verdicts and their projections under `test/results/` — **seven `$schema` families**, each named in the kind's `nodeSchemas` (see §\"Node schemas, one per `$schema` family\"): `kg-qa/v1`, `block-qa/v1` and `folio-test-run/v1` are Zod-validated, `qa-witness/v1`, `qa-results/v1` and `translation-qa/v1` are TypeScript shapes, and `folio-qa-index/v1` has no declared type at all. This row said \"one `qa-witness/v1` document per subject\" until 2026-09-23, when 591 of the 728 nodes were other families. Generated, never hand-edited. **The checkout holds the WORKING COPY; the record is on the orphan `qa-reports` branch**, keyed `main/<sha>/` or `pr/<n>/<sha>/`, written by the CI job `qa-publish` through `scripts/qa-store.ts` (arc `3fva`) — see §\"`storage` — a directory kept on a branch\". Judgements are not here: they are the `attestations` kind. Read witnesses with the [`qa-witness`](../../sdlc/sdlc-core/qa-witness.md) skill.",
     title: "QA",
     perInstance: true,
     renderable: false,
@@ -1059,7 +1227,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     schema: "content/pipeline/qa-witness.ts",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "kg-qa/v1": { validator: "schemas/kg-qa.ts#KgQaReportSchema" },
+      "kg-qa/v1": {},
       // The auditor's identity for the `kg-qa/v1` files beside it — one per
       // instance, not one per sidecar, for the reason `KG_QA_MANIFEST_SCHEMA`
       // gives. Registered under `skills` until 2026-09-27, because the file
@@ -1068,19 +1236,19 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // and this registration had to move with it. A kind claiming a `$schema`
       // whose files live in another kind's directory is a validator aimed at
       // nothing.
-      "kg-qa-manifest/v1": { validator: "schemas/kg-qa.ts#KgQaManifestSchema" },
-      "block-qa/v1": { validator: "schemas/block-qa-schema/js/index.ts#BlockQaReport" },
-      "folio-test-run/v1": { validator: "schemas/test-run.ts#TestRunSchema" },
+      "kg-qa-manifest/v1": {},
+      "block-qa/v1": {},
+      "folio-test-run/v1": {},
       "qa-witness/v1": { shape: "content/pipeline/qa-witness.ts#QaWitness" },
       "qa-results/v1": { shape: "scripts/qa-results.ts#QaResult" },
       "translation-qa/v1": { shape: "content/pipeline/translation-block-qa.ts#TranslationBlockQaReport" },
       // Written inline by two call sites and typed by neither — recorded,
       // not invented. `qa-graph-index.ts` names the tag only to say it is
       // NOT its own (`NOT_TO_BE_CONFUSED_WITH`).
-      "folio-qa-index/v1": { validator: "schemas/site-indexes.ts#QaIndexSchema", generated: true },
+      "folio-qa-index/v1": { generated: true },
       // Which authored pages have a translation projection (bean `4l4d`) —
       // the list `head_custom.html` once read from `_data/`, now an asset.
-      "folio-qa-translation-pages/v1": { validator: "schemas/site-indexes.ts#QaTranslationPagesSchema", generated: true },
+      "folio-qa-translation-pages/v1": { generated: true },
       // The detangle sidecars, in cat-harness
       // qa directory. `detangle` was its own instance until 2026-09-23 and is
       // now a directory of this harness (bean `byql`), so the shape is an
@@ -1091,12 +1259,12 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-lsi-index/v1": { shape: "scripts/lsi.ts#LsiSidecar" },
       // A downstream tool's run record (bean `fq5u`): outcome and input
       // fingerprint, read by kg:audit's `tool-downstream-fresh`.
-      "folio-tool-run/v1": { validator: "schemas/tool-run.ts#ToolRunRecordSchema" },
+      "folio-tool-run/v1": {},
       // The viewer-navbar audit (bean `edx7`). A VERDICT PER PAGE rather than
       // a count, because the owner's rule has two clauses -- present unless
       // EXPLICITLY removed -- and a count cannot tell a deliberate removal
       // from a generator nobody wired.
-      "viewer-nav-qa/v1": { validator: "schemas/viewer-nav-qa.ts#ViewerNavQaSchema" },
+      "viewer-nav-qa/v1": {},
     },
     // No `validator`, and that is a finding rather than an omission: the
     // module above exports TypeScript interfaces only. The largest generated
@@ -1120,6 +1288,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // fake-reference failure `activity-names-skill` is written to prevent. The
   // field is optional and absent means absent.
   health: {
+    description:
+      "repository health reports — one `\"$schema\": \"health-report/v1\"` document per sweep, carrying each check's three-state verdict, the thresholds it applied and the **basis** each threshold was chosen on. A separate kind from `qa` because the SUBJECT differs, not the producer: a QA verdict judges an artefact this instance produced, a health report judges the instance itself — its size, its publish branch, its work plan. Generated by `test/health/run.ts`; never hand-edited. Shape in `schemas/health-report.ts`.",
     title: "Health",
     renderable: false,
     // The same shape one level out: where the REPOSITORY got to, measured
@@ -1136,7 +1306,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // vocabulary entry that other code resolves THROUGH; reading it from a
     // declaration would be reading it from here. `check:kind-validators`
     // is what proves the path still resolves.
-    validator: "schemas/health-report.ts#HealthReportSchema",
   },
   // QA ATTESTATIONS — the judgement half of a QA verdict (bean `2gst`, arc
   // `3fva`). Split out of the `qa` kind by owner ruling D2 (a), 2026-10-01:
@@ -1158,6 +1327,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // member of the same `QaAttestationsSchema` union, not a second store:
   // `<attestations dir>/<family>/<mirrored subject path>.attestations.json`.
   attestations: {
+    description:
+      "the JUDGEMENT half of a QA verdict, kept apart from the derived half: one `qa-attestations/v1` file per subject at `test/attestations/<family>/<mirrored subject path>.attestations.json`, where `<family>` is the derived family it sits beside (`kg-qa`, bean `2gst`; `block-qa` and `translation-qa`, bean `8wj1` — whose derived reports keep a projection composed from the store). Split out of `qa` by owner ruling D2 (a), 2026-10-01 (bean `2gst`): derived verdicts move to the `qa-reports` branch, and judgements stay on main, where a `git rm` of derived results cannot reach them. A separate kind because the two answer the deletion question differently: a `qa` file can be regenerated, an attestation cannot. Every entry pins the hash it attested, so a stale one is detectable. `state`, like `review-verdicts`. Reads answer hit / miss / absent / corrupt / unknown. On a miss or an absent store a WRITER moves the judgements a prior derived file still carries into the store as it saves (owner ruling 2, 2026-10-01); a corrupt or unreadable store is `unknown` and refused. Shape in `schemas/qa-attestations.ts`.",
     renderable: false,
     holds: "state",
     recordsWork: false,
@@ -1168,7 +1339,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "entry pins the hash it attested, so a stale one is detectable.",
     schema: "schemas/qa-attestations.ts",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "schemas/qa-attestations.ts#QaAttestationsSchema",
   },
   // Source code. Registered 2026-09-22 (bean `ylj7`) after a measurement the
   // owner asked for: of roughly 1,216 `.ts` files in this repository, about
@@ -1208,6 +1378,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // `ce65` own it. Reporting the two as one number is how the cheap one never
   // gets done.
   code: {
+    anyLayer: true,
+    description:
+      "Source code — the modules, scripts and entry points an instance holds. Registered 2026-09-22 (bean `ylj7`) after a measurement: most of this repository's `.ts` files sat in no declared directory — **re-derive it with `bun run check:code-accounting` rather than reading a number here, because it moves every round** — " +
+      "so the one property every checker here depends on — *an undeclared file is one no checker has a reason to look at* (`v8gh`) — did not hold for most of the code. The owner's first proposal was to move everything under `<stub>/src`; the measurement confirmed the **mechanism** and argued against the **destination**, because `schemas/` is already a declared graph, `content/pipeline/` is core's subject, and `scripts/` are entry points named **by path** in `package.json` and CI. So they are declared where they are, and `<stub>/src` is the convention for new instances. `content`: authored with an intention, re-authored rather than regenerated, and it stands on its own. **Not renderable** — `renderable` asks whether the graph is wired to the site build as pages, and the generated references are built from schemas and skills, not from this. Being declared says nothing about whether a Tool node **claims** the code; that is a second axis, and beans `d308` and `ce65` own it. `check:code-accounting` reports both and refuses to average them.",
     title: "Code",
     // Grouped by concern from within (`<dir>/code.json`), PR0c — for the TEST
     // directories first: unit tests in `scripts/tests/<group>/`, e2e in
@@ -1258,6 +1432,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // through. A half-written report is not work in progress; it is a run that
   // died, which `qaReportVerdict` reports as `unknown` rather than as clean.
   "qa-report": {
+    description:
+      "QA reports — one `qa-report/v1` document per TOOL RUN, carrying that run's own successes, warnings and errors, the files it processed, the files it **expected** and the ones that were missing, plus the provenance and toolchain versions upstream records nowhere. A third subject beside its two neighbours, and that is the whole reason it is a separate kind: a `qa` witness judges an **artefact**, a `health` report judges the **repository**, a `qa-report` records an **execution**. Registered 2026-09-22 on evidence rather than design — every DAK pre/post script already writes exactly this document and the IG Publisher already writes `qa.json`, and nothing downstream read either. Upstream's snake_case field names are kept deliberately, so an upstream report validates byte for byte and a change upstream fails instead of being quietly re-mapped. `state`: a running process writes it. Three rules are structural rather than left to a checker — a summary may not disagree with the details it counts, `files_missing` must be a subset of `files_expected`, and `running` is never a pass. Shape in `schemas/qa-report.ts`.",
     title: "QA reports",
     renderable: false,
     holds: "state",
@@ -1269,7 +1445,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "records nowhere. Generated by the run; never hand-edited.",
     schema: "schemas/qa-report.ts",
     // declared-path-literal: this table IS the declaration, as for `health`.
-    validator: "schemas/qa-report.ts#QaReportSchema",
   },
   // Test plans -- what a SYSTEM UNDER TEST must do, case by case, and the DMN
   // rule that decides whether it did. Strawperson, bean `ygzh` (arc `3fva`,
@@ -1294,6 +1469,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // `crdm-detect` (§3.3), and no fixture was manufactured to make a count
   // non-zero -- the row `qa-report` and `binary-release` also carry.
   "test-plan": {
+    description:
+      "test plans — one `test-plan/v1` document per plan, shaped after the held FHIR R5 TestPlan source: the system-under-test kind and version range, the `req:` requirements it is evidence for, test cases whose assertion ids are criterion ids, test data that is either FIXED (committed, and evidence once reviewed) or GENERATED (template + params + seed, never stored materialised — bean `vm6m`), and the certification rule as a DMN reference. Strawperson, bean `ygzh`. `content`: a process reads a plan and never writes it, and it still says what is required when detached from every run. The run points at the plan and never the reverse, because a plan listing its runs would be rewritten by every execution. Declared, no directory. Shape in `schemas/test-plan.ts`.",
     renderable: false,
     holds: "content",
     summary:
@@ -1303,7 +1480,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "(template + params + seed) test data, and the certification rule as a DMN reference.",
     schema: "schemas/test-plan.ts",
     // declared-path-literal: this table IS the declaration, as for `health`.
-    validator: "schemas/test-plan.ts#TestPlanSchema",
   },
   // Test reports -- the verdicts ONE run of ONE plan reached against ONE
   // system under test, with a per-plan rollup. Strawperson, bean `ygzh`.
@@ -1334,6 +1510,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // branch under `tests/<plan-id>/<sut>/<run-id>/`, which does not exist yet
   // (beans `ygzh` and the branch work in arc `3fva`).
   "test-report": {
+    description:
+      "test reports — one `test-report/v1` document per run of a plan against a system under test, per-case verdicts in the block-qa entry shape, and a rollup for that ONE plan. **Never a total across plans** — the owner's `py74` ruling, enforced by a strict top level that has no field for a second plan or a total. Strawperson, bean `ygzh`. `state`: the run writes it, and re-running produces a new report rather than the same one. A separate kind from `qa-report` because the subject differs — that is a tool's account of its OWN run, this is a tester's finding about SOMEBODY ELSE, which is why the system under test may not write its own verdict. The rollup may not disagree with the cases, and `running` is never a pass. Written to the `qa-reports` branch under `tests/<plan-id>/<sut>/<run-id>/`; declared, no directory. Shape in `schemas/test-report.ts`.",
     renderable: false,
     holds: "state",
     recordsWork: false,
@@ -1344,7 +1522,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "and the system under test never writes its own verdict. Generated by the run.",
     schema: "schemas/test-report.ts",
     // declared-path-literal: this table IS the declaration, as for `health`.
-    validator: "schemas/test-report.ts#TestReportSchema",
   },
   // ONE kind for the whole work plan, not one per store. It replaced `workplan`
   // + `process-state` in #266; the rationale is in this map's doc comment above,
@@ -1356,6 +1533,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // instance's glossary/ page. This is the harness's swimlane-role ledger, one
   // source that page reads.
   "swimlane-glossary": {
+    description:
+      "(renamed from `glossary` on 2026-09-23, owner: \"Rename harness one\") the swimlane glossary's retirement ledger (`glossary/`) — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. `state` but **not** work (`recordsWork: false`): a bean is something somebody is partway through, this is a record that a term exists. Only the ledger is stored — the glossary DOCUMENT is derived from the corpus each run, which is exactly why the ledger has to exist: a derived document has no memory, so without it a retired term and one that never existed look the same. Written by `scripts/glossary-export.ts`; read with the [`swimlane-glossary`](../../process/process-core/swimlane-glossary.md) skill.",
     title: "Swimlane glossary",
     renderable: false,
     // `state`, and NOT `derived` — the interesting call now that `derived`
@@ -1368,7 +1547,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "glossary-ledger/1.0.0": { validator: "schemas/glossary-ledger.ts#LedgerSchema" },
+      "glossary-ledger/1.0.0": {},
     },
     // NOT work. A bean is something somebody is partway through; this is a
     // record that a term exists, true whether or not anybody is doing
@@ -1385,6 +1564,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "A Subgraph recording every term a Knowledge Graph's Processes have ever named, and when each stopped being used, so a retired term is never silently reused.",
   },
   models: {
+    description:
+      "which languages a model is good at, and whether a human checked (`models/models.json`). `context`: READ when a session opens, never written by a process — a person grants a validation, an agent never does, because a model's own claim about its languages is precisely what the validation state exists to distrust. In BOOTSTRAP because an agent reaching for the language it should communicate in has not yet loaded the harness that would otherwise answer. One INPUT to the [`communication-language`](../../conduct/conduct-core/communication-language.md) determination, never the answer.",
     title: "Models",
     renderable: false,
     // `context`: READ when a session opens, never written by a process. That
@@ -1404,6 +1585,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: BOOTSTRAP_GRAPH_KINDS["models"],
   },
   beans: {
+    description:
+      "the work plan as a whole (`beans/`); its inner nodes are declared by `beans/beans.json`",
     title: "Beans",
     perInstance: true,
     renderable: false,
@@ -1425,12 +1608,12 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-workflow-instance/v1": { shape: "src/workflow/instance.ts#InstanceState" },
       // Runnable, unlike its neighbour: `SessionSurveySchema` is a Zod schema,
       // so a published survey is PARSED rather than merely typed.
-      "folio-session-survey/v1": { validator: "schemas/session-survey.ts#SessionSurveySchema" },
+      "folio-session-survey/v1": {},
       // `merge-queue`'s family, missing for the same reason as the survey's:
       // no queue entry existed until the steward's first ACKs on 2026-10-04,
       // and the first one made `check:kind-validators:require-all` red. The
       // SAME validator the child declares, so the two cannot disagree.
-      "folio-merge-queue-entry/v1": { validator: "schemas/merge-queue.ts#MergeQueueEntrySchema" },
+      "folio-merge-queue-entry/v1": {},
     },
     recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:
@@ -1447,6 +1630,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // had grown a parallel closed vocabulary (`BEAN_NODE_KINDS`) saying the same
   // thing in different words.
   "bean-defs": {
+    description:
+      "work items — one Markdown file each, in the layout the `beans` CLI reads. Authored by people and agents.",
     title: "Bean definitions",
     renderable: false,
     // What is being worked on. A bean names a change to something; it is not
@@ -1464,6 +1649,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // of its own, so sibling pull requests stop conflicting on one bean they all
   // append to (`ob3m` cost five hand-merges in one afternoon, 2026-10-02).
   "bean-notes": {
+    description:
+      "one pull request's addendum to a bean — one Markdown file per branch per bean, `$schema: folio-bean-note/v1` in its front matter, named `<bean>--<date>--<branch>.md` so two pull requests never write one path; `README.md` beside them is the generated index. Bean `m61r`: `ob3m` cost five hand-merges in one afternoon while every finding was appended to the bean. `state`, and `recordsWork: false` because a note is a record about a bean, whose work is counted on the bean. Convention: [`bean-coordination`](../../sdlc/sdlc-core/bean-coordination.md) §\"Adding to a bean — a note, not an append\".",
     renderable: false,
     // Written by a session as it works, like the beans it adds to. Not
     // `context`: a process writes it.
@@ -1483,6 +1670,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "path. Indexed by a generated README.",
   },
   "session-survey": {
+    description:
+      "published surveys of a commit window — one JSON each, `\"$schema\": \"folio-session-survey/v1\"`. Bean `6ptx`: eight sessions surveyed the same ~2435-commit window in one minute and that day produced ONE authored commit. Each records the window's **two edge commits**, so a later session computes the uncovered delta (`bun run survey:owed`) instead of re-deriving the range — staleness decidable rather than guessed, and an unreachable upper edge reads as *unusable*, never as covered. `state` because a running session writes it; `recordsWork: false` because a survey is a READING of work, not work anybody is partway through.",
     title: "Session surveys",
     renderable: false,
     // Written BY a running session, for other sessions to read. That makes it
@@ -1495,7 +1684,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // nodes can actually be parsed instead of merely typed. `workflow-state`
       // next door can only offer a TypeScript shape, which `check:kind-validators`
       // reports as "not runnable — could not determine".
-      "folio-session-survey/v1": { validator: "schemas/session-survey.ts#SessionSurveySchema" },
+      "folio-session-survey/v1": {},
     },
     schema: "schemas/session-survey.ts",
     // A survey is a READING of work, not work anybody is partway through. An
@@ -1510,6 +1699,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "the whole range (bean `6ptx`).",
   },
   "workflow-state": {
+    description:
+      "running BPMN instances — one JSON each, `\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited.",
     title: "Workflow state",
     renderable: false,
     // The clearest case in the table: a token's position in a process drawn in
@@ -1557,6 +1748,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // through placing, which is exactly what that flag is for (beans, todos,
   // workflow-state). A held entry with an unexpired hold is open work.
   "merge-queue": {
+    description:
+      "a merge steward's DECISIONS about an open pull request — one JSON each, `\"$schema\": \"folio-merge-queue-entry/v1\"`: priority class, rank or override with its reason, a hold with its expiry, the train it joined, an ejection with its evidence. **Never a fact GitHub owns** — CI, mergeability, labels and the head SHA are read live at decision time and refused BY NAME by the schema, because a stored copy is a second answer that goes stale on the next push. The one exception is an evidence snapshot on a FINISHED train run, which is history rather than a claim about now. Declared at `beans/queue/`, beside `workflow-state`: this holds the decisions, a finished run next door holds the evidence they met. `state` because a steward writes it as the train proceeds; `recordsWork: true` because a held entry is open work. Shape in `schemas/merge-queue.ts`; read with [`merge-queue`](../../sdlc/sdlc-core/merge-queue.md). Bean `hfag`.",
     renderable: false,
     holds: "state",
     recordsWork: true,
@@ -1565,7 +1758,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // `workflow-state`. The validator is the SAME export the steward's tooling
     // imports, so the kind and the writer cannot drift into two answers.
     nodeSchemas: {
-      "folio-merge-queue-entry/v1": { validator: "schemas/merge-queue.ts#MergeQueueEntrySchema" },
+      "folio-merge-queue-entry/v1": {},
     },
     summary:
       "A merge steward's DECISIONS about an open pull request — priority, rank or override with its reason, " +
@@ -1580,6 +1773,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // the four coordinates of the role model: who, as which role, in which
   // process, on which task.
   todos: {
+    description:
+      "human actors' outstanding work as a whole (`todos/`); its inner nodes are declared by `todos/todos.json`",
     title: "Todos",
     perInstance: true,
     layer: "core",
@@ -1589,7 +1784,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "folio-board/v1": { validator: "schemas/board.ts#BoardSchema" },
+      "folio-board/v1": {},
     },
     recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:
@@ -1618,12 +1813,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // hold `x` and `y`, which `schemas/board-positions.ts` asserts against the
   // source of four schemas.
   boards: {
+    description:
+      "boards — one file each, `\"$schema\": \"folio-board/v1\"`. A board is a **diagram OF** a folio, not a container of one: it declares what it shows, and a folio with no board is complete. The semantic half of the OMG split the owner named — *\"treat it like OMG specs and BPMN layout. relationship first, visualiztion alter.\"*",
     title: "Boards",
     renderable: false,
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
-    validator: "schemas/board.ts#BoardSchema",
     // NOT work. A board is a way of LOOKING at work, and `check:graph-kind-work`
     // asks the question because the two are easy to conflate: `beans`, `todos`
     // and `workflow-state` each record something somebody is partway through,
@@ -1636,6 +1832,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "no board is complete. Schema: `schemas/board.ts`.",
   },
   "board-positions": {
+    description:
+      "where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The **Diagram Interchange** half: it points at notes and is never pointed back at, which is why a note carries no `x`, `y`, `board` or `position`. `state` rather than `content`, because a running process writes it every time somebody moves a note.",
     title: "Board positions",
     renderable: false,
     // Written by a running process every time somebody moves a note. It is
@@ -1643,7 +1841,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
-    validator: "schemas/board-positions.ts#BoardPositionsSchema",
     // NOT work either, and this is the sharper of the two. It IS `state` —
     // written by a running process — which is exactly what makes the question
     // worth asking: state that records a POSITION IN A PROCESS is work, and
@@ -1656,6 +1853,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "is never pointed back at. Schema: `schemas/board-positions.ts`.",
   },
   "todo-items": {
+    description:
+      "todo nodes — one file each, `\"$schema\": \"folio-todo/v1\"`. Authored by people, and by agents on their behalf.",
     title: "Todo items",
     layer: "core",
     renderable: false,
@@ -1663,49 +1862,51 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
-    validator: "schemas/todo.ts#TodoNodeSchema",
     recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:
       "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. " +
       "Authored by people and by agents on their behalf.",
   },
+
+  // BACK IN THE BASE LAYER, 2026-10-04 (bean riit). dmx1 moved this kind to
+  // folio-assistant-core's kinds/ graph the same day; that broke the invariant
+  // DEFAULT_DIRECTORIES states ("the harness cannot default a directory to a
+  // kind it does not know"), because the harness defaults `uploads/` beside
+  // `library/` — and the two are ONE pipeline, so they belong in one place.
   // The two stages of the document-ingestion pipeline. They are declared as
-  // SEPARATE kinds rather than one `sources` kind because the whole point of
-  // the pair is that they are not interchangeable: the corpus-grep checklist
-  // searches `library/` and not `uploads/`, so a source still in `uploads/`
-  // makes a clean grep read as "nobody has done this" while the file sits on
-  // disk. Collapsing them into one kind would erase exactly the distinction
-  // `content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md`
-  // exists to state.
+  // SEPARATE kinds rather than one `sources` kind because the whole point
+  // of the pair is that they are not interchangeable: the corpus-grep
+  // checklist searches `library/` and not `uploads/`, so a source still in
+  // `uploads/` makes a clean grep read as "nobody has done this" while the
+  // file sits on disk. Collapsing them into one kind would erase exactly
+  // the distinction `content/docs/document-ingestion/uploads-and-library-
+  // are-two-stages-of-one-pipeline.md` exists to state. A QUEUE, and a
+  // queue is a position in a pipeline. The declaration already says these
+  // files are NOT L1 and read as absent to every corpus consumer: the file
+  // is on disk and the content does not exist yet. Local since bean `tlat`
+  // moved the extraction contract down (placement PR5). The document
+  // adapter writes an upload's description beside its intake (bean `d4lb`),
+  // in the same family the IRIS catalogue records use. A queued source may
+  // itself BE a JSON Schema: the SPDX 3.1-RC1 schema held in
+  // uploads/spdx-3-1-rc1-machine-readable/ (bean `sd5v`) declares the meta-
+  // schema as its `$schema`. It conforms to a specification nobody here
+  // types, so it is `external`, as on `schemas` and `docs`.
   uploads: {
+    description: "the incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus.",
     title: "Uploads",
     perInstance: true,
     layer: "core",
     renderable: false,
-    // A QUEUE, and a queue is a position in a pipeline. The declaration
-    // already says these files are NOT L1 and read as absent to every corpus
-    // consumer: the file is on disk and the content does not exist yet.
     holds: "state",
-    // declared-path-literal: this table IS the declaration, as on `health`.
-    nodeSchemas: {
-      // Local since bean `tlat` moved the extraction contract down (placement PR5).
-      "folio-extraction/v1": { validator: "schemas/extraction.ts#ExtractionSchema" },
-      "folio-intake/v1": { validator: "schemas/intake.ts#IntakeSchema" },
-      // The document adapter writes an upload's description beside its intake
-      // (bean `d4lb`), in the same family the IRIS catalogue records use.
-      "folio-dublin-core/v1": { validator: "folio-assistant-core:schemas/dublin-core.ts#DublinCoreRecordSchema" },
-      // A queued source may itself BE a JSON Schema: the SPDX 3.1-RC1 schema
-      // held in uploads/spdx-3-1-rc1-machine-readable/ (bean `sd5v`) declares
-      // the meta-schema as its `$schema`. It conforms to a specification
-      // nobody here types, so it is `external`, as on `schemas` and `docs`.
-      "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
-    },
-    recordsWork: false, // live state, but nothing anybody is partway through
-    summary:
-      "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not " +
-      "greppable as corpus: a document here reads as absent to every consumer.",
+    nodeSchemas: {"folio-extraction/v1": {}, "folio-intake/v1": {}, "folio-dublin-core/v1": {}, "https://json-schema.org/draft/2020-12/schema": {"external": "JSON Schema 2020-12"}},
+    recordsWork: false,
+    summary: "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus: a document here reads as absent to every consumer.",
+    avatar: {"glyph": "M12 17V5m0 0l-4 4m4-4l4 4M5 19h14", "tone": 200, "reads": "an arrow onto a line — something arriving"},
+    tileIcon: "uploads",
   },
   library: {
+    description:
+      "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where scanned, `ocr/page-NNN.txt`.",
     title: "Library",
     perInstance: true,
     // Grouped by concern from within (`library/library.json`), PR0c — and
@@ -1736,23 +1937,23 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     nodeSchemas: {
       // The FROM-WITHIN node naming this directory's concern groups
       // (placement PR0c): `concern-groups/v1`.
-      "concern-groups/v1": { validator: "schemas/concern-groups.ts#ConcernGroupsSchema" },
-      "folio-document-images/v1": { validator: "schemas/document-image.ts#ImagesSidecarSchema" },
+      "concern-groups/v1": {},
+      "folio-document-images/v1": {},
       "folio-image-verdicts/v1": { shape: "scripts/apply-image-verdicts.ts#VerdictFile" },
       // The section analogue of image verdicts (bean `fnqn`): which sections are
       // mostly SAMPLE text. Read by summaries and the LSI units.
-      "folio-section-verdicts/v1": { validator: "schemas/section-verdicts.ts#SectionVerdictFileSchema" },
+      "folio-section-verdicts/v1": {},
       // The OTHER layer of the same page — bean `a8wy`. `folio-document-images`
       // holds what the PDF PLACES; this holds the positioned text of a figure
       // the PDF DRAWS, for which there is no image object to place. Two
       // families rather than one because a vector figure has no rectangle to
       // measure coverage on, no `xref` to dedupe by and no pixel to inspect,
       // so `role` and `basis` would each mean two things.
-      "folio-vector-labels/v1": { validator: "schemas/vector-labels.ts#VectorLabelsSidecarSchema" },
+      "folio-vector-labels/v1": {},
       // The vector figures ASSEMBLED and RENDERED — bean `ay3x`. Every entry
       // carries a basis naming who or what looked; the extractor's assigns no
       // role, and the role arrives by inspection through `image-verdicts.json`.
-      "folio-vector-figures/v1": { validator: "schemas/vector-figure.ts#VectorFiguresSidecarSchema" },
+      "folio-vector-figures/v1": {},
       // The JUDGEMENT half of the vector arm — bean `a8wy`. Stands to
       // `folio-vector-labels` as `folio-image-verdicts` stands to
       // `folio-document-images`: the measurement says where every text line
@@ -1760,21 +1961,19 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // required `basis` records whether they rendered the page. A
       // labels-only reading gets the nouns right and the relations wrong, so
       // a reader has to be able to tell the two apart.
-      "folio-figure-descriptions/v1": {
-        validator: "schemas/figure-description.ts#FigureDescriptionsFileSchema",
-      },
+      "folio-figure-descriptions/v1": {},
       // Agent summaries of prose blocks, beside the blocks rather than in
       // them — the blocks stay verbatim and `ingested` (owner, 2026-09-24).
       // The semantic half of its QA is `block-summaries` in check-l1-complete.
-      "folio-block-summaries/v1": { validator: "schemas/block-summary.ts#BlockSummariesSidecarSchema" },
+      "folio-block-summaries/v1": {},
       // What the site mount must not publish from this directory (bean `cw35`).
       // Written by the instance's generator from its licence gates; the mount
       // validates it with this schema and refuses to mount if it cannot.
-      "folio-withheld/v1": { validator: "schemas/withheld.ts#WithheldSchema" },
+      "folio-withheld/v1": {},
       // A slide deck's accessibility report, per check (bean `scfh`).
-      "folio-slides-accessibility/v1": { validator: "schemas/slides-accessibility.ts#SlidesAccessibilitySchema" },
+      "folio-slides-accessibility/v1": {},
       // A source recorded and not held, its text withheld by licence (bean `scfh`).
-      "folio-referenced-source/v1": { validator: "schemas/referenced-source.ts#ReferencedSourceSchema" },
+      "folio-referenced-source/v1": {},
     },
     summary:
       "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, " +
@@ -1782,219 +1981,36 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "knowledge-graph reference to a source resolves through here, never to a loose path " +
       "or a bare URL.",
   },
-  // A REMOTE catalogue modelled in the graph without being held. Distinct from
-  // `library`, and the distinction is the whole point: `library` is L1 content
-  // that IS here, `catalogue` is the shape of a collection of which almost
-  // nothing is. A who-iris node says 1,057,223 files exist and that three of
-  // them are materialized; folding that into `library` would make a consumer
-  // asking "what have we got" receive an answer about what EXISTS.
+  // What a folio's computations recorded — bean `qou-qb6t` (story T1 of the
+  // qou tools migration), and the owner's ruling of 2026-10-04: "all witnesses
+  // tools will need to go into the KG". A witness is the output node of a
+  // producer Tool; this kind is what makes that output a graph node.
   //
-  // Every node declares a materialization state and there is no default — see
-  // folio-assistant-core/schemas/materialization.ts.
-  catalogue: {
-    title: "Catalogue",
-    renderable: false,
-    // `content`, on the same reasoning that makes `library` content: it is
-    // DERIVED from an external source by an import process, and being derived
-    // rather than typed is not what the axis asks about. Detach a catalogue
-    // node and it still says something standing on its own — this item exists,
-    // at this handle, in this collection — so it is not the empty-when-detached
-    // shape that marks state. Contrast `uploads`, which is `state`: a queue
-    // says nothing once the thing has moved through it.
-    //
-    // THE TENSION, stated rather than hidden, per the skill's own rule: one
-    // FIELD of a catalogue node — `materialization.state` — genuinely is
-    // written by a running process, when `materialize-remote` moves a node from
-    // `referenced` to `materialized`. That does not make the graph state, for
-    // the same reason re-ingesting a PDF does not make `library` state: the
-    // axis classifies the KIND, not every field on it. If a consumer ever needs
-    // to ask "may a process write this field", that is a question about the
-    // field and belongs on `materialization.ts`, not a reclassification here.
-    holds: "content",
-    // declared-path-literal: this table IS the declaration, as on `health`.
-    nodeSchemas: {
-      "folio-dublin-core/v1": { validator: "folio-assistant-core:schemas/dublin-core.ts#DublinCoreRecordSchema" },
-      "folio-catalogue-node/v1": { validator: "folio-assistant-core:schemas/catalogue.ts#CatalogueNodeSchema" },
-      "folio-catalogue/v1": { validator: "folio-assistant-core:schemas/catalogue.ts#CatalogueSchema" },
-    },
-    summary:
-      "A remote catalogue modelled by reference — communities, collections and items " +
-      "of a corpus the instance does not hold. Every node declares whether its bytes " +
-      "are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), " +
-      "with no default. Distinct from `library`, which is content that IS here.",
-  },
-  // The artefact index of a published FHIR Implementation Guide — one graph
-  // per IG, keyed by the IG's own canonical URLs.
+  // `derived` on `library`'s reasoning: a witness is written by its producer
+  // and regenerated by re-running it, never edited in place, so a finding
+  // against one is a finding against its producer. `core` because the
+  // `computation.witness` field that wires a witness to a content block is a
+  // core block field, and nothing about a witness is specific to mathematics.
   //
-  // A SIBLING of `catalogue`, not a `flavour` of it, and the reason is the
-  // test AGENTS.md sets for a content type applied one level down: different
-  // CODE, or only different RULES? A catalogue node is a container or an item;
-  // a FHIR artefact is a `resourceType` at a canonical URL, published in
-  // several representations at once, in a versioned package, against a FHIR
-  // version. None of those five facts has a home on `CatalogueNode`, and a
-  // `flavour: "fhir"` smuggling them into free text would be a catalogue that
-  // cannot answer the only questions anybody asks of an IG.
-  //
-  // What the two DO share is `MaterializationSchema`, imported rather than
-  // restated — the same move `bean-graph.ts` makes with `ContentDirectorySchema`.
-  //
-  // NOT `derived`, and the distinction is the one `library`'s own comment
-  // draws. `library` is derived because ingestion PRODUCES BYTES HERE and a
-  // finding against a section is a finding against the ingestion that made it.
-  // This graph models a corpus that stays where it is: 655 of smart-trust's
-  // 674 artefacts are `referenced` and always will be. That is the `catalogue`
-  // shape exactly — including its mixed case, where a handful of nodes are
-  // materialised and the rest are not — so it takes `catalogue`'s answer.
-  "fhir-artifact-index": {
-    title: "FHIR artefact index",
-    renderable: false,
-    // `content`, on `catalogue`'s reasoning: detach an artefact node and it
-    // still says something standing on its own — this ValueSet exists, at this
-    // canonical URL, in this IG, with this JSON Schema. Being assembled by an
-    // import process is not what the axis asks about.
-    holds: "content",
-    // declared-path-literal: this table IS the declaration, as on `health`.
-    nodeSchemas: {
-      "folio-fhir-artifact-index/v2": { validator: "fhir-harness:schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema" },
-      // The IG's own NAVIGATION, read from its `sushi-config.yaml` — a second
-      // family in this directory because it comes from a second SOURCE. The
-      // index is harvested from the IG's published OUTPUT; a menu exists only
-      // in its SOURCE config, at a commit. Two provenances, so two documents:
-      // folding the menu into the index would give one file two answers to
-      // "where did this come from" (bean `0818`).
-      "folio-ig-menu/v1": { validator: "fhir-harness:schemas/ig-menu.ts#IgMenuSchema" },
-      // The IG's own CHROME — its palette, its status watermark, its publish
-      // box — resolved from the `fhir.template` chain its `ig.ini` names. A
-      // THIRD family in this directory because it comes from a third SOURCE,
-      // and this one is not even a single source: the index is harvested from
-      // the IG's published output, the menu from its `sushi-config.yaml`, and
-      // the chrome from separate template repositories the IG merely depends
-      // on. Three provenances, three documents (bean `ajx9`).
-      // v2 (stage D, #1767): keyed by the chain's TOP template, not by the IG
-      // it was ingested beside — every IG building with the chain wears it.
-      "folio-ig-chrome/v2": { validator: "fhir-harness:schemas/ig-chrome.ts#IgChromeSchema" },
-      // An IG's own id, canonical and status, read from ITS `sushi-config.yaml`.
-      // A FOURTH family in this directory because status is a fact about one
-      // IG, and the chrome it used to ride in is shared by many.
-      "folio-ig-identity/v1": { validator: "fhir-harness:schemas/ig-identity.ts#IgIdentitySchema" },
-      // The IG's GitHub RELEASES, as pointers to their binary assets — a
-      // fourth source (the GitHub API) and so a fourth document. Pointers,
-      // never bytes: previews carry no binaries, releases do (owner,
-      // 2026-10-02; bean `b8ip`).
-      "ig-releases/v1": { validator: "fhir-harness:schemas/ig-releases.ts#IgReleasesSchema" },
-      "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
-    },
-    summary:
-      "The artefact index of a published FHIR Implementation Guide, reconstructed from its " +
-      "published output — every artefact by canonical URL and published representation, with " +
-      "the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. " +
-      "No IG publishes such an index itself, so every field records which file it came out of.",
-    // NO `schema`/`validator`, and that is the same omission `catalogue` makes
-    // two entries up rather than an oversight. Both fields resolve under the
-    // DECLARING instance's root — here `cat-harness/` — and this kind's schema
-    // lives in `folio-assistant-core/schemas/fhir-artifact-index.ts`, one layer
-    // up. `check:kind-validators` catches a path that does not resolve, which
-    // is how this was found.
-    //
-    // The harness must not reach up into core: nothing under `cat-harness/`
-    // imports from `folio-assistant-core/`, and a declared path pointing there
-    // would be that dependency in all but name. When this repository splits,
-    // the kind moves to core with its schema and both fields come back — the
-    // `folio` kind is the worked example, registered by core through a
-    // load-time side effect rather than declared here.
-    //
-    // Until then `kg_validate` reports "could not determine" for this graph,
-    // and saying so here is the point: an undeclared validator that nobody
-    // wrote down reads exactly like a graph with nothing to check.
-  },
-  // The IG Publisher's OWN metadata exports — `valueset-ref-list.json`,
-  // `codesystem-ref-list.json` and `usage-stats.json`, the three files an IG
-  // publishes ABOUT what it built.
-  //
-  // Registered on the owner's ruling, 2026-09-30 — OPTION B of bean `rjug`:
-  // *"a sibling kind `ig-metadata-index`, `holds: "derived"`. Keeps 'what
-  // artefacts exist' apart from 'what the toolchain reported'."* Option A
-  // would have hung a `metadataExports` block off `fhir-artifact-index` one
-  // entry up, and the bean's own objection to it is why it lost: *"Risks
-  // making the index a bag."*
-  //
-  // A SIBLING of `fhir-artifact-index`, and the line between them is the line
-  // between a reconstruction and a transcription. That index answers *what
-  // artefacts does this IG contain*, assembled from four partial published
-  // views because NO IG PUBLISHES SUCH AN INDEX — which is why every field
-  // there records the file it came out of. This kind answers *what did the
-  // toolchain say about them*, read verbatim from three files the IG does
-  // publish. One document holding both would leave a consumer unable to tell
-  // a fact this repository assembled from a fact the Publisher asserted.
-  //
-  // `derived` by the axis's own two questions, and they agree here. It does
-  // NOT stand on its own — every record is an edge or a count about artefacts
-  // named elsewhere, so detached it asserts nothing. And you would REGENERATE
-  // it: re-harvest an unchanged published IG and the same file comes back.
-  // That last clause is exactly what separates it from `binary-release`
-  // below, where re-running produces a different release, which is why one is
-  // `derived` and the other `state` although both are downstream of a build.
-  //
-  // What `derived` buys, concretely, is what it bought `library/`: a QA
-  // finding against one of these documents is a finding against the HARVEST
-  // that made it, never against an author, so the content sweep is right to
-  // skip it and `walkBlocks` does.
-  //
-  // NOT renderable, on `fhir-artifact-index`'s reasoning one entry up. These
-  // are machine-readable edge lists and usage counts harvested from somebody
-  // else's published site; nothing in the docs build makes pages from them,
-  // and `renderable` asks whether the graph is wired to the SITE BUILD, not
-  // whether a human could be shown it. Saying `true` would promise a page per
-  // export for every IG ever harvested. The IG's own rendering is the IG's,
-  // and it is already published — at the URL `source.harvestedFrom` names.
-  //
-  // The schema carries bean `nsbb`'s two measured findings as SHAPE rather
-  // than prose, because both are absences that must not read as zeros: `uses`
-  // is declared-and-never-populated in both IGs measured (hence a three-state
-  // `usesState`, where a bare array would erase the finding), and nothing
-  // exports Library / PlanDefinition / Measure edges at all (hence
-  // `IG_METADATA_UNREACHED_TYPES` and `dependencyReach`, so an empty edge
-  // list over the decision-logic core reads as uninformative rather than
-  // clean).
-  openapi: {
-    renderable: false,
-    // `derived`, on `library`'s reasoning (bean `hqku`): the documents are
-    // INGESTED from an upstream source that still exists, and a change is made
-    // by re-running the ingest, never by editing the copy — a QA finding
-    // against one is a finding against its source or its ingest. Not
-    // `content`: this repository did not author the API. Bean `s4ta`.
-    holds: "derived",
-    // Not renderable for the reason `fhir-artifact-index` gives: the site
-    // build does not read this directory. Its pages — one per OPERATION, each
-    // with its own IRI (owner, 2026-10-03: "need page + IRI for each
-    // operation") — are written into the instance's `docs` by
-    // `cat-openapi/scripts/gen-openapi-pages.ts`, and their loader fetches the
-    // document from here, which is why a directory of this kind is `served`.
-    nodeSchemas: {
-      // The ingest's provenance node, one per document.
-      "folio-openapi-source/v1": { validator: "cat-openapi:schemas/openapi.ts#OpenApiProvenanceSchema" },
-    },
-    summary:
-      "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the " +
-      "repository, path and commit it was ingested from (the cat-openapi harness). Every operation " +
-      "in a document is a node of its own: a page and an IRI under the instance's docs.",
-  },
-  "ig-metadata-index": {
-    title: "IG metadata index",
+  // One `validator`, not per-tag `nodeSchemas`: witnesses carry no reliable
+  // `$schema` (22 of qou's carry one, in seven spellings), so they are selected
+  // by their `.witness.json` suffix. The validator is the ENVELOPE every
+  // witness meets; the producer contract is a separate schema whose failures
+  // `witness:conformance` reports as findings. Both are documented in
+  // `schemas/computation-witness.ts`.
+  "computation-witness": {
+    title: "Computation witnesses",
+    layer: "core",
     renderable: false,
     holds: "derived",
-    // declared-path-literal: this table IS the declaration, as on `health`.
-    // The schema lives in `fhir-harness/`, beside `ig-menu.ts` and
-    // `ig-chrome.ts`: it describes any FHIR IG's Publisher exports and nothing
-    // in it is the platform's (#1767, stage B). So the pointer is
-    // instance-qualified, as `fhir-artifact-index`'s already are, and
-    // `check:kind-validators` resolves it under fhir-harness's root.
-    validator: "fhir-harness:schemas/ig-metadata-index.ts#IgMetadataIndexSchema",
+    schema: "schemas/computation-witness.ts",
+    // Its validator is `validators/computation-witness.json` (bean riit, step
+    // 1c: no authored kind carries validator code).
     summary:
-      "The IG Publisher's own metadata exports for one published IG, harvested verbatim — " +
-      "ValueSet→CodeSystem edges, CodeSystem `uses`, and extension/profile usage paths. " +
-      "Each export declares whether it was present, absent or never looked for, and a " +
-      "`uses` field that upstream declared and left empty is recorded as exactly that.",
+      "What a folio's computations recorded: one `<name>.witness.json` per producer run, naming the " +
+      "engine, the script and its hash, the commit, and each assertion with its computed and expected " +
+      "values. Written by the producer and regenerated by re-running it; addressable from prose and " +
+      "wired to a content block through `computation.witness`.",
   },
   // Binary releases — WHAT WAS PUBLISHED, under what version, with what
   // digest. Never the bytes.
@@ -2056,13 +2072,14 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // from an accident, which is `deletion-requires-confirmation` written into a
   // shape.
   "binary-release": {
+    description:
+      "published binary releases — one `folio-binary-release/v1` document per release, carrying its id, version and origin, and for each asset the size, the sha256 where one is known, where it is fetched from, and what became of it. **Never the bytes**: the schema is strict throughout. Registered 2026-09-30 on the owner's ruling (bean `rjug`, Option A); Option B was reusing `materialization`, and bean `gpdo`'s `compiled` purpose landing since has sharpened that mismatch rather than softening it — all four materialization purposes are purposes of A COPY THIS INSTANCE HOLDS, while a release is a publication UPSTREAM that stays true after every local copy is gone. The two compose rather than substitute. `state`: the release pipeline writes it, and re-running produces a DIFFERENT release rather than the same one again, which is why this is not `derived` although `ig-metadata-index` above is. `recordsWork: false` — a published release is a completed fact, not something anybody is partway through. The case it exists for is the deploy purge: after the WHO deploy phase deletes its >100 MB files, nothing else anywhere records that they existed, so a purged asset must still say where to fetch it and why it went — a removal with no recorded reason cannot be told from an accident. Shape in `schemas/binary-release.ts`.",
     title: "Binary releases",
     renderable: false,
     holds: "state",
     recordsWork: false,
     // declared-path-literal: this table IS the declaration, as on `health`.
     schema: "schemas/binary-release.ts",
-    validator: "schemas/binary-release.ts#BinaryReleaseSchema",
     summary:
       "Published binary releases -- one `folio-binary-release/v1` document per release, " +
       "carrying its id, version and origin, and for each asset the size, the sha256 where " +
@@ -2076,6 +2093,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // a voice apply, and a graph kind that conflated the two would have no place
   // to record that this instance ships four voices and activates none.
   voices: {
+    description:
+      "editorial voice profiles — one JSON each, `\"$schema\": \"folio-voice/v1\"`. Every rule cites its source. **Opt-in**: shipping a voice does not apply it.",
     title: "Voices",
     perInstance: true,
     layer: "core",
@@ -2090,7 +2109,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
-    validator: "schemas/voices.ts#VoiceProfileSchema",
     summary:
       "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. " +
       "Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
@@ -2103,6 +2121,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // says what is held rather than how deep. `vendors/vendors.json` declares
   // each `<id>/`; the chain stops where a directory carries no declaration.
   "voice-vendors": {
+    description:
+      "a base voice specialised for one agent vendor — `folio-voice/v1` with `extends` naming the base. A **sub-graph of `voices`** (`within: \"voices\"`), declared from within: `voices/voices.json` names `vendors/`, and `vendors/vendors.json` names each `<id>/`. `loadVoices` descends only where a declaration says to and **refuses** an undeclared voice directory rather than skipping it. Bean `rkqp`, owner 2026-09-30.",
     title: "Voice vendors",
     layer: "core",
     renderable: false,
@@ -2110,7 +2130,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     declarationFile: "vendors.json",
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `voices`.
-    validator: "schemas/voices.ts#VoiceProfileSchema",
     summary:
       "Vendor voice profiles — a base voice specialised for one agent vendor, " +
       "`folio-voice/v1` with `extends` naming the base. A sub-graph of `voices`, " +
@@ -2129,6 +2148,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // subject matter does not live in the platform. This kind is what gives it
   // somewhere else to live that a declaration-driven consumer can still find.
   themes: {
+    description:
+      "themes an instance DERIVED from a source it holds — a served stylesheet, or a style guide's stated rules. One Theme node each, carrying `kind: sticky \\| webpage \\| publication`; the palette vocabulary is shared across every kind and only the geometry varies. Every value cites where it was measured. NOT the platform's own twelve themes, which are furniture in `cat-harness/schemas/themes.ts` — a palette read off a WHO style guide is subject matter.",
     title: "Themes",
     renderable: false,
     // Authored-from-a-source, like `voices` and for the same reason: a theme is
@@ -2137,13 +2158,14 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // up, and the same answer holds here.
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "schemas/theme.ts#ThemeSchema",
     summary:
       "Themes derived from an instance's own sources — one Theme node each, carrying " +
       "`kind: sticky | webpage | publication`. The palette vocabulary is shared across " +
       "every kind and only the geometry varies; every value cites where it was measured.",
   },
   "document-kinds": {
+    description:
+      "DOCUMENT KINDS a harness contributes — named structures of sections a document authored with it follows, `fixed` (exactly these sections) or `semi-fixed` (these required, others allowed). One `folio-document-kind/v1` JSON each; every kind and section names its sources, and `computedFrom` names the declared graphs a section derives from. Not a content profile: a profile constrains which BLOCK KINDS a folio may contain and is a compile-time union in core; a kind is a structure, contributed as data. Stage D5 of the smart-* separation, #1767.",
     renderable: false,
     // Authored-from-a-source, like `themes`: a document kind is true whether
     // or not any document has been written in it yet. Core knows that kinds
@@ -2152,11 +2174,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "folio-document-kind/v1": { validator: "schemas/document-kind.ts#DocumentKindSchema" },
+      "folio-document-kind/v1": {},
       // How one subject realises a kind, computed by the kind's owner — a
       // second family in this directory because it is DERIVED from another
       // graph (an IG's artefact index), where the kind is authored.
-      "folio-document-kind-coverage/v1": { validator: "schemas/document-kind.ts#DocumentKindCoverageSchema" },
+      "folio-document-kind-coverage/v1": {},
     },
     summary:
       "Document kinds — named structures of sections (fixed or semi-fixed) that a document " +
@@ -2165,6 +2187,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "section names its sources; `computedFrom` names the declared graphs a section derives from.",
   },
   "todo-feedback": {
+    description:
+      "feedback items — todos raised against a specific block, carrying the submitter's identity. Read by `todo-review`.",
     title: "Todo feedback",
     layer: "core",
     renderable: false,
@@ -2172,28 +2196,12 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // a record OF something rather than the something.
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "schemas/constraints.ts#FeedbackItemSchema",
     recordsWork: false, // live state, but nothing anybody is partway through
     summary:
       "Feedback items — todos raised against a specific block, carrying the submitter's " +
       "identity. Read by the `todo-review` skill.",
   },
-  "review-verdicts": {
-    title: "Review verdicts",
-    layer: "core",
-    renderable: false,
-    // Written by a running review: the coordinator's step commits each
-    // verdict as it is ingested. A record OF a review, like `todo-feedback`,
-    // and not a todo: it asks for nothing.
-    holds: "state",
-    // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "folio-assistant-core:schemas/review-verdict.ts#ReviewVerdictSchema",
-    recordsWork: false, // a verdict is a finished judgement, not work anybody is partway through
-    summary:
-      "Reviewers' per-block verdicts — one `folio-review-verdict/v1` JSON each, pinned to the " +
-      "block's content hash and committed on the edit-set's feature branch. Read by the review " +
-      "coverage gate (`folio-review-coverage`), which counts a verdict only while its hash is current.",
-  },
+
   // ── The one kind that is not-rendered ON PURPOSE ──────────────────────
   //
   // Every other kind above is `renderable: false` because it is a graph a
@@ -2258,6 +2266,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // and declaring a directory before it exists is the `dh4f` defect, where a
   // consumer scans nothing and reports a clean run. Nothing scans a kind.
   "session-state": {
+    // declared-path-literal: the description is the kind table's prose
+    // (generated by kind:table, bean dmx1) and names the shape module for a
+    // reader; `schema` below is the declaration.
+    description:
+      "a SESSION's context — the acting actor, the instances it has open, the beans it claimed and what it waits on. Distinct from `workflow-state`, which is where ONE instance got to: a session spans processes, and a session with nothing open is the commonest state there is. `actor` is required because nothing else can supply it. **Registered ahead of a directory**: nothing writes one yet, and the state machine that will is bean `3nfv`. Shape in `schemas/session-context.ts`; read with [`session-context`](../../process/workflow/session-context.md).",
     title: "Session state",
     renderable: false,
     holds: "state",
@@ -2282,6 +2295,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // REJECTS a dot-prefixed segment, so the file was in the one place the
   // conventions forbid while being read at the start of every session.
   interaction: {
+    description:
+      "how a PERSON wants to be asked — committed, read at session start by every agent. `context`: read during a process, never written by one; it changes when a person states a preference. Also `harness.config.json`'s `interaction` key, which defaults here, so the declaration and the config name one place.",
     title: "Interaction",
     renderable: false,
     holds: "context",
@@ -2294,7 +2309,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     schema: "schemas/interaction.ts",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "folio-interaction/v1": { validator: "schemas/interaction.ts#InteractionNodeSchema" },
+      "folio-interaction/v1": {},
     },
     summary: "How a person wants to be asked — read at session start, never written by a process.",
   },
@@ -2310,6 +2325,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // keeps its id: the id alone would call it seen, and an edited requirement
   // is a changed requirement (`issue-working`).
   "issue-marks": {
+    description:
+      "how far an agent has read an issue — `lastCommentId`, `lastUpdatedAt`, `checkedAt`, one file per issue. **Not the comments**: an id and two timestamps, never a body. Two marks because a comment EDITED after being read keeps its id. Read with [`issue-working`](../../sdlc/sdlc-core/issue-working.md); shape in `src/issue-watch/seen-comments.ts`.",
     title: "Issue marks",
     renderable: false,
     holds: "state",
@@ -2322,18 +2339,19 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // `audit-coverage` as reached by nothing. `SeenState` is now derived from
     // the Zod schema, so the two cannot drift. Bean `3oqj`.
     nodeSchemas: {
-      "folio-issue-mark/v1": { validator: "src/issue-watch/seen-comments.ts#IssueMarkSchema" },
+      "folio-issue-mark/v1": {},
     },
     summary: "How far an agent has read an issue — the comment id and the edit time it accounted for.",
   },
 
   memory: {
+    description:
+      "agent memory — durable facts an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each. Read during a process and never written by one; it changes when a human directs an authoring agent. Declared at `memory/`, **repository-scoped** — these are facts about the repository carried by the agents working in it, and `.claude/agents/` sits at the repository root too. They were in `skills/memory/` until 2026-09-20 (bean `07xs`), where the containing kind was `content` and the contents were `context`.",
     title: "Memory",
     renderable: false,
     holds: "context",
     // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
-    validator: "schemas/memory.ts#MemoryNodeSchema",
     summary: "Durable facts an agent carries between sessions. Read during a process, never written by one.",
   },
 
@@ -2356,6 +2374,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // has stopped being possible". A waiver's whole content is that it EXPIRES.
   // Labelling one `stable` would assert the opposite of what the node says.
   waiver: {
+    description:
+      "confirmations a person granted **in advance** — one `\"$schema\": \"folio-waiver/v1\"` node each, naming one gate class, scoped to a session or a process run, and carrying an expiry. Declared over the **same directory as `memory`**, `memory/`, and told apart from it by that tag rather than by a subdirectory: a directory is a place to look and may hold more than one part of a graph. `context` by the same test as `memory` — a process reads a waiver before a gate fires and no step writes one. Skill: [`confirmation-waiver`](../../conduct/conduct-core/confirmation-waiver.md).",
     title: "Waivers",
     renderable: false,
     holds: "context",
@@ -2363,12 +2383,14 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // declared-path-literal: as on `health` and `translation-sources` — this
     // table IS the declaration, so resolving `validator` through one would be
     // reading it from here. `check:kind-validators` proves it still loads.
-    validator: "schemas/waiver.ts#WaiverNodeSchema",
     summary:
       "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring.",
   },
 
   "fsh-guts": {
+    description:
+      "Deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. **THAT IS TRUE AGAIN AS OF 2026-09-23, AND WAS NOT FOR SOME TIME.** The kind also held `proposals/` — the LIVE design corpus, cited as the governing scheme by seven skills and four code modules — so an agent that read this row, learned the kind was throwaway and skipped it had skipped the schemes it needed. That is exactly what happened (bean `5kn6`): a session proposed three options for a question `instance-versioning.md` §3.3 and an owner ruling of 2026-09-20 had already settled. **The owner's fix was to move them, not to re-describe the kind** — *\"proposals not in fsh-guts but docs/ for needed &lt;stub&gt;\"* — so proposals now live in the `docs/` of the instance whose stub they concern, published rather than hidden. What remains here is `retired/` and one-off migration `scripts/`, which are what the label always described. **The lesson survives the fix**: a kind whose name tells an agent to skip it must not hold anything an agent needs.",
+    renderableNote: "on purpose",
     title: "FSH guts",
     renderable: false,
     // The one that reads like content, and the one `context` moved. What is
@@ -2383,7 +2405,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // the same day moved it, by the same criterion that moved memory.
     holds: "context",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "schemas/fsh-guts.ts#FshGutsNodeSchema",
     summary:
       "Deprecated and throwaway structured content — kept, addressable and exported, and " +
       "deliberately absent from the rendered site. The destination for anything that would " +
@@ -2424,6 +2445,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // finding against the substrate or the fetch. Not `context`: `kg:subscribe`
   // writes it, and a process writing a `context` graph is a defect.
   "substrate-snapshot": {
+    description:
+      "the root declaration of each Knowledge Graph this instance SUBSCRIBES to (`subscriptions/`), one `folio-substrate-snapshot/v1` file per `subscriptions` entry: the upstream bytes at the pinned commit, their sha256, and the harnesses and subgraphs the substrate offers. `derived`: written by `bun run kg:subscribe` from somebody else's bytes and regenerated, never edited; `kg:subscribe:check` re-hashes and re-judges each one offline. It WRAPS the upstream `<name>.json` rather than copying it, because a bare copy carries `name` equal to its stem and would read as an instance declaration to every scanner. Issue #1719.",
     title: "Substrate snapshots",
     renderable: false,
     holds: "derived",
@@ -2442,13 +2465,14 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // this registry cannot name it without pointing up the arrow. They are
     // JUDGED by `kg:materialize:check` instead; `kg:validate` on one reports
     // it against the snapshot schema, which is a known gap, not a verdict.
-    validator: "schemas/substrate-snapshot.ts#SubstrateSnapshotSchema",
     summary:
       "The root declaration of each Knowledge Graph this instance subscribes to, cached byte for byte at " +
       "the pinned commit with its fixity, and what the substrate judgement found in it; and each chosen " +
       "subgraph or asset materialised from it, with its fixity, provenance and gate answers.",
   },
   "translation-sources": {
+    description:
+      "the gettext side of translation — `.pot` templates, `.po` catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; there is deliberately **no kind for the rendered output**. Read with the [`translation-manager`](../../library/library-core/translation-manager.md) skill; shape in `schemas/translation.ts`.",
     title: "Translation sources",
     perInstance: true,
     renderable: false,
@@ -2466,7 +2490,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // file and pass.
     // declared-path-literal: as above — the vocabulary cannot resolve itself
     // through the vocabulary. `check:kind-validators` proves it resolves.
-    validator: "schemas/translation.ts#TranslationConfigSchema",
   },
 };
 
@@ -2475,10 +2498,11 @@ export type GraphKind = string;
 
 /** Thrown when a kind is registered twice with different meanings. */
 export class GraphKindConflictError extends Error {
-  constructor(name: string) {
+  constructor(name: string, detail?: string) {
     super(
-      `graph kind "${name}" is already registered with a different definition. ` +
-        `Kinds are a shared vocabulary — rename, or register once.`,
+      `graph kind "${name}" is already registered with a different definition` +
+        (detail ? ` (${detail})` : "") +
+        `. Kinds are a shared vocabulary — rename, or register once.`,
     );
     this.name = "GraphKindConflictError";
   }
@@ -2615,9 +2639,101 @@ export function graphKindIri(name: string, def?: Pick<GraphKindDef, "layer">): s
 
 export class GraphKindRegistry {
   private kinds = new Map<string, GraphKindDef>();
+  /** Which file declared each kind loaded from a `kinds/` graph (bean dmx1). */
+  private declaredIn = new Map<string, string>();
+  /** Validator nodes, keyed `kind\u0000family`, kept so a kind registered LATER (core's `folio`) is joined too. */
+  private validatorNodes = new Map<string, { file: string; node: ValidatorNode }>();
+  private loaded = false;
 
-  constructor(seed: Readonly<Record<string, GraphKindDef>> = BASE_GRAPH_KINDS) {
+  /**
+   * @param seed the kinds this layer lists in code
+   * @param declaredUnder a checkout whose instances' `kinds/` graphs are
+   *   loaded on first use; omitted, the registry holds only `seed` and what is
+   *   `register`ed (a test's private registry)
+   */
+  constructor(
+    seed: Readonly<Record<string, GraphKindDef>> = BASE_GRAPH_KINDS,
+    private readonly declaredUnder?: string,
+  ) {
     for (const [k, v] of Object.entries(seed)) this.kinds.set(k, v);
+  }
+
+  /**
+   * Load every declared kind node under {@link declaredUnder}, once. Lazy, so
+   * importing the registry touches no filesystem; on FIRST USE rather than at a
+   * call site, so a reader that imports only this module still sees every
+   * harness's kinds. A node that does not parse, or a name two files declare,
+   * THROWS with the path: a kind silently missing reads as "not a known kind",
+   * which is the dh4f shape.
+   */
+  private ensureDeclared(): void {
+    if (this.loaded || this.declaredUnder === undefined) return;
+    this.loaded = true;
+    for (const { file, node } of declaredKindNodes(this.declaredUnder)) {
+      const prior = this.declaredIn.get(node.kind);
+      if (prior === file) continue;
+      if (prior !== undefined || this.kinds.has(node.kind)) {
+        throw new GraphKindConflictError(node.kind, `declared by ${prior ?? "the base layer's code"} and by ${file}`);
+      }
+      this.kinds.set(node.kind, kindDefOf(node));
+      this.declaredIn.set(node.kind, file);
+    }
+    for (const v of declaredValidatorNodes(this.declaredUnder)) {
+      const key = `${v.node.validates.kind}\u0000${v.node.validates.family ?? ""}`;
+      const prior = this.validatorNodes.get(key);
+      if (prior && prior.file !== v.file) {
+        throw new Error(`two validators for ${describeValidator(v.node)}: ${prior.file} and ${v.file}. One family, one validator.`);
+      }
+      this.validatorNodes.set(key, v);
+    }
+    // A validator naming a kind not registered YET is joined by `register`
+    // (core registers `folio` in code after load); one naming no kind at all
+    // is `check:kind-validators`' finding.
+    for (const name of [...this.kinds.keys()]) this.joinValidators(name);
+  }
+
+  /** Fill each listed family's (or the kind's own) validator in from the node that names it. */
+  private joinValidators(name: string): void {
+    const def = this.kinds.get(name);
+    if (!def) return;
+    let next: GraphKindDef | undefined;
+    for (const { file, node } of this.validatorNodes.values()) {
+      if (node.validates.kind !== name) continue;
+      next ??= { ...def, ...(def.nodeSchemas ? { nodeSchemas: { ...def.nodeSchemas } } : {}) };
+      const family = node.validates.family;
+      if (family === undefined) {
+        if (next.validator !== undefined && next.validator !== node.schema) {
+          throw new Error(`${file}: kind "${name}" already names a validator in code (${next.validator}); two answers for one kind`);
+        }
+        next.validator = node.schema;
+        continue;
+      }
+      const entry = next.nodeSchemas?.[family];
+      if (entry === undefined) throw new Error(`${file}: validates family "${family}", which kind "${name}" does not list`);
+      if ((entry.validator !== undefined && entry.validator !== node.schema) || entry.shape !== undefined || entry.external !== undefined) {
+        throw new Error(`${file}: family "${family}" of kind "${name}" already has an answer in code; two answers for one family`);
+      }
+      (next.nodeSchemas as Record<string, NodeSchemaRef>)[family] = { ...entry, validator: node.schema } as NodeSchemaRef;
+    }
+    if (next) this.kinds.set(name, next);
+  }
+
+  /** The validator node joined onto `kind` (and `family`), when one is. */
+  validatorNodeFor(kind: string, family?: string): { file: string; node: ValidatorNode } | undefined {
+    this.ensureDeclared();
+    return this.validatorNodes.get(`${resolveGraphKind(kind).kind}\u0000${family ?? ""}`);
+  }
+
+  /** Every validator node loaded, for a check that a node names a kind that exists. */
+  validatorNodeList(): { file: string; node: ValidatorNode }[] {
+    this.ensureDeclared();
+    return [...this.validatorNodes.values()];
+  }
+
+  /** The file that declared `name`, when it came from a `kinds/` graph. */
+  declaredBy(name: string): string | undefined {
+    this.ensureDeclared();
+    return this.declaredIn.get(resolveGraphKind(name).kind);
   }
 
   register(name: string, def: GraphKindDef): void {
@@ -2627,6 +2743,7 @@ export class GraphKindRegistry {
       throw new GraphKindConflictError(name);
     }
     this.kinds.set(name, def);
+    this.joinValidators(name);
   }
 
   // `has` and `get` resolve a deprecated spelling, so a declaration written
@@ -2634,26 +2751,65 @@ export class GraphKindRegistry {
   // and nowhere else: a second place that knows the old name is a second place
   // that can forget it.
   has(name: string): boolean {
+    this.ensureDeclared();
     return this.kinds.has(resolveGraphKind(name).kind);
   }
 
   get(name: string): GraphKindDef | undefined {
+    this.ensureDeclared();
     return this.kinds.get(resolveGraphKind(name).kind);
   }
 
   names(): string[] {
+    this.ensureDeclared();
     return [...this.kinds.keys()];
   }
 
   /** The kind a `GraphKind` individual names, or `undefined`. */
   forIri(iri: string): string | undefined {
+    this.ensureDeclared();
     for (const [k, v] of this.kinds) if (graphKindIri(k, v) === iri) return k;
     return undefined;
   }
 }
 
-/** The shared registry. Core registers `folio` into this at load. */
-export const defaultGraphKinds = new GraphKindRegistry();
+/**
+ * Every `folio-graph-kind/v1` node in every `kinds/` graph the instances under
+ * `repoRoot` declare, files sorted for a stable order. Read RAW from each
+ * declaration (only `directories[].graphKinds`, `path` and `scope`), because
+ * the declaration's Zod schema lives in `cat-harness.ts`, which imports this
+ * module.
+ */
+export function declaredKindNodes(repoRoot: string): { file: string; node: ReturnType<typeof GraphKindNodeSchema.parse> }[] {
+  return declaredNodeFiles(repoRoot, "kinds").map(({ file, raw }) => {
+    const parsed = GraphKindNodeSchema.safeParse(raw);
+    if (!parsed.success) throw new Error(`${file} is not a folio-graph-kind/v1 node: ${parsed.error.message}`);
+    return { file, node: parsed.data };
+  });
+}
+
+/** Every `folio-validator/v1` node in every declared `validators/` graph (bean riit). */
+export function declaredValidatorNodes(repoRoot: string): { file: string; node: ValidatorNode }[] {
+  return declaredNodeFiles(repoRoot, "validators").map(({ file, raw }) => {
+    const parsed = ValidatorNodeSchema.safeParse(raw);
+    if (!parsed.success) throw new Error(`${file} is not a folio-validator/v1 node: ${parsed.error.message}`);
+    return { file, node: parsed.data };
+  });
+}
+
+function describeValidator(n: ValidatorNode): string {
+  return n.validates.family ? `kind "${n.validates.kind}", family "${n.validates.family}"` : `kind "${n.validates.kind}"`;
+}
+
+/**
+ * The shared registry: the base layer's kinds above, plus every kind the
+ * instances of THIS checkout declare in their `kinds/` graphs (bean dmx1),
+ * loaded on first use. Core registers `folio` into it at load.
+ */
+export const defaultGraphKinds = new GraphKindRegistry(
+  BASE_GRAPH_KINDS,
+  resolve(dirname(fileURLToPath(import.meta.url)), "..", ".."),
+);
 
 /**
  * The display name of a graph kind: its declared {@link GraphKindDef.title},

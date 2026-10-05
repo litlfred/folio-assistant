@@ -76,9 +76,13 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   // ── regen's slowest pairs, by measured wall time (seconds, both passes) ──
   "translation:block-qa:check": TREE_READER, //   456 s — `--check` compares `substantive()`, which drops commit SHAs and timestamps
   "kg:audit:all:check": TREE_READER, //            335 s — spawns `kg-audit.ts --check` per instance; the spawned source is in the tree
-  // 230 s. NOT read-only: even `--check` writes its registration report, so it
-  // runs alone; but its answer is the tree's, so an unchanged tree may skip it.
-  "skill:register:check": { inputs: [TRACKED] },
+  // 107 s (2026-10-05). Read-only since bean `bo44`: `writesReport` is false
+  // under `--check`, so this said "writes its registration report" a week after
+  // it stopped (bean `8qyc`). Re-measured under strace on a clean tree: no
+  // write in the repository; what it writes is what its sub-checks write, all
+  // declared read-only here (the qa-store fetch below `.git/` is
+  // `kg:audit:check`'s). In regen its sub-checks are folded (`pair-cover.ts`).
+  "skill:register:check": TREE_READER,
   "kg:audit:check": TREE_READER, //                 81 s — `--check` compares the manifest and every sidecar, writes neither
   "check:glossary": TREE_READER, //                 45 s — `glossary-page.ts --check` exits before its write loop
   "glossary:pot:check": TREE_READER, //             39 s — exits before writing; compares without the POT timestamp
@@ -182,6 +186,7 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "check:source-licence": READ_ONLY,
   "check:stale-field-advice": READ_ONLY,
   "check:stale-paths": READ_ONLY,
+  "check:state-on-main": READ_ONLY,
   "check:structure-accessor": READ_ONLY,
   "check:subgraph-coverage": READ_ONLY,
   "check:subgraphs": READ_ONLY,
@@ -265,6 +270,62 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "uml:overview:check": READ_ONLY,
   "upload-step:docs:check": READ_ONLY,
   "voices:viz:check": READ_ONLY,
+  // ── regen's barriers, re-measured 2026-10-05 (bean `8qyc`) ──
+  // Each was a pair regen ran ALONE only for want of a declaration: added to
+  // the gate set after the 2026-10-01 sweep. Each `--check` ran under `strace -f`
+  // on this tree and opened nothing for writing, created, renamed, removed or
+  // truncated nothing (`.git/**/index.lock`, git's optional stat refresh, aside:
+  // two concurrent refreshes skip rather than fail). AND each `--check` branch
+  // was READ for a write that only a red verdict reaches — every one returns or
+  // exits before its writer path, most through the judge (`concludeJudgement`
+  // / `judgeQaResult`), which writes nothing by contract.
+  "bat:sync:check": READ_ONLY,
+  "check:avatar-coverage:check": READ_ONLY,
+  "check:l1-complete:check": READ_ONLY, //         `sidecarFor` only under `--write`
+  "check:lane-documentation:check": READ_ONLY,
+  "check:layout-norms:check": READ_ONLY,
+  "check:library-qa:check": READ_ONLY, //          `writeQaResult` only in the else of `if (check)`
+  "check:methodology-evidence:check": READ_ONLY,
+  "check:nav-names:check": READ_ONLY, //           ditto
+  "check:rendered-labels:check": READ_ONLY,
+  "check:source-licence:check": READ_ONLY,
+  "check:undeclared-files:check": READ_ONLY, //    its one ftruncate is Bun's spawn-stdin memfd
+  "kg:locale:check": READ_ONLY, //                 writes nothing; reads KG_BASE_URL, so still no `inputs`
+  "kind:register:check": READ_ONLY, //             `--check` skips the write loop; its five verifies are READ_ONLY here
+  "check:wireframes:check": READ_ONLY,
+  "dc:render:check": READ_ONLY, //                 returns before `writeFileSync`
+  "document-kinds:viz:check": READ_ONLY, //        its one `rmSync` is in the not-`check` arm
+  "ig-ast:schema:check": READ_ONLY,
+  "kg:materialize:check": READ_ONLY, //            `checkMaterializations` is offline and reads
+  "p2:refusals:check": READ_ONLY,
+  "qa:attestations:migrate:check": READ_ONLY, //   `--check` passes `dryRun` to the kg trees and `check` to criteria
+  "slice:sqlite:vendor:check": READ_ONLY,
+  "smart-base:diig-figure:check": READ_ONLY, //    python; `write_text` only without `--check`
+  "smart-base:document-kinds:check": READ_ONLY,
+  "smart-base:dth-terms:check": READ_ONLY,
+  "smart-base:smart-kg-l1:check": READ_ONLY, //    `continue`s before `writeFileSync` under `check`
+  "smart-immunizations:pages:check": READ_ONLY, // `if (CHECK)` compares; the rebuild is the else
+  "smart-trust:openapi:check": READ_ONLY, //       exits before `--source` is even read
+  "smart-trust:openapi:pages:check": READ_ONLY,
+  // NO `inputs` for these five, read rather than assumed (bean `8qyc`): four
+  // build through `kg-export.ts`'s `buildExport`, which stamps the document
+  // with `stagingFields(process.env)` (`staging-stamp.ts`), and `kg:export`
+  // also reads `KG_BASE_URL`; `render:bpmn` renders through whatever Chromium
+  // the machine has. An answer that depends on the environment may not be
+  // skipped, so they are always asked — in the pool now, rather than alone.
+  //
+  // These five DO write, and only into a directory each makes for itself with
+  // `mkdtemp` (strace `-y` resolved every write fd: nothing outside
+  // `/tmp/<own prefix>-XXXXXX`, Chromium's per-launch profile included) and
+  // removes before exiting. No other process can name that directory, so
+  // nothing another pair reads moves — which is the property `outputs: []`
+  // exists to assert. Two were RED when measured (a stale skill payload on
+  // `main`), so the red `--check` path was traced as well as read.
+  "check:published-instance-exports": READ_ONLY, // 49 s; exports into `published-instance-export-*`, `--qa-root` there too (bean `ymsu`)
+  "kg:export:check": READ_ONLY, //                  13 s; `sidecarMode("check")` judges, `writeQaResult` is the write mode's
+  "render:bpmn:check": READ_ONLY, //                5 s; `emit` returns before `writeFile` under `--check`
+  "slice:sqlite:check": READ_ONLY, //               12 s; `checkSlice` builds in `slice-check-*` / `slice-sqlite-*`
+  "subgraph:jsonld:check": READ_ONLY, //            15 s; `if (check)` returns before `rmSync` / `writeFileSync`
 };
 
 /**

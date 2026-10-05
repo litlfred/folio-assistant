@@ -4,14 +4,14 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/library/ingest-build-l1-kg.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Ingestion subprocess — build the L1 knowledge graph
 
 `Process_BuildL1Kg` · advisory · 5 step(s)
 
-folio-assistant — Ingestion subprocess — build the L1 knowledge graph.
+Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links. folio-assistant — Ingestion subprocess — build the L1 knowledge graph.
 
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
@@ -25,7 +25,7 @@ work plan in beans/.
 
 ## How it connects
 
-- **Called by:** [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html)
+- **Called by:** [L1 document ingestion — a document to the L1 source knowledge graph](l1-document-ingestion.html)
 - **Calls:** none
 - **Presented on:** [Document ingestion — Build the L1 knowledge graph](../document-ingestion.html#build-the-l1-knowledge-graph)
 

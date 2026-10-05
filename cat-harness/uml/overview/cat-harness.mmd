@@ -1,5 +1,15 @@
 classDiagram
   direction LR
+  namespace cat_harness__cat_harness_validators {
+    class cat_harness_cat_harness_validators_folio_validator_v1_folio_validator_v1["folio-validator/v1"] {
+      <<json: ValidatorNodeSchema>>
+      $schema [1] 'folio-validator/v1'
+      id [1] string
+      validates [1] object
+      schema [1] string
+      rationale [0..1] string
+    }
+  }
   namespace cat_harness__tools {
     class cat_harness_tools_Maintain["Maintain"] {
       <<json: ToolDefinitionSchema>>
@@ -507,7 +517,6 @@ classDiagram
       bpmn:exclusiveGateway [0..*] element
       bpmn:extensionElements [0..*] element
       bpmn:flowNodeRef [0..*] element
-      bpmn:import [0..*] element
       bpmn:incoming [0..*] element
       bpmn:lane [0..*] element
       bpmn:laneSet [0..*] element
@@ -529,159 +538,8 @@ classDiagram
     }
   }
   namespace cat_harness__qa {
-    class cat_harness_qa_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
-      <<json: KgQaReportSchema>>
-      $schema [1] 'kg-qa/v1'
-      subject [1] object
-      source_hash [1] string | null
-      criteria [1] map~object~
-      totals [1] map~number~
-      pair_attestations [0..1] any
-      voice_reviews [0..1] any
-    }
-    class cat_harness_qa_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
-      <<json: KgQaManifestSchema>>
-      $schema [1] 'kg-qa-manifest/v1'
-      auditor [1] object
-    }
-    class cat_harness_qa_block_qa_v1_block_qa_v1["block-qa/v1"] {
-      <<json: BlockQaReport>>
-      $schema [1] 'block-qa/v1'
-      label [1] string
-      kind [1] string
-      paths [1] object
-      source_hashes [1] object
-      criteria [1] map~object[]~
-      updated_at [1] string
-    }
-    class cat_harness_qa_folio_test_run_v1_Case["Case"] {
-      <<json: TestRunSchema>>
-      input [1] any
-      output [1] any
-    }
-    class cat_harness_qa_folio_test_run_v1_folio_test_run_v1["folio-test-run/v1"] {
-      <<json: TestRunSchema>>
-      $schema [1] 'folio-test-run/v1'
-      skill [1] string
-      subject [1] string
-      data [1] object
-      process [1] object
-      outcome [1] map~any~
-      cases [0..*] Case[]
-      requirements [0..*] string[]
-      updated_at [1] string
-      plan [0..1] object
-      sut [0..1] object
-    }
-    class cat_harness_qa_qa_witness_v1["qa-witness/v1"] {
-      <<ts: QaWitness>>
-      kind [1] 'script' | 'agent' | 'human'
-      id [1] string
-      version [0..1] string
-      at [0..1] string
-      sha [0..1] string
-      scriptHash [0..1] string
-      scriptCommitSha [0..1] string
-      depsHash [0..1] string
-      model [0..1] string
-      session [0..1] string
-      skill [0..1] string
-      method [0..1] string
-      freshness [1] QaFreshness
-      changed [0..1] string[]
-      notCompared [0..1] string[]
-      notes [0..1] string
-    }
-    class cat_harness_qa_qa_results_v1["qa-results/v1"] {
-      <<ts: QaResult>>
-      $schema [1] 'qa-results/v1'
-      producer [1]  /** Repo-relative path to the script. */ script: string; /** 12-char SHA-256 prefix of that script's source, as `script-qa` writes. */ script_hash: string; 
-      subject [1]  kind: string; id: string 
-      families [1] Record~string, QaResultFamily~
-      total [1] number
-    }
-    class cat_harness_qa_translation_qa_v1["translation-qa/v1"] {
-      <<ts: TranslationBlockQaReport>>
-      $schema [1] 'translation-qa/v1'
-      label [1] string
-      block [0..1] string
-      locale [1] string
-      paths [1]  md: string; ts?: string 
-      po [1] string
-      source_hashes [1] TranslationFieldHash
-      criteria [1] Record~string, TranslationQaEntry[]~
-      updated_at [1] string
-    }
-    class cat_harness_qa_folio_qa_index_v1_folio_qa_index_v1["folio-qa-index/v1"] {
-      <<json: QaIndexSchema>>
-      $schema [1] 'folio-qa-index/v1'
-      page [1] string
-      corpus [0..1] present | absent
-      badges [1] map~object~
-      unswept [0..*] string[]
-    }
-    class cat_harness_qa_folio_qa_translation_pages_v1_folio_qa_translation_pages_v1["folio-qa-translation-pages/v1"] {
-      <<json: QaTranslationPagesSchema>>
-      $schema [1] 'folio-qa-translation-pages/v1'
-      corpus [1] present | absent
-      pages [0..*] string[]
-    }
-    class cat_harness_qa_folio_detangle_sidecar_v1["folio-detangle-sidecar/v1"] {
-      <<ts: DetangleSidecar>>
-      $schema [1] 'folio-detangle-sidecar/v1'
-      group [1] string
-      size [1] number
-      internal [1] number
-      inbound [1] number
-      outbound [1] number
-      cohesion [1] number
-      enforcedBoundary [1] number
-      recordedBoundary [1] number
-      proseMentions [1] number
-      wrongDirection [1] number
-      undeterminedDirection [1] number
-    }
-    class cat_harness_qa_folio_lsi_index_v1["folio-lsi-index/v1"] {
-      <<ts: LsiSidecar>>
-      $schema [1] 'folio-lsi-index/v1'
-      method [1] string
-      instance [1] string
-      graph [1] string
-      path [1] string
-      docs [1] string[] | null
-      fingerprint [1] string
-      options [1] LsiOptions
-      units [1] number
-      terms [1] number
-      k [1] number
-      retained [1] number
-      dimensions [1] Array~ dim: number; sigma: number; positive: string[]; negative: string[] ~
-      findings [1]  nearDuplicates: Array~ a: string; b: string; cosine: number ~; narrowDimensions: Array~ dim: number; units: string[] ~; 
-      neighbours [1] Record~string, Array~[string, number]~~
-    }
-    class cat_harness_qa_folio_tool_run_v1_folio_tool_run_v1["folio-tool-run/v1"] {
-      <<json: ToolRunRecordSchema>>
-      $schema [1] 'folio-tool-run/v1'
-      tool [1] string
-      target [1] string
-      outcome [1] succeeded | failed
-      inputFingerprint [1] string
-      detail [0..1] string
-    }
-    class cat_harness_qa_viewer_nav_qa_v1_Page["Page"] {
-      <<json: ViewerNavQaSchema>>
-      path [1] string
-      source [1] string
-      verdict [1] railed | declined | missing
-      reason [0..1] string
-      flags [0..*] enum(7)[]
-    }
-    class cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1["viewer-nav-qa/v1"] {
-      <<json: ViewerNavQaSchema>>
-      $schema [1] 'viewer-nav-qa/v1'
-      root [1] string
-      totals [1] object
-      pages [0..*] Page[]
+    class n_cat_harness_qa_qa["qa: no node schema"] {
+      <<could not determine>>
     }
   }
   namespace cat_harness__attestations {
@@ -901,6 +759,12 @@ classDiagram
       preview [1] string
       file [1] string
     }
+    class cat_harness_docs_folio_bean_index_v1_Edge["Edge"] {
+      <<json: BeanIndexSchema>>
+      blocker [1] string
+      blocked [1] string
+      declaredOn [1..*] list~blocked_by | blocking~
+    }
     class cat_harness_docs_folio_bean_index_v1_Finding["Finding"] {
       <<json: BeanIndexSchema>>
       kind [1] blocked-without-expiry | blocker-closed | blocking-unknown
@@ -914,6 +778,7 @@ classDiagram
       tile [0..1] map~object~
       repoWeb [1] string
       items [0..*] Item[]
+      edges [0..*] Edge[]
       findings [0..*] Finding[]
       plan [0..1] object
     }
@@ -1179,6 +1044,13 @@ classDiagram
       directories [0..*] Directory[]
       nodes [0..*] Node[]
     }
+    class cat_harness_docs_cat_harness_payload_v1_cat_harness_payload_v1["cat-harness-payload/v1"] {
+      <<json: PayloadSidecarSchema>>
+      $schema [1] 'cat-harness-payload/v1'
+      sha256 [1] string
+      bytes [1] integer
+      mediaType [1] string
+    }
   }
   namespace cat_harness__swimlane_glossary {
     class cat_harness_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0["glossary-ledger/1.0.0"] {
@@ -1268,6 +1140,278 @@ classDiagram
       superseded [0..1] object
     }
   }
+  namespace cat_harness__vendors {
+    class cat_harness_vendors_Source["Source"] {
+      <<json: VoiceProfileSchema>>
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      path [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class cat_harness_vendors_Pattern["Pattern"] {
+      <<json: VoiceProfileSchema>>
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class cat_harness_vendors_Terminology["Terminology"] {
+      <<json: VoiceProfileSchema>>
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class cat_harness_vendors_Rule["Rule"] {
+      <<json: VoiceProfileSchema>>
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      patterns [0..*] Pattern[]
+      terminology [0..*] Terminology[]
+      judgementOnly [0..1] boolean
+    }
+    class cat_harness_vendors_VoiceProfile["VoiceProfile"] {
+      <<json: VoiceProfileSchema>>
+      $schema [1] 'folio-voice/v1' | 'folio-voice-skill/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      sources [1..*] Source[]
+      rules [1..*] Rule[]
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] list~enum(16) | docs | skill | readme | specification | code~
+      provenance [1] assertion | evidence | house
+      extends [0..1] object
+      activeIn [0..1] object
+      superseded [0..1] object
+    }
+  }
+  namespace cat_harness__agent_skill_authoring_claude {
+    class cat_harness_agent_skill_authoring_claude_Source["Source"] {
+      <<json: VoiceProfileSchema>>
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      path [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class cat_harness_agent_skill_authoring_claude_Pattern["Pattern"] {
+      <<json: VoiceProfileSchema>>
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class cat_harness_agent_skill_authoring_claude_Terminology["Terminology"] {
+      <<json: VoiceProfileSchema>>
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class cat_harness_agent_skill_authoring_claude_Rule["Rule"] {
+      <<json: VoiceProfileSchema>>
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      patterns [0..*] Pattern[]
+      terminology [0..*] Terminology[]
+      judgementOnly [0..1] boolean
+    }
+    class cat_harness_agent_skill_authoring_claude_VoiceProfile["VoiceProfile"] {
+      <<json: VoiceProfileSchema>>
+      $schema [1] 'folio-voice/v1' | 'folio-voice-skill/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      sources [1..*] Source[]
+      rules [1..*] Rule[]
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] list~enum(16) | docs | skill | readme | specification | code~
+      provenance [1] assertion | evidence | house
+      extends [0..1] object
+      activeIn [0..1] object
+      superseded [0..1] object
+    }
+  }
+  namespace cat_harness__agent_skill_authoring_gemini_cli {
+    class cat_harness_agent_skill_authoring_gemini_cli_Source["Source"] {
+      <<json: VoiceProfileSchema>>
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      path [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class cat_harness_agent_skill_authoring_gemini_cli_Pattern["Pattern"] {
+      <<json: VoiceProfileSchema>>
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class cat_harness_agent_skill_authoring_gemini_cli_Terminology["Terminology"] {
+      <<json: VoiceProfileSchema>>
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class cat_harness_agent_skill_authoring_gemini_cli_Rule["Rule"] {
+      <<json: VoiceProfileSchema>>
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      patterns [0..*] Pattern[]
+      terminology [0..*] Terminology[]
+      judgementOnly [0..1] boolean
+    }
+    class cat_harness_agent_skill_authoring_gemini_cli_VoiceProfile["VoiceProfile"] {
+      <<json: VoiceProfileSchema>>
+      $schema [1] 'folio-voice/v1' | 'folio-voice-skill/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      sources [1..*] Source[]
+      rules [1..*] Rule[]
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] list~enum(16) | docs | skill | readme | specification | code~
+      provenance [1] assertion | evidence | house
+      extends [0..1] object
+      activeIn [0..1] object
+      superseded [0..1] object
+    }
+  }
+  namespace cat_harness__agent_skill_authoring_openai {
+    class cat_harness_agent_skill_authoring_openai_Source["Source"] {
+      <<json: VoiceProfileSchema>>
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      path [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class cat_harness_agent_skill_authoring_openai_Pattern["Pattern"] {
+      <<json: VoiceProfileSchema>>
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class cat_harness_agent_skill_authoring_openai_Terminology["Terminology"] {
+      <<json: VoiceProfileSchema>>
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class cat_harness_agent_skill_authoring_openai_Rule["Rule"] {
+      <<json: VoiceProfileSchema>>
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      patterns [0..*] Pattern[]
+      terminology [0..*] Terminology[]
+      judgementOnly [0..1] boolean
+    }
+    class cat_harness_agent_skill_authoring_openai_VoiceProfile["VoiceProfile"] {
+      <<json: VoiceProfileSchema>>
+      $schema [1] 'folio-voice/v1' | 'folio-voice-skill/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      sources [1..*] Source[]
+      rules [1..*] Rule[]
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] list~enum(16) | docs | skill | readme | specification | code~
+      provenance [1] assertion | evidence | house
+      extends [0..1] object
+      activeIn [0..1] object
+      superseded [0..1] object
+    }
+  }
+  namespace cat_harness__proposals {
+    class n_cat_harness_proposals_proposals["proposals: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__requirements {
+    class cat_harness_requirements_requirements_shape["requirements"] {
+      <<schema: ../bootstrap/schemas/requirement.schema.json>>
+      fields not machine-readable: ../bootstrap/schemas/requirement.schema.json names no exported schema
+    }
+  }
+  namespace cat_harness__auto_docs {
+    class n_cat_harness_auto_docs_auto_docs["auto-docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__glossary {
+    class n_cat_harness_glossary_auto_docs["auto-docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__index_dmn {
+    class n_cat_harness_index_dmn_auto_docs["auto-docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__index_docs {
+    class n_cat_harness_index_docs_auto_docs["auto-docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__index_processes {
+    class n_cat_harness_index_processes_auto_docs["auto-docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__index_roles {
+    class n_cat_harness_index_roles_auto_docs["auto-docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__index_schemas {
+    class n_cat_harness_index_schemas_auto_docs["auto-docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__index_skills {
+    class n_cat_harness_index_skills_auto_docs["auto-docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__index_tasks {
+    class n_cat_harness_index_tasks_auto_docs["auto-docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__index_tools {
+    class n_cat_harness_index_tools_auto_docs["auto-docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__uml_overview_pages {
+    class n_cat_harness_uml_overview_pages_auto_docs["auto-docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__uml_overview_svgs {
+    class n_cat_harness_uml_overview_svgs_auto_docs["auto-docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  cssClass "cat_harness_cat_harness_validators_folio_validator_v1_folio_validator_v1" fa_uml_kind_validators
   cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains
   cssClass "cat_harness_tools_Maintain" fa_uml_kind_tools
   cssClass "cat_harness_tools_ToolDefinition" fa_uml_kind_tools
@@ -1359,23 +1503,8 @@ classDiagram
   cssClass "cat_harness_processes_omg_bpmn_2_0" fa_uml_kind_processes
   cssClass "n_cat_harness_methodologies_methodology" fa_uml_kind_methodology
   cssClass "n_cat_harness_methodologies_methodology" fa_uml_undetermined
-  cat_harness_qa_folio_test_run_v1_folio_test_run_v1 *-- "0..*" cat_harness_qa_folio_test_run_v1_Case : cases
-  cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1 *-- "0..*" cat_harness_qa_viewer_nav_qa_v1_Page : pages
-  cssClass "cat_harness_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
-  cssClass "cat_harness_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa
-  cssClass "cat_harness_qa_block_qa_v1_block_qa_v1" fa_uml_kind_qa
-  cssClass "cat_harness_qa_folio_test_run_v1_Case" fa_uml_kind_qa
-  cssClass "cat_harness_qa_folio_test_run_v1_folio_test_run_v1" fa_uml_kind_qa
-  cssClass "cat_harness_qa_qa_witness_v1" fa_uml_kind_qa
-  cssClass "cat_harness_qa_qa_results_v1" fa_uml_kind_qa
-  cssClass "cat_harness_qa_translation_qa_v1" fa_uml_kind_qa
-  cssClass "cat_harness_qa_folio_qa_index_v1_folio_qa_index_v1" fa_uml_kind_qa
-  cssClass "cat_harness_qa_folio_qa_translation_pages_v1_folio_qa_translation_pages_v1" fa_uml_kind_qa
-  cssClass "cat_harness_qa_folio_detangle_sidecar_v1" fa_uml_kind_qa
-  cssClass "cat_harness_qa_folio_lsi_index_v1" fa_uml_kind_qa
-  cssClass "cat_harness_qa_folio_tool_run_v1_folio_tool_run_v1" fa_uml_kind_qa
-  cssClass "cat_harness_qa_viewer_nav_qa_v1_Page" fa_uml_kind_qa
-  cssClass "cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1" fa_uml_kind_qa
+  cssClass "n_cat_harness_qa_qa" fa_uml_kind_qa
+  cssClass "n_cat_harness_qa_qa" fa_uml_undetermined
   cssClass "cat_harness_attestations_QaAttestations" fa_uml_kind_attestations
   cat_harness_health_Check *-- "0..*" cat_harness_health_Threshold : thresholds
   cat_harness_health_Check *-- "0..*" cat_harness_health_Measurement : measurements
@@ -1407,6 +1536,7 @@ classDiagram
   cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo_index_v1_Relation : relations
   cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_docs_folio_todo_index_v1_Item : items
   cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Item : items
+  cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Edge : edges
   cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Finding : findings
   cat_harness_docs_folio_translation_status_v1_folio_translation_status_v1 *-- "0..*" cat_harness_docs_folio_translation_status_v1_Locale : locales
   cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Module : modules
@@ -1434,6 +1564,7 @@ classDiagram
   cssClass "cat_harness_docs_folio_qa_graph_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_translation_index_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_bean_index_v1_Item" fa_uml_kind_docs
+  cssClass "cat_harness_docs_folio_bean_index_v1_Edge" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_bean_index_v1_Finding" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_translation_status_v1_Locale" fa_uml_kind_docs
@@ -1461,6 +1592,7 @@ classDiagram
   cssClass "cat_harness_docs_folio_graph_projection_v1_Link" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_Node" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_folio_graph_projection_v1" fa_uml_kind_docs
+  cssClass "cat_harness_docs_cat_harness_payload_v1_cat_harness_payload_v1" fa_uml_kind_docs
   cssClass "cat_harness_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0" fa_uml_kind_swimlane_glossary
   cssClass "n_cat_harness_cat_harness_scripts_code" fa_uml_kind_code
   cssClass "n_cat_harness_cat_harness_scripts_code" fa_uml_undetermined
@@ -1483,3 +1615,66 @@ classDiagram
   cssClass "cat_harness_voices_Terminology" fa_uml_kind_voices
   cssClass "cat_harness_voices_Rule" fa_uml_kind_voices
   cssClass "cat_harness_voices_VoiceProfile" fa_uml_kind_voices
+  cat_harness_vendors_VoiceProfile *-- "1..*" cat_harness_vendors_Source : sources
+  cat_harness_vendors_Rule *-- "0..*" cat_harness_vendors_Pattern : patterns
+  cat_harness_vendors_Rule *-- "0..*" cat_harness_vendors_Terminology : terminology
+  cat_harness_vendors_VoiceProfile *-- "1..*" cat_harness_vendors_Rule : rules
+  cssClass "cat_harness_vendors_Source" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_vendors_Pattern" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_vendors_Terminology" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_vendors_Rule" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_vendors_VoiceProfile" fa_uml_kind_voice_vendors
+  cat_harness_agent_skill_authoring_claude_VoiceProfile *-- "1..*" cat_harness_agent_skill_authoring_claude_Source : sources
+  cat_harness_agent_skill_authoring_claude_Rule *-- "0..*" cat_harness_agent_skill_authoring_claude_Pattern : patterns
+  cat_harness_agent_skill_authoring_claude_Rule *-- "0..*" cat_harness_agent_skill_authoring_claude_Terminology : terminology
+  cat_harness_agent_skill_authoring_claude_VoiceProfile *-- "1..*" cat_harness_agent_skill_authoring_claude_Rule : rules
+  cssClass "cat_harness_agent_skill_authoring_claude_Source" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_agent_skill_authoring_claude_Pattern" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_agent_skill_authoring_claude_Terminology" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_agent_skill_authoring_claude_Rule" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_agent_skill_authoring_claude_VoiceProfile" fa_uml_kind_voice_vendors
+  cat_harness_agent_skill_authoring_gemini_cli_VoiceProfile *-- "1..*" cat_harness_agent_skill_authoring_gemini_cli_Source : sources
+  cat_harness_agent_skill_authoring_gemini_cli_Rule *-- "0..*" cat_harness_agent_skill_authoring_gemini_cli_Pattern : patterns
+  cat_harness_agent_skill_authoring_gemini_cli_Rule *-- "0..*" cat_harness_agent_skill_authoring_gemini_cli_Terminology : terminology
+  cat_harness_agent_skill_authoring_gemini_cli_VoiceProfile *-- "1..*" cat_harness_agent_skill_authoring_gemini_cli_Rule : rules
+  cssClass "cat_harness_agent_skill_authoring_gemini_cli_Source" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_agent_skill_authoring_gemini_cli_Pattern" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_agent_skill_authoring_gemini_cli_Terminology" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_agent_skill_authoring_gemini_cli_Rule" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_agent_skill_authoring_gemini_cli_VoiceProfile" fa_uml_kind_voice_vendors
+  cat_harness_agent_skill_authoring_openai_VoiceProfile *-- "1..*" cat_harness_agent_skill_authoring_openai_Source : sources
+  cat_harness_agent_skill_authoring_openai_Rule *-- "0..*" cat_harness_agent_skill_authoring_openai_Pattern : patterns
+  cat_harness_agent_skill_authoring_openai_Rule *-- "0..*" cat_harness_agent_skill_authoring_openai_Terminology : terminology
+  cat_harness_agent_skill_authoring_openai_VoiceProfile *-- "1..*" cat_harness_agent_skill_authoring_openai_Rule : rules
+  cssClass "cat_harness_agent_skill_authoring_openai_Source" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_agent_skill_authoring_openai_Pattern" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_agent_skill_authoring_openai_Terminology" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_agent_skill_authoring_openai_Rule" fa_uml_kind_voice_vendors
+  cssClass "cat_harness_agent_skill_authoring_openai_VoiceProfile" fa_uml_kind_voice_vendors
+  cssClass "n_cat_harness_proposals_proposals" fa_uml_kind_proposals
+  cssClass "n_cat_harness_proposals_proposals" fa_uml_undetermined
+  cssClass "cat_harness_requirements_requirements_shape" fa_uml_kind_requirements
+  cssClass "n_cat_harness_auto_docs_auto_docs" fa_uml_kind_auto_docs
+  cssClass "n_cat_harness_auto_docs_auto_docs" fa_uml_undetermined
+  cssClass "n_cat_harness_glossary_auto_docs" fa_uml_kind_auto_docs
+  cssClass "n_cat_harness_glossary_auto_docs" fa_uml_undetermined
+  cssClass "n_cat_harness_index_dmn_auto_docs" fa_uml_kind_auto_docs
+  cssClass "n_cat_harness_index_dmn_auto_docs" fa_uml_undetermined
+  cssClass "n_cat_harness_index_docs_auto_docs" fa_uml_kind_auto_docs
+  cssClass "n_cat_harness_index_docs_auto_docs" fa_uml_undetermined
+  cssClass "n_cat_harness_index_processes_auto_docs" fa_uml_kind_auto_docs
+  cssClass "n_cat_harness_index_processes_auto_docs" fa_uml_undetermined
+  cssClass "n_cat_harness_index_roles_auto_docs" fa_uml_kind_auto_docs
+  cssClass "n_cat_harness_index_roles_auto_docs" fa_uml_undetermined
+  cssClass "n_cat_harness_index_schemas_auto_docs" fa_uml_kind_auto_docs
+  cssClass "n_cat_harness_index_schemas_auto_docs" fa_uml_undetermined
+  cssClass "n_cat_harness_index_skills_auto_docs" fa_uml_kind_auto_docs
+  cssClass "n_cat_harness_index_skills_auto_docs" fa_uml_undetermined
+  cssClass "n_cat_harness_index_tasks_auto_docs" fa_uml_kind_auto_docs
+  cssClass "n_cat_harness_index_tasks_auto_docs" fa_uml_undetermined
+  cssClass "n_cat_harness_index_tools_auto_docs" fa_uml_kind_auto_docs
+  cssClass "n_cat_harness_index_tools_auto_docs" fa_uml_undetermined
+  cssClass "n_cat_harness_uml_overview_pages_auto_docs" fa_uml_kind_auto_docs
+  cssClass "n_cat_harness_uml_overview_pages_auto_docs" fa_uml_undetermined
+  cssClass "n_cat_harness_uml_overview_svgs_auto_docs" fa_uml_kind_auto_docs
+  cssClass "n_cat_harness_uml_overview_svgs_auto_docs" fa_uml_undetermined

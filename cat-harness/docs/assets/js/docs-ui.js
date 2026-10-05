@@ -3312,6 +3312,10 @@
     // GLASS passes it, because only the glass pans — see `nudge` for why a
     // window keeps its clamp (`l4zi`) and a card on the glass does not.
     var unbounded = !!(opts && opts.unbounded);
+    // `opts.noResize`, OPTIONAL: Shift+arrows MOVE rather than resize. The
+    // glass card passes it — owner, 2026-10-05: *"No keyboard resize thing.
+    // Only the plus minus"* — so its size has one route, the card's −/+.
+    var noResize = !!(opts && opts.noResize);
 
     // THE KEYBOARD PATH, and it acts only in the mode. Outside it the arrows
     // go on scrolling the page, which is what a reader expects of them.
@@ -3324,7 +3328,7 @@
         panel.dispatchEvent(new CustomEvent("fa:move-mode", { detail: { on: false } }));
         return;
       }
-      if (nudge(panel, e.key, e.shiftKey, unbounded)) {
+      if (nudge(panel, e.key, e.shiftKey && !noResize, unbounded)) {
         e.preventDefault();
         e.stopPropagation();
         settle();
@@ -3460,7 +3464,7 @@
     // BUTTON — the glass's move bar, for a reader who cannot press arrows.
     return {
       step: function (key, shift) {
-        if (!nudge(panel, key, shift, unbounded)) return false;
+        if (!nudge(panel, key, shift && !noResize, unbounded)) return false;
         settle();
         return true;
       },
@@ -4524,26 +4528,62 @@
    * WHERE it is restored from — a reversible action whose way back the reader
    * has to discover is one-way in practice (`l4zi`).
    */
-  var confirmSeq = 0;
   function confirmSendToFshGuts(title, onConfirm, opener) {
-    var n = ++confirmSeq;
-    var dialog = el("dialog", {
-      class: "fa-fsh-confirm",
-      "aria-labelledby": "fa-fsh-confirm-title-" + n,
-      "aria-describedby": "fa-fsh-confirm-body-" + n,
-    });
-    dialog.appendChild(el("h2", { class: "fa-fsh-confirm-title", id: "fa-fsh-confirm-title-" + n },
-      "Send “" + title + "” to fsh-guts?"));
-    var body = el("div", { id: "fa-fsh-confirm-body-" + n });
+    var body = el("div");
     body.appendChild(el("p", null,
       "fsh-guts is the trashcan that is kept. This takes the sticky off your panel in " +
       "this browser only; nobody else's view changes."));
     body.appendChild(el("p", null,
       "It is restorable: open " + fshGutsRestoreWhere() + ", and choose Restore."));
+    return confirmDialog({
+      cls: "fa-fsh-confirm",
+      title: "Send \u201c" + title + "\u201d to fsh-guts?",
+      body: body,
+      cancel: "Cancel",
+      ok: "Send to fsh-guts",
+      onConfirm: onConfirm,
+      opener: opener,
+    });
+  }
+
+  /**
+   * THE ONE CONFIRM: every "are you sure" on the page is this dialog, so the
+   * rules below are stated once and cannot drift between two copies (#1900
+   * and #1926 each grew one; they were merged here).
+   *
+   * - A NATIVE `<dialog>` opened modal: the browser traps focus, makes the
+   *   page behind it inert, and puts it in the top layer above every board
+   *   window.
+   * - Focus starts on Cancel, the recoverable choice.
+   * - Escape (the browser's `cancel`, or by hand where no modal fires it) is
+   *   the cancel, never the confirm, and is stopped here so it does not also
+   *   reach a surface behind (the glass's own Escape puts the glass away).
+   * - Dismissal returns focus to `opener`; confirming runs `onConfirm`, which
+   *   owns where focus goes next.
+   *
+   * `cls` is the class prefix (`<cls>`, `<cls>-title`, `<cls>-actions`,
+   * `<cls>-cancel`, `<cls>-ok`): each surface keeps its own look. `mount`
+   * defaults to `document.body`; the glass mounts inside its layer so its
+   * theme tokens reach the dialog.
+   */
+  var confirmSeq = 0;
+  function confirmDialog(o) {
+    var n = ++confirmSeq;
+    var cls = o.cls;
+    var attrs = {
+      class: cls,
+      "aria-labelledby": cls + "-title-" + n,
+      "aria-describedby": cls + "-body-" + n,
+    };
+    if (o.live) attrs["aria-live"] = o.live;
+    var dialog = el("dialog", attrs);
+    dialog.appendChild(el("h2", { class: cls + "-title", id: cls + "-title-" + n }, o.title));
+    var body = o.body;
+    body.id = cls + "-body-" + n;
     dialog.appendChild(body);
-    var row = el("div", { class: "fa-fsh-confirm-actions" });
-    var cancel = el("button", { type: "button", class: "fa-fsh-confirm-cancel" }, "Cancel");
-    var ok = el("button", { type: "button", class: "fa-fsh-confirm-ok" }, "Send to fsh-guts");
+    var row = el("div", { class: cls + "-actions" });
+    var cancel = el("button", { type: "button", class: cls + "-cancel" }, o.cancel);
+    var ok = el("button", { type: "button", class: cls + "-ok" }, o.ok);
     row.appendChild(cancel);
     row.appendChild(ok);
     dialog.appendChild(row);
@@ -4555,8 +4595,8 @@
       done = true;
       if (dialog.open && typeof dialog.close === "function") dialog.close();
       if (dialog.parentNode) dialog.parentNode.removeChild(dialog);
-      if (confirmed) onConfirm();
-      else if (opener && opener.isConnected) opener.focus();
+      if (confirmed) o.onConfirm();
+      else if (o.opener && o.opener.isConnected) o.opener.focus();
     }
     cancel.addEventListener("click", finish);
     ok.addEventListener("click", function () { confirmed = true; finish(); });
@@ -4566,7 +4606,7 @@
     dialog.addEventListener("keydown", function (e) {
       if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); finish(); }
     });
-    document.body.appendChild(dialog);
+    (o.mount || document.body).appendChild(dialog);
     if (typeof dialog.showModal === "function") dialog.showModal();
     else dialog.setAttribute("open", "");
     cancel.focus();
@@ -5552,8 +5592,10 @@
      * it is `wireMove` — the one implementation the board window and the
      * floating sticky already share: keyboard first (✥ enters move mode,
      * arrows move, Shift+arrows resize, Escape or Enter leaves), drag as the
-     * accelerator. The −/+ buttons are the low-dexterity path to size, since
-     * Shift+arrow is a chord.
+     * accelerator. Size is a corner drag over the same keyboard path: in the
+     * mode, + and − resize (Shift+arrow is a chord), and the move bar offers
+     * them as buttons for the low-dexterity path (issue #1900 took the card's
+     * own −/+ off it).
      *
      * ZOOM IS SEMANTIC AND AUTOMATIC: below the folio's DECLARED width for
      * the card's kind (`semantic-zoom.json`, via `rendersAvatar`), a card
@@ -5979,7 +6021,7 @@
      * here: the steps, the resize chord and the ways out are the mode's, and
      * the buttons call the SAME step through `wireMove`'s controller. They are
      * the pointer path to the mode for a reader who cannot comfortably press
-     * arrow keys, as −/+ already are for size, and the declared profile here
+     * arrow keys, as its −/+ are for size, and the declared profile here
      * is low-dexterity (WCAG 2.5.7).
      *
      * In the ZOOM BAR's row, because that row is sticky to the top of the
@@ -6006,7 +6048,7 @@
       "Done");
     moveDone.addEventListener("click", function () { if (moving) moving.done(); });
     moveBar.appendChild(moveDone);
-    // The mode's KEYS work here too: arrows step (Shift resizes), and Escape
+    // The mode's KEYS work here too: arrows step, and Escape
     // leaves the mode — stopped, so the glass's own Escape does not also put
     // the glass away under a reader who only meant "stop moving".
     moveBar.addEventListener("keydown", function (e) {
@@ -6025,8 +6067,8 @@
       if (moving && moving.card !== card) moving.done();
       moving = { card: card, mover: mover, done: done };
       moveBar.setAttribute("aria-label", "Move " + title);
-      moveSay.textContent = "Moving “" + title + "”: use these buttons or the arrow keys " +
-        "(Shift + arrows resize). Escape or Done to finish.";
+      moveSay.textContent = "Moving “" + title + "”: use these buttons or the arrow keys; " +
+        "Escape or Done to finish.";
       stepButtons.forEach(function (x) {
         x.b.setAttribute("aria-label", "Move " + title + " " + x.st.word);
         x.b.title = "Move " + x.st.word;
@@ -6072,6 +6114,9 @@
     function showMeta(card) {
       var rows = card.__faMeta || [];
       if (!rows.length) return;
+      // A card being MOVED is not a card being read — and the popover, drawn
+      // beside the card, landed on the move bar's own −/+ (measured, #1900).
+      if (card.getAttribute("data-fa-moving") === "true") { hideMeta(); return; }
       metaFor = card;
       while (metaPop.firstChild) metaPop.removeChild(metaPop.firstChild);
       var dl = el("dl", { class: "fa-glass-meta-list" });
@@ -6199,6 +6244,134 @@
         });
     }
 
+
+    /* WHERE A LIBRARY ASSET LIVES — issue #1900, owner 2026-10-02: *"as will
+     * all library assets in folio, i cant click to open/view them"*.
+     *
+     * Derived from the card's KEY (`<instance>/<id>`, the same split
+     * `libraryMetaRows` reads), never from the stored `href`: that one is
+     * whatever page the reader happened to pull the asset out from, and a
+     * value in `localStorage` is not a value this file may trust.
+     *
+     * THE ENTRY'S OWN PAGE is `/cat-harness/library/<instance>/<id>/` —
+     * every entry its own path IRI (#1881/#1899, owner 2026-10-02: *"no query
+     * strings... each asset gets its own IRI"*), a thin shell the shared
+     * library viewer fills from the published index.
+     *
+     * BUT OPENING GOES TO THE ASSET'S VISUALIZER when it declares one —
+     * owner, 2026-10-02: *"i also expected to be able to click on
+     * "smart-trust" slug and open up the visualizer for smart-trust (which is
+     * what i would expect also when opening the avatar on the folio glass)"*.
+     * That is the index entry's `view` (`viewOf`); the entry page is the
+     * fallback, so a card opens somewhere real before the index answers and
+     * for every entry with no visualizer of its own. */
+    function libraryPlaceOf(key) {
+      var i = key.indexOf("/");
+      if (i <= 0 || i === key.length - 1) return null;
+      var instance = key.slice(0, i);
+      var id = key.slice(i + 1);
+      var library = withBase("/cat-harness/library/" + encodeURIComponent(instance) + "/");
+      return { instance: instance, id: id, library: library,
+               entry: library + id.split("/").map(encodeURIComponent).join("/") + "/" };
+    }
+    /** An index entry's declared visualizer, resolved as every projection href is (site-root → baseurl); "" when none. */
+    function viewOf(entry) {
+      var v = entry && typeof entry.view === "string" ? entry.view.trim() : "";
+      if (!v) return "";
+      return safeHref(v.charAt(0) === "/" ? withBase(v) : v) || "";
+    }
+
+    /* WHAT × SAYS BEFORE IT ACTS — issue #1900, owner 2026-10-02: *"[x]
+     * should confirm returning back to library and tell them which library in
+     * case they need again."*
+     *
+     * The confirm names the place the way back is, and links it — `l4zi` one
+     * level out (`board-windows`: *"the thing to check is that the library
+     * offers the way back"*), now said at the moment of closing rather than
+     * left for the reader to remember. It also says what does NOT happen: the
+     * asset stays in the folio, which is the three-state rule in words.
+     *
+     * THREE PLACES, because there are three kinds of card (#1926 added the
+     * third): a LIBRARY card goes back to its instance's library, a TODO to
+     * the Todos board, and a pinned LANDING STICKY to the page it was pinned
+     * from. Calling a sticky "your Todos" sent the reader to a list it was
+     * never on. `returnPlaceOf` is the one answer, read by the confirm, the
+     * after-the-fact status and the x button's own label.
+     *
+     * The dialog is `confirmDialog`, the page's one confirm (focus on the
+     * safe choice, Escape cancels and is stopped before the glass's own
+     * Escape), mounted inside the layer for the glass's theme tokens and with
+     * `aria-live="off"` so opening it is not also read out as a live change. */
+    function returnPlaceOf(key, a) {
+      var isLib = zoomKindOf(a) === "library";
+      var lib = isLib ? libraryPlaceOf(key) : null;
+      if (lib) {
+        var libName = "the " + lib.instance + " library";
+        return { kind: "library", name: libName, href: safeHref(lib.library), entry: safeHref(lib.entry),
+                 heading: "Back to the library?", tip: "Back in " + libName };
+      }
+      if (a && a.kind === "sticky") {
+        var page = String(a.label || "").replace(/\s+/g, " ").trim();
+        var pageName = page ? "its page, " + page : "the page it came from";
+        return { kind: "sticky", name: pageName, href: safeHref(a.href) || safeHref(withBase("/")),
+                 heading: "Back on its page?", tip: "Back on " + pageName };
+      }
+      if (isLib) {
+        return { kind: "library", name: "the library view", href: safeHref(withBase("/cat-harness/library/")),
+                 heading: "Back to the library?", tip: "Back in the library view" };
+      }
+      return { kind: "todos", name: "your Todos", href: safeHref(withBase("/todos/")),
+               heading: "Back to your Todos?", tip: "Back in your Todos" };
+    }
+    /** "in the X library" / "in your Todos" / "on its page, Y". */
+    function backTo(place) { return (place.kind === "sticky" ? "on " : "in ") + place.name; }
+    function confirmShelve(key, a, title, opener) {
+      hideMeta();
+      var place = returnPlaceOf(key, a);
+      var body = el("div");
+      body.appendChild(el("p", { class: "fa-glass-confirm-say" },
+        "Put \u201c" + title + "\u201d back " + backTo(place) + "? It stays in your folio."));
+      var again = el("p", { class: "fa-glass-confirm-again" }, "To put it on the glass again, open ");
+      var backHref = safeHref(place.href);
+      again.appendChild(el("a", { href: backHref }, place.name));
+      var entryHref = safeHref(place.entry);
+      if (entryHref) {
+        again.appendChild(document.createTextNode(" \u2014 or go straight to "));
+        again.appendChild(el("a", { href: entryHref }, "its entry"));
+      }
+      again.appendChild(document.createTextNode("."));
+      body.appendChild(again);
+      return confirmDialog({
+        cls: "fa-glass-confirm",
+        title: place.heading,
+        body: body,
+        cancel: "Keep it on the glass",
+        ok: "Put it back",
+        live: "off",
+        mount: layer,
+        opener: opener,
+        onConfirm: function () {
+          shelveFromGlass(key);
+          sayShelved(title, place);
+          handle.focus();
+        },
+      });
+    }
+
+    /* SAID AFTER, WITH THE SAME LINK — a status the reader can also SEE, not
+     * only a live region: the card that was the reader's reference point has
+     * just gone, and "where did it go" is answered where they are looking. */
+    var shelvedSay = el("p", { class: "fa-glass-shelved-say", role: "status" });
+    sheet.insertBefore(shelvedSay, empty);
+    function sayShelved(title, place) {
+      while (shelvedSay.firstChild) shelvedSay.removeChild(shelvedSay.firstChild);
+      shelvedSay.appendChild(document.createTextNode("“" + title + "” is back " +
+        (place.kind === "sticky" ? "on " : "in ")));
+      var backHref = safeHref(place.href);
+      shelvedSay.appendChild(el("a", { href: backHref }, place.name));
+      shelvedSay.appendChild(document.createTextNode(" — it stays in your folio."));
+    }
+
     function buildGlassCard(key, a) {
       // ONE LINE, for every accessible name and title built from it. A todo's
       // title is its summary, which may carry raw newlines; an `aria-label`
@@ -6207,14 +6380,22 @@
       // without its markdown stripping, which would mangle a title like
       // "C*-algebras". The visible name keeps `a.title`: rendering collapses it.
       var label = String(a.title || "").replace(/\s+/g, " ").trim();
+      var isLibrary = zoomKindOf(a) === "library";
+      var place = isLibrary ? libraryPlaceOf(key) : null;
       var card = el("article", {
         class: "fa-glass-asset",
         "data-fa-asset": key,
         "data-fa-asset-kind": a.kind || "library",
         "data-fa-zoom-kind": zoomKindOf(a),
         "aria-label": label,
-        tabindex: "-1",
+        // A library card OPENS (issue #1900), so it is a stop in the tab
+        // order: zoomed to its cover the title link is not drawn, and Enter on
+        // the card is then the only key into the entry.
+        tabindex: place ? "0" : "-1",
       });
+      // WHERE A PRESS GOES: the entry page until the index names a visualizer.
+      var opens = place ? place.entry : "";
+      if (place) card.setAttribute("data-fa-opens", opens);
       var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
       var face = el("div", { class: "fa-glass-asset-face", "data-fa-grip": "" });
       var ava = glassAvatarFor(a, prefs.avatars);
@@ -6223,8 +6404,9 @@
       // store is `localStorage`, which the reader's own devtools can
       // rewrite, so a value sanitised on the way in is not a value that is
       // safe on the way out. The boundary is where the URL reaches an
-      // `href`, and that is here.
-      var href = safeHref(a.href);
+      // `href`, and that is here. A LIBRARY card's title links its entry —
+      // the address composed from its key, the same one a click opens.
+      var href = place ? place.entry : safeHref(a.href);
       face.appendChild(href
         ? el("a", { class: "fa-glass-asset-name", href: href }, a.title)
         : el("span", { class: "fa-glass-asset-name" }, a.title));
@@ -6241,8 +6423,8 @@
         "data-fa-control": "move",
         "aria-label": "Move " + label + " around the glass",
         "aria-pressed": "false",
-        title: "Move (arrow keys; Shift+arrows resize)",
-      }, CONTROL_GLYPHS.move || "\u271C");
+        title: "Move (arrow keys)",
+      }, CONTROL_GLYPHS.move || "✜");
       // Leaving the mode by any route — Escape or Enter on the card, Escape or
       // Done on the move bar — is this one path, so the bar, the pressed state
       // and focus cannot disagree about whether the card is still moving.
@@ -6254,6 +6436,7 @@
         var on = card.getAttribute("data-fa-moving") !== "true";
         if (!on) { leaveMoveMode(); return; }
         setMoveMode(card, true, live);
+        live.textContent = "Move mode on. Arrow keys move this card; Escape to finish.";
         moveBtn.setAttribute("aria-pressed", "true");
         showMoveBar(card, label, mover, leaveMoveMode);
       });
@@ -6262,59 +6445,93 @@
         hideMoveBar(card);
         moveBtn.focus();
       });
-      /* THE PRESSED BUTTON STAYS UNDER THE POINTER. Owner, 2026-10-01:
-       * *"when zoom in/out, the buttons dont stay same place so have to move
-       * cursor"* — and this instance's profile is low-dexterity, so a target
-       * that moves after each press is a re-aim per press. The card grew from
-       * its top-left corner, and these buttons sit at its bottom-right, so
-       * every press carried them a step down and right. Now the card is
-       * shifted by however far the pressed button drifted, measured rather
-       * than assumed (the tool row wraps, and the avatar state lays it out
-       * differently), in the shelf's own pixels — the view's scale divided
-       * out. */
-      function resizeBy(d, anchor) {
-        var g = geometryOf(card);
-        var before = anchor ? anchor.getBoundingClientRect() : null;
-        var ratio = g.height / g.width;
-        g.width = Math.max(MIN_WINDOW, g.width + d);
-        g.height = Math.max(Math.round(MIN_WINDOW * 0.5), Math.round(g.width * ratio));
+      /* SIZE has ONE route: the card's own − and + buttons. Owner,
+       * 2026-10-05: *"No keyboard resize thing. Only the plus minus"* — so
+       * the corner drag, the `+`/`−` keys in move mode, the move bar's size
+       * buttons and Shift+arrows (`noResize` on `wireMove` below) are gone.
+       * The card grows from its top-left corner. */
+      function resizeTo(g) {
+        g.width = Math.max(MIN_WINDOW, Math.round(g.width));
+        g.height = Math.max(Math.round(MIN_WINDOW * 0.5), Math.round(g.height));
         applyGeometry(card, g);
-        if (before) {
-          zoomGlassCard(card);
-          var after = anchor.getBoundingClientRect();
-          var sc = view.s || 1;
-          g.left = Math.round(g.left + (before.left - after.left) / sc);
-          g.top = Math.round(g.top + (before.top - after.top) / sc);
-          applyGeometry(card, g);
-        }
+        zoomGlassCard(card);
+        return g;
+      }
+      function settleSize(g) {
         placeOnGlass(key, g);
         fitShelf();
         zoomGlassCard(card);
         live.textContent = (card.getAttribute("data-fa-zoom") === "avatar"
           ? "Smaller: showing the avatar only." : "Size " + g.width + " by " + g.height + ".");
       }
-      var smaller = el("button", {
-        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + label + " smaller",
-        title: "Smaller",
-      }, "\u2212");
-      var larger = el("button", {
-        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + label + " larger",
-        title: "Larger",
-      }, "+");
-      smaller.addEventListener("click", function () { resizeBy(-2 * RESIZE_STEP, smaller); });
-      larger.addEventListener("click", function () { resizeBy(2 * RESIZE_STEP, larger); });
+      /* THE PRESSED BUTTON STAYS UNDER THE POINTER. Owner, 2026-10-01:
+       * *"when zoom in/out, the buttons dont stay same place so have to move
+       * cursor"* — and this instance's profile is low-dexterity, so a target
+       * that moves after each press is a re-aim per press. The card grows
+       * from its top-left corner and the buttons sit on its right, so each
+       * press would carry them; the card is shifted back by however far the
+       * pressed button drifted, measured (the tool row wraps, and the avatar
+       * state lays it out differently), in the shelf's own pixels. */
+      function resizeBy(d, anchor) {
+        var g = geometryOf(card);
+        var before = anchor ? anchor.getBoundingClientRect() : null;
+        var ratio = g.height / g.width;
+        g.width = Math.max(MIN_WINDOW, g.width + d);
+        g.height = Math.round(g.width * ratio);
+        resizeTo(g);
+        if (before) {
+          var after = anchor.getBoundingClientRect();
+          var sc = view.s || 1;
+          g.left = Math.round(g.left + (before.left - after.left) / sc);
+          g.top = Math.round(g.top + (before.top - after.top) / sc);
+          applyGeometry(card, g);
+        }
+        settleSize(g);
+      }
+      card.addEventListener("keydown", function (e) {
+        if (e.target !== card) return;
+        if (card.getAttribute("data-fa-moving") === "true") return;
+        // ENTER OPENS a library card — the keyboard half of the click below.
+        // Not in move mode: there Enter is "done moving" (`wireMove`).
+        if (place && e.key === "Enter" && !e.defaultPrevented) {
+          e.preventDefault();
+          window.location.assign(opens);
+        }
+      });
+
+      function sizeBtn(d, glyph, word) {
+        var btn = el("button", {
+          type: "button",
+          class: "fa-glass-asset-tool",
+          "data-fa-control": "size",
+          "data-fa-size": word,
+          "aria-label": "Make " + label + " " + word,
+          title: word.charAt(0).toUpperCase() + word.slice(1),
+        }, glyph);
+        btn.addEventListener("click", function () { resizeBy(d * 2 * RESIZE_STEP, btn); });
+        return btn;
+      }
+      var smaller = sizeBtn(-1, "\u2212", "smaller");
+      var larger = sizeBtn(1, "+", "larger");
 
       // CLOSE, and the word matters. "Remove" and "delete" both say the
       // asset stops being the reader's, which is exactly what does NOT
       // happen -- `board-windows`: closing returns it to the middle state
-      // and never to the first. The label says where it goes.
+      // and never to the first. The label says where it goes, and the
+      // confirm (issue #1900) names which library and links it.
+      var returnTo = returnPlaceOf(key, a);
+      function closeLabel(t) {
+        return "Put " + t + " back " + backTo(returnTo) + " — it stays in your folio";
+      }
       var close = el("button", {
         type: "button",
         class: "fa-glass-asset-tool fa-glass-asset-close",
-        "aria-label": "Put " + label + " back in the library view — it stays in your folio",
-        title: "Back in library view (stays in your folio)",
+        "aria-label": closeLabel(label),
+        title: returnTo.tip + " (stays in your folio)",
       }, "×");
-      close.addEventListener("click", function () { shelveFromGlass(key); });
+      close.addEventListener("click", function () {
+        confirmShelve(key, a, label, close);
+      });
       tools.appendChild(moveBtn);
       tools.appendChild(smaller);
       tools.appendChild(larger);
@@ -6322,21 +6539,62 @@
       card.appendChild(tools);
       card.appendChild(live);
       wireCardMeta(card);
-      if (zoomKindOf(a) === "library") {
+
+      /* A CLICK OPENS a library card — anywhere on it but its controls, and
+       * never at the end of a drag: a press that travelled is a move (or a
+       * pan, or a resize), and opening the entry under a reader who was only
+       * tidying would take them off the page mid-gesture. Same tab: the
+       * glass is on every page, so the reader's folio comes with them. */
+      var pressAt = null;
+      card.addEventListener("pointerdown", function (e) { pressAt = { x: e.clientX, y: e.clientY }; });
+      card.addEventListener("click", function (e) {
+        if (!place) return;
+        if (e.button !== 0 || e.defaultPrevented) return;
+        if (e.target.closest && e.target.closest("button, a, [data-fa-control], input, select, textarea")) return;
+        if (card.getAttribute("data-fa-moving") === "true") return;
+        var p = pressAt;
+        pressAt = null;
+        if (p && Math.abs(e.clientX - p.x) + Math.abs(e.clientY - p.y) > 4) return;
+        window.location.assign(opens);
+      });
+
+      if (isLibrary) {
         setCardMeta(card, libraryMetaRows(a, key, null));
         glassLibraryIndex(function (idx) {
           var entry = idx && idx[key];
           if (!entry) return;
           setCardMeta(card, libraryMetaRows(a, key, entry));
-          // A row stored before the entry had a real title (or one whose
-          // title IS its id) shows the index's title instead.
-          var better = entry.title && entry.title !== entry.id ? entry.title : "";
-          if (better && (a.title === key || a.title === entry.id)) {
-            var nm = card.querySelector(".fa-glass-asset-name");
-            if (nm) nm.textContent = better;
-            card.setAttribute("aria-label", better);
-            var g = card.querySelector(".fa-glass-asset-gist");
-            if (g) g.textContent = gistOf([better]);
+          // The asset's VISUALIZER, when it declares one, is what opening means.
+          var view = viewOf(entry);
+          if (view) {
+            opens = view;
+            card.setAttribute("data-fa-opens", opens);
+            var link = card.querySelector("a.fa-glass-asset-name");
+            if (link) link.setAttribute("href", opens);
+          }
+          /* THE INDEX'S TITLE WINS whenever it has a real one — issue #1900:
+           * *"Title in popup is right but not avatar"*. The popover already
+           * read the index; the caption only did when the stored title was
+           * the bare key or id, so a row stored with another wrong title
+           * ("Abies" for the WHO editorial style manual) kept it on the card.
+           * Every surface built from the title is renamed together, and the
+           * stored row is corrected — without announcing, which would repaint
+           * the glass under the reader. */
+          var better = entry.title && entry.title !== entry.id ? String(entry.title) : "";
+          if (!better || better === a.title) return;
+          label = better.replace(/\s+/g, " ").trim();
+          var nm = card.querySelector(".fa-glass-asset-name");
+          if (nm) nm.textContent = better;
+          card.setAttribute("aria-label", label);
+          var g = card.querySelector(".fa-glass-asset-gist");
+          if (g) g.textContent = gistOf([better]);
+          moveBtn.setAttribute("aria-label", "Move " + label + " around the glass");
+          close.setAttribute("aria-label", closeLabel(label));
+          zoomGlassCard(card);
+          var all = folioAssets();
+          if (all[key] && all[key].title !== better) {
+            all[key].title = better;
+            setFolioAssets(all);
           }
         });
       } else {
@@ -6357,7 +6615,7 @@
         placeOnGlass(key, g);
         fitShelf();
         applyView();
-      }, { unbounded: true });
+      }, { unbounded: true, noResize: true });
       if (a.kind === "todos" && key.indexOf("todo/") === 0) {
         var todoId = key.slice("todo/".length);
         glassTodoIndex(function (idx) {
@@ -10895,223 +11153,64 @@
   }
 
   function mountNavIconRow() {
-    var bar = document.querySelector(".side-bar");
-    if (!bar || bar.querySelector(".fa-nav-icons")) return;
-    var row = readNavbarRow();
-    if (row === undefined) return;
-    if (row === null) {
-      // Said once, at info level: this is a declaration gap in the instance,
-      // not a fault in the page, and a warning would push a reader toward the
-      // console for something only an author can fix.
-      console.info("docs-ui: this instance declares no navbarIcons and inherits none; " +
-                   "no navbar icon row was mounted.");
+    // THE ROW IS DRAWN BY `navbar-row.js` — beans `lhvt`, `9rq1`. That file is
+    // the one drawing for every navbar: it also runs on the 2,709 railed pages
+    // that never load this script (measured on the built site after #2149,
+    // where they carried the row's data and nothing drew it). Here it is
+    // called in FULL mode, with the three things only this script owns: the
+    // launcher's actions panel, the fsh-guts dialog and count (wired by
+    // `mountFshGutsNav` through the button's `data-fa-fsh-guts-open`), and the
+    // light/dark switch.
+    var hooks = {
+      full: true,
+      // The launcher is the EXISTING control, moved -- not a second one.
+      // `mountActionTiles` owns the panel and its open/close state, so this
+      // clicks that button rather than minting a rival with its own idea of
+      // whether the panel is open (`l4zi`).
+      launcher: function () {
+        var real = document.querySelector(".fa-tiles-toggle");
+        if (real) real.click();
+        else console.warn("docs-ui: the actions panel launcher is not mounted; " +
+                          "the navbar's More button has nothing to open.");
+      },
+      after: function (host) {
+        /* LIGHT / DARK IN THE ROW — owner, 2026-09-27: *"i want light dark
+         * mode on main icon tab at top of LHS"*. The same switch as the
+         * Settings tile and the header mini-button, so it REGISTERS a painter
+         * rather than owning the state: three controls over one fact. */
+        var scheme = el("button", { type: "button", class: "fa-nav-icon fa-nav-scheme" });
+        registerSchemePainter(function (name) {
+          scheme.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
+          var said = name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light";
+          scheme.setAttribute("aria-label", said);
+          scheme.setAttribute("data-fa-tip", said);
+          scheme.title = said;
+          scheme.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
+        });
+        scheme.addEventListener("click", toggleScheme);
+        host.appendChild(scheme);
+        // A row mounted LATE (the path below) has a fish nobody wired yet.
+        // Idempotent per button, so the synchronous path is unaffected.
+        mountFshGutsNav();
+      }
+    };
+    if (window.FaNavbarRow) {
+      window.FaNavbarRow.mount(hooks);
       return;
     }
-    var icons = Array.isArray(row.icons) ? row.icons : [];
-    var hrefs = row.hrefs && typeof row.hrefs === "object" ? row.hrefs : {};
-    // WHY a slot has no href — a separate map, because a slot has exactly one
-    // of the two and merging them would make "absent" mean both "resolved to
-    // nothing" and "never declared". See `navbarRow` in `sync-docs-harness.ts`.
-    var notes = row.notes && typeof row.notes === "object" ? row.notes : {};
-
-    /* EVERY CONTROL IN THIS ROW CARRIES `data-fa-tip`, and it is the SAME
-     * string as its `aria-label` — owner's ruling on `ob3m` finding 1,
-     * 2026-10-01: *"show each icon's name as a tooltip on hover or keyboard
-     * focus."* The row is glyphs with no words, so a sighted reader had no
-     * name at all until now; `title` names it for a pointer after a delay and
-     * never for a keyboard. The stylesheet paints the attribute beside the
-     * strip (`[data-fa-tip]::after` in docs-ui.css) with an EMPTY alternative
-     * text, so a screen reader still hears the `aria-label` once and the
-     * tooltip not at all. `check-navbar-consistency.ts` fails a row control
-     * built without it. */
-    var host = el("div", { class: "fa-nav-icons", role: "group", "aria-label": "Harness actions" });
-
-    var LABELS = {
-      todos: "Todos", beans: "Beans", processes: "Processes",
-      kg: "Knowledge graph", launcher: "More actions", "fsh-guts": "fsh-guts, discarded items"
-    };
-
-    // BUILT HERE, not at module scope, and the reason is ordering: STICKY_GLYPH
-    // and TILES_GLYPH are declared BELOW `TILE_GLYPHS`, so a map initialised
-    // beside that one would capture `undefined` for both. This runs at init,
-    // by which point every `var` in this IIFE is assigned.
-    //
-    // FIVE DISTINCT DRAWINGS. `glyphFor` falls back to NET_GLYPH, which would
-    // have given four of these five the same picture -- a row where four slots
-    // are indistinguishable is a row that says nothing.
-    var ROW_GLYPHS = {
-      todos: STICKY_GLYPH, beans: BEANS_GLYPH, processes: PROCESS_GLYPH,
-      kg: NET_GLYPH, launcher: TILES_GLYPH
-    };
-    var rowGlyph = function (id) {
-      return Object.prototype.hasOwnProperty.call(ROW_GLYPHS, id) ? ROW_GLYPHS[id] : NET_GLYPH;
-    };
-
-    for (var i = 0; i < icons.length; i++) {
-      var id = icons[i];
-      // `close` is the CSS-placed label described above. Skipped rather than
-      // dropped from the declaration, so the instance's list still says six.
-      if (id === "close") continue;
-
-      if (id === "fsh-guts") {
-        // THE TRASHCAN IN THE ROW, "with the others" — owner, 2026-10-02
-        // (#1925). A button, not a link: it opens the fsh-guts list and
-        // restore dialog and carries the live count, which `mountFshGutsNav`
-        // paints through `data-fa-fsh-guts-open` exactly as before.
-        var fish = el("button", {
-          type: "button", class: "fa-nav-icon fa-nav-icon--fsh-guts", "data-fa-fsh-guts-open": "",
-          "aria-label": LABELS["fsh-guts"], title: LABELS["fsh-guts"], "data-fa-tip": LABELS["fsh-guts"]
-        });
-        fish.innerHTML = FISH_GLYPH;
-        fish.appendChild(el("span", { class: "fa-nav-count", "data-fa-count-state": "pending", "aria-hidden": "true" }, "\u2026"));
-        host.appendChild(fish);
-        continue;
-      }
-
-      if (id === "launcher") {
-        // The launcher is the EXISTING control, moved -- not a second one.
-        // `mountActionTiles` owns the panel and its open/close state, so this
-        // clicks that button rather than minting a rival with its own idea of
-        // whether the panel is open. Two toggles over one state is the `l4zi`
-        // defect from the other direction.
-        var proxy = el("button", { type: "button", class: "fa-nav-icon", "aria-label": LABELS.launcher, "data-fa-tip": LABELS.launcher });
-        proxy.innerHTML = rowGlyph("launcher");
-        proxy.addEventListener("click", function () {
-          var real = document.querySelector(".fa-tiles-toggle");
-          if (real) real.click();
-          else console.warn("docs-ui: the actions panel launcher is not mounted; " +
-                            "the navbar's More button has nothing to open.");
-        });
-        host.appendChild(proxy);
-        continue;
-      }
-
-      var label = LABELS[id] || id;
-      // THROUGH `safeHref`, like every other href in this file. The value comes
-      // from `_data/harness.json`, which is generated -- but "generated" is not
-      // "trusted": the destinations are declared coverage paths, and a
-      // declaration is authored. `href-safety.test.ts` enforces this over the
-      // whole client for that reason, and it caught this exact line.
-      //
-      // `undefined` falls through to the non-link branch below, which is
-      // already the right rendering for a destination the row cannot use.
-      //
-      // THROUGH `withBase` FIRST, and it was not until the owner found the
-      // links live, 2026-09-23: *"beans and todos links wrong ...
-      // https://litlfred.github.io/beans/"*. The hrefs in `#fa-navbar-row` are
-      // site-root-relative (`/beans/`), and this site publishes under
-      // `/folio-assistant/`, so writing one unprefixed sends the reader to
-      // another repository's Pages root — a 404 that looks like a live site
-      // rather than like a broken link. `mountInstanceGraphs` two functions
-      // down has always done this for the folder list; only this row did not.
-      //
-      // `safeHref` AFTER `withBase`, so what is checked is the href actually
-      // written. That order is stated on the folder list too, for the same
-      // reason: checking the bare path clears a value the baseurl could still
-      // turn into something else.
-      var at = safeHref(withBase(hrefs[id]));
-      if (at) {
-        var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label, "data-fa-tip": label });
-        a.innerHTML = rowGlyph(id);
-        host.appendChild(a);
-      } else {
-        // DECLARED AND NOT PUBLISHED -- rendered, not dropped, and not a link.
-        // `pb04`: a dead link invites a click and then reads as a broken site,
-        // while a silent omission answers "where is beans" with nothing. The
-        // same choice the graph list in the harness tabs already makes.
-        //
-        // THE REASON IS IN THE ACCESSIBLE NAME, not only in a tooltip. This
-        // row is glyphs with no words at all, so `aria-label` is the ONLY
-        // channel a screen reader has -- and until now it said "Beans" for a
-        // slot that goes nowhere, which is a working control described to
-        // somebody who cannot see that it is grey. `title` carries the same
-        // string for a pointer user; neither is a substitute for the other.
-        //
-        // The wording is `row.notes`', carried from `harness-tiles.ts` where
-        // the four inert states are told apart, exactly as the folder list
-        // below does. The hardcoded "declared, with no published viewer" it
-        // replaced was one wording for four states.
-        var why = typeof notes[id] === "string" ? notes[id] : "reason not recorded";
-        var dead = el("span", {
-          class: "fa-nav-icon fa-nav-icon--dead",
-          "aria-label": label + " — " + why,
-          title: label + " — " + why,
-          "data-fa-tip": label + " — " + why
-        });
-        dead.innerHTML = rowGlyph(id);
-        host.appendChild(dead);
-      }
-    }
-
-    /* LIGHT / DARK IN THE ROW — owner, 2026-09-27: *"i want light dark mode
-     * on main icon tab at top of LHS"*. The same switch as the Settings tile
-     * and the header mini-button (which this row hides from 50rem up), so it
-     * REGISTERS a painter rather than owning the state: three controls over
-     * one fact, and none of them can disagree. */
-    var scheme = el("button", { type: "button", class: "fa-nav-icon fa-nav-scheme" });
-    registerSchemePainter(function (name) {
-      scheme.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
-      var said = name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light";
-      scheme.setAttribute("aria-label", said);
-      scheme.setAttribute("data-fa-tip", said);
-      scheme.title = said;
-      scheme.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
-    });
-    scheme.addEventListener("click", toggleScheme);
-    host.appendChild(scheme);
-
-    // AFTER the header: line 1 is the avatar and the name, line 2 is this.
-    var header = bar.querySelector(".site-header");
-    if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
-    else bar.appendChild(host);
-
-    holdStripForTips(bar, host);
-  }
-
-  /* ARRIVING ON AN ICON DOES NOT OPEN THE STRIP — bean `ob3m` finding 1.
-   *
-   * Hover widens the strip, and widening re-flows this column into a row, so
-   * the icon a pointer arrived on moved out from under it before its tooltip
-   * could name it. The stylesheet holds the strip at rest while the bar
-   * carries `.fa-nav-tip-hold`; this decides when it does.
-   *
-   * WHY A REMEMBERED BOX, not `:hover` on the column. The column's place is
-   * only true AT REST — once the strip peeks it is a row somewhere else — so
-   * "is the pointer on the column" has to be asked of where the column WAS.
-   * `.fa-nav-icons:hover` alone held the strip shut under a pointer moving
-   * into the open row and made the row's icons unreachable.
-   *
-   * Set on ENTERING the bar only, so a reader already peeking keeps the open
-   * bar; cleared the moment the pointer leaves the box, so moving down the
-   * strip peeks exactly as before. Touch has no hover and is left alone. */
-  function holdStripForTips(bar, host) {
-    var rest = null;
-    function measure() {
-      if (bar.classList.contains("fa-nav-tip-hold")) return;
-      if (bar.matches(":hover") || bar.matches(":focus-within")) return;
-      if (bar.querySelector(".fa-nav-open:checked")) return;
-      var r = host.getBoundingClientRect();
-      if (r.width > 0 && r.height > 0) rest = { l: r.left, r: r.right, t: r.top, b: r.bottom };
-    }
-    function inside(e) {
-      return !!rest && e.clientX >= rest.l && e.clientX < rest.r && e.clientY >= rest.t && e.clientY < rest.b;
-    }
-    measure();
-    window.addEventListener("resize", measure);
-    bar.addEventListener("pointerenter", function (e) {
-      if (e.pointerType === "touch") return;
-      measure();
-      if (inside(e)) bar.classList.add("fa-nav-tip-hold");
-    });
-    bar.addEventListener("pointermove", function (e) {
-      if (bar.classList.contains("fa-nav-tip-hold") && !inside(e)) bar.classList.remove("fa-nav-tip-hold");
-    });
-    bar.addEventListener("pointerleave", function () {
-      bar.classList.remove("fa-nav-tip-hold");
-      // Re-measured once the bar is back at rest, so a box first measured
-      // while the pointer happened to be on the bar at load is not missing.
-      requestAnimationFrame(measure);
-    });
+    // `navbar-row.js` has not run yet. On a `folio-mount.ts` page this script
+    // is appended from an inline script, so it can run first; leave the hooks
+    // where `navbar-row.js` looks, and fetch it if no tag for it is coming.
+    // Fetched beside THIS script's own file, and only when this script came
+    // from one: an inlined copy (every e2e fixture) has no address to be
+    // beside, and its page inlines `navbar-row.js` too.
+    window.faNavbarRowHooks = hooks;
+    if (document.querySelector('script[src*="/navbar-row.js"]')) return;
+    var mine = document.querySelector('script[src*="/assets/js/docs-ui.js"]');
+    if (!mine) return;
+    var s = document.createElement("script");
+    s.src = mine.getAttribute("src").replace(/\/assets\/js\/docs-ui\.js.*$/, "/assets/js/navbar-row.js");
+    document.head.appendChild(s);
   }
 
   /* ── THE MIDDLE: this instance's controlled folders, then its navigation ──

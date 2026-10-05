@@ -57,7 +57,6 @@
  */
 
 import {
-  type Dirent,
   existsSync,
   mkdirSync,
   readFileSync,
@@ -80,71 +79,9 @@ import {
 } from "./kg-node";
 import { NS_PREFIXES, propertyIri, termIri } from "./namespaces";
 import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
-import { KeyedBySchema, SubgraphSourceSchema, contentIsOffCheckout, type SubgraphSource } from "./subgraph-source";
+import { BranchPrefixSchema, KeyedBySchema, SubgraphSourceSchema, contentIsOffCheckout, type SubgraphSource } from "./subgraph-source";
 
-/**
- * The suffix every instance declaration carries — `<name>.config.json`.
- *
- * ## `harness.json` is gone, and this replaced it
- *
- * The owner, 2026-09-21: *"Excise harness.json.. only
- * `<harness-stub>.config.json` makes instantiation at root of repo"*.
- *
- * There used to be TWO files with no overlap in content: `harness.json` held
- * the DECLARATION (`name`, `directories`, `assets`, `needs`, `stickies`) and
- * `<name>.config.json` held the CONFIG (`contentType`, `adapter`,
- * `dependencies`, `translation`). One instance, two files, and a reader had to
- * know which question each answered. They are one file now.
- *
- * ## A fixed filename cannot be discovered, and that was the point
- *
- * `harness.json` was a CONSTANT, so discovery asked `existsSync(dir +
- * "/harness.json")` and the declared `name` inside was free to be anything.
- * Under `<name>.config.json` the FILENAME CARRIES THE NAME, so the two cannot
- * disagree — and {@link findDeclarationFile} checks exactly that rather than
- * trusting either half.
- *
- * ## What tells a declaration from a plain config — the NAME, then the SUFFIX
- *
- * **A `name` field**, and since 2026-09-21 the suffix as well.
- *
- * Until then both ended `.config.json`, so the only discriminator was inside
- * the file: carrying `name` made it a declaration, lacking one made it a
- * config. That worked and was still the thing `b5f0` §1 warned about — two
- * different schemas, with two different readers, sharing one filename shape
- * and told apart only by which directory they sat in.
- *
- * The owner reversed §1's REPLACE ruling on 2026-09-21 and took its other
- * option, the one `b5f0` recorded as *"`<name>.json` + `<name>.config.json`
- * would at least pair them"*:
- *
- * | file | schema | reader |
- * |---|---|---|
- * | `<name>.json` in the instance | {@link CatHarnessDeclarationSchema} | `readDeclaration` |
- * | `<name>.config.json` at the instantiation root | `HarnessConfigSchema` | `readHarnessConfig` |
- *
- * The `name` check STAYS rather than being replaced by the suffix.
- * {@link findDeclarationFile} still requires the filename stem to equal the
- * declared `name`, which is what makes a declaration self-identifying: a
- * consumer opening a repository it has never seen scans, parses, and takes the
- * file that agrees with itself. That is the property migration-plan I.8 asked
- * for, and it is the reason the suffix could move at all — nothing here
- * derives a filename from a DIRECTORY name, so a clone renamed on disk still
- * resolves.
- */
-export const DECLARATION_SUFFIX = ".json";
 
-/**
- * The suffix of an instantiation root's CONFIG, as against its declaration.
- *
- * These were ONE suffix until 2026-09-21, because the declaration had been
- * folded into the config. The owner's reversal separates them again, so there
- * are now two things to spell and they must not be spelled by one constant:
- * composing a config path from {@link DECLARATION_SUFFIX} produced
- * `cat-harness.json` for a file that is `cat-harness.config.json`, and
- * `check:instance-config` reported all three real configs as orphans.
- */
-export const CONFIG_SUFFIX = ".config.json";
 
 /**
  * The CONFIG filename for an instance of this name — `<name>.config.json`.
@@ -171,89 +108,6 @@ export function instanceDeclarationFilename(name: string): string {
   return `${name}${DECLARATION_SUFFIX}`;
 }
 
-/**
- * The declaration file in this directory, or `undefined` if there is none.
- *
- * Scans for `*.json` and returns the one that both carries a `name` and
- * whose filename stem EQUALS that name. A file failing either half is not a
- * declaration: no `name` means it is a plain config, and a mismatched stem is
- * the rename-half-done case `check:instance-config` already reports.
- *
- * **Several declarations in one directory THROWS.** Picking one silently is
- * the `dh4f` shape — a consumer reads a declaration, gets an answer, and
- * reports a clean run over the instance it did not see. There is no correct
- * choice to make here, so the caller is told rather than guessed at.
- */
-export function findDeclarationFile(dir: string): string | undefined {
-  let entries: string[];
-  try {
-    entries = readdirSync(dir);
-  } catch {
-    // Unreadable directory is "could not look", and a caller asking "is there
-    // a declaration here" gets `undefined` either way. The distinction is not
-    // lost: every caller that needs it re-reads and throws.
-    return undefined;
-  }
-  const found: string[] = [];
-  const broken: string[] = [];
-  for (const entry of entries) {
-    if (!entry.endsWith(DECLARATION_SUFFIX)) continue;
-    const stem = entry.slice(0, -DECLARATION_SUFFIX.length);
-    if (stem.length === 0) continue;
-    let raw: unknown;
-    try {
-      raw = JSON.parse(readFileSync(join(dir, entry), "utf-8"));
-    } catch {
-      // UNPARSEABLE IS NOT ABSENT. Skipping it here would make "this instance
-      // declared something and it is broken" indistinguishable from "there is
-      // nothing here" — the `xom7` failure, where a sweep that could not look
-      // reports a clean run. It cannot be matched on `name` (there is no
-      // parse), so it is collected separately and `readDeclaration` throws on
-      // it rather than returning `undefined`.
-      //
-      // BUT ONLY WHEN IT COULD PLAUSIBLY BE THIS INSTANCE'S. The suffix was
-      // `.config.json` until 2026-09-21, which made "unparseable file with
-      // this suffix" a near-certain broken declaration. A bare `.json` makes
-      // it near-certainly NOT one: a malformed `folio/landing.json` — a
-      // landing sticky, nothing to do with declarations — was reported as a
-      // broken declaration and took `readDeclaration` down with it.
-      //
-      // The two admissible signals, neither of which is used for RESOLUTION:
-      // a sibling `<stem>.config.json`, which is the pairing the split
-      // created, or a stem equal to the directory's own name. Matching the
-      // directory here does NOT reintroduce what migration-plan I.8 warned
-      // about — that is about deriving a declaration's location from a
-      // directory name, and resolution still goes only through a file
-      // agreeing with its own `name`. This is error REPORTING: the cost of
-      // being wrong is a worse message, not a missed instance.
-      const plausible = stem === basename(dir) || entries.includes(`${stem}${CONFIG_SUFFIX}`);
-      if (plausible) broken.push(entry);
-      continue;
-    }
-    if ((raw as { name?: unknown })?.name === stem) found.push(entry);
-  }
-  // A VALID declaration wins over a broken sibling: a directory may hold an
-  // unrelated `*.config.json` that is merely malformed, and that must not stop
-  // the instance being read.
-  //
-  // With NOTHING valid, the broken one is returned rather than thrown on, and
-  // that is the whole third-state design. DISCOVERY MUST BE TOTAL —
-  // `instanceRootsIn` asks "which directories are instances" and a throw there
-  // takes out every caller, including the ones written to REPORT an unreadable
-  // declaration (`workPlanGraphsIn`, `isActiveKg`). Returning it reproduces
-  // the old semantics exactly: `harness.json` present made the directory an
-  // instance, and `readDeclaration` threw when it came to parse it. Present
-  // and unreadable stays distinguishable from absent, which is the property;
-  // where the error is raised is not.
-  if (found.length === 0 && broken.length > 0) return broken.sort()[0];
-  if (found.length > 1) {
-    throw new Error(
-      `${resolve(dir)} carries ${found.length} declarations (${found.sort().join(", ")}). ` +
-        "A directory is one instance; picking one silently would hide the others.",
-    );
-  }
-  return found[0];
-}
 
 /**
  * The full path to this directory's declaration, or `undefined` if there is
@@ -545,6 +399,38 @@ export interface ContentDirectory extends GraphNodeDirectory {
    * one entry. New declarations use `source`.
    */
   storage?: DirectoryStorage;
+
+  /**
+   * What this directory's content is COMPUTED FROM: the declared directory ids
+   * of the graphs whose change can invalidate it, resolved across `needs`
+   * exactly as a document kind's `computedFrom` is (bean `nama`; design note
+   * `docs/proposals/derived-graph-dependencies-2026-10-04.md`).
+   *
+   * On the DERIVED side, by the owner's ruling (2026-10-04, option 1 of 3): the
+   * writer of a derived graph is what knows its inputs, and the edge points down
+   * the stack (an IG's pages name its artefact index, never the reverse). Data
+   * graphs only. A generator is code, and the staging cone (bean `4j86`) reaches
+   * it by its import closure, so code is not declared here a second time.
+   *
+   * Absent means "not declared", not "derived from nothing". `check:derived-from`
+   * says which directories in the `derived` layer still owe an answer.
+   */
+  derivedFrom?: string[];
+
+  /**
+   * The GENERATOR that writes this directory: repo-relative script files, and
+   * directories ending in `/` for what a generator READS rather than imports
+   * (its templates). The other half of `derivedFrom`: that names the DATA a
+   * derived graph is computed from, this names the CODE (owner, 2026-10-04,
+   * bean `4j86`, option 1 of 3).
+   *
+   * The staging cone reads it: a changed file in a writer's import closure, or
+   * under a writer directory, puts this directory in the cone. Absent means the
+   * cone cannot reach this directory through code, so it falls back to the
+   * instance-prefix rule. `check:derived-from` refuses a writer path that does
+   * not exist, because a dangling writer would silently shrink the cone.
+   */
+  writer?: string[];
 }
 
 /** An instance's root declaration. */
@@ -701,6 +587,11 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * not said". Bean `eayu`.
    */
   separation?: "content" | "tools";
+  /**
+   * Instances this one is seeded together with — see `seedsWith` on
+   * {@link CatHarnessDeclarationSchema}. Absent is "seeds alone".
+   */
+  seedsWith?: string[];
   stub?: string;
   /**
    * Where this instance's artefacts are published — the base every `@id` in
@@ -942,7 +833,7 @@ function acceptLegacyGraphsKey(v: unknown): unknown {
   return { ...rest, graphKinds: graphs };
 }
 
-const GraphNodeDirectoryShape = z.object({
+export const GraphNodeDirectoryShape = z.object({
   id: z.string().min(1),
   path: z.string().min(1),
   ...scopeShape,
@@ -1419,7 +1310,7 @@ export type Tile = z.infer<typeof TileSchema>;
  *   and `audit:coverage` reports the kind as `stored` rather than counting a
  *   working copy whose size depends on whether somebody ran `qa:fetch`.
  *
- * ## `keyedBy` — three keyings, and a fourth is a schema change
+ * ## `keyedBy` — four keyings, and a fifth is a schema change
  *
  * - `commit` — one entry per commit (`main/<sha>/`, `pr/<n>/<sha>/`), read
  *   against a baseline. The QA branch (`scripts/qa-store.ts`).
@@ -1450,14 +1341,23 @@ export type Tile = z.infer<typeof TileSchema>;
  *   `docs/proposals/state-branch-2026-10-02.md` draws is **regenerability**,
  *   and it is exactly what separates these two keyings.
  *
- * The field is an enum, not a string, so a fourth keying is a schema change
+ * - `route-family` — one entry per MEMBER of a family under the directory's
+ *   path, the member supplied at publish time rather than declared. Bean
+ *   `xp5j`. **Its reasoning lives with the enum**, in
+ *   `schemas/subgraph-source.ts`: a keying is documented where its one
+ *   definition is, which is the same rule that put the enum there (`1j3q`).
+ *   {@link RouteMemberSchema} there validates the untrusted member key.
+ *
+ * The field is an enum, not a string, so a FIFTH keying is a schema change
  * somebody has to make rather than a reinterpretation of an existing value. The
  * enum itself is `KeyedBySchema` in `schemas/subgraph-source.ts`, IMPORTED and
- * not restated: this field held its own `z.enum(["commit","tip","route"])` until
- * the two drifted — `route` was added here with bean `1j3q` and not there, so a
- * route-keyed declaration parsed and then threw a ZodError inside
- * `resolveSubgraphSource`. A schema change somebody has to make is only a guard
- * if there is ONE schema to change.
+ * not restated: this field held its own `z.enum([...])` until the two drifted —
+ * `route` was added here with bean `1j3q` and not there, so a route-keyed
+ * declaration parsed and then threw a ZodError inside `resolveSubgraphSource`.
+ * **A schema change somebody has to make is only a guard if there is ONE schema
+ * to change**, and `route-family` was added to `KeyedBySchema` for exactly that
+ * reason — this branch first restated the enum here and reproduced `1j3q` one
+ * keying later.
  * Not every named subgraph gets a branch — semi-static KG content (skills,
  * schemas, processes) stays on `main` (owner, 2026-10-02).
  *
@@ -1477,7 +1377,8 @@ export const DirectoryStorageSchema = z
       .refine(
         (b) => !b.includes("..") && !b.includes("//") && !b.endsWith("/") && !b.endsWith(".lock") && !b.startsWith("/"),
         "not a valid branch name",
-      ),
+      )
+      .optional(),
     /**
      * How entries are keyed on the branch: one entry per `commit`, one live
      * copy at the `tip`, or one entry per published `route`. See
@@ -1485,8 +1386,36 @@ export const DirectoryStorageSchema = z
      * synonym for `tip`.
      */
     keyedBy: KeyedBySchema,
+    /**
+     * `keyedBy: "family"` only (bean `lehh`, owner 2026-10-04): a FAMILY of
+     * branches, one per key — the branch-only graphs fhir-ast (one branch per
+     * IG package) and lake-cache (one per Lean package and toolchain). `path`
+     * is where a mount of ONE member lands, as fsh-guts' is. Resolved to
+     * `kind: "family"`, never to a single branch.
+     */
+    branchPrefix: BranchPrefixSchema.optional(),
+    /** `family` only: what the key is, in words — "the IG's package id". */
+    keyFrom: z.string().min(1).optional(),
+    /**
+     * `family` only: where the family is. Absent = this repository, a copy
+     * materialised here; `owner/repo` = read from that remote (owner,
+     * 2026-10-04: a remote AST may be read or materialised locally, "similar
+     * for lean cache").
+     */
+    repository: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/, "owner/repo").optional(),
   })
-  .strict();
+  .strict()
+  // ONE object carrying the ONE enum (`route-member.test.ts` checks identity),
+  // with the family form told apart by its keying rather than by a second arm.
+  .superRefine((s, ctx) => {
+    const family = s.keyedBy === "family";
+    if (family && (s.branch !== undefined || s.branchPrefix === undefined || s.keyFrom === undefined)) {
+      ctx.addIssue({ code: "custom", path: ["keyedBy"], message: '`keyedBy: "family"` takes `branchPrefix` and `keyFrom`, and no `branch`' });
+    }
+    if (!family && (s.branch === undefined || s.branchPrefix !== undefined || s.keyFrom !== undefined || s.repository !== undefined)) {
+      ctx.addIssue({ code: "custom", path: ["keyedBy"], message: "a single-branch keying takes `branch`, and no `branchPrefix`, `keyFrom` or `repository`" });
+    }
+  });
 export type DirectoryStorage = z.infer<typeof DirectoryStorageSchema>;
 
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
@@ -1660,6 +1589,38 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    */
   storage: DirectoryStorageSchema.optional(),
   /**
+   * What this directory's content is COMPUTED FROM: the declared directory ids
+   * of the graphs whose change can invalidate it, resolved across `needs`
+   * exactly as a document kind's `computedFrom` is (bean `nama`; design note
+   * `docs/proposals/derived-graph-dependencies-2026-10-04.md`).
+   *
+   * On the DERIVED side, by the owner's ruling (2026-10-04, option 1 of 3): the
+   * writer of a derived graph is what knows its inputs, and the edge points down
+   * the stack (an IG's pages name its artefact index, never the reverse). Data
+   * graphs only. A generator is code, and the staging cone (bean `4j86`) reaches
+   * it by its import closure, so code is not declared here a second time.
+   *
+   * Absent means "not declared", not "derived from nothing". `check:derived-from`
+   * says which directories in the `derived` layer still owe an answer.
+   * At least one id when present, each non-empty, and no id twice: an empty or
+   * duplicated list says nothing a reader can act on.
+   */
+  derivedFrom: z
+    .array(z.string().min(1))
+    .min(1)
+    .refine((ids) => new Set(ids).size === ids.length, { message: "derivedFrom names an id twice" })
+    .optional(),
+  /**
+   * The generator that writes this directory: repo-relative script files, and
+   * directories ending in `/` for what it reads rather than imports. See the
+   * interface field. At least one path, none twice.
+   */
+  writer: z
+    .array(z.string().min(1))
+    .min(1)
+    .refine((ps) => new Set(ps).size === ps.length, { message: "writer names a path twice" })
+    .optional(),
+  /**
    * This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the
    * Jekyll source instead of mounting its built output.
    *
@@ -1783,12 +1744,12 @@ export const ContentDirectorySchema = z.preprocess(
   ContentDirectoryShape.refine(
     (d) =>
       !(
-        (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route") &&
+        (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route" || d.storage?.keyedBy === "route-family") &&
         (d.graphKinds as readonly string[] | undefined)?.includes("qa")
       ),
     {
       message:
-        'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos) and `keyedBy: "route"` for regenerable rendered pages',
+        'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos), `keyedBy: "route"` for regenerable rendered pages, and `keyedBy: "route-family"` for a family of them named at publish time',
       path: ["storage", "keyedBy"],
     },
   ),
@@ -2853,6 +2814,22 @@ export const CatHarnessDeclarationSchema = z.object({
    * instance `supports` is content too, and is read as such without this.
    */
   separation: z.enum(["content", "tools"]).optional(),
+  /**
+   * Instances this one is SEEDED TOGETHER with: the same seeding step creates
+   * both repositories, so neither ever stands alone in a checkout (bean
+   * `smbc` seeds `cat-harness` and `cat-harness-tools` at once).
+   *
+   * Declared by the HIGHER instance, naming the lower one, because a lower
+   * instance naming one above it is the wrong direction
+   * (`check:reference-direction`). `seed:ready` reads it: a path declared in
+   * a lower instance that resolves only into an instance seeding with it is
+   * not "upward" — it cannot break on a seeding day that creates both.
+   * Owner, 2026-10-04: cat-harness's Tool nodes resolving into
+   * cat-harness-tools are a seeding pair, not a seeding risk.
+   *
+   * Absent means "seeds alone", which is the strict reading.
+   */
+  seedsWith: z.array(z.string().min(1)).optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   /**
@@ -3170,6 +3147,64 @@ export function repoRootFor(instanceRoot: string): string {
 }
 
 /**
+ * The CHECKOUT an instance's repository-level files live in — `.gitmodules`,
+ * `.github/`, `.claude/skills/`, the root declaration, a `scope: "repository"`
+ * path — answered for the root instance too (bean `g43f`).
+ *
+ * ## Why {@link repoRootFor} cannot be used for these reads
+ *
+ * `repoRootFor` is `dirname`, so for the instance declared AT the checkout root
+ * it climbs out. In the main checkout that is `/home/user`; in a Claude Code
+ * worktree it is `.claude/worktrees/`, whose every child is ANOTHER session's
+ * checkout. Measured 2026-10-03: twenty-odd readers composed
+ * `join(repoRootFor(root), …)` and were safe only because their callers passed
+ * a nested instance. Given the root instance they read a directory that is not
+ * there — `.claude/skills` read as empty, a root declaration read as absent —
+ * which is `dh4f`: a clean run over nothing.
+ *
+ * ## The rule is git's own marker, read from the filesystem
+ *
+ * - `instanceRoot` holds its own `.git` (a directory for a clone, a FILE for a
+ *   worktree) and its parent's `.gitmodules` does not name it — it IS a
+ *   checkout ({@link isForeignCheckout} from the parent's side): answer itself.
+ * - otherwise it is nested — a plain subdirectory, or a declared submodule such
+ *   as `bootstrap/` — and its repository is one level up, which is
+ *   `repoRootFor`'s contract and is unchanged.
+ *
+ * Read from the filesystem rather than by spawning `git rev-parse
+ * --show-toplevel` for two measured reasons: `rootForScope` is on the hot path
+ * of every declared-directory resolution, and a fixture built under a checkout
+ * would get the ENCLOSING repository's toplevel, which is the wrong answer
+ * delivered confidently. A non-git fixture has no `.git` anywhere and keeps the
+ * `dirname` answer every existing fixture was written against.
+ *
+ * ## It reports rather than guessing
+ *
+ * A nested checkout (a submodule) whose parent holds no `.git` is a tree whose
+ * repository cannot be determined: the `.gitmodules` says one thing and the
+ * parent's git state another. That throws, because returning `dirname` there
+ * is the silent escape this function exists to end.
+ */
+export function checkoutRootFor(instanceRoot: string): string {
+  const abs = resolve(instanceRoot);
+  if (isForeignCheckout(abs)) return abs;
+  // A git-less tree whose root AGGREGATES other instances (`init-folio` before
+  // `git init`, a cross-instance fixture) is its own checkout too — the
+  // container rule {@link siblingScopeFor} states, and the whole of what
+  // `harness-config`'s `checkoutRootFor` was before this (it now delegates
+  // here, so there is one answer rather than two that disagree on a leaf).
+  const up = siblingScopeFor(abs);
+  if (up === abs) return abs;
+  if (existsSync(join(abs, ".git")) && !existsSync(join(up, ".git"))) {
+    throw new Error(
+      `cannot determine the checkout of ${abs}: it is a declared submodule of ${up}, ` +
+        `which holds no \`.git\` — refusing to read repository-level files from outside a checkout`,
+    );
+  }
+  return up;
+}
+
+/**
  * The scope to resolve an instance's SIBLINGS in — `repoRootFor`, except when
  * the instance root IS the repository root.
  *
@@ -3281,7 +3316,9 @@ export function resolveCoveragePath(repoRoot: string, coveragePath: string): str
  * change to this function rather than a sweep over six declarations.
  */
 export function rootForScope(instanceRoot: string, scope?: DeclarationScope): string {
-  return scope === "repository" ? repoRootFor(instanceRoot) : instanceRoot;
+  // `checkoutRootFor`, not `repoRootFor`: a `scope: "repository"` entry on the
+  // ROOT declaration otherwise resolved against the checkout's parent (g43f).
+  return scope === "repository" ? checkoutRootFor(instanceRoot) : instanceRoot;
 }
 
 /**
@@ -3335,58 +3372,6 @@ export function declaresInstance(
   return decl !== undefined && (decl.name === ref || (decl.repository !== undefined && decl.repository === ref));
 }
 
-/**
- * Every instance in `repoRoot` — the repository root itself when it declares,
- * plus each immediate subdirectory that does.
- *
- * {@link findInstanceRoot} walks UP from a path to the instance owning it;
- * this is the same fact in the other direction, and until now it was the
- * direction nobody had implemented — the note on {@link initializationDoc}
- * said so explicitly ("*NOT implemented and is not assumed here*", bean
- * `wggr`).
- *
- * **Two gates were each carrying their own literal `["cat-harness",
- * "bootstrap"]` instead** (`check-declared-assets`, `check-instance-render`),
- * and by 2026-09-20 there were FOUR instances: those two, `folio-assist-core`,
- * and the repository root. So both gates reported clean runs over sets that
- * excluded half the subject — `dh4f` again, in the two checks whose whole job
- * is to look at instances.
- *
- * `check-instance-render`'s literal even sat under the docstring "*Every
- * instance this repository owns — the root, and any beside it*", which was
- * false in both halves: the root was not in the list and two instances beside
- * it were missing. **A list that has to be edited when a directory is added is
- * a list that will be wrong**, and the fix is to ask the filesystem rather
- * than to lengthen it (bean `6tkl`).
- *
- * Scanning is deliberately ONE level deep and skips dot-prefixed segments,
- * matching the dot-prefix guard the directory conventions already apply
- * everywhere else. Results are sorted so a caller's report is stable, with the
- * repository root first when it declares.
- */
-export function instanceRootsIn(repoRoot: string): string[] {
-  const root = resolve(repoRoot);
-  const out: string[] = [];
-  if (findDeclarationFile(root) !== undefined) out.push(root);
-
-  let entries: Dirent[];
-  try {
-    entries = readdirSync(root, { withFileTypes: true });
-  } catch {
-    // Unreadable root is "could not determine", and a caller that treats an
-    // empty list as "no instances" is the very failure this function exists
-    // to end — so say nothing rather than claim an empty set.
-    return out;
-  }
-
-  const subs = entries
-    .filter((e) => e.isDirectory() && !e.name.startsWith("."))
-    .map((e) => join(root, e.name))
-    .filter((p) => findDeclarationFile(p) !== undefined)
-    .sort();
-
-  return out.concat(subs);
-}
 
 /** {@link findInstanceRoot}, throwing rather than returning `undefined`. */
 export function instanceRootFor(start: string): string {
@@ -4470,7 +4455,27 @@ function declaredFromWithin(
       continue;
     }
     for (const nd of nested.directories ?? []) {
-      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.subgraph !== true) continue;
+      // `nd.subgraph !== true` was a third condition here until 2026-10-04.
+      // It withheld 29 directories from EVERY store-side consumer —
+      // `branch-store`, `graph-read`, `audit-coverage`, `state-mount` — while
+      // `nestedDirectories` (the other walk over the same declaration files,
+      // read by `check:declared-dirs` and `check:requirements`) ignored it. One
+      // fact, two readers, opposite answers: the shape of #2069's enum drift.
+      //
+      // It was never in the schema. No `subgraph: z.boolean()`, no `subgraph?:`
+      // field — it was read off an untyped object here and nowhere else, so
+      // nothing validated it and nothing required it. It appeared in 5 files,
+      // all `skills/skills.json`, and was absent from `beans/beans.json`,
+      // `docs/docs.json` and `auto-docs.json`. Removing it resolved 144 -> 173
+      // directories, including `auto-docs.json`'s ten sub-sub-graphs: the
+      // owner's 2026-10-03 ruling was implemented and unreachable.
+      //
+      // Measured consequences, all repaired in the same change because an
+      // exposed finding is still a finding: `check:layout-norms` saw
+      // `beans/defs contains beans/defs/archive` (siblings in one declaration
+      // file, now sanctioned there) and `check:subgraphs` saw one genuinely
+      // broken link in `docs/proposals/` that it could not previously reach.
+      if (typeof nd.id !== "string" || typeof nd.path !== "string") continue;
       const sub = nd.path.replace(/^\.\//, "").replace(/\/+$/, "");
       out.push({ sub, entry: nd as unknown as ContentDirectory });
     }
@@ -4542,7 +4547,7 @@ function promoteFromWithin(
       // (beans.json's `defs`, docs.json's `proposals`). It answered the retired
       // `dependents` question until 2026-09-30 (option A); the fact it carried
       // here was never about dependents, so it is now stated as what it is.
-      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.subgraph !== true) continue;
+      if (typeof nd.id !== "string" || typeof nd.path !== "string") continue;
       // An instance-level DECLARATION with this id wins; a built-in DEFAULT
       // (`declaredBy: "(default)"`, e.g. `skills/voices`) is a convention, and
       // a from-within declaration is stronger than a convention.
@@ -6161,8 +6166,7 @@ export function declaredKinds(
 
 /** Where a declared directory actually is, honouring `scope`. */
 function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string }): string {
-  const base = d.scope === "repository" ? repoRootFor(root) : root;
-  return resolve(base, d.path);
+  return resolve(rootForScope(root, d.scope as DeclarationScope | undefined), d.path);
 }
 
 /**
@@ -6328,3 +6332,8 @@ import "./folio-graph-kind.js";
 // (issue: owner 2026-09-23, "put glossary into folio-assistant-core").
 import "./glossary-graph-kind.js";
 import { ThemeRefSchema, type ThemeRef } from "./theme";
+import { CONFIG_SUFFIX, DECLARATION_SUFFIX, findDeclarationFile, instanceRootsIn, isForeignCheckout } from "./instance-roots";
+// Instance DISCOVERY lives in a leaf module (bean dmx1), so the graph-kind
+// registry can find each harness's declared `kinds/` without importing this
+// file, which imports the registry. Re-exported here so no caller moves.
+export { CONFIG_SUFFIX, DECLARATION_SUFFIX, findDeclarationFile, instanceRootsIn, isForeignCheckout } from "./instance-roots";

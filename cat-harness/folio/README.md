@@ -14,6 +14,5 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `folio`, holding `folio`.
 | [`cat-harness.json`](cat-harness.json) | computable adjudication and agentic test harness |  |
 | [`folio-assist-core.json`](folio-assist-core.json) | What a folio is |  |
 | [`folio-assistant.json`](folio-assistant.json) | The repository, acting as an initialized instance |  |
-| [`smart-trust.json`](smart-trust.json) | A published IG, read back as a graph |  |
 | [`who-iris.json`](who-iris.json) | A catalogue by reference |  |
 <!-- kg:subgraph:end -->

@@ -13,7 +13,7 @@ import { existsSync, readFileSync } from "node:fs";
 
 import { GlossarySchema } from "../schemas/glossary.ts";
 import { LOCALE_PAGE_STRINGS, LOCALE_PAGE_TEMPLATE, collect, type GlossarySource } from "./glossary-page.ts";
-import { potEntries, potPath, sourceText, templateName, templates, translationsDir } from "./glossary-pot.ts";
+import { catalogueDir, potEntries, potPath, sourceText, templateName, templates } from "./glossary-pot.ts";
 
 const c = collect();
 const tpl = templates(c);
@@ -69,10 +69,9 @@ describe("glossary .pot: authored terms only", () => {
   });
 
   it("the committed templates in every locale carry that set", () => {
-    const dir = translationsDir();
     for (const loc of ["ar", "es", "fr", "ru", "zh"]) {
       for (const [name, entries] of tpl) {
-        const p = potPath(dir, loc, name);
+        const p = potPath(catalogueDir(name).dir, loc, name);
         expect(existsSync(p)).toBe(true);
         expect([...msgidsIn(readFileSync(p, "utf-8"))].sort()).toEqual([...new Set(entries.map((e) => e.msgid))].sort());
       }

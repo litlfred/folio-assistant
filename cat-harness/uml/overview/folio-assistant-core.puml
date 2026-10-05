@@ -8,6 +8,68 @@ skinparam shadowing false
 skinparam packageStyle rectangle
 hide empty methods
 
+package "folio-assistant-core/folio-assistant-core-translations" as pkg_folio_assistant_core_folio_assistant_core_translations <<translation-sources>> {
+  class "TranslationConfig" as folio_assistant_core_folio_assistant_core_translations_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {
+    defaultLocale [0..1] : string
+    supportedLocales [0..*] : string[]
+    translationDir [0..1] : string
+    potGranularity [0..1] : block | chapter | folio
+    officialRequired [0..1] : boolean
+  }
+}
+package "folio-assistant-core/folio-assistant-core-block-kinds" as pkg_folio_assistant_core_folio_assistant_core_block_kinds <<block-kinds>> {
+  class "folio-block-kind/v1" as folio_assistant_core_folio_assistant_core_block_kinds_folio_block_kind_v1_folio_block_kind_v1 <<json: BlockKindNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-block-kind/v1'
+    kind [1] : string
+    adapter [1] : string
+    profile [0..1] : document | paper
+    builder [0..1] : string
+    labelPrefix [1] : string
+    prefixEnforced [0..1] : boolean
+    provable [0..1] : boolean
+    folioType [1] : string
+    docoType [0..1] : string
+    heading [0..1] : string
+    headingPlural [0..1] : string
+    indexRank [0..1] : integer
+    rationale [0..1] : string
+  }
+}
+package "folio-assistant-core/folio-assistant-core-validators" as pkg_folio_assistant_core_folio_assistant_core_validators <<validators>> {
+  class "folio-validator/v1" as folio_assistant_core_folio_assistant_core_validators_folio_validator_v1_folio_validator_v1 <<json: ValidatorNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-validator/v1'
+    id [1] : string
+    validates [1] : object
+    schema [1] : string
+    rationale [0..1] : string
+  }
+}
+package "folio-assistant-core/folio-assistant-core-kinds" as pkg_folio_assistant_core_folio_assistant_core_kinds <<kinds>> {
+  class "folio-graph-kind/v1" as folio_assistant_core_folio_assistant_core_kinds_folio_graph_kind_v1_folio_graph_kind_v1 <<json: GraphKindNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-graph-kind/v1'
+    kind [1] : string
+    title [0..1] : string
+    layer [0..1] : 'core'
+    perInstance [0..1] : true
+    renderable [1] : boolean
+    recordsWork [0..1] : boolean
+    holds [1] : content | context | state | derived
+    summary [1] : string
+    schema [0..1] : string
+    validator [0..1] : string
+    validatorNotApplicable [0..1] : string
+    nodeSchemas [0..1] : map<object>
+    declarationFile [0..1] : string
+    concernGroups [0..1] : true
+    within [0..1] : string
+    avatar [0..1] : object
+    tileIcon [0..1] : string
+    description [0..1] : string
+    renderableNote [0..1] : string
+    anyLayer [0..1] : true
+    rationale [0..1] : string
+  }
+}
 package "folio-assistant-core/core-schemas" as pkg_folio_assistant_core_core_schemas <<schemas, cat-harness>> {
   class "Document Authoring Input" as folio_assistant_core_core_schemas_skills_document_authoring_input_schema_json_Document_Authoring_Input <<schema: skills/document-authoring/input.schema.json>> #e9edf3 {
     document [1] : string
@@ -71,6 +133,23 @@ package "folio-assistant-core/core-schemas" as pkg_folio_assistant_core_core_sch
     anchor [0..1] : string
     citedBy [0..*] : string[]
   }
+  class "Public Comment Input" as folio_assistant_core_core_schemas_skills_public_comment_input_schema_json_Public_Comment_Input <<schema: skills/public-comment/input.schema.json>> #e9edf3 {
+    operation [1] : enum(13)
+    file [0..1] : string
+    ref [0..1] : string
+    to [0..1] : string
+    code [0..1] : accepted | accepted-modified | not-accepted | noted | deferred
+    reason [0..1] : string
+    branch [0..1] : string
+    pr [0..1] : integer
+    filter [0..1] : object
+  }
+  class "Public Comment Output" as folio_assistant_core_core_schemas_skills_public_comment_output_schema_json_Public_Comment_Output <<schema: skills/public-comment/output.schema.json>> #e9edf3 {
+    changed [0..*] : string[]
+    unplaced [0..*] : string[]
+    refused [0..*] : string[]
+    comments [0..*] : any[]
+  }
   class "Quality Control Input" as folio_assistant_core_core_schemas_skills_quality_control_input_schema_json_Quality_Control_Input <<schema: skills/quality-control/input.schema.json>> #e9edf3 {
     checkType [1] : qa-report | publication-checklist | conformance-validation | functionality-test | cross-component-consistency
     targetPath [1] : string
@@ -93,7 +172,39 @@ package "folio-assistant-core/folios" as pkg_folio_assistant_core_folios <<folio
   note "folio: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_folios_folio
 }
 package "folio-assistant-core/glossary" as pkg_folio_assistant_core_glossary <<glossary>> {
-  note "glossary: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_glossary_glossary
+  class "Term" as folio_assistant_core_glossary_folio_glossary_v1_Term <<json: GlossarySchema>> #e8f0ee {
+    id [1] : string
+    prefLabel [1] : string | map<string>
+    altLabel [0..*] : string[]
+    definition [0..1] : string | map<string>
+    notation [0..1] : string
+    scopeNote [0..1] : string
+    broader [0..*] : string[]
+    related [0..*] : string[]
+    exactMatch [0..*] : string[]
+    closeMatch [0..*] : string[]
+    broadMatch [0..*] : string[]
+    narrowMatch [0..*] : string[]
+    requires [0..*] : string[]
+    isDefinedBy [0..1] : string
+    iri [0..1] : string
+    source [0..1] : string
+    status [1] : authored | candidate | could-not-extract
+    reason [0..1] : string
+  }
+  class "folio-glossary/v1" as folio_assistant_core_glossary_folio_glossary_v1_folio_glossary_v1 <<json: GlossarySchema>> #e8f0ee {
+    $schema [1] : 'folio-glossary/v1'
+    id [1] : string
+    title [1] : string
+    description [0..1] : string
+    hasVersion [0..1] : string
+    modified [0..1] : string
+    source [0..1] : string
+    license [0..1] : string
+    terms [0..*] : Term[]
+    ordered [0..1] : boolean
+    members [0..*] : string[]
+  }
 }
 package "folio-assistant-core/core-tools" as pkg_folio_assistant_core_core_tools <<tools>> {
   class "Maintain" as folio_assistant_core_core_tools_Maintain <<json: ToolDefinitionSchema>> #eee9f5 {
@@ -119,6 +230,9 @@ package "folio-assistant-core/core-tools" as pkg_folio_assistant_core_core_tools
 }
 package "folio-assistant-core/core-adapters" as pkg_folio_assistant_core_core_adapters <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_core_adapters_code
+}
+package "folio-assistant-core/core-src" as pkg_folio_assistant_core_core_src <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_core_src_code
 }
 package "folio-assistant-core/core-scripts" as pkg_folio_assistant_core_core_scripts <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_core_scripts_code
@@ -213,7 +327,6 @@ package "folio-assistant-core/core-processes" as pkg_folio_assistant_core_core_p
     bpmn:exclusiveGateway [0..*] : element
     bpmn:extensionElements [0..*] : element
     bpmn:flowNodeRef [0..*] : element
-    bpmn:import [0..*] : element
     bpmn:incoming [0..*] : element
     bpmn:lane [0..*] : element
     bpmn:laneSet [0..*] : element
@@ -230,19 +343,7 @@ package "folio-assistant-core/core-processes" as pkg_folio_assistant_core_core_p
   }
 }
 package "folio-assistant-core/qa" as pkg_folio_assistant_core_qa <<qa>> {
-  class "kg-qa/v1" as folio_assistant_core_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
-    $schema [1] : 'kg-qa/v1'
-    subject [1] : object
-    source_hash [1] : string | null
-    criteria [1] : map<object>
-    totals [1] : map<number>
-    pair_attestations [0..1] : any
-    voice_reviews [0..1] : any
-  }
-  class "kg-qa-manifest/v1" as folio_assistant_core_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
-    $schema [1] : 'kg-qa-manifest/v1'
-    auditor [1] : object
-  }
+  note "qa: no node schema declared\n(no node here carries a $schema family qa names (13 named): could not determine)" as n_folio_assistant_core_qa_qa
 }
 package "folio-assistant-core/voices" as pkg_folio_assistant_core_voices <<voices>> {
   class "Source" as folio_assistant_core_voices_Source <<json: VoiceProfileSchema>> #e8f0ee {
@@ -292,6 +393,7 @@ package "folio-assistant-core/voices" as pkg_folio_assistant_core_voices <<voice
 
 folio_assistant_core_core_schemas_skills_document_publishing_output_schema_json_Document_Publishing_Output *-- "0..*" folio_assistant_core_core_schemas_skills_document_publishing_output_schema_json_Issue : issues
 folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Quality_Control_Output *-- "0..*" folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Finding : findings
+folio_assistant_core_glossary_folio_glossary_v1_folio_glossary_v1 *-- "0..*" folio_assistant_core_glossary_folio_glossary_v1_Term : terms
 folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
 folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_assistant_core_core_skills_folio_voice_v1_Source : sources
 folio_assistant_core_core_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_core_core_skills_folio_voice_v1_Pattern : patterns
@@ -303,12 +405,17 @@ folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern : patterns
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Terminology : terminology
 folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Rule : rules
-' grid: portrait, 3 column(s) — pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_glossary pkg_folio_assistant_core_core_tools pkg_folio_assistant_core_core_adapters pkg_folio_assistant_core_core_scripts pkg_folio_assistant_core_core_library pkg_folio_assistant_core_core_methodologies pkg_folio_assistant_core_core_skills pkg_folio_assistant_core_core_processes pkg_folio_assistant_core_qa pkg_folio_assistant_core_voices
+' grid: portrait, 3 column(s) — pkg_folio_assistant_core_folio_assistant_core_translations pkg_folio_assistant_core_folio_assistant_core_block_kinds pkg_folio_assistant_core_folio_assistant_core_validators pkg_folio_assistant_core_folio_assistant_core_kinds pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_glossary pkg_folio_assistant_core_core_tools pkg_folio_assistant_core_core_adapters pkg_folio_assistant_core_core_src pkg_folio_assistant_core_core_scripts pkg_folio_assistant_core_core_library pkg_folio_assistant_core_core_methodologies pkg_folio_assistant_core_core_skills pkg_folio_assistant_core_core_processes pkg_folio_assistant_core_qa pkg_folio_assistant_core_voices
+pkg_folio_assistant_core_folio_assistant_core_translations -[hidden]down- pkg_folio_assistant_core_folio_assistant_core_kinds
+pkg_folio_assistant_core_folio_assistant_core_block_kinds -[hidden]down- pkg_folio_assistant_core_core_schemas
+pkg_folio_assistant_core_folio_assistant_core_validators -[hidden]down- pkg_folio_assistant_core_folios
+pkg_folio_assistant_core_folio_assistant_core_kinds -[hidden]down- pkg_folio_assistant_core_glossary
 pkg_folio_assistant_core_core_schemas -[hidden]down- pkg_folio_assistant_core_core_tools
 pkg_folio_assistant_core_folios -[hidden]down- pkg_folio_assistant_core_core_adapters
-pkg_folio_assistant_core_glossary -[hidden]down- pkg_folio_assistant_core_core_scripts
-pkg_folio_assistant_core_core_tools -[hidden]down- pkg_folio_assistant_core_core_library
-pkg_folio_assistant_core_core_adapters -[hidden]down- pkg_folio_assistant_core_core_methodologies
+pkg_folio_assistant_core_glossary -[hidden]down- pkg_folio_assistant_core_core_src
+pkg_folio_assistant_core_core_tools -[hidden]down- pkg_folio_assistant_core_core_scripts
+pkg_folio_assistant_core_core_adapters -[hidden]down- pkg_folio_assistant_core_core_library
+pkg_folio_assistant_core_core_src -[hidden]down- pkg_folio_assistant_core_core_methodologies
 pkg_folio_assistant_core_core_scripts -[hidden]down- pkg_folio_assistant_core_core_skills
 pkg_folio_assistant_core_core_library -[hidden]down- pkg_folio_assistant_core_core_processes
 pkg_folio_assistant_core_core_methodologies -[hidden]down- pkg_folio_assistant_core_qa

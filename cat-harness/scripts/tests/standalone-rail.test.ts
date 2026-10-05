@@ -42,6 +42,7 @@ function site(): string {
   put("who-iris/item.html", page("<p>a mount route</p>"));
   put("STAGING/branch/page.html", page("<p>a preview of somebody's branch</p>"));
   put("fragment.html", "<p>html by extension only</p>\n");
+  put("assets/vendor/pdfjs/web/viewer.html", page("<div id=\"viewerContainer\"></div>"));
   return root;
 }
 
@@ -50,6 +51,27 @@ const railed = (root: string, rel: string): boolean =>
   /<nav class="fa-nav"/.test(readFileSync(join(root, rel), "utf-8"));
 
 describe("what it rails", () => {
+  test("a railed page carries the harness's icon-row data, so docs-ui draws the row (bean wckf, #2147)", () => {
+    // The rail had the harness's navbar without the harness's row: the row's
+    // data was written only by the theme's head include. Read from the same
+    // `_data/harness.json` the Jekyll sidebar reads, so the two cannot differ.
+    const root = site();
+    run(root);
+    const html = readFileSync(join(root, "bootstrap/README.html"), "utf-8");
+    const m = /<script type="application\/json" id="fa-navbar-row"[^>]*>([^<]*)<\/script>/.exec(html);
+    expect(m).not.toBeNull();
+    const row = JSON.parse(m![1]!) as { icons?: string[] } | null;
+    expect(Array.isArray(row?.icons)).toBe(true);
+  });
+
+  test("never the pinned pdf.js viewer — it is framed inside a railed page (bean folio-assistant-5ea6)", () => {
+    // Measured on the first staging preview: the rail drew the site's whole
+    // navigation inside the PDF frame, above pdf.js's own toolbar.
+    const root = site();
+    run(root);
+    expect(railed(root, "assets/vendor/pdfjs/web/viewer.html")).toBe(false);
+  });
+
   test("a standalone page with no navigation gets one", () => {
     const root = site();
     run(root);
@@ -185,5 +207,52 @@ describe("the mount routes are ASKED for, not guessed", () => {
     const routes = mountRoutes("cat-harness");
     expect(routes.every((r) => r.length > 0 && !r.startsWith("/"))).toBe(true);
     expect(routes).not.toContain("cat-harness");
+  });
+});
+
+describe("a FOLIO's site (folio-staging.yml): platform links point at the platform's site", () => {
+  // Measured 2026-10-05 on litlfred/smart-ra: a document folio's pages carried
+  // no navbar at all, and re-basing the platform's graphs against the FOLIO's
+  // root would have made every one of them a 404 on the folio's Pages site.
+  const BASE = "https://litlfred.github.io/folio-assistant";
+
+  test("graphs and harnesses are absolute on the platform site; home is the folio's own root", () => {
+    const root = mkdtempSync(join(tmpdir(), "folio-rail-"));
+    mkdirSync(join(root, "dpi-h-ra"), { recursive: true });
+    writeFileSync(join(root, "dpi-h-ra", "index.html"), page("<h1>Doc</h1><h2>Chapter</h2>"));
+    const r = railStandalonePages(root, "cat-harness", "cat-harness", [], { platformBase: BASE, homeLabel: "smart-ra" });
+    expect(r.injected).toBe(1);
+
+    const html = readFileSync(join(root, "dpi-h-ra", "index.html"), "utf-8");
+    expect(html).toMatch(/<nav class="fa-nav"/);
+    const hrefs = [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]!);
+    // Every link the platform owns resolves on the platform's site...
+    const platform = hrefs.filter((h) => !h.startsWith("#") && h !== "../");
+    expect(platform.length).toBeGreaterThan(0);
+    for (const h of platform) expect(h.startsWith(`${BASE}/`)).toBe(true);
+    // ...and home, named for the folio, is the folio site's own root.
+    expect(hrefs).toContain("../");
+    expect(html).toContain("smart-ra");
+  });
+
+  test("the icon row is drawn: docs-ui loads from the platform, and the row's links are the platform's", () => {
+    // Owner, 2026-10-05: "still missing navbar icons on upper left". The row
+    // is drawn by docs-ui.js from #fa-navbar-row, which a folio site never
+    // loaded, and its links were site-absolute (/todos/) on the folio's site.
+    const root = mkdtempSync(join(tmpdir(), "folio-row-"));
+    writeFileSync(join(root, "index.html"), page("<h1>Doc</h1>"));
+    railStandalonePages(root, "cat-harness", "cat-harness", [], { platformBase: BASE, homeLabel: "smart-ra" });
+    const html = readFileSync(join(root, "index.html"), "utf-8");
+    expect(html).toContain(`<script src="${BASE}/assets/js/docs-ui.js" defer`);
+    expect(html).toContain(`href="${BASE}/assets/css/docs-ui.css"`);
+    const row = /<script type="application\/json" id="fa-navbar-row">(.*?)<\/script>/s.exec(html);
+    expect(row).not.toBeNull();
+    const data = JSON.parse(row![1]!) as { hrefs?: Record<string, string> };
+    const targets = Object.values(data.hrefs ?? {});
+    expect(targets.length).toBeGreaterThan(0);
+    for (const t of targets) expect(t.startsWith(`${BASE}/`)).toBe(true);
+    // A second pass adds nothing: the loader is marked.
+    railStandalonePages(root, "cat-harness", "cat-harness", [], { platformBase: BASE, homeLabel: "smart-ra" });
+    expect(readFileSync(join(root, "index.html"), "utf-8").split("docs-ui.js").length).toBe(2);
   });
 });

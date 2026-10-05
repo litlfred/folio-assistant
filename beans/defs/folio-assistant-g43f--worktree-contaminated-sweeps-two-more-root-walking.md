@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-30T14:13:37Z
-updated_at: 2026-10-03T14:06:30Z
+updated_at: 2026-10-03T18:00:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -216,4 +216,153 @@ That residue is why the box below stays open rather than being ticked.
       not presume the answer, because most of those 55 are walking a directory
       they own, where a walk is fine.
 
+
+
+## Seen again 2026-10-03 (session_01AxhsSvodhTgaioG1nUBWkh)
+A `bun run gates` run in worktree `agent-a4f48d5f4b9b6cf79` failed 5 of 220: part of the run picked up the SIBLING worktree `.claude/worktrees/agent-a632837f47a89d903` as an instance, and the failing tests and flagged files (`gen-slice-sqlite.ts`, `vendor-sqlite-wasm.ts`) existed only there. Re-run alone, `check:declared-paths`, `check:artefact-verification`, `check:partition` and the three test files all passed. So at least one of those sweeps (or the instance discovery behind them) still descends into `.claude/worktrees/`.
+
 _2026-10-03T14:06:30Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## 2026-10-03 follow-up — the instance-discovery escape (session_01AxhsSvodhTgaioG1nUBWkh)
+
+### What the reproduction showed, and did not
+
+Probe: `git worktree add .claude/worktrees/g43f-probe HEAD`, seeded with
+`agent-a632837f47a89d903`'s `gen-slice-sqlite.ts`, `vendor-sqlite-wasm.ts`, its
+`package.json`, and a failing `*.test.ts`. With that probe nested AND ten live
+sibling worktrees beside this one, **before any fix**:
+
+```
+check:declared-paths, check:artefact-verification, check:partition   exit 0, 0 mentions of the probe
+bun test                                                            14726 pass, 0 fail (724 files); probe test not collected
+bun run gates                                                       220 of 220 pass
+```
+
+So the 5-of-220 failure of 2026-10-03 is **NOT reproduced** by a nested worktree,
+nor by siblings. Each of the three checks roots its scan at its own
+`import.meta.dir`, so flagging `gen-slice-sqlite.ts` means the process READ
+`agent-a632…`'s tree as its own. That points to the run's working directory
+(the main checkout, or `agent-a632…` itself) rather than to a sweep descending.
+**Not determined**, and not to be read as "no sweep descends".
+
+### The escape that IS real — found while looking
+
+`repoRootFor` is `dirname`. For the ROOT instance of a worktree that is
+`.claude/worktrees/`, and `instanceRootsIn` there returned **every sibling
+worktree** (measured: 10) as an instance. Three call sites composed exactly
+that: `content-holds-code.ts` (reached by `kg-audit` for the root instance),
+`check-tools.ts` (`declaredProcessIds`, `satisfiableSkills`) and
+`kg-subscribe.ts --check`.
+
+Fixed at two layers:
+
+- **Shared:** `instanceRootsIn` drops a child that holds its own `.git` (a
+  worktree's is a FILE) unless the scanned root's `.gitmodules` names it, via
+  the new exported `isForeignCheckout`. `bootstrap/`, `bootstrap-tools/` keep
+  their place; a fixture with no `.git` is unchanged. This reaches every
+  `instanceRootsIn` caller (~40), whatever scope it arrives with.
+- **Call sites:** the three above use `siblingScopeFor`, which keeps the root
+  instance inside its own checkout.
+
+Regression test: `cat-harness/schemas/instance-roots-worktrees.test.ts` builds a
+real `git worktree add` fixture and asserts neither the nested nor the escaped
+scan sees a sibling.
+
+### Class audit — recorded, not fixed
+
+`repoRootFor(x)` with an `x` that can be the root instance still escapes the
+checkout for **file reads**, though no longer for instance discovery:
+`known-skills.ts:462,766` (`join(repoRootFor(root), ".claude", "skills")` — a
+missing dir read as empty, the `dh4f` shape), `kg-export.ts:1519`,
+`schema-graph.ts:773`, `gen-subgraph-jsonld.ts:540`,
+`check-subgraph-coverage.ts:440` default, `voice-criteria.ts:75`,
+`liquid-values.ts:124` and `cat-harness.ts` `rootForScope`/6065 (a
+`scope: "repository"` entry on the root declaration), `core/access.ts:83`,
+`pages-bootstrap.ts:152`, `check-agents-xref.ts:266`, `validate-skills.ts:78,85`,
+`ensure-landing-sticky.ts:386`, `declared-dirs.ts:45`,
+`check-retired-front-matter.ts:46,212`, `library-graph.ts:748`,
+`voices-graph.ts:269`. Each is safe today only because its caller passes a
+NESTED instance. The fix is `repoRootFor` answering "the checkout" for the root
+instance, which changes ~60 callers and is its own bean.
+
+Static sweep of non-git enumerators seeded at a root-ish variable with no
+dot guard: 32 candidates; those inspected (`check-secret-leaks`,
+`check-self-discharging-instances`, `process-model`, `lean-coverage`,
+`summaries`, `beans-prime`, `check-declared-paths`) walk a named subdirectory.
+
+- [x] Reproduce with a nested probe worktree — done; not reproduced (above).
+- [x] Instance discovery cannot list a sibling or nested worktree — `isForeignCheckout`, with a regression test.
+- [x] The three call sites that composed the escape use `siblingScopeFor`.
+- [x] `repoRootFor` escapes the checkout for the root instance — classified and fixed below (`checkoutRootFor`).
+- [ ] What actually produced the 2026-10-03 5-of-220 — not determined.
+
+## 2026-10-03 — the `repoRootFor` class, classified and fixed (session_01AxhsSvodhTgaioG1nUBWkh)
+
+**Shared primitive: `checkoutRootFor(instanceRoot)`** in
+`cat-harness/schemas/cat-harness.ts`. An instance holding its own `.git` that
+its parent's `.gitmodules` does not name IS a checkout (main clone or
+worktree) and answers itself; anything else is nested and keeps `dirname`
+(`repoRootFor`'s contract, unchanged, so every non-git fixture reads as
+before). A declared submodule whose parent holds no `.git` THROWS rather than
+guessing (`dh4f`). Read from the filesystem, not `git rev-parse
+--show-toplevel`: `rootForScope` is on the hot path of every declared-directory
+resolution, and a fixture built under a checkout would get the ENCLOSING
+toplevel. **It absorbs, rather than duplicates, the `checkoutRootFor` that
+`schemas/harness-config.ts` already exported** (the container rule alone, i.e.
+`siblingScopeFor`): the container rule is kept for git-less trees and that
+export now delegates here, so `kg-audit`, `kg-export` and `qa-witness` get the
+git-aware answer too — a root checkout that aggregates nothing no longer
+returns its parent. `repoRootFor` itself is not changed — ~60 callers, most fed a nested
+instance, and its tests pin `dirname`.
+
+Classes: **(a)** reads a sibling INSTANCE → `siblingScopeFor`; **(b)** reads a
+REPOSITORY-level file → `checkoutRootFor`; **(c)** correct as is.
+
+| site | class | why / fix |
+|---|---|---|
+| `cat-harness.ts` `rootForScope` | b | `scope: "repository"` base → `checkoutRootFor` |
+| `cat-harness.ts` `declaredKindsEntryRoot` (was :6147) | b | inlined copy → `rootForScope` |
+| `liquid-values.ts:124` | b | inlined copy → `rootForScope` |
+| `kg-export.ts:1519` | b | root declaration's `repository` → `checkoutRootFor` |
+| `gen-subgraph-jsonld.ts:540` | b | root declaration's `repository` → `checkoutRootFor` |
+| `schema-graph.ts:773` | b | path base; `kg-audit` passes the root instance → `checkoutRootFor` |
+| `check-subgraph-coverage.ts:440` default | b | decides `isRoot` → `checkoutRootFor` |
+| `core/access.ts:83` | b | actor registry at the checkout → `checkoutRootFor` |
+| `pages-bootstrap.ts:152` | b | `.github/workflows` → `checkoutRootFor` |
+| `ensure-landing-sticky.ts:440` | b | `declaredIn` relative path → `checkoutRootFor` |
+| `check-retired-front-matter.ts:212` default | b | sweep roots → `checkoutRootFor` |
+| `library-graph.ts:748` default | b | upload-queue base → `checkoutRootFor` |
+| `known-skills.ts:462` | b | `.claude/skills` → `checkoutRootFor`, **scope preserved** (below) |
+| `voice-criteria.ts:75` | a | `instanceRootsIn` → `siblingScopeFor` |
+| `voices-graph.ts:269` default | a | `instanceRootsIn` → `siblingScopeFor` |
+| `known-skills.ts:766` | c | guarded to `OWN_INSTANCE` (nested) |
+| `check-agents-xref.ts:266` | c | instance from `import.meta.dir` = `cat-harness/` |
+| `validate-skills.ts:78,85` | c | `rootDir` = `cat-harness/` |
+| `declared-dirs.ts:45` | c | instance from `import.meta.dir` |
+| `check-retired-front-matter.ts:46` | c | `INSTANCE` = `cat-harness/` |
+| `ensure-landing-sticky.ts:386` | c | already guarded (`repoRoot !== own` and `.git`) |
+
+**13 (b) + 2 (a) fixed, 6 (c) left.** Not swept: the ~40 further
+`repoRootFor` callers outside the bean's list (e.g. `kg-export.ts`'s
+`repoRootFor(ROOT)` with `ROOT` = `cat-harness/`); those inspected take a
+nested instance.
+
+### The rescope this fix walked into — the bean's own trap, again
+
+Pointing `known-skills.ts:462` at the checkout WIDENED the root instance's
+skill set: **0 → 4** names, one of them `SKILL` (the stem of
+`.claude/skills/interaction-modality/SKILL.md`), and `kg:audit:all` regenerated
+`folio-assistant/kg-qa/scenarios/kg.kg-qa.json` with a new
+`skill-has-entry-point` fail. So the read now never leaves the checkout, but
+the root instance still does not read `.claude/skills`. Whether it SHOULD is a
+scope decision, open, and not made here.
+
+Regression: `cat-harness/schemas/instance-roots-worktrees.test.ts`, a real
+`git worktree add` fixture with the root instance in `.claude/worktrees/<x>`,
+asserting `checkoutRootFor`, `rootForScope`, `findPublishWorkflows`,
+`skillMdDirs` (a seeded `.claude/worktrees/.claude/skills/leak` is not read),
+`check-retired-front-matter`'s sweep roots, `auditInstance`'s default and
+`readSchemaGraph`'s module paths all resolve inside the worktree — plus a live
+assertion on the checkout the test runs in.
+
+- [x] Whether the root instance should read the checkout's `.claude/skills` (0 → 4, including a bogus `SKILL`). Owner, 2026-10-04: "do g43f". It does, and a `.claude/skills/<group>/` holding only Claude Code's `SKILL.md` loader stub is not a group of skills: **0 → 3** (`bean-coordination`, `todo-manager`, both stubs of corpus skills, and `language-trap-agent-audit`). The stub rule is scoped to `.claude/skills` only — elsewhere `SKILL.md` is a skill's own file (who-iris's voices), and excluding it globally dropped three of them from `kg:audit` (measured, then reverted). Regression in `instance-roots-worktrees.test.ts`; `kg:audit:all:check` 14/14 clean.

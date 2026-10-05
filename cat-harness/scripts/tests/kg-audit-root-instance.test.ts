@@ -32,6 +32,7 @@ import { join, resolve } from "node:path";
 
 import { readDeclaration, repoRootFor } from "../../schemas/cat-harness.js";
 import { checkoutRootFor } from "../../schemas/harness-config.js";
+import { inAggregate } from "../../test/support/checkout.js";
 
 const REPO = resolve(import.meta.dir, "../../..");
 
@@ -40,7 +41,12 @@ describe("kg:audit over the instance declared at the repository root (bean `pgzn
     expect(readDeclaration(REPO), "no declaration at the repository root — this test has no subject").toBeTruthy();
   });
 
-  test("checkoutRootFor resolves the root instance to the checkout, where repoRootFor climbs out", () => {
+  // The root instance here is the AGGREGATE's, the one checkout whose root
+  // carries `package.json` and nests `cat-harness/`. cat-harness run as its own
+  // clone is a different shape — schemas/instance-roots-worktrees.test.ts
+  // covers a checkout answering itself there — so this is skipped, not passed
+  // (bean `ho66`).
+  test.skipIf(!inAggregate())("checkoutRootFor resolves the root instance to the checkout, where repoRootFor climbs out", () => {
     // The falsifier: `dirname` lands where there is no package.json.
     expect(resolve(repoRootFor(REPO))).not.toBe(REPO);
     expect(checkoutRootFor(REPO)).toBe(REPO);

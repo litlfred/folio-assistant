@@ -73,13 +73,21 @@ const PAGE = `/_kg/${STUB}/index.html`;
 /** Facet ids carry `(`, `)` and `-`; they are matched literally, not as patterns. */
 const escapeRe = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-const KG = JSON.parse(readFileSync(`_kg/${STUB}.jsonld`, "utf-8")) as {
+type Kg = {
   "@graph": Array<Record<string, unknown>>;
   counts: Record<string, number>;
   /** Absent since bean `2634` — kept optional so the fixture below can set it. */
   undeclaredTerms?: Array<{ term: string }>;
   sourceCommit?: string;
 };
+
+/**
+ * The export as the page shows it: a TOMBSTONE (bean `4ak5` item 2, one
+ * release) is a forwarding address the viewer leaves out, as the export
+ * leaves it out of `counts`, so the page's node count is the rest.
+ */
+const KG_RAW = JSON.parse(readFileSync(`_kg/${STUB}.jsonld`, "utf-8")) as Kg;
+const KG: Kg = { ...KG_RAW, "@graph": KG_RAW["@graph"].filter((n) => n.deprecated !== true) };
 
 test.describe("kg viewer", () => {
   test("loads the sibling document and reports the real node count", async ({ page }) => {

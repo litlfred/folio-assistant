@@ -201,6 +201,27 @@
       "definition": "The statement itself, as one sentence a reviewer can say yes or no to.",
       "source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.requirement",
       "status": "candidate"
+    },
+    {
+      "id": "subgraph-export.subgraphnodebase.holdsgraph",
+      "prefLabel": "SubgraphNodeBase.holdsGraph",
+      "definition": "The graph kinds it holds, as bootstrap's graph-kind individuals.",
+      "source": "bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.holdsGraph",
+      "status": "candidate"
+    },
+    {
+      "id": "subgraph-export.subgraphnodebase.name",
+      "prefLabel": "SubgraphNodeBase.name",
+      "definition": "The repository's or harness's name at the two top levels; the instance-relative path below them.",
+      "source": "bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.name",
+      "status": "candidate"
+    },
+    {
+      "id": "subgraph-export.subgraphnodebase.path",
+      "prefLabel": "SubgraphNodeBase.path",
+      "definition": "Instance-relative, ending in `/`; `./` at the two top levels.",
+      "source": "bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.path",
+      "status": "candidate"
     }
   ]
 }

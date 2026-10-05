@@ -262,7 +262,7 @@ document run through a JSON-LD processor, with **zero** expanded IRIs outside
 
 **Where a prefix cannot be bound at all, a different spelling is never the
 answer.** CSVW metadata allows only `@language` and `@base` in its local
-context, so the `fac:` keys in [`tabular-metadata`](tabular-metadata.md)
+context, so the `fac:` keys in `tabular-metadata`
 dangled under ANY prefix. The two real answers are absolute IRIs, or not being
 JSON-LD at all. Bean `792y` took the second: the record became plain JSON and
 the CSVW document is derived from it. **A file whose extension says `.jsonld`
@@ -477,6 +477,509 @@ Three consequences, all of which the implementation carries:
    checked only against the exporter's own collection would have passed the
    original bug.
 
+## Whose nodes — an instance publishes its own, and leaves a tombstone
+
+**The published document holds the instance's OWN declared directories**
+(owner ruling 2026-10-05, option B; bean `4ak5` item 2). `buildExport` takes
+`scope`, and the CLI `--scope <instance|checkout>`:
+
+| scope | reads | for |
+|---|---|---|
+| `instance` (default) | this instance's declaration alone | the published document, its locale variants, its QA sidecar |
+| `checkout` | this instance plus every instance stacked on it | a corpus-wide consumer that says so — the `kg` search slice |
+
+Before the split one checkout-scope document carried five other instances'
+nodes under `cat-harness.jsonld#…` — 825 of 3369, measured the day it
+landed. Each stacked instance is in its own document now
+(`instance-exports.ts`).
+
+**An `@id` that moved keeps a tombstone for ONE release**, because GitHub
+Pages cannot redirect a fragment:
+
+```json
+{ "@id": "<old>", "deprecated": true, "isReplacedBy": "<the same node in its owner's document>" }
+```
+
+`deprecated` and `isReplacedBy` are `owl:deprecated` and
+`dcterms:isReplacedBy` in the context, as `ns-export` already publishes a
+retired term. A tombstone has no `@type` and is in neither `counts` nor
+`danglingLinks` — a link to a node that left still reads as dangling. A node
+no owner's document mints (a package, a schema module: those collectors are
+instance-bound) forwards to the owner's DOCUMENT. The owner's IRI is minted
+the way the deploy publishes it (`publishedIdentity`): no `--base-url` for an
+instance declaring its own `canonicalUrl`. The release after next deletes
+`tombstonesFor`, its call, and the two terms.
+
+## Named subgraphs — one IRI, two files, framed from one graph
+
+**Contract (bean `c1m4`; owner rulings 2026-10-03).** A *named subgraph* is a
+directory of a declared graph, read as a set of KG nodes: `skills/` is one, and
+so is `skills/sdlc/`. Asking for "every node of `cat-harness/skills/sdlc`" must
+take one fetch. Before this contract it could not be done in one step. Today's
+export is one document per instance, and `skills/sdlc` is not a subgraph
+anywhere (measured 2026-10-03; the evidence is on bean `c1m4`).
+
+### Identity
+
+- **The subgraph IRI is a directory IRI in its own namespace:**
+  `<BASE_URL>/subgraph/<HARNESS>/<PATH>/`, for example
+  `…/subgraph/cat-harness/skills/sdlc/`.
+- It is kept apart from content-node IRIs on purpose. A subgraph is a *view* of
+  nodes, not one of them, so renaming a file never renames the subgraph, and
+  re-homing a node never re-mints the subgraph.
+- `/hydrated-graph/` was rejected. The pointer-only file would then live under
+  a path that says "hydrated".
+- **The repository's level is `<BASE_URL>/subgraph/`** (bean `ax6r`). It has
+  `index.jsonld` only, and its `hasSubgraph` are the harness roots this build
+  frames. It is the one file a consumer needs to find every root. The workflow
+  page starts there.
+
+### Two files under the IRI
+
+Both files have root `@id` = the directory IRI.
+
+| file | what is in it | who it is for |
+|---|---|---|
+| `index.jsonld` | **referenced**: each direct member as a pointer (`@id`, `@type`, label), and each child subgraph by its IRI | search, navigation, skeleton loading (`f233`) |
+| `index.hydrated.jsonld` | **dereferenced**: every node in the subgraph's *transitive* membership, inline and fully hydrated | "give me all of `skills/sdlc`" in one fetch |
+
+Rules for the pair:
+
+- **The hydrated file carries KG metadata, never heavy content.** Markdown
+  bodies, images and binaries are payloads, reached by a `payload` link
+  (§"Payloads — heavy content by content address", below).
+- **The root has `index.jsonld` only.** A harness instance is itself a named
+  subgraph of the repo KG, and the repo KG is the level above it. A *deep*
+  hydrated file at the root would be the whole graph in one document, which is
+  the monolith `f233` forbids. The owner ruled "deep, but not at root"; the
+  rejected options were shallow everywhere, deep everywhere, and size-capped.
+- **The GitHub Pages caveat.** Pages does no content negotiation, so the
+  directory IRI is documented as resolving to `index.jsonld` by explicit path.
+  A consumer that dereferences the bare IRI gets whatever Pages serves for the
+  directory; `index.jsonld` and `index.hydrated.jsonld` are always addressable
+  by name.
+
+### Building the files
+
+- **One source, two frames.** Both files come out of one build step, from the
+  same in-memory graph, by JSON-LD **framing**: a pointer frame
+  (`@embed: @never`) and an embed frame (`@embed: @always`).
+- **Never two hand-synced properties.** No `authorUri` beside `author`. Two
+  properties carrying one fact is the drift `data-modelling` §3 exists to stop.
+- **`@context` is never inlined.** Every file declares the one shared, cached
+  context URL, the way content documents already use
+  `ns/content/v1.jsonld`.
+- **Where it is built.** `bun run subgraph:jsonld`
+  (`scripts/gen-subgraph-jsonld.ts`) frames kg-export's in-memory graphs —
+  one per framed instance, each from its OWN export, never a stacked
+  instance's node under this document's tombstoned `@id` — and
+  writes `docs/subgraph/<HARNESS>/<PATH>/index[.hydrated].jsonld`, which Pages
+  serves at the subgraph IRI, plus the context at `ns/subgraph/v1.jsonld`.
+  `subgraph:jsonld:check` is the gate. The file shape is
+  `schemas/subgraph-manifest.ts`.
+
+### Membership is declared, not inferred
+
+- A subgraph's members are what its **declared membership rule** selects.
+- For a directory of a declared graph, the rule is *containment*: a node is in
+  the deepest subgraph directory that contains its source path, and in every
+  ancestor of that one, transitively.
+- **An overlaid instance heads its own tree** (bean `ax6r`). kg-export reads
+  the corpus of every instance stacked on this one, so `folio-assistant-core`'s
+  processes and skills are nodes of this graph. Until then they all fell to
+  the root, which has no hydrated file, so "every process of this graph"
+  could not be fetched at all. A directory belongs to the instance that
+  declares it, so those nodes now sit under `<BASE_URL>/subgraph/<that
+  instance>/…`, framed by this build because this graph publishes them. Their
+  `@id`s do not change.
+- **Bootstrap gets no tree here.** `bootstrap` and `bootstrap-tools` sit
+  *below* this instance, and `pve3` (#432) keeps their processes out of its
+  graph. They publish through their own graph. Framing a tree for them here
+  would re-carry what that ruling excluded, so a consumer that needs their
+  subgraphs needs bootstrap to publish them.
+- A harness's own rule, saying which directories are its graph, is its
+  `<instance>.json` declaration. `Harness` and `Subgraph` therefore share
+  one base, `GraphNodeDirectoryShape`. They do not get two parallel
+  "directory with members" types.
+- A node whose subgraph cannot be determined goes in `problems[]`. It is never
+  silently left out (§"A partial graph must never pass for a whole one").
+
+### Consumers
+
+- **Remote materialization reads these same files.**
+  `bun run kg:materialize --nodes <subscription> <subgraph-path>` fetches one
+  subgraph's `index.hydrated.jsonld` at the subscription's pin. It never does
+  a sparse checkout of the subgraph's directory. The file is validated against
+  `SubgraphHydratedSchema`, its root `@id` must be the subgraph asked for, and
+  it is held with a sha256 record. A request for the root is refused, with a
+  pointer to `index.jsonld`. This is a metadata mode (owner ruling
+  2026-10-03). The byte copy (`kg:materialize <subscription> <subgraph>`) is
+  unchanged and keeps its five gates. See
+  [`kg-subscription`](kg-subscription.md)
+  §"metadata mode".
+- A subgraph manifest that lists a child IRI but whose child file is missing is
+  a dangling link. It is reported, never skipped.
+
+## Payloads — heavy content by content address
+
+**Contract (bean `f233`; owner ruling 2026-10-03).** The subgraph files are the
+**skeleton**: topology and the metadata a search needs. Heavy content is the
+**muscle**, and it lives outside the graph, one file per distinct body. No
+generator emits a monolithic graph file that inlines bodies.
+
+### Addressing
+
+- **A payload's IRI is `<BASE_URL>/payload/sha256/<hex>`**, where `<hex>` is the
+  lower-case hex SHA-256 of its bytes. Nothing else names it: no extension, no
+  source path, no node id.
+- **It is immutable.** The bytes at an IRI never change, because a change to
+  the bytes is a change to the name. A consumer may cache a payload forever.
+- Immutable is not "kept forever". A payload no node links to is an **orphan**:
+  the gate fails on it and the generator removes it on write. An old IRI may
+  therefore stop resolving once nothing references it; while it resolves, it
+  resolves to the same bytes.
+- **Identical bodies are one file**, linked from every node that has them.
+- **The bytes are the source file verbatim.** A Markdown body keeps its front
+  matter, and its relative links resolve against the node's own source path
+  (`instructionsPath`), not against the payload IRI.
+
+### The link
+
+Every node with a payload carries one `payload` link, in **both** subgraph
+files. In the index it sits on the pointer; in the hydrated file it sits on the
+whole node, in place of the body:
+
+```json
+"payload": { "@id": "<BASE_URL>/payload/sha256/<hex>", "sha256": "<hex>", "bytes": 12653 }
+```
+
+`sha256` and `bytes` let a consumer verify a fetch, and decide whether to make
+it, without a second request. `sha256` is the IRI's last segment by
+construction, and the schema checks it.
+
+### The media type is in a sidecar
+
+`<hex>.json` beside `<hex>` carries `$schema: cat-harness-payload/v1`,
+`sha256`, `bytes` and `mediaType`. It is a sidecar rather than an extension for
+two reasons:
+
+- the ruled IRI has no extension, and `<hex>.md` would be a second address for
+  one payload;
+- GitHub Pages types a file by its extension, so an extensionless payload is
+  served as `application/octet-stream` whatever it holds.
+
+A consumer holding only the IRI appends `.json`. The media type is not also on
+the link, because one fact gets one place. It comes from the source file's
+extension through a declared table; an undeclared extension is a problem, never
+a guess.
+
+### What is heavy
+
+Decided from measurement on 2026-10-03, over kg-export's graph for this
+instance. The graph held 3,120 nodes and 2.5 MB of metadata, and no literal
+field was over 4.6 KB. The graph therefore inlined no body already, so "heavy"
+means what its pointers name:
+
+| node | field | files | bytes | heavy? |
+|---|---|---|---|---|
+| Skill | `instructionsPath` (.md) | 300 | 3.0 MB | **yes** — the instruction body |
+| Asset | `path` (.md; an image would be too) | 3 | 12 KB | **yes** |
+| Process / Decision | `sourcePath` (.bpmn / .dmn) | 78 / 10 | 1.5 MB / 58 KB | not yet — the topology is already graph nodes, and the XML is its own graph's source |
+| Schema | `module` (.ts) | 161 | 2.5 MB | no — code, not content |
+
+No deep provenance is in the graph today, so none moves. The table that decides
+this is `HEAVY_POINTERS` in `schemas/subgraph-manifest.ts`, and adding a row
+there is the whole change to make a field heavy.
+
+### Building and checking
+
+- `bun run subgraph:jsonld` writes the payloads to `docs/payload/sha256/` in
+  the same run as the subgraph files, from the same graph.
+- The docs workflows copy that directory into the site **verbatim**. It is
+  excluded from Jekyll, which would render a body's front matter and Liquid,
+  and then the served bytes would not hash to their name.
+- `subgraph:jsonld:check` is the gate. It fails on any of these:
+  - a stale or stray file;
+  - a payload no node references;
+  - a node whose payload is missing;
+  - bytes that do not hash to their name;
+  - a payload without its sidecar, or a sidecar without its payload.
+- The schema is `PayloadLinkSchema` and `PayloadSidecarSchema` in
+  `schemas/subgraph-manifest.ts`.
+
+## Per-slice SQLite — a named subgraph as one file a browser mounts
+
+**Contract (bean `q8ar`; owner ruling 2026-10-03: the official SQLite WASM
+build with an OPFS VFS, pilot slice `beans`).** A large graph needs search on
+the client, and a static host cannot run a query. So CI flattens one slice into
+a relational schema and publishes it as `<slice>.<sha256>.sqlite3`, and the
+browser opens that file as it is. There is nothing to parse, because SQLite reads its
+B-tree pages on demand. This is the **skeleton** of `f233` in a second
+encoding. It never replaces the JSON-LD files above; it sits beside them for
+the consumer that has to search.
+
+**One builder, one definition per slice.** `scripts/gen-slice-sqlite.ts` is the
+`slice-sqlite` Tool; its procedure is the `slice-sqlite-publish` process. Each
+slice is one `SliceDef` in its `SLICES` table: the DDL, each stored table's
+columns and row order, the one FTS5 index and the rows it covers, where the
+payloads live, the `search` block the page reads, and a `load` that turns the
+source into rows. The engine (build, `VACUUM INTO`, digest, manifest,
+`--check`) names no slice. Adding a slice is adding a definition, **never a
+copy of the builder**.
+
+### The four pilots, measured
+
+Measured 2026-10-03 in this checkout (`bun run slice:sqlite -- --out <scratch>`;
+browser figures from `slice-sqlite.e2e.ts` in Chromium on loopback, first open
+including download and sha256 verification):
+
+| slice | source | file | source as published | rows | payloads | build | first open |
+|---|---|---|---|---|---|---|---|
+| `beans` | `beans/defs/` | 2.83 MB | 4.82 MB of bean files | 723 beans, 84 edges | 723 bean files, at deploy | 0.26 s | ~190 ms |
+| `todos` | `assets/todos/index.json` | 0.07 MB | 18 KB of JSON | 3 todos, 12 relations | 3 todo files, at deploy | 0.22 s | ~110 ms |
+| `library` | `assets/library/index.json` + `entries/<id>.json` | 2.48 MB | 3.59 MB of JSON | 64 entries, 3,557 blocks | 64 entry files, at deploy | 0.23 s | ~165 ms |
+| `kg` | the whole-repo KG export | 3.40 MB | 3.03 MB of JSON-LD | 3,121 nodes, 12,835 edges | 303, already committed | 4.8 s | ~180 ms |
+
+**All four are under the ~5 MB budget**, so all four shipped. The whole-repo
+slice is the **no-body variant**: nodes, edges, and an FTS5 over names,
+titles, summaries and descriptions, with bodies as payload pointers. It is the
+one slice larger than its JSON source, because it adds a full-text index the
+JSON does not have; it stays under budget because it stores IRIs as fragments
+of the document (`skill/todo-manager`, with `<doc>#` in `meta.base`). The
+budget is `SIZE_BUDGET_BYTES`, **reported** in the manifest as `overBudget` and
+not gated: the beans slice grows every session, and a gate would turn every
+open PR red on the day it crossed the line, for a change nobody made. Over
+budget means stop and report (the process's budget gateway), not ship.
+
+### What a slice file holds
+
+- **One table per node type, one row per node.** Columns are the fields a
+  search filters or sorts on. Each has a B-tree index where a query needs one.
+  A JSON-valued field stays a JSON column and is read through JSON1
+  (`json_each`), rather than becoming another stored table.
+- **One stored table per relation, never two.** When a relation can be
+  declared from either side, as a bean's `blocking:` and `blocked_by:` can, the
+  table has a `declared_on` column saying which side declared each edge, and
+  the two directions are **views** over it. Two tables for one relation are two
+  answers that can disagree. When a relation is declared on one side only, a
+  `declared_on` column could hold one value, so it is left out (`todos`,
+  `library`). When the relations are many and share one shape, they share ONE
+  table keyed by `rel`: the `kg` slice's 36 `@id`-typed terms are rows of
+  `edges (src, rel, dst)`, with `incoming` and `dangling` as views, because 36
+  tables of one shape would be 36 places to change it.
+- **An FTS5 index over the searchable text.** It is CONTENTLESS
+  (`content=''`), so it indexes text without storing it. It keeps **full
+  detail**, because positions are what make a phrase query work. Both the
+  official WASM build and `bun:sqlite` compile with `ENABLE_FTS5` (measured
+  2026-10-03: 3.53.4 and 3.53.0).
+- **No heavy content.** A row carries `payload_sha256`, a pointer to the
+  payload at `<BASE_URL>/payload/sha256/<hex>` (§"Payloads"). The client fetches
+  the payload when a result is opened. Measured on beans, the same 717 rows
+  take 7.85 MB with the bodies stored and 2.82 MB without them; the bodies were
+  4.58 MB of the larger file. **What the payload is, is a per-slice decision**:
+  a bean's or a todo's source file verbatim; for the library, the PUBLISHED
+  `entries/<id>.json`, one payload per entry that every one of its blocks
+  points at, never the section files under `library/`, because a withheld
+  entry (bean `cw35`) publishes no verbatim text and the published entry is
+  what already applied that rule; for `kg`, the KG's own committed payloads,
+  from the same `planPayloads` call the subgraph files use. A row with nothing
+  heavy has a `NULL` pointer, never an invented one.
+- **A `meta` table and `PRAGMA user_version`** carry the schema version. No
+  timestamp and no commit go in the file.
+
+### The manifest beside it
+
+`<slice>.sqlite3.json`, `$schema: folio-slice-sqlite/v1`, carries:
+
+- `file`, the database's content-addressed name (§"Content-addressed file,
+  fixed-name manifest");
+- `sha256` and `bytes` of the file;
+- `contentDigest`, a sha256 over the canonical row dump;
+- the row count of each table;
+- `schemaVersion`, `sqliteVersion` and `pageSize`;
+- `fts5`: the index's table, the table whose rows it covers, and its columns;
+- `payloadPath`, and `payloads`: whether they are written at deploy or
+  already published, how many, how many bytes;
+- any `duplicateIds` the source holds, and any other source `findings` in
+  words (a todo with no source file, an entry file the index does not list),
+  so a gap is reported rather than silently dropped;
+- `overBudget`;
+- `search`: the query, the alias, the column a typed query degrades to, and
+  what a payload is, which the one search page reads (§"The search page").
+
+`assets/slices/index.json` (`folio-slice-index/v1`) lists every slice built
+into a directory.
+
+There are two digests because there are two questions. `sha256` asks whether
+these are the bytes that were promised; it is what the client verifies a
+download against and keys its cache by. `contentDigest` asks whether this is
+the same data, and it stays equal across a SQLite upgrade that changes the
+file's bytes. The header records the writing library's version at offset 96.
+
+### Content-addressed file, fixed-name manifest
+
+**Bean `wixl`, 2026-10-03.** The database was published at `<slice>.sqlite3`,
+one path across builds. Behind a CDN with any TTL a client could fetch a fresh
+manifest and a stale database, fail the sha256 check, and fall back: safe for
+correctness, unsafe for availability. So the database is now
+**`assets/slices/<slice>.<sha256>.sqlite3`**, the full lower-case hex of its
+bytes, and the manifest's `file` names it. A fresh manifest names a file no
+cache has seen. A stale manifest names an older file whose bytes still hash to
+what that manifest promises, so the worst case is an older but
+self-consistent database, or a 404 the page reports.
+
+**Why not `payload/sha256/<hex>`.** §"Payloads" is the muscle: a node's body,
+the source file verbatim, linked from a node's `payload` and kept only while
+something links to it. A slice file is the skeleton in a second encoding. It
+is derived and SQLite-version dependent, and no node links to it, so under the
+payload tree's own orphan rule it would be an orphan. It would also need a
+`<hex>.json` sidecar for a media type that its extension already gives. What
+the scheme does take from §"Payloads" is the property that matters,
+**immutable, not kept forever**. It also takes the full hex rather than a
+prefix, so the name's hash segment is `sha256` by construction and can be
+checked against it. Beside its manifest, `file` stays a sibling name that the
+client resolves against the manifest's URL.
+
+**The manifest stays at the fixed `<slice>.sqlite3.json`** because it is the
+one file that says which build is current, and the page finds it by slice
+name. It needs a **short TTL**. The client's `no-store` bypasses only the
+browser cache; a CDN keeps the manifest for the host's TTL, and GitHub Pages
+sends `max-age=600`, which a repository cannot change. With content addressing
+that TTL bounds availability, not correctness.
+
+**Rotation.** A build writes only the current file and removes any other
+`<slice>.<hex>.sqlite3` of the same slice from `--out`, along with the legacy
+`<slice>.sqlite3` (`rotateSliceFiles`). Nothing else in the directory is
+touched. On `gh-pages` nothing piles up. `docs-site.yml` publishes as a full
+replace and restores each `STAGING/` preview as it was. `feature-staging.yml`
+empties `STAGING/<slug>/` before copying the build in, and
+`staging-rotate.ts` caps the number of previews. **What a CDN can still
+hold:**
+
+- for one TTL, a stale manifest together with the older file it names;
+- an older file that nothing now names, until it expires;
+- a stale manifest whose file the origin no longer serves. The client reports
+  this case as a 404 with "reload", never as an empty result.
+
+The branch's git history keeps old blobs, as it always did when one path
+changed bytes.
+
+### Deterministic, proved
+
+Rows go in sorted by key, the page size is fixed, and the published file is
+`VACUUM INTO` a fresh path, so no free page or insertion history leaks in. The
+gate builds twice and requires one sha256. Measured 2026-10-03: two separate
+processes gave one sha256 for each of the four slices, and the gate re-proves
+it on every run.
+
+### Built at deploy, not committed — when the source moves on most merges
+
+A slice of a corpus that every session writes, which `beans/` is, is **not
+committed**. A committed binary would be stale against every merge ref, so a
+content gate would be red on every open PR. It would also grow the clone on
+every edit. This is the same reasoning that checks `assets/beans/index.json`
+only for existence. The deploy builds each slice from the tree it publishes,
+one line per slice in `docs-site.yml` and `feature-staging.yml`, straight into
+`_site/assets/slices/`, and writes the deploy payloads into
+`_site/payload/sha256/`.
+
+**The other three are built at deploy too**, although their sources are
+committed generated files that a session does not write by hand. The todo
+index, the library index and entries, and the KG export are regenerated on
+most merges, so the same staleness applies one step removed. And a committed
+binary's sha256 is stable for one SQLite version only, so a content gate over
+it would go red on a Bun upgrade that changed no data. A slice whose source
+truly does not move may still be committed and gated like any generated file;
+none of the four pilots is that slice.
+
+Deploy payloads never go into the committed `docs/payload/`. Its orphan audit
+admits KG nodes only, and beans, todos and library entries are not KG nodes
+(§"Adding a node type").
+
+The gate (`bun run slice:sqlite:check`, or `--check --slice <name>` for one)
+therefore checks, for every slice:
+
+- the builder runs, and a source it cannot read is could-not-determine, red;
+- two builds give one sha256;
+- the row digest read back **from the file** equals the one computed
+  independently from the source, so a dropped or truncated row fails;
+- an FTS5 phrase query finds a known row, and a slice with no row to probe is
+  red rather than an empty green;
+- the payloads pass `auditPayloadTree`; for `kg`, every pointer names a
+  payload the committed tree holds;
+- the manifest's `file` is the content-addressed name of the file the build
+  wrote.
+
+### The client — download, OPFS, mount, with a fallback
+
+`docs/assets/js/slice-sqlite.js` gives `openSlice(manifestUrl)` →
+`{ mode, info, query(sql, params) }`:
+
+1. Fetch the manifest with `no-store`.
+2. Look in OPFS for `/<slice>-<sha256>.sqlite3`. A hit opens with **no
+   download**. A new build has a new name, which is the whole invalidation
+   story.
+3. On a miss, download the file **by the manifest's `file`** as an
+   ArrayBuffer. **Refuse** it if its sha256 is not the manifest's. That is a
+   `SliceIntegrityError`, which no fallback retries: the same URL would give
+   the same answer. The page shows it ("the manifest and the database
+   disagree … Refused") and marks `data-slice-error="integrity"`. Import it
+   into the pool and unlink older builds of that slice.
+4. Open it. `info.contentAddressed` is false only for a pre-`wixl` manifest
+   that names a fixed path.
+
+**The VFS is `opfs-sahpool`, in a Worker** (`slice-sqlite-worker.js`), not the
+`opfs` VFS. That one needs SharedArrayBuffer, which needs COOP/COEP headers,
+and GitHub Pages cannot send them. When there is no Worker or no OPFS, the
+verified bytes are opened **in memory** with `sqlite3_deserialize`. That is no
+parse either, but nothing is persisted. The mode actually used is reported,
+never assumed.
+
+The WASM build is **vendored** from the pinned `@sqlite.org/sqlite-wasm`
+devDependency, at 1.51 MB (`bun run slice:sqlite:vendor`, gated by
+`:vendor:check`). The reason: jsDelivr is unreachable from some builders, and
+a reader's search should depend on no host but the site's own.
+
+Measured in Chromium against a plain static server with no COOP/COEP: first
+open, including download and verification, 110 to 190 ms per slice on
+loopback (table above); reopen from OPFS about 85 ms, with no download.
+
+### The search page — one page, the slice is a parameter
+
+`docs/slices/search.html?slice=<name>`; with no `slice`, it lists what
+`assets/slices/index.json` says was built. **One page rather than one per
+slice**, because every per-slice fact the page needs is already in the
+manifest's `search` block, which the builder writes from the same definition
+that built the tables. A page per slice would be a second copy of those facts
+for each slice, free to drift from the schema it queries; this page has no
+slice-specific code that could. A payload is shown by what the manifest says
+it is: `markdown` (front matter stripped), or `library-entry` (the block of
+the published entry whose id the row names). The parameter is checked against
+a name pattern before it becomes part of a path.
+
+`beans/search.html`, the pilot's own page, is now a forwarding page to
+`?slice=beans`, so a link to it still lands.
+
+### Adding a slice
+
+Follow the `slice-sqlite-publish` process. In short:
+
+- Add one `SliceDef` to `SLICES` in `scripts/gen-slice-sqlite.ts`. Never copy
+  the builder.
+- Choose its heavy fields by the table in §"What is heavy". A heavy field is a
+  `payload_sha256` column, never a stored column. Choose what the payload IS by
+  what the site already publishes, and never publish through a payload what a
+  withheld or private source keeps back.
+- **Measure before wiring.** Build it to a scratch directory and read `bytes`.
+  Over the ~5 MB budget, try the no-body variant first, then stop and report the
+  measurement rather than ship it.
+- Decide **committed or built at deploy** by the question above.
+- Wire it: one deploy line per workflow, a unit test over a fixture and over
+  the real source, and a search in `slice-sqlite.e2e.ts`. The manifest, the
+  gate and the page come from the definition. A slice whose rows do not match
+  its source must fail. It must never pass as whole (§"A partial graph must
+  never pass for a whole one").
+
 ## Adding a node type
 
 1. **Decide it is in this graph.** The `kg` graph holds skills, processes,
@@ -507,6 +1010,8 @@ bun run kg:export -- --base-url https://… --out path.jsonld
 ```
 
 `--base-url` (or `KG_BASE_URL`) overrides the declaration's `canonicalUrl`.
+`--scope instance|checkout` picks whose directories are read (see "Whose
+nodes" above); the deploy says `instance` aloud.
 
 The output is a **build artifact**, deliberately not committed: it is a
 snapshot of a tree that changes every commit, so a committed copy is stale by
@@ -527,4 +1032,5 @@ publish.
 | process | step(s) that name it |
 |---|---|
 | [KG to public portal](../../processes/kg-to-portal.html) | Serialize to JSON-LD |
+| [Build and publish a per-slice SQLite file](../../processes/slice-sqlite-publish.html) | Write the slice definition; Build it locally and measure the file; Report the measurement; ship nothing; Wire it: gate, deploy line, search, tests; Gate every slice: slice:sqlite:check; Build each slice into _site at deploy |
 

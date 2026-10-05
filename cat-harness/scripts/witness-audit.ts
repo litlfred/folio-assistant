@@ -32,15 +32,11 @@ import { findContentRepoRoot } from "../content/pipeline/repo-root";
  *
  * Every field is optional and read defensively: these files are produced by
  * the folio's Python `WitnessBuilder` and can be malformed (this script
- * counts that case), so nothing here is guaranteed. `scriptFile`,
- * `scriptHash`, `scriptCommitSha` and `git_sha` are written by the builder
- * but are NOT on `ComputationWitness` in `schemas/types.ts` — the two have
- * drifted, and the drift is only visible once this stops being `any`.
+ * counts that case), so nothing here is guaranteed. `git_sha` is written by
+ * older builders and is not on `ComputationWitness`; the script fields were
+ * added there on 2026-10-04, ending the drift this comment used to record.
  */
 interface WitnessFile extends Partial<ComputationWitness> {
-  scriptFile?: string;
-  scriptHash?: string;
-  scriptCommitSha?: string;
   git_sha?: string;
 }
 

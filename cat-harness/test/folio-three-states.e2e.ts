@@ -191,6 +191,7 @@ test.describe("the middle state is real — these are the specs a two-state buil
     await page.locator(`${rowA} .fa-pullout`).click();
     await page.locator(".fa-glass-handle").click();
     await page.locator('.fa-glass-asset[data-fa-asset="who-iris/item-a"] .fa-glass-asset-close').click();
+    await page.getByRole("button", { name: "Put it back" }).click(); // the confirm, #1900
 
     await expect(page.locator(rowA)).toHaveAttribute("data-fa-folio-state", "folio");
     await expect(page.locator(`${rowA} .fa-pullout-state`)).toHaveText("In your folio, not displayed");
@@ -204,6 +205,7 @@ test.describe("the middle state is real — these are the specs a two-state buil
     await page.locator(`${rowA} .fa-pullout`).click();
     await page.locator(".fa-glass-handle").click();
     await page.locator('.fa-glass-asset[data-fa-asset="who-iris/item-a"] .fa-glass-asset-close').click();
+    await page.getByRole("button", { name: "Put it back" }).click(); // the confirm, #1900
 
     // Gone from the glass...
     await expect(page.locator('.fa-glass-asset[data-fa-asset="who-iris/item-a"]')).toHaveCount(0);
@@ -224,6 +226,7 @@ test.describe("the middle state is real — these are the specs a two-state buil
     await page.locator(`${rowA} .fa-pullout`).click();
     await page.locator(".fa-glass-handle").click();
     await page.locator('.fa-glass-asset[data-fa-asset="who-iris/item-a"] .fa-glass-asset-close').click();
+    await page.getByRole("button", { name: "Put it back" }).click(); // the confirm, #1900
     const note = page.locator(".fa-glass-shelved-note");
     await expect(note).toContainText("library view");
     await expect(note).toContainText("Put your folio away");
@@ -237,6 +240,7 @@ test.describe("the middle state is real — these are the specs a two-state buil
     await page.locator(`${rowA} .fa-pullout`).click();
     await page.locator(".fa-glass-handle").click();
     await page.locator('.fa-glass-asset[data-fa-asset="who-iris/item-a"] .fa-glass-asset-close').click();
+    await page.getByRole("button", { name: "Put it back" }).click(); // the confirm, #1900
     await expect(page.locator(`${rowA} .fa-pullout`)).toHaveText("Put back on glass");
     // Visible and named, but not clickable from here: the sheet is over it.
     await expect(page.locator(`${rowA} .fa-pullout`).click({ timeout: 1500 })).rejects.toThrow();
@@ -247,6 +251,7 @@ test.describe("the middle state is real — these are the specs a two-state buil
     await page.locator(`${rowA} .fa-pullout`).click();
     await page.locator(".fa-glass-handle").click();
     await page.locator('.fa-glass-asset[data-fa-asset="who-iris/item-a"] .fa-glass-asset-close').click();
+    await page.getByRole("button", { name: "Put it back" }).click(); // the confirm, #1900
     // Put the folio away first — which is what the note now tells the reader.
     await page.locator(".fa-glass-handle").click();
     await page.locator(`${rowA} .fa-pullout`).click();
@@ -262,6 +267,7 @@ test.describe("the middle state is real — these are the specs a two-state buil
     await page.locator(`${rowA} .fa-pullout`).click();
     await page.locator(".fa-glass-handle").click();
     await page.locator('.fa-glass-asset[data-fa-asset="who-iris/item-a"] .fa-glass-asset-close').click();
+    await page.getByRole("button", { name: "Put it back" }).click(); // the confirm, #1900
     await page.reload();
     await page.waitForLoadState("networkidle");
     await expect(page.locator(rowA)).toHaveAttribute("data-fa-folio-state", "folio");
@@ -287,7 +293,10 @@ test.describe("a hostile href never reaches the glass", () => {
     await page.locator(".fa-glass-handle").click();
     const card = page.locator('.fa-glass-asset[data-fa-asset="evil/js"]');
     await expect(card).toBeVisible();
-    await expect(card.locator("a")).toHaveCount(0);
+    // A LIBRARY card links the entry page composed from its key (#1900), so
+    // the stored href never reaches an anchor at all — and nothing hostile does.
+    await expect(card.locator('a[href^="javascript"], a[href*="alert"]')).toHaveCount(0);
+    await expect(card.locator("a")).toHaveAttribute("href", "/cat-harness/library/evil/js/");
     await expect(card.locator(".fa-glass-asset-name")).toHaveText("Looks ordinary");
   });
 
@@ -299,7 +308,7 @@ test.describe("a hostile href never reaches the glass", () => {
     await serve(page, HOSTILE);
     await page.locator('[data-fa-library-item="evil/split"] .fa-pullout').click();
     await page.locator(".fa-glass-handle").click();
-    await expect(page.locator('.fa-glass-asset[data-fa-asset="evil/split"] a')).toHaveCount(0);
+    await expect(page.locator('.fa-glass-asset[data-fa-asset="evil/split"] a')).toHaveAttribute("href", "/cat-harness/library/evil/split/");
   });
 
   test("and nothing was executed — a BACKSTOP, and measured to be the weak one", async ({ page }) => {
@@ -328,8 +337,9 @@ test.describe("a hostile href never reaches the glass", () => {
     await serve(page, HOSTILE);
     await page.locator('[data-fa-library-item="ok/relative"] .fa-pullout').click();
     await page.locator(".fa-glass-handle").click();
+    // A library card's link is its entry page, composed from its key (#1900).
     await expect(page.locator('.fa-glass-asset[data-fa-asset="ok/relative"] a'))
-      .toHaveAttribute("href", "/who-iris/item-a.html");
+      .toHaveAttribute("href", "/cat-harness/library/ok/relative/");
   });
 });
 
@@ -608,6 +618,13 @@ test.describe("the folio viewer page RUNS — not just 'the bytes are current'",
       }
       if (url.pathname.endsWith("assets/js/docs-ui.js")) {
         return route.fulfill({ status: 200, contentType: "text/javascript", body: JS });
+      }
+      // The row's own files, which the railed page links (bean `lhvt`).
+      if (url.pathname.endsWith("assets/js/navbar-row.js")) {
+        return route.fulfill({ status: 200, contentType: "text/javascript", body: readFileSync(join(SITE_ABS, "assets/js/navbar-row.js"), "utf8") });
+      }
+      if (url.pathname.endsWith("assets/css/navbar-row.css")) {
+        return route.fulfill({ status: 200, contentType: "text/css", body: readFileSync(join(SITE_ABS, "assets/css/navbar-row.css"), "utf8") });
       }
       if (url.pathname.endsWith("folio/index.json")) {
         if (body === "__404__") return route.fulfill({ status: 404, body: "nope" });

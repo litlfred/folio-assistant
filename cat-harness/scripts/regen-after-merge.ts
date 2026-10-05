@@ -111,6 +111,35 @@
  * which NO writer ran — so the final verdicts were all read from a tree no
  * writer was touching (bean `14ve`'s fixpoint does the work).
  *
+ * ## Asking only what a change can have affected — bean `94zs`
+ *
+ * Two more cuts, both selecting by the same FOOTPRINT (`changed-paths.ts`):
+ * a pair's declared input/output globs, its scripts' import closure, its
+ * `package.json` commands and `bun.lock` — what the input hash covers.
+ *
+ * - **`--changed <base>`** asks, in the first pass, only the pairs whose
+ *   footprint meets a path changed since `<base>` (`git diff <base>...HEAD`
+ *   plus the working tree and untracked files). A pair outside it reads what
+ *   it read at `<base>`, so its answer there is its answer here — an
+ *   ASSUMPTION about `<base>`, reported as `not asked` and never recorded in
+ *   the hash cache as a green run. `merge:main` passes the merge's fork point,
+ *   for the reason on `regenArgs` in `merge-base.ts`. Unlike the cache it
+ *   needs no earlier run on this machine, and it works under CI.
+ * - **The narrowed fixpoint.** Each pass after the first asks only the pairs
+ *   whose footprint meets a path the previous pass ACTUALLY changed —
+ *   measured by snapshotting `git` status before and after the pass, never
+ *   taken from a writer's declaration. A pair not re-asked keeps the answer it
+ *   gave from a tree identical on its footprint, so "settled" still means a
+ *   pass that ran no writer.
+ *
+ * Neither ever skips a pair with no input declaration, a `{tracked}` pair
+ * when anything changed, or a pair whose footprint or change set cannot be
+ * determined. **The limit, measured 2026-10-05:** the wall time is set by the
+ * `{tracked}` pairs (`kg:audit:all:check`, `skill:register:check`,
+ * `kg:audit:check`), which read the whole tree and so run after any merge and
+ * after any writer. Narrow declarations in `task-io.ts` are what let these
+ * two cuts skip anything; each must be read first.
+ *
  * Usage:
  *   bun run regen                # ask every gate; repair what is stale
  *   bun run regen --fast         # ...only the fast set (no browser-job pairs)
@@ -118,6 +147,7 @@
  *   bun run regen --jobs 3       # pool size (default: CPUs - 1)
  *   bun run regen --no-cache     # ask every pair; neither read nor update the hash cache
  *   bun run regen --explain      # say, per pair, why it ran or was skipped
+ *   bun run regen --changed <base>  # ask only pairs whose inputs changed since <base>
  *   bun run regen --max-passes 8 # raise the fixpoint bound (default: DEFAULT_MAX_PASSES)
  *
  * `--all` is accepted and is the default.
@@ -137,13 +167,25 @@ import {
   decide,
   fingerprint,
   loadCache,
+  qaBaselineIdentity,
   saveCache,
   type HashCache,
   type PairIO,
   type SkipDecision,
 } from "./input-hash.ts";
+import {
+  affects,
+  changedBaseFromArgv,
+  changedSince,
+  diffSnapshots,
+  footprintOf,
+  scriptsChangedSince,
+  snapshotTree,
+  type Affected,
+} from "./changed-paths.ts";
 import { ReadWriteGate, jobsFromArgv, orderedEmitter, runCaptured, runPool } from "./task-pool.ts";
 import { pairIO } from "./task-io.ts";
+import { foldable, settleCovered } from "./pair-cover.ts";
 import { repoRootFor } from "../schemas/cat-harness.ts";
 
 const ROOT = join(import.meta.dir, "..");
@@ -283,11 +325,20 @@ export const NO_WRITER: Readonly<Record<string, string>> = {
   "check:raci": "raci-chart.ts only prints; it writes nothing",
   "check:subgraphs": "check-subgraphs.ts only reports",
   "check:harness-dirs": "compares two config files; harness:dirs makes directories, not what it compares",
-  // `viewer:nav:audit` does write, but what it writes is the BASELINE the gate
-  // compares against, and the gate fails only on a REGRESSION. Running it on a
-  // failure would re-baseline, so the regression would vanish and be reported
-  // as a repair. It is the one case where a writer exists and must not be run.
+  // THE BASELINE CASES: a writer exists and must NOT be run. What it writes is
+  // the baseline the gate compares against, and the gate fails only on a
+  // REGRESSION, so running it on a failure re-baselines — the regression
+  // vanishes and is reported as a repair. There are two, and the second is why
+  // this comment no longer says "the one case":
+  //
+  // - `viewer:nav:audit` writes the viewer-nav baseline.
+  // - `check:state-on-main --update` writes the state-on-main baseline, which
+  //   may only SHRINK. regen repairing it would be regen RAISING a ratchet,
+  //   which is the whole thing the ratchet exists to prevent. Its `--update`
+  //   refuses growth without `--allow-growth` as a second line of defence, but
+  //   the first is not asking it at all.
   "check:viewer-nav": "its writer re-baselines, which would hide the regression the gate exists to report",
+  "check:state-on-main": "its --update writes the ratchet the gate reads; repairing it would RAISE a baseline that may only shrink",
 };
 
 /**
@@ -348,6 +399,18 @@ export interface Result {
   outcome: Outcome;
   /** `current` because its inputs hash to its last green run, not because it was asked. */
   skipped?: boolean;
+  /**
+   * `current` because `--changed` touched nothing it reads, so its answer is
+   * its answer at the base — ASSUMED, never measured here. Such a pair records
+   * no hash in the input-hash cache.
+   */
+  assumed?: boolean;
+  /**
+   * The pair whose verdict this one's was DERIVED from (`pair-cover.ts`): the
+   * check was answered by its residual plus its coverers, and this names the
+   * coverer that decided a non-`current` outcome.
+   */
+  coveredBy?: string;
 }
 
 /** One verify/write pair, with what it declares about its files (`task-io.ts`). */
@@ -432,6 +495,10 @@ export async function regenPass(
     o.report?.(pairs[i]!, v.result, v.why, v.ms),
   );
 
+  // Checks other pairs in THIS pass already answer (bean `8qyc`): each is asked
+  // only for its residual, and its verdict is settled from the coverers' below.
+  const folds = foldable(pairs.map((p) => p.check));
+
   // Checks that only read share; writers (and the re-ask after one) run alone.
   const gate = new ReadWriteGate();
   const askOne = async (pair: Pair, index: number): Promise<{ result: Result; why: string | undefined; ms: number }> => {
@@ -441,9 +508,17 @@ export async function regenPass(
     if (decision?.skip === true) {
       return { result: { check, writer, outcome: "current", skipped: true }, why: decision.why, ms: 0 };
     }
-    const why = decision?.why;
+    const fold = folds.get(check);
+    const why =
+      fold === undefined
+        ? decision?.why
+        : `${decision?.why ?? "asked"}; verdict DERIVED from ${fold.residual ?? "no residual"} + ` +
+          `${fold.covers.length} covering pair(s) (pair-cover.ts)`;
     const done = (result: Result) => ({ result, why, ms: performance.now() - t0 });
-    if (await gate.read(async () => runner(check))) return done({ check, writer, outcome: "current" });
+    // A folded check runs its residual in its place, or nothing at all.
+    const ask = fold === undefined ? check : fold.residual;
+    if (ask === undefined) return done({ check, writer, outcome: "current" });
+    if (await gate.read(async () => runner(ask))) return done({ check, writer, outcome: "current" });
     if (writer === undefined) return done({ check, outcome: "no-writer" });
     if (o.dryRun) return done({ check, writer, outcome: "regenerated" });
     return gate.write(index, async () => {
@@ -453,7 +528,7 @@ export async function regenPass(
       // it as one would be the false-clean this whole command is about.
       // And a writer that EXITED NON-ZERO is named as such (bean `i1q7`): the
       // defect is in the declared writer, not in what it generates from.
-      const outcome: Outcome = (await runner(check)) ? "regenerated" : wrote ? "unrepaired" : "writer-failed";
+      const outcome: Outcome = (await runner(ask)) ? "regenerated" : wrote ? "unrepaired" : "writer-failed";
       return done({ check, writer, outcome });
     });
   };
@@ -473,7 +548,7 @@ export async function regenPass(
   // Writers in PAIR order, not completion order, so the record is deterministic.
   const order = new Map(pairs.map((p, i) => [p.writer, i]));
   writerRan.sort((a, b) => (order.get(a) ?? 0) - (order.get(b) ?? 0));
-  return { results: done.map((d) => d.result), writerRan };
+  return { results: settleCovered(done.map((d) => d.result), folds), writerRan };
 }
 
 /**
@@ -503,15 +578,40 @@ export async function regenToFixpoint(
   pairs: readonly Pair[],
   runner: Runner,
   maxPasses = DEFAULT_MAX_PASSES,
-  opts: Omit<PassOptions, "dryRun"> & { onPass?: (pass: number) => void } = {},
+  opts: PassOptions & FixpointOptions = {},
 ): Promise<{ results: Result[]; passes: number; settled: boolean }> {
   const final = new Map<string, Result>();
   let passes = 0;
   let settled = false;
+  // What the previous pass changed: `null` before the first pass, `undefined`
+  // when it could not be measured (which asks every pair).
+  let lastChange: ReadonlySet<string> | undefined | null = null;
   while (passes < maxPasses) {
     passes++;
     opts.onPass?.(passes);
-    const { results, writerRan } = await regenPass(pairs, runner, opts);
+    const asked: Pair[] = [];
+    for (const pair of pairs) {
+      const sel =
+        lastChange === null
+          ? opts.firstPass?.(pair)
+          : opts.narrow === undefined
+            ? undefined
+            : opts.narrow.affects(pair, lastChange);
+      if (sel === undefined || sel.affected) {
+        asked.push(pair);
+        continue;
+      }
+      opts.onNotAsked?.(pair, sel.why, passes);
+      // Never asked at all: its answer is ASSUMED from the base, and the
+      // result says so (`hashesToRecord` will not record a hash for it).
+      // Asked in an earlier pass: that answer stands — nothing it reads moved.
+      if (!final.has(pair.check)) {
+        final.set(pair.check, { check: pair.check, writer: pair.writer, outcome: "current", skipped: true, assumed: true });
+      }
+    }
+    const measure = opts.narrow?.begin();
+    const { results, writerRan } = await regenPass(asked, runner, opts);
+    lastChange = measure === undefined ? undefined : measure();
     for (const r of results) {
       const prev = final.get(r.check);
       final.set(r.check, prev?.outcome === "regenerated" && r.outcome === "current" ? prev : r);
@@ -522,6 +622,36 @@ export async function regenToFixpoint(
     }
   }
   return { results: pairs.map((p) => final.get(p.check)!), passes, settled };
+}
+
+/**
+ * Which pairs a pass asks — bean `94zs`. Every hook is optional, and with none
+ * of them every pass asks every pair, exactly as before.
+ */
+export interface FixpointOptions {
+  onPass?: (pass: number) => void;
+  /**
+   * `--changed <base>`: whether the FIRST pass asks this pair. A pair it
+   * declines was not touched by the change since `<base>`.
+   */
+  firstPass?: (pair: Pair) => Affected;
+  /**
+   * The narrowed fixpoint. `begin()` is called before every pass and returns
+   * a function that, called after it, says which paths the pass ACTUALLY
+   * changed (`undefined`: could not be measured). The next pass asks only the
+   * pairs `affects` says that change touched.
+   *
+   * Why the settling guarantee survives: a pair not re-asked has the answer it
+   * gave in an earlier pass, and by induction nothing it reads has changed
+   * since it gave it — it was read from a tree identical, on its footprint, to
+   * this one. A pass that asks nobody runs no writer, and so settles.
+   */
+  narrow?: {
+    begin: () => () => ReadonlySet<string> | undefined;
+    affects: (pair: Pair, changed: ReadonlySet<string> | undefined) => Affected;
+  };
+  /** Called for each pair a pass does not ask, before the pass runs. */
+  onNotAsked?: (pair: Pair, why: string, pass: number) => void;
 }
 
 /** Why a run exited as it did — one of these, never a bare number. */
@@ -789,6 +919,10 @@ export function hashesToRecord(
   pairs.forEach((pair, i) => {
     const key = cacheKey(pair);
     const r = results[i];
+    // Assumed from the base rather than asked: a green hash recorded now
+    // would launder that premise into a measurement. Leave whatever a real
+    // run recorded (if it still matches, it still holds).
+    if (r?.assumed === true) return;
     const green = r !== undefined && (r.outcome === "current" || r.outcome === "regenerated");
     if (!settled || !green) {
       delete next.pairs[key];
@@ -809,6 +943,7 @@ if (import.meta.main) {
   const jobs = jobsFromArgv(process.argv);
   const maxPasses = maxPassesFromArgv(process.argv);
   const useCache = cacheEnabled(process.argv, process.env);
+  const changedBase = changedBaseFromArgv(process.argv);
   const t0 = performance.now();
 
   const gates = loadGates(repoRoot, { all });
@@ -839,7 +974,9 @@ if (import.meta.main) {
   // N+1 must hash again, and a reused table could serve a stale digest when an
   // mtime does not move within one clock tick.
   let digests = new FileDigests(repoRoot);
-  const fp = (pair: Pair) => fingerprint(repoRoot, scripts, scriptsOf(pair), pair.io, digests);
+  // Resolved once per run: a baseline that moves DURING a run is the next run's input.
+  const baseline = qaBaselineIdentity({ repoRoot });
+  const fp = (pair: Pair) => fingerprint(repoRoot, scripts, scriptsOf(pair), pair.io, digests, baseline);
   const skip = (pair: Pair): SkipDecision => decide(cache, cacheKey(pair), fp(pair));
 
   const checks = new Set(repairable.map((p) => p.check));
@@ -859,15 +996,60 @@ if (import.meta.main) {
       }
     : undefined;
 
+  // Bean `94zs`. A footprint is recomputed each pass: a writer can create a
+  // file a glob now matches. Memoised within the pass.
+  let footprints = new Map<string, ReturnType<typeof footprintOf>>();
+  const footprint = (pair: Pair) => {
+    let f = footprints.get(pair.check);
+    if (f === undefined) footprints.set(pair.check, (f = footprintOf(repoRoot, scripts, scriptsOf(pair), pair.io)));
+    return f;
+  };
+  let firstPass: ((pair: Pair) => Affected) | undefined;
+  if (changedBase !== undefined) {
+    const ch = changedSince(repoRoot, changedBase);
+    if ("undetermined" in ch) {
+      console.log(`  --changed ${changedBase}: COULD NOT DETERMINE the change (${ch.undetermined}) — asking every pair`);
+    } else {
+      const scriptsChanged = scriptsChangedSince(repoRoot, ch.baseSha, scripts);
+      firstPass = (pair) => affects(footprint(pair), ch.paths, { scriptsChanged });
+      const untouched = repairable.filter((p) => !firstPass!(p).affected).length;
+      console.log(
+        `  --changed ${changedBase} (${ch.baseSha.slice(0, 10)}): ${ch.paths.size} path(s) changed; ` +
+          `${untouched} of ${repairable.length} pair(s) read none of them and are not asked — ` +
+          "their answer is their answer at the base",
+      );
+    }
+  }
+  const narrow = {
+    begin: () => {
+      const before = snapshotTree(repoRoot);
+      return () => {
+        footprints = new Map();
+        const after = snapshotTree(repoRoot);
+        return before === undefined || after === undefined ? undefined : diffSnapshots(before, after);
+      };
+    },
+    affects: (pair: Pair, changed: ReadonlySet<string> | undefined) => affects(footprint(pair), changed),
+  };
+  const onNotAsked = explain
+    ? (pair: Pair, why: string, pass: number) =>
+        console.log(`    skip ${pair.check} — not asked${pass === 1 ? ` (--changed ${changedBase})` : " (unaffected by the last pass)"}: ${why}`)
+    : undefined;
+
   let results: Result[];
   let settled = false;
   if (dryRun) {
-    results = (await regenPass(repairable, asyncRun, { dryRun: true, jobs, skip, report })).results;
+    results = (
+      await regenToFixpoint(repairable, asyncRun, 1, { dryRun: true, jobs, skip, report, firstPass, onNotAsked })
+    ).results;
   } else {
     const fx = await regenToFixpoint(repairable, asyncRun, maxPasses, {
       jobs,
       skip,
       report,
+      firstPass,
+      narrow,
+      onNotAsked,
       onPass: (n) => {
         digests = new FileDigests(repoRoot);
         if (explain) console.log(`  pass ${n}:`);
@@ -890,6 +1072,12 @@ if (import.meta.main) {
     saveCache(repoRoot, hashesToRecord(repairable, results, settled, fp, cache));
   }
   for (const r of results) {
+    if (r.coveredBy !== undefined) {
+      // Derived (`pair-cover.ts`): the line that matters is the coverer's own,
+      // printed in its place; this one says where the verdict came from.
+      console.log(`  ${r.outcome === "regenerated" ? "·" : "✗"} ${r.check} is ${r.outcome} through ${r.coveredBy} (see its line)`);
+      continue;
+    }
     if (r.outcome === "regenerated") {
       console.log(
         dryRun
@@ -918,9 +1106,14 @@ if (import.meta.main) {
   }
 
   const by = (o: Outcome): Result[] => results.filter((r) => r.outcome === o);
-  const skippedCount = results.filter((r) => r.skipped).length;
+  const assumedCount = results.filter((r) => r.assumed).length;
+  const skippedCount = results.filter((r) => r.skipped && !r.assumed).length;
+  const skipNotes = [
+    ...(skippedCount > 0 ? [`${skippedCount} skipped: inputs unchanged since their last green run`] : []),
+    ...(assumedCount > 0 ? [`${assumedCount} not asked: --changed touched nothing they read`] : []),
+  ];
   console.log(
-    `\n${by("current").length} current${skippedCount > 0 ? ` (${skippedCount} skipped: inputs unchanged since their last green run)` : ""}, ` +
+    `\n${by("current").length} current${skipNotes.length > 0 ? ` (${skipNotes.join("; ")})` : ""}, ` +
       `${by("regenerated").length} ` +
       `${dryRun ? "stale" : "regenerated"}, ${by("unrepaired").length} unrepaired, ` +
       `${by("no-writer").length} without a writer, ${by("writer-failed").length} with a failing writer, ` +

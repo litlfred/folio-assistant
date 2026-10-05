@@ -3658,6 +3658,11 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   background: var(--fa-glass-card);
   color: var(--fa-glass-ink);
   border: 1px solid var(--fa-glass-edge);
+  /* BORDER-BOX: with the move bar open the row reaches `max-width: 100%`, and
+     a content-box 100% plus its padding and border overflowed the sheet by
+     18px — so pressing a move-bar button scrolled the glass sideways and the
+     button jumped out from under the pointer (measured, issue #1900). */
+  box-sizing: border-box;
 }
 .fa-glass-zoom-btn {
   min-width: 2.75rem;
@@ -5729,70 +5734,9 @@ a.fa-nav-folders__link:focus-visible {
   }
 }
 
-.fa-nav-icons {
-  display: flex;
-  gap: 0.125rem;
-  align-items: center;
-  /* Aligned to the mark above it rather than to the strip's edge: the avatar
-     starts at the gutter, so the first icon does too and the two lines read as
-     one block. */
-  padding: 0.25rem calc(var(--fa-nav-pad) - 0.25rem);
-  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
-}
-
-.fa-nav-icon {
-  display: flex;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-  /* 2.25rem = 36px. Above the 44px pointer target only with the row's gap and
-     padding counted, which is the honest reading -- six of these plus gutters
-     is 232px inside a 248px strip, so a bigger box does not fit the owner's
-     own cap of six. The declared interaction profile here is low-dexterity and
-     this is the constraint binding against it: SIX and FULL WIDTH are the two
-     requirements, and they set the size between them. */
-  /* 2rem since 2026-09-27: the row now carries SEVEN (the five declared
-     slots, the light/dark switch and the [x]), and seven at 2.25rem is 260px
-     in a 248px strip. 32px still clears SC 2.5.8's 24px with room. */
-  width: 2rem;
-  height: 2rem;
-  border-radius: 0.25rem;
-  color: inherit;
-  text-decoration: none;
-  opacity: 0.8;
-}
-
-.fa-nav-icon svg {
-  width: 1.125rem;
-  height: 1.125rem;
-}
-/* The bulb carries no fill of its own (the header mini-button gets it from
-   its own rule), so in the row it painted the initial black. */
-.fa-nav-scheme svg { fill: currentColor; }
-
-.fa-nav-icon:hover,
-.fa-nav-icon:focus-visible {
-  background: rgba(128, 128, 128, 0.22);
-  text-decoration: none;
-  opacity: 1;
-}
-
-/* DECLARED, WITH NO PUBLISHED VIEWER. Not a link and it must not look like
- * one — `pb04`, the same rule the harness tabs' graph list follows. Rendered
- * rather than dropped, because a declared graph missing its viewer is a
- * FINDING and hiding it answers "where is beans" with silence. */
-.fa-nav-icon--dead {
-  cursor: default;
-  opacity: 0.35;
-}
-
-/* Buttons in the row carry the browser's own chrome otherwise. */
-button.fa-nav-icon {
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-}
+/* THE ICON ROW'S OWN RULES moved to `navbar-row.css` (beans `lhvt`, `9rq1`):
+ * the row is drawn on pages that never load this stylesheet, so its style
+ * travels with its script. The `.side-bar`-specific rules stay here. */
 
 /* ═══ THE NAME OF AN ICON, ON HOVER AND ON KEYBOARD FOCUS ═════════════════
  *
@@ -7940,7 +7884,7 @@ a.fa-harness-tab__body:focus-visible {
   /* A position means nothing in a column, so the controls that set one go.
      Close and Return stay: they are about WHERE IT LIVES, not where it sits. */
   .fa-sticky-layer [data-fa-control="move"],
-  .fa-glass-asset-tool[aria-label^="Make "],
+  .fa-glass-shelf [data-fa-control="size"],
   .fa-glass-tidy { display: none; }
 }
 
@@ -8130,6 +8074,60 @@ a.fa-harness-tab__body:focus-visible {
    keeps a book's shape. */
 @media (max-width: 37.49rem) {
   .fa-glass-shelf > .fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) { min-height: 16rem; }
+}
+
+/* ── Issue #1900: open, and confirm the close ────────────────────────────
+ *
+ * A card is SIZED by its own − and + only (owner, 2026-10-05: *"No keyboard
+ * resize thing. Only the plus minus"*), so there is no corner grip. */
+/* A library card OPENS its entry, so it is a tab stop; its focus is drawn. */
+.fa-glass-asset[data-fa-opens]:focus-visible {
+  outline: 3px solid var(--fa-glass-accent);
+  outline-offset: 2px;
+}
+
+/* THE CONFIRM × opens: a native modal, so the browser traps focus. Inside the
+   layer, so the glass's theme tokens reach it. */
+.fa-glass-confirm {
+  box-sizing: border-box;
+  max-width: min(28rem, calc(100vw - 2rem));
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--fa-glass-edge);
+  border-radius: var(--fa-folio-radius, 0);
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+}
+.fa-glass-confirm::backdrop { background: rgba(0, 0, 0, 0.45); }
+.fa-glass-confirm-title { margin: 0 0 0.5rem; font-size: 1rem; }
+.fa-glass-confirm p { margin: 0 0 0.6rem; font-size: 0.9rem; line-height: 1.45; }
+.fa-glass-confirm a,
+.fa-glass-shelved-say a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.fa-glass-confirm-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: flex-end; }
+.fa-glass-confirm-actions button {
+  /* Low-dexterity profile: a confirm is the last place to economise on target size. */
+  min-height: 2.75rem;
+  padding: 0 0.875rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+/* Focus lands on the safe choice, and it carries the weight. */
+.fa-glass-confirm-cancel { font-weight: 600; }
+
+/* WHERE IT WENT, said where the card was — and always present, empty until
+   something is shelved, so the status region exists before it speaks. */
+.fa-glass-shelved-say {
+  max-width: 40rem;
+  margin: 0 auto;
+  font-size: 0.9rem;
+  color: var(--fa-glass-ink);
+  background: var(--fa-glass-card);
+}
+.fa-glass-shelved-say:not(:empty) {
+  margin: 0.5rem auto;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--fa-glass-edge);
 }
 
 /* The browser-only note's dismiss. */
@@ -8389,24 +8387,6 @@ a.fa-harness-tab__body:focus-visible {
   font-size: 0.6875rem;
   font-variant-numeric: tabular-nums;
   text-align: center;
-}
-/* fsh-guts IN THE ICON ROW (#1925, owner 2026-10-02: "with the others"): the
- * count rides as a small badge on the fish so the row keeps one glyph width. */
-.fa-nav-icon--fsh-guts { position: relative; }
-.fa-nav-icon--fsh-guts .fa-nav-count {
-  position: absolute;
-  right: -0.35rem;
-  top: -0.3rem;
-  min-width: 1rem;
-  padding: 0 0.2rem;
-  border-radius: 0.5rem;
-  background: rgba(128, 128, 128, 0.85);
-  color: #fff;
-  font-size: 0.625rem;
-  line-height: 1rem;
-  font-variant-numeric: tabular-nums;
-  text-align: center;
-  pointer-events: none;
 }
 /* The copy inside a window is shaped to the window, not to the square dock. */
 .fa-landing-window .fa-landing-sticky--fixed { aspect-ratio: auto; min-height: 16rem; }
@@ -8679,3 +8659,91 @@ table[data-fa-filtered] tr[hidden] { display: none !important; }
 }
 .fa-render-failed code,
 .fa-workplan-failed code { word-break: break-all; }
+
+/* The publication-workflow page's process index (bean `ax6r`), drawn at runtime
+   by assets/js/process-index.js. The two grouping buttons toggle with
+   `aria-pressed`, so the pressed one is drawn like `.fa-figure-tools`'. */
+.fa-process-index-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.fa-process-index-controls button {
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1.4;
+}
+
+.fa-process-index-controls button:hover,
+.fa-process-index-controls button:focus-visible {
+  border-color: var(--link-color, #7253ed);
+}
+
+.fa-process-index-controls button[aria-pressed="true"] {
+  border-color: var(--link-color, #7253ed);
+  box-shadow: inset 0 0 0 1px var(--link-color, #7253ed);
+  font-weight: 600;
+}
+
+.fa-process-index-table caption {
+  text-align: left;
+  font-weight: 600;
+  padding: 0.75rem 0 0.25rem;
+}
+
+/* Narrow viewports: four columns at 390 px leave a few words per line and push
+   the diagram links past the edge. Each row becomes a card whose cells say
+   which column they were (`data-label`, set by the script). Scoped deeper than
+   narrow-viewport.css's generic `table:not(...)` rule so this one wins. */
+@media (max-width: 799.98px) {
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table,
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table tbody,
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table tr,
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table td {
+    display: block;
+    width: auto;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table caption {
+    display: block;
+  }
+
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table tr {
+    border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+    border-radius: 4px;
+    margin: 0 0 0.75rem;
+  }
+
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table td {
+    border: 0;
+    padding: 0.35rem 0.75rem;
+  }
+
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.75em;
+    font-weight: 600;
+    opacity: 0.75;
+  }
+}

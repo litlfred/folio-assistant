@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/library/library-core/filing-dublin-core.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/filing-dublin-core.md) — do not edit here.
+> Generated from [`folio-assistant-core/skills/library/cataloguing/filing-dublin-core.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/cataloguing/filing-dublin-core.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/filing-dublin-core.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/cataloguing/filing-dublin-core.md){: .fa-edit-source }
 
 {% raw %}
 # Filing a source: what Dublin Core carries, and what it does not

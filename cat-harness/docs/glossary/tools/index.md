@@ -12,14 +12,14 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 120 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 23 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 125 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 23 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 3 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 154 terms and is 107 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 162 terms and is 114 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>154</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>154</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>162</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>162</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">154</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">162</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -226,6 +226,13 @@ Editorial content-graph analysis <span class="fa-gloss-status">candidate, extrac
 <p>Build the block- and section-level editorial dependency graph of one paper from its <code>.ts</code> manifests and report forward references, cross-chapter coupling, sparse or dense sections and isolated blocks, ranked. Reads <code>uses[]</code>/<code>interprets</code> only — the editorial relation, never the formal one.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#content-graph-analysis</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--pdf-viewer-embed" data-fa-state="extracted" data-fa-gloss="">
+Embed a PDF inline in a page <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Print the HTML fragment that shows a PDF in the installed viewer: a lazily loaded frame whose address is derived from the page's own location (so one page works at the site root, under a project base and under a staging preview), plus plain open and download links that work without it.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pdf-viewer-embed</code></a></p>
+</dd>
 <dt id="fhir-harness--kg-tools--ig-ast-jsonld" data-fa-state="extracted" data-fa-gloss="">
 Export an IG AST as JSON-LD <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -307,6 +314,13 @@ Folio viewer <span class="fa-gloss-status">candidate, extracted</span>
 <p>Render each declared folio directory as a browsable page over its published index.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#folio-viewer</code></a></p>
 </dd>
+<dt id="folio-assistant-sci--kg-tools--lean-formal-edges" data-fa-state="extracted" data-fa-gloss="">
+Formal edges from the Lean build <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Extract ELABORATED formal dependencies between a folio's lean.ref declarations (LeanArchitect's rule over the folio's own lean.ref set). Needs a Lean toolchain and a built Lake project. Tagged declarations missing from the build are reported, never recorded as dependency-free; with ingest the result is recorded in the formal cache as source &quot;elaborated&quot;.</p>
+<p class="fa-gloss-meta">Tools of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/tools/index.ts"><code>folio-assistant-sci/tools/index.ts#lean-formal-edges</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--fsh-cone" data-fa-state="extracted" data-fa-gloss="">
 FSH dependency cone <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -329,7 +343,7 @@ Gates on the merged tree <span class="fa-gloss-status">candidate, extracted</spa
 Generate an IG instance's reader-facing pages from its artefact index <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Write <code>&lt;instance&gt;/docs/</code> — an index page, one page per artefact, a page per over-large category and per menu group — from <code>fhir-artifact-index/index.json</code> (and <code>menu.json</code> when ingested), styled by the template chrome an owning instance ingested. Moved here from smart-trust because nothing in it was smart-trust's (#1767); smart-base reuses it for its <code>/smart-base/</code> landing page with <code>--summary</code>. For an IG whose SOURCE is at hand, <a href="#fhir-harness--kg-tools--build-ig-site"><code>build-ig-site</code></a> renders the IG's own pages instead; this is for an IG known only by what it published.</p>
+<p>Write <code>&lt;instance&gt;/docs/</code> — an index page, one page per artefact, a page per over-large category and per menu group — from <code>fhir-artifact-index/index.json</code> (and <code>menu.json</code> when ingested), styled by the template chrome an owning instance ingested. Moved down to this layer because nothing in it was one IG's own (#1767); with <code>--summary</code> it writes an instance's landing page, opening with that instance's harness section. For an IG whose SOURCE is at hand, <a href="#fhir-harness--kg-tools--build-ig-site"><code>build-ig-site</code></a> renders the IG's own pages instead; this is for an IG known only by what it published.</p>
 <p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ig-pages</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--auto-docs-viewer" data-fa-state="extracted" data-fa-gloss="">
@@ -416,6 +430,20 @@ Inject translations <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Produce a translated copy of a source markdown file from a .po, using the same segmentation the extractor used.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#translation-inject</code></a></p>
+</dd>
+<dt id="folio-assistant-sci--kg-tools--tex-install" data-fa-state="extracted" data-fa-gloss="">
+Install TeX Live in a sandbox <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Install TeX Live (full) and latexmk where no TeX engine is present, disabling the firewalled launchpad PPAs that otherwise abort <code>apt-get update</code>. Idempotent: does nothing when pdflatex and memoize.sty are already present. About 5 GB and 10-20 minutes, so run it in the background. pdflatex unpacks early but is not usable until the post-install format build ends (<code>kpsewhich memoize.sty</code> returning a path is the ready signal).</p>
+<p class="fa-gloss-meta">Tools of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/tools/index.ts"><code>folio-assistant-sci/tools/index.ts#tex-install</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--pdf-viewer-install" data-fa-state="extracted" data-fa-gloss="">
+Install the inline PDF viewer into a built site <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Download the pinned pdf.js release (legacy build), verify its SHA-256, copy the parts a site needs into <code>&lt;site&gt;/assets/vendor/pdfjs/</code>, and add the shim that opens <code>?src=</code> only for the allowlisted URL prefixes or the site's own origin. Nothing is committed: the viewer exists only in the built site.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pdf-viewer-install</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--cat-harness-schema" data-fa-state="extracted" data-fa-gloss="">
 Instance declaration schema <span class="fa-gloss-status">candidate, extracted</span>
@@ -697,12 +725,26 @@ Paper build to LaTeX chapters <span class="fa-gloss-status">candidate, extracted
 <p>Render a paper's content objects to LaTeX chapters: load the paper manifest, resolve its chapters and blocks, render, validate the LaTeX AST, and write the chapter files. With no manifest it builds the folio's only paper, and refuses — naming them — when there are several or none.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#paper-latex-build</code></a></p>
 </dd>
+<dt id="folio-assistant-sci--kg-tools--paper-feature-build" data-fa-state="extracted" data-fa-gloss="">
+Paper feature build (changed chapters + latexdiff) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Quick preview of a paper folio's branch: render the paper with the sci print template (plus the folio's notation fragment when it has one), then compile ONLY the chapters changed against a base ref, and a colored and a plain latexdiff of each. Margin notes are off by default (<code>FAST_PREVIEW=1</code>, about 2x). Cross-references to chapters outside the build print as '??'. A preview, never a publish build. Run from the folio. Without a TeX engine the render still runs and the compile steps are skipped with a message.</p>
+<p class="fa-gloss-meta">Tools of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/tools/index.ts"><code>folio-assistant-sci/tools/index.ts#paper-feature-build</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--pdf-cover" data-fa-state="extracted" data-fa-gloss="">
 PDF page raster <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Render one page of a PDF to a PNG — the thumbnail a repository listing shows — and print the provenance a catalogue needs to record it as DERIVED: source, digest, page, geometry, renderer.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pdf-cover</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--slice-sqlite" data-fa-state="extracted" data-fa-gloss="">
+Per-slice SQLite builder <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. <code>--check</code> builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#slice-sqlite</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-tools--ig-ast-plan" data-fa-state="extracted" data-fa-gloss="">
 Plan an incremental IG build from a delta of changed files <span class="fa-gloss-status">candidate, extracted</span>
@@ -835,7 +877,7 @@ Replace inline Library content with URL references <span class="fa-gloss-status"
 Resolve a declared subgraph's content source <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Say where a declared subgraph gets its content — the checkout's own directory, or a declared repository branch (with its keying and its <code>special-branches.json</code> row) — after the instance config's <code>subgraphSources</code> override by id, and which layer answered. The same <code>declaredSubgraph</code> resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.</p>
+<p>Say where a declared subgraph gets its content — the checkout's own directory, a declared repository branch (with its keying), or a branch family (with its prefix, key and repository) — after the instance config's <code>subgraphSources</code> override by id, and which layer answered. The same <code>declaredSubgraph</code> resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#subgraph-resolve</code></a></p>
 </dd>
 </dl>
@@ -1200,6 +1242,20 @@ Wireframe check at web and mobile viewports <span class="fa-gloss-status">candid
 <dd>
 <p>Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records <code>script</code> entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#wireframe-check</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--witness-conformance" data-fa-state="extracted" data-fa-gloss="">
+Witness conformance report <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Check every <code>*.witness.json</code> in the folio's declared <code>computation-witness</code> directories against the two schemas in <code>schemas/computation-witness.ts</code>: the envelope every witness should meet (a failure is a malformed file) and the producer contract (a failure is a finding against the producer, grouped by the fields at fault). Also lists files that are not strict JSON, which Python's reader accepts and every other consumer rejects. Report-only: it never edits a witness, which is generator output.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#witness-conformance</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--witness-parity" data-fa-state="extracted" data-fa-gloss="">
+Witness reproduction check <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Re-run a computation witness's producer and say whether it reproduces the committed witness. Reads the command from <code>invocation.reproduce</code> (else <code>python3 &lt;scriptFile&gt;</code>) and the recorded package versions from <code>environment</code>; on a version mismatch it stops at <code>unknown</code>, since a different environment is not a reproduction test. Otherwise it runs the COMMITTED producer in a scratch git worktree, so the folio's own checkout is never written, and compares the result with the committed witness with run-specific fields (commit, timing, environment) masked at every depth. <code>pass</code>, <code>fail</code> (with the differing JSON paths), or <code>unknown</code> (mismatch, non-zero exit, timeout, no witness written).</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#witness-parity</code></a></p>
 </dd>
 </dl>
 

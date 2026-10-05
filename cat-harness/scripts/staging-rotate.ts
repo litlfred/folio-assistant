@@ -21,7 +21,13 @@
  * bounds the TOTAL, which is the quantity the limit is about.
  *
  * **Owner ruling, 2026-10-02:** *"for going forward, we should cap the maximum
- * number of previews (<= 10) and rotate old ones off."* That ruling is the
+ * number of previews (<= 10) and rotate old ones off."* **Amended 2026-10-04:**
+ * the cap is by SIZE, not count — *"Cap by size, not count"*, budget *"3gb"*.
+ * Previews had grown from ~88 MiB (2026-09-22) to 200–780 MB each, so ten of
+ * them was 3–5 GB and any one lasted an hour or two before rotating off; a
+ * count bounds the total only as well as preview size is stable, and it was
+ * not. The total is the quantity GitHub's limit is about, so the total is
+ * what is capped. The ruling is the
  * confirmation `deletion-requires-confirmation` asks for, given once for the
  * whole class rather than per preview. What the skill still asks of every
  * removal is a RECORD, and this script leaves three: a `removed` entry in the
@@ -94,18 +100,23 @@ import { join } from "node:path";
 import { RENDER_LOG_DIR, readRenderLog } from "../schemas/render-log.ts";
 import { readStagingPreview, retireStagingPreview, serializeStagingPreview } from "../schemas/staging-preview.ts";
 import { appendEntry, buildEntry } from "./render-log.ts";
-import { RETIRED_DIR, STAGING_PREFIX } from "./restore-staging.ts";
-import { SLUG_PATTERN } from "./staging-cleanup-preflight.ts";
+import { RETIRED_DIR, SLUG_PATTERN, STAGING_PREFIX } from "./restore-staging.ts";
 import { loadExisting } from "./staging-record.ts";
 
 /**
  * THE CAP — defined here and nowhere else. The workflow passes no number, so
  * there is no second copy to drift.
  *
- * Owner ruling 2026-10-02 (issue #1868): *"cap the maximum number of previews
- * (<= 10) and rotate old ones off."* The preview being staged counts toward it.
+ * The TOTAL size of every preview under `STAGING/`, in bytes as checked out
+ * (what Pages publishes, not what git stores). Owner ruling 2026-10-02
+ * (issue #1868) capped the COUNT at ten; amended 2026-10-04 to a size budget
+ * of *"3gb"*. Binary, 3 x 1024^3: every byte formatter in this repository
+ * divides by 1024, and a budget stated in decimal would print as "2.79 GB"
+ * beside the owner's 3 in the health report that checks it. The preview being staged counts
+ * toward it. GitHub's Pages limit (10 GB) covers the live site too, which is
+ * why the budget leaves most of it free.
  */
-export const MAX_PREVIEWS = 10;
+export const MAX_PREVIEW_BYTES = 3 * 1024 ** 3;
 
 /** The per-preview stamp, inside the preview directory. */
 export const STAGED_AT_FILE = ".staged-at";
@@ -139,12 +150,20 @@ export function isPreviewName(name: string): boolean {
 /**
  * Decide what to keep. Pure.
  *
- * `current` always keeps a slot, whether or not it is in `previews`. The other
- * `max - 1` slots go to the most recently updated; ties break by slug so two
- * runs over the same tree agree. Unknown ages sort oldest.
+ * `current` is always kept, whether or not it is in `previews`, and its bytes
+ * count first. The others are kept newest first while the running total stays
+ * within `budget`; the first that does not fit goes, and so does everything
+ * older than it. Strictly by recency, never by fit: keeping an older small
+ * preview over a newer large one would make rotation depend on size, and a
+ * reviewer could not tell from a preview's age whether it is still there.
+ * Ties break by slug so two runs over the same tree agree. Unknown ages sort
+ * oldest.
+ *
+ * A current preview larger than the whole budget on its own is still kept —
+ * it is what this run was asked to publish — and every other preview goes.
  */
-export function planRotation(previews: Preview[], current: string, max: number = MAX_PREVIEWS): RotationPlan {
-  if (!Number.isInteger(max) || max < 1) throw new Error(`the preview cap must be a positive integer, got ${max}`);
+export function planRotation(previews: Preview[], current: string, budget: number = MAX_PREVIEW_BYTES): RotationPlan {
+  if (!Number.isFinite(budget) || budget <= 0) throw new Error(`the preview budget must be a positive number of bytes, got ${budget}`);
   const cur = previews.filter((p) => p.slug === current);
   const others = previews
     .filter((p) => p.slug !== current)
@@ -154,8 +173,10 @@ export function planRotation(previews: Preview[], current: string, max: number =
       if (ta !== tb) return tb - ta;
       return a.slug < b.slug ? -1 : a.slug > b.slug ? 1 : 0;
     });
-  const slots = max - 1;
-  return { keep: [...cur, ...others.slice(0, slots)], remove: others.slice(slots) };
+  let total = cur.reduce((n, p) => n + p.bytes, 0);
+  let fit = 0;
+  while (fit < others.length && total + others[fit]!.bytes <= budget) total += others[fit++]!.bytes;
+  return { keep: [...cur, ...others.slice(0, fit)], remove: others.slice(fit) };
 }
 
 /** The latest `rendered`/`restored` time per slug, from every log file under `dir`. */
@@ -274,7 +295,8 @@ export interface RotateOptions {
   dir: string;
   current: string;
   now: string;
-  max?: number;
+  /** Bytes. Defaults to {@link MAX_PREVIEW_BYTES}; tests pass their own. */
+  budget?: number;
   git?: GitTime;
   run?: string;
 }
@@ -284,7 +306,7 @@ export interface RotateOptions {
  * a record for each. Returns the plan that was carried out.
  */
 export function rotate(o: RotateOptions): { plan: RotationPlan; lines: string[] } {
-  const max = o.max ?? MAX_PREVIEWS;
+  const budget = o.budget ?? MAX_PREVIEW_BYTES;
   const nowMs = Date.parse(o.now);
   if (Number.isNaN(nowMs)) throw new Error(`--now \`${o.now}\` is not a timestamp`);
   if (!isPreviewName(o.current)) throw new Error(`--current \`${o.current}\` is not a preview slug`);
@@ -292,9 +314,10 @@ export function rotate(o: RotateOptions): { plan: RotationPlan; lines: string[] 
   const curDir = join(o.dir, STAGING_PREFIX, o.current);
   if (existsSync(curDir)) writeFileSync(join(curDir, STAGED_AT_FILE), `${o.now}\n`);
 
-  const plan = planRotation(readPreviews(o.dir, o.git ?? gitLastCommit), o.current, max);
+  const plan = planRotation(readPreviews(o.dir, o.git ?? gitLastCommit), o.current, budget);
   const reason =
-    `rotated off: more than ${max} previews on gh-pages (owner ruling 2026-10-02, issue #1868); ` +
+    `rotated off: the previews on gh-pages came to more than ${human(budget)} ` +
+    `(owner ruling 2026-10-02, issue #1868, amended 2026-10-04 to a size budget); ` +
     `STAGING/${o.current} was staged and the least recently updated preview goes. ` +
     `The next push to its branch re-stages it.`;
   const lines: string[] = [];
@@ -366,10 +389,15 @@ if (import.meta.main) {
   try {
     const now = new Date().toISOString();
     const { plan, lines } = rotate({ dir, current, now, run: flag(argv, "run") });
+    const kept = plan.keep.reduce((n, p) => n + p.bytes, 0);
     console.log(
-      `staging-rotate: cap ${MAX_PREVIEWS}; ${plan.keep.length} kept, ${plan.remove.length} rotated off`,
+      `staging-rotate: budget ${human(MAX_PREVIEW_BYTES)}; ${plan.keep.length} kept (${human(kept)}), ` +
+        `${plan.remove.length} rotated off`,
     );
-    for (const p of plan.keep) console.log(`  keep STAGING/${p.slug}: ${age(p, Date.parse(now))} (${p.source})`);
+    if (kept > MAX_PREVIEW_BYTES) {
+      console.log(`::warning title=staging preview over budget::STAGING/${current} alone is ${human(kept)}, over the ${human(MAX_PREVIEW_BYTES)} budget; it is published and every other preview was rotated off`);
+    }
+    for (const p of plan.keep) console.log(`  keep STAGING/${p.slug}: ${age(p, Date.parse(now))} (${p.source}), ${human(p.bytes)}`);
     for (const l of lines) console.log(`::notice title=staging preview rotated off::${l}`);
     const out = flag(argv, "summary-out");
     if (out !== undefined) writeFileSync(out, lines.length === 0 ? "" : `${lines.join("\n")}\n`);

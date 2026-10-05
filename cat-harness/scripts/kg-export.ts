@@ -44,7 +44,7 @@
  * `_kg/` document, no QA sidecar. 0 no fatal finding · 1 a root field or a
  * term outside the `@context`, or a keyword/alias collision · 2 an unread
  * source (could not determine), an unknown flag, or a run that threw. It
- * accepts `--base-url` and `--instance`; `--out` and `--qa-root` are a
+ * accepts `--base-url`, `--instance` and `--scope`; `--out` and `--qa-root` are a
  * writer's flags and are refused.
  *
  * Distinct from `kg:export:check` below (bean `v556`), which compares the
@@ -85,14 +85,18 @@ import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
   artefactStub,
   defaultGraphKinds,
+  findInstanceRoot,
   graphKindIri,
   isPublishedDirectory,
   isPublishedGraphKind,
   isPublishedSchemaModule,
   isPublishedSkill,
+  forgeLocation,
   instanceRootsIn,
   readDeclaration,
   renderingPath,
+  siteDirFor,
+  UNPUBLISHED_GRAPH_KINDS,
 } from "../schemas/cat-harness.js";
 import { firstHeading, frontMatter } from "./front-matter.js";
 import { packageDirsIn } from "./skill-topics.js";
@@ -107,11 +111,13 @@ import {
   unpublishedSkills,
   corpusScopeFor,
   roleGraphFor,
+  type CorpusScope,
 } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
 import { loadSpecs } from "./external-schemas.js";
 import { declaredNamespaces } from "../schemas/external-schema.js";
 import { toolsOf } from "../tools/discover.js";
+import { declaresOwnCanonical } from "./instance-exports.js";
 import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
 import {
@@ -173,8 +179,8 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  * Two readers with two copies of "where skills live" is the exact failure
  * `known-skills.ts` was extracted to prevent, restated one module along.
  */
-function skillMdDirs(root: string = ROOT): string[] {
-  return knownSkillDirs(root, corpusScopeFor(root)).map((p) => p.join("/"));
+function skillMdDirs(root: string = ROOT, scope: CorpusScope = corpusScopeFor(root)): string[] {
+  return knownSkillDirs(root, scope).map((p) => p.join("/"));
 }
 
 /**
@@ -218,8 +224,8 @@ const SKILL_IO_DIR = "schemas/skills";
  * Reading the declaration needs none: an instance's diagrams are the ones it
  * DECLARES, and a directory it does not declare is not its graph.
  */
-function findBpmnDirs(root: string = ROOT): string[] {
-  return workflowDirs(root, corpusScopeFor(root)).map((abs) => relative(root, abs));
+function findBpmnDirs(root: string = ROOT, scope: CorpusScope = corpusScopeFor(root)): string[] {
+  return workflowDirs(root, scope).map((abs) => relative(root, abs));
 }
 
 
@@ -227,7 +233,7 @@ function findBpmnDirs(root: string = ROOT): string[] {
 
 /** The namespace a declared graph kind's nodes belong in. */
 /** A kind's individual, `<layer ns>graphKind/<name>` — the registry's one answer. */
-function graphKindId(kindName: string): string {
+export function graphKindId(kindName: string): string {
   return graphKindIri(kindName, defaultGraphKinds.get(kindName));
 }
 
@@ -397,6 +403,13 @@ export function buildContext(): Record<string, unknown> {
     // "same underlying thing, different presentation" and merges nothing.
     alternateOf: { "@id": `${PROV}alternateOf`, ...link },
     canonicalDocument: { "@id": termIri("canonicalDocument"), ...link },
+    // A TOMBSTONE's two terms — see `tombstonesFor`; remove with it, one
+    // release after the split (bean `4ak5` item 2). The standard properties,
+    // as `ns-export` and `glossary-export` already publish a retired term:
+    // `isReplacedBy` is a LINK to the same node in its owning instance's
+    // document, which is the whole use of keeping the old `@id`.
+    deprecated: { "@id": `${STANDARD_PREFIXES.owl}deprecated`, "@type": `${XSD}boolean` },
+    isReplacedBy: { "@id": `${STANDARD_PREFIXES.dcterms}isReplacedBy`, ...link },
 
     // ── The standards a graph is written in, and what validates it ──────
     //
@@ -497,6 +510,17 @@ export function buildContext(): Record<string, unknown> {
     decisionRef: termIri("decisionRef"),
     decidedBy: { "@id": termIri("decidedBy"), ...link },
     hitPolicy: termIri("hitPolicy"),
+    // A call activity's target, as a LINK to the Process node it invokes —
+    // BPMN's own `calledElement`, so the standard property rather than a
+    // minted one. Written only when that Process is in this graph, for
+    // `decidedBy`'s reason: a call to a process nobody declares is a diagram
+    // defect (`kg-qa`'s to report), not a link to mint (bean `ax6r`).
+    calledElement: { "@id": propertyIri("calledElement"), ...link },
+    // The SVG `render:bpmn` drew from a diagram, and the diagram on its forge.
+    // LINKS, both: each is a URL a reader opens, which is what the workflow
+    // page does with them (bean `ax6r`).
+    depiction: { "@id": termIri("depiction"), ...link },
+    sourceUrl: { "@id": termIri("sourceUrl"), ...link },
     // WHERE A NODE CAME FROM, and the two senses are not one term. A Process
     // carries the `.bpmn` path it was loaded from; a Role carries the string
     // `role-registry` (and a lane-derived Role, until #1168 B9b, carried
@@ -990,12 +1014,18 @@ interface SkillFacts {
   outputSchema?: string;
 }
 
-function collectSkills(doc: string, base: string, problems: string[], root: string = ROOT): Node[] {
+function collectSkills(
+  doc: string,
+  base: string,
+  problems: string[],
+  root: string = ROOT,
+  scope: CorpusScope = corpusScopeFor(root),
+): Node[] {
   const byName = new Map<string, SkillFacts>();
   const get = (n: string): SkillFacts =>
     byName.get(n) ?? (byName.set(n, { packages: [] }), byName.get(n)!);
 
-  for (const dir of skillMdDirs(root)) {
+  for (const dir of skillMdDirs(root, scope)) {
     const abs = join(root, dir);
     if (!existsSync(abs)) continue; // A package this instance does not carry.
     for (const f of readdirSync(abs)) {
@@ -1055,7 +1085,7 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
     const m = new RegExp(`^${SKILL_IO_DIR}/([^/]+)/(input|output)\\.schema\\.json$`).exec(ref);
     return m ? skillIoIri(base, m[1]!, m[2]!) : undefined;
   };
-  for (const c of skillContracts(root).values()) {
+  for (const c of skillContracts(root, scope).values()) {
     const s = get(c.skill);
     if (c.input !== undefined) s.inputSchema = contractIri(c.instanceRoot, c.input);
     if (c.output !== undefined) s.outputSchema = contractIri(c.instanceRoot, c.output);
@@ -1293,7 +1323,7 @@ function packageIdFor(dirRelToRoot: string): string {
   }
 }
 
-function collectPackages(doc: string, problems: string[]): Node[] {
+function collectPackages(doc: string, problems: string[], scope: CorpusScope = corpusScopeFor(ROOT)): Node[] {
   const nodes: Node[] = [];
 
   // Every directory that holds skills is a package node, manifest or not.
@@ -1306,7 +1336,7 @@ function collectPackages(doc: string, problems: string[]): Node[] {
   // the whole bug: two directories wanting one id was indistinguishable from
   // the same directory seen twice.
   const claimedBy = new Map<string, string>();
-  for (const dir of skillMdDirs()) {
+  for (const dir of skillMdDirs(ROOT, scope)) {
     if (!existsSync(join(ROOT, dir))) continue;
     const id = packageIdFor(dir);
     const prior = claimedBy.get(id);
@@ -1505,9 +1535,50 @@ async function collectProcesses(
    * behaviour and the safe default for a sink nobody is reading.
    */
   notes?: string[],
+  /**
+   * The base of the SITE that serves this instance's pictures, when the
+   * caller has one. With it, a Process whose diagram `render:bpmn` has drawn
+   * into that site carries the SVG as `depiction`; without it (a fixture, an
+   * instance outside this repository) the link is simply absent, never
+   * composed against a base nobody declared.
+   */
+  base?: string,
+  /** Whose directories are read — see {@link ExportOptions.scope}. */
+  scope: CorpusScope = corpusScopeFor(root),
 ): Promise<Node[]> {
   const nodes: Node[] = [];
-  const dirs = findBpmnDirs(root);
+  const dirs = findBpmnDirs(root, scope);
+  // Where a diagram can be read on its forge, from the REPOSITORY's own
+  // declaration (`repository: owner/name`) — never from the checkout's
+  // remote, which differs by clone and would make the committed subgraph
+  // files differ with it. A file in a submodule resolves to the submodule's
+  // repository.
+  // The CHECKOUT, not `dirname`: for the root instance `dirname` is outside it (g43f).
+  const repoRoot = checkoutRootFor(root);
+  const repoName = (() => {
+    try {
+      return readDeclaration(repoRoot)?.repository;
+    } catch {
+      return undefined;
+    }
+  })();
+  const forgeOf = (abs: string): string | undefined => {
+    if (!repoName) return undefined;
+    const at = forgeLocation(relative(repoRoot, abs).split(sep).join("/"), `https://github.com/${repoName}`, repoRoot);
+    return `${at.repoUrl.replace(/\.git$/, "")}/blob/main/${at.path.split("/").map(encodeURIComponent).join("/")}`;
+  };
+  // `render:bpmn` draws every diagram in the checkout into THIS instance's
+  // site, the one the deploy serves. It was asked only of this instance's
+  // export while that export carried every stacked instance's processes;
+  // since the split (bean `4ak5` item 2) those are in their owners'
+  // documents, which pass this site's base so their pictures stay linked —
+  // 25 diagrams' worth on the workflow page.
+  const svgDir = base !== undefined ? join(ROOT, siteDirFor(ROOT), "assets", "img", "workflows") : undefined;
+  const depictionOf = (abs: string): string | undefined => {
+    if (svgDir === undefined) return undefined;
+    const name = `${basename(abs, ".bpmn")}.svg`;
+    return existsSync(join(svgDir, name)) ? `${base!.replace(/\/+$/, "")}/assets/img/workflows/${name}` : undefined;
+  };
   // Zero diagrams is a determined empty ONLY if we looked. Say which.
   //
   // AND AN INSTANCE THAT DECLARES NO `kg` DIRECTORY HAS NOTHING TO LOOK IN.
@@ -1581,7 +1652,7 @@ async function collectProcesses(
   // Reading the DECLARATION is the only way to compare what was claimed
   // against what is there, because the filtered view has already thrown the
   // discrepancy away.
-  if (dirs.length === 0 && kgDirectories(root, corpusScopeFor(root)).length > 0) {
+  if (dirs.length === 0 && kgDirectories(root, scope).length > 0) {
     (notes ?? problems).push(
       `no directory containing .bpmn files was found under ${relative(ROOT, root) || "."}`,
     );
@@ -1689,8 +1760,22 @@ async function collectProcesses(
         "@id": makeIri(doc, "process", m.id),
         "@type": termIri("Process"),
         name: m.name,
+        // The diagram's OWN `bpmn:documentation` — what the process is FOR —
+        // whole as `description` and its first sentence as `summary`, the two
+        // naming keys every other node already uses (bean `ax6r`). The
+        // workflow page's row text is this, so a sentence about a process is
+        // written once, in the process.
+        //
+        // A text that NAMES an unpublished graph kind is not carried — the
+        // owner's 2026-09-19 rule that references to `fsh-guts` are stripped
+        // before publication covers prose as much as edges. The first
+        // sentence is kept when it alone is clean, so the row still says what
+        // the process is for (`sample-import` is the live case).
+        ...publishableDocumentation(m.documentation),
         enforcement: m.enforcement,
         sourcePath: relative(root, m.source),
+        sourceUrl: forgeOf(m.source),
+        depiction: depictionOf(m.source),
         startNode: m.startNodes.map((n) => makeIri(doc, "process", `${m.id}/node/${n}`)),
         nodeCount: m.nodes.size,
         flowCount: m.flows.size,
@@ -1759,6 +1844,8 @@ async function collectProcesses(
           // move a published term, and it is what a reader needs when the
           // link is absent because the table was not found.
           decidedBy: decidedBy(m.source, n.decisionRef),
+          // Pruned below when the called process is not in this graph.
+          calledElement: n.calledElement === undefined ? undefined : makeIri(doc, "process", n.calledElement),
           incoming: n.incoming.map((f) => makeIri(doc, "process", `${m.id}/flow/${f}`)),
           outgoing: n.outgoing.map((f) => makeIri(doc, "process", `${m.id}/flow/${f}`)),
         });
@@ -1768,7 +1855,31 @@ async function collectProcesses(
     }
   }
   }
+  // A call to a process this graph does not hold stays out of it rather than
+  // becoming a dangling link — `Process_MergeRefusal`, called and defined
+  // nowhere, is the live case. Resolved after every diagram is read, because a
+  // call may name a process in a file read later.
+  const processIris = new Set(nodes.filter((n) => n["@type"] === termIri("Process")).map((n) => n["@id"]));
+  for (const n of nodes) {
+    if (typeof n.calledElement === "string" && !processIris.has(n.calledElement)) delete (n as Record<string, unknown>).calledElement;
+  }
   return nodes;
+}
+
+/** `summary` and `description` from a diagram's documentation, minus any text naming an unpublished graph kind. */
+function publishableDocumentation(doc: string | undefined): { summary?: string; description?: string } {
+  if (!doc) return {};
+  const clean = (t: string): boolean => !UNPUBLISHED_GRAPH_KINDS.some((k) => t.includes(k));
+  const summary = firstSentence(doc);
+  return { ...(clean(summary) ? { summary } : {}), ...(clean(doc) ? { description: doc } : {}) };
+}
+
+/** The first sentence of a longer text — a node's `summary` when only a body is authored. */
+export function firstSentence(s: string, max = 260): string {
+  const one = s.replace(/\s+/g, " ").trim();
+  const stop = one.search(/\.\s|\.$/);
+  const cut = stop > 0 ? one.slice(0, stop + 1) : one;
+  return cut.length > max ? cut.slice(0, max - 1).trimEnd() + "…" : cut;
 }
 
 /**
@@ -1818,7 +1929,19 @@ async function collectProcesses(
  * reported defect into a link that merely 404s later, which is the harder
  * failure to find. Only a skill some instance DOES declare is re-homed.
  */
-function skillHome(base: string, ownDoc: string, skillId: string): string {
+/** One answer per skill per build: roles and Tools ask about the same names many times. */
+const skillHomes = new Map<string, string>();
+
+function skillHome(base: string, ownDoc: string, skillId: string, scope: CorpusScope = corpusScopeFor(ROOT)): string {
+  const key = `${base}\0${ownDoc}\0${scope}\0${skillId}`;
+  const hit = skillHomes.get(key);
+  if (hit !== undefined) return hit;
+  const home = skillHomeUncached(base, ownDoc, skillId, scope);
+  skillHomes.set(key, home);
+  return home;
+}
+
+function skillHomeUncached(base: string, ownDoc: string, skillId: string, scope: CorpusScope): string {
   // THIS DOCUMENT WINS WHENEVER IT HAS THE SKILL, and that check has to come
   // first rather than fall out of iteration order.
   //
@@ -1829,16 +1952,19 @@ function skillHome(base: string, ownDoc: string, skillId: string): string {
   // because those instances declare ids cat-harness also declares, and the
   // published-paths walk in `kg-export.test.ts` caught it as two documents
   // the deploy does not write.
-  if (knownSkills(ROOT, corpusScopeFor(ROOT)).has(skillId)) return ownDoc;
+  if (knownSkills(ROOT, scope).has(skillId)) return ownDoc;
   for (const instance of instanceRootsIn(repoRootFor(ROOT))) {
     if (resolve(instance) === resolve(ROOT)) continue;
     if (!knownSkills(instance).has(skillId)) continue;
-    return exportIdentity({ baseUrl: base, instanceRoot: instance }).docIri;
+    // `publishedIdentity`, not `exportIdentity` with this base: an instance
+    // that declares its own `canonicalUrl` is published under it, so passing
+    // ours named `<base>/<stub>.jsonld`, a path nothing writes (bean `4ak5`).
+    return publishedIdentity(instance, base || undefined).docIri;
   }
   return ownDoc;
 }
 
-function collectTools(doc: string, base: string, problems: string[]): Node[] {
+function collectTools(doc: string, base: string, problems: string[], scope: CorpusScope = corpusScopeFor(ROOT)): Node[] {
   let defs;
   try {
     // The SAME base the document is published against — see tools/index.ts.
@@ -1861,7 +1987,7 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
     // an environment descriptor (`{ runtime: ["go"], network: true }`) whose
     // values are not capability ids. Two relations, two terms.
     requirements: t.requires,
-    satisfies: t.satisfies.map((k) => makeIri(skillHome(base, doc, k), "skill", k)),
+    satisfies: t.satisfies.map((k) => makeIri(skillHome(base, doc, k, scope), "skill", k)),
     // `satisfiesSkillNames` was here. REMOVED as denormalised: every
     // `satisfies` link lands on a Skill node carrying that same name, and none
     // of them dangles — see {@link skillHome} for the ones that land in
@@ -1910,8 +2036,8 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
  * Tool keeps an artefact true; this says which Tool keeps THIS module's
  * artefact true, which is the question a reader of a schema node actually has.
  */
-function collectSchemas(doc: string, base: string): Node[] {
-  const audit = auditSchemaNodes(ROOT);
+function collectSchemas(doc: string, base: string, scope: CorpusScope = "checkout"): Node[] {
+  const audit = auditSchemaNodes(ROOT, scope);
 
   // Tool → artefact, inverted once so each schema node can name its keeper.
   const keeper = new Map<string, string[]>();
@@ -2083,7 +2209,20 @@ function linkSchemas(graph: Node[], root: string = ROOT): void {
  * activity's `performedBy` reaches the role here through its lane's
  * `roleRef`. Lane-derived Roles, keyed by lane name, gave one role two nodes.
  */
-function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
+function collectDeclaredRoles(
+  doc: string,
+  root: string = ROOT,
+  scope: CorpusScope = corpusScopeFor(root),
+  /**
+   * The publication base, when the caller has one — and with it a role's skill
+   * held by ANOTHER instance links into that instance's document
+   * ({@link skillHome}), as a Tool's `satisfies` does. Only for this
+   * instance: `skillHome` asks this instance's corpus first. In the instance
+   * scope this is what keeps `qc-reviewer → ig-ast-delta` from dangling
+   * (measured: 3 such links the day the split landed, bean `4ak5`).
+   */
+  base?: string,
+): Node[] {
   // EVERY declared `kg` root, not the literal `skills/` and not the first one
   // that answers. `kgRoots` is explicit that taking the first is the `dh4f`
   // defect arriving through the helper written to prevent it: a topical
@@ -2094,8 +2233,8 @@ function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
   const seen = new Set<string>();
   // The checkout's view on the platform's own run (placement PR0b): a
   // dependent's extension adds skills to a role here, by id.
-  for (const kgRoot of corpusScopeFor(root) === "checkout" ? [root] : kgRoots(root)) {
-    const g = corpusScopeFor(root) === "checkout" ? roleGraphFor(root, "checkout") : readRoleGraph(kgRoot);
+  for (const kgRoot of scope === "checkout" ? [root] : kgRoots(root, scope)) {
+    const g = scope === "checkout" ? roleGraphFor(root, "checkout") : readRoleGraph(kgRoot);
     for (const r of g?.roles ?? []) {
       if (seen.has(r.id)) continue;
       seen.add(r.id);
@@ -2119,7 +2258,9 @@ function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
     actedUpon: r.actedUpon,
     judgementOnly: r.judgementOnly,
     // Links, so a consumer can walk role -> skill without string surgery.
-    hasSkill: (r.skills ?? []).map((n) => makeIri(doc, "skill", n)),
+    hasSkill: (r.skills ?? []).map((n) =>
+      makeIri(base !== undefined && resolve(root) === resolve(ROOT) ? skillHome(base, doc, n, scope) : doc, "skill", n),
+    ),
   }));
 }
 
@@ -2365,11 +2506,16 @@ export async function collectInstanceNodes(
   doc: string,
   base: string,
   problems: string[],
+  /**
+   * The base of the site that serves this checkout's diagram SVGs — this
+   * instance's — when the caller publishes there. See `collectProcesses`.
+   */
+  siteBase?: string,
 ): Promise<{ nodes: Node[]; omitted: readonly string[]; notes: string[] }> {
   const notes: string[] = [];
   const nodes = [
     ...collectSkills(doc, base, problems, root),
-    ...(await collectProcesses(doc, problems, root, notes)),
+    ...(await collectProcesses(doc, problems, root, notes, siteBase)),
     ...collectGraphKinds(root),
     ...collectDeclaredRoles(doc, root),
     ...collectDeclaration(doc, problems, root),
@@ -2498,6 +2644,27 @@ export interface ExportOptions {
    * bootstrap's graph and the link has to name bootstrap's document.
    */
   instanceRoot?: string;
+  /**
+   * Whose directories the HOST's collectors read — bean `4ak5` item 2.
+   *
+   * `"instance"`, the default, is what this instance PUBLISHES. Owner ruling
+   * 2026-10-05 (option B, the full split): `cat-harness.jsonld` holds
+   * cat-harness's own declared directories, and every instance stacked on it
+   * is in that instance's own document (`instance-exports.ts`). Measured the
+   * day it landed: 825 of 3369 nodes were other instances' — 495 of them
+   * folio-assistant-core's — under `cat-harness.jsonld#…` fragments. Each
+   * `@id` the checkout graph had and this one lacks is answered by a
+   * tombstone ({@link tombstonesFor}), for one release.
+   *
+   * `"checkout"` is {@link corpusScopeFor}'s answer for this instance, and is
+   * for a caller that wants the corpus-wide graph rather than the published
+   * document — `gen-slice-sqlite`'s `kg` slice says so at its call site. It
+   * carries no tombstones: nothing is missing from it.
+   *
+   * Ignored for a foreign instance, which is built from the generic
+   * collectors in its own scope already.
+   */
+  scope?: CorpusScope;
 }
 
 /** Filename stem and document IRI for this instance's published graph. */
@@ -2732,6 +2899,142 @@ export function exportIdentity(opts: ExportOptions = {}): {
 }
 
 /**
+ * The identity an instance's PUBLISHED document has — {@link exportIdentity}
+ * with `baseUrl` passed exactly when the deploy passes it.
+ *
+ * `instance-exports.ts` gives an instance that declares its own
+ * `canonicalUrl` no `--base-url` ({@link declaresOwnCanonical}), so its
+ * `@id`s are minted against that whatever site builds it. Anything here that
+ * names a node in ANOTHER instance's document has to mint the same way, or it
+ * names a document nobody writes: `skillHome` passed this site's base and got
+ * `<site>/smart-base.jsonld`, which the deploy never writes (measured
+ * 2026-10-05, bean `4ak5` item 2).
+ */
+export function publishedIdentity(instanceRoot: string, baseUrl?: string): ReturnType<typeof exportIdentity> {
+  const own = declaresOwnCanonical(readDeclaration(instanceRoot));
+  return exportIdentity({ instanceRoot, ...(baseUrl !== undefined && !own ? { baseUrl } : {}) });
+}
+
+// ── TOMBSTONES — ONE RELEASE ONLY; REMOVE IN THE NEXT (bean `4ak5` item 2) ──
+//
+// Owner ruling 2026-10-05 (option B): `cat-harness.jsonld` is built in
+// instance scope, and every `@id` the checkout-scope document had that this
+// one lacks keeps a node for one release:
+//
+//   { "@id": <old>, "owl:deprecated": true,
+//     "dcterms:isReplacedBy": { "@id": <the same node in its owner's document> } }
+//
+// — written `deprecated` / `isReplacedBy` under the context, which maps them
+// to exactly those IRIs (see `buildContext`). GitHub Pages cannot redirect a
+// FRAGMENT, so without this a consumer holding `cat-harness.jsonld#skill/x`
+// would fetch the document and find nothing at the fragment, with nothing to
+// say where it went. The precedent is the vocabulary's own retired terms
+// (`schemas/vocabulary.ts` `replacedBy`) and a role's former names
+// (`schemas/role-graph.ts` `formerNames`).
+//
+// Removal: delete `tombstonesFor`, its call in `buildExport`, and the two
+// context terms. `kg-export.test.ts` holds every tombstone to a replacement
+// the deploy writes, so the release that drops them only drops that test.
+
+/** What {@link tombstonesFor} found: the nodes, and anything it could not place. */
+interface Tombstones {
+  nodes: Node[];
+  problems: string[];
+}
+
+const tombstoneMemo = new Map<string, Promise<Tombstones>>();
+
+/**
+ * One tombstone per `@id` the CHECKOUT-scope document mints and `kept` does
+ * not hold.
+ *
+ * Only the collectors whose answer depends on the scope are re-run —
+ * skills, packages, processes, roles and schema modules; the rest read this
+ * instance alone in either scope. `kg-export.test.ts` compares two whole builds, so a collector
+ * that becomes scope-dependent later and is not added here fails there rather
+ * than leaving an `@id` with no forwarding address.
+ *
+ * The replacement is the node with the SAME fragment in its owner's published
+ * document, read from that instance's generic collectors — the ones
+ * `instance-exports.ts` publishes it with. A node no owner mints (a
+ * `SkillPackage` or a `Schema`: those collectors are instance-bound, so no
+ * other instance's document carries one) is forwarded to its owner's
+ * DOCUMENT, found by its path. A node neither finds, or two owners claim, is a problem:
+ * a tombstone that points nowhere is a 404 with extra steps.
+ */
+async function tombstonesFor(kept: ReadonlySet<string>, docIri: string, base: string, baseUrl: string | undefined): Promise<Tombstones> {
+  const key = `${docIri}\0${base}\0${baseUrl ?? ""}\0${kept.size}`;
+  let hit = tombstoneMemo.get(key);
+  if (hit === undefined) {
+    hit = computeTombstones(kept, docIri, base, baseUrl);
+    tombstoneMemo.set(key, hit);
+  }
+  return hit;
+}
+
+async function computeTombstones(kept: ReadonlySet<string>, docIri: string, base: string, baseUrl: string | undefined): Promise<Tombstones> {
+  const problems: string[] = [];
+  // A source the CHECKOUT build could not read is a hole in the tombstone
+  // set, so it is reported — prefixed, since the instance build read fine.
+  const corpusProblems: string[] = [];
+  const checkout: Node[] = [
+    ...collectSkills(docIri, base, corpusProblems, ROOT, "checkout"),
+    ...collectPackages(docIri, corpusProblems, "checkout"),
+    ...(await collectProcesses(docIri, corpusProblems, ROOT, [], base, "checkout")),
+    ...collectDeclaredRoles(docIri, ROOT, "checkout"),
+    ...collectSchemas(docIri, base, "checkout"),
+  ];
+  for (const p of corpusProblems) problems.push(`tombstones: the checkout-scope corpus — ${p}`);
+  const dropped = new Map<string, Node>();
+  for (const n of checkout) {
+    const id = String(n["@id"]);
+    if (!kept.has(id) && id.startsWith(`${docIri}#`)) dropped.set(id, n);
+  }
+  if (dropped.size === 0) return { nodes: [], problems };
+
+  // Fragment → the IRIs owners publish it under. An owner's own unreadable
+  // source is that export's problem, reported by it and gated by
+  // `check:published-instance-exports`; here it can only mean a missing
+  // owner, which the path fallback and the "no home" problem below catch.
+  const owners = new Map<string, string[]>();
+  for (const inst of instanceRootsIn(repoRootFor(ROOT))) {
+    if (resolve(inst) === resolve(ROOT)) continue;
+    const id = publishedIdentity(inst, baseUrl);
+    const { nodes } = await collectInstanceNodes(inst, id.docIri, id.base, []);
+    for (const n of nodes) {
+      const iri = String(n["@id"]);
+      if (!iri.startsWith(`${id.docIri}#`)) continue;
+      const frag = iri.slice(id.docIri.length + 1);
+      owners.set(frag, [...(owners.get(frag) ?? []), iri]);
+    }
+  }
+
+  const nodes: Node[] = [];
+  for (const [id, n] of [...dropped].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))) {
+    const claims = owners.get(id.slice(docIri.length + 1)) ?? [];
+    let to: string | undefined;
+    if (claims.length > 1) {
+      problems.push(`tombstones: ${id} is minted by ${claims.length} instances (${claims.join(", ")}) — no single replacement`);
+      continue;
+    }
+    if (claims.length === 1) to = claims[0];
+    else {
+      const path = [n.path, n.instructionsPath, n.sourcePath, n.module].find((v): v is string => typeof v === "string" && v !== "");
+      const inst = path === undefined ? undefined : findInstanceRoot(resolve(ROOT, path));
+      if (inst !== undefined && resolve(inst) !== resolve(ROOT)) to = publishedIdentity(inst, baseUrl).docIri;
+    }
+    if (to === undefined) {
+      problems.push(`tombstones: ${id} left this document and no instance publishes it — nothing to forward it to`);
+      continue;
+    }
+    // No `@type`, by the ruling's shape: the node is no longer anything
+    // here, and a type would put it back in every per-type count and view.
+    nodes.push({ "@id": id, deprecated: true, isReplacedBy: to } as unknown as Node);
+  }
+  return { nodes, problems };
+}
+
+/**
  * The declared Subgraph node a PUBLISHER points at — its absolute IRI in the
  * declaring instance's published document, and its resolved content source in
  * the JSON-LD form this exporter writes on that node (bean `l4ay`,
@@ -2829,27 +3132,36 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   // of that seam. So the branch is not a special case bolted on here — it is
   // the seam being used for the first time by something other than a test.
   const foreign = opts.instanceRoot !== undefined && resolve(opts.instanceRoot) !== resolve(ROOT);
+  const scope: CorpusScope = opts.scope ?? "instance";
   // Audited over the instance being exported, not over this one. For a
   // foreign instance that is honestly empty (bootstrap declares no
   // `schemas/`), where a hand-built empty object would be asserting the same
   // thing without having looked.
-  const schemaAudit = auditSchemaNodes(foreign ? opts.instanceRoot! : ROOT);
+  const schemaAudit = foreign ? auditSchemaNodes(opts.instanceRoot!) : auditSchemaNodes(ROOT, scope);
   const instanceOnly = foreign
-    ? await collectInstanceNodes(opts.instanceRoot!, docIri, base, problems)
+    ? await collectInstanceNodes(
+        opts.instanceRoot!,
+        docIri,
+        base,
+        problems,
+        // The pictures are on THIS site — the host's base, which for an
+        // instance with its own `canonicalUrl` is not `base`.
+        exportedInstancePublishedHere ? exportIdentity({ baseUrl: opts.baseUrl }).base || undefined : undefined,
+      )
     : undefined;
   const graph = (
     instanceOnly
       ? instanceOnly.nodes
       : [
-          ...collectSkills(docIri, base, problems),
+          ...collectSkills(docIri, base, problems, ROOT, scope),
           ...collectRegistryNodes(docIri, problems),
-          ...collectPackages(docIri, problems),
-          ...(await collectProcesses(docIri, problems)),
-          ...collectTools(docIri, base, problems),
-          ...collectSchemas(docIri, base),
+          ...collectPackages(docIri, problems, scope),
+          ...(await collectProcesses(docIri, problems, ROOT, undefined, base, scope)),
+          ...collectTools(docIri, base, problems, scope),
+          ...collectSchemas(docIri, base, scope),
           ...collectExternalSchemas(docIri),
           ...collectGraphKinds(),
-          ...collectDeclaredRoles(docIri),
+          ...collectDeclaredRoles(docIri, ROOT, scope, base),
           ...collectDeclaration(docIri, problems),
           ...collectDeclaredAssets(docIri, problems),
         ]
@@ -2880,6 +3192,16 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
       n.alternateOf = `${canonicalIri}#${id.slice(docIri.length + 1)}`;
     }
   }
+
+  // Tombstones last, after `alternateOf` and the subgraph stamp, so a
+  // tombstone is exactly the ruling's three fields; and kept out of `counts`
+  // and `danglingLinks` below, so a link to a node that LEFT still reads as
+  // dangling rather than as resolved by its own forwarding address.
+  const tombstones =
+    !foreign && scope === "instance"
+      ? await tombstonesFor(new Set(graph.map((n) => String(n["@id"]))), docIri, base, opts.baseUrl)
+      : { nodes: [], problems: [] };
+  problems.push(...tombstones.problems);
 
   // §3.4. Computed over the instance being EXPORTED, not over this one — a
   // foreign instance's document states that instance's dependency set, and
@@ -2920,12 +3242,12 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     ...dependsOnFields,
     counts,
     problems,
-    undeclaredTerms: undeclaredTerms(graph, buildContext()),
+    undeclaredTerms: undeclaredTerms([...graph, ...tombstones.nodes], buildContext()),
     undeclaredSchemaModules: [
       ...schemaAudit.undeclared.map((m) => ({ module: m.module, why: "no-tag" as const })),
       ...schemaAudit.reasonless.map((m) => ({ module: m.module, why: "none-without-reason" as const })),
     ],
-    "@graph": graph,
+    "@graph": [...graph, ...tombstones.nodes],
   };
 }
 
@@ -2995,13 +3317,24 @@ export function judgeKgExport(f: KgExportFindings): Judgement {
   });
 }
 
+/**
+ * `--scope <instance|checkout>` — {@link ExportOptions.scope}. Absent is the
+ * default (`instance`, the published document); any other value is a usage
+ * error rather than a silent default, since the two build different graphs.
+ */
+function scopeFlag(v: string | undefined): CorpusScope | undefined {
+  if (v === undefined || v === "instance" || v === "checkout") return v;
+  console.error(`--scope must be \`instance\` or \`checkout\`, not \`${v}\``);
+  process.exit(2);
+}
+
 if (import.meta.main && process.argv.includes("--judge")) {
   // Judge mode: build the export in memory, judge it, write NOTHING — neither
   // `_kg/<stub>.jsonld` nor the QA sidecar (bean `bo44`). `--out` and
   // `--qa-root` are a writer's flags and are refused here.
   const GATE = "kg:export:judge";
   const argv = process.argv.slice(2);
-  const usage = judgeUsage(GATE, argv, ["--judge", "--base-url", "--instance"]);
+  const usage = judgeUsage(GATE, argv, ["--judge", "--base-url", "--instance", "--scope"]);
   if (usage !== undefined) process.exit(usage);
   const arg = (flag: string): string | undefined => {
     const i = argv.indexOf(flag);
@@ -3010,8 +3343,9 @@ if (import.meta.main && process.argv.includes("--judge")) {
   try {
     const baseUrl = arg("--base-url") ?? process.env.KG_BASE_URL;
     const instanceRoot = arg("--instance");
+    const scope = scopeFlag(arg("--scope"));
     const { stub, docPath } = exportIdentity({ baseUrl, instanceRoot });
-    const data = await buildExport({ baseUrl, instanceRoot });
+    const data = await buildExport({ baseUrl, instanceRoot, scope });
     const published = { ...publishedDocument(data), ...stagingFields() };
     const rootUndeclared = undeclaredRootTerms(published as unknown as Record<string, unknown>, data["@context"]);
     const collisions = keywordCollisions(data["@graph"]);
@@ -3114,7 +3448,10 @@ async function sidecarMode(mode: "check" | "write", baseUrl: string | undefined)
     for (const s of subjects) {
       const out = join(tmp, s.stem);
       const args = ["run", fileURLToPath(import.meta.url), "--out", join(out, "doc.jsonld"), "--qa-root", out];
+      // The host's sidecar describes the PUBLISHED document, so it is built
+      // in the scope the deploy builds it in (bean `4ak5` item 2).
       if (s.instance) args.push("--instance", s.instance);
+      else args.push("--scope", "instance");
       if (baseUrl) args.push("--base-url", baseUrl);
       spawnSync("bun", args, { cwd: repoRootFor(ROOT), encoding: "utf-8" });
       const fresh = readQaResult(qaResultPath(out, s.stem));
@@ -3197,6 +3534,10 @@ if (import.meta.main) {
   // the producer still writes the committed sidecar, and only a caller that
   // says otherwise gets a different destination.
   const qaRoot = arg("--qa-root") ?? ROOT;
+  // `--scope` — see {@link ExportOptions.scope}. The deploy says `instance`
+  // aloud although it is the default, so the published document's scope is
+  // read off the workflow rather than off this file (bean `4ak5` item 2).
+  const scope = scopeFlag(arg("--scope"));
   // Bean `v556` — see `sidecarMode`. Neither writes the JSON-LD document.
   if (process.argv.includes("--check") || process.argv.includes("--sidecars")) {
     process.exit(await sidecarMode(process.argv.includes("--check") ? "check" : "write", baseUrl));
@@ -3213,7 +3554,7 @@ if (import.meta.main) {
   // one level up — and the stale pre-move copy at the old path made it look
   // fine locally.
 const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
-  const data = await buildExport({ baseUrl, instanceRoot });
+  const data = await buildExport({ baseUrl, instanceRoot, scope });
 
   mkdirSync(dirname(out), { recursive: true });
   // The staging stamp, from the same function `harness-schema-export` uses, so

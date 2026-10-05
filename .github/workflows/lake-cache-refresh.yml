@@ -162,7 +162,7 @@ jobs:
             --push
 
   cleanup:
-    name: Prune orphan-branch family (keep 2 per package)
+    name: Report prune candidates (keep 2 per package) - never deletes
     needs: [setup, refresh]
     if: always() && github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -172,13 +172,24 @@ jobs:
           submodules: true
           fetch-depth: 0
 
-      - name: List + prune cat/folio-assistant-sci/lake-cache/*, cat-lake-cache/* and lake-cache/* branches
+      - name: List prune candidates in cat/folio-assistant-sci/lake-cache/*, cat-lake-cache/* and lake-cache/* (no deletion)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PACKAGES: ${{ needs.setup.outputs.packages }}
         run: |
-          # Per package, keep the 2 most-recent cache branches (current
-          # + previous toolchain). Delete older ones. The package list
+          # REPORT-ONLY (owner-approved 2026-10-04). This job used to
+          # `git push origin --delete` every branch past the newest two per
+          # family and package. Measured on litlfred/qou the same day, the
+          # rule would delete 7 of its 9 live lake-cache/qou-* branches,
+          # including the canonical one and the add-on olean branches,
+          # because add-ons share the family prefix and "newest two by date"
+          # cannot tell them apart. Cache branches are restored BY NAME, so a
+          # deletion silently breaks every later restore. Per
+          # deletion-requires-confirmation the job lists candidates in the job
+          # summary; a person deletes. Same change landed in qou (#7504).
+          #
+          # Per package, the 2 most-recent cache branches (current
+          # + previous toolchain) are kept; older ones are listed. The package list
           # comes from .github/lake-packages.json (via the setup job),
           # so nothing is hardcoded here.
           #
@@ -216,12 +227,17 @@ jobs:
               fi
               echo "Branches for $pkg in $fam:"
               echo "$branches" | sed 's/^/  /'
-              to_delete=$(echo "$branches" | tail -n +3)
-              for b in $to_delete; do
-                echo "Pruning old cache: $b"
-                git push origin --delete "$b" 2>/dev/null \
-                  || echo "  (already deleted or push failed)"
-              done
+              candidates=$(echo "$branches" | tail -n +3)
+              if [ -n "$candidates" ]; then
+                {
+                  echo "### $fam/$pkg-*: prune candidates (NOT deleted)"
+                  echo "$candidates" | sed 's/^/- /'
+                  echo
+                  echo "Add-on branches share this prefix. Check each one before deleting it by hand."
+                } >> "$GITHUB_STEP_SUMMARY"
+                echo "Prune candidates for $pkg in $fam (not deleted):"
+                echo "$candidates" | sed 's/^/  /'
+              fi
             done
           done
 

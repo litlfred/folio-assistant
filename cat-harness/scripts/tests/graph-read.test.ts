@@ -471,3 +471,19 @@ describe("resolveBeanGraphNode and the workflow instance store", () => {
     clearWorkflowDirCache();
   });
 });
+
+describe("a branch FAMILY (bean lehh)", () => {
+  test("is refused, never read as the empty declared path", () => {
+    const root = repo([
+      {
+        id: "ig-ast",
+        path: "ig-ast/",
+        graphKinds: ["docs"],
+        storage: { branchPrefix: "cat/fhir-harness/fhir-ast/", keyedBy: "family", keyFrom: "the IG's package id" },
+      },
+    ]);
+    const r = graphReadPath("ig-ast", root);
+    expect(r.state).toBe("refused");
+    expect(JSON.stringify(r)).toContain("FAMILY");
+  });
+});

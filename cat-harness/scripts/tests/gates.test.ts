@@ -99,8 +99,10 @@ describe("the gates come from the workflow, not from a list", () => {
     // is lint + typecheck + `bun test`, and every repository gate moved to a
     // sibling job with no `needs`, so a red test no longer stops them being
     // asked. The job is asserted rather than left loose because it is half of
-    // what makes a failure findable — the Actions UI groups by it.
-    expect(g?.job).toBe("gates");
+    // what makes a failure findable — the Actions UI groups by it. Since bean
+    // `doxj` the repository gates run as three parallel parts under a `gates`
+    // roll-up that runs no `bun` line, and this one is in `gates-docs`.
+    expect(g?.job).toBe("gates-docs");
   });
 
   test("every browser-free job contributes, so a split cannot silently shrink the set", () => {
@@ -130,7 +132,11 @@ describe("the gates come from the workflow, not from a list", () => {
     // `e2e` would pass the browser exclusion for the wrong reason.
     expect(jobs.has("typescript-static")).toBe(true);
     expect(jobs.has("typescript-test")).toBe(true);
-    expect(jobs.has("gates")).toBe(true);
+    // `gates` is a roll-up since bean `doxj` and carries no command; its
+    // three parts do.
+    expect(jobs.has("gates-kg")).toBe(true);
+    expect(jobs.has("gates-docs")).toBe(true);
+    expect(jobs.has("gates-standalone")).toBe(true);
     expect(jobs.has("gates-unrun")).toBe(true);
     expect(jobs.has("e2e-shard")).toBe(false);
     expect(gates.length).toBeGreaterThan(100);

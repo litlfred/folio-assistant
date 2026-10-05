@@ -14,7 +14,6 @@ export { isCrossPaperRef, KNOWN_LABEL_PREFIXES } from "./constraints.js";
  * @graphNode schema
  */
 
-import type { BlockKind } from "./block-kinds.js";
 import type { Narrative } from "./narrative.ts";
 
 // The skill-framework vocabulary moved to `skill-package.ts` — see that
@@ -240,6 +239,17 @@ export interface ComputationWitness {
    * (e.g. ``"docs/audits/2026-05-06-path-b-evacuation.md"``).
    */
   auditOnly?: string;
+  /**
+   * The producer, its content hash, and the commit that last changed it —
+   * written by ``WitnessBuilder`` on every witness and missing from this
+   * interface until 2026-10-04 (`scripts/witness-audit.ts` recorded the
+   * drift). ``scriptHash`` is what staleness keys on; ``scriptCommitSha`` is
+   * provenance only, because a rebase-merge rewrites it. The runtime schema is
+   * ``schemas/computation-witness.ts``.
+   */
+  scriptFile?: string;
+  scriptHash?: string;
+  scriptCommitSha?: string;
 }
 
 /**
@@ -1058,15 +1068,6 @@ export { BLOCK_KINDS, BLOCK_KIND_ALT } from "./block-kinds.js";
 export type { BlockKind } from "./block-kinds.js";
 
 
-/**
- * Compile-time proof that `BLOCK_KINDS` and `Block["kind"]` cover each other.
- * Add a member to the union without adding it here (or vice versa) and this
- * stops type-checking — which is the whole point, since the drift it replaces
- * produced no error anywhere.
- */
-type _MutuallyExhaustive<A, B> = [A] extends [B] ? ([B] extends [A] ? true : never) : never;
-const _blockKindsAreExhaustive: _MutuallyExhaustive<Block["kind"], BlockKind> = true;
-void _blockKindsAreExhaustive;
 
 /** Blocks that represent theorem-like environments. */
 export type EnvironmentBlock =
@@ -1122,6 +1123,13 @@ export function extractBlockLabel(block: Block): string | undefined {
 export interface Section {
   title: string;
   label?: string;
+  /**
+   * A chapter's LEAD: the text between the chapter heading and its first
+   * section (an executive summary has nothing else). It keeps a title, for
+   * outlines and the review page, but renders without a heading of its own,
+   * because the chapter heading directly above already says it.
+   */
+  lead?: boolean;
   /** Ordered list of block root names (resolved to .ts files in section/chapter dir). */
   blocks: string[];
   /** Subsections (inline or referenced). */

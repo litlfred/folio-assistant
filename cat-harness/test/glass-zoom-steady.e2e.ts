@@ -195,7 +195,7 @@ test.describe("the zoom controls stay where the pointer is", () => {
     expect(moves, `start ${JSON.stringify(start)}`).toEqual([]);
   });
 
-  test("a card's own − and + stay under the pointer as it is resized", async ({ page }) => {
+  test("a card's − and + stay under the pointer as it is resized", async ({ page }) => {
     await serveGlass(page, 800);
     const card = page.locator(plain);
     for (const [label, n] of [["larger", 3], ["smaller", 5], ["larger", 2]] as const) {

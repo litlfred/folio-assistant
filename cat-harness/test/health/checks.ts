@@ -48,6 +48,7 @@ import type {
   HealthMeasurement,
   HealthThreshold,
 } from "../../schemas/health-report.ts";
+import { MAX_PREVIEW_BYTES } from "../../scripts/staging-rotate.ts";
 
 // ── Evidence ────────────────────────────────────────────────────
 
@@ -177,6 +178,13 @@ export interface BeanEvidence {
    * children answers that the same either way.
    */
   parent?: string;
+  /**
+   * The bean's `type:` front matter — `milestone`, `epic`, `feature`, `task`,
+   * `bug` — or `undefined` when the probe predates the field or the file
+   * carries none. Read only by `bean-session-log-roots`, which treats
+   * `undefined` as "not a root", never as a match.
+   */
+  type?: string;
 }
 
 export interface TodoEvidence {
@@ -209,6 +217,41 @@ export interface HealthContext {
   repoSize: Probe<RepoSizeEvidence>;
   beans: Probe<BeanEvidence[]>;
   todos: Probe<TodoEvidence[]>;
+  /** Every special branch the declaration names, with its budget and tip size. */
+  specialBranches: Probe<SpecialBranchEvidence>;
+}
+
+/** A special branch's size budget, as `special-branches.json` declares it. */
+export interface SpecialBranchBudget {
+  bytes: number;
+  /** `branch`: each branch on its own. `family`: every branch of a family together. */
+  scope: "branch" | "family";
+  /** The owner's own words for the number. */
+  stated: string;
+  basis: string;
+}
+
+/** One declared special branch (or family), as measured on the remote. */
+export interface SpecialBranchMeasure {
+  id: string;
+  name: string;
+  shape: "branch" | "family";
+  budget?: SpecialBranchBudget;
+  /**
+   * `measured`: budgeted, present, every member's tip tree summed.
+   * `absent`: no branch on the remote carries the name (a determined answer).
+   * `unbudgeted`: present, but the declaration states no budget — never read
+   * as within one.
+   */
+  state: "measured" | "absent" | "unbudgeted";
+  /** The name (new or legacy) the remote actually carries. */
+  resolved?: string;
+  branches: { ref: string; bytes: number; files: number }[];
+}
+
+export interface SpecialBranchEvidence {
+  rows: SpecialBranchMeasure[];
+  command: string;
 }
 
 // ── Helpers ─────────────────────────────────────────────────────
@@ -446,8 +489,16 @@ export function formatAge(minutes: number): string {
  * as work merges instead of being carried forever.
  *
  * Owner, 2026-09-20: *"set stagfing to 500mb. drain if branches merged"*.
+ *
+ * **Superseded 2026-10-04.** The owner replaced the #1868 count cap with a size
+ * budget — *"Cap by size, not count"*, *"3gb"* — which `staging-rotate.ts`
+ * ENFORCES on every deploy. This check now reports against that same number,
+ * imported rather than restated: two budgets for one quantity would put a
+ * permanent finding (500 MB) beside a rotation that allows 3 GB, which is the
+ * monotonic-verdict failure the 2026-09-20 note above describes. Over it now
+ * means the rotation did not hold, which is news.
  */
-export const STAGING_WARN_BYTES = 500 * MB;
+export const STAGING_WARN_BYTES = MAX_PREVIEW_BYTES;
 
 
 /**
@@ -499,7 +550,13 @@ const STAGING_SIZE_THRESHOLDS: HealthThreshold[] = [
     unit: "bytes",
     severity: "major",
     basis:
-      "The owner's explicit instruction, 2026-09-20 (\"set stagfing to 500mb. drain if branches " +
+      "The owner's size budget for previews, 2026-10-04 (\"Cap by size, not count\", \"3gb\"), " +
+      "which replaced the #1868 count cap of ten and which `staging-rotate.ts` enforces on every " +
+      "deploy; this threshold IS that constant (`MAX_PREVIEW_BYTES`), imported, so the check and " +
+      "the rotation cannot disagree. Previews had grown from ~88 MiB (2026-09-22) to 200-780 MB, " +
+      "so ten of them was 3-5 GB and any one lasted an hour or two. Being over it means the " +
+      "rotation did not hold. HISTORY, kept because the reasoning still applies: " +
+      "the owner's explicit instruction, 2026-09-20 (\"set stagfing to 500mb. drain if branches " +
       "merged\"), RAISED from the 100 MB they set on 2026-09-19 — and the raise went with a policy " +
       "change that made the old number mean something different. Until `folio-assistant-1feu`, " +
       "previews were retained on close AND on merge, so the total was monotonic: any threshold was " +
@@ -568,9 +625,9 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
   // which owns the serving question. A threshold belongs with its argument.
   //
   // What remains is the owner's own number, and it is a BUDGET rather than a
-  // cliff: 500 MB, set 2026-09-20 ("set stagfing to 500mb. drain if branches
-  // merged"). Being over it is worth telling a person about whatever GitHub
-  // does.
+  // cliff: 3 GB since 2026-10-04 (500 MB from 2026-09-20), the same constant
+  // the rotation enforces. Being over it is worth telling a person about
+  // whatever GitHub does.
   if (total > STAGING_WARN_BYTES) {
     findings.push({
       metric: "staging-total-bytes",
@@ -582,14 +639,83 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
       // is the copy a reader sees first.
       summary:
         `${ev.previews.length} staging preview(s) total ${formatBytes(total)}, ` +
-        `over the ${formatBytes(STAGING_WARN_BYTES)} warning point.`,
+        `over the ${formatBytes(STAGING_WARN_BYTES)} budget the deploy rotation enforces.`,
       action:
-        "Report the list below to the owner and ask which are finished with. Removal is by adding " +
+        "The rotation in `feature-staging.yml`'s stage job should have held this, so first read its " +
+        "last run's `staging-rotate` output: a single preview larger than the budget is kept on its " +
+        "own (and says so in a warning), anything else is the rotation failing. Then report the list " +
+        "below to the owner and ask which are finished with. Removal is by adding " +
         "`staging:cleanup` to that PR WHILE IT IS STILL OPEN, or a `feature-staging.yml` dispatch once " +
         "it has closed (bean `7umv`) — never by this sweep, and never on an agent's own initiative.",
     });
   }
   return settle(id, summary, STAGING_SIZE_THRESHOLDS, measurements, findings);
+}
+
+/**
+ * Each declared special branch against its declared size budget.
+ *
+ * Owner, 2026-10-04: *"also update healthchecks for limits on the other specal
+ * branches (e.g. lean cache 4gb, auto-docs 1gb, beans 100mb, todos 100mb)"*,
+ * and qa-reports at 500 MB. The budgets live on the rows of
+ * `special-branches.json`, beside the names — one declaration, so a renamed
+ * branch cannot leave its budget behind — and every threshold below is built
+ * from them, basis and all. The preview budget on `gh-pages` is not here: it
+ * is `staging-preview-size`'s, and the deploy rotation enforces it.
+ *
+ * A family is measured as the owner scoped it: `lake-cache` in TOTAL, because
+ * a full clone fetches every cache branch; `auto-docs` PER BRANCH.
+ */
+export function specialBranchSizeCheck(ctx: HealthContext): HealthCheckResult {
+  const id = "special-branch-size";
+  const summary =
+    "Each special data branch (beans, todos, qa-reports, the Lean cache family, auto-docs) against the " +
+    "size budget its row in `special-branches.json` declares. Measures tip trees; removes nothing.";
+  if (ctx.specialBranches.state === "unknown") {
+    return unknownResult(id, summary, [], ctx.specialBranches.reason);
+  }
+  const ev = ctx.specialBranches.value;
+  const metric = (r: SpecialBranchMeasure) => `special-branch-bytes:${r.id}`;
+  const thresholds: HealthThreshold[] = ev.rows
+    .filter((r) => r.budget !== undefined)
+    .map((r) => ({
+      metric: metric(r),
+      value: r.budget!.bytes,
+      unit: "bytes",
+      severity: "major",
+      basis: `${r.budget!.scope === "family" ? `Every branch under \`${r.name}\` together` : `\`${r.name}\`${r.shape === "family" ? ", each branch" : ""}`}: ${r.budget!.stated}. ${r.budget!.basis}`,
+    }));
+  const measurements: HealthMeasurement[] = [];
+  const findings: HealthFinding[] = [];
+  for (const r of ev.rows) {
+    if (r.state !== "measured" || r.budget === undefined) continue;
+    const total = r.branches.reduce((n, b) => n + b.bytes, 0);
+    measurements.push({ metric: metric(r), value: total, unit: "bytes", command: ev.command });
+    const over =
+      r.budget.scope === "family"
+        ? total > r.budget.bytes
+          ? [{ what: `${r.branches.length} branch(es) under \`${r.resolved ?? r.name}\``, bytes: total }]
+          : []
+        : r.branches.filter((b) => b.bytes > r.budget!.bytes).map((b) => ({ what: `\`${b.ref}\``, bytes: b.bytes }));
+    for (const o of over) {
+      findings.push({
+        metric: metric(r),
+        severity: "major",
+        summary: `${o.what} ${o.bytes === total && r.budget.scope === "family" ? "total" : "is"} ${formatBytes(o.bytes)}, over the ${formatBytes(r.budget.bytes)} budget (${r.budget.stated}) for \`${r.id}\`.`,
+        action:
+          "Report it to the owner with what the branch holds and its largest paths, and ask what to prune or " +
+          "whether the budget should change. Nothing here removes anything; the budget is the owner's.",
+      });
+    }
+  }
+  const counted = (state: SpecialBranchMeasure["state"]) => ev.rows.filter((r) => r.state === state);
+  measurements.push(
+    { metric: "special-branches-measured", value: counted("measured").length, unit: "count", command: ev.command },
+    // Said, not dropped: a branch the declaration gives no budget is NOT within one.
+    { metric: "special-branches-unbudgeted", value: counted("unbudgeted").length, unit: "count", command: `present without a budget: ${counted("unbudgeted").map((r) => r.id).join(", ") || "none"}` },
+    { metric: "special-branches-absent", value: counted("absent").length, unit: "count", command: `not on the remote: ${counted("absent").map((r) => r.id).join(", ") || "none"}` },
+  );
+  return settle(id, summary, thresholds, measurements, findings);
 }
 
 /**
@@ -1111,6 +1237,21 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
       "day found 7 more of the 39 live that way, and none of that is computable from the store.",
   },
   {
+    metric: "bean-session-log-roots",
+    value: 0,
+    unit: "count",
+    severity: "minor",
+    basis:
+      "Zero, because the condition has no tolerant form: a session is a LOG, and a roadmap root is a claim " +
+      "about where to look for a SUBJECT (`todo-manager` §\"A session is a log, not a parent\"). Measured in " +
+      "the `qou` folio 2026-10-04: 292 of 353 `type: epic` beans were session logs, minted because " +
+      "`todo-manager` Core Directive 1 and `session-intent` step 4b told every session to run " +
+      "`beans create \"Session: …\" --type milestone` (bean `8unf`, issue #2106). Measured on this store the " +
+      "same day: 0 open, so this locks in a property the store has. MINOR because a mis-typed log misleads " +
+      "the roadmap rather than breaking a consumer. OPEN beans only — a completed session epic is history, " +
+      "and back-filling it changes no plan, the same scope `check-bean-parents` takes.",
+  },
+  {
     metric: "bean-resolved-inline",
     value: BEAN_RESOLVED_INLINE_LIMIT,
     unit: "count",
@@ -1239,11 +1380,41 @@ export function claimPopulations(
   return { claimed, stale, quiet, quietButParenting };
 }
 
+/**
+ * Bean types that are ROOTS of the roadmap — what `beans roadmap` draws as a
+ * heading. The same pair `check-bean-parents`' `ROOT_TYPES` names.
+ */
+const ROADMAP_ROOT_TYPES = new Set(["epic", "milestone"]);
+
+/**
+ * A title that says the bean records ONE SITTING rather than a subject:
+ * `Session: …`, `Session 3 — …`, `SESSION …`, `Handoff: …`, `Handover …`.
+ * Anchored at the start, because "session" mid-title is usually a subject
+ * ("session-start sweep", "sibling sessions") and is not a log.
+ */
+export const SESSION_LOG_TITLE = /^\s*(session|hand-?off|hand-?over)\b/i;
+
+/**
+ * Open beans typed `epic`/`milestone` whose title marks them as a session or
+ * handover log — bean `8unf`. Pure, so a second consumer (a restructure plan
+ * generator) cannot disagree with the health finding about what one is.
+ */
+export function sessionLogRootBeans(beans: BeanEvidence[]): BeanEvidence[] {
+  return beans.filter(
+    (b) =>
+      OPEN_BEAN_STATUSES.has(b.status) &&
+      b.type !== undefined &&
+      ROADMAP_ROOT_TYPES.has(b.type) &&
+      SESSION_LOG_TITLE.test(b.title),
+  );
+}
+
 export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   const id = "bean-store";
   const summary =
     "The work-plan store itself: duplicates, claims nobody is honouring, resolved items still inline, " +
-    "the size of the open backlog, and decision records that list fewer than two real options.";
+    "the size of the open backlog, decision records that list fewer than two real options, and session " +
+    "logs typed as roadmap roots.";
   if (ctx.beans.state === "unknown") return unknownResult(id, summary, BEAN_THRESHOLDS, ctx.beans.reason);
   const beans = ctx.beans.value;
 
@@ -1292,6 +1463,7 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   const thin = decisionRecords.filter((b) => (b.consideredOptions ?? 0) < 2);
   const rendered = beans.filter((b) => b.renderedDecision === true);
   const { claimed, stale, quiet, quietButParenting } = claimPopulations(beans, ctx.now);
+  const sessionLogRoots = sessionLogRootBeans(beans);
 
   // A CLAIM THAT ITS OWN CRITERIA SAY IS FINISHED — bean `fkjo`.
   //
@@ -1351,6 +1523,7 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
       command: cmd,
     },
     { metric: "bean-stale-in-progress", value: stale.length, unit: "count", command: cmd },
+    { metric: "bean-session-log-roots", value: sessionLogRoots.length, unit: "count", command: cmd },
     // The DENOMINATOR, reported so the next number is legible. "12 quiet" means
     // nothing without it; "12 of 60 claimed" is a finding a person can act on,
     // and `fgnw` is the bean that measured why — 43 of 60 read very differently
@@ -1498,6 +1671,19 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
         "in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: " +
         "this check reports, and a person or the session taking the work acts. " +
         "See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\".",
+    });
+  }
+  for (const b of sessionLogRoots) {
+    findings.push({
+      metric: "bean-session-log-roots",
+      severity: "minor",
+      summary: `\`${b.id}\` is an open \`${b.type}\` whose title says it is a session log ("${b.title}").`,
+      action:
+        "A session is a LOG, not a roadmap root (`todo-manager` §\"A session is a log, not a parent\"). " +
+        "Re-parent each open child to the epic whose SUBJECT it is, move the narrative into a bean note " +
+        "(`bun run beans:note`) or the PR body, then set this bean to `completed` or `scrapped` with a note " +
+        "naming where its children went. For many at once, use a reviewed `work-plan-restructure` plan. " +
+        "This check reports and never acts; never `beans delete` it — commits and other beans cite its id.",
     });
   }
   if (resolved.length > BEAN_RESOLVED_INLINE_LIMIT) {
@@ -1727,6 +1913,13 @@ export const HEALTH_CHECKS: readonly {
       "Total size of the `STAGING/` review previews on the publish branch, against the owner's " +
       "budget. Measurement only — the serving question is `pages-publish-health`.",
     run: stagingSizeCheck,
+  },
+  {
+    id: "special-branch-size",
+    summary:
+      "Each special data branch against the size budget its `special-branches.json` row declares " +
+      "(owner, 2026-10-04). Measures tip trees; removes nothing.",
+    run: specialBranchSizeCheck,
   },
   {
     id: "pages-publish-health",

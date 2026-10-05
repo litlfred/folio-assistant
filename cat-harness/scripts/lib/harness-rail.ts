@@ -69,6 +69,18 @@ export interface RailOptions {
    */
   harnesses?: readonly NavItem[];
   /**
+   * Where the PLATFORM's site root is from this page, when it is not `toRoot`
+   * — a folio's own Pages site, whose platform links and row files live on the
+   * platform's site (`platformBase`). Default `toRoot`. Bean `lhvt`.
+   */
+  assetRoot?: string;
+  /**
+   * The row's script and stylesheet, to be INLINED rather than linked — for a
+   * standalone viewer page that fetches nothing (`withViewerNav`), as its
+   * narrow-viewport rules already are. Bean `lhvt`.
+   */
+  inlineRowAssets?: { js: string; css: string };
+  /**
    * The open document's own index, for the fixed top.
    *
    * Optional, and ABSENT rather than empty when the page has fewer than two
@@ -82,6 +94,25 @@ export interface RailOptions {
    * `_data/harness.json` the harnesses region comes from.
    */
   mark?: NavbarModel["mark"];
+  /**
+   * The harness's NAVBAR ROW — the icon row (todos, beans, processes, kg,
+   * fsh-guts, launcher) — exactly as `_data/harness.json` carries it under
+   * `navbar`, which is what the Jekyll sidebar reads through
+   * `head_custom.html`'s `#fa-navbar-row`.
+   *
+   * Bean `wckf` (#2147), owner 2026-10-05: *"still no LHS icons top navbar on
+   * who-iris page"*, then *"this should be a common navbar functionality in
+   * harness"* (bean `9rq1`). The row is drawn by ONE function,
+   * `mountNavIconRow` in `docs-ui.js`; a railed page lacked only its DATA, so
+   * this writes the same block the theme writes and the same function draws
+   * the same row. No second renderer here, and no script: the rail stays
+   * script-free, and a page without `docs-ui.js` simply shows no row.
+   *
+   * Three states, as everywhere the row is read: `undefined` — the caller
+   * could not find out, nothing is written; `null` — declared none, written as
+   * `null`, which `readNavbarRow` reports at info level; an object — the row.
+   */
+  navbarRow?: unknown;
   /**
    * What the page's own section is CALLED — the visualiser's name, `todos` on
    * `/todos/`. Absent on a mounted document, whose section is its "Contents".
@@ -160,5 +191,59 @@ export function declinesNavbar(html: string): boolean {
 export function injectRail(html: string, o: RailOptions): string | undefined {
   const label = o.visualiserLabel ?? "Contents";
   const documentIndex = o.documentIndex ?? visualiserNavOf(html, label) ?? documentIndexOf(html, label);
-  return injectNavbar(html, railModel({ ...o, ...(documentIndex ? { documentIndex } : {}) }));
+  const railed = injectNavbar(html, railModel({ ...o, ...(documentIndex ? { documentIndex } : {}) }));
+  return railed === undefined
+    ? undefined
+    : withNavbarRow(railed, o.navbarRow, { root: o.assetRoot ?? o.toRoot, ...(o.inlineRowAssets ? { inline: o.inlineRowAssets } : {}) });
+}
+
+/** The id `docs-ui.js`'s `readNavbarRow` looks for — the same one `head_custom.html` writes. */
+export const NAVBAR_ROW_ID = "fa-navbar-row";
+
+/** Where the row's drawing and style are published, relative to the site root. */
+export const NAVBAR_ROW_JS = "assets/js/navbar-row.js";
+export const NAVBAR_ROW_CSS = "assets/css/navbar-row.css";
+/** The attribute an INLINED copy of the row's script and style carries. */
+export const NAVBAR_ROW_INLINE = "data-fa-navbar-row-inline";
+
+/**
+ * The navbar row's data block, written right after the opening `<body>` —
+ * once, and never when `row` is `undefined` (see {@link RailOptions.navbarRow}).
+ *
+ * `<` is escaped so a value can never close the script element early: the
+ * hrefs are generated, but "generated" is not "trusted" (`docs-ui.js`
+ * `safeHref`'s own argument), and the bytes land inside somebody else's page.
+ *
+ * WITH `toRoot`, ALSO WHAT DRAWS IT — beans `lhvt`, `9rq1`. The data alone
+ * was written onto 2,747 railed pages by #2149, and on the 2,709 of them that
+ * never load `docs-ui.js` nothing drew it. `navbar-row.js` and its stylesheet
+ * are linked before `</head>`, each once; a row the instance declined (`null`)
+ * still gets them, so the decline is reported the same way on every page.
+ */
+export function withNavbarRow(
+  html: string,
+  row: unknown,
+  at?: { root: string; inline?: { js: string; css: string } },
+): string {
+  if (row === undefined) return html;
+  let out = html;
+  if (!out.includes(`id="${NAVBAR_ROW_ID}"`)) {
+    const body = /<body\b[^>]*>/i.exec(out);
+    if (!body) return html;
+    const pos = body.index + body[0].length;
+    const json = JSON.stringify(row).replace(/</g, "\\u003c");
+    // `data-fa-root` — the site root the row's site-root hrefs (`/beans/`) are
+    // composed against. A railed page carries no `fa-baseurl` meta, and an
+    // INLINED script has no address of its own to derive one from.
+    const root = at ? ` data-fa-root="${at.root.replace(/"/g, "&quot;")}"` : "";
+    out = out.slice(0, pos) + `<script type="application/json" id="${NAVBAR_ROW_ID}"${root}>${json}</script>` + out.slice(pos);
+  }
+  if (at === undefined || out.includes(NAVBAR_ROW_JS) || out.includes(NAVBAR_ROW_INLINE)) return out;
+  const tags = at.inline
+    ? `<style ${NAVBAR_ROW_INLINE}>${at.inline.css}</style><script ${NAVBAR_ROW_INLINE}>${at.inline.js}</script>`
+    : `<link rel="stylesheet" href="${at.root}/${NAVBAR_ROW_CSS}">` + `<script src="${at.root}/${NAVBAR_ROW_JS}" defer></script>`;
+  const head = /<\/head\s*>/i.exec(out);
+  if (head) return out.slice(0, head.index) + tags + out.slice(head.index);
+  const body = /<body\b[^>]*>/i.exec(out);
+  return body ? out.slice(0, body.index + body[0].length) + tags + out.slice(body.index + body[0].length) : out;
 }

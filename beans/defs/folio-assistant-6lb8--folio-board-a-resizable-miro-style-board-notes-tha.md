@@ -5,8 +5,8 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-09-20T10:37:35Z
-updated_at: 2026-09-20T21:48:12Z
-parent: folio-assistant-p5wm
+updated_at: 2026-10-05T04:57:13Z
+parent: folio-assistant-rwmf
 ---
 
 ## The ask, owner 2026-09-20 (verbatim, in the order it arrived)

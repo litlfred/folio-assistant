@@ -78,6 +78,8 @@ import { TABULAR_CSVW_FILENAME } from "../../schemas/tabular-csvw.ts";
 import { readStructure, STRUCTURE_FILENAME } from "../../schemas/document-structure.ts";
 import type { INGEST_RUNGS } from "../../schemas/site-indexes.ts";
 import { corpusDirectoriesForGraph } from "../../schemas/harness-config.js";
+import { applyVocabMapping, vocabMapping, type VocabMapping } from "../../schemas/vocab-mapping.ts";
+import type { SourceLicence } from "../../schemas/source-licence.ts";
 import { libraryAssetIri } from "../../schemas/library-iri.ts";
 import { readDeclaration } from "../../schemas/cat-harness.ts";
 import {
@@ -159,8 +161,9 @@ interface Candidates {
 }
 
 /**
- * The AUTHORED licence record beside an entry, carried verbatim into
- * `manifest.jsonld` as `meta.licence` — the field `check-source-licence` reads.
+ * The AUTHORED licence record beside an entry, carried into `manifest.jsonld`
+ * by {@link licenceProperties}: the licence as `dcterms:license`, the record
+ * verbatim as `licenceRecord` — the field `check-source-licence` reads.
  *
  * A sidecar because the manifest is generated: a record written into it by hand
  * was erased by the next run, so until 2026-09-30 no licence, `stated` or
@@ -182,6 +185,37 @@ export function readLicence(dir: string): unknown {
   } catch (e) {
     return { status: "unparseable", note: `${LICENCE_FILENAME}: ${(e as Error).message}` };
   }
+}
+
+/** The instance this generator belongs to, whose `vocab-mappings/` it reads. */
+const INSTANCE_ROOT = join(import.meta.dir, "..", "..");
+
+let licenceNaming: VocabMapping | undefined;
+
+/**
+ * A manifest's licence properties, from the `licence-naming` table — the
+ * SAME row a glossary's `dcterms:license` comes from (finding D4 of
+ * `docs/proposals/vocabulary-mappings-2026-10-02.md`, bean `gzkt`, owner
+ * ruling 2026-10-03: "move it").
+ *
+ * Until then the licence was `meta.licence`, inside the `@json` literal, so an
+ * RDF reader saw a glossary's licence and never a library item's. Now:
+ *
+ * | record            | `license` (`dcterms:license`) | `licenceRecord` (`@json`) |
+ * |-------------------|-------------------------------|---------------------------|
+ * | absent            | —                             | —                         |
+ * | `stated`, an `id` | the `id`, as written          | the record, verbatim      |
+ * | `unknown`, or any other | — never invented        | the record, verbatim      |
+ *
+ * The record stays whole because the three-state rule lives in it (`unknown`
+ * with where somebody searched is not absent), and only `@json` keeps it.
+ */
+export function licenceProperties(record: unknown): Record<string, unknown> {
+  if (record === undefined) return {};
+  const r = record as SourceLicence;
+  const license = r?.status === "stated" && typeof r.id === "string" && r.id.trim() !== "" ? r.id : undefined;
+  licenceNaming ??= vocabMapping(INSTANCE_ROOT, "licence-naming");
+  return applyVocabMapping(licenceNaming, { license, licenceRecord: record });
 }
 
 /** `sec-000-1-introduction` → `sec-000`, the stable part of a section id. */
@@ -425,6 +459,7 @@ export function buildDocumentNodes(
       title: resolvedTitle.title,
       contains: sectionIris,
       provenance: "ingested",
+      ...licenceProperties(licence),
       meta: {
         doc_id: docId,
         ...titleMeta(resolvedTitle, structure.metadata),
@@ -439,7 +474,6 @@ export function buildDocumentNodes(
         disposition:
           candidates?.disposition ??
           "ingested source material — attributed to its document, not folio content",
-        licence,
       },
     }),
   });
@@ -677,7 +711,8 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
         // Where the headers and shape came from. The manifest points at
         // sheets and blocks; without this nothing in the graph says which
         // record produced them.
-        meta: { ...titleMeta(titled), tabular_record: record?.$schema, licence: readLicence(dir) },
+        meta: { ...titleMeta(titled), tabular_record: record?.$schema },
+        properties: licenceProperties(readLicence(dir)),
       }),
     };
   }
@@ -710,6 +745,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
       // The same value every manifest carries; `disposition` below says that
       // none of the source's text is held.
       provenance: "ingested",
+      ...licenceProperties(readLicence(dir)),
       meta: published
         ? {
             // NO new keys here: `meta` is an opaque `@json` literal (finding
@@ -719,7 +755,6 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
             doc_id: docId,
             ...titleMeta(titled),
             disposition: "referenced source — an external publication, nothing copied",
-            licence: readLicence(dir),
           }
         : {
             doc_id: docId,
@@ -727,7 +762,6 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
             source_file: src.file,
             source_sha256: src.sha256,
             disposition: "referenced source — recorded, text withheld by licence",
-            licence: readLicence(dir),
           },
     };
     return {

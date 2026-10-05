@@ -20,6 +20,8 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = siteDirFor(ROOT);
 const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
+const ROW_JS = readFileSync(join(ROOT, SITE, "assets/js/navbar-row.js"), "utf8");
+const ROW_CSS = readFileSync(join(ROOT, SITE, "assets/css/navbar-row.css"), "utf8");
 
 function table(n: number, attrs = "", wrap = false): string {
   const rows = Array.from({ length: n }, (_, i) =>
@@ -97,7 +99,13 @@ test.describe("table filter on a auto-docs page", () => {
   test("the shipped glossary page filters its rows with a live count", async ({ page: p }) => {
     const errors: string[] = [];
     p.on("pageerror", (e) => errors.push(String(e)));
-    await p.route("http://docsauto.fixture/**", (r) => r.fulfill({ contentType: "text/html", body: GLOSSARY }));
+    await p.route("http://docsauto.fixture/**", (r) => {
+      // The shipped page links the row's own files (bean `lhvt`); serve the real ones.
+      const path = new URL(r.request().url()).pathname;
+      if (path.endsWith("/assets/js/navbar-row.js")) return r.fulfill({ contentType: "text/javascript", body: ROW_JS });
+      if (path.endsWith("/assets/css/navbar-row.css")) return r.fulfill({ contentType: "text/css", body: ROW_CSS });
+      return r.fulfill({ contentType: "text/html", body: GLOSSARY });
+    });
     await p.goto("http://docsauto.fixture/g", { waitUntil: "load" });
     expect(errors).toEqual([]);
     const input = p.getByLabel("Filter this table");

@@ -110,8 +110,11 @@ export function subdirDescriptions(
 
 /** Does a directory declaration carry `storage` — its record lives on a branch, not in the checkout? */
 export function isStored(d: unknown): boolean {
-  const s = (d as { storage?: { branch?: unknown } }).storage;
-  return typeof s === "object" && s !== null && typeof s.branch === "string" && s.branch !== "";
+  const s = (d as { storage?: { branch?: unknown; branchPrefix?: unknown } }).storage;
+  if (typeof s !== "object" || s === null) return false;
+  // A branch FAMILY (bean `lehh`) is stored too, on `branchPrefix` rather than one `branch`;
+  // reading only `branch` would generate a README into a mount path that is empty by design.
+  return (typeof s.branch === "string" && s.branch !== "") || (typeof s.branchPrefix === "string" && s.branchPrefix !== "");
 }
 
 /**

@@ -160,6 +160,14 @@ test.describe("pin puts a landing sticky on the FOLIO glass", () => {
     await page.locator(alphaPin).click();
     await openGlass(page);
     await page.locator(`${glassCard("landing/alpha")} .fa-glass-asset-close`).click();
+    // × asks first (#1900), and a landing sticky goes back to ITS PAGE, the
+    // one it was pinned from: never "your Todos", a list it was never on.
+    const dlg = page.getByRole("dialog", { name: "Back on its page?" });
+    await expect(dlg).toBeVisible();
+    await expect(dlg).not.toContainText("Todos");
+    const pinnedFrom = new URL(page.url()).pathname;
+    await expect(dlg.getByRole("link").first()).toHaveAttribute("href", pinnedFrom);
+    await dlg.getByRole("button", { name: "Put it back" }).click();
     await expect(page.locator(glassCard("landing/alpha"))).toHaveCount(0);
     expect((await folio(page))["landing/alpha"]).toMatchObject({ shown: false });
     await expect(page.locator(alphaPin)).toHaveAttribute("aria-pressed", "false");

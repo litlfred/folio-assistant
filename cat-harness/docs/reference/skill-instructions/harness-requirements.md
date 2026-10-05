@@ -101,8 +101,8 @@ not a hole**: an axis that dropped bootstrap by kind would stop checking the
 one thing bootstrap must have.
 
 **An unknown kind owes one.** The default is the strict side, for the reason
-`DOCUMENT_BLOCK_KINDS` is a derived complement rather than a list: a kind
-nobody has classified must not escape an obligation by being unmentioned.
+a block kind's `profile` is a required field rather than an opt-in list: a
+kind nobody has classified must not escape an obligation by being unmentioned.
 Note this is the opposite collapse from `graphLayer()`, whose `undefined`
 callers must *not* read as `content` — there the unknown must stay unknown,
 here it resolves to the obligation. Both choose the direction that fails safe.

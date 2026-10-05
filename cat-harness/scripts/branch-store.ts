@@ -169,7 +169,7 @@ export interface WriteResult {
  * `DirectoryStorage.keyedBy` that lives on a branch tip rather than under a
  * per-commit prefix. `commit` is `qa-store.ts`'s and is deliberately absent.
  */
-export const BRANCH_KEYINGS = ["tip", "route"] as const;
+export const BRANCH_KEYINGS = ["tip", "route", "route-family"] as const;
 export type BranchKeying = (typeof BRANCH_KEYINGS)[number];
 
 export interface BranchStoreOptions {
@@ -224,17 +224,27 @@ export interface TipLocation {
  * subgraph declared the current way — `source: { kind: "branch" }` — was
  * invisible to the `branch-store` CLI, to `StateStore` and to the state mount.
  *
- * `route` is the one keying still read straight off `storage`: the source
- * union has no `route` member yet, so the resolver would refuse it.
+ * `route` and `route-family` are the keyings still read straight off
+ * `storage`: the source union has no member for either yet, so the resolver
+ * would refuse them.
  */
 function keptAt(inst: string, repoRoot: string, d: ResolvedDirectory): { branch: string; keyedBy: string } | undefined {
-  if (d.storage?.keyedBy === "route") return { branch: d.storage.branch, keyedBy: "route" };
+  if (d.storage?.keyedBy === "route" || d.storage?.keyedBy === "route-family") {
+    // Non-null by DirectoryStorageSchema's refine: every keying but `family` requires `branch`.
+    return { branch: d.storage.branch!, keyedBy: d.storage.keyedBy };
+  }
   const src = resolveSubgraphSource(d, subgraphSourceOverrides(inst, repoRoot));
   switch (src.kind) {
     case "directory":
       return undefined;
     case "branch":
       return { branch: src.branch, keyedBy: src.keyedBy };
+    // A FAMILY (bean `lehh`) has no single tip: every caller below either skips
+    // a keying it is not (`tipLocations`), refuses it (`resolveTipLocation`), or
+    // reports it as on a branch and not mounted (`contentAt`). It is returned as
+    // the prefix so each of them can name it, and never opened as a branch.
+    case "family":
+      return { branch: src.branchPrefix, keyedBy: "family" };
     default: {
       const unknown: never = src;
       throw new BranchStoreUsageError(`directory ${d.id} has a source kind this store does not know: ${JSON.stringify(unknown)}`);
@@ -264,7 +274,7 @@ export function tipLocations(repoRoot: string = gitTopLevel(), keyedBy: BranchKe
     for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {
       const at = keptAt(inst, repoRoot, d);
       const k = at?.keyedBy;
-      if (k !== "tip" && k !== "route") continue;
+      if (k !== "tip" && k !== "route" && k !== "route-family") continue;
       if (keyedBy !== "any" && k !== keyedBy) continue;
       if (!out.some((o) => o.id === d.id)) out.push({ id: d.id, path: repoRelative(repoRoot, d.absPath), branch: at!.branch, keyedBy: k });
     }
@@ -289,10 +299,13 @@ export function resolveTipLocation(
       const at = keptAt(inst, repoRoot, d);
       if (!at) throw new BranchStoreUsageError(`directory ${id} is kept in the checkout, not on a branch; it lives on main`);
       const k = at.keyedBy;
-      // `commit` is qa-store's layout, not a branch tip at all; `route` and
-      // `tip` are both tips but differ in how a write settles, so a caller
-      // that came for one is refused the other rather than served it.
-      if (k !== "tip" && k !== "route") {
+      // `commit` is qa-store's layout, not a branch tip at all; `tip`,
+      // `route` and `route-family` are all tips but differ in how a write
+      // settles, so a caller that came for one is refused the others rather
+      // than served them. A family additionally needs a MEMBER, which a
+      // caller holding only an id does not have — hence the refusal here is
+      // the same shape, not a looser one.
+      if (k !== "tip" && k !== "route" && k !== "route-family") {
         throw new BranchStoreUsageError(`directory ${id} is keyed by ${k}, which this store does not implement`);
       }
       if (keyedBy !== "any" && k !== keyedBy) throw new BranchStoreUsageError(`directory ${id} is keyed by ${k}, not ${keyedBy}`);
@@ -823,11 +836,16 @@ export class BranchStore extends TreeStore {
    */
   write(changes: Change[], message: string): WriteResult {
     if (changes.length === 0) throw new BranchStoreUsageError("no changes to write");
-    if (this.keyedBy === "route") {
+    // BOTH route keyings refuse `expect`, and a family must not be forgotten
+    // here: a member is a rendering exactly as a route is, so the premise that
+    // makes `expect` meaningless is identical. Written as a set rather than as
+    // `=== "route"` twice, so a fifth keying has to decide rather than default
+    // to accepting an `expect` nobody meant.
+    if (this.keyedBy === "route" || this.keyedBy === "route-family") {
       const withExpect = changes.filter((c) => c.expect !== undefined).map((c) => c.path);
       if (withExpect.length > 0) {
         throw new BranchStoreUsageError(
-          `a route-keyed write may not carry \`expect\` (${withExpect.join(", ")}): a rendered page has one writer and the newer generation wins. ` +
+          `a ${this.keyedBy}-keyed write may not carry \`expect\` (${withExpect.join(", ")}): a rendered page has one writer and the newer generation wins. ` +
             `An \`expect\` here means the page has two writers — fix that rather than resolving a conflict.`,
         );
       }

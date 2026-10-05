@@ -143,14 +143,14 @@ describe("reachability reads the serving registry, not just manifests", () => {
     // The defect this whole change came from: `skills/authoring/content-lifecycle` was
     // absent from LOCAL_PACKAGES while 52 activities named its skills. A
     // package pointing at a missing directory is the same failure one step on.
-    const { LOCAL_PACKAGES } = await import("../../cat-harness/src/tools/skill-fetch.js");
+    const { LOCAL_PACKAGES } = await import("../src/tools/skill-fetch.js");
     const { existsSync } = await import("node:fs");
     const missing = Object.entries(LOCAL_PACKAGES).filter(([, dir]) => !existsSync(dir));
     expect(missing).toEqual([]);
   });
 
   test("every directory holding `<skill>.md` that a diagram can name is served", async () => {
-    const { LOCAL_PACKAGES } = await import("../../cat-harness/src/tools/skill-fetch.js");
+    const { LOCAL_PACKAGES } = await import("../src/tools/skill-fetch.js");
     const served = new Set(Object.keys(LOCAL_PACKAGES));
     // `content-lifecycle` is the one this change added; pin it so a future
     // edit to the table cannot silently drop it again.
