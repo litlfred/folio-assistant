@@ -36,7 +36,7 @@
  *
  * This is the shape. Nothing writes it yet: `3nfv` is the state machine, and a
  * declared-but-absent directory is the `dh4f` defect, where a consumer scans
- * nothing and reports a clean run. The `session-state` graph kind is
+ * nothing and reports a clean run. The `session-state` graph typology is
  * registered ahead of its directory — the `folio` and `memory` situation, not
  * `dh4f`, because nothing scans a kind.
  *

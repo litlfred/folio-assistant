@@ -105,7 +105,7 @@ describe("rows from a hydrated processes subgraph", () => {
   const doc = {
     "@id": "https://x.test/subgraph/h/processes/",
     path: "processes/",
-    holdsGraph: ["bootstrap:graphKind/processes"],
+    holdsGraph: ["bootstrap:graphTypology/processes"],
     hasMember: [{ "@id": `${P}Top`, "@type": "bootstrap:Process", name: "Top", summary: "Does the top thing.", sourcePath: "processes/top.bpmn" }],
     hasSubgraph: [{
       "@id": "https://x.test/subgraph/h/processes/sdlc/",
@@ -123,7 +123,7 @@ describe("rows from a hydrated processes subgraph", () => {
     expect(rows[0]!.summary).toBe("Does the top thing.");
     expect(rows[1]!.summary).toBe("");
     expect(api.holdsProcesses(doc)).toBe(true);
-    expect(api.holdsProcesses({ holdsGraph: ["bootstrap:graphKind/skills"] })).toBe(false);
+    expect(api.holdsProcesses({ holdsGraph: ["bootstrap:graphTypology/skills"] })).toBe(false);
   });
 });
 

@@ -255,7 +255,9 @@ test.describe("the icon row — line 2 of the fixed top", () => {
     // accessible name carries the live count after a dash, so only its stem is
     // pinned here; the count states are `fshGutsCount`'s to test.
     expect(labels.map((l) => (l ?? "").split(" — ")[0])).toEqual([
-      "Todos", "Beans", "Processes", "Knowledge graph", "fsh-guts, discarded items", "More actions",
+      // Processes and Knowledge graph left the row (owner, 2026-10-05, bean
+      // `82qs`); language is the glass band's globe (#2211), not a row slot.
+      "Todos", "Beans", "fsh-guts, discarded items", "More actions",
     ]);
     // ...then the switch, last. No [x] after it (ob3m finding 8).
     const tail = await page.locator(".fa-nav-icons > *").evaluateAll((ns) =>
@@ -281,7 +283,8 @@ test.describe("the icon row — line 2 of the fixed top", () => {
     // slot is rendered, and it is not an anchor.
     const { errors } = await load(page, CUSTOM);
     expect(errors).toEqual([]);
-    const todos = page.locator('.fa-nav-icons [aria-label="Todos"]');
+    // `^=`: the name gains its live count once `count.json` is read (bean `gkv6`).
+    const todos = page.locator('.fa-nav-icons [aria-label^="Todos"]');
     // WITH THE BASEURL. `#fa-navbar-row` is `jsonify`d raw, unlike
     // `#fa-site-links`, which Liquid has already run `relative_url` over — so
     // a site-root path arriving here is unprefixed and composing it without
@@ -525,6 +528,28 @@ test.describe("the document index — the fixed top, about the page rather than 
     expect(rows.join(" ")).not.toContain("Unlinkable");
     expect(rows.join(" ")).not.toContain("Too deep");
     await expect(page.locator(".fa-doc-index__item--sub")).toHaveCount(1);
+  });
+
+  test("sub-sections FOLD under their section, closed, below its link — owner, 2026-10-05", async ({ page }) => {
+    // "on this page should have sub-sections collapsible" (bean `r2ld`).
+    const { errors } = await load(page, CUSTOM);
+    expect(errors).toEqual([]);
+    await page.hover(".side-bar");
+    await page.locator(".fa-doc-index__heading").click();
+    const one = page.locator(".fa-doc-index__list:not(.fa-doc-index__list--sub) > .fa-doc-index__item").first();
+    const fold = one.locator(":scope > details.fa-doc-index__fold");
+    await expect(fold).toHaveCount(1);
+    await expect(fold).not.toHaveAttribute("open", "");
+    // The section's own link stays a link, OUTSIDE the summary.
+    await expect(one.locator(":scope > a.fa-doc-index__link")).toHaveText("One");
+    await expect(fold.locator("summary a")).toHaveCount(0);
+    await expect(fold.locator("summary")).toHaveText("1 sub-section");
+    await expect(page.locator(".fa-doc-index__item--sub .fa-doc-index__link")).toBeHidden();
+    await fold.locator("summary").click();
+    await expect(fold).toHaveAttribute("open", "");
+    await expect(page.locator(".fa-doc-index__item--sub .fa-doc-index__link")).toBeVisible();
+    // A section with no sub-sections has no fold.
+    await expect(page.locator(".fa-doc-index__fold")).toHaveCount(1);
   });
 
   test("is ABSENT below two rows, not an empty or one-row menu", async ({ page }) => {

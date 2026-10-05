@@ -193,19 +193,16 @@ for (const width of [1280, 390]) {
       await expect(p).toBeFocused();
     });
 
-    test("the open/closed choice persists per viewer, and the way back is always the magnifier", async ({ page }) => {
+    test("every page arrives with search closed, even after it was left open", async ({ page }) => {
+      // Owner, 2026-10-05: "start with search bar closed". The open state
+      // used to be remembered per viewer and restored on the next page.
       await page.locator(peek).click();
-      await page.reload();
-      await page.waitForSelector(home);
       await expect(page.locator(home)).toHaveAttribute("data-open", "true");
-      await expect(page.locator(input)).toBeVisible();
-      // Restored open is not a focus grab: nothing typed into by surprise.
-      await expect(page.locator(input)).not.toBeFocused();
-      expect(await pressable(page, peek)).toBe("yes");
-      await page.locator(peek).click();
       await page.reload();
       await page.waitForSelector(home);
       await expect(page.locator(home)).toHaveAttribute("data-open", "false");
+      await expect(page.locator(input)).toBeHidden();
+      expect(await pressable(page, peek)).toBe("yes");
     });
 
     test("never overlaps the Folio handle, closed or open, at rest or scrolled", async ({ page }) => {

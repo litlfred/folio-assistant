@@ -114,8 +114,12 @@ button.fa-nav-icon {
 
 /* fsh-guts IN THE ICON ROW (#1925, owner 2026-10-02: "with the others"): the
  * count rides as a small badge on the fish so the row keeps one glyph width. */
-.fa-nav-icon--fsh-guts { position: relative; }
-.fa-nav-icon--fsh-guts .fa-nav-count {
+/* Todos and Beans carry the same badge since bean `gkv6` (owner, 2026-10-05:
+ * "why no count on beans and todos ... as badges like fsh-guts has?"). */
+.fa-nav-icon--fsh-guts,
+.fa-nav-icon--counted { position: relative; }
+.fa-nav-icon--fsh-guts .fa-nav-count,
+.fa-nav-icon--counted .fa-nav-count {
   position: absolute;
   right: -0.35rem;
   top: -0.3rem;
@@ -130,3 +134,5 @@ button.fa-nav-icon {
   text-align: center;
   pointer-events: none;
 }
+/* Could not be read, or nothing published: no number is better than a wrong one. */
+.fa-nav-icon--counted .fa-nav-count[data-fa-count-state="absent"] { display: none; }

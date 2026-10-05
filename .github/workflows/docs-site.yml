@@ -459,7 +459,7 @@ jobs:
       # Serve the prebuilt static output as-is (just-the-docs is already rendered;
       # /api is TypeDoc HTML).
       # The harness has no renderer of its own — `folio` is the only renderable
-      # graph kind and it belongs to folio-assistant-core — so its knowledge graph
+      # graph typology and it belongs to folio-assistant-core — so its knowledge graph
       # is published as DATA rather than as a page. Something else may draw it.
       # A non-zero exit means a source could not be read, and a partial graph
       # must not be published as a whole one.
@@ -730,7 +730,7 @@ jobs:
 
           # The ROOT INDEX (bean `4ak5` item 3): `<site>/index.jsonld` and its
           # `.json` alias name every declared instance at depth 1 — its export,
-          # where this site serves it, its directories and graph kinds, its
+          # where this site serves it, its directories and graph typologies, its
           # dependencies, its subgraph root, and a node count and digest of
           # the document. LAST in this step because it reads what the lines
           # above wrote, and it exits 1 on any instance whose export is not

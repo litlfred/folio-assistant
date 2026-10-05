@@ -85,7 +85,7 @@ export interface StepInputs {
    */
   inputs?: readonly string[];
   /**
-   * Graph KINDS whose declared directories this step reads.
+   * Graph TYPOLOGIES whose declared directories this step reads.
    *
    * **Preferred over spelling the paths into `inputs`.** `check:declared-paths`
    * caught the first draft listing `who-iris/skills`, `kg-navigation/skills`
@@ -168,7 +168,7 @@ export function resolvedInputs(root: string, step: StepInputs, resolve?: GraphRe
 }
 
 /**
- * Repo-relative directories declaring one graph kind.
+ * Repo-relative directories declaring one graph typology.
  *
  * Injected rather than imported, so this module stays a pure function of its
  * arguments and the tests need no `harness.json` on disk.

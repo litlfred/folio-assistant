@@ -310,9 +310,9 @@ export function claimOnBranchStore(
   // where `defs` is within the graph, and after the cutover that file is only
   // on the branch. Composing `defs` here instead would be the second spelling
   // this arc has spent five PRs removing.
-  const graph = store.readJson<{ directories?: Array<{ path: string; graphKinds?: string[] }> }>(`${loc.path}/beans.json`);
+  const graph = store.readJson<{ directories?: Array<{ path: string; graphTypologies?: string[] }> }>(`${loc.path}/beans.json`);
   if (graph.state !== "hit") return unknown(`could not read ${loc.path}/beans.json on ${loc.branch}: ${graph.reason}`);
-  const defs = graph.value.directories?.find((d) => (d.graphKinds ?? []).includes("bean-defs"));
+  const defs = graph.value.directories?.find((d) => (d.graphTypologies ?? []).includes("bean-defs"));
   if (!defs) return unknown(`${loc.path}/beans.json on ${loc.branch} declares no \`bean-defs\` directory`);
   const defsPath = `${loc.path}/${defs.path.replace(/\/+$/, "")}`;
 

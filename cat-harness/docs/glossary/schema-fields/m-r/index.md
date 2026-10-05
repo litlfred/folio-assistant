@@ -918,7 +918,7 @@ OpenApiConfigDocumentSchema.title <span class="fa-gloss-status">candidate, extra
 OpenApiConfigSchema.directory <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The <code>&lt;instance&gt;.json</code> directory id of graph kind <code>openapi</code> the documents are ingested into.</p>
+<p>The <code>&lt;instance&gt;.json</code> directory id of graph typology <code>openapi</code> the documents are ingested into.</p>
 <p class="fa-gloss-meta">Schema fields of cat-openapi · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/schemas/openapi.ts"><code>cat-openapi/schemas/openapi.ts#OpenApiConfigSchema.directory</code></a></p>
 </dd>
 <dt id="cat-openapi--kg-schema-fields--openapi.openapioperation.declaredid" data-fa-state="extracted" data-fa-gloss="">
@@ -2739,12 +2739,12 @@ RemarkSchema.interprets <span class="fa-gloss-status">candidate, extracted</span
 <p>Label of the provable block this remark interprets.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/constraints.ts"><code>cat-harness/schemas/constraints.ts#RemarkSchema.interprets</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.remotegraph.graphkinds" data-fa-state="extracted" data-fa-gloss="">
-RemoteGraph.graphKinds <span class="fa-gloss-status">candidate, extracted</span>
+<dt id="cat-harness--kg-schema-fields--cat-harness.remotegraph.graphtypologies" data-fa-state="extracted" data-fa-gloss="">
+RemoteGraph.graphTypologies <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Which parts of the knowledge graph live there.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#RemoteGraph.graphKinds</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#RemoteGraph.graphTypologies</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.remotegraph.id" data-fa-state="extracted" data-fa-gloss="">
 RemoteGraph.id <span class="fa-gloss-status">candidate, extracted</span>

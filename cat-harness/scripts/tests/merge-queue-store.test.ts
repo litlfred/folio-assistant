@@ -51,11 +51,11 @@ function repo(dirs: Array<Record<string, unknown>>): string {
  * `"subgraph": true` so `resolveDirectories` lists it (bean `cmsl`).
  */
 function nestedRepo(entry: Record<string, unknown>): string {
-  const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"] }]);
+  const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"] }]);
   mkdirSync(join(root, "beans"), { recursive: true });
   writeFileSync(
     join(root, "beans", "beans.json"),
-    JSON.stringify({ name: "fixture", directories: [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }, entry] }, null, 2),
+    JSON.stringify({ name: "fixture", directories: [{ id: "defs", path: "defs", graphTypologies: ["bean-defs"] }, entry] }, null, 2),
   );
   mkdirSync(join(root, "beans", "defs"), { recursive: true });
   return root;
@@ -81,14 +81,14 @@ const ENTRY = {
 
 describe("the four read states", () => {
   test("absent — no instance declares a merge-queue directory, and nothing claims one", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"] }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"] }]);
     expect(readQueueStore(root)).toEqual({ state: "absent", dir: null });
     // `null`, not a throw: an unmigrated folio has no queue, which is fine.
     expect(readQueueEntries(root)).toBeNull();
   });
 
   test("declared-but-absent — a checkout directory the declaration names and the disk has not got", () => {
-    const root = repo([{ id: "queue", path: "beans/queue/", graphKinds: ["merge-queue"] }]);
+    const root = repo([{ id: "queue", path: "beans/queue/", graphTypologies: ["merge-queue"] }]);
     const s = readQueueStore(root);
     expect(s.state).toBe("declared-but-absent");
     // And NOT a throw: the remedy here is to create it or fix the declaration,
@@ -97,7 +97,7 @@ describe("the four read states", () => {
   });
 
   test("unreachable — on the branch, nothing mounted: a REASON, and readQueueEntries THROWS", () => {
-    const root = repo([{ id: "queue", path: "beans/queue/", graphKinds: ["merge-queue"], source: TIP }]);
+    const root = repo([{ id: "queue", path: "beans/queue/", graphTypologies: ["merge-queue"], source: TIP }]);
     const s = readQueueStore(root);
     expect(s.state).toBe("unreachable");
     if (s.state !== "unreachable") throw new Error("unreachable");
@@ -109,7 +109,7 @@ describe("the four read states", () => {
   });
 
   test("read — entries, what was skipped, and a files count that is not a restatement", () => {
-    const root = repo([{ id: "queue", path: "beans/queue/", graphKinds: ["merge-queue"] }]);
+    const root = repo([{ id: "queue", path: "beans/queue/", graphTypologies: ["merge-queue"] }]);
     const dir = join(root, "beans", "queue");
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, entryFileName(ENTRY.repository, ENTRY.pr)), JSON.stringify(ENTRY));
@@ -128,7 +128,7 @@ describe("the four read states", () => {
   });
 
   test("a GitHub fact is refused BY NAME, so the queue cannot acquire a second answer to CI", () => {
-    const root = repo([{ id: "queue", path: "beans/queue/", graphKinds: ["merge-queue"], source: TIP }]);
+    const root = repo([{ id: "queue", path: "beans/queue/", graphTypologies: ["merge-queue"], source: TIP }]);
     const r = recordDecision({ ...ENTRY, headSha: "a".repeat(40) }, { root });
     expect(r.state).toBe("refused");
     if (r.state !== "refused") throw new Error("refused");
@@ -138,7 +138,7 @@ describe("the four read states", () => {
 
 describe("the live shape: declared FROM WITHIN, and cut over", () => {
   test("graphReadPath resolves the from-within entry by its OWN id, and the store reads its mount", () => {
-    const root = nestedRepo({ id: "queue", path: "queue", subgraph: true, source: TIP, graphKinds: ["merge-queue"] });
+    const root = nestedRepo({ id: "queue", path: "queue", subgraph: true, source: TIP, graphTypologies: ["merge-queue"] });
     const into = join(root, "beans", "queue");
     mount(root, "queue", "beans/queue", into);
     const where = graphReadPath("queue", root);
@@ -152,7 +152,7 @@ describe("the live shape: declared FROM WITHIN, and cut over", () => {
   });
 
   test("a MOUNTED from-within graph no longer reports as `unmounted` — the najo regression", () => {
-    const root = nestedRepo({ id: "queue", path: "queue", subgraph: true, source: TIP, graphKinds: ["merge-queue"] });
+    const root = nestedRepo({ id: "queue", path: "queue", subgraph: true, source: TIP, graphTypologies: ["merge-queue"] });
     const into = join(root, "beans", "queue");
     mount(root, "queue", "beans/queue", into);
 
@@ -177,7 +177,7 @@ describe("the live shape: declared FROM WITHIN, and cut over", () => {
     // No `"subgraph": true`, so `resolveDirectories` never lists it,
     // `tipLocations` never sees it and `state:mount` cannot reach it. Printing
     // "mount it" would be a remedy that does nothing.
-    const root = nestedRepo({ id: "queue", path: "queue", source: TIP, graphKinds: ["merge-queue"] });
+    const root = nestedRepo({ id: "queue", path: "queue", source: TIP, graphTypologies: ["merge-queue"] });
     const findings = auditNested(root, root, readDeclaration(root) as never);
     expect(findings.map((f) => f.kind)).toEqual(["unmountable"]);
     expect(findings[0]!.detail).toContain('"subgraph": true');
@@ -187,7 +187,7 @@ describe("the live shape: declared FROM WITHIN, and cut over", () => {
 
 describe("recording a decision", () => {
   test("refuses when the graph is not mounted, rather than writing where no push reaches", () => {
-    const root = repo([{ id: "queue", path: "beans/queue/", graphKinds: ["merge-queue"], source: TIP }]);
+    const root = repo([{ id: "queue", path: "beans/queue/", graphTypologies: ["merge-queue"], source: TIP }]);
     const r = recordDecision(ENTRY, { root, push: false });
     expect(r.state).toBe("refused");
     if (r.state !== "refused") throw new Error("refused");
@@ -195,7 +195,7 @@ describe("recording a decision", () => {
   });
 
   test("refuses when the path is the CHECKOUT's own, because that write would be a commit on this branch", () => {
-    const root = repo([{ id: "queue", path: "beans/queue/", graphKinds: ["merge-queue"] }]);
+    const root = repo([{ id: "queue", path: "beans/queue/", graphTypologies: ["merge-queue"] }]);
     mkdirSync(join(root, "beans", "queue"), { recursive: true });
     const r = recordDecision(ENTRY, { root, push: false });
     expect(r.state).toBe("refused");
@@ -204,7 +204,7 @@ describe("recording a decision", () => {
   });
 
   test("writes the entry into the mount, named for its repository and pull request", () => {
-    const root = nestedRepo({ id: "queue", path: "queue", subgraph: true, source: TIP, graphKinds: ["merge-queue"] });
+    const root = nestedRepo({ id: "queue", path: "queue", subgraph: true, source: TIP, graphTypologies: ["merge-queue"] });
     const into = join(root, "beans", "queue");
     mount(root, "queue", "beans/queue", into);
     const r = recordDecision(ENTRY, { root, push: false });
@@ -219,7 +219,7 @@ describe("recording a decision", () => {
   });
 
   test("an override with no reason is refused — the schema's one hard refusal, through the writer", () => {
-    const root = nestedRepo({ id: "queue", path: "queue", subgraph: true, source: TIP, graphKinds: ["merge-queue"] });
+    const root = nestedRepo({ id: "queue", path: "queue", subgraph: true, source: TIP, graphTypologies: ["merge-queue"] });
     mount(root, "queue", "beans/queue", join(root, "beans", "queue"));
     const r = recordDecision({ ...ENTRY, placement: { kind: "override", position: 1 } }, { root, push: false });
     expect(r.state).toBe("refused");

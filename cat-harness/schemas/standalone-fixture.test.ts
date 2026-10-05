@@ -42,8 +42,8 @@ describe("the standalone fixture copies the real nodes", () => {
     const rels = copies.map((f) => relative(FIXTURE, f));
     expect(rels).toContain("folio-assistant-sci/content-adapters/paper.json");
     expect(rels.filter((r) => r.includes("/block-kinds/") && r.endsWith(".json")).length).toBe(16);
-    expect(rels).toContain("folio-assistant-core/kinds/review-verdicts.json");
-    expect(rels).toContain("fhir-harness/kinds/ig-metadata-index.json");
+    expect(rels).toContain("folio-assistant-core/typologies/review-verdicts.json");
+    expect(rels).toContain("fhir-harness/typologies/ig-metadata-index.json");
   });
 
   test.skipIf(!sourcesPresent)("every copy is byte-equal to the file it copies", () => {
@@ -59,7 +59,7 @@ describe("the standalone fixture copies the real nodes", () => {
   test.skipIf(!sourcesPresent)("every block-kinds, content-adapters and kinds node the copied instances declare is copied", () => {
     const missing: string[] = [];
     for (const inst of FIXTURE_INSTANCES) {
-      for (const dir of ["block-kinds", "content-adapters", "kinds"]) {
+      for (const dir of ["block-kinds", "content-adapters", "typologies"]) {
         const real = join(CHECKOUT, inst, dir);
         if (!existsSync(real)) continue;
         for (const f of readdirSync(real).filter((x) => x.endsWith(".json"))) {

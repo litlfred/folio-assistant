@@ -104,7 +104,7 @@ function fixture(
     JSON.stringify({
       $schema: "folio-harness/v1",
       name: "fixture",
-      directories: [{ id: ID, path: ROUTE, graphKinds: ["auto-docs"], storage: { branch: BRANCH, keyedBy } }],
+      directories: [{ id: ID, path: ROUTE, graphTypologies: ["auto-docs"], storage: { branch: BRANCH, keyedBy } }],
     }),
   );
   for (const [n, t] of Object.entries(inCheckout)) {

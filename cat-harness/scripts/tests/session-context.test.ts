@@ -17,7 +17,7 @@ import {
   SessionContextSchema,
   parseSessionContext,
 } from "../../schemas/session-context.js";
-import { defaultGraphKinds, graphKindIri, graphLayer, processMayWrite } from "../../schemas/cat-harness.js";
+import { defaultGraphTypologies, graphTypologyIri, graphLayer, processMayWrite } from "../../schemas/cat-harness.js";
 
 /** The smallest record that parses — an idle session, which is the common one. */
 function idle(): unknown {
@@ -77,20 +77,20 @@ describe("session context", () => {
   test("`session-state` is a registered kind, writable, and its reader names it", () => {
     // Registered AHEAD of any directory, like `memory` and `folio`. Nothing
     // scans a kind, so this is not the `dh4f` shape.
-    expect(defaultGraphKinds.has("session-state")).toBe(true);
+    expect(defaultGraphTypologies.has("session-state")).toBe(true);
     expect(graphLayer("session-state")).toBe("state");
     expect(processMayWrite("session-state")).toBe(true);
     // The skill names the kind it reads, not the other way (#1168, B3).
     const skill = readFileSync(join(import.meta.dir, "../../skills/process/workflow/session-context.md"), "utf-8");
     const frontMatter = skill.startsWith("---\n") ? skill.slice(4, skill.indexOf("\n---", 4)) : "";
-    expect(frontMatter).toContain("graph-kinds:\n  - session-state");
+    expect(frontMatter).toContain("graph-typologies:\n  - session-state");
   });
 
   test("a session is NOT a process instance — two kinds, both state", () => {
     // `workflow-state` is where ONE instance got to; a session spans
     // processes. Merging them would make the idle session unrepresentable.
-    expect(defaultGraphKinds.has("session-state") && defaultGraphKinds.has("workflow-state")).toBe(true);
-    expect(graphKindIri("session-state", defaultGraphKinds.get("session-state")))
-      .not.toBe(graphKindIri("workflow-state", defaultGraphKinds.get("workflow-state")));
+    expect(defaultGraphTypologies.has("session-state") && defaultGraphTypologies.has("workflow-state")).toBe(true);
+    expect(graphTypologyIri("session-state", defaultGraphTypologies.get("session-state")))
+      .not.toBe(graphTypologyIri("workflow-state", defaultGraphTypologies.get("workflow-state")));
   });
 });

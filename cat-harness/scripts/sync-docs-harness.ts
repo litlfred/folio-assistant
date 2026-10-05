@@ -536,7 +536,7 @@ const glassStrip = (() => {
       )
     : undefined;
   if (pins === undefined) return undefined;
-  const resolved = resolveGlassStrip(pins, tiles, new Map(tileDirs.map((d) => [d.id, d.graphKinds])));
+  const resolved = resolveGlassStrip(pins, tiles, new Map(tileDirs.map((d) => [d.id, d.graphTypologies])));
   for (const k of resolved.unmatched) {
     console.warn(`glassStrip pins the kind "${k}", and no glass tile on this site holds it.`);
   }
@@ -584,7 +584,7 @@ const payload = {
   // de-duplicated, because a directory may hold several graphs and two
   // directories may hold the same one — `schemas/` declares both `schemas`
   // and `cat-harness`.
-  declaredKinds: [...new Set(siteDirectories(decl.directories ?? [], LANDING_DIR, REPO_ROOT).flatMap((d) => d.graphKinds ?? []))].sort(),
+  declaredKinds: [...new Set(siteDirectories(decl.directories ?? [], LANDING_DIR, REPO_ROOT).flatMap((d) => d.graphTypologies ?? []))].sort(),
   links,
   // ONE FAT TILE PER INITIATED HARNESS, for the left sidebar.
   //

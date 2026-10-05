@@ -3,8 +3,9 @@
 title: Locale selector back in the LHS navbar's top row
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-05T14:39:33Z
-updated_at: 2026-10-05T15:24:15Z
+updated_at: 2026-10-05T17:19:54Z
 parent: folio-assistant-9rq1
 ---
 
@@ -15,3 +16,9 @@ Owner, 2026-10-05: 'we lost locale selector in top navbar LHS again'. Cause (mea
 - [ ] e2e: present whenever .fa-nav-icons is
 
 _2026-10-05T15:24:15Z_ — Claimed by claude/vibrant-darwin-r6im60 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+Measured 2026-10-05: a globe IN the row does not fit — eight controls open to 280px in the 264px sidebar, bulb past the edge, and at rest the extra stacked icon clipped the closed 'On this page' at a 500px viewport. Fix taken instead: stop hiding .fa-lang-mini, so the original button stays on line 1 beside the name (236-264px, title unclipped). e2e proves it fails on the old CSS.
+
+Owner 2026-10-05 (later): 'language globe with rest of icons (beans, todos, processes). drop the processes graph icon' then '1 2' to which icon to drop -> both processes and kg dropped. Row is now todos, beans, language, fsh-guts, launcher (+ bulb). New 'language' slot in NAVBAR_ICONS, FULL-only like launcher; line-1 mini hidden again.
+
+Owner, 2026-10-05 (later, after #2211 landed a globe in the glass band): 'Keep only the band globe' / 'i only want the content bar globe, not the LHS navbar'. Row language slot removed entirely (NAVBAR_ICONS back to 7, no GLOBE in navbar-row.js, no docs-ui hook). Row stays todos, beans, fsh-guts, launcher + bulb.

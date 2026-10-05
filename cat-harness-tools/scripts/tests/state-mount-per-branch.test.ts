@@ -59,7 +59,7 @@ interface Subgraph {
   /** Repository-relative declared path — where the mount must land. */
   path: string;
   branch: string;
-  graphKinds: string[];
+  graphTypologies: string[];
   /** Branch-relative path → content. `null` seeds no branch at all. */
   files: Record<string, string> | null;
 }
@@ -88,7 +88,7 @@ function fixture(subs: Subgraph[]) {
         directories: subs.map((s) => ({
           id: s.id,
           path: `${s.path}/`,
-          graphKinds: s.graphKinds,
+          graphTypologies: s.graphTypologies,
           storage: { branch: s.branch, keyedBy: "tip" },
         })),
       },
@@ -123,14 +123,14 @@ const TWO: Subgraph[] = [
     id: "beans-defs",
     path: "beans/defs",
     branch: BEANS_BRANCH,
-    graphKinds: ["bean-defs"],
+    graphTypologies: ["bean-defs"],
     files: { "manifest.json": MANIFEST, "beans/defs/a.md": "A\n" },
   },
   {
     id: "todos",
     path: "todos",
     branch: TODOS_BRANCH,
-    graphKinds: ["todos"],
+    graphTypologies: ["todos"],
     files: { "manifest.json": MANIFEST, "todos/t1.md": "T\n" },
   },
 ];

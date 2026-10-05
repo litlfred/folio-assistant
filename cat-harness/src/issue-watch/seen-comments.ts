@@ -58,7 +58,7 @@ export const ISSUE_MARK_SCHEMA_TAG = "folio-issue-mark/v1";
  *
  * `SeenState` was a TypeScript interface, so the `issue-marks` kind declared
  * `schema` (where the shape is written) and no `validator` (what can be run) —
- * the exact pair `GraphKindDef.validator` documents as diverging, with `qa` as
+ * the exact pair `GraphTypologyDef.validator` documents as diverging, with `qa` as
  * its worked example. `check:kind-validators` therefore reported this kind as
  * *could not determine* and `audit-coverage` as reached by nothing at all.
  *

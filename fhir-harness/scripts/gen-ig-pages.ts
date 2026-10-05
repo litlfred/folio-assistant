@@ -22,7 +22,7 @@
  * `fhir-artifact-index` is registered `renderable: false`, so an instance
  * whose only declared graph of that kind is the index publishes its artefacts
  * at no URL. The owner found it by asking where `/smart-trust` was. Only two
- * of this repository's graph kinds are renderable (`docs` and `folio`); this
+ * of this repository's graph typologies are renderable (`docs` and `folio`); this
  * generator writes an instance's `docs/` from its index.
  *
  * **The URL the owner expected is the right one.** `withRoutes` in

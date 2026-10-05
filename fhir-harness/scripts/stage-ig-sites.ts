@@ -168,7 +168,7 @@ export function artifactsFor(root: string, pagesHref = "../artifact/"): StageOpt
  * a harness landing page.
  */
 export function igSiteDocs(root: string): string | undefined {
-  const d = readDeclaration(root)?.directories?.find((x) => x.igSite === true && x.graphKinds?.includes("docs"));
+  const d = readDeclaration(root)?.directories?.find((x) => x.igSite === true && x.graphTypologies?.includes("docs"));
   return d ? join(root, d.path) : undefined;
 }
 

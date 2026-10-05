@@ -74,7 +74,7 @@ export const ROOT = resolve(import.meta.dir, "..");
 /**
  * Authored entries — the directory declaring the `memory` graph.
  *
- * Asked BY GRAPH KIND rather than composed from a path. It was
+ * Asked BY GRAPH TYPOLOGY rather than composed from a path. It was
  * `kgRoots(ROOT).map((d) => join(d, "memory"))` — every knowledge-graph root's
  * `memory/` subdirectory — which was the right answer while the nodes lived
  * under `skills/`, and stopped finding anything the moment they moved out:

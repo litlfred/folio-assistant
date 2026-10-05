@@ -97,7 +97,7 @@ three ways that was wrong is an instance of the thing being fixed.
 files), `fsh-guts/` (27), `issue-marks/` (2) and root `docs/` were all reported
 as gaps. All four are declared, by `cat-harness`, with `scope: "repository"`:
 
-| directory | id | graph kinds | declared by |
+| directory | id | graph typologies | declared by |
 |---|---|---|---|
 | `beans/` | `beans` | `beans` | cat-harness |
 | `todos/` | `todos` | `todos` | cat-harness |
@@ -118,8 +118,8 @@ of the graph*, and `beans/beans.json` says *these are its internal nodes*
 holds for `todos/` and `interaction/`.
 
 **Two — `issue-marks` and `fsh-guts` were reported as undeclared while their
-graph KINDS were already registered.** Both are in
-`schemas/graph-kind-registry.ts`. A registered kind with no declaring directory
+graph TYPOLOGIES were already registered.** Both are in
+`schemas/graph-typology-registry.ts`. A registered kind with no declaring directory
 would have been a genuine and sharper finding than the one reported; the
 registry is where to look before concluding that a directory has no model.
 
@@ -463,7 +463,7 @@ it belongs to whoever owns the declaration schema.
 
 Branch `claude/declare-three-subgraphs-clean`, commit `675ffa4f8`, pushed and
 not merged at the time of writing, declares `cat-harness/deploy/`,
-`cat-harness/ui/` and `cat-harness/blueprint/` as `graphKinds: ["code"]`. It
+`cat-harness/ui/` and `cat-harness/blueprint/` as `graphTypologies: ["code"]`. It
 reached the `scope: "repository"` correction independently, which is worth
 recording: two sessions measuring the same thing found the same bug, so it is a
 property of the model rather than of one agent's carelessness.
@@ -500,7 +500,7 @@ The owner ruled all seven classifications on 2026-09-24. Two of the four
 "declare" items landed; two did not compile, for reasons that are findings about
 the declaration model rather than about the directories.
 
-**Landed** — `cat-harness/deploy/` and root `tools/`, both `graphKinds: ["code"]`,
+**Landed** — `cat-harness/deploy/` and root `tools/`, both `graphTypologies: ["code"]`,
 `dependents: "skip"`, each with a `coverage.skill`: `deployment-auth` for
 `deploy/` (that skill's architecture diagram is *of* those files) and
 `skills-and-tools` for `tools/`. 143/143 gates. Ten gates went red on the first
@@ -526,7 +526,7 @@ root, and this call site expects one:
   schemas → …/cat-harness/schemas; cat-harness-ns → …/cat-harness/ns
 ```
 
-`instanceDirectoryForGraph` enforces one directory per graph kind per instance,
+`instanceDirectoryForGraph` enforces one directory per graph typology per instance,
 and `schemasRoot` in `gen-schema-docs.ts` calls it. `cat-harness/schemas/` is
 already that one. **`code` has no such constraint** — `cat-harness` declares six
 code directories and nothing objects — because no call site resolves "the code

@@ -1,6 +1,6 @@
 /**
  * The published index files the site's viewers read — each `$schema` family
- * typed, so the graph-kind registry names a validator instead of the script
+ * typed, so the graph-typology registry names a validator instead of the script
  * that writes it (#1168 B6b, bean `dv8v`).
  *
  * Until then each family was registered as `writtenBy: "scripts/…"`: the

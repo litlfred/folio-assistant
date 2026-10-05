@@ -268,7 +268,7 @@ describe("smart-trust, referenced in smart-base's library (owner, 2026-10-02)", 
     // The site path is the smart-trust instance's ROOT route, which is what its
     // declaration's `instanceRoot` docs directory publishes at.
     const decl = readDeclaration(join(REPO, "smart-trust"))!;
-    expect(decl.directories?.some((d) => (d as { instanceRoot?: boolean }).instanceRoot && d.graphKinds?.includes("docs"))).toBe(true);
+    expect(decl.directories?.some((d) => (d as { instanceRoot?: boolean }).instanceRoot && d.graphTypologies?.includes("docs"))).toBe(true);
     expect(rec.links).toContainEqual({ label: "artefact index", site_path: `${decl.name}/` });
   });
   test("appears in smart-base's library projection, with its links", () => {

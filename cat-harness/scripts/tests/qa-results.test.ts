@@ -37,7 +37,7 @@ describe("the results directory is DECLARED, not merely created", () => {
     expect(decl).toBeDefined();
     const entry = decl!.directories.find((d) => d.path.replace(/\/+$/, "") === QA_RESULTS_DIR);
     expect(entry).toBeDefined();
-    expect(entry!.graphKinds).toContain("qa");
+    expect(entry!.graphTypologies).toContain("qa");
   });
 
   it("...and the directory it declares exists — or is a kind that leaves `main`", () => {
@@ -49,7 +49,7 @@ describe("the results directory is DECLARED, not merely created", () => {
     // nothing and reporting clean. So absence is allowed only for that kind.
     const entry = readDeclaration(ROOT)!.directories.find((d) => d.path.replace(/\/+$/, "") === QA_RESULTS_DIR)!;
     if (!existsSync(join(ROOT, QA_RESULTS_DIR))) {
-      expect(mayLeaveMain(entry as { graphKinds?: string[] })).toBe(true);
+      expect(mayLeaveMain(entry as { graphTypologies?: string[] })).toBe(true);
       return;
     }
     expect(existsSync(join(ROOT, QA_RESULTS_DIR))).toBe(true);

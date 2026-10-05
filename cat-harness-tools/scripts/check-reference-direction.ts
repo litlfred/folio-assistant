@@ -135,7 +135,7 @@
  *
  * @module scripts/check-reference-direction
  * @covers computed — the set it reads is DERIVED from the declarations on the
- *   run in front of you: every declared directory whose graph kind is neither
+ *   run in front of you: every declared directory whose graph typology is neither
  *   `state` nor `derived`, plus every file that has not declared itself
  *   generator output. Writing today's answer as a literal list of kinds would
  *   be the snapshot that goes stale silently, which is the failure this file
@@ -148,7 +148,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 
 import {
-  BASE_GRAPH_KINDS,
+  BASE_GRAPH_TYPOLOGIES,
   findDeclarationFile,
   instanceRootsIn,
   isDerivedGraph,
@@ -206,7 +206,7 @@ const SKIP_DIRS = new Set([".git", "node_modules", "translations"]);
  *
  * This is the generated-file question answered from the DECLARATION rather
  * than from a path or a marker, which is the only form of it this repository
- * accepts. `holds` is already on every graph kind and already means exactly
+ * accepts. `holds` is already on every graph typology and already means exactly
  * this: `content` is produced by authors, `context` is read and never
  * written, `state` is written by a running process as it runs, `derived` is
  * computed from something else.
@@ -222,7 +222,7 @@ const SKIP_DIRS = new Set([".git", "node_modules", "translations"]);
  * 'generated' from a path or a naming convention would silently exempt
  * authored content"* — and a declaration is a stronger warrant than a marker,
  * not a weaker one: the instance SAYS what a process does with the directory,
- * and `check:graph-kind-work` already gates that it said something.
+ * and `check:graph-typology-work` already gates that it said something.
  *
  * Asked through `isStateGraph`/`isDerivedGraph` rather than by reading
  * `holds` directly, because those two are deliberately NOT each other's
@@ -239,11 +239,11 @@ const SKIP_DIRS = new Set([".git", "node_modules", "translations"]);
  * family is declared too, and {@link GENERATOR_WRITTEN} reads that.
  */
 /**
- * Every `$schema` a graph kind declares a GENERATOR writes.
+ * Every `$schema` a graph typology declares a GENERATOR writes.
  *
  * The second half of the machine-written question, at file granularity, and
  * read from the same declarations as the first — `nodeSchemas[…].generated`
- * in the graph-kind registry. Eight families across `docs` and `qa`.
+ * in the graph-typology registry. Eight families across `docs` and `qa`.
  *
  * It read `writtenBy` until main removed that form (#1168 B6b, beans `dv8v`,
  * `d4lb`): the registry is a `@general` node, and naming each family's writer
@@ -266,7 +266,7 @@ const SKIP_DIRS = new Set([".git", "node_modules", "translations"]);
  * already says it, so nothing needs to start saying it again.
  */
 const GENERATOR_WRITTEN: ReadonlySet<string> = new Set(
-  Object.values(BASE_GRAPH_KINDS).flatMap((k) =>
+  Object.values(BASE_GRAPH_TYPOLOGIES).flatMap((k) =>
     Object.entries(k.nodeSchemas ?? {})
       .filter(([, d]) => (d as { generated?: true }).generated === true)
       .map(([schema]) => schema),
@@ -448,7 +448,7 @@ const EXEMPTIONS: readonly ReferenceExemption[] = [
  *  - **Declarations and registries** — `cat-harness.json` names
  *    `folio-assistant-core/schemas/` BECAUSE IT DECLARES THAT DIRECTORY.
  *    Moving it up does not remove the reference; it removes the
- *    declaration. Same for `avatars.ts`, `ig-chrome.ts`, `graph-kind-
+ *    declaration. Same for `avatars.ts`, `ig-chrome.ts`, `graph-typology-
  *    registry.ts`, `namespaces.ts` — registries keyed by instance.
  *  - **Specifications about the layering** — `instance-rules.ts`,
  *    `smart-stack-layering.md` and this file. RULED since (owner, Q-B
@@ -496,7 +496,7 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "fhir-harness/AGENTS.md", names: 4 },
   { file: "smart-base/skills/content/authoring-who-smart-guidelines/dak-preprocessing.md", names: 3 },
   { file: "cat-harness/skills/kg/kg-core/kg-export.md", names: 2 },
-  { file: "cat-harness/schemas/graph-kind-registry.ts", names: 2 },
+  { file: "cat-harness/schemas/graph-typology-registry.ts", names: 2 },
   { file: "cat-harness/scripts/dak-pdf.ts", names: 2 },
   { file: "cat-harness/scripts/external-schemas.ts", names: 3 },
   { file: "cat-harness/docs/methodologies/index.md", names: 2 },
@@ -607,7 +607,7 @@ function instances(repoRoot: string): Instance[] {
     const decl = JSON.parse(readFileSync(join(root, findDeclarationFile(root)!), "utf-8")) as {
       name?: string;
       needs?: string[];
-      directories?: { path?: string; graphKinds?: string[]; scope?: "instance" | "repository" }[];
+      directories?: { path?: string; graphTypologies?: string[]; scope?: "instance" | "repository" }[];
     };
     // `rootForScope`, NEVER `join(root, path)`. A directory entry may carry
     // `scope: "repository"`, and it then resolves against the REPO ROOT
@@ -619,7 +619,7 @@ function instances(repoRoot: string): Instance[] {
     // which does not exist, so the directory was not excluded and every file
     // in it was read as authored prose. Measured cost below.
     const machineWritten = (decl.directories ?? [])
-      .filter((d) => d.path !== undefined && declaresMachineWritten(d.graphKinds))
+      .filter((d) => d.path !== undefined && declaresMachineWritten(d.graphTypologies))
       .map((d) => join(rootForScope(root, d.scope), d.path!));
     // A declaration with no `name` cannot be a reference TARGET (nothing to
     // match) and cannot own files by name either, so it is skipped rather

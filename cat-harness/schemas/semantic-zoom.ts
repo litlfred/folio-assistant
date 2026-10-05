@@ -141,7 +141,7 @@ export function rendersAvatar(zoom: SemanticZoom, kind: string, widthPx: number)
  * The other two candidates were wrong for reasons worth keeping. A board
  * cannot own it, because the threshold survives deleting every board and
  * `board-diagram-interchange`'s test says a fact that survives the layout is
- * not layout. And a new graph KIND would have been a directory, a declaration
+ * not layout. And a new graph TYPOLOGY would have been a directory, a declaration
  * entry and a consumer contract for one object with no identifier of its
  * own.
  *

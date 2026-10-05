@@ -43,14 +43,14 @@
  * written as a pass.
  *
  * @module scripts/kg-audit
- * @covers processes, scenarios, skills, tools, cat-harness, attestations — the graph kinds
- *   `KG_SUBJECT_GRAPH_KINDS` maps its seven subject kinds onto, plus the
+ * @covers processes, scenarios, skills, tools, cat-harness, attestations — the graph typologies
+ *   `KG_SUBJECT_GRAPH_TYPOLOGIES` maps its seven subject kinds onto, plus the
  *   attestation store it reads and `--check`s (bean `2gst`)
  */
 
 import { createHash } from "node:crypto";
 import { parse as parseYaml } from "yaml";
-import { defaultGraphKinds } from "../schemas/graph-kind-registry.js";
+import { defaultGraphTypologies } from "../schemas/graph-typology-registry.js";
 import { contractFile, contractRefProblem, skillContracts } from "./skill-contracts.js";
 import { checkTestRuns, testRunFiles } from "./test-run-conformance.js";
 import { auditTestPlans, jsonFilesUnder } from "./test-plan-audit.js";
@@ -270,7 +270,7 @@ const WORKFLOW_DIR = ownDirectoryById(root, "processes", "processes");
 // on 2026-09-21 and a path-less subject needs a sidecar home.
 const SCENARIO_DIR = ownDirectoryById(root, "scenarios", "scenarios");
 // declared-path-literal: the convention fallback, at the call site, as for
-// `SCENARIO_DIR`. The ODRL policies (issue #1180) are their own graph kind.
+// `SCENARIO_DIR`. The ODRL policies (issue #1180) are their own graph typology.
 const POLICY_DIR = ownDirectoryById(root, "policies", "policies");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
@@ -1622,13 +1622,13 @@ function frontMatterLists(key: string): { value: string; from: string }[] {
 }
 
 /**
- * The `graph-kinds:` a skill names that are not registered kinds (#1168, B3).
+ * The `graph-typologies:` a skill names that are not registered kinds (#1168, B3).
  * The skill says which kinds it reads; the kind names no skill.
  */
-function unknownSkillGraphKinds(): KgFinding[] {
-  return frontMatterLists("graph-kinds")
-    .filter(({ value }) => !defaultGraphKinds.has(value))
-    .map(({ value, from }) => ({ where: from, detail: `names graph kind "${value}", which is not registered.` }));
+function unknownSkillGraphTypologies(): KgFinding[] {
+  return frontMatterLists("graph-typologies")
+    .filter(({ value }) => !defaultGraphTypologies.has(value))
+    .map(({ value, from }) => ({ where: from, detail: `names graph typology "${value}", which is not registered.` }));
 }
 
 /**
@@ -2373,7 +2373,7 @@ function auditGraph(
       // declared (#1168, B3). The statement names no satisfier, so this is
       // the only place a mistyped claim can be caught.
       "satisfies-resolves": entry(badSatisfies),
-      "skill-graph-kinds-resolve": entry(unknownSkillGraphKinds()),
+      "skill-graph-typologies-resolve": entry(unknownSkillGraphTypologies()),
       "skill-contract-resolves": entry(brokenSkillContracts()),
       ...testRunCriteria(skills),
       ...testPlanCriteria(actors),

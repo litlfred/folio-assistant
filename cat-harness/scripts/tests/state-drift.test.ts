@@ -244,7 +244,7 @@ describe("observed, not tabled (bean rva2)", () => {
     mkdirSync(join(repo, "d"));
     writeFileSync(
       join(repo, "fx.json"),
-      JSON.stringify({ name: "fx", directories: [{ id: "d", path: "d/", graphKinds: ["docs"], storage: { branch: "cat/fx/declared", keyedBy: "tip" } }] }),
+      JSON.stringify({ name: "fx", directories: [{ id: "d", path: "d/", graphTypologies: ["docs"], storage: { branch: "cat/fx/declared", keyedBy: "tip" } }] }),
     );
     const rows = observedRows({ repoRoot: repo, remote })!;
     expect(rows.map((r) => [r.name, r.id, r.declared])).toEqual([

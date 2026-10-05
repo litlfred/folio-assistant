@@ -42,7 +42,7 @@ import { publishedUrlOf, solveCrop } from "../harness-tiles.js";
 import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { declaredGraphs, toRootFor, visualiserHref } from "../mount-instance-docs.js";
 import { kindTitle } from "../lib/nav-label.js";
-import { graphKindRowDecor } from "../lib/graph-kind-nav.js";
+import { graphTypologyRowDecor } from "../lib/graph-typology-nav.js";
 
 // Typed WITH its middle region, because this fixture is a mounted page's
 // navbar and a mounted page always has one. `graphs` became optional for the
@@ -640,11 +640,35 @@ describe("the document index — `documentIndexOf`", () => {
     const g = documentIndexOf(
       page(`<h2 id="a">Alpha</h2><h3 id="b">Beta</h3><h2 id="c">Gamma</h2>`),
     );
+    // An h3 is a CHILD of the h2 above it, folded (bean `r2ld`).
     expect(g?.items.map((i) => [i.href, i.label, i.depth ?? 0])).toEqual([
       ["#a", "Alpha", 0],
-      ["#b", "Beta", 1],
       ["#c", "Gamma", 0],
     ]);
+    expect(g?.items[0]!.children?.map((i) => [i.href, i.label, i.depth])).toEqual([["#b", "Beta", 1]]);
+    expect(g?.items[0]!.fold).toBe("1 sub-section");
+    expect(g?.items[1]!.fold).toBeUndefined();
+  });
+
+  it("FOLDS sub-sections under their section, closed, as a disclosure BELOW the link — owner, 2026-10-05", () => {
+    // "on this page should have sub-sections collapsible" (bean `r2ld`).
+    const g = documentIndexOf(
+      page(`<h2 id="a">Alpha</h2><h3 id="b">Beta</h3><h3 id="b2">Beta 2</h3><h2 id="c">Gamma</h2>`),
+    )!;
+    expect(g.items[0]!.fold).toBe("2 sub-sections");
+    const html = navbarHtml({ instance: "x", graphs: { label: "Graphs", items: [] }, documentIndex: g });
+    // The section stays a plain link; the fold follows it, closed.
+    expect(html).toMatch(/<a href="#a"[^>]*>[\s\S]*?<\/a><details class="fa-nav-fold"><summary>/);
+    expect(html).not.toMatch(/<details class="fa-nav-fold" open/);
+    // No link INSIDE any one summary.
+    expect(html).not.toMatch(/<summary>(?:(?!<\/summary>)[^])*<a /);
+    expect(html).toContain('href="#b2"');
+  });
+
+  it("an h3 BEFORE any h2 stays a row of its own", () => {
+    const g = documentIndexOf(page(`<h3 id="x">Lead</h3><h2 id="a">A</h2><h3 id="b">B</h3>`))!;
+    expect(g.items.map((i) => i.label)).toEqual(["Lead", "A"]);
+    expect(g.items[0]!.depth).toBe(1);
   });
 
   it("SKIPS a heading with no id — it is not a destination", () => {
@@ -1116,19 +1140,19 @@ describe("the rail's Graphs group starts closed (#2150)", () => {
   });
 });
 
-describe("a harness row is not a graph-kind row, whatever its mark (#2151)", () => {
+describe("a harness row is not a graph-typology row, whatever its mark (#2151)", () => {
   // Owner, 2026-10-05: "alignment of harnesses is off". `fa-nav-kind` (the
   // strip-column indent) was inferred from "has an SVG glyph"; #2122 gave
   // harnesses glyph marks, and smart-trust / SMART Base took the kind indent.
   //
-  // Rows built from `graphKindRowDecor` itself, the one function that sets
+  // Rows built from `graphTypologyRowDecor` itself, the one function that sets
   // `NavItem.kind`, so this holds in a standalone cat-harness layer. That the
   // rows `declaredGraphs` builds for a REAL instance carry it is asserted in
   // `cat-harness-tools/scripts/tests/navbar-kind-rows.test.ts`, because it
   // reads who-iris's declaration, which only the monorepo has.
-  const kinds = ["docs", "library", "skills"].map((k) => ({ href: `../${k}/`, label: k, ...graphKindRowDecor(k, "x") }));
+  const kinds = ["docs", "library", "skills"].map((k) => ({ href: `../${k}/`, label: k, ...graphTypologyRowDecor(k, "x") }));
 
-  it("graphKindRowDecor DECLARES the row a kind, whatever mark it draws", () => {
+  it("graphTypologyRowDecor DECLARES the row a kind, whatever mark it draws", () => {
     expect(kinds.every((r) => r.kind === true)).toBe(true);
   });
 

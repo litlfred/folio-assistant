@@ -84,7 +84,7 @@
  * **Resolved from the DECLARATIONS, never from a list here.** A list would be
  * a second answer to "what processes does this harness have", free to disagree
  * with the declaration the moment either moves — the failure this repository
- * has paid for repeatedly. `processes` and `scenarios` graph kinds are read off
+ * has paid for repeatedly. `processes` and `scenarios` graph typologies are read off
  * the instance's own declaration, exactly as the `docs` kind already is.
  *
  * **Three states on this half too.** A harness that declares no processes, no
@@ -222,7 +222,7 @@ export function subjectsOf(instanceRoot: string): Subjects {
   if (!decl) return { processes: [], roles: [], tasks: [], unreadable: ["(no declaration)"] };
 
   for (const d of decl.directories ?? []) {
-    const kinds = (d.graphKinds ?? []) as readonly string[];
+    const kinds = (d.graphTypologies ?? []) as readonly string[];
     const abs = join(instanceRoot, d.path);
     if (kinds.includes("processes")) {
       for (const f of pagesOfExt(abs, ".bpmn")) {
@@ -612,7 +612,7 @@ export function harnessesWithDocs(repoRoot: string): { instance: string; root: s
     const decl = readDeclaration(inst);
     if (!decl) continue;
     const dirs = (decl.directories ?? [])
-      .filter((d) => (d.graphKinds ?? []).includes("docs"))
+      .filter((d) => (d.graphTypologies ?? []).includes("docs"))
       .map((d) => relative(repoRoot, join(inst, d.path)).split("\\").join("/"));
     // `root` is carried rather than re-derived from `instance`: the name is a
     // declared identifier and nothing resolves a path from it, so a consumer

@@ -1,5 +1,5 @@
 /**
- * Register core's graph kinds before any test reads a declaration.
+ * Register core's graph typologies before any test reads a declaration.
  *
  * @module schemas/test-preload
  * @graphNode schema
@@ -28,7 +28,7 @@
  * ## The failure this removed, and the evidence for the mechanism
  *
  * `folio` is registered by CORE as a load-time side effect
- * (`folio-graph-kind.ts`: *"a layer that cannot render must not own the
+ * (`folio-graph-typology.ts`: *"a layer that cannot render must not own the
  * renderable kind"*), so whether `readDeclaration` accepts this instance's
  * declaration depends on whether anything has imported core yet. That is an
  * IMPORT-ORDER dependency, and a test runner chooses its own order.
@@ -60,8 +60,8 @@
  * preload makes the TEST environment match production, where the entry point
  * has loaded core; it does not excuse production from loading it.
  */
-import "./folio-graph-kind.js";
-import "./glossary-graph-kind.js";
+import "./folio-graph-typology.js";
+import "./glossary-graph-typology.js";
 
 /*
  * THE SUITE'S DEFAULT TIMEOUT — bean `61n5`.

@@ -28,7 +28,7 @@
  * catches a hand-edit and a bump that was never re-vendored.
  *
  * @module cat-harness/scripts/vendor-sqlite-wasm
- * @covers none — vendored third-party bytes compared with their pinned package; no declared graph kind
+ * @covers none — vendored third-party bytes compared with their pinned package; no declared graph typology
  */
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";

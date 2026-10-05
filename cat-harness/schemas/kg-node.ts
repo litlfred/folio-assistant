@@ -40,7 +40,7 @@
  * {@link KG_NODE_LABEL_FIELDS} is the list a translation extractor reads, so
  * adding a third label later is one edit here rather than a sweep through every
  * extractor. Nothing else in a KG declaration is offered for translation: an
- * id, a path or a graph kind is structure, and translating structure is how a
+ * id, a path or a graph typology is structure, and translating structure is how a
  * reference goes dangling — the same rule `bpmn-translate.ts` follows.
  *
  * @module schemas/kg-node

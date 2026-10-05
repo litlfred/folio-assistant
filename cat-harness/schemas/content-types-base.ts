@@ -4,7 +4,7 @@
  * @module schemas/content-types-base
  * @graphNode schema
  *
- * Separate from `content-type.ts` for the reason `folio-graph-kind.ts` is
+ * Separate from `content-type.ts` for the reason `folio-graph-typology.ts` is
  * separate from `cat-harness.ts`: the registry is a mechanism and the entries
  * are a layer's opinion. A layer that does not own a type must not be the
  * place it is declared, and the split is what makes that enforceable rather
@@ -64,7 +64,7 @@
  * downstream. The comment was right about the destination and wrong that it
  * could wait: recognising `dak.config.json` needs `DAK_TYPE`, and reaching for it is
  * the edge. They live in {@link module:schemas/dak-content-type}, registered by
- * the layer that owns the model — exactly as `folio-graph-kind.ts` registers
+ * the layer that owns the model — exactly as `folio-graph-typology.ts` registers
  * `folio` rather than the harness declaring a kind it cannot serve.
  *
  * `ig` is registered nowhere, and that is also deliberate. `79t3` records it as
