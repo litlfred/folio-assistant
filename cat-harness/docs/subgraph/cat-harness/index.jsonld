@@ -114,6 +114,11 @@
       "name": "uml"
     },
     {
+      "@id": "cat-harness:graphKind/validators",
+      "@type": "bootstrap:GraphKind",
+      "name": "validators"
+    },
+    {
       "@id": "cat-harness:graphKind/vocab-mapping",
       "@type": "bootstrap:GraphKind",
       "name": "vocab-mapping"
@@ -525,6 +530,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests",
       "@type": "bootstrap:Subgraph",
       "name": "cat-harness-tests"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-validators",
+      "@type": "bootstrap:Subgraph",
+      "name": "cat-harness-validators"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/code-lists",
@@ -1087,6 +1097,12 @@
       "title": "binary-release"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/block-kind-node",
+      "@type": "cat-harness:Schema",
+      "name": "block-kind-node",
+      "title": "block-kind-node"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/block-kinds",
       "@type": "cat-harness:Schema",
       "name": "block-kinds",
@@ -1147,6 +1163,12 @@
       "title": "constraints"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/content-adapter-node",
+      "@type": "cat-harness:Schema",
+      "name": "content-adapter-node",
+      "title": "content-adapter-node"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/content-type",
       "@type": "cat-harness:Schema",
       "name": "content-type",
@@ -1157,6 +1179,12 @@
       "@type": "cat-harness:Schema",
       "name": "content-types-base",
       "title": "content-types-base"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/contribution-nodes",
+      "@type": "cat-harness:Schema",
+      "name": "contribution-nodes",
+      "title": "contribution-nodes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/contributions",
@@ -1277,6 +1305,12 @@
       "@type": "cat-harness:Schema",
       "name": "glossary-ledger",
       "title": "glossary-ledger"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/graph-kind-node",
+      "@type": "cat-harness:Schema",
+      "name": "graph-kind-node",
+      "title": "graph-kind-node"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/graph-kind-registry",
@@ -1811,6 +1845,12 @@
       "@type": "cat-harness:Schema",
       "name": "user-story",
       "title": "user-story"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/validator-node",
+      "@type": "cat-harness:Schema",
+      "name": "validator-node",
+      "title": "validator-node"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vector-figure",
@@ -2597,6 +2637,12 @@
       "@type": "cat-harness:Tool",
       "name": "witness-conformance",
       "title": "Witness conformance report"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/witness-parity",
+      "@type": "cat-harness:Tool",
+      "name": "witness-parity",
+      "title": "Witness reproduction check"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/work-plan-prime",

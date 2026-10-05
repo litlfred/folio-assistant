@@ -1,5 +1,15 @@
 classDiagram
   direction LR
+  namespace cat_harness__cat_harness_validators {
+    class cat_harness_cat_harness_validators_folio_validator_v1_folio_validator_v1["folio-validator/v1"] {
+      <<json: ValidatorNodeSchema>>
+      $schema [1] 'folio-validator/v1'
+      id [1] string
+      validates [1] object
+      schema [1] string
+      rationale [0..1] string
+    }
+  }
   namespace cat_harness__tools {
     class cat_harness_tools_Maintain["Maintain"] {
       <<json: ToolDefinitionSchema>>
@@ -640,6 +650,33 @@ classDiagram
       proseMentions [1] number
       wrongDirection [1] number
       undeterminedDirection [1] number
+    }
+    class cat_harness_qa_folio_lsi_index_v1["folio-lsi-index/v1"] {
+      <<ts: LsiSidecar>>
+      $schema [1] 'folio-lsi-index/v1'
+      method [1] string
+      instance [1] string
+      graph [1] string
+      path [1] string
+      docs [1] string[] | null
+      fingerprint [1] string
+      options [1] LsiOptions
+      units [1] number
+      terms [1] number
+      k [1] number
+      retained [1] number
+      dimensions [1] Array~ dim: number; sigma: number; positive: string[]; negative: string[] ~
+      findings [1]  nearDuplicates: Array~ a: string; b: string; cosine: number ~; narrowDimensions: Array~ dim: number; units: string[] ~; 
+      neighbours [1] Record~string, Array~[string, number]~~
+    }
+    class cat_harness_qa_folio_tool_run_v1_folio_tool_run_v1["folio-tool-run/v1"] {
+      <<json: ToolRunRecordSchema>>
+      $schema [1] 'folio-tool-run/v1'
+      tool [1] string
+      target [1] string
+      outcome [1] succeeded | failed
+      inputFingerprint [1] string
+      detail [0..1] string
     }
     class cat_harness_qa_viewer_nav_qa_v1_Page["Page"] {
       <<json: ViewerNavQaSchema>>
@@ -1526,6 +1563,7 @@ classDiagram
       <<could not determine>>
     }
   }
+  cssClass "cat_harness_cat_harness_validators_folio_validator_v1_folio_validator_v1" fa_uml_kind_validators
   cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains
   cssClass "cat_harness_tools_Maintain" fa_uml_kind_tools
   cssClass "cat_harness_tools_ToolDefinition" fa_uml_kind_tools
@@ -1630,6 +1668,8 @@ classDiagram
   cssClass "cat_harness_qa_folio_qa_index_v1_folio_qa_index_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_qa_translation_pages_v1_folio_qa_translation_pages_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_detangle_sidecar_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_folio_lsi_index_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_folio_tool_run_v1_folio_tool_run_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_viewer_nav_qa_v1_Page" fa_uml_kind_qa
   cssClass "cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1" fa_uml_kind_qa
   cssClass "cat_harness_attestations_QaAttestations" fa_uml_kind_attestations

@@ -1199,6 +1199,12 @@ export interface ScriptExemption {
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
   {
+    script: "skill:register:declarations:check",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `skill:register:check`, which CI runs: this is the same script with `--declarations-only`, which asks the declaration half and leaves out the chain checks (`STEPS`), so the gate performs this one's entire job besides. It exists for ONE caller, `regen-after-merge` via `pair-cover.ts` (bean `8qyc`): when every chain check is already asked in the same pool, the full gate would ask them a second time, so the pool asks the residual instead. As a CI step it would duplicate a subset of a step CI already runs",
+  },
+  {
     script: "split:baseline:check",
     kind: "report",
     reason:
@@ -1233,6 +1239,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "covered-by",
     reason:
       "SUBSUMED by `check:kind-validators:require-all`, which CI runs: the same script with a flag that adds one assertion — that no kind has stayed silent about a validator — and performs this one's entire job besides. Kept as a script because the bare form is the REPORT, and a contributor adding a kind wants to read the three states without the non-zero exit while they are still deciding which one applies. Bean `rj0n`",
+  },
+  {
+    script: "kind:table:check",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `kind:register:check`, which CI runs: its first STEP is exactly `kind:table:check` (cat-harness-tools/scripts/kind-register.ts), so the generated kind table in directory-conventions.md is checked on every push through the command that owns every artefact a kind owes. Kept as a script because a contributor editing one kind node wants the table's answer alone, without the other steps. Bean `dmx1`",
   },
   {
     script: "check:harness-state",

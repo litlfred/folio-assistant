@@ -15,29 +15,20 @@ import { join, extname, resolve } from "path";
 import type { ContentAdapter } from "./types.js";
 import { GitHelper } from "../../cat-harness/src/core/git.js";
 import { log, logDebug } from "../../cat-harness/src/core/logging.js";
-import { registerDeclaredToolGroups, toolGroupsFromNodes, type ToolGroupDeclaration } from "./tool-groups.js";
-import { tools as declaredTools } from "../../cat-harness/tools/index.js";
+import { registerServedToolGroups } from "./tool-groups.js";
 import { registerSkillPrompts } from "./tools/skill-prompts.js";
 import {
   dispatchGet, dispatchPost, mountDeclaredRoutes,
   type MountedRoute, type RouteDeclaration,
 } from "./route-groups.js";
 
-/** Where this server's declared tool modules resolve from. */
+/** Where this server's declared route modules resolve from. */
 const PLATFORM_ROOT = resolve(import.meta.dir, "..");
-/** The harness this layer implements: where the Tool nodes are declared. */
-const HARNESS_ROOT = resolve(PLATFORM_ROOT, "..", "cat-harness");
-
-/**
- * The tool groups the HTTP/stdio server serves — READ from the Tool nodes this
- * instance declares (`tools/`), not listed here. See `toolGroupsFromNodes`.
- */
-const SERVER_TOOL_GROUPS: readonly ToolGroupDeclaration[] = toolGroupsFromNodes(declaredTools());
 
 /**
  * The HTTP routes this server serves, IN DISPATCH ORDER.
  *
- * Declared rather than imported, for the reason `SERVER_TOOL_GROUPS` above is:
+ * Declared rather than imported, for the reason the tool groups are not imported:
  * three of these five are CORE's — a folio's feedback items, its glossary
  * candidates, its bibliography relevance — and the harness is the base
  * repository, so it may not import them.
@@ -301,14 +292,13 @@ export class FolioServer {
   }
 
   private async registerToolGroups(repoRoot: string): Promise<void> {
-    for (const o of await registerDeclaredToolGroups(
-      this.mcpServer,
-      SERVER_TOOL_GROUPS,
-      // The DECLARING instance: the Tool nodes are cat-harness's (`../tools/`
-      // there), and each module resolves from it to whoever implements it.
-      HARNESS_ROOT,
-      [repoRoot],
-    )) {
+    // Every Tool node in the folio's dependency tree, the harness's always —
+    // read from the declared `tools` graphs, not listed here (bean `zmdo`;
+    // owner 2026-10-05, bean riit 3c: the viewer server uses the same rule).
+    // Each group resolves from the instance that declares it.
+    const { outcomes, failures } = await registerServedToolGroups(this.mcpServer, repoRoot, [repoRoot]);
+    for (const f of failures) log("init", "\u2717 tools graph", f);
+    for (const o of outcomes) {
       // An absent group is skipped and REPORTED: a server quietly starting
       // without its translation tools looks identical to one where they are
       // broken. A present-but-broken one is a different state again, because

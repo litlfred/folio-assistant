@@ -874,11 +874,28 @@ const REDIRECT = /<meta\s+http-equiv="refresh"/i;
 // measured on the first staging preview, 2026-10-04 (bean `folio-assistant-5ea6`).
 const NOT_THIS_PASS: readonly string[] = [VIEWER_DIR];
 
+/**
+ * Where a rail's platform links point when the site is NOT the platform's.
+ *
+ * A folio's own Pages site (`folio-staging.yml`, e.g. litlfred/smart-ra) is
+ * railed with the platform's graphs and harnesses, but those are published on
+ * the PLATFORM's site: re-based against the folio page's own root, every one
+ * of them 404s. `platformBase` re-bases them against the platform's published
+ * root instead, while the home row stays the folio's own root.
+ */
+export interface ForeignSiteRail {
+  /** The platform site's root, no trailing slash: `https://litlfred.github.io/folio-assistant`. */
+  platformBase: string;
+  /** What the home row is called — the folio's name, not the platform's. */
+  homeLabel?: string;
+}
+
 export function railStandalonePages(
   siteAbs: string,
   built: string,
   instanceName: string,
   mountRoutes: readonly string[],
+  foreign?: ForeignSiteRail,
 ): { injected: number; alreadyNavigated: number; redirects: number; declined: number; skipped: string[] } {
   const skipped: string[] = [];
   let injected = 0;
@@ -927,12 +944,15 @@ export function railStandalonePages(
       const depth = rel.split("/").length - 1;
       const toRoot = depth === 0 ? "." : new Array(depth).fill("..").join("/");
       const named = railNames(built, instanceName);
-      const links = declaredGraphs(instanceName, new Map(), publishedGraphs(built, instanceName, toRoot), named.harness);
-      const harnesses = instantiatedHarnesses(built, toRoot);
-      const mark = instanceMark(built, instanceName, toRoot);
+      // The platform's links resolve against the platform's site; only home is this site's.
+      const linkRoot = foreign?.platformBase ?? toRoot;
+      const links = declaredGraphs(instanceName, new Map(), publishedGraphs(built, instanceName, linkRoot), named.harness);
+      const harnesses = instantiatedHarnesses(built, linkRoot);
+      const mark = instanceMark(built, instanceName, linkRoot);
+      const homeLabel = foreign ? foreign.homeLabel : named.site;
       const after = injectRail(before, {
         instance: named.harness ?? instanceName,
-        ...(named.site ? { homeLabel: named.site } : {}),
+        ...(homeLabel ? { homeLabel } : {}),
         toRoot,
         ...(mark ? { mark } : {}),
         links,

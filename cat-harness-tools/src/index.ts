@@ -10,14 +10,10 @@
  * @module folio-assistant/index
  */
 
-import { basename, resolve } from "path";
-import { existsSync, readFileSync } from "fs";
+import { resolve } from "path";
 import { FolioServer } from "./server.js";
-import { resolveBuiltinAdapter } from "../../cat-harness/src/builtin-adapters.js";
-import { NoContentAdapter } from "./no-content-adapter.js";
+import { createContentAdapter, readFolioContentConfig } from "./content-adapter.js";
 import { GitHelper } from "../../cat-harness/src/core/git.js";
-import { log } from "../../cat-harness/src/core/logging.js";
-import { expectedInstanceConfigPath } from "../../cat-harness/schemas/harness-config";
 import { repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
 
 // ── Parse CLI args ───────────────────────────────────────────────
@@ -115,106 +111,17 @@ if (args.includes("--check-deps")) {
   process.exit(missingReq > 0 ? 1 : 0);
 }
 
-// ── Detect adapter type ──────────────────────────────────────────
+// ── Load folio config and create adapter ────────────────────────
+//
+// In `content-adapter.ts`, so the viewer server in `adapters/mcp-server/`
+// serves the same content tools rather than a fork of them (bean riit, 3c).
 
-// ── Load folio config ───────────────────────────────────────────
-
-let adapterType = "paper";
-let adapterModule: string | undefined;
-/** Whether the config NAMED a content type, rather than `adapterType` defaulting. */
-let contentDeclared = false;
-let feedbackDir = resolve(repoRoot, ".folio-feedback");
-let viewerPort: number | undefined;
-
-// The instance's own config — `<name>.config.json`, resolved outward from
-// the instance root (2026-09-20). `undefined` = nothing declares an instance
-// here, so there is no config to prefer and the defaults below stand.
-const harnessConfigPath = expectedInstanceConfigPath(repoRoot);
-if (harnessConfigPath !== undefined && existsSync(harnessConfigPath)) {
-  try {
-    const config = JSON.parse(readFileSync(harnessConfigPath, "utf-8"));
-    adapterType = config.contentType || config.adapter || "paper";
-    contentDeclared = Boolean(config.contentType || config.adapter);
-    adapterModule = config.adapterModule;
-    if (config.feedbackDir) feedbackDir = resolve(repoRoot, config.feedbackDir);
-    if (config.viewer?.port) viewerPort = config.viewer.port;
-    // NAME THE FILE ACTUALLY READ. `harnessConfigPath` is computed by
-    // `expectedInstanceConfigPath`, and the config is `<name>.config.json`
-    // since the 2026-09-21 split — so a hardcoded `harness.config.json` here
-    // told an operator to go and look at a file that does not exist. A log
-    // line is not prose a rename rewords; it is output somebody acts on.
-    log("init", `Loaded ${basename(harnessConfigPath)}: adapter=${adapterType}`);
-  } catch (e) {
-    log("init", `Failed to read ${harnessConfigPath}: ${e}`);
-  }
-}
-
-// Fallback: lean-mcp.config.json for viewer_port
-if (!viewerPort) {
-  const mcpConfigPath = resolve(repoRoot, "lean-mcp.config.json");
-  if (existsSync(mcpConfigPath)) {
-    try {
-      const mcpConfig = JSON.parse(readFileSync(mcpConfigPath, "utf-8"));
-      if (mcpConfig.viewer_port) viewerPort = mcpConfig.viewer_port;
-    } catch { /* ignore */ }
-  }
-}
-
-// ── Create adapter ───────────────────────────────────────────────
-
+const folioConfig = readFolioContentConfig(repoRoot);
+const { feedbackDir, viewerPort } = folioConfig;
 const gitHelper = new GitHelper(repoRoot);
 // The UI stayed in the harness when the server moved up (70lx).
 const assistantDir = resolve(import.meta.dir, "..", "..", "cat-harness", "ui");
-
-let adapter;
-
-if (adapterModule) {
-  // Dynamic adapter loading — content repo provides its own adapter
-  try {
-    const modulePath = resolve(repoRoot, adapterModule);
-    const mod = await import(modulePath);
-    const AdapterClass = mod.default || mod[Object.keys(mod).find(k => k.includes("Adapter")) || ""];
-    adapter = new AdapterClass(repoRoot, gitHelper, feedbackDir);
-    log("init", `Using custom adapter from ${adapterModule} (repo: ${repoRoot})`);
-  } catch (e) {
-    log("init", `Failed to load adapter from ${adapterModule}: ${e}`);
-    log("init", `Falling back to a built-in adapter`);
-    const r = await resolveBuiltinAdapter(adapterType);
-    if (r.fallbackReason) log("init", r.fallbackReason);
-    adapter = new (r.ctor as new (...a: never[]) => unknown)(
-      repoRoot as never, gitHelper as never, feedbackDir as never,
-    );
-  }
-} else {
-  // Built-in adapter selection, from the declaration in `builtin-adapters.ts`
-  // rather than a `switch` over imported classes.
-  //
-  // `document` is the base content type — prose folios with no Lean and no
-  // required TeX — and `paper` is the specialization that adds both. `paper`
-  // remains the fallback because every folio predating the document type
-  // declares `contentType: "paper"` or nothing at all, and the paper adapter
-  // is a superset: it registers the document tools too. Falling back the other
-  // way would silently drop `lean_build` from an existing folio whose config
-  // happens to omit `contentType` — which is why a fallback that DOES go that
-  // way (because the science layer is not installed) says so out loud.
-  //
-  // When NO adapter is installed at all — `cat-harness` with nothing above it —
-  // the server starts with the generic tools only, and says so (owner,
-  // 2026-10-04, bean `zmdo`). It refused to start until then, which left a
-  // fresh instance on the harness alone unable to reach `folio_init`.
-  try {
-    const r = await resolveBuiltinAdapter(adapterType);
-    if (r.fallbackReason) log("init", r.fallbackReason);
-    adapter = new (r.ctor as new (...a: never[]) => unknown)(
-      repoRoot as never, gitHelper as never, feedbackDir as never,
-    );
-    log("init", `Using ${r.used.contentType} adapter (repo: ${repoRoot})`);
-  } catch (e) {
-    adapter = new NoContentAdapter(repoRoot);
-    const asked = contentDeclared ? `contentType "${adapterType}" was asked for and` : "this instance declares no content type, and";
-    log("init", `NO CONTENT ADAPTER — serving the generic tools only: ${asked} ${e instanceof Error ? e.message.split("\n")[0] : String(e)}`);
-  }
-}
+const adapter = await createContentAdapter(repoRoot, gitHelper, folioConfig);
 
 // ── Start server ─────────────────────────────────────────────────
 

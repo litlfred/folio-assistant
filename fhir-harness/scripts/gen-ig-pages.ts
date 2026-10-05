@@ -3,7 +3,7 @@
  * Render ANY FHIR IG instance's reader-facing pages from its artefact index.
  *
  * @module fhir-harness/scripts/gen-ig-pages
- * @covers fhir-artifact-index
+ * @covers fhir-artifact-index, ig-pages — it reads the index and its `--check` grades every page it writes
  *
  * ## Why it lives in fhir-harness
  *
@@ -74,7 +74,8 @@
  * word of it being typed here.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { basename, join, posix, resolve } from "node:path";
+import { basename, join, posix, relative, resolve, sep } from "node:path";
+import { compareRoute } from "../../cat-harness/scripts/route-authority.ts";
 import { IG_API_HUB_SCRIPT, IG_API_HUB_TEMPLATE, IG_API_VIEW_SCRIPT, igApiHubData, igApiHubFragment, igApiServed, igApiViewData, igApiViews } from "./ig-api-views.ts";
 import { igFooterData } from "./ig-footer.ts";
 import { JSON_VIEW_SCRIPT, VIEW_PAGE, examplesPage, hasJsonView, historyPage, jsonViewData, mappingsPage, mdText, packageEntries, profileJsonViewData, resourceFacts, resourceTabs, testingPage, type TabPageData } from "./resource-views.ts";
@@ -198,11 +199,11 @@ const IG_API_OPENAPI_SCRIPT = "assets/ig-api-openapi.js";
  * The instance that OWNS the template chrome, or none.
  *
  * Named rather than walked to, and `schemas/ig-chrome.ts` §`chromeFileFor`
- * carries why: `smart-trust` needs `smart-ig` while `smart-base` needs
- * `fhir-harness`, so there is no `needs` path between them to walk. Widening
- * the walk until one matched would settle a layering question — `nsbb`'s —
- * inside a stylesheet loader. A FLAG rather than a constant now that the
- * generator is generic: fhir-harness has no business naming a WHO instance.
+ * carries why: the generator is generic, so the caller names the owner rather
+ * than a walk picking one (the `needs` gap that first motivated this has closed;
+ * the IG page sets now declare `derivedFrom: smart-base-themes`, bean `nama`).
+ * A FLAG rather than a constant: fhir-harness has no business naming a WHO
+ * instance.
  */
 const CHROME_OWNER = arg("--chrome-owner");
 
@@ -1375,11 +1376,46 @@ function committed(): Map<string, string> {
   return out;
 }
 
+/**
+ * The declared id of the directory these pages are written to, or `undefined`
+ * when `--out` points somewhere no declaration names. Keyed by ID so that moving
+ * the pages to `cat/fhir-harness/ig-docs` (bean lbz8) is a declaration edit
+ * (`storage: { branch, keyedBy: "route" }`), not a change here.
+ */
+function docsDirectoryId(): string | undefined {
+  const norm = (p: string) => resolve(p).replace(/\/+$/, "");
+  return readDeclaration(INSTANCE)?.directories?.find((d) => norm(join(INSTANCE, d.path)) === norm(OUT))?.id;
+}
+
 if (CHECK) {
+  // Compared against whichever copy the declaration says is authoritative — the
+  // checkout today, both while the same pages live on main and on
+  // cat/fhir-harness/ig-docs, and the branch after the cutover (bean lbz8).
+  // The resolver is the one `uml:overview:check` uses (`route-authority.ts`,
+  // #2053). A branch it cannot reach is UNKNOWN: neither stale nor a pass.
+  const repoRoot = repoRootFor(INSTANCE);
+  const id = docsDirectoryId();
+  const outRel = relative(repoRoot, OUT).split(sep).join("/");
+  const verdict = id === undefined
+    ? undefined
+    : compareRoute(id, new Map([...pages].map(([rel, text]) => [`${outRel}/${rel.split(sep).join("/")}`, text])), repoRoot);
+  if (verdict?.state === "unknown") {
+    console.error(`COULD NOT DETERMINE whether ${INSTANCE_NAME}'s IG pages are current: ${verdict.reason}`);
+    console.error(`  authority: ${verdict.authority} — nothing was compared, so this is not a pass.`);
+    process.exit(4);
+  }
+  for (const d of verdict?.drift ?? []) console.error(`drift: ${d} differs between the checkout and the branch`);
   const have = committed();
   const stale: string[] = [];
-  for (const [rel, html] of pages) if (have.get(rel) !== html) stale.push(rel);
-  for (const rel of have.keys()) if (!pages.has(rel)) stale.push(`${rel} (orphan — no artefact produces it)`);
+  if (verdict?.authority === "branch") {
+    // The branch is replaced wholesale by a publish, so an orphan is the
+    // publisher's to sweep; only content is compared here.
+    stale.push(...verdict.stale.map((p) => p.slice(outRel.length + 1)));
+  } else {
+    for (const [rel, html] of pages) if (have.get(rel) !== html) stale.push(rel);
+    for (const rel of have.keys()) if (!pages.has(rel)) stale.push(`${rel} (orphan — no artefact produces it)`);
+  }
+  stale.push(...(verdict?.drift ?? []).map((p) => `${p} (drift between the checkout and the branch)`));
   if (stale.length > 0) {
     console.error(`✗ ${stale.length} page(s) stale or orphaned:`);
     for (const s of stale.slice(0, 10)) console.error(`    ${s}`);
@@ -1387,7 +1423,7 @@ if (CHECK) {
     console.error(`  Run \`bun run ${INSTANCE_NAME}:pages\`. These pages are generated; never edit them.`);
     process.exit(1);
   }
-  console.log(`✓ ${INSTANCE_NAME} docs are current — ${pages.size} page(s) over ${ix.count} artefacts`);
+  console.log(`✓ ${INSTANCE_NAME} docs are current — ${pages.size} page(s) over ${ix.count} artefacts${verdict ? `, read from ${verdict.authority === "both" ? "both copies (the checkout decides)" : `the ${verdict.authority}`}` : ""}`);
 } else {
   // Rebuilt wholesale so a removed artefact cannot leave a page behind — all
   // but the directory's README, which another generator owns and is carried
