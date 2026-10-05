@@ -20610,6 +20610,177 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind-index.nodekindentry.declaredby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeKindEntry.declaredBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance that declares it: the one whose code holds the `nodeKind()`. Absent for a kind reached only as an ANCESTOR (a mixin such as `themed`): no typology names it, so nothing here says where it lives, and guessing from a child would file it under whichever child was read first."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.declaredBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind-index.nodekindentry.holdings",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeKindEntry.holdings"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The graph typologies that hold nodes of this kind, and the families they file it under."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.holdings",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind-index.nodekindentry.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeKindEntry.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`nodeKind()`'s id — a `$schema` tag for a tagged kind, a name for a mixin."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind-index.nodekindentry.module",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeKindEntry.module"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where, repo-relative, and under which export. Absent for an ancestor reached only as a parent."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.module",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind-index.nodekindentry.parents",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeKindEntry.parents"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Direct parents, by id, in declared order."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.parents",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind-index.nodekindentry.subclasses",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeKindEntry.subclasses"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Direct subclasses, by id, sorted: the kinds that name this one as a parent."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.subclasses",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind-index.nodekindindex.collisions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeKindIndex.collisions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Two different kinds sharing one id — always a finding."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindIndex.collisions",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind-index.unkinded.family",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Unkinded.family"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The `$schema` family; absent when it is the typology's kind-level validator."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#Unkinded.family",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind.nodekind.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeKind.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kind's NAME — its identity and its URL segment (`changeset`). Never versioned."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind.ts#NodeKind.id",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind.nodekind.order",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -20683,6 +20854,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/node-kind.ts#NodeKind.schema",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind.nodekind.tag",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeKind.tag"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`<id>/<version>`: what a writer stamps in `$schema`. Absent when unversioned."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind.ts#NodeKind.tag",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind.nodekind.version",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeKind.version"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "SemVer, for a kind whose nodes are files (issue #2195). Absent for a mixin (`themed`), which has no `$schema` of its own."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind.ts#NodeKind.version",
       "skos:note": "candidate"
     },
     {

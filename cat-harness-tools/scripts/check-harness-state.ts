@@ -729,7 +729,7 @@ export function todoBeanRefs(opts: { dirs?: string[]; beans?: ReadonlySet<string
   }
   for (const p of filesIn(dirs, ".md")) {
     const fm = frontMatterOf(readFileSync(p, "utf-8"));
-    if (fm?.["$schema"] !== "folio-todo/v1") continue;
+    if (fm?.["$schema"] !== "todo/1.0.0") continue;
     f.examined++;
     const refs = Array.isArray(fm["references"]) ? (fm["references"] as Array<{ kind?: unknown; id?: unknown }>) : [];
     for (const r of refs) {

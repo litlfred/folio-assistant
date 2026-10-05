@@ -1219,6 +1219,14 @@ jobs:
       - name: every graph typology's artefacts are current, and its authored two exist
         run: bun run kind:register:check
 
+      # Node kinds, found THROUGH the typologies (issue #2195): a family whose
+      # validator node names a `nodeKind()` is a node kind with parents. Fails
+      # on a stale index, on an id two kinds share, and on a NEW family that is
+      # not a node kind -- the families that predate node kinds are a baseline
+      # that only shrinks.
+      - name: node kinds are indexed, and no new family lacks one
+        run: bun run node-kinds:check
+
       # The skills graph's LSI index is written by the registration chain
       # (`lsi:skills`) and read by kg:audit's `tool-downstream-fresh`. Checked on its
       # own so an edited skill with a stale index names THIS step, not a

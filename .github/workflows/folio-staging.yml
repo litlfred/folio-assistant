@@ -45,7 +45,7 @@ name: Folio Staging (reusable)
 # ## Review comments, and why the `comments` job checks out no PR code
 #
 # The `folio-review-comments` Tool, governed by the `review-comments` skill,
-# turns a PR's tagged comments into `folio-review-comment/v1` todos and
+# turns a PR's tagged comments into `review-comment/1.0.0` todos and
 # writes `review-comments.json`. `stage` runs it against the checked-out PR
 # and also publishes `blocks.json`. `comments` runs it against that published
 # `blocks.json` instead, because an `issue_comment` run is started by anyone
@@ -472,7 +472,7 @@ jobs:
             --changeset "$SITE_DIR/changeset.json" --base "$BEFORE_DIR" --head "$SITE_DIR" --out "$SITE_DIR"
 
       - name: Ingest review comments
-        # Tagged PR comments → `folio-review-comment/v1` todos, kept across
+        # Tagged PR comments → `review-comment/1.0.0` todos, kept across
         # builds via the preview's previous file (bean `423d`). A failure here
         # fails the build: a preview whose comment list silently went empty
         # would read as "nobody commented".
