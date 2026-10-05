@@ -1,0 +1,72 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Non-Functional Requirement (DAK) API",
+    "description": "Logical Model for representing non-functional requirement from a DAK",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-NonFunctionalRequirement.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-NonFunctionalRequirement",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-NonFunctionalRequirement.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-NonFunctionalRequirement",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-NonFunctionalRequirement.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-NonFunctionalRequirement": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-NonFunctionalRequirement.schema.json",
+        "title": "Non-Functional Requirement (DAK)",
+        "description": "Logical Model for representing non-functional requirement from a DAK",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "NonFunctionalRequirement",
+            "description": "Resource type identifier for NonFunctionalRequirement logical model"
+          },
+          "id": {
+            "type": "string",
+            "description": "An identifier or code for the requirement"
+          },
+          "requirement": {
+            "type": "string",
+            "description": "Description of the requirement"
+          },
+          "category": {
+            "type": "object",
+            "description": "Category of the non-functional requirement"
+          },
+          "classification": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "Classification or category of the requirement"
+          }
+        },
+        "required": [
+          "resourceType",
+          "id",
+          "requirement"
+        ],
+        "resourceDefinition": "http://smart.who.int/base/StructureDefinition/NonFunctionalRequirement",
+        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+      }
+    }
+  }
+}
