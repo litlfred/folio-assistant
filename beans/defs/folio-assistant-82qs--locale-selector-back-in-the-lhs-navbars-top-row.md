@@ -1,10 +1,10 @@
 ---
 # folio-assistant-82qs
 title: Locale selector back in the LHS navbar's top row
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-05T14:39:33Z
-updated_at: 2026-10-05T14:39:33Z
+updated_at: 2026-10-05T15:24:15Z
 parent: folio-assistant-9rq1
 ---
 
@@ -13,3 +13,5 @@ Owner, 2026-10-05: 'we lost locale selector in top navbar LHS again'. Cause (mea
 ## Done when
 - [ ] a visible language control in the navbar's top row on the theme sidebar
 - [ ] e2e: present whenever .fa-nav-icons is
+
+_2026-10-05T15:24:15Z_ — Claimed by claude/vibrant-darwin-r6im60 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
