@@ -682,10 +682,11 @@ describe("check 5 — Feature Staging is judged once finished, never waited for"
  * tested the head merged with main AS MAIN WAS when it was pushed. #1898 was
  * signed, green and labelled, passed checks 1-7, and conflicted with main by
  * the time it was merged; twice on 2026-10-05 GitHub refused a guard-passed
- * merge with HTTP 405 "merge conflicts". #1898 has merged since, and GitHub
- * no longer computes mergeability for a merged PR (it now reads `null` /
- * `unknown`), so its conflicting state is rebuilt here as the PR API reports
- * any conflicting head: `mergeable: false`, `mergeable_state: "dirty"`.
+ * merge with HTTP 405 "merge conflicts". #1898 has merged since, and on a
+ * merged PR the PR API's mergeability is stale, serving the pre-merge view
+ * (bean `fx5r`); it now reads `null` / `unknown`. So its conflicting state is
+ * rebuilt here as the PR API reports any conflicting OPEN head, the one
+ * reading check 8 trusts — only `dirty`: `mergeable: false`, `mergeable_state: "dirty"`.
  */
 describe("check 8 — the head still merges cleanly into main", () => {
   /** #1957 as it should have been (checks 1-7 pass), with the PR API's mergeability set. */
@@ -696,6 +697,7 @@ describe("check 8 — the head still merges cleanly into main", () => {
     s.comments.push(signed(12, shift(ev.created_at!, 4_000), own, `ready: ${s.pr.head.sha.slice(0, 11)}`));
     if (mergeable === undefined) delete s.pr.mergeable;
     else s.pr.mergeable = mergeable;
+    // An OPEN PR's state is set directly: the post-merge staleness (bean `fx5r`) is check 1's case.
     if (state === undefined) delete s.pr.mergeable_state;
     else s.pr.mergeable_state = state;
     return s;
@@ -756,6 +758,7 @@ describe("check 8 — the head still merges cleanly into main", () => {
 
 describe("fetchPull — re-asks while GitHub has not computed `mergeable`", () => {
   const PR_URL = "https://api.github.com/repos/litlfred/folio-assistant/pulls/1898";
+  // `unknown` is not computed yet (bean `h2s9`); a closed PR's view is stale (bean `fx5r`).
   type Answer = { mergeable?: boolean | null; mergeable_state?: string; state?: string };
   /** Serves `answers` in order (the last one repeats) for the PR URL, recording each wait. */
   const serve = (answers: Answer[]) => {
@@ -778,6 +781,7 @@ describe("fetchPull — re-asks while GitHub has not computed `mergeable`", () =
   };
 
   test("null then false: the second answer is the one returned", async () => {
+    // `unknown` = not computed yet (bean `h2s9`); then a conflict, the reading trusted.
     const f = serve([{ mergeable: null, mergeable_state: "unknown" }, { mergeable: false, mergeable_state: "dirty" }]);
     const pr = await fetchPull("litlfred/folio-assistant", 1898, { fetchImpl: f.impl, sleep: f.sleep, waitsMs: [1, 2, 3] });
     expect([pr.mergeable, pr.mergeable_state]).toEqual([false, "dirty"]);
@@ -793,6 +797,7 @@ describe("fetchPull — re-asks while GitHub has not computed `mergeable`", () =
   });
 
   test("an answer on the first ask is not re-asked; nor is a closed PR", async () => {
+    // `clean` on an open PR; on a merged one it would be stale (bean `fx5r`).
     const a = serve([{ mergeable: true, mergeable_state: "clean" }]);
     await fetchPull("litlfred/folio-assistant", 1898, { fetchImpl: a.impl, sleep: a.sleep, waitsMs: [1, 2] });
     expect(a.asked()).toBe(1);

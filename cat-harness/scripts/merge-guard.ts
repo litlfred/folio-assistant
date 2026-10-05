@@ -228,7 +228,11 @@ export interface GhPull {
    * later GET reads the answer. Absent means the record did not carry it.
    */
   mergeable?: boolean | null;
-  /** `clean`, `dirty` (conflicts), `unstable`, `blocked`, `behind`, `draft`, `has_hooks` or `unknown`. */
+  /**
+   * Trusted only when it is `dirty` (a conflict). `unknown` is not computed yet
+   * (bean `h2s9`), and on a MERGED PR every value goes stale, serving the
+   * pre-merge view (bean `fx5r`), which is why check 1 refuses a merged PR first.
+   */
   mergeable_state?: string;
 }
 
@@ -789,6 +793,8 @@ function checkOpenQuestion(s: GuardSnapshot): CheckResult {
  */
 function checkMergeable(s: GuardSnapshot): CheckResult {
   const { mergeable, mergeable_state: state } = s.pr;
+  // Only `dirty` refuses; any other state is shown, never judged. On a merged
+  // PR the field is stale (bean `fx5r`), but check 1 has refused that PR already.
   const st = state ? ` (\`mergeable_state: ${state}\`)` : "";
   if (mergeable === false || state === "dirty") {
     return R(
