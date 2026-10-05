@@ -141,6 +141,18 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 199,
     reads: "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
   },
+  "smart-trust": {
+    // A shield with a keyhole — a trust framework, about who may open what.
+    // NOT the shield-with-check: that is `qa`'s, and the registry refuses two
+    // kinds sharing a glyph. WHO BLUE, like smart-base:
+    // an organisation's published colour on a neutral glyph is not its
+    // identity, which is the line the owner drew for who-iris on 2026-09-23.
+    // Added 2026-10-04 (bean `2vpn`) when the owner chose a glyph over the
+    // shared operations card it had borrowed through a sticky.
+    glyph: "M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6zM12 9.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM12 12.5v3",
+    tone: 199,
+    reads: "a shield with a keyhole — the trust framework, in WHO blue",
+  },
   "who-iris": {
     // An open book with a band across it — a repository of published
     // documents, which is what IRIS is. The FALLBACK mark since 2026-10-04:
