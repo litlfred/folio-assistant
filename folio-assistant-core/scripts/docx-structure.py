@@ -25,16 +25,31 @@ Output (`docx-structure/v1`, JSON on stdout or --out):
                  {"seq": 5, "type": "callout", "md": ..., "text": ...},
                  {"seq": 6, "type": "caption", "target": "table"|"figure", "number": "3.1", "md": ...} ],
       "footnotes": {"5": "markdown"},
-      "media": ["media/image1.png", ...] }
+      "media": ["media/image1.png", ...],
+      "rotations": {"media/image3-rot90.png": {"source": "media/image3.png", "rot": 90}},
+      "warnings": [...] }
 
 `text` is the plain text, used for alignment; `md` keeps bold, italic,
 hyperlinks and footnote references (`[^5]`). The issue asks for "basic
 formatting (bold, italic) preserved as much as possible, but not 1:1".
 
+Images inside a table cell stay in the cell, as `![alt](media/imageN.png)`,
+and get no image item of their own. The alt text is the row's adjacent cell
+when that is a short label (an icon legend: picture | name | meaning), else
+the drawing's `wp:docPr` descr or name, else "image".
+
+Rotation: a drawing whose `a:xfrm` carries `rot` (60000ths of a degree,
+clockwise) is shown rotated by Word, while the embedded file is not. Such an
+image is referenced as a rotated copy, `media/imageN-rot90.png`, listed under
+`rotations` and written rotated by `--media-dir` (Pillow). The original file
+is left as it is. Without Pillow the original is referenced unrotated and the
+rotation is recorded in `warnings`.
+
 Text boxes: Word stores a drawing's text twice, once in `mc:Choice` and once
 in `mc:Fallback`. Only the Choice is read, so a call-out box is not doubled.
 
-Standard library only: no python-docx.
+Standard library only (no python-docx); Pillow, optional, only to write
+rotated copies of rotated drawings.
 
 Usage:
     python3 docx-structure.py <file.docx> [--out structure.json] [--media-dir DIR]
@@ -64,6 +79,8 @@ def qn(tag: str) -> str:
 
 SCHEMA = "docx-structure/v1"
 R_NS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+A_NS = "http://schemas.openxmlformats.org/drawingml/2006/main"
+WP_NS = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
 MC_FALLBACK = "{http://schemas.openxmlformats.org/markup-compatibility/2006}Fallback"
 CAPTION_RE = re.compile(r"^\s*(Table|Figure|Box)\s+([A-Z]?\.?\d+(?:\.\d+)*)\s*[:.\-—–]?\s*(.*)$", re.I)
 
@@ -79,6 +96,14 @@ class Ctx:
         self.z = z
         self.rels = self.read_rels("word/_rels/document.xml.rels")
         self.media_used: list[str] = []
+        # Rotated copy → its source and angle; written by --media-dir.
+        self.rotations: dict[str, dict] = {}
+        self.warnings: list[str] = []
+        try:
+            import PIL.Image  # noqa: F401
+            self.can_rotate = True
+        except ImportError:
+            self.can_rotate = False
         self.styles: dict[str, str] = {}
         if "word/styles.xml" in z.namelist():
             for st in ET.fromstring(z.read("word/styles.xml")).iter(qn("w:style")):
@@ -141,8 +166,54 @@ def run_props(r) -> tuple[bool, bool, bool]:
     return on("w:b"), on("w:i"), sup
 
 
-def runs_md(ctx: Ctx, p_el, images: list[str]) -> tuple[str, str]:
-    """Markdown and plain text of a paragraph element, in document order."""
+def drawing_rotation(d) -> int:
+    """Clockwise rotation in whole degrees Word applies to a drawing (0 if none)."""
+    for x in d.iter(f"{{{A_NS}}}xfrm"):
+        r = x.get("rot")
+        if r:
+            return round(int(r) / 60000) % 360
+    return 0
+
+
+def image_record(ctx: Ctx, d, tgt: str) -> dict:
+    """An embedded picture: the media path to reference, after rotation."""
+    pr = next(d.iter(f"{{{WP_NS}}}docPr"), None)
+    rec = {
+        "media": tgt,
+        "descr": (pr.get("descr") or "").strip() if pr is not None else "",
+        "name": (pr.get("name") or "").strip() if pr is not None else "",
+    }
+    rot = drawing_rotation(d)
+    if rot:
+        rec["rot"] = rot
+        if ctx.can_rotate:
+            stem, dot, ext = tgt.rpartition(".")
+            rotated = f"{stem}-rot{rot}.{ext}" if dot else f"{tgt}-rot{rot}"
+            ctx.rotations[rotated] = {"source": tgt, "rot": rot}
+            rec["media"] = rotated
+        else:
+            msg = f"{tgt} is rotated {rot}° in Word but Pillow is not installed: referenced unrotated"
+            if msg not in ctx.warnings:
+                ctx.warnings.append(msg)
+                print(f"⚠ {msg}", file=sys.stderr)
+    return rec
+
+
+def use_media(ctx: Ctx, m: str) -> None:
+    if m not in ctx.media_used:
+        ctx.media_used.append(m)
+
+
+IMG_MARK = re.compile(r"\x00IMG(\d+)\x00")
+
+
+def runs_md(ctx: Ctx, p_el, images: list[dict], inline: bool = False) -> tuple[str, str]:
+    """Markdown and plain text of a paragraph element, in document order.
+
+    Each picture is appended to `images`. With `inline` (a table cell) the
+    picture also leaves a marker `\\x00IMG<i>\\x00` in the markdown at its
+    position, which `table_item` replaces with `![alt](path)` once the row's
+    labels are known."""
     md: list[str] = []
     plain: list[str] = []
 
@@ -163,11 +234,13 @@ def runs_md(ctx: Ctx, p_el, images: list[str]) -> tuple[str, str]:
                         fid = t.get(qn("w:id"))
                         md.append(f"[^{fid}]")
                     elif t.tag == qn("w:drawing") or t.tag.endswith("}AlternateContent") or t.tag == qn("w:pict"):
-                        for blip in t.iter("{http://schemas.openxmlformats.org/drawingml/2006/main}blip"):
+                        for blip in t.iter(f"{{{A_NS}}}blip"):
                             rid = blip.get(f"{{{R_NS}}}embed")
                             tgt = ctx.rel_target(rid) if rid else None
                             if tgt:
-                                images.append(tgt)
+                                if inline:
+                                    md.append(f"\x00IMG{len(images)}\x00")
+                                images.append(image_record(ctx, t, tgt))
                 text = "".join(buf)
                 if text:
                     plain.append(text)
@@ -245,30 +318,58 @@ def heading_level(style: str) -> int | None:
     return int(m.group(1)) if m else None
 
 
-def cell_md(ctx: Ctx, tc, images: list[str]) -> tuple[str, str]:
+def cell_md(ctx: Ctx, tc, images: list[dict]) -> tuple[str, str]:
     parts_md, parts_txt = [], []
     for p in tc.iter(qn("w:p")):
-        m, t = runs_md(ctx, p, images)
+        m, t = runs_md(ctx, p, images, inline=True)
         if m:
             parts_md.append(m)
             parts_txt.append(t)
     return "<br>".join(parts_md).replace("|", "\\|"), " ".join(parts_txt)
 
 
-def table_item(ctx: Ctx, tbl, images: list[str]) -> dict:
+LABEL_MAX = 60
+
+
+def alt_text(label: str) -> str:
+    return re.sub(r"\s+", " ", re.sub(r"[\[\]|\\\x00]", "", label)).strip()
+
+
+def cell_image_alt(row_txt: list[str], row_md: list[str], col: int, rec: dict) -> str:
+    """The row's adjacent cell when it is a short text label, else docPr."""
+    for j in (col + 1, col - 1):
+        if 0 <= j < len(row_txt) and "\x00IMG" not in row_md[j]:
+            lab = alt_text(row_txt[j])
+            if lab and len(lab) <= LABEL_MAX:
+                return lab
+    return alt_text(rec.get("descr") or "") or alt_text(rec.get("name") or "") or "image"
+
+
+def table_item(ctx: Ctx, tbl, images: list[dict]) -> dict:
+    """A table; pictures in its cells stay in the cells and are not added to `images`."""
     rows_md, txt = [], []
     for tr in tbl.findall(qn("w:tr")):
-        row = []
+        row, row_txt, cell_imgs = [], [], []
         for tc in tr.findall(qn("w:tc")):
-            m, t = cell_md(ctx, tc, images)
+            imgs: list[dict] = []
+            m, t = cell_md(ctx, tc, imgs)
             span = 1
             tcpr = tc.find(qn("w:tcPr"))
             if tcpr is not None and tcpr.find(qn("w:gridSpan")) is not None:
                 span = int(tcpr.find(qn("w:gridSpan")).get(qn("w:val")))
+            cell_imgs.append((len(row), imgs))
             row.append(m)
+            row_txt.append(t)
             row.extend([""] * (span - 1))
+            row_txt.extend([""] * (span - 1))
             if t:
                 txt.append(t)
+        for col, imgs in cell_imgs:
+            def sub(mo: re.Match, col=col, imgs=imgs) -> str:
+                rec = imgs[int(mo.group(1))]
+                use_media(ctx, rec["media"])
+                return f"![{cell_image_alt(row_txt, row, col, rec)}]({rec['media']})"
+            row[col] = IMG_MARK.sub(sub, row[col])
         rows_md.append(row)
     width = max((len(r) for r in rows_md), default=0)
     rows_md = [r + [""] * (width - len(r)) for r in rows_md]
@@ -306,22 +407,24 @@ def extract(path: Path) -> dict:
         item["seq"] = len(items)
         items.append(item)
 
-    def emit_images(imgs: list[str]) -> None:
-        for m in imgs:
-            if m not in ctx.media_used:
-                ctx.media_used.append(m)
-            push({"type": "image", "media": m})
+    def emit_images(imgs: list[dict]) -> None:
+        for rec in imgs:
+            use_media(ctx, rec["media"])
+            item = {"type": "image", "media": rec["media"]}
+            if rec.get("rot"):
+                item["rot"] = rec["rot"]
+            push(item)
 
     for el in body:
         if el.tag == qn("w:tbl"):
-            imgs: list[str] = []
+            imgs: list[dict] = []
             push(table_item(ctx, el, imgs))
             emit_images(imgs)
             continue
         if el.tag != qn("w:p"):
             continue
         style = ctx.style(el)
-        imgs: list[str] = []
+        imgs: list[dict] = []
         md, text = runs_md(ctx, el, imgs)
         # Text boxes (call-outs) inside this paragraph come out as their own item.
         box = [runs_md(ctx, bp, imgs) for bp in textbox_paragraphs(el)]
@@ -355,7 +458,22 @@ def extract(path: Path) -> dict:
         "items": items,
         "footnotes": footnotes(ctx),
         "media": ctx.media_used,
+        "rotations": ctx.rotations,
+        "warnings": ctx.warnings,
     }
+
+
+def write_rotated(raw: bytes, rot: int, dest: Path) -> None:
+    """Write `raw` rotated `rot` degrees clockwise, as Word displays it."""
+    import io
+
+    from PIL import Image
+
+    img = Image.open(io.BytesIO(raw))
+    fmt = img.format or "PNG"
+    exact = {90: Image.Transpose.ROTATE_270, 180: Image.Transpose.ROTATE_180, 270: Image.Transpose.ROTATE_90}
+    out = img.transpose(exact[rot]) if rot in exact else img.rotate(-rot, expand=True)
+    out.save(dest, format=fmt)
 
 
 def main() -> int:
@@ -369,7 +487,12 @@ def main() -> int:
         a.media_dir.mkdir(parents=True, exist_ok=True)
         with zipfile.ZipFile(a.docx) as z:
             for m in data["media"]:
-                (a.media_dir / Path(m).name).write_bytes(z.read(f"word/{m}"))
+                rot = data["rotations"].get(m)
+                dest = a.media_dir / Path(m).name
+                if rot is None:
+                    dest.write_bytes(z.read(f"word/{m}"))
+                else:
+                    write_rotated(z.read(f"word/{rot['source']}"), rot["rot"], dest)
     js = json.dumps(data, ensure_ascii=False, indent=1)
     if a.out:
         a.out.write_text(js + "\n", encoding="utf-8")
