@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script data-folio-saved-scheme>try{var s=localStorage.getItem("fa-color-scheme");if(s==="light"||s==="dark")document.documentElement.setAttribute("data-fa-scheme",s)}catch(e){}</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>docs/_data/node-kinds — node-kind-index</title>
+<style>
+  :root { color-scheme: light dark; --fg:#1b1b1b; --bg:#fdfdfb; --muted:#5b5b5b; --line:#d6d6d0; --link:#0b5cad; --panel:#f3f4f2; }
+  @media (prefers-color-scheme: dark) { :root:not([data-fa-scheme="light"]) { --fg:#e8e8e6; --bg:#161616; --muted:#a8a8a4; --line:#3a3a38; --link:#7db4ff; --panel:#1f2124; } }
+  :root[data-fa-scheme="dark"] { --fg:#e8e8e6; --bg:#161616; --muted:#a8a8a4; --line:#3a3a38; --link:#7db4ff; --panel:#1f2124; }
+  :root[data-fa-scheme="light"] { color-scheme: light; } :root[data-fa-scheme="dark"] { color-scheme: dark; }
+  body { margin:0; font:1rem/1.5 system-ui,sans-serif; color:var(--fg); background:var(--bg); }
+  main { max-width:80rem; margin:0 auto; padding:1.5rem 1.5rem 4rem; min-width:0; overflow-wrap:anywhere; }
+  h1 { font-size:1.35rem; margin:0 0 .25rem; } h2 { font-size:1.05rem; margin:1.5rem 0 .5rem; }
+  a { color:var(--link); } a:focus-visible, select:focus-visible { outline:3px solid var(--link); outline-offset:2px; }
+  .m { color:var(--muted); font-size:.9rem; }
+  .tiles { display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0; padding:0; list-style:none; }
+  .tiles li { border:1px solid var(--line); border-radius:.4rem; padding:.35rem .7rem; }
+  .tiles b { font-size:1.2rem; margin-right:.3rem; }
+  .clip { width:100%; overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:.92rem; }
+  th, td { text-align:left; vertical-align:top; padding:.35rem .5rem; border-bottom:1px solid var(--line); }
+  th { background:var(--panel); white-space:nowrap; }
+  /* Only the node's path and long text may break mid-word; a status or a date
+     broken across lines ("in_pr ogres s") is unreadable. */
+  td { overflow-wrap:normal; } td.p, td.t { overflow-wrap:anywhere; } td.s { white-space:nowrap; }
+  dl { display:grid; grid-template-columns:minmax(8rem,14rem) 1fr; gap:.25rem 1rem; }
+  dt { font-weight:600; } dd { margin:0; }
+  pre { background:var(--panel); padding:.75rem; overflow-x:auto; font-size:.85rem; }
+  label { margin-right:1rem; }
+  @media (max-width:40rem) { dl { grid-template-columns:1fr; } }
+</style>
+<link rel="stylesheet" href="../../../../../../../assets/css/navbar.css"><script src="../../../../../../../assets/navbar/rail-2611snyyhcs.js" defer></script><script src="../../../../../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../../../../../assets/css/navbar-row.css"><script src="../../../../../../../assets/js/navbar-row.js" defer></script><style data-folio-narrow-viewport>
+/* Narrow viewports: nothing may widen the PAGE — bean `2r2n`.
+ *
+ * At 390 px, 105 of 249 built pages scrolled sideways (measured 2026-09-24).
+ * The rule here is the bean's: wide content scrolls INSIDE ITS OWN BOX with a
+ * visible cue, and the page itself never pans.
+ *
+ * ONE FILE, TWO WAYS IN. Themed pages link it from `_includes/head_custom.html`.
+ * The standalone viewer pages carry no theme stylesheet at all, so
+ * `withViewerNav` in `scripts/viewer-page.ts` inlines this same file when it
+ * adds the rail. A copy of these rules in each place would be two answers to
+ * "what does a table do at 390 px", free to drift apart.
+ *
+ * Every selector here is written to be safe on both kinds of page: no
+ * `.main-content` scope (a standalone page has none), the navbar excluded by
+ * name, and the theme's own `.table-wrapper` left alone, since it already does
+ * this job for Markdown tables. */
+
+@media (max-width: 799.98px) {
+  /* A table the theme did not wrap: raw HTML from a generator, or one built at
+   * runtime. `display: block` makes the table its own scroll box. Its cells
+   * still lay out as a table inside the anonymous table box. */
+  table:not(.table-wrapper > table):not(.fa-nav table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* THE CUE: the edge that has more content past it fades out. The fade is a
+   * MASK over the table's own pixels, driven by its own scroll position, so
+   * it needs no knowledge of the page's background. A painted cover (the
+   * usual `background-attachment: local` trick) does: the first version used
+   * `Canvas`, and on a page that is dark under a LIGHT scheme it laid a white
+   * band over the first column.
+   *
+   * A table that does not overflow has an inactive scroll timeline, so the
+   * animation has no effect and both fades stay at their initial 0: no cue
+   * where there is nothing to scroll to. A browser without scroll-driven
+   * animations shows no fade, and the table still scrolls. */
+  @supports (animation-timeline: scroll()) {
+    table:not(.table-wrapper > table):not(.fa-nav table) {
+      mask-image: linear-gradient(to right,
+        transparent 0, #000 var(--fa-cue-l),
+        #000 calc(100% - var(--fa-cue-r)), transparent 100%);
+      animation: fa-scroll-cue linear both;
+      animation-timeline: scroll(self inline);
+    }
+  }
+
+  /* A code block scrolls in its own box, which is what `pre` is for. Mermaid
+   * SOURCE sits in a `pre` until the renderer replaces it, and at 390 px a
+   * diagram's source line is longer than the screen. */
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Prose that has no break opportunity: a long path in inline code, or a
+   * glossary definition naming one. Breaking the string is better than
+   * widening the page it sits on. */
+  :not(pre) > code,
+  dd {
+    overflow-wrap: anywhere;
+  }
+}
+
+@property --fa-cue-l { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --fa-cue-r { syntax: "<length>"; inherits: false; initial-value: 0px; }
+
+@keyframes fa-scroll-cue {
+  0%   { --fa-cue-l: 0px;    --fa-cue-r: 2.5rem; }
+  12%  { --fa-cue-l: 2.5rem; }
+  88%  { --fa-cue-r: 2.5rem; }
+  100% { --fa-cue-l: 2.5rem; --fa-cue-r: 0px; }
+}
+
+</style>
+</head>
+<body data-fa-node-kind-page><script type="application/json" id="fa-navbar-row" data-fa-root="../../../../../../..">{"icons":["close","todos","beans","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"doc-group","label":"Doc group","within":"docs","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><script type="application/json" id="fa-rail" data-fa-root="../../../../../../.." data-fa-to-root="../../../../../../..">{"data":"rail-2611snyyhcs","here":"/en/cat-harness/node-kind-index/cat-harness/docs/_data/node-kinds/"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../../../../../">C@T Harness</a></nav>
+<main>
+<h1>docs/_data/node-kinds</h1>
+<p class="m">A <a href="../../../../">node-kind-index</a> node held by <a href="../../../">cat-harness</a>, at <code>cat-harness/docs/_data/node-kinds.json</code>.</p>
+<dl>
+<dt>$schema</dt><dd>node-kind-index/1.0.0</dd>
+<dt>kinds</dt><dd><pre>[
+  {
+    &quot;id&quot;: &quot;carried-note&quot;,
+    &quot;parents&quot;: [],
+    &quot;subclasses&quot;: [
+      &quot;todo&quot;
+    ],
+    &quot;holdings&quot;: []
+  },
+  {
+    &quot;id&quot;: &quot;changeset&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;tag&quot;: &quot;changeset/1.0.0&quot;,
+    &quot;parents&quot;: [],
+    &quot;subclasses&quot;: [],
+    &quot;declaredBy&quot;: &quot;folio-assistant-core&quot;,
+    &quot;module&quot;: &quot;folio-assistant-core/schemas/public-comment.ts&quot;,
+    &quot;exportName&quot;: &quot;ChangeSetKind&quot;,
+    &quot;holdings&quot;: [
+      {
+        &quot;typology&quot;: &quot;public-comments&quot;,
+        &quot;family&quot;: &quot;changeset/1.0.0&quot;
+      }
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;node-kind-index&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;tag&quot;: &quot;node-kind-index/1.0.0&quot;,
+    &quot;parents&quot;: [],
+    &quot;subclasses&quot;: [],
+    &quot;declaredBy&quot;: &quot;cat-harness&quot;,
+    &quot;module&quot;: &quot;cat-harness/schemas/node-kind-index.ts&quot;,
+    &quot;exportName&quot;: &quot;NodeKindIndexFileKind&quot;,
+    &quot;holdings&quot;: [
+      {
+        &quot;typology&quot;: &quot;docs&quot;,
+        &quot;family&quot;: &quot;node-kind-index/1.0.0&quot;
+      }
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;public-comment&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;tag&quot;: &quot;public-comment/1.0.0&quot;,
+    &quot;parents&quot;: [
+      &quot;todo&quot;
+    ],
+    &quot;subclasses&quot;: [],
+    &quot;declaredBy&quot;: &quot;folio-assistant-core&quot;,
+    &quot;module&quot;: &quot;folio-assistant-core/schemas/public-comment.ts&quot;,
+    &quot;exportName&quot;: &quot;PublicCommentKind&quot;,
+    &quot;holdings&quot;: [
+      {
+        &quot;typology&quot;: &quot;public-comments&quot;,
+        &quot;family&quot;: &quot;public-comment/1.0.0&quot;
+      }
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;themed&quot;,
+    &quot;parents&quot;: [],
+    &quot;subclasses&quot;: [
+      &quot;todo&quot;
+    ],
+    &quot;holdings&quot;: []
+  },
+  {
+    &quot;id&quot;: &quot;todo&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;tag&quot;: &quot;todo/1.0.0&quot;,
+    &quot;parents&quot;: [
+      &quot;carried-note&quot;,
+      &quot;themed&quot;
+    ],
+    &quot;subclasses&quot;: [
+      &quot;public-comment&quot;
+    ],
+    &quot;holdings&quot;: [
+      {
+        &quot;typology&quot;: &quot;todo-items&quot;
+      }
+    ],
+    &quot;declaredBy&quot;: &quot;cat-harness&quot;,
+    &quot;module&quot;: &quot;cat-harness/schemas/todo.ts&quot;,
+    &quot;exportName&quot;: &quot;TodoNodeKind&quot;
+  }
+]</pre></dd>
+<dt>unkinded</dt><dd><pre>[
+  {
+    &quot;typology&quot;: &quot;attestations&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/qa-attestations.ts#QaAttestationsSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;beans&quot;,
+    &quot;family&quot;: &quot;folio-merge-queue-entry/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/merge-queue.ts#MergeQueueEntrySchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;beans&quot;,
+    &quot;family&quot;: &quot;folio-session-survey/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/session-survey.ts#SessionSurveySchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;beans&quot;,
+    &quot;family&quot;: &quot;folio-workflow-instance/v1&quot;,
+    &quot;reason&quot;: &quot;no-validator&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;binary-release&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/binary-release.ts#BinaryReleaseSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;block-kinds&quot;,
+    &quot;family&quot;: &quot;folio-block-kind/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/block-kind-node.ts#BlockKindNodeSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;board-positions&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/board-positions.ts#BoardPositionsSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;boards&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/board.ts#BoardSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;catalogue&quot;,
+    &quot;family&quot;: &quot;folio-catalogue-node/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;folio-assistant-core:schemas/catalogue.ts#CatalogueNodeSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;catalogue&quot;,
+    &quot;family&quot;: &quot;folio-catalogue/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;folio-assistant-core:schemas/catalogue.ts#CatalogueSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;catalogue&quot;,
+    &quot;family&quot;: &quot;folio-dublin-core/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;folio-assistant-core:schemas/dublin-core.ts#DublinCoreRecordSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;code-list&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/code-list.ts#CodeListSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;computation-witness&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/computation-witness.ts#ComputationWitnessSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;content-adapters&quot;,
+    &quot;family&quot;: &quot;folio-content-adapter/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/content-adapter-node.ts#ContentAdapterNodeSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;docs&quot;,
+    &quot;family&quot;: &quot;cat-harness-payload/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/subgraph-manifest.ts#PayloadSidecarSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;docs&quot;,
+    &quot;family&quot;: &quot;folio-bean-index/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/site-indexes.ts#BeanIndexSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;docs&quot;,
+    &quot;family&quot;: &quot;folio-graph-projection/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/site-indexes.ts#FolioGraphProjectionSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;docs&quot;,
+    &quot;family&quot;: &quot;folio-library-entry/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/site-indexes.ts#LibraryEntrySchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;docs&quot;,
+    &quot;family&quot;: &quot;folio-library-index/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/site-indexes.ts#LibraryIndexSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;docs&quot;,
+    &quot;family&quot;: &quot;folio-qa-graph/v1&quot;,
+    &quot;reason&quot;: &quot;no-validator&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;docs&quot;,
+    &quot;family&quot;: &quot;folio-schema-graph/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/site-indexes.ts#SchemaGraphIndexSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;docs&quot;,
+    &quot;family&quot;: &quot;folio-semantic-zoom/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/semantic-zoom.ts#SemanticZoomSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;docs&quot;,
+    &quot;family&quot;: &quot;folio-todo-index/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/todo-index.ts#TodoIndexSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;docs&quot;,
+    &quot;family&quot;: &quot;folio-translation-index/v1&quot;,
+    &quot;reason&quot;: &quot;no-validator&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;docs&quot;,
+    &quot;family&quot;: &quot;folio-translation-status/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/site-indexes.ts#TranslationStatusSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;docs&quot;,
+    &quot;family&quot;: &quot;folio-voices-index/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/site-indexes.ts#VoicesIndexSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;document-kinds&quot;,
+    &quot;family&quot;: &quot;folio-document-kind-coverage/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/document-kind.ts#DocumentKindCoverageSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;document-kinds&quot;,
+    &quot;family&quot;: &quot;folio-document-kind/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/document-kind.ts#DocumentKindSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;external-schema&quot;,
+    &quot;family&quot;: &quot;folio-external-schema/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/external-schema.ts#ExternalSchemaSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;external-schema&quot;,
+    &quot;family&quot;: &quot;folio-pinned-terminology/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/pinned-terminology.ts#PinnedTerminologySchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;fhir-artifact-index&quot;,
+    &quot;family&quot;: &quot;folio-fhir-artifact-index/v2&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;fhir-harness:schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;fhir-artifact-index&quot;,
+    &quot;family&quot;: &quot;folio-ig-chrome/v2&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;fhir-harness:schemas/ig-chrome.ts#IgChromeSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;fhir-artifact-index&quot;,
+    &quot;family&quot;: &quot;folio-ig-identity/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;fhir-harness:schemas/ig-identity.ts#IgIdentitySchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;fhir-artifact-index&quot;,
+    &quot;family&quot;: &quot;folio-ig-menu/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;fhir-harness:schemas/ig-menu.ts#IgMenuSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;fhir-artifact-index&quot;,
+    &quot;family&quot;: &quot;ig-releases/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;fhir-harness:schemas/ig-releases.ts#IgReleasesSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;fsh-guts&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/fsh-guts.ts#FshGutsNodeSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;glossary&quot;,
+    &quot;family&quot;: &quot;folio-glossary/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;folio-assistant-core:schemas/glossary.ts#GlossarySchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;health&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/health-report.ts#HealthReportSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;ig-ast&quot;,
+    &quot;family&quot;: &quot;ig-ast-dependencies/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;fhir-harness:schemas/ig-ast.ts#AstDependenciesSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;ig-ast&quot;,
+    &quot;family&quot;: &quot;ig-ast-plan/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;fhir-harness:schemas/ig-ast.ts#AstPlanSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;ig-ast&quot;,
+    &quot;family&quot;: &quot;ig-ast/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;fhir-harness:schemas/ig-ast.ts#AstManifestSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;ig-metadata-index&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;fhir-harness:schemas/ig-metadata-index.ts#IgMetadataIndexSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;interaction&quot;,
+    &quot;family&quot;: &quot;folio-interaction/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/interaction.ts#InteractionNodeSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;issue-marks&quot;,
+    &quot;family&quot;: &quot;folio-issue-mark/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;src/issue-watch/seen-comments.ts#IssueMarkSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;library&quot;,
+    &quot;family&quot;: &quot;concern-groups/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/concern-groups.ts#ConcernGroupsSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;library&quot;,
+    &quot;family&quot;: &quot;folio-block-summaries/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/block-summary.ts#BlockSummariesSidecarSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;library&quot;,
+    &quot;family&quot;: &quot;folio-document-images/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/document-image.ts#ImagesSidecarSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;library&quot;,
+    &quot;family&quot;: &quot;folio-figure-descriptions/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/figure-description.ts#FigureDescriptionsFileSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;library&quot;,
+    &quot;family&quot;: &quot;folio-image-verdicts/v1&quot;,
+    &quot;reason&quot;: &quot;no-validator&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;library&quot;,
+    &quot;family&quot;: &quot;folio-referenced-source/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/referenced-source.ts#ReferencedSourceSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;library&quot;,
+    &quot;family&quot;: &quot;folio-section-verdicts/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/section-verdicts.ts#SectionVerdictFileSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;library&quot;,
+    &quot;family&quot;: &quot;folio-slides-accessibility/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/slides-accessibility.ts#SlidesAccessibilitySchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;library&quot;,
+    &quot;family&quot;: &quot;folio-vector-figures/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/vector-figure.ts#VectorFiguresSidecarSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;library&quot;,
+    &quot;family&quot;: &quot;folio-vector-labels/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/vector-labels.ts#VectorLabelsSidecarSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;library&quot;,
+    &quot;family&quot;: &quot;folio-withheld/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/withheld.ts#WithheldSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;memory&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/memory.ts#MemoryNodeSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;merge-queue&quot;,
+    &quot;family&quot;: &quot;folio-merge-queue-entry/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/merge-queue.ts#MergeQueueEntrySchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;models&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;bootstrap-tools:schemas/model-registry.ts#ModelRegistrySchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;openapi&quot;,
+    &quot;family&quot;: &quot;folio-openapi-source/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;cat-openapi:schemas/openapi.ts#OpenApiProvenanceSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;pipeline-plugins&quot;,
+    &quot;family&quot;: &quot;folio-pipeline-plugin/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/contribution-nodes.ts#PipelinePluginNodeSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;policies&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/odrl.ts#OdrlPolicySchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa-checkers&quot;,
+    &quot;family&quot;: &quot;folio-qa-checker/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/contribution-nodes.ts#QaCheckerNodeSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa-report&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/qa-report.ts#QaReportSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa&quot;,
+    &quot;family&quot;: &quot;block-qa/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/block-qa-schema/js/index.ts#BlockQaReport&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa&quot;,
+    &quot;family&quot;: &quot;folio-detangle-sidecar/v1&quot;,
+    &quot;reason&quot;: &quot;no-validator&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa&quot;,
+    &quot;family&quot;: &quot;folio-lsi-index/v1&quot;,
+    &quot;reason&quot;: &quot;no-validator&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa&quot;,
+    &quot;family&quot;: &quot;folio-qa-index/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/site-indexes.ts#QaIndexSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa&quot;,
+    &quot;family&quot;: &quot;folio-qa-translation-pages/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/site-indexes.ts#QaTranslationPagesSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa&quot;,
+    &quot;family&quot;: &quot;folio-test-run/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/test-run.ts#TestRunSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa&quot;,
+    &quot;family&quot;: &quot;folio-tool-run/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/tool-run.ts#ToolRunRecordSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa&quot;,
+    &quot;family&quot;: &quot;kg-qa-manifest/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/kg-qa.ts#KgQaManifestSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa&quot;,
+    &quot;family&quot;: &quot;kg-qa/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/kg-qa.ts#KgQaReportSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa&quot;,
+    &quot;family&quot;: &quot;qa-results/v1&quot;,
+    &quot;reason&quot;: &quot;no-validator&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa&quot;,
+    &quot;family&quot;: &quot;qa-witness/v1&quot;,
+    &quot;reason&quot;: &quot;no-validator&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa&quot;,
+    &quot;family&quot;: &quot;translation-qa/v1&quot;,
+    &quot;reason&quot;: &quot;no-validator&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;qa&quot;,
+    &quot;family&quot;: &quot;viewer-nav-qa/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/viewer-nav-qa.ts#ViewerNavQaSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;review-verdicts&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;folio-assistant-core:schemas/review-verdict.ts#ReviewVerdictSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;scenarios&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/role-graph.ts#RoleGraphSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;schemas&quot;,
+    &quot;family&quot;: &quot;concern-groups/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/concern-groups.ts#ConcernGroupsSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;schemas&quot;,
+    &quot;family&quot;: &quot;folio-source-descriptor/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;cat-harness:schemas/source-descriptor.ts#SourceDescriptorSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;session-survey&quot;,
+    &quot;family&quot;: &quot;folio-session-survey/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/session-survey.ts#SessionSurveySchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;skills&quot;,
+    &quot;family&quot;: &quot;folio-remote-skill/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/skill-package.ts#RemoteSkillRecordSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;skills&quot;,
+    &quot;family&quot;: &quot;folio-voice-skill/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/voice-skill.ts#VoiceSkillSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;skills&quot;,
+    &quot;family&quot;: &quot;folio-voice/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/voices.ts#VoiceProfileSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;skills&quot;,
+    &quot;family&quot;: &quot;skill-topics/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/skill-topics.ts#SkillTopicsSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;substrate-snapshot&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/substrate-snapshot.ts#SubstrateSnapshotSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;swimlane-glossary&quot;,
+    &quot;family&quot;: &quot;glossary-ledger/1.0.0&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/glossary-ledger.ts#LedgerSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;test-plan&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/test-plan.ts#TestPlanSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;test-report&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/test-report.ts#TestReportSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;themes&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/theme.ts#ThemeSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;todo-feedback&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/constraints.ts#FeedbackItemSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;todos&quot;,
+    &quot;family&quot;: &quot;folio-board/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/board.ts#BoardSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;tools&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/tool.ts#ToolDefinitionSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;translation-sources&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/translation.ts#TranslationConfigSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;typologies&quot;,
+    &quot;family&quot;: &quot;folio-graph-typology/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/graph-typology-node.ts#GraphTypologyNodeSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;uploads&quot;,
+    &quot;family&quot;: &quot;folio-dublin-core/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;folio-assistant-core:schemas/dublin-core.ts#DublinCoreRecordSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;uploads&quot;,
+    &quot;family&quot;: &quot;folio-extraction/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/extraction.ts#ExtractionSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;uploads&quot;,
+    &quot;family&quot;: &quot;folio-intake/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/intake.ts#IntakeSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;validators&quot;,
+    &quot;family&quot;: &quot;folio-validator/v1&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/validator-node.ts#ValidatorNodeSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;vocab-mapping&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/vocab-mapping.ts#VocabMappingSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;voice-vendors&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/voices.ts#VoiceProfileSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;voices&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/voices.ts#VoiceProfileSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;waiver&quot;,
+    &quot;reason&quot;: &quot;zod-schema&quot;,
+    &quot;ref&quot;: &quot;schemas/waiver.ts#WaiverNodeSchema&quot;
+  },
+  {
+    &quot;typology&quot;: &quot;workflow-state&quot;,
+    &quot;family&quot;: &quot;folio-workflow-instance/v1&quot;,
+    &quot;reason&quot;: &quot;no-validator&quot;
+  }
+]</pre></dd>
+<dt>collisions</dt><dd><pre>[]</pre></dd>
+</dl>
+</main>
+</body>
+</html>

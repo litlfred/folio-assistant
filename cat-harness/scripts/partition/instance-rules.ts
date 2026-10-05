@@ -291,6 +291,10 @@ export const RULES: Rule[] = [
       // #2195): rewrites `$schema` values only. HARNESS, beside the node-kind
       // machinery in `schemas/node-kind.ts` it serves.
       "scripts/retag-schemas.ts",
+      // The generic node-kind pages (issue #2195): one per kind, harness and
+      // node. HARNESS for the reason the viewer pages are: it is the
+      // platform's view of any harness's nodes, and its reader beside it.
+      "scripts/gen-node-kind-pages.ts",
       // The geometry that navbar became a reader of, and the generator that
       // renders it to CSS (bean `sjic`). HARNESS for the same reason as
       // `navbar.ts` and one step more plainly: the numbers are the width of

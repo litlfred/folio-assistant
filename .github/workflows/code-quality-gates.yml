@@ -2616,6 +2616,9 @@ jobs:
           # Byte-identical regeneration runs wherever the PDF is present.
           bun run smart-base:diig-figure:check
           bun run document-kinds:viz:check
+          # A page per node kind, per harness that holds one, and per node, under
+          # /<locale>/<declaring>/<kind>/ (#2195): stale or orphaned pages fail.
+          bun run node-kind:pages:check
           # P2's refusal record (bean ntyj): every published XML/Turtle
           # representation this pipeline does not render, per IG, generated
           # from the artefact index -- so it goes stale the moment the index

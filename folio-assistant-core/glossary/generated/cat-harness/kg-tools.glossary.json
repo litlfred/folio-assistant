@@ -439,6 +439,14 @@
       "status": "candidate"
     },
     {
+      "id": "node-kind-pages",
+      "prefLabel": "Node kind pages",
+      "definition": "Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195).",
+      "notation": "node-kind-pages",
+      "source": "cat-harness/tools/viewers.ts#node-kind-pages",
+      "status": "candidate"
+    },
+    {
       "id": "ns-vocabulary",
       "prefLabel": "Namespace vocabulary",
       "definition": "Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets.",
