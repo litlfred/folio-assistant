@@ -1,0 +1,1111 @@
+{
+  "@context": {
+    "name": "https://litlfred.github.io/cat-harness/0.1.0/ns#name",
+    "stub": "https://litlfred.github.io/cat-harness/0.1.0/ns#stub",
+    "title": "https://litlfred.github.io/cat-harness/0.1.0/ns#title",
+    "description": "https://litlfred.github.io/cat-harness/0.1.0/ns#description",
+    "version": "https://litlfred.github.io/cat-harness/0.1.0/ns#version",
+    "path": "https://litlfred.github.io/cat-harness/0.1.0/ns#path",
+    "nodes": "https://litlfred.github.io/cat-harness/0.1.0/ns#nodes",
+    "bytes": "https://litlfred.github.io/cat-harness/0.1.0/ns#bytes",
+    "sha256": "https://litlfred.github.io/cat-harness/0.1.0/ns#sha256",
+    "dependsOn": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#dependsOn",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "directory": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#directory",
+      "@container": "@set"
+    },
+    "graphKinds": {
+      "@id": "http://purl.org/dc/terms/type",
+      "@container": "@set"
+    },
+    "subgraph": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasSubgraph",
+      "@type": "@id"
+    },
+    "url": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentUrl",
+      "@type": "@id"
+    },
+    "hasHarness": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasMember",
+      "@container": "@set"
+    }
+  },
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/index.jsonld",
+  "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#KnowledgeGraph",
+  "hasHarness": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/bootstrap/bootstrap.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "bootstrap",
+      "stub": "bootstrap",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/bootstrap/bootstrap.jsonld",
+      "title": "Bootstrap",
+      "description": "The graph an agent reads before it knows what this repository is.",
+      "version": "0.1.0",
+      "directory": [
+        {
+          "name": "skills",
+          "path": "skills/",
+          "graphKinds": [
+            "skills"
+          ]
+        },
+        {
+          "name": "schemas",
+          "path": "schemas/",
+          "graphKinds": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "scenarios",
+          "path": "scenarios/",
+          "graphKinds": [
+            "scenarios"
+          ]
+        },
+        {
+          "name": "processes",
+          "path": "processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "models",
+          "path": "models/",
+          "graphKinds": [
+            "models"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/bootstrap/subgraph/",
+      "nodes": 166,
+      "bytes": 133417,
+      "sha256": "d952b800e32dd297cf1c10357ced54873bba78a6f885d78d209c13498e741ee0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/bootstrap-tools/bootstrap-tools.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "bootstrap-tools",
+      "stub": "bootstrap-tools",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/bootstrap-tools/bootstrap-tools.jsonld",
+      "title": "Bootstrap tools",
+      "description": "The Zod source of bootstrap's schemas, the generators that write bootstrap's JSON Schemas, schema page and READMEs, and the checks bootstrap's content must pass — runnable by an agent, with zod, liquidjs, Playwright and bpmn-js as its dependencies.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/bootstrap/bootstrap.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "bootstrap-tools-schemas",
+          "path": "schemas/",
+          "graphKinds": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-skills",
+          "path": "skills/",
+          "graphKinds": [
+            "skills"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-processes",
+          "path": "processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-scenarios",
+          "path": "scenarios/",
+          "graphKinds": [
+            "scenarios"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/bootstrap-tools/subgraph/",
+      "nodes": 43,
+      "bytes": 69099,
+      "sha256": "639d00745d90cb1cfe82f1c89f3a98c71ded5a622b6efecf0a07bcda2fb304df"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/cat-harness.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "cat-harness",
+      "stub": "cat-harness",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/cat-harness.jsonld",
+      "title": "C@T Harness",
+      "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/bootstrap/bootstrap.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/bootstrap-tools/bootstrap-tools.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "tools",
+          "path": "tools/",
+          "graphKinds": [
+            "tools"
+          ]
+        },
+        {
+          "name": "external-schemas",
+          "path": "external-schemas/",
+          "graphKinds": [
+            "external-schema"
+          ]
+        },
+        {
+          "name": "subscriptions",
+          "path": "subscriptions/",
+          "graphKinds": [
+            "substrate-snapshot"
+          ]
+        },
+        {
+          "name": "code-lists",
+          "path": "code-lists/",
+          "graphKinds": [
+            "code-list"
+          ]
+        },
+        {
+          "name": "vocab-mappings",
+          "path": "vocab-mappings/",
+          "graphKinds": [
+            "vocab-mapping"
+          ]
+        },
+        {
+          "name": "schemas",
+          "path": "schemas/",
+          "graphKinds": [
+            "schemas",
+            "cat-harness"
+          ]
+        },
+        {
+          "name": "uml",
+          "path": "uml/",
+          "graphKinds": [
+            "uml"
+          ]
+        },
+        {
+          "name": "skills",
+          "path": "skills/",
+          "graphKinds": [
+            "skills"
+          ]
+        },
+        {
+          "name": "scenarios",
+          "path": "scenarios/",
+          "graphKinds": [
+            "scenarios"
+          ]
+        },
+        {
+          "name": "policies",
+          "path": "policies/",
+          "graphKinds": [
+            "policies"
+          ]
+        },
+        {
+          "name": "processes",
+          "path": "processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "methodologies",
+          "path": "methodologies/",
+          "graphKinds": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        },
+        {
+          "name": "attestations",
+          "path": "test/attestations/",
+          "graphKinds": [
+            "attestations"
+          ]
+        },
+        {
+          "name": "health",
+          "path": "test/health/results/",
+          "graphKinds": [
+            "health"
+          ]
+        },
+        {
+          "name": "uploads",
+          "path": "uploads/",
+          "graphKinds": [
+            "uploads"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphKinds": [
+            "library"
+          ]
+        },
+        {
+          "name": "translation-sources",
+          "path": "translations/",
+          "graphKinds": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "folio",
+          "path": "folio/",
+          "graphKinds": [
+            "folio"
+          ]
+        },
+        {
+          "name": "docs",
+          "path": "docs/",
+          "graphKinds": [
+            "docs"
+          ]
+        },
+        {
+          "name": "swimlane-glossary",
+          "path": "glossary/",
+          "graphKinds": [
+            "swimlane-glossary"
+          ]
+        },
+        {
+          "name": "cat-harness-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-src",
+          "path": "src/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-adapters",
+          "path": "adapters/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tests",
+          "path": "test/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "folio-templates",
+          "path": "templates/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-deploy",
+          "path": "deploy/",
+          "graphKinds": [
+            "code"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/",
+      "nodes": 3372,
+      "bytes": 4299342,
+      "sha256": "f40d3b223fef949ad8528888088c3d12e00ce50d4a6048cb9c98bfbc731d9373"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/cat-harness-tools.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "cat-harness-tools",
+      "stub": "cat-harness-tools",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/cat-harness-tools/cat-harness-tools.jsonld",
+      "title": "C@T Harness Tools",
+      "description": "What implements the harness's Tool definitions: the MCP servers, their tool registrars and routes. Definitions stay in cat-harness; this layer runs them.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/cat-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/bootstrap-tools/bootstrap-tools.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "cat-harness-tools-adapters",
+          "path": "adapters/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-schemas",
+          "path": "schemas/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-id-lookup",
+          "path": "id-lookup/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-tests",
+          "path": "test/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-src",
+          "path": "src/",
+          "graphKinds": [
+            "code"
+          ]
+        }
+      ],
+      "nodes": 9,
+      "bytes": 22925,
+      "sha256": "3e66ebc783cb9f0f83e7bd37cbabc99b7153a2d973f975ed776451107aa4fd22"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/cat-openapi.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "cat-openapi",
+      "stub": "cat-openapi",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/cat-openapi/cat-openapi.jsonld",
+      "title": "C@T OpenAPI",
+      "description": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph kind `openapi`, and gives every operation in them a page and an IRI, rendered in the browser from the served document.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/cat-harness.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "cat-openapi-schemas",
+          "path": "schemas/",
+          "graphKinds": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "cat-openapi-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        }
+      ],
+      "nodes": 6,
+      "bytes": 17287,
+      "sha256": "3e37fab2c3728b797a11efef5d15cc3063da833624fb5e26a0c1373b8e81bfa2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/fhir-harness.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "fhir-harness",
+      "stub": "fhir-harness",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/fhir-harness/fhir-harness.jsonld",
+      "title": "FHIR IG Harness",
+      "description": "The bare FHIR IG pipeline — SUSHI, the IG Publisher, Jekyll assembly and publication — with no WHO, DAK or SMART assumption. What a non-WHO implementation guide instantiates.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/folio-assistant-core/folio-assistant-core.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "library",
+          "path": "library/",
+          "graphKinds": [
+            "library"
+          ]
+        },
+        {
+          "name": "fhir-ig-skills",
+          "path": "skills/",
+          "graphKinds": [
+            "skills"
+          ]
+        },
+        {
+          "name": "fhir-ig-tools",
+          "path": "tools/",
+          "graphKinds": [
+            "tools"
+          ]
+        },
+        {
+          "name": "fhir-ig-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "fhir-harness-processes",
+          "path": "processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/",
+      "nodes": 146,
+      "bytes": 160669,
+      "sha256": "5be92a1094c4d67b7f4d2397ac0486c6dcdb4ff8553d640047a643f181b78d26"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/folio-assistant/folio-assistant.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "folio-assistant",
+      "stub": "folio-assistant",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/folio-assistant/folio-assistant.jsonld",
+      "title": "Folio Assistant",
+      "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/bootstrap/bootstrap.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/bootstrap-tools/bootstrap-tools.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/cat-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/cat-harness-tools.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/fhir-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/folio-assistant-core/folio-assistant-core.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/folio-assistant-sci/folio-assistant-sci.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-base.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-ig/smart-ig.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-immunizations/smart-immunizations.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-trust/smart-trust.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/who-iris/who-iris.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "uploads",
+          "path": "uploads/",
+          "graphKinds": [
+            "uploads"
+          ]
+        },
+        {
+          "name": "root-tools",
+          "path": "tools/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "fsh-guts",
+          "path": "fsh-guts/",
+          "graphKinds": [
+            "fsh-guts"
+          ]
+        },
+        {
+          "name": "beans",
+          "path": "beans/",
+          "graphKinds": [
+            "beans"
+          ]
+        },
+        {
+          "name": "todos",
+          "path": "todos/",
+          "graphKinds": [
+            "todos"
+          ]
+        },
+        {
+          "name": "memory",
+          "path": "memory/",
+          "graphKinds": [
+            "memory",
+            "waiver"
+          ]
+        },
+        {
+          "name": "interaction",
+          "path": "interaction/",
+          "graphKinds": [
+            "interaction"
+          ]
+        },
+        {
+          "name": "issue-marks",
+          "path": "issue-marks/",
+          "graphKinds": [
+            "issue-marks"
+          ]
+        },
+        {
+          "name": "root-docs",
+          "path": "docs/",
+          "graphKinds": [
+            "docs"
+          ]
+        }
+      ],
+      "nodes": 31,
+      "bytes": 39892,
+      "sha256": "19cc19e9efbb00f3c2bc727ba4ec37911e4602801498493e05957fbeef7b3a1b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/folio-assistant-core/folio-assistant-core.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "folio-assistant-core",
+      "stub": "folio-assistant-core",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/folio-assistant-core/folio-assistant-core.jsonld",
+      "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph kind itself.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/cat-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/cat-harness-tools.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "core-schemas",
+          "path": "schemas/",
+          "graphKinds": [
+            "schemas",
+            "cat-harness"
+          ]
+        },
+        {
+          "name": "folios",
+          "path": "folios/",
+          "graphKinds": [
+            "folio"
+          ]
+        },
+        {
+          "name": "glossary",
+          "path": "glossary/",
+          "graphKinds": [
+            "glossary"
+          ]
+        },
+        {
+          "name": "core-tools",
+          "path": "tools/",
+          "graphKinds": [
+            "tools"
+          ]
+        },
+        {
+          "name": "core-adapters",
+          "path": "adapters/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "core-src",
+          "path": "src/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "core-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "core-library",
+          "path": "library/",
+          "graphKinds": [
+            "library"
+          ]
+        },
+        {
+          "name": "core-methodologies",
+          "path": "methodologies/",
+          "graphKinds": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "core-skills",
+          "path": "skills/",
+          "graphKinds": [
+            "skills"
+          ]
+        },
+        {
+          "name": "core-processes",
+          "path": "processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/",
+      "nodes": 521,
+      "bytes": 776871,
+      "sha256": "37f952d2da778651e6dcceadb767c6db1cfe4840e3e5f7c1db4fbfbc3c87a2b6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/folio-assistant-sci/folio-assistant-sci.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "folio-assistant-sci",
+      "stub": "folio-assistant-sci",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/folio-assistant-sci/folio-assistant-sci.jsonld",
+      "description": "Scientific source material used by folios that formalise mathematics, and the methodologies for formalising it in Lean that this layer adopts from that material.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/folio-assistant-core/folio-assistant-core.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "library",
+          "path": "library/",
+          "graphKinds": [
+            "library"
+          ]
+        },
+        {
+          "name": "sci-methodologies",
+          "path": "methodologies/",
+          "graphKinds": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "skills",
+          "path": "skills/",
+          "graphKinds": [
+            "skills"
+          ]
+        },
+        {
+          "name": "sci-adapters",
+          "path": "adapters/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "sci-tools",
+          "path": "tools/",
+          "graphKinds": [
+            "tools"
+          ]
+        },
+        {
+          "name": "sci-sources",
+          "path": "sources/",
+          "graphKinds": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "sci-processes",
+          "path": "processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        },
+        {
+          "name": "attestations",
+          "path": "test/attestations/",
+          "graphKinds": [
+            "attestations"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/",
+      "nodes": 121,
+      "bytes": 163534,
+      "sha256": "85e2ea403da93e205eba42721b7162c8e515e9d08dacec822eda289c9c61cf76"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-base.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "smart-base",
+      "stub": "smart-base",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-base/smart-base.jsonld",
+      "title": "SMART Base",
+      "description": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/fhir-harness.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "smart-base-docs",
+          "path": "docs/",
+          "graphKinds": [
+            "docs"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphKinds": [
+            "library"
+          ]
+        },
+        {
+          "name": "methodologies",
+          "path": "methodologies/",
+          "graphKinds": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "processes",
+          "path": "methodologies/processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "smart-base-house-processes",
+          "path": "processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "smart-base-artifact-index",
+          "path": "fhir-artifact-index/",
+          "graphKinds": [
+            "fhir-artifact-index"
+          ]
+        },
+        {
+          "name": "tools",
+          "path": "tools/",
+          "graphKinds": [
+            "tools"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        },
+        {
+          "name": "smart-base-themes",
+          "path": "themes/",
+          "graphKinds": [
+            "themes"
+          ]
+        },
+        {
+          "name": "smart-base-document-kinds",
+          "path": "document-kinds/",
+          "graphKinds": [
+            "document-kinds"
+          ]
+        },
+        {
+          "name": "smart-base-findings",
+          "path": "findings/",
+          "graphKinds": [
+            "docs"
+          ]
+        },
+        {
+          "name": "smart-base-external-schemas",
+          "path": "external-schemas/",
+          "graphKinds": [
+            "external-schema"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/",
+      "nodes": 105,
+      "bytes": 101640,
+      "sha256": "be9c4e524c49a1bb4da874e0d4e0e6f6d4cbad2d905a85b2858d2a4c5147e7bd"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-ig/smart-ig.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "smart-ig",
+      "stub": "smart-ig",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-ig/smart-ig.jsonld",
+      "title": "SMART IG",
+      "description": "The L3 layer — a WHO SMART Guideline's FHIR Implementation Guide, and what one owes beyond a bare FHIR IG.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-base.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        }
+      ],
+      "nodes": 4,
+      "bytes": 17923,
+      "sha256": "4d32174db475e03395d6aad02ec1c41f46a4a0868eafe7d0b7c9a8e3050ba9c0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-immunizations/smart-immunizations.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "smart-immunizations",
+      "stub": "smart-immunizations",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-immunizations/smart-immunizations.jsonld",
+      "description": "WHO SMART Immunizations (smart.who.int.immunizations) v0.2.0, FHIR 4.0.1 — the published IG's artefact index, reconstructed: 748 artefacts known, 200 materialized.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-ig/smart-ig.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "smart-immunizations-docs",
+          "path": "docs/",
+          "graphKinds": [
+            "docs"
+          ]
+        },
+        {
+          "name": "smart-immunizations-artifact-index",
+          "path": "fhir-artifact-index/",
+          "graphKinds": [
+            "fhir-artifact-index"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        }
+      ],
+      "nodes": 8,
+      "bytes": 22534,
+      "sha256": "f3a139493667d64ab89d4cd392f11e6c6d20e4b621fbcc6dabee0b6bffb4c70e"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-trust/smart-trust.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "smart-trust",
+      "stub": "smart-trust",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-trust/smart-trust.jsonld",
+      "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/smart-ig/smart-ig.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/cat-openapi.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "smart-trust-artifact-index",
+          "path": "fhir-artifact-index/",
+          "graphKinds": [
+            "fhir-artifact-index"
+          ]
+        },
+        {
+          "name": "smart-trust-openapi",
+          "path": "openapi/",
+          "graphKinds": [
+            "openapi"
+          ]
+        },
+        {
+          "name": "smart-trust-docs",
+          "path": "docs/",
+          "graphKinds": [
+            "docs"
+          ]
+        },
+        {
+          "name": "smart-trust-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        }
+      ],
+      "nodes": 12,
+      "bytes": 27769,
+      "sha256": "a156451bff49b775aa8b3b3c9d7f12ab5d3384d93008427b5cbc8f02c516e835"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/who-iris/who-iris.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "who-iris",
+      "stub": "who-iris",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/who-iris/who-iris.jsonld",
+      "title": "WHO IRIS",
+      "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-eqly-orphan-blocks/folio-assistant-core/folio-assistant-core.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "library",
+          "path": "library/",
+          "graphKinds": [
+            "library"
+          ]
+        },
+        {
+          "name": "who-iris-site",
+          "path": "site/",
+          "graphKinds": [
+            "docs"
+          ]
+        },
+        {
+          "name": "who-iris-catalogue",
+          "path": "catalogue/",
+          "graphKinds": [
+            "catalogue"
+          ]
+        },
+        {
+          "name": "who-iris-uploads",
+          "path": "uploads/",
+          "graphKinds": [
+            "uploads"
+          ]
+        },
+        {
+          "name": "who-iris-skills",
+          "path": "skills/",
+          "graphKinds": [
+            "skills"
+          ]
+        },
+        {
+          "name": "glossary",
+          "path": "glossary/",
+          "graphKinds": [
+            "glossary"
+          ]
+        },
+        {
+          "name": "who-iris-themes",
+          "path": "themes/",
+          "graphKinds": [
+            "themes"
+          ]
+        },
+        {
+          "name": "who-iris-docs",
+          "path": "docs/",
+          "graphKinds": [
+            "docs"
+          ]
+        },
+        {
+          "name": "who-iris-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "who-iris-sources",
+          "path": "sources/",
+          "graphKinds": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "id-lookup",
+          "path": "id-lookup/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/",
+      "nodes": 26,
+      "bytes": 39459,
+      "sha256": "dbf2e6f3b377e98a63f1bdcb2590ec9a38e9494724c420aa075c87d9bd34b420"
+    }
+  ]
+}
