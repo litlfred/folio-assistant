@@ -2605,6 +2605,10 @@ export function renderExemptionProblems(
  * rather than in place of anything: *"i wanted fsh guts icon here with the
  * others"* (#1925). The cap moved with the ruling; it is still a cap.
  *
+ * 2026-10-05: cat-harness's own row dropped `processes` and `kg` (owner). A
+ * row globe was tried and taken out the same day: the owner kept ONE globe,
+ * the locale toggle in the glass band (#2211).
+ *
  * Refused rather than truncated. Truncating drops whichever the instance
  * listed last, silently, and an instance that declared seven has made a
  * decision the navbar would then be overruling without saying so.

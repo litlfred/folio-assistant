@@ -65,6 +65,7 @@ import { readHarnessConfig } from "../../cat-harness/schemas/harness-config.js";
 import type { Chapter, Paper, Section, SectionRef } from "../../cat-harness/schemas/types.js";
 import { buildDocumentMarkdown } from "../../cat-harness/content/pipeline/render-markdown.js";
 import { reviewPageHtml } from "../../cat-harness/scripts/gen-review-page.js";
+import { darkRules } from "../../cat-harness/scripts/lib/scheme-css.ts";
 
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
@@ -78,7 +79,7 @@ function page(title: string, body: string, math?: MathOptions): string {
 <title>${esc(title)}</title>
 <style>
   :root { color-scheme: light dark; --fg: #1b1b1b; --bg: #fdfdfb; --muted: #5b5b5b; --link: #0b5cad; }
-  @media (prefers-color-scheme: dark) { :root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; } }
+  ${darkRules(`:root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; }`)}
   body { margin: 0; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
   /* The column and its gutters belong to main, not body: the harness rail sets
      body padding-left to clear its strip, which replaced a body's own gutter and
@@ -167,7 +168,7 @@ addEventListener("DOMContentLoaded", () => {
 
 /** The viewer's macro table (`buildKatexMacros` in cat-harness/viewer/index.html), from a paper manifest. */
 export function katexMacros(paperMacros: Record<string, { tex: string }> | undefined): Record<string, string> {
-  const m: Record<string, string> = { "\\bigbowtie": "\\bowtie", "\\smallmatrix": "\\begin{smallmatrix}" };
+  const m: Record<string, string> = { "\\bigbowtie": "\\bowtie", "\\smallmatrix": "\\begin{smallmatrix}", "\\qed": "\\square" };
   for (const [name, def] of Object.entries(paperMacros ?? {})) m["\\" + name] = def.tex;
   return m;
 }
@@ -237,9 +238,43 @@ export function displayMathLines(markdown: string): string {
     .join("\n");
 }
 
+
+/**
+ * Four ways valid TeX in a Markdown block is misread before KaTeX sees it,
+ * each found by the rendered-content QA on qou (folio-site-qa.ts), and each
+ * fixed here by rewriting to an equivalent KaTeX accepts. Outside fenced code.
+ *
+ * - `\text{$n$-body}` inside math: the inner `$` ends the outer equation.
+ *   Rewritten to `\text{\(n\)-body}`, which KaTeX reads the same way.
+ * - `|` inside math in a GFM table row: the table splits the cell on it.
+ *   Rewritten to `\vert `.
+ * - `$a$$b$` — two inline equations with nothing between them reads as `$$`.
+ *   A space is put between them.
+ * - `\ref{x}` / `\eqref{x}` in prose: a link to the label's anchor.
+ */
+export function texInMarkdown(markdown: string): string {
+  let fenced = false;
+  return markdown
+    .split("\n")
+    .map((line) => {
+      if (/^\s*(```|~~~)/.test(line)) fenced = !fenced;
+      if (fenced) return line;
+      let out = line.replace(/\\text\{([^{}]*)\}/g, (m, body: string) => {
+        if (!body.includes("$")) return m;
+        let open = true;
+        return `\\text{${body.replace(/\$/g, () => ((open = !open) ? "\\)" : "\\("))}}`;
+      });
+      if (/^\s*\|/.test(out)) out = out.replace(/\$([^$\n]+)\$/g, (_m, tex: string) => `$${tex.replace(/(?<!\\)\|/g, "\\vert ")}$`);
+      if (!/^\s*\$\$/.test(out)) out = out.replace(/([^$\s\\])\$\$([^$\s])/g, "$1$ $$$2");
+      out = out.replace(/\\(?:eq)?ref\{([^}]+)\}/g, (_m, label: string) => `<a href="#${esc(label)}">${esc(label)}</a>`);
+      return out;
+    })
+    .join("\n");
+}
+
 /** One document's Markdown to HTML. */
 export async function renderDocumentHtml(markdown: string, opts: { math: boolean }): Promise<string> {
-  const source = citationsToHtml(opts.math ? displayMathLines(markdown) : markdown);
+  const source = citationsToHtml(opts.math ? texInMarkdown(displayMathLines(markdown)) : markdown);
   const base = opts.math ? remark().use(remarkMath) : remark();
   const proc = base.use(remarkGfm).use(remarkDirective).use(glossaryDirectives(source)).use(remarkHtml, { sanitize: false });
   return String(await proc.process(source));
