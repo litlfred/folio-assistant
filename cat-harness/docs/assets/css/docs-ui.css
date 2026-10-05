@@ -5745,6 +5745,39 @@ a.fa-nav-folders__link:focus-visible {
   border-bottom: 1px solid rgba(128, 128, 128, 0.25);
 }
 
+/* THE SAME ROW ON THE RAIL — bean `wckf` (#2147). `mountNavIconRow` now draws
+ * into `nav.fa-nav` too, under its fixed top inside `.fa-nav-in`. The rail
+ * clips every child at its collapsed width rather than reflowing them
+ * (`navbarCss`), so — exactly as on `.side-bar` above — the row wraps to one
+ * icon per line at rest, and lies flat once the rail is open by hover, by
+ * keyboard focus or by its pinned checkbox: the rail's own three open
+ * selectors, not a fourth idea of "open". At ANY width: the rail has no
+ * 50rem mode, unlike the theme's sidebar. */
+nav.fa-nav .fa-nav-in > .fa-nav-icons {
+  /* Border-box HERE, not inherited: the rail lands in somebody else's page,
+     and a page that leaves `content-box` would add the row's 16px of padding
+     to the strip's width (measured: 72px in a 56px rail). */
+  box-sizing: border-box;
+  width: var(--fa-nav-collapsed);
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+}
+/* The rail styles EVERY link in it as a nav row — `.fa-nav a{padding:8px
+ * 12px;gap:8px}` (`navbarCss`) — so the row's four LINK slots inherited 24px
+ * of horizontal padding inside a 32px box and drew their glyph 8px wide, while
+ * the BUTTON slots beside them drew at 18px. Measured in Chromium on the
+ * who-iris replica, 2026-10-05. A row icon is not a nav row. */
+nav.fa-nav .fa-nav-icons > a.fa-nav-icon {
+  padding: 0;
+  gap: 0;
+}
+nav.fa-nav:hover .fa-nav-in > .fa-nav-icons,
+nav.fa-nav:has(:focus-visible) .fa-nav-in > .fa-nav-icons,
+nav.fa-nav:has(.fa-nav-open:checked) .fa-nav-in > .fa-nav-icons {
+  width: auto;
+  flex-wrap: nowrap;
+}
+
 .fa-nav-icon {
   display: flex;
   flex: none;

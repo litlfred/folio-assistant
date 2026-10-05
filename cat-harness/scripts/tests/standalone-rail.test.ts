@@ -51,6 +51,19 @@ const railed = (root: string, rel: string): boolean =>
   /<nav class="fa-nav"/.test(readFileSync(join(root, rel), "utf-8"));
 
 describe("what it rails", () => {
+  test("a railed page carries the harness's icon-row data, so docs-ui draws the row (bean wckf, #2147)", () => {
+    // The rail had the harness's navbar without the harness's row: the row's
+    // data was written only by the theme's head include. Read from the same
+    // `_data/harness.json` the Jekyll sidebar reads, so the two cannot differ.
+    const root = site();
+    run(root);
+    const html = readFileSync(join(root, "bootstrap/README.html"), "utf-8");
+    const m = /<script type="application\/json" id="fa-navbar-row">([^<]*)<\/script>/.exec(html);
+    expect(m).not.toBeNull();
+    const row = JSON.parse(m![1]!) as { icons?: string[] } | null;
+    expect(Array.isArray(row?.icons)).toBe(true);
+  });
+
   test("never the pinned pdf.js viewer — it is framed inside a railed page (bean folio-assistant-5ea6)", () => {
     // Measured on the first staging preview: the rail drew the site's whole
     // navigation inside the PDF frame, above pdf.js's own toolbar.
