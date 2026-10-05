@@ -67,6 +67,7 @@
  *   a committed sidecar that is stale or absent. This is the gate CI runs.
  */
 import { existsSync, readFileSync } from "node:fs";
+import { RAIL_DATA_DIR, expandRail, railDataJson } from "../../cat-harness/scripts/lib/harness-rail.ts";
 import { join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -320,7 +321,11 @@ export function checkNavNames(repoRoot: string, siteAbs: string, files?: readonl
     if (!f.endsWith(".html") || f.includes("/_includes/") || f.includes("/_layouts/")) continue;
     const abs = join(repoRoot, f);
     if (!existsSync(abs)) continue;
-    const html = readFileSync(abs, "utf-8");
+    // A rail drawn from SHARED data (bean `lnoy`) is read as the reader sees it.
+    const html = expandRail(readFileSync(abs, "utf-8"), (name) => {
+      const f = join(siteAbs, RAIL_DATA_DIR, `${name}.js`);
+      return existsSync(f) ? railDataJson(readFileSync(f, "utf-8")) : undefined;
+    });
     if (!html.includes('class="fa-nav"')) continue;
     const under = f.slice(siteRel.length + 1);
     const dir = under.includes("/") ? `/${under.slice(0, under.lastIndexOf("/") + 1)}` : "/";
