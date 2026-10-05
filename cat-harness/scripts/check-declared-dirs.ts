@@ -492,6 +492,10 @@ function offCheckoutFindings(
     // `unmounted` is the honest state: nothing read this path.
     return [{ instance: instanceRoot, id: e.id, path: e.path, kind: "unmounted", detail: (err as Error).message }];
   }
+  // A FAMILY (bean `lehh`) is on its branches by declaration and mounted one
+  // member at a time, so an absent path is the expected state, not a finding —
+  // fsh-guts' precedent, without a single tip to compare against.
+  if (src.kind === "family") return [];
   if (src.kind !== "branch") return [];
   if (src.keyedBy === "route") {
     const r = routePresence(src, abs, repoRoot);

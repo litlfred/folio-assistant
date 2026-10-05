@@ -8,6 +8,50 @@ skinparam shadowing false
 skinparam packageStyle rectangle
 hide empty methods
 
+package "fhir-harness/fhir-harness-translations" as pkg_fhir_harness_fhir_harness_translations <<translation-sources>> {
+  class "TranslationConfig" as fhir_harness_fhir_harness_translations_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {
+    defaultLocale [0..1] : string
+    supportedLocales [0..*] : string[]
+    translationDir [0..1] : string
+    potGranularity [0..1] : block | chapter | folio
+    officialRequired [0..1] : boolean
+  }
+}
+package "fhir-harness/fhir-harness-validators" as pkg_fhir_harness_fhir_harness_validators <<validators>> {
+  class "folio-validator/v1" as fhir_harness_fhir_harness_validators_folio_validator_v1_folio_validator_v1 <<json: ValidatorNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-validator/v1'
+    id [1] : string
+    validates [1] : object
+    schema [1] : string
+    rationale [0..1] : string
+  }
+}
+package "fhir-harness/fhir-harness-kinds" as pkg_fhir_harness_fhir_harness_kinds <<kinds>> {
+  class "folio-graph-kind/v1" as fhir_harness_fhir_harness_kinds_folio_graph_kind_v1_folio_graph_kind_v1 <<json: GraphKindNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-graph-kind/v1'
+    kind [1] : string
+    title [0..1] : string
+    layer [0..1] : 'core'
+    perInstance [0..1] : true
+    renderable [1] : boolean
+    recordsWork [0..1] : boolean
+    holds [1] : content | context | state | derived
+    summary [1] : string
+    schema [0..1] : string
+    validator [0..1] : string
+    validatorNotApplicable [0..1] : string
+    nodeSchemas [0..1] : map<object>
+    declarationFile [0..1] : string
+    concernGroups [0..1] : true
+    within [0..1] : string
+    avatar [0..1] : object
+    tileIcon [0..1] : string
+    description [0..1] : string
+    renderableNote [0..1] : string
+    anyLayer [0..1] : true
+    rationale [0..1] : string
+  }
+}
 package "fhir-harness/library" as pkg_fhir_harness_library <<library>> {
   class "folio-document-images/v1" as fhir_harness_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> #f4f4f1 {
     $schema [1] : 'folio-document-images/v1'
@@ -86,9 +130,11 @@ package "fhir-harness/qa" as pkg_fhir_harness_qa <<qa>> {
 }
 
 fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Maintain : maintains
-' grid: portrait, 2 column(s) — pkg_fhir_harness_library pkg_fhir_harness_fhir_ig_skills pkg_fhir_harness_fhir_ig_tools pkg_fhir_harness_fhir_ig_scripts pkg_fhir_harness_fhir_harness_processes pkg_fhir_harness_qa
-pkg_fhir_harness_library -[hidden]down- pkg_fhir_harness_fhir_ig_tools
-pkg_fhir_harness_fhir_ig_skills -[hidden]down- pkg_fhir_harness_fhir_ig_scripts
-pkg_fhir_harness_fhir_ig_tools -[hidden]down- pkg_fhir_harness_fhir_harness_processes
-pkg_fhir_harness_fhir_ig_scripts -[hidden]down- pkg_fhir_harness_qa
+' grid: portrait, 3 column(s) — pkg_fhir_harness_fhir_harness_translations pkg_fhir_harness_fhir_harness_validators pkg_fhir_harness_fhir_harness_kinds pkg_fhir_harness_library pkg_fhir_harness_fhir_ig_skills pkg_fhir_harness_fhir_ig_tools pkg_fhir_harness_fhir_ig_scripts pkg_fhir_harness_fhir_harness_processes pkg_fhir_harness_qa
+pkg_fhir_harness_fhir_harness_translations -[hidden]down- pkg_fhir_harness_library
+pkg_fhir_harness_fhir_harness_validators -[hidden]down- pkg_fhir_harness_fhir_ig_skills
+pkg_fhir_harness_fhir_harness_kinds -[hidden]down- pkg_fhir_harness_fhir_ig_tools
+pkg_fhir_harness_library -[hidden]down- pkg_fhir_harness_fhir_ig_scripts
+pkg_fhir_harness_fhir_ig_skills -[hidden]down- pkg_fhir_harness_fhir_harness_processes
+pkg_fhir_harness_fhir_ig_tools -[hidden]down- pkg_fhir_harness_qa
 @enduml

@@ -6,6 +6,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
 import { repoRootFor } from "../../schemas/cat-harness.ts";
+import { inAggregate } from "../../test/support/checkout.ts";
 import { readBeans, type BeanNode } from "../beans.ts";
 import { auditPayloadTree } from "../gen-subgraph-jsonld.ts";
 import {
@@ -188,7 +189,9 @@ describe("gen-slice-sqlite — fixture", () => {
     }));
 });
 
-describe("gen-slice-sqlite — the real bean store", () => {
+// The bean store is the AGGREGATE's, at its checkout root: cat-harness run as
+// its own clone has none, so these two are skipped there, never passed (bean `ho66`).
+describe.skipIf(!inAggregate())("gen-slice-sqlite — the real bean store", () => {
   const beans = readBeans(repoRootFor(join(import.meta.dir, "../.."))) ?? [];
 
   test("rows equal the bean count, and a known bean is queryable by id and by FTS", () =>
@@ -274,7 +277,9 @@ describe("gen-slice-sqlite — todos", () => {
     withDir((dir) => expect(buildSlice(TODOS_SLICE, lost, dir).contentDigest).not.toBe(expectedContentDigest(TODOS_SLICE, d)));
   });
 
-  test("the real index slices green, every todo with its source file", async () => {
+  // The published index is committed here, but its todos' SOURCE files are the
+  // aggregate's todo graph; alone, every one would be a missing-source finding.
+  test.skipIf(!inAggregate())("the real index slices green, every todo with its source file", async () => {
     const d = (await TODOS_SLICE.load(REPO))!;
     expect(d.rows.todos!.length).toBe(realTodoIndex.items.length);
     expect(d.findings).toEqual([]);
