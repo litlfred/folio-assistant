@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-bardeen-inaarx/skills/content-review/input.schema.json",
+  "title": "Content Review Input",
+  "description": "Input schema for formal content review and approval workflow.",
+  "type": "object",
+  "required": [
+    "reviewType",
+    "contentRef"
+  ],
+  "properties": {
+    "reviewType": {
+      "type": "string",
+      "enum": [
+        "l2-to-l3-gate",
+        "l3-to-publish-gate",
+        "change-assessment",
+        "final-signoff"
+      ],
+      "description": "Type of review phase gate."
+    },
+    "contentRef": {
+      "type": "string",
+      "description": "Git ref or path to the content being reviewed."
+    },
+    "previousVersion": {
+      "type": "string",
+      "description": "Git ref of the previous approved version (for diff)."
+    },
+    "validationReport": {
+      "type": "string",
+      "description": "Path to the validation report for this content."
+    }
+  },
+  "staging": {
+    "branch": "claude/confident-bardeen-inaarx",
+    "sha": "83de5cf056ff8848a3c745f8c0f331c617c52b41",
+    "pr": "2214/merge",
+    "run": "37347304774"
+  }
+}
