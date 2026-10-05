@@ -12,7 +12,8 @@ import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, 
 import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 
-import { droppedInMerge, droppedLine, droppedPaths, plan, refusable, resolutionFailure, resolveGitlink, stageGitlink, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
+import { droppedInMerge, droppedLine, droppedPaths, ownedTreeAction, plan, refusable, resolutionFailure, resolveGitlink, stageGitlink, takeBase, takeBaseAction, takeOwnedTree, unmergedStages } from "../merge-base.js";
+import { pathClass } from "../merge-pipeline-paths.ts";
 import { parseLog } from "../merge-main-comment.js";
 import { plan as qaPlan } from "../qa-resolve-conflicts.ts";
 import { classify, PATTERNS, resolveGeneratedRegions } from "../merge-conflict-patterns.js";
@@ -760,5 +761,171 @@ describe("a resolution that fails is reported as a refusal, not an unexplained e
     // merge-main.yml: grep -qE '^  ✗ .*  \['
     expect(/^ {2}✗ .* {2}\[/.test(line)).toBe(true);
     expect(parseLog(`merge-base: 1 conflicted path(s)\n${line}\n`).refused).toContain("results/x.json");
+  });
+});
+
+/**
+ * #2176: the subgraph indexes and content-addressed payloads that
+ * `subgraph:jsonld` writes. Both sides change one node, so both rewrite the
+ * subgraph index and both move the node's payload to a new hex. Git reports
+ * the payload as a RENAME/RENAME, and plain `take-base` cannot resolve that
+ * without a drop.
+ */
+describe("owned-tree: subgraph indexes and content-addressed payloads (#2176)", () => {
+  const P = "cat-harness/docs/payload/sha256";
+  const IDX = "cat-harness/docs/subgraph/cat-harness/index.jsonld";
+  const hex = (s: string) => new Bun.CryptoHasher("sha256").update(s).digest("hex");
+  const lines = Array.from({ length: 60 }, (_, i) => `line ${i}`).join("\n") + "\n";
+  const body = { base: lines, branch: `${lines}branch edit\n`, main: `${lines}main edit\n` };
+  type Side = keyof typeof body;
+  const name: Record<Side, string> = { base: hex(body.base), branch: hex(body.branch), main: hex(body.main) };
+  const sidecar = (h: string, b: string) => `${JSON.stringify({ sha256: h, bytes: b.length })}\n`;
+  const index = (who: string, h: string) => `${JSON.stringify({ "@id": "skill", who, payload: h })}\n`;
+
+  /** The fixture: a base, then a branch and a main that each moved the payload. */
+  const mk = () => {
+    const dir = mkdtempSync(join(tmpdir(), "merge-base-owned-"));
+    const g = (...a: string[]) => execFileSync("git", a, { cwd: dir, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+    const put = (side: Side) => {
+      for (const s of Object.keys(body) as Side[]) {
+        if (s === side) continue;
+        rmSync(join(dir, P, name[s]), { force: true });
+        rmSync(join(dir, P, `${name[s]}.json`), { force: true });
+      }
+      writeFileSync(join(dir, P, name[side]), body[side]);
+      writeFileSync(join(dir, P, `${name[side]}.json`), sidecar(name[side], body[side]));
+      writeFileSync(join(dir, IDX), index(side, name[side]));
+    };
+    g("init", "-q", "-b", "branch");
+    g("config", "user.email", "t@example.invalid");
+    g("config", "user.name", "t");
+    mkdirSync(join(dir, P), { recursive: true });
+    mkdirSync(join(dir, IDX, ".."), { recursive: true });
+    put("base");
+    g("add", "-A");
+    g("commit", "-qm", "base");
+    g("checkout", "-q", "-b", "main");
+    put("main");
+    g("add", "-A");
+    g("commit", "-qm", "main moves the payload");
+    g("checkout", "-q", "branch");
+    put("branch");
+    g("add", "-A");
+    g("commit", "-qm", "branch moves the payload");
+    try { g("merge", "--no-ff", "--no-commit", "main"); } catch { /* the conflict is the point */ }
+    const conflicted = g("diff", "--name-only", "--diff-filter=U").split("\n").filter(Boolean).sort();
+    return { dir, g, conflicted };
+  };
+
+  /**
+   * What `subgraph:jsonld` does in the merged tree. It writes the index and
+   * the payload the merged node needs, and deletes every file it did not
+   * write. In this fixture the merged node is main's.
+   */
+  const regen = (dir: string) => {
+    const keep = new Set([name.main, `${name.main}.json`]);
+    for (const f of readdirSync(join(dir, P))) if (!keep.has(f)) rmSync(join(dir, P, f));
+    writeFileSync(join(dir, P, name.main), body.main);
+    writeFileSync(join(dir, P, `${name.main}.json`), sidecar(name.main, body.main));
+    writeFileSync(join(dir, IDX), index("main", name.main));
+  };
+
+  const onDisk = (dir: string) => (p: string) => existsSync(join(dir, p));
+
+  test("both directories classify as owned-tree, pruned by a writer package.json declares", () => {
+    const scripts = (JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")) as { scripts: Record<string, string> }).scripts;
+    expect(classify(IDX).pattern?.id).toBe("subgraph-index");
+    expect(classify("cat-harness/docs/subgraph/index.jsonld").pattern?.id).toBe("subgraph-index");
+    expect(classify(`${P}/${name.base}`).pattern?.id).toBe("subgraph-payload");
+    expect(classify(`${P}/${name.base}.json`).pattern?.id).toBe("subgraph-payload");
+    for (const p of PATTERNS.filter((x) => x.strategy === "owned-tree")) {
+      expect(p.prunedBy).toBeDefined();
+      expect(scripts[p.prunedBy!]).toBeDefined();
+      expect(scripts[`${p.prunedBy!}:check`]).toBeDefined();
+    }
+    // `prunedBy` belongs to owned-tree alone.
+    expect(PATTERNS.filter((x) => x.prunedBy !== undefined && x.strategy !== "owned-tree")).toEqual([]);
+    expect(pathClass(IDX).class).toBe("generated");
+    expect(pathClass(`${P}/${name.base}`).class).toBe("generated");
+  });
+
+  test("the neighbours stay refused: the authored skill a subgraph is built FROM, and the rest of docs/payload", () => {
+    expect(classify("cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md").strategy).toBe("refuse");
+    expect(classify("cat-harness/docs/payload/README.txt").strategy).toBe("refuse");
+  });
+
+  test("the action reads the parents: base's copy, else the branch's, removed only when neither has it", () => {
+    expect(ownedTreeAction(true, true)).toBe("theirs");
+    expect(ownedTreeAction(true, false)).toBe("theirs");
+    expect(ownedTreeAction(false, true)).toBe("ours");
+    expect(ownedTreeAction(false, false)).toBe("delete");
+  });
+
+  test("git reports the payload as rename/rename, with marked bytes at the new names", () => {
+    const { dir, g, conflicted } = mk();
+    try {
+      expect(conflicted).toEqual([IDX, `${P}/${name.base}`, `${P}/${name.branch}`, `${P}/${name.main}`].sort());
+      expect([...unmergedStages(dir, `${P}/${name.base}`)]).toEqual([1]);
+      expect([...unmergedStages(dir, `${P}/${name.branch}`)]).toEqual([2]);
+      expect([...unmergedStages(dir, `${P}/${name.main}`)]).toEqual([3]);
+      expect(g("show", `:3:${P}/${name.main}`)).toContain("<<<<<<<");
+      expect(plan(conflicted).refused).toEqual([]);
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+
+  test("the refusal sibling: take-base would drop the branch's payload, and the resolved checkpoint refuses it", () => {
+    const { dir, conflicted } = mk();
+    try {
+      for (const p of conflicted) takeBase(dir, p);
+      expect(refusable(droppedInMerge(dir), "resolved", onDisk(dir))).toEqual([{ path: `${P}/${name.branch}`, heldBy: "ours" }]);
+      // ...and it wrote marked bytes under main's content-addressed name.
+      expect(readFileSync(join(dir, P, name.main), "utf-8")).toContain("<<<<<<<");
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+
+  test("owned-tree completes the merge, passes both #2145 checkpoints, then regenerates", () => {
+    const { dir, g, conflicted } = mk();
+    try {
+      for (const c of plan(conflicted).resolvable) {
+        expect(c.strategy).toBe("owned-tree");
+        takeOwnedTree(dir, c.path);
+      }
+      expect(g("diff", "--name-only", "--diff-filter=U")).toBe("");
+      // Checkpoint 1: the resolution dropped nothing a parent holds.
+      expect(refusable(droppedInMerge(dir), "resolved", onDisk(dir))).toEqual([]);
+      // Every kept payload holds the bytes its name hashes: the committed blobs, not marked merges.
+      for (const s of ["branch", "main"] as const) {
+        const bytes = readFileSync(join(dir, P, name[s]), "utf-8");
+        expect(bytes).toBe(body[s]);
+        expect(hex(bytes)).toBe(name[s]);
+      }
+      expect(existsSync(join(dir, P, name.base))).toBe(false);
+      expect(readFileSync(join(dir, IDX), "utf-8")).toBe(index("main", name.main));
+
+      // The writer replaces the branch's payload, so the index loses a path the branch added.
+      regen(dir);
+      g("add", "-A");
+      const dropped = droppedInMerge(dir);
+      expect(dropped.map((d) => d.path).sort()).toEqual([`${P}/${name.branch}`, `${P}/${name.branch}.json`]);
+      // Checkpoint 2: its writer replacing a content-addressed payload is NOT refused...
+      expect(refusable(dropped, "staged", onDisk(dir))).toEqual([]);
+      // ...though checkpoint 1 would refuse the same drop. That is why there are two.
+      expect(refusable(dropped, "resolved", onDisk(dir)).length).toBe(2);
+      g("commit", "-q", "--no-edit");
+      expect(g("ls-files", P).split("\n").sort()).toEqual([`${P}/${name.main}`, `${P}/${name.main}.json`].sort());
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+
+  test("a payload only the branch has is kept from its commit; an already-resolved path is left alone", () => {
+    const { dir } = mk();
+    try {
+      takeOwnedTree(dir, `${P}/${name.branch}`);
+      expect(readFileSync(join(dir, P, name.branch), "utf-8")).toBe(body.branch);
+      expect(unmergedStages(dir, `${P}/${name.branch}`).size).toBe(0);
+      writeFileSync(join(dir, IDX), "resolved earlier\n");
+      execFileSync("git", ["add", "--", IDX], { cwd: dir });
+      takeOwnedTree(dir, IDX);
+      expect(readFileSync(join(dir, IDX), "utf-8")).toBe("resolved earlier\n");
+    } finally { rmSync(dir, { recursive: true, force: true }); }
   });
 });
