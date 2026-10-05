@@ -387,8 +387,8 @@ function ownPages(dir: string): string[] {
 }
 
 export interface BuildOptions {
-  /** The platform instance whose registry the index is built from (cat-harness's root). */
-  platformRoot: string;
+  /** The instance whose registry the index is built from: cat-harness's root, wherever the platform is checked out. */
+  instanceRoot: string;
   /** The checkout whose harnesses hold the nodes: the platform's own, or a folio's. */
   siteRepo: string;
   /** The site directory pages are written under. */
@@ -406,11 +406,11 @@ export interface BuildOptions {
  * mark — rather than trust that writing it worked.
  */
 export async function buildNodeKindPages(o: BuildOptions): Promise<{ pages: string[]; stale: number }> {
-  const platformRepo = repoRootFor(o.platformRoot);
+  const platformRepo = repoRootFor(o.instanceRoot);
   let stale = 0;
   const nav: ViewerNav = { built: o.built, docsRoot: o.site };
 
-  const index = await nodeKindIndex(defaultGraphTypologies, o.platformRoot, platformRepo);
+  const index = await nodeKindIndex(defaultGraphTypologies, o.instanceRoot, platformRepo);
   const byId = new Map(index.kinds.map((k) => [k.id, k]));
   const cache = new Map<string, KindNode[]>();
   const nodesOf = (id: string) => cache.get(id) ?? cache.set(id, nodesOfKind(index, id, o.siteRepo)).get(id)!;
@@ -505,20 +505,20 @@ if (import.meta.main) {
     return i >= 0 ? argv[i + 1] : undefined;
   };
   const check = argv.includes("--check");
-  const platformRoot = join(import.meta.dir, "..");
+  const INSTANCE_ROOT = join(import.meta.dir, "..");
   // A folio builds its own site: `--root <folio checkout> --out <site dir>`.
   // Its nodes are its harnesses', the kinds are the platform's, and its
   // `_site` is built at deploy rather than committed, so there is nothing to
   // prune or to call stale.
   const folio = opt("--root");
-  const siteRepo = folio ? resolve(folio) : repoRootFor(platformRoot);
-  const site = folio ? resolve(opt("--out") ?? "_site") : join(platformRoot, siteDirFor(platformRoot));
-  const built = readDeclaration(folio ? siteRepo : platformRoot)?.name;
+  const siteRepo = folio ? resolve(folio) : repoRootFor(INSTANCE_ROOT);
+  const site = folio ? resolve(opt("--out") ?? "_site") : join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT));
+  const built = readDeclaration(folio ? siteRepo : INSTANCE_ROOT)?.name;
   if (!built) {
     console.log("  · this instance declares no name — nothing to publish under");
     process.exit(0);
   }
-  const { pages, stale } = await buildNodeKindPages({ platformRoot, siteRepo, site, built, check, prune: !folio });
+  const { pages, stale } = await buildNodeKindPages({ instanceRoot: INSTANCE_ROOT, siteRepo, site, built, check, prune: !folio });
   if (!check) console.log(`  ${pages.length} node-kind page(s) under ${LOCALES.join(", ")} in ${relative(process.cwd(), site) || "."}`);
   if (stale > 0) {
     console.error(`\n${stale} page(s) stale — run \`bun run node-kind:pages\``);
