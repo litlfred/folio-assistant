@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-04T17:33:45Z
+updated_at: 2026-10-05T14:11:27Z
 parent: folio-assistant-fs43
 ---
 
@@ -134,3 +134,14 @@ So the end state is **no reader resolves a branch name through a central file.**
 - `resolve-subgraph` no longer exits 2 for a declaration with no row. It did, which meant the table was gating the declarations.
 
 **Left:** step 3, the shell mirrors (lake-cache.sh, lake-cache-fetch*, lake-cache-produce.py, reseed-lean-cache.sh, rename-special-branch.sh, the restore action and its template) reading the prefix from the folio-assistant-sci declaration; then delete the table and its `special-branches.test.ts` mirror check, with `state-drift` as the health check.
+
+
+## 2026-10-05: merge-queue is NOT cut over, though its branch says it is
+`state-drift` reports `cat/cat-harness/merge-queue` as on the remote and declared nowhere. I tried declaring it on `beans/beans.json`'s `queue` entry (`source: {kind: branch, branch: cat/cat-harness/merge-queue, keyedBy: tip}`), and it is the wrong move today:
+- The branch's `manifest.json` says `authoritative: true`, and its README says "main no longer tracks beans/queue/".
+- But main tracks `beans/queue/`, with 10+ entries, and the steward still commits there (latest: bc31c114 "queue: #1918 landed").
+- With the declaration, `state:mount` REFUSES with "still tracked on this checkout's branch" (the not-cut-over state), and that would fail CI's mount step.
+
+So the cutover never happened, or it was reverted, and the branch's manifest overstates its role. Fixing this belongs to the merge-pipeline owner (hfag/najo): either cut over (stop tracking on main and declare the source), or mark the branch seed-only. Not done here.
+
+Separately: `state-drift.declaredBranches` read only top-level instance entries, so a store declared on a NESTED entry (`beans/beans.json`) would still read as undeclared. It now reads `nestedDirectories` too, the same set `state:mount`'s resolver already sees.

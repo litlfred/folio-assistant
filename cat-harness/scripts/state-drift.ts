@@ -53,7 +53,7 @@ import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.ts";
+import { instanceRootsIn, nestedDirectories, readDeclaration } from "../schemas/cat-harness.ts";
 
 import { BranchStore, MANIFEST_FILE, MANIFEST_SCHEMA } from "./branch-store.ts";
 
@@ -187,7 +187,10 @@ export function declaredBranches(repoRoot: string = REPO_ROOT): { exact: Map<str
     } catch {
       continue; // an unreadable declaration is check:declared-dirs' finding
     }
-    for (const d of decl?.directories ?? []) {
+    // Nested entries too (`beans/beans.json`'s `queue`): a store declared on
+    // the node that labels it is as declared as one in the instance file.
+    const entries = decl ? [...(decl.directories ?? []), ...nestedDirectories(root, decl)] : [];
+    for (const d of entries) {
       const st = d.storage as { branch?: string; branchPrefix?: string } | undefined;
       const src = d.source as { kind?: string; branch?: string; branchPrefix?: string } | undefined;
       const branch = st?.branch ?? (src?.kind === "branch" ? src.branch : undefined);
