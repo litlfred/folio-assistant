@@ -11,10 +11,9 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { COVERED, foldable, settleCovered } from "../pair-cover.ts";
-import { regenPass, repairableGates, type Pair, type Runner } from "../regen-after-merge.ts";
+import { foldable, settleCovered } from "../pair-cover.ts";
+import { regenPass, type Pair, type Runner } from "../regen-after-merge.ts";
 import { CHECKS } from "../skill-register.ts";
-import { loadGates } from "../gates.ts";
 import { instanceRootsIn, repoRootFor } from "../../schemas/cat-harness.ts";
 
 const INSTANCE = join(import.meta.dir, "..", "..");
@@ -124,14 +123,10 @@ describe("regenPass with folds", () => {
  * argument in `pair-cover.ts` has to be re-read before the fold may stand.
  */
 describe("the equivalences still hold in this tree", () => {
-  test("every residual is a script, and every coverer a pair regen asks", () => {
-    const asked = new Set(repairableGates(loadGates(REPO, { all: false }), SCRIPTS).map((p) => p.check));
-    for (const [check, c] of Object.entries(COVERED)) {
-      expect(asked.has(check), `${check} is a pair`).toBe(true);
-      for (const x of c.covers) expect(asked.has(x), `${check}'s coverer ${x} is a pair`).toBe(true);
-      if (c.residual !== undefined) expect(SCRIPTS[c.residual], c.residual).toBeDefined();
-    }
-  });
+  // "every residual is a script, and every coverer a pair regen asks" reads
+  // the CI workflows, so it lives in
+  // `cat-harness-tools/scripts/tests/pair-cover-workflows.test.ts`: a
+  // standalone cat-harness layer has no workflows to read.
 
   test("skill:register's residual is its gate plus --declarations-only, and its chain names scripts", () => {
     expect(SCRIPTS["skill:register:declarations:check"]).toBe(`${SCRIPTS["skill:register:check"]} --declarations-only`);
