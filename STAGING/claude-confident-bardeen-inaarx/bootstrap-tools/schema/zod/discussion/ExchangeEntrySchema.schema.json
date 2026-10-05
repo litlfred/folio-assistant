@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/ExchangeEntry",
+  "definitions": {
+    "ExchangeEntry": {
+      "type": "object",
+      "properties": {
+        "asked": {
+          "type": "string",
+          "description": "The question as put, with its candidates named. A question a reader must go and research is not ready."
+        },
+        "answered": {
+          "description": "The reply as received. Absent means the question was put and nothing came back, which is one route to `unsettled`.",
+          "type": "string"
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+        }
+      },
+      "required": [
+        "asked"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-bardeen-inaarx/bootstrap-tools/schema/zod/discussion/ExchangeEntrySchema.schema.json",
+  "title": "ExchangeEntrySchema",
+  "description": "Generated from `ExchangeEntrySchema` in schemas/discussion.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/confident-bardeen-inaarx",
+    "sha": "bd0213c5892489d2717c5d046ccece7ffcbd0ebc",
+    "pr": "2242/merge",
+    "run": "37388505278"
+  }
+}
