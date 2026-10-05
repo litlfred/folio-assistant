@@ -524,6 +524,15 @@
 <meta name="fa-search-index" content="{{ site.data.build.search_index }}">
 
 <!--
+  A page left out of the search index ON PURPOSE (`search_exclude: true`)
+  says so in what is built, so `publish:verify`'s search-index check can tell
+  a deliberate exclusion from a truncated index (#2233). Front matter is gone
+  once Jekyll has run; without this marker the ~2,800 IG artefact pages that
+  #2194 excluded read as "4,189 pages offer a search box, 1,003 indexed".
+-->
+{% if page.search_exclude %}<meta name="fa-search-exclude" content="true">{% endif %}
+
+<!--
   The bean index — the AGENT work plan, published by the same generator beside
   the todo index above, for the same reason and read the same way. Separate
   files rather than one combined document because the two stores are separate

@@ -515,6 +515,9 @@ export const SEARCH_INDEX_PATH = "assets/js/search-data.json";
  */
 export const SEARCH_COVERAGE_FLOOR = 0.5;
 
+/** What `head_custom.html` writes on a page whose front matter sets `search_exclude: true` (#2233). */
+export const SEARCH_EXCLUDE_MARKER = '<meta name="fa-search-exclude" content="true">';
+
 /**
  * The site search index is a DOWNSTREAM output (bean `fq5u`): Jekyll writes
  * it implicitly, nothing checked it, and an empty one would have shipped
@@ -535,8 +538,21 @@ export const SEARCH_INDEX: Verifier = {
     "cover the pages that offer a search box?",
   async run(dir, ctx) {
     const id = "search-index";
-    const boxPages = treeFiles(dir, ".html").filter((f) => readFileSync(f, "utf-8").includes('id="search-input"'));
-    if (boxPages.length === 0) throw new Error("no page in the tree carries the theme's search box");
+    // A page excluded from search ON PURPOSE carries the marker
+    // `head_custom.html` writes for `search_exclude: true` (#2233); it is not
+    // a page the index failed to cover, so it is not in the denominator. It
+    // is COUNTED, so a mass exclusion is visible rather than silent.
+    let excluded = 0;
+    const boxPages = treeFiles(dir, ".html").filter((f) => {
+      const html = readFileSync(f, "utf-8");
+      if (!html.includes('id="search-input"')) return false;
+      if (html.includes(SEARCH_EXCLUDE_MARKER)) {
+        excluded += 1;
+        return false;
+      }
+      return true;
+    });
+    if (boxPages.length === 0 && excluded === 0) throw new Error("no page in the tree carries the theme's search box");
     const file = join(dir, SEARCH_INDEX_PATH);
     const at = SEARCH_INDEX_PATH;
     if (!existsSync(file)) return { checked: 1, outOfScope: 0, findings: [{ verifier: id, file: at, detail: `missing — ${boxPages.length} page(s) offer a search box that would search nothing` }] };
@@ -573,7 +589,7 @@ export const SEARCH_INDEX: Verifier = {
     for (const u of dangling.slice(0, 20)) findings.push({ verifier: id, file: at, detail: `indexes ${u}, which is not in the tree` });
     if (dangling.length > 20) findings.push({ verifier: id, file: at, detail: `…and ${dangling.length - 20} more indexed page(s) not in the tree` });
     if (pages.size < SEARCH_COVERAGE_FLOOR * boxPages.length)
-      findings.push({ verifier: id, file: at, detail: `indexes ${pages.size} page(s) while ${boxPages.length} offer a search box — below the ${SEARCH_COVERAGE_FLOOR} floor, so the index is truncated or stale` });
+      findings.push({ verifier: id, file: at, detail: `indexes ${pages.size} page(s) while ${boxPages.length} offer a search box (${excluded} more are excluded from search on purpose) — below the ${SEARCH_COVERAGE_FLOOR} floor, so the index is truncated or stale` });
     return { checked: 1, outOfScope: 0, findings };
   },
 };
