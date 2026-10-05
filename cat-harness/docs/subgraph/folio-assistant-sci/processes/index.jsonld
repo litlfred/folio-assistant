@@ -2,6 +2,13 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/processes/",
   "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-processes",
+      "@type": "bootstrap:Subgraph",
+      "name": "sci-processes"
+    }
+  ],
   "hasSubgraph": [
     "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/processes/content/"
   ],

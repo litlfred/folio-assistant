@@ -4,21 +4,14 @@
   "@type": "bootstrap:Subgraph",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
-      "@type": "cat-harness:SkillPackage",
-      "hasManifest": true,
-      "name": "folio-document-adapter",
-      "path": "../folio-assistant-core/skills/content/folio-document-adapter"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-authoring",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-authoring",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
       "instructionLines": 92,
-      "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/document-authoring.md",
+      "instructionsPath": "skills/content/folio-document-adapter/document-authoring.md",
       "name": "document-authoring",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d4d459e5e0ea55089cfcbe0c10a3bb057c4e031443c42207f98359fee716f0ba",
@@ -28,14 +21,14 @@
       "title": "document-authoring"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-publishing",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-publishing",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
       "instructionLines": 82,
-      "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/document-publishing.md",
+      "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
       "name": "document-publishing",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/078453880e1c8cb5171ed7069cde0a704bffba019244d475def34a99c062512d",
@@ -45,14 +38,14 @@
       "title": "document-publishing"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-structure",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-structure",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
       "instructionLines": 64,
-      "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/document-structure.md",
+      "instructionsPath": "skills/content/folio-document-adapter/document-structure.md",
       "name": "document-structure",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3b8b381875663d9398577c7e72b0c36e1dc97b52d7b85e16f673a4e91ad96e1d",
@@ -62,14 +55,14 @@
       "title": "document-structure"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/normative-statements",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/normative-statements",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
       "instructionLines": 85,
-      "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/normative-statements.md",
+      "instructionsPath": "skills/content/folio-document-adapter/normative-statements.md",
       "name": "normative-statements",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9b8f41a3efb6f406fccc533b5223d0e89052465c3bc52e84ebc2c73b20258038",
@@ -79,19 +72,19 @@
       "title": "normative-statements"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/public-comment",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
-      "instructionLines": 240,
-      "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/public-comment.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "instructionLines": 182,
+      "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
       "name": "public-comment",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/590b5d7b3383429d00fe595c0fdd513d2b6c859e8cf8891f0f813ff210941fe0",
-        "bytes": 12953,
-        "sha256": "590b5d7b3383429d00fe595c0fdd513d2b6c859e8cf8891f0f813ff210941fe0"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4ba962274fb249c70481964191f2a11075d51ae9558341db4eb38899d112425e",
+        "bytes": 9691,
+        "sha256": "4ba962274fb249c70481964191f2a11075d51ae9558341db4eb38899d112425e"
       },
       "title": "public-comment"
     }

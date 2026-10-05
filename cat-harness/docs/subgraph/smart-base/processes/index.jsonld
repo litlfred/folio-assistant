@@ -2,6 +2,13 @@
   "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/processes/",
   "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-house-processes"
+    }
+  ],
   "hasSubgraph": [
     "https://litlfred.github.io/folio-assistant/subgraph/smart-base/processes/content/"
   ],
