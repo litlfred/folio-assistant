@@ -1,0 +1,96 @@
+{
+  "$ref": "#/definitions/ReviewVerdict",
+  "definitions": {
+    "ReviewVerdict": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-review-verdict/v1"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verdict": {
+          "type": "string",
+          "enum": [
+            "ok",
+            "changes",
+            "waived"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "blockHash": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repo": {
+          "type": "string",
+          "pattern": "^[\\w.-]+\\/[\\w.-]+$"
+        },
+        "pr": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "commentId": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "commentUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "commit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "at": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "$schema",
+        "id",
+        "targetLabel",
+        "verdict",
+        "blockHash",
+        "reviewer",
+        "role",
+        "repo",
+        "pr",
+        "commentId",
+        "commentUrl",
+        "commit",
+        "at"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-search-exclude-marker/folio-assistant-core/schema/zod/review-verdict/ReviewVerdictSchema.schema.json",
+  "title": "ReviewVerdictSchema",
+  "description": "Generated from `ReviewVerdictSchema` in schemas/review-verdict.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/search-exclude-marker",
+    "sha": "7dce78f8bb805f4e646f9ff5305897797b051517",
+    "pr": "2234/merge",
+    "run": "37367478753"
+  }
+}
