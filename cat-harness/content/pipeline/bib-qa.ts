@@ -24,6 +24,7 @@ import { readFileSync, existsSync, readdirSync, writeFileSync } from "fs";
 import { resolve, join, extname, relative } from "path";
 import { references } from "./references-registry-di";
 import { findContentRepoRoot } from "./repo-root";
+import { readSourceLedger } from "../../schemas/bib-attestations";
 import type { Data as CSLData, Person as CSLPerson } from "csl-json";
 
 // Content repo root (was import-relative, which pointed at
@@ -379,10 +380,11 @@ interface VerificationEntry {
 }
 
 function loadVerifications(): Map<string, VerificationEntry> {
-  const path = join(folioDirOf(), "bib-qa-verifications.json");
-  if (!existsSync(path)) return new Map();
-  const raw = JSON.parse(readFileSync(path, "utf-8"));
-  const arr: (VerificationEntry & { id: string | null })[] = raw.entries ?? [];
+  // The ONE reader of the source ledger: the attestation store, or the legacy
+  // file while this folio's store has no `bib-verification` family. It says which.
+  const read = readSourceLedger(REPO_ROOT);
+  console.error(read.note);
+  const arr = read.ledger.entries as unknown as (VerificationEntry & { id: string | null })[];
   // Since the source-ledger migration (2026-08-08) the file also carries rows
   // for uploaded documents that back no reference yet; those have `id: null`
   // and would otherwise collide on a single null key.  Bib QA is per-
@@ -592,7 +594,7 @@ async function buildReport(): Promise<BibQAReport> {
         key: "verification_status",
         label: "Verification Status",
         status: "unchecked",
-        detail: "Not yet examined (no entry in bib-qa-verifications.json)",
+        detail: "Not yet examined (no entry in the source ledger)",
       });
     }
 
