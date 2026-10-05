@@ -524,6 +524,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 38,
     reads: "a lightbulb — an idea being argued, not yet a promise",
   },
+  "doc-group": {
+    // A folder holding lined pages — one named group of the docs graph's own
+    // pages (bean `xka5`). The docs family's tone: its pages ARE docs pages.
+    glyph: "M3 6h6l2 2h10v11H3zM7 12h10M7 15h7",
+    tone: 212,
+    reads: "a folder of pages — one named group of the documentation",
+  },
   requirements: {
     // A page with two ticked lines — what was agreed, each line checkable.
     // A proposal is MOVED here when its feature ships (issue #1164).

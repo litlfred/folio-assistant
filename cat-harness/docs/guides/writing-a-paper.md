@@ -53,7 +53,7 @@ Every step is something the LLM does *for you* by calling folio-assistant's MCP
 tools — you converse in natural language and approve the work. *Approve* is
 literal: steps 3–5 are a loop, and the assistant's edit is a **proposal** until
 you have seen the validation findings and accepted it. The
-[publication workflow](../publication-workflow.html) models that gate, and the
+[publication workflow](../process/publication-workflow.html) models that gate, and the
 review and release that follow, as BPMN swimlane diagrams.
 
 ---
@@ -63,9 +63,9 @@ review and release that follow, as BPMN swimlane diagrams.
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/before-you-start.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/before-you-start.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="before-you-start.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/before-you-start.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-paper/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" data-qa-family="translation" data-qa-key="before-you-start.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/before-you-start.translation.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-paper/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
-1. [Install folio-assistant](../installation.html) and run `bun run check-deps`.
+1. [Install folio-assistant](../start/installation.html) and run `bun run check-deps`.
    For papers you want `bun`, `latexmk`/`texlive`, and Lean (`elan`).
-2. [Connect your LLM harness](../installation.html#connecting-an-llm-harness)
+2. [Connect your LLM harness](../start/installation.html#connecting-an-llm-harness)
    (Claude Code, Antigravity, …) so the agent has the MCP tools.
 3. Create an (empty) content repository for your paper and add a
    `<name>.config.json` with `"contentType": "paper"`.
@@ -335,13 +335,13 @@ beans <id> --status resolved
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/where-to-go-deeper.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/where-to-go-deeper.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="where-to-go-deeper.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/where-to-go-deeper.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-paper/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" data-qa-family="translation" data-qa-key="where-to-go-deeper.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/where-to-go-deeper.translation.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-paper/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
-- [Content types — papers & books](../content-types.html#scientific-papers--books)
+- [Content types — papers & books](../concepts/content-types.html#scientific-papers--books)
 - Skill contracts:
   [`latex-authoring`](../reference/skills/latex-authoring.html),
   [`lean-formalization`](../reference/skills/lean-formalization.html),
   [`proof-verification`](../reference/skills/proof-verification.html)
 - [TypeScript API reference](../api/) — the block model in detail
-- [Architecture](../architecture.html) — how the paper adapter is wired
+- [Architecture](../concepts/architecture.html) — how the paper adapter is wired
 
 > **Note on the screenshots.** The images above are *mockups* illustrating the
 > chat-driven workflow and the viewer. Replace them with real screenshots from

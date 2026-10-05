@@ -60,7 +60,7 @@ const ROOT = HARNESS_ROOT;
 const REPO = repoRootFor(ROOT);
 const SITE = join(ROOT, siteDirFor(ROOT));
 const OUT = join(ROOT, subgraphOutDir(ROOT));
-const PAGE = join(ROOT, "content", "docs", "publication-workflow", "every-workflow-in-the-repo.md");
+const PAGE = join(ROOT, "content", "docs", "process-publication-workflow", "every-workflow-in-the-repo.md");
 
 type Doc = Record<string, unknown>;
 const list = (v: unknown): unknown[] => (v == null ? [] : Array.isArray(v) ? v : [v]);

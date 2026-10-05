@@ -1144,3 +1144,42 @@ test.describe("the avatar opens and closes the bar — owner, 2026-09-27", () =>
     await expect.poll(async () => (await page.locator(".side-bar").boundingBox())!.width).toBeLessThan(100);
   });
 });
+
+/* THE PAGES LIST IN THE READER'S ALPHABET — bean `xka5`. Owner, 2026-10-05:
+ * "(and alphebatization//locale depnenddent)". just-the-docs orders by a
+ * hand-kept `nav_order`; `sortNavByLocale` re-sorts each level with
+ * `Intl.Collator` in the page's `lang`. Swedish is the probe because it puts
+ * "Å" AFTER "Z" while English puts it beside "A" — one list, two orders. */
+test.describe("the Pages list is sorted in the page's own language (bean xka5)", () => {
+  const list =
+    '<nav class="site-nav"><ul class="nav-list">' +
+    `<li class="nav-list-item"><a class="nav-list-link" href="${BASEURL}/">Home</a></li>` +
+    '<li class="nav-list-item"><a class="nav-list-link" href="#z">Zebra</a></li>' +
+    '<li class="nav-list-item"><a class="nav-list-link" href="#aa">Ångström</a>' +
+    '<ul class="nav-list"><li class="nav-list-item"><a class="nav-list-link" href="#b">beta</a></li>' +
+    '<li class="nav-list-item"><a class="nav-list-link" href="#a">Alpha</a></li></ul></li>' +
+    '<li class="nav-list-item"><a class="nav-list-link" href="#ap">apple</a></li>' +
+    "</ul></nav>";
+  const order = (p: import("@playwright/test").Page) =>
+    p.locator(".side-bar .site-nav > ul.nav-list > li > a.nav-list-link").allTextContents();
+
+  for (const [lang, want] of [
+    ["en", ["Home", "Ångström", "apple", "Zebra"]],
+    ["sv", ["Home", "apple", "Zebra", "Ångström"]],
+  ] as const) {
+    test(`lang="${lang}": Home first, then the ${lang} collation, at every level`, async ({ page: p }) => {
+      const html = page(CUSTOM)
+        .replace('<nav class="site-nav"><a href="#">Navigation link</a></nav>', list)
+        .replace('<html lang="en">', `<html lang="${lang}">`);
+      const errors: string[] = [];
+      p.on("pageerror", (e) => errors.push(String(e)));
+      await p.route("http://navbar.fixture/**", (r) => r.fulfill({ contentType: "text/html", body: html }));
+      await p.goto("http://navbar.fixture/nav", { waitUntil: "load" });
+      expect(errors).toEqual([]);
+      expect((await order(p)).map((t) => t.trim())).toEqual([...want]);
+      // A nested level is sorted too: Alpha before beta, case ignored.
+      const nested = await p.locator(".side-bar .site-nav ul.nav-list ul.nav-list > li > a").allTextContents();
+      expect(nested.map((t) => t.trim())).toEqual(["Alpha", "beta"]);
+    });
+  }
+});

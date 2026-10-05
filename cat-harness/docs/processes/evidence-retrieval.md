@@ -19,7 +19,7 @@ Frame a question for a recommendation, retrieve and appraise evidence from trust
 
 - **Called by:** [Editing and HCI validation](editing-hci-validation.html)
 - **Calls:** none
-- **Presented on:** [Evidence for a recommendation — The subprocess](../evidence.html#the-subprocess)
+- **Presented on:** [Evidence for a recommendation — The subprocess](../process/evidence.html#the-subprocess)
 
 ## Lanes — who acts
 

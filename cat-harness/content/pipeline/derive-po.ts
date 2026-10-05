@@ -63,7 +63,7 @@
  *
  * **These numbers are measurements, not invariants, and each carries the tree it
  * was taken on for that reason.** They move when anyone edits a source page: hours
- * after the 10 above, `main` added two constructs to `docs/installation.md`,
+ * after the 10 above, `main` added two constructs to `docs/start/installation.md`,
  * `ar/installation` stopped aligning, and the pair became **9 / 16**. A test of
  * mine asserted the equality and CI failed it — correctly. The equality is gone;
  * what is asserted now is that alignment is partial and that no pair diverges by
