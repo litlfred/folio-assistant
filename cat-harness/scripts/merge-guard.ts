@@ -758,21 +758,59 @@ async function gh(url: string, init: RequestInit = {}, fetchImpl: typeof fetch =
   }
 }
 
+/**
+ * Why a GET failed, with GitHub's (or the proxy's) own `message` when the body
+ * carries one. The status alone hid the cause of issue #2137 for two days: the
+ * 403 body said in plain words which URL form to use instead.
+ */
+async function failure(url: string, r: Response): Promise<CannotAsk> {
+  let why = "";
+  try {
+    const m = ((await r.json()) as { message?: unknown }).message;
+    if (typeof m === "string" && m) why = ` — ${m}`;
+  } catch {
+    // no JSON body: the status is all there is
+  }
+  return new CannotAsk(`GET ${url}: HTTP ${r.status}${why}`);
+}
+
 async function getJson<T>(url: string, fetchImpl?: typeof fetch): Promise<T> {
   const r = await gh(url, {}, fetchImpl);
-  if (!r.ok) throw new CannotAsk(`GET ${url}: HTTP ${r.status}`);
+  if (!r.ok) throw await failure(url, r);
   return (await r.json()) as T;
 }
 
-/** Every page of a list endpoint, following `Link: rel="next"`. */
-async function getAll<T>(url: string, fetchImpl?: typeof fetch): Promise<T[]> {
+/**
+ * A `rel="next"` URL rewritten to the `repos/{owner}/{repo}/…` form of the
+ * walk's first URL.
+ *
+ * GitHub writes pagination links as `/repositories/<numeric id>/…`, and the
+ * Claude Code agent proxy refuses that form outright (HTTP 403, "Numeric-ID
+ * repository paths … are not supported through this proxy"), so page 2 of any
+ * long list failed from an agent session while page 1 — which we build — worked
+ * (issue #2137). The two forms name the same resource: the `next` link of a list
+ * under `repos/{owner}/{repo}/` is always into that same repository.
+ *
+ * Anything else — a `next` not in the numeric form, or a walk that did not start
+ * under `repos/{owner}/{repo}/` — is returned unchanged; if the proxy then
+ * refuses it, the caller's could-not-determine path reports it.
+ */
+export function sameRepoNext(next: string, start: string): string {
+  const repo = start.replace(/^https:\/\/api\.github\.com\//, "").match(/^repos\/([^/]+\/[^/?#]+)\//)?.[1];
+  const m = next.match(/^https:\/\/api\.github\.com\/repositories\/\d+\/(.*)$/);
+  return repo && m ? `https://api.github.com/repos/${repo}/${m[1]}` : next;
+}
+
+/** Every page of a list endpoint, following `Link: rel="next"` (normalised by {@link sameRepoNext}). */
+export async function getAll<T>(url: string, fetchImpl?: typeof fetch): Promise<T[]> {
   const out: T[] = [];
   let next: string | undefined = url;
   for (let page = 0; next && page < 20; page += 1) {
     const r = await gh(next, {}, fetchImpl);
-    if (!r.ok) throw new CannotAsk(`GET ${next}: HTTP ${r.status}`);
+    if (!r.ok) throw await failure(next, r);
     out.push(...((await r.json()) as T[]));
-    next = r.headers.get("link")?.match(/<([^>]+)>;\s*rel="next"/)?.[1];
+    const link = r.headers.get("link")?.match(/<([^>]+)>;\s*rel="next"/)?.[1];
+    next = link === undefined ? undefined : sameRepoNext(link, url);
   }
   return out;
 }
