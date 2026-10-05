@@ -265,11 +265,32 @@ export function droppedInMerge(root: string): DroppedPath[] {
   return droppedPaths(base, list("HEAD"), list("MERGE_HEAD"), git(root, "ls-files").split("\n").filter(Boolean));
 }
 
-/** Abort, restoring the tree, when the staged merge drops a path that neither side deleted. */
-function refuseDroppedFiles(root: string, abort: (why: string) => never): void {
-  const dropped = droppedInMerge(root);
+/**
+ * Which dropped paths to refuse, at one of the two points the guard runs.
+ *
+ * - `resolved`: after the conflict resolution and before anything is staged
+ *   with `add -A`. Only the resolvers have touched the index at this point,
+ *   and a resolver never has a reason to drop a path neither side deleted, so
+ *   EVERY dropped path is refused. This is where #1898's `git rm` would have
+ *   been caught.
+ * - `staged`: after the writers have run and `add -A` has staged their
+ *   output. A writer may delete what it owns: a content-addressed payload is
+ *   superseded when the merge changes its node, and the writer's own `:check`
+ *   proves the result. That was measured on this guard's first merge of main,
+ *   where `subgraph:jsonld` replaced a payload main had added. So only drops
+ *   still ON DISK are refused here. That is the 8j9e signature: the index lost
+ *   the path while the disk keeps it, and an ignored path is never restaged.
+ */
+export function refusable(dropped: readonly DroppedPath[], when: "resolved" | "staged", onDisk: (path: string) => boolean): DroppedPath[] {
+  return when === "resolved" ? [...dropped] : dropped.filter((d) => onDisk(d.path));
+}
+
+/** Abort, restoring the tree, when the merge drops a path that neither side deleted (see `refusable`). */
+function refuseDroppedFiles(root: string, abort: (why: string) => never, when: "resolved" | "staged"): void {
+  const onDisk = (p: string) => existsSync(join(root, p));
+  const dropped = refusable(droppedInMerge(root), when, onDisk);
   if (dropped.length) {
-    for (const d of dropped) console.log(droppedLine(d, existsSync(join(root, d.path))));
+    for (const d of dropped) console.log(droppedLine(d, onDisk(d.path)));
     abort(`${dropped.length} tracked path(s) would be dropped by this merge, and neither side deleted them (beans vsv7, 8j9e)`);
   }
 }
@@ -421,6 +442,9 @@ if (import.meta.main) {
       abort(`${c.path}: a hunk lies outside a generated region (authored text conflicts)`);
     }
   }
+  // Every resolver has now staged what it resolved, and nothing else has been
+  // staged yet: the index is the resolution alone. Beans vsv7, 8j9e.
+  refuseDroppedFiles(root, abort, "resolved");
 
   if (noRegen) {
     // Sync the submodule checkouts to the merged gitlinks BEFORE staging.
@@ -431,7 +455,7 @@ if (import.meta.main) {
     // (2026-10-04).
     syncSubmodules(root);
     git(root, "add", "-A");
-    refuseDroppedFiles(root, abort);
+    refuseDroppedFiles(root, abort, "staged");
     git(root, "commit", "-q", "--no-edit");
     console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern. NOT regenerated (--no-regen): run \`bun run regen\` once over the train.`);
     process.exit(0);
@@ -485,7 +509,7 @@ if (import.meta.main) {
     );
   }
   git(root, "add", "-A");
-  refuseDroppedFiles(root, abort);
+  refuseDroppedFiles(root, abort, "staged");
   git(root, "commit", "-q", "--no-edit");
   console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern, regenerated and proved.`);
 }

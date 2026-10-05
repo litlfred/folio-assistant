@@ -12,7 +12,7 @@ import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, 
 import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 
-import { droppedInMerge, droppedLine, droppedPaths, plan, resolutionFailure, resolveGitlink, stageGitlink, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
+import { droppedInMerge, droppedLine, droppedPaths, plan, refusable, resolutionFailure, resolveGitlink, stageGitlink, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
 import { parseLog } from "../merge-main-comment.js";
 import { plan as qaPlan } from "../qa-resolve-conflicts.ts";
 import { classify, PATTERNS, resolveGeneratedRegions } from "../merge-conflict-patterns.js";
@@ -508,6 +508,16 @@ describe("a merge never drops a path neither side deleted (beans vsv7, 8j9e)", (
   test("nothing dropped is an empty list, and the order is stable", () => {
     expect(droppedPaths(["a", "z"], ["z", "a"], ["a", "z"], ["a", "z"])).toEqual([]);
     expect(paths(droppedPaths(["a", "m", "z"], ["z", "a", "m"], ["m", "a", "z"], []))).toEqual(["a", "m", "z"]);
+  });
+
+  test("before staging every drop is refused; after the writers, only a drop the disk still holds", () => {
+    const dropped = [
+      { path: "payload/superseded", heldBy: "theirs" as const }, // a writer replaced it
+      { path: "results/x.json", heldBy: "both" as const }, // out of the index, still on disk
+    ];
+    const onDisk = (p: string) => p === "results/x.json";
+    expect(refusable(dropped, "resolved", onDisk)).toEqual(dropped);
+    expect(refusable(dropped, "staged", onDisk)).toEqual([dropped[1]!]);
   });
 
   test("the refusal line has the shape merge-main-comment reads, and says when the disk hides the loss", () => {
