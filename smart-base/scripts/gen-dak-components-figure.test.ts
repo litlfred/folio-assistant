@@ -1,5 +1,5 @@
 /**
- * Slide 3 of the living deck (`cat-harness/content/docs/harnessed-kg-overview/`):
+ * Slide 3 of the living deck (`cat-harness/content/docs/concepts-harnessed-kg-overview/`):
  * the ten DAK components, and the squares figure generated from them.
  *
  * Moved from `cat-harness/scripts/tests/harnessed-kg-overview.test.ts` in bean
@@ -17,7 +17,7 @@ import { join, resolve } from "node:path";
 import { DAK_COMPONENTS, DAK_UNFORMALIZED_COMPONENTS } from "../schemas/dak-kinds.ts";
 import { DAK_CARDS, DAK_FIGURE_PATH, renderDakComponentsSvg } from "./gen-dak-components-figure.ts";
 
-const DECK = resolve(import.meta.dir, "../../cat-harness/content/docs/harnessed-kg-overview");
+const DECK = resolve(import.meta.dir, "../../cat-harness/content/docs/concepts-harnessed-kg-overview");
 const read = (p: string) => readFileSync(p, "utf-8");
 
 describe("living deck slide 3: the DAK components", () => {

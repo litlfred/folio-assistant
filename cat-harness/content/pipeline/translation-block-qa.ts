@@ -489,7 +489,7 @@ function entry(
  * POT and this module does not get to dictate that:
  *
  *   - `docs/index.md` — instance-relative, no line;
- *   - `content/docs/crdm-methodology/overview.md:1` — instance-relative, line;
+ *   - `content/docs/process-crdm-methodology/overview.md:1` — instance-relative, line;
  *   - `agent-onboarding.md:10` — bare basename, line.
  *
  * So the line suffix is stripped, and then the reference's OWN SHAPE decides
@@ -791,7 +791,7 @@ function arg(name: string, fallback: string): string {
  *
  * ## Three exclusions, and each would be a wrong answer rather than a gap
  *
- * 1. **A GENERATED page.** `docs/crdm-methodology.md` is assembled from blocks
+ * 1. **A GENERATED page.** `docs/process/crdm-methodology.md` is assembled from blocks
  *    that carry their own translation verdicts, so sweeping the assembled page
  *    as well would measure the same prose twice and roll it up twice — a page
  *    reporting eight criteria where four were established. Detected by the

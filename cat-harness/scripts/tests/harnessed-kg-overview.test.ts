@@ -1,12 +1,12 @@
 /**
  * The living deck's alignment claims, re-checked against the KG — bean `scfh`.
  *
- * `docs/harnessed-kg-overview.md` says, slide by slide, where the 2026-09-30 snapshot
+ * `docs/concepts/harnessed-kg-overview.md` says, slide by slide, where the 2026-09-30 snapshot
  * agrees with the knowledge graph and where it does not. Those sentences are
  * the part of the page that goes stale silently: the deck they came from went
  * stale exactly that way, which is why the owner asked for a living one. So each
  * claim the page makes about the KG is asserted here. When one fails, the KG
- * moved: update the slide's note in `content/docs/harnessed-kg-overview/` and this test
+ * moved: update the slide's note in `content/docs/concepts-harnessed-kg-overview/` and this test
  * together. Do not relax the assertion alone.
  *
  * @module scripts/tests/harnessed-kg-overview
@@ -21,7 +21,7 @@ import { ownKgRoots, workflowFile } from "../known-skills.ts";
 
 const H = resolve(import.meta.dir, "../..");
 const REPO = resolve(H, "..");
-const DECK = join(H, "content/docs/harnessed-kg-overview");
+const DECK = join(H, "content/docs/concepts-harnessed-kg-overview");
 /** The published site root, from the declaration — never a literal. */
 const SITE = join(H, siteDirFor(H));
 const read = (p: string) => readFileSync(p, "utf-8");
@@ -47,7 +47,7 @@ function skillFile(name: string): string {
 
 describe("living deck: every claim about the KG still holds", () => {
   test("slide 1 — the layers page lists all five SMART layers", () => {
-    const t = read(join(H, "content/docs/fhir-content/the-three-layers.md"));
+    const t = read(join(H, "content/docs/fhir-fhir-content/the-three-layers.md"));
     for (const l of ["**L1** Narrative", "**L2** Operational", "**L3** Machine readable", "L4 Executable", "L5 Dynamic"]) {
       expect(t).toContain(l);
     }

@@ -148,8 +148,8 @@ export interface SubgraphReport {
    * DIFFERENT from `exempt`, which drops a retired directory wholesale. This
    * keeps the directory in scope and routes one class of link out of
    * `dangling`: a renderable graph addresses the PUBLISHED tree, so
-   * `docs/architecture.md -> api/` names a directory the docs build
-   * generates and `docs/skills.md -> ...migration.html` names a page Jekyll
+   * `docs/concepts/architecture.md -> api/` names a directory the docs build
+   * generates and `docs/concepts/skills.md -> ...migration.html` names a page Jekyll
    * renders. Neither is a file here and neither is broken.
    *
    * **Counted and printed, never asserted, and the number is why.** Declaring
@@ -271,7 +271,7 @@ function linkTargets(raw: string): string[] {
  * Resolve a link target in the SOURCE tree, or `undefined`.
  *
  * A `.html` target is a RENDERED PAGE, not a file here: jekyll builds
- * `docs/skills.html` from `docs/skills.md`. Testing the `.html` on disk
+ * `docs/skills.html` from `docs/concepts/skills.md`. Testing the `.html` on disk
  * reports every correct site link as broken, and the first triage (bean
  * `rl3h`) hit exactly that. Resolving to the source tells a page with a
  * source apart from one that genuinely does not exist; skipping `.html`

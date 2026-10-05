@@ -1,4 +1,4 @@
-# Russian translation of folio-assistant publication-workflow (docs/publication-workflow.md)
+# Russian translation of folio-assistant publication-workflow (docs/process/publication-workflow.md)
 # Copyright (C) 2026 folio-assistant contributors
 # This file is distributed under the same license as the folio-assistant package.
 #
@@ -21,695 +21,695 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: docs/publication-workflow.md:13
+#: docs/process/publication-workflow.md:13
 msgid "Publication workflow"
 msgstr "Рабочий процесс публикации"
 
-#: docs/publication-workflow.md:18
+#: docs/process/publication-workflow.md:18
 msgid "On this page"
 msgstr "На этой странице"
 
-#: docs/publication-workflow.md:25
+#: docs/process/publication-workflow.md:25
 msgid "This page is generated from  — each section below links to its own source."
 msgstr "Эта страница сгенерирована из  — каждый раздел ниже ссылается на собственный исходный файл."
 
-#: docs/publication-workflow.md:29
+#: docs/process/publication-workflow.md:29
 msgid "How a change gets from an editor had an idea to the folio is officially published — expressed as BPMN 2.0 swimlane diagrams, with the roles, the validation gate, the skills, and the shared work plan all named."
 msgstr "Путь изменения от момента «у редактора появилась идея» до момента «фолио официально опубликовано» — представленный в виде BPMN 2.0 диаграмм с дорожками, с указанием ролей, шлюза валидации, навыков и общего плана работы."
 
-#: docs/publication-workflow.md:35
+#: docs/process/publication-workflow.md:35
 msgid "Every workflow in the repo"
 msgstr "Все рабочие процессы в репозитории"
 
-#: docs/publication-workflow.md:91
+#: docs/process/publication-workflow.md:91
 msgid "Diagram"
 msgstr "Диаграмма"
 
-#: docs/publication-workflow.md:319
+#: docs/process/publication-workflow.md:319
 msgid "They also run"
 msgstr "Они также исполняются"
 
-#: docs/publication-workflow.md:324
+#: docs/process/publication-workflow.md:324
 msgid "Since bean  these files are not only pictures. The MCP server interprets them:  opens an instance for a subject,  reports what is enabled now — with the lane that performs it and the skill that implements it — and  refuses a step the process has not reached.  cannot be reported done before the editor's decision is recorded, because there is no token on it until then."
 msgstr "Начиная с bean , эти файлы перестали быть просто иллюстрациями. MCP-сервер интерпретирует их:  открывает экземпляр для субъекта,  сообщает, что доступно сейчас — с указанием дорожки, которая выполняет действие, и навыка, который его реализует, — а  отклоняет шаг, до которого процесс еще не дошел. Действие  не может быть помечено как выполненное до того, как решение редактора будет зафиксировано, поскольку до этого момента на нем нет токена выполнения."
 
-#: docs/publication-workflow.md:331
+#: docs/process/publication-workflow.md:331
 msgid "That is ordering, not enforcement: nothing yet stops an agent calling a capability tool directly. The case for making it binding — and the argument that the commit boundary is the right place — is in Proposal: workflow orchestration."
 msgstr "Это упорядочивание, а не принудительное ограничение: пока ничто не мешает агенту вызвать инструмент напрямую. Обоснование того, почему эти правила должны стать обязательными — и аргумент в пользу того, что граница коммита является правильным местом для этого — изложены в Предложение: оркестрация рабочих процессов."
 
-#: docs/publication-workflow.md:336
+#: docs/process/publication-workflow.md:336
 msgid "Some decisions are computed, not judged"
 msgstr "Некоторые решения вычисляются, а не принимаются на основе суждения"
 
-#: docs/publication-workflow.md:341
+#: docs/process/publication-workflow.md:341
 msgid "Ten exclusive gateways sit across the six diagrams, and they are not all the same kind of question.  is the editor's call.  is arithmetic over  and ."
 msgstr "Десять исключающих шлюзов распределены по шести диаграммам, и они представляют собой совершенно разные виды вопросов.  (Принять, доработать или отклонить?) — это решение редактора.  (Сборка прошла успешно, нет неразрешенных 'sorry'?) — это арифметика над  и ."
 
-#: docs/publication-workflow.md:345
+#: docs/process/publication-workflow.md:345
 msgid "A gateway carrying  has its outcome computed from a DMN decision table under . The agent supplies facts —  — and the table returns the branch;  refuses a hand-supplied outcome there, and records which rule fired."
 msgstr "Шлюз, содержащий , вычисляет свой исход на основе таблицы решений DMN в каталоге . Агент предоставляет факты — , — а таблица возвращает ветку;  отклоняет переданный вручную исход и фиксирует, какое именно правило сработало."
 
-#: docs/publication-workflow.md:352
+#: docs/process/publication-workflow.md:352
 msgid "Gateway"
 msgstr "Шлюз"
 
-#: docs/publication-workflow.md:352
+#: docs/process/publication-workflow.md:352
 msgid "Table"
 msgstr "Таблица"
 
-#: docs/publication-workflow.md:352
+#: docs/process/publication-workflow.md:352
 msgid "Reads"
 msgstr "Считываемые параметры"
 
-#: docs/publication-workflow.md:357
+#: docs/process/publication-workflow.md:357
 msgid "and  are equally mechanical and equally deserve tables — they wait on a WHO/FHIR adapter, because a table keyed to facts no tool emits looks authoritative and is not."
 msgstr "и  столь же механистичны и в равной степени заслуживают таблиц — они ожидают адаптера ВОЗ/FHIR, поскольку таблица, привязанная к фактам, которые не выдает ни один инструмент, выглядит авторитетно, но таковой не является."
 
-#: docs/publication-workflow.md:361
+#: docs/process/publication-workflow.md:361
 msgid "The base processes are strict"
 msgstr "Базовые процессы являются строгими"
 
-#: docs/publication-workflow.md:366
+#: docs/process/publication-workflow.md:366
 msgid "The three content-agnostic diagrams — editing, draft-to-publication, lifecycle — carry .  refuses a step they have not reached. The three per-content-type diagrams are , because what counts as adequate review of a Lean proof and of a FHIR profile are different questions, and the package that knows the domain should answer them."
 msgstr "Три независимые от контента диаграммы — редактирование, черновик-публикация, жизненный цикл — содержат .  отклоняет шаг, которого они еще не достигли. Три диаграммы для конкретных типов контента имеют статус  (рекомендательные), поскольку то, что считается адекватным рецензированием доказательства Lean и профиля FHIR — это разные вопросы, и отвечать на них должен пакет, знающий соответствующую предметную область."
 
-#: docs/publication-workflow.md:372
+#: docs/process/publication-workflow.md:372
 msgid "A content package may relax a base step by declaring it in  with a reason — an unexplained relaxation does not load, so the file is the record of what was waived and why. Five steps refuse to be relaxed at all: ,  and  (the editor seeing the findings, the decision, the write), plus  and  (the  SHALL). If those were negotiable the base would not be strict, it would be a suggestion."
 msgstr "Пакет контента может смягчить базовый шаг, объявив это в  с указанием причины — необоснованное смягчение не загружается, поэтому файл служит протоколом того, от чего отказались и почему. Пять шагов категорически не допускают смягчения: ,  и  (редактор знакомится с замечаниями, принятие решения, запись), а также  и  (требование SHALL правила ). Если бы они подлежали обсуждению, основа не была бы строгой — она была бы просто пожеланием."
 
-#: docs/publication-workflow.md:381
+#: docs/process/publication-workflow.md:381
 msgid "lists the policy and validates every relaxation; it runs in CI, so one that has stopped applying is a build failure rather than a discovery on the day it is needed."
 msgstr "выводит список политик и проверяет каждое смягчение; эта проверка выполняется в CI, поэтому смягчение, переставшее действовать — это сбой сборки, а не открытие в день, когда оно потребуется."
 
-#: docs/publication-workflow.md:385
+#: docs/process/publication-workflow.md:385
 msgid "The commit boundary is where this is enforced rather than merely answerable. , run in the folio repo from a pre-commit hook or CI, refuses a changed content block that no instance records the editor having authorised.  answers an agent that asks; the hook does not depend on anyone asking."
 msgstr "Граница коммита — это место, где данное требование принудительно исполняется, а не просто ожидает ответа. Скрипт , запускаемый в репозитории фолио из pre-commit хука или CI, отклоняет измененный блок контента, для которого ни один экземпляр не фиксирует авторизацию редактором.  отвечает агенту, который задает вопрос; хук не зависит от того, задает ли кто-либо вопросы."
 
-#: docs/publication-workflow.md:396
+#: docs/process/publication-workflow.md:396
 msgid "How to read them"
 msgstr "Как их читать"
 
-#: docs/publication-workflow.md:401
+#: docs/process/publication-workflow.md:401
 msgid "A lane is a role. Every lane maps to an actor in  — see Who is who."
 msgstr "Дорожка — это роль. Каждая дорожка сопоставляется с актором в  — см. раздел Кто есть кто."
 
-#: docs/publication-workflow.md:404
+#: docs/process/publication-workflow.md:404
 msgid "under an activity is the folio-assistant skill that implements it. The same reference is carried machine-readably as a  extension element on the BPMN activity."
 msgstr "под действием обозначает навык folio-assistant, который его реализует. Та же ссылка передается в машиночитаемом виде как элемент расширения  для действия BPMN."
 
-#: docs/publication-workflow.md:407
+#: docs/process/publication-workflow.md:407
 msgid "The \"Work plan — beans\" lane is the shared to-do store. Steps in that lane read and write , and are marked  in the source."
 msgstr "Дорожка «План работы — beans» (Work plan — beans) — это общее хранилище задач. Шаги в этой дорожке выполняют чтение и запись в  и помечены как  в исходном коде."
 
-#: docs/publication-workflow.md:410
+#: docs/process/publication-workflow.md:410
 msgid "A thick-bordered box is a call activity — it expands into another diagram on this page."
 msgstr "Прямоугольник с жирной рамкой — это действие-вызов (call activity) — оно разворачивается в другую диаграмму на этой странице."
 
-#: docs/publication-workflow.md:415
+#: docs/process/publication-workflow.md:415
 msgid "Editing and the HCI validation gate"
 msgstr "Редактирование и шлюз валидации HCI"
 
-#: docs/publication-workflow.md:420
+#: docs/process/publication-workflow.md:420
 msgid "This is the diagram that matters most day to day: one proposed change to one content block."
 msgstr "Это диаграмма, которая имеет наибольшее значение в повседневной работе: одно предлагаемое изменение в одном блоке контента."
 
-#: docs/publication-workflow.md:428
+#: docs/process/publication-workflow.md:428
 msgid "Open the BPMN source{: .btn .btn-outline }"
 msgstr "Открыть исходный код BPMN{: .btn .btn-outline }"
 
-#: docs/publication-workflow.md:430
+#: docs/process/publication-workflow.md:430
 msgid "The one rule this diagram exists to state"
 msgstr "Единственное правило, ради которого создана эта диаграмма"
 
-#: docs/publication-workflow.md:435
+#: docs/process/publication-workflow.md:435
 msgid "Nothing reaches the corpus before the editor has seen the findings. The authoring agent produces a proposed change, not a commit. That proposal fans out through the HCI validation pipeline, the results are collated into one report, and the editor decides — accept, revise, or discard. The  activity sits after that decision, in its own lane, and is the only step that writes content."
 msgstr "Ничто не попадает в корпус до того, как редактор ознакомится с замечаниями. Агент создания контента формирует предлагаемое изменение, а не коммит. Это предложение параллельно проходит через конвейер валидации HCI, результаты объединяются в единый отчет, и редактор принимает решение: принять, доработать или отклонить. Действие  расположено после этого решения, на собственной дорожке, и является единственным шагом, выполняющим запись контента."
 
-#: docs/publication-workflow.md:442
+#: docs/process/publication-workflow.md:442
 msgid "Mechanical vs non-mechanical validation"
 msgstr "Механическая и немеханическая валидация"
 
-#: docs/publication-workflow.md:447
+#: docs/process/publication-workflow.md:447
 msgid "The parallel gateway splits the pipeline in two, and the split is the point:"
 msgstr "Параллельный шлюз делит конвейер на две ветки, и это разделение принципиально:"
 
-#: docs/publication-workflow.md:449
+#: docs/process/publication-workflow.md:449
 msgid "Mechanical validation — anything a machine can settle on its own, with a reproducible verdict: block schema and constraint rules, label prefixes, syntax, spelling, cross-references and citation resolution, Lean build and proof status, LaTeX compilation, FHIR/SUSHI validation, QA axes. No judgement, no negotiation; it passes or it does not."
 msgstr "Механическая валидация — всё, что машина может разрешить самостоятельно с воспроизводимым вердиктом: схема блоков и правила ограничений, префиксы меток, синтаксис, орфография, разрешение перекрестных ссылок и цитат, сборка Lean и статус доказательств, компиляция LaTeX, валидация FHIR/SUSHI, оси QA. Никаких суждений, никаких переговоров: проверка либо пройдена, либо нет."
 
-#: docs/publication-workflow.md:454
+#: docs/process/publication-workflow.md:454
 msgid "Non-mechanical validation — everything that needs judgement: is the claim accurate, does the prose keep the folio's voice, does the change actually say what the editor meant. A review agent handles the routine cases; anything turning on clinical or scientific judgement escalates to a human reviewer or SME. Both branches are the same stage of the pipeline — the reviewer being a person or an agent changes who answers, not where the answer goes."
 msgstr "Немеханическая валидация — всё, что требует экспертного суждения: точно ли утверждение, сохраняет ли текст стилистический голос фолио, действительно ли изменение выражает то, что имел в виду редактор. Агент рецензирования обрабатывает типовые случаи; всё, что требует клинического или научного суждения, эскалируется человеку-рецензенту или профильному эксперту (SME). Обе ветки представляют собой один и тот же этап конвейера: то, является ли рецензент человеком или агентом, меняет лишь того, кто отвечает, а не то, куда направляется ответ."
 
-#: docs/publication-workflow.md:461
+#: docs/process/publication-workflow.md:461
 msgid "Both branches must report before the join. A green mechanical run does not excuse a missing review, and a clean review does not excuse a red build."
 msgstr "Обе ветки должны предоставить отчет до точки слияния. Успешный механический прогон не оправдывает отсутствия рецензирования, а положительное рецензирование не оправдывает сбойной сборки."
 
-#: docs/publication-workflow.md:464
+#: docs/process/publication-workflow.md:464
 msgid "Activities and the skills that implement them"
 msgstr "Действия и навыки, которые их реализуют"
 
-#: docs/publication-workflow.md:469
+#: docs/process/publication-workflow.md:469
 msgid "Activity"
 msgstr "Действие"
 
-#: docs/publication-workflow.md:469
+#: docs/process/publication-workflow.md:469
 msgid "Lane"
 msgstr "Дорожка"
 
-#: docs/publication-workflow.md:469
+#: docs/process/publication-workflow.md:469
 msgid "Skill"
 msgstr "Навык"
 
-#: docs/publication-workflow.md:471
+#: docs/process/publication-workflow.md:471
 msgid "Describe the intended change"
 msgstr "Описание предполагаемого изменения"
 
-#: docs/publication-workflow.md:471
+#: docs/process/publication-workflow.md:471
 msgid "Editor / author"
 msgstr "Редактор / автор"
 
-#: docs/publication-workflow.md:471
+#: docs/process/publication-workflow.md:471
 msgid "— (human)"
 msgstr "— (человек)"
 
-#: docs/publication-workflow.md:472
+#: docs/process/publication-workflow.md:472
 msgid "Claim or open the bean"
 msgstr "Резервирование или создание bean"
 
-#: docs/publication-workflow.md:472
+#: docs/process/publication-workflow.md:472
 msgid "Work plan"
 msgstr "План работы"
 
-#: docs/publication-workflow.md:473
+#: docs/process/publication-workflow.md:473
 msgid "Draft the block edit"
 msgstr "Подготовка черновика изменения блока"
 
-#: docs/publication-workflow.md:473
+#: docs/process/publication-workflow.md:473
 msgid "Authoring agent"
 msgstr "Агент создания контента"
 
-#: docs/publication-workflow.md:474
+#: docs/process/publication-workflow.md:474
 msgid "Schema and constraint checks"
 msgstr "Проверки схемы и ограничений"
 
-#: docs/publication-workflow.md:474
+#: docs/process/publication-workflow.md:474
 msgid "Mechanical validation"
 msgstr "Механическая валидация"
 
-#: docs/publication-workflow.md:475
+#: docs/process/publication-workflow.md:475
 msgid "Syntax, spelling and links"
 msgstr "Синтаксис, орфография и ссылки"
 
-#: docs/publication-workflow.md:476
+#: docs/process/publication-workflow.md:476
 msgid "Build and QA gates"
 msgstr "Рубежи сборки и QA"
 
-#: docs/publication-workflow.md:477
+#: docs/process/publication-workflow.md:477
 msgid "Agent review of the change"
 msgstr "Рецензирование изменения агентом"
 
-#: docs/publication-workflow.md:477
+#: docs/process/publication-workflow.md:477
 msgid "Non-mechanical validation"
 msgstr "Немеханическая валидация"
 
-#: docs/publication-workflow.md:478
+#: docs/process/publication-workflow.md:478
 msgid "Human / SME review"
 msgstr "Рецензирование человеком / экспертом (SME)"
 
-#: docs/publication-workflow.md:479
+#: docs/process/publication-workflow.md:479
 msgid "Collate findings into a report"
 msgstr "Сведение замечаний в отчет"
 
-#: docs/publication-workflow.md:479
+#: docs/process/publication-workflow.md:479
 msgid "HCI validation pipeline"
 msgstr "Конвейер валидации HCI"
 
-#: docs/publication-workflow.md:479
+#: docs/process/publication-workflow.md:479
 msgid "— (pipeline)"
 msgstr "— (конвейер)"
 
-#: docs/publication-workflow.md:480
+#: docs/process/publication-workflow.md:480
 msgid "Log findings on the bean"
 msgstr "Фиксация замечаний в bean"
 
-#: docs/publication-workflow.md:481
+#: docs/process/publication-workflow.md:481
 msgid "Review the findings"
 msgstr "Ознакомление с замечаниями"
 
-#: docs/publication-workflow.md:481
+#: docs/process/publication-workflow.md:481
 msgid "— (human — this is the gate)"
 msgstr "— (человек — это контрольный рубеж)"
 
-#: docs/publication-workflow.md:482
+#: docs/process/publication-workflow.md:482
 msgid "Revise the proposed change"
 msgstr "Доработка предлагаемого изменения"
 
-#: docs/publication-workflow.md:483
+#: docs/process/publication-workflow.md:483
 msgid "Commit into the corpus"
 msgstr "Фиксация в корпусе (Commit)"
 
-#: docs/publication-workflow.md:483
+#: docs/process/publication-workflow.md:483
 msgid "Corpus"
 msgstr "Корпус"
 
-#: docs/publication-workflow.md:483
+#: docs/process/publication-workflow.md:483
 msgid "— (subject to the  requirement)"
 msgstr "— (при условии соблюдения требования )"
 
-#: docs/publication-workflow.md:484
+#: docs/process/publication-workflow.md:484
 msgid "Resolve or re-open the bean"
 msgstr "Закрытие или повторное открытие bean"
 
-#: docs/publication-workflow.md:486
+#: docs/process/publication-workflow.md:486
 msgid "The domain-specific checks hang off  /  by content type:  and  for papers,  and  for IGs,  for rendering."
 msgstr "Специфичные для предметной области проверки зависят от  /  в соответствии с типом контента:  и  для научных статей,  и  для руководств по внедрению (IG),  для рендеринга."
 
-#: docs/publication-workflow.md:496
+#: docs/process/publication-workflow.md:496
 msgid "From corpus to published folio"
 msgstr "От корпуса к опубликованному фолио"
 
-#: docs/publication-workflow.md:501
+#: docs/process/publication-workflow.md:501
 msgid "The corpus is not the publication. A draft is built from it, reviewed as a whole by the review team, and only then released."
 msgstr "Корпус — это еще не публикация. Из него собирается черновик, рецензируется как единое целое группой рецензентов и только после этого выпускается."
 
-#: docs/publication-workflow.md:511
+#: docs/process/publication-workflow.md:511
 msgid "Three things to note:"
 msgstr "Три момента, на которые следует обратить внимание:"
 
-#: docs/publication-workflow.md:513
+#: docs/process/publication-workflow.md:513
 msgid "A red draft is fixed in the editing process, not in the artifact. The  branch off  goes back through the editing call activity — which means back through the HCI validation gate. Nobody patches a built PDF or a generated IG."
 msgstr "Сбойный черновик исправляется в процессе редактирования, а не в самом артефакте. Ветка  от шлюза  возвращается через действие-вызов редактирования — а это значит, обратно через шлюз валидации HCI. Никто не вносит исправления напрямую в собранный PDF или сгенерированное руководство IG."
 
-#: docs/publication-workflow.md:517
+#: docs/process/publication-workflow.md:517
 msgid "Review is parallel, and both halves must land. The review team (content reviewer, QC reviewer, technical officer) reviews the draft as a publication; the clinical or scientific SMEs sign off on the domain content. The join waits for both."
 msgstr "Рецензирование идет параллельно, и обе половины должны завершиться. Группа рецензирования (рецензент контента, рецензент контроля качества QC, технический специалист) рецензирует черновик как публикацию; клинические или научные эксперты (SME) утверждают предметный контент. Точка слияния ожидает результатов от обеих сторон."
 
-#: docs/publication-workflow.md:521
+#: docs/process/publication-workflow.md:521
 msgid "Change requests become beans. A  outcome does not evaporate into a review thread — each request is opened as a bean, so whoever picks the work up next (human or agent) sees exactly what review asked for."
 msgstr "Запросы на изменение становятся beans. Результат  (требуются изменения) не растворяется в ветке обсуждения — каждый запрос открывается как отдельный bean, благодаря чему тот, кто возьмет работу следующим (человек или агент), точно видит, чего потребовали при рецензировании."
 
-#: docs/publication-workflow.md:528
+#: docs/process/publication-workflow.md:528
 msgid "Open or claim the release bean"
 msgstr "Открытие или резервирование bean релиза"
 
-#: docs/publication-workflow.md:529
+#: docs/process/publication-workflow.md:529
 msgid "Build the draft publication"
 msgstr "Сборка черновика публикации"
 
-#: docs/publication-workflow.md:529
+#: docs/process/publication-workflow.md:529
 msgid "Corpus + build pipeline"
 msgstr "Корпус + конвейер сборки"
 
-#: docs/publication-workflow.md:530
+#: docs/process/publication-workflow.md:530
 msgid "Run publication QA gates"
 msgstr "Выполнение контрольных рубежей QA публикации"
 
-#: docs/publication-workflow.md:531
+#: docs/process/publication-workflow.md:531
 msgid "Editing and HCI validation"
 msgstr "Редактирование и валидация HCI"
 
-#: docs/publication-workflow.md:531
+#: docs/process/publication-workflow.md:531
 msgid "Editors + authoring agents"
 msgstr "Редакторы + агенты создания контента"
 
-#: docs/publication-workflow.md:531
+#: docs/process/publication-workflow.md:531
 msgid "call activity → diagram 3"
 msgstr "действие-вызов → диаграмма 3"
 
-#: docs/publication-workflow.md:532
+#: docs/process/publication-workflow.md:532
 msgid "Circulate the draft"
 msgstr "Распространение черновика"
 
-#: docs/publication-workflow.md:532
+#: docs/process/publication-workflow.md:532
 msgid "Publication manager"
 msgstr "Менеджер публикации"
 
-#: docs/publication-workflow.md:533
+#: docs/process/publication-workflow.md:533
 msgid "Review the draft publication"
 msgstr "Рецензирование черновика публикации"
 
-#: docs/publication-workflow.md:533
+#: docs/process/publication-workflow.md:533
 msgid "Review team"
 msgstr "Группа рецензирования"
 
-#: docs/publication-workflow.md:534
+#: docs/process/publication-workflow.md:534
 msgid "Clinical / scientific sign-off"
 msgstr "Клиническое / научное утверждение"
 
-#: docs/publication-workflow.md:534
+#: docs/process/publication-workflow.md:534
 msgid "SMEs"
 msgstr "Профильные эксперты (SME)"
 
-#: docs/publication-workflow.md:535
+#: docs/process/publication-workflow.md:535
 msgid "Open beans for the change requests"
 msgstr "Создание beans для запросов на изменение"
 
-#: docs/publication-workflow.md:536
+#: docs/process/publication-workflow.md:536
 msgid "Authorise the release"
 msgstr "Авторизация выпуска"
 
-#: docs/publication-workflow.md:536
+#: docs/process/publication-workflow.md:536
 msgid "Programme manager"
 msgstr "Руководитель программы"
 
-#: docs/publication-workflow.md:537
+#: docs/process/publication-workflow.md:537
 msgid "Version, tag and publish"
 msgstr "Присвоение версии, тегирование и публикация"
 
-#: docs/publication-workflow.md:538
+#: docs/process/publication-workflow.md:538
 msgid "Close the release beans"
 msgstr "Закрытие beans релиза"
 
-#: docs/publication-workflow.md:540
+#: docs/process/publication-workflow.md:540
 msgid "This diagram implements the  phase gates — , , ,  — see ."
 msgstr "Эта диаграмма реализует фазовые рубежи требования  — , , ,  — см. ."
 
-#: docs/publication-workflow.md:547
+#: docs/process/publication-workflow.md:547
 msgid "Content lifecycle overview"
 msgstr "Обзор жизненного цикла контента"
 
-#: docs/publication-workflow.md:552
+#: docs/process/publication-workflow.md:552
 msgid "One cycle of a folio, plan to retire. Both diagrams above appear here as call activities."
 msgstr "Один цикл фолио, от планирования до вывода из эксплуатации. Обе диаграммы выше представлены здесь как действия-вызовы."
 
-#: docs/publication-workflow.md:562
+#: docs/process/publication-workflow.md:562
 msgid "This is the same lifecycle as the linear plan → author → validate → review → test → publish → feedback → retire strip, with the actors and the loops made explicit. Note that  runs once per proposed change, not once per cycle — the linear strip flattens that."
 msgstr "Это тот же самый жизненный цикл, что и линейная цепочка plan → author → validate → review → test → publish → feedback → retire, но с явно показанными действующими лицами и циклами обратной связи. Обратите внимание, что  выполняется один раз на каждое предлагаемое изменение, а не один раз за цикл — линейная схема это сглаживает."
 
-#: docs/publication-workflow.md:570
+#: docs/process/publication-workflow.md:570
 msgid "The work plan — tasks as beans"
 msgstr "План работы — задачи в виде beans"
 
-#: docs/publication-workflow.md:575
+#: docs/process/publication-workflow.md:575
 msgid "Every diagram has a Work plan lane, and it is not decoration. Editing work is tracked as beans (hmans/beans) in a committed  directory, which makes it the one place where a human and an agent see the same answer to what is done, and what is next."
 msgstr "На каждой диаграмме присутствует дорожка План работы (Work plan), и это не просто декорация. Работа по редактированию отслеживается в виде beans (hmans/beans) в коммитируемом каталоге , что делает его единственным местом, где человек и агент видят одинаковый ответ на вопрос: что сделано и что дальше."
 
-#: docs/publication-workflow.md:580
+#: docs/process/publication-workflow.md:580
 msgid "Where in the workflow"
 msgstr "Место в рабочем процессе"
 
-#: docs/publication-workflow.md:580
+#: docs/process/publication-workflow.md:580
 msgid "What happens to the work plan"
 msgstr "Что происходит с планом работы"
 
-#: docs/publication-workflow.md:582
+#: docs/process/publication-workflow.md:582
 msgid "Plan is agreed"
 msgstr "План согласован"
 
-#: docs/publication-workflow.md:582
+#: docs/process/publication-workflow.md:582
 msgid "The plan is seeded as beans"
 msgstr "План первично наполняется задачами в виде beans"
 
-#: docs/publication-workflow.md:583
+#: docs/process/publication-workflow.md:583
 msgid "An edit starts"
 msgstr "Начинается редактирование"
 
-#: docs/publication-workflow.md:583
+#: docs/process/publication-workflow.md:583
 msgid "The bean is claimed () before any drafting"
 msgstr "Bean резервируется () до начала подготовки черновика"
 
-#: docs/publication-workflow.md:584
+#: docs/process/publication-workflow.md:584
 msgid "Validation reports"
 msgstr "Валидация выдает отчет"
 
-#: docs/publication-workflow.md:584
+#: docs/process/publication-workflow.md:584
 msgid "Findings are appended to the bean"
 msgstr "Замечания добавляются к bean"
 
-#: docs/publication-workflow.md:585
+#: docs/process/publication-workflow.md:585
 msgid "The change is committed"
 msgstr "Изменение фиксируется (коммит)"
 
-#: docs/publication-workflow.md:585
+#: docs/process/publication-workflow.md:585
 msgid "The bean is resolved — or left open with what is still outstanding"
 msgstr "Bean закрывается (resolve) — либо остается открытым с указанием нерешенных вопросов"
 
-#: docs/publication-workflow.md:586
+#: docs/process/publication-workflow.md:586
 msgid "Review requests changes"
 msgstr "Рецензенты запрашивают изменения"
 
-#: docs/publication-workflow.md:586
+#: docs/process/publication-workflow.md:586
 msgid "Each request is opened as its own bean"
 msgstr "Каждый запрос открывается как отдельный bean"
 
-#: docs/publication-workflow.md:587
+#: docs/process/publication-workflow.md:587
 msgid "A release ships"
 msgstr "Релиз выпущен"
 
-#: docs/publication-workflow.md:587
+#: docs/process/publication-workflow.md:587
 msgid "Shipped work is closed; what slipped stays open into the next cycle"
 msgstr "Выполненная работа закрывается; перенесенные задачи остаются открытыми на следующий цикл"
 
-#: docs/publication-workflow.md:589
+#: docs/process/publication-workflow.md:589
 msgid "Why it is modelled as a lane rather than a note:"
 msgstr "Почему это смоделировано как дорожка, а не просто примечание:"
 
-#: docs/publication-workflow.md:591
+#: docs/process/publication-workflow.md:591
 msgid "It is shared state, not session state.  is committed, so the plan survives a resumed session and is visible to sibling agents working other branches. An agent's ephemeral in-memory to-do list is not."
 msgstr "Это общее состояние, а не состояние сессии. Каталог  коммитится в git, поэтому план сохраняется при возобновлении сессии и виден соседним агентам, работающим в других ветках. Эфемерный список задач агента в оперативной памяти этим свойством не обладает."
 
-#: docs/publication-workflow.md:594
+#: docs/process/publication-workflow.md:594
 msgid "Claiming is how two workers avoid the same item. Claim before you work, and never resolve someone else's bean."
 msgstr "Резервирование (claiming) предотвращает взятие одной и той же задачи двумя исполнителями. Зарезервируйте bean перед началом работы и никогда не закрывайте чужой bean."
 
-#: docs/publication-workflow.md:596
+#: docs/process/publication-workflow.md:596
 msgid "is not idempotent. Check for an existing bean by exact title before creating one — the guard, and the incident that motivates it, are in ."
 msgstr "Команда  не идемпотентна. Проверяйте наличие существующего bean по точному заголовку перед созданием нового — защитный механизм и инцидент, послуживший поводом для него, описаны в ."
 
-#: docs/publication-workflow.md:600
+#: docs/process/publication-workflow.md:600
 msgid "Beans are not sidecars. Machine-generated queues (QA , witness files, watcher queues) stay bulk JSON; they never become beans."
 msgstr "Beans — это не вспомогательные файлы (sidecars). Автоматически генерируемые очереди (файлы QA , файлы-свидетели, очереди наблюдателей) остаются обычным JSON; они никогда не превращаются в beans."
 
-#: docs/publication-workflow.md:605
+#: docs/process/publication-workflow.md:605
 msgid "Who is who"
 msgstr "Кто есть кто"
 
-#: docs/publication-workflow.md:610
+#: docs/process/publication-workflow.md:610
 msgid "The roles in the lanes, and the actor definition each one maps to. Roles inherit ( →  →  → ). What an actor may do is not a property of its role: it is an ODRL rule in , and before every task the BPMN executor checks that the actor is authenticated, eligible for the lane's role, permitted by policy and allowed to touch the content (, issue #1207)."
 msgstr "Роли на дорожках и определение актора, которому соответствует каждая из них. Роли наследуются ( →  →  → ). То, что актор может делать, не является свойством его роли: это правило ODRL в , и перед выполнением каждой задачи исполнитель BPMN проверяет, что актор аутентифицирован, соответствует роли дорожки, имеет права согласно политике и допущен к работе с данным контентом (, issue #1207)."
 
-#: docs/publication-workflow.md:618
+#: docs/process/publication-workflow.md:618
 msgid "People"
 msgstr "Люди"
 
-#: docs/publication-workflow.md:623
+#: docs/process/publication-workflow.md:623
 msgid "In the diagrams"
 msgstr "На диаграммах"
 
-#: docs/publication-workflow.md:623
+#: docs/process/publication-workflow.md:623
 msgid "Actor"
 msgstr "Актор"
 
-#: docs/publication-workflow.md:623
+#: docs/process/publication-workflow.md:623
 msgid "Authority"
 msgstr "Полномочия"
 
-#: docs/publication-workflow.md:625
+#: docs/process/publication-workflow.md:625
 msgid "Creates and modifies content. Decides accept / revise / discard at the HCI gate. Inherits ."
 msgstr "Создает и модифицирует контент. Принимает решение accept / revise / discard на шлюзе HCI. Наследует ."
 
-#: docs/publication-workflow.md:626
+#: docs/process/publication-workflow.md:626
 msgid "Reviewer"
 msgstr "Рецензент"
 
-#: docs/publication-workflow.md:626
+#: docs/process/publication-workflow.md:626
 msgid "Views content and leaves review comments. Cannot make direct changes."
 msgstr "Просматривает контент и оставляет замечания при рецензировании. Не может вносить прямые изменения."
 
-#: docs/publication-workflow.md:627
+#: docs/process/publication-workflow.md:627
 msgid "Human / SME reviewer (editing)"
 msgstr "Человек / профильный эксперт (SME) (редактирование)"
 
-#: docs/publication-workflow.md:627
+#: docs/process/publication-workflow.md:627
 msgid "Domain ground truth. Answers the judgement calls a review agent escalates."
 msgstr "Истина предметной области. Отвечает на вопросы, требующие экспертного суждения, эскалированные агентом рецензирования."
 
-#: docs/publication-workflow.md:628
+#: docs/process/publication-workflow.md:628
 msgid "Review team (draft)"
 msgstr "Группа рецензирования (черновик)"
 
-#: docs/publication-workflow.md:628
+#: docs/process/publication-workflow.md:628
 msgid "Formal approval and phase-gate sign-off — the approval authority on a draft."
 msgstr "Официальное утверждение и подписание контрольного рубежа этапа — утверждающая инстанция для черновика."
 
-#: docs/publication-workflow.md:629
+#: docs/process/publication-workflow.md:629
 msgid "Publication-readiness QA across layers; runs the QA reports."
 msgstr "Контроль качества (QA) готовности к публикации на всех уровнях; формирует отчеты QA."
 
-#: docs/publication-workflow.md:630
+#: docs/process/publication-workflow.md:630
 msgid "Programme-area coordination and first-pass review."
 msgstr "Координация в рамках программной области и первичное рецензирование."
 
-#: docs/publication-workflow.md:631
+#: docs/process/publication-workflow.md:631
 msgid "Builds, versions, tags, deploys. Does not authorise the release."
 msgstr "Собирает, версионирует, тегирует, развертывает. Не авторизует релиз."
 
-#: docs/publication-workflow.md:632
+#: docs/process/publication-workflow.md:632
 msgid "Scope, team, timeline, governance — and release authorisation."
 msgstr "Объем работ, команда, сроки, управление — и авторизация выпуска (релиза)."
 
-#: docs/publication-workflow.md:633
+#: docs/process/publication-workflow.md:633
 msgid "Admin"
 msgstr "Администратор"
 
-#: docs/publication-workflow.md:633
+#: docs/process/publication-workflow.md:633
 msgid "Full administrative access: roles, settings, all content."
 msgstr "Полный административный доступ: роли, настройки, весь контент."
 
-#: docs/publication-workflow.md:635
+#: docs/process/publication-workflow.md:635
 msgid "Domain-authoring roles that appear inside  rather than as their own lane:  (L2 DAK),  (L3 FHIR),  (code systems and value sets),  (localisation)."
 msgstr "Роли предметного создания контента, которые действуют внутри , а не в виде отдельных дорожек:  (L2 DAK),  (L3 FHIR),  (системы кодирования и наборы значений),  (локализация)."
 
-#: docs/publication-workflow.md:639
+#: docs/process/publication-workflow.md:639
 msgid "Agents and system actors"
 msgstr "Агенты и системные акторы"
 
-#: docs/publication-workflow.md:644
+#: docs/process/publication-workflow.md:644
 msgid "What it does — and what it cannot do"
 msgstr "Что делает — и чего делать не может"
 
-#: docs/publication-workflow.md:646
+#: docs/process/publication-workflow.md:646
 msgid "Drafts and revises a proposed change. Has ; does not commit — its output goes to the editor through the validation gate."
 msgstr "Готовит черновик и вносит правки в предлагаемое изменение. Имеет возможность ; не делает коммитов — его вывод направляется редактору через шлюз валидации."
 
-#: docs/publication-workflow.md:647
+#: docs/process/publication-workflow.md:647
 msgid "Review agent"
 msgstr "Агент рецензирования"
 
-#: docs/publication-workflow.md:647
+#: docs/process/publication-workflow.md:647
 msgid "Non-mechanical validation: accuracy, voice, exposition. Has  only — it reports findings, it does not approve."
 msgstr "Немеханическая валидация: точность, стилистический голос, изложение. Имеет только право  — сообщает о замечаниях, но не утверждает."
 
-#: docs/publication-workflow.md:648
+#: docs/process/publication-workflow.md:648
 msgid "Lean 4 proof checking and diagnostics over MCP."
 msgstr "Проверка доказательств и диагностика Lean 4 через MCP."
 
-#: docs/publication-workflow.md:649
+#: docs/process/publication-workflow.md:649
 msgid "FHIR IG Publisher build and QA reporting."
 msgstr "Сборка и отчетность QA с помощью FHIR IG Publisher."
 
-#: docs/publication-workflow.md:651
+#: docs/process/publication-workflow.md:651
 msgid "The distinction the diagrams enforce: an agent can propose and can report, but approval and commit are a person's. A review agent's finding and an SME's finding arrive at the same place in the pipeline — but neither of them decides; the editor does, and the release is authorised by the programme manager."
 msgstr "Разграничение, обеспечиваемое диаграммами: агент может предлагать и может отчитываться, но утверждение и фиксация изменений (коммит) остаются за человеком. Замечание агента рецензирования и замечание профильного эксперта (SME) попадают в одно и то же место конвейера — но ни один из них не принимает окончательного решения; решение принимает редактор, а релиз авторизует руководитель программы."
 
-#: docs/publication-workflow.md:656
+#: docs/process/publication-workflow.md:656
 msgid "For the full role list, their capabilities, and how a user is mapped to a role, see Skills & roles."
 msgstr "Полный перечень ролей, их возможностей и правил сопоставления пользователя с ролью см. в разделе Навыки и роли."
 
-#: docs/publication-workflow.md:661
+#: docs/process/publication-workflow.md:661
 msgid "Changing these diagrams"
 msgstr "Внесение изменений в эти диаграммы"
 
-#: docs/publication-workflow.md:666
+#: docs/process/publication-workflow.md:666
 msgid "The  files are the source of truth."
 msgstr "Файлы  являются первоисточником истины."
 
-#: docs/publication-workflow.md:676
+#: docs/process/publication-workflow.md:676
 msgid "renders each  with bpmn-js in headless Chromium and writes . If the sandbox ships a Chromium that does not match the pinned Playwright build, point at it with ."
 msgstr "выполняет рендеринг каждого  с помощью bpmn-js в headless Chromium и записывает . Если в песочнице установлен Chromium, не соответствующий зафиксированной сборке Playwright, укажите путь к нему через переменную окружения ."
 
-#: docs/publication-workflow.md:681
+#: docs/process/publication-workflow.md:681
 msgid "When you add an activity, add its  extension (and  if it touches the work plan) and the matching row in the tables above — the diagram and the skill list drifting apart is the failure this page exists to prevent."
 msgstr "При добавлении нового действия добавьте его расширение  (а также , если оно затрагивает план работы) и соответствующую строку в таблицы выше — расхождение между диаграммой и списком навыков является именно той ошибкой, для предотвращения которой и существует эта страница."
 
-#: docs/publication-workflow.md:686
+#: docs/process/publication-workflow.md:686
 msgid "Which diagrams are BPMN, and which are not"
 msgstr "Какие диаграммы являются BPMN, а какие нет"
 
-#: docs/publication-workflow.md:691
+#: docs/process/publication-workflow.md:691
 msgid "Every process in the docs is BPMN. The diagrams that remain Mermaid are not processes, and BPMN would be the wrong notation for them — a pool with lanes implies actors performing activities over time, which none of these have:"
 msgstr "Каждый процесс в документации представлен в BPMN. Диаграммы, остающиеся в Mermaid, не являются процессами, и нотация BPMN была бы для них неподходящей — пул с дорожками подразумевает акторов, выполняющих действия во времени, чего нет ни на одной из них:"
 
-#: docs/publication-workflow.md:695
+#: docs/process/publication-workflow.md:695
 msgid "Notation"
 msgstr "Нотация"
 
-#: docs/publication-workflow.md:695
+#: docs/process/publication-workflow.md:695
 msgid "Why"
 msgstr "Почему"
 
-#: docs/publication-workflow.md:697
+#: docs/process/publication-workflow.md:697
 msgid ", home — \"What it does\""
 msgstr ", главная — «Что делает платформа»"
 
-#: docs/publication-workflow.md:697
+#: docs/process/publication-workflow.md:697
 msgid "Mermaid"
 msgstr "Mermaid"
 
-#: docs/publication-workflow.md:697
+#: docs/process/publication-workflow.md:697
 msgid "Component / data-flow map of the platform, not a sequence of activities"
 msgstr "Карта компонентов и потоков данных платформы, а не последовательность действий"
 
-#: docs/publication-workflow.md:698
+#: docs/process/publication-workflow.md:698
 msgid "Architecture — server and adapters"
 msgstr "Архитектура — сервер и адаптеры"
 
-#: docs/publication-workflow.md:698
+#: docs/process/publication-workflow.md:698
 msgid "Deployment and module structure"
 msgstr "Структура развертывания и модулей"
 
-#: docs/publication-workflow.md:699
+#: docs/process/publication-workflow.md:699
 msgid "Skills & roles — how the five concepts compose"
 msgstr "Навыки и роли — как сочетаются пять концепций"
 
-#: docs/publication-workflow.md:699
+#: docs/process/publication-workflow.md:699
 msgid "Conceptual composition, no time axis"
 msgstr "Концептуальная композиция, отсутствие временной оси"
 
-#: docs/publication-workflow.md:700
+#: docs/process/publication-workflow.md:700
 msgid "Skills & roles —"
 msgstr "Навыки и роли —"
 
-#: docs/publication-workflow.md:700
+#: docs/process/publication-workflow.md:700
 msgid "An inheritance lattice, not a flow"
 msgstr "Решетка наследования, а не поток управления"
 
-#: docs/publication-workflow.md:701
+#: docs/process/publication-workflow.md:701
 msgid "Home — documentation map"
 msgstr "Главная — карта документации"
 
-#: docs/publication-workflow.md:701
+#: docs/process/publication-workflow.md:701
 msgid "Navigation graph"
 msgstr "Граф навигации"
 
-#: docs/publication-workflow.md:702
+#: docs/process/publication-workflow.md:702
 msgid "Adding a content type — \"What you provide\""
 msgstr "Добавление типа контента — «Что вы предоставляете»"
 
-#: docs/publication-workflow.md:702
+#: docs/process/publication-workflow.md:702
 msgid "What you hand over, not what you do"
 msgstr "То, что вы передаете, а не то, что вы делаете"
 
-#: docs/publication-workflow.md:703
+#: docs/process/publication-workflow.md:703
 msgid "Writing a paper — the Lean session"
 msgstr "Написание статьи — сессия Lean"
 
-#: docs/publication-workflow.md:703
+#: docs/process/publication-workflow.md:703
 msgid "An interaction transcript between you, the assistant and the MCP server. BPMN's equivalent — a collaboration with message flows — would add ceremony without adding meaning"
 msgstr "Протокол взаимодействия между вами, ассистентом и MCP-сервером. Эквивалент в BPMN — взаимодействие с потоками сообщений — добавил бы формализма, не добавив смысла"
 
-#: docs/publication-workflow.md:705
+#: docs/process/publication-workflow.md:705
 msgid "If you add a diagram that does have actors, activities and a control flow, it belongs in  as BPMN, not in a Mermaid fence."
 msgstr "Если вы добавляете диаграмму, которая действительно содержит акторов, действия и поток управления, она должна быть размещена в  как BPMN, а не в блоке Mermaid."
 
-#: docs/publication-workflow.md:710
+#: docs/process/publication-workflow.md:710
 msgid "See also"
 msgstr "См. также"
 
-#: docs/publication-workflow.md:715
+#: docs/process/publication-workflow.md:715
 msgid "Content types — the linear lifecycle and what each type produces"
 msgstr "Типы контента — линейный жизненный цикл и то, что создает каждый тип"
 
-#: docs/publication-workflow.md:716
+#: docs/process/publication-workflow.md:716
 msgid "Skills & roles — every skill and role, and how they compose with the LLM"
 msgstr "Навыки и роли — каждый навык и каждая роль, а также их взаимодействие с LLM"
 
-#: docs/publication-workflow.md:717
+#: docs/process/publication-workflow.md:717
 msgid "Skill schema reference — typed input/output per skill"
 msgstr "Справочник схем навыков — типизированный ввод/вывод для каждого навыка"
 
-#: docs/publication-workflow.md:718
+#: docs/process/publication-workflow.md:718
 msgid "Agent onboarding — orientation for an agent dropped into a folio"
 msgstr "Адаптация агента — ориентация для агента, подключенного к фолио"
 
@@ -728,56 +728,56 @@ msgstr "Адаптация агента — ориентация для аген
 #~ msgid "TR"
 #~ msgstr "TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/overview.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/overview.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/overview.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/overview.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
 
 #~ msgid "Five independent jobs, and nothing in the YAML says so in one place. No job declares , so the workflow's wall-clock cost is the slowest job rather than the sum — the single most useful thing to know before adding a gate. Four are hard and one () is warn-only, so the gateway after the join asks specifically about the HARD ones; drawing five equal boxes would be a lie a reader would act on"
 #~ msgstr "Пять независимых заданий, и ничто в YAML не говорит об этом в одном месте. Ни одно задание не объявляет , поэтому время выполнения рабочего процесса определяется самым медленным заданием, а не их суммой — самая полезная информация перед добавлением нового рубежа. Четыре из них строгие, а одно () выдает лишь предупреждение, поэтому шлюз после объединения спрашивает конкретно о СТРОГИХ; изображение пяти одинаковых блоков было бы ложью, на основе которой читатель принимал бы неверные решения"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/they-also-run.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/they-also-run.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/they-also-run.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/they-also-run.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/some-decisions-are-computed-not-judged.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/some-decisions-are-computed-not-judged.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/some-decisions-are-computed-not-judged.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/some-decisions-are-computed-not-judged.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-base-processes-are-strict.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-base-processes-are-strict.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/the-base-processes-are-strict.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/the-base-processes-are-strict.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/how-to-read-them.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/how-to-read-them.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/how-to-read-them.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/how-to-read-them.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/the-one-rule-this-diagram-exists-to-state.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/the-one-rule-this-diagram-exists-to-state.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/mechanical-vs-non-mechanical-validation.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/mechanical-vs-non-mechanical-validation.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/activities-and-the-skills-that-implement-them.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/activities-and-the-skills-that-implement-them.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-work-plan-tasks-as-beans.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-work-plan-tasks-as-beans.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/the-work-plan-tasks-as-beans.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/the-work-plan-tasks-as-beans.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/who-is-who.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/who-is-who.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/who-is-who.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/who-is-who.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/people.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/people.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/people.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/people.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/agents-and-system-actors.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/agents-and-system-actors.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/agents-and-system-actors.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/agents-and-system-actors.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/changing-these-diagrams.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/changing-these-diagrams.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/changing-these-diagrams.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/changing-these-diagrams.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/see-also.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/see-also.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/see-also.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/see-also.md\" } QA… TR"
 
 #~ msgid "How many BPMN 2.0 files are there? This page no longer says, and that is the fix rather than an evasion."
 #~ msgstr "Сколько всего файлов BPMN 2.0? На этой странице это число больше не указывается, и это исправление, а не уклонение от ответа."

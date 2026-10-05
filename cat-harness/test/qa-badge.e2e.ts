@@ -38,7 +38,7 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  *   - **not available in this build** — the index says `corpus: "absent"`:
  *     the build had no QA results, so whether anything was swept is unknown.
  *
- * **The markup is the generator's own, lifted out of `docs/publication-workflow.md`.**
+ * **The markup is the generator's own, lifted out of `docs/process/publication-workflow.md`.**
  * The verdicts are NOT the corpus's: `qa-badge-fixture.ts` sets them, and
  * throws by name if a node the spec addresses has left the page. A test whose
  * fixture is a live corpus verdict is the very defect this PR is about, and

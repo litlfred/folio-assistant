@@ -44,7 +44,7 @@ describe("scopeOf", () => {
     expect(scopeOf("/library/who-iris/item.html", INSTANCES, LOCALES)).toEqual({ id: "who-iris", kind: "instance" });
   });
   test("a target-locale prefix is that locale's scope", () => {
-    expect(scopeOf("/fr/getting-started.html", INSTANCES, LOCALES)).toEqual({ id: "locale-fr", kind: "locale" });
+    expect(scopeOf("/fr/start/getting-started.html", INSTANCES, LOCALES)).toEqual({ id: "locale-fr", kind: "locale" });
   });
   test("anything else is the platform's", () => {
     for (const u of ["/", "/reference/x.html", "/es/page.html", ""]) {
@@ -144,7 +144,7 @@ describe("platform sections over the budget — bean mm2n", () => {
     expect(sectionOfPath("/reference/skills.html")).toBe("reference");
     expect(sectionOfPath("/reference/")).toBe("reference");
     expect(sectionOfPath("/reference/a/b.html")).toBe("reference");
-    expect(sectionOfPath("/getting-started.html")).toBeUndefined();
+    expect(sectionOfPath("/start/getting-started.html")).toBeUndefined();
     expect(sectionOfPath("/")).toBeUndefined();
   });
 
@@ -155,7 +155,7 @@ describe("platform sections over the budget — bean mm2n", () => {
     2: { relUrl: "/reference/a.html", content: big },
     3: { relUrl: "/guides/g.html", content: "small" },
     4: { relUrl: "/smart-trust/t.html", content: big },
-    5: { relUrl: "/getting-started.html", content: big },
+    5: { relUrl: "/start/getting-started.html", content: big },
   };
   // A budget the reference section (two ~430-byte entries) crosses and the
   // others do not — the real 512 KiB is tested by what it is, not by size.

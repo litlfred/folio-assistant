@@ -154,7 +154,7 @@ be sitting in `uploads/` today. Three samples agreeing proves nothing about
 the fourth.
 
 This is the rule
-[`how-much-of-this-does-dublin-core-carry.md`](../../../../cat-harness/content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md)
+[`how-much-of-this-does-dublin-core-carry.md`](../../../../cat-harness/content/docs/guides-document-ingestion/how-much-of-this-does-dublin-core-carry.md)
 states for vocabularies, applied to an API: *settled against the published
 specifications rather than from memory.*
 

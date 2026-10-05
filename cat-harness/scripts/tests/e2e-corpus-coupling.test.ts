@@ -207,7 +207,7 @@ describe("the guard fires", () => {
   test("on the other corpora too — kg-qa, translation-qa, health results, a qa-index", () => {
     for (const p of [
       "test/results/kg-qa/processes/x.kg-qa.json",
-      "content/docs/harness/overview.fr.translation-qa.json",
+      "content/docs/concepts-harness/overview.fr.translation-qa.json",
       "test/health/results/repository.health-report.json",
       "docs/assets/qa/page/qa-index.json",
     ]) {

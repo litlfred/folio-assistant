@@ -209,7 +209,7 @@ mis-scoped, it was **unnecessary** for the nav work.
 
 Evidence, all checkable:
 
-- `cat-harness/docs/architecture/folio-board-requirements.md` §"What this is,
+- `cat-harness/docs/concepts/architecture/folio-board-requirements.md` §"What this is,
   and what it is not" states on the owner's own ruling that the file is
   "history, not instruction", and that the rules an agent follows live in the
   `cat-harness` skills. R4 governs nothing *directly*, board or docs.

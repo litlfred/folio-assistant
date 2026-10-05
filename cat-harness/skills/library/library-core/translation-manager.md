@@ -22,7 +22,7 @@ rendering.
 ## Reference
 
 The authoritative documentation is
-[`docs/translation-support.md`](../../../docs/translation-support.md). Read it
+[`docs/guides/translation-support.md`](../../../docs/translation-support.md). Read it
 before using this skill. This file is the operational checklist, not the
 architecture.
 

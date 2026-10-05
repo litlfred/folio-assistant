@@ -297,7 +297,7 @@ describe("this repository's five uncatalogued pages", () => {
   it("alignment is incomplete, and every refusal is a COUNT difference", () => {
     // **This test asserted `derived === 10` and `refused === 15`, and CI was
     // right to fail it.** Those are a measurement of a corpus at a moment, not an
-    // invariant: `main` edited `docs/installation.md` while this branch was open,
+    // invariant: `main` edited `docs/start/installation.md` while this branch was open,
     // which added two constructs to that page, so `ar/installation` stopped
     // aligning and the pair became 9/16. Nothing in this module regressed — an
     // unrelated source edit falsified an equality I had no business asserting.
@@ -325,7 +325,7 @@ describe("this repository's five uncatalogued pages", () => {
 
   it("the same table cell is now translatable in the same way in every script (`6b8u`)", () => {
     // THE REGRESSION THIS PINS, and it is the reason `isTranslatable` counts
-    // letters. These are the real cells from `docs/installation.md` and its
+    // letters. These are the real cells from `docs/start/installation.md` and its
     // Arabic translation. Under the old `text.length >= 3`, stripping the code
     // spans left `", "` (2 characters, dropped) in English and `"، و"` (3, kept)
     // in Arabic — so an identical 4x7 table yielded 66 constructs in `ar` against
@@ -352,7 +352,7 @@ describe("this repository's five uncatalogued pages", () => {
 
   it("an INDENTED code fence is a code fence (`ig4a`)", () => {
     // Anchored at column 0, the fence inside a list item was invisible and its
-    // body was extracted as prose — `docs/contributing.md` yielded "````" as a
+    // body was extracted as prose — `docs/start/contributing.md` yielded "````" as a
     // PARAGRAPH, twice. Corpus-wide that was 74 msgids of code offered to
     // translators, 48 of them a bare fence run.
     const md = [

@@ -50,7 +50,7 @@ describe("declared diagram paths resolve", () => {
   test("every bpmnDiagrams entry names a file that exists", async () => {
     // Same failure one layer over. `schemas/translation-tools.ts` listed
     // `processes/publication-workflow.bpmn`, which has never existed —
-    // `docs/publication-workflow.md` is a PAGE embedding three diagrams. The
+    // `docs/process/publication-workflow.md` is a PAGE embedding three diagrams. The
     // re-render skipped it silently, and a skipped diagram is
     // indistinguishable from one that needed no work.
     const { CONTENT_TYPE_TRANSLATIONS } = await import("../../schemas/translation-tools.ts");

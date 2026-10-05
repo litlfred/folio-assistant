@@ -1,4 +1,4 @@
-# French translation of folio-assistant publication-workflow (docs/publication-workflow.md)
+# French translation of folio-assistant publication-workflow (docs/process/publication-workflow.md)
 # Copyright (C) 2026 folio-assistant contributors
 # This file is distributed under the same license as the folio-assistant package.
 #
@@ -21,695 +21,695 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: docs/publication-workflow.md:13
+#: docs/process/publication-workflow.md:13
 msgid "Publication workflow"
 msgstr "Flux de publication"
 
-#: docs/publication-workflow.md:18
+#: docs/process/publication-workflow.md:18
 msgid "On this page"
 msgstr "Sur cette page"
 
-#: docs/publication-workflow.md:25
+#: docs/process/publication-workflow.md:25
 msgid "This page is generated from  — each section below links to its own source."
 msgstr "Cette page est générée à partir de  — chaque section ci-dessous renvoie vers sa propre source."
 
-#: docs/publication-workflow.md:29
+#: docs/process/publication-workflow.md:29
 msgid "How a change gets from an editor had an idea to the folio is officially published — expressed as BPMN 2.0 swimlane diagrams, with the roles, the validation gate, the skills, and the shared work plan all named."
 msgstr "Comment une modification passe de un éditeur a eu une idée à le folio est officiellement publié — exprimé sous la forme de diagrammes BPMN 2.0 à couloirs, avec les rôles, la porte de validation, les compétences et le plan de travail partagé, tous explicitement nommés."
 
-#: docs/publication-workflow.md:35
+#: docs/process/publication-workflow.md:35
 msgid "Every workflow in the repo"
 msgstr "Chaque flux de travail du dépôt"
 
-#: docs/publication-workflow.md:91
+#: docs/process/publication-workflow.md:91
 msgid "Diagram"
 msgstr "Diagramme"
 
-#: docs/publication-workflow.md:319
+#: docs/process/publication-workflow.md:319
 msgid "They also run"
 msgstr "Ils s'exécutent également"
 
-#: docs/publication-workflow.md:324
+#: docs/process/publication-workflow.md:324
 msgid "Since bean  these files are not only pictures. The MCP server interprets them:  opens an instance for a subject,  reports what is enabled now — with the lane that performs it and the skill that implements it — and  refuses a step the process has not reached.  cannot be reported done before the editor's decision is recorded, because there is no token on it until then."
 msgstr "Depuis le bean , ces fichiers ne sont plus de simples images. Le serveur MCP les interprète :  ouvre une instance pour un sujet,  signale ce qui est actif à cet instant — avec le couloir qui l'exécute et la compétence qui l'implémente — et  refuse une étape que le processus n'a pas encore atteinte.  ne peut pas être déclaré terminé avant que la décision de l'éditeur ne soit enregistrée, car aucun jeton ne s'y trouve jusque-là."
 
-#: docs/publication-workflow.md:331
+#: docs/process/publication-workflow.md:331
 msgid "That is ordering, not enforcement: nothing yet stops an agent calling a capability tool directly. The case for making it binding — and the argument that the commit boundary is the right place — is in Proposal: workflow orchestration."
 msgstr "Il s'agit d'un ordonnancement, non d'un verrouillage strict : rien n'empêche encore un agent d'appeler directement un outil de capacité. L'argumentaire en faveur de son caractère contraignant — et démontrant que la frontière du commit est le bon endroit pour cela — figure dans la Proposition : orchestration des flux de travail."
 
-#: docs/publication-workflow.md:336
+#: docs/process/publication-workflow.md:336
 msgid "Some decisions are computed, not judged"
 msgstr "Certaines décisions sont calculées, non arbitrées"
 
-#: docs/publication-workflow.md:341
+#: docs/process/publication-workflow.md:341
 msgid "Ten exclusive gateways sit across the six diagrams, and they are not all the same kind of question.  is the editor's call.  is arithmetic over  and ."
 msgstr "Dix passerelles exclusives sont réparties sur les six diagrammes, et elles ne posent pas toutes le même genre de question. « Accepter, réviser ou rejeter ? » relève de la décision de l'éditeur. « Compilation au vert, aucun sorry ? » relève de l'arithmétique sur  et ."
 
-#: docs/publication-workflow.md:345
+#: docs/process/publication-workflow.md:345
 msgid "A gateway carrying  has its outcome computed from a DMN decision table under . The agent supplies facts —  — and the table returns the branch;  refuses a hand-supplied outcome there, and records which rule fired."
 msgstr "Une passerelle portant  voit son résultat calculé à partir d'une table de décision DMN sous . L'agent fournit des faits —  — et la table renvoie la branche ;  y refuse tout résultat fourni manuellement et consigne quelle règle s'est déclenchée."
 
-#: docs/publication-workflow.md:352
+#: docs/process/publication-workflow.md:352
 msgid "Gateway"
 msgstr "Passerelle"
 
-#: docs/publication-workflow.md:352
+#: docs/process/publication-workflow.md:352
 msgid "Table"
 msgstr "Table"
 
-#: docs/publication-workflow.md:352
+#: docs/process/publication-workflow.md:352
 msgid "Reads"
 msgstr "Données lues"
 
-#: docs/publication-workflow.md:357
+#: docs/process/publication-workflow.md:357
 msgid "and  are equally mechanical and equally deserve tables — they wait on a WHO/FHIR adapter, because a table keyed to facts no tool emits looks authoritative and is not."
 msgstr "« QC sans erreur ? » et « FHIR valide ? » sont tout aussi mécaniques et méritent tout autant des tables — ils attendent un adaptateur OMS/FHIR, car une table indexée sur des faits qu'aucun outil n'émet a une apparence d'autorité sans en avoir la réalité."
 
-#: docs/publication-workflow.md:361
+#: docs/process/publication-workflow.md:361
 msgid "The base processes are strict"
 msgstr "Les processus de base sont stricts"
 
-#: docs/publication-workflow.md:366
+#: docs/process/publication-workflow.md:366
 msgid "The three content-agnostic diagrams — editing, draft-to-publication, lifecycle — carry .  refuses a step they have not reached. The three per-content-type diagrams are , because what counts as adequate review of a Lean proof and of a FHIR profile are different questions, and the package that knows the domain should answer them."
 msgstr "Les trois diagrammes indépendants du contenu — édition, brouillon vers publication, cycle de vie — portent .  refuse une étape qu'ils n'ont pas atteinte. Les trois diagrammes spécifiques au type de contenu sont de nature  (consultative), car ce qui constitue une relecture adéquate d'une preuve Lean ou d'un profil FHIR relève de questions distinctes, et c'est au paquet connaissant le domaine d'y répondre."
 
-#: docs/publication-workflow.md:372
+#: docs/process/publication-workflow.md:372
 msgid "A content package may relax a base step by declaring it in  with a reason — an unexplained relaxation does not load, so the file is the record of what was waived and why. Five steps refuse to be relaxed at all: ,  and  (the editor seeing the findings, the decision, the write), plus  and  (the  SHALL). If those were negotiable the base would not be strict, it would be a suggestion."
 msgstr "Un paquet de contenu peut assouplir une étape de base en le déclarant dans  avec un motif explicatif — un assouplissement non justifié ne se charge pas, de sorte que le fichier constitue le registre de ce qui a fait l'objet d'une dérogation et pourquoi. Cinq étapes refusent catégoriquement tout assouplissement : ,  et  (l'éditeur prenant connaissance des conclusions, la décision, l'écriture), ainsi que  et  (le SHALL de ). Si celles-ci étaient négociables, la base ne serait pas stricte, elle ne serait qu'une simple suggestion."
 
-#: docs/publication-workflow.md:381
+#: docs/process/publication-workflow.md:381
 msgid "lists the policy and validates every relaxation; it runs in CI, so one that has stopped applying is a build failure rather than a discovery on the day it is needed."
 msgstr "liste la politique et valide chaque assouplissement ; il s'exécute en CI, de sorte qu'une règle qui a cessé de s'appliquer constitue un échec de compilation plutôt qu'une découverte le jour où elle est requise."
 
-#: docs/publication-workflow.md:385
+#: docs/process/publication-workflow.md:385
 msgid "The commit boundary is where this is enforced rather than merely answerable. , run in the folio repo from a pre-commit hook or CI, refuses a changed content block that no instance records the editor having authorised.  answers an agent that asks; the hook does not depend on anyone asking."
 msgstr "La frontière du commit est le lieu où cette règle est appliquée plutôt que simplement consultable. , exécuté dans le dépôt du folio depuis un hook de pré-commit ou la CI, refuse tout bloc de contenu modifié si aucune instance n'enregistre que l'éditeur l'a autorisé.  répond à un agent qui l'interroge ; le hook ne dépend de la demande de personne."
 
-#: docs/publication-workflow.md:396
+#: docs/process/publication-workflow.md:396
 msgid "How to read them"
 msgstr "Comment les lire"
 
-#: docs/publication-workflow.md:401
+#: docs/process/publication-workflow.md:401
 msgid "A lane is a role. Every lane maps to an actor in  — see Who is who."
 msgstr "Un couloir représente un rôle. Chaque couloir correspond à un acteur dans  — voir Qui est qui."
 
-#: docs/publication-workflow.md:404
+#: docs/process/publication-workflow.md:404
 msgid "under an activity is the folio-assistant skill that implements it. The same reference is carried machine-readably as a  extension element on the BPMN activity."
 msgstr "sous une activité désigne la compétence folio-assistant qui l'implémente. La même référence est portée sous forme lisible par machine via un élément d'extension  sur l'activité BPMN."
 
-#: docs/publication-workflow.md:407
+#: docs/process/publication-workflow.md:407
 msgid "The \"Work plan — beans\" lane is the shared to-do store. Steps in that lane read and write , and are marked  in the source."
 msgstr "Le couloir « Plan de travail — beans » est le magasin partagé des tâches à accomplir. Les étapes de ce couloir lisent et écrivent dans , et portent la marque  dans la source."
 
-#: docs/publication-workflow.md:410
+#: docs/process/publication-workflow.md:410
 msgid "A thick-bordered box is a call activity — it expands into another diagram on this page."
 msgstr "Une boîte à bordure épaisse est une activité d'appel — elle se développe dans un autre diagramme sur cette page."
 
-#: docs/publication-workflow.md:415
+#: docs/process/publication-workflow.md:415
 msgid "Editing and the HCI validation gate"
 msgstr "Édition et la porte de validation IHM"
 
-#: docs/publication-workflow.md:420
+#: docs/process/publication-workflow.md:420
 msgid "This is the diagram that matters most day to day: one proposed change to one content block."
 msgstr "C'est le diagramme qui compte le plus au quotidien : une modification proposée pour un bloc de contenu."
 
-#: docs/publication-workflow.md:428
+#: docs/process/publication-workflow.md:428
 msgid "Open the BPMN source{: .btn .btn-outline }"
 msgstr "Ouvrir la source BPMN{: .btn .btn-outline }"
 
-#: docs/publication-workflow.md:430
+#: docs/process/publication-workflow.md:430
 msgid "The one rule this diagram exists to state"
 msgstr "La règle unique que ce diagramme a pour vocation d'énoncer"
 
-#: docs/publication-workflow.md:435
+#: docs/process/publication-workflow.md:435
 msgid "Nothing reaches the corpus before the editor has seen the findings. The authoring agent produces a proposed change, not a commit. That proposal fans out through the HCI validation pipeline, the results are collated into one report, and the editor decides — accept, revise, or discard. The  activity sits after that decision, in its own lane, and is the only step that writes content."
 msgstr "Rien ne parvient au corpus avant que l'éditeur n'ait pris connaissance des conclusions. L'agent de rédaction produit une modification proposée, et non un commit. Cette proposition se diffuse à travers le pipeline de validation IHM, les résultats sont rassemblés dans un rapport unique, et l'éditeur tranche — accepter, réviser ou rejeter. L'activité  se situe après cette décision, dans son propre couloir, et constitue l'unique étape qui écrit du contenu."
 
-#: docs/publication-workflow.md:442
+#: docs/process/publication-workflow.md:442
 msgid "Mechanical vs non-mechanical validation"
 msgstr "Validation mécanique vs validation non mécanique"
 
-#: docs/publication-workflow.md:447
+#: docs/process/publication-workflow.md:447
 msgid "The parallel gateway splits the pipeline in two, and the split is the point:"
 msgstr "La passerelle parallèle sépare le pipeline en deux, et cette séparation en est la raison d'être :"
 
-#: docs/publication-workflow.md:449
+#: docs/process/publication-workflow.md:449
 msgid "Mechanical validation — anything a machine can settle on its own, with a reproducible verdict: block schema and constraint rules, label prefixes, syntax, spelling, cross-references and citation resolution, Lean build and proof status, LaTeX compilation, FHIR/SUSHI validation, QA axes. No judgement, no negotiation; it passes or it does not."
 msgstr "Validation mécanique — tout ce qu'une machine peut trancher d'elle-même, avec un verdict reproductible : schéma de bloc et règles de contraintes, préfixes d'étiquettes, syntaxe, orthographe, résolution des références croisées et des citations, compilation Lean et statut des preuves, compilation LaTeX, validation FHIR/SUSHI, axes QA. Aucun jugement, aucune négociation ; elle réussit ou elle échoue."
 
-#: docs/publication-workflow.md:454
+#: docs/process/publication-workflow.md:454
 msgid "Non-mechanical validation — everything that needs judgement: is the claim accurate, does the prose keep the folio's voice, does the change actually say what the editor meant. A review agent handles the routine cases; anything turning on clinical or scientific judgement escalates to a human reviewer or SME. Both branches are the same stage of the pipeline — the reviewer being a person or an agent changes who answers, not where the answer goes."
 msgstr "Validation non mécanique — tout ce qui fait appel au discernement : l'affirmation est-elle exacte, la prose respecte-t-elle le ton du folio, la modification exprime-t-elle fidèlement l'intention de l'éditeur. Un agent de relecture traite les cas courants ; tout ce qui relève du jugement clinique ou scientifique est transmis à un relecteur humain ou expert métier (SME). Les deux branches constituent la même étape du pipeline — le fait que le relecteur soit une personne ou un agent change qui répond, mais non la destination de la réponse."
 
-#: docs/publication-workflow.md:461
+#: docs/process/publication-workflow.md:461
 msgid "Both branches must report before the join. A green mechanical run does not excuse a missing review, and a clean review does not excuse a red build."
 msgstr "Les deux branches doivent rendre leur rapport avant la jonction. Une exécution mécanique au vert ne dispense pas d'une relecture manquante, et une relecture favorable ne compense pas une compilation en échec."
 
-#: docs/publication-workflow.md:464
+#: docs/process/publication-workflow.md:464
 msgid "Activities and the skills that implement them"
 msgstr "Activités et compétences qui les implémentent"
 
-#: docs/publication-workflow.md:469
+#: docs/process/publication-workflow.md:469
 msgid "Activity"
 msgstr "Activité"
 
-#: docs/publication-workflow.md:469
+#: docs/process/publication-workflow.md:469
 msgid "Lane"
 msgstr "Couloir"
 
-#: docs/publication-workflow.md:469
+#: docs/process/publication-workflow.md:469
 msgid "Skill"
 msgstr "Compétence"
 
-#: docs/publication-workflow.md:471
+#: docs/process/publication-workflow.md:471
 msgid "Describe the intended change"
 msgstr "Décrire la modification souhaitée"
 
-#: docs/publication-workflow.md:471
+#: docs/process/publication-workflow.md:471
 msgid "Editor / author"
 msgstr "Éditeur / auteur"
 
-#: docs/publication-workflow.md:471
+#: docs/process/publication-workflow.md:471
 msgid "— (human)"
 msgstr "— (humain)"
 
-#: docs/publication-workflow.md:472
+#: docs/process/publication-workflow.md:472
 msgid "Claim or open the bean"
 msgstr "Prendre en charge ou ouvrir le bean"
 
-#: docs/publication-workflow.md:472
+#: docs/process/publication-workflow.md:472
 msgid "Work plan"
 msgstr "Plan de travail"
 
-#: docs/publication-workflow.md:473
+#: docs/process/publication-workflow.md:473
 msgid "Draft the block edit"
 msgstr "Rédiger la modification du bloc"
 
-#: docs/publication-workflow.md:473
+#: docs/process/publication-workflow.md:473
 msgid "Authoring agent"
 msgstr "Agent de rédaction"
 
-#: docs/publication-workflow.md:474
+#: docs/process/publication-workflow.md:474
 msgid "Schema and constraint checks"
 msgstr "Vérifications de schéma et de contraintes"
 
-#: docs/publication-workflow.md:474
+#: docs/process/publication-workflow.md:474
 msgid "Mechanical validation"
 msgstr "Validation mécanique"
 
-#: docs/publication-workflow.md:475
+#: docs/process/publication-workflow.md:475
 msgid "Syntax, spelling and links"
 msgstr "Syntaxe, orthographe et liens"
 
-#: docs/publication-workflow.md:476
+#: docs/process/publication-workflow.md:476
 msgid "Build and QA gates"
 msgstr "Compilation et points de contrôle QA"
 
-#: docs/publication-workflow.md:477
+#: docs/process/publication-workflow.md:477
 msgid "Agent review of the change"
 msgstr "Relecture de la modification par l'agent"
 
-#: docs/publication-workflow.md:477
+#: docs/process/publication-workflow.md:477
 msgid "Non-mechanical validation"
 msgstr "Validation non mécanique"
 
-#: docs/publication-workflow.md:478
+#: docs/process/publication-workflow.md:478
 msgid "Human / SME review"
 msgstr "Relecture humaine / par un expert métier"
 
-#: docs/publication-workflow.md:479
+#: docs/process/publication-workflow.md:479
 msgid "Collate findings into a report"
 msgstr "Rassembler les conclusions dans un rapport"
 
-#: docs/publication-workflow.md:479
+#: docs/process/publication-workflow.md:479
 msgid "HCI validation pipeline"
 msgstr "Pipeline de validation IHM"
 
-#: docs/publication-workflow.md:479
+#: docs/process/publication-workflow.md:479
 msgid "— (pipeline)"
 msgstr "— (pipeline)"
 
-#: docs/publication-workflow.md:480
+#: docs/process/publication-workflow.md:480
 msgid "Log findings on the bean"
 msgstr "Consigner les conclusions sur le bean"
 
-#: docs/publication-workflow.md:481
+#: docs/process/publication-workflow.md:481
 msgid "Review the findings"
 msgstr "Examiner les conclusions"
 
-#: docs/publication-workflow.md:481
+#: docs/process/publication-workflow.md:481
 msgid "— (human — this is the gate)"
 msgstr "— (humain — c'est le point de contrôle)"
 
-#: docs/publication-workflow.md:482
+#: docs/process/publication-workflow.md:482
 msgid "Revise the proposed change"
 msgstr "Réviser la modification proposée"
 
-#: docs/publication-workflow.md:483
+#: docs/process/publication-workflow.md:483
 msgid "Commit into the corpus"
 msgstr "Valider (commit) dans le corpus"
 
-#: docs/publication-workflow.md:483
+#: docs/process/publication-workflow.md:483
 msgid "Corpus"
 msgstr "Corpus"
 
-#: docs/publication-workflow.md:483
+#: docs/process/publication-workflow.md:483
 msgid "— (subject to the  requirement)"
 msgstr "— (soumis à l'exigence )"
 
-#: docs/publication-workflow.md:484
+#: docs/process/publication-workflow.md:484
 msgid "Resolve or re-open the bean"
 msgstr "Résoudre ou rouvrir le bean"
 
-#: docs/publication-workflow.md:486
+#: docs/process/publication-workflow.md:486
 msgid "The domain-specific checks hang off  /  by content type:  and  for papers,  and  for IGs,  for rendering."
 msgstr "Les vérifications spécifiques au domaine dépendent de  /  selon le type de contenu :  et  pour les articles,  et  pour les IG,  pour le rendu."
 
-#: docs/publication-workflow.md:496
+#: docs/process/publication-workflow.md:496
 msgid "From corpus to published folio"
 msgstr "Du corpus au folio publié"
 
-#: docs/publication-workflow.md:501
+#: docs/process/publication-workflow.md:501
 msgid "The corpus is not the publication. A draft is built from it, reviewed as a whole by the review team, and only then released."
 msgstr "Le corpus n'est pas la publication. Un brouillon en est extrait, relu dans son ensemble par l'équipe de relecture, puis seulement publié."
 
-#: docs/publication-workflow.md:511
+#: docs/process/publication-workflow.md:511
 msgid "Three things to note:"
 msgstr "Trois points à noter :"
 
-#: docs/publication-workflow.md:513
+#: docs/process/publication-workflow.md:513
 msgid "A red draft is fixed in the editing process, not in the artifact. The  branch off  goes back through the editing call activity — which means back through the HCI validation gate. Nobody patches a built PDF or a generated IG."
 msgstr "Un brouillon en échec est corrigé dans le processus d'édition, non dans l'artefact. La branche  issue de « QA brouillon au vert ? » repart vers l'activité d'appel d'édition — ce qui signifie repasser par la porte de validation IHM. Personne ne modifie directement un PDF généré ou un IG produit."
 
-#: docs/publication-workflow.md:517
+#: docs/process/publication-workflow.md:517
 msgid "Review is parallel, and both halves must land. The review team (content reviewer, QC reviewer, technical officer) reviews the draft as a publication; the clinical or scientific SMEs sign off on the domain content. The join waits for both."
 msgstr "La relecture est menée en parallèle, et les deux volets doivent aboutir. L'équipe de relecture (relecteur de contenu, relecteur QC, responsable technique) examine le brouillon en tant que publication ; les experts métier cliniques ou scientifiques valident le contenu métier. La jonction attend les deux."
 
-#: docs/publication-workflow.md:521
+#: docs/process/publication-workflow.md:521
 msgid "Change requests become beans. A  outcome does not evaporate into a review thread — each request is opened as a bean, so whoever picks the work up next (human or agent) sees exactly what review asked for."
 msgstr "Les demandes de modification deviennent des beans. Une issue « modifications requises » ne s'évapore pas dans un fil de commentaires de relecture — chaque demande est ouverte sous forme de bean, afin que la personne ou l'agent qui reprend le travail voit exactement ce que la relecture a demandé."
 
-#: docs/publication-workflow.md:528
+#: docs/process/publication-workflow.md:528
 msgid "Open or claim the release bean"
 msgstr "Ouvrir ou prendre en charge le bean de publication"
 
-#: docs/publication-workflow.md:529
+#: docs/process/publication-workflow.md:529
 msgid "Build the draft publication"
 msgstr "Compiler la publication brouillon"
 
-#: docs/publication-workflow.md:529
+#: docs/process/publication-workflow.md:529
 msgid "Corpus + build pipeline"
 msgstr "Corpus + pipeline de compilation"
 
-#: docs/publication-workflow.md:530
+#: docs/process/publication-workflow.md:530
 msgid "Run publication QA gates"
 msgstr "Exécuter les points de contrôle QA de publication"
 
-#: docs/publication-workflow.md:531
+#: docs/process/publication-workflow.md:531
 msgid "Editing and HCI validation"
 msgstr "Édition et validation IHM"
 
-#: docs/publication-workflow.md:531
+#: docs/process/publication-workflow.md:531
 msgid "Editors + authoring agents"
 msgstr "Éditeurs + agents de rédaction"
 
-#: docs/publication-workflow.md:531
+#: docs/process/publication-workflow.md:531
 msgid "call activity → diagram 3"
 msgstr "activité d'appel → diagramme 3"
 
-#: docs/publication-workflow.md:532
+#: docs/process/publication-workflow.md:532
 msgid "Circulate the draft"
 msgstr "Diffuser le brouillon"
 
-#: docs/publication-workflow.md:532
+#: docs/process/publication-workflow.md:532
 msgid "Publication manager"
 msgstr "Gestionnaire de publication"
 
-#: docs/publication-workflow.md:533
+#: docs/process/publication-workflow.md:533
 msgid "Review the draft publication"
 msgstr "Relire la publication brouillon"
 
-#: docs/publication-workflow.md:533
+#: docs/process/publication-workflow.md:533
 msgid "Review team"
 msgstr "Équipe de relecture"
 
-#: docs/publication-workflow.md:534
+#: docs/process/publication-workflow.md:534
 msgid "Clinical / scientific sign-off"
 msgstr "Validation clinique / scientifique"
 
-#: docs/publication-workflow.md:534
+#: docs/process/publication-workflow.md:534
 msgid "SMEs"
 msgstr "Experts métier (SME)"
 
-#: docs/publication-workflow.md:535
+#: docs/process/publication-workflow.md:535
 msgid "Open beans for the change requests"
 msgstr "Ouvrir des beans pour les demandes de modification"
 
-#: docs/publication-workflow.md:536
+#: docs/process/publication-workflow.md:536
 msgid "Authorise the release"
 msgstr "Autoriser la publication (release)"
 
-#: docs/publication-workflow.md:536
+#: docs/process/publication-workflow.md:536
 msgid "Programme manager"
 msgstr "Gestionnaire de programme"
 
-#: docs/publication-workflow.md:537
+#: docs/process/publication-workflow.md:537
 msgid "Version, tag and publish"
 msgstr "Numéroter, étiqueter et publier"
 
-#: docs/publication-workflow.md:538
+#: docs/process/publication-workflow.md:538
 msgid "Close the release beans"
 msgstr "Fermer les beans de publication"
 
-#: docs/publication-workflow.md:540
+#: docs/process/publication-workflow.md:540
 msgid "This diagram implements the  phase gates — , , ,  — see ."
 msgstr "Ce diagramme implémente les points de transition de phase de  — , , ,  — voir ."
 
-#: docs/publication-workflow.md:547
+#: docs/process/publication-workflow.md:547
 msgid "Content lifecycle overview"
 msgstr "Vue d'ensemble du cycle de vie du contenu"
 
-#: docs/publication-workflow.md:552
+#: docs/process/publication-workflow.md:552
 msgid "One cycle of a folio, plan to retire. Both diagrams above appear here as call activities."
 msgstr "Un cycle d'un folio, de la planification au retrait. Les deux diagrammes ci-dessus apparaissent ici sous forme d'activités d'appel."
 
-#: docs/publication-workflow.md:562
+#: docs/process/publication-workflow.md:562
 msgid "This is the same lifecycle as the linear plan → author → validate → review → test → publish → feedback → retire strip, with the actors and the loops made explicit. Note that  runs once per proposed change, not once per cycle — the linear strip flattens that."
 msgstr "Il s'agit du même cycle de vie que le ruban linéaire planifier → rédiger → valider → relire → tester → publier → retours → retirer, les acteurs et les boucles étant ici rendus explicites. Remarquez qu' s'exécute une fois par modification proposée, et non une fois par cycle — le ruban linéaire aplatit cette distinction."
 
-#: docs/publication-workflow.md:570
+#: docs/process/publication-workflow.md:570
 msgid "The work plan — tasks as beans"
 msgstr "Le plan de travail — les tâches sous forme de beans"
 
-#: docs/publication-workflow.md:575
+#: docs/process/publication-workflow.md:575
 msgid "Every diagram has a Work plan lane, and it is not decoration. Editing work is tracked as beans (hmans/beans) in a committed  directory, which makes it the one place where a human and an agent see the same answer to what is done, and what is next."
 msgstr "Chaque diagramme dispose d'un couloir Plan de travail, et ce n'est pas un simple ornement. Le travail d'édition est suivi sous forme de beans (hmans/beans) dans un répertoire  versionné, ce qui en fait le seul endroit où un humain et un agent partagent la même réponse à la question qu'est-ce qui est fait, et qu'est-ce qui vient ensuite ?."
 
-#: docs/publication-workflow.md:580
+#: docs/process/publication-workflow.md:580
 msgid "Where in the workflow"
 msgstr "Moment du flux"
 
-#: docs/publication-workflow.md:580
+#: docs/process/publication-workflow.md:580
 msgid "What happens to the work plan"
 msgstr "Ce qui se passe dans le plan de travail"
 
-#: docs/publication-workflow.md:582
+#: docs/process/publication-workflow.md:582
 msgid "Plan is agreed"
 msgstr "Le plan est approuvé"
 
-#: docs/publication-workflow.md:582
+#: docs/process/publication-workflow.md:582
 msgid "The plan is seeded as beans"
 msgstr "Le plan est initialisé sous forme de beans"
 
-#: docs/publication-workflow.md:583
+#: docs/process/publication-workflow.md:583
 msgid "An edit starts"
 msgstr "Une édition commence"
 
-#: docs/publication-workflow.md:583
+#: docs/process/publication-workflow.md:583
 msgid "The bean is claimed () before any drafting"
 msgstr "Le bean est pris en charge () avant toute rédaction"
 
-#: docs/publication-workflow.md:584
+#: docs/process/publication-workflow.md:584
 msgid "Validation reports"
 msgstr "La validation rend son rapport"
 
-#: docs/publication-workflow.md:584
+#: docs/process/publication-workflow.md:584
 msgid "Findings are appended to the bean"
 msgstr "Les conclusions sont ajoutées au bean"
 
-#: docs/publication-workflow.md:585
+#: docs/process/publication-workflow.md:585
 msgid "The change is committed"
 msgstr "La modification est validée (commit)"
 
-#: docs/publication-workflow.md:585
+#: docs/process/publication-workflow.md:585
 msgid "The bean is resolved — or left open with what is still outstanding"
 msgstr "Le bean est résolu — ou laissé ouvert avec ce qui reste en suspens"
 
-#: docs/publication-workflow.md:586
+#: docs/process/publication-workflow.md:586
 msgid "Review requests changes"
 msgstr "La relecture demande des modifications"
 
-#: docs/publication-workflow.md:586
+#: docs/process/publication-workflow.md:586
 msgid "Each request is opened as its own bean"
 msgstr "Chaque demande est ouverte sous forme de bean distinct"
 
-#: docs/publication-workflow.md:587
+#: docs/process/publication-workflow.md:587
 msgid "A release ships"
 msgstr "Une version est livrée"
 
-#: docs/publication-workflow.md:587
+#: docs/process/publication-workflow.md:587
 msgid "Shipped work is closed; what slipped stays open into the next cycle"
 msgstr "Le travail livré est fermé ; ce qui a été reporté reste ouvert pour le cycle suivant"
 
-#: docs/publication-workflow.md:589
+#: docs/process/publication-workflow.md:589
 msgid "Why it is modelled as a lane rather than a note:"
 msgstr "Pourquoi cela est modélisé sous la forme d'un couloir plutôt que d'une simple note :"
 
-#: docs/publication-workflow.md:591
+#: docs/process/publication-workflow.md:591
 msgid "It is shared state, not session state.  is committed, so the plan survives a resumed session and is visible to sibling agents working other branches. An agent's ephemeral in-memory to-do list is not."
 msgstr "C'est un état partagé, non un état de session.  est versionné dans git, si bien que le plan persiste lors de la reprise d'une session et demeure visible pour les agents confrères travaillant sur d'autres branches. La liste de tâches éphémère en mémoire d'un agent ne l'est pas."
 
-#: docs/publication-workflow.md:594
+#: docs/process/publication-workflow.md:594
 msgid "Claiming is how two workers avoid the same item. Claim before you work, and never resolve someone else's bean."
 msgstr "La prise en charge évite que deux intervenants ne traitent le même élément. Prenez en charge le bean avant de travailler, et ne résolvez jamais le bean de quelqu'un d'autre."
 
-#: docs/publication-workflow.md:596
+#: docs/process/publication-workflow.md:596
 msgid "is not idempotent. Check for an existing bean by exact title before creating one — the guard, and the incident that motivates it, are in ."
 msgstr "n'est pas idempotent. Vérifiez l'existence d'un bean par son titre exact avant d'en créer un nouveau — la garde, et l'incident qui la motive, sont décrits dans ."
 
-#: docs/publication-workflow.md:600
+#: docs/process/publication-workflow.md:600
 msgid "Beans are not sidecars. Machine-generated queues (QA , witness files, watcher queues) stay bulk JSON; they never become beans."
 msgstr "Les beans ne sont pas des sidecars. Les files d'attente générées par machine (QA , fichiers témoins, files de surveillance) restent du JSON brut ; elles ne deviennent jamais des beans."
 
-#: docs/publication-workflow.md:605
+#: docs/process/publication-workflow.md:605
 msgid "Who is who"
 msgstr "Qui est qui"
 
-#: docs/publication-workflow.md:610
+#: docs/process/publication-workflow.md:610
 msgid "The roles in the lanes, and the actor definition each one maps to. Roles inherit ( →  →  → ). What an actor may do is not a property of its role: it is an ODRL rule in , and before every task the BPMN executor checks that the actor is authenticated, eligible for the lane's role, permitted by policy and allowed to touch the content (, issue #1207)."
 msgstr "Les rôles dans les couloirs et la définition d'acteur à laquelle chacun correspond. Les rôles héritent les uns des autres ( →  →  → ). Ce qu'un acteur peut faire ne constitue pas une propriété de son rôle : c'est une règle ODRL dans , et avant chaque tâche, l'exécuteur BPMN vérifie que l'acteur est authentifié, éligible au rôle du couloir, autorisé par la politique et habilité à toucher au contenu (, ticket #1207)."
 
-#: docs/publication-workflow.md:618
+#: docs/process/publication-workflow.md:618
 msgid "People"
 msgstr "Personnes"
 
-#: docs/publication-workflow.md:623
+#: docs/process/publication-workflow.md:623
 msgid "In the diagrams"
 msgstr "Dans les diagrammes"
 
-#: docs/publication-workflow.md:623
+#: docs/process/publication-workflow.md:623
 msgid "Actor"
 msgstr "Acteur"
 
-#: docs/publication-workflow.md:623
+#: docs/process/publication-workflow.md:623
 msgid "Authority"
 msgstr "Autorité"
 
-#: docs/publication-workflow.md:625
+#: docs/process/publication-workflow.md:625
 msgid "Creates and modifies content. Decides accept / revise / discard at the HCI gate. Inherits ."
 msgstr "Crée et modifie le contenu. Décide d'accepter / réviser / rejeter à la porte IHM. Hérite de ."
 
-#: docs/publication-workflow.md:626
+#: docs/process/publication-workflow.md:626
 msgid "Reviewer"
 msgstr "Relecteur"
 
-#: docs/publication-workflow.md:626
+#: docs/process/publication-workflow.md:626
 msgid "Views content and leaves review comments. Cannot make direct changes."
 msgstr "Consulte le contenu et dépose des commentaires de relecture. Ne peut pas apporter de modifications directes."
 
-#: docs/publication-workflow.md:627
+#: docs/process/publication-workflow.md:627
 msgid "Human / SME reviewer (editing)"
 msgstr "Relecteur humain / expert métier (édition)"
 
-#: docs/publication-workflow.md:627
+#: docs/process/publication-workflow.md:627
 msgid "Domain ground truth. Answers the judgement calls a review agent escalates."
 msgstr "Vérité terrain du domaine. Répond aux décisions nécessitant un discernement qu'un agent de relecture lui transmet."
 
-#: docs/publication-workflow.md:628
+#: docs/process/publication-workflow.md:628
 msgid "Review team (draft)"
 msgstr "Équipe de relecture (brouillon)"
 
-#: docs/publication-workflow.md:628
+#: docs/process/publication-workflow.md:628
 msgid "Formal approval and phase-gate sign-off — the approval authority on a draft."
 msgstr "Approbation formelle et validation de transition de phase — autorité d'approbation sur un brouillon."
 
-#: docs/publication-workflow.md:629
+#: docs/process/publication-workflow.md:629
 msgid "Publication-readiness QA across layers; runs the QA reports."
 msgstr "QA d'aptitude à la publication à travers les couches ; génère les rapports QA."
 
-#: docs/publication-workflow.md:630
+#: docs/process/publication-workflow.md:630
 msgid "Programme-area coordination and first-pass review."
 msgstr "Coordination du domaine de programme et relecture de premier niveau."
 
-#: docs/publication-workflow.md:631
+#: docs/process/publication-workflow.md:631
 msgid "Builds, versions, tags, deploys. Does not authorise the release."
 msgstr "Compile, versionne, étiquette, déploie. N'autorise pas la publication (release)."
 
-#: docs/publication-workflow.md:632
+#: docs/process/publication-workflow.md:632
 msgid "Scope, team, timeline, governance — and release authorisation."
 msgstr "Périmètre, équipe, calendrier, gouvernance — et autorisation de publication."
 
-#: docs/publication-workflow.md:633
+#: docs/process/publication-workflow.md:633
 msgid "Admin"
 msgstr "Administrateur"
 
-#: docs/publication-workflow.md:633
+#: docs/process/publication-workflow.md:633
 msgid "Full administrative access: roles, settings, all content."
 msgstr "Accès administratif complet : rôles, paramètres, l'ensemble du contenu."
 
-#: docs/publication-workflow.md:635
+#: docs/process/publication-workflow.md:635
 msgid "Domain-authoring roles that appear inside  rather than as their own lane:  (L2 DAK),  (L3 FHIR),  (code systems and value sets),  (localisation)."
 msgstr "Rôles de rédaction métier qui apparaissent au sein de  plutôt que dans leur propre couloir :  (DAK L2),  (FHIR L3),  (systèmes de codage et jeux de valeurs),  (localisation)."
 
-#: docs/publication-workflow.md:639
+#: docs/process/publication-workflow.md:639
 msgid "Agents and system actors"
 msgstr "Agents et acteurs système"
 
-#: docs/publication-workflow.md:644
+#: docs/process/publication-workflow.md:644
 msgid "What it does — and what it cannot do"
 msgstr "Ce qu'il fait — et ce qu'il ne peut pas faire"
 
-#: docs/publication-workflow.md:646
+#: docs/process/publication-workflow.md:646
 msgid "Drafts and revises a proposed change. Has ; does not commit — its output goes to the editor through the validation gate."
 msgstr "Rédige et révise une modification proposée. Possède  ; ne fait pas de commit — sa production est transmise à l'éditeur via la porte de validation."
 
-#: docs/publication-workflow.md:647
+#: docs/process/publication-workflow.md:647
 msgid "Review agent"
 msgstr "Agent de relecture"
 
-#: docs/publication-workflow.md:647
+#: docs/process/publication-workflow.md:647
 msgid "Non-mechanical validation: accuracy, voice, exposition. Has  only — it reports findings, it does not approve."
 msgstr "Validation non mécanique : exactitude, voix, exposition. Dispose uniquement de  — il signale des conclusions, il n'approuve pas."
 
-#: docs/publication-workflow.md:648
+#: docs/process/publication-workflow.md:648
 msgid "Lean 4 proof checking and diagnostics over MCP."
 msgstr "Vérification des preuves et diagnostics Lean 4 via MCP."
 
-#: docs/publication-workflow.md:649
+#: docs/process/publication-workflow.md:649
 msgid "FHIR IG Publisher build and QA reporting."
 msgstr "Compilation FHIR IG Publisher et génération des rapports QA."
 
-#: docs/publication-workflow.md:651
+#: docs/process/publication-workflow.md:651
 msgid "The distinction the diagrams enforce: an agent can propose and can report, but approval and commit are a person's. A review agent's finding and an SME's finding arrive at the same place in the pipeline — but neither of them decides; the editor does, and the release is authorised by the programme manager."
 msgstr "La distinction que les diagrammes imposent : un agent peut proposer et rendre compte, mais l'approbation et le commit relèvent d'une personne. La conclusion d'un agent de relecture et celle d'un expert métier arrivent au même endroit dans le pipeline — mais aucun des deux ne décide ; c'est l'éditeur qui décide, et la publication est autorisée par le gestionnaire de programme."
 
-#: docs/publication-workflow.md:656
+#: docs/process/publication-workflow.md:656
 msgid "For the full role list, their capabilities, and how a user is mapped to a role, see Skills & roles."
 msgstr "Pour la liste complète des rôles, leurs capacités et la manière dont un utilisateur est associé à un rôle, voir Compétences et rôles."
 
-#: docs/publication-workflow.md:661
+#: docs/process/publication-workflow.md:661
 msgid "Changing these diagrams"
 msgstr "Modifier ces diagrammes"
 
-#: docs/publication-workflow.md:666
+#: docs/process/publication-workflow.md:666
 msgid "The  files are the source of truth."
 msgstr "Les fichiers  constituent la source de vérité."
 
-#: docs/publication-workflow.md:676
+#: docs/process/publication-workflow.md:676
 msgid "renders each  with bpmn-js in headless Chromium and writes . If the sandbox ships a Chromium that does not match the pinned Playwright build, point at it with ."
 msgstr "effectue le rendu de chaque  avec bpmn-js dans un Chromium sans tête (headless) et écrit . Si le bac à sable fournit un Chromium ne correspondant pas à la version figée de Playwright, pointez vers lui avec ."
 
-#: docs/publication-workflow.md:681
+#: docs/process/publication-workflow.md:681
 msgid "When you add an activity, add its  extension (and  if it touches the work plan) and the matching row in the tables above — the diagram and the skill list drifting apart is the failure this page exists to prevent."
 msgstr "Lorsque vous ajoutez une activité, ajoutez son extension  (et  si elle touche au plan de travail) ainsi que la ligne correspondante dans les tableaux ci-dessus — la divergence entre le diagramme et la liste des compétences est précisément l'anomalie que cette page a pour vocation d'empêcher."
 
-#: docs/publication-workflow.md:686
+#: docs/process/publication-workflow.md:686
 msgid "Which diagrams are BPMN, and which are not"
 msgstr "Quels diagrammes sont en BPMN, et lesquels ne le sont pas"
 
-#: docs/publication-workflow.md:691
+#: docs/process/publication-workflow.md:691
 msgid "Every process in the docs is BPMN. The diagrams that remain Mermaid are not processes, and BPMN would be the wrong notation for them — a pool with lanes implies actors performing activities over time, which none of these have:"
 msgstr "Chaque processus de la documentation est en BPMN. Les diagrammes qui restent en Mermaid ne sont pas des processus, et BPMN serait une notation inadaptée pour eux — un pool avec des couloirs implique des acteurs exécutant des activités au fil du temps, ce qu'aucun d'eux ne comporte :"
 
-#: docs/publication-workflow.md:695
+#: docs/process/publication-workflow.md:695
 msgid "Notation"
 msgstr "Notation"
 
-#: docs/publication-workflow.md:695
+#: docs/process/publication-workflow.md:695
 msgid "Why"
 msgstr "Pourquoi"
 
-#: docs/publication-workflow.md:697
+#: docs/process/publication-workflow.md:697
 msgid ", home — \"What it does\""
 msgstr ", accueil — « Ce qu'il fait »"
 
-#: docs/publication-workflow.md:697
+#: docs/process/publication-workflow.md:697
 msgid "Mermaid"
 msgstr "Mermaid"
 
-#: docs/publication-workflow.md:697
+#: docs/process/publication-workflow.md:697
 msgid "Component / data-flow map of the platform, not a sequence of activities"
 msgstr "Cartographie des composants / flux de données de la plateforme, et non une séquence d'activités"
 
-#: docs/publication-workflow.md:698
+#: docs/process/publication-workflow.md:698
 msgid "Architecture — server and adapters"
 msgstr "Architecture — serveur et adaptateurs"
 
-#: docs/publication-workflow.md:698
+#: docs/process/publication-workflow.md:698
 msgid "Deployment and module structure"
 msgstr "Structure des modules et du déploiement"
 
-#: docs/publication-workflow.md:699
+#: docs/process/publication-workflow.md:699
 msgid "Skills & roles — how the five concepts compose"
 msgstr "Compétences et rôles — comment les cinq concepts s'articulent"
 
-#: docs/publication-workflow.md:699
+#: docs/process/publication-workflow.md:699
 msgid "Conceptual composition, no time axis"
 msgstr "Agencement conceptuel, aucun axe temporel"
 
-#: docs/publication-workflow.md:700
+#: docs/process/publication-workflow.md:700
 msgid "Skills & roles —"
 msgstr "Compétences et rôles —"
 
-#: docs/publication-workflow.md:700
+#: docs/process/publication-workflow.md:700
 msgid "An inheritance lattice, not a flow"
 msgstr "Un treillis d'héritage, et non un flux"
 
-#: docs/publication-workflow.md:701
+#: docs/process/publication-workflow.md:701
 msgid "Home — documentation map"
 msgstr "Accueil — plan de la documentation"
 
-#: docs/publication-workflow.md:701
+#: docs/process/publication-workflow.md:701
 msgid "Navigation graph"
 msgstr "Graphe de navigation"
 
-#: docs/publication-workflow.md:702
+#: docs/process/publication-workflow.md:702
 msgid "Adding a content type — \"What you provide\""
 msgstr "Ajouter un type de contenu — « Ce que vous fournissez »"
 
-#: docs/publication-workflow.md:702
+#: docs/process/publication-workflow.md:702
 msgid "What you hand over, not what you do"
 msgstr "Ce que vous transmettez, non ce que vous faites"
 
-#: docs/publication-workflow.md:703
+#: docs/process/publication-workflow.md:703
 msgid "Writing a paper — the Lean session"
 msgstr "Rédiger un article — la session Lean"
 
-#: docs/publication-workflow.md:703
+#: docs/process/publication-workflow.md:703
 msgid "An interaction transcript between you, the assistant and the MCP server. BPMN's equivalent — a collaboration with message flows — would add ceremony without adding meaning"
 msgstr "Une transcription d'interaction entre vous, l'assistant et le serveur MCP. L'équivalent BPMN — une collaboration avec des flux de messages — ajouterait du formalisme sans apporter de sens"
 
-#: docs/publication-workflow.md:705
+#: docs/process/publication-workflow.md:705
 msgid "If you add a diagram that does have actors, activities and a control flow, it belongs in  as BPMN, not in a Mermaid fence."
 msgstr "Si vous ajoutez un diagramme qui comporte effectivement des acteurs, des activités et un flux de contrôle, il a sa place dans  sous forme de BPMN, et non dans un bloc Mermaid."
 
-#: docs/publication-workflow.md:710
+#: docs/process/publication-workflow.md:710
 msgid "See also"
 msgstr "Voir aussi"
 
-#: docs/publication-workflow.md:715
+#: docs/process/publication-workflow.md:715
 msgid "Content types — the linear lifecycle and what each type produces"
 msgstr "Types de contenu — le cycle de vie linéaire et ce que chaque type produit"
 
-#: docs/publication-workflow.md:716
+#: docs/process/publication-workflow.md:716
 msgid "Skills & roles — every skill and role, and how they compose with the LLM"
 msgstr "Compétences et rôles — chaque compétence et rôle, et comment ils s'articulent avec le LLM"
 
-#: docs/publication-workflow.md:717
+#: docs/process/publication-workflow.md:717
 msgid "Skill schema reference — typed input/output per skill"
 msgstr "Référence des schémas de compétences — entrées/sorties typées par compétence"
 
-#: docs/publication-workflow.md:718
+#: docs/process/publication-workflow.md:718
 msgid "Agent onboarding — orientation for an agent dropped into a folio"
 msgstr "Intégration d'un agent — orientation pour un agent introduit dans un folio"
 
@@ -728,56 +728,56 @@ msgstr "Intégration d'un agent — orientation pour un agent introduit dans un 
 #~ msgid "TR"
 #~ msgstr "TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/overview.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/overview.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/overview.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/overview.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
 
 #~ msgid "Five independent jobs, and nothing in the YAML says so in one place. No job declares , so the workflow's wall-clock cost is the slowest job rather than the sum — the single most useful thing to know before adding a gate. Four are hard and one () is warn-only, so the gateway after the join asks specifically about the HARD ones; drawing five equal boxes would be a lie a reader would act on"
 #~ msgstr "Cinq jobs indépendants, et rien dans le YAML ne l'indique en un lieu unique. Aucun job ne déclare de clause , de sorte que la durée d'exécution réelle du flux correspond au job le plus lent plutôt qu'à la somme — l'information la plus utile à connaître avant d'ajouter une porte de contrôle. Quatre sont stricts et un () est un simple avertissement, si bien que la passerelle après la jonction porte spécifiquement sur les contrôles STRICTS ; dessiner cinq boîtes équivalentes constituerait un mensonge sur lequel le lecteur s'appuierait"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/they-also-run.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/they-also-run.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/they-also-run.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/they-also-run.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/some-decisions-are-computed-not-judged.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/some-decisions-are-computed-not-judged.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/some-decisions-are-computed-not-judged.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/some-decisions-are-computed-not-judged.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-base-processes-are-strict.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-base-processes-are-strict.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/the-base-processes-are-strict.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/the-base-processes-are-strict.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/how-to-read-them.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/how-to-read-them.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/how-to-read-them.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/how-to-read-them.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/the-one-rule-this-diagram-exists-to-state.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/the-one-rule-this-diagram-exists-to-state.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/mechanical-vs-non-mechanical-validation.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/mechanical-vs-non-mechanical-validation.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/activities-and-the-skills-that-implement-them.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/activities-and-the-skills-that-implement-them.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-work-plan-tasks-as-beans.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-work-plan-tasks-as-beans.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/the-work-plan-tasks-as-beans.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/the-work-plan-tasks-as-beans.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/who-is-who.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/who-is-who.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/who-is-who.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/who-is-who.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/people.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/people.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/people.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/people.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/agents-and-system-actors.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/agents-and-system-actors.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/agents-and-system-actors.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/agents-and-system-actors.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/changing-these-diagrams.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/changing-these-diagrams.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/changing-these-diagrams.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/changing-these-diagrams.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md\" } QA… TR"
 
-#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/see-also.md\" } QA… TR"
-#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/see-also.md\" } QA… TR"
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/see-also.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/process-publication-workflow/see-also.md\" } QA… TR"
 
 #~ msgid "How many BPMN 2.0 files are there? This page no longer says, and that is the fix rather than an evasion."
 #~ msgstr "Combien y a-t-il de fichiers BPMN 2.0 ? Cette page ne l'indique plus, et c'est là une correction plutôt qu'une dérobade."

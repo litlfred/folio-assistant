@@ -287,7 +287,7 @@ test.describe("the page-level translation badge joins the badge row", () => {
       $schema: "qa-witness/v1",
       family: "translation",
       subject: "Harness — translations",
-      sidecars: ["content/docs/harness/overview.fr.translation-qa.json"],
+      sidecars: ["content/docs/concepts-harness/overview.fr.translation-qa.json"],
       state: "warn",
       counts: { fail: 0, warn: 1, pass: 2, na: 0, unknown: 1 },
       criteria: [

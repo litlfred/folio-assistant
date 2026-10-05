@@ -300,7 +300,7 @@ activity.
 
 The engine checks **before** a step. An agent swarm acts first, so the same
 policy is checked **after**, from the record (issue #1180, step 5;
-`content/docs/agentic-harness/bpmn-execution.md`).
+`content/docs/concepts-agentic-harness/bpmn-execution.md`).
 `scripts/prov-qaqc.ts` reads every instance in `beans/workflows/`, including
 its subprocesses, and for each history entry on an activity or decision:
 

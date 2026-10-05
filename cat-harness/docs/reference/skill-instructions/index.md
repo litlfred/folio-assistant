@@ -14,7 +14,7 @@ published reference always matches what the agent actually reads.
 
 For each skill's *typed input/output contract*, see the
 [Skill schema reference](../skills/); for the conceptual overview of skills,
-roles, and how they compose with the LLM, see [Skills & roles](../../skills.html).
+roles, and how they compose with the LLM, see [Skills & roles](../../concepts/skills.html).
 
 ## Content authoring and editorial review (authoring-core)
 

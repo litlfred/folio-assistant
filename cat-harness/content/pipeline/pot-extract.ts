@@ -168,7 +168,7 @@ const MD_KRAMDOWN_CONSUMING_RE = /^\{:\s*toc\s*\}$/;
  * This was `text.length >= 3` until 2026-09-26, which made translatability a
  * property of the locale's script rather than of the content. Bean `6b8u`.
  *
- * The mechanism, on a real cell of `docs/installation.md` — after
+ * The mechanism, on a real cell of `docs/start/installation.md` — after
  * {@link cleanMarkdownText} strips the code spans:
  *
  * | | cell | residue | extracted at `length >= 3`? |
@@ -225,7 +225,7 @@ export function isTranslatable(text: string): boolean {
   // Measured over 660 files / 46 800 msgids before the change: this admits
   // **exactly two strings, four times each** — `是` and `否`, in yes/no cells of
   // comparison tables in `docs/guides/zh/agent-onboarding.md`,
-  // `docs/zh/document-ingestion.md` and `docs/zh/getting-started.md`. Eight cells.
+  // `docs/zh/guides/document-ingestion.md` and `docs/zh/start/getting-started.md`. Eight cells.
   //
   // **It does not improve alignment, and must never be cited as if it did.**
   // `derive-po` reports 57 derived / 13 refused either way, with an identical
