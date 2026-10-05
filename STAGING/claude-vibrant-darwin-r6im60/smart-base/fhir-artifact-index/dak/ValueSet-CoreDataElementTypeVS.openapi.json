@@ -1,0 +1,50 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Core Data Element Type Value Set Schema API",
+    "description": "JSON Schema for Core Data Element Type Value Set ValueSet codes. Generated from FHIR expansions using IRI format.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-CoreDataElementTypeVS.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-CoreDataElementTypeVS",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-CoreDataElementTypeVS.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-CoreDataElementTypeVS",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-CoreDataElementTypeVS.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-CoreDataElementTypeVS": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/ValueSet-CoreDataElementTypeVS.schema.json",
+        "title": "Core Data Element Type Value Set Schema",
+        "description": "JSON Schema for Core Data Element Type Value Set ValueSet codes. Generated from FHIR expansions using IRI format.",
+        "type": "string",
+        "enum": [
+          "http://smart.who.int/base/CodeSystem/CoreDataElementType#valueset",
+          "http://smart.who.int/base/CodeSystem/CoreDataElementType#codesystem",
+          "http://smart.who.int/base/CodeSystem/CoreDataElementType#conceptmap",
+          "http://smart.who.int/base/CodeSystem/CoreDataElementType#logicalmodel"
+        ],
+        "narrative": "This schema validates IRI-formatted codes for the Core Data Element Type Value Set ValueSet. Each enum value includes the system URI in the format {systemuri}#{code} to match JSON-LD enumeration IRIs. Display values are available at http://smart.who.int/base/ValueSet-CoreDataElementTypeVS.displays.json. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/base/ValueSet-CoreDataElementTypeVS.displays.json",
+        "fhir:valueSet": "http://smart.who.int/base/ValueSet/CoreDataElementTypeVS",
+        "fhir:version": "0.3.0",
+        "fhir:expansionTimestamp": "2026-08-26T08:29:22.807417"
+      }
+    }
+  }
+}
