@@ -704,7 +704,10 @@ renderAll();
 
 function init(doc) {
   loaded = doc;
-  G = doc["@graph"] ?? [];
+  // A TOMBSTONE is a forwarding address, not a node (bean \`4ak5\` item 2,
+  // for one release): it has no type, and the export leaves it out of
+  // \`counts\` for the same reason it is left out here.
+  G = (doc["@graph"] ?? []).filter((n) => n.deprecated !== true);
   const ctx = doc["@context"] ?? {};
   declared = new Set(Object.keys(ctx).filter((k) => !k.startsWith("@")));
   for (const [k, v] of Object.entries(ctx)) {

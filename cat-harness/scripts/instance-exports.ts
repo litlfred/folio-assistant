@@ -60,10 +60,14 @@ export interface PublishedElsewhere {
 /** Keyed by declared stub (`artefactStub`), not by path: declaration over location. */
 export const PUBLISHED_ELSEWHERE: Readonly<Record<string, PublishedElsewhere>> = {
   "cat-harness": {
-    publisher: /kg-export\.ts\s+(?:--base-url\s+\S+\s+)?--out\s+"\.\/_site\/\$\{STUB\}\.jsonld"/,
+    // `--scope instance` is optional because it is the default, and is the
+    // only scope accepted: `--scope checkout` would publish every stacked
+    // instance's nodes under this name again, so it does not match.
+    publisher: /kg-export\.ts\s+(?:--base-url\s+\S+\s+)?(?:--scope\s+instance\s+)?--out\s+"\.\/_site\/\$\{STUB\}\.jsonld"/,
     why:
       "the host: published at the site root as `<stub>.jsonld`, the address every published `@id` names. " +
-      "Moving it is bean `4ak5` item 2 (the split), which keeps the old URL for a release",
+      "Built in instance scope since bean `4ak5` item 2 (the split): its own directories only, with a " +
+      "tombstone for one release at each `@id` that moved to its owner's document",
   },
   "folio-assistant": {
     publisher: /kg-export\.ts\s+--instance\s+\.\s/,
@@ -89,6 +93,17 @@ export interface PlannedExport {
    * Its own address is the honest one in every build.
    */
   ownCanonical: boolean;
+}
+
+/**
+ * Does this instance mint its `@id`s against its OWN `canonicalUrl`? Then the
+ * deploy passes it no `--base-url` ({@link PlannedExport.ownCanonical}), and
+ * anything that names a node in its published document — `kg-export`'s
+ * tombstones and re-homed skill links (bean `4ak5` item 2) — must mint the
+ * same way, or it names a document nobody writes.
+ */
+export function declaresOwnCanonical(decl: { canonicalUrl?: string } | undefined): boolean {
+  return typeof decl?.canonicalUrl === "string" && decl.canonicalUrl !== "";
 }
 
 /** Every declared instance's stub, readable declarations only. */
@@ -119,7 +134,7 @@ export function instanceExportPlan(repo: string = REPO): PlannedExport[] {
       const d = readDeclaration(abs);
       if (!d) continue;
       stub = artefactStub(d);
-      ownCanonical = typeof d.canonicalUrl === "string" && d.canonicalUrl !== "";
+      ownCanonical = declaresOwnCanonical(d);
     } catch {
       continue;
     }

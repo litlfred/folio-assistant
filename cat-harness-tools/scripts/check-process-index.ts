@@ -32,8 +32,8 @@
  * holds a documented Process node for it, keyed by its `source` IRI (those
  * files carry no `sourcePath`). An unframed instance with no such link is
  * LISTED as not covered, with the reason, and never folded into a clean
- * total. Which instances are unframed is computed (`kgDirectories` over the
- * corpus `kg-export` reads), not named here.
+ * total. Which instances are unframed is computed (`framedInstances`, the
+ * generator's own answer), not named here.
  *
  * Staleness (the files differ from what the generator writes now) is
  * `subgraph:jsonld:check`'s, not this gate's.
@@ -49,10 +49,10 @@ import { HARNESS_ROOT } from "./lib/roots.ts";
 import { existsSync, readFileSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 
-import { corpusScopeFor, kgDirectories, workflowFiles } from "../../cat-harness/scripts/known-skills.ts";
+import { workflowFiles } from "../../cat-harness/scripts/known-skills.ts";
 import { SubgraphHydratedSchema, SubgraphIndexSchema, SUBGRAPH_HYDRATED_FILE, SUBGRAPH_INDEX_FILE } from "../../cat-harness/schemas/subgraph-manifest.ts";
-import { findInstanceRoot, instanceRootsIn, readDeclaration, repoRootFor, siteDirFor } from "../../cat-harness/schemas/cat-harness.ts";
-import { subgraphOutDir } from "../../cat-harness/scripts/gen-subgraph-jsonld.ts";
+import { instanceRootsIn, readDeclaration, repoRootFor, siteDirFor } from "../../cat-harness/schemas/cat-harness.ts";
+import { framedInstances as framedRoots, subgraphOutDir } from "../../cat-harness/scripts/gen-subgraph-jsonld.ts";
 import { readKnowledgeGraphDeclaration } from "../../bootstrap-tools/schemas/declaration.ts";
 import { buildSubgraphs, publicationBase } from "../../bootstrap-tools/scripts/subgraph-jsonld.ts";
 
@@ -77,14 +77,35 @@ export function declaredDiagrams(repoRoot: string = REPO): Map<string, string> {
   return out;
 }
 
-/** The instance roots whose knowledge-graph directories this graph frames — the corpus `kg-export` reads. */
+/**
+ * The instance roots whose knowledge-graph directories this graph frames —
+ * `gen-subgraph-jsonld`'s own answer, so the gate and the generator cannot
+ * disagree about which diagrams are covered.
+ */
 export function framedInstances(root: string = ROOT): Set<string> {
-  const out = new Set<string>();
-  for (const d of kgDirectories(root, corpusScopeFor(root))) {
-    const inst = findInstanceRoot(d.absPath);
-    if (inst !== undefined) out.add(resolve(inst));
+  return new Set(framedRoots(root));
+}
+
+/** Each repository's instances by declared name, read once per run. */
+const instanceByName = new Map<string, Map<string, string>>();
+
+/**
+ * A published Process's diagram, repository-relative. Its `sourcePath` is
+ * relative to the instance that EXPORTED it — the one whose tree it is in,
+ * named by `harness` — since each instance is framed from its own export
+ * (bean `4ak5` item 2). It was relative to this instance while one
+ * checkout-scope export carried every framed instance's processes.
+ */
+export function diagramPath(p: PublishedProcess, repoRoot: string = REPO): string {
+  let byName = instanceByName.get(repoRoot);
+  if (byName === undefined) {
+    byName = new Map(instanceRootsIn(repoRoot).flatMap((r) => {
+      const name = readDeclaration(r)?.name;
+      return name === undefined ? [] : [[name, r] as const];
+    }));
+    instanceByName.set(repoRoot, byName);
   }
-  return out;
+  return relative(repoRoot, resolve(byName.get(p.harness) ?? ROOT, p.sourcePath)).split(sep).join("/");
 }
 
 /** A Process node as the gate reads it, with the instance tree it was found in. */
@@ -197,10 +218,9 @@ if (import.meta.main) {
   const framed = framedInstances();
   const unframed = unframedProcesses(seeAlso, framed);
   problems.push(...unframed.problems);
-  // A node's `sourcePath` is relative to the instance that EXPORTED it — this one.
   const byPath = new Map<string, PublishedProcess>();
   for (const p of processes) {
-    const path = repoRel(resolve(ROOT, p.sourcePath));
+    const path = diagramPath(p);
     if (byPath.has(path)) problems.push(`two Process nodes for one diagram: ${path}`);
     byPath.set(path, p);
     if (!declared.has(path)) problems.push(`a Process node for an undeclared diagram: ${path} (${p.id})`);

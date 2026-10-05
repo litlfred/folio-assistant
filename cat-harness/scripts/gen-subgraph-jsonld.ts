@@ -23,12 +23,23 @@
  * - A node with no path is a member of whatever subgraph its `partOf` parent
  *   is in — a ProcessNode is part of a diagram, not a file. The same rule
  *   `stampSubgraph` uses for `inSubgraph`, to a fixed point.
- * - A node the export OVERLAYS from an instance stacked on this one lands in
- *   that instance's own tree, `<BASE_URL>/subgraph/<ITS NAME>/…`, by the same
- *   containment rule over its declared directories (bean `ax6r`) — a path
- *   outside them falls to that instance's root.
+ * - A node of an instance stacked on this one lands in that instance's own
+ *   tree, `<BASE_URL>/subgraph/<ITS NAME>/…`, by the same containment rule
+ *   over its declared directories (bean `ax6r`) — a path outside them falls
+ *   to that instance's root.
  * - Everything else — schemas, tools, roles, graph kinds — is a direct member
- *   of this harness's ROOT.
+ *   of its own harness's ROOT.
+ *
+ * ## Each instance is framed from its OWN export (bean `4ak5` item 2)
+ *
+ * Since the split, `cat-harness.jsonld` holds cat-harness's directories only,
+ * so a stacked instance's nodes are read from that instance's export, under
+ * the `@id`s its published document gives them — never under
+ * `cat-harness.jsonld#…` fragments, which are tombstones now and are not
+ * framed. Which instances are framed is {@link framedInstances}: the corpus
+ * this instance's checkout scope reaches, as before. A node's paths are
+ * relative to the instance that exported it, so the plan is told which one
+ * (`rootOf`).
  *
  * Above every root is the REPOSITORY's index, `<BASE_URL>/subgraph/`, whose
  * `hasSubgraph` are the roots framed here. `bootstrap` and `bootstrap-tools`
@@ -195,6 +206,32 @@ export function planPayloads(graph: Node[], opts: { root: string; baseUrl: strin
   return { payloads, links, problems };
 }
 
+/**
+ * Several instances' payload plans as one: a body two instances share is ONE
+ * payload, referenced from both — the same rule {@link planPayloads} applies
+ * inside one graph, and the same refusal when the media types disagree.
+ */
+export function mergePayloadPlans(plans: readonly PayloadPlan[]): PayloadPlan {
+  const payloads = new Map<string, PayloadEntry>();
+  const links = new Map<string, PayloadLink>();
+  const problems: string[] = [];
+  for (const pp of plans) {
+    problems.push(...pp.problems);
+    for (const [id, link] of pp.links) links.set(id, link);
+    for (const [hex, e] of pp.payloads) {
+      const prior = payloads.get(hex);
+      if (prior === undefined) { payloads.set(hex, { ...e, referencedBy: [...e.referencedBy] }); continue; }
+      if (prior.mediaType !== e.mediaType) {
+        problems.push(`payload ${hex} is ${prior.mediaType} for ${prior.referencedBy[0]} but ${e.mediaType} for ${e.referencedBy[0]}`);
+        continue;
+      }
+      prior.referencedBy.push(...e.referencedBy);
+    }
+  }
+  for (const e of payloads.values()) e.referencedBy.sort();
+  return { payloads, links, problems };
+}
+
 /** A sidecar's bytes — canonical, so a re-run writes the same file. */
 export function payloadSidecar(e: PayloadEntry): string {
   return `${JSON.stringify({ $schema: PAYLOAD_SIDECAR_SCHEMA, bytes: e.bytes.length, mediaType: e.mediaType, sha256: e.sha256 }, null, 2)}\n`;
@@ -352,6 +389,23 @@ export interface SubgraphPlan {
   problems: string[];
 }
 
+/**
+ * The instances this build frames, this one first: every instance whose
+ * knowledge-graph directories the checkout scope reaches from `root` — the
+ * corpus `kg-export` read in one document before the split, and each now read
+ * from its own. `check:process-index` asks the same function, so the gate and
+ * the generator cannot disagree about which diagrams are covered.
+ */
+export function framedInstances(root: string = ROOT): string[] {
+  const own = resolve(root);
+  const out = new Set<string>();
+  for (const d of kgDirectories(root, corpusScopeFor(root))) {
+    const inst = findInstanceRoot(d.absPath);
+    if (inst !== undefined && resolve(inst) !== own) out.add(resolve(inst));
+  }
+  return [own, ...[...out].sort()];
+}
+
 const PATH_KEYS = ["instructionsPath", "module", "sourcePath", "path"] as const;
 
 function pathOf(n: Node): string | undefined {
@@ -386,7 +440,19 @@ function gitDirs(abs: string, rel: string): string[] | undefined {
 /** Decide every subgraph and every node's place in one of them. Pure over `graph`. */
 export function planSubgraphs(
   graph: Node[],
-  opts: { root: string; harness: string; baseUrl: string; title?: string },
+  opts: {
+    root: string;
+    harness: string;
+    baseUrl: string;
+    title?: string;
+    /**
+     * The instance root a node was EXPORTED from, by `@id` — what its paths
+     * are relative to, and whose harness root a node with no path and no
+     * parent falls to. Absent → `root`, which is every node of a one-instance
+     * graph.
+     */
+    rootOf?: ReadonlyMap<string, string>;
+  },
 ): SubgraphPlan {
   const base = opts.baseUrl.replace(/\/+$/, "");
   const rootIri = `${base}/subgraph/${opts.harness}/`;
@@ -492,6 +558,10 @@ export function planSubgraphs(
     const inst = findInstanceRoot(abs);
     return (inst !== undefined && harnessRoots.get(resolve(inst))) || root;
   };
+  /** Where a node's paths are relative to: the instance that exported it. */
+  const exportedFrom = (id: string): string => resolve(opts.rootOf?.get(id) ?? opts.root);
+  /** A node with no path and no parent: its own instance's root. */
+  const homeOf = (id: string): SubgraphEntry => harnessRoots.get(exportedFrom(id)) ?? root;
 
   // Place by path.
   const placed = new Map<string, SubgraphEntry>();
@@ -499,7 +569,7 @@ export function planSubgraphs(
     const id = String(n["@id"]);
     const p = pathOf(n);
     if (p === undefined) continue;
-    const abs = resolve(opts.root, p);
+    const abs = resolve(exportedFrom(id), p);
     const top = kgTops.find((t) => slash(abs).startsWith(t.abs));
     if (top === undefined) { placed.set(id, rootFor(abs)); continue; }
     if (!existsSync(abs)) { problems.push(`${id}: source path ${p} is inside ${top.entry.harness}/${top.entry.rel} but not on disk`); continue; }
@@ -517,7 +587,7 @@ export function planSubgraphs(
       const id = String(n["@id"]);
       if (placed.has(id) || pathOf(n) !== undefined) continue;
       const parent = Array.isArray(n.partOf) ? n.partOf[0] : n.partOf;
-      if (typeof parent !== "string") { placed.set(id, root); moved += 1; continue; }
+      if (typeof parent !== "string") { placed.set(id, homeOf(id)); moved += 1; continue; }
       if (!nodes.has(parent)) continue;
       const e = placed.get(parent);
       if (e) { placed.set(id, e); moved += 1; }
@@ -752,10 +822,31 @@ export async function generateSubgraphs(
   if (!decl) throw new Error(`gen-subgraph-jsonld: no declaration under ${root}`);
   const baseUrl = opts.baseUrl ?? decl.canonicalUrl;
   if (!baseUrl) throw new Error(`gen-subgraph-jsonld: ${decl.name} declares no canonicalUrl and no --base-url was given`);
-  const data = await buildExport({ instanceRoot: root });
-  // Payloads first, so every node carries its link into both frames.
-  const payloadPlan = planPayloads(data["@graph"] as Node[], { root, baseUrl });
-  const graph = (data["@graph"] as Node[]).map((n) => {
+  // ONE EXPORT PER FRAMED INSTANCE, each in its own scope (bean `4ak5` item
+  // 2): the host's is the published document, the others are the documents
+  // `instance-exports.ts` publishes. No `baseUrl`, as before: the IRIs are
+  // canonical whatever site this tree is built for. A tombstone is the host
+  // document's forwarding address for a node framed here under its owner's
+  // `@id`, so it is not framed itself. An `@id` two exports share (a graph
+  // kind is a vocabulary IRI, not a document fragment) is placed once, from
+  // the first — the host.
+  const exported: Node[] = [];
+  const rootOf = new Map<string, string>();
+  const payloadPlans: PayloadPlan[] = [];
+  const exportProblems: string[] = [];
+  for (const inst of framedInstances(root)) {
+    const data = await buildExport({ instanceRoot: inst, scope: "instance" });
+    const name = readDeclaration(inst)?.name ?? basename(inst);
+    for (const p of data.problems) exportProblems.push(`kg-export (${name}): ${p}`);
+    const own = (data["@graph"] as Node[]).filter((n) => n.deprecated !== true && !rootOf.has(String(n["@id"])));
+    for (const n of own) rootOf.set(String(n["@id"]), inst);
+    exported.push(...own);
+    // Payloads first, so every node carries its link into both frames — each
+    // against the instance its paths are relative to.
+    payloadPlans.push(planPayloads(own, { root: inst, baseUrl }));
+  }
+  const payloadPlan = mergePayloadPlans(payloadPlans);
+  const graph = exported.map((n) => {
     const link = payloadPlan.links.get(String(n["@id"]));
     return link ? { ...n, payload: link } : n;
   });
@@ -764,8 +855,9 @@ export async function generateSubgraphs(
     harness: decl.name,
     baseUrl,
     title: decl.title,
+    rootOf,
   });
-  for (const p of data.problems) plan.problems.push(`kg-export: ${p}`);
+  plan.problems.push(...exportProblems);
   for (const p of payloadPlan.problems) plan.problems.push(`payload: ${p}`);
   const outDir = subgraphOutDir(root);
   const files = await renderSubgraphFiles(plan, decl.name, outDir);

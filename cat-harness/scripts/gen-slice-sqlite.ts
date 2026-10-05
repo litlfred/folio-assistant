@@ -989,7 +989,12 @@ export const KG_SLICE: SliceDef = {
   },
   async load() {
     const { buildExport } = await import("./kg-export.ts");
-    const data = await buildExport({ instanceRoot: INSTANCE_ROOT });
+    // `checkout`, deliberately: this slice is the CORPUS's search, every
+    // instance stacked on this one included, as it was before the published
+    // document split (bean `4ak5` item 2). A stacked instance's node keeps
+    // this document's `@id`, which the published document answers with a
+    // tombstone forwarding to its owner's — so a result still resolves.
+    const data = await buildExport({ instanceRoot: INSTANCE_ROOT, scope: "checkout" });
     const baseUrl = canonicalBase();
     // The SAME plan `gen-subgraph-jsonld` writes the committed payloads from.
     const plan = planPayloads(data["@graph"] as Parameters<typeof planPayloads>[0], { root: INSTANCE_ROOT, baseUrl });
