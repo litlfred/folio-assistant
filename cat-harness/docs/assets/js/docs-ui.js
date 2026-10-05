@@ -11153,7 +11153,15 @@
   }
 
   function mountNavIconRow() {
-    var bar = document.querySelector(".side-bar");
+    // EITHER NAVBAR, ONE ROW — bean `wckf` (#2147), owner 2026-10-05: *"still
+    // no LHS icons top navbar on who-iris page"*, and then *"this should be a
+    // common navbar functionality in harness"* (bean `9rq1`). This bound
+    // `.side-bar` only, so every page railed by `lib/navbar.ts` — the who-iris
+    // replicas, the standalone viewers — had the harness's navbar without the
+    // harness's row. `injectRail` now writes the same `#fa-navbar-row` the
+    // theme writes, and this draws it into whichever navbar the page has. The
+    // theme's sidebar first: a page carries one or the other, never both.
+    var bar = document.querySelector(".side-bar") || document.querySelector("nav.fa-nav");
     if (!bar || bar.querySelector(".fa-nav-icons")) return;
     var row = readNavbarRow();
     if (row === undefined) return;
@@ -11319,8 +11327,14 @@
     host.appendChild(scheme);
 
     // AFTER the header: line 1 is the avatar and the name, line 2 is this.
+    // On the rail the row goes straight under its fixed top — the mark, the
+    // instance's root and the page's own section — inside `.fa-nav-in`, whose
+    // OPEN width every rail child keeps (`navbarCss`). On the theme's sidebar,
+    // under `.site-header`, as before.
+    var railTop = bar.matches("nav.fa-nav") ? bar.querySelector(".fa-nav-in > .fa-nav-top") : null;
     var header = bar.querySelector(".site-header");
-    if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
+    if (railTop) railTop.parentNode.insertBefore(host, railTop.nextSibling);
+    else if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
     else bar.appendChild(host);
 
     holdStripForTips(bar, host);

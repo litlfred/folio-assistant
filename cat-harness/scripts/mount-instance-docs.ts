@@ -601,6 +601,26 @@ export function instantiatedHarnesses(built: string, toRoot: string): NavItem[] 
 }
 
 /**
+ * The harness's navbar ROW — the icon row — read off the same
+ * `_data/harness.json` every other rail input comes from, under `navbar`,
+ * which is exactly what the Jekyll sidebar's `#fa-navbar-row` carries (bean
+ * `wckf`, #2147). See `RailOptions.navbarRow` for the three states:
+ * `undefined` when the file cannot say, `null` when it says "none".
+ */
+export function navbarRowData(built: string): unknown {
+  const prefix = publishedDocsPrefix(REPO, built);
+  if (prefix === undefined) return undefined;
+  const data = join(REPO, prefix, "_data", "harness.json");
+  if (!existsSync(data)) return undefined;
+  try {
+    const d = JSON.parse(readFileSync(data, "utf-8")) as { navbar?: unknown };
+    return "navbar" in d ? (d.navbar ?? null) : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
  * The NAMES the rail shows, read off the same `_data/harness.json` every other
  * surface reads: the harness's own display name (`C@T Harness`, for the header
  * and the rows' descriptions) and the site's title (for the home row).
@@ -777,6 +797,7 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
         ...(root[0] ? { root: root[0] } : {}),
         links,
         ...(harnesses ? { harnesses } : {}),
+        navbarRow: navbarRowData(built),
       });
       if (after === undefined) {
         skipped.push(file.slice(siteAbs.length + 1));
@@ -957,6 +978,7 @@ export function railStandalonePages(
         ...(mark ? { mark } : {}),
         links,
         ...(harnesses ? { harnesses } : {}),
+        navbarRow: navbarRowData(built),
       });
       if (after === undefined) {
         skipped.push(rel);
