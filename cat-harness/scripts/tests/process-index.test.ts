@@ -19,6 +19,7 @@ import { declaredDiagrams, framedInstances, publishedProcesses, unframedProcesse
 import { firstSentence } from "../kg-export.ts";
 import { subgraphOutDir } from "../gen-subgraph-jsonld.ts";
 import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.ts";
+import { inAggregate } from "../../test/support/checkout.ts";
 
 const HARNESS = resolve(import.meta.dir, "../..");
 const REPO = repoRootFor(HARNESS);
@@ -154,7 +155,11 @@ describe("the committed subgraph JSON-LD", () => {
   test("every file the walk reaches exists and validates", () => {
     expect(problems).toEqual([]);
   });
-  test("every diagram an instance in this graph declares is a Process node, and nothing else is", () => {
+  // The committed JSON-LD is generated in the AGGREGATE and frames the higher
+  // instances' diagrams too; cat-harness run as its own clone declares none of
+  // them, so the comparison has one side only there. Skipped, not passed, until
+  // the outputs are self-contained (bean `vj2p`; `ho66`).
+  test.skipIf(!inAggregate())("every diagram an instance in this graph declares is a Process node, and nothing else is", () => {
     const want = [...declared].filter(([, inst]) => framed.has(inst)).map(([p]) => p).sort();
     expect(processes.map((p) => pathOf(p.sourcePath)).sort()).toEqual(want);
   });
