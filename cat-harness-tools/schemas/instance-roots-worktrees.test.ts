@@ -111,6 +111,33 @@ describe("instanceRootsIn with git worktrees present", () => {
   });
 });
 
+describe("sibling clones in a plain directory — the separated layout (ho66)", () => {
+  test("every clone is an instance when no checkout encloses them", () => {
+    // The standalone rehearsal lays each layer out as its own `git init`ed
+    // clone side by side in a temp directory, which is also what separated
+    // repositories look like on disk. g43f's foreign-checkout filter dropped
+    // every one of them, so `needs` resolved to nothing (2026-10-05).
+    const plain = mkdtempSync(join(tmpdir(), "ho66-siblings-"));
+    try {
+      for (const name of ["lower", "upper"]) {
+        mkdirSync(join(plain, name));
+        declareInstance(join(plain, name), name);
+        git(join(plain, name), "init", "-q");
+      }
+      expect(instanceRootsIn(plain)).toEqual([join(plain, "lower"), join(plain, "upper")]);
+      expect(instanceRootsIn(siblingScopeFor(join(plain, "upper")))).toContain(join(plain, "lower"));
+    } finally {
+      rmSync(plain, { recursive: true, force: true });
+    }
+  });
+
+  test("inside a checkout, a clone is still foreign", () => {
+    // `.claude/worktrees/` sits inside the main checkout, so the escape test
+    // above keeps holding; pinned here beside the case it must not swallow.
+    expect(instanceRootsIn(join(checkout, ".claude", "worktrees"))).toEqual([]);
+  });
+});
+
 describe("checkoutRootFor — repository-level reads stay inside the checkout (g43f)", () => {
   test("THIS checkout — the main one or a nested agent worktree — answers itself", () => {
     const here = resolve(import.meta.dir, "..", "..");
