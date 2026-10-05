@@ -1,0 +1,50 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/authoring-math/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-math",
+      "@type": "cat-harness:SkillPackage",
+      "name": "authoring-math"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/latex-authoring",
+      "@type": "bootstrap:Skill",
+      "name": "latex-authoring",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a9ec4998b03612f940ba38340df71ba4e20373e951f9cdae4a69e2c028aa1816",
+        "bytes": 2836,
+        "sha256": "a9ec4998b03612f940ba38340df71ba4e20373e951f9cdae4a69e2c028aa1816"
+      },
+      "title": "latex-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lean-formalization",
+      "@type": "bootstrap:Skill",
+      "name": "lean-formalization",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/93d655e6df349b12f8559425fc30283b699be6b9f4f7712544649ef28972b16f",
+        "bytes": 4996,
+        "sha256": "93d655e6df349b12f8559425fc30283b699be6b9f4f7712544649ef28972b16f"
+      },
+      "title": "lean-formalization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/proof-verification",
+      "@type": "bootstrap:Skill",
+      "name": "proof-verification",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c3a6213453e89bd7f7e9be06b83ee3c960e111200437a2a5513e9082be3e4a68",
+        "bytes": 3301,
+        "sha256": "c3a6213453e89bd7f7e9be06b83ee3c960e111200437a2a5513e9082be3e4a68"
+      },
+      "title": "proof-verification"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/content/authoring-math",
+  "path": "skills/content/authoring-math/"
+}
