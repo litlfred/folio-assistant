@@ -33,7 +33,7 @@
  *
  * ## The file is the node, as JSON
  *
- * `<feedback dir>/<id>.json`: one `folio-review-comment/v1` node, the same
+ * `<feedback dir>/<id>.json`: one `review-comment/1.0.0` node, the same
  * object `review-comments.json` carries. It is not Markdown, because the
  * todo reader's front-matter parser is flat and a review comment carries a
  * nested `review` field. One format for the kind, wherever it is stored.
@@ -101,7 +101,7 @@ export function readCommitted(dir: string): Map<string, ReviewComment> {
   for (const f of new Bun.Glob("*.json").scanSync(dir)) {
     const raw = JSON.parse(readFileSync(join(dir, f), "utf-8")) as { $schema?: unknown };
     // Declaration over location: the directory may hold other feedback.
-    if (raw.$schema !== "folio-review-comment/v1") continue;
+    if (raw.$schema !== "review-comment/1.0.0") continue;
     const c = ReviewCommentSchema.parse(raw);
     out.set(c.id, c);
   }

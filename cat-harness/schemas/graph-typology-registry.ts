@@ -969,6 +969,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       "folio-qa-graph/v1": { shape: "content/pipeline/qa-graph-index.ts#QaGraphIndex" },
       "folio-translation-index/v1": { shape: "content/pipeline/translation-index.ts#TranslationIndex" },
       "folio-bean-index/v1": { generated: true },
+      "node-kind-index/1.0.0": { generated: true },
       "folio-translation-status/v1": { generated: true },
       "folio-schema-graph/v1": { generated: true },
       "folio-library-index/v1": { generated: true },
@@ -1903,7 +1904,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   },
   "todo-items": {
     description:
-      "todo nodes — one file each, `\"$schema\": \"folio-todo/v1\"`. Authored by people, and by agents on their behalf.",
+      "todo nodes — one file each, `\"$schema\": \"todo/1.0.0\"`. Authored by people, and by agents on their behalf.",
     title: "Todo items",
     layer: "core",
     renderable: false,
@@ -1913,7 +1914,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
     recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:
-      "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. " +
+      "Todo nodes — one file each, carrying `\"$schema\": \"todo/1.0.0\"`. " +
       "Authored by people and by agents on their behalf.",
   },
 

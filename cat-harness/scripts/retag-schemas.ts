@@ -1,0 +1,82 @@
+#!/usr/bin/env bun
+/**
+ * Rewrite node files' `$schema` tags — the migration a renamed or MAJOR-bumped
+ * node kind ships with (issue #2195).
+ *
+ * @module scripts/retag-schemas
+ * @graphNode none — a migration over node files, not a schema
+ *
+ * The owner, 2026-10-05: node kinds are short names with *"SEMVER"* versions,
+ * one live version per kind, so a major bump rewrites every file in the same
+ * change. This is that rewrite, and the first one it does is the rename to
+ * short names ({@link RENAMES_2026_10_05}).
+ *
+ * It changes ONLY the value of a `$schema` key: a JSON file's top-level
+ * `"$schema"`, or a Markdown file's `$schema:` front-matter line. A tag quoted
+ * in prose is left alone — prose that names an old tag is history, and
+ * rewriting it would make the record say something that was never true.
+ *
+ *   bun run cat-harness/scripts/retag-schemas.ts <dir>...            rewrite
+ *   bun run cat-harness/scripts/retag-schemas.ts --check <dir>...    fail if any file still carries an old tag
+ */
+import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+
+/** Old tag → new tag, for the rename to short SemVer names (issue #2195). */
+export const RENAMES_2026_10_05: Readonly<Record<string, string>> = {
+  "folio-todo/v1": "todo/1.0.0",
+  "folio-review-comment/v1": "review-comment/1.0.0",
+  "folio-public-comment/v1": "public-comment/1.0.0",
+  "folio-public-comment-changeset/v1": "changeset/1.0.0",
+  "folio-node-kind-index/v1": "node-kind-index/1.0.0",
+};
+
+const JSON_TAG = /("\$schema"\s*:\s*")([^"]+)(")/;
+const FRONT_MATTER_TAG = /^(\$schema:\s*["']?)([^"'\s]+)(["']?\s*)$/m;
+
+/** The text with its `$schema` value renamed, or undefined when there is nothing to rename. */
+export function retag(text: string, file: string, renames: Readonly<Record<string, string>>): string | undefined {
+  if (file.endsWith(".json")) {
+    const m = JSON_TAG.exec(text);
+    const to = m && renames[m[2]!];
+    return to ? text.replace(JSON_TAG, `$1${to}$3`) : undefined;
+  }
+  if (file.endsWith(".md")) {
+    const fm = /^---\n([\s\S]*?)\n---/.exec(text);
+    if (!fm) return undefined;
+    const m = FRONT_MATTER_TAG.exec(fm[1]!);
+    const to = m && renames[m[2]!];
+    return to ? text.replace(fm[1]!, fm[1]!.replace(FRONT_MATTER_TAG, `$1${to}$3`)) : undefined;
+  }
+  return undefined;
+}
+
+function* files(dir: string): Generator<string> {
+  for (const e of readdirSync(dir)) {
+    if (e === "node_modules" || e.startsWith(".")) continue;
+    const p = join(dir, e);
+    if (statSync(p).isDirectory()) yield* files(p);
+    else if (e.endsWith(".json") || e.endsWith(".md")) yield p;
+  }
+}
+
+if (import.meta.main) {
+  const check = process.argv.includes("--check");
+  const dirs = process.argv.slice(2).filter((a) => !a.startsWith("--"));
+  if (dirs.length === 0) {
+    console.error("usage: retag-schemas.ts [--check] <dir>...");
+    process.exit(2);
+  }
+  let n = 0;
+  for (const dir of dirs) {
+    for (const f of files(dir)) {
+      const next = retag(readFileSync(f, "utf-8"), f, RENAMES_2026_10_05);
+      if (next === undefined) continue;
+      n++;
+      if (check) console.error(`  ✗ ${f} carries a renamed tag`);
+      else writeFileSync(f, next);
+    }
+  }
+  console.log(check ? `${n} file(s) carry a renamed tag` : `retagged ${n} file(s)`);
+  process.exit(check && n > 0 ? 1 : 0);
+}
