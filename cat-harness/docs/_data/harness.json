@@ -4000,6 +4000,15 @@
         ]
       },
       {
+        "key": "avatar",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
         "key": "images",
         "skills": [
           {
@@ -4317,6 +4326,10 @@
             "summary": "This repository as a working instance: the platform and the folios it hosts."
           },
           {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
+          },
+          {
             "key": "assets",
             "summary": "2: agent-instructions, instance-readme"
           },
@@ -4359,6 +4372,10 @@
             "summary": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconst…"
           },
           {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
+          },
+          {
             "key": "assets",
             "summary": "2: agent-instructions, instance-readme"
           },
@@ -4399,6 +4416,10 @@
           {
             "key": "description",
             "summary": "WHO SMART Immunizations (smart.who.int.immunizations) v0.2.0, FHIR 4.0.1 — the published …"
+          },
+          {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
           },
           {
             "key": "assets",
@@ -4447,6 +4468,10 @@
             "summary": "The L3 layer — a WHO SMART Guideline's FHIR Implementation Guide, and what one owes beyon…"
           },
           {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
+          },
+          {
             "key": "assets",
             "summary": "2: agent-instructions, instance-readme"
           },
@@ -4491,6 +4516,10 @@
           {
             "key": "description",
             "summary": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodo…"
+          },
+          {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
           },
           {
             "key": "assets",
@@ -4541,6 +4570,10 @@
           {
             "key": "description",
             "summary": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057…"
+          },
+          {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
           },
           {
             "key": "images",
@@ -4601,6 +4634,10 @@
             "summary": "Scientific source material used by folios that formalise mathematics, and the methodologi…"
           },
           {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
+          },
+          {
             "key": "assets",
             "summary": "2: agent-instructions, readme"
           },
@@ -4651,6 +4688,10 @@
             "summary": "The bare FHIR IG pipeline — SUSHI, the IG Publisher, Jekyll assembly and publication — wi…"
           },
           {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
+          },
+          {
             "key": "assets",
             "summary": "2: agent-instructions, instance-readme"
           },
@@ -4699,6 +4740,10 @@
           {
             "key": "description",
             "summary": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio…"
+          },
+          {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
           },
           {
             "key": "assets",
@@ -4759,6 +4804,10 @@
             "summary": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph kind `openapi`, and give…"
           },
           {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
+          },
+          {
             "key": "assets",
             "summary": "2: agent-instructions, instance-readme"
           },
@@ -4807,6 +4856,10 @@
           {
             "key": "description",
             "summary": "What implements the harness's Tool definitions: the MCP servers, their tool registrars an…"
+          },
+          {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
           },
           {
             "key": "assets",
@@ -5057,18 +5110,7 @@
     ],
     "findings": [
       "`topology`: no skill edits `topology` yet: its axes are documented only in the schema (cat-harness.ts, TopologySchema)",
-      "folio-assistant: declares `avatar`, which the declaration schema does not have and silently drops.",
-      "smart-trust: declares `avatar`, which the declaration schema does not have and silently drops.",
-      "smart-immunizations: declares `avatar`, which the declaration schema does not have and silently drops.",
-      "smart-ig: declares `avatar`, which the declaration schema does not have and silently drops.",
-      "smart-base: declares `avatar`, which the declaration schema does not have and silently drops.",
-      "who-iris: declares `avatar`, which the declaration schema does not have and silently drops.",
       "who-iris: declares `folioMount`, which the declaration schema does not have and silently drops.",
-      "folio-assistant-sci: declares `avatar`, which the declaration schema does not have and silently drops.",
-      "fhir-harness: declares `avatar`, which the declaration schema does not have and silently drops.",
-      "folio-assistant-core: declares `avatar`, which the declaration schema does not have and silently drops.",
-      "cat-openapi: declares `avatar`, which the declaration schema does not have and silently drops.",
-      "cat-harness-tools: declares `avatar`, which the declaration schema does not have and silently drops.",
       "cat-harness: declares `folioMount`, which the declaration schema does not have and silently drops.",
       "bootstrap-tools: declares `supports`, which the declaration schema does not have and silently drops."
     ]
