@@ -2226,6 +2226,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.avatar",
+      "prefLabel": "CatHarnessDeclaration.avatar",
+      "definition": "The instance's own avatar (sod4 #4); the table in avatars.ts covers only the instances below the harness.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.avatar",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.canonicalurl",
       "prefLabel": "CatHarnessDeclaration.canonicalUrl",
       "definition": "Where this instance's artefacts are published — the base every `@id` in the exported graph is minted against.",
@@ -2419,6 +2426,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.associatedHarnesses",
       "definition": "Harnesses this one is associated with — see {@link AssociatedHarness}. `.optional()`, not `.default([])`: absent is \"has not said\", and a default would make the field required in the output type of every declaration. Names are unique, never also in `needs`, and never a harness in this checkout (that would be local, not associated) — refined below.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.associatedHarnesses",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.avatar",
+      "prefLabel": "CatHarnessDeclarationSchema.avatar",
+      "definition": "The instance's mark — the same shape a kind node carries (bean sod4 #4). It sat in `schemas/avatars.ts`'s AVATARS beside the kinds' until 2026-10-05, so a new instance needed an edit to cat-harness to get a face; declared here, it brings its own. `avatarFor(name)` reads it.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.avatar",
       "status": "candidate"
     },
     {
@@ -5978,6 +5992,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-node.graphkindnodeschema.kgcontent",
+      "prefLabel": "GraphKindNodeSchema.kgContent",
+      "definition": "The kind is harness knowledge-graph content (sod4 #5).",
+      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.kgContent",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-node.graphkindnodeschema.kind",
       "prefLabel": "GraphKindNodeSchema.kind",
       "definition": "The kind's word, as a directory's `graphKinds` names it. `kind`, NOT `name`: a JSON file whose `name` equals its filename stem is how `findDeclarationFile` recognises an INSTANCE declaration, so a node spelled with `name` made `kinds/` read as a directory of four instances (measured on the first move, 2026-10-04).",
@@ -5985,10 +6006,24 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-node.graphkindnodeschema.published",
+      "prefLabel": "GraphKindNodeSchema.published",
+      "definition": "`false`: never part of a published graph (sod4 #5).",
+      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.published",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-node.graphkindnodeschema.rationale",
       "prefLabel": "GraphKindNodeSchema.rationale",
       "definition": "WHY the kind sits in its layer and renders as it does: what a code comment said on a listed kind. Not read by any reader.",
       "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.rationale",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-node.graphkindnodeschema.skillbearing",
+      "prefLabel": "GraphKindNodeSchema.skillBearing",
+      "definition": "The directory may be scanned for skill bodies (sod4 #5).",
+      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.skillBearing",
       "status": "candidate"
     },
     {
@@ -6041,6 +6076,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.kgcontent",
+      "prefLabel": "GraphKindDef.kgContent",
+      "definition": "The kind IS harness knowledge-graph content — the `cat-harness` umbrella and the kinds split out of it. Was `KG_CONTENT_GRAPH_KINDS` (sod4 #5).",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.kgContent",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.layer",
       "prefLabel": "GraphKindDef.layer",
       "definition": "Whose namespace the kind is named in, when it is not the harness's: `core` for the folio's own furniture (`voices`, `library`, `todos`, …). A kind bootstrap defines is bootstrap's whatever this says (`BOOTSTRAP_GRAPH_KINDS`). The kind IS its individual, `<ns>graphKind/<name>` ({@link graphKindIri}); there is no class per kind. Owner, 2026-09-30 (bean `3r47`): \"Drop per-kind classes\" — bootstrap names a kind as one `GraphKind` individual, and the harness now does the same.",
@@ -6059,6 +6101,13 @@
       "prefLabel": "GraphKindDef.perInstance",
       "definition": "Does every instance have ITS OWN graph of this kind — so an instance that inherits a directory of this kind gets its own copy created?",
       "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.perInstance",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-registry.graphkinddef.published",
+      "prefLabel": "GraphKindDef.published",
+      "definition": "`false` keeps the kind out of every PUBLISHED graph: not one edge of a published artefact may lead to it (`isPublishedGraphKind`). Absent means published. Was `UNPUBLISHED_GRAPH_KINDS` in cat-harness.ts (sod4 #5).",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.published",
       "status": "candidate"
     },
     {
@@ -6090,9 +6139,16 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.skillbearing",
+      "prefLabel": "GraphKindDef.skillBearing",
+      "definition": "The kind's directory may be scanned for SKILL BODIES (`*.md` with a `name:` front matter). Was `SKILL_BEARING_GRAPH_KINDS` (sod4 #5).",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.skillBearing",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.tileicon",
       "prefLabel": "GraphKindDef.tileIcon",
-      "definition": "The navbar tile icon for a DECLARED kind (bean dmx1); cat-harness's own kinds keep theirs in graph-tiles.ts.",
+      "definition": "The navbar tile icon (a name in `TILE_GLYPHS`); on cat-harness's own kinds too since sod4 #5, so `graph-tiles.ts` keeps no table.",
       "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.tileIcon",
       "status": "candidate"
     },
