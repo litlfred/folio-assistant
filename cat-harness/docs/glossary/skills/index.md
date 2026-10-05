@@ -1065,7 +1065,7 @@ instance-kinds <span class="fa-gloss-status">candidate, extracted</span>
 instance-publication <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and <code>published</code> is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft.</p>
+<p>Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and <code>published</code> is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft. Also the one home for which graph each instance publishes, where, under which IRI and schema, and what is stripped from it.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/instance-publication.md"><code>cat-harness/skills/kg/kg-core/instance-publication.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--integration-audit" data-fa-state="extracted" data-fa-gloss="">
