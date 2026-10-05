@@ -111,6 +111,35 @@
  * which NO writer ran — so the final verdicts were all read from a tree no
  * writer was touching (bean `14ve`'s fixpoint does the work).
  *
+ * ## Asking only what a change can have affected — bean `94zs`
+ *
+ * Two more cuts, both selecting by the same FOOTPRINT (`changed-paths.ts`):
+ * a pair's declared input/output globs, its scripts' import closure, its
+ * `package.json` commands and `bun.lock` — what the input hash covers.
+ *
+ * - **`--changed <base>`** asks, in the first pass, only the pairs whose
+ *   footprint meets a path changed since `<base>` (`git diff <base>...HEAD`
+ *   plus the working tree and untracked files). A pair outside it reads what
+ *   it read at `<base>`, so its answer there is its answer here — an
+ *   ASSUMPTION about `<base>`, reported as `not asked` and never recorded in
+ *   the hash cache as a green run. `merge:main` passes the merge's fork point,
+ *   for the reason on `regenArgs` in `merge-base.ts`. Unlike the cache it
+ *   needs no earlier run on this machine, and it works under CI.
+ * - **The narrowed fixpoint.** Each pass after the first asks only the pairs
+ *   whose footprint meets a path the previous pass ACTUALLY changed —
+ *   measured by snapshotting `git` status before and after the pass, never
+ *   taken from a writer's declaration. A pair not re-asked keeps the answer it
+ *   gave from a tree identical on its footprint, so "settled" still means a
+ *   pass that ran no writer.
+ *
+ * Neither ever skips a pair with no input declaration, a `{tracked}` pair
+ * when anything changed, or a pair whose footprint or change set cannot be
+ * determined. **The limit, measured 2026-10-05:** the wall time is set by the
+ * `{tracked}` pairs (`kg:audit:all:check`, `skill:register:check`,
+ * `kg:audit:check`), which read the whole tree and so run after any merge and
+ * after any writer. Narrow declarations in `task-io.ts` are what let these
+ * two cuts skip anything; each must be read first.
+ *
  * Usage:
  *   bun run regen                # ask every gate; repair what is stale
  *   bun run regen --fast         # ...only the fast set (no browser-job pairs)
@@ -118,6 +147,7 @@
  *   bun run regen --jobs 3       # pool size (default: CPUs - 1)
  *   bun run regen --no-cache     # ask every pair; neither read nor update the hash cache
  *   bun run regen --explain      # say, per pair, why it ran or was skipped
+ *   bun run regen --changed <base>  # ask only pairs whose inputs changed since <base>
  *   bun run regen --max-passes 8 # raise the fixpoint bound (default: DEFAULT_MAX_PASSES)
  *
  * `--all` is accepted and is the default.
