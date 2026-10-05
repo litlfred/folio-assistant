@@ -199,7 +199,9 @@ describe("the storage clock", () => {
     expect(j.publish).toEqual([]);
   });
 
-  it("this checkout: the fsh-guts viewer is built at publish and nothing committed derives from a branch", () => {
+  // The fsh-guts declaration lives in the ROOT instance, which a standalone
+  // cat-harness extract does not carry.
+  it.skipIf(!existsSync(join(resolve(import.meta.dir, "..", "..", ".."), "folio-assistant.json")))("this checkout: the fsh-guts viewer is built at publish and nothing committed derives from a branch", () => {
     const j = analyse();
     expect(j.findings.filter((f) => f.kind === "committed-from-branch" || f.kind === "publish-without-writer")).toEqual([]);
     expect(j.publish.map((a) => a.artefact)).toContain("cat-harness/docs/fsh-guts/index.md");

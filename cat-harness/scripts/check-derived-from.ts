@@ -301,6 +301,11 @@ export function readTree(repoRoot = REPO_ROOT): Inst[] {
 
 /** Is this repo-relative path (a file, or a directory ending in `/`) tracked by git? Asks git, never the disk. */
 export function trackedIn(repoRoot = REPO_ROOT): (repoRelative: string) => boolean {
+  // Not a git work tree (a standalone extract of one layer): nothing here is
+  // COMMITTED, so nothing can be committed-from-branch. That is the true
+  // answer, not a blind one — the question is about commits, and there are none.
+  const inside = spawnSync("git", ["rev-parse", "--is-inside-work-tree"], { cwd: repoRoot, encoding: "utf8" });
+  if (inside.status !== 0 || inside.stdout.trim() !== "true") return () => false;
   const r = spawnSync("git", ["ls-files", "-z"], { cwd: repoRoot, encoding: "utf8", maxBuffer: 1 << 28 });
   if (r.status !== 0) throw new Error(`check:derived-from: git ls-files failed — ${r.stderr}`);
   const files = new Set(r.stdout.split("\0").filter(Boolean));

@@ -44,9 +44,12 @@ const REPO = resolve(import.meta.dir, "..", "..", "..");
 // a branch, so it is never committed. Build it the way the site build does —
 // `state:mount`, then `derive:publish`, then compose — so the compose below
 // sees what a real build sees. Fails loudly, like the build, when unmounted.
+// Where it cannot be built (no mount; a standalone layer with no root script),
+// the tests that need the page fail on their own, by name, rather than this
+// hook failing the whole file.
 beforeAll(() => {
   const r = spawnSync("bun", ["run", "derive:publish"], { cwd: REPO, encoding: "utf8" });
-  if (r.status !== 0) throw new Error(`derive:publish failed (is fsh-guts mounted? \`bun run state:mount\`):\n${r.stdout}${r.stderr}`);
+  if (r.status !== 0) console.warn(`derive:publish did not build the page (is fsh-guts mounted? \`bun run state:mount\`):\n${r.stdout}${r.stderr}`);
 });
 
 function composeTo(opts: { staging?: boolean }): { dir: string; report: ReturnType<typeof compose> } {
@@ -170,7 +173,9 @@ describe("composing honours the default, which is the restrictive one", () => {
       rmSync(canon.dir, { recursive: true, force: true });
       rmSync(stage.dir, { recursive: true, force: true });
     }
-  });
+    // Two full composes of the real tree in one body: ~5 s on an idle runner,
+    // so bun's 5 s default times it out under any load (measured 5.1-6.2 s).
+  }, 30_000);
 
   it("a withheld file is never also reported as supplied", () => {
     // The report has to stay coherent: naming a file the tree does not carry
