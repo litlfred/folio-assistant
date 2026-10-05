@@ -124,7 +124,7 @@ repository root.
 The consequence is already committed in the tree. The config file's own comment
 says the third state *"runs every criterion, and the paper adapter's
 LaTeX-shaped axes fire `critical` on prose that never reaches pdflatex"* — and
-`test/results/block-qa/content/docs/publication-workflow/*.qa.json` carry
+`test/results/block-qa/content/docs/process-publication-workflow/*.qa.json` carry
 `detangler-archimedean-wall` verdicts on workflow documentation. A
 `profiles: ["paper"]` criterion, scored against prose, because the declaration
 that would have excluded it was never read.

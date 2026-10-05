@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "8f400c55fe87"
+    "script_hash": "f4e8d8904ad9"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 68 of 68 declared kind(s), 238 gate(s), 77 criteria.",
-      "count": 68,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 69 of 69 declared kind(s), 238 gate(s), 77 criteria.",
+      "count": 69,
       "entries": [
         {
           "kind": "attestations",
@@ -381,6 +381,22 @@
           "hasFiles": true
         },
         {
+          "kind": "doc-group",
+          "state": "unaudited",
+          "directories": [
+            "cat-harness/docs/concepts",
+            "cat-harness/docs/fhir",
+            "cat-harness/docs/guides",
+            "cat-harness/docs/process",
+            "cat-harness/docs/start"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": false,
+          "hasFiles": true
+        },
+        {
           "kind": "docs",
           "state": "covered",
           "directories": [
@@ -618,23 +634,6 @@
           "subjectKinds": [],
           "gates": [
             "bun run check:harness-state:check"
-          ],
-          "typed": true,
-          "hasFiles": true
-        },
-        {
-          "kind": "kinds",
-          "state": "covered",
-          "directories": [
-            "cat-openapi/kinds",
-            "fhir-harness/kinds",
-            "folio-assistant-core/kinds",
-            "folio-assistant-sci/kinds"
-          ],
-          "criteria": [],
-          "subjectKinds": [],
-          "gates": [
-            "bun run kind:register:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -1281,6 +1280,23 @@
           "hasFiles": true
         },
         {
+          "kind": "typologies",
+          "state": "covered",
+          "directories": [
+            "cat-openapi/typologies",
+            "fhir-harness/typologies",
+            "folio-assistant-core/typologies",
+            "folio-assistant-sci/typologies"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run kind:register:check"
+          ],
+          "typed": true,
+          "hasFiles": true
+        },
+        {
           "kind": "uml",
           "state": "covered",
           "directories": [
@@ -1487,8 +1503,19 @@
     },
     "kinds-unaudited": {
       "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 238 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "kind": "doc-group",
+          "directories": [
+            "cat-harness/docs/concepts",
+            "cat-harness/docs/fhir",
+            "cat-harness/docs/guides",
+            "cat-harness/docs/process",
+            "cat-harness/docs/start"
+          ]
+        }
+      ]
     },
     "kinds-unknown": {
       "summary": "A declared directory of this kind is not in the checkout and declares no `storage`, and nothing else of the kind was counted — the census was not taken (bean `0dav`, readers-audit C8). Never `empty`: that would print an absent answer as a determined zero. Not gated: proposal §2.3.",
@@ -1496,5 +1523,5 @@
       "entries": []
     }
   },
-  "total": 78
+  "total": 80
 }

@@ -220,10 +220,10 @@ the layer a reader browses, which is the layer the distinction is for.
 `tools`:
 
 ```json
-"coverage": { "docs": "cat-harness/docs/skills.md", "skill": "skills-and-tools" }
+"coverage": { "docs": "cat-harness/docs/concepts/skills.md", "skill": "skills-and-tools" }
 ```
 
-`cat-harness/docs/skills.md` is titled **"Skills & roles"**. Its headings are
+`cat-harness/docs/concepts/skills.md` is titled **"Skills & roles"**. Its headings are
 Skills, Roles, Capabilities & requirements — **there is no tools section**;
 "tool" appears 7 times, incidentally. So the tools graph has no documentation
 of its own and its `docs` coverage points at a page about something else.
@@ -316,7 +316,7 @@ fourth heuristic.
 ## The `tools` viewer, and a hypothesis this bean recorded that turned out WRONG
 
 `tools` now has a viewer (`cat-harness/docs/tools/index.md`, 69 Tool nodes) and
-a documentation page of its own (`cat-harness/docs/tool-graph.md`), so
+a documentation page of its own (`cat-harness/docs/concepts/tool-graph.md`), so
 `coverage.docs` no longer names a page about skills.
 
 Measured while building it: **69 Tool nodes, all 69 carrying `satisfies`,

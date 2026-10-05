@@ -119,8 +119,8 @@ export interface WebPageNode {
 
 export interface WebPage {
   /**
-   * URL stem. `document-ingestion` publishes to `docs/document-ingestion.md`
-   * and thus to `<baseurl>/document-ingestion.html`, which is what existing
+   * URL stem. `document-ingestion` publishes to `docs/guides/document-ingestion.md`
+   * and thus to `<baseurl>/guides/document-ingestion.html`, which is what existing
    * inbound links already use.
    */
   slug: string;

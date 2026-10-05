@@ -10,7 +10,7 @@ parent: folio-assistant-p5wm
 ---
 
 
-Owner, 2026-09-23, with a screenshot of `/document-ingestion.html`: *"bad LHS
+Owner, 2026-09-23, with a screenshot of `/guides/document-ingestion.html`: *"bad LHS
 … and probably similar pages"*. The opened nav and the page content are drawn on
 top of each other.
 
@@ -39,7 +39,7 @@ nav opened behind the page.
 
 ## Measured
 
-`/document-ingestion.html` has 5 figure scopes and **auto-expands 4** of them, so
+`/guides/document-ingestion.html` has 5 figure scopes and **auto-expands 4** of them, so
 the class is legitimately set. With the nav open, `elementFromPoint` at x=120
 returned page content — `A`, `SPAN.fa-qa-glyph`, `P` — and the nav only inside
 the original 56px strip. `crdm-methodology.html` is affected the same way;

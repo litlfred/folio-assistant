@@ -144,37 +144,37 @@ export const UNCATALOGED: UncatalogedTranslation[] = [
   // to a human, so re-translating any of these to make a catalogue derivable
   // would manufacture exactly the sign-off that issue protects.
   {
-    translation: "ar/architecture",
+    translation: "ar/concepts/architecture",
     since: "2026-09-26",
     reason:
       "`count-differs` — the source has 60 translatable constructs and the translation has 61, so the translation carries something the source does not. `alignGrownSource` is sound only for constructs ADDED TO THE SOURCE; pairing a remainder the source lacks would invent an alignment rather than read one",
   },
   {
-    translation: "ar/skills",
+    translation: "ar/concepts/skills",
     since: "2026-09-26",
     reason:
       "`count-differs` — source 146 constructs, translation 147. Same shape as `ar/architecture`: longer than its source by one, so no positional alignment is sound",
   },
   {
-    translation: "zh/getting-started",
+    translation: "zh/start/getting-started",
     since: "2026-09-26",
     reason:
       "`count-differs` — source 149 constructs, translation 145. Diagnosed on bean `7x8o`: 20 table cells are dropped by `isTranslatable`, of which `是` and `否` are real words dropped for being one character. That is bean `6b8u`'s own incompleteness, and the obvious CJK-aware rule is measured and deliberately NOT shipped — it takes this pair from short-by-4 to long-by-1",
   },
   {
-    translation: "ar/publication-workflow",
+    translation: "ar/process/publication-workflow",
     since: "2026-09-26",
     reason:
       '`msgid-conflict` — the source string "Editor / author" occurs more than once and is translated two different ways ("المحرر / المؤلف", and left untranslated at construct 298). A msgid-keyed `.po` cannot represent both, so this needs `msgctxt` rather than a derivation',
   },
   {
-    translation: "zh/publication-workflow",
+    translation: "zh/process/publication-workflow",
     since: "2026-09-26",
     reason:
       '`msgid-conflict` — "Editor / author" is translated "编辑 / 作者" and "Editor / author（编辑 / 作者）" at construct 298. Needs `msgctxt`; a msgid-keyed `.po` cannot hold both',
   },
   {
-    translation: "zh/skills",
+    translation: "zh/concepts/skills",
     since: "2026-09-26",
     reason:
       '`msgid-conflict` — "Skills" occurs more than once and is translated "技能" and "技能数" at construct 89. This is the guard added after bean `f6r1` found the same case masked by `count-differs`, now firing on genuinely new data. Needs `msgctxt`',

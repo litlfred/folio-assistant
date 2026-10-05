@@ -173,13 +173,13 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     layer: "harness",
     gloss:
       "A repository carrying a harness declaration — it names itself, its published stub, and the directories it holds.",
-    seeAlso: "/agentic-harness.html",
+    seeAlso: "/concepts/agentic-harness.html",
   },
   Folio: {
     layer: "harness",
     gloss:
       "A repository that authors folio content — it declares a content type, and `folio_init` wrote its config. Distinct from an Instance: this repository's `cat-harness/` is an Instance and is not a Folio.",
-    seeAlso: "/getting-started.html",
+    seeAlso: "/start/getting-started.html",
   },
   SushiProject: {
     layer: "harness",
@@ -191,13 +191,13 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     layer: "harness",
     gloss:
       "A standing rule an actor must hold while performing a task, bound to a process, a lane or an activity rather than loaded unconditionally. Resolution is first-binding-wins along that order, not a merge, so a reader asking why a rule applies here gets one answer.",
-    seeAlso: "/agentic-harness.html",
+    seeAlso: "/concepts/agentic-harness.html",
   },
   Requirement: {
     layer: "harness",
     gloss:
       "A stated need a change must satisfy, elicited and signed off in the CRDM process before implementation begins. Distinct from the issue that tracks it and the bean that plans the work.",
-    seeAlso: "/crdm-methodology.html",
+    seeAlso: "/process/crdm-methodology.html",
   },
   Lane: {
     gloss:
@@ -215,7 +215,7 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   },
   SkillPackage: {
     gloss: "A directory of skills shipped and versioned together.",
-    seeAlso: "/skills.html",
+    seeAlso: "/concepts/skills.html",
   },
   Tool: {
     // The harness's own term. Bootstrap defined it until v3 of its terms; the
@@ -223,7 +223,7 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     // Actor runs, so the word belongs to the layer that has Tools.
     gloss:
       "A Node Instance describing a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
-    seeAlso: "/architecture.html",
+    seeAlso: "/concepts/architecture.html",
   },
   Schema: {
     gloss: "A schema definition, itself a node in the knowledge graph rather than an island beside one.",
@@ -256,7 +256,7 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   FolioGraph: {
     layer: "core",
     gloss: "Authored content — the folio itself, rendered to a website.",
-    seeAlso: "/content-types.html",
+    seeAlso: "/concepts/content-types.html",
   },
   GlossaryGraph: {
     layer: "core",
