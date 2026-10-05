@@ -1233,10 +1233,13 @@ describe("DMN decisions are nodes, linked to their gateways and to DMN 1.3", () 
       expect(typeof p.summary).toBe("string");
       expect(String(p.description).startsWith(String(p.summary).replace(/…$/, ""))).toBe(true);
     }
-    const lifecycle = processes.find((p) => String(p.sourcePath).endsWith("content-lifecycle.bpmn"))!;
-    expect(lifecycle.description).toBeDefined();
-    expect(String(lifecycle.sourceUrl)).toMatch(/^https:\/\/github\.com\/.+\/blob\/main\/.+content-lifecycle\.bpmn$/);
-    expect(String(lifecycle.depiction)).toMatch(/\/assets\/img\/workflows\/content-lifecycle\.svg$/);
+    // The witness is one of cat-harness's OWN diagrams, so the case holds where
+    // cat-harness is its own clone with no higher instance beside it (bean
+    // `ho66`); `content-lifecycle` was folio-assistant-core's.
+    const review = processes.find((p) => String(p.sourcePath).endsWith("content/review-task.bpmn"))!;
+    expect(review.description).toBeDefined();
+    expect(String(review.sourceUrl)).toMatch(/^https:\/\/github\.com\/.+\/blob\/main\/.+review-task\.bpmn$/);
+    expect(String(review.depiction)).toMatch(/\/assets\/img\/workflows\/review-task\.svg$/);
   });
 
   test("a call activity's calledElement links to a Process in this graph, never to one it lacks", () => {
@@ -1244,10 +1247,11 @@ describe("DMN decisions are nodes, linked to their gateways and to DMN 1.3", () 
     const calls = byType("ProcessNode").filter((n) => n.calledElement !== undefined);
     expect(calls.length).toBeGreaterThan(0);
     for (const c of calls) expect(procIds.has(c.calledElement as string)).toBe(true);
-    // `content-lifecycle` calls `draft-to-publication` — the edge the page reads.
-    const lifecycle = byType("Process").find((p) => String(p.sourcePath).endsWith("content-lifecycle.bpmn"))!;
-    const publication = byType("Process").find((p) => String(p.sourcePath).endsWith("draft-to-publication.bpmn"))!;
-    expect(calls.some((c) => c.partOf === lifecycle["@id"] && c.calledElement === publication["@id"])).toBe(true);
+    // `review-task` calls `review-narrative` — an edge between two of
+    // cat-harness's own diagrams, so it is there standalone too (bean `ho66`).
+    const review = byType("Process").find((p) => String(p.sourcePath).endsWith("content/review-task.bpmn"))!;
+    const narrative = byType("Process").find((p) => String(p.sourcePath).endsWith("content/review-narrative.bpmn"))!;
+    expect(calls.some((c) => c.partOf === review["@id"] && c.calledElement === narrative["@id"])).toBe(true);
   });
 });
 

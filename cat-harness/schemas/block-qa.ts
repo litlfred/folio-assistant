@@ -20,7 +20,7 @@
  * @graphNode schema
  */
 
-import { CONTENT_PROFILES } from "./block-kinds";
+import { CONTENT_ADAPTER_NODES, CONTENT_PROFILES } from "./block-kinds";
 
 import type { AttributionKind } from "./attribution";
 import type { ContentAdapter, ContentProfile } from "./block-kinds";
@@ -173,17 +173,10 @@ export interface QaReviewer {
  * Adding a role here does not make any existing criterion apply to it: a
  * criterion opts in by listing the role in its own `depends_on`.
  */
-export const COMPANION_ROLES = [
-  "md",
-  "ts",
-  "lean",
-  "bpmn",
-  "dmn",
-  "xlsx",
-  "fsh",
-  "cql",
-  "feature",
-] as const;
+// Declared in the content-adapter node's leaf schema, so a node's
+// `companionRoles` is validated against this same list (bean riit, step 5).
+export { COMPANION_ROLES } from "./content-adapter-node";
+import type { COMPANION_ROLES } from "./content-adapter-node";
 
 export type CompanionRole = (typeof COMPANION_ROLES)[number];
 
@@ -220,19 +213,23 @@ export interface CheckerHit {
  * `md` and `ts` are shared: every block has a manifest, and every kind of
  * block may carry prose. `lean` is paper-only.
  *
- * A CONTRIBUTED adapter declares its own on its `AdapterContribution`
- * (`companionRoles`) — the `dak` row that stood here until bean `1335`, with
- * BPMN/DMN/FSH/CQL/XLSX/feature, is its contributor's now — and
- * {@link incompatibleCompanions} reads it from the registry.
+ * Every vocabulary, typed or contributed, declares its roles on its
+ * `folio-content-adapter/v1` node (bean riit, step 5). A CONTRIBUTED one's —
+ * the `dak` row that stood here until bean `1335` — reaches the registry
+ * through the folio's dependency tree, and {@link incompatibleCompanions}
+ * reads it from there.
  *
  * Stated here so that "a paper criterion depends on `.dmn`" is a *checkable*
  * mistake rather than one that shows up as a criterion which silently never
  * applies — `depends_on` gates applicability, so a mismatched pair produces a
  * permanent `n/a` and no error.
  */
-export const ADAPTER_COMPANION_ROLES: Record<ContentAdapter, readonly CompanionRole[]> = {
-  paper: ["md", "ts", "lean"],
-};
+export const ADAPTER_COMPANION_ROLES: Record<ContentAdapter, readonly CompanionRole[]> = Object.fromEntries(
+  // Read from each typed vocabulary's node (bean riit, step 5): the roles a
+  // `paper` block can have are a fact about the paper vocabulary, declared
+  // where that vocabulary is, not restated in a table here.
+  CONTENT_ADAPTER_NODES.filter((n) => n.typed).map((n) => [n.adapter, n.companionRoles]),
+) as unknown as Record<ContentAdapter, readonly CompanionRole[]>;
 
 /** {@link ADAPTER_COMPANION_ROLES}, keyed by a plain string for lookup. */
 const BUILT_IN_COMPANION_ROLES: ReadonlyMap<string, readonly CompanionRole[]> = new Map(

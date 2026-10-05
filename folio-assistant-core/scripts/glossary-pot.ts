@@ -46,6 +46,8 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { dirname, join, relative, resolve } from "node:path";
 
 import { directoryForGraph, repoRootFor } from "../../cat-harness/schemas/cat-harness.ts";
+import { declaredDirectories } from "../../cat-harness/schemas/declared-nodes.ts";
+import { findDeclarationFile, instanceRootsIn } from "../../cat-harness/schemas/instance-roots.ts";
 import { formatPot, potWithoutTimestamp, type PotEntry } from "../../cat-harness/content/pipeline/pot-extract.ts";
 import { termIri, type LangText } from "../schemas/glossary.ts";
 import { LOCALE_PAGE_STRINGS, LOCALE_PAGE_TEMPLATE, collect, type GlossarySource } from "./glossary-page.ts";
@@ -149,6 +151,44 @@ export function potPath(dir: string, locale: string, name: string): string {
   return join(dir, locale, GLOSSARY_SUBDIR, `${name}.pot`);
 }
 
+/** The instance that owns template `name`: the scheme's owner, or core for the locale page it writes. */
+export function templateOwner(name: string): string {
+  return name === LOCALE_PAGE_TEMPLATE ? "folio-assistant-core" : name.split("--")[0];
+}
+
+/**
+ * Where template `name`'s catalogues live: the OWNER's declared
+ * `translation-sources` directory. Owner, 2026-10-04: *"move things to
+ * semantically appropriate place"* (bean riit). A scheme's translations sit
+ * with the instance whose terms they translate, as its block-kind headings do.
+ * An owner that declares no translation graph — `bootstrap`, a separate
+ * repository this one cannot declare a directory in — falls back to the
+ * platform's, and `glossary:pot:check` names each such template so the
+ * fallback is never silent.
+ */
+export function catalogueDir(name: string, repo: string = REPO): { dir: string; fallback: boolean } {
+  const owner = templateOwner(name);
+  for (const root of instanceRootsIn(repo)) {
+    const declFile = findDeclarationFile(root);
+    if (!declFile) continue;
+    let declared: string | undefined;
+    try {
+      declared = (JSON.parse(readFileSync(join(root, declFile), "utf-8")) as { name?: string }).name;
+    } catch {
+      continue;
+    }
+    if (declared !== owner) continue;
+    const dir = directoryForGraph(root, "translation-sources");
+    if (dir) return { dir, fallback: false };
+  }
+  return { dir: translationsDir(), fallback: true };
+}
+
+/** Every declared `translation-sources` directory in the checkout: where a reader looks. */
+export function allTranslationDirs(repo: string = REPO): string[] {
+  return declaredDirectories(repo, "translation-sources");
+}
+
 function knownLocales(dir: string): string[] {
   if (!existsSync(dir)) return [];
   return readdirSync(dir, { withFileTypes: true })
@@ -180,27 +220,35 @@ if (import.meta.main) {
     console.error("No authored glossary term in any declared glossary directory: nothing was examined.");
     process.exit(2);
   }
-  const dir = translationsDir();
-  const locales = locale ? [locale] : knownLocales(dir);
+  const dirs = allTranslationDirs();
+  const locales = locale ? [locale] : [...new Set(dirs.flatMap(knownLocales))].sort();
   if (locales.length === 0) {
-    console.error(`No locales under ${relative(REPO, dir)} and none given with --locale.`);
+    console.error(`No locales under any declared translation-sources directory and none given with --locale.`);
     process.exit(2);
   }
+  const placed = new Map([...tpl.keys()].map((name) => [name, catalogueDir(name)]));
   const render = (name: string, loc: string) => formatPot(tpl.get(name)!, { projectName: name, locale: loc });
 
   if (wantCheck) {
     const bad: string[] = [];
     for (const loc of locales) {
       for (const name of tpl.keys()) {
-        const p = potPath(dir, loc, name);
+        const p = potPath(placed.get(name)!.dir, loc, name);
         const rel = relative(REPO, p);
         if (!existsSync(p)) bad.push(`never extracted: ${rel}`);
         else if (potWithoutTimestamp(readFileSync(p, "utf-8")) !== potWithoutTimestamp(render(name, loc))) bad.push(`out of date: ${rel}`);
       }
-      const sub = join(dir, loc, GLOSSARY_SUBDIR);
-      if (existsSync(sub)) {
-        for (const f of readdirSync(sub).filter((f) => f.endsWith(".pot")).sort()) {
-          if (!tpl.has(f.slice(0, -".pot".length))) bad.push(`no authored scheme: ${relative(REPO, join(sub, f))}`);
+      for (const dir of dirs) {
+        const sub = join(dir, loc, GLOSSARY_SUBDIR);
+        if (!existsSync(sub)) continue;
+        for (const f of readdirSync(sub).filter((f) => f.endsWith(".pot") || f.endsWith(".po")).sort()) {
+          const name = f.replace(/\.pot?$/, "");
+          const rel = relative(REPO, join(sub, f));
+          if (!tpl.has(name)) {
+            if (f.endsWith(".pot")) bad.push(`no authored scheme: ${rel}`);
+          } else if (resolve(placed.get(name)!.dir) !== resolve(dir)) {
+            bad.push(`misplaced — ${templateOwner(name)} owns it, so it belongs in ${relative(REPO, placed.get(name)!.dir)}: ${rel}`);
+          }
         }
       }
     }
@@ -209,13 +257,16 @@ if (import.meta.main) {
       console.error(`\n${bad.length} glossary template(s) need attention: bun run glossary:pot`);
       process.exit(1);
     }
+    for (const [name, c] of placed) {
+      if (c.fallback) console.log(`  · ${name}: ${templateOwner(name)} declares no translation-sources directory — kept in ${relative(REPO, c.dir)}`);
+    }
     console.log(`✓ ${tpl.size} glossary template(s), ${entries} msgid(s), current in ${locales.join(", ")}.`);
     process.exit(0);
   }
 
   for (const loc of locales) {
     for (const name of tpl.keys()) {
-      const p = potPath(dir, loc, name);
+      const p = potPath(placed.get(name)!.dir, loc, name);
       const fresh = render(name, loc);
       // Written only when the content changed: POT-Creation-Date moves on every run.
       if (existsSync(p) && potWithoutTimestamp(readFileSync(p, "utf-8")) === potWithoutTimestamp(fresh)) continue;

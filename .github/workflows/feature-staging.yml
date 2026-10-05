@@ -625,7 +625,9 @@ jobs:
       - name: Render each IG from its IG Publisher AST cache
         continue-on-error: true
         run: |
-          bun run fhir-harness/scripts/stage-ast-sites.ts > ./_ast-list.txt
+          # Only the IGs the staging cone reaches (bean `4j86`); no file list carries all.
+          CF=(); [ -f "$RUNNER_TEMP/pr-files.txt" ] && CF=(--changed-files "$RUNNER_TEMP/pr-files.txt")
+          bun run fhir-harness/scripts/stage-ast-sites.ts "${CF[@]}" > ./_ast-list.txt
           while IFS=$'\t' read -r INSTANCE URL LABEL CHROME; do
             [ -n "$INSTANCE" ] || continue
             SRC="./_ast-src/${INSTANCE}"
@@ -744,8 +746,10 @@ jobs:
           BASE="/${{ github.event.repository.name }}/STAGING/${STAGING_SLUG}"
           curl -sSfL -o /tmp/plantuml.jar \
             https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar
+          # Only the IGs the staging cone reaches (bean `4j86`); no file list carries all.
+          CF=(); [ -f "$RUNNER_TEMP/pr-files.txt" ] && CF=(--changed-files "$RUNNER_TEMP/pr-files.txt")
           bun run fhir-harness/scripts/stage-ig-sites.ts --work ./_ig --baseurl "$BASE" \
-            --plantuml-jar /tmp/plantuml.jar > ./_ig-list.txt
+            --plantuml-jar /tmp/plantuml.jar "${CF[@]}" > ./_ig-list.txt
           while read -r INSTANCE SRC; do
             BUNDLE_GEMFILE="$PWD/cat-harness/docs/Gemfile" bundle exec jekyll build \
               --source "$SRC" --destination "./_site/${INSTANCE}/ig"
