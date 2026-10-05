@@ -121,3 +121,10 @@ describe("rendered-content handling and QA (owner, 2026-10-05)", () => {
     expect(clean.findings).toEqual([]);
   });
 });
+
+import { leanStatus } from "./build-folio-site.js";
+test("Lean status reads a sorry outside comments only", () => {
+  expect(leanStatus("theorem t : 1 = 1 := rfl")).toBe("proved");
+  expect(leanStatus("theorem t : P := by\n  sorry")).toBe("sorry");
+  expect(leanStatus("-- sorry was here\n/- sorry -/\ntheorem t : 1 = 1 := rfl")).toBe("proved");
+});
