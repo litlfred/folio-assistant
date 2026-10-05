@@ -327,14 +327,6 @@
       "status": "candidate"
     },
     {
-      "id": "lean-cache",
-      "prefLabel": "Lake olean cache",
-      "definition": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
-      "notation": "lean-cache",
-      "source": "cat-harness/tools/index.ts#lean-cache",
-      "status": "candidate"
-    },
-    {
       "id": "lean-coverage",
       "prefLabel": "Lean coverage",
       "definition": "Count how many provable blocks — theorem, lemma, proposition, corollary — carry a full Lean proof rather than a sorry, per paper. The completeness half of the Lean audit: what is formalised, and what is still a gap.",

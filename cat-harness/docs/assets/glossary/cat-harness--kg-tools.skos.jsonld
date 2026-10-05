@@ -814,26 +814,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/lean-cache",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Lake olean cache"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two."
-        }
-      ],
-      "skos:notation": "lean-cache",
-      "dcterms:source": "cat-harness/tools/index.ts#lean-cache",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/lean-coverage",
       "@type": "skos:Concept",
       "skos:inScheme": {

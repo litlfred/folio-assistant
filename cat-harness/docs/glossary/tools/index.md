@@ -12,7 +12,7 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 126 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 23 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 3 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 125 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 23 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 4 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
 **Size:** this page holds 163 terms and is 115 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
@@ -513,12 +513,12 @@ L1 source completeness <span class="fa-gloss-status">candidate, extracted</span>
 <p>Is a <code>library/&lt;bib-slug&gt;/</code> entry complete as L1 source content? Each requirement is met, unmet, or NOT-DERIVABLE, so a document that cannot yield an artefact is distinguished from one that simply has not.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#l1-complete-check</code></a></p>
 </dd>
-<dt id="cat-harness--kg-tools--lean-cache" data-fa-state="extracted" data-fa-gloss="">
+<dt id="folio-assistant-sci--kg-tools--lean-cache" data-fa-state="extracted" data-fa-gloss="">
 Lake olean cache <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Restore, verify, seed and diagnose the prebuilt <code>.lake/</code> artefacts for a Lean package. Always try <code>restore</code> first: a from-source Mathlib build is 30–60 minutes, a restore about two.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#lean-cache</code></a></p>
+<p class="fa-gloss-meta">Tools of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/tools/index.ts"><code>folio-assistant-sci/tools/index.ts#lean-cache</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--lsi-viewer" data-fa-state="extracted" data-fa-gloss="">
 Latent semantic index viewer <span class="fa-gloss-status">candidate, extracted</span>
