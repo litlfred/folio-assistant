@@ -328,14 +328,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-05T05:36:45.350Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/731bef36d88c5f7b8905fbed54414192c05351ba",
-  "sourceCommitSha": "731bef36d88c5f7b8905fbed54414192c05351ba",
-  "sourceCommitAt": "2026-10-05T05:30:00Z",
+  "generatedAt": "2026-10-05T06:37:40.628Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d009f9c50e316f8286bf6378a68a3be5172fe1a1",
+  "sourceCommitSha": "d009f9c50e316f8286bf6378a68a3be5172fe1a1",
+  "sourceCommitAt": "2026-10-05T06:31:26Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 312,
+    "Skill": 313,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 34,
@@ -344,7 +344,7 @@
     "SequenceFlow": 1133,
     "Lane": 228,
     "ProcessNode": 1077,
-    "Tool": 122,
+    "Tool": 124,
     "Schema": 170,
     "ExternalSchema": 22,
     "GraphKind": 28,
@@ -4188,6 +4188,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-tiles"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#skill/pdf-inline-viewer",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "pdf-inline-viewer",
+      "title": "Inline PDF viewer — a pinned pdf.js, installed at build time",
+      "description": "Show a published PDF inside a generated page — search, scroll, jump to page, print and download — with the pinned pdf.js viewer the site build installs. Which two Tools do it, the publication-gate rule that decides whether a page may embed a document at all, why the viewer opens only allowlisted hosts, and the three pdf.js behaviours that were measured rather than assumed. Read before putting a PDF on a page, before bumping the pdf.js pin, and when an embedded viewer shows an empty frame.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/pdf-inline-viewer.md",
+      "instructionLines": 156,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pdf-inline-viewer"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#skill/readme-sections",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "readme-sections",
@@ -4290,7 +4307,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#package/folio-document-adapter"
       ],
       "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/public-comment.md",
-      "instructionLines": 142,
+      "instructionLines": 150,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -7284,6 +7301,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#skill/liquid-templates",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#skill/markdown-render-check",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#skill/pdf-inline-viewer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#skill/readme-sections",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#skill/render-logging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#skill/render-order",
@@ -46135,6 +46153,111 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/pdf-cover"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#tool/pdf-viewer-install",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "pdf-viewer-install",
+      "title": "Install the inline PDF viewer into a built site",
+      "description": "Download the pinned pdf.js release (legacy build), verify its SHA-256, copy the parts a site needs into `<site>/assets/vendor/pdfjs/`, and add the shim that opens `?src=` only for the allowlisted URL prefixes or the site's own origin. Nothing is committed: the viewer exists only in the built site.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/pdf-viewer.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The built site directory, `_site` in both site workflows.",
+            "required": true,
+            "arg": {
+              "flag": "--site"
+            }
+          },
+          {
+            "name": "allow",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/tool-types.schema.json#/$defs/Url",
+            "description": "An https URL prefix the viewer may open, ending in `/`. Repeat the flag for more than one. `same-origin-only` is the explicit way to allow none — an omitted flag is a usage error, because a viewer that refuses every CDN document would otherwise ship green.",
+            "required": true,
+            "arg": {
+              "flag": "--allow"
+            }
+          },
+          {
+            "name": "zip",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A local copy of the release zip, for offline runs and tests. Its hash is checked exactly as a download's would be.",
+            "required": false,
+            "arg": {
+              "flag": "--zip"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "summary",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/tool-types.schema.json#/$defs/Text",
+            "description": "One line on stdout: version, destination, file count, and the prefixes it will open. Exit 2 on a usage error; a hash mismatch or a release missing a kept path throws, refusing the install."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "unzip"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#skill/pdf-inline-viewer"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/pdf-viewer-install"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#tool/pdf-viewer-embed",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "pdf-viewer-embed",
+      "title": "Embed a PDF inline in a page",
+      "description": "Print the HTML fragment that shows a PDF in the installed viewer: a lazily loaded frame whose address is derived from the page's own location (so one page works at the site root, under a project base and under a staging preview), plus plain open and download links that work without it.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/pdf-viewer.ts --embed"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "spec",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/tool-types.schema.json#/$defs/Text",
+            "description": "One JSON object: `src` (the PDF's URL, which must fall under a prefix `pdf-viewer-install` was given, or the viewer refuses it on screen), `title` (what the document is; the frame's accessible name), `route` (a regular expression over the page's pathname whose group 1 is the site root — the `folio-mount.ts` convention) and optionally `page` (open at this 1-based page). On stdin because a title and a regular expression are free text.",
+            "required": true,
+            "arg": {
+              "stdin": true
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "fragment",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/tool-types.schema.json#/$defs/Text",
+            "description": "The HTML fragment on stdout. TypeScript callers import `embed` from `cat-harness/scripts/pdf-viewer.ts` instead, as `who-iris/scripts/gen-iris-pages.ts` does."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#skill/pdf-inline-viewer"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/pdf-viewer-embed"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#tool/upload-url",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "upload-url",
@@ -55659,7 +55782,7 @@
       ],
       "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
       "readmePath": "schemas/README.md",
-      "fileCount": 251,
+      "fileCount": 249,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
@@ -55695,7 +55818,7 @@
       ],
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "readmePath": "skills/README.md",
-      "fileCount": 288,
+      "fileCount": 289,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
@@ -55914,7 +56037,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 3024,
+      "fileCount": 3027,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#directory/docs",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
@@ -55950,7 +56073,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 901,
+      "fileCount": 903,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-70lx-b2d/cat-harness.jsonld#directory/cat-harness-scripts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
