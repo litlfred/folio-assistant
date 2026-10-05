@@ -334,10 +334,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-05T14:11:46.462Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1f22e849648f0208bac1664b3d2fa387b7e2d4cd",
-  "sourceCommitSha": "1f22e849648f0208bac1664b3d2fa387b7e2d4cd",
-  "sourceCommitAt": "2026-10-05T16:03:45+02:00",
+  "generatedAt": "2026-10-05T15:13:50.574Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0e1e46c26360e078531aea0309ab0b33a7cb4f34",
+  "sourceCommitSha": "0e1e46c26360e078531aea0309ab0b33a7cb4f34",
+  "sourceCommitAt": "2026-10-05T17:05:45+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1409,7 +1409,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/content-context-and-state-graphs.md",
-      "instructionLines": 368,
+      "instructionLines": 371,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1505,7 +1505,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/kg-export.md",
-      "instructionLines": 1023,
+      "instructionLines": 1021,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1660,12 +1660,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "instance-publication",
       "title": "instance-publication — draft is a state, not an absence of one",
-      "description": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft.",
+      "description": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft. Also the one home for which graph each instance publishes, where, under which IRI and schema, and what is stripped from it.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/instance-publication.md",
-      "instructionLines": 275,
+      "instructionLines": 455,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1680,7 +1680,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1523,
+      "instructionLines": 1529,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3675,7 +3675,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/kg-viewer.md",
-      "instructionLines": 261,
+      "instructionLines": 265,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -39861,9 +39861,9 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
       ],
-      "description": "Files `folio_init` WRITES INTO a new folio, kept as real files so they can be read, diffed and parsed rather than living as strings inside `scripts/init-folio.ts`. One subdirectory per content profile, mirroring the folio's own layout under it: `document/` is written into every folio and `paper/` additionally into a paper folio (profiles nest, as `content-profiles` says), and a `github/` segment lands as the folio's `.github/`, because a dot-prefixed directory is the one place this repository's own conventions refuse. Bean `52dz`, owner 2026-09-24: the generic QA workflows (`qa-sweep`, `qa-sweep-nightly`, `section-title-audit`) and the Lean workflows (`blueprint`, `lean-build`, `lean-build-sidecar`, `lean_ci`) moved here from `.github/workflows/`, where they could never run and counted as workflows that do not. `{{assistant}}`, `{{folio}}`, `{{platform_git}}` and `{{platform_repo}}` are substituted at write time; `${{ … }}` is GitHub's and is left alone. Declared `code` rather than a kind of its own: these are executable sources whose target is another repository, and nothing here reads them as graph nodes. `dependents: skip` -- a dependent inherits them through `folio_init`, not by owning a copy.",
+      "description": "Files `folio_init` WRITES INTO a new folio, kept as real files so they can be read, diffed and parsed rather than living as strings inside `scripts/init-folio.ts`. One subdirectory per content profile, mirroring the folio's own layout under it: `document/` is written into every folio and `paper/` additionally into a paper folio (profiles nest, as `content-profiles` says), and a `github/` segment lands as the folio's `.github/`, because a dot-prefixed directory is the one place this repository's own conventions refuse. `public-comment/` is the one set that is NOT a profile: a folio running a public review opts in with `public-comment-changesets.ts install` (issue #2183), so `folio_init` never writes it. Bean `52dz`, owner 2026-09-24: the generic QA workflows (`qa-sweep`, `qa-sweep-nightly`, `section-title-audit`) and the Lean workflows (`blueprint`, `lean-build`, `lean-build-sidecar`, `lean_ci`) moved here from `.github/workflows/`, where they could never run and counted as workflows that do not. `{{assistant}}`, `{{folio}}`, `{{platform_git}}` and `{{platform_repo}}` are substituted at write time; `${{ … }}` is GitHub's and is left alone. Declared `code` rather than a kind of its own: these are executable sources whose target is another repository, and nothing here reads them as graph nodes. `dependents: skip` -- a dependent inherits them through `folio_init`, not by owning a copy.",
       "readmePath": "templates/README.md",
-      "fileCount": 17,
+      "fileCount": 22,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-templates"
     },
     {
@@ -43772,6 +43772,11 @@
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_EditorialDirect"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_GroupedToAssign",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_GroupedToAssign"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_NoChange",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_NoChange"
@@ -43800,6 +43805,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToDecide",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToDecide"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToGroup",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToGroup"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporate",
@@ -43942,6 +43952,11 @@
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_EditorDecides"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_GroupChangeSets",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_GroupChangeSets"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Incorporate",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Incorporate"
@@ -43950,6 +43965,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Ingest",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Ingest"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_ProposeChangeSets",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_ProposeChangeSets"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Triage",
@@ -44814,8 +44834,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "1f22e849648f0208bac1664b3d2fa387b7e2d4cd",
+    "sha": "0e1e46c26360e078531aea0309ab0b33a7cb4f34",
     "pr": "main",
-    "run": "37321679775"
+    "run": "37330002468"
   }
 }
