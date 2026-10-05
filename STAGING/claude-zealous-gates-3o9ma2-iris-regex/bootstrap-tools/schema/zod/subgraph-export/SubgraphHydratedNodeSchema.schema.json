@@ -1,0 +1,82 @@
+{
+  "$ref": "#/definitions/SubgraphHydratedNode",
+  "definitions": {
+    "SubgraphHydratedNode": {
+      "type": "object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "pattern": "\\/subgraph\\/(?:[^/]+\\/(?:.+\\/)?)?$"
+        },
+        "@type": {
+          "type": "string",
+          "const": "bootstrap:Subgraph"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "holdsGraph": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^bootstrap:graphTypology\\/[a-z][a-z0-9-]*$"
+          }
+        },
+        "hasMember": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "@id": {
+                "type": "string",
+                "format": "uri"
+              },
+              "@type": {
+                "type": "string",
+                "pattern": "^bootstrap:[A-Z][A-Za-z]*$"
+              }
+            },
+            "required": [
+              "@id",
+              "@type"
+            ],
+            "additionalProperties": {}
+          }
+        },
+        "hasSubgraph": {
+          "type": "array",
+          "items": {
+            "$ref": "#"
+          }
+        }
+      },
+      "required": [
+        "@id",
+        "@type",
+        "name",
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-iris-regex/bootstrap-tools/schema/zod/subgraph-export/SubgraphHydratedNodeSchema.schema.json",
+  "title": "SubgraphHydratedNodeSchema",
+  "description": "Generated from `SubgraphHydratedNodeSchema` in schemas/subgraph-export.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/zealous-gates-3o9ma2-iris-regex",
+    "sha": "fe74df7fd9bccb171281d68eab58d3d669186368",
+    "pr": "2226/merge",
+    "run": "37359589384"
+  }
+}

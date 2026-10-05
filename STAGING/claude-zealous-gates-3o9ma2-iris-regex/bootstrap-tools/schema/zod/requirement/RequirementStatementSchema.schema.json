@@ -1,0 +1,83 @@
+{
+  "$ref": "#/definitions/RequirementStatement",
+  "definitions": {
+    "RequirementStatement": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "conformance": {
+          "type": "string",
+          "enum": [
+            "SHALL",
+            "SHOULD",
+            "MAY",
+            "SHALL NOT"
+          ]
+        },
+        "requirement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "functional",
+            "non-functional"
+          ]
+        },
+        "activity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capability": {
+          "type": "string",
+          "minLength": 1
+        },
+        "benefit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "dependsOn": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "key",
+        "label",
+        "conformance",
+        "requirement"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-iris-regex/bootstrap-tools/schema/zod/requirement/RequirementStatementSchema.schema.json",
+  "title": "RequirementStatementSchema",
+  "description": "Generated from `RequirementStatementSchema` in schemas/requirement.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/zealous-gates-3o9ma2-iris-regex",
+    "sha": "fe74df7fd9bccb171281d68eab58d3d669186368",
+    "pr": "2226/merge",
+    "run": "37359589384"
+  }
+}
