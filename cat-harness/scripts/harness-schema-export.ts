@@ -527,6 +527,24 @@ export function instanceZodSchemaDirs(root: string): string[] {
   return declared.length > 0 ? declared : [join(root, "schemas")];
 }
 
+/**
+ * Whether {@link scanInstanceZodSchemas} would be DETERMINED for this instance
+ * — whether its schemas directories resolve — without importing anything.
+ *
+ * For the JSON-LD document's `omitted` (`kg-export.ts`), which must not stop
+ * saying "schemas were not looked for" when the index the document links
+ * would say the same. Through {@link instanceZodSchemaDirs}, the scan's own
+ * first step, so the two cannot answer differently.
+ */
+export function zodSchemaScanDetermined(root: string): boolean {
+  try {
+    instanceZodSchemaDirs(root);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 /** One exported Zod `*Schema`, as found by {@link scanInstanceZodSchemas}. */
 export interface ZodSchemaExport {
   /** Module path relative to the instance root, `/`-separated. */
