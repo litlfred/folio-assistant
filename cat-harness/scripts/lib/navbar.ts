@@ -86,6 +86,21 @@ export interface NavItem {
    */
   glyphPath?: string;
   /**
+   * This row opens a GRAPH KIND — a `docs`, `library`, `beans` row — rather
+   * than a harness, a page or an index entry. Set by `graphKindRowDecor`, the
+   * one place a kind row is decorated.
+   *
+   * DECLARED, never inferred from the mark. A kind row sits in the strip's
+   * column (bean `yag0`, the `a.fa-nav-kind` rule in {@link navbarCss}), and
+   * that class used to be read off `glyphPath`: "an SVG mark means a kind".
+   * True only until #2122 gave seven HARNESSES glyph marks — smart-trust and
+   * SMART Base then took the kind rows' indent and sat flush left of the
+   * avatar-marked harnesses beside them (#2151, owner: *"alignment of
+   * harnesses is off"*). What a row IS decides where it sits; what its mark
+   * is drawn with does not.
+   */
+  kind?: boolean;
+  /**
    * The rest of the row's ACCESSIBLE NAME, after {@link label} — rendered as
    * visually-hidden text inside the link and as its `title`. The visible
    * label stays short; the name a screen reader or a hover gives is full, and
@@ -633,10 +648,10 @@ function itemHtml(i: NavItem, c: Ctx): string {
     // and a live one sit at the same indent (and a dead NON-kind row at the
     // same indent as its linked siblings — the schemas rail put `all` one
     // step left of the subjects beside it, owner 2026-10-01).
-    const deadKind = i.glyphPath && !i.icon ? " fa-nav-kind" : "";
+    const deadKind = i.kind ? " fa-nav-kind" : "";
     row = `<span class="fa-nav-dead${deadKind}"${d}${title}>${body}${note}</span>`;
   } else {
-    const kind = i.glyphPath && !i.icon ? ' class="fa-nav-kind"' : "";
+    const kind = i.kind ? ' class="fa-nav-kind"' : "";
     row = `<a href="${href(i.href, c)}"${kind}${d}${title}${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
   }
   if (!i.action && !i.children) return row;

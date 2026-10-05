@@ -1080,3 +1080,34 @@ describe("adjacent graph rows cannot be confused (bean yag0)", () => {
     expect(html).toMatch(/<span class="fa-nav-glyph fa-nav-tone" style="[^"]*" aria-hidden="true"><svg viewBox="0 0 24 24"/);
   });
 });
+
+describe("a harness row is not a graph-kind row, whatever its mark (#2151)", () => {
+  // Owner, 2026-10-05: "alignment of harnesses is off". `fa-nav-kind` (the
+  // strip-column indent) was inferred from "has an SVG glyph"; #2122 gave
+  // harnesses glyph marks, and smart-trust / SMART Base took the kind indent.
+  const kinds = declaredGraphs("who-iris", new Map([["docs", "../docs/who-iris/"]]));
+
+  it("every graph-kind row DECLARES itself a kind", () => {
+    expect(kinds.length).toBeGreaterThan(0);
+    expect(kinds.every((r) => r.kind === true)).toBe(true);
+  });
+
+  it("a glyph-marked harness row gets no kind class, and nor does an avatar one", () => {
+    const html = navbarRegionsHtml(
+      railModel({
+        instance: "cat-harness",
+        toRoot: "..",
+        links: kinds,
+        harnesses: [
+          { href: "../smart-trust/", label: "smart-trust", glyphPath: "M12 3l7 3v6", tone: 199 },
+          { href: "../", label: "C@T Harness", avatar: { src: "../a.webp" }, tone: 268 },
+        ],
+      }),
+    );
+    const at = html.indexOf('<div class="fa-nav-bottom">');
+    expect(html.slice(at)).toContain('<a href="../smart-trust/"><span class="fa-nav-glyph');
+    expect(html.slice(at)).not.toContain("fa-nav-kind");
+    // ...while the kind rows above keep it.
+    expect(html.slice(0, at)).toContain('class="fa-nav-kind"');
+  });
+});
