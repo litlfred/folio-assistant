@@ -110,6 +110,7 @@ import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js"
 import { navMarkFields, type HarnessMark } from "./lib/harness-mark.js";
 import { graphTypologyRowDecor } from "./lib/graph-typology-nav.js";
 import { kindTitle } from "./lib/nav-label.js";
+import { withSavedScheme } from "./lib/scheme-css.js";
 import { viewersOf } from "./viewer-declarations.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
@@ -671,7 +672,10 @@ export function withPlatformUi(html: string, platformBase: string): string {
   const tags =
     `<link rel="stylesheet" href="${platformBase}/assets/css/docs-ui.css" ${PLATFORM_UI_ATTR}>` +
     `<script src="${platformBase}/assets/js/docs-ui.js" defer ${PLATFORM_UI_ATTR}></script>`;
-  return html.slice(0, head) + tags + html.slice(head);
+  // And the reader's saved scheme, before first paint: the light bulb sets it
+  // on any page of the site, and without this a folio's page painted in the
+  // OS scheme and flipped once `docs-ui.js` arrived (issue #2208).
+  return withSavedScheme(html.slice(0, head) + tags + html.slice(head));
 }
 
 /**
