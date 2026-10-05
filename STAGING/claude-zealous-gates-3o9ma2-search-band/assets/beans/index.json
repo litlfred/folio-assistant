@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 899,
+      "count": 905,
       "unit": "beans"
     }
   },
@@ -1651,7 +1651,7 @@
         "folio-assistant-e0hw"
       ],
       "createdAt": "2026-10-02T21:36:29Z",
-      "updatedAt": "2026-10-05T05:09:44Z",
+      "updatedAt": "2026-10-05T13:42:54Z",
       "preview": "Owner, 2026-10-02, verbatim: \"bean: please make sure harnesses generate json(ld)+schema for their semi-static KGs, their subgraphs etc. there are some rules in the KG corpsu but scattered. right now, i dont see folio-assistnat.jsonld in gh-pagaes for example. i think all subsumted into cat-harness? these should be split out into their component sub-grpah/harnesses. see related beans. maybe we also",
       "file": "beans/defs/folio-assistant-4ak5--per-harness-kg-export-every-instance-publishes-its.md"
     },
@@ -3209,6 +3209,20 @@
       "file": "beans/defs/folio-assistant-81vy--deployment-awareness-the-agent-must-know-its-ui-su.md"
     },
     {
+      "id": "folio-assistant-82qs",
+      "title": "Locale selector back in the LHS navbar's top row",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-9rq1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T14:39:33Z",
+      "updatedAt": "2026-10-05T15:24:15Z",
+      "preview": "Owner, 2026-10-05: 'we lost locale selector in top navbar LHS again'. Cause (measured): docs-ui.css ~5729 hides .fa-lang-mini whenever .fa-nav-icons exists; the icon row took the launcher and the light/dark bulb but never a language control. Fix: a globe beside the bulb in the row's after-hook (opens the launcher on the language view), plus an e2e asserting a visible language control in .side-bar ",
+      "file": "beans/defs/folio-assistant-82qs--locale-selector-back-in-the-lhs-navbars-top-row.md"
+    },
+    {
       "id": "folio-assistant-872t",
       "title": "The Python half's WHEEL BUILD is unchecked — rsi6's lesson applied to only one of the two halves",
       "status": "todo",
@@ -3894,7 +3908,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:29:44Z",
-      "updatedAt": "2026-09-29T21:43:13Z",
+      "updatedAt": "2026-10-05T13:39:00Z",
       "preview": "Owner ruling, 2026-09-23: *\"all assets get a version and are in 'draft' publication. formal publication process needs to be deinfed/neeeds tools/depends on instance\"*.\n\nCorrects §3.1 as `snjh` shipped it. Not a gap in that work — a different model.\n\n## What §3.1 got wrong, precisely\n\nIt models `publishable?: boolean` with three states, and REFUSES id and version unless `publishable: true`:\n\n    re",
       "file": "beans/defs/folio-assistant-9wb0--publication-is-a-state-not-a-boolean-every-asset-c.md"
     },
@@ -6142,6 +6156,20 @@
       "file": "beans/defs/folio-assistant-ghgn--orphaned-viewer-pages-the-schema-viewer-and-uml-ge.md"
     },
     {
+      "id": "folio-assistant-gkv6",
+      "title": "NAVBAR ROW COUNTS: beans and todos icons carry count badges, as fsh-guts does",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-9rq1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T15:14:38Z",
+      "updatedAt": "2026-10-05T15:14:38Z",
+      "preview": "Owner, 2026-10-05: \"why no count on beans and todos on LHS top navbar as badges like fsh-guts has?\" Find how fsh-guts draws the count badges, then make the shared row (navbar-row.js) show the bean and todo counts. Must work in both FULL and LITE row modes.",
+      "file": "beans/defs/folio-assistant-gkv6--navbar-row-counts-beans-and-todos-icons-carry-coun.md"
+    },
+    {
       "id": "folio-assistant-gm9g",
       "title": "render:bpmn:check on bootstrap/processes/*.svg — two generators, one artefact; FIXED by #1663, and my 'flap' diagnosis retracted",
       "status": "completed",
@@ -6196,6 +6224,20 @@
       "updatedAt": "2026-10-05T04:57:14Z",
       "preview": "Issue #1885.\n\nOwner rulings, 2026-10-02:\n- \"~230KB per IG page mostly navigation/styling overhead... can we condense into common styling/libraries? so page size is small?\"\n- \"1 do all.\"\n- \"first document workplan and /coordinate in case active work on pages happening\"\n- \"(in genreal update agent-agent coorindation/hadover skills - if you are working on a refactor of the platform, review active age",
       "file": "beans/defs/folio-assistant-gp2f--page-weight-move-per-page-nav-harness-bar-icons-sc.md"
+    },
+    {
+      "id": "folio-assistant-gpbc",
+      "title": "Graphs and Folders are one heading, with the count badge",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-9rq1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T14:39:33Z",
+      "updatedAt": "2026-10-05T15:25:10Z",
+      "preview": "Owner, 2026-10-05: 'graphs containing ONLY folders is weird. combine w/ badge of count.' mountSidebarRail wraps mountInstanceGraphs' 'Folders N' details in a second 'Graphs' details. Make one disclosure titled Graphs carrying the count.\n\n## Done when\n- [ ] one 'Graphs N' disclosure on the theme sidebar; the rail already has one\n- [ ] e2e updated\n\n_2026-10-05T15:25:10Z_ — Claimed by claude/vibrant-",
+      "file": "beans/defs/folio-assistant-gpbc--graphs-and-folders-are-one-heading-with-the-count.md"
     },
     {
       "id": "folio-assistant-gpdo",
@@ -7673,6 +7715,20 @@
       "updatedAt": "2026-10-02T23:32:19Z",
       "preview": "## Measured 2026-10-02, on a checkout of `main`\n\n`check:workflow-refs` reports two callers that run an adjudication without\nnaming the answers it may give, and sends the reader to bean `bvuk`:\n\n```\n? processes/library/sample-import.bpmn  · Call_Refresh → Process_RefreshMaterialized: does not say\n? processes/library/subscribe-kg.bpmn   · Call_Refresh → Process_RefreshMaterialized: does not say\n2 ca",
       "file": "beans/defs/folio-assistant-lk2a--checkworkflow-refs-sends-the-reader-to-bean-bvuk-w.md"
+    },
+    {
+      "id": "folio-assistant-lnoy",
+      "title": "Thin pages get the rail, with its style LINKED: navbar.css as a shared asset, folio-navbar: linked",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-9rq1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T13:30:03Z",
+      "updatedAt": "2026-10-05T13:33:51Z",
+      "preview": "Owner, 2026-10-05: chose '1. Add the rail' for the 95 built pages with no navbar, then, told they decline on purpose (the rail is 7.9 KB, 4.3 KB of it CSS, on pages of 1.4-3 KB), '1. Shared rail style first'. thin-page.ts and gen-library-viz.ts decline 'until the rail is itself a shared asset'.\n\n## Done when\n- [ ] assets/css/navbar.css generated from navbarCss(), with a check that it matches\n- [ ]",
+      "file": "beans/defs/folio-assistant-lnoy--thin-pages-get-the-rail-with-its-style-linked-navb.md"
     },
     {
       "id": "folio-assistant-lodp",
@@ -9457,6 +9513,20 @@
       "updatedAt": "2026-09-23T21:59:43Z",
       "preview": "## Why this is its own bean\n\n`1r0p` (audio transcription) waited on `68dt` — declare Python dependencies and\ninstall them in CI. **`68dt` has landed**: `requirements.txt` is generated from\n`schemas/python-deps.ts` and `code-quality-gates.yml` runs\n`pip install -r requirements.txt`. The mechanism exists.\n\nWhat does not exist is a **decision about which backend**, and that is not a\nline to add quiet",
       "file": "beans/defs/folio-assistant-r279--decide-which-transcription-backend-and-what-ci-pay.md"
+    },
+    {
+      "id": "folio-assistant-r2ld",
+      "title": "'On this page': sections with sub-sections are collapsible",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-9rq1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T14:39:33Z",
+      "updatedAt": "2026-10-05T14:39:33Z",
+      "preview": "Owner, 2026-10-05: 'on this page should have sub-sections collapsible'. Both surfaces: mountDocumentIndex (docs-ui.js) and documentIndexOf (navbar.ts, rail) — independent implementations of one rule; nest h3 under h2 as a closed disclosure.\n\n## Done when\n- [ ] theme sidebar and rail both nest h3 under their h2, closed by default\n- [ ] e2e on both",
+      "file": "beans/defs/folio-assistant-r2ld--on-this-page-sections-with-sub-sections-are-collap.md"
     },
     {
       "id": "folio-assistant-r3gy",
@@ -11800,7 +11870,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T05:59:28Z",
-      "updatedAt": "2026-09-20T04:05:17Z",
+      "updatedAt": "2026-10-05T13:38:59Z",
       "preview": "_2026-09-19T05:59:49Z_ — THE ASK (owner, 2026-09-19, answering where the harness schemas should move): 'toplevel topical directories like: bootstrap =/ KG w/ only tool the CLI fallback for beans. minimal workflow, init, absolutely minimal skills and bpms listt to get going.' So the organising axis is TOPIC, not layer — which also settles the earlier layer question by construction, since math/ and ",
       "file": "beans/defs/folio-assistant-x3bd--top-level-topical-kg-directories-bootstrap-first.md"
     },
@@ -12031,6 +12101,20 @@
       "updatedAt": "2026-09-29T18:14:47Z",
       "preview": "Owner, 2026-09-20, naming the pipeline verbatim:\n\n> 'using ghpages as CDN is a tool choice, other tools possible like cloudflare, doucment that in process/BPMNS/skills, part of publication piepleine, internal publication mamgement: (chief) editor signoff -> merge to main -> huamn eyes review last check -> publish to CDN (requires EXTREME care in URL handling) and make accessible from CDN'\n\nFOUR GA",
       "file": "beans/defs/folio-assistant-xies--publish-to-cdn-editor-signoff-merge-human-eyes-cdn.md"
+    },
+    {
+      "id": "folio-assistant-xka5",
+      "title": "Pages grouped by harness, following the URL; each harness owns its sub-doc graphs",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-9rq1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T14:39:33Z",
+      "updatedAt": "2026-10-05T14:39:33Z",
+      "preview": "Owner, 2026-10-05, asked how to group the 79 top-level pages: 'dont want additional categorization that will drift, needs maintain. do it by harnesses to follow urls <base>cat-harness/docs/<harness>. each harness is responsible for managing its own sub doc graphs (if any) which then make up the hierarchy'. Also: '(and alphabetization//locale dependent)' — order within a level alphabetical by the p",
+      "file": "beans/defs/folio-assistant-xka5--pages-grouped-by-harness-following-the-url-each-ha.md"
     },
     {
       "id": "folio-assistant-xl55",
@@ -14354,14 +14438,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 540,
+        "total": 546,
         "closed": 196,
-        "open": 344,
-        "inProgress": 128,
-        "todo": 215,
+        "open": 350,
+        "inProgress": 131,
+        "todo": 218,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.362962962962963
+        "share": 0.358974358974359
       },
       {
         "id": "folio-assistant-vuip",
@@ -14395,8 +14479,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 523,
-    "coveredOpen": 520,
+    "openTotal": 529,
+    "coveredOpen": 526,
     "duplicateIds": 0
   }
 }

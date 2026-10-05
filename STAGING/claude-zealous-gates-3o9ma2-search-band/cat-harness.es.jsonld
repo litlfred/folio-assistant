@@ -338,10 +338,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-05T15:31:35.659Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b8e66330fa2898a9c0f3ec24e8a1e77daa859a4e",
-  "sourceCommitSha": "b8e66330fa2898a9c0f3ec24e8a1e77daa859a4e",
-  "sourceCommitAt": "2026-10-05T15:25:34Z",
+  "generatedAt": "2026-10-05T15:50:30.473Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c143b7f67bef6b3abcb4073db9603f776c8aa3ec",
+  "sourceCommitSha": "c143b7f67bef6b3abcb4073db9603f776c8aa3ec",
+  "sourceCommitAt": "2026-10-05T15:34:35Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1478,7 +1478,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/content-context-and-state-graphs.md",
-      "instructionLines": 368,
+      "instructionLines": 371,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1580,7 +1580,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/kg-export.md",
-      "instructionLines": 1023,
+      "instructionLines": 1021,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1745,12 +1745,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "instance-publication",
       "title": "instance-publication — draft is a state, not an absence of one",
-      "description": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft.",
+      "description": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft. Also the one home for which graph each instance publishes, where, under which IRI and schema, and what is stripped from it.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/instance-publication.md",
-      "instructionLines": 275,
+      "instructionLines": 455,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1766,7 +1766,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1523,
+      "instructionLines": 1529,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3886,7 +3886,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/kg-viewer.md",
-      "instructionLines": 261,
+      "instructionLines": 265,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -42429,7 +42429,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 3128,
+      "fileCount": 3138,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#directory/docs",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
@@ -42465,7 +42465,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 915,
+      "fileCount": 918,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#directory/cat-harness-scripts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
@@ -42535,9 +42535,9 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
       ],
-      "description": "Files `folio_init` WRITES INTO a new folio, kept as real files so they can be read, diffed and parsed rather than living as strings inside `scripts/init-folio.ts`. One subdirectory per content profile, mirroring the folio's own layout under it: `document/` is written into every folio and `paper/` additionally into a paper folio (profiles nest, as `content-profiles` says), and a `github/` segment lands as the folio's `.github/`, because a dot-prefixed directory is the one place this repository's own conventions refuse. Bean `52dz`, owner 2026-09-24: the generic QA workflows (`qa-sweep`, `qa-sweep-nightly`, `section-title-audit`) and the Lean workflows (`blueprint`, `lean-build`, `lean-build-sidecar`, `lean_ci`) moved here from `.github/workflows/`, where they could never run and counted as workflows that do not. `{{assistant}}`, `{{folio}}`, `{{platform_git}}` and `{{platform_repo}}` are substituted at write time; `${{ … }}` is GitHub's and is left alone. Declared `code` rather than a kind of its own: these are executable sources whose target is another repository, and nothing here reads them as graph nodes. `dependents: skip` -- a dependent inherits them through `folio_init`, not by owning a copy.",
+      "description": "Files `folio_init` WRITES INTO a new folio, kept as real files so they can be read, diffed and parsed rather than living as strings inside `scripts/init-folio.ts`. One subdirectory per content profile, mirroring the folio's own layout under it: `document/` is written into every folio and `paper/` additionally into a paper folio (profiles nest, as `content-profiles` says), and a `github/` segment lands as the folio's `.github/`, because a dot-prefixed directory is the one place this repository's own conventions refuse. `public-comment/` is the one set that is NOT a profile: a folio running a public review opts in with `public-comment-changesets.ts install` (issue #2183), so `folio_init` never writes it. Bean `52dz`, owner 2026-09-24: the generic QA workflows (`qa-sweep`, `qa-sweep-nightly`, `section-title-audit`) and the Lean workflows (`blueprint`, `lean-build`, `lean-build-sidecar`, `lean_ci`) moved here from `.github/workflows/`, where they could never run and counted as workflows that do not. `{{assistant}}`, `{{folio}}`, `{{platform_git}}` and `{{platform_repo}}` are substituted at write time; `${{ … }}` is GitHub's and is left alone. Declared `code` rather than a kind of its own: these are executable sources whose target is another repository, and nothing here reads them as graph nodes. `dependents: skip` -- a dependent inherits them through `folio_init`, not by owning a copy.",
       "readmePath": "templates/README.md",
-      "fileCount": 17,
+      "fileCount": 22,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#directory/folio-templates",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-templates"
     },
@@ -46451,6 +46451,11 @@
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_EditorialDirect"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_GroupedToAssign",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_GroupedToAssign"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_NoChange",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_NoChange"
@@ -46479,6 +46484,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToDecide",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToDecide"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToGroup",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToGroup"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporate",
@@ -46621,6 +46631,11 @@
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_EditorDecides"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#process/Process_PublicComment/node/Task_GroupChangeSets",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_GroupChangeSets"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#process/Process_PublicComment/node/Task_Incorporate",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Incorporate"
@@ -46629,6 +46644,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#process/Process_PublicComment/node/Task_Ingest",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Ingest"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#process/Process_PublicComment/node/Task_ProposeChangeSets",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_ProposeChangeSets"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-search-band/cat-harness.jsonld#process/Process_PublicComment/node/Task_Triage",
