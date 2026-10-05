@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTTyphoidContraindicationsVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTyphoidContraindicationsVS.schema.json` · [view](ValueSet-IMMZD5DTTyphoidContraindicationsVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTTyphoidContraindicationsVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTyphoidContraindicationsVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTTyphoidContraindicationsVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTyphoidContraindicationsVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTTyphoidContraindicationsVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTyphoidContraindicationsVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD5DTTyphoidContraindicationsVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTyphoidContraindicationsVS.jsonld` · [view](ValueSet-IMMZD5DTTyphoidContraindicationsVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD5DTTyphoidContraindicationsVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTyphoidContraindicationsVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD5DTTBEContraindicationsVS.html" data-next="ValueSet-IMMZD5DTVaricellaContraindicationsVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPOnTimeStartVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPOnTimeStartVS.schema.json` · [view](ValueSet-IMMZD2DTDTPOnTimeStartVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPOnTimeStartVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPOnTimeStartVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPOnTimeStartVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPOnTimeStartVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPOnTimeStartVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPOnTimeStartVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTDTPOnTimeStartVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPOnTimeStartVS.jsonld` · [view](ValueSet-IMMZD2DTDTPOnTimeStartVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTDTPOnTimeStartVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPOnTimeStartVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.html" data-next="ValueSet-IMMZD2DTDTPPregnancyStartingWith3DosesVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

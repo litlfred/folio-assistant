@@ -8,7 +8,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, composeIgSite, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, composeIgSite, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, relinkPublisherOutputs, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
 import { copyDocsInto, igSiteDocs, webpagePalette } from "./stage-ig-sites";
 import type { IgReleases } from "../schemas/ig-releases.ts";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
@@ -488,5 +488,19 @@ describe("composeIgSite: a staged IG moved into a host Jekyll source", () => {
     // A second compose of the same IG is two answers for one URL.
     expect(composeIgSite(staged, host, "x").collisions.length).toBeGreaterThan(0);
     rmSync(d, { recursive: true, force: true });
+  });
+});
+
+describe("relinkPublisherOutputs — the Publisher's downloads live on the published IG", () => {
+  test("points a bare .zip/.tgz link at the canonical site", () => {
+    const r = relinkPublisherOutputs("* [IG Package](package.tgz)\n* [JSON](definitions.json.zip)", "http://smart.who.int/immunizations/");
+    expect(r.text).toBe("* [IG Package](http://smart.who.int/immunizations/package.tgz)\n* [JSON](http://smart.who.int/immunizations/definitions.json.zip)");
+    expect(r.count).toBe(2);
+  });
+  test("leaves pages, paths and absolute URLs alone", () => {
+    const t = "[a](index.html) [b](files/x.zip) [c](https://x.org/y.zip) <a href=\"z.tgz\">";
+    const r = relinkPublisherOutputs(t, "http://c");
+    expect(r.text).toBe("[a](index.html) [b](files/x.zip) [c](https://x.org/y.zip) <a href=\"http://c/z.tgz\">");
+    expect(r.count).toBe(1);
   });
 });

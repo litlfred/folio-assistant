@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.schema.json` · [view](ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.jsonld` · [view](ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD18SMeningococcalMonovalentMenCConjugateVaccineVS.html" data-next="ValueSet-IMMZD18SMeningococcalQuadrivalentConjugateVaccines1DoseVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

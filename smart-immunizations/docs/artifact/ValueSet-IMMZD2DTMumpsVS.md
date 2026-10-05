@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMumpsVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMumpsVS.schema.json` · [view](ValueSet-IMMZD2DTMumpsVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMumpsVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMumpsVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMumpsVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMumpsVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMumpsVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMumpsVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTMumpsVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMumpsVS.jsonld` · [view](ValueSet-IMMZD2DTMumpsVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTMumpsVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMumpsVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines2DosesVS.html" data-next="ValueSet-IMMZD2DTPneumococcal2DosesWithBoosterDoseVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

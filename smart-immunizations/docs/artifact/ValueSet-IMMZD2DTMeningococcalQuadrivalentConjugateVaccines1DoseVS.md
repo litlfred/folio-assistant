@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.schema.json` · [view](ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.jsonld` · [view](ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD2DTMeningococcalPolysaccharideVaccinesVS.html" data-next="ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines2DosesVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

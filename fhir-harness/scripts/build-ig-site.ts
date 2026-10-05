@@ -174,6 +174,26 @@ export function relinkArtifacts(text: string, pageNames: ReadonlySet<string>, pa
   return { text: out, count };
 }
 
+/**
+ * Point a page's links to the IG Publisher's DOWNLOADS at the IG's published
+ * site. `downloads.md` links `package.tgz` and `definitions.json.zip` beside
+ * itself because the Publisher writes them there; this build renders pages,
+ * not packages, so those links resolved to nothing (7 per IG, measured on
+ * litlfred/smart-immunizations' site, 2026-10-05). The published IG at the
+ * sushi `canonical` serves the same files. Only a bare relative `.zip`/`.tgz`
+ * name is touched: an archive is a Publisher output by construction here,
+ * and a path, a query or an absolute URL is the author's and is left alone.
+ */
+export function relinkPublisherOutputs(text: string, publishedBase: string): { text: string; count: number } {
+  let count = 0;
+  const base = publishedBase.replace(/\/$/, "");
+  const out = text.replace(/(\]\(|href=["'])([A-Za-z0-9][A-Za-z0-9._-]*\.(?:zip|tgz))(?=[)"'])/g, (_w, pre: string, file: string) => {
+    count++;
+    return `${pre}${base}/${file}`;
+  });
+  return { text: out, count };
+}
+
 /** A menu href made site-absolute under `baseurl`; an absolute or external one is kept. */
 const siteHref = (baseurl: string, href: string): string =>
   /^([a-z][a-z0-9+.-]*:|\/|#)/i.test(href) ? href : `${baseurl.replace(/\/$/, "")}/${href}`;
@@ -776,9 +796,16 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   const usedMarkers = new Set<string>();
   const artifactPages = new Set((opts.artifacts?.list ?? []).map((a) => artifactPageName(a)));
   let relinked = 0;
+  const canonical = typeof sushi.canonical === "string" ? sushi.canonical : undefined;
   const relink = (text: string): string => {
-    if (!opts.artifacts) return text;
-    const r = relinkArtifacts(text, artifactPages, opts.artifacts.pagesHref);
+    let t = text;
+    if (canonical) {
+      const p = relinkPublisherOutputs(t, canonical);
+      relinked += p.count;
+      t = p.text;
+    }
+    if (!opts.artifacts) return t;
+    const r = relinkArtifacts(t, artifactPages, opts.artifacts.pagesHref);
     relinked += r.count;
     return r.text;
   };
