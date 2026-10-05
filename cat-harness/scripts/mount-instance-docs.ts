@@ -964,6 +964,54 @@ export interface ForeignSiteRail {
   platformBase: string;
   /** What the home row is called — the folio's name, not the platform's. */
   homeLabel?: string;
+  /**
+   * The instance whose OWN site this is — an IG repository that instantiates
+   * a harness and builds its own site (bean `mftp`, owner 2026-10-05:
+   * "harnesses in bottom LHS navbar link back to folio-assist, not
+   * smart-immz"). Given, the navbar is that instance's: its name and mark in
+   * the header, its graphs, and a Harnesses list of IT and the harnesses it
+   * is built on (its `needs`, transitively) — itself linking to this site's
+   * root, the others to their own pages. Absent, the rail is the platform's.
+   */
+  instance?: string;
+}
+
+/**
+ * An instance and the harnesses it is built on, as navbar rows: the instance
+ * first, linking to `ownHref`, then every harness reachable through `needs`,
+ * in `harness.json`'s order, each linking to its own page re-based on
+ * `linkRoot`. A harness with no page is listed without a link rather than
+ * dropped. Undefined when `harness.json` cannot be read.
+ */
+export function instanceHarnesses(built: string, instance: string, linkRoot: string, ownHref: string): NavItem[] | undefined {
+  const prefix = publishedDocsPrefix(REPO, built);
+  if (prefix === undefined) return undefined;
+  const data = join(REPO, prefix, "_data", "harness.json");
+  if (!existsSync(data)) return undefined;
+  let d: { harnesses?: { name?: string; label?: string; title?: string; href?: string | null; tone?: number; mark?: HarnessMark | null; needs?: string[] }[] };
+  try {
+    d = JSON.parse(readFileSync(data, "utf-8"));
+  } catch {
+    return undefined;
+  }
+  const rows = d.harnesses ?? [];
+  const byName = new Map(rows.map((h) => [h.name, h]));
+  const reach = new Set<string>([instance]);
+  for (const queue = [instance]; queue.length > 0; ) {
+    for (const n of byName.get(queue.shift()!)?.needs ?? []) {
+      if (reach.has(n)) continue;
+      reach.add(n);
+      queue.push(n);
+    }
+  }
+  return rows
+    .filter((h) => h.name !== undefined && reach.has(h.name))
+    .sort((a, b) => (a.name === instance ? -1 : b.name === instance ? 1 : 0))
+    .map((h) => {
+      const label = h.label ?? h.title ?? h.name ?? "?";
+      const href = h.name === instance ? ownHref : h.href ? `${linkRoot}${h.href}` : undefined;
+      return { label, ...(href ? { href } : {}), ...navMarkFields(h.mark, h.tone, (src) => `${linkRoot}${src}`) };
+    });
 }
 
 export function railStandalonePages(
@@ -1021,12 +1069,12 @@ export function railStandalonePages(
       const toRoot = depth === 0 ? "." : new Array(depth).fill("..").join("/");
       // A page of an `igSite` instance's own IG site (bean `mftp`) is THAT
       // instance's page: its name, mark and graphs, not the platform's.
-      const owner = foreign ? instanceName : (igSiteOwner(rel.split("/")[0]!) ?? instanceName);
+      const owner = foreign ? (foreign.instance ?? instanceName) : (igSiteOwner(rel.split("/")[0]!) ?? instanceName);
       const named = railNames(built, owner);
       // The platform's links resolve against the platform's site; only home is this site's.
       const linkRoot = foreign?.platformBase ?? toRoot;
       const links = declaredGraphs(owner, new Map(), publishedGraphs(built, owner, linkRoot), named.harness);
-      const harnesses = instantiatedHarnesses(built, linkRoot);
+      const harnesses = foreign?.instance ? instanceHarnesses(built, foreign.instance, linkRoot, `${toRoot}/`) : instantiatedHarnesses(built, linkRoot);
       const mark = instanceMark(built, owner, linkRoot);
       const homeLabel = foreign ? foreign.homeLabel : named.site;
       const after = injectRail(before, {

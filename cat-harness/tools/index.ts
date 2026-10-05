@@ -187,6 +187,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "site", schema: t("RepoPath"), required: true, description: "The finished site directory." },
           { name: "built", schema: t("Slug"), required: true, description: "The instance whose site this is (`cat-harness`)." },
           { name: "foreign-site", schema: t("Flag"), required: false, arg: { flag: "--foreign-site" }, description: "The site is a folio's, not the platform's: platform links point at the platform's published site." },
+          { name: "instance", schema: t("Slug"), required: false, description: "With `--foreign-site`: the instance whose own site this is. Its name, mark and graphs head the navbar, and Harnesses lists it (linking to this site's root) and the harnesses it is built on." },
         ],
         outputs: [
           { name: "railed", schema: t("Count"), description: "Pages given the navbar, beside those already navigated, redirect stubs, pages that declined, and pages with no <body> — each counted, none silently." },
