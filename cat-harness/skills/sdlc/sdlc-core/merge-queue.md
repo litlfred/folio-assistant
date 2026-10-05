@@ -543,12 +543,17 @@ one.** The causes to check, in order:
 
 The first one is not visible in the check list, so look at the YAML.
 
-**After any merge of `main`, check for silently dropped files.** Files that
-are gitignored but still tracked under `*/test/results/` (LSI indexes, QA
-sidecars) are dropped by a merge and by `git add -A`. Local checks still pass,
-because regen rewrites them on disk, but CI's fresh checkout fails. Run
-`git diff --diff-filter=D HEAD^1 HEAD -- '*/test/results/*'` and
-`git ls-files -m`, and re-add anything dropped with `git add -f` (bean `8j9e`).
+**After any merge of `main`, check for silently dropped files.** Some files
+under `*/test/results/` (LSI indexes, QA and detangle sidecars) are gitignored
+but still tracked. Once a resolution step removes one from the index, regen
+rewrites it on disk and `git add -A` does not stage it again. Local checks
+still pass, but CI's fresh checkout fails. `merge:main` and the merge-main bot
+now refuse such a merge and name the paths (`droppedInMerge` in
+`merge-base.ts`, see `merge-conflict-patterns` §"When one side deleted the
+file"). A hand `git merge` gets no such check. After one, run
+`git diff --diff-filter=D HEAD^1 HEAD -- '*/test/results/*'`, and restore
+anything that main still tracks with `git checkout HEAD^2 -- <path>` (bean
+`8j9e`).
 
 ### Stalled for days, with no handover report: write it, then hand it to a takeover agent
 

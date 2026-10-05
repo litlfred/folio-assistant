@@ -36,7 +36,7 @@
  * 2 could not start (dirty tree, no such base).
  */
 import { execFileSync, spawnSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { repoRootFor } from "../schemas/cat-harness.js";
@@ -193,28 +193,84 @@ export function stageGitlink(root: string, path: string, pin: string): void {
   git(root, "update-index", "--cacheinfo", `160000,${pin},${path}`);
 }
 
-/**
- * Paths both parents hold that the merged result does not (bean `vsv7`, done-when 2).
- *
- * A merge may drop a file one side deleted; it never drops one BOTH sides
- * still have. On #1955 (2026-10-03) a resolver mis-step `git rm`ed two such
- * generated sidecars and the run still said "proved", because no gate asks
- * whether a file vanished. This is that question, asked of the index just
- * before the merge commit. Pure over three path lists.
- */
-export function lostOnBothSides(ours: readonly string[], theirs: readonly string[], result: readonly string[]): string[] {
-  const kept = new Set(result);
-  const theirsSet = new Set(theirs);
-  return ours.filter((f) => theirsSet.has(f) && !kept.has(f)).sort();
+/** One path a merge would drop, and which parents track it. */
+export interface DroppedPath {
+  path: string;
+  heldBy: "both" | "ours" | "theirs";
 }
 
-/** Abort (tree restored) when the staged merge lost a path both parents hold. */
-function refuseLostFiles(root: string, abort: (why: string) => never): void {
+/**
+ * Paths a parent tracks that the merged result does not, where NEITHER side
+ * deleted the path since the merge base (beans `vsv7` and `8j9e`).
+ *
+ * A merge may drop a path only by taking a DELETION: the path was in the merge
+ * base and one side removed it. A path both parents hold, or one a side ADDED
+ * since the base, must survive. The first version (`vsv7`, after #1955 lost
+ * two kg-export sidecars to a resolver mis-step) asked only whether both
+ * parents held the path, so a file one side added and the merge lost passed as
+ * "a deletion the merge took", although nobody deleted it.
+ *
+ * Why this has to be checked: once a path leaves the index, nothing puts it
+ * back if it is gitignored. `cat-harness/test/results/` is ignored while main
+ * tracks files under it. Regen rewrites such a file on disk, every local check
+ * reads the disk and passes, and `git add -A` does not stage the file because
+ * it is now untracked and ignored. Only a fresh checkout shows the loss.
+ * Measured on #2000 (`a16089d07`, two LSI sidecars) and on #1898
+ * (`edf52fcf6`, three detangle sidecars, red on `kg:detangle:check`).
+ * Pure over four path lists.
+ */
+export function droppedPaths(
+  base: readonly string[],
+  ours: readonly string[],
+  theirs: readonly string[],
+  result: readonly string[],
+): DroppedPath[] {
+  const kept = new Set(result);
+  const inBase = new Set(base);
+  const o = new Set(ours);
+  const t = new Set(theirs);
+  const out: DroppedPath[] = [];
+  for (const path of new Set([...ours, ...theirs])) {
+    if (kept.has(path)) continue;
+    const both = o.has(path) && t.has(path);
+    // One side lacks a path the base had, so that side deleted it. Taking the
+    // deletion is a legitimate merge outcome.
+    if (!both && inBase.has(path)) continue;
+    out.push({ path, heldBy: both ? "both" : o.has(path) ? "ours" : "theirs" });
+  }
+  return out.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+}
+
+/**
+ * The refusal line for one dropped path. It has the `  ✗ <path>  [...]` shape
+ * that merge-main.yml and merge-main-comment.ts read.
+ */
+export function droppedLine(d: DroppedPath, onDisk: boolean): string {
+  const held = d.heldBy === "both" ? "tracked by both parents" : `added on ${d.heldBy === "ours" ? "the branch" : "the base"} since the merge base`;
+  const disk = onDisk ? "; still on disk, so local checks pass while a fresh checkout lacks it" : "";
+  return `  ✗ ${d.path}  [dropped: ${held}, deleted by neither side${disk}]`;
+}
+
+/**
+ * `droppedPaths` for the merge in progress at `root`. It reads the INDEX
+ * (`ls-files`) and never the working tree, because the working tree is exactly
+ * where a dropped ignored file hides.
+ */
+export function droppedInMerge(root: string): DroppedPath[] {
   const list = (ref: string) => git(root, "ls-tree", "-r", "--name-only", ref).split("\n").filter(Boolean);
-  const lost = lostOnBothSides(list("HEAD"), list("MERGE_HEAD"), git(root, "ls-files").split("\n").filter(Boolean));
-  if (lost.length) {
-    for (const f of lost) console.error(`  ✗ ${f}  [present on both sides, absent from the merge]`);
-    abort(`${lost.length} file(s) both sides hold would be deleted by this merge (bean vsv7)`);
+  // With no merge base (unrelated histories) `base` is empty. That only makes
+  // the guard stricter: every dropped path is then refused.
+  const mb = spawnSync("git", ["-C", root, "merge-base", "HEAD", "MERGE_HEAD"], { encoding: "utf-8" });
+  const base = mb.status === 0 ? list(mb.stdout.trim()) : [];
+  return droppedPaths(base, list("HEAD"), list("MERGE_HEAD"), git(root, "ls-files").split("\n").filter(Boolean));
+}
+
+/** Abort, restoring the tree, when the staged merge drops a path that neither side deleted. */
+function refuseDroppedFiles(root: string, abort: (why: string) => never): void {
+  const dropped = droppedInMerge(root);
+  if (dropped.length) {
+    for (const d of dropped) console.log(droppedLine(d, existsSync(join(root, d.path))));
+    abort(`${dropped.length} tracked path(s) would be dropped by this merge, and neither side deleted them (beans vsv7, 8j9e)`);
   }
 }
 
@@ -375,7 +431,7 @@ if (import.meta.main) {
     // (2026-10-04).
     syncSubmodules(root);
     git(root, "add", "-A");
-    refuseLostFiles(root, abort);
+    refuseDroppedFiles(root, abort);
     git(root, "commit", "-q", "--no-edit");
     console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern. NOT regenerated (--no-regen): run \`bun run regen\` once over the train.`);
     process.exit(0);
@@ -429,7 +485,7 @@ if (import.meta.main) {
     );
   }
   git(root, "add", "-A");
-  refuseLostFiles(root, abort);
+  refuseDroppedFiles(root, abort);
   git(root, "commit", "-q", "--no-edit");
   console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern, regenerated and proved.`);
 }
