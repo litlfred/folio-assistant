@@ -51,6 +51,7 @@
         <bpmn:documentation>Turns each returned row, form response or cited passage into one comment and resolves its anchor through the review version's page/line map. A citation that resolves to nothing is kept as unplaced, never dropped.</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Ingest</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ProposeChangeSets</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Coordinator" name="Review coordinator">
         <bpmn:documentation>Owns triage: confirms or moves each anchor, sets type and priority, closes duplicates, routes plain editorial points straight to the editor, and assigns the rest to committee members.</bpmn:documentation>
@@ -63,6 +64,7 @@
       <bpmn:lane id="Lane_Committee" name="Review committee">
         <bpmn:documentation>Recommends, does not decide: each member records one recommendation with a rationale, on GitHub or through the tool, and a later one replaces their earlier one. The editor weighs them.</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_GroupChangeSets</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CommitteeRecommends</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Editor" name="Editor">
@@ -110,10 +112,22 @@
     <bpmn:endEvent id="EndEvent_Duplicate" name="Closed as a duplicate">
       <bpmn:incoming>Flow_Duplicate</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:task id="Task_ProposeChangeSets" name="Propose change-sets, one GitHub issue each">
+      <bpmn:documentation>public-comment-changesets seed / add / body / link: the agent groups the comments to be weighed into change-sets, one per change the document may need, and opens each as a GitHub issue whose body carries the requirements and a pc: line. A PROPOSAL: nothing is decided here, and a comment may sit in zero, one or several change-sets.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_ToAssign</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToGroup</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_GroupChangeSets" name="Agree each change-set's requirements on its issue">
+      <bpmn:documentation>People discuss the requirements in the issue thread, and regroup by editing the issue body's pc: line (committee and editor only; the record follows the body exactly). Merging, splitting or closing an agent's proposal is ordinary work here. The issue is for requirements; the PR that closes it is for preview, review and approval.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_ToGroup</bpmn:incoming>
+      <bpmn:outgoing>Flow_GroupedToAssign</bpmn:outgoing>
+    </bpmn:task>
     <bpmn:task id="Task_Assign" name="Assign to committee members">
       <bpmn:documentation>public-comment assign: by GitHub login. A committee member who recommends on an unassigned comment is assigned it as they do.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
-      <bpmn:incoming>Flow_ToAssign</bpmn:incoming>
+      <bpmn:incoming>Flow_GroupedToAssign</bpmn:incoming>
       <bpmn:outgoing>Flow_ToRecommend</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_CommitteeRecommends" name="Recommend a decision, with a rationale">
@@ -138,7 +152,7 @@
       <bpmn:incoming>Flow_NoChange</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:task id="Task_AuthorEdits" name="Edit the document as decided, on a feature branch">
-      <bpmn:documentation>public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch that may answer several comments. Status: editing.</bpmn:documentation>
+      <bpmn:documentation>public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch for one change-set. Its PR says Closes #N for the change-set issue, and opening it moves that issue's accepted comments to editing.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
       <bpmn:incoming>Flow_ToAuthorEdits</bpmn:incoming>
       <bpmn:outgoing>Flow_ToChangeSet</bpmn:outgoing>
@@ -150,7 +164,7 @@
       <bpmn:outgoing>Flow_ToIncorporate</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:task id="Task_Incorporate" name="Mark incorporated when the change set merges">
-      <bpmn:documentation>public-comment incorporate, naming the branch, PR and staging URL.</bpmn:documentation>
+      <bpmn:documentation>public-comment incorporate, naming the branch, PR and staging URL; done by the folio's workflow when the PR that closes a change-set issue merges. A PR closed unmerged moves nothing.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
       <bpmn:incoming>Flow_ToIncorporate</bpmn:incoming>
       <bpmn:outgoing>Flow_ToIncorporated</bpmn:outgoing>
@@ -176,7 +190,9 @@
     <bpmn:sequenceFlow id="Flow_ToTriage" sourceRef="Task_Ingest" targetRef="Task_Triage" />
     <bpmn:sequenceFlow id="Flow_ToTriageGateway" sourceRef="Task_Triage" targetRef="Gateway_Triage" />
     <bpmn:sequenceFlow id="Flow_Duplicate" name="duplicate" sourceRef="Gateway_Triage" targetRef="EndEvent_Duplicate" />
-    <bpmn:sequenceFlow id="Flow_ToAssign" name="to be weighed" sourceRef="Gateway_Triage" targetRef="Task_Assign" />
+    <bpmn:sequenceFlow id="Flow_ToAssign" name="to be weighed" sourceRef="Gateway_Triage" targetRef="Task_ProposeChangeSets" />
+    <bpmn:sequenceFlow id="Flow_ToGroup" sourceRef="Task_ProposeChangeSets" targetRef="Task_GroupChangeSets" />
+    <bpmn:sequenceFlow id="Flow_GroupedToAssign" sourceRef="Task_GroupChangeSets" targetRef="Task_Assign" />
     <bpmn:sequenceFlow id="Flow_EditorialDirect" name="plain editorial" sourceRef="Gateway_Triage" targetRef="Task_EditorDecides" />
     <bpmn:sequenceFlow id="Flow_ToRecommend" sourceRef="Task_Assign" targetRef="Task_CommitteeRecommends" />
     <bpmn:sequenceFlow id="Flow_ToDecide" sourceRef="Task_CommitteeRecommends" targetRef="Task_EditorDecides" />
@@ -233,6 +249,12 @@
       <bpmndi:BPMNShape id="EndEvent_Duplicate_di" bpmnElement="EndEvent_Duplicate">
         <dc:Bounds x="704" y="326" width="36" height="36" />
         <bpmndi:BPMNLabel><dc:Bounds x="744" y="328" width="72" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ProposeChangeSets_di" bpmnElement="Task_ProposeChangeSets">
+        <dc:Bounds x="730" y="215" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_GroupChangeSets_di" bpmnElement="Task_GroupChangeSets">
+        <dc:Bounds x="820" y="475" width="120" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Assign_di" bpmnElement="Task_Assign">
         <dc:Bounds x="820" y="345" width="120" height="80" />
@@ -295,8 +317,18 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_ToAssign_di" bpmnElement="Flow_ToAssign">
         <di:waypoint x="690" y="385" />
-        <di:waypoint x="820" y="385" />
-        <bpmndi:BPMNLabel><dc:Bounds x="712" y="392" width="70" height="14" /></bpmndi:BPMNLabel>
+        <di:waypoint x="760" y="385" />
+        <di:waypoint x="760" y="295" />
+        <bpmndi:BPMNLabel><dc:Bounds x="690" y="392" width="70" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToGroup_di" bpmnElement="Flow_ToGroup">
+        <di:waypoint x="800" y="295" />
+        <di:waypoint x="800" y="515" />
+        <di:waypoint x="820" y="515" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_GroupedToAssign_di" bpmnElement="Flow_GroupedToAssign">
+        <di:waypoint x="880" y="475" />
+        <di:waypoint x="880" y="425" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_EditorialDirect_di" bpmnElement="Flow_EditorialDirect">
         <di:waypoint x="665" y="410" />

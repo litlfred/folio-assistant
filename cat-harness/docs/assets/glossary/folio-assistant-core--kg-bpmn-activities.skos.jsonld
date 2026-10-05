@@ -3046,7 +3046,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch that may answer several comments. Status: editing."
+          "@value": "public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch for one change-set. Its PR says Closes #N for the change-set issue, and opening it moves that issue's accepted comments to editing."
         }
       ],
       "skos:notation": "Task_AuthorEdits",
@@ -3094,6 +3094,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_groupchangesets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Agree each change-set's requirements on its issue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "People discuss the requirements in the issue thread, and regroup by editing the issue body's pc: line (committee and editor only; the record follows the body exactly). Merging, splitting or closing an agent's proposal is ordinary work here. The issue is for requirements; the PR that closes it is for preview, review and approval."
+        }
+      ],
+      "skos:notation": "Task_GroupChangeSets",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_GroupChangeSets",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_incorporate",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3106,7 +3126,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "public-comment incorporate, naming the branch, PR and staging URL."
+          "@value": "public-comment incorporate, naming the branch, PR and staging URL; done by the folio's workflow when the PR that closes a change-set issue merges. A PR closed unmerged moves nothing."
         }
       ],
       "skos:notation": "Task_Incorporate",
@@ -3131,6 +3151,26 @@
       ],
       "skos:notation": "Task_Ingest",
       "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Ingest",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_proposechangesets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Propose change-sets, one GitHub issue each"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "public-comment-changesets seed / add / body / link: the agent groups the comments to be weighed into change-sets, one per change the document may need, and opens each as a GitHub issue whose body carries the requirements and a pc: line. A PROPOSAL: nothing is decided here, and a comment may sit in zero, one or several change-sets."
+        }
+      ],
+      "skos:notation": "Task_ProposeChangeSets",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_ProposeChangeSets",
       "skos:note": "candidate"
     },
     {

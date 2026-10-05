@@ -1217,7 +1217,7 @@
     {
       "id": "process_publiccomment.task_authoredits",
       "prefLabel": "Edit the document as decided, on a feature branch",
-      "definition": "public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch that may answer several comments. Status: editing.",
+      "definition": "public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch for one change-set. Its PR says Closes #N for the change-set issue, and opening it moves that issue's accepted comments to editing.",
       "notation": "Task_AuthorEdits",
       "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_AuthorEdits",
       "status": "candidate"
@@ -1239,9 +1239,17 @@
       "status": "candidate"
     },
     {
+      "id": "process_publiccomment.task_groupchangesets",
+      "prefLabel": "Agree each change-set's requirements on its issue",
+      "definition": "People discuss the requirements in the issue thread, and regroup by editing the issue body's pc: line (committee and editor only; the record follows the body exactly). Merging, splitting or closing an agent's proposal is ordinary work here. The issue is for requirements; the PR that closes it is for preview, review and approval.",
+      "notation": "Task_GroupChangeSets",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_GroupChangeSets",
+      "status": "candidate"
+    },
+    {
       "id": "process_publiccomment.task_incorporate",
       "prefLabel": "Mark incorporated when the change set merges",
-      "definition": "public-comment incorporate, naming the branch, PR and staging URL.",
+      "definition": "public-comment incorporate, naming the branch, PR and staging URL; done by the folio's workflow when the PR that closes a change-set issue merges. A PR closed unmerged moves nothing.",
       "notation": "Task_Incorporate",
       "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Incorporate",
       "status": "candidate"
@@ -1252,6 +1260,14 @@
       "definition": "public-comment import / import-narrative: one record per row or cited passage, anchored through review-anchors.json. Status: received.",
       "notation": "Task_Ingest",
       "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Ingest",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_proposechangesets",
+      "prefLabel": "Propose change-sets, one GitHub issue each",
+      "definition": "public-comment-changesets seed / add / body / link: the agent groups the comments to be weighed into change-sets, one per change the document may need, and opens each as a GitHub issue whose body carries the requirements and a pc: line. A PROPOSAL: nothing is decided here, and a comment may sit in zero, one or several change-sets.",
+      "notation": "Task_ProposeChangeSets",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_ProposeChangeSets",
       "status": "candidate"
     },
     {

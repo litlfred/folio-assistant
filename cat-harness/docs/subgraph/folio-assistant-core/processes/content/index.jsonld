@@ -1261,6 +1261,10 @@
       "name": "plain editorial"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_GroupedToAssign",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_NoChange",
       "@type": "bootstrap:SequenceFlow",
       "name": "no: not accepted, noted, deferred"
@@ -1285,6 +1289,10 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToDecide",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToGroup",
       "@type": "bootstrap:SequenceFlow"
     },
     {
@@ -1420,6 +1428,11 @@
       "name": "Decide, weighing the recommendations"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_GroupChangeSets",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Agree each change-set's requirements on its issue"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Incorporate",
       "@type": "bootstrap:ProcessNode",
       "name": "Mark incorporated when the change set merges"
@@ -1428,6 +1441,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Ingest",
       "@type": "bootstrap:ProcessNode",
       "name": "Ingest and place each comment"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_ProposeChangeSets",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Propose change-sets, one GitHub issue each"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Triage",

@@ -12,8 +12,13 @@ import {
   transition,
 } from "../schemas/public-comment.js";
 import type { ReviewAnchors } from "./docx-to-folio.js";
+import { addChangeSet, changeSets, issueBody, linkIssue, seed } from "./public-comment-changesets.js";
 import {
   applyGithubComment,
+  applyGithubIssue,
+  applyGithubPullRequest,
+  closedIssues,
+  issueRefs,
   channelOf,
   consentByName,
   filterComments,
@@ -236,11 +241,13 @@ describe("GitHub tags", () => {
   test("parse", () => {
     expect(parseGithubTag("pc: PC-0042, PC-43\nrecommend: accepted modified\n\nShorter is better.")).toEqual({
       refs: ["PC-0042", "PC-0043"],
+      issues: [],
       verb: "recommend",
       code: "accepted-modified",
       text: "Shorter is better.",
     });
     expect(parseGithubTag("Just talking.")).toBeNull();
+    expect(parseGithubTag("pc: #7\ndecide: noted\n\nCovered.")).toMatchObject({ refs: [], issues: [7], verb: "decide" });
     expect(parseGithubTag("pc: PC-1\nrecommend: maybe")).toMatchObject({ error: expect.stringContaining("is not one of") });
   });
 
@@ -355,5 +362,60 @@ describe("a consolidated review log (the DPI-H master log, 2026-10-05)", () => {
     expect(sectionsNamed("Public Health Surveillance Platform", named)[0]!.label).toBe("sec:c-phsp");
     expect(resolveAnchor({ section: "PHSP, 5", page: "14", lines: "Requirement 5" }, "", named)).toMatchObject({ targetLabel: "prose:c-phsp-1", method: "page", confidence: "medium" });
     expect(resolveAnchor({ section: "Public Health Surveillance Platform" }, "", named)).toMatchObject({ targetLabel: "sec:c-phsp", method: "section" });
+  });
+});
+
+describe("change-set issues (issue #2183)", () => {
+  const at = "2026-10-05T12:00:00Z";
+  const three = () => {
+    const s = tempStore();
+    importRows(s, [1, 2, 3].map((i) => ({ row: i, reviewer: { name: "R" }, citation: { section: "1.1.2", page: "9", lines: "42" }, type: "technical", text: `Comment ${i}.` })), { channel: "comment-matrix", batch: "b", sha256: "s" }, at);
+    return s;
+  };
+
+  test("an issue's pc: lines ARE its change-set: added, removed, and only from the committee", () => {
+    expect(issueRefs("Intro\n\npc: PC-0001, PC-0002\n- pc: PC-3")).toEqual(["PC-0001", "PC-0002", "PC-0003"]);
+    const s = three();
+    expect(applyGithubIssue(s, { number: 7, body: "pc: PC-0001, PC-0002", login: "stranger", association: "NONE", at }).refused).toHaveLength(1);
+    expect(s.all().every((c) => c.public.issues.length === 0)).toBe(true);
+    expect(applyGithubIssue(s, { number: 7, body: "pc: PC-0001, PC-0002", login: "cm", at }).added).toEqual(["PC-0001", "PC-0002"]);
+    // Editing the list moves the membership with it.
+    const r = applyGithubIssue(s, { number: 7, body: "pc: PC-0002, PC-0003", login: "cm", at });
+    expect(r).toMatchObject({ added: ["PC-0003"], removed: ["PC-0001"] });
+    expect(s.get("PC-0001").public.issues).toEqual([]);
+    expect(s.get("PC-0002").public.issues).toEqual([7]);
+  });
+
+  test("`pc: #7` decides every comment in the issue; the PR that closes it carries them to editing, then incorporated", () => {
+    const s = three();
+    applyGithubIssue(s, { number: 7, body: "pc: PC-0001, PC-0002", login: "cm", at });
+    const d = applyGithubComment(s, { login: "ed", body: "pc: #7\ndecide: accepted\n\nAgreed on the issue.", url: "https://github.com/o/r/issues/7#c", at });
+    expect(d.applied.sort()).toEqual(["PC-0001", "PC-0002"]);
+    expect(closedIssues("Fixes the actors table.\n\nCloses #7, resolves #9")).toEqual([7, 9]);
+    const opened = applyGithubPullRequest(s, { number: 12, body: "Closes #7", branch: "cs-007", merged: false, closed: false, login: "au", at });
+    expect(opened.applied.sort()).toEqual(["PC-0001", "PC-0002"]);
+    expect(s.get("PC-0001")).toMatchObject({ status: "editing", public: { decision: { changeSet: { branch: "cs-007", pr: 12 } } } });
+    // A PR closed WITHOUT merging moves nothing.
+    expect(applyGithubPullRequest(s, { number: 12, body: "Closes #7", branch: "cs-007", merged: false, closed: true, login: "au", at }).applied).toEqual([]);
+    const merged = applyGithubPullRequest(s, { number: 12, body: "Closes #7", branch: "cs-007", merged: true, closed: true, login: "au", at });
+    expect(merged.applied.sort()).toEqual(["PC-0001", "PC-0002"]);
+    expect(s.get("PC-0002").status).toBe("incorporated");
+    expect(s.get("PC-0003").status).toBe("received");
+  });
+
+  test("an agent proposes change-sets; the issue body carries the pc: list; link groups the comments", () => {
+    const s = three();
+    expect(seed(s)[0]!.comments).toHaveLength(3);
+    const cs = addChangeSet(s, { title: "Clarify the DPI definition", requirements: "Say what DPI-H is in one sentence.", refs: ["PC-0001", "PC-0003"], by: "agent", at });
+    expect(cs.id).toBe("CS-001");
+    expect(() => addChangeSet(s, { title: "x", requirements: "y", refs: ["PC-9999"], by: "agent", at })).toThrow(/not comments/);
+    const body = issueBody(cs, s);
+    expect(body).toContain("<!-- public-comment-changeset CS-001 -->");
+    expect(issueRefs(body)).toEqual(["PC-0001", "PC-0003"]);
+    expect(linkIssue(s, "CS-001", 21, "agent", at).added).toEqual(["PC-0001", "PC-0003"]);
+    expect(changeSets(s)[0]!.issue).toBe(21);
+    expect(s.get("PC-0001").public.issues).toEqual([21]);
+    // Seeded input leaves out what is already in a change-set.
+    expect(seed(s).flatMap((b) => b.comments as Array<{ ref: string }>).map((c) => c.ref)).toEqual(["PC-0002"]);
   });
 });

@@ -57,6 +57,8 @@ export interface SiteComment {
   reviewer: string;
   recommendations: Array<{ by: string; code: string; rationale: string; url?: string }>;
   decision?: { code: string; label: string; reason: string; by: string };
+  /** The change-set issues it belongs to (issue #2183). */
+  issues: number[];
   links: { document?: string; before?: string; after?: string; pr?: string; discussion?: string; search?: string; record?: string };
 }
 
@@ -99,6 +101,7 @@ export function siteComments(
       reviewer: [p.reviewer.name, p.reviewer.organisation, p.reviewer.country].filter(Boolean).join(", ") || "a reviewer",
       recommendations: p.recommendations.map((r) => ({ by: r.by, code: r.code, rationale: r.rationale, ...(r.url ? { url: r.url } : {}) })),
       ...(p.decision ? { decision: { code: p.decision.code, label: DECISION_LABELS[p.decision.code], reason: p.decision.reason, by: p.decision.by } } : {}),
+      issues: p.issues ?? [],
       links: {
         ...(c.targetLabel ? { document: `../${opts.slug}/index.html${frag}` } : {}),
         ...(site && c.targetLabel && cs ? { before: `${site}/${opts.slug}/index.html${frag}` } : {}),
@@ -125,6 +128,10 @@ const STYLE = `
   .tile { border:1px solid var(--line); border-radius:.5rem; padding:.5rem .9rem; min-width:7rem; font:inherit; color:var(--fg); background:transparent; text-align:left; cursor:pointer; }
   .tile b { display:block; font-size:1.6rem; }
   .tile:hover { border-color:var(--link); }
+  main input[type=checkbox] { min-height:0; width:1.1rem; height:1.1rem; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+  #open-issue { font:inherit; padding:.45rem .9rem; border:1px solid var(--link); border-radius:.4rem; background:transparent; color:var(--link); cursor:pointer; }
+  #open-issue:disabled { opacity:.5; cursor:default; }
   .tile[aria-pressed="true"] { border-color:var(--link); box-shadow:inset 0 0 0 1px var(--link); background:var(--chip); }
   form { display:flex; flex-wrap:wrap; gap:.75rem; align-items:end; margin:1rem 0; }
   /* Form, table and details rules are scoped to main: the harness rail's header
@@ -144,7 +151,8 @@ const STYLE = `
 `;
 
 /** The dashboard. Filters run in the page; with scripts off the full table still renders. */
-export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: string; generated: string }): string {
+export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: string; generated: string; repo?: string }): string {
+  const issueLink = (n: number) => (meta.repo ? `<a href="https://github.com/${esc(meta.repo)}/issues/${n}">#${n}</a>` : `#${n}`);
   const count = (f: (r: SiteComment) => boolean) => rows.filter(f).length;
   // A tile is a TOGGLE (owner, 2026-10-05: "some of these should be toggable"):
   // pressing it filters the table to what it counts, pressing it again clears
@@ -166,7 +174,8 @@ export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: 
       .join(" ");
   const body = rows
     .map(
-      (r) => `<tr id="${esc(r.ref)}" data-phase="${r.phase}" data-status="${esc(r.status)}" data-placed="${r.target ? "1" : "0"}" data-type="${esc(r.type)}" data-section="${esc(r.section)}" data-text="${esc(`${r.ref} ${r.text} ${r.suggestion} ${r.sectionTitle}`.toLowerCase())}">
+      (r) => `<tr id="${esc(r.ref)}" data-phase="${r.phase}" data-status="${esc(r.status)}" data-placed="${r.target ? "1" : "0"}" data-inissue="${r.issues.length ? "1" : "0"}" data-summary="${esc(r.summary)}" data-type="${esc(r.type)}" data-section="${esc(r.section)}" data-text="${esc(`${r.ref} ${r.text} ${r.suggestion} ${r.sectionTitle}`.toLowerCase())}">
+<td><input type="checkbox" class="pick" value="${esc(r.ref)}" aria-label="Select ${esc(r.ref)}"></td>
 <td><a href="#${esc(r.ref)}">${esc(r.ref)}</a></td>
 <td class="phase phase-${r.phase}">${esc(r.status)}</td>
 <td>${esc(r.type)}</td>
@@ -174,6 +183,7 @@ export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: 
 <td><details><summary>${esc(r.summary)}</summary><p>${esc(r.text)}</p>${r.suggestion ? `<p><b>Suggested revision:</b> ${esc(r.suggestion)}</p>` : ""}<p class="muted">${esc(r.reviewer)}</p></details></td>
 <td>${r.recommendations.map((x) => `<span class="chip" title="${esc(x.rationale)}">${x.url ? `<a href="${esc(x.url)}">` : ""}${esc(x.by)}: ${esc(x.code)}${x.url ? "</a>" : ""}</span>`).join("") || `<span class="muted">none</span>`}</td>
 <td>${r.decision ? `<b>${esc(r.decision.label)}</b>${r.decision.reason ? `<br>${esc(r.decision.reason)}` : ""}<br><span class="muted">${esc(r.decision.by)}</span>` : `<span class="muted">not yet</span>`}</td>
+<td>${r.issues.map(issueLink).join(" ") || `<span class="muted">none</span>`}</td>
 <td class="links">${linkList(r)}</td>
 </tr>`,
     )
@@ -201,6 +211,7 @@ ${[
   tile(count((r) => r.phase === "editing"), "being edited", "editing"),
   tile(count((r) => r.phase === "decided"), "decided", "decided"),
   tile(count((r) => r.status === "incorporated"), "incorporated", "incorporated"),
+  tile(count((r) => r.phase === "open" && !r.issues.length), "open, no change-set", "noissue"),
 ].join("\n")}
 </div>
 <form id="filters" aria-controls="comments">
@@ -210,9 +221,10 @@ ${[
 <label>Search<input id="f-text" type="search" placeholder="words, or PC-0042"></label>
 <p id="f-count" class="muted" aria-live="polite"></p>
 </form>
+${meta.repo ? `<p class="picker"><button type="button" id="open-issue" disabled>Open a change-set issue for the selected comments</button> <span id="pick-count" class="muted">Tick comments to group them.</span></p>` : ""}
 <div class="table-wrap">
 <table id="comments">
-<thead><tr><th>Ref</th><th>Status</th><th>Type</th><th>Where</th><th>Comment</th><th>Committee</th><th>Decision</th><th>Links</th></tr></thead>
+<thead><tr><th><span class="sr">Select</span></th><th>Ref</th><th>Status</th><th>Type</th><th>Where</th><th>Comment</th><th>Committee</th><th>Decision</th><th>Change-set</th><th>Links</th></tr></thead>
 <tbody>
 ${body}
 </tbody>
@@ -221,6 +233,7 @@ ${body}
 </main>
 <script>
 (() => {
+  const REPO = ${JSON.stringify(meta.repo ?? "")};
   const $ = (id) => document.getElementById(id);
   const rows = [...document.querySelectorAll("#comments tbody tr")];
   const tiles = [...document.querySelectorAll(".tile[data-tile]")];
@@ -236,7 +249,8 @@ ${body}
       const ok = (!ph || r.dataset.phase === ph) && (!ty || r.dataset.type === ty)
         && (!se || s === se || s.startsWith(se + ".")) && (!tx || r.dataset.text.includes(tx))
         && (extra !== "unplaced" || r.dataset.placed === "0")
-        && (extra !== "incorporated" || r.dataset.status === "incorporated");
+        && (extra !== "incorporated" || r.dataset.status === "incorporated")
+        && (extra !== "noissue" || (r.dataset.inissue === "0" && r.dataset.phase === "open"));
       r.hidden = !ok; if (ok) n++;
     }
     $("f-count").textContent = n + " of " + rows.length + " shown";
@@ -252,6 +266,29 @@ ${body}
     apply();
   });
   $("f-phase").addEventListener("input", () => { extra = null; });
+  // GROUPING (issue #2183): tick comments, open a pre-filled change-set issue.
+  // Its pc: line is what groups them; the repository's workflow records it.
+  const picker = $("open-issue");
+  if (picker) {
+    const picked = () => [...document.querySelectorAll("input.pick:checked")].map((x) => x.value);
+    const sync = () => {
+      const n = picked().length;
+      picker.disabled = n === 0;
+      $("pick-count").textContent = n ? n + " selected" : "Tick comments to group them.";
+    };
+    document.getElementById("comments").addEventListener("change", (e) => { if (e.target.classList.contains("pick")) sync(); });
+    picker.addEventListener("click", () => {
+      const refs = picked();
+      if (!refs.length) return;
+      const lines = refs.map((ref) => "- " + ref + ": " + (document.getElementById(ref)?.dataset.summary || "").slice(0, 140));
+      let body = "## Requirements\n\n(What should this change do?)\n\n## Comments (" + refs.length + ")\n\npc: " + refs.join(", ") + "\n\n" + lines.join("\n");
+      // A URL has a length limit; the pc: line is what matters, so it is kept and the list is cut.
+      if (body.length > 6000) body = body.slice(0, 6000) + "\n- …";
+      const url = "https://github.com/" + REPO + "/issues/new?title=" + encodeURIComponent("Change-set: ") + "&body=" + encodeURIComponent(body);
+      window.open(url, "_blank", "noopener");
+    });
+    sync();
+  }
   // A link to #PC-0042 shows that comment whatever the filters say.
   if (location.hash.startsWith("#PC-")) $("f-phase").value = "";
   for (const id of ["f-phase", "f-type", "f-section", "f-text"]) $(id).addEventListener("input", apply);
@@ -269,10 +306,10 @@ ${body}
  * after each block's anchor. With scripts off the document reads as before.
  */
 export function overlaySnippet(rows: SiteComment[]): string {
-  const byTarget: Record<string, Array<Pick<SiteComment, "ref" | "status" | "phase" | "type" | "summary" | "decision">>> = {};
+  const byTarget: Record<string, Array<Pick<SiteComment, "ref" | "status" | "phase" | "type" | "summary" | "decision"> & { issues?: number[] }>> = {};
   for (const r of rows) {
     if (!r.target) continue;
-    (byTarget[r.target] ??= []).push({ ref: r.ref, status: r.status, phase: r.phase, type: r.type, summary: r.summary, ...(r.decision ? { decision: r.decision } : {}) });
+    (byTarget[r.target] ??= []).push({ ref: r.ref, status: r.status, phase: r.phase, type: r.type, summary: r.summary, ...(r.decision ? { decision: r.decision } : {}), ...(r.issues.length ? { issues: r.issues } : {}) });
   }
   const json = JSON.stringify(byTarget).replace(/</g, "\\u003c");
   return `
@@ -298,7 +335,7 @@ export function overlaySnippet(rows: SiteComment[]): string {
     const n = list.filter((c) => c.phase === "open").length;
     d.innerHTML = "<summary>" + list.length + " public comment" + (list.length > 1 ? "s" : "") + (n ? " (" + n + " open)" : "") + "</summary><ul>" +
       list.map((c) => "<li><a href=\\"../public-comments/index.html#" + esc(c.ref) + "\\">" + esc(c.ref) + "</a> · " + esc(c.status) +
-        (c.type ? " · " + esc(c.type) : "") + (c.decision ? " · <b>" + esc(c.decision.label) + "</b>" : "") + " — " + esc(c.summary) + "</li>").join("") + "</ul>";
+        (c.type ? " · " + esc(c.type) : "") + (c.decision ? " · <b>" + esc(c.decision.label) + "</b>" : "") + (c.issues ? " · change-set " + c.issues.map((n) => "#" + n).join(" ") : "") + " — "+ esc(c.summary) + "</li>").join("") + "</ul>";
     host.after(d);
   }
   const bar = document.createElement("div");
@@ -328,7 +365,7 @@ export function buildPublicCommentSite(repo: string, out: string, storeDir?: str
   mkdirSync(join(out, "public-comments"), { recursive: true });
   writeFileSync(
     join(out, "public-comments", "index.html"),
-    dashboardHtml(rows, { title: cfg.title ?? cfg.document, slug: cfg.document, generated: new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC" }),
+    dashboardHtml(rows, { title: cfg.title ?? cfg.document, slug: cfg.document, ...(cfg.repo ? { repo: cfg.repo } : {}), generated: new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC" }),
   );
   writeFileSync(join(out, "public-comments", "comments.json"), JSON.stringify(rows, null, 1) + "\n");
   return { comments: rows.length, open: rows.filter((r) => r.phase === "open").length };

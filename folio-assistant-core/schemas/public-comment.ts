@@ -280,6 +280,13 @@ export const PublicFieldsSchema = z.object({
   duplicateOf: z.string().optional(),
   /** GitHub issue holding this comment's discussion, once one is opened. */
   discussion: z.string().url().optional(),
+  /**
+   * The CHANGE-SET issues this comment belongs to (issue #2183): zero or
+   * more. An issue groups related comments whose answer is one change; the PR
+   * that closes it carries them to editing, and to incorporated on merge. Set
+   * from the issue's own `pc:` list, never by hand-editing the record.
+   */
+  issues: z.array(z.number().int().positive()).default([]),
   history: z.array(HistoryEntrySchema).default([]),
 });
 export type PublicFields = z.infer<typeof PublicFieldsSchema>;
@@ -443,3 +450,32 @@ export const reviewerId = (key: string) =>
   `r-${createHash("sha256").update(key.trim().toLowerCase()).digest("hex").slice(0, 10)}`;
 
 export const formatRef = (n: number) => `PC-${String(n).padStart(4, "0")}`;
+
+// ── Change-sets (issue #2183) ────────────────────────────────────
+
+export const CHANGE_SET_SCHEMA = "folio-public-comment-changeset/v1" as const;
+
+/**
+ * One proposed change to the document, answering a group of comments. The
+ * record is the PROPOSAL; once it is opened, its GitHub issue is where people
+ * agree the requirements, and the PR that closes the issue is where they
+ * preview the change and approve the merge. An agent may propose change-sets;
+ * people review them on the issue.
+ */
+export const ChangeSetSchema = z.object({
+  $schema: z.literal(CHANGE_SET_SCHEMA),
+  /** "CS-001". */
+  id: z.string().regex(/^CS-\d{3,}$/),
+  title: z.string().min(1),
+  /** What the change should do, in the editor's terms: the issue's requirements. */
+  requirements: z.string().min(1),
+  /** The comments it answers. A comment may be in more than one change-set. */
+  refs: z.array(z.string().regex(/^PC-\d{4,}$/)).min(1),
+  /** The section or block the change is mainly about, for ordering. */
+  anchor: z.string().optional(),
+  proposedBy: z.string().min(1),
+  proposedAt: z.string().min(1),
+  /** Set once the issue is opened. */
+  issue: z.number().int().positive().optional(),
+});
+export type ChangeSet = z.infer<typeof ChangeSetSchema>;

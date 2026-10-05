@@ -728,6 +728,41 @@
       "status": "candidate"
     },
     {
+      "id": "public-comment.changesetschema.anchor",
+      "prefLabel": "ChangeSetSchema.anchor",
+      "definition": "The section or block the change is mainly about, for ordering.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.anchor",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.changesetschema.id",
+      "prefLabel": "ChangeSetSchema.id",
+      "definition": "\"CS-001\".",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.changesetschema.issue",
+      "prefLabel": "ChangeSetSchema.issue",
+      "definition": "Set once the issue is opened.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.issue",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.changesetschema.refs",
+      "prefLabel": "ChangeSetSchema.refs",
+      "definition": "The comments it answers. A comment may be in more than one change-set.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.refs",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.changesetschema.requirements",
+      "prefLabel": "ChangeSetSchema.requirements",
+      "definition": "What the change should do, in the editor's terms: the issue's requirements.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.requirements",
+      "status": "candidate"
+    },
+    {
       "id": "public-comment.citationschema.caption",
       "prefLabel": "CitationSchema.caption",
       "definition": "\"Table 3.1\" / \"Figure 2.2\" as parsed from the line or comment.",
@@ -753,6 +788,13 @@
       "prefLabel": "PublicFieldsSchema.discussion",
       "definition": "GitHub issue holding this comment's discussion, once one is opened.",
       "source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.discussion",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.publicfieldsschema.issues",
+      "prefLabel": "PublicFieldsSchema.issues",
+      "definition": "The CHANGE-SET issues this comment belongs to (issue #2183): zero or more. An issue groups related comments whose answer is one change; the PR that closes it carries them to editing, and to incorporated on merge. Set from the issue's own `pc:` list, never by hand-editing the record.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.issues",
       "status": "candidate"
     },
     {

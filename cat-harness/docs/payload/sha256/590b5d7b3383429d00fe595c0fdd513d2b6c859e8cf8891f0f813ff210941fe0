@@ -124,7 +124,9 @@ adjudicated when no one decided it.
 
 | who (role) | does | how |
 |---|---|---|
+| intake agent (`intake`) | propose change-sets, one issue each ([below](#the-agent-proposes-people-group)) | `public-comment-changesets.ts` |
 | review coordinator (`review-coordinator`) | triage, place, mark duplicates, assign | `triage`, `reassign`, `duplicate`, `assign` |
+| committee and editor | agree each change-set's requirements, and regroup it, on its issue | the issue thread, and its body's `pc:` line |
 | committee member (`reviewer`) | recommend a decision, with a rationale | a GitHub comment `pc: PC-0042` / `recommend: accepted-modified`, or `recommend` |
 | editor (`editor`) | decide, with a reason unless accepted | `decide: …` on GitHub (editors only) or `decide` |
 | author (`author`), human or agentic | once a comment is dispensed with a changing decision, make the edit on a feature branch | `edit <ref> --branch … [--to <login>]` |
@@ -147,25 +149,81 @@ The five decision codes (owner, 2026-10-04): `accepted`, `accepted-modified`,
 `not-accepted`, `noted`, `deferred`. Every code but `accepted` needs a reason,
 because the commenter is owed one.
 
-## Change sets: group comments, show the change
+## Change-sets: an issue to agree it, a PR to approve it
 
-One editorial change often answers several comments, and one comment
-sometimes needs several changes. Neither is a problem, because the change set
-is the **branch**, not the comment:
+One editorial change often answers several comments, and one comment sometimes
+needs several changes. So a comment belongs to **zero or more change-sets**
+(`public.issues`), and a change-set is two GitHub objects with different jobs
+(owner, 2026-10-05):
 
-1. Branch from `main`. Name it for the change, not for one comment.
-2. Record the author's step on each comment: `edit <ref> --branch <b>`.
-   The dashboard then shows the comment as *editing*, with its branch. The
-   author may be a person or an agent in the `author` role. An agent edits only
-   what the decision says, and the decision's reason is its brief.
-3. Edit the folio's blocks. Open the PR at the first commit
-   ([`continual-progress`](../../../../cat-harness/skills/sdlc/sdlc-core/continual-progress.md)).
-4. List the comments the PR answers in its body, one `PC-0042` per line.
-   `decide <ref> --branch … --pr …` records the link on each comment.
-5. The staging preview is published to `STAGING/<branch>/`. The dashboard links
+| object | what people do there |
+|---|---|
+| **the change-set ISSUE** | discuss and agree the *requirements*: what the document should say, which comments the change answers |
+| **the PR that closes it** | preview the change on staging, review it, approve the merge to `main` |
+
+Requirements argued on a PR get lost when it is closed and reopened; a diff
+argued on an issue has nothing to point at. Keep each on its own object.
+
+### The agent proposes; people group
+
+`Task_ProposeChangeSets` (intake agent) then `Task_GroupChangeSets`
+(committee). An agent may draft **every** change-set, but each one is a
+*proposal* until people have discussed it on its issue. Tool:
+`folio-assistant-core/scripts/public-comment-changesets.ts`.
+
+1. `seed --out seed.json` lists the open comments that are not yet in any
+   change-set, bucketed by section. **A bucket is not a change-set.** One
+   section's comments usually ask for several different changes, and one
+   change (a term used throughout, say) spans sections.
+2. Read the buckets and decide the changes. One change-set is **one change a
+   reviewer can approve or refuse as a whole**. Good signs: the comments ask
+   for the same edit, or for edits that must land together. Bad signs: the
+   title needs "and", or the requirements list unrelated edits.
+3. `add --title … --requirements … --refs PC-0001,PC-0007 [--anchor <label>]`
+   records each proposal as `changesets/CS-NNN.json`. Write the requirements as
+   what the text must do ("define *actor* once, in 2.1, and use it
+   consistently"), not as the new text itself: the text is the PR's job.
+4. `body CS-001` renders the issue: requirements, the `pc:` line, and a table
+   of the comments with deep links. Open the issue with that body (through
+   the GitHub tools, by a person, or by a workflow). The tool holds no token.
+5. `link CS-001 --issue 42` records the issue on the change-set and on each
+   comment.
+
+A comment the agent cannot place in a change-set is left out, not forced in.
+It stays on the dashboard's **open, no change-set** tile, where a person can
+pick it.
+
+### People regroup on the issue
+
+- **The issue body's `pc:` line is the membership.** When the committee or the
+  editor edits it, the record follows it exactly. Anyone else's edit is
+  refused, as for a `recommend:` from someone outside the committee.
+- **Recommend or decide the whole set at once**: a comment `pc: #42` then
+  `decide: accepted` (or any code) applies to every comment in issue 42.
+- **Start a change-set by hand** from the dashboard. Tick the comments and
+  press *Open a change-set issue for the selected comments*.
+- Merging, splitting and closing an agent's proposals is ordinary work here,
+  not a correction.
+
+### The PR
+
+1. Branch from `main`, named for the change. Open the PR at the first commit
+   ([`continual-progress`](../../../../cat-harness/skills/sdlc/sdlc-core/continual-progress.md)),
+   with `Closes #42` in its body.
+2. Opening (or editing) the PR moves the issue's **accepted** comments to
+   *editing*, with the branch and PR recorded. Comments not yet decided, or
+   decided `not-accepted`/`noted`/`deferred`, do not move.
+3. Edit the folio's blocks. An agent in the `author` role edits only what the
+   decision and the issue's requirements say.
+4. The staging preview is published to `STAGING/<branch>/`. The dashboard links
    each comment's anchor on `main` (before) and on the preview (after). See
    [`staging-review`](../../../../cat-harness/skills/sdlc/sdlc-core/staging-review.md).
-6. On merge, `incorporate` each comment.
+5. Merging moves those comments to *incorporated*. A PR closed without merging
+   moves nothing back or forward.
+
+These moves come from the folio's `public-comment.yml` workflow listening to
+`issues` and `pull_request` events, as well as `issue_comment`. The CLI
+`edit` and `incorporate` still work for a change made outside a PR.
 
 This is the same review loop as any content change
 (`content-change-review.bpmn`), with a different intake. Reuse it rather than
