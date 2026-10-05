@@ -45,7 +45,7 @@
     for (const it of items) {
       const p = prefix ? `${prefix}/${it.slug}` : it.slug;
       const li = el("li");
-      const a = link(href(p), it.title);
+      const a = link(href(p), it.number ? `${it.number}\u2002${it.title}` : it.title);
       if (p === path) a.setAttribute("aria-current", "page");
       li.append(a);
       if (it.sections && it.sections.length && (path === p || path.startsWith(p + "/"))) li.append(tocList(it.sections, p));
@@ -73,10 +73,10 @@
   // ── The scope as a list of units, each one section's own blocks ──
   const units = [];
   const flatten = (sec, p, level) => {
-    units.push({ title: sec.title, label: sec.label, path: p, level, blocks: sec.blocks });
+    units.push({ title: sec.title, number: sec.number, label: sec.label, path: p, level, blocks: sec.blocks });
     for (const sub of sec.sections) flatten(sub, `${p}/${sub.slug}`, level + 1);
   };
-  if (!node) for (const ch of outline.chapters) { units.push({ title: ch.title, label: ch.label, path: ch.slug, level: 2, blocks: [], chapter: true }); for (const s of ch.sections) flatten(s, `${ch.slug}/${s.slug}`, 3); }
+  if (!node) for (const ch of outline.chapters) { units.push({ title: ch.title, number: ch.number, label: ch.label, path: ch.slug, level: 2, blocks: [], chapter: true }); for (const s of ch.sections) flatten(s, `${ch.slug}/${s.slug}`, 3); }
   else if (segs.length === 1) for (const s of node.sections) flatten(s, `${segs[0]}/${s.slug}`, 2);
   else { units.push({ title: "", path, level: 2, blocks: node.blocks, self: true }); for (const s of node.sections) flatten(s, `${path}/${s.slug}`, 3); }
 
@@ -108,6 +108,29 @@
   if (h1 && h1.textContent.includes("$")) { const t = h1.textContent; h1.replaceChildren(titled(t)); }
   for (const scope of [$("toc"), crumbs, h1]) if (scope) watchMath(scope);
 
+  // With the harness chrome present, the contents live IN its navbar — a group
+  // at the top of the scrollable middle — not in a second sidebar beside it.
+  // Without it (a bare build), the page keeps its own.
+  const adopt = () => {
+    const graphs = document.querySelector("nav.fa-nav .fa-nav-graphs");
+    if (!graphs) return false;
+    const g = el("details", { class: "fa-nav-group folio-contents", open: "" });
+    const s = el("summary"); s.append(el("span", { class: "fa-nav-glyph", "aria-hidden": "true" }, "\u00A7"));
+    const lab = el("span", { class: "fa-nav-label" }); lab.append(titled(outline.title)); s.append(lab);
+    const sub = el("div", { class: "fa-nav-sub" }); sub.append(tocList(outline.chapters, ""));
+    g.append(s, sub);
+    graphs.prepend(g);
+    watchMath(g);
+    $("toc").remove();
+    body.classList.add("in-harness");
+    return true;
+  };
+  if (!adopt() && document.querySelector("nav.fa-nav")) {
+    const mo = new MutationObserver(() => { if (adopt()) mo.disconnect(); });
+    mo.observe(document.querySelector("nav.fa-nav"), { childList: true, subtree: true });
+    setTimeout(() => mo.disconnect(), 10000);
+  }
+
   // ── Incremental loading ──
   content.replaceChildren();
   let next = 0;
@@ -116,10 +139,65 @@
     const u = units[next++];
     const box = el("section", { class: "unit" });
     if (u.label) box.id = u.label;
-    if (!u.self) { const h = el(`h${Math.min(6, u.level)}`); h.append(link(href(u.path), u.title)); box.append(h); }
+    if (!u.self) { const h = el(`h${Math.min(6, u.level)}`); h.append(link(href(u.path), u.number ? `${u.number}\u2002${u.title}` : u.title)); box.append(h); }
     content.append(box);
     const nodes = await Promise.all(u.blocks.map((b) => getJSON(pbase + b).catch((e) => ({ html: `<p class="muted">${String(e.message)}</p>` }))));
-    for (const n of nodes) { const d = el("div", { class: "block" }); d.innerHTML = n.html || ""; box.append(d); }
+    for (const n of nodes) {
+      const d = el("div", { class: `block kind-${n.kind || "prose"}` });
+      d.innerHTML = n.html || "";
+      // The heading, typeset as a paper does: "Proposition 2.3.1 (Frobenius relation)." / "Proof."
+      if (n.kind === "proof") {
+        // "Proof of X" as a title only repeats the heading, so it is dropped.
+        const t = n.title && !/^proof\b/i.test(n.title) ? `Proof (${n.title}).` : "Proof.";
+        const h = el("span", { class: "thm-head" }); const i = el("i"); i.append(titled(t)); h.append(i);
+        (d.querySelector("p") || d).prepend(h, " ");
+        // One end-of-proof mark: the author's own (\square, \qed, □, ∎) if the proof has one, else ours.
+        if (!/\\(square|blacksquare|qed|Box)\b|[□∎]/.test(n.html || "")) d.classList.add("qed");
+      } else if (n.heading) {
+        const h = el("span", { class: "thm-head" });
+        h.append(el("b", {}, n.number ? `${n.heading} ${n.number}` : n.heading));
+        if (n.title) { h.append(" ("); h.append(titled(n.title)); h.append(")"); }
+        h.append(".");
+        (d.querySelector("p") || d).prepend(h, " ");
+      } else if (n.title) {
+        const h = el("p", { class: "prose-title" }); const b = el("b"); b.append(titled(n.title)); h.append(b); d.prepend(h);
+      }
+      // Edit the source, give feedback, read the Lean (owner, 2026-10-05). The
+      // feedback issue carries the block's reference and the comment matrix's
+      // columns (type, comment, proposed change), as public-comment reads them.
+      if (outline.source && n.source) {
+        const gh = `https://github.com/${outline.source.repository}`;
+        const row = el("span", { class: "block-links" });
+        const name = n.number ? `${n.heading} ${n.number}` : n.heading || n.label || n.source;
+        const ref = n.label || n.source;
+        const body = [
+          `**Block:** \`${ref}\`${n.number ? ` (${name})` : ""}`,
+          `**Page:** ${location.href.split("#")[0]}${n.label ? "#" + encodeURIComponent(n.label) : ""}`,
+          `**Source:** \`${n.source}\``,
+          "",
+          "**Type:** general | technical | editorial",
+          "",
+          "**Comment:**",
+          "",
+          "",
+          "**Proposed change:**",
+          "",
+        ].join("\n");
+        const issue = `${gh}/issues/new?title=${encodeURIComponent(`Feedback: ${name}${n.title ? " — " + n.title : ""}`)}&body=${encodeURIComponent(body)}`;
+        row.append(el("a", { href: `${gh}/edit/${outline.source.ref}/${n.source}`, title: "Edit the source on GitHub", "aria-label": "Edit the source" }, "\u270E edit"));
+        row.append(el("a", { href: issue, title: "Give feedback: open an issue on this block", "aria-label": "Give feedback" }, "\u{1F4E3} feedback"));
+        if (n.leanSource) row.append(el("a", { href: `${gh}/blob/${outline.source.ref}/${n.leanSource}`, title: "The Lean formalisation", "aria-label": "Lean source" }, "Lean"));
+        d.prepend(row);
+      }
+      // A \ref link names its label; show the number the label has.
+      for (const a of d.querySelectorAll('a[href^="#"]')) {
+        const l = decodeURIComponent(a.getAttribute("href").slice(1));
+        if (a.textContent === l && outline.numbers && outline.numbers[l]) a.textContent = outline.numbers[l];
+      }
+      // Pre-rendered figures name a path below the paper; resolve it here, since this block may sit at any depth.
+      for (const img of d.querySelectorAll("img[data-src]")) img.src = pbase + img.getAttribute("data-src");
+      box.append(d);
+    }
     await watchMath(box);
     return true;
   };
