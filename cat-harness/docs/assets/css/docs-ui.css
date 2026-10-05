@@ -5983,6 +5983,18 @@ a.fa-nav-folders__link:focus-visible {
   overflow: visible;
 }
 
+/* ONE HEADING, "GRAPHS N" (bean `gpbc`). `mountSidebarRail` moves the count
+   onto the Graphs heading and holds Folders open, so Folders' own heading,
+   padding and divider would be a second title and a second rule inside the
+   first. The rows are unchanged. */
+.fa-nav-graphs-group > .fa-nav-folders--in-graphs {
+  padding: 0;
+  border-bottom: 0;
+}
+.fa-nav-graphs-group > .fa-nav-folders--in-graphs > .fa-nav-folders__heading {
+  display: none;
+}
+
 /* The harness group beside Graphs: the footer's size it had before the move,
    and the same divider, so the two pinned headings read as one set. */
 .fa-nav-middle > .fa-nav-harness-group {

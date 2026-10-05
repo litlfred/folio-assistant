@@ -502,17 +502,21 @@ test.describe("the middle — controlled folders, then the harness navigation, O
     // until then. The count stays on the summary, so a folded block still says
     // how many there are — folded is not hidden.
     await load(page, CUSTOM);
-    await expect(page.locator(".fa-nav-folders")).not.toHaveAttribute("open", "");
+    // The GRAPHS group is what arrives closed; Folders inside it is held open
+    // with its heading hidden, one heading "Graphs N" (bean `gpbc`).
+    await expect(page.locator(".fa-nav-graphs-group")).not.toHaveAttribute("open", "");
     // The count is read with the bar OPEN. At rest the whole block is a text
     // region and is held invisible with the rest — see the collapsed-strip
     // tests below — so asserting it visible here would be asserting that the
     // strip still shows words.
     await page.hover(".side-bar");
-    // Inside the Graphs group, which is folded too (ob3m finding 7).
+    // One click: the count is ON the Graphs heading, and opening it shows
+    // the rows with no second disclosure to open (bean `gpbc`).
+    await expect(page.locator(".fa-nav-graphs-group__heading .fa-nav-folders__count")).toBeVisible();
     await page.locator(".fa-nav-graphs-group__heading").click();
-    await expect(page.locator(".fa-nav-folders__count")).toBeVisible();
-    await page.locator(".fa-nav-folders__heading").click();
-    await expect(page.locator(".fa-nav-folders")).toHaveAttribute("open", "");
+    await expect(page.locator(".fa-nav-graphs-group")).toHaveAttribute("open", "");
+    await expect(page.locator(".fa-nav-folders__item").first()).toBeVisible();
+    await expect(page.locator(".fa-nav-folders__heading")).toBeHidden();
   });
 
   test("the document index arrives closed too — both, from one instruction", async ({ page }) => {
@@ -806,7 +810,7 @@ test.describe("every row in the navbar is a target", () => {
     // has no box to measure, and a sweep that skipped them would report clean
     // over the rows most likely to be wrong.
     await page.hover(".side-bar");
-    for (const heading of [".fa-doc-index__heading", ".fa-nav-graphs-group__heading", ".fa-nav-folders__heading", ".fa-harness-tabs__heading"]) {
+    for (const heading of [".fa-doc-index__heading", ".fa-nav-graphs-group__heading", ".fa-harness-tabs__heading"]) {
       const h = page.locator(".side-bar " + heading);
       if (await h.count()) await h.click();
     }
@@ -1034,7 +1038,6 @@ test.describe("a page withheld from this deploy is not linked", () => {
     // test passed while asserting nothing.
     // Inside the folded Graphs group since ob3m finding 7.
     await page.locator(".fa-nav-graphs-group__heading").click();
-    await page.locator(".fa-nav-folders__heading").click();
     await page.waitForTimeout(200);
     const note = (kind: string) =>
       page.locator(".fa-nav-folders__item", { hasText: kind }).locator(".fa-nav-folders__note");
@@ -1080,7 +1083,6 @@ test.describe("a sub-graph is drawn INSIDE its parent's row, folded — issue #1
     await page.hover(".side-bar");
     // Inside the folded Graphs group since ob3m finding 7.
     await page.locator(".fa-nav-graphs-group__heading").click();
-    await page.locator(".fa-nav-folders__heading").click();
     const docs = page.locator(".fa-nav-folders__list > .fa-nav-folders__item", { hasText: /^docs/ });
     const sub = docs.locator(":scope > .fa-nav-folders__sub");
     await expect(sub).toHaveCount(1);
@@ -1099,7 +1101,6 @@ test.describe("a sub-graph is drawn INSIDE its parent's row, folded — issue #1
     await page.hover(".side-bar");
     // Inside the folded Graphs group since ob3m finding 7.
     await page.locator(".fa-nav-graphs-group__heading").click();
-    await page.locator(".fa-nav-folders__heading").click();
     await expect(page.locator(".fa-nav-folders__list:not(.fa-nav-folders__list--sub) > .fa-nav-folders__item",
       { hasText: "orphan" })).toHaveCount(1);
   });

@@ -249,7 +249,11 @@ test.describe("the theme sidebar has the viewer rail's layout (ob3m finding 7)",
     await expect(heading).toBeInViewport();
     await heading.click();
     await expect(group).toHaveAttribute("open", "");
-    await expect(group.locator(".fa-nav-folders__heading")).toBeInViewport();
+    // ONE heading, "Graphs N" (bean `gpbc`): the count is on it and the rows
+    // show on the first open, with no "Folders" fold inside.
+    await expect(heading.locator(".fa-nav-folders__count")).toHaveCount(1);
+    await expect(group.locator(".fa-nav-folders__heading")).toBeHidden();
+    await expect(group.locator(".fa-nav-folders__item").first()).toBeInViewport();
   });
 
   test("the tooltips (#1805) still name the rows AFTER the move", async ({ page }) => {
@@ -385,7 +389,6 @@ test.describe("every disclosure in the column wears the same caret and states (#
     ".fa-doc-index > summary",
     ".fa-nav-pages",
     ".fa-nav-graphs-group > summary",
-    ".fa-nav-folders > summary",
   ];
 
   test("one glyph, turned the same way when folded and when open", async ({ page }) => {
@@ -395,7 +398,7 @@ test.describe("every disclosure in the column wears the same caret and states (#
         const s = getComputedStyle(e, "::before");
         return { content: s.content, transform: s.transform };
       });
-    // Open the Graphs group so Folders' heading is rendered at all.
+    // Open the Graphs group (one heading since bean `gpbc`).
     await page.locator(".side-bar .fa-nav-graphs-group > summary").click();
     await page.waitForTimeout(300);
     const pages = await caret(".fa-nav-pages");
@@ -409,7 +412,6 @@ test.describe("every disclosure in the column wears the same caret and states (#
     await page.waitForTimeout(300); // the caret turns over 120ms
     const folded = await caret(".fa-nav-pages");
     expect((await caret(".fa-doc-index > summary")).transform).toBe(folded.transform);
-    expect((await caret(".fa-nav-folders > summary")).transform).toBe(folded.transform);
     const open = await caret(".fa-nav-graphs-group > summary");
     expect(open.transform).not.toBe(folded.transform);
   });

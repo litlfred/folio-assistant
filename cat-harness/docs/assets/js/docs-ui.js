@@ -11646,7 +11646,19 @@
 
     if (folders) {
       var group = el("details", { class: "fa-nav-graphs-group" });
-      group.appendChild(el("summary", { class: "fa-nav-graphs-group__heading" }, "Graphs"));
+      var groupSum = el("summary", { class: "fa-nav-graphs-group__heading" }, "Graphs");
+      group.appendChild(groupSum);
+      /* ONE HEADING, "GRAPHS N" — owner, 2026-10-05: *"graphs containing ONLY
+       * folders is weird. combine w/ badge of count."* (bean `gpbc`). The
+       * group held one thing, a second fold titled "Folders N", so a reader
+       * opened two disclosures to reach one list. The count moves up onto
+       * this heading and Folders' own fold is held OPEN with its heading
+       * hidden: the rows are still Folders' nodes, MOVED (the rule above),
+       * and every pin rule written against this group still applies. */
+      var folderCount = folders.querySelector(":scope > summary > .fa-nav-folders__count");
+      if (folderCount) groupSum.appendChild(folderCount);
+      folders.open = true;
+      folders.classList.add("fa-nav-folders--in-graphs");
       group.appendChild(folders);
       middle.appendChild(group);
       mirrorExpanded(group);
