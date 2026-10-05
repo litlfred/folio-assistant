@@ -640,11 +640,35 @@ describe("the document index — `documentIndexOf`", () => {
     const g = documentIndexOf(
       page(`<h2 id="a">Alpha</h2><h3 id="b">Beta</h3><h2 id="c">Gamma</h2>`),
     );
+    // An h3 is a CHILD of the h2 above it, folded (bean `r2ld`).
     expect(g?.items.map((i) => [i.href, i.label, i.depth ?? 0])).toEqual([
       ["#a", "Alpha", 0],
-      ["#b", "Beta", 1],
       ["#c", "Gamma", 0],
     ]);
+    expect(g?.items[0]!.children?.map((i) => [i.href, i.label, i.depth])).toEqual([["#b", "Beta", 1]]);
+    expect(g?.items[0]!.fold).toBe("1 sub-section");
+    expect(g?.items[1]!.fold).toBeUndefined();
+  });
+
+  it("FOLDS sub-sections under their section, closed, as a disclosure BELOW the link — owner, 2026-10-05", () => {
+    // "on this page should have sub-sections collapsible" (bean `r2ld`).
+    const g = documentIndexOf(
+      page(`<h2 id="a">Alpha</h2><h3 id="b">Beta</h3><h3 id="b2">Beta 2</h3><h2 id="c">Gamma</h2>`),
+    )!;
+    expect(g.items[0]!.fold).toBe("2 sub-sections");
+    const html = navbarHtml({ instance: "x", graphs: { label: "Graphs", items: [] }, documentIndex: g });
+    // The section stays a plain link; the fold follows it, closed.
+    expect(html).toMatch(/<a href="#a"[^>]*>[\s\S]*?<\/a><details class="fa-nav-fold"><summary>/);
+    expect(html).not.toMatch(/<details class="fa-nav-fold" open/);
+    // No link INSIDE any one summary.
+    expect(html).not.toMatch(/<summary>(?:(?!<\/summary>)[^])*<a /);
+    expect(html).toContain('href="#b2"');
+  });
+
+  it("an h3 BEFORE any h2 stays a row of its own", () => {
+    const g = documentIndexOf(page(`<h3 id="x">Lead</h3><h2 id="a">A</h2><h3 id="b">B</h3>`))!;
+    expect(g.items.map((i) => i.label)).toEqual(["Lead", "A"]);
+    expect(g.items[0]!.depth).toBe(1);
   });
 
   it("SKIPS a heading with no id — it is not a destination", () => {

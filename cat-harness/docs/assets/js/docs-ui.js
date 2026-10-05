@@ -11220,8 +11220,16 @@
     sum.appendChild(count);
     box.appendChild(sum);
 
+    /* SUB-SECTIONS FOLD UNDER THEIR SECTION — owner, 2026-10-05: *"on this
+     * page should have sub-sections collapsible"* (bean `r2ld`). An h3 goes
+     * into a closed "N sub-sections" disclosure BELOW its h2's link, never
+     * around it: the shape the folders' "Sub-graphs of …" fold has, and the
+     * rail's (`navbar.ts` `fold`, same wording from `subSections`). An h3
+     * before any h2 has no section to sit in and stays a row of its own. */
+    var subSections = function (n) { return n === 1 ? "1 sub-section" : n + " sub-sections"; };
     var list = document.createElement("ul");
     list.className = "fa-doc-index__list";
+    var section = null;
     for (var j = 0; j < rows.length; j++) {
       var li = document.createElement("li");
       li.className = "fa-doc-index__item";
@@ -11231,7 +11239,27 @@
       a.setAttribute("href", "#" + rows[j].id);
       a.textContent = rows[j].text;
       li.appendChild(a);
-      list.appendChild(li);
+      if (!rows[j].depth) {
+        section = { li: li, fold: null, sum: null, ul: null, n: 0 };
+        list.appendChild(li);
+      } else if (section) {
+        if (!section.fold) {
+          section.fold = document.createElement("details");
+          section.fold.className = "fa-doc-index__fold";
+          section.sum = document.createElement("summary");
+          section.sum.className = "fa-doc-index__fold-heading";
+          section.ul = document.createElement("ul");
+          section.ul.className = "fa-doc-index__list fa-doc-index__list--sub";
+          section.fold.appendChild(section.sum);
+          section.fold.appendChild(section.ul);
+          section.li.appendChild(section.fold);
+        }
+        section.ul.appendChild(li);
+        section.n += 1;
+        section.sum.textContent = subSections(section.n);
+      } else {
+        list.appendChild(li);
+      }
     }
     box.appendChild(list);
     mirrorExpanded(box);
