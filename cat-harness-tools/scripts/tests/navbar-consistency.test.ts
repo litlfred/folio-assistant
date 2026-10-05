@@ -42,6 +42,8 @@ const SCRIPT = join("cat-harness-tools", "scripts", "check-navbar-consistency.ts
 // relative to the instance, so the instance root is joined in front of it.
 const CLIENT_INSTANCE = join(REPO, "cat-harness");
 const CLIENT = join(CLIENT_INSTANCE, siteDirFor(CLIENT_INSTANCE), "assets", "js", "docs-ui.js");
+// The row's registry, `ROW_GLYPHS`, lives beside it (beans `lhvt`, `9rq1`).
+const ROW_CLIENT = join(dirname(CLIENT), "navbar-row.js");
 const DECL = join(REPO, "cat-harness", "cat-harness.json");
 // The ROOT instance holds the `beans` tile since placement PR0 (bean `ejye`).
 const ROOT_DECL = join(REPO, "folio-assistant.json");
@@ -203,7 +205,7 @@ describe("the fallback is measured, not graded", () => {
 describe("one artefact, one glyph, across both registries", () => {
   test("a row/tile disagreement fails", () => {
     withEdit(
-      CLIENT,
+      ROW_CLIENT,
       (s) => s.replace("beans: BEANS_GLYPH, processes:", "beans: NET_GLYPH, processes:"),
       () => {
         const { status, out } = run("--check");
@@ -217,7 +219,7 @@ describe("one artefact, one glyph, across both registries", () => {
 describe("could-not-determine is never green", () => {
   for (const name of ["TILE_GLYPHS", "ROW_GLYPHS"]) {
     test(`a renamed ${name} REFUSES (exit 2), it does not pass`, () => {
-      withEdit(CLIENT, (s) => s.replace(`var ${name} = {`, `var ${name}_MOVED = {`), () => {
+      withEdit(name === "ROW_GLYPHS" ? ROW_CLIENT : CLIENT, (s) => s.replace(`var ${name} = {`, `var ${name}_MOVED = {`), () => {
         const { status, out } = run("--check");
         expect(status).toBe(2);
         expect(out).toContain("could not locate");
