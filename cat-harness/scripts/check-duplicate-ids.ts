@@ -27,6 +27,7 @@
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
+import { isVendoredViewer } from "./pdf-viewer.ts";
 
 /** The ids that occur more than once in one HTML document, with their counts. */
 export function duplicateIds(html: string): Map<string, number> {
@@ -62,7 +63,15 @@ if (import.meta.main) {
     process.exit(2);
   }
   let bad = 0;
+  let vendored = 0;
   for (const f of files) {
+    // The pinned pdf.js viewer is Mozilla's markup; it declares `id="buttons"`
+    // twice at v6.4.299, and nobody here can fix that without forking it
+    // (bean `folio-assistant-5ea6`). Counted and said, not silently passed.
+    if (isVendoredViewer(relative(site, f))) {
+      vendored += 1;
+      continue;
+    }
     const d = duplicateIds(readFileSync(f, "utf8"));
     if (d.size === 0) continue;
     bad += 1;
@@ -72,5 +81,8 @@ if (import.meta.main) {
     console.error(`\ncheck:duplicate-ids — ${bad} of ${files.length} page(s) carry a duplicate id.`);
     process.exit(1);
   }
-  console.log(`check:duplicate-ids — ${files.length} page(s), no duplicate id.`);
+  console.log(
+    `check:duplicate-ids — ${files.length - vendored} page(s), no duplicate id` +
+      (vendored ? `; ${vendored} vendored pdf.js page(s) out of scope (not ours).` : "."),
+  );
 }

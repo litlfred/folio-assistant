@@ -3,9 +3,10 @@
 title: 'PAGE WEIGHT: move per-page nav, harness bar, icons, scripts and IG chrome CSS into shared cached assets (#1885)'
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-02T16:39:55Z
-updated_at: 2026-10-02T16:39:55Z
-parent: folio-assistant-p5wm
+updated_at: 2026-10-05T04:57:14Z
+parent: folio-assistant-rwmf
 ---
 
 Issue #1885.
@@ -70,4 +71,3 @@ Each phase is its own PR, with a before/after size table and a Chromium check at
 - Inline svg: about 31 KB.
 - Inline script: about 14.5 KB.
 - Whole site: 595 MiB, 89 % of it HTML.
-

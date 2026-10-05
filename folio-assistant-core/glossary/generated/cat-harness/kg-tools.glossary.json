@@ -503,6 +503,22 @@
       "status": "candidate"
     },
     {
+      "id": "pdf-viewer-embed",
+      "prefLabel": "Embed a PDF inline in a page",
+      "definition": "Print the HTML fragment that shows a PDF in the installed viewer: a lazily loaded frame whose address is derived from the page's own location (so one page works at the site root, under a project base and under a staging preview), plus plain open and download links that work without it.",
+      "notation": "pdf-viewer-embed",
+      "source": "cat-harness/tools/index.ts#pdf-viewer-embed",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-viewer-install",
+      "prefLabel": "Install the inline PDF viewer into a built site",
+      "definition": "Download the pinned pdf.js release (legacy build), verify its SHA-256, copy the parts a site needs into `<site>/assets/vendor/pdfjs/`, and add the shim that opens `?src=` only for the allowlisted URL prefixes or the site's own origin. Nothing is committed: the viewer exists only in the built site.",
+      "notation": "pdf-viewer-install",
+      "source": "cat-harness/tools/index.ts#pdf-viewer-install",
+      "status": "candidate"
+    },
+    {
       "id": "pin-spdx-license-list",
       "prefLabel": "Snapshot the SPDX License List at its pinned version",
       "definition": "Read `json/licenses.json` and `json/exceptions.json` from a copy of github.com/spdx/license-list-data at the pinned tag and write `cat-harness/external-schemas/spdx-license-list.terminology.json` (`folio-pinned-terminology/v1`): every licence and exception id with its name and deprecated flag — the offline, version-fixed list `check:source-licence` validates a `licence.json` id against.",
@@ -932,6 +948,14 @@
       "definition": "Check every `*.witness.json` in the folio's declared `computation-witness` directories against the two schemas in `schemas/computation-witness.ts`: the envelope every witness should meet (a failure is a malformed file) and the producer contract (a failure is a finding against the producer, grouped by the fields at fault). Also lists files that are not strict JSON, which Python's reader accepts and every other consumer rejects. Report-only: it never edits a witness, which is generator output.",
       "notation": "witness-conformance",
       "source": "cat-harness/tools/index.ts#witness-conformance",
+      "status": "candidate"
+    },
+    {
+      "id": "witness-parity",
+      "prefLabel": "Witness reproduction check",
+      "definition": "Re-run a computation witness's producer and say whether it reproduces the committed witness. Reads the command from `invocation.reproduce` (else `python3 <scriptFile>`) and the recorded package versions from `environment`; on a version mismatch it stops at `unknown`, since a different environment is not a reproduction test. Otherwise it runs the COMMITTED producer in a scratch git worktree, so the folio's own checkout is never written, and compares the result with the committed witness with run-specific fields (commit, timing, environment) masked at every depth. `pass`, `fail` (with the differing JSON paths), or `unknown` (mismatch, non-zero exit, timeout, no witness written).",
+      "notation": "witness-parity",
+      "source": "cat-harness/tools/index.ts#witness-parity",
       "status": "candidate"
     },
     {
