@@ -1,0 +1,34 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/data/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/data",
+      "@type": "cat-harness:SkillPackage",
+      "hasManifest": false,
+      "name": "data",
+      "path": "../folio-assistant-sci/skills/data"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/reference-dataset-ingestion",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Ingest a published REFERENCE dataset — a constants table such as CODATA, AME or PDG — into a library entry whose values are addressable in prose as {{ <instance>.library.<entry>.<slug> }}, with edition, source, sha256 and licence recorded. Use when a paper quotes a physical constant, when a value is hard-coded in a script or registry, or before adding a \"vendored snapshot\" of someone else's numbers.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/data",
+      "instructionLines": 95,
+      "instructionsPath": "../folio-assistant-sci/skills/data/reference-dataset-ingestion.md",
+      "name": "reference-dataset-ingestion",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a8d4c99523cdb426ff8697df097730522496da43050709f1f956f13783a9902a",
+        "bytes": 4266,
+        "sha256": "a8d4c99523cdb426ff8697df097730522496da43050709f1f956f13783a9902a"
+      },
+      "title": "Reference dataset ingestion"
+    }
+  ],
+  "name": "skills/data",
+  "path": "skills/data/"
+}
