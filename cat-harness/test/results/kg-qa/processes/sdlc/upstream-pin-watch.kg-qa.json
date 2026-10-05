@@ -5,7 +5,7 @@
     "id": "Process_UpstreamPinWatch",
     "path": "processes/sdlc/upstream-pin-watch.bpmn"
   },
-  "source_hash": "sha256:c09e1e1ec549c12aa064a6525ab236f2d2ad24d40758d0bd36fe199b4be20f90",
+  "source_hash": "sha256:e4cdb9ed0cadb77791b3d9ecca0af84252b186317353e52aaff842225f7592d7",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -125,13 +125,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/upstream-pins.yml",
-          "detail": ".github/workflows/upstream-pins.yml changed since cat-harness/processes/sdlc/upstream-pin-watch.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -139,8 +134,8 @@
     }
   },
   "totals": {
-    "pass": 17,
-    "fail": 2,
+    "pass": 18,
+    "fail": 1,
     "n/a": 6,
     "unknown": 0
   }

@@ -41,8 +41,12 @@ When an agent pushes to a feature branch, `feature-staging.yml` automatically:
    log — **once**, to `staging.json` at the preview root
 3. Injects a **constant** staging banner at the top of every HTML page, which
    reads those facts in the browser
-4. Deploys to `gh-pages/STAGING/<branch-slug>/`
-5. Comments the staging URL on the PR
+4. Comments on the PR that the preview is **staged and queued**, with the
+   earliest push time and when it should be live
+5. Waits for the rate-limit window (§7), then deploys to
+   `gh-pages/STAGING/<branch-slug>/`
+6. Rewrites the same comment: **pushed** at a time, live by about five
+   minutes later
 
 ### 2. The staging banner
 
@@ -181,6 +185,63 @@ Two things to know when editing it:
   404 until the author pushes rather than lost work. Detail and the reviewer's
   remedy: [`staging-review`](staging-review.md) §"The cap".
 
+### 7. The rate limit — a preview never cancels the main site's Pages build
+
+**Owner ruling, 2026-10-03 (issues #1868, #1956, bean `j27s`), option 1:**
+push staging previews to `gh-pages` less often. GitHub's `pages build and
+deployment` keeps only the NEWEST run, so every push cancels the build in
+flight. A build takes about three minutes (2m20s–3m40s, measured 2026-10-03),
+and in busy stretches previews were pushed every one to two minutes — ten
+builds cancelled in a row between 07:50Z and 08:00Z that day, the main site's
+among them.
+
+So before each push attempt the `stage` job re-reads `gh-pages` and runs
+`cat-harness/scripts/staging-push-gate.ts gate`, which holds the push until the
+branch tip is old enough:
+
+| tip of `gh-pages` | wait until it is |
+|---|---|
+| a staging commit (`staging(...)`) | `STAGING_WINDOW_MS` — 5 min |
+| anything else: the main-site publish, `publish.yml`, any other publisher | `MAIN_WINDOW_MS` — 10 min |
+
+The numbers live once, in that script. Exit `75` means it slept until the
+window should open (plus up to a minute of jitter) and the loop must re-read
+and ask again; exit `1` means the job has waited `MAX_WAIT_MS` (two hours) and
+fails rather than pushing; exit `2` is an unreadable tip, never read as open.
+
+Three things to know when editing it:
+
+- **git's fast-forward rule is the lock.** Two jobs that both find the window
+  open both build on the same tip; one push is rejected, re-reads, finds a tip
+  younger than the window, and waits. So at most one staging push lands per
+  window with no shared state. A rejection whose tip MOVED is therefore a lost
+  race, sent back to the gate without spending one of the three attempts; only
+  a rejection with the tip unmoved counts as a failure.
+- **No concurrency group, and none should be added.** Every waiting preview
+  would pend in one group and each arrival would cancel the last — the
+  2026-09-19 measurement on the `stage` job. The per-branch group at the
+  workflow level stays: a newer push to the same PR cancels a preview still
+  waiting at the gate, so a superseded preview is never pushed at all.
+- **A staging push BEFORE a main-site push is harmless; only one AFTER it
+  cancels the build that matters.** The main push then cancels the staging
+  build, and the build that runs carries both. That is why the gate looks at
+  the tip, and why it does not wait for `docs-site` runs that have not pushed
+  yet.
+
+**Why a rate limit rather than a batching "flush" job.** A flush job — previews
+uploaded as artifacts, one scheduled job pushing every pending one in one
+commit — batches harder, but costs a second workflow, an artifact round trip of
+200–500 MB per preview, a record of which artifact is already deployed, a
+schedule GitHub runs best-effort, and a write token over content built from a
+pull request. The gate is one script and one loop, and its correctness rests on
+git rather than on bookkeeping. The cost is latency under load: with K
+previews waiting, the last one pushes about 5 × K minutes later, and the PR
+comment says so with its own estimate.
+
+The `cleanup` and `cleanup-dispatch` jobs do NOT pass through the gate yet.
+They push once per closed PR rather than once per push, so they are far rarer;
+gating them is the next step if cancellations by cleanup are ever measured.
+
 ## Agent workflow
 
 When an author requests a content change:
@@ -224,10 +285,12 @@ An author needs to change the immunization schedule:
 ## Before you hand a staging URL to a person
 
 **Check the ref, then say how long and come back.** A preview push is not a
-served page, and the bot's *"Staging preview deployed"* comment reports the
-first, not the second. List `STAGING/<slug>/` on `refs/heads/gh-pages` before
-relaying the URL; say the `stage` job takes ~2 minutes and Pages adds up to ten
-on top; schedule the re-check rather than promising it.
+served page, and the bot's *"Staging preview"* comment reports at most the
+first, not the second — and while it says **queued**, not even that. List
+`STAGING/<slug>/` on `refs/heads/gh-pages` before relaying the URL; quote the
+comment's own push and live-by times (the rate limit in §7 can hold a push for
+several windows), or say the `stage` job takes ~2 minutes plus the wait and
+Pages adds a few on top; schedule the re-check rather than promising it.
 
 The reason it is a rule: an agent relayed one preview URL to the owner **five
 times in a session** without checking anything, each time straight off the

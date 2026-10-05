@@ -611,9 +611,13 @@ only the `name` and `size` fields while you are at it.
 A person handed a URL with no timing either refreshes a 404 or walks away.
 Give them the number and the follow-up, in the same breath as the link:
 
-- **The `stage` job takes ~2 minutes.** Measured 2026-09-20 over three
-  consecutive runs: 1m44s, 1m58s, 2m17s. That is the push to `gh-pages`, and
-  it is the part the check run tells you about.
+- **The `stage` job takes ~2 minutes, plus its wait at the rate limit.**
+  Measured 2026-09-20 over three consecutive runs: 1m44s, 1m58s, 2m17s. Since
+  #1956 the job then waits until `gh-pages` has gone 5 minutes without a
+  staging push and 10 without a main-site one
+  ([`feature-staging`](feature-staging.md) §7), and its PR comment says
+  **queued** with an earliest push time and a live-by time while it waits.
+  Quote those times; they are the job's own estimate.
 - **Pages propagation is on top of that**, and GitHub documents it as up to
   ten minutes. Since it is unobservable from here, quote the bound rather than
   a guess: *"give it ~5 minutes; up to 10 if Pages is slow."*
@@ -664,4 +668,5 @@ Full rule and the measured failure:
 | [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Comment the preview URL on the PR; Post the retention notice on the PR |
 | [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Review the MVP against what we bind to |
 | [Content Change and Review](../../processes/content-change-review.html) | Review staged rendering; Request further revisions; Submit to review committee; Compare main vs staging; Slice the change and assign reviewers |
+| [Public comment on a review draft](../../processes/public-comment.html) | Review the change set on its staging preview (calls a sub-process) |
 

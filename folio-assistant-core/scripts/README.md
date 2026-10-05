@@ -25,6 +25,9 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`codemod-refterm.test.ts`](codemod-refterm.test.ts) | a file |  |
 | [`codemod-refterm.ts`](codemod-refterm.ts) | a file |  |
 | [`dc-render.ts`](dc-render.ts) | a file |  |
+| [`docx-structure.py`](docx-structure.py) | a file |  |
+| [`docx-to-folio.test.ts`](docx-to-folio.test.ts) | a file |  |
+| [`docx-to-folio.ts`](docx-to-folio.ts) | a file |  |
 | [`gen-covers.test.ts`](gen-covers.test.ts) | a file |  |
 | [`gen-covers.ts`](gen-covers.ts) | a file |  |
 | [`glossary-extract.ts`](glossary-extract.ts) | a file |  |
@@ -34,10 +37,16 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`glossary-pot.test.ts`](glossary-pot.test.ts) | a file |  |
 | [`glossary-pot.ts`](glossary-pot.ts) | a file |  |
 | [`glossary-skos-automated.test.ts`](glossary-skos-automated.test.ts) | a file |  |
+| [`intake-rows.py`](intake-rows.py) | a file |  |
 | [`kg-materialize.test.ts`](kg-materialize.test.ts) | a file |  |
 | [`kg-materialize.ts`](kg-materialize.ts) | a file |  |
 | [`local-path.test.ts`](local-path.test.ts) | a file |  |
 | [`materialized-fixity.test.ts`](materialized-fixity.test.ts) | a file |  |
+| [`pdf-line-map.py`](pdf-line-map.py) | a file |  |
+| [`public-comment-site.test.ts`](public-comment-site.test.ts) | a file |  |
+| [`public-comment-site.ts`](public-comment-site.ts) | a file |  |
+| [`public-comment.test.ts`](public-comment.test.ts) | a file |  |
+| [`public-comment.ts`](public-comment.ts) | a file |  |
 | [`review-comment-move.test.ts`](review-comment-move.test.ts) | a file |  |
 | [`review-comment-move.ts`](review-comment-move.ts) | a file |  |
 | [`review-comments.test.ts`](review-comments.test.ts) | a file |  |

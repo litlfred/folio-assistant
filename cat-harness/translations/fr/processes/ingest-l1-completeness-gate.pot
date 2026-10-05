@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ingest-l1-completeness-gate\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.784Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.324Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -39,6 +39,11 @@ msgstr ""
 msgid "clean"
 msgstr ""
 
+#: processes/library/ingest-l1-completeness-gate.bpmn:26
+#. Diagram element documentation
+msgid "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so. folio-assistant — Ingestion subprocess — the L1 completeness gate. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
+msgstr ""
+
 #: processes/library/ingest-l1-completeness-gate.bpmn:127
 #. Diagram label
 msgid "drift"
@@ -52,11 +57,6 @@ msgstr ""
 #: processes/library/ingest-l1-completeness-gate.bpmn:132
 #. Diagram label
 msgid "false positive"
-msgstr ""
-
-#: processes/library/ingest-l1-completeness-gate.bpmn:26
-#. Diagram element documentation
-msgid "folio-assistant — Ingestion subprocess — the L1 completeness gate. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
 #: processes/library/ingest-l1-completeness-gate.bpmn:39

@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1774 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1786 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 152 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 558 terms and is 316 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 568 terms and is 322 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2026</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2026</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2066</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2066</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">558</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">568</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a></nav>
 
@@ -317,6 +317,27 @@ AmbiguityFlag.resolved_to <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>The resolution chosen (filled in after disambiguation).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formalization-types.ts"><code>cat-harness/schemas/formalization-types.ts#AmbiguityFlag.resolved_to</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.anchorschema.candidates" data-fa-state="extracted" data-fa-gloss="">
+AnchorSchema.candidates <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Other plausible targets, for triage to choose between.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#AnchorSchema.candidates</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.anchorschema.note" data-fa-state="extracted" data-fa-gloss="">
+AnchorSchema.note <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Why, in a sentence a triager can check.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#AnchorSchema.note</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.anchorschema.targetlabel" data-fa-state="extracted" data-fa-gloss="">
+AnchorSchema.targetLabel <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A block or section label in the folio; null when unplaced.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#AnchorSchema.targetLabel</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--assistant-package.aptdependency.package" data-fa-state="extracted" data-fa-gloss="">
 AptDependency.package <span class="fa-gloss-status">candidate, extracted</span>
@@ -769,6 +790,13 @@ BeanIndexItemSchema.preview <span class="fa-gloss-status">candidate, extracted</
 <dd>
 <p>The body, trimmed to its first 400 characters.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.preview</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.beanindexschema.edges" data-fa-state="extracted" data-fa-gloss="">
+BeanIndexSchema.edges <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The block graph as ONE edge set, <code>blocker → blocked</code>, over both front-matter declarations (<code>blocking:</code> on the blocker, <code>blocked_by:</code> on the blocked), deduplicated — <code>blockEdges</code> in <code>scripts/beans.ts</code>, bean <code>vhqq</code>. An end may name no bean in <code>items</code>: that edge is kept here and reported as a <code>blocking-unknown</code> finding, never dropped.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#BeanIndexSchema.edges</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--site-indexes.beanindexschema.plan" data-fa-state="extracted" data-fa-gloss="">
 BeanIndexSchema.plan <span class="fa-gloss-status">candidate, extracted</span>
@@ -1796,6 +1824,20 @@ ChangeProseSchema.concept <span class="fa-gloss-status">candidate, extracted</sp
 <p>The authorised concept the corpus now uses.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/term-adjudication.ts"><code>cat-harness/schemas/term-adjudication.ts#ChangeProseSchema.concept</code></a></p>
 </dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.changesetrefschema.before" data-fa-state="extracted" data-fa-gloss="">
+ChangeSetRefSchema.before <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Before/after deep links to the comment's anchor.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema.before</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.changesetrefschema.stagingurl" data-fa-state="extracted" data-fa-gloss="">
+ChangeSetRefSchema.stagingUrl <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The staging preview of the change set.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema.stagingUrl</code></a></p>
+</dd>
 <dt id="folio-assistant-core--kg-schema-fields--changeset.changesetschema.changes" data-fa-state="extracted" data-fa-gloss="">
 ChangeSetSchema.changes <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1914,6 +1956,20 @@ Citation.ref <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>The cited node — a path, a label, a finding id, a bib key.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/qa-review.ts"><code>cat-harness/schemas/qa-review.ts#Citation.ref</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.citationschema.caption" data-fa-state="extracted" data-fa-gloss="">
+CitationSchema.caption <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>&quot;Table 3.1&quot; / &quot;Figure 2.2&quot; as parsed from the line or comment.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#CitationSchema.caption</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.citationschema.raw" data-fa-state="extracted" data-fa-gloss="">
+CitationSchema.raw <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The cell or phrase exactly as given.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#CitationSchema.raw</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--detangle.classifiededge.basis" data-fa-state="extracted" data-fa-gloss="">
 ClassifiedEdge.basis <span class="fa-gloss-status">candidate, extracted</span>
@@ -2159,6 +2215,13 @@ ComputationWitness.engineVersion <span class="fa-gloss-status">candidate, extrac
 <dd>
 <p>Engine version string (e.g. &quot;snappy 3.3.2&quot;, &quot;sympy 1.13&quot;).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/types.ts"><code>cat-harness/schemas/types.ts#ComputationWitness.engineVersion</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--types.computationwitness.scriptfile" data-fa-state="extracted" data-fa-gloss="">
+ComputationWitness.scriptFile <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The producer, its content hash, and the commit that last changed it — written by `<code>WitnessBuilder</code><code> on every witness and missing from this interface until 2026-10-04 (</code>scripts/witness-audit.ts<code> recorded the drift). </code><code>scriptHash</code><code> is what staleness keys on; </code><code>scriptCommitSha</code><code> is provenance only, because a rebase-merge rewrites it. The runtime schema is </code><code>schemas/computation-witness.ts</code>`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/types.ts"><code>cat-harness/schemas/types.ts#ComputationWitness.scriptFile</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--changeset.computeoptions.base" data-fa-state="extracted" data-fa-gloss="">
 ComputeOptions.base <span class="fa-gloss-status">candidate, extracted</span>
@@ -3024,6 +3087,13 @@ DecisionRequestSchema.recommends <span class="fa-gloss-status">candidate, extrac
 <dd>
 <p>The <code>label</code> of the recommended option. Checked to be one of them.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-request.ts"><code>cat-harness/schemas/decision-request.ts#DecisionRequestSchema.recommends</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.decisionschema.changeset" data-fa-state="extracted" data-fa-gloss="">
+DecisionSchema.changeSet <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where the change is made, for a decision that changes the document.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#DecisionSchema.changeSet</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--sticky-contribution.declaredcontribution.alsowritten" data-fa-state="extracted" data-fa-gloss="">
 DeclaredContribution.alsoWritten <span class="fa-gloss-status">candidate, extracted</span>

@@ -69,8 +69,13 @@ import { join, resolve } from "node:path";
 import { CONTENT_CONTEXT, CONTENT_CONTEXT_URL } from "../../cat-harness/schemas/jsonld.js";
 import { stubOfNamespace } from "../../cat-harness/schemas/namespaces.js";
 import { heldProvJsonldContext, PROV_JSONLD_CONTEXT_URL } from "../../cat-harness/schemas/prov-jsonld.js";
+import { SUBGRAPH_CONTEXT_PATH } from "../../cat-harness/schemas/subgraph-manifest.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
+
+/** The subgraph context: same base as the content context, its own path. */
+const SUBGRAPH_CONTEXT_URL = CONTENT_CONTEXT_URL.replace(/ns\/content\/v1\.jsonld$/, SUBGRAPH_CONTEXT_PATH);
+const SUBGRAPH_CONTEXT_FILE = join(REPO, "cat-harness", SUBGRAPH_CONTEXT_PATH);
 
 /**
  * Prefixes bound ahead of anything that emits them, each with the reason.
@@ -379,6 +384,15 @@ export function checkPrefixDeclaration(
       if (c === PROV_JSONLD_CONTEXT_URL) {
         const held = heldProvJsonldContext(repo) as { "@context": Record<string, unknown> };
         for (const k of Object.keys(held["@context"])) if (!k.startsWith("@")) scope.add(k);
+        return true;
+      }
+      // The named-subgraph context (bean `c1m4`) is GENERATED and committed
+      // beside the content one, so it is read from this instance rather than
+      // reported unresolvable — and its own bindings are checked like any other.
+      if (c === SUBGRAPH_CONTEXT_URL && existsSync(SUBGRAPH_CONTEXT_FILE)) {
+        const held = JSON.parse(readFileSync(SUBGRAPH_CONTEXT_FILE, "utf-8")) as { "@context": Record<string, unknown> };
+        for (const k of Object.keys(held["@context"])) if (!k.startsWith("@")) scope.add(k);
+        if (check) checkContext(held["@context"], SUBGRAPH_CONTEXT_PATH, scope);
         return true;
       }
       if (c !== contextUrl) {

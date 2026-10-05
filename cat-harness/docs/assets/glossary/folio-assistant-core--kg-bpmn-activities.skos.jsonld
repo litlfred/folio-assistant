@@ -2134,6 +2134,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publication.callactivity_publiccomment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Public comment on the review version"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When the draft is released for public comment: comments returned on the frozen, line-numbered review version are placed, triaged, recommended on by the review committee and decided by the editor (public-comment.bpmn). Bean v26p, issue #197."
+        }
+      ],
+      "skos:notation": "CallActivity_PublicComment",
+      "dcterms:source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#CallActivity_PublicComment",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publication.task_authorizerelease",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2331,6 +2351,186 @@
       ],
       "skos:notation": "Task_SmeSignoff",
       "dcterms:source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#Task_SmeSignoff",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publiccomment.callactivity_changeset",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Review the change set on its staging preview"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The existing content-change review, unchanged, of the author's branch: its PR lists the PC refs it answers, and its staging preview is the after side of every deep link. A change the reviewers send back returns to the author inside that process."
+        }
+      ],
+      "skos:notation": "CallActivity_ChangeSet",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#CallActivity_ChangeSet",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_assign",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Assign to committee members"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "public-comment assign: by GitHub login. A committee member who recommends on an unassigned comment is assigned it as they do."
+        }
+      ],
+      "skos:notation": "Task_Assign",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Assign",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_authoredits",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Edit the document as decided, on a feature branch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch that may answer several comments. Status: editing."
+        }
+      ],
+      "skos:notation": "Task_AuthorEdits",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_AuthorEdits",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_committeerecommends",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Recommend a decision, with a rationale"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A GitHub comment tagged pc: PC-0042 / recommend: code, from a login in config.json committee, or public-comment recommend."
+        }
+      ],
+      "skos:notation": "Task_CommitteeRecommends",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_CommitteeRecommends",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_editordecides",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Decide, weighing the recommendations"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "public-comment decide, or decide: code on GitHub from a login in config.json editors. accepted, accepted-modified, not-accepted, noted, deferred; a reason for all but accepted. Also reopens a decided comment."
+        }
+      ],
+      "skos:notation": "Task_EditorDecides",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_EditorDecides",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_incorporate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Mark incorporated when the change set merges"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "public-comment incorporate, naming the branch, PR and staging URL."
+        }
+      ],
+      "skos:notation": "Task_Incorporate",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Incorporate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_ingest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Ingest and place each comment"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "public-comment import / import-narrative: one record per row or cited passage, anchored through review-anchors.json. Status: received."
+        }
+      ],
+      "skos:notation": "Task_Ingest",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Ingest",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_triage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Triage: confirm the anchor, type and priority"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "public-comment triage / reassign / duplicate. An unplaced or low-confidence anchor is placed here, by a person."
+        }
+      ],
+      "skos:notation": "Task_Triage",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Triage",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_publiccomment.task_withdraw",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record the withdrawal"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "public-comment withdraw, from any open status."
+        }
+      ],
+      "skos:notation": "Task_Withdraw",
+      "dcterms:source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Withdraw",
       "skos:note": "candidate"
     }
   ]

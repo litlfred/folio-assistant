@@ -560,6 +560,7 @@ export const SectionSchema = z.object({
   title: z.string().min(1),
   label: z.string().optional(),
   blocks: z.array(z.string().min(1)),
+  lead: z.boolean().optional(),
 }).passthrough();
 
 export const SectionRefSchema = z.object({

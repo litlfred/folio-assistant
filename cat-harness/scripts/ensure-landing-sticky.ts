@@ -64,7 +64,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { type ContentDirectory, findDeclarationFile, findInstanceRoot, instanceRootFor, readDeclaration, repoRootFor, rootForScope, declarationPathIn } from "../schemas/cat-harness.js";
+import { checkoutRootFor, type ContentDirectory, findDeclarationFile, findInstanceRoot, instanceRootFor, readDeclaration, repoRootFor, rootForScope, declarationPathIn } from "../schemas/cat-harness.js";
 import {
   LandingStickySchema,
   stickyFromContribution,
@@ -437,7 +437,7 @@ export function declaredContributions(root: string): DeclaredContribution[] {
         // link to the source had only a name, which is not resolvable — and
         // resolving one by searching is how two instances sharing a `name`
         // silently attribute a card to the wrong file.
-        declaredIn: relative(repoRootFor(root), declarationPathIn(layer)!) || (findDeclarationFile(layer) ?? ""),
+        declaredIn: relative(checkoutRootFor(root), declarationPathIn(layer)!) || (findDeclarationFile(layer) ?? ""),
         ...(decl.description === undefined ? {} : { description: decl.description }),
         ...(decl.summary === undefined ? {} : { summary: decl.summary }),
         ...(decl.alsoWritten === undefined ? {} : { alsoWritten: decl.alsoWritten }),

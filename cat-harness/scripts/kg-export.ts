@@ -90,9 +90,12 @@ import {
   isPublishedGraphKind,
   isPublishedSchemaModule,
   isPublishedSkill,
+  forgeLocation,
   instanceRootsIn,
   readDeclaration,
   renderingPath,
+  siteDirFor,
+  UNPUBLISHED_GRAPH_KINDS,
 } from "../schemas/cat-harness.js";
 import { firstHeading, frontMatter } from "./front-matter.js";
 import { packageDirsIn } from "./skill-topics.js";
@@ -227,7 +230,7 @@ function findBpmnDirs(root: string = ROOT): string[] {
 
 /** The namespace a declared graph kind's nodes belong in. */
 /** A kind's individual, `<layer ns>graphKind/<name>` — the registry's one answer. */
-function graphKindId(kindName: string): string {
+export function graphKindId(kindName: string): string {
   return graphKindIri(kindName, defaultGraphKinds.get(kindName));
 }
 
@@ -497,6 +500,17 @@ export function buildContext(): Record<string, unknown> {
     decisionRef: termIri("decisionRef"),
     decidedBy: { "@id": termIri("decidedBy"), ...link },
     hitPolicy: termIri("hitPolicy"),
+    // A call activity's target, as a LINK to the Process node it invokes —
+    // BPMN's own `calledElement`, so the standard property rather than a
+    // minted one. Written only when that Process is in this graph, for
+    // `decidedBy`'s reason: a call to a process nobody declares is a diagram
+    // defect (`kg-qa`'s to report), not a link to mint (bean `ax6r`).
+    calledElement: { "@id": propertyIri("calledElement"), ...link },
+    // The SVG `render:bpmn` drew from a diagram, and the diagram on its forge.
+    // LINKS, both: each is a URL a reader opens, which is what the workflow
+    // page does with them (bean `ax6r`).
+    depiction: { "@id": termIri("depiction"), ...link },
+    sourceUrl: { "@id": termIri("sourceUrl"), ...link },
     // WHERE A NODE CAME FROM, and the two senses are not one term. A Process
     // carries the `.bpmn` path it was loaded from; a Role carries the string
     // `role-registry` (and a lane-derived Role, until #1168 B9b, carried
@@ -1505,9 +1519,45 @@ async function collectProcesses(
    * behaviour and the safe default for a sink nobody is reading.
    */
   notes?: string[],
+  /**
+   * The publication base, when the caller has one. With it, a Process whose
+   * diagram `render:bpmn` has drawn into this instance's site carries that SVG
+   * as `depiction`; without it (a foreign instance's export, a fixture) the
+   * link is simply absent, never composed against a base nobody declared.
+   */
+  base?: string,
 ): Promise<Node[]> {
   const nodes: Node[] = [];
   const dirs = findBpmnDirs(root);
+  // Where a diagram can be read on its forge, from the REPOSITORY's own
+  // declaration (`repository: owner/name`) — never from the checkout's
+  // remote, which differs by clone and would make the committed subgraph
+  // files differ with it. A file in a submodule resolves to the submodule's
+  // repository.
+  // The CHECKOUT, not `dirname`: for the root instance `dirname` is outside it (g43f).
+  const repoRoot = checkoutRootFor(root);
+  const repoName = (() => {
+    try {
+      return readDeclaration(repoRoot)?.repository;
+    } catch {
+      return undefined;
+    }
+  })();
+  const forgeOf = (abs: string): string | undefined => {
+    if (!repoName) return undefined;
+    const at = forgeLocation(relative(repoRoot, abs).split(sep).join("/"), `https://github.com/${repoName}`, repoRoot);
+    return `${at.repoUrl.replace(/\.git$/, "")}/blob/main/${at.path.split("/").map(encodeURIComponent).join("/")}`;
+  };
+  // The site `render:bpmn` draws into is THIS instance's, so only an export of
+  // this instance can say a picture exists.
+  const svgDir = base !== undefined && resolve(root) === resolve(ROOT)
+    ? join(ROOT, siteDirFor(ROOT), "assets", "img", "workflows")
+    : undefined;
+  const depictionOf = (abs: string): string | undefined => {
+    if (svgDir === undefined) return undefined;
+    const name = `${basename(abs, ".bpmn")}.svg`;
+    return existsSync(join(svgDir, name)) ? `${base!.replace(/\/+$/, "")}/assets/img/workflows/${name}` : undefined;
+  };
   // Zero diagrams is a determined empty ONLY if we looked. Say which.
   //
   // AND AN INSTANCE THAT DECLARES NO `kg` DIRECTORY HAS NOTHING TO LOOK IN.
@@ -1689,8 +1739,22 @@ async function collectProcesses(
         "@id": makeIri(doc, "process", m.id),
         "@type": termIri("Process"),
         name: m.name,
+        // The diagram's OWN `bpmn:documentation` — what the process is FOR —
+        // whole as `description` and its first sentence as `summary`, the two
+        // naming keys every other node already uses (bean `ax6r`). The
+        // workflow page's row text is this, so a sentence about a process is
+        // written once, in the process.
+        //
+        // A text that NAMES an unpublished graph kind is not carried — the
+        // owner's 2026-09-19 rule that references to `fsh-guts` are stripped
+        // before publication covers prose as much as edges. The first
+        // sentence is kept when it alone is clean, so the row still says what
+        // the process is for (`sample-import` is the live case).
+        ...publishableDocumentation(m.documentation),
         enforcement: m.enforcement,
         sourcePath: relative(root, m.source),
+        sourceUrl: forgeOf(m.source),
+        depiction: depictionOf(m.source),
         startNode: m.startNodes.map((n) => makeIri(doc, "process", `${m.id}/node/${n}`)),
         nodeCount: m.nodes.size,
         flowCount: m.flows.size,
@@ -1759,6 +1823,8 @@ async function collectProcesses(
           // move a published term, and it is what a reader needs when the
           // link is absent because the table was not found.
           decidedBy: decidedBy(m.source, n.decisionRef),
+          // Pruned below when the called process is not in this graph.
+          calledElement: n.calledElement === undefined ? undefined : makeIri(doc, "process", n.calledElement),
           incoming: n.incoming.map((f) => makeIri(doc, "process", `${m.id}/flow/${f}`)),
           outgoing: n.outgoing.map((f) => makeIri(doc, "process", `${m.id}/flow/${f}`)),
         });
@@ -1768,7 +1834,31 @@ async function collectProcesses(
     }
   }
   }
+  // A call to a process this graph does not hold stays out of it rather than
+  // becoming a dangling link — `Process_MergeRefusal`, called and defined
+  // nowhere, is the live case. Resolved after every diagram is read, because a
+  // call may name a process in a file read later.
+  const processIris = new Set(nodes.filter((n) => n["@type"] === termIri("Process")).map((n) => n["@id"]));
+  for (const n of nodes) {
+    if (typeof n.calledElement === "string" && !processIris.has(n.calledElement)) delete (n as Record<string, unknown>).calledElement;
+  }
   return nodes;
+}
+
+/** `summary` and `description` from a diagram's documentation, minus any text naming an unpublished graph kind. */
+function publishableDocumentation(doc: string | undefined): { summary?: string; description?: string } {
+  if (!doc) return {};
+  const clean = (t: string): boolean => !UNPUBLISHED_GRAPH_KINDS.some((k) => t.includes(k));
+  const summary = firstSentence(doc);
+  return { ...(clean(summary) ? { summary } : {}), ...(clean(doc) ? { description: doc } : {}) };
+}
+
+/** The first sentence of a longer text — a node's `summary` when only a body is authored. */
+export function firstSentence(s: string, max = 260): string {
+  const one = s.replace(/\s+/g, " ").trim();
+  const stop = one.search(/\.\s|\.$/);
+  const cut = stop > 0 ? one.slice(0, stop + 1) : one;
+  return cut.length > max ? cut.slice(0, max - 1).trimEnd() + "…" : cut;
 }
 
 /**
@@ -2844,7 +2934,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
           ...collectSkills(docIri, base, problems),
           ...collectRegistryNodes(docIri, problems),
           ...collectPackages(docIri, problems),
-          ...(await collectProcesses(docIri, problems)),
+          ...(await collectProcesses(docIri, problems, ROOT, undefined, base)),
           ...collectTools(docIri, base, problems),
           ...collectSchemas(docIri, base),
           ...collectExternalSchemas(docIri),

@@ -2266,6 +2266,147 @@ for the drawing above:</p>
   health certificates, and nothing there covers arbitrary files.</p>
 </div>
 
+<h2>Publishing a large graph: skeleton, payloads, one SQLite file per slice</h2>
+
+<p>A corpus the size of IRIS can only be searched on the client if the client never
+downloads the whole graph. The platform&rsquo;s answer is <strong>late
+materialization</strong>. The graph is published as three things:</p>
+
+<ol class="kids" style="margin-left:0">
+  <li><strong>The skeleton, as JSON-LD.</strong> Each named subgraph &mdash; a directory of a
+      declared graph &mdash; is published at <code>/subgraph/&lt;harness&gt;/&lt;path&gt;/</code> as
+      <code>index.jsonld</code> (pointers to its members and child subgraphs) and
+      <code>index.hydrated.jsonld</code> (every member inline, with metadata only). The root
+      has the pointer file only, so no single file is ever the whole graph.</li>
+  <li><strong>Payloads, by content address.</strong> Heavy content &mdash; a body, a PDF, a page
+      of sections &mdash; lives at <code>/payload/sha256/&lt;hex&gt;</code>, named by the hash of its
+      bytes, with a <code>&lt;hex&gt;.json</code> sidecar giving its media type. A node carries a
+      <code>payload</code> link with <code>sha256</code> and <code>bytes</code>, so a consumer can
+      decide whether to fetch before it fetches.</li>
+  <li><strong>Per-slice SQLite.</strong> CI flattens one slice into a relational schema:
+      one table per node type, one table per relation, and a contentless FTS5 index. It
+      publishes the result as <code>&lt;slice&gt;.&lt;sha256&gt;.sqlite3</code>, named by the
+      hash of its bytes, with a <code>&lt;slice&gt;.sqlite3.json</code> manifest at a fixed path
+      beside it that names the file. A row holds only the payload
+      pointer, never the payload. The browser downloads the file, checks its sha256 against the
+      manifest, imports it into the Origin Private File System, and opens it with the official
+      SQLite WASM build. Nothing is parsed.</li>
+</ol>
+
+<p>The contract is in the <code>kg-export</code> skill, under &ldquo;Named subgraphs&rdquo;,
+&ldquo;Payloads&rdquo; and &ldquo;Per-slice SQLite&rdquo;. The procedure is the
+<code>slice-sqlite-publish</code> process. This page does not restate that contract&rsquo;s
+rules; where the two differ, the skill is right.</p>
+
+<h3>Measured: the four pilots</h3>
+
+<p class="ordering">These are the platform&rsquo;s own slices, not this catalogue&rsquo;s. They
+were measured on 2026-10-03 (bean <code>q8ar</code>). The first open was measured in Chromium
+on loopback against a plain static server with no COOP/COEP headers, and includes the download
+and the sha256 check.</p>
+
+<table class="reqs">
+  <thead><tr><th>slice</th><th>file</th><th>source as published</th><th>first open</th></tr></thead>
+  <tbody>
+    <tr><th class="rid">beans</th><td>2.83 MB</td><td>4.82 MB of bean files</td><td>~190 ms</td></tr>
+    <tr><th class="rid">todos</th><td>0.07 MB</td><td>18 KB of JSON</td><td>~110 ms</td></tr>
+    <tr><th class="rid">library</th><td>2.48 MB</td><td>3.59 MB of JSON</td><td>~165 ms</td></tr>
+    <tr><th class="rid">kg</th><td>3.40 MB</td><td>3.03 MB of JSON-LD (the whole-repo graph, without bodies)</td><td>~180 ms</td></tr>
+  </tbody>
+</table>
+
+<p>The VFS is <code>opfs-sahpool</code>, running in a Worker. It needs neither
+SharedArrayBuffer nor COOP/COEP, which GitHub Pages cannot send. Reopening from OPFS took about
+85&nbsp;ms, with no download. Without a Worker or OPFS, the verified bytes are opened in memory
+instead, and the page reports which mode it used.</p>
+
+<div class="caveat">
+  <p><strong>No who-iris slice is built, and none of these numbers is a who-iris
+  number.</strong> Nothing here was measured against a CDN, either: <code>cdn.jsdelivr.net</code>
+  is egress-blocked from the container that generates this page.</p>
+</div>
+
+<h3>The slice budget, and what to do above it</h3>
+
+<p><strong>As built:</strong> the budget is about 5&nbsp;MB per file
+(<code>SIZE_BUDGET_BYTES</code>). It is reported in the manifest as <code>overBudget</code>
+and is not gated. The process says what to do over budget: try the no-body variant first, then
+stop and report the measurement. All four pilots are under it.</p>
+
+<p><strong>Why IRIS will not fit one slice.</strong> This is arithmetic on the pilots, not a
+measurement. The pilots hold between ${(3.40 * 1024 / 3121).toFixed(1)}&nbsp;KB per node
+(<code>kg</code>, 3,121 nodes) and ${(2.83 * 1024 / 723).toFixed(1)}&nbsp;KB per row
+(<code>beans</code>, 723 rows). At those rates, ${cat.totalItemsUpstream ? `the ${cat.totalItemsUpstream.toLocaleString("en-US")} upstream items would make one file of roughly ${Math.round(cat.totalItemsUpstream * 3.40 / 3121)} to ${Math.round(cat.totalItemsUpstream * 2.83 / 723)}&nbsp;MB, before any per-bitstream row. That is about ${Math.round(cat.totalItemsUpstream * 3.40 / 3121 / 5)} to ${Math.round(cat.totalItemsUpstream * 2.83 / 723 / 5)} times the budget.`: "no size can be estimated, because the upstream item count is unknown."}</p>
+
+<p><strong>Recommended, not built: split by subgraph.</strong> A slice is one
+<code>SliceDef</code>, and nothing in the builder requires a slice to be a whole graph. A
+DSpace community or collection is already a directory-shaped subgraph, so the natural cut is
+one slice per community or collection. If one of those is still over budget, split it at the
+next level down. Do not split by row count: a slice should match a subgraph IRI a reader can
+name. Each split slice keeps the full contract, with its own manifest, row digest and
+determinism check. A small <strong>routing slice</strong> would let one search span all of IRIS.
+It would hold only titles, identifiers and the subgraph each item belongs to, so the client can
+then open the one slice that has the rows. That is the skeleton pattern again, one level up.</p>
+
+<h3>CDN caching</h3>
+
+<table class="reqs">
+  <thead><tr><th>file</th><th>as built</th><th>recommended behind a CDN</th></tr></thead>
+  <tbody>
+    <tr><th class="rid">payload</th><td>named by its sha256, so its bytes never change</td><td class="why">cache forever (<code>immutable</code>); a new body is a new URL</td></tr>
+    <tr><th class="rid">subgraph JSON-LD</th><td>a stable IRI whose content changes when the graph does</td><td class="why">short TTL; a long one serves an old skeleton whose payload links may have been removed as orphans since</td></tr>
+    <tr><th class="rid">slice manifest</th><td><code>&lt;slice&gt;.sqlite3.json</code> at a <strong>fixed</strong> path; it names the slice file; the client fetches it with <code>no-store</code></td><td class="why">short TTL or none; it is the one file that says which build is current</td></tr>
+    <tr><th class="rid">slice file</th><td><code>&lt;slice&gt;.&lt;sha256&gt;.sqlite3</code>, named by its sha256, so its bytes never change; OPFS keys its copy by the same sha256</td><td class="why">cache forever (<code>immutable</code>); a new build is a new URL</td></tr>
+  </tbody>
+</table>
+
+<div class="caveat">
+  <p><strong>This section has been corrected twice.</strong> It first said that only the
+  manifest needs a short TTL, because the client keys its copy by sha256. That held for the
+  browser&rsquo;s OPFS copy, not for a CDN: the slice file was then published at the same path
+  every build, so a CDN could serve old bytes against a new manifest, the client would refuse
+  them on the sha256 check, and search was down until the cache expired. That is now fixed
+  (bean <code>wixl</code>). The slice file is published at
+  <code>assets/slices/&lt;slice&gt;.&lt;sha256&gt;.sqlite3</code>, and the manifest&rsquo;s
+  <code>file</code> names it. A fresh manifest names a file no cache has seen. A stale one names
+  an older file that still matches it.</p>
+  <p><strong>Why not under <code>/payload/sha256/</code>:</strong> a payload is a node&rsquo;s
+  body, linked from that node and removed once nothing links to it. A slice file is linked from
+  no node, so the payload tree would treat it as an orphan. It takes the payload rule that
+  matters, immutable bytes at a hash-named address, without joining that tree.</p>
+  <p><strong>What a CDN can still hold, as built:</strong> for one manifest TTL, a stale
+  manifest together with the older file it names, which is a consistent pair. It can also hold
+  an older file that nothing names until that file expires, or a stale manifest whose file the
+  origin has stopped serving. The page reports that last case as a 404 and asks for a reload. A
+  manifest that names a file with a different sha256 is <strong>refused</strong> with a visible
+  message, never opened. Each deploy writes only the current file. Old ones do not pile up on
+  the host. GitHub Pages sends <code>max-age=600</code> for every file and cannot be told to send
+  anything else, so on Pages the manifest&rsquo;s short TTL is ten minutes.</p>
+</div>
+
+<p>No CDN layer has been chosen (bean <code>l9v6</code>, still <em>proposed</em>). Whichever
+one is chosen stands <em>in front of</em> the publication host, as above. The slice files and
+payloads go out through the same publish-to-CDN step as every other page (bean
+<code>7dek</code>, <code>Process_RenderKgToCdn</code>), behind the same four gates (bean
+<code>xies</code>). The URL-layout check that <code>xies</code> asks for must therefore cover
+<code>/payload/sha256/</code> and <code>assets/slices/</code> too.</p>
+
+<h3>How a client picks a slice</h3>
+
+<p><strong>As built:</strong> <code>assets/slices/index.json</code>
+(<code>folio-slice-index/v1</code>) lists every slice built into the site. The one search page,
+<code>slices/search.html?slice=&lt;name&gt;</code>, lists them when no slice is named. Given a
+name, it reads everything else it needs from the <code>search</code> block of that
+slice&rsquo;s manifest. The reader picks. The page checks the name against a pattern before
+using it in a path.</p>
+
+<p><strong>Recommended for who-iris, not built:</strong> keep the reader&rsquo;s choice, and
+make the choices follow the catalogue&rsquo;s community and collection tree. A reader browsing
+a community opens that community&rsquo;s slice, named in its <code>index.jsonld</code>. A
+reader searching all of IRIS opens the routing slice first. Several slices can be open at once,
+because each is its own file in the pool. What that costs on a phone has not been
+measured.</p>
+
 <h2>What is deliberately not decided</h2>
 
 <div class="caveat">

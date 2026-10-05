@@ -80,6 +80,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`check-python-deps.ts`](check-python-deps.ts) | a file |  |
 | [`check-qa-corpus.ts`](check-qa-corpus.ts) | a file |  |
 | [`check-qa-reviewer-permission.ts`](check-qa-reviewer-permission.ts) | a file |  |
+| [`check-standalone.ts`](check-standalone.ts) | a file |  |
 | [`check-state-on-main.ts`](check-state-on-main.ts) | a file |  |
 | [`check-workflow-submodules.ts`](check-workflow-submodules.ts) | a file |  |
 | [`extract-assets.ts`](extract-assets.ts) | a file |  |
@@ -97,10 +98,12 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`seed-ready.ts`](seed-ready.ts) | a file |  |
 | [`split-baseline.json`](split-baseline.json) | data |  |
 | [`split-baseline.ts`](split-baseline.ts) | a file |  |
+| [`standalone-baseline.json`](standalone-baseline.json) | data |  |
 | [`state-push.ts`](state-push.ts) | a file |  |
 | [`state-seed.ts`](state-seed.ts) | a file |  |
 | [`state-store.ts`](state-store.ts) | a file |  |
 | [`vocab-mappings.ts`](vocab-mappings.ts) | a file |  |
+| [`witness-conformance.ts`](witness-conformance.ts) | a file |  |
 | [`docker-latex-build/`](docker-latex-build/) | _nothing declares what this holds_ | |
 | [`lib/`](lib/) | _nothing declares what this holds_ | |
 | [`tests/`](tests/) | _nothing declares what this holds_ | |

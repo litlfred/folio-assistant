@@ -278,3 +278,9 @@ who-style-guide/test/results/
 # read `beans/defs` off a disk. It is a READ SURFACE and never a commit on this
 # branch: writes go through `state-store.ts`'s splice-write.
 state/
+
+# Per-slice SQLite (bean `q8ar`). BUILT AT DEPLOY into `_site/assets/slices/`
+# by `bun run slice:sqlite`, never committed: every session writes `beans/`, so
+# a committed binary would be stale against every merge ref and would grow the
+# clone on every bean edit. A local `bun run slice:sqlite` lands here.
+cat-harness/docs/assets/slices/

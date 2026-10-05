@@ -39,7 +39,7 @@ import { alternativesWithoutSelection } from "../schemas/tool.js";
 import { toJsonSchema } from "../schemas/to-json-schema.js";
 import { contractFile, skillContracts } from "./skill-contracts.js";
 import { corpusScopeFor, knownSkills as knownSkillsIn, workflowFiles } from "./known-skills.js";
-import { instanceRootsIn, repoRootFor, siblingScopeFor } from "../schemas/cat-harness.js";
+import { instanceRootsIn, siblingScopeFor } from "../schemas/cat-harness.js";
 import { resolveImplementingPath } from "../schemas/harness-config.js";
 import type { ToolDefinition } from "../schemas/tool.js";
 
@@ -353,7 +353,7 @@ export interface ToolCheck {
  */
 function declaredProcessIds(instance: string = ROOT): Set<string> {
   const out = new Set<string>();
-  for (const inst of new Set([resolve(instance), ...instanceRootsIn(repoRootFor(instance)).map((r) => resolve(r))])) {
+  for (const inst of new Set([resolve(instance), ...instanceRootsIn(siblingScopeFor(instance)).map((r) => resolve(r))])) {
     for (const f of workflowFiles(inst)) {
       if (f.endsWith(".bpmn")) out.add(f.replace(/^.*\//, "").slice(0, -".bpmn".length));
     }

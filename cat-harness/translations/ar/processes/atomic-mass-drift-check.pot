@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: atomic-mass-drift-check\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.941Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.471Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -17,6 +17,11 @@ msgstr ""
 #: ../folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn:50
 #. Diagram element documentation
 msgid "Answered by the diff Task_Check takes after regenerating AtomicMass.lean from the data table. No difference ends clean; any difference ends the job red, because the committed file is stale against its source."
+msgstr ""
+
+#: ../folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn:14
+#. Diagram element documentation
+msgid "Check that `AtomicMass.lean` is still in sync with the data table it is generated from. THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON. `AtomicMass.lean` is generated from a data table; if the two part company, a Lean file that compiles is nevertheless carrying numbers nothing produced. So the job regenerates and diffs, and any difference is red. THIS DIAGRAM IS DELIBERATELY SMALL, AND SAYING SO IS PART OF IT. Bean `7yvd` warns that \"a diagram that is drawn once and then drifts is worse than none, because it is consulted\", so each of the six was read before being drawn and classified by whether it says anything the YAML does not. `docs-site`, `ci-health`, `health-check` and `code-quality-gates` do — a full-replace compensation pair, two three-state verdict gateways, five independent parallel jobs. THIS ONE DOES NOT: it is one job with no branch and no compensation path, and dressing it up as more would be decoration that still has to be maintained. IT EARNS A DIAGRAM FOR A DIFFERENT REASON. Without one its job names no node (`# bpmn-node:` in the workflow), so `check:workflow-coverage` has nothing to compare and a job added here would tell nobody. That is drift detection rather than exposition, and it is worth the file on its own — but the two are not the same thing, and a reader who opens this expecting the second should be told which they are getting."
 msgstr ""
 
 #: ../folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn:28
@@ -67,11 +72,6 @@ msgstr ""
 #: ../folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn:29
 #. Diagram element documentation
 msgid "The only lane in the smallest workflow here, and there is nothing else to hand off to: Task_Check's diff result is what GW_Drift reads directly, with no reviewer, no QC pass and no second lane positioned to catch a bad regeneration before End_Drift or End_Clean fires. Keeping this to one mechanical step is deliberate — a second lane would be ceremony over a check that either matches or does not."
-msgstr ""
-
-#: ../folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn:14
-#. Diagram element documentation
-msgid "THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON. `AtomicMass.lean` is generated from a data table; if the two part company, a Lean file that compiles is nevertheless carrying numbers nothing produced. So the job regenerates and diffs, and any difference is red. THIS DIAGRAM IS DELIBERATELY SMALL, AND SAYING SO IS PART OF IT. Bean `7yvd` warns that \"a diagram that is drawn once and then drifts is worse than none, because it is consulted\", so each of the six was read before being drawn and classified by whether it says anything the YAML does not. `docs-site`, `ci-health`, `health-check` and `code-quality-gates` do — a full-replace compensation pair, two three-state verdict gateways, five independent parallel jobs. THIS ONE DOES NOT: it is one job with no branch and no compensation path, and dressing it up as more would be decoration that still has to be maintained. IT EARNS A DIAGRAM FOR A DIFFERENT REASON. Without one its job names no node (`# bpmn-node:` in the workflow), so `check:workflow-coverage` has nothing to compare and a job added here would tell nobody. That is drift detection rather than exposition, and it is worth the file on its own — but the two are not the same thing, and a reader who opens this expecting the second should be told which they are getting."
 msgstr ""
 
 #: ../folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn:64

@@ -144,31 +144,45 @@ export function renderBlockMarkdown(
   return lines.join("\n");
 }
 
-/** The block root-names a section contributes, its subsections included. */
+/**
+ * The block root-names a section contributes, its subsections included, at
+ * every depth. One level only until 2026-10-04: a document's 3.5.3.1 lost its
+ * blocks, because the walk stopped at 3.5.3 (issue #197, the DPI-H draft).
+ */
 function sectionBlocks(sec: Section): string[] {
   const own = Array.isArray(sec.blocks) ? sec.blocks : [];
   const subs = Array.isArray(sec.subsections)
-    ? sec.subsections.flatMap((s) =>
-        !isSectionRef(s) && Array.isArray(s.blocks) ? s.blocks : [],
-      )
+    ? sec.subsections.flatMap((s) => (isSectionRef(s) ? [] : sectionBlocks(s)))
     : [];
   return [...own, ...subs];
 }
 
-/** Render one section: its heading, then each of its blocks in order. */
+/**
+ * Render one section: its heading, its own blocks in order, then each
+ * subsection one heading level deeper.
+ *
+ * Subsections were flattened into the parent until 2026-10-04: their blocks
+ * were rendered, their HEADINGS were not, so "1.1.1 What is a reference
+ * architecture" vanished from a document whose reviewers cite it by number.
+ * A heading level past six stays at six, which Markdown has no seventh of.
+ */
 export function renderSectionMarkdown(
   section: Section,
   blocks: Map<string, LoadedBlockEntry>,
   opts: MarkdownRenderOptions = {},
 ): string {
-  const level = (opts.baseHeadingLevel ?? 1) + 1;
+  const level = Math.min(6, (opts.baseHeadingLevel ?? 1) + 1);
   const lines: string[] = [];
 
   if (opts.anchors !== false && section.label) lines.push(`<a id="${section.label}"></a>`);
-  lines.push(`${hashes(level)} ${section.title}`);
-  lines.push("");
+  // A chapter's LEAD (`Section.lead`) gets an anchor and no heading: the
+  // chapter heading directly above already says it.
+  if (!section.lead) {
+    lines.push(`${hashes(level)} ${section.title}`);
+    lines.push("");
+  }
 
-  for (const rootName of sectionBlocks(section)) {
+  for (const rootName of Array.isArray(section.blocks) ? section.blocks : []) {
     const entry = blocks.get(rootName);
     // A missing block is reported, never skipped in silence: a section that
     // renders short is otherwise indistinguishable from a section that is
@@ -181,6 +195,11 @@ export function renderSectionMarkdown(
     }
     lines.push(renderBlockMarkdown(entry, opts));
     lines.push("");
+  }
+
+  for (const sub of Array.isArray(section.subsections) ? section.subsections : []) {
+    if (isSectionRef(sub)) continue;
+    lines.push(renderSectionMarkdown(sub, blocks, { ...opts, baseHeadingLevel: level }));
   }
 
   return lines.join("\n");
