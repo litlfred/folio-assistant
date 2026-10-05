@@ -39,7 +39,7 @@ import {
   kindForBuilder,
   adapterForKind,
   profileAcceptsKind,
-} from "../../cat-harness/schemas/block-kinds";
+} from "../platform.js";
 import {
   decisionTable,
   valueSet,
@@ -51,12 +51,12 @@ import {
   testScenario,
   type DakBlock,
 } from "./dak-blocks";
-import { KNOWN_LABEL_PREFIXES } from "../../cat-harness/schemas/constraints";
+import { KNOWN_LABEL_PREFIXES } from "../platform.js";
 import { DAK_KIND_TO_WHO_MODEL, DAK_KIND_TO_FOLIO_TYPE } from "./dak-jsonld";
-import { assertPrefixesInSync, typesForKind } from "../../cat-harness/schemas/jsonld";
-import { readBlockManifest } from "../../cat-harness/content/pipeline/qa-utils";
-import { ContributionRegistry, composedKindOwner } from "../../cat-harness/schemas/contributions";
-import { loadContributionsSync } from "../../cat-harness/schemas/harness-config";
+import { assertPrefixesInSync, typesForKind } from "../platform.js";
+import { readBlockManifest } from "../platform.js";
+import { ContributionRegistry, composedKindOwner } from "../platform.js";
+import { loadContributionsSync } from "../platform.js";
 
 /**
  * The registry a folio depending on smart-base gets: `smart-ig`'s, loaded as
