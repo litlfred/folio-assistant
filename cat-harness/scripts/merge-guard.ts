@@ -58,7 +58,10 @@
  *    running is not-ready, red is a defect. Held with no dispatch: refused
  *    not-ready if `merge-main.yml` dispatches that workflow (it is still
  *    owed), reported "not judged" if it does not (preview-only), `unknown` if
- *    that file's dispatch line cannot be parsed.
+ *    that file's dispatch line cannot be parsed. One exemption from WAITING,
+ *    never from judging: a workflow in {@link NOT_WAITED_FOR_WORKFLOW_FILES}
+ *    (Feature Staging, owner ruling 2026-10-05, bean `gnnj`) that is still in
+ *    flight or has not started is not a refusal; once finished, red refuses.
  * 6. `checklist` — no unticked `- [ ]` item in the body (#1960).
  * 7. `open-question` — no comment newer than the ready marker asks the owner
  *    or the Merge Manager an open question. A heuristic; its limits are on
@@ -127,6 +130,23 @@ export const BOT_LOGIN = "github-actions[bot]";
 export const MERGE_MAIN_MARKER = "<!-- merge-main-bot -->";
 /** This guard's own workflow. Its runs are never evidence about the head: they are the guard. */
 export const SELF_WORKFLOW_FILE = ".github/workflows/merge-guard.yml";
+/**
+ * Workflows check 5 JUDGES once they finish but never WAITS for — bean `gnnj`,
+ * owner ruling 2026-10-05 (option 1 of the staging-speed report).
+ *
+ * Feature Staging's deploy is held by the #1956 rate limit: one `gh-pages` push
+ * per 5 min, none for 10 min after a main-site publish. Measured 06:00–07:10Z
+ * that day, its deploy step waited up to 2483 s (41 min) and eight runs were
+ * queued at once, so every PR in the merge queue inherited the preview queue's
+ * depth. The preview is for reviewers and publishes on its own schedule; the
+ * merge does not wait for it.
+ *
+ * NOT waived: a run that has FINISHED red still refuses, because `stage`
+ * carries real checks before it deploys (no duplicate page id, no escaped
+ * block markup, the export verifies). Only "not finished yet" and "not started
+ * yet" stop being reasons to refuse. #1956's limits are untouched.
+ */
+export const NOT_WAITED_FOR_WORKFLOW_FILES: ReadonlySet<string> = new Set([".github/workflows/feature-staging.yml"]);
 /** The workflow that merges main into PR heads, and dispatches the gating workflows after a bot push. */
 export const MERGE_MAIN_WORKFLOW = ".github/workflows/merge-main.yml";
 /** The commit-status context the workflow posts and a ruleset would require. */
@@ -628,9 +648,17 @@ function checkCi(s: GuardSnapshot): CheckResult {
     if (!problems.has(name)) problems.set(name, { text, kind });
   };
 
+  // Judged once finished, never waited for (bean `gnnj`). Matched by FILE and
+  // mapped to the run NAME the scan reads from that file, as `selfNames` is.
+  const notWaitedNames = new Set(
+    s.scan.triggers.filter((t) => NOT_WAITED_FOR_WORKFLOW_FILES.has(t.file)).map((t) => t.name),
+  );
+  const notWaited: string[] = [];
+
   const latest = latestByName(prRuns);
   for (const [name, r] of latest) {
-    if (r.status !== "completed") problem(name, `${name}: ${r.status}`, "not-ready");
+    if (r.status !== "completed" && notWaitedNames.has(name)) notWaited.push(`${name} (${r.status})`);
+    else if (r.status !== "completed") problem(name, `${name}: ${r.status}`, "not-ready");
     else if (NOT_EXECUTED.has(r.conclusion ?? "")) {
       // A run that never executed is not a verdict on the tree, so it is not
       // red either; on a bot-merged head its dispatch may stand in for it.
@@ -648,6 +676,10 @@ function checkCi(s: GuardSnapshot): CheckResult {
   const cov = coverageFor(all, scan, "pull_request");
   for (const w of cov.required) {
     if (w.ran) continue;
+    if (notWaitedNames.has(w.name)) {
+      if (!latest.has(w.name)) notWaited.push(`${w.name} (${w.state})`);
+      continue;
+    }
     if (w.state === "blocked") {
       const o = resolveHeld(w.name, latest.get(w.name)?.conclusion ?? "blocked");
       if ("unknown" in o) {
@@ -667,6 +699,7 @@ function checkCi(s: GuardSnapshot): CheckResult {
       ? `${standIns.length} held for approval on this bot-merged head and judged by its green \`workflow_dispatch\` run: ${standIns.join(", ")}`
       : "",
     notJudged.length ? `not judged (preview-only, not dispatched by merge-main): ${notJudged.join(", ")}` : "",
+    notWaited.length ? `not waited for (judged only once finished, bean \`gnnj\`): ${notWaited.join(", ")}` : "",
     unused
       ? `${unused} green \`workflow_dispatch\` run(s) on this head are not counted: a dispatch stands in only for a \`pull_request\` run held for approval on a bot-merged head`
       : "",
@@ -680,7 +713,8 @@ function checkCi(s: GuardSnapshot): CheckResult {
     return R(5, "ci", "refuse", `\`pull_request\` CI on the head is not green: ${list.map((p) => p.text).join("; ")}${note}`, kind);
   }
   const how = standIns.length || notJudged.length ? ", once held runs are resolved" : "";
-  return R(5, "ci", "pass", `${latest.size} \`pull_request\` workflow(s) on the head, all success or skipped${how}${note}`);
+  const finished = [...latest.values()].filter((r) => r.status === "completed" || !notWaitedNames.has(r.name)).length;
+  return R(5, "ci", "pass", `${finished} \`pull_request\` workflow(s) on the head, all success or skipped${how}${note}`);
 }
 
 function checkChecklist(s: GuardSnapshot): CheckResult {
