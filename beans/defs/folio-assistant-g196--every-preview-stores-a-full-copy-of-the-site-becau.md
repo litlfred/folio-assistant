@@ -399,7 +399,7 @@ The diff is path-sorted, and its first entry moved:
 
 | deploy | first changed file |
 |---|---|
-| `bbd5989` (before) | `STAGING/…/accessibility.html` |
+| `bbd5989` (before) | `STAGING/…/start/accessibility.html` |
 | `d7a09ee` (after) | `STAGING/…/api/functions/…actor.html` |
 
 `accessibility.html` and `agentic-harness.html` sort **before** `api/` and led

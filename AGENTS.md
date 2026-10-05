@@ -79,7 +79,7 @@ run in your first five minutes, how to find the right skill instead of
 improvising one, the content-object triple, the two dependency relations, beans,
 QA sidecars and axes, and where to look things up.
 Published at
-<https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/agent-onboarding.html>.
+<https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html>.
 
 Read that first. **The rest of this file is a reference** — commands and
 conventions to come back to, not a path through the project.
@@ -307,7 +307,7 @@ hides.
 The processes are executable diagrams, not prose: `board-open-close.bpmn`,
 `board-relocate.bpmn` and `board-place-note.bpmn` under `folio-assistant-core/processes/ui/`,
 indexed with the rest on the [publication-workflow
-page](cat-harness/docs/publication-workflow.md). **Count the directory rather
+page](cat-harness/docs/process/publication-workflow.md). **Count the directory rather
 than quoting a number from this paragraph** — `bpmn-processes` says why.
 
 ## CI health — a red workflow looks exactly like a green one from in here
@@ -475,7 +475,7 @@ if your clones live under one predictable directory.
 
 ## Agentic harness — interaction model
 
-The [agentic harness](https://litlfred.github.io/folio-assistant/docs/cat-harness/agentic-harness.html)
+The [agentic harness](https://litlfred.github.io/folio-assistant/agentic-harness.html)
 page documents the agent–user interaction model: idle vs workflow states, request
 classification, session lifecycle, and how content workflows and the CRDM
 feature-request workflow fit together. Read it for the consolidated reference;
@@ -485,7 +485,7 @@ the individual skills listed below remain authoritative where they differ.
 
 When a user request is a **feature request** (platform capability change rather
 than content work), the agent enters the
-[CRDM requirements workflow](https://litlfred.github.io/folio-assistant/docs/cat-harness/crdm-methodology.html)
+[CRDM requirements workflow](https://litlfred.github.io/folio-assistant/crdm-methodology.html)
 rather than implementing directly. Detection signals and session-state handling
 are in [`skills/sdlc/crdm/crdm-detect.md`](cat-harness/skills/sdlc/crdm/crdm-detect.md);
 the full six-phase process is in
@@ -657,7 +657,7 @@ to spend the words: **do not start the topic.**
   [issue #198](https://github.com/litlfred/folio-assistant/issues/198).
 - **Every process here is BPMN, and the diagrams are executable.** The `.bpmn`
   files under `processes/` are the source of truth, indexed by
-  [`folio-assistant/docs/publication-workflow.md`](cat-harness/docs/publication-workflow.md) — the normative
+  [`folio-assistant/docs/process/publication-workflow.md`](cat-harness/docs/process/publication-workflow.md) — the normative
   picture of the HCI validation gate, the draft-review-publish path and the
   work-plan lane. `folio-assistant/docs/assets/img/workflows/*.svg` is
   generated: `bun run render:bpmn`, and `render:bpmn:check` fails if stale.
@@ -687,7 +687,7 @@ to spend the words: **do not start the topic.**
   A swarm is **asked for every time**, per swarm, with agent count, model level
   and rough cost —
   [`skills/sdlc/sdlc-core/swarm-management.md`](cat-harness/skills/sdlc/sdlc-core/swarm-management.md)
-  and the [reader-facing page](cat-harness/docs/swarm-management.md).
+  and the [reader-facing page](cat-harness/docs/guides/swarm-management.md).
 - **An instance declares the directories it scans — `<instance>.json` at that
   instance's own root.** Each entry names a directory and the **kind of graph**
   it holds: `folio` (authored content, rendered to a website by just-the-docs),

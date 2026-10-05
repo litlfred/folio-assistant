@@ -54,7 +54,7 @@ Every declared theme: palette, the scrim's measured contrast against the binding
 **14 theme(s)**, 8 with art. A theme is chosen per note by whoever authors it — there is
 no mapping from a role or a kind to a theme — so "worn by" lists the landing-board cards that chose it,
 not every place it may appear. How themes are split into skills, and why contrast is measured over pure
-black, is on the [theming page]({{ '/docs/cat-harness/architecture/theming.html' | relative_url }}).
+black, is on the [theming page]({{ '/architecture/theming.html' | relative_url }}).
 
 <div class="fa-theme-sheet">
 <table>

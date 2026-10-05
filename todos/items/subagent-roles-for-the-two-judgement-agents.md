@@ -1,5 +1,5 @@
 ---
-$schema: folio-todo/v1
+$schema: todo/1.0.0
 id: subagent-roles-for-the-two-judgement-agents
 summary: "Decide which roles content-pipeline-navigator and platform-boundary-guard take on"
 status: blocked

@@ -31,7 +31,7 @@ IT REFINES THE HARNESS FLOW BY CALLING IT. CallActivity_Basic runs the harness's
 
 - **Called by:** no call activity names this process
 - **Calls:** [Ingestion subprocess — build the L1 knowledge graph](ingest-build-l1-kg.html), [Ingestion subprocess — derive content from the assets](ingest-derive-content.html), [Ingestion subprocess — extract structure](ingest-extract-structure.html), [Basic ingestion — an upload to an asset catalogued in library/](document-ingestion.html), [Ingestion subprocess — ingest a theme](ingest-theme.html), [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html)
-- **Presented on:** [Document ingestion — The pipeline](../docs/cat-harness/document-ingestion.html#the-pipeline)
+- **Presented on:** [Document ingestion — The pipeline](../guides/document-ingestion.html#the-pipeline)
 - **Skill:** [`l1-document-ingestion`](../reference/skill-instructions/l1-document-ingestion.html)
 
 ## Lanes — who acts

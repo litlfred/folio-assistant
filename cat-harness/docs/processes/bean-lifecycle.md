@@ -23,7 +23,7 @@ The one irreversible thing is refused outright. Unwanted work is SCRAPPED with i
 
 - **Called by:** no call activity names this process
 - **Calls:** none
-- **Presented on:** [Beans and todos — The agent bean lifecycle](../docs/cat-harness/beans-and-todos.html#the-agent-bean-lifecycle)
+- **Presented on:** [Beans and todos — The agent bean lifecycle](../guides/beans-and-todos.html#the-agent-bean-lifecycle)
 
 ## Lanes — who acts
 

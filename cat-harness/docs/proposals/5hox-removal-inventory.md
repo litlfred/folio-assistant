@@ -49,7 +49,7 @@ files: 1,186 on disk, 1,186 in `git ls-files`. Nothing untracked is mixed in.
 |---|---|
 | files | **1,186** |
 | bytes | **8,520,910** (8.1 MiB) |
-| oldest file, by last change | **6 days**: `cat-harness/test/results/block-qa/content/docs/agentic-harness/consolidated-skill-references.qa.json`, last changed 2026-09-26 (`2e8effe0f`) |
+| oldest file, by last change | **6 days**: `cat-harness/test/results/block-qa/content/docs/concepts-agentic-harness/consolidated-skill-references.qa.json`, last changed 2026-09-26 (`2e8effe0f`) |
 | oldest file, by first commit at its current path | **13 days**: `cat-harness/test/results/avatar-coverage.qa-results.json`, added 2026-09-19 (`c25761d2c`) |
 | newest | 2026-10-02 (`51e40d7c4`) |
 

@@ -28,8 +28,8 @@ d'objets de contenu typé.
   note — authored content on one page, not chrome — and the forge remains
   reachable from the navbar's Source tile regardless.
 -->
-[Démarrer]({{ '/docs/cat-harness/getting-started.html' | relative_url }}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[Installer]({{ '/docs/cat-harness/installation.html' | relative_url }}){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Démarrer](../start/getting-started.html){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Installer](../start/installation.html){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [Voir sur GitHub](https://github.com/litlfred/folio-assistant){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
@@ -37,7 +37,7 @@ d'objets de contenu typé.
 ## Quatre choses, dans l'ordre
 
 **1. Le plan de travail est l'endroit où vous dites ce que vous faites.**
-Pas un message de discussion, pas un commentaire — des [beans]({{ '/docs/cat-harness/beans-and-todos.html' | relative_url }}), un dépôt versionné que toute session ou tout agent peut lire. Réservez avant de travailler, pour qu'une session voisine ne prenne pas le même élément ; un bean qui s'avère inutile est marqué `scrapped`, avec ses raisons, jamais supprimé.
+Pas un message de discussion, pas un commentaire — des [beans]({{ '/guides/beans-and-todos.html' | relative_url }}), un dépôt versionné que toute session ou tout agent peut lire. Réservez avant de travailler, pour qu'une session voisine ne prenne pas le même élément ; un bean qui s'avère inutile est marqué `scrapped`, avec ses raisons, jamais supprimé.
 
 ```sh
 cat-harness/scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
@@ -52,14 +52,14 @@ beans <id> --status in-progress     # le réserver, visiblement
 bun run init-folio --help
 ```
 
-Ensuite, [Démarrer]({{ '/docs/cat-harness/getting-started.html' | relative_url }}) accompagne le premier bloc à travers la validation, le rendu et la relecture.
+Ensuite, [Démarrer]({{ '/start/getting-started.html' | relative_url }}) accompagne le premier bloc à travers la validation, le rendu et la relecture.
 
-**3. Sachez quel genre de chose vous écrivez.** Un *document* est de la prose structurée ; un *article* (paper) est cela, plus les types de blocs dont l'assertion est une affirmation formelle, appuyée par Lean et composée avec LaTeX. Ce choix décide quels blocs sont permis et quels contrôles s'exécutent : [Types de contenu]({{ '/docs/cat-harness/content-types.html' | relative_url }}).
+**3. Sachez quel genre de chose vous écrivez.** Un *document* est de la prose structurée ; un *article* (paper) est cela, plus les types de blocs dont l'assertion est une affirmation formelle, appuyée par Lean et composée avec LaTeX. Ce choix décide quels blocs sont permis et quels contrôles s'exécutent : [Types de contenu]({{ '/concepts/content-types.html' | relative_url }}).
 
 **4. La documentation que vous ne lirez jamais.**
-[Toute la documentation]({{ '/docs/cat-harness/guides/index.html' | relative_url }}) — les guides de rédaction, l'architecture, le flux de publication, la référence générée des schémas et des compétences. Elle est là, elle est complète, et l'attente honnête est que vous y arriverez depuis un moteur de recherche au moment exact où quelque chose casse. C'est une bonne façon de s'en servir. Les trois étapes ci-dessus sont celles qui valent d'être lues maintenant.
+[Toute la documentation]({{ '/guides/index.html' | relative_url }}) — les guides de rédaction, l'architecture, le flux de publication, la référence générée des schémas et des compétences. Elle est là, elle est complète, et l'attente honnête est que vous y arriverez depuis un moteur de recherche au moment exact où quelque chose casse. C'est une bonne façon de s'en servir. Les trois étapes ci-dessus sont celles qui valent d'être lues maintenant.
 
-Quand c'est la *machinerie* qui vous déroute plutôt que la rédaction — qui fait quoi, dans quel processus, avec quelle compétence — commencez par [La plateforme]({{ '/docs/cat-harness/platform.html' | relative_url }}). Une seule phrase y porte tout le modèle, et chacun de ses mots est un objet déclaré séparément.
+Quand c'est la *machinerie* qui vous déroute plutôt que la rédaction — qui fait quoi, dans quel processus, avec quelle compétence — commencez par [La plateforme]({{ '/platform.html' | relative_url }}). Une seule phrase y porte tout le modèle, et chacun de ses mots est un objet déclaré séparément.
 
 ---
 
@@ -94,32 +94,32 @@ actuellement pris en charge :
 
 | Type de contenu | Artefacts | Ensemble de compétences |
 |-----------------|-----------|-------------------------|
-| **Articles scientifiques et livres** | Formalisation Lean 4 + LaTeX/Markdown | [`authoring-math`]({{ site.baseurl }}/docs/cat-harness/content-types.html#scientific-papers--books) |
-| **Kits d'adaptation numérique (DAK) des Lignes directrices SMART de l'OMS** | Artefacts L2 — BPMN, DMN, dictionnaires de données Excel, personas | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/content-types.html#who-smart-guidelines-daks-l2) |
-| **Guides d'implémentation SMART de l'OMS** | Ressources FHIR L3, FSH, sortie de l'éditeur d'IG | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/content-types.html#who-smart-implementation-guides-l3) |
-| **Autres** | Extensible — ajoutez un nouvel adaptateur + ensemble de compétences | [Ajouter un type de contenu]({{ site.baseurl }}/docs/cat-harness/guides/new-content-type.html) |
+| **Articles scientifiques et livres** | Formalisation Lean 4 + LaTeX/Markdown | [`authoring-math`](../concepts/content-types.html#scientific-papers--books) |
+| **Kits d'adaptation numérique (DAK) des Lignes directrices SMART de l'OMS** | Artefacts L2 — BPMN, DMN, dictionnaires de données Excel, personas | [`authoring-who-smart-guidelines`](../concepts/content-types.html#who-smart-guidelines-daks-l2) |
+| **Guides d'implémentation SMART de l'OMS** | Ressources FHIR L3, FSH, sortie de l'éditeur d'IG | [`authoring-who-smart-guidelines`](../concepts/content-types.html#who-smart-implementation-guides-l3) |
+| **Autres** | Extensible — ajoutez un nouvel adaptateur + ensemble de compétences | [Ajouter un type de contenu](../guides/new-content-type.html) |
 
-Le cycle transversal [`content-lifecycle`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#the-content-lifecycle)
+Le cycle transversal [`content-lifecycle`](../concepts/content-types.html#the-content-lifecycle)
 (planifier → rédiger → valider → réviser → tester → publier → retour → retirer)
 s'applique à chaque type de contenu. Le
-[flux de publication]({{ '/docs/cat-harness/publication-workflow.html' | relative_url }}) le modélise correctement —
+[flux de publication](../process/publication-workflow.html) le modélise correctement —
 en diagrammes BPMN à couloirs, avec les rôles, la porte de validation IHM, et le
 plan de travail partagé.
 
 ## Où aller ensuite
 
-- **[Installation]({{ '/docs/cat-harness/installation.html' | relative_url }})** — prérequis, clonage, `bun install`, vérification des capacités.
-- **[Démarrage]({{ '/docs/cat-harness/getting-started.html' | relative_url }})** — connectez le serveur MCP à votre LLM et exécutez votre première compétence.
-- **[Tutoriel : Rédiger un article avec folio-assistant]({{ '/docs/cat-harness/guides/writing-a-paper.html' | relative_url }})** — un guide complet piloté par LLM avec une session de chat simulée.
-- **[Types de contenu]({{ '/docs/cat-harness/content-types.html' | relative_url }})** — le formalisme de chaque domaine de rédaction.
-- **[Flux de publication]({{ '/docs/cat-harness/publication-workflow.html' | relative_url }})** — diagrammes BPMN à couloirs des processus d'édition et de publication : la porte de validation IHM, qui révise quoi, et le plan de travail partagé.
-- **[Intégration de l'agent]({{ '/docs/cat-harness/guides/agent-onboarding.html' | relative_url }})** — orientation pour un agent LLM intégré dans un folio : premières étapes, recherche de compétences, modèle d'objets de contenu, side-cars d'assurance qualité.
-- **[Compétences et rôles]({{ '/docs/cat-harness/skills.html' | relative_url }})** — chaque compétence et rôle, et comment ils fonctionnent ensemble avec le LLM.
+- **[Installation](../start/installation.html)** — prérequis, clonage, `bun install`, vérification des capacités.
+- **[Démarrage](../start/getting-started.html)** — connectez le serveur MCP à votre LLM et exécutez votre première compétence.
+- **[Tutoriel : Rédiger un article avec folio-assistant](../guides/writing-a-paper.html)** — un guide complet piloté par LLM avec une session de chat simulée.
+- **[Types de contenu](../concepts/content-types.html)** — le formalisme de chaque domaine de rédaction.
+- **[Flux de publication](../process/publication-workflow.html)** — diagrammes BPMN à couloirs des processus d'édition et de publication : la porte de validation IHM, qui révise quoi, et le plan de travail partagé.
+- **[Intégration de l'agent](../guides/agent-onboarding.html)** — orientation pour un agent LLM intégré dans un folio : premières étapes, recherche de compétences, modèle d'objets de contenu, side-cars d'assurance qualité.
+- **[Compétences et rôles](../concepts/skills.html)** — chaque compétence et rôle, et comment ils fonctionnent ensemble avec le LLM.
 - **[Référence du schéma de compétences](../reference/skills/)** — contrats d'entrée/sortie générés pour chaque compétence.
 - **[Référence de l'API TypeScript](../api/)** — le modèle d'objets de contenu (`Block`, `Chapter`, `Paper`, builders, contraintes Zod).
-- **[Architecture]({{ '/docs/cat-harness/architecture.html' | relative_url }})** — adaptateurs, serveur MCP, RBAC, le modèle de blocs.
-- **[Le graphe de connaissances]({{ '/docs/cat-harness/knowledge-graph.html' | relative_url }})** — la taxonomie des sous-graphes, le sens dans lequel les références s'exécutent, et la manière dont les dépôts répartissent le travail.
-- **[Le Harness]({{ '/docs/cat-harness/harness.html' | relative_url }})** — instanciation, le parcours des dépendances, et ce à quoi oblige le harnachement d'un répertoire.
+- **[Architecture](../concepts/architecture.html)** — adaptateurs, serveur MCP, RBAC, le modèle de blocs.
+- **[Le graphe de connaissances](../concepts/knowledge-graph.html)** — la taxonomie des sous-graphes, le sens dans lequel les références s'exécutent, et la manière dont les dépôts répartissent le travail.
+- **[Le Harness](../concepts/harness.html)** — instanciation, le parcours des dépendances, et ce à quoi oblige le harnachement d'un répertoire.
 
 Deux compétences méritent d'être lues avant les pages ci-dessus, car tout le reste
 les présuppose : [`getting-started`](../reference/skill-instructions/getting-started.html)

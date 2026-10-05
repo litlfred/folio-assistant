@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 /**
  * review-comments — ingest a pull request's tagged comments into
- * `folio-review-comment/v1` todos and write `review-comments.json`. Bean
+ * `review-comment/1.0.0` todos and write `review-comments.json`. Bean
  * `423d`, epic `q4jm`.
  *
  * ## Why this is a Tool and not a workflow step

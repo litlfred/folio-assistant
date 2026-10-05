@@ -25,7 +25,7 @@ Rules that make this work rather than merely compile:
   mapping — it predates this content type.
 
 The full convention, and what it is missing, is in the
-[`normative-statements`]({{ '/reference/skill-instructions/normative-statements.html' | relative_url }})
+[`normative-statements`](../reference/skill-instructions/normative-statements.html)
 skill.
 
 ---

@@ -197,8 +197,8 @@ too — that is the cost of the half an index cannot write.
 
 ## Where to go next
 
-- [Getting started]({{ '/docs/cat-harness/getting-started.html' | relative_url }}) — the first five minutes
-- [Agentic harness]({{ '/docs/cat-harness/agentic-harness.html' | relative_url }}) — the agent–user interaction model, idle and workflow states
-- [Publication workflow]({{ '/docs/cat-harness/publication-workflow.html' | relative_url }}) — the normative picture of the review and publish path
-- [Beans and todos]({{ '/docs/cat-harness/beans-and-todos.html' | relative_url }}) — the work plan, and why it is committed
-- [CRDM]({{ '/docs/cat-harness/crdm-methodology.html' | relative_url }}) — what happens when a request is a feature request rather than content work
+- [Getting started]({{ '/start/getting-started.html' | relative_url }}) — the first five minutes
+- [Agentic harness]({{ '/concepts/agentic-harness.html' | relative_url }}) — the agent–user interaction model, idle and workflow states
+- [Publication workflow]({{ '/process/publication-workflow.html' | relative_url }}) — the normative picture of the review and publish path
+- [Beans and todos]({{ '/guides/beans-and-todos.html' | relative_url }}) — the work plan, and why it is committed
+- [CRDM]({{ '/process/crdm-methodology.html' | relative_url }}) — what happens when a request is a feature request rather than content work

@@ -8,4 +8,4 @@ Ask the agent to draft prose and statements; review and refine conversationally.
 
 A mock of the chat-driven authoring session:
 
-![Mock chat: the author and the assistant drafting blocks]({{ '/assets/img/mock-chat.svg' | relative_url }})
+![Mock chat: the author and the assistant drafting blocks](../assets/img/mock-chat.svg)

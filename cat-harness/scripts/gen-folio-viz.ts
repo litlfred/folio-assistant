@@ -251,7 +251,7 @@ export function viewerHtml(dataHref: string, mount = ""): string {
 <script>
 var DATA_HREF = ${JSON.stringify(dataHref)};
 // Bean "qgjh": a node's links are LINKS. An absolute http(s) href is used as
-// it is; a site-rooted one ("/agentic-harness.html") is resolved against this
+// it is; a site-rooted one ("/concepts/agentic-harness.html") is resolved against this
 // site's root, found from where the page reads its data, so it works under the
 // bare site, the project baseurl and a staging preview alike. Anything else
 // stays text rather than becoming a link that 404s.

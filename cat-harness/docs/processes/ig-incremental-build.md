@@ -26,7 +26,7 @@ package that owns the content owns what adequate means.
 
 - **Called by:** no call activity names this process
 - **Calls:** none
-- **Presented on:** [Authoring a WHO SMART IG (L3) — Making the build incremental](../docs/cat-harness/guides/who-smart-ig.html#making-the-build-incremental)
+- **Presented on:** [Authoring a WHO SMART IG (L3) — Making the build incremental](../guides/who-smart-ig.html#making-the-build-incremental)
 
 ## Lanes — who acts
 

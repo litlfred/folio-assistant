@@ -23,7 +23,7 @@ check, which is what keeps a document folio publishable without either toolchain
 
 - **Called by:** no call activity names this process
 - **Calls:** none
-- **Presented on:** [Content types — Documents & policy guidance](../docs/cat-harness/content-types.html#documents-policy-guidance), [Writing a document — What a document folio is](../docs/cat-harness/guides/writing-a-document.html#what-a-document-folio-is)
+- **Presented on:** [Content types — Documents & policy guidance](../concepts/content-types.html#documents-policy-guidance), [Writing a document — What a document folio is](../guides/writing-a-document.html#what-a-document-folio-is)
 
 ## Lanes — who acts
 

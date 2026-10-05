@@ -3333,7 +3333,7 @@
       "blockedBy": [],
       "createdAt": "2026-10-03T08:55:15Z",
       "updatedAt": "2026-10-03T11:20:40Z",
-      "preview": "Found 2026-10-03 while measuring PR #1888's merge with `main` for session\n`folio-assistant-a8`: of its 55 conflicts, 53 classified to a declared pattern\nand **2 refused**, and both were the same page in its two forms —\n`cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md`\n(authored source) and `cat-harness/docs/publication-workflow.md` (its generated\nmirror). The mirror's o",
+      "preview": "Found 2026-10-03 while measuring PR #1888's merge with `main` for session\n`folio-assistant-a8`: of its 55 conflicts, 53 classified to a declared pattern\nand **2 refused**, and both were the same page in its two forms —\n`cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md`\n(authored source) and `cat-harness/docs/process/publication-workflow.md` (its generated\nmirror). The mi",
       "file": "beans/defs/folio-assistant-8c6v--merge-patterns-gap-the-17-generated-docsmd-pages-h.md"
     },
     {
@@ -3937,7 +3937,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-26T14:26:44Z",
       "updatedAt": "2026-09-26T20:14:52Z",
-      "preview": "Found while fixing an e2e fixture (bean `6bhf`, PR #1408), not while looking for\nit — so the measurement below is narrow on purpose and the sweep is part of the\nwork.\n\n## The contradiction\n\n`cat-harness/docs/crdm-methodology.md` declares\n\n    available_locales: [\"en\",\"fr\"]\n\nand there is **no `cat-harness/docs/fr/crdm-methodology.md`**. It is also absent\nfrom `docs/_data/translations.json`, which i",
+      "preview": "Found while fixing an e2e fixture (bean `6bhf`, PR #1408), not while looking for\nit — so the measurement below is narrow on purpose and the sweep is part of the\nwork.\n\n## The contradiction\n\n`cat-harness/docs/process/crdm-methodology.md` declares\n\n    available_locales: [\"en\",\"fr\"]\n\nand there is **no `cat-harness/docs/fr/crdm-methodology.md`**. It is also absent\nfrom `docs/_data/translations.json`,",
       "file": "beans/defs/folio-assistant-9x01--available-locales-claims-a-locale-with-no-translat.md"
     },
     {
@@ -6568,6 +6568,20 @@
       "file": "beans/defs/folio-assistant-hcpz--seedready-per-layer-seeding-readiness-gateway-for.md"
     },
     {
+      "id": "folio-assistant-he8h",
+      "title": "QA-REPORTS: don't record a result when neither content nor result changed",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-3fva",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T18:45:22Z",
+      "updatedAt": "2026-10-05T19:16:49Z",
+      "preview": "## Why\n\nThe owner saw the same mechanical QA results repeated on the `cat/cat-harness/qa-reports`\nbranch (2026-10-05). Measured that day: `main/` holds 140 per-commit snapshots, and its\n`cat-harness/test/results/translation-qa` subtree has only **2 distinct trees** across\nthem (89 + 51 identical copies). 142 `pr/<n>` refs add more. Prune keeps everything on\nmain for 90 days, so nothing has gone ye",
+      "file": "beans/defs/folio-assistant-he8h--qa-reports-dont-record-a-result-when-neither-conte.md"
+    },
+    {
       "id": "folio-assistant-hf2q",
       "title": "PROGRAMME PROGRESS: an epic burn-down and a math-progress heat map as a board feed",
       "status": "todo",
@@ -7347,20 +7361,6 @@
       "updatedAt": "2026-09-24T18:37:44Z",
       "preview": "Owner 2026-09-24: \"i want sticky themes to by default use the square avatar layout but mostly faded, if not specified. themes/ pages should show sticky as square\".\n\n## Summary of Changes\n- ThemedTodoFieldsSchema gains an optional `layout` (laptop|mobile|card); absent means the square card crop. todos.ts reads it from front matter.\n- docs-ui.js buildBackdrop: the square crop on every screen, no lon",
       "file": "beans/defs/folio-assistant-k9yq--sticky-art-default-square-crop-faded-unless-the-to.md"
-    },
-    {
-      "id": "folio-assistant-kc7k",
-      "title": "Docs site: cat-harness pages publish under /docs/cat-harness/, not the site root (#2188)",
-      "status": "in-progress",
-      "type": "task",
-      "priority": "normal",
-      "parent": "folio-assistant-0lmb",
-      "blocking": [],
-      "blockedBy": [],
-      "createdAt": "2026-10-05T14:02:31Z",
-      "updatedAt": "2026-10-05T18:34:45Z",
-      "preview": "Owner ruling 2026-10-05: cat-harness docs move from the site root to /docs/cat-harness/, a clean break with no redirects, so they cannot collide with instance mounts, graph-kind directories, locales or exports at the root (108 root entries; architecture and skills already share a page and a directory stem). Issue #2188. Supersedes the open question in 8h42. Done when: the published site serves cat",
-      "file": "beans/defs/folio-assistant-kc7k--docs-site-cat-harness-pages-publish-under-docscat.md"
     },
     {
       "id": "folio-assistant-kd85",
@@ -14562,14 +14562,14 @@
         "file": "beans/defs/folio-assistant-npuo--goal-5-content-the-content-model-and-the-ingest-pi.md",
         "status": "todo",
         "epics": 2,
-        "total": 65,
+        "total": 64,
         "closed": 29,
-        "open": 36,
-        "inProgress": 14,
+        "open": 35,
+        "inProgress": 13,
         "todo": 22,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.4461538461538462
+        "share": 0.453125
       },
       {
         "id": "folio-assistant-p5wm",
@@ -14592,14 +14592,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 552,
+        "total": 553,
         "closed": 197,
-        "open": 355,
+        "open": 356,
         "inProgress": 137,
-        "todo": 217,
+        "todo": 218,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.35688405797101447
+        "share": 0.3562386980108499
       },
       {
         "id": "folio-assistant-vuip",

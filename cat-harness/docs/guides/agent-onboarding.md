@@ -15,7 +15,7 @@ folio-assistant. This page is your orientation: what you are looking at,
 what to do first, and where to look things up.
 
 For the *architecture* of skills, roles, and capabilities, read
-[Skills & roles](../skills.html). This page is the practical version.
+[Skills & roles](../concepts/skills.html). This page is the practical version.
 
 1. TOC
 {:toc}
@@ -89,9 +89,9 @@ start:
 
 | Where | What it gives you |
 |---|---|
-| [Skill schema reference]({{ site.baseurl }}/reference/skills/) | generated input/output contract per skill |
-| [Skill instructions]({{ site.baseurl }}/reference/skill-instructions/) | generated full instruction bodies |
-| [Skills & roles](../skills.html) | how skills, roles, and capabilities compose |
+| [Skill schema reference](../reference/skills/) | generated input/output contract per skill |
+| [Skill instructions](../reference/skill-instructions/) | generated full instruction bodies |
+| [Skills & roles](../concepts/skills.html) | how skills, roles, and capabilities compose |
 
 Both `reference/` directories are **generated** — never hand-edit them.
 Regenerate with `bun run cat-harness/scripts/gen-schema-docs.ts` and
@@ -216,8 +216,8 @@ Watching a sibling PR: `/watch <pr|branch>`.
 | Question | Answer |
 |---|---|
 | Project commands, conventions | `AGENTS.md` (the agent-generic source of truth) |
-| What a skill does | `skills/**/`, or the generated [instruction bodies]({{ site.baseurl }}/reference/skill-instructions/) |
-| A skill's typed contract | [Skill schema reference]({{ site.baseurl }}/reference/skills/) |
+| What a skill does | `skills/**/`, or the generated [instruction bodies](../reference/skill-instructions/) |
+| A skill's typed contract | [Skill schema reference](../reference/skills/) |
 | What a QA criterion means | `content/pipeline/qa-criteria-registry.ts` — descriptions are the spec |
 | The block schema | `schemas/types.ts` |
 | The QA sidecar schema | `schemas/block-qa.ts` |

@@ -56,7 +56,7 @@ Two deliberate exclusions:
 > ```
 
 Each block carries typed front-matter validated against the
-[content-object model]({{ '/api/' | relative_url }}). A definition block, for example:
+[content-object model](../api/). A definition block, for example:
 
 ```markdown
 ---

@@ -215,7 +215,7 @@
    change is the media query on these two rules -- the mechanism is the same. */
 @media (min-width: 50rem) {
   /* WAS `z-index: auto`, AND THAT BROKE THE NAV ON EVERY PAGE WITH A WIDE
-     FIGURE -- bean `vfr8`, owner's screenshot of `/document-ingestion.html`.
+     FIGURE -- bean `vfr8`, owner's screenshot of `/guides/document-ingestion.html`.
 
      Removing the stacking context also removed the sidebar's own ability to
      paint above `.main`, and it did so IN EVERY STATE rather than only where
@@ -226,7 +226,7 @@
      against `.side-bar:hover`'s (0,2,0) -- so on such a page the nav opened
      behind the page whether or not anything was actually in full-width mode.
 
-     MEASURED on `/document-ingestion.html`, which auto-expands 4 of its 5
+     MEASURED on `/guides/document-ingestion.html`, which auto-expands 4 of its 5
      figures: with the nav open, `elementFromPoint` inside the opened column
      returned page content (`SPAN.fa-qa-glyph`, `P`, `A`) at x=120, and the
      nav only within the original 56px strip.
