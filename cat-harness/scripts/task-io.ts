@@ -295,6 +295,7 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "check:wireframes:check": READ_ONLY,
   "dc:render:check": READ_ONLY, //                 returns before `writeFileSync`
   "document-kinds:viz:check": READ_ONLY, //        its one `rmSync` is in the not-`check` arm
+  "node-kind:pages:check": READ_ONLY, //           its one `rmSync` is in the not-`check` arm
   "ig-ast:schema:check": READ_ONLY,
   "kg:materialize:check": READ_ONLY, //            `checkMaterializations` is offline and reads
   "p2:refusals:check": READ_ONLY,
