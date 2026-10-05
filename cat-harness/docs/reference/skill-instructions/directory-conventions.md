@@ -813,11 +813,13 @@ beside a directory concept. Bean `l4ay`; schema `schemas/subgraph-source.ts`.
   declared repository branch and `path` is where a mount of it lands. A later
   kind (a graph database) is a new member of the union: additive, and a
   compile error at every consumer that has not decided what to do with it.
-- **The branch NAME is declared once**, in `cat-harness/scripts/special-branches.json`
-  (with its legacy spellings and its mirrors). A branch source names its
-  branch; the resolver attaches the matching row, and a branch no row
-  declares is a finding (`subgraph-source.test.ts`), never a guess at what to
-  fetch.
+- **The branch NAME is declared once**, on the directory entry that owns it:
+  its `storage` (or `source`). There is no central table — `special-branches.json`
+  was removed on 2026-10-05 (owner: *"dont use /get rid of"*). A script that
+  resolves a family's branch reads the folio's declaration first and keeps
+  its built-in names only as a fallback (`cache-family-fallbacks.test.ts`
+  keeps those in step). A branch no declaration names is a finding
+  (`subgraph-source.test.ts`), never a guess at what to fetch.
 - **The instance config overrides it, by id.** `<instance>.config.json` →
   `"subgraphSources": { "<dir-id>": <source> }`. The declaration says what the
   subgraph IS; the config says how THIS instantiation is set up, and where
@@ -1039,8 +1041,8 @@ one is argued.
    (§"Node schemas, one per `$schema` family").
 4. **Declare only what exists**, or say why not with `absent: { reason }`.
    **Where its content comes from** is `source` — omit it for the checkout
-   directory; a branch source names a branch declared in
-   `special-branches.json` (§"Where a subgraph gets its content").
+   directory; a branch source names its branch on the entry itself
+   (§"Where a subgraph gets its content").
 5. **`coverage`** — the `skill` that governs it, the `docs` that say what it is
    for, the `visualiser` that renders it; an opt-out carries its reason
    (`SubgraphCoverageSchema`). Without a skill the directory is unreachable

@@ -2569,7 +2569,7 @@ Monitor, and use data effectively <span class="fa-gloss-status">candidate, extra
 Mount the branch tip at the declared path <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A <code>branch</code> source keyed by <code>tip</code>: <code>branch-store mount --id &lt;dir-id&gt;</code> writes the tip's files at the declared path, so every reader finds the directory where it always was; <code>push</code> splices edits back onto the tip, never forcing, and a same-file race is a conflict. The branch's NAME is the special-branches row the resolver attached — a branch no row declares is refused rather than guessed. A <code>commit</code>-keyed branch is read per commit through its own store (<code>qa-store</code>), not mounted.</p>
+<p>A <code>branch</code> source keyed by <code>tip</code>: <code>branch-store mount --id &lt;dir-id&gt;</code> writes the tip's files at the declared path, so every reader finds the directory where it always was; <code>push</code> splices edits back onto the tip, never forcing, and a same-file race is a conflict. The branch's NAME is the declaring directory's <code>storage</code> (or <code>source</code>) — a branch no declaration names is refused rather than guessed. A <code>commit</code>-keyed branch is read per commit through its own store (<code>qa-store</code>), not mounted.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountBranchTip</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_l1documentingestion.task_promote" data-fa-state="extracted" data-fa-gloss="">
