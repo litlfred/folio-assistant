@@ -505,12 +505,12 @@ export function auditInstance(root: string, repoRoot: string = checkoutRootFor(r
       // names none. Derived skills exist by construction, so there is no
       // "declared and does not resolve" case for this criterion.
       if (criterion === "skill") {
-        if (governingSkills({ instance, id: dir.id, graphKinds: dir.graphKinds }, skills, repoRoot, reach).length > 0) continue;
+        if (governingSkills({ instance, id: dir.id, graphTypologies: dir.graphTypologies }, skills, repoRoot, reach).length > 0) continue;
       }
       // The DOCS page is read from the pages the same way (#1168 B7c): a page
       // says what it documents, and the directory names no page.
       if (criterion === "docs") {
-        if (documentingPages({ instance, id: dir.id, graphKinds: dir.graphKinds }, pages, repoRoot, reach).length > 0) continue;
+        if (documentingPages({ instance, id: dir.id, graphTypologies: dir.graphTypologies }, pages, repoRoot, reach).length > 0) continue;
       }
       const declared = criterion === "skill" || criterion === "docs" ? undefined : dir.coverage?.[criterion];
       if (declared === undefined) {
@@ -536,7 +536,7 @@ export function auditInstance(root: string, repoRoot: string = checkoutRootFor(r
         // is the existence claim.
         const unmetObligation =
           criterion === "serialisations" ||
-          (criterion === "visualiser" && dir.graphKinds.some((g) => owesVisualiser(g)));
+          (criterion === "visualiser" && dir.graphTypologies.some((g) => owesVisualiser(g)));
         findings.push({
           instance,
           directory: dir.id,
@@ -548,7 +548,7 @@ export function auditInstance(root: string, repoRoot: string = checkoutRootFor(r
               ? `no serialisations declared — every declared directory owes json, jsonld and ` +
                 `schema.json at its own URL, and this one is excused nothing`
               : unmetObligation
-                ? `no visualiser declared, and ${dir.graphKinds.filter((g) => owesVisualiser(g)).join(", ")} owes one — ` +
+                ? `no visualiser declared, and ${dir.graphTypologies.filter((g) => owesVisualiser(g)).join(", ")} owes one — ` +
                   `an instance renders what it declares`
                 : `no ${criterion} declared — nobody has said what ${ASKS[criterion]}`,
         });

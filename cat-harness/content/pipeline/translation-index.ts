@@ -25,7 +25,7 @@
  *
  * ## Why the locale directories are NOT declared one by one
  *
- * A first draft of PR #351 added a `translated-content` graph kind and a
+ * A first draft of PR #351 added a `translated-content` graph typology and a
  * `locale` field to `ContentDirectory`, then declared ten directories —
  * `docs/{ar,es,fr,ru,zh}/` and the same five under `docs/guides/`. It worked.
  * It was the wrong axis, for three reasons that only look small one at a time:
@@ -108,7 +108,7 @@ const REPO_ROOT = resolve(HERE, "..", "..");
  * `kg:schema:check` and `docs:harness:check` plus 9 tests."*
  *
  * Both entries are in `cat-harness.json` now, and the way they got there is the
- * point: they declare `graphKinds: ["docs"]`, not `folio`. The measurement was
+ * point: they declare `graphTypologies: ["docs"]`, not `folio`. The measurement was
  * true — declaring `docs/` as `folio` DID break those three checks, because
  * `folio` is registered by core. The CONCLUSION drawn from it, that the
  * directory therefore could not be declared at all, was wrong: it needed a

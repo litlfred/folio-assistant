@@ -3,7 +3,7 @@
 ## Covers
 
 - Declared visualiser ref: `cat-harness/docs/tools/index.md` (tile `tools`, title "Tools", surfaces `navbar` and `board`, in `cat-harness/docs/_data/harness.json`; `navbar.hrefs` has no `tools` icon, but the Folders list and the C@T Harness divider link `/tools/`).
-- Generator: `cat-harness/scripts/gen-tools-viz.ts` (graph kind `tools`, page location read from the `coverage.visualiser` of the `tools` directory in `cat-harness.json`).
+- Generator: `cat-harness/scripts/gen-tools-viz.ts` (graph typology `tools`, page location read from the `coverage.visualiser` of the `tools` directory in `cat-harness.json`).
 - Rendered by Jekyll with just-the-docs `v0.12.0` (`remote_theme` in `_config.yml`). The page has no `layout:` in its front matter and relies on the github-pages default layout. The chrome comes from `_includes/title.html`, `_includes/nav_footer_custom.html`, `_includes/footer_custom.html`, `assets/js/docs-ui.js` and `assets/css/docs-ui.css`.
 
 I could not build the site here: there is no local just-the-docs, and `litlfred.github.io` is refused at the proxy. So the wireframe is drawn from the committed Markdown, the generator and the chrome's templates, JS and CSS.

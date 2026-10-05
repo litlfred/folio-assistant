@@ -934,7 +934,7 @@ export function* walkBlocks(
   if (!opts.includeNonContent) {
     try {
       for (const e of readDeclaration(declaringRootFor(rootDir))?.directories ?? []) {
-        const layers = (e.graphKinds ?? []).map((g) => graphLayer(g));
+        const layers = (e.graphTypologies ?? []).map((g) => graphLayer(g));
         // Skip only when the entry DECLARES graphs and none of them is
         // content. An entry declaring none says nothing about being retired,
         // so it stays walked — silence is not evidence.
@@ -942,7 +942,7 @@ export function* walkBlocks(
         // There is deliberately no `l !== undefined` arm. The first draft had
         // one, on the reading that an unregistered kind should not count as
         // non-content. It is unreachable: `readDeclaration` THROWS on an
-        // unknown kind ("declares unknown graph kind …"), and a registered one
+        // unknown kind ("declares unknown graph typology …"), and a registered one
         // always has `holds`, which the schema requires. So the only way to
         // reach this loop is with every kind registered and layered. Measured
         // rather than reasoned — see the test that pins the throw.

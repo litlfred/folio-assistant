@@ -78,8 +78,8 @@ import {
   type DeclaredContribution,
 } from "../schemas/sticky-contribution.js";
 
-/** The graph kind, and the conventional directory an instance keeps it in. */
-export const FOLIO_GRAPH_KIND = "folio";
+/** The graph typology, and the conventional directory an instance keeps it in. */
+export const FOLIO_GRAPH_TYPOLOGY = "folio";
 export const FOLIO_DIR_ID = "folio";
 // declared-path-literal: the convention for a directory that does not exist yet.
 // This script's whole job is to CREATE the folio graph and then declare it, so
@@ -119,13 +119,13 @@ export function stickyFile(id: string): string {
 export const FOLIO_DIRECTORY_ENTRY: ContentDirectory = {
   id: FOLIO_DIR_ID,
   path: FOLIO_DIR_PATH,
-  graphKinds: [FOLIO_GRAPH_KIND],
+  graphTypologies: [FOLIO_GRAPH_TYPOLOGY],
   description:
     "Authored content of this instance itself, rendered to a website. Holds the landing sticky — the instance's own description and its onboarding links, as a page-global note rather than text composited into the backdrop.",
 };
 
 /**
- * The kinds one raw directory entry declares — `graphKinds`, or the pre-2026-09-21
+ * The kinds one raw directory entry declares — `graphTypologies`, or the pre-2026-09-21
  * `graphs`.
  *
  * **This path parses the declaration itself**, because the edit below is a byte
@@ -138,8 +138,8 @@ export const FOLIO_DIRECTORY_ENTRY: ContentDirectory = {
  * Tolerant of a missing or non-array value on purpose: the input is whatever
  * `JSON.parse` returned, not something a schema has vouched for.
  */
-function kindsOf(d: { graphKinds?: readonly string[]; graphs?: readonly string[] }): readonly string[] {
-  const k = d.graphKinds ?? d.graphs;
+function kindsOf(d: { graphTypologies?: readonly string[]; graphs?: readonly string[] }): readonly string[] {
+  const k = d.graphTypologies ?? d.graphs;
   return Array.isArray(k) ? k : [];
 }
 
@@ -148,12 +148,12 @@ type RawDirectory = Partial<ContentDirectory> & { graphs?: readonly string[] };
 
 /** Does this declaration already know about a folio graph? */
 export function declaresFolio(decl: { directories?: readonly RawDirectory[] } | undefined): boolean {
-  // Matched on the GRAPH KIND rather than on `id` or `path`. An instance may
+  // Matched on the GRAPH TYPOLOGY rather than on `id` or `path`. An instance may
   // keep its folio anywhere and call the entry what it likes — `harness.json`'s
   // own comment records that overrides match on id, not path, precisely because
   // a relocation must not mint a second graph. What makes an entry "the folio"
   // is the kind it declares.
-  return (decl?.directories ?? []).some((d) => kindsOf(d).includes(FOLIO_GRAPH_KIND));
+  return (decl?.directories ?? []).some((d) => kindsOf(d).includes(FOLIO_GRAPH_TYPOLOGY));
 }
 
 /** The declared folio directory's path, or the convention when none is declared. */
@@ -161,7 +161,7 @@ export function folioDirPath(
   decl: { directories?: readonly RawDirectory[] } | undefined,
 ): string {
   return (
-    (decl?.directories ?? []).find((d) => kindsOf(d).includes(FOLIO_GRAPH_KIND))?.path ??
+    (decl?.directories ?? []).find((d) => kindsOf(d).includes(FOLIO_GRAPH_TYPOLOGY))?.path ??
     FOLIO_DIR_PATH
   );
 }
@@ -185,7 +185,7 @@ export function toAsciiJson(value: unknown, indent: number): string {
  * **A text edit, not a re-serialise**, for the reasons in the module docs. The
  * array's bounds are found by bracket matching rather than by a regex, because a
  * regex over nested JSON either stops at the first `]` — there are nested arrays
- * inside these entries, `graphKinds` among them — or is unreadable.
+ * inside these entries, `graphTypologies` among them — or is unreadable.
  *
  * Returns the input unchanged when a folio is already declared, so calling this
  * twice is the same as calling it once.

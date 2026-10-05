@@ -48,10 +48,10 @@ const REPO = resolve(import.meta.dir, "../..");
 /** Every directory the bean graph declares as holding `bean-defs` — `defs` and
  *  its `archive` view — read from the declarations rather than spelled here. */
 function beanDefDirs(): string[] {
-  const store = [REPO, join(REPO, "cat-harness")].flatMap((r) => declaredGraphs(r)).find((g) => g.graphKinds.includes("beans"))?.absPath;
+  const store = [REPO, join(REPO, "cat-harness")].flatMap((r) => declaredGraphs(r)).find((g) => g.graphTypologies.includes("beans"))?.absPath;
   if (!store) throw new Error("no declared `beans` graph — nothing to file (this is not an empty work plan)");
-  const graph = JSON.parse(readFileSync(join(store, BEAN_GRAPH_FILE), "utf8")) as { directories: Array<{ path: string; graphKinds: string[] }> };
-  return graph.directories.filter((d) => d.graphKinds.includes("bean-defs")).map((d) => join(store, d.path));
+  const graph = JSON.parse(readFileSync(join(store, BEAN_GRAPH_FILE), "utf8")) as { directories: Array<{ path: string; graphTypologies: string[] }> };
+  return graph.directories.filter((d) => d.graphTypologies.includes("bean-defs")).map((d) => join(store, d.path));
 }
 /** Below this best-cosine an item fits no epic: a candidate for a NEW one. */
 const FIT_FLOOR = 0.3;

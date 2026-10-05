@@ -68,7 +68,7 @@ import {
   readDeclaration,
 } from "../../cat-harness/schemas/cat-harness.js";
 
-/** The graph kinds whose files are named after what somebody uploaded. */
+/** The graph typologies whose files are named after what somebody uploaded. */
 const KINDS = ["uploads", "library"] as const;
 
 /**

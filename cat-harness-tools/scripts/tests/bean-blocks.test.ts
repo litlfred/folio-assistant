@@ -12,7 +12,7 @@ import { join } from "node:path";
 import { BLOCK_HEADING, BASELINE_FILE, inspect, scan } from "../check-bean-blocks.ts";
 import { readBeans, type BeanNode } from "../../../cat-harness/scripts/beans.ts";
 import { repoRootFor } from "../../../cat-harness/schemas/cat-harness.ts";
-import "../../../cat-harness/schemas/folio-graph-kind.js";
+import "../../../cat-harness/schemas/folio-graph-typology.js";
 
 const REPO = repoRootFor(join(import.meta.dir, "..", ".."));
 

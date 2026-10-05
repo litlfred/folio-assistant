@@ -51,8 +51,8 @@ import {
 } from "../schemas/cat-harness.js";
 import { detectRepoUrl } from "../content/pipeline/readme-toc.js";
 
-/** The graph kind an acquisition queue declares. */
-export const UPLOADS_GRAPH_KIND = "uploads";
+/** The graph typology an acquisition queue declares. */
+export const UPLOADS_GRAPH_TYPOLOGY = "uploads";
 
 /** Resolved, or the reason it could not be — never a guessed URL. */
 export type UploadTarget =
@@ -68,7 +68,7 @@ export type UploadTarget =
 export function queueRepoRelative(root: string): string | undefined {
   const decl = readDeclaration(root);
   const entry = (decl?.directories ?? []).find((d: ContentDirectory) =>
-    d.graphKinds.includes(UPLOADS_GRAPH_KIND),
+    d.graphTypologies.includes(UPLOADS_GRAPH_TYPOLOGY),
   );
   if (!entry) return undefined;
   const abs = resolve(rootForScope(root, entry.scope), entry.path);
@@ -97,7 +97,7 @@ export function uploadUrl(root: string, branch = "main"): UploadTarget {
   if (rel === undefined) {
     return {
       ok: false,
-      reason: `${decl.name} declares no \`${UPLOADS_GRAPH_KIND}\` graph`,
+      reason: `${decl.name} declares no \`${UPLOADS_GRAPH_TYPOLOGY}\` graph`,
       remedy:
         "declare one in the instance's <name>.json, or acquire the resource through another channel — see the content-acquisition skill",
     };

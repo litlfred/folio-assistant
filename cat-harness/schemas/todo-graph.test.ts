@@ -14,7 +14,7 @@ import {
   DEFAULT_TODO_GRAPH_ROOT,
   TODO_NODE_KINDS,
 } from "./todo-graph";
-import { defaultGraphKinds } from "./cat-harness";
+import { defaultGraphTypologies } from "./cat-harness";
 
 describe("the default layout", () => {
   test("it parses, and names both node kinds", () => {
@@ -24,9 +24,9 @@ describe("the default layout", () => {
   });
 
   test("both kinds are in the SHARED registry, not a private enum", () => {
-    // The vocabulary is `BASE_GRAPH_KINDS`. A parallel closed list is exactly
+    // The vocabulary is `BASE_GRAPH_TYPOLOGIES`. A parallel closed list is exactly
     // what `bean-graph.ts` had to unwind.
-    for (const k of TODO_NODE_KINDS) expect(defaultGraphKinds.has(k)).toBe(true);
+    for (const k of TODO_NODE_KINDS) expect(defaultGraphTypologies.has(k)).toBe(true);
   });
 
   test("the file and root names are declared, not scattered literals", () => {
@@ -36,13 +36,13 @@ describe("the default layout", () => {
 });
 
 describe("what it refuses", () => {
-  const ok = { id: "items", path: "items", graphKinds: ["todo-items"] };
+  const ok = { id: "items", path: "items", graphTypologies: ["todo-items"] };
 
-  test("an unknown graph kind is rejected, not accepted and ignored", () => {
+  test("an unknown graph typology is rejected, not accepted and ignored", () => {
     // A node whose kind nothing understands is a store nothing will read.
     expect(() =>
-      parseTodoGraph({ name: "x", directories: [{ id: "a", path: "a", graphKinds: ["no-such-kind"] }] }),
-    ).toThrow(/unknown graph kind/);
+      parseTodoGraph({ name: "x", directories: [{ id: "a", path: "a", graphTypologies: ["no-such-kind"] }] }),
+    ).toThrow(/unknown graph typology/);
   });
 
   test("a duplicate node id is rejected", () => {
@@ -75,8 +75,8 @@ describe("what it deliberately allows", () => {
     const g = parseTodoGraph({
       name: "x",
       directories: [
-        { id: "fb-a", path: "feedback/a", graphKinds: ["todo-feedback"] },
-        { id: "fb-b", path: "feedback/b", graphKinds: ["todo-feedback"] },
+        { id: "fb-a", path: "feedback/a", graphTypologies: ["todo-feedback"] },
+        { id: "fb-b", path: "feedback/b", graphTypologies: ["todo-feedback"] },
       ],
     });
     expect(g.directories).toHaveLength(2);
@@ -87,7 +87,7 @@ describe("what it deliberately allows", () => {
     // the graph; the FILES say which they are (`$schema: folio-todo/v1`).
     const g = parseTodoGraph({
       name: "x",
-      directories: [{ id: "all", path: "all", graphKinds: ["todo-items", "todo-feedback"] }],
+      directories: [{ id: "all", path: "all", graphTypologies: ["todo-items", "todo-feedback"] }],
     });
     expect(nodeOfKind(g, "todo-items")).toBe(nodeOfKind(g, "todo-feedback")!);
   });
@@ -97,7 +97,7 @@ describe("what it deliberately allows", () => {
     // holds `todos.json`, and a node claiming the same directory makes "which
     // files belong to which node" unanswerable.
     expect(() =>
-      parseTodoGraph({ name: "x", directories: [{ id: "root", path: ".", graphKinds: ["todo-items"] }] }),
+      parseTodoGraph({ name: "x", directories: [{ id: "root", path: ".", graphTypologies: ["todo-items"] }] }),
     ).toThrow(/escapes the graph root/);
   });
 });

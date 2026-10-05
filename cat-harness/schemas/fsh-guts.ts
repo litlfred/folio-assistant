@@ -6,7 +6,7 @@
  *
  * ## The two properties that are not obvious from the shape
  *
- * **It is reachable BY NAME and never by an edge.** `UNPUBLISHED_GRAPH_KINDS`
+ * **It is reachable BY NAME and never by an edge.** `UNPUBLISHED_GRAPH_TYPOLOGIES`
  * strips `fsh-guts` from every other published graph, so a consumer may fetch
  * this document deliberately and must never ARRIVE at it by following a link.
  * That is the owner's rule — *"references to fsh-guts stripped out of KG
@@ -222,7 +222,7 @@ function jsonSchemaTag(text: string): string | undefined {
   return undefined;
 }
 
-/** The graph kind a trashcan directory declares. */
+/** The graph typology a trashcan directory declares. */
 export const FSH_GUTS_KIND = "fsh-guts";
 
 /**
@@ -243,7 +243,7 @@ export const FSH_GUTS_KIND = "fsh-guts";
  * An unreadable declaration yields nothing rather than a guess.
  */
 export function fshGutsDirectories(root: string): ResolvedDirectory[] {
-  const isGuts = (d: ResolvedDirectory) => (d.graphKinds as readonly string[]).includes(FSH_GUTS_KIND);
+  const isGuts = (d: ResolvedDirectory) => (d.graphTypologies as readonly string[]).includes(FSH_GUTS_KIND);
   try {
     const own = resolveDirectories([{ name: "(local)", root, own: true }]).filter(isGuts);
     return own.length > 0 ? own : checkoutDirectories(root, { stackedOn: root }).filter(isGuts);

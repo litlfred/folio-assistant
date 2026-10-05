@@ -22,9 +22,9 @@
 import { describe, expect, test } from "bun:test";
 
 import {
-  UNPUBLISHED_GRAPH_KINDS,
+  UNPUBLISHED_GRAPH_TYPOLOGIES,
   isPublishedDirectory,
-  isPublishedGraphKind,
+  isPublishedGraphTypology,
   isPublishedSkill,
 } from "../../schemas/cat-harness.ts";
 import { buildExport } from "../kg-export.js";
@@ -38,10 +38,10 @@ const EXPORT = await buildExport();
 
 describe("the exclusion predicates", () => {
   test("fsh-guts is excluded and the ordinary kinds are not", () => {
-    expect(UNPUBLISHED_GRAPH_KINDS).toContain("fsh-guts");
-    expect(isPublishedGraphKind("fsh-guts")).toBe(false);
+    expect(UNPUBLISHED_GRAPH_TYPOLOGIES).toContain("fsh-guts");
+    expect(isPublishedGraphTypology("fsh-guts")).toBe(false);
     for (const ok of ["cat-harness", "schemas", "beans", "qa", "tools"]) {
-      expect(isPublishedGraphKind(ok)).toBe(true);
+      expect(isPublishedGraphTypology(ok)).toBe(true);
     }
   });
 
@@ -49,9 +49,9 @@ describe("the exclusion predicates", () => {
     // `graphs` is an array and `schemas/` already holds two. An "every kind
     // is excluded" test would publish a directory holding both `kg` and
     // `fsh-guts`, naming the trashcan's path on the way past.
-    expect(isPublishedDirectory({ graphKinds: ["fsh-guts"] })).toBe(false);
-    expect(isPublishedDirectory({ graphKinds: ["cat-harness", "fsh-guts"] })).toBe(false);
-    expect(isPublishedDirectory({ graphKinds: ["schemas", "cat-harness"] })).toBe(true);
+    expect(isPublishedDirectory({ graphTypologies: ["fsh-guts"] })).toBe(false);
+    expect(isPublishedDirectory({ graphTypologies: ["cat-harness", "fsh-guts"] })).toBe(false);
+    expect(isPublishedDirectory({ graphTypologies: ["schemas", "cat-harness"] })).toBe(true);
     // No declared graph is not a reason to drop it.
     expect(isPublishedDirectory({})).toBe(true);
   });
@@ -89,7 +89,7 @@ describe("the built export", () => {
 
   test("the skill documenting the trashcan is excluded, and ordinary skills are not", () => {
     // The SECOND leak, found only because the substring sweep kept failing
-    // after the graph-kind and directory emitters were filtered:
+    // after the graph-typology and directory emitters were filtered:
     // `skill/fsh-guts` plus the `declaresSkill` edge from
     // `package/folio-core`. An edge to a stripped node is a dangling
     // reference that still spells the name it was meant to remove.
@@ -102,7 +102,7 @@ describe("the built export", () => {
 /**
  * The DECLARED half of the strip.
  *
- * `isPublishedSkill` matched a skill's NAME against `UNPUBLISHED_GRAPH_KINDS`,
+ * `isPublishedSkill` matched a skill's NAME against `UNPUBLISHED_GRAPH_TYPOLOGIES`,
  * and its own note said where that stops: *"Same list, because the skill and
  * the kind share a name by construction. If that ever stops being true this
  * needs its own list, not a cleverer derivation."*

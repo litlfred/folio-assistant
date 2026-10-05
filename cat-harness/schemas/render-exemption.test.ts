@@ -84,7 +84,7 @@ describe("this repository's actual declaration", () => {
     for (const rel of named) {
       const home = dirs.find((d) => rel.startsWith(d.path));
       expect(home, `${rel} is in no directory bootstrap declares`).toBeDefined();
-      expect(home?.graphKinds).toContain("skills");
+      expect(home?.graphTypologies).toContain("skills");
     }
   });
 });

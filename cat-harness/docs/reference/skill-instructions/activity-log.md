@@ -220,7 +220,7 @@ Three consequences worth knowing before you call it:
 
 ## It is never published
 
-`fsh-guts/logs/` is inside `fsh-guts/`, which `UNPUBLISHED_GRAPH_KINDS`
+`fsh-guts/logs/` is inside `fsh-guts/`, which `UNPUBLISHED_GRAPH_TYPOLOGIES`
 strips from every published graph — the kind, the directory, the skill and
 every edge naming them (bean `folio-assistant-uv09`,
 [`kg-export`](kg-export.md)).

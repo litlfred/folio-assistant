@@ -10,7 +10,7 @@ import {
   releaseBytes,
   type BinaryRelease,
 } from "./binary-release";
-import { defaultGraphKinds, graphKindIri, graphLayer, isDerivedGraph, isRenderable, processMayWrite } from "./cat-harness";
+import { defaultGraphTypologies, graphTypologyIri, graphLayer, isDerivedGraph, isRenderable, processMayWrite } from "./cat-harness";
 
 const SHA = "a".repeat(64);
 
@@ -188,12 +188,12 @@ describe("the file declares what it is", () => {
   });
 });
 
-describe("the graph kind it is held under", () => {
+describe("the graph typology it is held under", () => {
   test("registered, not renderable, `state`, and not work", () => {
-    expect(defaultGraphKinds.get("binary-release")).toBeDefined();
+    expect(defaultGraphTypologies.get("binary-release")).toBeDefined();
     expect(isRenderable("binary-release")).toBe(false);
     expect(graphLayer("binary-release")).toBe("state");
-    expect(defaultGraphKinds.get("binary-release")?.recordsWork).toBe(false);
+    expect(defaultGraphTypologies.get("binary-release")?.recordsWork).toBe(false);
   });
 
   test("a process MAY write it — the release pipeline appends a node", () => {
@@ -212,7 +212,7 @@ describe("the graph kind it is held under", () => {
     // Option B was reusing `materialization`. A release is a publication
     // upstream; a materialization is a copy here. This test is what stops a
     // later tidy-up folding them without the argument being made again.
-    const kinds = ["binary-release", "catalogue"].map((k) => (defaultGraphKinds.has(k) ? graphKindIri(k, defaultGraphKinds.get(k)) : undefined));
+    const kinds = ["binary-release", "catalogue"].map((k) => (defaultGraphTypologies.has(k) ? graphTypologyIri(k, defaultGraphTypologies.get(k)) : undefined));
     expect(new Set(kinds).size).toBe(2);
   });
 });

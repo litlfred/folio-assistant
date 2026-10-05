@@ -49,11 +49,11 @@ export const REVIEW_COVERAGE_SCHEMA = "folio-review-coverage/v1" as const;
 export function verdictsDir(todosRoot: string): string {
   const decl = join(todosRoot, TODO_GRAPH_FILE);
   if (!existsSync(decl)) {
-    throw new Error(`${decl} does not exist, so this folio declares no todos graph. Declare one with a directory of graph kind "review-verdicts".`);
+    throw new Error(`${decl} does not exist, so this folio declares no todos graph. Declare one with a directory of graph typology "review-verdicts".`);
   }
   const node = nodeOfKind(parseTodoGraph(JSON.parse(readFileSync(decl, "utf-8"))), "review-verdicts");
   if (!node) {
-    throw new Error(`${decl} declares no directory of graph kind "review-verdicts", which is where verdicts are committed.`);
+    throw new Error(`${decl} declares no directory of graph typology "review-verdicts", which is where verdicts are committed.`);
   }
   return join(todosRoot, node.path);
 }

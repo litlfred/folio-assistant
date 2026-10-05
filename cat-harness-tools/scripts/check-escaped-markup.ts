@@ -301,7 +301,7 @@ export function checkEscapedMarkup(siteDir: string): {
  *
  * **Why the directories are arguments rather than derived:** resolving them from
  * the instance declarations was tried first. `resolveDirectories` over the local
- * root alone returns 5 graph kinds, not the full declared set, and a sweep that
+ * root alone returns 5 graph typologies, not the full declared set, and a sweep that
  * under-matches reads as a clean corpus — so the scope is explicit and the
  * zero-file guard in `main` is what stops a wrong path passing.
  */

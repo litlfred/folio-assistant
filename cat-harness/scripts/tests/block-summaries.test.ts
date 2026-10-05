@@ -51,7 +51,7 @@ function fixture(sections: Record<string, string>): { root: string; entry: strin
   made.push(root);
   writeDeclaration(root, {
     name: "fixture",
-    directories: [{ id: "library", path: "library", graphKinds: ["library"] }],
+    directories: [{ id: "library", path: "library", graphTypologies: ["library"] }],
   });
   const entry = join(root, "library", "doc");
   mkdirSync(join(entry, "blocks"), { recursive: true });

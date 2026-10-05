@@ -36,7 +36,7 @@ function repo(n: number): { dir: string; shas: string[] } {
   mkdirSync(join(dir, "beans", "surveys"), { recursive: true });
   writeFileSync(
     join(dir, "beans", "beans.json"),
-    JSON.stringify({ name: "s", directories: [{ id: "surveys", path: "surveys", graphKinds: ["session-survey"] }] }),
+    JSON.stringify({ name: "s", directories: [{ id: "surveys", path: "surveys", graphTypologies: ["session-survey"] }] }),
   );
   const shas: string[] = [];
   for (let i = 0; i < n; i++) {

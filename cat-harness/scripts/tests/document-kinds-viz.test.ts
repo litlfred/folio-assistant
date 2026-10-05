@@ -32,7 +32,7 @@ describe("an invalid kind is refused, not drawn", () => {
   it("throws naming the file", () => {
     const repo = mkdtempSync(join(REPO, "doc-kinds-scratch-"));
     try {
-      writeFileSync(join(repo, "scratch.json"), JSON.stringify({ name: "scratch", directories: [{ id: "k", path: "kinds/", graphKinds: ["document-kinds"] }] }));
+      writeFileSync(join(repo, "scratch.json"), JSON.stringify({ name: "scratch", directories: [{ id: "k", path: "kinds/", graphTypologies: ["document-kinds"] }] }));
       mkdirSync(join(repo, "kinds"));
       writeFileSync(join(repo, "kinds", "bad.json"), JSON.stringify({ $schema: "folio-document-kind/v1", id: "bad", title: "Bad", description: "x", structure: "fixed", sections: [], sources: [] }));
       expect(() => readDocumentKinds(REPO)).toThrow(/bad\.json/);

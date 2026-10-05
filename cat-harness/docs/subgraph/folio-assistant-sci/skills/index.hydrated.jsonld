@@ -13,7 +13,7 @@
       "description": "The skills this layer owns: the paper content adapter's skills (`content/folio-paper-adapter/`, with `authoring-math`, `hypothesis-generation`, `scientific-critical-thinking` and `scientific-visualization` beside it), plus `lean/`, `data/` and the `voices/` subgraph, which `skills/skills.json` declares from within. Declared here explicitly on 2026-10-04 (bean `g2sv`, issue #2106). The directory was already reachable through the `skills` entry of `DEFAULT_DIRECTORIES`, which `ownDirectories` seeds for every instance and marks `declaredBy: (default)`, so `skill_list` already served its packages. A read-only analysis of the qou folio nonetheless reported it as undeclared and reachable only through `known-skills.ts`, because the declaration file was the only place the analysis looked, and that file said nothing. A convention is not visible from the declaration a reader opens, and a reader should not have to know the fallback to learn that this instance's largest graph exists. The id is `skills`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it. The reason is the one the `library` entry above gives: overrides match on id and never on path, so a distinct id at the same path would make two entries for one directory.",
       "fileCount": 146,
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/skills",
       "name": "skills",
@@ -83,7 +83,7 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/content/authoring-math",
           "path": "skills/content/authoring-math/"
@@ -922,7 +922,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/folio-paper-adapter/formalizer/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/content/folio-paper-adapter/formalizer",
               "path": "skills/content/folio-paper-adapter/formalizer/"
@@ -931,14 +931,14 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/content/folio-paper-adapter/lean-environment-setup",
               "path": "skills/content/folio-paper-adapter/lean-environment-setup/"
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/content/folio-paper-adapter",
           "path": "skills/content/folio-paper-adapter/"
@@ -971,7 +971,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/hypothesis-generation/assets/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/content/hypothesis-generation/assets",
               "path": "skills/content/hypothesis-generation/assets/"
@@ -980,7 +980,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/hypothesis-generation/references/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/content/hypothesis-generation/references",
               "path": "skills/content/hypothesis-generation/references/"
@@ -989,14 +989,14 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/hypothesis-generation/scripts/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/content/hypothesis-generation/scripts",
               "path": "skills/content/hypothesis-generation/scripts/"
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/content/hypothesis-generation",
           "path": "skills/content/hypothesis-generation/"
@@ -1029,14 +1029,14 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/scientific-critical-thinking/references/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/content/scientific-critical-thinking/references",
               "path": "skills/content/scientific-critical-thinking/references/"
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/content/scientific-critical-thinking",
           "path": "skills/content/scientific-critical-thinking/"
@@ -1069,7 +1069,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/scientific-visualization/assets/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/content/scientific-visualization/assets",
               "path": "skills/content/scientific-visualization/assets/"
@@ -1078,7 +1078,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/scientific-visualization/references/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/content/scientific-visualization/references",
               "path": "skills/content/scientific-visualization/references/"
@@ -1087,21 +1087,21 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/scientific-visualization/scripts/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/content/scientific-visualization/scripts",
               "path": "skills/content/scientific-visualization/scripts/"
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/content/scientific-visualization",
           "path": "skills/content/scientific-visualization/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/content",
       "path": "skills/content/"
@@ -1162,7 +1162,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/remote-packages/",
       "@type": "bootstrap:Subgraph",
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/remote-packages",
       "path": "skills/remote-packages/"
@@ -1171,7 +1171,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/skill-definitions/",
       "@type": "bootstrap:Subgraph",
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/skill-definitions",
       "path": "skills/skill-definitions/"
@@ -1184,21 +1184,21 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/voices/milnor/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/milnor",
           "path": "skills/voices/milnor/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/voices",
       "path": "skills/voices/"
     }
   ],
   "holdsGraph": [
-    "bootstrap:graphKind/skills"
+    "bootstrap:graphTypology/skills"
   ],
   "name": "skills",
   "path": "skills/"

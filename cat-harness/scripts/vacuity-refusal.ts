@@ -39,7 +39,7 @@
  * `check:bun-pin` and `check:red-gate-is-last` use for a scan that matched no
  * site.
  *
- * @covers none — a shared helper, not an audit of any declared graph kind
+ * @covers none — a shared helper, not an audit of any declared graph typology
  * @graphNode tool
  */
 
@@ -60,7 +60,7 @@ export interface Gate {
   /** The `bun run` target, so the reader can re-run exactly this. */
   script: string;
   /**
-   * The declared graph kind this gate claims to audit, or `undefined`.
+   * The declared graph typology this gate claims to audit, or `undefined`.
    *
    * Present because a vacuous pass is worse when a kind is credited to it:
    * `audit:coverage` reads `@covers` as coverage, so a gate that examined

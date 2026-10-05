@@ -44,7 +44,7 @@ import {
 } from "../../cat-harness/schemas/voices";
 import {
   declaresInstance,
-  defaultGraphKinds,
+  defaultGraphTypologies,
   directoriesForGraph,
   instanceRootsIn,
   readDeclaration,
@@ -204,7 +204,7 @@ export function vendorVoiceFindings(
  * directories walked too, so the run can print its denominator.
  */
 function vendorVoices(repoRoot: string): { dirs: string[]; vendors: Array<{ where: string; voice: VoiceProfile }> } {
-  const declFile = defaultGraphKinds.get("voice-vendors")?.declarationFile;
+  const declFile = defaultGraphTypologies.get("voice-vendors")?.declarationFile;
   const dirs = new Set<string>();
   for (const root of instanceRootsIn(repoRoot)) for (const d of directoriesForGraph(root, "voice-vendors")) if (existsSync(d)) dirs.add(resolve(d));
   const vendors: Array<{ where: string; voice: VoiceProfile }> = [];

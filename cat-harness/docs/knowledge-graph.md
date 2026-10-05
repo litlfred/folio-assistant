@@ -105,7 +105,7 @@ one declared directory — the thing a visualiser draws and a Skill governs. Thi
 page uses it for a branch of the topical taxonomy. One topical subgraph is
 usually several declared directories across several instances, so the two
 readings are related but do not count the same things. Where the number
-matters, this page says *declared directory* or *graph kind* and leaves
+matters, this page says *declared directory* or *graph typology* and leaves
 *subgraph* for the taxonomy.
 
 ## The subgraphs
@@ -265,7 +265,7 @@ be followed mechanically rather than inferred:
 | Workflow activity | `<cat-harness.processes:bean op>` | a work-plan operation |
 | Tool | `satisfies` | Skill |
 | Skill, Capability | `satisfies` | Requirement statement |
-| Skill | `graph-kinds` | Graph kind |
+| Skill | `graph-typologies` | Graph typology |
 | Skill | `input`, `output` | Schema (its contract) |
 | Test run | `skill` | Skill |
 | any content node | `$schema` | Schema |
@@ -431,7 +431,7 @@ fragility the graph exists to remove. `skills`, `workflows` and `scenarios` are
 now their own kinds and the query works.
 
 **`cat-harness` survives and is not deprecated**, which surprises people twice
-over. An alias cannot express a split — `GRAPH_KIND_ALIASES` maps one name to
+over. An alias cannot express a split — `GRAPH_TYPOLOGY_ALIASES` maps one name to
 one name, and this would have to become three. And the kind had a fifth job the
 split does not name: on an entry declaring `["schemas", "cat-harness"]` it means
 *a schema IS a knowledge-graph node*, which is why the skill scanner tests for
@@ -486,7 +486,7 @@ page disagree, **the Skill wins and this page is wrong**.
 
 | question | where it is answered |
 |---|---|
-| How an instance declares its directories, and every graph kind | [`directory-conventions`](reference/skill-instructions/directory-conventions.html) |
+| How an instance declares its directories, and every graph typology | [`directory-conventions`](reference/skill-instructions/directory-conventions.html) |
 | What `content`, `context`, `state` and `derived` each promise a consumer | [`content-context-and-state-graphs`](reference/skill-instructions/content-context-and-state-graphs.html) |
 | Actors, Roles, Permissions, and why a Role is a swimlane | [`role-model`](reference/skill-instructions/role-model.html) |
 | Authoring a Workflow activity, and what a bean-marked step performs | [`bpmn-processes`](reference/skill-instructions/bpmn-processes.html) |

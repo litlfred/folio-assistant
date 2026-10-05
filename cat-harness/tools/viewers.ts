@@ -1,5 +1,5 @@
 /**
- * The viewer generators as Tool nodes — each says which graph kinds it renders
+ * The viewer generators as Tool nodes — each says which graph typologies it renders
  * (#1168 B7a, bean `w91p`).
  *
  * Until then a directory named its viewer page (`coverage.visualiser`): the
@@ -17,7 +17,7 @@
  *
  * **`gen-fsh-guts-viz.ts` is deliberately not here.** Tool nodes are
  * published in the tools graph, and the owner's rule is that no published
- * artefact carries a path to fsh-guts (`UNPUBLISHED_GRAPH_KINDS`). A Tool
+ * artefact carries a path to fsh-guts (`UNPUBLISHED_GRAPH_TYPOLOGIES`). A Tool
  * whose `renders` named it would be that path.
  *
  * @module tools/viewers

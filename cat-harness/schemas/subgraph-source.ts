@@ -290,7 +290,7 @@ export type ResolvedSubgraphSource =
 export interface SourcedEntry {
   id: string;
   path: string;
-  graphKinds?: readonly string[];
+  graphTypologies?: readonly string[];
   source?: SubgraphSource;
   /** #1764's field, if a declaration carries it. Read only to map it. */
   storage?: unknown;
@@ -355,7 +355,7 @@ export function resolveSubgraphSource(
       // `ContentDirectorySchema` refuses both for a DECLARED entry, so this arm
       // is reached by a caller that builds an entry by hand — `audit-coverage.ts`
       // does — which is precisely where a schema cannot help.
-      if (src.keyedBy !== "commit" && (entry.graphKinds ?? []).includes("qa")) {
+      if (src.keyedBy !== "commit" && (entry.graphTypologies ?? []).includes("qa")) {
         throw new Error(
           `directory "${entry.id}" is a \`qa\` subgraph: it is keyed by commit, and \`keyedBy: "${src.keyedBy}"\` is not. ` +
             `\`tip\` is for one-live-copy state (beans, todos); \`route\` is for regenerable published output. ` +
@@ -372,7 +372,7 @@ export function resolveSubgraphSource(
       };
     }
     case "family": {
-      if ((entry.graphKinds ?? []).includes("qa")) {
+      if ((entry.graphTypologies ?? []).includes("qa")) {
         throw new Error(
           `directory "${entry.id}" is a \`qa\` subgraph: it is keyed by commit, and a branch family is not.`,
         );

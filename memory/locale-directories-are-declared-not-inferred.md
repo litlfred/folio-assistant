@@ -13,7 +13,7 @@ references:
 `docs/fr/index.md` is French because it carries `lang: fr` and
 `translation_source: index.md`. **Never** match a directory name against a
 list of language subtags: a `no/` chapter is hidden, a `translated-fr/` one is
-shown as source, and neither announces itself. Do **not** add a graph kind for
+shown as source, and neither announces itself. Do **not** add a graph typology for
 translated content — a translation is the same kind of thing as the page it
 translates, differing by a field the FILE declares. Translatability is a
 property of a FORMAT within a content type (`schemas/translation-tools.ts`,

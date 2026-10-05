@@ -1817,22 +1817,20 @@ a.fa-lang-tab:hover:not(.is-current) {
 .fa-page-lang-caret { font-size: 0.8em; }
 .fa-page-lang-list { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px; }
 
-/* WIDE: THE SIX TABS INLINE, ONE CLICK TO SWITCH — owner, reviewing #2202:
-   *"dropdown on phone only"*. The toggle is not drawn and the list is always
-   shown, whatever `data-open` says, so a phone that opened it and then
-   rotated is not left with a stale state on screen.
+/* CLOSED UNTIL THE GLOBE IS PRESSED, AT EVERY WIDTH — owner, 2026-10-05:
+   *"make globe click open and closed the desktop view of the locale
+   selector. start closed too."* This replaces #2210's split, where the six
+   tabs were always shown above 40rem and the toggle was not drawn there.
 
-   NARROW (40rem and below): the dropdown. 40rem is where the tabs stop
-   fitting: globe and six tabs are ~252px from the panel's start, the Folio
-   handle (~92px) is centred on the WINDOW and sits over the band once the
-   page is scrolled, so the tabs clear it only while 14px + 252px stays left
-   of (width / 2 - 46px) — about 640px. */
-.fa-page-lang-toggle { display: none; }
-.fa-page-lang-globe--inline { display: inline-block; padding: 0 2px; }
-@media (max-width: 40rem) {
-  .fa-page-lang-toggle { display: inline-flex; }
-  .fa-page-lang-globe--inline { display: none; }
-  .fa-page-lang-bar[data-open="false"] .fa-page-lang-list { display: none; }
+   WIDE: the toggle is the globe alone; pressed, the six tabs open inline
+   beside it in the band, one click each. NARROW (40rem and below): the
+   toggle also names the page's language and carries the caret, the phone
+   dropdown #2210 kept. While the tabs are open the Folio handle steps aside
+   (`data-fa-band-active`), so they never meet it. */
+.fa-page-lang-bar[data-open="false"] .fa-page-lang-list { display: none; }
+@media (min-width: 40.0625rem) {
+  .fa-page-lang-current,
+  .fa-page-lang-caret { display: none; }
 }
 
 .fa-page-lang-tab {
@@ -6567,7 +6565,7 @@ a.fa-harness-tab__body:focus-visible {
 
 .side-bar .fa-nav-kids .fa-nav-label { flex: 0 1 auto; min-width: 0; }
 
-/* A graph kind's SVG glyph (bean `yag0`) — distinct per kind, so `docs` and
+/* A graph typology's SVG glyph (bean `yag0`) — distinct per kind, so `docs` and
  * `library` are no longer two adjacent initials. Fills the chip above and
  * strokes in the inherited ink. */
 .side-bar .fa-nav-glyph svg {

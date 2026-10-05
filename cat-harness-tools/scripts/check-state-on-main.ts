@@ -1,5 +1,5 @@
 /**
- * Every declared directory whose graph kind `holds: "state"` is kept OFF
+ * Every declared directory whose graph typology `holds: "state"` is kept OFF
  * `main`, or it is recorded debt that may only go down.
  *
  * @covers cat-harness
@@ -9,7 +9,7 @@
  * Arc `fs43`'s plan of record carried a row reading *"`holds: state` ⇒ default
  * `storage.keyedBy: tip`, plus a check that a declared `state` dir on `main`
  * is a finding"*, marked done. It was not done — `grep -c "keyedBy\|storage"
- * cat-harness/schemas/graph-kind-registry.ts` was 0 — and the two halves are
+ * cat-harness/schemas/graph-typology-registry.ts` was 0 — and the two halves are
  * not equally worth doing.
  *
  * **The default half is near-worthless and is not built here.** A kind-level
@@ -83,12 +83,12 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import { findDeclarationFile, instanceRootsIn, nestedDirectories, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
-import { defaultGraphKinds } from "../../cat-harness/schemas/graph-kind-registry.js";
+import { defaultGraphTypologies } from "../../cat-harness/schemas/graph-typology-registry.js";
 import { contentIsOffCheckout } from "../../cat-harness/schemas/subgraph-source.ts";
 // The registration side-effect import, same reason `check:declared-dirs` has
 // it: without it a reader's acceptance of this repository's own declaration is
 // an import-order property of the process rather than of the declaration.
-import "../../cat-harness/schemas/folio-graph-kind.js";
+import "../../cat-harness/schemas/folio-graph-typology.js";
 
 /** Where the recorded debt lives. One file, named in one place. */
 export const BASELINE = "cat-harness/scripts/state-on-main-baseline.json";
@@ -124,7 +124,7 @@ export function keyOf(d: { instance: string; id: string }): string {
 
 /** Does this kind record LIVE state? Asked of the registry, never guessed. */
 function holdsState(kind: string): boolean {
-  return defaultGraphKinds.get(kind)?.holds === "state";
+  return defaultGraphTypologies.get(kind)?.holds === "state";
 }
 
 /**
@@ -151,7 +151,7 @@ export function stateDirectories(repoRoot: string): StateDirectory[] {
     const own = (decl.directories ?? []).map((d) => ({
       id: d.id,
       path: d.path,
-      graphKinds: d.graphKinds ?? [],
+      graphTypologies: d.graphTypologies ?? [],
       source: d.source,
       storage: (d as { storage?: unknown }).storage,
       declaredIn: declFile,
@@ -160,7 +160,7 @@ export function stateDirectories(repoRoot: string): StateDirectory[] {
     const nested = nestedDirectories(inst, decl).map((d) => ({
       id: d.id,
       path: d.path,
-      graphKinds: d.graphKinds ?? [],
+      graphTypologies: d.graphTypologies ?? [],
       source: d.source,
       storage: d.storage,
       // The from-within file, named by the PARENT entry it hangs off, so a
@@ -169,7 +169,7 @@ export function stateDirectories(repoRoot: string): StateDirectory[] {
       parent: d.parentId,
     }));
     for (const d of [...own, ...nested]) {
-      const stateKinds = d.graphKinds.filter(holdsState);
+      const stateKinds = d.graphTypologies.filter(holdsState);
       if (stateKinds.length === 0) continue;
       out.push({
         instance: instRel,
@@ -252,7 +252,7 @@ if (import.meta.main) {
       JSON.stringify(
         {
           _comment:
-            "Declared directories whose graph kind `holds: \"state\"` and whose content is still on `main`, " +
+            "Declared directories whose graph typology `holds: \"state\"` and whose content is still on `main`, " +
             "as `<instance>::<id>` (`.` for the repository root). RECORDED DEBT, and it may only go DOWN: " +
             "a state directory on `main` that is not listed here fails `check:state-on-main`, and a line " +
             "here that no longer describes a directory on `main` fails too, so a paid-off entry cannot " +

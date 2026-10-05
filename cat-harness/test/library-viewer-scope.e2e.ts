@@ -76,7 +76,7 @@ function declaredLibrarySubjects(): { name: string; entries: string[] }[] {
     }
     if (decl?.name === undefined) continue;
     for (const dir of decl.directories ?? []) {
-      if (!(dir.graphKinds ?? []).includes("library")) continue;
+      if (!(dir.graphTypologies ?? []).includes("library")) continue;
       const abs = join(root, dir.path);
       if (!existsSync(abs)) continue;
       const entries = readdirSync(abs, { withFileTypes: true })

@@ -12,11 +12,11 @@
  * | hand-written markdown | a `documents:` front-matter list |
  * | generated HTML | `<meta name="documents" content="…">` from its generator |
  *
- * Each entry is a graph KIND (`library`) — the page documents every directory
+ * Each entry is a graph TYPOLOGY (`library`) — the page documents every directory
  * of that kind — or one directory, `<instance>/<id>`, where the kind is too
  * general to claim (`cat-harness/tools`: `tool-graph.md` is about this
  * instance's tool graph, not every `tools` directory). The same two forms, and
- * the same reach rule, as a skill's `graph-kinds:` / `governs:`
+ * the same reach rule, as a skill's `graph-typologies:` / `governs:`
  * (`skill-governance.ts`).
  *
  * @module scripts/docs-declarations
@@ -65,7 +65,7 @@ export function docsPages(repoRoot: string, files: readonly string[]): DocsPage[
  * or naming one of its kinds from an instance in reach.
  */
 export function documentingPages(
-  dir: { instance: string; id: string; graphKinds: readonly string[] },
+  dir: { instance: string; id: string; graphTypologies: readonly string[] },
   pages: readonly DocsPage[],
   repoRoot: string,
   reach: readonly string[],
@@ -75,7 +75,7 @@ export function documentingPages(
     .filter(
       (p) =>
         p.documents.includes(`${dir.instance}/${dir.id}`) ||
-        (p.documents.some((d) => !d.includes("/") && dir.graphKinds.includes(d)) &&
+        (p.documents.some((d) => !d.includes("/") && dir.graphTypologies.includes(d)) &&
           inReach.has(resolve(repoRoot, p.instance))),
     )
     .map((p) => p.page)

@@ -19,7 +19,7 @@
  * `cat-harness/schemas/`: *"a palette read off a WHO style guide is subject
  * matter."* So nothing here names who-iris or copies a colour. The owner is
  * found by its declared `name`, its themes by the directory it declares with
- * graph kind `themes`, and the module there by one convention: a `themes.ts`
+ * graph typology `themes`, and the module there by one convention: a `themes.ts`
  * exporting `INSTANCE_THEMES`, already resolved. That is the same shape as
  * the tool groups — the harness loads a layer by what its declaration says,
  * rather than importing it, which is what keeps the harness able to build
@@ -42,8 +42,8 @@ import { themeById } from "./themes.js";
 /** The instance whose themes are {@link THEMES} — the default `platform` below. */
 export const PLATFORM_THEME_OWNER = "cat-harness";
 
-/** The graph kind an instance's own themes are declared under. */
-export const THEMES_GRAPH_KIND = "themes";
+/** The graph typology an instance's own themes are declared under. */
+export const THEMES_GRAPH_TYPOLOGY = "themes";
 /** The module a `themes` directory holds, and the export it must carry. */
 export const INSTANCE_THEMES_MODULE = "themes.ts";
 export const INSTANCE_THEMES_EXPORT = "INSTANCE_THEMES";
@@ -72,7 +72,7 @@ export type ThemeRefResult = { ok: true; theme: ResolvedTheme; owner: string | u
 export function instanceThemes(repoRoot: string, instance: string): { ok: true; themes: readonly ResolvedTheme[] } | { ok: false; miss: ThemeRefMiss } {
   const root = instanceRootsIn(repoRoot).find((r) => declaresInstance(readDeclaration(r), instance));
   if (root === undefined) return { ok: false, miss: { kind: "no-such-instance", instance } };
-  const dirs = instanceDirectoriesForGraph(root, THEMES_GRAPH_KIND);
+  const dirs = instanceDirectoriesForGraph(root, THEMES_GRAPH_TYPOLOGY);
   if (dirs.length === 0) return { ok: false, miss: { kind: "no-themes-directory", instance } };
   const themes: ResolvedTheme[] = [];
   let read = 0;
@@ -267,7 +267,7 @@ export function explainThemeRefMiss(m: ThemeRefMiss): string {
     case "no-such-instance":
       return `no instance named "${m.instance}" is declared in this repository`;
     case "no-themes-directory":
-      return `"${m.instance}" declares no directory with graph kind "${THEMES_GRAPH_KIND}"`;
+      return `"${m.instance}" declares no directory with graph typology "${THEMES_GRAPH_TYPOLOGY}"`;
     case "no-themes-module":
       return `"${m.instance}"'s themes directory has no ${INSTANCE_THEMES_MODULE} exporting ${INSTANCE_THEMES_EXPORT} (looked at ${m.path})`;
     case "no-such-theme":

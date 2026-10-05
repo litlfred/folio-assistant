@@ -10,7 +10,7 @@
 import { describe, expect, it } from "bun:test";
 import { resolve } from "node:path";
 
-import { instanceRootsIn, instanceDirectories, isPublishedGraphKind } from "../../schemas/cat-harness.js";
+import { instanceRootsIn, instanceDirectories, isPublishedGraphTypology } from "../../schemas/cat-harness.js";
 // Every instance's Tools, as `viewer-declarations` reads them: a viewer Tool
 // may live in a dependency's `tools` graph (fhir-harness's `ig-pages`), and the
 // cat-harness barrel alone would report its pages as naming no renderer.
@@ -19,7 +19,7 @@ import { viewerPages } from "../viewer-declarations.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 
-interface Dir { id: string; graphKinds?: string[]; coverage?: { visualiser?: unknown } }
+interface Dir { id: string; graphTypologies?: string[]; coverage?: { visualiser?: unknown } }
 
 const dirs: { instance: string; dir: Dir }[] = [];
 // Own entries AND those declared from within (bean `cmsl`): `voices` is
@@ -49,11 +49,11 @@ describe("viewer Tools declare what they render", () => {
   });
 
   it("every rendered kind is declared by some directory", () => {
-    const declared = new Set(dirs.flatMap(({ dir }) => dir.graphKinds ?? []));
+    const declared = new Set(dirs.flatMap(({ dir }) => dir.graphTypologies ?? []));
     expect([...rendered].filter((k) => !declared.has(k))).toEqual([]);
   });
 
   it("no Tool renders an unpublished kind — the Tool graph is published", () => {
-    expect([...rendered].filter((k) => !isPublishedGraphKind(k))).toEqual([]);
+    expect([...rendered].filter((k) => !isPublishedGraphTypology(k))).toEqual([]);
   });
 });

@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * Every graph kind that declares a validator — does it actually load?
+ * Every graph typology that declares a validator — does it actually load?
  *
  * Bean `folio-assistant-i31r`. Two failure modes, and only one of them fails
  * the build:
@@ -30,13 +30,13 @@
  *   is computed and a literal list would go stale silently
  */
 
-// The REGISTRY, not BASE_GRAPH_KINDS: since bean dmx1 a harness DECLARES its
-// kinds in a kinds/ graph, and a sweep over the code list alone stopped checking
+// The REGISTRY, not BASE_GRAPH_TYPOLOGIES: since bean dmx1 a harness DECLARES its
+// kinds in a typologies/ graph, and a sweep over the code list alone stopped checking
 // every kind that moved (fhir-harness's, cat-openapi's, core's). Measured
 // 2026-10-04 while building riit; core's code-registered kinds are imported too.
-import { BASE_GRAPH_KINDS, declaredKindNodes, defaultGraphKinds } from "../../cat-harness/schemas/graph-kind-registry.js";
-import { FOLIO_GRAPH_KIND } from "../../cat-harness/schemas/folio-graph-kind.js";
-import { GLOSSARY_GRAPH_KIND } from "../../cat-harness/schemas/glossary-graph-kind.js";
+import { BASE_GRAPH_TYPOLOGIES, declaredKindNodes, defaultGraphTypologies } from "../../cat-harness/schemas/graph-typology-registry.js";
+import { FOLIO_GRAPH_TYPOLOGY } from "../../cat-harness/schemas/folio-graph-typology.js";
+import { GLOSSARY_GRAPH_TYPOLOGY } from "../../cat-harness/schemas/glossary-graph-typology.js";
 import { BLOCK_KINDS, CONTENT_ADAPTER_NODES, DISCOVERED_BLOCK_KIND_NODES } from "../../cat-harness/schemas/block-kinds.js";
 import { declaredNodeFiles } from "../../cat-harness/schemas/declared-nodes.js";
 import { typedBlockKinds } from "../../cat-harness/schemas/constraints.js";
@@ -98,17 +98,17 @@ export function authoredValidatorStrings(): { kind: string; family?: string; ref
       if (v) out.push({ kind, family, ref: v });
     }
   };
-  for (const [k, d] of Object.entries(BASE_GRAPH_KINDS)) add(k, d);
-  add("folio", FOLIO_GRAPH_KIND);
-  add("glossary", GLOSSARY_GRAPH_KIND);
+  for (const [k, d] of Object.entries(BASE_GRAPH_TYPOLOGIES)) add(k, d);
+  add("folio", FOLIO_GRAPH_TYPOLOGY);
+  add("glossary", GLOSSARY_GRAPH_TYPOLOGY);
   for (const { node } of declaredKindNodes(join(import.meta.dir, "..", ".."))) add(node.kind, node);
   return out;
 }
 
 export async function sweep(root: string): Promise<ValidatorSweep> {
   const out: ValidatorSweep = { resolved: [], notApplicable: [], undeclared: [], unresolvable: [], contradictory: [] };
-  for (const kind of defaultGraphKinds.names()) {
-    const def = defaultGraphKinds.get(kind);
+  for (const kind of defaultGraphTypologies.names()) {
+    const def = defaultGraphTypologies.get(kind);
     const na = def?.validatorNotApplicable;
     // The contradiction first, because everything below would otherwise pick a
     // winner between two claims that cannot both hold.
@@ -227,8 +227,8 @@ function jsonFiles(dir: string): string[] {
  */
 export async function sweepFamilies(root: string): Promise<FamilySweep[]> {
   const out: FamilySweep[] = [];
-  for (const kind of defaultGraphKinds.names()) {
-    const def = defaultGraphKinds.get(kind)!;
+  for (const kind of defaultGraphTypologies.names()) {
+    const def = defaultGraphTypologies.get(kind)!;
     if (!def.nodeSchemas) continue;
     const fams = await resolveNodeSchemas(kind, root);
     const byTag = new Map(fams.map((f) => [f.tag, f]));
@@ -249,7 +249,7 @@ export async function sweepFamilies(root: string): Promise<FamilySweep[]> {
       for (const e of readDeclaration(inst)?.directories ?? []) {
         const st = e.storage as { keyedBy?: string } | undefined;
         const src = e.source as { kind?: string } | undefined;
-        if (e.graphKinds.includes(kind as never) && (st?.keyedBy === "family" || src?.kind === "family")) onFamily.add(join(inst, e.path).replace(/\/$/, ""));
+        if (e.graphTypologies.includes(kind as never) && (st?.keyedBy === "family" || src?.kind === "family")) onFamily.add(join(inst, e.path).replace(/\/$/, ""));
       }
       for (const d of directoryEntriesForGraph(inst, kind)) {
         if (onFamily.has(d.absPath.replace(/\/$/, ""))) continue;
@@ -388,12 +388,12 @@ async function main(): Promise<number> {
   if (total === 0) {
     // A sweep over no kinds has not passed. This repository has paid three
     // times for a check that ticked over an empty set.
-    console.log("⚠ EXAMINED NOTHING — no graph kinds are registered");
+    console.log("⚠ EXAMINED NOTHING — no graph typologies are registered");
     return 1;
   }
 
   console.log(
-    `${total} graph kind(s): ${r.resolved.length} with a validator that loads, ` +
+    `${total} graph typology(s): ${r.resolved.length} with a validator that loads, ` +
       `${r.notApplicable.length} where one cannot apply`,
   );
   for (const k of r.resolved) console.log(`  ✓ ${k}`);
@@ -427,9 +427,9 @@ async function main(): Promise<number> {
   // A VALIDATOR NODE naming a kind no instance declares (bean riit): the
   // registry cannot join it to anything, so its code checks nothing. A node
   // naming an unlisted family already throws at load, with its path.
-  const orphans = defaultGraphKinds.validatorNodeList().filter((v) => !defaultGraphKinds.has(v.node.validates.kind));
+  const orphans = defaultGraphTypologies.validatorNodeList().filter((v) => !defaultGraphTypologies.has(v.node.validates.kind));
   if (orphans.length > 0) {
-    console.log(`\n✗ ${orphans.length} validator node(s) name a graph kind no instance declares:`);
+    console.log(`\n✗ ${orphans.length} validator node(s) name a graph typology no instance declares:`);
     for (const o of orphans) console.log(`  ✗ ${o.file}: validates kind "${o.node.validates.kind}"`);
     return 1;
   }

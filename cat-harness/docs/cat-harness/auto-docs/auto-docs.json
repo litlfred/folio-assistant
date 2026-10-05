@@ -5,7 +5,7 @@
     {
       "id": "glossary",
       "path": "glossary",
-      "graphKinds": [
+      "graphTypologies": [
         "auto-docs"
       ],
       "description": "Glossary — every term this instance's swimlanes define — the role's title and description, the lane names that bind it, and whether the term has been retired. Indexes the `swimlane-glossary` graph."
@@ -13,7 +13,7 @@
     {
       "id": "index-dmn",
       "path": "index/dmn",
-      "graphKinds": [
+      "graphTypologies": [
         "auto-docs"
       ],
       "description": "Decisions — every DMN decision table a declared `processes` graph holds, with the decision's own name. Indexes the `processes` graph."
@@ -21,7 +21,7 @@
     {
       "id": "index-docs",
       "path": "index/docs",
-      "graphKinds": [
+      "graphTypologies": [
         "auto-docs"
       ],
       "description": "Docs — every AUTHORED documentation page an instance publishes, with the title and description its own front matter declares. Indexes the `docs` graph."
@@ -29,7 +29,7 @@
     {
       "id": "index-processes",
       "path": "index/processes",
-      "graphKinds": [
+      "graphTypologies": [
         "auto-docs"
       ],
       "description": "Processes — every BPMN process, with its own documentation, its lanes, and the skills its activities name. Indexes the `processes` graph."
@@ -37,7 +37,7 @@
     {
       "id": "index-roles",
       "path": "index/roles",
-      "graphKinds": [
+      "graphTypologies": [
         "auto-docs"
       ],
       "description": "Roles — every role a declared `scenarios` graph defines, with the description it declares. Indexes the `scenarios` graph."
@@ -45,7 +45,7 @@
     {
       "id": "index-schemas",
       "path": "index/schemas",
-      "graphKinds": [
+      "graphTypologies": [
         "auto-docs"
       ],
       "description": "Schemas — every schema module a declared `schemas` directory holds, with the first sentence of its module docblock. Indexes the `schemas` graph."
@@ -53,7 +53,7 @@
     {
       "id": "index-skills",
       "path": "index/skills",
-      "graphKinds": [
+      "graphTypologies": [
         "auto-docs"
       ],
       "description": "Skills — every skill markdown file, with the description it declares in its own front matter. Indexes the `skills` graph."
@@ -61,7 +61,7 @@
     {
       "id": "index-tasks",
       "path": "index/tasks",
-      "graphKinds": [
+      "graphTypologies": [
         "auto-docs"
       ],
       "description": "Tasks — every named activity in a declared `processes` graph — task, user, service, manual, script and call activities. Indexes the `processes` graph."
@@ -69,7 +69,7 @@
     {
       "id": "index-tools",
       "path": "index/tools",
-      "graphKinds": [
+      "graphTypologies": [
         "auto-docs"
       ],
       "description": "Tools — every Tool module a declared `tools` directory holds, with the first sentence of its module docblock. Indexes the `tools` graph."
@@ -77,7 +77,7 @@
     {
       "id": "uml",
       "path": "uml",
-      "graphKinds": [
+      "graphTypologies": [
         "auto-docs"
       ],
       "description": "UML — every UML model a declared `uml` directory holds, one row per model rather than per notation. Indexes the `uml` graph."

@@ -77,7 +77,7 @@ import { checkQaDirs } from "../../cat-harness/content/pipeline/qa-graph-integri
 import { directoriesForGraph, instanceRootsIn, kgQaHomeFor, repoRootFor, siteDirFor } from "../../cat-harness/schemas/cat-harness.js";
 // `directoriesForGraph` reads declarations, which throw on the `folio` kind
 // unless core has registered it — the same side-effect import qa-store carries.
-import "../../cat-harness/schemas/folio-graph-kind.js";
+import "../../cat-harness/schemas/folio-graph-typology.js";
 import {
   criteriaFor,
   KG_CRITERIA_BY_ID,

@@ -126,7 +126,7 @@
  * this file's.
  *
  * @module scripts/check-workflow-injection
- * @covers none — .github/workflows/ is not a declared graph kind
+ * @covers none — .github/workflows/ is not a declared graph typology
  */
 
 import { HARNESS_ROOT } from "./lib/roots.ts";

@@ -182,7 +182,7 @@ function ownerOf(abs: string, own: ReturnType<typeof owners>): string | undefine
   return own.find((o) => p === o.root || p.startsWith(o.root + sep))?.name;
 }
 
-/** Declared directories of one graph kind, each at its declaring instance's own root. */
+/** Declared directories of one graph typology, each at its declaring instance's own root. */
 function ownDirectories(repo: string, kind: string): string[] {
   const out = new Set<string>();
   for (const root of instanceRootsIn(repo)) {
@@ -190,7 +190,7 @@ function ownDirectories(repo: string, kind: string): string[] {
     if (!decl) continue;
     for (const d of resolveDirectories([{ name: decl.name, root, own: true }])) {
       if (!d.own || d.scope === "repository") continue;
-      if (!(d.graphKinds ?? []).includes(kind)) continue;
+      if (!(d.graphTypologies ?? []).includes(kind)) continue;
       if (existsSync(d.absPath)) out.add(resolve(d.absPath));
     }
   }
