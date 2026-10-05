@@ -168,7 +168,7 @@ export function buildReport(
   return {
     $schema: "merge-overlap/v1",
     ...meta,
-    generated_from: "cat-harness/scripts/merge-conflict-patterns.ts PATTERNS (take-base, qa-sidecar: generated; generated-regions: region-only when only regions changed)",
+    generated_from: "cat-harness/scripts/merge-conflict-patterns.ts PATTERNS (take-base, owned-tree, qa-sidecar: generated; generated-regions: region-only when only regions changed)",
     members,
     pairs,
     summary: {
