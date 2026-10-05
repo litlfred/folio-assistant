@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-against-cache/skills/content-publish/input.schema.json",
+  "title": "Content Publish Input",
+  "description": "Input schema for content publication.",
+  "type": "object",
+  "required": [
+    "versionIncrement"
+  ],
+  "properties": {
+    "versionIncrement": {
+      "type": "string",
+      "enum": [
+        "major",
+        "minor",
+        "patch"
+      ]
+    },
+    "releaseNotes": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string",
+      "enum": [
+        "github-release",
+        "npm",
+        "fhir-registry",
+        "arxiv"
+      ],
+      "description": "Publication target."
+    }
+  },
+  "staging": {
+    "branch": "claude/zealous-gates-3o9ma2-against-cache",
+    "sha": "ed0ccb329998d1e3aff7f7005a9a3b02ae6d9ef7",
+    "pr": "2157/merge",
+    "run": "37276171416"
+  }
+}
