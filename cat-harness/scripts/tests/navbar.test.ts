@@ -42,6 +42,7 @@ import { publishedUrlOf, solveCrop } from "../harness-tiles.js";
 import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { declaredGraphs, toRootFor, visualiserHref } from "../mount-instance-docs.js";
 import { kindTitle } from "../lib/nav-label.js";
+import { graphKindRowDecor } from "../lib/graph-kind-nav.js";
 
 // Typed WITH its middle region, because this fixture is a mounted page's
 // navbar and a mounted page always has one. `graphs` became optional for the
@@ -1082,6 +1083,72 @@ describe("adjacent graph rows cannot be confused (bean yag0)", () => {
   it("the glyph is an SVG hidden from assistive technology — the words are the name", () => {
     const html = navbarRegionsHtml(railModel({ instance: "who-iris", toRoot: "..", links: rows }));
     expect(html).toMatch(/<span class="fa-nav-glyph fa-nav-tone" style="[^"]*" aria-hidden="true"><svg viewBox="0 0 24 24"/);
+  });
+});
+
+describe("the rail's Graphs group starts closed (#2150)", () => {
+  // Owner, 2026-10-05: "also have the "Graphs" section start closed on LHS navbar".
+  const graphsSummary = /<details class="fa-nav-group"( open)?><summary><span class="fa-nav-glyph" aria-hidden="true">▤<\/span>/;
+
+  it("is folded on arrival on a page with no section of its own", () => {
+    const html = navbarRegionsHtml(railModel({ instance: "x", toRoot: "..", links: [{ href: "../a/", label: "a" }] }));
+    expect(graphsSummary.exec(html)?.[1]).toBeUndefined();
+    expect(graphsSummary.test(html)).toBe(true);
+  });
+
+  it("opens when one of its rows is the page being read", () => {
+    const html = navbarRegionsHtml(
+      railModel({ instance: "x", toRoot: "..", links: [{ href: "../a/", label: "a" }, { label: "b", current: true }] }),
+    );
+    expect(graphsSummary.exec(html)?.[1]).toBe(" open");
+  });
+
+  it("stays folded beside the page's own section, which is the one open group", () => {
+    const html = navbarRegionsHtml(
+      railModel({
+        instance: "x",
+        toRoot: "..",
+        links: [{ label: "b", current: true }],
+        documentIndex: { label: "Contents", items: [{ href: "#a", label: "A" }], collapsible: true, open: true },
+      }),
+    );
+    expect(graphsSummary.exec(html)?.[1]).toBeUndefined();
+  });
+});
+
+describe("a harness row is not a graph-kind row, whatever its mark (#2151)", () => {
+  // Owner, 2026-10-05: "alignment of harnesses is off". `fa-nav-kind` (the
+  // strip-column indent) was inferred from "has an SVG glyph"; #2122 gave
+  // harnesses glyph marks, and smart-trust / SMART Base took the kind indent.
+  //
+  // Rows built from `graphKindRowDecor` itself, the one function that sets
+  // `NavItem.kind`, so this holds in a standalone cat-harness layer. That the
+  // rows `declaredGraphs` builds for a REAL instance carry it is asserted in
+  // `cat-harness-tools/scripts/tests/navbar-kind-rows.test.ts`, because it
+  // reads who-iris's declaration, which only the monorepo has.
+  const kinds = ["docs", "library", "skills"].map((k) => ({ href: `../${k}/`, label: k, ...graphKindRowDecor(k, "x") }));
+
+  it("graphKindRowDecor DECLARES the row a kind, whatever mark it draws", () => {
+    expect(kinds.every((r) => r.kind === true)).toBe(true);
+  });
+
+  it("a glyph-marked harness row gets no kind class, and nor does an avatar one", () => {
+    const html = navbarRegionsHtml(
+      railModel({
+        instance: "cat-harness",
+        toRoot: "..",
+        links: kinds,
+        harnesses: [
+          { href: "../smart-trust/", label: "smart-trust", glyphPath: "M12 3l7 3v6", tone: 199 },
+          { href: "../", label: "C@T Harness", avatar: { src: "../a.webp" }, tone: 268 },
+        ],
+      }),
+    );
+    const at = html.indexOf('<div class="fa-nav-bottom">');
+    expect(html.slice(at)).toContain('<a href="../smart-trust/"><span class="fa-nav-glyph');
+    expect(html.slice(at)).not.toContain("fa-nav-kind");
+    // ...while the kind rows above keep it.
+    expect(html.slice(0, at)).toContain('class="fa-nav-kind"');
   });
 });
 

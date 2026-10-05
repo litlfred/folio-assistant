@@ -792,7 +792,7 @@
     overflow-x: hidden;
   }
 
-  /* FOLDED, THE GRAPHS HEADING STAYS IN SIGHT. It comes after the page list,
+  /* FOLDED, THE FOLDERS HEADING STAYS IN SIGHT. It comes after the page list,
    * which is the ruling's order and the rail's, and the page list runs to
    * thousands of pixels -- so in flow the heading would sit at the very end
    * of the one scroller, where nobody finds it. Pinned to the scroller's
@@ -812,7 +812,7 @@
      * screen, a second column's worth of content hanging off it. */
     position: relative;
   }
-  .fa-nav-middle > .fa-nav-graphs-group:not([open]),
+  .fa-nav-middle > .fa-nav-folders:not([open]),
   .fa-nav-middle > .fa-nav-harness-group:not([open]) {
     position: sticky;
     bottom: 0;
@@ -821,10 +821,10 @@
   }
   /* ▦ Harnesses is the LAST row of the scroller and the lowest pinned
    * heading (the viewer rail's order: graphs, then harnesses, then home), so
-   * a folded Graphs heading stands on top of it rather than under it. The
+   * a folded Folders heading stands on top of it rather than under it. The
    * height is measured by `mountSidebarRail`, because ▦'s row is one height
    * in the strip and another in the open bar. */
-  .fa-nav-middle:has(> .fa-nav-harness-group:not([open])) > .fa-nav-graphs-group:not([open]) {
+  .fa-nav-middle:has(> .fa-nav-harness-group:not([open])) > .fa-nav-folders:not([open]) {
     bottom: var(--fa-nav-harness-rest, 0px);
   }
   /* AT THE BOTTOM EVEN WHEN THE LIST IS SHORT. `sticky` holds a heading at
@@ -835,11 +835,11 @@
    * The middle's bottom edge does not move when the strip opens, so a
    * heading pushed against it stays under the pointer, as it did in the
    * footer. */
-  .side-bar > .fa-nav-middle > .fa-nav-graphs-group,
+  .side-bar > .fa-nav-middle > .fa-nav-folders,
   .side-bar > .fa-nav-middle > .fa-nav-harness-group {
     margin-top: auto;
   }
-  .side-bar > .fa-nav-middle > .fa-nav-graphs-group + .fa-nav-harness-group {
+  .side-bar > .fa-nav-middle > .fa-nav-folders + .fa-nav-harness-group {
     margin-top: 0;
   }
 
@@ -935,7 +935,6 @@
   .side-bar .site-nav,
   .side-bar .fa-doc-index,
   .side-bar .fa-nav-folders,
-  .side-bar .fa-nav-graphs-group,
   .side-bar .fa-nav-pages,
   .side-bar .fa-harness-tabs__heading,
   .side-bar .fa-harness-tab__label,
@@ -5610,23 +5609,18 @@ html:has(.fa-glass-band[data-fa-band-tools]) .main-content * {
  * same timing, keyed on the element's own open state rather than on a class a
  * script has to keep in step. */
 .fa-doc-index__heading,
-.fa-nav-graphs-group__heading,
 .fa-nav-folders__heading { list-style: none; }
 .fa-doc-index__heading::-webkit-details-marker,
-.fa-nav-graphs-group__heading::-webkit-details-marker,
 .fa-nav-folders__heading::-webkit-details-marker { display: none; }
 .fa-doc-index__heading::before,
-.fa-nav-graphs-group__heading::before,
 .fa-nav-folders__heading::before {
   content: "\25be";
   display: inline-block;
   transition: transform .12s ease;
 }
 .fa-doc-index:not([open]) > .fa-doc-index__heading::before,
-.fa-nav-graphs-group:not([open]) > .fa-nav-graphs-group__heading::before,
 .fa-nav-folders:not([open]) > .fa-nav-folders__heading::before { transform: rotate(-90deg); }
 .fa-doc-index__heading:focus-visible,
-.fa-nav-graphs-group__heading:focus-visible,
 .fa-nav-folders__heading:focus-visible {
   outline: 2px solid var(--link-color, #7253ed);
   outline-offset: -2px;
@@ -5988,40 +5982,22 @@ a.fa-nav-folders__link:focus-visible {
  * The middle scrolls; nothing inside it shrinks. */
 .fa-nav-middle > .fa-doc-index { flex: 0 0 auto; }
 
-.fa-nav-graphs-group {
-  /* Published the way `.fa-nav-folders` publishes it — read by the strip. */
-  --fa-nav-rest-pad: 0.5rem;
-  flex: 0 0 auto;
-  padding: var(--fa-nav-rest-pad) 0;
+/* FOLDERS AT THE FOOT OF THE SCROLLER (#2150): it sits where the "Graphs"
+   wrapper sat, so it takes that wrapper's divider -- a rule ABOVE it, against
+   the page list -- rather than its own one below, against ▦. */
+.fa-nav-middle > .fa-nav-folders {
   border-top: 1px solid rgba(128, 128, 128, 0.25);
-  /* The footer's size, which the harness group had before it moved here. */
-  font-size: 0.75rem;
-}
-
-/* The same heading the other disclosures in this column wear, so the four
-   read as one set. 24px floor for the reason `.fa-doc-index__heading` gives. */
-.fa-nav-graphs-group__heading {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  min-height: 1.5rem;
-  padding: 0.25rem var(--fa-nav-pad, 1rem);
-  cursor: pointer;
-  user-select: none;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  border-bottom: 0;
 }
 
 /* The group no longer sits in a capped footer, so the scroll box the footer
    rule gave it would be a second scroller inside the first. */
-.fa-nav-graphs-group > .fa-nav-group,
 .fa-nav-middle > .fa-nav-harness-group {
   max-height: none;
   overflow: visible;
 }
 
-/* The harness group beside Graphs: the footer's size it had before the move,
+/* The harness group beside Folders: the footer's size it had before the move,
    and the same divider, so the two pinned headings read as one set. */
 .fa-nav-middle > .fa-nav-harness-group {
   flex: 0 0 auto;
