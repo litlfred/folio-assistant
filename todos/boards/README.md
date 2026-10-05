@@ -11,7 +11,7 @@ Part of [Folio Assistant](../../README.md) 0.1.0, declared as `boards`, holding 
 | file | what it is | used by |
 |---|---|---|
 | [`cat-harness.json`](cat-harness.json) | C@T [Harness](https://litlfred.github.io/bootstrap/schemas/#harness) |  |
-| [`folio-assistant-core.json`](folio-assistant-core.json) | folio-assistant-core |  |
+| [`folio-assistant-core.json`](folio-assistant-core.json) | Folio Assistant Core |  |
 | [`folio-assistant.json`](folio-assistant.json) | Folio Assistant |  |
 | [`smart-base.json`](smart-base.json) | SMART Base |  |
 | [`smart-trust.json`](smart-trust.json) | smart-trust |  |

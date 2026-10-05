@@ -6,7 +6,7 @@
 
 This instance's own reader-facing pages, and the page `/folio-assistant-core/` serves. Added 2026-10-05 with `folio-assistant-core.config.json` (issue #2196, bean c5fm), when the owner asked for the instance to be staged and instantiated so the navbar's [Harnesses](https://litlfred.github.io/bootstrap/schemas/#harness) list shows it. Without a docs directory the harness tile can only open this instance's section of the landing (`/#harness-folio-assistant-core`), and `harness-tiles.ts` reports that as a finding. Authored markdown, composed THROUGH just-the-docs like smart-base's and smart-trust's pages, so it gets the sidebar, search and layout. Declared HERE, in this instance's own file, rather than in the root's or cat-harness's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a composition layer, so declaring it there would overlay this `index.md` onto the site's own.
 
-Part of [folio-assistant-core](../README.md) 0.1.0, declared as `folio-assistant-core-docs`, holding `docs`.
+Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `folio-assistant-core-docs`, holding `docs`.
 
 | file | what it is | used by |
 |---|---|---|

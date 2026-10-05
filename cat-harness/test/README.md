@@ -38,6 +38,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`glass.e2e.ts`](glass.e2e.ts) | a file |  |
 | [`graph-tiles.e2e.ts`](graph-tiles.e2e.ts) | a file |  |
 | [`harness-config-panel.e2e.ts`](harness-config-panel.e2e.ts) | a file |  |
+| [`harness-row-alignment.e2e.ts`](harness-row-alignment.e2e.ts) | a file |  |
 | [`id-lookup.e2e.ts`](id-lookup.e2e.ts) | a file |  |
 | [`kg-viewer.e2e.ts`](kg-viewer.e2e.ts) | a file |  |
 | [`kind-fan.e2e.ts`](kind-fan.e2e.ts) | a file |  |
@@ -59,6 +60,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`review-nav.e2e.ts`](review-nav.e2e.ts) | a file |  |
 | [`review-visual.e2e.ts`](review-visual.e2e.ts) | a file |  |
 | [`schema-overview-filter.e2e.ts`](schema-overview-filter.e2e.ts) | a file |  |
+| [`search-band.e2e.ts`](search-band.e2e.ts) | a file |  |
 | [`search-lazy.e2e.ts`](search-lazy.e2e.ts) | a file |  |
 | [`search-pinned.e2e.ts`](search-pinned.e2e.ts) | a file |  |
 | [`search-restore.e2e.ts`](search-restore.e2e.ts) | a file |  |

@@ -1098,9 +1098,9 @@
               "instructionsPath": "skills/conduct/conduct-core/where-does-this-go.md",
               "name": "where-does-this-go",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4a57c6d4bde422d5d612ec73d6891b0ef7ec8788b6e8bc35c62ae25bd37ab264",
-                "bytes": 7179,
-                "sha256": "4a57c6d4bde422d5d612ec73d6891b0ef7ec8788b6e8bc35c62ae25bd37ab264"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/75d4c6c0087253b3e3c478bc8d98fa8e02c25e79e19ba39d238b2d9785af42a6",
+                "bytes": 7273,
+                "sha256": "75d4c6c0087253b3e3c478bc8d98fa8e02c25e79e19ba39d238b2d9785af42a6"
               },
               "title": "Where does this go? — the question, then the skill that answers it"
             }
@@ -1617,13 +1617,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 368,
+              "instructionLines": 371,
               "instructionsPath": "skills/kg/kg-core/content-context-and-state-graphs.md",
               "name": "content-context-and-state-graphs",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/99ac2de1162ce4c39061d67932acd847336ee7d84e18f070e84125178e5ca662",
-                "bytes": 20687,
-                "sha256": "99ac2de1162ce4c39061d67932acd847336ee7d84e18f070e84125178e5ca662"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/adae4e675b5e812202e8e2abd265deadf481e9af35988dd9f02033ee417400e2",
+                "bytes": 20959,
+                "sha256": "adae4e675b5e812202e8e2abd265deadf481e9af35988dd9f02033ee417400e2"
               },
               "title": "Content, context and state graphs"
             },
@@ -1673,13 +1673,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 1523,
+              "instructionLines": 1529,
               "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
               "name": "directory-conventions",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7b53f631eca4e0cd219909df2dd73971d3feb47a72f9a3a8b9e5d504200c06bf",
-                "bytes": 117232,
-                "sha256": "7b53f631eca4e0cd219909df2dd73971d3feb47a72f9a3a8b9e5d504200c06bf"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/234c8c2a7eab9b5d59d8edcc7c225e73fe31a750d7b7ab6d475459ebaa71b46d",
+                "bytes": 117545,
+                "sha256": "234c8c2a7eab9b5d59d8edcc7c225e73fe31a750d7b7ab6d475459ebaa71b46d"
               },
               "title": "Directory conventions — what an instance declares it scans"
             },
@@ -1744,18 +1744,18 @@
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-publication",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft.",
+              "description": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft. Also the one home for which graph each instance publishes, where, under which IRI and schema, and what is stripped from it.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 275,
+              "instructionLines": 455,
               "instructionsPath": "skills/kg/kg-core/instance-publication.md",
               "name": "instance-publication",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2fc72b926e9869e2ca25ab23ba19d6b640f0e15fd3aa1461cc874bf0c5bd8a2d",
-                "bytes": 14169,
-                "sha256": "2fc72b926e9869e2ca25ab23ba19d6b640f0e15fd3aa1461cc874bf0c5bd8a2d"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/43280bf1d650f39b3aff26782e9a4353f0974fc2fd5240b19a53cad58b851243",
+                "bytes": 25354,
+                "sha256": "43280bf1d650f39b3aff26782e9a4353f0974fc2fd5240b19a53cad58b851243"
               },
               "title": "instance-publication — draft is a state, not an absence of one"
             },
@@ -1787,13 +1787,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 1023,
+              "instructionLines": 1021,
               "instructionsPath": "skills/kg/kg-core/kg-export.md",
               "name": "kg-export",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d9425c22acb584672ba4d639be6d968240d77b0864699a91c230ff49e5258911",
-                "bytes": 55820,
-                "sha256": "d9425c22acb584672ba4d639be6d968240d77b0864699a91c230ff49e5258911"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/115d2005d64a73f9ff6909ce77e0a0f5e992505566aa37e052e241e40d3df4c1",
+                "bytes": 55721,
+                "sha256": "115d2005d64a73f9ff6909ce77e0a0f5e992505566aa37e052e241e40d3df4c1"
               },
               "title": "KG export — publishing the graph as linked data, not as a page"
             },
@@ -3692,13 +3692,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 905,
+              "instructionLines": 959,
               "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
               "name": "merge-queue",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ec066f41e66c226801bd7891cdafb2883206c64adc793d81b7b1e246df273efb",
-                "bytes": 49342,
-                "sha256": "ec066f41e66c226801bd7891cdafb2883206c64adc793d81b7b1e246df273efb"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a081af036bf24fa48c64121b106d4fb8be28b28e3a199743252726c27d9721b8",
+                "bytes": 52736,
+                "sha256": "a081af036bf24fa48c64121b106d4fb8be28b28e3a199743252726c27d9721b8"
               },
               "title": "Merge queue — what lands next, and as what"
             },
@@ -4735,13 +4735,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 261,
+              "instructionLines": 265,
               "instructionsPath": "skills/ui/ui-core/kg-viewer.md",
               "name": "kg-viewer",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e624cfe29fc257ecfa15e4468def72cb1935a2290ca53183a4e338781296ef35",
-                "bytes": 14053,
-                "sha256": "e624cfe29fc257ecfa15e4468def72cb1935a2290ca53183a4e338781296ef35"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7a3ec518b93e4dd84a25cfe4e9d0992254706559bb8688a90b13fe7999e8df66",
+                "bytes": 14275,
+                "sha256": "7a3ec518b93e4dd84a25cfe4e9d0992254706559bb8688a90b13fe7999e8df66"
               },
               "title": "Rendering the knowledge graph"
             },

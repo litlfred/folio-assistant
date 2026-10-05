@@ -31,7 +31,8 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import type { ReviewAnchors } from "./docx-to-folio.js";
-import { DECISION_LABELS, IN_EDIT_STATUSES, OPEN_STATUSES, type PublicComment } from "../schemas/public-comment.js";
+import { type ChangeSet, DECISION_LABELS, IN_EDIT_STATUSES, OPEN_STATUSES, type PublicComment } from "../schemas/public-comment.js";
+import { changeSets, discussUrl } from "./public-comment-changesets.js";
 import { Store } from "./public-comment.js";
 
 /** `folio-staging.yml`'s slug rule, step `slug`. */
@@ -57,14 +58,19 @@ export interface SiteComment {
   reviewer: string;
   recommendations: Array<{ by: string; code: string; rationale: string; url?: string }>;
   decision?: { code: string; label: string; reason: string; by: string };
+  /** The change-sets it is in (issue #2183), derived from the change-set records. */
+  changeSets: Array<{ id: string; title: string; status: string; issue?: number }>;
   links: { document?: string; before?: string; after?: string; pr?: string; discussion?: string; search?: string; record?: string };
 }
 
 export function siteComments(
   all: PublicComment[],
   anchors: ReviewAnchors,
-  opts: { slug: string; site?: string; repo?: string; storeDir?: string },
+  opts: { slug: string; site?: string; repo?: string; storeDir?: string; changeSets?: ChangeSet[] },
 ): SiteComment[] {
+  const inSets = new Map<string, SiteComment["changeSets"]>();
+  for (const cs of opts.changeSets ?? [])
+    if (cs.status !== "merged") for (const r of cs.refs) (inSets.get(r) ?? inSets.set(r, []).get(r)!).push({ id: cs.id, title: cs.title, status: cs.status, ...(cs.issue ? { issue: cs.issue } : {}) });
   const blocks = new Map(anchors.blocks.map((b) => [b.label, b]));
   const sections = new Map(anchors.sections.map((s) => [s.label, s]));
   return all.map((c) => {
@@ -99,6 +105,7 @@ export function siteComments(
       reviewer: [p.reviewer.name, p.reviewer.organisation, p.reviewer.country].filter(Boolean).join(", ") || "a reviewer",
       recommendations: p.recommendations.map((r) => ({ by: r.by, code: r.code, rationale: r.rationale, ...(r.url ? { url: r.url } : {}) })),
       ...(p.decision ? { decision: { code: p.decision.code, label: DECISION_LABELS[p.decision.code], reason: p.decision.reason, by: p.decision.by } } : {}),
+      changeSets: inSets.get(p.ref) ?? [],
       links: {
         ...(c.targetLabel ? { document: `../${opts.slug}/index.html${frag}` } : {}),
         ...(site && c.targetLabel && cs ? { before: `${site}/${opts.slug}/index.html${frag}` } : {}),
@@ -125,6 +132,10 @@ const STYLE = `
   .tile { border:1px solid var(--line); border-radius:.5rem; padding:.5rem .9rem; min-width:7rem; font:inherit; color:var(--fg); background:transparent; text-align:left; cursor:pointer; }
   .tile b { display:block; font-size:1.6rem; }
   .tile:hover { border-color:var(--link); }
+  main input[type=checkbox] { min-height:0; width:1.1rem; height:1.1rem; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+  #open-issue { font:inherit; padding:.45rem .9rem; border:1px solid var(--link); border-radius:.4rem; background:transparent; color:var(--link); cursor:pointer; }
+  #open-issue:disabled { opacity:.5; cursor:default; }
   .tile[aria-pressed="true"] { border-color:var(--link); box-shadow:inset 0 0 0 1px var(--link); background:var(--chip); }
   form { display:flex; flex-wrap:wrap; gap:.75rem; align-items:end; margin:1rem 0; }
   /* Form, table and details rules are scoped to main: the harness rail's header
@@ -144,7 +155,24 @@ const STYLE = `
 `;
 
 /** The dashboard. Filters run in the page; with scripts off the full table still renders. */
-export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: string; generated: string }): string {
+export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: string; generated: string; repo?: string; changeSets?: ChangeSet[] }): string {
+  const issueLink = (n: number) => (meta.repo ? `<a href="https://github.com/${esc(meta.repo)}/issues/${n}">#${n}</a>` : `#${n}`);
+  // A change-set with an issue links it; one without offers to open it, which
+  // is the moment it gets one (issue #2183: "dont create issue until someone
+  // comments").
+  const csCell = (c: { id: string; title: string; status: string; issue?: number }) =>
+    `<span class="chip" title="${esc(c.title)} (${esc(c.status)})"><a href="#${esc(c.id)}">${esc(c.id)}</a>` +
+    (c.issue ? ` ${issueLink(c.issue)}` : meta.repo ? ` <a href="${esc(discussUrl(meta.repo, c))}">discuss</a>` : "") +
+    `</span>`;
+  const sets = (meta.changeSets ?? []).filter((c) => c.status !== "merged");
+  const csRows = sets
+    .map(
+      (c) => `<tr id="${esc(c.id)}" data-cs-status="${esc(c.status)}"><td>${esc(c.id)}</td><td>${esc(c.title)}<details><summary class="muted">requirements</summary><p>${esc(c.requirements).replace(/\n/g, "<br>")}</p></details></td><td>${esc(c.status)}</td><td>${c.refs.length}</td>` +
+        `<td>${c.issue ? issueLink(c.issue) + (c.issues.length > 1 ? ` <span class="muted">+${c.issues.length - 1} more</span>` : "") : meta.repo ? `<a class="discuss" href="${esc(discussUrl(meta.repo, c))}">Discuss</a>` : "—"}</td>` +
+        `<td>${c.pr && meta.repo ? `<a href="https://github.com/${esc(meta.repo)}/pull/${c.pr.number}">#${c.pr.number}</a>` : ""}</td>` +
+        `<td><a href="#" class="show-cs" data-refs="${esc(c.refs.join(" "))}">show its comments</a></td></tr>`,
+    )
+    .join("\n");
   const count = (f: (r: SiteComment) => boolean) => rows.filter(f).length;
   // A tile is a TOGGLE (owner, 2026-10-05: "some of these should be toggable"):
   // pressing it filters the table to what it counts, pressing it again clears
@@ -166,7 +194,8 @@ export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: 
       .join(" ");
   const body = rows
     .map(
-      (r) => `<tr id="${esc(r.ref)}" data-phase="${r.phase}" data-status="${esc(r.status)}" data-placed="${r.target ? "1" : "0"}" data-type="${esc(r.type)}" data-section="${esc(r.section)}" data-text="${esc(`${r.ref} ${r.text} ${r.suggestion} ${r.sectionTitle}`.toLowerCase())}">
+      (r) => `<tr id="${esc(r.ref)}" data-phase="${r.phase}" data-status="${esc(r.status)}" data-placed="${r.target ? "1" : "0"}" data-incs="${r.changeSets.length ? "1" : "0"}" data-summary="${esc(r.summary)}" data-type="${esc(r.type)}" data-section="${esc(r.section)}" data-text="${esc(`${r.ref} ${r.text} ${r.suggestion} ${r.sectionTitle}`.toLowerCase())}">
+<td><input type="checkbox" class="pick" value="${esc(r.ref)}" aria-label="Select ${esc(r.ref)}"></td>
 <td><a href="#${esc(r.ref)}">${esc(r.ref)}</a></td>
 <td class="phase phase-${r.phase}">${esc(r.status)}</td>
 <td>${esc(r.type)}</td>
@@ -174,6 +203,7 @@ export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: 
 <td><details><summary>${esc(r.summary)}</summary><p>${esc(r.text)}</p>${r.suggestion ? `<p><b>Suggested revision:</b> ${esc(r.suggestion)}</p>` : ""}<p class="muted">${esc(r.reviewer)}</p></details></td>
 <td>${r.recommendations.map((x) => `<span class="chip" title="${esc(x.rationale)}">${x.url ? `<a href="${esc(x.url)}">` : ""}${esc(x.by)}: ${esc(x.code)}${x.url ? "</a>" : ""}</span>`).join("") || `<span class="muted">none</span>`}</td>
 <td>${r.decision ? `<b>${esc(r.decision.label)}</b>${r.decision.reason ? `<br>${esc(r.decision.reason)}` : ""}<br><span class="muted">${esc(r.decision.by)}</span>` : `<span class="muted">not yet</span>`}</td>
+<td>${r.changeSets.map(csCell).join(" ") || `<span class="muted">none</span>`}</td>
 <td class="links">${linkList(r)}</td>
 </tr>`,
     )
@@ -201,6 +231,7 @@ ${[
   tile(count((r) => r.phase === "editing"), "being edited", "editing"),
   tile(count((r) => r.phase === "decided"), "decided", "decided"),
   tile(count((r) => r.status === "incorporated"), "incorporated", "incorporated"),
+  tile(count((r) => r.phase === "open" && !r.changeSets.length), "open, in no change-set", "noissue"),
 ].join("\n")}
 </div>
 <form id="filters" aria-controls="comments">
@@ -210,9 +241,18 @@ ${[
 <label>Search<input id="f-text" type="search" placeholder="words, or PC-0042"></label>
 <p id="f-count" class="muted" aria-live="polite"></p>
 </form>
+${
+  sets.length
+    ? `<details id="change-sets"><summary><b>Change-sets (${sets.length})</b>: ${["proposed", "discussing", "editing", "incorporated", "closed"].map((st) => `${sets.filter((c) => c.status === st).length} ${st}`).join(", ")}. A change-set gets its GitHub issue the first time somebody discusses it, recommends on it or decides it.</summary>
+<div class="table-wrap"><table><thead><tr><th>Id</th><th>Change</th><th>Status</th><th>Comments</th><th>Issue</th><th>PR</th><th></th></tr></thead><tbody>
+${csRows}
+</tbody></table></div></details>`
+    : ""
+}
+${meta.repo ? `<p class="picker"><button type="button" id="open-issue" disabled>New change-set from the selected comments</button> <span id="pick-count" class="muted">Tick comments to group them.</span></p>` : ""}
 <div class="table-wrap">
 <table id="comments">
-<thead><tr><th>Ref</th><th>Status</th><th>Type</th><th>Where</th><th>Comment</th><th>Committee</th><th>Decision</th><th>Links</th></tr></thead>
+<thead><tr><th><span class="sr">Select</span></th><th>Ref</th><th>Status</th><th>Type</th><th>Where</th><th>Comment</th><th>Committee</th><th>Decision</th><th>Change-set</th><th>Links</th></tr></thead>
 <tbody>
 ${body}
 </tbody>
@@ -221,12 +261,14 @@ ${body}
 </main>
 <script>
 (() => {
+  const REPO = ${JSON.stringify(meta.repo ?? "")};
   const $ = (id) => document.getElementById(id);
   const rows = [...document.querySelectorAll("#comments tbody tr")];
   const tiles = [...document.querySelectorAll(".tile[data-tile]")];
   // Tiles that ARE a Status value set the select; the other two are extra filters.
   const PHASE_TILES = ["open", "editing", "decided"];
-  let extra = null; // "unplaced" | "incorporated" | null
+  let extra = null; // "unplaced" | "incorporated" | "noissue" | null
+  let only = null; // a change-set's comments, from "show its comments"
   const active = () => extra ?? ($("f-phase").value || "all");
   const apply = () => {
     const ph = $("f-phase").value, ty = $("f-type").value, se = $("f-section").value, tx = $("f-text").value.trim().toLowerCase();
@@ -236,7 +278,9 @@ ${body}
       const ok = (!ph || r.dataset.phase === ph) && (!ty || r.dataset.type === ty)
         && (!se || s === se || s.startsWith(se + ".")) && (!tx || r.dataset.text.includes(tx))
         && (extra !== "unplaced" || r.dataset.placed === "0")
-        && (extra !== "incorporated" || r.dataset.status === "incorporated");
+        && (extra !== "incorporated" || r.dataset.status === "incorporated")
+        && (extra !== "noissue" || (r.dataset.incs === "0" && r.dataset.phase === "open"))
+        && (!only || only.has(r.id));
       r.hidden = !ok; if (ok) n++;
     }
     $("f-count").textContent = n + " of " + rows.length + " shown";
@@ -251,9 +295,39 @@ ${body}
     $("f-phase").value = !clear && PHASE_TILES.includes(key) ? key : "";
     apply();
   });
-  $("f-phase").addEventListener("input", () => { extra = null; });
-  // A link to #PC-0042 shows that comment whatever the filters say.
+  $("f-phase").addEventListener("input", () => { extra = null; only = null; });
+  for (const a of document.querySelectorAll("a.show-cs")) a.addEventListener("click", (e) => {
+    e.preventDefault();
+    only = new Set(a.dataset.refs.split(" "));
+    extra = null; $("f-phase").value = "";
+    apply();
+    document.getElementById("comments").scrollIntoView();
+  });
+  // GROUPING (issue #2183): tick comments, open the "new change-set" issue
+  // form prefilled with them. The repository's workflow records the change-set
+  // from the form and adopts that issue as its own.
+  const picker = $("open-issue");
+  if (picker) {
+    const picked = () => [...document.querySelectorAll("input.pick:checked")].map((x) => x.value);
+    const sync = () => {
+      const n = picked().length;
+      picker.disabled = n === 0;
+      $("pick-count").textContent = n ? n + " selected" : "Tick comments to group them.";
+    };
+    document.getElementById("comments").addEventListener("change", (e) => { if (e.target.classList.contains("pick")) sync(); });
+    picker.addEventListener("click", () => {
+      const refs = picked();
+      if (!refs.length) return;
+      const q = new URLSearchParams({ template: "change-set-new.yml", title: "New change-set: ", comments: refs.join(", ") });
+      const url = "https://github.com/" + REPO + "/issues/new?" + q;
+      window.open(url, "_blank", "noopener");
+    });
+    sync();
+  }
+  // A link to #PC-0042 shows that comment whatever the filters say; a link to
+  // #CS-012 opens the change-sets list there.
   if (location.hash.startsWith("#PC-")) $("f-phase").value = "";
+  if (location.hash.startsWith("#CS-") && $("change-sets")) { $("change-sets").open = true; document.getElementById(location.hash.slice(1))?.scrollIntoView(); }
   for (const id of ["f-phase", "f-type", "f-section", "f-text"]) $(id).addEventListener("input", apply);
   apply();
 })();
@@ -269,10 +343,10 @@ ${body}
  * after each block's anchor. With scripts off the document reads as before.
  */
 export function overlaySnippet(rows: SiteComment[]): string {
-  const byTarget: Record<string, Array<Pick<SiteComment, "ref" | "status" | "phase" | "type" | "summary" | "decision">>> = {};
+  const byTarget: Record<string, Array<Pick<SiteComment, "ref" | "status" | "phase" | "type" | "summary" | "decision"> & { sets?: string[] }>> = {};
   for (const r of rows) {
     if (!r.target) continue;
-    (byTarget[r.target] ??= []).push({ ref: r.ref, status: r.status, phase: r.phase, type: r.type, summary: r.summary, ...(r.decision ? { decision: r.decision } : {}) });
+    (byTarget[r.target] ??= []).push({ ref: r.ref, status: r.status, phase: r.phase, type: r.type, summary: r.summary, ...(r.decision ? { decision: r.decision } : {}), ...(r.changeSets.length ? { sets: r.changeSets.map((c) => c.id) } : {}) });
   }
   const json = JSON.stringify(byTarget).replace(/</g, "\\u003c");
   return `
@@ -298,7 +372,7 @@ export function overlaySnippet(rows: SiteComment[]): string {
     const n = list.filter((c) => c.phase === "open").length;
     d.innerHTML = "<summary>" + list.length + " public comment" + (list.length > 1 ? "s" : "") + (n ? " (" + n + " open)" : "") + "</summary><ul>" +
       list.map((c) => "<li><a href=\\"../public-comments/index.html#" + esc(c.ref) + "\\">" + esc(c.ref) + "</a> · " + esc(c.status) +
-        (c.type ? " · " + esc(c.type) : "") + (c.decision ? " · <b>" + esc(c.decision.label) + "</b>" : "") + " — " + esc(c.summary) + "</li>").join("") + "</ul>";
+        (c.type ? " · " + esc(c.type) : "") + (c.decision ? " · <b>" + esc(c.decision.label) + "</b>" : "") + (c.sets ? " · " + c.sets.map((id) => "<a href=\\"../public-comments/index.html#" + esc(id) + "\\">" + esc(id) + "</a>").join(" ") : "") + " — "+ esc(c.summary) + "</li>").join("") + "</ul>";
     host.after(d);
   }
   const bar = document.createElement("div");
@@ -313,9 +387,11 @@ export function overlaySnippet(rows: SiteComment[]): string {
 
 export function buildPublicCommentSite(repo: string, out: string, storeDir?: string) {
   const store = Store.open(repo, storeDir);
-  const cfg = store.config() as ReturnType<Store["config"]> & { repo?: string; title?: string };
+  const cfg = store.config() as ReturnType<Store["config"]> & { title?: string };
   const anchors = store.anchors();
+  const sets = changeSets(store);
   const rows = siteComments(store.all(), anchors, {
+    changeSets: sets,
     slug: cfg.document,
     site: cfg.site,
     repo: cfg.repo,
@@ -328,7 +404,7 @@ export function buildPublicCommentSite(repo: string, out: string, storeDir?: str
   mkdirSync(join(out, "public-comments"), { recursive: true });
   writeFileSync(
     join(out, "public-comments", "index.html"),
-    dashboardHtml(rows, { title: cfg.title ?? cfg.document, slug: cfg.document, generated: new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC" }),
+    dashboardHtml(rows, { title: cfg.title ?? cfg.document, slug: cfg.document, ...(cfg.repo ? { repo: cfg.repo } : {}), changeSets: sets, generated: new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC" }),
   );
   writeFileSync(join(out, "public-comments", "comments.json"), JSON.stringify(rows, null, 1) + "\n");
   return { comments: rows.length, open: rows.filter((r) => r.phase === "open").length };

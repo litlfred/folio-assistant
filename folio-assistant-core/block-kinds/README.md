@@ -6,7 +6,7 @@
 
 The document profile's block kinds (prose, example, remark, algorithm, simulator, equation, diagram, table, figure), one folio-block-kind/v1 node per file (bean riit, step 2). Owner, 2026-10-04: kinds are discoverable and not centrally managed; cat-harness/schemas/block-kinds.ts finds these by scanning every instance's declared block-kinds graph, and the seven parallel tables they replace are gone.
 
-Part of [folio-assistant-core](../README.md) 0.1.0, declared as `folio-assistant-core-block-kinds`, holding `block-kinds`.
+Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `folio-assistant-core-block-kinds`, holding `block-kinds`.
 
 | file | what it is | used by |
 |---|---|---|

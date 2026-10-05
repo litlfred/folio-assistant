@@ -28,7 +28,10 @@
  *   incorporate <ref> [--branch <b>] [--pr N] [--staging <url>] --by <login>
  *   duplicate <ref> --of <ref> --by <login>
  *   withdraw <ref> --by <login>
- *   github --event <event.json>     ingest committee/editor tags from an issue or PR comment
+ *   github --event <event.json> [--dry-run]
+ *                                   an issue, issue comment or PR event: tags, change-set
+ *                                   issues and commands, and the PR that closes them. Handled
+ *                                   by `public-comment-changesets.ts`, which owns change-sets.
  *   summary [--json]                counts by status, decision, type and section
  *
  * Every command accepts `--repo <folio root>` and `--store <dir>`.
@@ -105,6 +108,8 @@ export interface StoreConfig {
   committee?: string[];
   /** Base URL of the published site, for deep links (main and STAGING/<slug>/). */
   site?: string;
+  /** "owner/name" on GitHub: where change-set issues are opened. */
+  repo?: string;
 }
 
 export class Store {
@@ -734,30 +739,46 @@ function readRows(file: string): Array<{ name: string; rows: Cell[][] }> {
 // ── GitHub tags ──────────────────────────────────────────────────
 
 export interface GithubTag {
+  /** Comments named as `pc: PC-0042`. */
   refs: string[];
+  /** Change-sets named as `cs: CS-012`. */
+  changeSets: string[];
+  /** Issues named as `pc: #12`: every comment in the change-sets it discusses. */
+  issues: number[];
   verb: "recommend" | "decide";
   code: DecisionCode;
   text: string;
 }
 
+/**
+ * Read a recommend/decide tag from a comment body: header lines `pc:`, `cs:`,
+ * `recommend:`, `decide:` in any order, then the rationale. Returns null when
+ * the body carries no tag at all.
+ *
+ * A tag naming no comment and no change-set is still a tag: in a change-set's
+ * issue, `decide: accepted` alone means that change-set, which the caller
+ * resolves from the thread (`public-comment-changesets.ts`). People do not
+ * repeat the ref they are standing on.
+ */
 export function parseGithubTag(body: string): GithubTag | { error: string } | null {
   const lines = body.replace(/\r\n/g, "\n").split("\n");
   const header: Record<string, string> = {};
   let i = 0;
   while (i < lines.length && !lines[i].trim()) i++;
   for (; i < lines.length; i++) {
-    const m = /^\s*(pc|recommend|decide):\s*(.*?)\s*$/i.exec(lines[i]);
+    const m = /^\s*(pc|cs|recommend|decide):\s*(.*?)\s*$/i.exec(lines[i]);
     if (!m) break;
     header[m[1].toLowerCase()] = m[2];
   }
-  if (!header.pc) return null;
   const verb = header.decide !== undefined ? "decide" : header.recommend !== undefined ? "recommend" : null;
-  if (!verb) return { error: "`pc:` needs a `recommend:` or `decide:` line" };
+  if (!verb) return header.pc !== undefined ? { error: "`pc:` needs a `recommend:` or `decide:` line" } : null;
   const code = (header[verb] ?? "").toLowerCase().replace(/\s+/g, "-") as DecisionCode;
   if (!DECISION_CODES.includes(code)) return { error: `\`${verb}: ${header[verb]}\` is not one of ${DECISION_CODES.join(", ")}` };
-  const refs = [...header.pc.matchAll(/PC-?\s*(\d+)/gi)].map((m) => formatRef(Number(m[1])));
-  if (!refs.length) return { error: "`pc:` names no comment (PC-0042)" };
-  return { refs, verb, code, text: lines.slice(i).join("\n").trim() };
+  const named = `${header.pc ?? ""} ${header.cs ?? ""}`;
+  const refs = [...named.matchAll(/PC-?\s*(\d+)/gi)].map((m) => formatRef(Number(m[1])));
+  const changeSets = [...named.matchAll(/CS-?\s*(\d+)/gi)].map((m) => `CS-${String(Number(m[1])).padStart(3, "0")}`);
+  const issues = [...named.matchAll(/(?:^|[\s,])#(\d+)\b/g)].map((m) => Number(m[1]));
+  return { refs, changeSets, issues, verb, code, text: lines.slice(i).join("\n").trim() };
 }
 
 /** The `author_association` values that make a commenter a collaborator on the repository. */
@@ -780,30 +801,31 @@ export function isCommittee(cfg: Pick<StoreConfig, "committee">, login: string, 
   return hasAssociation(COLLABORATOR_ASSOCIATIONS, association);
 }
 
-export function applyGithubComment(
+/** Why this person may not give this tag, or undefined when they may. */
+export function tagRefusal(cfg: Pick<StoreConfig, "editors" | "committee">, verb: GithubTag["verb"], login: string, association?: string): string | undefined {
+  const editor = isEditor(cfg, login, association);
+  if (verb === "decide" ? editor : editor || isCommittee(cfg, login, association)) return undefined;
+  const who =
+    verb === "decide"
+      ? cfg.editors
+        ? "an editor in config.json"
+        : "the owner of this repository (the default editor)"
+      : cfg.committee
+        ? "on the committee list in config.json, or an editor"
+        : "a collaborator on this repository, or an editor";
+  return `${login} is not ${who}`;
+}
+
+/** Record a recommendation or decision on each of `refs`. Permission is the caller's check. */
+export function applyTag(
   store: Store,
-  ev: { login: string; body: string; url: string; at: string; association?: string },
+  tag: Pick<GithubTag, "verb" | "code" | "text">,
+  refs: readonly string[],
+  ev: { login: string; url: string; at: string },
 ): { applied: string[]; refused: string[] } {
-  const tag = parseGithubTag(ev.body);
-  if (tag === null) return { applied: [], refused: [] };
-  if ("error" in tag) return { applied: [], refused: [tag.error] };
-  const cfg = store.config();
-  const editor = isEditor(cfg, ev.login, ev.association);
-  const allowed = tag.verb === "decide" ? editor : editor || isCommittee(cfg, ev.login, ev.association);
-  if (!allowed) {
-    const who =
-      tag.verb === "decide"
-        ? cfg.editors
-          ? "an editor in config.json"
-          : "the owner of this repository (the default editor)"
-        : cfg.committee
-          ? "on the committee list in config.json, or an editor"
-          : "a collaborator on this repository, or an editor";
-    return { applied: [], refused: [`${ev.login} is not ${who}`] };
-  }
   const applied: string[] = [];
   const refused: string[] = [];
-  for (const ref of tag.refs) {
+  for (const ref of [...new Set(refs)]) {
     try {
       let c = store.get(ref);
       if (tag.verb === "recommend") {
@@ -822,6 +844,24 @@ export function applyGithubComment(
     }
   }
   return { applied, refused };
+}
+
+/**
+ * A tag naming comments directly. A tag naming a change-set or an issue, or
+ * none at all, needs the change-set records to resolve: the folio's workflow
+ * runs `public-comment-changesets.ts github`, which does.
+ */
+export function applyGithubComment(
+  store: Store,
+  ev: { login: string; body: string; url: string; at: string; association?: string },
+): { applied: string[]; refused: string[] } {
+  const tag = parseGithubTag(ev.body);
+  if (tag === null) return { applied: [], refused: [] };
+  if ("error" in tag) return { applied: [], refused: [tag.error] };
+  const no = tagRefusal(store.config(), tag.verb, ev.login, ev.association);
+  if (no) return { applied: [], refused: [no] };
+  if (!tag.refs.length) return { applied: [], refused: ["the tag names no comment (pc: PC-0042); a change-set or issue is resolved by public-comment-changesets.ts"] };
+  return applyTag(store, tag, tag.refs, ev);
 }
 
 // ── Listing ──────────────────────────────────────────────────────
@@ -973,21 +1013,10 @@ if (import.meta.main) {
         break;
       }
       case "github": {
-        const ev = JSON.parse(readFileSync(resolve(opt("event")!), "utf-8"));
-        const c = ev.comment ?? ev.review;
-        if (!c?.body) {
-          console.error("no comment body in the event; nothing to do");
-          break;
-        }
-        const r = applyGithubComment(store, {
-          login: c.user.login,
-          body: c.body,
-          url: c.html_url,
-          at: c.updated_at ?? c.created_at ?? now,
-          association: c.author_association,
-        });
-        for (const x of r.applied) console.error(`✓ ${x}`);
-        for (const x of r.refused) console.error(`✗ ${x}`);
+        // Tags, change-set issues and their PRs all live in the change-set
+        // module, which owns the records a tag may name (issue #2183).
+        const { githubCommand } = await import("./public-comment-changesets.js");
+        await githubCommand(store, resolve(opt("event")!), { dryRun: flag("dry-run"), now });
         break;
       }
       default: {
