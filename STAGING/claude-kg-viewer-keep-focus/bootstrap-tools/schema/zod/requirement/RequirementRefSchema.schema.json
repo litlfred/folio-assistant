@@ -1,0 +1,18 @@
+{
+  "$ref": "#/definitions/RequirementRef",
+  "definitions": {
+    "RequirementRef": {
+      "type": "string",
+      "pattern": "^req:[a-z0-9][a-z0-9-]*(#[A-Za-z0-9][A-Za-z0-9_.-]*)?$"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-viewer-keep-focus/bootstrap-tools/schema/zod/requirement/RequirementRefSchema.schema.json",
+  "title": "RequirementRefSchema",
+  "description": "Generated from `RequirementRefSchema` in schemas/requirement.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/kg-viewer-keep-focus",
+    "sha": "2824e03cf6b6bc230afd0139dbb5f6007cd581e8",
+    "pr": "2241/merge",
+    "run": "37382721078"
+  }
+}

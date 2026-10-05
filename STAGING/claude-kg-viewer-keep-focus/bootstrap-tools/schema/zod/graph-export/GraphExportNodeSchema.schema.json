@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/GraphExportNode",
+  "definitions": {
+    "GraphExportNode": {
+      "type": "object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "@type": {
+          "type": "string",
+          "pattern": "^bootstrap:[A-Z][A-Za-z]*$"
+        }
+      },
+      "required": [
+        "@id",
+        "@type"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-viewer-keep-focus/bootstrap-tools/schema/zod/graph-export/GraphExportNodeSchema.schema.json",
+  "title": "GraphExportNodeSchema",
+  "description": "Generated from `GraphExportNodeSchema` in schemas/graph-export.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/kg-viewer-keep-focus",
+    "sha": "2824e03cf6b6bc230afd0139dbb5f6007cd581e8",
+    "pr": "2241/merge",
+    "run": "37382721078"
+  }
+}
