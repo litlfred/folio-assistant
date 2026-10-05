@@ -125,6 +125,12 @@ describe("declared means TRANSITIVELY declared", () => {
   });
 });
 
+// Renders EVERY instance in the checkout, one after another. That is a few
+// seconds of real work on a CI runner and sat on bun's 5000 ms default
+// (5073 and 5262 ms on shard 4/4). A render that finishes is not a hang, so
+// the budget is explicit rather than default.
+const RENDER_ALL_TIMEOUT_MS = 30_000;
+
 describe("this repository's own instances", () => {
   const REPO = repoRootFor(resolve(import.meta.dir, "../.."));
 
@@ -223,7 +229,7 @@ describe("this repository's own instances", () => {
       expect({ [r.name]: r.verdict }).toEqual({ [r.name]: "rendered" });
       expect(r.nodeCount).toBeGreaterThan(0);
     }
-  });
+  }, RENDER_ALL_TIMEOUT_MS);
 
   test("bootstrap's OWN skills are in its render — the silent drop, pinned", async () => {
     // `confirm-harness` lives only in `bootstrap/skills/`. When `skillMdDirs`
