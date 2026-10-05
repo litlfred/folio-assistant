@@ -22,6 +22,13 @@
  *
  * This exports the graph; the registry stays what it is, a runtime manifest.
  *
+ * ## The publication rules are not here
+ *
+ * Which instance's document is published where, under which base, with which
+ * schema, for how long a moved `@id` keeps a tombstone, and what is stripped:
+ * `skills/kg/kg-core/instance-publication.md` §"What each instance publishes"
+ * (bean `4ak5` item 4). This module carries the mechanics those rules need.
+ *
  * ## The edges are the point
  *
  * A list of skills is not a graph. What makes this worth publishing is that
