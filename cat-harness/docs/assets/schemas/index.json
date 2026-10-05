@@ -141,7 +141,7 @@
       "module": "cat-harness/schemas/block-kind-node.ts",
       "instance": "cat-harness",
       "name": "block-kind-node",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "A block kind as a KG node: `folio-block-kind/v1`, one JSON file per kind in",
       "isTest": false
     },
@@ -303,7 +303,7 @@
       "module": "cat-harness/schemas/contribution-nodes.ts",
       "instance": "cat-harness",
       "name": "contribution-nodes",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "Contributions as KG nodes: a harness's QA checkers and pipeline-plugin",
       "isTest": false
     },
@@ -343,7 +343,8 @@
       "module": "cat-harness/schemas/declared-nodes.ts",
       "instance": "cat-harness",
       "name": "declared-nodes",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "a function library over the declared directories; it defines no schema",
       "summary": "The files of every declared directory of one graph kind, across the",
       "isTest": false
     },
@@ -560,7 +561,7 @@
       "module": "cat-harness/schemas/graph-kind-node.ts",
       "instance": "cat-harness",
       "name": "graph-kind-node",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "A GRAPH KIND as a node of the knowledge graph, declared by the harness that",
       "isTest": false
     },
@@ -639,7 +640,8 @@
       "module": "cat-harness/schemas/instance-roots.ts",
       "instance": "cat-harness",
       "name": "instance-roots",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "constants and functions that locate an instance's declaration; no schema",
       "summary": "Instance DISCOVERY: which directories are instances, and which file in a",
       "isTest": false
     },
@@ -931,7 +933,8 @@
       "module": "cat-harness/schemas/po-strings.ts",
       "instance": "cat-harness",
       "name": "po-strings",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "a parser for .po catalogue strings; no schema",
       "summary": "A minimal gettext reader: `(msgctxt, msgid) → msgstr` for one `.po` file.",
       "isTest": false
     },
@@ -1695,7 +1698,7 @@
       "module": "cat-harness/schemas/validator-node.ts",
       "instance": "cat-harness",
       "name": "validator-node",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "A VALIDATOR as a node of the knowledge graph (bean riit). Owner, 2026-10-04:",
       "isTest": false
     },
