@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/Participant",
+  "definitions": {
+    "Participant": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "person",
+            "agent"
+          ]
+        },
+        "id": {
+          "description": "Session id, handle or name, where one is known. Absent is normal for a person.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-upbeat-franklin-97mdlz/bootstrap-tools/schema/zod/discussion/ParticipantSchema.schema.json",
+  "title": "ParticipantSchema",
+  "description": "Generated from `ParticipantSchema` in schemas/discussion.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/upbeat-franklin-97mdlz",
+    "sha": "634b13ab0d98b434dc21b671b0777fb18aaf8b91",
+    "pr": "2194/merge",
+    "run": "37357692247"
+  }
+}
