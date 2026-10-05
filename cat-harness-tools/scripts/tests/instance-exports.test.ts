@@ -8,8 +8,16 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { DEPLOY_WORKFLOW, incompleteExports, publishedInstances } from "../check-published-instance-exports.js";
-import { PUBLISHED_ELSEWHERE, declaredInstanceStubs, instanceExportPlan, type PlannedExport } from "../../../cat-harness/scripts/instance-exports.js";
+import { DEPLOY_WORKFLOW, incompleteExports, publishedInstances, unpublishedInstanceSchemas } from "../check-published-instance-exports.js";
+import { publishedInstanceSchemas } from "../../../cat-harness/scripts/kg-export.js";
+import { inAggregate } from "../../../cat-harness/test/support/checkout.js";
+import {
+  PUBLISHED_ELSEWHERE,
+  declaredInstanceStubs,
+  instanceExportPlan,
+  publishesInstanceSchema,
+  type PlannedExport,
+} from "../../../cat-harness/scripts/instance-exports.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 const wf = (n: string) => readFileSync(join(REPO, ".github", "workflows", n), "utf-8");
@@ -61,6 +69,8 @@ describe("a plan line expands to one invocation per planned instance", () => {
       ["./a", false],
       ["./b", false],
     ]);
+    // A plan row is the one whose document must link a schema index.
+    expect(got.every((i) => i.planned === true)).toBe(true);
   });
   test("with a base, it stands in only where the publisher passes it", () => {
     const got = publishedInstances('instance-exports.ts --out-dir ./_site --base-url "$BASE"', "w.yml", () => plan);
@@ -128,5 +138,56 @@ describe("completeness — bean 4ak5 item 5", () => {
       ["feature-staging.yml", wf("feature-staging.yml")],
     ]);
     expect(incompleteExports(real, declaredInstanceStubs(REPO))).toEqual([]);
+  });
+});
+
+// ── The schema half — bean `4ak5` item 1 ───────────────────────────────────
+//
+// Reads other instances' real contracts and skills, so only where they are
+// checked out together (standalone rule, bean `ho66`).
+describe.skipIf(!inAggregate())("every contract a planned instance's skills name reaches its schema/", () => {
+  const plan = instanceExportPlan(REPO);
+
+  test("the deploy's own publisher leaves nothing out", () => {
+    expect(unpublishedInstanceSchemas(plan)).toEqual([]);
+  });
+
+  test("the instances measured on 2026-10-05 with unpublished contracts now publish them", () => {
+    const counts = new Map(plan.map((p) => [p.stub, publishedInstanceSchemas(resolve(REPO, p.path)).contracts.length]));
+    for (const s of ["folio-assistant-core", "fhir-harness", "folio-assistant-sci", "smart-base"]) {
+      expect(counts.get(s) ?? 0).toBeGreaterThan(0);
+    }
+  });
+
+  test("FALSIFIED: a publisher that drops a contract fails the gate, naming it", () => {
+    // The gate reads what the instance HAS from its skills' front matter and
+    // what the publisher WRITES from the publisher, so a publisher that loses
+    // a file is seen — the shape `folio-assistant-sci` would have had if the
+    // contracts were read from its declared `schemas` graph (`sources/`).
+    const dropping = (root: string) => {
+      const built = publishedInstanceSchemas(root);
+      return { ...built, contracts: built.contracts.slice(1), files: built.files.filter(([f]) => f !== built.contracts[0]?.published) };
+    };
+    const got = unpublishedInstanceSchemas(plan, dropping).join("\n");
+    expect(got).toContain("which the publisher does not write into");
+    expect(got).toContain("folio-assistant-sci");
+  });
+
+  test("FALSIFIED: a publisher that writes no index fails the gate", () => {
+    const noIndex = (root: string) => {
+      const built = publishedInstanceSchemas(root);
+      return { ...built, files: built.files.slice(1) };
+    };
+    const got = unpublishedInstanceSchemas(plan.slice(0, 1), noIndex);
+    expect(got).toHaveLength(1);
+    expect(got[0]).toContain(`${plan[0]!.stub}.schema.json\` index`);
+  });
+
+  test("the document links an index exactly for the planned instances — the plan is the one answer", () => {
+    for (const p of plan) expect(publishesInstanceSchema(resolve(REPO, p.path), REPO)).toBe(true);
+    // The exempt instances keep their own publishers and get no schema/ from this one.
+    expect(publishesInstanceSchema(REPO, REPO)).toBe(false); // the checkout root, `folio-assistant`
+    expect(publishesInstanceSchema(join(REPO, "cat-harness"), REPO)).toBe(false);
+    expect(publishesInstanceSchema(join(REPO, "bootstrap"), REPO)).toBe(false);
   });
 });

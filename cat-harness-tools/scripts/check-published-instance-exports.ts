@@ -68,6 +68,10 @@ import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
 import { againstRef, qaResultPath, qaResultState, readQaResult, type QaResultState } from "../../cat-harness/scripts/qa-results.js";
 import { readQaTree } from "../../cat-harness/scripts/qa-store.js";
 import { PUBLISHED_ELSEWHERE, declaredInstanceStubs, instanceExportPlan, type PlannedExport } from "../../cat-harness/scripts/instance-exports.js";
+import { publishedInstanceSchemas } from "../../cat-harness/scripts/kg-export.js";
+import type { InstanceSchemaExport } from "../../cat-harness/scripts/harness-schema-export.js";
+import { isExternalContract, skillContracts } from "../../cat-harness/scripts/skill-contracts.js";
+import { termIri } from "../../cat-harness/schemas/namespaces.js";
 
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
 const WORKFLOW_DIR = join(REPO_ROOT, ".github", "workflows");
@@ -127,6 +131,11 @@ export interface Invocation {
   standInBase: boolean;
   /** Which exporter: cat-harness's, or the content's own tools'. */
   tool?: "kg-export" | "export-graph";
+  /**
+   * Expanded from an `instance-exports.ts` line, so the deploy also writes this
+   * instance a `<stub>/schema/` directory and links it (bean `4ak5` item 1).
+   */
+  planned?: boolean;
 }
 
 /**
@@ -186,6 +195,11 @@ export interface PublishedExportReport {
    * no export. Each entry names the workflow and why. Non-empty is a failure.
    */
   incomplete?: string[];
+  /**
+   * Bean `4ak5` item 1: contracts a planned instance's skills name that the
+   * publisher would not write into its `<stub>/schema/`. Non-empty is a failure.
+   */
+  unpublishedSchemas?: string[];
   /**
    * Why no committed sidecar could be LISTED, when none could — bean `id4s`.
    * The QA results directory not being in the checkout (QA leaves `main` for
@@ -319,6 +333,7 @@ export function publishedInstances(
       // The publisher passes no base to an instance with its own canonical URL.
       standInBase: /--base-url/.test(m[1] ?? "") && !p.ownCanonical,
       tool: "kg-export" as const,
+      planned: true,
     })),
   );
   return [
@@ -450,6 +465,19 @@ function runExport(inv: Invocation, outDir: string, against?: string): ExportRes
     if (nodes === 0) {
       return { ...inv, nodes, ok: false, qaSidecar, detail: "exported 0 nodes — an empty graph published under a name a consumer trusts" };
     }
+    // ── THE SCHEMA HALF (bean `4ak5` item 1) ────────────────────────────
+    //
+    // A planned instance's document must link the index the deploy writes for
+    // it, and must list no public `Schema` node the publisher would leave
+    // out. The second is a standing tripwire, not a present failure: the
+    // schema-node collector is instance-bound (`COLLECTOR_SCOPE`), so no
+    // foreign export lists one today, and `buildInstanceSchemas` renders none.
+    // The day an instance's export does, its index would omit them while its
+    // graph advertised them — so this fails then, rather than nobody noticing.
+    if (inv.planned === true) {
+      const gap = schemaLinkGap(inv, join(outDir, `${stub}.jsonld`));
+      if (gap !== undefined) return { ...inv, nodes, ok: false, qaSidecar, detail: gap };
+    }
     // `kg-export.ts` ALWAYS writes a sidecar under `--qa-root`. If it wrote
     // none, nothing was compared. That is could-not-determine, and it must
     // not share an exit with agreement (bean `r7v6`, C2). `export-graph.ts`
@@ -501,6 +529,81 @@ function runExport(inv: Invocation, outDir: string, against?: string): ExportRes
     .join("\n")
     .trim();
   return { ...inv, nodes, ok: false, qaSidecar, detail: said || `exited ${String(r.status)} with no diagnosis` };
+}
+
+/**
+ * Why a planned instance's exported document disagrees with the schema
+ * directory the deploy writes for it, or `undefined` when it agrees.
+ *
+ * Built with the base the deploy would pass, so the comparison is between the
+ * two artefacts ONE run produces — `kg-export`'s `conformsTo` and
+ * `instance-exports.ts`'s index `$id` — through the one composition both use
+ * (`publishedInstanceSchemas`).
+ */
+function schemaLinkGap(inv: Invocation, docPath: string): string | undefined {
+  let doc: { conformsTo?: unknown; "@graph"?: Array<Record<string, unknown>> };
+  try {
+    doc = JSON.parse(readFileSync(docPath, "utf-8")) as typeof doc;
+  } catch (e) {
+    return `could not read the exported document to compare its schema link: ${e instanceof Error ? e.message : String(e)}`;
+  }
+  const built = publishedInstanceSchemas(resolve(REPO_ROOT, inv.instance), inv.standInBase ? PLACEHOLDER_BASE : undefined);
+  if (doc.conformsTo !== built.indexIri) {
+    return (
+      `its document links schema index ${JSON.stringify(doc.conformsTo ?? null)}, but the deploy writes ` +
+      `${JSON.stringify(built.indexIri ?? null)} — the link and the file must come from one identity`
+    );
+  }
+  const schemaType = termIri("Schema");
+  const listed = (doc["@graph"] ?? []).filter((n) => n["@type"] === schemaType || (Array.isArray(n["@type"]) && n["@type"].includes(schemaType)));
+  if (listed.length > 0) {
+    return (
+      `its graph lists ${listed.length} public Schema node(s) (${listed.map((n) => String(n.name ?? n["@id"])).join(", ")}), ` +
+      "and the publisher writes no rendering of any — `buildInstanceSchemas` lists contracts only. Render them before publishing the nodes"
+    );
+  }
+  return undefined;
+}
+
+/**
+ * Bean `4ak5` item 1 — does every contract a planned instance's skills NAME
+ * reach its published `<stub>/schema/`?
+ *
+ * The two sides are read independently on purpose. What the instance HAS is
+ * its own skills' `input:` / `output:` refs (`skillContracts`, instance
+ * scope, external IRIs aside); what the publisher WRITES is
+ * `publishedInstanceSchemas`, the function `instance-exports.ts` calls. A
+ * check that read the contract directory for both would agree with itself
+ * whatever the publisher did — the failure this repository keeps naming.
+ *
+ * `publish` is injectable so a test can stand in a publisher that drops a
+ * contract and watch this fail; the default is the deploy's own.
+ */
+export function unpublishedInstanceSchemas(
+  plan: readonly PlannedExport[] = instanceExportPlan(REPO_ROOT),
+  publish: (instanceRoot: string) => InstanceSchemaExport = (r) => publishedInstanceSchemas(r),
+  repo: string = REPO_ROOT,
+): string[] {
+  const out: string[] = [];
+  const norm = (p: string): string => p.split("\\").join("/");
+  for (const p of plan) {
+    const root = resolve(repo, p.path);
+    const built = publish(root);
+    if (!built.files.some(([f]) => f === `${p.stub}.schema.json`)) {
+      out.push(`${p.path}: the publisher writes no \`${p.stub}/schema/${p.stub}.schema.json\` index`);
+    }
+    const written = new Set(built.contracts.map((c) => norm(c.source)));
+    for (const c of skillContracts(root, "instance").values()) {
+      if (resolve(c.instanceRoot) !== root) continue; // a skill held higher up publishes with its own instance
+      for (const ref of [c.input, c.output]) {
+        if (ref === undefined || isExternalContract(ref)) continue;
+        if (!written.has(norm(ref))) {
+          out.push(`${p.path}: skill \`${c.skill}\` names contract ${ref}, which the publisher does not write into ${p.stub}/schema/`);
+        }
+      }
+    }
+  }
+  return out;
 }
 
 /** A workflow's text with its comment lines removed, so prose naming a command is not the command. */
@@ -585,6 +688,9 @@ export function checkPublishedInstanceExports(opts: { against?: string } = {}): 
   }
   const declaredStubs = declaredInstanceStubs(REPO_ROOT);
   const incomplete = incompleteExports(texts, declaredStubs);
+  // Only when a workflow runs the plan: with no plan line nothing writes a
+  // schema directory, and `incomplete` already says the deploy is short.
+  const unpublishedSchemas = invocations.some((i) => i.planned === true) ? unpublishedInstanceSchemas() : [];
 
   const base: PublishedExportReport = {
     invocations,
@@ -592,6 +698,7 @@ export function checkPublishedInstanceExports(opts: { against?: string } = {}): 
     workflowsRead: files.length - unreadable.length,
     ...(unreadable.length > 0 ? { unreadable: unreadable.join("; ") } : {}),
     ...(incomplete.length > 0 ? { incomplete } : {}),
+    ...(unpublishedSchemas.length > 0 ? { unpublishedSchemas } : {}),
   };
   if (invocations.length === 0) return base;
 
@@ -640,6 +747,7 @@ export function formatReport(r: PublishedExportReport): string {
   }
 
   for (const line of r.incomplete ?? []) out.push(`  ✗ NOT EXPORTED — ${line}`);
+  for (const line of r.unpublishedSchemas ?? []) out.push(`  ✗ SCHEMA NOT PUBLISHED — ${line}`);
 
   const failed = r.results.filter((x) => !x.ok);
   for (const x of r.results) {
@@ -682,8 +790,9 @@ export function formatReport(r: PublishedExportReport): string {
         "its committed sidecar is compared here, but only a manual run produces it. Keeping it is a person's decision",
     );
   }
-  if (failed.length === 0 && r.unreadable === undefined && (r.incomplete ?? []).length === 0) {
+  if (failed.length === 0 && r.unreadable === undefined && (r.incomplete ?? []).length === 0 && (r.unpublishedSchemas ?? []).length === 0) {
     out.push("    every declared instance is published, and every graph a workflow publishes builds, with dereferenceable `@id`s");
+    out.push("    every planned instance's contracts reach its `<stub>/schema/`, and its document links that index");
     return out.join("\n");
   }
   if (failed.length === 0) return out.join("\n");
@@ -712,6 +821,7 @@ if (import.meta.main) {
     report.unreadable === undefined &&
     report.invocations.length > 0 &&
     (report.incomplete ?? []).length === 0 &&
+    (report.unpublishedSchemas ?? []).length === 0 &&
     report.results.every((x) => x.ok);
   (clean ? console.log : console.error)(formatReport(report));
   process.exit(clean ? 0 : 1);
