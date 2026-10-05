@@ -672,6 +672,26 @@ function itemHtml(i: NavItem, c: Ctx): string {
   return `<div class="fa-nav-row">${row}${action}${kids}</div>`;
 }
 
+/** Does this row, or any row beneath it, stand for the page being read? */
+function holdsCurrent(i: NavItem): boolean {
+  return i.current === true || (i.children ?? []).some(holdsCurrent);
+}
+
+/**
+ * The graphs group's state on arrival (#2150).
+ *
+ * FOLDED when the page has a section of its own: that section IS where the
+ * reader is, and it is the one disclosure open on arrival (#1757's
+ * *"only the current pages visualiers LHS navbar is open"*, graded by
+ * `check-viewer-nav.ts` `single-open`). Otherwise as declared — folded, from
+ * `railModel` — UNLESS one of its rows is the page being read: a folded
+ * default must not hide where the reader is.
+ */
+function graphsOnArrival(g: NavGroup, hasOwnSection: boolean): NavGroup {
+  if (hasOwnSection) return { ...g, open: false };
+  return g.items.some(holdsCurrent) ? { ...g, open: true } : g;
+}
+
 function groupHtml(g: NavGroup, c: Ctx): string {
   const items = g.items.map((i) => itemHtml(i, c)).join("");
   if (!g.collapsible) return items;
@@ -773,7 +793,7 @@ export function navbarRegionsHtml(m: NavbarModel): string {
     (m.graphs || m.visualiser
       ? `<div class="fa-nav-graphs">` +
         (m.visualiser ? groupHtml({ ...m.visualiser, collapsible: true, open: true }, c) : "") +
-        (m.graphs ? groupHtml(m.visualiser ? { ...m.graphs, open: false } : m.graphs, c) : "") +
+        (m.graphs ? groupHtml(graphsOnArrival(m.graphs, m.visualiser !== undefined), c) : "") +
         `</div>`
       : "") +
     `<div class="fa-nav-bottom">` +

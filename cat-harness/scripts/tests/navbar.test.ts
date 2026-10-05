@@ -1081,6 +1081,36 @@ describe("adjacent graph rows cannot be confused (bean yag0)", () => {
   });
 });
 
+describe("the rail's Graphs group starts closed (#2150)", () => {
+  // Owner, 2026-10-05: "also have the "Graphs" section start closed on LHS navbar".
+  const graphsSummary = /<details class="fa-nav-group"( open)?><summary><span class="fa-nav-glyph" aria-hidden="true">▤<\/span>/;
+
+  it("is folded on arrival on a page with no section of its own", () => {
+    const html = navbarRegionsHtml(railModel({ instance: "x", toRoot: "..", links: [{ href: "../a/", label: "a" }] }));
+    expect(graphsSummary.exec(html)?.[1]).toBeUndefined();
+    expect(graphsSummary.test(html)).toBe(true);
+  });
+
+  it("opens when one of its rows is the page being read", () => {
+    const html = navbarRegionsHtml(
+      railModel({ instance: "x", toRoot: "..", links: [{ href: "../a/", label: "a" }, { label: "b", current: true }] }),
+    );
+    expect(graphsSummary.exec(html)?.[1]).toBe(" open");
+  });
+
+  it("stays folded beside the page's own section, which is the one open group", () => {
+    const html = navbarRegionsHtml(
+      railModel({
+        instance: "x",
+        toRoot: "..",
+        links: [{ label: "b", current: true }],
+        documentIndex: { label: "Contents", items: [{ href: "#a", label: "A" }], collapsible: true, open: true },
+      }),
+    );
+    expect(graphsSummary.exec(html)?.[1]).toBeUndefined();
+  });
+});
+
 describe("a harness row is not a graph-kind row, whatever its mark (#2151)", () => {
   // Owner, 2026-10-05: "alignment of harnesses is off". `fa-nav-kind` (the
   // strip-column indent) was inferred from "has an SVG glyph"; #2122 gave
