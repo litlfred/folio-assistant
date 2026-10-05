@@ -215,18 +215,22 @@ export function buildSkillIoContracts(opts: SchemaExportOptions = {}): SkillIoCo
       if (!f.endsWith(".schema.json")) continue;
       const io = f.slice(0, -".schema.json".length);
       const source = join(relative(root, dir), e.name, f);
-      const schema = JSON.parse(readFileSync(join(root, source), "utf-8")) as Record<string, unknown>;
+      const stored = JSON.parse(readFileSync(join(root, source), "utf-8")) as Record<string, unknown>;
+      // With no base the stored `$id` is DROPPED, so the contract publishes
+      // with no identity rather than the hand-written one this function exists
+      // not to trust. Measured on a fixture (bean `4ak5` item 1): spreading the
+      // file let a stale `$id` through whenever no base was known. With a base
+      // the computed one replaces it IN PLACE, keeping the key order — so the
+      // host's published bytes are unchanged.
+      const { $id: _dropped, ...unidentified } = stored;
       out.push({
         skill: e.name,
         io,
         source,
         published: join("skills", e.name, f),
-        schema: {
-          ...schema,
-          // Absolute or absent, never relative and never composed by hand.
-          // Same rule the three documents above follow.
-          ...(base ? { $id: skillIoIri(base, e.name, io) } : {}),
-        },
+        // Absolute or absent, never relative and never composed by hand.
+        // Same rule the three documents above follow.
+        schema: base ? { ...stored, $id: skillIoIri(base, e.name, io) } : unidentified,
       });
     }
   }
