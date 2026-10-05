@@ -1,5 +1,5 @@
 ---
-description: "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `folio-revie..."
+description: "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `review-comm..."
 argument-hint: "[what to run it on]"
 generated: cat-harness/scripts/gen-skill-commands.ts
 ---

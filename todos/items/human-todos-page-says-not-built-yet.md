@@ -1,5 +1,5 @@
 ---
-$schema: folio-todo/v1
+$schema: todo/1.0.0
 id: human-todos-page-says-not-built-yet
 summary: "The human-todos page still says 'Not built yet' — the store now exists"
 status: open

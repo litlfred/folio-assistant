@@ -16,7 +16,7 @@ const anchors: ReviewAnchors = {
 
 const comment = (over: Record<string, unknown> = {}) =>
   PublicCommentSchema.parse({
-    $schema: "folio-public-comment/v1",
+    $schema: "public-comment/1.0.0",
     id: "pc-0001",
     summary: "Split <the> definition",
     comment: "Split <the> definition",

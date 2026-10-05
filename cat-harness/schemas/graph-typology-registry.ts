@@ -969,6 +969,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       "folio-qa-graph/v1": { shape: "content/pipeline/qa-graph-index.ts#QaGraphIndex" },
       "folio-translation-index/v1": { shape: "content/pipeline/translation-index.ts#TranslationIndex" },
       "folio-bean-index/v1": { generated: true },
+      "node-kind-index/1.0.0": { generated: true },
       "folio-translation-status/v1": { generated: true },
       "folio-schema-graph/v1": { generated: true },
       "folio-library-index/v1": { generated: true },
@@ -1376,13 +1377,13 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   // `<attestations dir>/<family>/<mirrored subject path>.attestations.json`.
   attestations: {
     description:
-      "the JUDGEMENT half of a QA verdict, kept apart from the derived half: one `qa-attestations/v1` file per subject at `test/attestations/<family>/<mirrored subject path>.attestations.json`, where `<family>` is the derived family it sits beside (`kg-qa`, bean `2gst`; `block-qa` and `translation-qa`, bean `8wj1` — whose derived reports keep a projection composed from the store). Split out of `qa` by owner ruling D2 (a), 2026-10-01 (bean `2gst`): derived verdicts move to the `qa-reports` branch, and judgements stay on main, where a `git rm` of derived results cannot reach them. A separate kind because the two answer the deletion question differently: a `qa` file can be regenerated, an attestation cannot. Every entry pins the hash it attested, so a stale one is detectable. `state`, like `review-verdicts`. Reads answer hit / miss / absent / corrupt / unknown. On a miss or an absent store a WRITER moves the judgements a prior derived file still carries into the store as it saves (owner ruling 2, 2026-10-01); a corrupt or unreadable store is `unknown` and refused. Shape in `schemas/qa-attestations.ts`.",
+      "the JUDGEMENT half of a QA verdict, kept apart from the derived half: one `qa-attestations/v1` file per subject at `test/attestations/<family>/<mirrored subject path>.attestations.json`, where `<family>` is the derived family it sits beside (`kg-qa`, bean `2gst`; `block-qa` and `translation-qa`, bean `8wj1` — whose derived reports keep a projection composed from the store; `bib-verification` and `bib-human-review`, the folio's two bibliography judgement ledgers, one file per reference, read and written only through `schemas/bib-attestations.ts`). Split out of `qa` by owner ruling D2 (a), 2026-10-01 (bean `2gst`): derived verdicts move to the `qa-reports` branch, and judgements stay on main, where a `git rm` of derived results cannot reach them. A separate kind because the two answer the deletion question differently: a `qa` file can be regenerated, an attestation cannot. Every entry pins the hash it attested, so a stale one is detectable. `state`, like `review-verdicts`. Reads answer hit / miss / absent / corrupt / unknown. On a miss or an absent store a WRITER moves the judgements a prior derived file still carries into the store as it saves (owner ruling 2, 2026-10-01); a corrupt or unreadable store is `unknown` and refused. Shape in `schemas/qa-attestations.ts`.",
     renderable: false,
     holds: "state",
     recordsWork: false,
     summary:
       "QA attestations — the judgements a QA family carries across runs (pair attestations, voice " +
-      "reviews, agent and human verdicts), one `qa-attestations/v1` file per subject, mirroring the " +
+      "reviews, agent and human verdicts, bibliography verifications and human reviews), one `qa-attestations/v1` file per subject, mirroring the " +
       "derived family's tree. Kept on main where deleting derived results cannot reach them; each " +
       "entry pins the hash it attested, so a stale one is detectable.",
     schema: "schemas/qa-attestations.ts",
@@ -1903,7 +1904,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   },
   "todo-items": {
     description:
-      "todo nodes — one file each, `\"$schema\": \"folio-todo/v1\"`. Authored by people, and by agents on their behalf.",
+      "todo nodes — one file each, `\"$schema\": \"todo/1.0.0\"`. Authored by people, and by agents on their behalf.",
     title: "Todo items",
     layer: "core",
     renderable: false,
@@ -1913,7 +1914,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
     recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:
-      "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. " +
+      "Todo nodes — one file each, carrying `\"$schema\": \"todo/1.0.0\"`. " +
       "Authored by people and by agents on their behalf.",
   },
 
