@@ -4,46 +4,46 @@
   "@type": "bootstrap:Subgraph",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/fhir-artifact-index",
-      "@type": "cat-harness:Schema",
-      "name": "fhir-artifact-index",
-      "title": "fhir-artifact-index"
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#asset/agent-instructions",
+      "@type": "bootstrap:Asset",
+      "name": "agent-instructions",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5880a3a6f354b7488578d653ac3c1018857f8090a6031929a8c2272ad9de481e",
+        "bytes": 2686,
+        "sha256": "5880a3a6f354b7488578d653ac3c1018857f8090a6031929a8c2272ad9de481e"
+      },
+      "title": "AGENTS.md — fhir-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-ast",
-      "@type": "cat-harness:Schema",
-      "name": "ig-ast",
-      "title": "ig-ast"
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#asset/instance-readme",
+      "@type": "bootstrap:Asset",
+      "name": "instance-readme",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/49e89965629c8d06cd548dde44f46ec59c8a939fcebf2deb8dd6904560f49013",
+        "bytes": 2402,
+        "sha256": "49e89965629c8d06cd548dde44f46ec59c8a939fcebf2deb8dd6904560f49013"
+      },
+      "title": "fhir-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-chrome",
-      "@type": "cat-harness:Schema",
-      "name": "ig-chrome",
-      "title": "ig-chrome"
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-scripts",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-ig-scripts"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-identity",
-      "@type": "cat-harness:Schema",
-      "name": "ig-identity",
-      "title": "ig-identity"
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-tools",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-ig-tools"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-menu",
-      "@type": "cat-harness:Schema",
-      "name": "ig-menu",
-      "title": "ig-menu"
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/library",
+      "@type": "bootstrap:Subgraph",
+      "name": "library"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-metadata-index",
-      "@type": "cat-harness:Schema",
-      "name": "ig-metadata-index",
-      "title": "ig-metadata-index"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-releases",
-      "@type": "cat-harness:Schema",
-      "name": "ig-releases",
-      "title": "ig-releases"
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/qa",
+      "@type": "bootstrap:Subgraph",
+      "name": "qa"
     }
   ],
   "hasSubgraph": [
