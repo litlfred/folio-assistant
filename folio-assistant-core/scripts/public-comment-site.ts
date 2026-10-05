@@ -117,8 +117,9 @@ const STYLE = `
     --open:#9a5b00; --editing:#0b5cad; --decided:#2e6b2e; --closed:#5b5b5b; }
   @media (prefers-color-scheme: dark) { :root { --fg:#e8e8e6; --bg:#161616; --muted:#a8a8a4; --line:#3a3a38; --link:#7db4ff; --chip:#23272e;
     --open:#f0b35a; --editing:#7db4ff; --decided:#8fd18f; --closed:#a8a8a4; } }
-  body { margin:0; padding:1.5rem 1rem 4rem; font:1rem/1.5 system-ui,sans-serif; color:var(--fg); background:var(--bg); }
-  main { max-width:90rem; margin:0 auto; }
+  body { margin:0; font:1rem/1.5 system-ui,sans-serif; color:var(--fg); background:var(--bg); }
+  /* Column and gutters belong to main: the harness rail owns body padding-left. */
+  main { max-width:90rem; margin:0 auto; padding:1.5rem 1.5rem 4rem; }
   a { color:var(--link); } a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible { outline:3px solid var(--link); outline-offset:2px; }
   .tiles { display:flex; flex-wrap:wrap; gap:.75rem; margin:1rem 0; }
   .tile { border:1px solid var(--line); border-radius:.5rem; padding:.5rem .9rem; min-width:7rem; }

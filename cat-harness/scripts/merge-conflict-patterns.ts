@@ -20,11 +20,12 @@
  * progress. `refuse` entries exist only to say WHY a common path is not
  * automatic (so the next agent does not add it on a hunch).
  *
- * ## The four strategies
+ * ## The five strategies
  *
  * | strategy | resolution | safe because |
  * |---|---|---|
  * | `take-base` | the base's copy, then regenerate | the file is wholly generated; the gate set regenerates it from the merged inputs |
+ * | `owned-tree` | the base's COMMITTED copy, else the branch's; removed only when neither side has it; then regenerate | one writer (`prunedBy`) owns the whole directory and deletes every file it did not write, so a kept orphan is pruned by regen, and the resolution never drops a path (beans `vsv7`, `8j9e`) |
  * | `generated-regions` | each hunk takes the base's side, then regenerate | EVERY hunk lies inside a `<!-- x:begin -->`…`<!-- x:end -->` region, which the generator rewrites; a hunk in authored text refuses |
  * | `qa-sidecar` | `qa:resolve-conflicts` | that command reads git's stages and refuses a sidecar carrying an agent's attestation |
  * | `refuse` | none | authored, or carries judgement a generator cannot reproduce |
@@ -35,7 +36,7 @@
  * purpose — a hand-kept list of check names is the list that rots.
  */
 
-export type ConflictStrategy = "take-base" | "generated-regions" | "qa-sidecar" | "refuse";
+export type ConflictStrategy = "take-base" | "owned-tree" | "generated-regions" | "qa-sidecar" | "refuse";
 
 export interface ConflictPattern {
   /** Stable id; the skill's section anchor. */
@@ -45,6 +46,14 @@ export interface ConflictPattern {
   strategy: ConflictStrategy;
   /** Why it churns (or, for `refuse`, why it is not automatic). */
   why: string;
+  /**
+   * `owned-tree` only: the `package.json` script that writes the directory
+   * WHOLE and deletes what it did not write. The strategy keeps a file that
+   * only one side has, so it is sound only when this writer prunes the
+   * orphans. It names a writer, not a check: `regen` still finds the check
+   * from the CI workflow.
+   */
+  prunedBy?: string;
 }
 
 /**
@@ -235,6 +244,29 @@ export const PATTERNS: readonly ConflictPattern[] = [
     globs: ["cat-harness/docs/assets/**/*.json", "cat-harness/docs/_data/**"],
     strategy: "take-base",
     why: "generated site data indexes (23 + 13). Rewritten from the graph on every regeneration.",
+  },
+  {
+    id: "subgraph-index",
+    // Instance-agnostic, like `prov-qaqc`: `subgraphOutDir` is `<docs>/subgraph`
+    // under whichever instance runs the writer.
+    globs: ["**/docs/subgraph/**"],
+    strategy: "owned-tree",
+    prunedBy: "subgraph:jsonld",
+    why:
+      "the subgraph JSON-LD indexes, written WHOLE by `subgraph:jsonld` (gen-subgraph-jsonld.ts, `subgraph:jsonld:check` in CI), which also deletes every file under the directory that it did not write. " +
+      "Any skill, schema or declaration edit rewrites one, so every merge of main into a PR that edits a skill conflicted here and was refused (#2176, 2026-10-05). " +
+      "It is `owned-tree` rather than `take-base` because a subgraph that only the branch has can meet a rename on the base, and `take-base` would `git rm` it. `droppedInMerge` refuses that drop.",
+  },
+  {
+    id: "subgraph-payload",
+    globs: ["**/docs/payload/sha256/**"],
+    strategy: "owned-tree",
+    prunedBy: "subgraph:jsonld",
+    why:
+      "content-addressed payloads (f233): `<hex>` is the sha256 of its bytes and sits beside its `<hex>.json` sidecar. The same `subgraph:jsonld` writes them, and deletes every payload no node links to. " +
+      "When both sides change one node's payload, git reads it as a RENAME/RENAME (base hex to branch hex, and base hex to main hex). It leaves the old name at stage 1 only, the branch's at stage 2 only and main's at stage 3 only. Both new stages hold git's merge of the two bodies WITH conflict markers (measured 2026-10-05, #2176). " +
+      "So `take-base` fails twice. It `git rm`s the branch's new payload, a path the branch ADDED, which `droppedInMerge` refuses. And `checkout --theirs` writes marked bytes under a name that is the hash of other bytes. " +
+      "`owned-tree` takes each side's COMMITTED blob instead, so every kept name holds the bytes it hashes. The writer then deletes the orphan, which is the deletion the `staged` checkpoint allows.",
   },
   {
     id: "readme-generated-regions",
