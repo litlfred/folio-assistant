@@ -27,7 +27,7 @@ import {
   type NavGroup,
   type NavbarModel,
 } from "../lib/navbar.js";
-import { NAVBAR_ROW_CSS, NAVBAR_ROW_JS, injectRail, railModel, withNavbarRow } from "../lib/harness-rail.js";
+import { NAVBAR_ROW_CSS, NAVBAR_ROW_INLINE, NAVBAR_ROW_JS, injectRail, railModel, withNavbarRow } from "../lib/harness-rail.js";
 import { documentIndexOf } from "../lib/navbar.js";
 import {
   BEGIN,
@@ -1094,7 +1094,7 @@ describe("the harness row's data reaches a railed page (bean wckf, #2147)", () =
   it("an object row is written once, right after <body>, and parses back to itself", () => {
     const row = { icons: ["todos", "beans"], hrefs: { todos: "/todos/" } };
     const out = injectRail(SHELL, { ...opts, navbarRow: row })!;
-    const m = /<body><script type="application\/json" id="fa-navbar-row">([^<]*)<\/script>/.exec(out);
+    const m = /<body><script type="application\/json" id="fa-navbar-row" data-fa-root="\.\.">([^<]*)<\/script>/.exec(out);
     expect(m).not.toBeNull();
     expect(JSON.parse(m![1]!)).toEqual(row);
     expect(withNavbarRow(out, row)).toBe(out); // never twice
@@ -1107,7 +1107,7 @@ describe("the harness row's data reaches a railed page (bean wckf, #2147)", () =
   });
 
   it("declared none is written as null; could-not-tell writes nothing", () => {
-    expect(injectRail(SHELL, { ...opts, navbarRow: null })).toContain('id="fa-navbar-row">null</script>');
+    expect(injectRail(SHELL, { ...opts, navbarRow: null })).toContain('id="fa-navbar-row" data-fa-root="..">null</script>');
     expect(injectRail(SHELL, { ...opts })).not.toContain("fa-navbar-row");
   });
 
@@ -1118,8 +1118,24 @@ describe("the harness row's data reaches a railed page (bean wckf, #2147)", () =
     const head = out.slice(0, out.indexOf("</head>"));
     expect(head).toContain(`<script src="../${NAVBAR_ROW_JS}" defer></script>`);
     expect(head).toContain(`<link rel="stylesheet" href="../${NAVBAR_ROW_CSS}">`);
-    expect(withNavbarRow(out, { icons: ["todos"] }, "..")).toBe(out);
+    expect(withNavbarRow(out, { icons: ["todos"] }, { root: ".." })).toBe(out);
     expect(out.split(NAVBAR_ROW_JS).length - 1).toBe(1);
+  });
+
+  it("a folio's site links the PLATFORM's row files and composes the row's hrefs there", () => {
+    const BASE = "https://litlfred.github.io/folio-assistant";
+    const out = injectRail(SHELL, { ...opts, assetRoot: BASE, navbarRow: { icons: ["todos"] } })!;
+    expect(out).toContain(`<script src="${BASE}/${NAVBAR_ROW_JS}" defer></script>`);
+    expect(out).toContain(`data-fa-root="${BASE}"`);
+  });
+
+  it("a page that fetches nothing gets the row INLINED, not linked", () => {
+    const out = injectRail(SHELL, { ...opts, navbarRow: { icons: ["todos"] }, inlineRowAssets: { js: "/*JS*/", css: "/*CSS*/" } })!;
+    expect(out).not.toContain("<script src=");
+    expect(out).not.toContain('rel="stylesheet"');
+    expect(out).toContain(">/*JS*/</script>");
+    expect(out).toContain(">/*CSS*/</style>");
+    expect(out.split("/*JS*/").length - 1).toBe(1);
   });
 
   it("no row data, no row script — and a declined row still gets one, to say so", () => {
@@ -1172,7 +1188,7 @@ describe("every committed railed page carries the harness row's data (bean wckf,
     if (!html.includes('id="fa-navbar-row"')) missing.push(rel);
     // The data alone drew nothing on 2,709 published pages (bean `lhvt`): a
     // railed page must also load what draws it, itself or through docs-ui.js.
-    if (!html.includes(NAVBAR_ROW_JS)) undrawn.push(rel);
+    if (!html.includes(NAVBAR_ROW_JS) && !html.includes(NAVBAR_ROW_INLINE)) undrawn.push(rel);
   }
 
   it("there are railed pages to check — an empty scan is not a clean one", () => {

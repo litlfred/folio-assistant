@@ -58,7 +58,7 @@ describe("what it rails", () => {
     const root = site();
     run(root);
     const html = readFileSync(join(root, "bootstrap/README.html"), "utf-8");
-    const m = /<script type="application\/json" id="fa-navbar-row">([^<]*)<\/script>/.exec(html);
+    const m = /<script type="application\/json" id="fa-navbar-row"[^>]*>([^<]*)<\/script>/.exec(html);
     expect(m).not.toBeNull();
     const row = JSON.parse(m![1]!) as { icons?: string[] } | null;
     expect(Array.isArray(row?.icons)).toBe(true);

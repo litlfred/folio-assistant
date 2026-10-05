@@ -50,10 +50,25 @@
     }
   })();
 
+  /* The site root, in order: the theme's `fa-baseurl` meta; then the
+   * `data-fa-root` `injectRail` writes on the row's data — relative on the
+   * platform's own site, the platform's absolute address on a folio's site,
+   * and the ONLY answer for an inlined copy of this script, which has no
+   * address of its own; then this script's own address. */
   function siteBaseurl() {
     var meta = document.querySelector('meta[name="fa-baseurl"]');
     var v = (meta && meta.getAttribute("content")) || "";
-    return v ? v.replace(/\/+$/, "") : SCRIPT_BASE;
+    if (v) return v.replace(/\/+$/, "");
+    var data = document.getElementById("fa-navbar-row");
+    var root = data && data.getAttribute("data-fa-root");
+    if (root) {
+      try {
+        var u = new URL(root.replace(/\/*$/, "/"), location.href);
+        var path = u.pathname.replace(/\/+$/, "");
+        return u.origin === location.origin ? path : u.origin + path;
+      } catch (_e) { /* fall through to the script's own address */ }
+    }
+    return SCRIPT_BASE;
   }
 
   /** A site-root path, composed against this deploy's base — as `docs-ui.js`'s `withBase`. */
