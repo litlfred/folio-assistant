@@ -1,0 +1,1240 @@
+{
+  "$ref": "#/definitions/CatHarnessDeclaration",
+  "definitions": {
+    "CatHarnessDeclaration": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "alsoWritten": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "avatar": {
+          "type": "object",
+          "properties": {
+            "glyph": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tone": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 359
+            },
+            "reads": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "glyph",
+            "tone",
+            "reads"
+          ],
+          "additionalProperties": false
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "src": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "type": "string",
+                "minLength": 1
+              },
+              "layout": {
+                "type": "string",
+                "minLength": 1
+              },
+              "width": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "height": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "textRegion": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "y": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "w": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  },
+                  "h": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "w",
+                  "h"
+                ]
+              },
+              "avatarRegion": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "y": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "w": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  },
+                  "h": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "w",
+                  "h"
+                ]
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "src"
+            ]
+          }
+        },
+        "assets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "src": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                    "description": "A forge repository's full name, owner/name"
+                  },
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "ref": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "instance",
+                  "path"
+                ]
+              },
+              "scope": {
+                "type": "string",
+                "enum": [
+                  "instance",
+                  "repository"
+                ]
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "src"
+            ]
+          }
+        },
+        "icon": {
+          "type": "string",
+          "minLength": 1
+        },
+        "navbarIcons": {
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "close",
+              "todos",
+              "beans",
+              "processes",
+              "kg",
+              "fsh-guts",
+              "launcher"
+            ]
+          }
+        },
+        "glassStrip": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "chrome": {
+                    "type": "string",
+                    "enum": [
+                      "todos",
+                      "filter",
+                      "settings"
+                    ]
+                  }
+                },
+                "required": [
+                  "chrome"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "repository": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "description": "A forge repository's full name, owner/name"
+        },
+        "livesAt": {
+          "type": "object",
+          "properties": {
+            "repository": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "description": "A forge repository's full name, owner/name"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9._-]+(?:\\/[A-Za-z0-9._-]+)*$"
+            }
+          },
+          "required": [
+            "repository",
+            "path"
+          ],
+          "additionalProperties": false
+        },
+        "separation": {
+          "type": "string",
+          "enum": [
+            "content",
+            "tools"
+          ]
+        },
+        "seedsWith": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "stub": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonicalUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "iriBase": {
+          "type": "string",
+          "format": "uri"
+        },
+        "nodeSchemas": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "previewUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "publication": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "enum": [
+                "github-pages",
+                "local-server",
+                "jurisdiction-endpoint",
+                "none"
+              ]
+            },
+            "state": {
+              "type": "string",
+              "const": "draft"
+            }
+          }
+        },
+        "topology": {
+          "type": "object",
+          "properties": {
+            "forge": {
+              "type": "string",
+              "enum": [
+                "none",
+                "github",
+                "self-hosted",
+                "jurisdiction-hosted"
+              ]
+            },
+            "network": {
+              "type": "string",
+              "enum": [
+                "internet",
+                "egress-restricted",
+                "air-gapped"
+              ]
+            },
+            "modelProvenance": {
+              "type": "string",
+              "enum": [
+                "open-weight-local",
+                "hosted",
+                "mixed"
+              ]
+            },
+            "outwardFacing": {
+              "type": "boolean"
+            }
+          }
+        },
+        "directories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scope": {
+                "type": "string",
+                "enum": [
+                  "instance",
+                  "repository"
+                ]
+              },
+              "graphTypologies": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "absent": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "reason"
+                ]
+              },
+              "subgraph": {
+                "type": "boolean",
+                "const": true
+              },
+              "source": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "directory"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "branch"
+                      },
+                      "branch": {
+                        "type": "string",
+                        "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+                      },
+                      "keyedBy": {
+                        "type": "string",
+                        "enum": [
+                          "commit",
+                          "tip",
+                          "route",
+                          "route-family",
+                          "family"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "branch",
+                      "keyedBy"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "family"
+                      },
+                      "branchPrefix": {
+                        "type": "string",
+                        "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+\\/$"
+                      },
+                      "keyFrom": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "repository": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "branchPrefix",
+                      "keyFrom"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "storage": {
+                "type": "object",
+                "properties": {
+                  "branch": {
+                    "type": "string",
+                    "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+                  },
+                  "keyedBy": {
+                    "type": "string",
+                    "enum": [
+                      "commit",
+                      "tip",
+                      "route",
+                      "route-family",
+                      "family"
+                    ]
+                  },
+                  "branchPrefix": {
+                    "type": "string",
+                    "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+\\/$"
+                  },
+                  "keyFrom": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "repository": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
+                  }
+                },
+                "required": [
+                  "keyedBy"
+                ],
+                "additionalProperties": false
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "coverage": {
+                "type": "object",
+                "properties": {
+                  "visualiser": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ref": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "title": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "surfaces": {
+                              "minItems": 1,
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "enum": [
+                                  "navbar",
+                                  "board",
+                                  "glass"
+                                ]
+                              }
+                            },
+                            "hidden": {
+                              "type": "boolean"
+                            },
+                            "theme": {
+                              "type": "object",
+                              "properties": {
+                                "instance": {
+                                  "type": "string",
+                                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                                  "description": "A forge repository's full name, owner/name"
+                                },
+                                "themeId": {
+                                  "type": "string",
+                                  "pattern": "^[a-z][a-z0-9-]*$"
+                                }
+                              },
+                              "required": [
+                                "themeId"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "icon": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "publish": {
+                              "type": "string",
+                              "enum": [
+                                "staging-only"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "ref"
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "serialisations": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "process": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "exempt": {
+                    "type": "object",
+                    "properties": {
+                      "visualiser": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "docs": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "skill": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              },
+              "tile": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "surfaces": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "navbar",
+                        "board",
+                        "glass"
+                      ]
+                    }
+                  },
+                  "hidden": {
+                    "type": "boolean"
+                  },
+                  "theme": {
+                    "type": "object",
+                    "properties": {
+                      "instance": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                        "description": "A forge repository's full name, owner/name"
+                      },
+                      "themeId": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9-]*$"
+                      }
+                    },
+                    "required": [
+                      "themeId"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "icon": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "publish": {
+                    "type": "string",
+                    "enum": [
+                      "staging-only"
+                    ]
+                  }
+                }
+              },
+              "summaries": {
+                "type": "string",
+                "enum": [
+                  "drain",
+                  "held"
+                ]
+              },
+              "heldEntries": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "visualisedAs": {
+                "type": "string",
+                "enum": [
+                  "folio"
+                ]
+              },
+              "readOnly": {
+                "type": "boolean"
+              },
+              "readOnlyBasis": {
+                "type": "string",
+                "minLength": 1
+              },
+              "instanceRoot": {
+                "type": "boolean"
+              },
+              "kindRouteRedirect": {
+                "type": "boolean"
+              },
+              "derivedFrom": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "writer": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "composed": {
+                "type": "boolean"
+              },
+              "igSite": {
+                "type": "boolean"
+              },
+              "served": {
+                "type": "boolean"
+              },
+              "theme": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                    "description": "A forge repository's full name, owner/name"
+                  },
+                  "themeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9-]*$"
+                  }
+                },
+                "required": [
+                  "themeId"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "path",
+              "graphTypologies"
+            ]
+          }
+        },
+        "remoteGraphs": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "graphTypologies": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "url",
+              "graphTypologies"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "associatedHarnesses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "repository": {
+                "type": "string",
+                "format": "uri"
+              },
+              "declarationUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "relation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "url"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "subscriptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "repository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                "description": "A forge repository's full name, owner/name"
+              },
+              "ref": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "subgraphs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "assets": {
+                "type": "object",
+                "properties": {
+                  "policy": {
+                    "type": "string",
+                    "enum": [
+                      "none",
+                      "on-demand",
+                      "all"
+                    ]
+                  }
+                },
+                "required": [
+                  "policy"
+                ],
+                "additionalProperties": false
+              },
+              "harnesses": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                }
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "repository",
+              "ref"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "knownSubstrates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "repository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                "description": "A forge repository's full name, owner/name"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "proposed",
+                  "planned",
+                  "exists",
+                  "published"
+                ]
+              },
+              "toolsRepository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                "description": "A forge repository's full name, owner/name"
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "status"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "stickies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "order": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "theme": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                    "description": "A forge repository's full name, owner/name"
+                  },
+                  "themeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9-]*$"
+                  }
+                },
+                "required": [
+                  "themeId"
+                ],
+                "additionalProperties": false
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "body": {
+                "type": "string",
+                "minLength": 1
+              },
+              "bodyFrom": {
+                "type": "string",
+                "enum": [
+                  "summary",
+                  "description"
+                ]
+              },
+              "bodyAppend": {
+                "type": "string",
+                "minLength": 1
+              },
+              "links": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "href": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "note": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "href"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "onboardingLinks": {
+                "type": "boolean"
+              },
+              "shape": {
+                "type": "string",
+                "enum": [
+                  "laptop",
+                  "mobile",
+                  "card"
+                ]
+              },
+              "text": {
+                "type": "object",
+                "properties": {
+                  "box": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "y": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "w": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "h": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "w",
+                      "h"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "scale": {
+                    "type": "number",
+                    "minimum": 0.6,
+                    "maximum": 2
+                  },
+                  "align": {
+                    "type": "string",
+                    "enum": [
+                      "start",
+                      "center",
+                      "end"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              },
+              "_comment": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "order",
+              "theme"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "renderExemption": {
+          "type": "object",
+          "properties": {
+            "of": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "visualiser",
+                  "workflow-visualiser",
+                  "own-docs"
+                ]
+              }
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "owes": {
+              "type": "string",
+              "minLength": 1
+            },
+            "reachableAt": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "of",
+            "reason",
+            "owes"
+          ]
+        },
+        "needs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "contentAdapters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "contentType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "className": {
+                "type": "string",
+                "minLength": 1
+              },
+              "extends": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "contentType",
+              "module",
+              "className"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "liquid": {
+          "type": "object",
+          "properties": {
+            "prefix": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*(?:\\.[a-z][a-z0-9-]*)*$"
+            },
+            "passThrough": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-bardeen-inaarx/cat-harness.schema.json",
+  "title": "CatHarness declaration",
+  "description": "The root declaration every instance carries as `<name>.json`: what it is called, where it publishes, and which directories it scans for which kind of graph. Generated from `CatHarnessDeclarationSchema` in schemas/cat-harness.ts, which is authoritative.",
+  "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-confident-bardeen-inaarx/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-bardeen-inaarx",
+    "sha": "814f29c76bddd736ca345285a433220f24b00e75",
+    "pr": "2242/merge",
+    "run": "37382929556"
+  }
+}
