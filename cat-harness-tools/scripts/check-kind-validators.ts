@@ -20,7 +20,8 @@
  * to be closed.
  *
  * @module folio-assistant/scripts/check-kind-validators
- * @covers validators, block-kinds, qa-checkers, pipeline-plugins, computed — every
+ * @covers validators, block-kinds, content-adapters, qa-checkers, pipeline-plugins, computed — every
+ *   block kind's adapter must name a `content-adapters/` node, and an untyped vocabulary's module must exist; every
  *   `qa-checkers` and `pipeline-plugins` node is loaded through the platform root's dependency
  *   tree and must resolve to the code its table ref names; every discovered block kind is checked against
  *   the kinds BlockSchema types, both directions; every `folio-validator/v1` node is parsed, resolved and
@@ -36,14 +37,15 @@
 import { BASE_GRAPH_KINDS, declaredKindNodes, defaultGraphKinds } from "../../cat-harness/schemas/graph-kind-registry.js";
 import { FOLIO_GRAPH_KIND } from "../../cat-harness/schemas/folio-graph-kind.js";
 import { GLOSSARY_GRAPH_KIND } from "../../cat-harness/schemas/glossary-graph-kind.js";
-import { BLOCK_KINDS } from "../../cat-harness/schemas/block-kinds.js";
+import { BLOCK_KINDS, CONTENT_ADAPTER_NODES, DISCOVERED_BLOCK_KIND_NODES } from "../../cat-harness/schemas/block-kinds.js";
+import { declaredNodeFiles } from "../../cat-harness/schemas/declared-nodes.js";
 import { typedBlockKinds } from "../../cat-harness/schemas/constraints.js";
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 
 import { gitCorpus } from "../../cat-harness/schemas/git-corpus.ts";
-import { join, relative } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 
-import { directoriesForGraph, instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
+import { directoriesForGraph, findInstanceRoot, instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
 import { resolveKindValidator, resolveNodeSchemas, stripAnnotations } from "../../cat-harness/schemas/kind-validator.js";
 import { HARNESS_ROOT, REPO_ROOT } from "./lib/roots.ts";
 import { ContributionRegistry } from "../../cat-harness/schemas/contributions.js";
@@ -339,14 +341,43 @@ async function main(): Promise<number> {
   // does not type has no schema to validate its blocks; a typed kind nobody
   // declares is invisible to every list read off the nodes.
   const discovered = new Set<string>(BLOCK_KINDS);
-  const typed = new Set(typedBlockKinds());
-  const untyped = [...discovered].filter((k) => !typed.has(k));
-  const undiscovered = [...typed].filter((k) => !discovered.has(k));
-  console.log(`\n${discovered.size} block kind(s) discovered from block-kinds/ nodes`);
-  if (untyped.length || undiscovered.length) {
-    for (const k of untyped) console.log(`  ✗ block kind "${k}" is declared by a node but no BlockSchema member types it`);
-    for (const k of undiscovered) console.log(`  ✗ block kind "${k}" is typed by BlockSchema but no block-kinds/ node declares it`);
-    return 1;
+  if (REPO_ROOT === undefined && discovered.size === 0) {
+    // Standalone: the harness alone owns no vocabulary, so there is nothing to
+    // hold the typed kinds against — said, never read as a pass.
+    console.log("\n· block kinds not examined: standalone, no checkout holds the instances that declare them");
+  } else {
+    const typed = new Set(typedBlockKinds());
+    const untyped = [...discovered].filter((k) => !typed.has(k));
+    const undiscovered = [...typed].filter((k) => !discovered.has(k));
+    console.log(`\n${discovered.size} block kind(s) discovered from block-kinds/ nodes`);
+    if (untyped.length || undiscovered.length) {
+      for (const k of untyped) console.log(`  ✗ block kind "${k}" is declared by a node but no BlockSchema member types it`);
+      for (const k of undiscovered) console.log(`  ✗ block kind "${k}" is typed by BlockSchema but no block-kinds/ node declares it`);
+      return 1;
+    }
+  }
+
+  // CONTENT ADAPTERS (bean riit, step 5): every block kind's `adapter` names
+  // a vocabulary some `folio-content-adapter/v1` node declares, and an untyped
+  // vocabulary's `vocabulary` module exists in the instance that declares it.
+  // A kind naming no vocabulary would split into neither the typed list nor
+  // a contribution, and be read by nothing.
+  {
+    const vocabularies = new Set(CONTENT_ADAPTER_NODES.map((n) => n.adapter));
+    const orphanKinds = DISCOVERED_BLOCK_KIND_NODES.filter((k) => !vocabularies.has(k.adapter));
+    const missingModules: string[] = [];
+    for (const { file, raw } of declaredNodeFiles(REPO_ROOT ?? resolve(HARNESS_ROOT, ".."), "content-adapters")) {
+      const n = raw as { adapter?: string; vocabulary?: string };
+      if (n.vocabulary === undefined) continue;
+      const inst = findInstanceRoot(dirname(file));
+      if (inst === undefined || !existsSync(join(inst, n.vocabulary))) missingModules.push(`${n.adapter}: ${n.vocabulary} (declared by ${file})`);
+    }
+    console.log(`\n${vocabularies.size} content-adapter vocabular(ies) discovered from content-adapters/ nodes`);
+    if (orphanKinds.length || missingModules.length) {
+      for (const k of orphanKinds) console.log(`  ✗ block kind "${k.kind}" names adapter "${k.adapter}", which no content-adapters/ node declares`);
+      for (const m of missingModules) console.log(`  ✗ vocabulary module not found — ${m}`);
+      return 1;
+    }
   }
 
   // CONTRIBUTION NODES (bean riit, step 3b): every QA checker and pipeline

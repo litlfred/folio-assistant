@@ -65,9 +65,7 @@ export function discoverBlockKinds(repoRoot: string = PLATFORM_ROOT): BlockKindN
     if (prior) throw new Error(`block kind "${parsed.data.kind}" is declared twice: ${prior.file} and ${file}`);
     byKind.set(parsed.data.kind, { file, node: parsed.data });
   }
-  if (byKind.size === 0) {
-    throw new Error(`no block kinds discovered under ${repoRoot}: no instance declares a readable block-kinds graph`);
-  }
+  // NONE is legitimate for the harness alone, as for content adapters below.
   return [...byKind.values()].map((v) => v.node).sort((a, b) => a.kind.localeCompare(b.kind));
 }
 
@@ -78,8 +76,8 @@ const PLATFORM_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..
  * Every content-adapter VOCABULARY node in the platform checkout, sorted by
  * name: one `folio-content-adapter/v1` node per vocabulary, in the
  * `content-adapters/` graph of the harness that owns it (bean riit, step 5;
- * owner 2026-10-05, option 1). Two nodes naming one vocabulary throw, and so
- * does finding none — a typed vocabulary is what every block kind is split by.
+ * owner 2026-10-05, option 1). Two nodes naming one vocabulary throw; finding
+ * none does not, since the harness alone owns no vocabulary.
  */
 export function discoverContentAdapters(repoRoot: string = PLATFORM_ROOT): ContentAdapterNode[] {
   const byName = new Map<string, { file: string; node: ContentAdapterNode }>();
@@ -90,9 +88,10 @@ export function discoverContentAdapters(repoRoot: string = PLATFORM_ROOT): Conte
     if (prior) throw new Error(`content adapter "${parsed.data.adapter}" is declared twice: ${prior.file} and ${file}`);
     byName.set(parsed.data.adapter, { file, node: parsed.data });
   }
-  if (![...byName.values()].some((v) => v.node.typed)) {
-    throw new Error(`no typed content adapter discovered under ${repoRoot}: no instance declares a readable content-adapters graph`);
-  }
+  // NONE is a legitimate answer: the harness on its own declares no
+  // vocabulary, and it must still load (bean `zmdo`: generic tools only).
+  // What would make "none" a lie is caught elsewhere — a malformed node throws
+  // above, and a declared directory that is missing is check:declared-dirs'.
   return [...byName.values()].map((v) => v.node).sort((a, b) => a.adapter.localeCompare(b.adapter));
 }
 

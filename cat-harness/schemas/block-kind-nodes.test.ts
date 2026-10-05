@@ -70,9 +70,15 @@ describe("block kinds are discovered, not listed", () => {
     expect(() => discoverBlockKinds(root)).toThrow(/declared twice: .*a\/block-kinds\/note\.json and .*b\/block-kinds\/note\.json/);
   });
 
-  test("a checkout that declares no block-kinds graph is refused rather than read as having no kinds", () => {
+  test("a checkout that declares no block-kinds graph has no kinds — the harness alone loads", () => {
+    // It threw until check:cat-harness-standalone measured the cost: every
+    // module importing block-kinds failed to LOAD in a cat-harness-only
+    // checkout, which owns no vocabulary (bean `zmdo`: generic tools only).
+    // "None" is guarded where it could lie: a malformed node throws (above),
+    // and THIS checkout, which does declare them, must find them (below).
     const root = mkdtempSync(join(tmpdir(), "block-kinds-empty-"));
-    expect(() => discoverBlockKinds(root)).toThrow(/no block kinds discovered/);
+    expect(discoverBlockKinds(root)).toEqual([]);
+    expect(BLOCK_KINDS.length).toBeGreaterThan(0);
   });
 });
 
@@ -105,7 +111,7 @@ describe("content-adapter vocabularies are nodes (bean riit, step 5)", () => {
     for (const n of CONTENT_ADAPTER_NODES) expect("name" in n).toBe(false);
   });
 
-  test("a vocabulary declared twice throws, and so does finding no typed one", () => {
+  test("a vocabulary declared twice throws; finding no typed one does not", () => {
     const tmp = mkdtempSync(join(tmpdir(), "content-adapters-"));
     const inst = (name: string, nodes: Record<string, unknown>) => {
       mkdirSync(join(tmp, name, "content-adapters"), { recursive: true });
@@ -117,7 +123,8 @@ describe("content-adapter vocabularies are nodes (bean riit, step 5)", () => {
     };
     const node = (adapter: string, typed: boolean) => ({ $schema: "folio-content-adapter/v1", adapter, typed, companionRoles: ["md"] });
     inst("a", { "x.json": node("x", false) });
-    expect(() => discoverContentAdapters(tmp)).toThrow(/no typed content adapter/);
+    expect(discoverContentAdapters(tmp).map((n) => n.adapter)).toEqual(["x"]);
+    expect(CONTENT_ADAPTERS.length).toBeGreaterThan(0);
     inst("b", { "x.json": node("x", true) });
     expect(() => discoverContentAdapters(tmp)).toThrow(/declared twice/);
   });

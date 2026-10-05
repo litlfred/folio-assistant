@@ -20,10 +20,19 @@ mathematical claim, backed by machine-checkable siblings and typeset through a
 TeX pipeline.
 
 **That relation is encoded, not merely described.** The paper adapter *extends*
-the document adapter; the set of mathematical kinds is written out, and the
-document set is its **derived complement** — so a kind added to the base
-registry cannot go unclassified. Deriving one from the other is what makes the
-classification total by construction rather than by review.
+the document adapter, and every block kind is a `folio-block-kind/v1` node
+whose **required** `profile` field says which side it is on: `paper` for a
+mathematical claim, `document` otherwise. A two-valued required field is what
+makes the classification total by construction rather than by review — a kind
+whose author did not choose does not parse.
+
+**No module lists the kinds.** They are DISCOVERED from the `block-kinds/`
+graphs their owning harnesses declare — the document kinds in
+folio-assistant-core, the math kinds in folio-assistant-sci (owner,
+2026-10-04: *"kinds need to be discoverable … not centrally managed"*; bean
+riit). Adding a kind is adding a node to the harness that owns it; the
+`BLOCK_KINDS`, `MATH_BLOCK_KINDS` and `DOCUMENT_BLOCK_KINDS` values in
+`schemas/block-kinds.ts` are computed from the nodes.
 
 ## Two axes, and conflating them is the costly mistake
 
