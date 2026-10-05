@@ -41,7 +41,7 @@ import { extname, join, resolve } from "node:path";
 
 import { checkChrome } from "./folio-site-chrome-check.js";
 
-const PLATFORM = resolve(import.meta.dir, "../..");
+const REPO_ROOT = resolve(import.meta.dir, "../..");
 const arg = (n: string) => {
   const i = process.argv.indexOf(`--${n}`);
   return i >= 0 ? process.argv[i + 1] : undefined;
@@ -69,16 +69,16 @@ const sha = execFileSync("git", ["rev-parse", "--short=7", "HEAD"], { cwd: repo 
 rmSync(site, { recursive: true, force: true });
 const build = arg("build");
 if (build) run("bash", ["-c", build], repo);
-else run("bun", ["run", join(PLATFORM, "folio-assistant-core/scripts/build-folio-site.ts"), "--out", site], repo);
+else run("bun", ["run", join(REPO_ROOT, "folio-assistant-core/scripts/build-folio-site.ts"), "--out", site], repo);
 
 // 2. Rail
-run("bun", ["run", join(PLATFORM, "cat-harness/scripts/rail-standalone-pages.ts"), "--site", site, "--built", "cat-harness", "--foreign-site", "--home-label", arg("home-label") ?? slug], PLATFORM);
+run("bun", ["run", join(REPO_ROOT, "cat-harness/scripts/rail-standalone-pages.ts"), "--site", site, "--built", "cat-harness", "--foreign-site", "--home-label", arg("home-label") ?? slug], REPO_ROOT);
 
 // 3. Banner
 run(
   "bun",
   [
-    "run", join(PLATFORM, "cat-harness/scripts/staging-banner.ts"),
+    "run", join(REPO_ROOT, "cat-harness/scripts/staging-banner.ts"),
     "--site", site, "--branch", slug, "--sha", sha, "--built", new Date().toISOString().replace(/\.\d+Z$/, "Z"),
     "--pr", arg("pr") ?? "n/a", "--pr-url", need("pr-url"),
     "--branch-url", `https://github.com/${publishRepo}/tree/${arg("source-ref") ?? "main"}`,
@@ -86,7 +86,7 @@ run(
     "--main-site", arg("main-site") ?? `https://${publishRepo.split("/")[0]}.github.io/${publishRepo.split("/")[1]}`,
     "--before-ref", arg("before-ref") ?? "main",
   ],
-  PLATFORM,
+  REPO_ROOT,
 );
 
 // 4. Chrome check, over a local server, on one representative page.
