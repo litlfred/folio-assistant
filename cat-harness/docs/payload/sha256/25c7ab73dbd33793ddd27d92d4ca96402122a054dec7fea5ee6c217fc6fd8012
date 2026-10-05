@@ -5,7 +5,8 @@ description: >
   state, not a boolean, and `published` is refused by the schema because the
   formal process does not exist yet. Carries the id namespace rule, why a
   mirror never takes its subject's identity, and what a consumer may assume of
-  a draft.
+  a draft. Also the one home for which graph each instance publishes, where,
+  under which IRI and schema, and what is stripped from it.
 adapters: [document, paper, dak]
 profiles: [document, paper]
 ---
@@ -246,6 +247,162 @@ plainly, `v<major>.<minor>.<patch>`; a repository of several instances tags
 instance it released (owner, 2026-09-30). `check:version-bump` reads both
 accordingly. The tag is what a site deploy writes `/<version>/` from, so an
 untagged commit is never an agent-facing release.
+
+## What each instance publishes — graph, address, schema, and what is stripped
+
+Owner, 2026-10-02, opening bean `4ak5`: *"there are some rules in the KG
+corpsu but scattered."* They were spread over an exporter's docblock, the
+deploy workflow's comments, four skills and two beans (item 4). **This section
+is where they are stated.** The files that carry the mechanics keep them and
+point here for the policy.
+
+### One document per declared instance, of its own directories
+
+**Every directory carrying a declaration publishes ONE JSON-LD document, and
+it holds only the directories that declaration names.** A dependency is
+referenced by IRI, never inlined. The set is read from the declarations
+(`instanceRootsIn`), never listed in a workflow: a list went stale the way
+such lists do, missing every instance added since `l4ay`.
+
+| instance | document on this site | built by |
+|---|---|---|
+| the host, `cat-harness` | `<site>/<stub>.jsonld` | `kg-export.ts --scope instance`, its own line in `docs-site.yml` |
+| the checkout root, `folio-assistant` | `<site>/<stub>/<stub>.jsonld` | `kg-export.ts --instance .` (bean `l4ay`) |
+| `bootstrap` | `<site>/bootstrap/bootstrap.jsonld` | `bootstrap-tools/scripts/export-graph.ts` (owner, 2026-09-30, bean `xsqm`) |
+| every other declared instance | `<site>/<stub>/<stub>.jsonld` | `cat-harness/scripts/instance-exports.ts` |
+
+- **Each document has a `.json` copy beside it**, the same bytes. Pages serves
+  `.jsonld` as octet-stream, and `.json` is the only way to get a correct
+  `Content-Type` out of it. The `.jsonld` stays canonical, since it is what
+  every `@id` names.
+- **The first three rows are the only exemptions**, and they are
+  `PUBLISHED_ELSEWHERE` in `instance-exports.ts`, each with its reason. No
+  other list exists.
+- **The host is built in instance scope** since #2135 (owner ruling
+  2026-10-05, option B; bean `4ak5` item 2). Before that one document carried
+  every stacked instance's nodes under `cat-harness.jsonld#…`: 825 of 3369,
+  measured the day it landed. `--scope checkout` remains for a corpus-wide
+  consumer that says so (the `kg` search slice). It is never published under
+  the host's name: `PUBLISHED_ELSEWHERE`'s pattern for the host refuses it.
+
+The exporter's contract (the two scopes, what each collector reads) is
+[`kg-export`](kg-export.md) §"Whose nodes — an instance publishes its own,
+and leaves a tombstone".
+
+### An `@id` that moved keeps a tombstone for ONE release
+
+GitHub Pages cannot redirect a fragment. So each `@id` the checkout-scope
+host document minted and the instance-scope one does not keeps a node:
+
+```json
+{ "@id": "<old>", "deprecated": true, "isReplacedBy": "<the same node in its owner's document>" }
+```
+
+`deprecated` is `owl:deprecated` and `isReplacedBy` is
+`dcterms:isReplacedBy`. The replacement is minted the way the deploy
+publishes the owner (`publishedIdentity` in `kg-export.ts`): an instance that
+declares its own `canonicalUrl` is forwarded to its `canonicalUrl`-based
+`@id`, so `smart-base`'s tombstones point under `http://smart.who.int/base/`.
+A node no owner's document mints (a package, a schema module) forwards to the
+owner's DOCUMENT. A node with no home, or two, is a `problems[]` entry, and
+the export exits non-zero rather than publish a tombstone that points
+nowhere.
+
+**Removal is due one release after the split** (`tombstonesFor`'s banner:
+*"ONE RELEASE ONLY; REMOVE IN THE NEXT"*). Delete `tombstonesFor`, its call in
+`buildExport`, the two context terms, and the test in `kg-export.test.ts` that
+holds every tombstone to a replacement the deploy writes.
+
+### Which base an `@id` is minted against
+
+`exportIdentity` in `kg-export.ts` decides. The base is `--base-url` if
+given; else the instance's own `canonicalUrl`; else, for an instance this
+repository publishes, the host's. With no base at all the `@id` is
+document-relative and a problem is reported, never a guessed absolute one
+(bean `40fl`). The host sits at `<base>/<stub>.jsonld` and a foreign instance
+at `<base>/<stub>/<stub>.jsonld` (bean `dyd3`). **An instance declaring its
+own `canonicalUrl` is the host of its own base**, so its `@id` is
+`<canonicalUrl>/<stub>.jsonld` (#1548), and the deploy passes it no
+`--base-url` (`declaresOwnCanonical` in `instance-exports.ts`). Measured
+2026-10-05, those are `cat-harness-tools`, `cat-openapi`, `fhir-harness` and
+`smart-base`. **This site still serves their bytes at
+`<site>/<stub>/<stub>.jsonld`.** The root index records both: `@id` is what
+the document is, `url` is where this site serves it. Anything that names a
+node in another instance's document mints with `publishedIdentity`, or it
+names a document nobody writes. `iriBase` is a different field, for
+identifiers that carry the release (§"Release IRIs" above).
+
+### The schema
+
+`harness-schema-export.ts` writes `<site>/<stub>.schema.json` for the host.
+That is the JSON Schema of the declaration itself, which every
+`<instance>.json` is validated against. It also writes `tool.schema.json`,
+`tool-types.schema.json` and each skill's I/O contract, each at the URL its
+`$id` names. `bootstrap`'s schemas are published as they sit, by
+`publish-instance-files.ts`. **No other instance has a schema of its own on
+the site** (measured 2026-10-05: `instance-exports.ts` writes the document and
+its `.json` copy only). That is the open half of item 1's
+*"json(ld)+schema"*.
+
+### Named subgraphs, and the root index above them
+
+- **Named subgraphs** (bean `c1m4`): `<site>/subgraph/<HARNESS>/<PATH>/`, with
+  `index.jsonld` (direct members as pointers) and `index.hydrated.jsonld`
+  (every member inline, deep). **The harness root has `index.jsonld` only**,
+  because a deep hydrated file there is the monolith `f233` forbids.
+  `gen-subgraph-jsonld.ts` frames each instance from its OWN export, so no
+  subgraph names a `cat-harness.jsonld#<foreign>` fragment. The tree is
+  committed under `cat-harness/docs/subgraph/`, its `@context` is
+  `<site>/ns/subgraph/v1.jsonld`, and heavy bodies are content-addressed
+  payloads under `cat-harness/docs/payload/sha256/`, copied verbatim to
+  `<site>/payload/`. `bootstrap` and `bootstrap-tools` publish their own
+  subgraphs, and the repository index links them with `rdfs:seeAlso`
+  (bean `t8c4`). The contract: [`kg-export`](kg-export.md) §"Named
+  subgraphs" and §"Payloads".
+- **The root index** (item 3): `<site>/index.jsonld` and `index.json`, built
+  at publish time by `root-index.ts` and never committed (owner,
+  2026-10-04): a committed copy conflicts whenever two PRs change the set of
+  harnesses. It names every declared instance at depth 1, with no node of
+  any graph inlined. It exits 1, having written nothing, when an instance's
+  export is not where its identity says, rather than publish a shorter map.
+
+### What is never in a published graph
+
+- **`fsh-guts`.** Owner, 2026-09-19: *"NEVER include fsh-guts, references to
+  fsh-guts stripped out of KG before sending to publication."* The one list is
+  `UNPUBLISHED_GRAPH_KINDS` in `schemas/cat-harness.ts`. Every emitter filters
+  on it where the document is built, not at upload: `isPublishedGraphKind`,
+  `isPublishedDirectory` (a directory holding ANY unpublished kind),
+  `isPublishedSkill` and `isPublishedSchemaModule`, plus a diagram's
+  documentation prose (`publishableDocumentation`). The trashcan has its own
+  document, `<site>/fsh-guts.jsonld`, from `fsh-guts-export.ts`. That is
+  deliberate: a consumer may fetch it by name and must never arrive by
+  following an edge. Mechanics: [`kg-export`](kg-export.md) §"`fsh-guts`
+  NEVER reaches a published graph"; what belongs in it:
+  [`fsh-guts`](fsh-guts.md).
+- **A skill that declares `published: false`** in its front matter
+  (`unpublishedSkills` in `known-skills.ts`). The name match and the
+  declaration are two inputs on purpose: one asks whether a skill is NAMED
+  after the trashcan, the other whether it SAID not to publish it.
+- **The nodes of a `state` graph.** The export carries the declared Directory
+  node and its `holdsGraph`. No collector in `kg-export.ts` reads a state
+  graph's files (measured 2026-10-05). Where such contents are published, it
+  is as their declared Subgraph node's own document (`todos.jsonld`,
+  [`directory-conventions`](directory-conventions.md) §"Publishing a
+  subgraph's contents"), as a SQLite slice built at deploy (bean `q8ar`), or
+  on a branch rather than the site (QA verdicts, on `qa-reports`).
+
+### The gates
+
+| gate | fails when |
+|---|---|
+| `check:published-instance-exports` | the deploy does not run `instance-exports.ts`, a workflow running it drops an exempt instance's own publisher, an exemption names no declared instance, or a published export fails or mints a relative `@id` |
+| `root-index.ts` at deploy | an instance's export is missing; the deploy fails rather than publish a shorter map |
+| `subgraph:jsonld:check` | the committed subgraph tree or its payloads are stale |
+| `check:process-index` | a declared BPMN has no `Process` node in the published subgraphs |
+| `kg-export.test.ts` | a tombstone forwards to a document the deploy does not write, or a published `@id` dangles |
+| `fsh-guts-unpublished.test.ts` | the string `fsh-guts` appears anywhere in the built export |
+| `check:node-iris` | a node's identifier is not its file's path under the release address (§"The release site") |
 
 ## What a consumer may assume of a draft
 

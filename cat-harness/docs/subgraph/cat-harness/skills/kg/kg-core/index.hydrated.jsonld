@@ -178,13 +178,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 1523,
+      "instructionLines": 1529,
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
       "name": "directory-conventions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7b53f631eca4e0cd219909df2dd73971d3feb47a72f9a3a8b9e5d504200c06bf",
-        "bytes": 117232,
-        "sha256": "7b53f631eca4e0cd219909df2dd73971d3feb47a72f9a3a8b9e5d504200c06bf"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/234c8c2a7eab9b5d59d8edcc7c225e73fe31a750d7b7ab6d475459ebaa71b46d",
+        "bytes": 117545,
+        "sha256": "234c8c2a7eab9b5d59d8edcc7c225e73fe31a750d7b7ab6d475459ebaa71b46d"
       },
       "title": "Directory conventions — what an instance declares it scans"
     },
@@ -249,18 +249,18 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-publication",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft.",
+      "description": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft. Also the one home for which graph each instance publishes, where, under which IRI and schema, and what is stripped from it.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 275,
+      "instructionLines": 432,
       "instructionsPath": "skills/kg/kg-core/instance-publication.md",
       "name": "instance-publication",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2fc72b926e9869e2ca25ab23ba19d6b640f0e15fd3aa1461cc874bf0c5bd8a2d",
-        "bytes": 14169,
-        "sha256": "2fc72b926e9869e2ca25ab23ba19d6b640f0e15fd3aa1461cc874bf0c5bd8a2d"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/25c7ab73dbd33793ddd27d92d4ca96402122a054dec7fea5ee6c217fc6fd8012",
+        "bytes": 23657,
+        "sha256": "25c7ab73dbd33793ddd27d92d4ca96402122a054dec7fea5ee6c217fc6fd8012"
       },
       "title": "instance-publication — draft is a state, not an absence of one"
     },
@@ -292,13 +292,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 1023,
+      "instructionLines": 1021,
       "instructionsPath": "skills/kg/kg-core/kg-export.md",
       "name": "kg-export",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d9425c22acb584672ba4d639be6d968240d77b0864699a91c230ff49e5258911",
-        "bytes": 55820,
-        "sha256": "d9425c22acb584672ba4d639be6d968240d77b0864699a91c230ff49e5258911"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/115d2005d64a73f9ff6909ce77e0a0f5e992505566aa37e052e241e40d3df4c1",
+        "bytes": 55721,
+        "sha256": "115d2005d64a73f9ff6909ce77e0a0f5e992505566aa37e052e241e40d3df4c1"
       },
       "title": "KG export — publishing the graph as linked data, not as a page"
     },
