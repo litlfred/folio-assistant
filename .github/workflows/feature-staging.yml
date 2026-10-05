@@ -695,6 +695,14 @@ jobs:
       # it looks published, it is not, and nothing on the page would say so.
       # Empty plus a warning is honest; stale plus a warning about the wrong
       # thing is not.
+      # BEFORE the swap below, judge the index THIS build made (#2233). The
+      # preview then serves the published one, so the release check's
+      # coverage question was never asked of a PR: #2194 was green here and
+      # its production publish was refused ("indexes 1003 page(s) while 4189
+      # offer a search box"). A check only the release runs fails after merge.
+      - name: The search index this build made covers its pages
+        run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --only search-index
+
       - name: Serve the published search index, or none
         run: |
           DEST="./_site/assets/js/search-data.json"

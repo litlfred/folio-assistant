@@ -759,7 +759,17 @@ if (import.meta.main) {
   const declared = declaredBase(resolve(arg("--instance") ?? resolve(import.meta.dir, "..")));
   const bases = given.length > 0 ? given : declared ? [declared] : [];
   const searchIndex = arg("--search-index") === "borrowed" ? "borrowed" : "built";
-  const { results, exit } = await verify(dir, VERIFIERS, { bases, searchIndex });
+  // `--only <id>` (repeatable) runs a subset. The staging preview uses it to
+  // judge its OWN Jekyll-built search index before swapping in the published
+  // one, so a coverage regression fails the PR rather than the release (#2233).
+  const only = argv.flatMap((a, i) => (a === "--only" && argv[i + 1] ? [argv[i + 1]!] : []));
+  const unknown = only.filter((o) => !VERIFIERS.some((v) => v.id === o));
+  if (unknown.length > 0) {
+    console.error(`publish-verify: no verifier named ${unknown.join(", ")} (have: ${VERIFIERS.map((v) => v.id).join(", ")})`);
+    process.exit(2);
+  }
+  const chosen = only.length > 0 ? VERIFIERS.filter((v) => only.includes(v.id)) : VERIFIERS;
+  const { results, exit } = await verify(dir, chosen, { bases, searchIndex });
   const md = reportMarkdown(relative(process.cwd(), dir) || ".", results, bases);
   console.log(md);
   const report = arg("--report");
