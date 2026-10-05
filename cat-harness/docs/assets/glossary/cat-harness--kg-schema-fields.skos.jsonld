@@ -2636,6 +2636,120 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bib-attestations.ledgerread.files",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LedgerRead.files"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Store reads only: how many store files were read."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bib-attestations.ts#LedgerRead.files",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bib-attestations.ledgerread.legacypresent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LedgerRead.legacyPresent"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Store reads only: a legacy file is still there beside the store."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bib-attestations.ts#LedgerRead.legacyPresent",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bib-attestations.ledgerread.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LedgerRead.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One line for the caller to print: which home answered."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bib-attestations.ts#LedgerRead.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bib-attestations.reviewread.meta",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReviewRead.meta"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The legacy file's `_meta`, when that is where the read came from."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bib-attestations.ts#ReviewRead.meta",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bib-attestations.reviewread.reviews",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReviewRead.reviews"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Reference id → review, in recorded order."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bib-attestations.ts#ReviewRead.reviews",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bib-attestations.writeresult.written",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WriteResult.written"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Paths written (store) or the legacy path."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bib-attestations.ts#WriteResult.written",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bib-verification.keyresult.locator",
       "@type": "skos:Concept",
       "skos:inScheme": {
