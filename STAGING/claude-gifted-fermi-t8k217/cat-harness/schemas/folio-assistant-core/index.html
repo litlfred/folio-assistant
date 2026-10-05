@@ -1,0 +1,1443 @@
+<!doctype html><html lang="en"><head><script data-folio-saved-scheme>try{var s=localStorage.getItem("fa-color-scheme");if(s==="light"||s==="dark")document.documentElement.setAttribute("data-fa-scheme",s)}catch(e){}</script><meta name="renders" content="folio-assistant-core/schemas"><meta name="rendered-by" content="schemas-viewer"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Schema graph</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231a5fb4'/%3E%3Crect x='3' y='4' width='10' height='3' fill='white'/%3E%3Crect x='3' y='9' width='7' height='3' fill='white'/%3E%3C/svg%3E"><style>
+:root {
+  --bg: #ffffff; --fg: #17191c; --muted: #5b6168; --line: #d9dde2;
+  --panel: #f6f7f9; --accent: #1a5fb4; --accent-soft: #e7eefb;
+  --warn: #8a5300; --warn-soft: #fdf3e0; --box: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14171a; --fg: #e8eaed; --muted: #9aa2ab; --line: #2e343b;
+    --panel: #1b1f24; --accent: #7aa7e8; --accent-soft: #1d2937;
+    --warn: #e0b25e; --warn-soft: #2a2213; --box: #1b1f24;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14171a; --fg: #e8eaed; --muted: #9aa2ab; --line: #2e343b;
+  --panel: #1b1f24; --accent: #7aa7e8; --accent-soft: #1d2937;
+  --warn: #e0b25e; --warn-soft: #2a2213; --box: #1b1f24;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+header { padding: 16px; border-bottom: 1px solid var(--line); }
+h1 { font-size: 1.15rem; margin: 0 0 4px; }
+.counts { color: var(--muted); font-size: .85rem; }
+.counts b { color: var(--fg); font-variant-numeric: tabular-nums; }
+main { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.4fr); gap: 0; }
+@media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+#list { border-right: 1px solid var(--line); min-height: 60vh; }
+@media (max-width: 900px) { #list { border-right: none; border-bottom: 1px solid var(--line); } }
+.controls { padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+input, select, button {
+  font: inherit; color: var(--fg); background: var(--box);
+  border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px;
+}
+input { flex: 1 1 180px; min-width: 0; }
+ul { list-style: none; margin: 0; padding: 0 0 24px; max-height: 70vh; overflow: auto; }
+li > button {
+  display: block; width: 100%; text-align: left; border: 0; border-radius: 0;
+  border-bottom: 1px solid var(--line); background: transparent; padding: 9px 16px; cursor: pointer;
+}
+li > button:hover, li > button:focus-visible { background: var(--panel); }
+li > button[aria-current="true"] { background: var(--accent-soft); }
+.nm { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; }
+.sub { color: var(--muted); font-size: .78rem; }
+.tag {
+  display: inline-block; font-size: .7rem; padding: 1px 6px; border-radius: 999px;
+  border: 1px solid var(--line); color: var(--muted); margin-left: 6px; vertical-align: 1px;
+}
+.tag.warn { color: var(--warn); background: var(--warn-soft); border-color: var(--warn); }
+#detail { padding: 16px; min-width: 0; }
+#detail h2 { font-size: 1rem; margin: 0 0 2px; font-family: ui-monospace, Menlo, monospace; }
+table { border-collapse: collapse; width: 100%; font-size: .86rem; margin: 8px 0 16px; }
+th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: .76rem; text-transform: uppercase; letter-spacing: .04em; }
+td code { font-family: ui-monospace, Menlo, monospace; font-size: .82rem; word-break: break-word; }
+.opt { color: var(--muted); }
+a { color: var(--accent); }
+svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
+.uml-box { fill: var(--box); stroke: var(--line); }
+.uml-box.sel { stroke: var(--accent); stroke-width: 2; }
+.uml-t { fill: var(--fg); font: 600 12px ui-monospace, Menlo, monospace; }
+.uml-f { fill: var(--muted); font: 11px ui-monospace, Menlo, monospace; }
+.uml-e { stroke: var(--muted); fill: none; }
+.uml-head { fill: var(--box); stroke: var(--muted); }
+.uml-tip { fill: none; stroke: var(--muted); stroke-width: 1.4; }
+.uml-l { fill: var(--muted); font: 10px ui-sans-serif, system-ui, sans-serif; }
+.empty { color: var(--muted); padding: 24px 16px; }
+.note { background: var(--warn-soft); border-left: 3px solid var(--warn); padding: 8px 12px; font-size: .85rem; margin: 8px 0; }
+.note code { word-break: break-all; }
+/* The overview panel. Collapsible and CLOSED by default: the questions people
+   arrive with are local, so the list is what should meet them. The overview
+   answers a different one — how connected is this, and where are the hubs —
+   and that is worth a deliberate click rather than a scroll past. */
+#overview { border-bottom: 1px solid var(--line); background: var(--panel); }
+#overview > summary { cursor: pointer; padding: 10px 16px; font-weight: 600; font-size: .9rem; list-style: revert; }
+#overview > summary:hover { color: var(--accent); }
+#overview > summary::marker { color: var(--muted); }
+.ov-body { padding: 0 16px 14px; }
+.ov-cap { color: var(--muted); font-size: .8rem; margin: 0 0 8px; }
+#ov-svg { width: 100%; height: auto; display: block; max-height: 78vh; }
+.dia-e { fill: none; stroke-width: 1.6; }
+.dia-field { stroke: var(--accent); }
+.dia-gen { stroke: var(--fg); }
+/* Dashed, and a different colour, because an id-ref is DECLARED rather than
+   found in the source. Drawing it like a field reference would claim the
+   reader saw something it structurally cannot see. */
+.dia-idref { stroke: var(--warn); }
+.dia-genhead { fill: var(--bg); stroke: var(--fg); stroke-width: 1.4; }
+.dia-refhead { fill: none; stroke: var(--accent); stroke-width: 1.5; }
+.dia-l { fill: var(--fg); font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; }
+.dia-lb { fill: var(--panel); stroke: var(--line); stroke-width: .8; }
+.dia-n { cursor: pointer; }
+.dia-n:hover .uml-box { stroke: var(--accent); stroke-width: 2; }
+/* Context boxes are faded, never hidden: they are real declarations the page
+   is not about, and a link into one is the edge a strict filter would cut. */
+.dia-ctx { opacity: .55; }
+.dia-ctx .uml-box { stroke-dasharray: 4 3; }
+.ov-key { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 0; font-size: .78rem; color: var(--muted); }
+.ov-key span { display: inline-flex; align-items: center; gap: 6px; }
+.ov-key i { display: inline-block; }
+.ov-key i.k-gen { width: 16px; height: 0; border-top: 2px solid var(--fg); border-radius: 0; }
+.ov-key i.k-field { width: 16px; height: 0; border-top: 2px solid var(--accent); border-radius: 0; }
+.ov-key i.k-idref { width: 16px; height: 0; border-top: 2px dashed var(--warn); border-radius: 0; }
+</style><style data-fa-navbar-row-inline>/* THE HARNESS ICON ROW'S OWN STYLE — beans `lhvt`, `9rq1`.
+ *
+ * Loaded with `navbar-row.js` wherever the row is drawn: by `head_custom.html`
+ * on the theme's pages and by `injectRail` on every railed page. It was part of
+ * `docs-ui.css`, which 2,709 of the 2,747 railed pages never load (measured on
+ * the built site after #2149).
+ *
+ * Every custom property carries its fallback. `docs-ui.css` declares
+ * `--fa-nav-pad` and `--fa-nav-collapsed` on `:root`; a railed page without it
+ * declares neither, and a `var()` with no fallback would compute to nothing.
+ * The fallbacks are the values `docs-ui.css` declares.
+ *
+ * The rules that only make sense inside the theme's `.side-bar` stay in
+ * `docs-ui.css`; the tooltip on the rail is `navbarCss`'s.
+ */
+
+.fa-nav-icons {
+  display: flex;
+  gap: 0.125rem;
+  align-items: center;
+  /* Aligned to the mark above it rather than to the strip's edge: the avatar
+     starts at the gutter, so the first icon does too and the two lines read as
+     one block. */
+  padding: 0.25rem calc(var(--fa-nav-pad, 0.75rem) - 0.25rem);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+/* THE SAME ROW ON THE RAIL — bean `wckf` (#2147). `mountNavIconRow` now draws
+ * into `nav.fa-nav` too, under its fixed top inside `.fa-nav-in`. The rail
+ * clips every child at its collapsed width rather than reflowing them
+ * (`navbarCss`), so — exactly as on `.side-bar` above — the row wraps to one
+ * icon per line at rest, and lies flat once the rail is open by hover, by
+ * keyboard focus or by its pinned checkbox: the rail's own three open
+ * selectors, not a fourth idea of "open". At ANY width: the rail has no
+ * 50rem mode, unlike the theme's sidebar. */
+nav.fa-nav .fa-nav-in > .fa-nav-icons {
+  /* Border-box HERE, not inherited: the rail lands in somebody else's page,
+     and a page that leaves `content-box` would add the row's 16px of padding
+     to the strip's width (measured: 72px in a 56px rail). */
+  box-sizing: border-box;
+  width: var(--fa-nav-collapsed, 3.5rem);
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+}
+/* The rail styles EVERY link in it as a nav row — `.fa-nav a{padding:8px
+ * 12px;gap:8px}` (`navbarCss`) — so the row's four LINK slots inherited 24px
+ * of horizontal padding inside a 32px box and drew their glyph 8px wide, while
+ * the BUTTON slots beside them drew at 18px. Measured in Chromium on the
+ * who-iris replica, 2026-10-05. A row icon is not a nav row. */
+nav.fa-nav .fa-nav-icons > a.fa-nav-icon {
+  padding: 0;
+  gap: 0;
+}
+nav.fa-nav:hover .fa-nav-in > .fa-nav-icons,
+nav.fa-nav:has(:focus-visible) .fa-nav-in > .fa-nav-icons,
+nav.fa-nav:has(.fa-nav-open:checked) .fa-nav-in > .fa-nav-icons {
+  width: auto;
+  flex-wrap: nowrap;
+}
+
+.fa-nav-icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  /* 2.25rem = 36px. Above the 44px pointer target only with the row's gap and
+     padding counted, which is the honest reading -- six of these plus gutters
+     is 232px inside a 248px strip, so a bigger box does not fit the owner's
+     own cap of six. The declared interaction profile here is low-dexterity and
+     this is the constraint binding against it: SIX and FULL WIDTH are the two
+     requirements, and they set the size between them. */
+  /* 2rem since 2026-09-27: the row now carries SEVEN (the five declared
+     slots, the light/dark switch and the [x]), and seven at 2.25rem is 260px
+     in a 248px strip. 32px still clears SC 2.5.8's 24px with room. */
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.25rem;
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+.fa-nav-icon svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+/* The bulb carries no fill of its own (the header mini-button gets it from
+   its own rule), so in the row it painted the initial black. */
+.fa-nav-scheme svg { fill: currentColor; }
+
+.fa-nav-icon:hover,
+.fa-nav-icon:focus-visible {
+  background: rgba(128, 128, 128, 0.22);
+  text-decoration: none;
+  opacity: 1;
+}
+
+/* DECLARED, WITH NO PUBLISHED VIEWER. Not a link and it must not look like
+ * one — `pb04`, the same rule the harness tabs' graph list follows. Rendered
+ * rather than dropped, because a declared graph missing its viewer is a
+ * FINDING and hiding it answers "where is beans" with silence. */
+.fa-nav-icon--dead {
+  cursor: default;
+  opacity: 0.35;
+}
+
+/* Buttons in the row carry the browser's own chrome otherwise. */
+button.fa-nav-icon {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+/* fsh-guts IN THE ICON ROW (#1925, owner 2026-10-02: "with the others"): the
+ * count rides as a small badge on the fish so the row keeps one glyph width. */
+.fa-nav-icon--fsh-guts { position: relative; }
+.fa-nav-icon--fsh-guts .fa-nav-count {
+  position: absolute;
+  right: -0.35rem;
+  top: -0.3rem;
+  min-width: 1rem;
+  padding: 0 0.2rem;
+  border-radius: 0.5rem;
+  background: rgba(128, 128, 128, 0.85);
+  color: #fff;
+  font-size: 0.625rem;
+  line-height: 1rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  pointer-events: none;
+}
+</style><script data-fa-navbar-row-inline>/* THE HARNESS ICON ROW, ONE MECHANISM FOR EVERY NAVBAR — beans `lhvt`, `9rq1`.
+ *
+ * Owner, 2026-10-05: *"this should be a common navbar functionality in
+ * harness"*, then, choosing how: *"1. Small shared script"*.
+ *
+ * WHY THIS IS ITS OWN FILE. The row was drawn by `mountNavIconRow` inside
+ * `docs-ui.js`, so it existed only where that 589 KB script loads. Measured on
+ * the built main site after #2149: 2,709 of the 2,747 pages railed by
+ * `lib/navbar.ts` never load it — the TypeDoc `api/*` pages, `auto-docs`, the
+ * schema, voice and upload viewers — so they carried the row's DATA
+ * (`#fa-navbar-row`, written by `injectRail`) and nothing drew it. This file
+ * is the drawing, small enough for every railed page to load.
+ *
+ * TWO MODES, ONE DRAWING.
+ *
+ * - FULL — `docs-ui.js` calls `FaNavbarRow.mount(hooks)`. The fsh-guts slot is
+ *   the button whose dialog and live count `docs-ui.js` wires, the launcher
+ *   proxies its actions panel, and `hooks.after` appends the light/dark switch.
+ * - LITE — no `docs-ui.js` on the page. The row draws what works without it:
+ *   the link slots, and fsh-guts as a link to its own page. The launcher is
+ *   LEFT OUT, not greyed — owner, 2026-10-05: *"1. Leave it out"* — because
+ *   the panel it opens is built by `docs-ui.js`, and these pages never had it.
+ *
+ * FULL REPLACES LITE, never the other way. `folio-mount.ts` appends
+ * `docs-ui.js` from an inline script, so on those pages the two files may run
+ * in either order; whichever arrives second, the row ends up full.
+ *
+ * The glyphs are copies of `docs-ui.js`'s, which still draws them on its tiles.
+ * `navbar-row.test.ts` fails the moment the two copies differ.
+ */
+(function () {
+  "use strict";
+
+  if (window.FaNavbarRow) return;   // loaded twice: the first copy already ran
+
+  /* The site's base, from this script's own address — the same derivation
+   * `docs-ui.js` makes for itself (`SCRIPT_BASE`, bean `zrvt`). A railed page
+   * outside the theme carries no `fa-baseurl` meta, so this is the only way it
+   * learns that the site is published under `/folio-assistant/`. Read once:
+   * `document.currentScript` is only set during first evaluation. */
+  var SCRIPT_BASE = (function () {
+    try {
+      var cs = document.currentScript;
+      if (!cs || !cs.src) return "";
+      var path = new URL(cs.src, location.href).pathname;
+      var suffix = "/assets/js/navbar-row.js";
+      return path.slice(-suffix.length) === suffix ? path.slice(0, -suffix.length) : "";
+    } catch (_e) {
+      return "";
+    }
+  })();
+
+  /* The site root, in order: the theme's `fa-baseurl` meta; then the
+   * `data-fa-root` `injectRail` writes on the row's data — relative on the
+   * platform's own site, the platform's absolute address on a folio's site,
+   * and the ONLY answer for an inlined copy of this script, which has no
+   * address of its own; then this script's own address. */
+  function siteBaseurl() {
+    var meta = document.querySelector('meta[name="fa-baseurl"]');
+    var v = (meta && meta.getAttribute("content")) || "";
+    if (v) return v.replace(/\/+$/, "");
+    var data = document.getElementById("fa-navbar-row");
+    var root = data && data.getAttribute("data-fa-root");
+    if (root) {
+      try {
+        var u = new URL(root.replace(/\/*$/, "/"), location.href);
+        var path = u.pathname.replace(/\/+$/, "");
+        return u.origin === location.origin ? path : u.origin + path;
+      } catch (_e) { /* fall through to the script's own address */ }
+    }
+    return SCRIPT_BASE;
+  }
+
+  /** A site-root path, composed against this deploy's base — as `docs-ui.js`'s `withBase`. */
+  function withBase(href) {
+    if (typeof href !== "string" || href.charAt(0) !== "/") return href;
+    return siteBaseurl() + href;
+  }
+
+  var ALLOWED_URL_SCHEMES = ["http:", "https:", "mailto:", "tel:"];
+
+  /** The same href guard as `docs-ui.js` (`href-safety.test.ts` holds both). */
+  function safeHref(url) {
+    if (url === undefined || url === null) return undefined;
+    var stripped = String(url).replace(/[\u0009\u000A\u000D]/g, "");
+    var trimmed = stripped.replace(/^[\u0000- ]+/, "").replace(/[\u0000- ]+$/, "");
+    if (trimmed === "") return undefined;
+    if (trimmed.indexOf("//") === 0) return undefined;
+    if (/^[#?./]/.test(trimmed) || !/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) return trimmed;
+    var scheme = trimmed.slice(0, trimmed.indexOf(":") + 1).toLowerCase();
+    return ALLOWED_URL_SCHEMES.indexOf(scheme) === -1 ? undefined : trimmed;
+  }
+
+  /** An element; an absent attribute value means an absent attribute. */
+  function el(tag, attrs, text) {
+    var node = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      if (attrs[k] === undefined || attrs[k] === null) return;
+      node.setAttribute(k, attrs[k]);
+    });
+    if (text != null) node.textContent = text;
+    return node;
+  }
+
+  var STICKY_GLYPH =
+    '<svg class="fa-tile-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+    'stroke-linejoin="round"/><path d="M15 3v4h4" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  var BEANS_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">' +
+    '<g transform="translate(8.4,8.6) rotate(-32)">' +
+    '<ellipse rx="5.6" ry="3.7"/><path d="M-1.9 0.7A2.3 2.3 0 0 1 1.9-0.4"/></g>' +
+    '<g transform="translate(15.6,15.4) rotate(26)">' +
+    '<ellipse rx="5.6" ry="3.7"/><path d="M-1.9 0.7A2.3 2.3 0 0 1 1.9-0.4"/></g>' +
+    "</g></svg>";
+  var PROCESS_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<rect x="2.5" y="8" width="7" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+    '<rect x="14.5" y="8" width="7" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+    '<path d="M9.5 11h5M13 9.5 14.5 11 13 12.5" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+    "</svg>";
+  var NET_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M12 4.5 5 9.5M12 4.5l7 5M5 9.5l3.5 8M19 9.5l-3.5 8M8.5 17.5h7M5 9.5h14" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+    '<g fill="currentColor">' +
+    '<circle cx="12" cy="4.5" r="2.1"/><circle cx="5" cy="9.5" r="2.1"/>' +
+    '<circle cx="19" cy="9.5" r="2.1"/><circle cx="8.5" cy="17.5" r="2.1"/>' +
+    '<circle cx="15.5" cy="17.5" r="2.1"/></g>' +
+    "</svg>";
+  var TILES_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">' +
+    '<rect x="3" y="3" width="6" height="6" rx="1.4"/>' +
+    '<rect x="15" y="3" width="6" height="6" rx="1.4"/>' +
+    '<rect x="3" y="15" width="6" height="6" rx="1.4"/>' +
+    '<rect x="15" y="15" width="6" height="6" rx="1.4"/>' +
+    '<rect x="9.5" y="9.5" width="5" height="5" rx="1.2"/>' +
+    "</svg>";
+  var FISH_GLYPH =
+    '<svg class="fa-tile-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M2 12c3-4 7-6 11-6s7 2 9 6c-2 4-5 6-9 6s-8-2-11-6z" fill="none" ' +
+    'stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>' +
+    '<path d="M22 12l-3-3v6z" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+    'stroke-linejoin="round"/>' +
+    '<path d="M7.2 10.2l2 2m0-2l-2 2" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.6" stroke-linecap="round"/></svg>';
+
+  /* FIVE DISTINCT DRAWINGS: a fallback to NET_GLYPH alone would give four of
+   * the five slots the same picture. */
+  var ROW_GLYPHS = {
+    todos: STICKY_GLYPH, beans: BEANS_GLYPH, processes: PROCESS_GLYPH,
+    kg: NET_GLYPH, launcher: TILES_GLYPH, "fsh-guts": FISH_GLYPH
+  };
+  function rowGlyph(id) {
+    return Object.prototype.hasOwnProperty.call(ROW_GLYPHS, id) ? ROW_GLYPHS[id] : NET_GLYPH;
+  }
+
+  var LABELS = {
+    todos: "Todos", beans: "Beans", processes: "Processes",
+    kg: "Knowledge graph", launcher: "More actions", "fsh-guts": "fsh-guts, discarded items"
+  };
+
+  /** The row's data: `undefined` when the page carries none or it is unreadable, `null` when the instance declares no row. */
+  function readNavbarRow() {
+    var node = document.getElementById("fa-navbar-row");
+    if (!node) return undefined;
+    var text = (node.textContent || "").trim();
+    if (text === "" || text === "null") return null;   // declared nothing
+    try {
+      var parsed = JSON.parse(text);
+      return parsed && typeof parsed === "object" ? parsed : null;
+    } catch (_e) {
+      console.warn("navbar-row: #fa-navbar-row is not valid JSON; the navbar icon row " +
+                   "was not mounted.");
+      return undefined;
+    }
+  }
+
+  /** The page's navbar: the theme's sidebar first — a page carries one or the other, never both. */
+  function navbar() {
+    return document.querySelector(".side-bar") || document.querySelector("nav.fa-nav");
+  }
+
+  /* A link to a slot's published page, or — DECLARED AND NOT PUBLISHED — a
+   * non-link that says why in its accessible name (`pb04`: a dead link invites
+   * a click and reads as a broken site; a silent omission answers "where is
+   * beans" with nothing). Every control carries `data-fa-tip`, the SAME string
+   * as its `aria-label` (`ob3m` finding 1). */
+  function linkSlot(id, label, href, notes) {
+    // `safeHref` AFTER `withBase`, so what is checked is the href written.
+    var at = safeHref(withBase(href));
+    if (at) {
+      var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label, "data-fa-tip": label });
+      a.innerHTML = rowGlyph(id);
+      return a;
+    }
+    var why = typeof notes[id] === "string" ? notes[id] : "reason not recorded";
+    var dead = el("span", {
+      class: "fa-nav-icon fa-nav-icon--dead",
+      "aria-label": label + " — " + why,
+      title: label + " — " + why,
+      "data-fa-tip": label + " — " + why
+    });
+    dead.innerHTML = rowGlyph(id);
+    return dead;
+  }
+
+  /* ARRIVING ON AN ICON DOES NOT OPEN THE STRIP — bean `ob3m` finding 1.
+   * Hover widens the strip and re-flows the column into a row, so the icon a
+   * pointer arrived on moved out from under it before its tooltip could name
+   * it. The bar carries `.fa-nav-tip-hold` while the pointer is inside the
+   * column's AT-REST box. Bound once per bar; the row is looked up each time,
+   * so a row replaced by a full one is measured, not the detached old one. */
+  var holding = typeof WeakMap === "function" ? new WeakMap() : null;
+  function holdStripForTips(bar) {
+    if (!holding) return;
+    // RE-MEASURED on every mount: a FULL row replacing a LITE one is a
+    // different height, and a box kept from the lite row left the lower icons
+    // outside it, so arriving on them opened the strip (`rail-tips.e2e.ts`).
+    if (holding.has(bar)) { holding.get(bar)(); return; }
+    var rest = null;
+    function measure() {
+      var host = bar.querySelector(".fa-nav-icons");
+      if (!host) return;
+      if (bar.classList.contains("fa-nav-tip-hold")) return;
+      if (bar.matches(":hover") || bar.matches(":focus-within")) return;
+      if (bar.querySelector(".fa-nav-open:checked")) return;
+      var r = host.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0) rest = { l: r.left, r: r.right, t: r.top, b: r.bottom };
+    }
+    function inside(e) {
+      return !!rest && e.clientX >= rest.l && e.clientX < rest.r && e.clientY >= rest.t && e.clientY < rest.b;
+    }
+    holding.set(bar, function () { rest = null; measure(); });
+    measure();
+    window.addEventListener("resize", measure);
+    bar.addEventListener("pointerenter", function (e) {
+      if (e.pointerType === "touch") return;
+      measure();
+      if (inside(e)) bar.classList.add("fa-nav-tip-hold");
+    });
+    bar.addEventListener("pointermove", function (e) {
+      if (bar.classList.contains("fa-nav-tip-hold") && !inside(e)) bar.classList.remove("fa-nav-tip-hold");
+    });
+    bar.addEventListener("pointerleave", function () {
+      bar.classList.remove("fa-nav-tip-hold");
+      requestAnimationFrame(measure);
+    });
+  }
+
+  /**
+   * Draw the row into the page's navbar.
+   *
+   * `hooks` (all optional; absent means LITE):
+   * - `full`     — true when `docs-ui.js` is the caller.
+   * - `launcher` — the click handler for the launcher slot; without it the slot is left out.
+   * - `after(host, bar)` — called once the row is in the page (the light/dark switch goes here).
+   *
+   * Returns the row element, or `null` when there is nothing to draw.
+   */
+  function mount(hooks) {
+    hooks = hooks || {};
+    var full = !!hooks.full;
+    var bar = navbar();
+    if (!bar) return null;
+    var existing = bar.querySelector(".fa-nav-icons");
+    if (existing) {
+      // FULL REPLACES LITE; nothing replaces FULL.
+      if (!full || existing.getAttribute("data-fa-row") === "full") return existing;
+      existing.parentNode.removeChild(existing);
+    }
+    var row = readNavbarRow();
+    if (row === undefined) return null;
+    if (row === null) {
+      // Info, not a warning: a declaration gap only an author can fix.
+      console.info("navbar-row: this instance declares no navbarIcons and inherits none; " +
+                   "no navbar icon row was mounted.");
+      return null;
+    }
+    var icons = Array.isArray(row.icons) ? row.icons : [];
+    var hrefs = row.hrefs && typeof row.hrefs === "object" ? row.hrefs : {};
+    // WHY a slot has no href — a separate map, so "absent" never means both
+    // "resolved to nothing" and "never declared". See `navbarRow` in
+    // `sync-docs-harness.ts`.
+    var notes = row.notes && typeof row.notes === "object" ? row.notes : {};
+
+    var host = el("div", {
+      class: "fa-nav-icons", role: "group", "aria-label": "Harness actions",
+      "data-fa-row": full ? "full" : "lite"
+    });
+
+    for (var i = 0; i < icons.length; i++) {
+      var id = icons[i];
+      // `close` is CSS-placed, never drawn in the row; skipped rather than
+      // dropped from the declaration, so the instance's list still says six.
+      if (id === "close") continue;
+      var label = LABELS[id] || id;
+
+      if (id === "fsh-guts") {
+        if (full) {
+          // THE TRASHCAN, "with the others" (#1925). A button: it opens the
+          // fsh-guts dialog and carries the live count, both wired by
+          // `docs-ui.js` (`mountFshGutsNav`) through `data-fa-fsh-guts-open`.
+          var fish = el("button", {
+            type: "button", class: "fa-nav-icon fa-nav-icon--fsh-guts", "data-fa-fsh-guts-open": "",
+            "aria-label": label, title: label, "data-fa-tip": label
+          });
+          fish.innerHTML = FISH_GLYPH;
+          fish.appendChild(el("span", { class: "fa-nav-count", "data-fa-count-state": "pending", "aria-hidden": "true" }, "…"));
+          host.appendChild(fish);
+        } else {
+          // No dialog on this page, so the fish goes to the fsh-guts page.
+          host.appendChild(linkSlot(id, label, hrefs[id], notes));
+        }
+        continue;
+      }
+
+      if (id === "launcher") {
+        // The launcher proxies `docs-ui.js`'s actions panel. With no panel on
+        // the page the slot is LEFT OUT (owner, 2026-10-05).
+        if (typeof hooks.launcher !== "function") continue;
+        var proxy = el("button", { type: "button", class: "fa-nav-icon", "aria-label": LABELS.launcher, "data-fa-tip": LABELS.launcher });
+        proxy.innerHTML = rowGlyph("launcher");
+        proxy.addEventListener("click", hooks.launcher);
+        host.appendChild(proxy);
+        continue;
+      }
+
+      host.appendChild(linkSlot(id, label, hrefs[id], notes));
+    }
+
+    // Line 1 is the mark and the name, line 2 is this. On the rail, straight
+    // under its fixed top inside `.fa-nav-in`; on the theme's sidebar, under
+    // `.site-header`.
+    var railTop = bar.matches("nav.fa-nav") ? bar.querySelector(".fa-nav-in > .fa-nav-top") : null;
+    var header = bar.querySelector(".site-header");
+    if (railTop) railTop.parentNode.insertBefore(host, railTop.nextSibling);
+    else if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
+    else bar.appendChild(host);
+
+    if (typeof hooks.after === "function") hooks.after(host, bar);
+    holdStripForTips(bar);
+    return host;
+  }
+
+  window.FaNavbarRow = { mount: mount };
+
+  // `docs-ui.js` ran first and left its hooks (a `folio-mount.ts` page).
+  if (window.faNavbarRowHooks) {
+    mount(window.faNavbarRowHooks);
+    return;
+  }
+
+  function whenReady(fn) {
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn);
+    else fn();
+  }
+
+  if (document.querySelector('script[src*="/docs-ui.js"]')) {
+    // `docs-ui.js` will mount the FULL row. If it never does — it 404s, or
+    // throws before reaching the row — draw the lite one rather than none.
+    // Deferred and appended scripts all run before `load`.
+    window.addEventListener("load", function () {
+      var bar = navbar();
+      if (bar && !bar.querySelector(".fa-nav-icons")) mount({});
+    });
+  } else {
+    whenReady(function () { mount({}); });
+  }
+})();
+</script><style data-folio-narrow-viewport>
+/* Narrow viewports: nothing may widen the PAGE — bean `2r2n`.
+ *
+ * At 390 px, 105 of 249 built pages scrolled sideways (measured 2026-09-24).
+ * The rule here is the bean's: wide content scrolls INSIDE ITS OWN BOX with a
+ * visible cue, and the page itself never pans.
+ *
+ * ONE FILE, TWO WAYS IN. Themed pages link it from `_includes/head_custom.html`.
+ * The standalone viewer pages carry no theme stylesheet at all, so
+ * `withViewerNav` in `scripts/viewer-page.ts` inlines this same file when it
+ * adds the rail. A copy of these rules in each place would be two answers to
+ * "what does a table do at 390 px", free to drift apart.
+ *
+ * Every selector here is written to be safe on both kinds of page: no
+ * `.main-content` scope (a standalone page has none), the navbar excluded by
+ * name, and the theme's own `.table-wrapper` left alone, since it already does
+ * this job for Markdown tables. */
+
+@media (max-width: 799.98px) {
+  /* A table the theme did not wrap: raw HTML from a generator, or one built at
+   * runtime. `display: block` makes the table its own scroll box. Its cells
+   * still lay out as a table inside the anonymous table box. */
+  table:not(.table-wrapper > table):not(.fa-nav table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* THE CUE: the edge that has more content past it fades out. The fade is a
+   * MASK over the table's own pixels, driven by its own scroll position, so
+   * it needs no knowledge of the page's background. A painted cover (the
+   * usual `background-attachment: local` trick) does: the first version used
+   * `Canvas`, and on a page that is dark under a LIGHT scheme it laid a white
+   * band over the first column.
+   *
+   * A table that does not overflow has an inactive scroll timeline, so the
+   * animation has no effect and both fades stay at their initial 0: no cue
+   * where there is nothing to scroll to. A browser without scroll-driven
+   * animations shows no fade, and the table still scrolls. */
+  @supports (animation-timeline: scroll()) {
+    table:not(.table-wrapper > table):not(.fa-nav table) {
+      mask-image: linear-gradient(to right,
+        transparent 0, #000 var(--fa-cue-l),
+        #000 calc(100% - var(--fa-cue-r)), transparent 100%);
+      animation: fa-scroll-cue linear both;
+      animation-timeline: scroll(self inline);
+    }
+  }
+
+  /* A code block scrolls in its own box, which is what `pre` is for. Mermaid
+   * SOURCE sits in a `pre` until the renderer replaces it, and at 390 px a
+   * diagram's source line is longer than the screen. */
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Prose that has no break opportunity: a long path in inline code, or a
+   * glossary definition naming one. Breaking the string is better than
+   * widening the page it sits on. */
+  :not(pre) > code,
+  dd {
+    overflow-wrap: anywhere;
+  }
+}
+
+@property --fa-cue-l { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --fa-cue-r { syntax: "<length>"; inherits: false; initial-value: 0px; }
+
+@keyframes fa-scroll-cue {
+  0%   { --fa-cue-l: 0px;    --fa-cue-r: 2.5rem; }
+  12%  { --fa-cue-l: 2.5rem; }
+  88%  { --fa-cue-r: 2.5rem; }
+  100% { --fa-cue-l: 2.5rem; --fa-cue-r: 0px; }
+}
+
+</style></head><body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><script type="application/json" id="fa-navbar-row" data-fa-root="../../..">{"icons":["close","todos","beans","processes","kg","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","processes":"/processes/","kg":"/cat-harness/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><style>body{padding-left:56px}.fa-nav{position:fixed;top:0;left:0;bottom:0;width:56px;z-index:2147483000;background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}.fa-nav:hover,.fa-nav:has(:focus-visible),.fa-nav:has(.fa-nav-open:checked){width:248px}.fa-nav:not(:hover):not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) .fa-glass-handle__label{opacity:0}@media(min-width:1064px){.fa-nav:hover,.fa-nav:has(:focus-visible),.fa-nav:has(.fa-nav-open:checked){width:264px}.fa-nav-in{width:264px}}.fa-nav-open{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.fa-nav-in{width:248px;height:100%;display:flex;flex-direction:column}.fa-nav-top{flex:0 0 auto}.fa-nav-graphs{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden}.fa-nav-bottom{flex:0 0 auto;border-top:1px solid #30363d}.fa-nav-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #30363d;cursor:pointer;user-select:none}.fa-nav:has(.fa-nav-open:focus-visible) .fa-nav-head{outline:2px solid #58a6ff;outline-offset:-2px}.fa-nav-glyph{flex:0 0 32px;text-align:center;font-size:16px}.fa-nav-glyph img{width:32px;height:32px;display:block}.fa-nav-glyph svg{width:32px;height:32px;display:block;padding:4px;box-sizing:border-box}.fa-nav-crop{position:relative;overflow:hidden;height:32px}.fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}.fa-nav-name{font-weight:600}.fa-nav a{display:flex;align-items:center;gap:8px;padding:8px 12px;color:#e6edf3;text-decoration:none;white-space:nowrap}.fa-nav a:hover{background:#30363d}.fa-nav a[aria-current="page"]{background:#30363d;font-weight:600}.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px 12px;opacity:.55;cursor:default}.fa-nav-note{margin-left:auto;font-size:11px;font-style:italic;white-space:nowrap}.fa-nav-row{display:grid;grid-template-columns:1fr auto;align-items:center}.fa-nav-row>a,.fa-nav-row>.fa-nav-dead{min-width:0}.fa-nav-kids{grid-column:1/-1}.fa-nav-action{display:none;background:none;border:0;cursor:pointer;padding:0 12px;font-size:13px;line-height:1;color:inherit;opacity:.7}.fa-nav-action:hover,.fa-nav-action:focus-visible{opacity:1}.fa-nav:hover .fa-nav-action,.fa-nav:has(:focus-visible) .fa-nav-action,.fa-nav:has(.fa-nav-open:checked) .fa-nav-action{display:block}.fa-nav-group>summary{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;user-select:none;list-style:none}.fa-nav-group>summary::-webkit-details-marker{display:none}.fa-nav-group>summary:hover{background:#30363d}.fa-nav-group[open]>summary{font-weight:600}.fa-nav-group .fa-nav-sub a{padding-left:52px}.fa-nav-group .fa-nav-sub .fa-nav-dead{padding-left:52px}.fa-nav-group .fa-nav-sub a.fa-nav-kind,.fa-nav-group .fa-nav-sub .fa-nav-dead.fa-nav-kind{padding-left:12px}.fa-nav-tone{border-radius:3px}.fa-nav-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}.fa-nav:hover .fa-nav-label,.fa-nav:has(:focus-visible) .fa-nav-label,.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}@media print{.fa-nav{display:none}body{padding-left:0}}.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.fa-nav [data-fa-tip]::after{content:attr(data-fa-tip);content:attr(data-fa-tip) / "";position:fixed;left:64px;z-index:2147483001;padding:4px 8px;border-radius:4px;background:#1f2328;color:#ffffff;border:1px solid #58a6ff;box-shadow:0 2px 8px rgba(0,0,0,.35);font:600 13px/1.3 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;letter-spacing:normal;text-transform:none;white-space:nowrap;pointer-events:none;opacity:0}.fa-nav [data-fa-tip]:hover::after,.fa-nav [data-fa-tip]:focus-visible::after{opacity:1}.fa-nav:hover [data-fa-tip]::after,.fa-nav:has(:focus-visible) [data-fa-tip]::after,.fa-nav:has(.fa-nav-open:checked) [data-fa-tip]::after{left:256px}@media(min-width:1064px){.fa-nav:hover [data-fa-tip]::after,.fa-nav:has(:focus-visible) [data-fa-tip]::after,.fa-nav:has(.fa-nav-open:checked) [data-fa-tip]::after{left:272px}}@media(prefers-reduced-motion:no-preference){.fa-nav [data-fa-tip]::after{transition:opacity .12s ease}}</style><nav class="fa-nav" aria-label="folio-assistant"><input type="checkbox" class="fa-nav-open" id="fa-nav-open"><div class="fa-nav-in"><div class="fa-nav-top"><label class="fa-nav-head" for="fa-nav-open" title="Open or close navigation"><span class="fa-nav-glyph fa-nav-tone fa-nav-crop" style="background:hsl(212 45% 28%)"><img src="../../../assets/img/harness/landing-card.webp" alt="" title="Grumpy cat" style="width:200%;height:200%;left:0%;top:-92%"></span><span class="fa-nav-name fa-nav-label">folio-assistant-core</span></label></div><div class="fa-nav-graphs"><details class="fa-nav-group" open><summary><span class="fa-nav-glyph" aria-hidden="true">§</span><span class="fa-nav-label">Schemas</span></summary><div class="fa-nav-sub"><a href="../"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">▸</span><span class="fa-nav-label">Schemas</span></a><a href="../cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">▸</span><span class="fa-nav-label">Schemas<span class="fa-nav-qualifier"> · C@T Harness</span></span></a><a href="../cat-openapi/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">▸</span><span class="fa-nav-label">Schemas<span class="fa-nav-qualifier"> · C@T OpenAPI</span></span></a><a href="../fhir-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">▸</span><span class="fa-nav-label">Schemas<span class="fa-nav-qualifier"> · FHIR IG Harness</span></span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">▸</span><span class="fa-nav-label">Schemas<span class="fa-nav-qualifier"> · folio-assistant-core</span></span></span><a href="#overview" style="padding-left:92px"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">·</span><span class="fa-nav-label">Overview</span></a><a href="#list" style="padding-left:92px"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">·</span><span class="fa-nav-label">Declarations</span></a><a href="#detail" style="padding-left:92px"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">·</span><span class="fa-nav-label">Detail</span></a><a href="../smart-base/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">▸</span><span class="fa-nav-label">Schemas<span class="fa-nav-qualifier"> · SMART Base</span></span></a></div></details><details class="fa-nav-group"><summary><span class="fa-nav-glyph" aria-hidden="true">▤</span><span class="fa-nav-label">Graphs</span></summary><div class="fa-nav-sub"><span class="fa-nav-dead fa-nav-kind" title="Block kinds — The block kinds a harness's adapter owns, one node per kind carrying its label prefix, RDF types, profile and builder, folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(32 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 15h14v4H5zM5 10h14v4H5zM5 5h9v4H5zM16 5l3 2-3 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">Block kinds<span class="fa-nav-sr"> — The block kinds a harness's adapter owns, one node per kind carrying its label prefix, RDF types, profile and builder, folio-assistant-core</span></span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead fa-nav-kind" title="Code — Source code, folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(268 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 7l-5 5 5 5m8-10l5 5-5 5M13 5l-2 14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">Code<span class="fa-nav-sr"> — Source code, folio-assistant-core</span></span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead fa-nav-kind" title="Folio — Authored content, rendered to a website by the just-the-docs pipeline, folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(224 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 5h7v14H4zM13 5h7v14h-7zM11 5v14M7 9h1M16 9h1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">Folio<span class="fa-nav-sr"> — Authored content, rendered to a website by the just-the-docs pipeline, folio-assistant-core</span></span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../glossary/" class="fa-nav-kind" title="Glossary — SKOS terms (folio-glossary/v1), folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(84 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 7v12M12 7C10 5 7 5 4 6v12c3-1 6-1 8 1M12 7c2-2 5-2 8-1v12c-3-1-6-1-8 1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">Glossary<span class="fa-nav-sr"> — SKOS terms (folio-glossary/v1), folio-assistant-core</span></span></a><span class="fa-nav-dead fa-nav-kind" title="Graph kinds — The graph kinds a harness declares it owns, one node per kind, so no central registry names another harness's subgraph types, folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(300 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 8h12v11H5zM7 5h12v11M9 2h12v11M8 12h6M8 15h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">Graph kinds<span class="fa-nav-sr"> — The graph kinds a harness declares it owns, one node per kind, so no central registry names another harness's subgraph types, folio-assistant-core</span></span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../cat-harness/library/folio-assistant-core/" class="fa-nav-kind" title="Library — L1 source content, folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(36 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 4h4v16H5zM11 4h3v16h-3zM16 5l3 15-2 .4L14 5.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">Library<span class="fa-nav-sr"> — L1 source content, folio-assistant-core</span></span></a><a href="../../../methodologies/" class="fa-nav-kind" title="Methodologies — Judgement methodologies, adopted whole and kept independent, folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(268 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 20V12m0 0L6 6m6 6l6-6M4 4h4m8 0h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">Methodologies<span class="fa-nav-sr"> — Judgement methodologies, adopted whole and kept independent, folio-assistant-core</span></span></a><a href="../../../processes/" class="fa-nav-kind" title="Processes — A Subgraph of Processes, folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(280 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 12h4m4 0h4m4 0h.01M6 12a2 2 0 11-4 0 2 2 0 014 0zm14 0a2 2 0 11-4 0 2 2 0 014 0zM12 9l3 3-3 3-3-3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">Processes<span class="fa-nav-sr"> — A Subgraph of Processes, folio-assistant-core</span></span></a><span class="fa-nav-dead fa-nav-kind" title="QA — QA verdicts and their projections, folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(140 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6zM9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">QA<span class="fa-nav-sr"> — QA verdicts and their projections, folio-assistant-core</span></span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead fa-nav-kind" title="Schemas — A Subgraph of Node Schemas, folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(156 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3l8 4-8 4-8-4zM4 12l8 4 8-4M4 17l8 4 8-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">Schemas<span class="fa-nav-sr"> — A Subgraph of Node Schemas, folio-assistant-core</span></span></span><a href="../../../cat-harness/auto-docs/index/skills/core-skills/" class="fa-nav-kind" title="Skills — A Subgraph of Skills, folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(256 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 5h6a2 2 0 012 2v12a2 2 0 00-2-2H4zm16 0h-6a2 2 0 00-2 2v12a2 2 0 012-2h6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">Skills<span class="fa-nav-sr"> — A Subgraph of Skills, folio-assistant-core</span></span></a><span class="fa-nav-dead fa-nav-kind" title="Tools — Tool definitions, folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(250 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M14 4a4 4 0 00-5 5l-5 5 2 2 5-5a4 4 0 005-5l-2 2-2-2 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">Tools<span class="fa-nav-sr"> — Tool definitions, folio-assistant-core</span></span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead fa-nav-kind" title="Translation sources — POT templates, PO catalogues and their TranslationNode manifests, one directory per target locale, folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(176 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 6h7M7 6v2c0 3-1 5-3 6M6 10c1 3 3 4 5 5M13 19l4-10 4 10M15 16h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">Translation sources<span class="fa-nav-sr"> — POT templates, PO catalogues and their TranslationNode manifests, one directory per target locale, folio-assistant-core</span></span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead fa-nav-kind" title="Validators — The validators a harness's code provides, one node each naming the graph kind and $schema family it checks and the Zod export that checks it, joined onto the kinds on first use, folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(132 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6zM8.5 12.5l2.5 2.5 4.5-5M12 3v2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">Validators<span class="fa-nav-sr"> — The validators a harness's code provides, one node each naming the graph kind and $schema family it checks and the Zod export that checks it, joined onto the kinds on first use, folio-assistant-core</span></span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../cat-harness/voices/folio-assistant-core/" class="fa-nav-kind" title="Voices — Editorial voice profiles, folio-assistant-core"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(292 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 4a3 3 0 013 3v4a3 3 0 01-6 0V7a3 3 0 013-3zM7 11a5 5 0 0010 0M12 16v4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">Voices<span class="fa-nav-sr"> — Editorial voice profiles, folio-assistant-core</span></span></a></div></details></div><div class="fa-nav-bottom"><details class="fa-nav-group"><summary><span class="fa-nav-glyph" aria-hidden="true">▦</span><span class="fa-nav-label">Harnesses</span></summary><div class="fa-nav-sub"><a href="../../../#harness-folio-assistant"><span class="fa-nav-glyph fa-nav-tone fa-nav-crop" style="background:hsl(236 45% 28%)"><img src="../../../assets/img/harness/landing-engineer-card.webp" alt="" title="Grumpy cat, engineering" style="width:217.3913%;height:217.3913%;left:0%;top:-86.9565%"></span><span class="fa-nav-label">Folio Assistant</span></a><a href="../../../smart-trust/" class="fa-nav-kind"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6zM12 9.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM12 12.5v3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">smart-trust</span></a><a href="../../../smart-base/" class="fa-nav-kind"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M3 18h18M6 14h12M9 10h6M11 6h2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fa-nav-label">SMART Base</span></a><a href="../../../who-iris/"><span class="fa-nav-glyph fa-nav-tone fa-nav-crop" style="background:hsl(198 45% 28%)"><img src="../../../docs/who-iris/assets/img/who-emblem.svg" alt="" title="WHO emblem" style="width:326.3708%;height:100%;left:0%;top:0%"></span><span class="fa-nav-label">WHO IRIS</span></a><a href="../../../#harness-cat-harness"><span class="fa-nav-glyph fa-nav-tone fa-nav-crop" style="background:hsl(268 45% 28%)"><img src="../../../assets/img/harness/landing-grumpy-cyborg-agents-card.webp" alt="" title="Grumpy cyborg agents" style="width:500%;height:500%;left:-30%;top:-170%"></span><span class="fa-nav-label">C@T Harness</span></a><a href="../../../#harness-bootstrap"><span class="fa-nav-glyph fa-nav-tone fa-nav-crop" style="background:hsl(96 45% 28%)"><img src="../../../assets/img/harness/landing-bootstrap-card.webp" alt="" title="CatBootstrap" style="width:416.6667%;height:416.6667%;left:-112.5%;top:-256.25%"></span><span class="fa-nav-label">Bootstrap</span></a></div></details><a href="../../../"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">⌂</span><span class="fa-nav-label">C@T Harness</span></a></div></div></nav><script type="application/json" data-fa-visualiser-nav>[{"label":"Schemas","href":"../"},{"label":"Schemas","qualifier":"C@T Harness","href":"../cat-harness/"},{"label":"Schemas","qualifier":"C@T OpenAPI","href":"../cat-openapi/"},{"label":"Schemas","qualifier":"FHIR IG Harness","href":"../fhir-harness/"},{"label":"Schemas","qualifier":"folio-assistant-core","items":[{"label":"Overview","href":"#overview"},{"label":"Declarations","href":"#list"},{"label":"Detail","href":"#detail"}]},{"label":"Schemas","qualifier":"SMART Base","href":"../smart-base/"}]</script><header><h1>Schema graph</h1><p class="counts" id="counts">loading…</p><p class="counts" style="margin-top:4px">Diagrams show <strong>containment</strong> and
+    <strong>generalisation</strong>. A reference carried as a string id is not drawn &mdash; it is
+    invisible to a syntactic reader, not absent from the model.</p></header><details id="overview"><summary>Relationship diagram &mdash; what is defined here, and how it is linked</summary><div class="ov-body"><p class="ov-cap" id="ov-cap">loading&hellip;</p><svg id="ov-svg" role="img" aria-labelledby="ov-cap"></svg><div class="ov-key" id="ov-key"></div></div></details><main><section id="list" aria-label="Declarations"><div class="controls"><input id="q" type="search" placeholder="Search declarations…" aria-label="Search declarations"> <select id="kind" aria-label="Filter by kind"><option value="">any kind</option></select> <select id="mod" aria-label="Filter by module"><option value="">any module</option></select></div><ul id="items"></ul></section><section id="detail" aria-live="polite"><p class="empty">Select a declaration.</p></section></main><script>
+"use strict";
+var G = null, SEL = null;
+var DATA_HREF = "../../../assets/schemas/index.json";
+/* The SUBJECT this page is scoped to, or "" for the handler's whole view.
+   One projection serves every page — a second JSON per subject would be the
+   same facts written N+1 times, free to disagree once one is regenerated. */
+var SCOPE = "folio-assistant-core";
+function inScope(d){ return !SCOPE || d.instance === SCOPE; }
+var $ = function (id) { return document.getElementById(id); };
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+/* A field's doc is prose that names things in markdown inline code; escaped
+   verbatim, "bean `abc`" showed its backticks. Escape first, then turn each
+   PAIRED span into <code>, the rule schemas/inline-code.ts applies server-side.
+   An unpaired backtick stays as written. ` is the backtick: the character
+   itself would end the template literal that carries this script. */
+function withCode(s) {
+  return esc(s).replace(/`([^`]+)`/g, "<code>$1</code>");
+}
+function byId(id) { return G.declIndex[id]; }
+
+/* A one-type UML neighbourhood: generalisations above, references below.
+   Built as SVG text so the page keeps its no-dependency rule. */
+function uml(d) {
+  var CH = 7.0, PAD = 10, LH = 15, HEAD = 22;
+  function box(x, y, title, fields, sel) {
+    // Truncation is STATED, not silent. A box showing 8 of 24 fields with no
+    // mark reads as a type with 8 fields, which is a wrong diagram rather than
+    // an abbreviated one.
+    var rows = fields.slice(0, 8);
+    if (fields.length > rows.length) rows = rows.concat(["… " + (fields.length - rows.length) + " more"]);
+    var w = Math.max(title.length, 8);
+    rows.forEach(function (r) { w = Math.max(w, r.length); });
+    w = Math.min(w, 42) * CH + PAD * 2;
+    var h = HEAD + (rows.length ? rows.length * LH + 6 : 0);
+    var g = '<g><rect class="uml-box' + (sel ? " sel" : "") + '" x="' + x + '" y="' + y +
+      '" width="' + w + '" height="' + h + '" rx="4"/>' +
+      '<text class="uml-t" x="' + (x + PAD) + '" y="' + (y + 15) + '">' + esc(title.slice(0, 42)) + "</text>";
+    if (rows.length) {
+      g += '<line class="uml-e" x1="' + x + '" y1="' + (y + HEAD) + '" x2="' + (x + w) + '" y2="' + (y + HEAD) + '"/>';
+      rows.forEach(function (r, i) {
+        g += '<text class="uml-f" x="' + (x + PAD) + '" y="' + (y + HEAD + 14 + i * LH) + '">' + esc(r.slice(0, 42)) + "</text>";
+      });
+    }
+    return { svg: g + "</g>", w: w, h: h };
+  }
+  var parents = (d.extendsNames || []).map(function (n) {
+    var e = (G.edges || []).filter(function (x) { return x.from === d.id && x.kind === "extends"; })
+      .map(function (x) { return byId(x.to); }).filter(Boolean)
+      .find(function (t) { return t.name === n; });
+    return e || { id: null, name: n, fields: [] };
+  });
+  var refs = [];
+  (G.edges || []).forEach(function (x) {
+    if (x.from !== d.id || x.kind !== "field") return;
+    var t = byId(x.to);
+    if (t && !refs.some(function (r) { return r.t.id === t.id; })) refs.push({ t: t, via: x.via, arr: x.array, opt: x.optional });
+  });
+  refs = refs.slice(0, 6);
+  var selFields = (d.fields || []).map(function (f) {
+    return f.name + (f.optional ? "?" : "") + ": " + f.type.replace(/^z\./, "").slice(0, 28);
+  });
+
+  var W = 0, parts = [], y = 0;
+  var px = 0, prow = [];
+  parents.forEach(function (p) {
+    var b = box(px, y, p.name, [], false);
+    prow.push({ b: b, x: px, cx: px + b.w / 2, bottom: y + b.h });
+    px += b.w + 24;
+  });
+  var prowW = px - 24;
+  if (prow.length) { W = Math.max(W, prowW); y += 46; }
+  var sel = box(0, y, d.name, selFields, true);
+  var selTop = y, selBottom = y + sel.h, selCx = sel.w / 2;
+  W = Math.max(W, sel.w);
+  y += sel.h + 46;
+  var rx = 0, rrow = [];
+  refs.forEach(function (r) {
+    var b = box(rx, y, r.t.name, [], false);
+    rrow.push({ b: b, x: rx, cx: rx + b.w / 2, top: y, via: r.via + (r.arr ? "[]" : "") + (r.opt ? "?" : "") });
+    rx += b.w + 24;
+  });
+  if (rrow.length) { W = Math.max(W, rx - 24); y += 40; } else { y -= 46; }
+
+  // Shift the parent row so it sits over the selected box rather than at the
+  // left margin: a generalisation that elbows sideways for no reason reads as
+  // pointing somewhere else.
+  var pShift = prow.length ? Math.max(0, Math.round(sel.w / 2 - prowW / 2)) : 0;
+  if (pShift > 0) W = Math.max(W, prowW + pShift);
+  prow.forEach(function (p) {
+    p.cx += pShift;
+    p.b.svg = p.b.svg.replace(/x="(d+(?:.d+)?)"/, function (m0, v) {
+      return 'x="' + (parseFloat(v) + pShift) + '"';
+    });
+    parts.push(p.b.svg);
+    parts.push('<path class="uml-e" d="M' + p.cx + ' ' + p.bottom + ' L' + p.cx + ' ' + (selTop - 10) +
+      ' L' + selCx + ' ' + (selTop - 10) + ' L' + selCx + ' ' + selTop + '" marker-end="url(#gen)"/>');
+  });
+  parts.push(sel.svg);
+  rrow.forEach(function (r) {
+    parts.push(r.b.svg);
+    parts.push('<path class="uml-e" d="M' + selCx + ' ' + selBottom + ' L' + selCx + ' ' + (r.top - 14) +
+      ' L' + r.cx + ' ' + (r.top - 14) + ' L' + r.cx + ' ' + r.top + '" marker-end="url(#ref)"/>');
+    parts.push('<text class="uml-l" x="' + (r.cx + 4) + '" y="' + (r.top - 18) + '">' + esc(r.via) + "</text>");
+  });
+  var H = y + 8;
+  return '<svg viewBox="0 0 ' + (W + 4) + " " + H + '" width="' + (W + 4) + '" role="img" aria-label="Neighbourhood of ' +
+    esc(d.name) + '"><defs>' +
+    /* UML notation, kept: a HOLLOW triangle is generalisation, an open arrow
+       is an association. Drawing both the same way would say the two edge
+       kinds are one relation, which is the thing the reader works to keep
+       apart. */
+    '<marker id="gen" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">' +
+    '<path d="M1 1 L11 6 L1 11 z" class="uml-head"/></marker>' +
+    '<marker id="ref" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">' +
+    '<path d="M1 1 L9 5 L1 9" class="uml-tip"/></marker></defs>' + parts.join("") + "</svg>";
+}
+
+function detail(d) {
+  var referrers = (G.edges || []).filter(function (e) { return e.to === d.id; });
+  var h = '<h2>' + esc(d.name) + '</h2><p class="sub">' + esc(d.module) +
+    ' &middot; ' + esc(d.kind) + (d.exported ? "" : " &middot; not exported") + "</p>";
+  if (d.doc) h += "<p>" + esc(d.doc) + "</p>";
+  if (d.kind === "undetermined") {
+    h += '<p class="note"><strong>Could not be classified.</strong> This is not "it has no fields" — ' +
+      "the reader saw an expression it does not model, and says so rather than rendering an empty type: <code>" +
+      esc(d.note || "") + "</code></p>";
+  }
+  h += uml(d);
+  /* The diagram shows CONTAINMENT and generalisation. It cannot show a
+     reference carried as a string id: a field declared as a plain string holds
+     no syntactic link to the schema it names, and a diagram that omitted a
+     whole class of relation silently would be the "rendered as nothing"
+     failure this repository works to avoid. Measured against the hand-drawn
+     UML: 14 of 15 compositions reproduced, 0 of 9 id associations.
+     NOTE: no backticks in this file's embedded script — they terminate the
+     template literal that carries the whole page. */
+  if ((d.fields || []).some(function (f) { return /(^|[a-z])Id$|(^|[a-z])Ids$|(^|_)ref$/.test(f.name); })) {
+    h += '<p class="note"><strong>This type carries id-style fields.</strong> ' +
+      "The diagram draws containment and generalisation only: a reference held as a string id " +
+      "(<code>actorId: z.string()</code>) carries no syntactic link to the schema it names, so it is " +
+      "<em>not</em> an absent relation — it is one this view structurally cannot see.</p>";
+  }
+  if (d.fields && d.fields.length) {
+    h += "<table><caption class=\"sub\" style=\"text-align:left;padding:0 0 4px\">Fields</caption><thead><tr><th>name</th><th>type</th><th>notes</th></tr></thead><tbody>";
+    d.fields.forEach(function (f) {
+      h += "<tr><td><code>" + esc(f.name) + (f.optional ? '<span class="opt">?</span>' : "") +
+        "</code></td><td><code>" + esc(f.type) + "</code></td><td class=\"sub\">" + withCode(f.doc || "") + "</td></tr>";
+    });
+    h += "</tbody></table>";
+  }
+  if (d.values && d.values.length) {
+    h += '<p class="sub">Values</p><p><code>' + d.values.map(esc).join("</code> <code>") + "</code></p>";
+  }
+  function links(ids) {
+    return ids.map(function (i) {
+      var t = byId(i);
+      return t ? '<a href="#' + encodeURIComponent(i) + '"><code>' + esc(t.name) + "</code></a>" : "<code>" + esc(i) + "</code>";
+    }).join(", ");
+  }
+  if (d.refs && d.refs.length) h += '<p class="sub">References</p><p>' + links(d.refs) + "</p>";
+  if (referrers.length) {
+    h += '<p class="sub">Referenced by</p><p>' + links([...new Set(referrers.map(function (e) { return e.from; }))]) + "</p>";
+  }
+  if (d.unresolved && d.unresolved.length) {
+    h += '<p class="note">Names bound in this module that resolved to no declaration in the graph: <code>' +
+      d.unresolved.map(esc).join("</code> <code>") + "</code></p>";
+  }
+  $("detail").innerHTML = h;
+}
+
+/* ---- Relationship diagram -------------------------------------------------
+   UML class boxes wired by their edges, so a reader can see that Role is
+   linked to Skill AND HOW — the label on the edge is the field it goes
+   through. This is the panel's whole reason to exist; a picture that shows
+   connection without naming the relation answers half the question.
+
+   SCOPED, NEVER THE WHOLE CORPUS. Owner, 2026-09-20: "not the WHOLE thing"
+   and "what's defined in that KG harness". 812 labelled boxes is the hairball
+   kg-viewer measured at 1111 nodes, so the diagram draws what the page is
+   scoped to, narrowed further by the module filter when one is set — which is
+   how a 754-declaration instance still has a readable picture.
+
+   The layout is STATIC: computed once, deterministically, no simulation.
+   Dragging and alternate arrangements are bean whbf. */
+var DIA_MAX = 40;
+
+/** Edge styling per kind — and an id-ref is deliberately not drawn like the rest. */
+function diaEdgeStyle(kind) {
+  if (kind === "extends") return { dash: "", head: "gen", cls: "dia-gen", label: "" };
+  /* DECLARED, not proven. A field reference is in the source; an id-ref is an
+     author's assertion via @ref over a plain string. Drawing them alike would
+     claim the reader found something it cannot see. */
+  if (kind === "id-ref") return { dash: "5 4", head: "ref", cls: "dia-idref", label: "" };
+  return { dash: "", head: "ref", cls: "dia-field", label: "" };
+}
+
+var DIA_CONTEXT_MAX = 12;
+
+/* WIDTH BUDGET, in viewBox units (bean qttr).
+   Without one, a layer is placed as a single row and the viewBox grows with
+   it, so the SVG scales the whole picture down to fit its container --
+   silently, because an SVG that does not fit does not complain. Measured
+   across all 67 modules of this graph: dak-blocks.ts came out 5476 units
+   wide against 1248 CSS px, a scale of 0.228, which renders a 10px font at
+   2.3px. Twelve modules were below a 5px effective glyph.
+   The budget is the PANEL'S OWN WIDTH, so the rendered scale lands at 1:1
+   rather than under it, and a narrow reader gets a tall legible picture
+   instead of a wide illegible one. A fixed budget cannot do that: 1100 units
+   is 1:1 on a laptop and 0.36 on a phone.
+   This makes wrapping depend on the viewport, which is deliberate and does
+   not cost reproducibility -- the ORDER within a layer is what has to be
+   stable, and it is untouched.
+   There is deliberately NO FLOOR. A floor was tried at 560 and measured: at a
+   390px viewport it left 49 of 69 modules below a 5px glyph, because the
+   floor rather than the page was setting the width. Taking the panel's width
+   whatever it is degrades to one box per row on a phone -- tall, but legible,
+   which is the trade worth making for a panel a reader opened in order to
+   read. The band loop already gives an over-budget box a row of its own, so
+   no width is degenerate. */
+function diaWidth(svg) {
+  /* A collapsed details panel measures 0, and so does a detached node. The
+     fallback is only ever used for a layout that is about to be redone on
+     open, so it need only be sane. */
+  return svg.getBoundingClientRect().width || 900;
+}
+
+/* THE LIST AND THE PICTURE FILTER THROUGH ONE PREDICATE, and that is the
+   point of this function existing rather than each caller writing its own.
+   They drifted precisely because there were two: render() honoured search,
+   kind and module while diaModel() honoured module alone, so a reader who
+   typed into the search box narrowed the list and the diagram did not move.
+   Nothing on the page said why, which makes a deliberate choice and a bug
+   look identical to the person looking at them. */
+function matchesFilter(d, q, k, m) {
+  if (!inScope(d)) return false;
+  if (k && d.kind !== k) return false;
+  if (m && d.module !== m) return false;
+  if (!q) return true;
+  return (d.name + " " + d.module + " " + (d.doc || "")).toLowerCase().indexOf(q) >= 0;
+}
+
+/** The three filter controls, read once so every caller sees one state. */
+function filterState() {
+  return {
+    q: $("q") ? $("q").value.trim().toLowerCase() : "",
+    k: $("kind") ? $("kind").value : "",
+    m: $("mod") ? $("mod").value : "",
+  };
+}
+
+function diaModel() {
+  var f = filterState();
+  var mod = f.m;
+  var core = G.decls.filter(function (d) { return matchesFilter(d, f.q, f.k, f.m); });
+  var index = {}, decls = [];
+  core.forEach(function (d) { index[d.id] = decls.length; decls.push(d); d.__ctx = false; });
+
+  /* ONE HOP OF CONTEXT, and it is not a nicety.
+     The relationship worth seeing is usually the one that LEAVES the module:
+     RoleDefSchema --skills--> SkillDefinitionSchema lives in two files, so a
+     strict module filter draws Role with its most interesting edge cut and
+     reports the loss as a number. Counting an edge is not showing it. So a
+     declaration just outside the filter that a drawn one touches is drawn
+     too, marked as context rather than as part of the set. */
+  var ctxIds = {};
+  G.edges.forEach(function (e) {
+    var fi = index[e.from], ti = index[e.to];
+    if (fi !== undefined && ti === undefined) ctxIds[e.to] = true;
+    else if (ti !== undefined && fi === undefined) ctxIds[e.from] = true;
+  });
+  var ctx = Object.keys(ctxIds)
+    .map(function (id) { return G.declIndex[id]; })
+    .filter(Boolean)
+    .sort(function (a, b) { return a.name < b.name ? -1 : 1; });
+  var ctxShown = ctx.slice(0, DIA_CONTEXT_MAX);
+  ctxShown.forEach(function (d) { index[d.id] = decls.length; decls.push(d); d.__ctx = true; });
+
+  var edges = [], ctxEdges = 0;
+  G.edges.forEach(function (e) {
+    var a = index[e.from], b = index[e.to];
+    if (a === undefined || b === undefined || a === b) return;
+    /* Context-to-context would draw a graph the page is not about -- but BOTH
+       boxes are on screen, so a reader sees two declarations with no line and
+       has no way to know a relationship was suppressed rather than absent.
+       Counted, not dropped: the same contract the module-aggregation count
+       used to carry before the layered diagram replaced it, and the reason
+       this bean's own closing line requires the report survive every mode.
+       Measured when this was added, over the COMMITTED projection of 842
+       declarations and 525 edges: 15 summed across the 79 module filters,
+       and 0 across eight sample searches -- so it is a SMALL loss, and the
+       reason to report it is that it is INVISIBLE, not that it is large. An
+       earlier draft of this comment claimed a tighter filter makes more of
+       them; that was asserted, then measured, and it is false. The figures
+       move as the corpus does; the contract does not. */
+    if (decls[a].__ctx && decls[b].__ctx) { ctxEdges++; return; }
+    edges.push({ a: a, b: b, via: e.via, kind: e.kind, array: e.array, optional: e.optional });
+  });
+  return {
+    decls: decls,
+    edges: edges,
+    index: index,
+    mod: mod,
+    coreCount: core.length,
+    ctxShown: ctxShown.length,
+    ctxHidden: ctx.length - ctxShown.length,
+    ctxEdges: ctxEdges,
+    /* Whether any filter is NARROWING the picture, so an empty result can say
+       which. Module is included: it empties the set the same way. */
+    filtered: !!(f.q || f.k || f.m),
+  };
+}
+
+/** Longest-path layering, then one barycentre pass to reduce crossings. */
+function diaLayout(m) {
+  var n = m.decls.length;
+  var out = [], inc = [];
+  for (var i = 0; i < n; i++) { out.push([]); inc.push([]); }
+  m.edges.forEach(function (e) { out[e.a].push(e.b); inc[e.b].push(e.a); });
+
+  /* A generalisation should read DOWNWARD from its parent, so layer by
+     longest path over incoming edges. Cycles are real in a schema graph
+     (mutually recursive types), so the walk is depth-capped rather than
+     assuming a DAG — a cycle settles instead of hanging. */
+  var layer = new Array(n).fill(0);
+  for (var pass = 0; pass < Math.min(n, 12); pass++) {
+    var moved = false;
+    for (var v = 0; v < n; v++) {
+      inc[v].forEach(function (u) {
+        if (layer[u] + 1 > layer[v]) { layer[v] = layer[u] + 1; moved = true; }
+      });
+    }
+    if (!moved) break;
+  }
+
+  var rows = {};
+  for (var k = 0; k < n; k++) { (rows[layer[k]] = rows[layer[k]] || []).push(k); }
+  var keys = Object.keys(rows).map(Number).sort(function (x, y) { return x - y; });
+  /* Stable within a layer: barycentre of the layer above, ties by name, so the
+     picture is reproducible rather than merely deterministic-looking. */
+  keys.forEach(function (ky) {
+    rows[ky].sort(function (x, y) {
+      var bx = inc[x].length ? inc[x].reduce(function (s, u) { return s + u; }, 0) / inc[x].length : 1e9;
+      var by = inc[y].length ? inc[y].reduce(function (s, u) { return s + u; }, 0) / inc[y].length : 1e9;
+      return bx - by || (m.decls[x].name < m.decls[y].name ? -1 : 1);
+    });
+  });
+  return { rows: rows, keys: keys, layer: layer };
+}
+
+function diagram() {
+  var svg = $("ov-svg"), cap = $("ov-cap"), key = $("ov-key");
+  var m = diaModel();
+
+  if (!m.decls.length) {
+    /* NAME THE CAUSE. This said "Nothing in scope to draw" while only scope
+       and the module select could empty it, and that was true then. Once the
+       search and kind filters narrow the picture too, the same words blame
+       the SUBJECT for what a filter did, and a reader who typed a word that
+       matches nothing is told the page is empty. */
+    var why = m.filtered
+      ? "No declaration matches the filters above, so there is nothing to draw. Clear the search or the kind to get the picture back."
+      : "Nothing in scope to draw.";
+    cap.textContent = why;
+    svg.innerHTML = ""; key.innerHTML = "";
+    return;
+  }
+  if (m.coreCount > DIA_MAX) {
+    /* Refusing is the honest answer, and it says how to get a picture rather
+       than just declining. Drawing 754 labelled boxes is the hairball. */
+    svg.innerHTML = ""; key.innerHTML = "";
+    cap.innerHTML = "<b>" + m.decls.length + "</b> declarations in scope — too many to draw as a relationship diagram " +
+      "(the limit is <b>" + DIA_MAX + "</b>, above which labelled boxes stop being readable). " +
+      "Pick a <b>module</b> in the filter above and the diagram for it appears here.";
+    return;
+  }
+
+  var L = diaLayout(m);
+  var CH = 7.0, PAD = 10, LH = 15, HEAD = 22, GAPX = 46, GAPY = 96;
+
+  /* Boxes first, to know their sizes before placing anything. */
+  var boxes = m.decls.map(function (d) {
+    var fields = (d.fields || []).map(function (f) {
+      return f.name + (f.optional ? "?" : "") + ": " + f.type.replace(/^z./, "").slice(0, 24);
+    });
+    var rows = fields.slice(0, 6);
+    if (fields.length > rows.length) rows = rows.concat(["… " + (fields.length - rows.length) + " more"]);
+    var w = Math.max(d.name.length, 10);
+    rows.forEach(function (r) { w = Math.max(w, r.length); });
+    w = Math.min(w, 34) * CH + PAD * 2;
+    return { d: d, rows: rows, w: w, h: HEAD + (rows.length ? rows.length * LH + 6 : 0) };
+  });
+
+  /* A layer becomes one or more BANDS, each within the width budget. Wrapping keeps
+     a layer's members in their own stretch of the picture, so layer-as-depth
+     still reads; it only stops the row running off the side. Order within the
+     layer is untouched, so the arrangement stays reproducible. */
+  var budget = diaWidth(svg);
+  var bands = [];
+  L.keys.forEach(function (ky) {
+    var row = L.rows[ky], cur = [], w = 0;
+    row.forEach(function (i) {
+      var bw = boxes[i].w;
+      if (cur.length && w + GAPX + bw > budget) { bands.push({ ky: ky, row: cur }); cur = []; w = 0; }
+      w += (cur.length ? GAPX : 0) + bw;
+      cur.push(i);
+    });
+    /* A single box wider than the budget still gets a band of its own rather
+       than being dropped. Unreachable at today's 258-unit cap, and a visibly
+       oversized band is a better failure than a missing declaration. */
+    if (cur.length) bands.push({ ky: ky, row: cur });
+  });
+  var wrapped = bands.length - L.keys.length;
+
+  var y = 20, W = 0;
+  bands.forEach(function (b, bi) {
+    b.rw = b.row.reduce(function (s, i) { return s + boxes[i].w; }, 0) + GAPX * (b.row.length - 1);
+    var x = 20, hmax = 0;
+    b.row.forEach(function (i) {
+      boxes[i].x = x; boxes[i].y = y;
+      x += boxes[i].w + GAPX;
+      if (boxes[i].h > hmax) hmax = boxes[i].h;
+    });
+    W = Math.max(W, b.rw + 40);
+    /* Tighter between bands of ONE layer than between layers: the gap is what
+       tells a reader the two rows are the same depth rather than two. */
+    var same = bands[bi + 1] && bands[bi + 1].ky === b.ky;
+    y += hmax + (same ? 30 : GAPY);
+  });
+  var H = y;
+
+  /* Centre each band, now that the widest is known. */
+  bands.forEach(function (b) {
+    var off = (W - b.rw) / 2 - 20;
+    b.row.forEach(function (i) { boxes[i].x += off; });
+  });
+
+  var parts = [
+    '<defs>' +
+    '<marker id="dia-gen" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">' +
+    '<path d="M0 0 L12 6 L0 12 z" class="dia-genhead"/></marker>' +
+    '<marker id="dia-ref" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">' +
+    '<path d="M0 0 L10 5 L0 10" class="dia-refhead"/></marker>' +
+    "</defs>",
+  ];
+
+  var crowded = 0;
+  m.edges.forEach(function (e, ei) {
+    var a = boxes[e.a], b = boxes[e.b];
+    var ax = a.x + a.w / 2, bx = b.x + b.w / 2;
+    var ay, by;
+    if (b.y >= a.y + a.h) { ay = a.y + a.h; by = b.y; }
+    else if (a.y >= b.y + b.h) { ay = a.y; by = b.y + b.h; }
+    else { ay = a.y + a.h / 2; by = b.y + b.h / 2; }
+    var my = (ay + by) / 2;
+    var st = diaEdgeStyle(e.kind);
+    parts.push('<path class="dia-e ' + st.cls + '" d="M' + ax.toFixed(1) + " " + ay.toFixed(1) +
+      "C" + ax.toFixed(1) + " " + my.toFixed(1) + " " + bx.toFixed(1) + " " + my.toFixed(1) + " " +
+      bx.toFixed(1) + " " + by.toFixed(1) + '"' + (st.dash ? ' stroke-dasharray="' + st.dash + '"' : "") +
+      ' marker-end="url(#dia-' + st.head + ')"/>');
+    /* THE LABEL IS THE POINT. "Role is linked to Skill" is half an answer;
+       "via skills, many" is the whole one. */
+    if (e.via) {
+      /* Two edges whose midpoints land in the same band overplot their
+         labels, which is how "permissions * 0..1" and "actors * 0..1" came
+         out on top of each other. Stagger by index: deterministic, and it
+         only has to separate neighbours rather than be optimal. */
+      var lx = (ax + bx) / 2, ly = my + ((ei % 3) - 1) * 13;
+      var txt = e.via + (e.array ? " *" : "") + (e.optional ? " 0..1" : "");
+      /* A label that lands ON a box (bean qttr). Boxes are painted after the
+         edges, so an opaque one hides the label -- but a CONTEXT box is
+         faded, and the label then shows through its fields as overstruck
+         text. Narrow layouts made this common rather than rare: one box per
+         row means a near-vertical edge whose midpoint is the next box.
+         Push clear of the offender rather than dropping the label, because
+         the label is the whole point of the edge -- "Role is linked to
+         Skill" is half an answer, "via skills, many" is the whole one. */
+      var half = txt.length * 3.3 + 5;
+      var blocker = function (cx, cy) {
+        for (var q = 0; q < boxes.length; q++) {
+          var bq = boxes[q];
+          if (cx + half > bq.x && cx - half < bq.x + bq.w && cy + 8 > bq.y && cy - 8 < bq.y + bq.h) return bq;
+        }
+        return null;
+      };
+      /* Candidates in order of preference, first clear one wins. One pass of
+         push-aside was not enough: measured over this graph it left 28 of 323
+         labels still on a box, because pushing clear of one lands on the
+         next. Deterministic -- the same edge in the same layout always picks
+         the same candidate. */
+      var hit = blocker(lx, ly);
+      if (hit) {
+        var cands = [
+          [hit.x + hit.w + half + 6, ly],
+          [hit.x - half - 6, ly],
+          [(ax + bx) / 2, ay + 11],
+          [(ax + bx) / 2, by - 11],
+          [hit.x + hit.w + half + 6, ay + 11],
+          [hit.x - half - 6, by - 11],
+        ];
+        for (var ci = 0; ci < cands.length; ci++) {
+          if (cands[ci][0] - half < 0 || cands[ci][0] + half > W) continue;
+          if (!blocker(cands[ci][0], cands[ci][1])) { lx = cands[ci][0]; ly = cands[ci][1]; hit = null; break; }
+        }
+        /* Still nowhere clear. Counted and reported rather than silently
+           overstruck or silently dropped -- an edge whose field a reader
+           cannot read is the same loss the undrawn-edge count exists for. */
+        if (hit) crowded++;
+      }
+      parts.push('<rect class="dia-lb" x="' + (lx - half).toFixed(1) + '" y="' + (ly - 8).toFixed(1) +
+        '" width="' + (half * 2).toFixed(1) + '" height="15" rx="3"/>');
+      parts.push('<text class="dia-l" x="' + lx.toFixed(1) + '" y="' + (ly + 3).toFixed(1) +
+        '" text-anchor="middle">' + esc(txt) + "</text>");
+    }
+  });
+
+  boxes.forEach(function (bx) {
+    var d = bx.d;
+    var g = '<g class="dia-n' + (d.__ctx ? " dia-ctx" : "") + '" data-ov="' + esc(d.id) + '"><title>' +
+      esc(d.name) + " — " + esc(d.kind) +
+      (d.__ctx ? ". OUTSIDE this filter — drawn because something here links to it." : "") +
+      ". Click to open its definition.</title>" +
+      '<rect class="uml-box' + (SEL === d.id ? " sel" : "") + '" x="' + bx.x.toFixed(1) + '" y="' + bx.y.toFixed(1) +
+      '" width="' + bx.w.toFixed(1) + '" height="' + bx.h.toFixed(1) + '" rx="4"/>' +
+      '<text class="uml-t" x="' + (bx.x + PAD).toFixed(1) + '" y="' + (bx.y + 15).toFixed(1) + '">' +
+      esc(d.name.slice(0, 34)) + "</text>";
+    if (bx.rows.length) {
+      g += '<line class="uml-e" x1="' + bx.x.toFixed(1) + '" y1="' + (bx.y + HEAD).toFixed(1) +
+        '" x2="' + (bx.x + bx.w).toFixed(1) + '" y2="' + (bx.y + HEAD).toFixed(1) + '"/>';
+      bx.rows.forEach(function (r, i) {
+        g += '<text class="uml-f" x="' + (bx.x + PAD).toFixed(1) + '" y="' +
+          (bx.y + HEAD + 14 + i * LH).toFixed(1) + '">' + esc(r.slice(0, 34)) + "</text>";
+      });
+    }
+    parts.push(g + "</g>");
+  });
+
+  svg.setAttribute("viewBox", "0 0 " + Math.max(W, 320) + " " + H);
+  svg.innerHTML = parts.join("");
+
+  var kinds = {};
+  m.edges.forEach(function (e) { kinds[e.kind] = (kinds[e.kind] || 0) + 1; });
+  cap.innerHTML = "<b>" + m.coreCount + "</b> declaration(s)" +
+    (m.mod ? " in <b>" + esc(m.mod.split("/").pop()) + "</b>" : SCOPE ? " in <b>" + esc(SCOPE) + "</b>" : "") +
+    ", <b>" + m.edges.length + "</b> relationship(s). Each edge is labelled with the FIELD it goes " +
+    "through; <b>*</b> is a list. Click a box to open its definition." +
+    (m.ctxShown ? " <b>" + m.ctxShown + "</b> faded box(es) sit OUTSIDE this filter and are drawn because " +
+      "something here links to them — a cut edge is the one most worth seeing." : "") +
+    (m.ctxHidden ? " <b>" + m.ctxHidden + "</b> further neighbour(s) not drawn." : "") +
+    /* Both endpoints ARE drawn, so an unreported suppression reads as "these
+       two are unrelated" -- a false statement the picture makes silently. */
+    (m.ctxEdges ? " <b>" + m.ctxEdges + "</b> relationship(s) BETWEEN two faded boxes are not drawn, because " +
+      "the picture is about this filter rather than about its surroundings — counted here so a missing " +
+      "line is never mistaken for a missing relationship." : "") +
+    /* Said rather than left to be noticed: a wrapped layer looks like two
+       layers to a reader who was not told, and the alternative the panel used
+       to take was to shrink the whole picture without saying so. */
+    (wrapped ? " <b>" + wrapped + "</b> row(s) wrapped to keep the boxes at full size." : "") +
+    (crowded ? " <b>" + crowded + "</b> label(s) had nowhere clear to sit and overlap a box — hover the edge's boxes to read the field." : "");
+
+  key.innerHTML =
+    '<span><i class="k-gen"></i>generalisation (extends)</span>' +
+    '<span><i class="k-field"></i>field reference — in the source</span>' +
+    '<span><i class="k-idref"></i>id reference — DECLARED with @ref, because a string id is invisible to a syntactic reader</span>';
+}
+
+function render() {
+  var f = filterState();
+  var rows = G.decls.filter(function (d) { return matchesFilter(d, f.q, f.k, f.m); });
+  $("items").innerHTML = rows.slice(0, 400).map(function (d) {
+    return '<li><button type="button" data-id="' + esc(d.id) + '" aria-current="' + (SEL === d.id) + '">' +
+      '<span class="nm">' + esc(d.name) + "</span>" +
+      (d.kind === "undetermined" ? '<span class="tag warn">undetermined</span>' : '<span class="tag">' + esc(d.kind) + "</span>") +
+      '<br><span class="sub">' + esc(d.module.split("/").pop()) + "</span></li>";
+  }).join("") || '<li><p class="empty">Nothing matches.</p></li>';
+  $("counts").textContent = "";
+  var scoped = G.decls.filter(inScope);
+  var mods = G.modules.filter(function (m) { return !SCOPE || m.instance === SCOPE; });
+  /* Edges are scoped too. Reporting the graph-wide 512 on a page showing 9
+     declarations says there are 512 edges among those 9, which is a claim the
+     page does not support. An edge COUNTS here when it leaves a declaration
+     this page shows — edges INTO the subject from elsewhere are real and are
+     still followable from the detail panel, they are just not this subject's
+     own outgoing structure. */
+  var edgeCount = SCOPE
+    ? G.edges.filter(function (e) { var f = G.declIndex[e.from]; return f && inScope(f); }).length
+    : G.edges.length;
+  $("counts").innerHTML = (SCOPE ? "<b>" + SCOPE + "</b> &middot; " : "") +
+    "<b>" + rows.length + "</b> of <b>" + scoped.length + "</b> declarations &middot; <b>" +
+    mods.length + "</b> modules &middot; <b>" + edgeCount + "</b> edges &middot; <b>" +
+    scoped.filter(function (d) { return d.kind === "undetermined"; }).length + "</b> undetermined";
+}
+
+function select(id) {
+  var d = byId(id);
+  if (!d) return;
+  SEL = id;
+  if (location.hash.slice(1) !== encodeURIComponent(id)) {
+    try { history.replaceState(null, "", "#" + encodeURIComponent(id)); } catch (e) { /* opened from a file */ }
+  }
+  render();
+  detail(d);
+}
+
+fetch(DATA_HREF).then(function (r) {
+  if (!r.ok) throw new Error(String(r.status));
+  return r.json();
+}).then(function (data) {
+  G = data;
+  G.declIndex = {};
+  G.decls.forEach(function (d) { G.declIndex[d.id] = d; });
+  // A declaration names its module; the module names its instance. Joined
+  // here once rather than at each filter, so the scope test stays O(1).
+  var instOf = {};
+  G.modules.forEach(function (m) { instOf[m.module] = m.instance; });
+  G.decls.forEach(function (d) { d.instance = instOf[d.module]; });
+  var kinds = [...new Set(G.decls.map(function (d) { return d.kind; }))].sort();
+  kinds.forEach(function (k) {
+    var o = document.createElement("option"); o.value = k; o.textContent = k; $("kind").appendChild(o);
+  });
+  var withDecls = {};
+  G.decls.forEach(function (d) { withDecls[d.module] = true; });
+  /* Labelled with the instance, because four of them declare a schemas graph
+     and module names repeat across them — two entries both reading "types"
+     are indistinguishable in the list even though their values differ. */
+  var nameCount = {};
+  G.modules.forEach(function (m) { nameCount[m.name] = (nameCount[m.name] || 0) + 1; });
+  G.modules.forEach(function (m) {
+    if (!withDecls[m.module]) return;
+    if (SCOPE && m.instance !== SCOPE) return;
+    var o = document.createElement("option");
+    o.value = m.module;
+    o.textContent = nameCount[m.name] > 1 ? m.instance + " / " + m.name : m.name;
+    $("mod").appendChild(o);
+  });
+  /* Redrawn only when the panel is OPEN; a closed one costs nothing, and the
+     toggle handler below draws it on first open. */
+  function redrawIfOpen() {
+    if ($("overview").open) diagram();
+  }
+  /* Search is debounced and the two selects are not: a select fires once per
+     choice, while typing fires per keystroke and the layout is the expensive
+     part -- the same trade the resize handler below makes, at the same 150ms.
+     The LIST stays undebounced either way, so typing still feels immediate;
+     only the picture waits. */
+  var flt;
+  $("q").addEventListener("input", function () {
+    render();
+    clearTimeout(flt);
+    flt = setTimeout(redrawIfOpen, 150);
+  });
+  /* The diagram narrows with EVERY filter, not just the module one. A
+     754-declaration instance is over DIA_MAX and refuses to draw, so before
+     this the only way to get a picture was to know which module to pick;
+     a search that narrows the set under the limit now earns one too. */
+  $("kind").addEventListener("change", function () { render(); redrawIfOpen(); });
+  $("mod").addEventListener("change", function () { render(); redrawIfOpen(); });
+  $("items").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-id]");
+    if (b) select(b.getAttribute("data-id"));
+  });
+  /* A node navigates; it does not move. In declaration mode it selects, in
+     module mode it filters the list to that module — the overview hands you
+     off to the panel that answers the local question. */
+  $("ov-svg").addEventListener("click", function (e) {
+    var c = e.target.closest("[data-ov]");
+    if (!c) return;
+    var id = c.getAttribute("data-ov");
+    if (byId(id)) { select(id); return; }
+    $("mod").value = id;
+    render();
+    $("list").scrollIntoView({ block: "start" });
+  });
+  $("overview").addEventListener("toggle", function () {
+    /* Drawn on first open rather than at load: a reader who never opens the
+       panel should not pay for a layout over 812 declarations. */
+    if ($("overview").open && !$("ov-svg").childNodes.length) diagram();
+  });
+  /* The width budget is the panel's own width, so a resize changes how many
+     boxes fit a row. Without this the layout keeps the width it was built at
+     and the reader is back to a shrunk picture -- the defect the budget
+     exists to remove. Debounced, because a drag fires this continuously and
+     the layout is the expensive part. */
+  var rsz;
+  window.addEventListener("resize", function () {
+    if (!$("overview").open || !$("ov-svg").childNodes.length) return;
+    clearTimeout(rsz);
+    rsz = setTimeout(diagram, 150);
+  });
+  $("detail").addEventListener("click", function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (a) { e.preventDefault(); select(decodeURIComponent(a.getAttribute("href").slice(1))); }
+  });
+  render();
+  if (location.hash.length > 1) select(decodeURIComponent(location.hash.slice(1)));
+}).catch(function (e) {
+  $("counts").textContent = "could not load the projection: " + e.message;
+  $("detail").innerHTML = '<p class="empty">The projection at <code>' + esc(DATA_HREF) + '</code> could not be read. ' +
+    "That is not an empty graph \u2014 it is a graph that could not be loaded, and the page says so rather than showing nothing.</p>";
+});
+</script></body></html>
