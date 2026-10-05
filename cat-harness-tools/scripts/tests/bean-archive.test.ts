@@ -27,9 +27,9 @@ function scratch(opts: { archiveStatuses: string[]; declareArchive?: boolean }):
   const defs = join(dir, "beans", "defs");
   const arch = join(defs, "archive");
   mkdirSync(arch, { recursive: true });
-  const dirs: unknown[] = [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }];
+  const dirs: unknown[] = [{ id: "defs", path: "defs", graphTypologies: ["bean-defs"] }];
   if (opts.declareArchive !== false) {
-    dirs.push({ id: "archive", path: "defs/archive", graphKinds: ["bean-defs"] });
+    dirs.push({ id: "archive", path: "defs/archive", graphTypologies: ["bean-defs"] });
   }
   writeFileSync(
     join(dir, "beans", "beans.json"),

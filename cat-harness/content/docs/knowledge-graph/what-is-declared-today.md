@@ -30,7 +30,7 @@ fragility the graph exists to remove. `skills`, `workflows` and `scenarios` are
 now their own kinds and the query works.
 
 **`cat-harness` survives and is not deprecated**, which surprises people twice
-over. An alias cannot express a split — `GRAPH_KIND_ALIASES` maps one name to
+over. An alias cannot express a split — `GRAPH_TYPOLOGY_ALIASES` maps one name to
 one name, and this would have to become three. And the kind had a fifth job the
 split does not name: on an entry declaring `["schemas", "cat-harness"]` it means
 *a schema IS a knowledge-graph node*, which is why the skill scanner tests for

@@ -32,7 +32,7 @@ about it, or a record it may write from one it may not.
 **`content`'s example used to be "a library section" and that was wrong** —
 see §"The case that added `derived`" below. It is a folio chapter now.
 
-It is `holds` on `GraphKindDef` in `schemas/cat-harness.ts`, and it is
+It is `holds` on `GraphTypologyDef` in `schemas/cat-harness.ts`, and it is
 **required**: `tsc` refuses a kind that has not said.
 
 **A step that writes to a `context` graph is a defect, not an update.** That is
@@ -62,7 +62,7 @@ this axis has not met is how a vocabulary acquires a category nobody can use.
 
 ## The classification
 
-Ask the code, not this page — `graphKindsOfLayer("context")` returns the live
+Ask the code, not this page — `graphTypologiesOfLayer("context")` returns the live
 answer. **No count appears here on purpose**: a count in prose is a claim
 nothing checks, and this repository has corrected two of them.
 
@@ -332,7 +332,7 @@ layer is added — and the word stops carrying a rule the moment that is
 possible.
 
 **Where an asset's layer is declared is the one difference.** A directory's
-layer is a property of its graph KIND; an asset's is a property of its ROLE,
+layer is a property of its graph TYPOLOGY; an asset's is a property of its ROLE,
 in `ASSET_ROLES`, because an asset has no kind. A per-asset `layer` would be
 eleven instances answering one question, and `check:asset-roles` rejects it —
 asked of the raw declaration, since `KgAssetSchema` strips an unknown key

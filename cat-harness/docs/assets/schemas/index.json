@@ -353,7 +353,7 @@
       "name": "declared-nodes",
       "graphNode": "none",
       "reason": "a function library over the declared directories; it defines no schema",
-      "summary": "The files of every declared directory of one graph kind, across the",
+      "summary": "The files of every declared directory of one graph typology, across the",
       "isTest": false
     },
     {
@@ -485,11 +485,11 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/folio-graph-kind.ts",
+      "module": "cat-harness/schemas/folio-graph-typology.ts",
       "instance": "cat-harness",
-      "name": "folio-graph-kind",
+      "name": "folio-graph-typology",
       "graphNode": "schema",
-      "summary": "The `folio` graph kind — registered by **core**, not declared by the harness.",
+      "summary": "The `folio` graph typology — registered by **core**, not declared by the harness.",
       "isTest": false
     },
     {
@@ -542,11 +542,11 @@
       "isTest": true
     },
     {
-      "module": "cat-harness/schemas/glossary-graph-kind.ts",
+      "module": "cat-harness/schemas/glossary-graph-typology.ts",
       "instance": "cat-harness",
-      "name": "glossary-graph-kind",
+      "name": "glossary-graph-typology",
       "graphNode": "schema",
-      "summary": "The `glossary` graph kind — registered by **core**, not declared by the harness.",
+      "summary": "The `glossary` graph typology — registered by **core**, not declared by the harness.",
       "isTest": false
     },
     {
@@ -558,27 +558,27 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/graph-kind-node.test.ts",
+      "module": "cat-harness/schemas/graph-typology-node.test.ts",
       "instance": "cat-harness",
-      "name": "graph-kind-node.test",
+      "name": "graph-typology-node.test",
       "graphNode": "undeclared",
-      "summary": "Graph kinds declared as nodes (bean dmx1): loaded from each instance's",
+      "summary": "Graph typologies declared as nodes (bean dmx1): loaded from each instance's",
       "isTest": true
     },
     {
-      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "module": "cat-harness/schemas/graph-typology-node.ts",
       "instance": "cat-harness",
-      "name": "graph-kind-node",
+      "name": "graph-typology-node",
       "graphNode": "schema",
-      "summary": "A GRAPH KIND as a node of the knowledge graph, declared by the harness that",
+      "summary": "A GRAPH TYPOLOGY as a node of the knowledge graph, declared by the harness that",
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
       "instance": "cat-harness",
-      "name": "graph-kind-registry",
+      "name": "graph-typology-registry",
       "graphNode": "schema",
-      "summary": "The graph-kind registry — **a leaf, and that is its whole job**.",
+      "summary": "The graph-typology registry — **a leaf, and that is its whole job**.",
       "isTest": false
     },
     {
@@ -722,7 +722,7 @@
       "instance": "cat-harness",
       "name": "kind-validator",
       "graphNode": "schema",
-      "summary": "Resolving a graph kind's **validator** — the one parameter that turns",
+      "summary": "Resolving a graph typology's **validator** — the one parameter that turns",
       "isTest": false
     },
     {
@@ -1491,7 +1491,7 @@
       "instance": "cat-harness",
       "name": "test-preload",
       "graphNode": "schema",
-      "summary": "Register core's graph kinds before any test reads a declaration.",
+      "summary": "Register core's graph typologies before any test reads a declaration.",
       "isTest": false
     },
     {
@@ -2035,7 +2035,7 @@
       "instance": "folio-assistant-core",
       "name": "glossary",
       "graphNode": "schema",
-      "summary": "`folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph kind",
+      "summary": "`folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph typology",
       "isTest": false
     },
     {
@@ -6886,7 +6886,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#AssetDelivery",
-        "cat-harness/schemas/graph-kind-registry.ts#GraphLayer"
+        "cat-harness/schemas/graph-typology-registry.ts#GraphLayer"
       ],
       "unresolved": [],
       "external": [],
@@ -7249,7 +7249,7 @@
         "cat-harness/schemas/cat-harness.ts#RenderExemption",
         "cat-harness/schemas/cat-harness.ts#Subscription",
         "cat-harness/schemas/cat-harness.ts#Topology",
-        "cat-harness/schemas/graph-kind-node.ts#KindAvatar",
+        "cat-harness/schemas/graph-typology-node.ts#KindAvatar",
         "cat-harness/schemas/kg-node.ts#KgAsset",
         "cat-harness/schemas/kg-node.ts#KgImage",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels",
@@ -7494,7 +7494,7 @@
         "cat-harness/schemas/cat-harness.ts#RenderExemptionSchema",
         "cat-harness/schemas/cat-harness.ts#SubscriptionSchema",
         "cat-harness/schemas/cat-harness.ts#TopologySchema",
-        "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
+        "cat-harness/schemas/graph-typology-node.ts#KindAvatarSchema",
         "cat-harness/schemas/kg-node.ts#KgAssetSchema",
         "cat-harness/schemas/kg-node.ts#KgImageSchema",
         "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
@@ -7849,8 +7849,8 @@
           "array": false
         },
         {
-          "name": "graphKinds",
-          "type": "GraphKind[]",
+          "name": "graphTypologies",
+          "type": "GraphTypology[]",
           "optional": false,
           "array": true
         },
@@ -7880,7 +7880,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
+        "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels"
       ],
       "unresolved": [],
@@ -8063,8 +8063,8 @@
           "doc": "Which root `path` is relative to. Absent means this instance's."
         },
         {
-          "name": "graphKinds",
-          "type": "GraphKind[]",
+          "name": "graphTypologies",
+          "type": "GraphTypology[]",
           "optional": false,
           "array": true,
           "doc": "Which parts of the knowledge graph this directory holds — an ARRAY,"
@@ -8075,7 +8075,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
+        "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
         "cat-harness/schemas/kg-node.ts#DeclarationScope",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels"
       ],
@@ -8089,7 +8089,7 @@
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "undetermined",
       "note": "z.preprocess(acceptLegacyGraphsKey, GraphNodeDirectoryShape)",
-      "doc": "The directory schema callers use — legacy `graphs` accepted, `graphKinds` canonical.",
+      "doc": "The directory schema callers use — legacy `graphs` accepted, `graphTypologies` canonical.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -8117,7 +8117,7 @@
           "array": false
         },
         {
-          "name": "graphKinds",
+          "name": "graphTypologies",
           "type": "z.array(z.string().min(1)).min(1)",
           "optional": false,
           "array": true
@@ -8498,7 +8498,7 @@
           "array": false
         },
         {
-          "name": "graphKinds",
+          "name": "graphTypologies",
           "type": "string[]",
           "optional": false,
           "array": true
@@ -8655,8 +8655,8 @@
           "doc": "Where it is. A reader may follow this; a consumer wanting its bytes may not, without the gates."
         },
         {
-          "name": "graphKinds",
-          "type": "GraphKind[]",
+          "name": "graphTypologies",
+          "type": "GraphTypology[]",
           "optional": false,
           "array": true,
           "doc": "Which parts of the knowledge graph live there."
@@ -8667,7 +8667,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
+        "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels"
       ],
       "unresolved": [],
@@ -8693,7 +8693,7 @@
           "array": false
         },
         {
-          "name": "graphKinds",
+          "name": "graphTypologies",
           "type": "z.array(z.string().min(1)).min(1)",
           "optional": false,
           "array": true
@@ -9910,7 +9910,7 @@
         },
         {
           "name": "directories",
-          "type": "z .array( z .object({ id: z.string().min(1), path: z.string().min(1), subgraph: z.literal(true), graphKinds: z.array(z.…",
+          "type": "z .array( z .object({ id: z.string().min(1), path: z.string().min(1), subgraph: z.literal(true), graphTypologies: z.arr…",
           "optional": true,
           "array": true,
           "doc": "Instance directories declared from within, as in `skills.json`."
@@ -18442,9 +18442,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph-kind-node.ts#_EveryDefFieldIsDeclarable",
+      "id": "cat-harness/schemas/graph-typology-node.ts#_EveryDefFieldIsDeclarable",
       "name": "_EveryDefFieldIsDeclarable",
-      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "module": "cat-harness/schemas/graph-typology-node.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -18455,9 +18455,9 @@
       "exported": false
     },
     {
-      "id": "cat-harness/schemas/graph-kind-node.ts#GraphKindNode",
-      "name": "GraphKindNode",
-      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "id": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNode",
+      "name": "GraphTypologyNode",
+      "module": "cat-harness/schemas/graph-typology-node.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -18468,14 +18468,14 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema",
-      "name": "GraphKindNodeSchema",
-      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "id": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema",
+      "name": "GraphTypologyNodeSchema",
+      "module": "cat-harness/schemas/graph-typology-node.ts",
       "kind": "zod-object",
       "fields": [
         {
           "name": "$schema",
-          "type": "z.literal(GRAPH_KIND_NODE_TAG)",
+          "type": "z.literal(GRAPH_TYPOLOGY_NODE_TAG)",
           "optional": false,
           "array": false
         },
@@ -18484,7 +18484,7 @@
           "type": "z.string().regex(/^[a-z][a-z0-9-]*$/, \"a lower-case kind word, e.g. ig-ast\")",
           "optional": false,
           "array": false,
-          "doc": "The kind's word, as a directory's `graphKinds` names it. `kind`, NOT"
+          "doc": "The kind's word, as a directory's `graphTypologies` names it. `kind`, NOT"
         },
         {
           "name": "title",
@@ -18634,20 +18634,20 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
-        "cat-harness/schemas/graph-kind-node.ts#NodeSchemaRefSchema"
+        "cat-harness/schemas/graph-typology-node.ts#KindAvatarSchema",
+        "cat-harness/schemas/graph-typology-node.ts#NodeSchemaRefSchema"
       ],
       "unresolved": [],
       "external": [
-        "GRAPH_KIND_NODE_TAG",
+        "GRAPH_TYPOLOGY_NODE_TAG",
         "z"
       ],
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph-kind-node.ts#KindAvatar",
+      "id": "cat-harness/schemas/graph-typology-node.ts#KindAvatar",
       "name": "KindAvatar",
-      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "module": "cat-harness/schemas/graph-typology-node.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -18658,9 +18658,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
+      "id": "cat-harness/schemas/graph-typology-node.ts#KindAvatarSchema",
       "name": "KindAvatarSchema",
-      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "module": "cat-harness/schemas/graph-typology-node.ts",
       "kind": "zod-object",
       "doc": "A kind's mark: SVG path data in a 24×24 box, a hue angle, and why. As `schemas/avatars.ts` `Avatar`.",
       "fields": [
@@ -18693,9 +18693,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph-kind-node.ts#NodeSchemaRefSchema",
+      "id": "cat-harness/schemas/graph-typology-node.ts#NodeSchemaRefSchema",
       "name": "NodeSchemaRefSchema",
-      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "module": "cat-harness/schemas/graph-typology-node.ts",
       "kind": "zod-union",
       "fields": [],
       "extendsNames": [],
@@ -18706,11 +18706,30 @@
       "exported": false
     },
     {
-      "id": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
-      "name": "GraphKind",
-      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "id": "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
+      "name": "GraphLayer",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
       "kind": "type-alias",
-      "doc": "A graph kind name. Open, not a closed union — downstream layers add kinds.",
+      "doc": "What a running process does with a graph of this kind.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "content",
+        "context",
+        "state",
+        "derived"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
+      "name": "GraphTypology",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
+      "kind": "type-alias",
+      "doc": "A graph typology name. Open, not a closed union — downstream layers add kinds.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -18720,9 +18739,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef",
-      "name": "GraphKindDef",
-      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "id": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef",
+      "name": "GraphTypologyDef",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
       "kind": "interface",
       "doc": "never at its dependents (data-modelling step 8; checked by `arrow-direction`).",
       "fields": [
@@ -18883,38 +18902,19 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
-        "cat-harness/schemas/graph-kind-registry.ts#NodeSchemaRef"
+        "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
+        "cat-harness/schemas/graph-typology-registry.ts#NodeSchemaRef"
       ],
       "unresolved": [],
       "external": [],
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
-      "name": "GraphLayer",
-      "module": "cat-harness/schemas/graph-kind-registry.ts",
-      "kind": "type-alias",
-      "doc": "What a running process does with a graph of this kind.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [
-        "content",
-        "context",
-        "state",
-        "derived"
-      ],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/graph-kind-registry.ts#NodeSchemaRef",
+      "id": "cat-harness/schemas/graph-typology-registry.ts#NodeSchemaRef",
       "name": "NodeSchemaRef",
-      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
       "kind": "type-alias",
-      "doc": "Where ONE `$schema` family of a graph kind is defined. Bean `rdkm`.",
+      "doc": "Where ONE `$schema` family of a graph typology is defined. Bean `rdkm`.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -32270,7 +32270,7 @@
           "doc": "Marks the entry as a subgraph of the INSTANCE rather than a part of the"
         },
         {
-          "name": "graphKinds",
+          "name": "graphTypologies",
           "type": "z.array(z.string().min(1)).min(1)",
           "optional": false,
           "array": true
@@ -34277,7 +34277,7 @@
           "type": "z.array(z.string().min(1)).optional()",
           "optional": true,
           "array": true,
-          "doc": "Links to the GraphKind nodes this subgraph holds."
+          "doc": "Links to the GraphTypology nodes this subgraph holds."
         }
       ],
       "extendsNames": [
@@ -34605,7 +34605,7 @@
           "array": false
         },
         {
-          "name": "graphKinds",
+          "name": "graphTypologies",
           "type": "readonly string[]",
           "optional": true,
           "array": false
@@ -40156,7 +40156,7 @@
           "type": "z.array(z.string().min(1)).optional()",
           "optional": true,
           "array": true,
-          "doc": "The graph KINDS this Tool draws a viewer for — one page per declared"
+          "doc": "The graph TYPOLOGIES this Tool draws a viewer for — one page per declared"
         },
         {
           "name": "subprocesses",
@@ -43640,7 +43640,7 @@
           "type": "z .object({ kind: z.string().min(1), family: z.string().min(1).optional(), }) .strict()",
           "optional": false,
           "array": false,
-          "doc": "What it validates: a graph kind, and the `$schema` family within it when the kind has several."
+          "doc": "What it validates: a graph typology, and the `$schema` family within it when the kind has several."
         },
         {
           "name": "schema",
@@ -46537,7 +46537,7 @@
           "type": "string[]",
           "optional": true,
           "array": true,
-          "doc": "What this page documents: graph kinds (`library`), or one directory as"
+          "doc": "What this page documents: graph typologies (`library`), or one directory as"
         },
         {
           "name": "parent",
@@ -46920,7 +46920,7 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "The `<instance>.json` directory id of graph kind `openapi` the documents are ingested into."
+          "doc": "The `<instance>.json` directory id of graph typology `openapi` the documents are ingested into."
         },
         {
           "name": "documents",
@@ -55575,7 +55575,7 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#AssetRoleDef",
-      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
+      "to": "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
       "via": "layer",
       "kind": "field",
       "optional": false,
@@ -55687,7 +55687,7 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
-      "to": "cat-harness/schemas/graph-kind-node.ts#KindAvatar",
+      "to": "cat-harness/schemas/graph-typology-node.ts#KindAvatar",
       "via": "avatar",
       "kind": "field",
       "optional": true,
@@ -55839,7 +55839,7 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
-      "to": "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
+      "to": "cat-harness/schemas/graph-typology-node.ts#KindAvatarSchema",
       "via": "avatar",
       "kind": "field",
       "optional": true,
@@ -55967,8 +55967,8 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#DeclaredGraph",
-      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
-      "via": "graphKinds",
+      "to": "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
+      "via": "graphTypologies",
       "kind": "field",
       "optional": false,
       "array": true
@@ -55999,8 +55999,8 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectory",
-      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
-      "via": "graphKinds",
+      "to": "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
+      "via": "graphTypologies",
       "kind": "field",
       "optional": false,
       "array": true
@@ -56103,8 +56103,8 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#RemoteGraph",
-      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
-      "via": "graphKinds",
+      "to": "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
+      "via": "graphTypologies",
       "kind": "field",
       "optional": false,
       "array": true
@@ -57566,32 +57566,32 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema",
-      "to": "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
+      "from": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema",
+      "to": "cat-harness/schemas/graph-typology-node.ts#KindAvatarSchema",
       "via": "avatar",
       "kind": "field",
       "optional": true,
       "array": false
     },
     {
-      "from": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema",
-      "to": "cat-harness/schemas/graph-kind-node.ts#NodeSchemaRefSchema",
+      "from": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema",
+      "to": "cat-harness/schemas/graph-typology-node.ts#NodeSchemaRefSchema",
       "via": "nodeSchemas",
       "kind": "field",
       "optional": true,
       "array": false
     },
     {
-      "from": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef",
-      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
+      "from": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef",
+      "to": "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
       "via": "holds",
       "kind": "field",
       "optional": false,
       "array": false
     },
     {
-      "from": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef",
-      "to": "cat-harness/schemas/graph-kind-registry.ts#NodeSchemaRef",
+      "from": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef",
+      "to": "cat-harness/schemas/graph-typology-registry.ts#NodeSchemaRef",
       "via": "nodeSchemas",
       "kind": "field",
       "optional": true,

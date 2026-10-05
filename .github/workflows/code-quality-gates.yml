@@ -823,7 +823,7 @@ jobs:
       - name: declared directories exist, or say why not
         run: bun run check:declared-dirs
 
-      # A declared directory whose graph kind `holds: "state"` is kept OFF
+      # A declared directory whose graph typology `holds: "state"` is kept OFF
       # `main`, or it is recorded debt that may only go down.
       #
       # RATCHETED, not gated from zero, and the number is the reason: 19 of the
@@ -864,7 +864,7 @@ jobs:
       # assuming: the gate compared bytes, while every property it was
       # protecting is asserted directly in `scripts/tests/bootstrap-graph.test.ts`
       # against `buildCatBootstrapDocument()` — purity, id ordering, no absolute
-      # build paths, skills derived from disk, graph kinds a subset of the
+      # build paths, skills derived from disk, graph typologies a subset of the
       # declaration, and the `omitted` list. Those run in `bun test`, which
       # the TypeScript job above already runs. Removing a check whose
       # coverage lives elsewhere is fine; removing one and saying so is what
@@ -1207,7 +1207,7 @@ jobs:
       - name: every skill is declared, and declares nothing absent
         run: bun run skill:register:check
 
-      # The same obligation one level out, for a graph KIND (bean `uoij`). Added
+      # The same obligation one level out, for a graph TYPOLOGY (bean `uoij`). Added
       # 2026-10-04 with the command, because an unenforced chain is exactly the
       # state it exists to leave: adding `docs-auto` on #2022, six hand-picked
       # `check:*` commands all passed while `bun run gates` found 5 failures
@@ -1216,7 +1216,7 @@ jobs:
       # It is HERE, in the registered-never-run job, for the reason that job
       # exists: a gate no workflow runs cannot fail, which is bean `xom7` one
       # level down.
-      - name: every graph kind's artefacts are current, and its authored two exist
+      - name: every graph typology's artefacts are current, and its authored two exist
         run: bun run kind:register:check
 
       # The skills graph's LSI index is written by the registration chain
@@ -1658,7 +1658,7 @@ jobs:
         run: bun run bootstrap:validate
 
       # bootstrap's vocabulary, `bootstrap/ns.jsonld`: exactly its defined
-      # terms and graph kinds, written by bootstrap-tools and committed, and
+      # terms and graph typologies, written by bootstrap-tools and committed, and
       # copied to the site as-is (owner, 2026-09-30, bean `xsqm`).
       - name: bootstrap vocabulary is current
         run: bun run bootstrap:vocabulary:check
@@ -2766,7 +2766,7 @@ jobs:
           # nothing rather than a clean run. Advisory until an instance
           # declares `publishable`.
           bun run check:version-bump
-          bun run check:graph-kind-work
+          bun run check:graph-typology-work
           # One place says what an asset ROLE is — purpose, layer and
           # delivery. A per-asset restatement of any of the three is a
           # second answer free to disagree, and `KgAssetSchema` strips it

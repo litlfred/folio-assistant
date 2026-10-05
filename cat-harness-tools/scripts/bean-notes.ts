@@ -75,9 +75,9 @@ interface Dirs {
 export function noteDirs(root = ROOT): Dirs {
   const graphRoot = join(root, DEFAULT_BEAN_GRAPH_ROOT);
   const graph = parseBeanGraph(JSON.parse(readFileSync(join(graphRoot, BEAN_GRAPH_FILE), "utf-8")));
-  const notes = graph.directories.find((d) => d.graphKinds.includes("bean-notes"));
+  const notes = graph.directories.find((d) => d.graphTypologies.includes("bean-notes"));
   if (!notes) throw new Error("bean graph declares no `bean-notes` directory — bean `m61r`");
-  const defs = graph.directories.filter((d) => d.graphKinds.includes("bean-defs")).map((d) => join(graphRoot, d.path));
+  const defs = graph.directories.filter((d) => d.graphTypologies.includes("bean-defs")).map((d) => join(graphRoot, d.path));
   return { notes: join(graphRoot, notes.path), defs };
 }
 

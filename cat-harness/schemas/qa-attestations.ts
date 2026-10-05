@@ -115,19 +115,19 @@ import { z } from "zod";
 
 import {
   artefactStub,
-  defaultGraphKinds,
+  defaultGraphTypologies,
   instanceRootsIn,
   kgQaHomeFor,
   readDeclaration,
   resolveDirectories,
-  type GraphKindRegistry,
+  type GraphTypologyRegistry,
 } from "./cat-harness";
 
 /** The `$schema` tag every attestation file carries. */
 export const QA_ATTESTATIONS_SCHEMA = "qa-attestations/v1" as const;
 
-/** The graph kind (and the declared directory id) that holds them. */
-export const ATTESTATIONS_GRAPH_KIND = "attestations" as const;
+/** The graph typology (and the declared directory id) that holds them. */
+export const ATTESTATIONS_GRAPH_TYPOLOGY = "attestations" as const;
 
 /** The file suffix, one place. */
 export const ATTESTATIONS_SUFFIX = ".attestations.json";
@@ -248,7 +248,7 @@ export type QaAttestations = z.infer<typeof QaAttestationsSchema>;
 export function attestationsHomeFor(
   instanceRoot: string,
   hostRoot?: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): {
   root: string;
   by: "own" | "hosted" | "convention";
@@ -262,7 +262,7 @@ export function attestationsHomeFor(
 } {
   const find = (root: string) =>
     resolveDirectories([{ name: "(local)", root, own: true }], registry).find((d) =>
-      (d.graphKinds as readonly string[]).includes(ATTESTATIONS_GRAPH_KIND),
+      (d.graphTypologies as readonly string[]).includes(ATTESTATIONS_GRAPH_TYPOLOGY),
     );
   const own = find(instanceRoot);
   if (own !== undefined) return { root: own.absPath, by: "own", storeRoot: own.absPath };

@@ -86,7 +86,7 @@ describe("the declaration matches the scan set — z6xd itself", () => {
     // whatever its name says.
     const text = readFileSync(scriptPath("check-instance-themes.ts"), "utf-8");
     expect(text).toContain("instanceDirectoriesForGraph");
-    expect(text).toContain("THEMES_GRAPH_KIND");
+    expect(text).toContain("THEMES_GRAPH_TYPOLOGY");
   });
 
   test("the three former claimants declare `none` WITH a reason", () => {
@@ -127,7 +127,7 @@ describe("kinds are reported, never graded", () => {
       mkdirSync(join(dir, "acme", "themes"), { recursive: true });
       writeFileSync(
         join(dir, "acme", "acme.json"),
-        JSON.stringify({ name: "acme", version: "0.1.0", directories: [{ id: "acme-themes", path: "themes/", graphKinds: ["themes"] }] }),
+        JSON.stringify({ name: "acme", version: "0.1.0", directories: [{ id: "acme-themes", path: "themes/", graphTypologies: ["themes"] }] }),
       );
       const themeTs = JSON.stringify(join(REPO, "cat-harness", "schemas", "theme.ts"));
       writeFileSync(

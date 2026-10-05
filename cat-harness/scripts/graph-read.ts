@@ -63,7 +63,7 @@
 import { relative, sep } from "node:path";
 
 import { instanceRootsIn, resolveDirectories } from "../schemas/cat-harness.js";
-import "../schemas/folio-graph-kind.js";
+import "../schemas/folio-graph-typology.js";
 import { resolveSubgraphSource, type ResolvedSubgraphSource } from "../schemas/subgraph-source.js";
 import { routePresence, tipPresence } from "./check-declared-dirs.ts";
 

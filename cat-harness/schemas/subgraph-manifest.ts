@@ -18,8 +18,8 @@
  *
  * - `id` — the node's identity is its `@id`, the directory IRI. A second,
  *   local identifier beside it is two answers to "which subgraph is this?".
- * - `graphKinds` — the KG carries kinds as `holdsGraph` LINKS to GraphKind
- *   nodes (kg-export removed `graphKinds` from its directory nodes as
+ * - `graphTypologies` — the KG carries kinds as `holdsGraph` LINKS to GraphTypology
+ *   nodes (kg-export removed `graphTypologies` from its directory nodes as
  *   denormalised for exactly this reason), so a literal list here would be a
  *   second, unlinked spelling of one fact.
  *
@@ -59,7 +59,7 @@ const SubgraphNodeBase = GraphNodeDirectoryShape.pick({ path: true, title: true,
   "@type": z.string().min(1),
   /** The subgraph's label: the harness name at the root, the instance-relative path below it. */
   name: z.string().min(1),
-  /** Links to the GraphKind nodes this subgraph holds. */
+  /** Links to the GraphTypology nodes this subgraph holds. */
   holdsGraph: z.array(z.string().min(1)).optional(),
 });
 

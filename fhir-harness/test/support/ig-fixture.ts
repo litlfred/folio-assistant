@@ -145,7 +145,7 @@ export function scratchRepo(instances: Record<string, Omit<ScratchInstance, "dir
         name,
         version: "0.0.0",
         description: `Scratch IG instance ${name} for fhir-harness tests.`,
-        directories: [{ id: `${name}-index`, path: "fhir-artifact-index/", graphKinds: ["fhir-artifact-index"] }],
+        directories: [{ id: `${name}-index`, path: "fhir-artifact-index/", graphTypologies: ["fhir-artifact-index"] }],
       }),
     );
     writeFileSync(join(ix, "index.json"), JSON.stringify(inst.index, null, 2));
@@ -159,7 +159,7 @@ export function scratchRepo(instances: Record<string, Omit<ScratchInstance, "dir
       name: "chrome-owner",
       version: "0.0.0",
       description: "Scratch chrome owner for fhir-harness tests.",
-      directories: [{ id: "themes", path: "themes/", graphKinds: ["themes"] }],
+      directories: [{ id: "themes", path: "themes/", graphTypologies: ["themes"] }],
     }),
   );
   writeFileSync(join(owner, "themes", "chrome.json"), JSON.stringify(NEUTRAL_CHROME, null, 2));

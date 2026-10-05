@@ -69,7 +69,7 @@ import { relative, resolve } from "node:path";
 
 import { instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
 import { gitFiles } from "../../cat-harness/schemas/git-corpus.ts";
-/* NO `folio-graph-kind` IMPORT IS NEEDED HERE, and that is recent: until #840
+/* NO `folio-graph-typology` IMPORT IS NEEDED HERE, and that is recent: until #840
    `readDeclaration` THREW on this repository's own declaration unless the
    caller had imported core's registration for its side effect. #840 moved the
    registry to a leaf and put the trigger at `cat-harness.ts`'s foot, so

@@ -238,9 +238,9 @@ describe("subject — the processes/roles/tasks half", () => {
         repository: "o/t",
         version: "0.1.0",
         directories: [
-          { id: "pages", path: "pages/", graphKinds: ["docs"] },
-          { id: "flows", path: "flows/", graphKinds: ["processes"] },
-          { id: "lanes", path: "lanes/", graphKinds: ["scenarios"] },
+          { id: "pages", path: "pages/", graphTypologies: ["docs"] },
+          { id: "flows", path: "flows/", graphTypologies: ["processes"] },
+          { id: "lanes", path: "lanes/", graphTypologies: ["scenarios"] },
         ],
       }),
     );
@@ -255,7 +255,7 @@ describe("subject — the processes/roles/tasks half", () => {
     );
   }
 
-  test("subjects are resolved from the DECLARATION — processes, roles and tasks, each from its own graph kind", () => {
+  test("subjects are resolved from the DECLARATION — processes, roles and tasks, each from its own graph typology", () => {
     const dir = mkdtempSync(join(tmpdir(), "subject-decl-"));
     try {
       plantInstance(dir);

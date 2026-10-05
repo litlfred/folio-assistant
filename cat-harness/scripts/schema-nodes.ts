@@ -3,7 +3,7 @@
  *
  * ## The defect this exists for
  *
- * `harness.json` declares `schemas/` with `graphKinds: ["schemas", "kg"]`.
+ * `harness.json` declares `schemas/` with `graphTypologies: ["schemas", "kg"]`.
  * Measured on `814b693e`: the exported graph contained **zero** nodes of the
  * `schemas` kind — 11 node types, none of them a schema. A declaration a
  * consumer reads and finds nothing behind is the `dh4f` shape this repository
@@ -12,7 +12,7 @@
  * ## The declaration principle, applied to the odd one out
  *
  * A directory says what to EXPECT; the files declare what they ARE. Three of
- * the four graph kinds already hold that up — skills by YAML front matter,
+ * the four graph typologies already hold that up — skills by YAML front matter,
  * beans by front matter, workflow instances by `"$schema"`. `schemas/*.ts`
  * declared nothing: `@module` names the file's own path, which a scanner
  * already knows, so it says WHERE and not WHAT. Bean `xxxb`.
@@ -44,7 +44,7 @@ import { basename, join, relative, sep } from "node:path";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 import { directoriesForGraph } from "../schemas/cat-harness.js";
 import type { CorpusScope } from "./known-skills.js";
-// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// The `folio` graph typology is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
 // COMMAND that runs carries it — and since #840 every caller does, because

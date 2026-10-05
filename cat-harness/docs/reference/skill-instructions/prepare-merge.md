@@ -33,7 +33,7 @@ the one recipe.
 ## `fsh-guts` must not reach publication
 
 Before a branch that touches the knowledge graph ships, the published export
-must contain no reference to `fsh-guts` — not the graph kind, not the
+must contain no reference to `fsh-guts` — not the graph typology, not the
 declared directory, not the skill that documents it, and not an edge naming
 any of them. Owner's rule, 2026-09-19.
 

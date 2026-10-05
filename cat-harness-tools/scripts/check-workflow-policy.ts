@@ -14,7 +14,7 @@
  *
  * Usage:  bun run check:workflow-policy
  *
- * @covers none — .github/workflows/ is not a declared graph kind
+ * @covers none — .github/workflows/ is not a declared graph typology
  */
 import { HARNESS_ROOT } from "./lib/roots.ts";
 import { workflowFiles, corpusScopeFor } from "../../cat-harness/scripts/known-skills.js";

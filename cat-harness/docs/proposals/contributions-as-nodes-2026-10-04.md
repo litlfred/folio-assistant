@@ -5,7 +5,7 @@ bean: folio-assistant-riit
 summary: >-
   A harness contributes block kinds, an adapter, QA checkers, renderers,
   pipeline plugins and MCP tools by exporting TypeScript from a
-  contributions.ts module, and a graph kind names its validators as path
+  contributions.ts module, and a graph typology names its validators as path
   strings. Owner, 2026-10-04: all of it becomes declared nodes in the
   contributing harness's KG, with code referenced as <harness>:path#export, and
   validators are nodes too. This note proposes the node shapes, one loader for
@@ -28,7 +28,7 @@ Owner, 2026-10-04, on the audit's open question (bean `sod4`): **every contribut
 
   smart-base and folio-assistant-sci contribute this way. The `paper` adapter's kinds do not: they are tables in cat-harness, which is sod4 #1.
 - **Validators** are strings. A kind carries `validator: "fhir-harness:schemas/ig-ast.ts#AstManifestSchema"` or `nodeSchemas: { "<tag>": { validator: "…" } }`, which `schemas/kind-validator.ts` resolves through `parseValidatorRef`. Nothing declares a validator: a kind points at code.
-- **The precedent is already built** (bean dmx1, the same day). Graph kinds became `kinds/` nodes (`folio-graph-kind/v1`), loaded lazily on first use across every instance's declared graph, with a name claimed by two files refused. The kind TABLE is now generated from them.
+- **The precedent is already built** (bean dmx1, the same day). Graph typologies became `kinds/` nodes (`folio-graph-typology/v1`), loaded lazily on first use across every instance's declared graph, with a name claimed by two files refused. The kind TABLE is now generated from them.
 
 ## Proposal
 
@@ -49,7 +49,7 @@ A reference is the form validators already use, `<harness>:<path>#<export>`, so 
 ### 2. One loader for every declared node graph
 
 The `kinds/` loader is generalised:
-- scan each instance's declaration for directories of a given graph kind;
+- scan each instance's declaration for directories of a given graph typology;
 - parse each JSON file against that kind's node schema;
 - refuse a name two files claim, naming both files;
 - load lazily, on first use.
@@ -82,6 +82,6 @@ Kinds, validators, block kinds and the rest all go through it. Reading the DATA 
 
 ## Owner rulings, 2026-10-04: all three decided
 
-1. **One graph per contribution type** (option 1 of 3). Each harness declares `validators/`, `block-kinds/`, `checkers/`, `renderers/` and so on, each a graph kind with its own node schema, viewer, audit and coverage row, as `kinds/` and `tools/` are. Rejected: one `contributions/` graph, and validators apart with the rest together.
+1. **One graph per contribution type** (option 1 of 3). Each harness declares `validators/`, `block-kinds/`, `checkers/`, `renderers/` and so on, each a graph typology with its own node schema, viewer, audit and coverage row, as `kinds/` and `tools/` are. Rejected: one `contributions/` graph, and validators apart with the rest together.
 2. **The validator names the family it validates** (option 1 of 2). A `folio-validator/v1` node says `validates: "<$schema tag>"`; a kind lists only its families; the registry joins them; two validators for one family are refused. The writer of the code declares what it checks, so a harness adds a validator without editing another harness's kind. Rejected: the kind naming a validator node id.
 3. **Locale headings live in the translation graph** (option 1 of 2). A block-kind node carries only its English heading, the source string; every other locale lives in the catalogues with every other string. Rejected: a `headings` map on the node.

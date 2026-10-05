@@ -72,7 +72,7 @@ describe("block kinds are discovered, not listed", () => {
       mkdirSync(join(root, inst, "block-kinds"), { recursive: true });
       writeFileSync(
         join(root, inst, `${inst}.json`),
-        JSON.stringify({ name: inst, directories: [{ id: `${inst}-bk`, path: "block-kinds/", graphKinds: ["block-kinds"] }] }),
+        JSON.stringify({ name: inst, directories: [{ id: `${inst}-bk`, path: "block-kinds/", graphTypologies: ["block-kinds"] }] }),
       );
       writeFileSync(
         join(root, inst, "block-kinds", "note.json"),
@@ -132,7 +132,7 @@ describe("content-adapter vocabularies are nodes (bean riit, step 5)", () => {
       mkdirSync(join(tmp, name, "content-adapters"), { recursive: true });
       writeFileSync(
         join(tmp, name, `${name}.json`),
-        JSON.stringify({ name, directories: [{ id: `${name}-ca`, path: "content-adapters/", graphKinds: ["content-adapters"] }] }),
+        JSON.stringify({ name, directories: [{ id: `${name}-ca`, path: "content-adapters/", graphTypologies: ["content-adapters"] }] }),
       );
       for (const [f, n] of Object.entries(nodes)) writeFileSync(join(tmp, name, "content-adapters", f), JSON.stringify(n));
     };

@@ -26,7 +26,7 @@ facts that belong to the actor — and the idle session, which is most of them,
 becomes unrepresentable. So it is its own record, **referencing** instances
 rather than containing them.
 
-Shape: `schemas/session-context.ts`. Graph kind: `session-state`, layer
+Shape: `schemas/session-context.ts`. Graph typology: `session-state`, layer
 `state` — a session writes its own record as it goes, which is exactly what
 [`content-context-and-state-graphs`](content-context-and-state-graphs.md)
 means by live state.

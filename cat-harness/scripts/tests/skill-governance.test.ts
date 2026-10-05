@@ -19,7 +19,7 @@ function repo(files: Record<string, string>): string {
 
 const skill = (kinds: string[], governs: string[] = []): string =>
   "---\nname: s\n" +
-  (kinds.length ? `graph-kinds:\n${kinds.map((k) => `  - ${k}\n`).join("")}` : "") +
+  (kinds.length ? `graph-typologies:\n${kinds.map((k) => `  - ${k}\n`).join("")}` : "") +
   (governs.length ? `governs:\n${governs.map((g) => `  - ${g}\n`).join("")}` : "") +
   "---\n# s\n";
 
@@ -32,9 +32,9 @@ const files = {
 
 describe("reading the declarations", () => {
   test("a list, an inline list, and nothing", () => {
-    expect(frontMatterList("---\ngraph-kinds:\n  - a\n  - b\n---\n", "graph-kinds")).toEqual(["a", "b"]);
-    expect(frontMatterList("---\ngraph-kinds: [a, b]\n---\n", "graph-kinds")).toEqual(["a", "b"]);
-    expect(frontMatterList("# no front matter\ngraph-kinds: [a]\n", "graph-kinds")).toEqual([]);
+    expect(frontMatterList("---\ngraph-typologies:\n  - a\n  - b\n---\n", "graph-typologies")).toEqual(["a", "b"]);
+    expect(frontMatterList("---\ngraph-typologies: [a, b]\n---\n", "graph-typologies")).toEqual(["a", "b"]);
+    expect(frontMatterList("# no front matter\ngraph-typologies: [a]\n", "graph-typologies")).toEqual([]);
   });
 
   test("skills are read from skills/ directories, never from a published docs copy", () => {
@@ -52,17 +52,17 @@ describe("who governs a directory", () => {
   const domain = join(root, "domain");
 
   test("a kind claim governs every directory of that kind in reach", () => {
-    expect(governingSkills({ instance: "platform", id: "beans", graphKinds: ["beans"] }, skills, root, [platform])).toEqual(["todo-manager"]);
-    expect(governingSkills({ instance: "domain", id: "work", graphKinds: ["beans"] }, skills, root, [domain, platform])).toEqual(["todo-manager"]);
+    expect(governingSkills({ instance: "platform", id: "beans", graphTypologies: ["beans"] }, skills, root, [platform])).toEqual(["todo-manager"]);
+    expect(governingSkills({ instance: "domain", id: "work", graphTypologies: ["beans"] }, skills, root, [domain, platform])).toEqual(["todo-manager"]);
   });
 
   test("a kind claim does not reach an instance that does not depend on the skill's", () => {
     // `domain` depends on `platform`, not the other way round.
-    expect(governingSkills({ instance: "platform", id: "x", graphKinds: ["fhir-index"] }, skills, root, [platform])).toEqual([]);
+    expect(governingSkills({ instance: "platform", id: "x", graphTypologies: ["fhir-index"] }, skills, root, [platform])).toEqual([]);
   });
 
   test("governs: names ONE directory, instance-qualified — the same id elsewhere is not it", () => {
-    expect(governingSkills({ instance: "domain", id: "tools", graphKinds: ["tools"] }, skills, root, [domain, platform])).toEqual(["ig-build"]);
-    expect(governingSkills({ instance: "platform", id: "tools", graphKinds: ["tools"] }, skills, root, [platform])).toEqual(["skills-and-tools"]);
+    expect(governingSkills({ instance: "domain", id: "tools", graphTypologies: ["tools"] }, skills, root, [domain, platform])).toEqual(["ig-build"]);
+    expect(governingSkills({ instance: "platform", id: "tools", graphTypologies: ["tools"] }, skills, root, [platform])).toEqual(["skills-and-tools"]);
   });
 });

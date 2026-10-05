@@ -3,14 +3,14 @@
  * Every declared kind has an avatar — and every gap is a finding.
  *
  * @module scripts/check-avatar-coverage
- * @covers cat-harness — it reads the instance declaration's graph kinds and asks each for art; the
+ * @covers cat-harness — it reads the instance declaration's graph typologies and asks each for art; the
  *   avatars themselves are code in `schemas/avatars.ts`, as `gen-avatars-css` records
  *
  * Owner, 2026-09-19: *"QA sidescares if avatar thems not fully done."*
  *
  * ## Why this is a QA result and not an assertion
  *
- * The kind vocabulary is OPEN — `BASE_GRAPH_KINDS` is an open registry and
+ * The kind vocabulary is OPEN — `BASE_GRAPH_TYPOLOGIES` is an open registry and
  * an `fsh-guts` node's `kind` is deliberately a free string. So a missing
  * avatar is not a build error: it is a fact about how far the art has got,
  * and it must read as MISSING rather than as a blank the viewer silently
@@ -44,9 +44,9 @@ import { join } from "node:path";
 
 import { allAvatars, AVATARS, GENERIC, hasAvatar } from "../../cat-harness/schemas/avatars.js";
 import {
-  BASE_GRAPH_KINDS,
-  defaultGraphKinds,
-  isPublishedGraphKind,
+  BASE_GRAPH_TYPOLOGIES,
+  defaultGraphTypologies,
+  isPublishedGraphTypology,
   readDeclaration,
 } from "../../cat-harness/schemas/cat-harness.js";
 import { avatarsCssPath } from "../../cat-harness/scripts/gen-avatars-css.js";
@@ -96,17 +96,17 @@ export interface Coverage {
 export function requiredKinds(root: string = ROOT): { required: string[]; declared: string[] } {
   // THREE sources, unioned, and the first two are not the same thing.
   //
-  // `defaultGraphKinds` is a LIVE registry that modules write into on import,
+  // `defaultGraphTypologies` is a LIVE registry that modules write into on import,
   // so reading it alone makes this check's answer depend on what the calling
   // process happened to load. Measured: run from the CLI it saw 16 kinds and
   // reported full coverage; run inside the test suite it saw 17, and the
   // seventeenth was `folio` — the one renderable kind, with no avatar. A
   // check whose result changes with the importer is not a check.
-  const registry = [...new Set([...Object.keys(BASE_GRAPH_KINDS), ...defaultGraphKinds.names()])];
+  const registry = [...new Set([...Object.keys(BASE_GRAPH_TYPOLOGIES), ...defaultGraphTypologies.names()])];
   let declared: string[] = [];
   try {
     const d = readDeclaration(root);
-    declared = [...new Set((d?.directories ?? []).flatMap((x) => x.graphKinds ?? []))];
+    declared = [...new Set((d?.directories ?? []).flatMap((x) => x.graphTypologies ?? []))];
   } catch {
     // An unreadable declaration is the instance's problem to fix, not this
     // check's to guess around; the registry half still reports.
@@ -124,7 +124,7 @@ export function coverage(root: string = ROOT): Coverage {
       where: "schemas/avatars.ts",
       note:
         `no avatar is declared, so this kind renders as the generic question mark` +
-        (isPublishedGraphKind(kind) ? "" : " (an unpublished kind — still shown in the viewer)"),
+        (isPublishedGraphTypology(kind) ? "" : " (an unpublished kind — still shown in the viewer)"),
     });
   }
   const orphaned = Object.keys(AVATARS)

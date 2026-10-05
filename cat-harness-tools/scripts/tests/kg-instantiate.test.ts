@@ -34,9 +34,9 @@ const SUBSTRATE = {
   title: "iHRIS Knowledge Base",
   description: "Skills and processes for health workforce information.",
   directories: [
-    { id: "kb-skills", path: "skills/", graphKinds: ["skills"] },
-    { id: "work", path: "beans/workflows/", graphKinds: ["workflow-state"] },
-    { id: "plan", path: "beans/defs/", graphKinds: ["bean-defs"] },
+    { id: "kb-skills", path: "skills/", graphTypologies: ["skills"] },
+    { id: "work", path: "beans/workflows/", graphTypologies: ["workflow-state"] },
+    { id: "plan", path: "beans/defs/", graphTypologies: ["bean-defs"] },
   ],
 };
 
@@ -67,7 +67,7 @@ function checkout(extraInstances: string[] = []): { repo: string; host: string; 
       "id": "subscriptions",
       "path": "subscriptions/",
       "dependents": "skip",
-      "graphKinds": ["substrate-snapshot"]
+      "graphTypologies": ["substrate-snapshot"]
     }
   ]
 }
@@ -192,7 +192,7 @@ describe("instantiate: refusals, each with its reason", () => {
 
   test("a need is satisfied by another subscription", async () => {
     const c = checkout();
-    await subscribed(c, { name: "base-kb", directories: [{ id: "s", path: "skills/", graphKinds: ["skills"] }] }, []);
+    await subscribed(c, { name: "base-kb", directories: [{ id: "s", path: "skills/", graphTypologies: ["skills"] }] }, []);
     await subscribed(c, { ...SUBSTRATE, needs: ["base-kb"] });
     expect(instantiate({ subscription: "ihris-kb", harness: "ihris-kb", instance: c.host }).ok).toBe(true);
   });
@@ -219,7 +219,7 @@ describe("instantiate: refusals, each with its reason", () => {
 
   test("a state path that climbs out is refused before anything is written", async () => {
     const c = checkout();
-    await subscribed(c, { ...SUBSTRATE, directories: [{ id: "esc", path: "../outside/", graphKinds: ["workflow-state"] }, SUBSTRATE.directories[0]] });
+    await subscribed(c, { ...SUBSTRATE, directories: [{ id: "esc", path: "../outside/", graphTypologies: ["workflow-state"] }, SUBSTRATE.directories[0]] });
     const r = instantiate({ subscription: "ihris-kb", harness: "ihris-kb", instance: c.host });
     expect(!r.ok && r.state).toBe("refused");
     expect(!r.ok && r.reason).toMatch(/climbs out/);
@@ -239,7 +239,7 @@ describe("could-not-determine is never clean", () => {
 
   test("a directory whose kinds nobody here registers", async () => {
     const c = checkout();
-    await subscribed(c, { ...SUBSTRATE, directories: [...SUBSTRATE.directories, { id: "odd", path: "odd/", graphKinds: ["not-a-kind-here"] }] });
+    await subscribed(c, { ...SUBSTRATE, directories: [...SUBSTRATE.directories, { id: "odd", path: "odd/", graphTypologies: ["not-a-kind-here"] }] });
     const r = instantiate({ subscription: "ihris-kb", harness: "ihris-kb", instance: c.host });
     expect(!r.ok && r.state).toBe("could-not-determine");
     expect(!r.ok && r.reason).toMatch(/`odd` \(`not-a-kind-here`\)/);
@@ -248,7 +248,7 @@ describe("could-not-determine is never clean", () => {
 
   test("an unmet need while another snapshot cannot be read is undetermined, not refused", async () => {
     const c = checkout();
-    await subscribed(c, { name: "base-kb", directories: [{ id: "s", path: "skills/", graphKinds: ["skills"] }] }, []);
+    await subscribed(c, { name: "base-kb", directories: [{ id: "s", path: "skills/", graphTypologies: ["skills"] }] }, []);
     await subscribed(c, { ...SUBSTRATE, needs: ["base-kb"] });
     rmSync(join(c.host, "subscriptions", "base-kb.substrate.json"));
     const r = instantiate({ subscription: "ihris-kb", harness: "ihris-kb", instance: c.host });
@@ -257,7 +257,7 @@ describe("could-not-determine is never clean", () => {
   });
 
   test("a state kind beside an unknown kind still counts as state", () => {
-    const r = stateDirectoriesOf({ name: "x", directories: [{ id: "a", path: "a/", graphKinds: ["workflow-state", "mystery"] }] });
+    const r = stateDirectoriesOf({ name: "x", directories: [{ id: "a", path: "a/", graphTypologies: ["workflow-state", "mystery"] }] });
     expect(r).toEqual({ state: "determined", dirs: [{ id: "a", path: "a/" }] });
   });
 });

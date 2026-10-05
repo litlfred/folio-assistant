@@ -68,7 +68,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
 import { siteDirFor } from "../schemas/cat-harness.js";
-import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
+import { graphTypologyRowDecor } from "./lib/graph-typology-nav.js";
 import { kindTitle } from "./lib/nav-label.js";
 import { navMarkFields, type HarnessMark } from "./lib/harness-mark.js";
 import {
@@ -138,11 +138,11 @@ function graphRows(h: Harness, staging: boolean): NavItem[] {
     const label = v.label ?? kindTitle(v.kind);
     const withheld = v.stagingOnly === true && !staging;
     // The same distinct glyph and full accessible name the rail gives a kind
-    // row (bean `yag0`) — one answer, from `lib/graph-kind-nav.ts`.
+    // row (bean `yag0`) — one answer, from `lib/graph-typology-nav.ts`.
     // The kind's HUE is left out here: the sidebar paints these small marks
     // on its own neutral chip in the page's ink, and a dark tone behind a
     // dark-ink glyph would lose contrast. The shape and the words carry it.
-    const { tone: _tone, ...decor } = graphKindRowDecor(v.kind, h.label ?? h.title ?? h.name);
+    const { tone: _tone, ...decor } = graphTypologyRowDecor(v.kind, h.label ?? h.title ?? h.name);
     if (v.path && !withheld) return { href: v.path, label, ...decor };
     const note = withheld ? "staging only" : v.note;
     return { label, ...decor, ...(note ? { note } : {}) };

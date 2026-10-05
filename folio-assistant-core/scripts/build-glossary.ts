@@ -379,7 +379,7 @@ export function paperSchemeTarget(
     return {
       missing:
         `instance "${decl.name}" declares no glossary directory; add ` +
-        `{ "id": "glossary", "path": "glossary/", "graphKinds": ["glossary"] } to its directories`,
+        `{ "id": "glossary", "path": "glossary/", "graphTypologies": ["glossary"] } to its directories`,
     };
   }
   return {

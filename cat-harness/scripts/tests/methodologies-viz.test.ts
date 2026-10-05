@@ -2,7 +2,7 @@
  * The methodologies viewer — the join, the three states, and the page a reader
  * actually gets.
  *
- * Bean `yunp`: `methodology` was one of seven declared graph kinds with no
+ * Bean `yunp`: `methodology` was one of seven declared graph typologies with no
  * published viewer, so the navbar listed it disabled and nine typed nodes
  * reached nobody.
  *

@@ -7,7 +7,7 @@
  *
  * ## Why this exists
  *
- * `schemas/` is a declared graph kind holding **content** (`BASE_GRAPH_KINDS`:
+ * `schemas/` is a declared graph typology holding **content** (`BASE_GRAPH_TYPOLOGIES`:
  * *"a shape is the subject matter of the schema graph"*), and it is
  * `renderable: false` — so 100 modules carrying 199 exported schemas had no
  * way to be looked at. Bean `xgd8`.

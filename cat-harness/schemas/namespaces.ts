@@ -100,7 +100,7 @@ export const LEGACY_FOLIO_NS = ownNamespace("legacy-folio");
  * these IRIs. Once the vocabulary is published, changing a term's IRI is a
  * breaking change for every downstream instance and needs an alias to carry
  * forever — the `kg` -> `cat-harness` migration, one layer down and with no
- * `GRAPH_KIND_ALIASES` to soften it.
+ * `GRAPH_TYPOLOGY_ALIASES` to soften it.
  *
  * The paths name the REPOSITORIES the split creates, not the layer words, so
  * that after separation each namespace is already the IRI its own instance
@@ -319,7 +319,7 @@ export function prefixForLayer(layer: TermLayer): NsPrefix {
  * This replaced 93 hand-written per-term template literals
  * across four modules. Each of those was a place to pick the wrong namespace
  * once the namespaces stopped being one, and `cat-harness.ts` alone mints
- * terms in all three layers — `Subgraph` and `GraphKind` are
+ * terms in all three layers — `Subgraph` and `GraphTypology` are
  * bootstrap's, `BeanGraph` is the harness's, `VoiceGraph` is core's — so
  * "which namespace does this file use" has no file-level answer.
  */

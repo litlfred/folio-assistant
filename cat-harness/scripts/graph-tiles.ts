@@ -62,7 +62,7 @@ import {
   visualisationsOf,
 } from "../schemas/cat-harness.js";
 import { tileLabel } from "./lib/nav-label.js";
-import { BASE_GRAPH_KINDS, defaultGraphKinds } from "../schemas/graph-kind-registry.ts";
+import { BASE_GRAPH_TYPOLOGIES, defaultGraphTypologies } from "../schemas/graph-typology-registry.ts";
 
 /** Where a tile may appear. A visualisation that says nothing appears on every surface. */
 export type TileSurface = CatHarnessTileSurface;
@@ -203,12 +203,12 @@ export type TiledDirectory = {
   theme?: { themeId: string; instance?: string };
   /** The directory holds materialized content. Absent is NOT DECLARED, never `false`. */
   readOnly?: boolean;
-  /** The directory's declared graph kinds — the icon a tile falls back to. */
-  graphKinds?: readonly string[];
+  /** The directory's declared graph typologies — the icon a tile falls back to. */
+  graphTypologies?: readonly string[];
 };
 
 /**
- * The tile icon a graph KIND stands for, used when a visualisation names none
+ * The tile icon a graph TYPOLOGY stands for, used when a visualisation names none
  * (bean `ob3m` finding 11). Most tiles are derived from a dependency's
  * directory rather than declared, so a declared-only icon left 20 of 29 tiles
  * in the More panel drawing the same net. A tile still names its own icon
@@ -220,7 +220,7 @@ export type TiledDirectory = {
 export const KIND_TILE_ICONS: Readonly<Record<string, string>> = Object.fromEntries(
   // A FIELD on each kind since sod4 #5 (`tileIcon`), cat-harness's own and a
   // declared node's alike; this map is derived for the callers that read it.
-  Object.entries(BASE_GRAPH_KINDS).flatMap(([k, d]) => (d.tileIcon ? [[k, d.tileIcon]] : [])),
+  Object.entries(BASE_GRAPH_TYPOLOGIES).flatMap(([k, d]) => (d.tileIcon ? [[k, d.tileIcon]] : [])),
 );
 
 /** The first of `kinds` that has a tile icon, or `undefined`. */
@@ -229,7 +229,7 @@ export function kindTileIcon(kinds: readonly string[] | undefined): string | und
     if (Object.hasOwn(KIND_TILE_ICONS, k)) return KIND_TILE_ICONS[k];
     // A kind another harness DECLARES carries its own tile icon (bean dmx1), so
     // this table lists only cat-harness's own kinds.
-    const declared = defaultGraphKinds.get(k)?.tileIcon;
+    const declared = defaultGraphTypologies.get(k)?.tileIcon;
     if (declared) return declared;
   }
   return undefined;
@@ -323,7 +323,7 @@ export function graphTiles(
         // views of the same frozen nodes, so a per-view answer could disagree
         // with itself about one corpus.
         ...(d.readOnly === undefined ? {} : { readOnly: d.readOnly }),
-        ...((v.icon ?? kindTileIcon(d.graphKinds)) === undefined ? {} : { icon: v.icon ?? kindTileIcon(d.graphKinds) }),
+        ...((v.icon ?? kindTileIcon(d.graphTypologies)) === undefined ? {} : { icon: v.icon ?? kindTileIcon(d.graphTypologies) }),
         ...(v.publish === undefined ? {} : { publish: v.publish }),
         // The published tile carries the theme's ID, not the reference: the
         // browser reads `harness.json`, and the reference is a declaration shape.

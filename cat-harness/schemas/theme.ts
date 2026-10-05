@@ -40,7 +40,7 @@
  * **Missing a layout is invalid, never degraded.** There is deliberately no
  * fallback to another layout's geometry: a theme that renders wrong on a phone
  * is worse than one that refuses to load, because the first ships and the
- * second is noticed. Same reason `resolveGraphKind` refuses an unknown kind
+ * second is noticed. Same reason `resolveGraphTypology` refuses an unknown kind
  * rather than guessing.
  *
  * ## One EXCEPTION, and it is a convention rather than a derivation
@@ -54,7 +54,7 @@
  *
  * | | |
  * |---|---|
- * | **refused** | deriving a theme from a ROLE, process, skill or graph kind — a note's appearance would depend on which lane happened to be reading it |
+ * | **refused** | deriving a theme from a ROLE, process, skill or graph typology — a note's appearance would depend on which lane happened to be reading it |
  * | **this** | a HARNESS picking one theme and keeping it, written in that harness's own declaration |
  *
  * A harness is a fixed thing that owns its declaration, not a lane an actor
@@ -83,7 +83,7 @@
  * authoring (human/agentic) decision/judgement."*
  *
  * So a theme is picked by whoever writes the note, and **nothing derives one**
- * from a role, a process, a skill or a graph kind. `ThemedTodoFields.theme` and
+ * from a role, a process, a skill or a graph typology. `ThemedTodoFields.theme` and
  * the landing sticky's required `theme` are the whole selection surface: an id,
  * set by an author.
  *

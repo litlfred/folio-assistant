@@ -45,8 +45,8 @@ function instance(dir: string, name: string): void {
     JSON.stringify({
       name,
       directories: [
-        { id: "folio", path: "folio/", graphKinds: ["folio"] },
-        { id: "glossary", path: "glossary/", graphKinds: ["glossary"] },
+        { id: "folio", path: "folio/", graphTypologies: ["folio"] },
+        { id: "glossary", path: "glossary/", graphTypologies: ["glossary"] },
       ],
     }),
   );
@@ -191,7 +191,7 @@ describe("an instance with no glossary directory", () => {
     try {
       writeFileSync(
         join(bare, "bare.json"),
-        JSON.stringify({ name: "bare", directories: [{ id: "folio", path: "folio/", graphKinds: ["folio"] }] }),
+        JSON.stringify({ name: "bare", directories: [{ id: "folio", path: "folio/", graphTypologies: ["folio"] }] }),
       );
       mkdirSync(join(bare, "folio/p/intro"), { recursive: true });
       writeFileSync(join(bare, "folio/p/p.ts"), `export default { title: "P", authors: ["A"], chapters: [{ dir: "intro" }] };\n`);

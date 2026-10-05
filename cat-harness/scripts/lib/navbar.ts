@@ -79,15 +79,15 @@ export interface NavItem {
   icon?: string;
   /**
    * SVG path data in a 24×24 box, drawn as the mark instead of {@link icon}
-   * — a graph kind's own avatar glyph (bean `yag0`). One letter per row made
+   * — a graph typology's own avatar glyph (bean `yag0`). One letter per row made
    * `docs` and `library` two adjacent single letters, and `catalogue` and
    * `code` the SAME letter; a shape the avatar registry already draws cannot
    * collide that way.
    */
   glyphPath?: string;
   /**
-   * This row opens a GRAPH KIND — a `docs`, `library`, `beans` row — rather
-   * than a harness, a page or an index entry. Set by `graphKindRowDecor`, the
+   * This row opens a GRAPH TYPOLOGY — a `docs`, `library`, `beans` row — rather
+   * than a harness, a page or an index entry. Set by `graphTypologyRowDecor`, the
    * one place a kind row is decorated.
    *
    * DECLARED, never inferred from the mark. A kind row sits in the strip's
@@ -525,7 +525,7 @@ export function navbarCss(): string {
     `.fa-nav-group>summary:hover{background:#30363d}`,
     `.fa-nav-group[open]>summary{font-weight:600}`,
     `.fa-nav-group .fa-nav-sub a{padding-left:${NAV_PAD_PX + NAV_GLYPH_PX + 8}px}`,
-    // A graph-kind row carries its OWN mark (bean `yag0`), so it sits in the
+    // A graph-typology row carries its OWN mark (bean `yag0`), so it sits in the
     // strip's column like the inert rows beside it. Indented as above, a
     // LINKED row's mark was pushed past the 56px strip at rest while an inert
     // row's was not — measured on a built /who-iris/ page — so the strip showed

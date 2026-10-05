@@ -28,8 +28,8 @@ beforeAll(() => {
   writeDeclaration(demo, {
     name: "demo",
     directories: [
-      { id: "computations", path: "computations/", graphKinds: ["code"] },
-      { id: "library", path: "library/", graphKinds: ["library"] },
+      { id: "computations", path: "computations/", graphTypologies: ["code"] },
+      { id: "library", path: "library/", graphTypologies: ["library"] },
     ],
   });
   scope = buildValueScope(repo);

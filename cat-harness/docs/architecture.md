@@ -23,7 +23,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 > [`content-profiles`](reference/skill-instructions/content-profiles.html).
 > Where a new node belongs before you create it —
 > [`placement`](reference/skill-instructions/placement.html). The repository
-> layout and every graph kind —
+> layout and every graph typology —
 > [`directory-conventions`](reference/skill-instructions/directory-conventions.html).
 > Composing and verifying the MCP surface —
 > [`mcp-assembly`](reference/skill-instructions/mcp-assembly.html) and

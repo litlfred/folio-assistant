@@ -144,7 +144,7 @@ const declNameOf = (root: string, fallback: string): string =>
 const HANDLER = declNameOf(HARNESS_ROOT, "cat-harness");
 const SUBJECT = declNameOf(INSTANCE, "who-iris");
 /**
- * The graph kind this viewer renders, taken from the declaration entry that
+ * The graph typology this viewer renders, taken from the declaration entry that
  * declares it rather than written down again.
  *
  * `who-iris.json`'s `who-iris-catalogue` entry is the one place that says this
@@ -156,10 +156,10 @@ const SUBJECT = declNameOf(INSTANCE, "who-iris");
 const CATALOGUE_KIND = ((): string => {
   const dirs = readDeclaration(INSTANCE)?.directories ?? [];
   const entry = dirs.find((d) => d.id === "who-iris-catalogue");
-  const kind = (entry?.graphKinds ?? [])[0];
+  const kind = (entry?.graphTypologies ?? [])[0];
   if (kind === undefined) {
     throw new Error(
-      "who-iris.json declares no graphKinds on `who-iris-catalogue`, so the catalogue " +
+      "who-iris.json declares no graphTypologies on `who-iris-catalogue`, so the catalogue " +
         "viewer has no conventional route to be published at. Declare the kind, or " +
         "this generator is publishing to a path no tile will look at (bean `ha78`).",
     );
@@ -765,7 +765,7 @@ function page(
    */
   side: "site" | "docs" | "harness",
   /**
-   * The graph kinds this page documents, as `<meta name="documents">` — the
+   * The graph typologies this page documents, as `<meta name="documents">` — the
    * page names what it is about, so the directory need not name the page
    * (#1168 B7c). Only the docs index carries one.
    */
@@ -1529,7 +1529,7 @@ const LIBRARY_LINKS = libraryResolver(repoRootFor(HARNESS_ROOT), HARNESS_ROOT);
 /** The replica's route from the site root (no slashes), as `withRoutes` gives it. */
 const REPLICA_ROUTE = (() => {
   const declared = (readDeclaration(INSTANCE)?.directories ?? []).flatMap((d) =>
-    (d.graphKinds ?? []).map((kind) => ({ name: SUBJECT, kind, dir: d.path, instanceRoot: (d as { instanceRoot?: boolean }).instanceRoot === true })),
+    (d.graphTypologies ?? []).map((kind) => ({ name: SUBJECT, kind, dir: d.path, instanceRoot: (d as { instanceRoot?: boolean }).instanceRoot === true })),
   );
   const { candidates } = withRoutes(declared);
   const root = candidates.find((c) => c.instanceRoot && c.route === SUBJECT);

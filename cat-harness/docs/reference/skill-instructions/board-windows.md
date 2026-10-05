@@ -265,7 +265,7 @@ A thing on that glass can be closed. **What closing does is the rule:**
 says *"materialized should live in folio"*, and the folio is the reader's
 REPOSITORY, of which `library/` and `uploads/` are already declared parts —
 both carry `dependents: "reproduce"`, which is the schema saying *this is the
-reader's own copy*. `folio/` is a different graph kind: **renderable** authored
+reader's own copy*. `folio/` is a different graph typology: **renderable** authored
 content.
 
 Reading it as the directory would break a consumer that exists.

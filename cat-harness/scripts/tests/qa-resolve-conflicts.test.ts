@@ -303,7 +303,7 @@ describe("the qa directory is resolved, not assembled", () => {
     // command itself. It was found on its first real conflict rather than by a
     // test, so the shape of the return value is asserted here directly.
     const { directoryForGraph, repoRootFor } = await import("../../schemas/cat-harness.ts");
-    await import("../../schemas/folio-graph-kind.js");
+    await import("../../schemas/folio-graph-typology.js");
     const instance = join(import.meta.dir, "..", "..");
     const qa = directoryForGraph(instance, "qa");
     expect(qa).toBeDefined();

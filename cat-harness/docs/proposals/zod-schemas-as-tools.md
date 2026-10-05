@@ -6,7 +6,7 @@ movedOn: 2026-09-23
 issue: 223
 bean: folio-assistant-3lbz
 summary: >-
-  Is Zod usage reachable through skills and Tools? No. 199 exported schemas, 3 named by a Tool node, 0 Tools that validate, 0 Tools bound to kg-navigation. The requirement already exists in #223 and is unmet. Analyses three routes; recommends one parameterised pattern keyed on graph kind, because the parameter is the graph kind. Corrected in place while implementing: the reference field already existed as GraphKindDef.schema, and it is not a validator — qa's declared module exports interfaces only — so a second field, validator, was added beside it.
+  Is Zod usage reachable through skills and Tools? No. 199 exported schemas, 3 named by a Tool node, 0 Tools that validate, 0 Tools bound to kg-navigation. The requirement already exists in #223 and is unmet. Analyses three routes; recommends one parameterised pattern keyed on graph typology, because the parameter is the graph typology. Corrected in place while implementing: the reference field already existed as GraphTypologyDef.schema, and it is not a validator — qa's declared module exports interfaces only — so a second field, validator, was added beside it.
 ---
 
 # Zod schemas as Tools — audit and analysis
@@ -126,13 +126,13 @@ What makes it possible is that two of the three declarations already exist:
 
 | needed | status |
 |---|---|
-| which directory holds which **graph kind** | ✅ `<name>.json`, per `ContentDirectory.graphs` |
+| which directory holds which **graph typology** | ✅ `<name>.json`, per `ContentDirectory.graphs` |
 | a module declaring itself a schema node | ✅ the `@graphNode schema` tag, checked by `check:schema-nodes` |
-| **graph kind → the schema that validates its nodes** | ⚠️ **this row was wrong — see below** |
+| **graph typology → the schema that validates its nodes** | ⚠️ **this row was wrong — see below** |
 
 > **Corrected 2026-09-20 while implementing this (bean `folio-assistant-i31r`).**
 > The row above said the reference was missing. It is not:
-> **`GraphKindDef.schema` has existed all along.** Three of sixteen kinds
+> **`GraphTypologyDef.schema` has existed all along.** Three of sixteen kinds
 > declare one, **nothing reads it**, and since `#437` all three resolve only
 > relative to the *instance* root while their own doc comment calls them
 > repo-relative — undetected precisely because nothing read them.
@@ -144,7 +144,7 @@ What makes it possible is that two of the three declarations already exist:
 > use a lie — a consumer importing it expecting something parseable gets a
 > module with nothing to call.
 >
-> So what shipped is `GraphKindDef.validator` (`module#Export`) **beside**
+> So what shipped is `GraphTypologyDef.validator` (`module#Export`) **beside**
 > `schema`, not instead of it: two fields, because a case where they diverge
 > is already committed. The `#` form is the spelling
 > `<cat-harness.processes:decision ref="file.dmn#Decision_Id"/>` already uses in every BPMN

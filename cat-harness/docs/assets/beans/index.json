@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 910,
+      "count": 911,
       "unit": "beans"
     }
   },
@@ -10401,6 +10401,20 @@
       "file": "beans/defs/folio-assistant-syzb--separation-stage-6-carry-cat-harness-and-cat-harne.md"
     },
     {
+      "id": "folio-assistant-t0jg",
+      "title": "WHO-IRIS: update .pot templates, 6 UN language translations and execute untainted roundtrip Q/A",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T14:24:39Z",
+      "updatedAt": "2026-10-05T14:25:04Z",
+      "preview": "Update who-iris .pot gettext templates, verify 6 UN official language translations (en source + ar, es, fr, ru, zh in who-iris/translations/), and perform untainted roundtrip QA (independent back-translation + adjudication) per untainted-verification discipline.\n\n\n## Tasks\n- [x] Ensure who-iris .pot templates are extracted and up-to-date (`bun run glossary:pot:check`)\n- [x] Verify 6 UN official la",
+      "file": "beans/defs/folio-assistant-t0jg--who-iris-update-pot-templates-6-un-language-transl.md"
+    },
+    {
       "id": "folio-assistant-t3n8",
       "title": "HARNESS DISPLAY NAMES: every instance declares a human title, and the schema should say so",
       "status": "completed",
@@ -12175,14 +12189,14 @@
     {
       "id": "folio-assistant-xka5",
       "title": "Pages grouped by harness, following the URL; each harness owns its sub-doc graphs",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-9rq1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T14:39:33Z",
-      "updatedAt": "2026-10-05T14:39:33Z",
+      "updatedAt": "2026-10-05T16:20:41Z",
       "preview": "Owner, 2026-10-05, asked how to group the 79 top-level pages: 'dont want additional categorization that will drift, needs maintain. do it by harnesses to follow urls <base>cat-harness/docs/<harness>. each harness is responsible for managing its own sub doc graphs (if any) which then make up the hierarchy'. Also: '(and alphabetization//locale dependent)' — order within a level alphabetical by the p",
       "file": "beans/defs/folio-assistant-xka5--pages-grouped-by-harness-following-the-url-each-ha.md"
     },
@@ -14508,14 +14522,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 549,
+        "total": 550,
         "closed": 197,
-        "open": 352,
-        "inProgress": 133,
-        "todo": 218,
+        "open": 353,
+        "inProgress": 135,
+        "todo": 217,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3588342440801457
+        "share": 0.35818181818181816
       },
       {
         "id": "folio-assistant-vuip",
@@ -14549,8 +14563,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 531,
-    "coveredOpen": 528,
+    "openTotal": 532,
+    "coveredOpen": 529,
     "duplicateIds": 0
   }
 }

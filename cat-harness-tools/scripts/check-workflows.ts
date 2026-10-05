@@ -30,7 +30,7 @@
  *   `16ei`: `qa-reports-unretried`.
  *
  * @module scripts/check-workflows
- * @covers none — .github/workflows/ is not a declared graph kind
+ * @covers none — .github/workflows/ is not a declared graph typology
  */
 import { readdirSync, readFileSync } from "node:fs";
 import { parse, parseDocument } from "yaml";
