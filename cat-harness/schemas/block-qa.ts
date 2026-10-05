@@ -228,7 +228,7 @@ export const ADAPTER_COMPANION_ROLES: Record<ContentAdapter, readonly CompanionR
   // Read from each typed vocabulary's node (bean riit, step 5): the roles a
   // `paper` block can have are a fact about the paper vocabulary, declared
   // where that vocabulary is, not restated in a table here.
-  CONTENT_ADAPTER_NODES.filter((n) => n.typed).map((n) => [n.name, n.companionRoles]),
+  CONTENT_ADAPTER_NODES.filter((n) => n.typed).map((n) => [n.adapter, n.companionRoles]),
 ) as unknown as Record<ContentAdapter, readonly CompanionRole[]>;
 
 /** {@link ADAPTER_COMPANION_ROLES}, keyed by a plain string for lookup. */

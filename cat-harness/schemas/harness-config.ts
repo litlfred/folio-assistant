@@ -1801,10 +1801,10 @@ function registerDeclaredContributions<C extends { name: string }>(folioRoot: st
       const parsed = ContentAdapterNodeSchema.safeParse(raw);
       if (!parsed.success) throw new Error(`${file} is not a folio-content-adapter/v1 node: ${parsed.error.message}`);
       const n = parsed.data;
-      if (n.typed || (registry.acceptsDeclaredKind && !registry.acceptsDeclaredKind(n.name))) continue;
+      if (n.typed || (registry.acceptsDeclaredKind && !registry.acceptsDeclaredKind(n.adapter))) continue;
       registerPinned(registry, dep, {
         name: dep.dependency.name,
-        adapter: { name: n.name, module: n.vocabulary ?? "", companionRoles: n.companionRoles },
+        adapter: { name: n.adapter, module: n.vocabulary ?? "", companionRoles: n.companionRoles },
       } as unknown as C);
     }
   }

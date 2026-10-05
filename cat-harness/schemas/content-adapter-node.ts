@@ -42,8 +42,14 @@ export const CONTENT_ADAPTER_NODE_SCHEMA = "folio-content-adapter/v1" as const;
 export const ContentAdapterNodeSchema = z
   .object({
     $schema: z.literal(CONTENT_ADAPTER_NODE_SCHEMA),
-    /** The vocabulary's name: what a block-kind node's `adapter` names. */
-    name: z.string().regex(/^[a-z][a-z0-9-]*$/),
+    /**
+     * The vocabulary's name — the same field, and the same value, as a
+     * block-kind node's `adapter`. Deliberately NOT `name`: a `<stem>.json`
+     * whose `name` equals its stem is an instance DECLARATION to
+     * `findDeclarationFile`, so `paper.json` with `name: "paper"` made
+     * `content-adapters/` an instance and collapsed sci's sibling scope.
+     */
+    adapter: z.string().regex(/^[a-z][a-z0-9-]*$/),
     /**
      * Whether cat-harness's CODE types this vocabulary's blocks (`BlockSchema`
      * in `schemas/types.ts`). A typed vocabulary's kinds are the platform's

@@ -86,14 +86,14 @@ export function discoverContentAdapters(repoRoot: string = PLATFORM_ROOT): Conte
   for (const { file, raw } of declaredNodeFiles(repoRoot, "content-adapters")) {
     const parsed = ContentAdapterNodeSchema.safeParse(raw);
     if (!parsed.success) throw new Error(`${file} is not a folio-content-adapter/v1 node: ${parsed.error.message}`);
-    const prior = byName.get(parsed.data.name);
-    if (prior) throw new Error(`content adapter "${parsed.data.name}" is declared twice: ${prior.file} and ${file}`);
-    byName.set(parsed.data.name, { file, node: parsed.data });
+    const prior = byName.get(parsed.data.adapter);
+    if (prior) throw new Error(`content adapter "${parsed.data.adapter}" is declared twice: ${prior.file} and ${file}`);
+    byName.set(parsed.data.adapter, { file, node: parsed.data });
   }
   if (![...byName.values()].some((v) => v.node.typed)) {
     throw new Error(`no typed content adapter discovered under ${repoRoot}: no instance declares a readable content-adapters graph`);
   }
-  return [...byName.values()].map((v) => v.node).sort((a, b) => a.name.localeCompare(b.name));
+  return [...byName.values()].map((v) => v.node).sort((a, b) => a.adapter.localeCompare(b.adapter));
 }
 
 /** Every discovered content-adapter node, typed or contributed. */
@@ -114,7 +114,7 @@ export type ContentAdapter = "paper";
  * see {@link BLOCK_KIND_NODES}. Its full rationale is on the adapter-scoping
  * section below.
  */
-export const CONTENT_ADAPTERS = CONTENT_ADAPTER_NODES.filter((n) => n.typed).map((n) => n.name) as readonly ContentAdapter[];
+export const CONTENT_ADAPTERS = CONTENT_ADAPTER_NODES.filter((n) => n.typed).map((n) => n.adapter) as readonly ContentAdapter[];
 
 /** Every discovered block-kind node in the platform checkout, built-in or contributed, sorted by kind. */
 export const DISCOVERED_BLOCK_KIND_NODES: readonly BlockKindNode[] = discoverBlockKinds();
@@ -402,8 +402,8 @@ export function profileForContentType(contentType: string | undefined): ContentP
 // The `dak` adapter's 21 kinds, their builder names and label prefixes, and
 // the WHO DAK component tables were declared HERE until bean `1335`. They live
 // in `smart-base/schemas/dak-kinds.ts` now and reach core by registration:
-// smart-base's `contributions.ts` contributes the adapter and its kinds, and
-// `loadContributions` hands them to a `ContributionRegistry`.
+// smart-base declares the adapter and its kinds as nodes (bean riit, steps 3
+// and 5), and `loadContributions` hands them to a `ContributionRegistry`.
 //
 // So everything below answers for the BUILT-IN vocabulary — what core owns —
 // and a question about "every kind, including contributed ones" is a runtime

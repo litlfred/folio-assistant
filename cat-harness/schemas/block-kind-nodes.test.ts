@@ -88,14 +88,21 @@ describe("content-adapter vocabularies are nodes (bean riit, step 5)", () => {
 
   test("each typed vocabulary's companion roles come from its node", () => {
     for (const n of CONTENT_ADAPTER_NODES.filter((x) => x.typed)) {
-      expect(ADAPTER_COMPANION_ROLES[n.name as ContentAdapter]).toEqual(n.companionRoles);
+      expect(ADAPTER_COMPANION_ROLES[n.adapter as ContentAdapter]).toEqual(n.companionRoles);
     }
     expect(ADAPTER_COMPANION_ROLES.paper).toEqual(["md", "ts", "lean"]);
   });
 
   test("every block-kind node names a vocabulary that has a node", () => {
-    const names = new Set(CONTENT_ADAPTER_NODES.map((n) => n.name));
+    const names = new Set(CONTENT_ADAPTER_NODES.map((n) => n.adapter));
     for (const k of discoverBlockKinds()) expect(names.has(k.adapter)).toBe(true);
+  });
+
+  test("a node is never mistaken for an instance declaration", () => {
+    // `paper.json` carrying `name: "paper"` read as a declaration, made
+    // `content-adapters/` an instance, and hid core from sci's needs. The
+    // field is `adapter` so the two shapes cannot coincide.
+    for (const n of CONTENT_ADAPTER_NODES) expect("name" in n).toBe(false);
   });
 
   test("a vocabulary declared twice throws, and so does finding no typed one", () => {
@@ -108,7 +115,7 @@ describe("content-adapter vocabularies are nodes (bean riit, step 5)", () => {
       );
       for (const [f, n] of Object.entries(nodes)) writeFileSync(join(tmp, name, "content-adapters", f), JSON.stringify(n));
     };
-    const node = (name: string, typed: boolean) => ({ $schema: "folio-content-adapter/v1", name, typed, companionRoles: ["md"] });
+    const node = (adapter: string, typed: boolean) => ({ $schema: "folio-content-adapter/v1", adapter, typed, companionRoles: ["md"] });
     inst("a", { "x.json": node("x", false) });
     expect(() => discoverContentAdapters(tmp)).toThrow(/no typed content adapter/);
     inst("b", { "x.json": node("x", true) });
