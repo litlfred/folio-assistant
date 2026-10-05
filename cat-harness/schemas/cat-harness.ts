@@ -63,7 +63,7 @@ import {
   readdirSync,
   writeFileSync,
 } from "node:fs";
-import { isAbsolute, join, relative, resolve, basename, dirname } from "node:path";
+import { isAbsolute, join, relative, resolve, basename } from "node:path";
 import { z } from "zod";
 import { RepoFullNameSchema, type RepoFullName } from "./repo-full-name.js";
 
