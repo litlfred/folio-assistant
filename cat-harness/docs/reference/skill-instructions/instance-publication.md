@@ -374,9 +374,11 @@ item 1). It holds:
   `output:` refs name. The declared `schemas` graph is not the answer:
   `folio-assistant-sci` declares `sources/` as its `schemas` graph and keeps
   its contracts under `schemas/skills/`.
+- **its public Zod schemas**, at `schema/zod/<module>/<Export>.schema.json`
+  (§"Which Zod schemas are public" below).
 - **an index, `schema/<stub>.schema.json`.** It `$ref`s the shared declaration
   schema (the host's `<stub>.schema.json`, by the `$id` the same build gives
-  it) and lists every contract in `$defs` by `$id`.
+  it) and lists every contract and every Zod rendering in `$defs` by `$id`.
 
 **Every `$id` is the instance's publication identity, not this site's
 address.** The schema base is `schema/` beside the document `publishedIdentity`
@@ -394,16 +396,49 @@ It does so exactly when `instance-exports.ts` writes one, which is when
 `publishesInstanceSchema` finds the instance in the plan. The host and the
 other two exemptions carry no such link.
 
-**Public Zod schemas are not published yet.** "Public" was ruled to mean
-exactly the `Schema` nodes the instance's own JSON-LD export lists. A foreign
-export lists none: the schema-node collector is instance-bound
-(`COLLECTOR_SCOPE` in `kg-export.ts`), so its document says
-`"omitted": [..., "schemas"]`. Where that collector does run, it yields modules
-(`schemaModules` in `schema-nodes.ts`), not the exported Zod values a JSON
-Schema is rendered from. No rule says which exports of a module are public,
-and none is invented here. The index carries the same `omitted` entry, so
-"not looked for" never reads as "there are none". The gate fails the day an
-instance's export lists a `Schema` node the publisher does not render.
+#### Which Zod schemas are public
+
+**Owner ruling 2026-10-05, option C: "every exported \*Schema".** In the
+owner's words: *"Render all exported Zod \*Schema consts per instance now; may
+expose internal schemas."* So an instance's public schemas are **every
+exported const whose name ends in `Schema` and whose value is a Zod schema**,
+in the `.ts` modules (not `*.test.ts`) directly inside its schemas directory.
+That directory is the instance's declared `schemas` graph if it declares one,
+else `<root>/schemas/` by convention. `folio-assistant-sci` and `who-iris`
+declare `sources/`, which holds JSON descriptors, so they publish none.
+
+The rule is the suffix, literally. A Zod value named otherwise is not public,
+and an export named `notASchema` matches if its value is Zod. A `*Schema`
+export whose value is not Zod is not public either; the scan lists it as
+`notZod` and it is not a failure. Publishing a schema says it is reachable,
+not that it is stable: the owner accepted that internal schemas are exposed.
+
+Each one is rendered with `namedJsonSchema` (`to-json-schema.ts`), as the
+host's own schema documents are, and gets an `$id` under the same schema base
+as the contracts. `scanInstanceZodSchemas` and `renderZodSchemas` in
+`harness-schema-export.ts` do the work, and `scannedInstanceSchemas` in
+`kg-export.ts` is what the deploy and the gate both call. Once the scan has
+run, the index drops `"omitted": ["schemas"]`, so an index with no `zod/`
+entries means the scan ran and found none. If the directory could not be
+resolved, `omitted` stays.
+
+**A failure fails the publish.** A module that will not import, an export the
+converter cannot represent (`z.date()`, `z.custom()`), a value with
+`safeParse` that is not a zod-4 schema, and two modules that collide on one
+path are each reported. They go into the index as `unrendered`, so "not
+rendered" never reads as "not there". `instance-exports.ts` still writes what
+did render, then exits 1, which is how it treats a failed `kg-export`.
+Logging the failure and exiting 0 would publish a partial `zod/` that reads as
+complete.
+
+**The host is left out.** Its schema documents sit at the site root, not
+under a per-instance `<stub>/schema/`, and every existing host file must stay
+byte-identical, so it gets no `zod/`.
+
+The JSON-LD document's own `omitted` is unchanged. Its schema-node collector
+is still instance-bound and lists modules, not exports. The gate fails the
+day an instance's export lists a `Schema` node, because nothing yet maps a
+module node to its per-export renderings.
 
 ### Named subgraphs, and the root index above them
 
@@ -457,7 +492,7 @@ instance's export lists a `Schema` node the publisher does not render.
 
 | gate | fails when |
 |---|---|
-| `check:published-instance-exports` | the deploy does not run `instance-exports.ts`, a workflow running it drops an exempt instance's own publisher, an exemption names no declared instance, or a published export fails or mints a relative `@id`; or, for a planned instance, a contract its skills name is not written to `<stub>/schema/`, the index is missing, the document's `conformsTo` is not the index's `$id`, or the document lists a `Schema` node the publisher does not render |
+| `check:published-instance-exports` | the deploy does not run `instance-exports.ts`, a workflow running it drops an exempt instance's own publisher, an exemption names no declared instance, or a published export fails or mints a relative `@id`; or, for a planned instance, a contract its skills name is not written to `<stub>/schema/`, the index is missing, the document's `conformsTo` is not the index's `$id`, or the document lists a `Schema` node the publisher does not render; or an exported Zod `*Schema` const (read from the module text, confirmed Zod by import) is not written to `<stub>/schema/zod/` and listed in the index, the publisher did not scan, or it reports an import or render failure |
 | `root-index.ts` at deploy | an instance's export is missing; the deploy fails rather than publish a shorter map |
 | `subgraph:jsonld:check` | the committed subgraph tree or its payloads are stale |
 | `check:process-index` | a declared BPMN has no `Process` node in the published subgraphs |
