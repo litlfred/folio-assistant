@@ -34,7 +34,7 @@
  * @covers schemas, cat-harness
  */
 import { writeFileSync, mkdirSync, readFileSync, readdirSync, existsSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { dirname, join, posix, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { namedJsonSchema, toJsonSchema } from "../schemas/to-json-schema.ts";
 
@@ -43,35 +43,52 @@ import { tools } from "../tools/discover.js";
 import { ToolDefinitionSchema } from "../schemas/tool.js";
 import { TOOL_TYPES } from "../schemas/tool-types.js";
 import { stagingFields } from "./staging-stamp.js";
-import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
 
 /**
- * THIS INSTANCE'S OWN `schemas` directory, or the convention.
+ * Where an instance keeps its skills' I/O contracts: `<root>/schemas/skills/`.
  *
- * declared-path-literal: the fallback is at the call site so the choice is
- * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
- * the schema definitions — which is why the `schemas` one is asked for by name
- * rather than being handed a single-home guess.
+ * declared-path-literal: the contract-ref convention itself. A skill names its
+ * contract in front matter as `input: schemas/skills/<skill>/input.schema.json`,
+ * RELATIVE TO ITS INSTANCE ROOT (`contractRefProblem` in `skill-contracts.ts`),
+ * and `kg-export` mints an IRI only for a ref of that shape. So the directory is
+ * fixed by the refs that name it, not by the declared `schemas` graph.
  *
- * `instanceDirectoryForGraph`, not `directoriesForGraph(...)[0]`, because every use
- * below composes a path INSIDE this directory. The question is "where is MY
- * schemas directory", not "who declares schemas" — and from the `cat-harness`
- * root those have different answers: measured 2026-09-20, `schemas` resolves
- * to FOUR homes (`cat-harness/`, `folio-assistant-core/`, `large-datasets/`,
- * `detangle/`), three of them arriving through the dependency overlay and
- * belonging to somebody else. `[0]` was right only because the resolver
- * happens to order the root's own declarations first; a reordering would have
- * sent this generator's output into another checkout, silently. Bean `a02m`.
+ * It read the declared `schemas` directory (`instanceDirectoryForGraph`) until
+ * bean `4ak5` item 1 generalised this to every instance, and for the host the
+ * two agree. They do not agree elsewhere: `folio-assistant-sci` declares
+ * `sources/` as its `schemas` graph (source descriptors) and keeps its six
+ * contracts under `schemas/skills/`, where its skills' refs point; `fhir-harness`
+ * and `smart-base` declare no `schemas` graph at all and hold eight and two
+ * (measured 2026-10-05). Reading the declaration would have published none of
+ * the sixteen.
+ *
+ * Bean `a02m`'s concern is not reopened: that was `directoriesForGraph(...)[0]`
+ * picking up a DEPENDENCY's directory through the overlay. This joins onto the
+ * instance root it is handed, so it cannot reach another instance.
  */
-function schemasRoot(root: string): string {
-  return instanceDirectoryForGraph(root, "schemas") ?? join(root, "schemas");
+function contractsDir(root: string): string {
+  return join(root, "schemas", "skills");
 }
-
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 export interface SchemaExportOptions {
   baseUrl?: string;
+  /**
+   * The instance whose contracts are read. The host when absent, so every
+   * existing caller — and the host's published bytes — are unchanged.
+   */
+  root?: string;
+  /**
+   * The base a contract's `$id` is minted under, when it is not the host's.
+   *
+   * Passed IN rather than derived here, because for a foreign instance it is
+   * {@link instanceSchemaBase} of that instance's published identity, and the
+   * identity is `kg-export`'s answer (`publishedIdentity`). Deriving it a second
+   * time in this module would be a second answer to "where does this instance
+   * publish", free to disagree with the document's own `@id`.
+   */
+  schemaBase?: string;
 }
 
 export function buildDeclarationSchema(opts: SchemaExportOptions = {}): Record<string, unknown> {
@@ -170,7 +187,7 @@ export interface SkillIoContract {
   skill: string;
   /** `input` or `output` — the file stem before `.schema.json`. */
   io: string;
-  /** Repo-relative source path. */
+  /** Source path relative to the INSTANCE root it was read from (`SchemaExportOptions.root`). */
   source: string;
   /** Published path under the output directory. */
   published: string;
@@ -186,9 +203,9 @@ export interface SkillIoContract {
  * checks, which is exactly how 44 of them came to be dead at once.
  */
 export function buildSkillIoContracts(opts: SchemaExportOptions = {}): SkillIoContract[] {
-  const decl = readDeclaration(ROOT);
-  const base = (opts.baseUrl ?? decl?.canonicalUrl ?? "").replace(/\/+$/, "");
-  const dir = join(schemasRoot(ROOT), "skills");
+  const root = opts.root ?? ROOT;
+  const base = (opts.schemaBase ?? opts.baseUrl ?? readDeclaration(ROOT)?.canonicalUrl ?? "").replace(/\/+$/, "");
+  const dir = contractsDir(root);
   if (!existsSync(dir)) return [];
 
   const out: SkillIoContract[] = [];
@@ -197,8 +214,8 @@ export function buildSkillIoContracts(opts: SchemaExportOptions = {}): SkillIoCo
     for (const f of readdirSync(join(dir, e.name))) {
       if (!f.endsWith(".schema.json")) continue;
       const io = f.slice(0, -".schema.json".length);
-      const source = join("schemas", "skills", e.name, f);
-      const schema = JSON.parse(readFileSync(join(ROOT, source), "utf-8")) as Record<string, unknown>;
+      const source = join(relative(root, dir), e.name, f);
+      const schema = JSON.parse(readFileSync(join(root, source), "utf-8")) as Record<string, unknown>;
       out.push({
         skill: e.name,
         io,
@@ -228,7 +245,7 @@ export function staleSkillIoIds(opts: SchemaExportOptions = {}): Array<{ source:
   for (const c of buildSkillIoContracts(opts)) {
     const expected = c.schema.$id as string | undefined;
     if (expected === undefined) continue; // No canonicalUrl declared — nothing to check against.
-    const stored = JSON.parse(readFileSync(join(ROOT, c.source), "utf-8")).$id as string | undefined;
+    const stored = JSON.parse(readFileSync(join(opts.root ?? ROOT, c.source), "utf-8")).$id as string | undefined;
     if (stored !== expected) bad.push({ source: c.source, stored: stored ?? "(none)", expected });
   }
   return bad;
@@ -363,7 +380,7 @@ export function artefactDeclarationDrift(produced: readonly string[]): {
 export function writeSkillIoIds(opts: SchemaExportOptions = {}): string[] {
   const written: string[] = [];
   for (const { source, stored, expected } of staleSkillIoIds(opts)) {
-    const abs = join(ROOT, source);
+    const abs = join(opts.root ?? ROOT, source);
     const doc = JSON.parse(readFileSync(abs, "utf-8")) as Record<string, unknown>;
     if (stored === "(none)" && !("$id" in doc)) {
       // A file with no `$id` at all: put it FIRST, which is where every other
@@ -396,6 +413,136 @@ export function schemaFiles(stub: string, baseUrl?: string): Array<[string, Reco
     ["tool.schema.json", buildToolSchema({ baseUrl })],
     ["tool-types.schema.json", buildToolTypes({ baseUrl })],
   ];
+}
+
+// ── EVERY OTHER INSTANCE'S SCHEMA — `<site>/<stub>/schema/` (bean `4ak5` item 1) ──
+//
+// Owner ruling 2026-10-05, option B: every instance `instance-exports.ts`
+// publishes ALSO publishes a schema directory beside its document. The
+// builders above stay the host's, byte for byte; what follows reuses them over
+// another instance's root. Policy: `instance-publication` §"The schema".
+
+/**
+ * The part of an instance's PUBLISHED identity this module needs.
+ *
+ * Structurally a subset of what `publishedIdentity` in `kg-export.ts` returns,
+ * and it is always that function's answer — passed in, never re-derived here.
+ * This module cannot import `kg-export` (which imports it for `skillIoIri`), and
+ * a second derivation of "where does this instance publish" is the thing
+ * `instance-publication` §"Three questions that must not be merged" forbids: it
+ * would be free to disagree with the document's own `@id`.
+ */
+export interface InstanceIdentity {
+  stub: string;
+  /** The publication base the instance's `@id`s are minted under. Empty when none is known. */
+  base: string;
+  /** The document's path under `base`: `<stub>/<stub>.jsonld`, or `<stub>.jsonld` for an instance with its own `canonicalUrl`. */
+  docPath: string;
+  /** The document's `@id`, for the index's back-pointer. */
+  docIri?: string;
+}
+
+/** The directory, beside an instance's document, that holds its schemas. */
+export const INSTANCE_SCHEMA_DIR = "schema";
+
+/**
+ * The base an instance's schema `$id`s are minted under — `schema/` BESIDE ITS
+ * DOCUMENT, at its publication identity.
+ *
+ * Beside the document, not at a second composed address: an instance with no
+ * `canonicalUrl` of its own sits at `<site>/<stub>/<stub>.jsonld`, so its schemas
+ * are `<site>/<stub>/schema/…`; one that declares its own sits at
+ * `<canonicalUrl>/<stub>.jsonld`, so its schemas are `<canonicalUrl>/schema/…`.
+ * The second is its PUBLICATION identity; this site only stages the bytes at
+ * `<site>/<stub>/schema/` (`instance-publication` §"Three questions that must
+ * not be merged"), exactly as it stages the document.
+ *
+ * Empty when the identity has no base: an `$id` is absolute or absent (module
+ * note), and a document-relative one would resolve differently per fetcher.
+ */
+export function instanceSchemaBase(id: InstanceIdentity): string {
+  if (!id.base) return "";
+  const docDir = posix.dirname(id.docPath);
+  return renderingPath(id.base, docDir === "." ? "" : docDir, INSTANCE_SCHEMA_DIR);
+}
+
+/** The schema index's `$id` — `<schema base>/<stub>.schema.json`, or `undefined` with no base. */
+export function instanceSchemaIndexIri(id: InstanceIdentity): string | undefined {
+  const b = instanceSchemaBase(id);
+  return b ? renderingPath(b, `${id.stub}.schema.json`) : undefined;
+}
+
+/** What one instance's `schema/` directory holds, by path relative to it. */
+export interface InstanceSchemaExport {
+  /** `[path under <stub>/schema/, document]`, index first. */
+  files: Array<[string, Record<string, unknown>]>;
+  /** The instance's own skill I/O contracts, `$id` minted under its schema base. */
+  contracts: SkillIoContract[];
+  /** The index's `$id`, when the instance has a base. */
+  indexIri?: string;
+}
+
+/**
+ * One instance's schema directory: its own skill I/O contracts and an index.
+ *
+ * ## The index
+ *
+ * `<stub>.schema.json` is the schema of the instance's DECLARATION — it
+ * `$ref`s the shared declaration schema the host publishes
+ * ({@link buildDeclarationSchema}, by its published `$id`, so a preview's
+ * index names the preview's copy) — and it lists every contract in `$defs`
+ * by `$id`. A consumer holding an instance's `<stub>.json` reaches both from
+ * one fetch.
+ *
+ * ## Public Zod schemas are NOT listed, and the index says so
+ *
+ * Bean `4ak5` item 1 asked for the instance's public Zod schemas too, with
+ * "public" meaning exactly the `Schema` nodes the instance's own JSON-LD export
+ * lists. For every instance this module serves, that export lists NONE and
+ * says why: the schema-node collector is instance-bound (`COLLECTOR_SCOPE` in
+ * `kg-export.ts`), so a foreign export records `"omitted": [..., "schemas"]`.
+ * And where the collector does run (the host) it yields MODULES
+ * (`schemaModules` in `schema-nodes.ts`), not the Zod values a JSON Schema
+ * would be rendered from. Choosing which exports of a module are "public"
+ * would be a rule nobody has made, so none is invented: the index carries the
+ * same `omitted` entry, so "not looked for" cannot read as "there are none".
+ */
+export function buildInstanceSchemas(
+  root: string,
+  id: InstanceIdentity,
+  opts: { baseUrl?: string } = {},
+): InstanceSchemaExport {
+  const schemaBase = instanceSchemaBase(id);
+  const contracts = buildSkillIoContracts({ root, schemaBase });
+  const indexIri = instanceSchemaIndexIri(id);
+  // The SHARED declaration schema, at the `$id` the host's own export gives
+  // it in this same build — `schemaFiles` publishes that document.
+  const declarationIri = buildDeclarationSchema({ baseUrl: opts.baseUrl }).$id as string | undefined;
+  const defs: Record<string, unknown> = {};
+  for (const c of contracts) {
+    // By `$id` when there is one. With no base both files sit in this one
+    // directory, so the published path resolves the same for every fetcher.
+    defs[`skills/${c.skill}/${c.io}`] = { $ref: (c.schema.$id as string | undefined) ?? c.published.split("\\").join("/") };
+  }
+  const index: Record<string, unknown> = {
+    $schema: "http://json-schema.org/draft-07/schema#",
+    ...(indexIri ? { $id: indexIri } : {}),
+    title: `${id.stub} schemas`,
+    description:
+      `The schemas instance \`${id.stub}\` publishes: its declaration, which is a ` +
+      "CatHarness declaration and is validated by the shared schema this `$ref`s, and its skills' I/O " +
+      "contracts, listed in `$defs` by `$id`. Public Zod schemas are not listed — see `omitted`.",
+    ...(declarationIri ? { allOf: [{ $ref: declarationIri }] } : {}),
+    $defs: defs,
+    // The JSON-LD export's own word for a collector it did not run. See above.
+    omitted: ["schemas"],
+    ...(id.docIri ? { $comment: `Instance graph: ${id.docIri}` } : {}),
+  };
+  return {
+    files: [[`${id.stub}.schema.json`, index], ...contracts.map((c): [string, Record<string, unknown>] => [c.published, c.schema])],
+    contracts,
+    ...(indexIri ? { indexIri } : {}),
+  };
 }
 
 if (import.meta.main) {
