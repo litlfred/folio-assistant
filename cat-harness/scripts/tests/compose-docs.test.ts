@@ -500,7 +500,15 @@ describe("the cut, on the REAL tree", () => {
     // so a ratio tuned to that corpus measured instances no longer here.
     const stubbed = cut.carried.filter((d) => !d.carry).map((d) => `${d.instance.under}/`);
     const theirs = Object.keys(all.suppliedBy).filter((k) => stubbed.some((u) => k.startsWith(u))).length;
-    expect(theirs).toBeGreaterThan(stubbed.length);
+    // A stubbed instance whose docs are ONE page (folio-assistant-core's, since
+    // bean c5fm) is replaced by exactly one stub, so the cut cannot shrink the
+    // tree: assert that it does not grow it either, the same answer the
+    // composes-none case above gives. Otherwise the cut must remove pages.
+    if (theirs === stubbed.length) {
+      expect(nCut).toBe(nAll);
+    } else {
+      expect(theirs).toBeGreaterThan(stubbed.length);
+    }
     expect(nCut).toBeLessThanOrEqual(nAll - theirs + stubbed.length);
 
     // ...and what remains in place of each stubbed instance is its stub, not a
