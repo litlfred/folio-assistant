@@ -235,7 +235,7 @@ reads as two concepts.
 ## A paper's glossary (bean `lqo9`, ruling 2: converge on SKOS)
 
 The paper builder (`folio-assistant-core/scripts/build-glossary.ts`, skill
-[`glossary-build`](glossary-build.md)) also writes the paper's terms as one
+`glossary-build`) also writes the paper's terms as one
 `folio-glossary/v1` scheme, `paper-<paper directory>`, into the glossary
 directory the paper's OWN instance declares. The page picks it up through
 `collect()` like any other scheme, so the IRIs are in that instance's

@@ -1,4 +1,10 @@
-Four things in that diagram are worth reading closely.
+Five things in that diagram are worth reading closely.
+
+**It begins by calling the basic flow.** The first step is a call into
+`document-ingestion.bpmn`, the basic ingestion flow every asset takes: the
+upload is accepted, its metadata goes into the knowledge graph, and the asset is
+catalogued in `library/`. That flow makes no content-type decision; everything
+after the call is the document-specific refinement (placement PR6).
 
 **The Ingestion Engine is an actor, not a script.** It runs unattended. A drop
 during an editing session triggers ingestion in the background — the

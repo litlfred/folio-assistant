@@ -224,20 +224,8 @@
     "Process_SliceSqlitePublish": [],
     "Process_ContentAcquisition": [],
     "Process_CopyOutMaterialized": [],
-    "Process_Ingestion": [
-      "Process_BuildL1Kg",
-      "Process_DeriveContent",
-      "Process_ExtractStructure",
-      "Process_IngestTheme",
-      "Process_L1Gate"
-    ],
+    "Process_Ingestion": [],
     "Process_HumanTranslation": [],
-    "Process_BuildL1Kg": [],
-    "Process_DeriveContent": [],
-    "Process_ExtractStructure": [],
-    "Process_L1Gate": [
-      "Process_Adjudication"
-    ],
     "Process_MaterializeRemote": [],
     "Process_MethodologyFromSource": [
       "Process_Ingestion",
@@ -371,6 +359,20 @@
       "Process_ContentChangeReview"
     ],
     "Process_DeepDocumentResearch": [],
+    "Process_BuildL1Kg": [],
+    "Process_DeriveContent": [],
+    "Process_ExtractStructure": [],
+    "Process_L1Gate": [
+      "Process_Adjudication"
+    ],
+    "Process_L1DocumentIngestion": [
+      "Process_BuildL1Kg",
+      "Process_DeriveContent",
+      "Process_ExtractStructure",
+      "Process_IngestTheme",
+      "Process_Ingestion",
+      "Process_L1Gate"
+    ],
     "Process_BoardOpenClose": [],
     "Process_BoardPlaceNote": [],
     "Process_BoardRelocate": [],
