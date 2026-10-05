@@ -165,6 +165,50 @@ export function takeBase(root: string, path: string): void {
   }
 }
 
+/**
+ * What an `owned-tree` resolution does with one conflicted path (#2176). It
+ * reads which PARENT COMMITS hold the path, never the conflict stages.
+ *
+ * Measured 2026-10-05: when both sides change one node's content-addressed
+ * payload, git reports a rename/rename. The old name has stage 1 only, the
+ * branch's new name stage 2 only, and the base's new name stage 3 only. Both
+ * new stages hold git's three-way merge of the bodies WITH conflict markers.
+ * `takeBase` reads stage 2 alone as "the base deleted it" and `git rm`s a path
+ * the branch ADDED, which `droppedInMerge` refuses at the `resolved`
+ * checkpoint. It also writes stage 3's marked bytes under a name that is the
+ * hash of other bytes.
+ *
+ * So: the base's committed copy when the base has the path, the branch's
+ * committed copy when only the branch has it, and a removal only when NEITHER
+ * parent has it, which is a deletion both sides made. Nothing a parent holds
+ * is dropped here. The pattern's `prunedBy` writer later deletes whatever is
+ * orphaned in the merged tree, and the `staged` checkpoint allows a writer to
+ * delete what it owns.
+ */
+export function ownedTreeAction(inBase: boolean, inBranch: boolean): "theirs" | "ours" | "delete" {
+  return inBase ? "theirs" : inBranch ? "ours" : "delete";
+}
+
+/** Whether `ref` (a commit) tracks `path`. */
+function tracks(root: string, ref: string, path: string): boolean {
+  return spawnSync("git", ["-C", root, "cat-file", "-e", `${ref}:${path}`], { stdio: "ignore" }).status === 0;
+}
+
+/** Resolve one `owned-tree` path from the parents' committed blobs; stages the result. */
+export function takeOwnedTree(root: string, path: string): void {
+  if (unmergedStages(root, path).size === 0) return; // resolved by an earlier step (bean vsv7)
+  const action = ownedTreeAction(tracks(root, "MERGE_HEAD", path), tracks(root, "HEAD", path));
+  if (action === "delete") {
+    git(root, "rm", "-q", "-f", "--", path);
+    return;
+  }
+  // `checkout <commit> -- <path>` writes that commit's blob to the index and
+  // the disk, resolving the unmerged entry. The blob is the one the side
+  // COMMITTED, not git's marked three-way merge of the bodies.
+  git(root, "checkout", action === "theirs" ? "MERGE_HEAD" : "HEAD", "--", path);
+  stageConflicted(root, path);
+}
+
 /** The resolution of one conflicted submodule GITLINK — bean `wczm` item 2. */
 export type GitlinkResolution =
   | { take: "ours" | "theirs"; pin: string; why: string }
@@ -467,7 +511,10 @@ if (import.meta.main) {
     const oneSided = c.strategy === "generated-regions" && unmergedStages(root, c.path).size < 3;
     let resolved: string | undefined;
     try {
-      if (c.strategy === "take-base" || oneSided) {
+      if (c.strategy === "owned-tree") {
+        takeOwnedTree(root, c.path);
+        continue;
+      } else if (c.strategy === "take-base" || oneSided) {
         takeBase(root, c.path);
         continue;
       } else if (c.strategy === "generated-regions") {
