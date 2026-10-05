@@ -21,7 +21,7 @@ import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { declaresGenerated } from "../../cat-harness/scripts/check-reference-direction.ts";
+import { declaresGenerated } from "../scripts/check-reference-direction.ts";
 
 const DIR = mkdtempSync(join(tmpdir(), "ws99-declares-"));
 afterAll(() => rmSync(DIR, { recursive: true, force: true }));
