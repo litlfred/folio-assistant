@@ -4,8 +4,8 @@ description: "Requirements: Receive PKI material as DID - Testing (Experimental)
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Requirements-ReceivePKUMaterialDID.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Requirements-ReceivePKUMaterialDID.xml","active":false},{"label":"JSON","href":"Requirements-ReceivePKUMaterialDID.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Requirements-ReceivePKUMaterialDID.ttl","active":false}],"heading":"Requirements: Receive PKI material as DID - Testing (Experimental)","status":"Active as of 2026-10-01","sections":[{"heading":"Test Plans","text":"No test plans are currently available for the Requirements."},{"heading":"Test Scripts","text":"No test scripts are currently available for the Requirements."}]}
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -34,4 +34,4 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endfor %}
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

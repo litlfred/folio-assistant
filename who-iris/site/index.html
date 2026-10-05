@@ -480,7 +480,7 @@ Upstream IRIS reports <strong>273,559</strong> items across <strong>1,057,223</s
     for (var i = 0; i < terms.length; i++) {
       var t = terms[i];
       if (!t) continue;
-      var regex = new RegExp("(" + t.replace(/[.*+?^${}()|[\]\]/g, "\\$&") + ")", "gi");
+      var regex = new RegExp("(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi");
       escaped = escaped.replace(regex, "<mark class=\"search-mark\">$1</mark>");
     }
     return escaped;

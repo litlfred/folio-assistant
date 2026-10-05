@@ -569,6 +569,29 @@ describe("the replica in the six UN languages — issue #2228", () => {
     expect(fr).toContain(`action="../../id-lookup/"`);
     for (const m of fr.matchAll(/<img src="([^"]+)"/g)) {
       expect(existsSync(join(SITE, "fr", decodeURIComponent(m[1]!)))).toBe(true);
+/**
+ * The search box's highlighter escapes each typed term before building a
+ * RegExp from it. The escape class once read `[.*+?^${}()|[\]\]` in the emitted
+ * page: the `]` closed the class early and `\` was missing, so a lone `(` or
+ * `[` went through unescaped and `new RegExp("(()")` threw on every keystroke.
+ * Asserted against the RENDERED page's own escape pattern, so the template's
+ * double-escaping cannot drift from what the browser runs.
+ */
+describe("the search highlighter escapes every regex metacharacter", () => {
+  const html = readFileSync(join(SITE, "index.html"), "utf-8");
+  const m = html.match(/t\.replace\((\/\[.*?\]\/g), "\\\\\$&"\)/);
+
+  it("the rendered page carries the escape call", () => {
+    expect(m).not.toBeNull();
+  });
+
+  it("every metacharacter typed alone compiles and matches literally", () => {
+    const pattern = m![1]!;
+    const cls = new RegExp(pattern.slice(1, pattern.lastIndexOf("/")), "g");
+    const esc = (t: string) => t.replace(cls, "\\$&");
+    for (const t of ["(", ")", "[", "]", "{", "}", ".", "*", "+", "?", "^", "$", "|", "\\", "c++", "who?"]) {
+      const re = new RegExp("(" + esc(t) + ")", "gi");
+      expect(re.test(`pre ${t} post`)).toBe(true);
     }
   });
 });
