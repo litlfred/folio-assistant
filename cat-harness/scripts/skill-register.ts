@@ -74,7 +74,7 @@
  * **Only an isolated run of one check against a known tree measures anything**,
  * which is why the table below cites per-check runs and not a `gates` summary.
  *
- * ## The seven, each measured alone, red before and green after
+ * ## The chain, each step measured alone, red before and green after
  *
  * | writer | the check it clears |
  * |---|---|
@@ -85,6 +85,22 @@
  * | `kg:audit` | `kg:audit:check` |
  * | `kg:detangle` | `kg:detangle:check` |
  * | `uml:overview` | `uml:overview:check` |
+ * | `subgraph:jsonld` | `subgraph:jsonld:check` — added 2026-10-05 (`8qyc`), below |
+ *
+ * **`subgraph:jsonld` is measured, not recalled.** #2139 went red in CI after
+ * editing three skills, on `subgraph:jsonld:check`: a skill's body is published
+ * as a content-addressed PAYLOAD (`docs/payload/sha256/<hex>`) that its
+ * subgraph index points at, so editing the body moves the hash. Measured
+ * 2026-10-05 on `main` at `da10ede3d3`, where `merge-conflict-patterns.md` had
+ * been edited without it: `subgraph:jsonld:check` exit 1 alone (2 stale
+ * payloads, 4 subgraph files); `bun run subgraph:jsonld` (28 s under load 15);
+ * then exit 0. `slice:sqlite:check` was red on the same tree for the same
+ * missing payload and went green from that one write, with no slice writer
+ * run, so it is downstream of this step rather than a step. Of the chain's
+ * other checks, `auto:docs:check`, `readme:subgraphs:check`, `docs:pages:check`
+ * and `check:undeclared-files:check` were green before and after, so the new
+ * payload files stale nothing else. It is LAST because it reads the graph
+ * the steps above write into.
  *
  * `check:ci-invocations` also goes green, and is not a step of its own: it
  * re-runs the CI invocations, one of which is step 1, so it is downstream of it.
@@ -524,6 +540,13 @@ export const STEPS: readonly Step[] = [
     write: ["uml:overview"],
     verify: ["uml:overview:check"],
     because: "the UML overview renders the QA tree the two steps above just wrote",
+  },
+  {
+    write: ["subgraph:jsonld"],
+    verify: ["subgraph:jsonld:check"],
+    because:
+      "a skill's BODY is a content-addressed payload its subgraph index points at, so editing it moves the hash " +
+      "(#2139 went red on exactly this); `slice:sqlite:check` reads the same payload tree and follows from this write",
   },
 ];
 
