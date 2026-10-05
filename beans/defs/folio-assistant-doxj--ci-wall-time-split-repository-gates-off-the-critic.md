@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-05T05:46:34Z
-updated_at: 2026-10-05T05:46:53Z
+updated_at: 2026-10-05T05:47:08Z
 parent: folio-assistant-hfag
 ---
 
@@ -22,3 +22,6 @@ main run 37253911158 (98ab8cd, green): ~9m20s wall. Critical path = `Repository 
 
 ## Done when
 PR CI is green apart from main's known reds, every step that ran before still runs (step-name diff), and the PR carries a before/after job timing table.
+
+
+Issue: #2153
