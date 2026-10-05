@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/vendors/",
+  "@type": "bootstrap:Subgraph",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/vendors/agent-skill-authoring-claude/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/vendors/agent-skill-authoring-claude",
+      "path": "skills/voices/vendors/agent-skill-authoring-claude/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/vendors/agent-skill-authoring-gemini-cli/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/vendors/agent-skill-authoring-gemini-cli",
+      "path": "skills/voices/vendors/agent-skill-authoring-gemini-cli/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/vendors/agent-skill-authoring-openai/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/voices/vendors/agent-skill-authoring-openai",
+      "path": "skills/voices/vendors/agent-skill-authoring-openai/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/voices/vendors",
+  "path": "skills/voices/vendors/"
+}

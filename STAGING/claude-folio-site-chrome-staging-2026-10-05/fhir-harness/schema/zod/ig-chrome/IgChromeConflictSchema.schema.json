@@ -1,0 +1,61 @@
+{
+  "$ref": "#/definitions/IgChromeConflict",
+  "definitions": {
+    "IgChromeConflict": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "shape",
+            "malformed"
+          ]
+        },
+        "detail": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sites": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "package": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "package",
+              "value"
+            ]
+          }
+        }
+      },
+      "required": [
+        "token",
+        "kind",
+        "detail",
+        "sites"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-chrome/IgChromeConflictSchema.schema.json",
+  "title": "IgChromeConflictSchema",
+  "description": "Generated from `IgChromeConflictSchema` in schemas/ig-chrome.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/folio-site-chrome-staging-2026-10-05",
+    "sha": "ec327615b9b43a43858a0dc322e848ce5d061c56",
+    "pr": "2222/merge",
+    "run": "37359268777"
+  }
+}

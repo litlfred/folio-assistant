@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Quality Control Input",
+  "description": "Input schema for quality control checks across content lifecycle.",
+  "type": "object",
+  "required": [
+    "checkType",
+    "targetPath"
+  ],
+  "properties": {
+    "checkType": {
+      "type": "string",
+      "enum": [
+        "qa-report",
+        "publication-checklist",
+        "conformance-validation",
+        "functionality-test",
+        "cross-component-consistency"
+      ],
+      "description": "Type of QC check to perform."
+    },
+    "targetPath": {
+      "type": "string",
+      "description": "Path to content being checked."
+    },
+    "checklistSections": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "global"
+        ]
+      },
+      "description": "Publication checklist sections to review."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-folio-site-chrome-staging-2026-10-05/folio-assistant-core/schema/skills/quality-control/input.schema.json",
+  "staging": {
+    "branch": "claude/folio-site-chrome-staging-2026-10-05",
+    "sha": "ec327615b9b43a43858a0dc322e848ce5d061c56",
+    "pr": "2222/merge",
+    "run": "37359268777"
+  }
+}
