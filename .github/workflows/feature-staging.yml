@@ -1272,6 +1272,9 @@ jobs:
           bun run cat-harness/scripts/qa-site-assets.ts verify \
             --site ./_site --results cat-harness/test/results \
             --state "$RUNNER_TEMP/qa-site-assets.state.json"
+          # The panels' links to each result file, judged on what was BUILT
+          # (bean `bejf`, #2217). Mirrored in `docs-site.yml`.
+          bun run check:qa-result-links --site ./_site
 
       # The same navbar-tile check `docs-site.yml` runs, mirrored here for the
       # same reason the witness copy above is: staging publishes the SAME
