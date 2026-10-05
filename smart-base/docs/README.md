@@ -10,8 +10,7 @@ Part of [SMART Base](../README.md) 0.1.0, declared as `smart-base-docs`, holding
 
 | file | what it is | used by |
 |---|---|---|
-| [`index.md`](index.md) | "All 225 artefacts of the WHO SMART Base IG 0.3.0, reconstructed from its published output." |  |
+| [`artifacts.md`](artifacts.md) | text |  |
 | [`artifact/`](artifact/) | _nothing declares what this holds_ | |
 | [`assets/`](assets/) | _nothing declares what this holds_ | |
-| [`menu/`](menu/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

@@ -4,8 +4,8 @@ description: "The JSON Schema sidecar of StructureDefinition/CWT, from the IG's 
 nav_exclude: true
 ig_api: {"label":"JSON Schema","file":"StructureDefinition-CWT.schema.json","src":"../fhir-artifact-index/dak/StructureDefinition-CWT.schema.json","artifact":{"title":"CBOR Web Token (CWT) Claim","page":"StructureDefinition-CWT.html"},"tabs":[{"label":"Narrative Content","href":"StructureDefinition-CWT.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT.xml","active":false},{"label":"JSON","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT.json","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-CWT.schema.json.html","active":true}],"script":"../assets/ig-api-view.js"}
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -36,4 +36,4 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <script src="{{ page.ig_api.script }}" defer></script>
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

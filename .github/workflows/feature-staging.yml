@@ -613,6 +613,24 @@ jobs:
             bun run cat-harness/scripts/compose-docs.ts --out ./_docs --staging
           fi
 
+      # EACH IG IS BUILT INSIDE THIS SITE (bean `mftp`, owner 2026-10-05:
+      # "Build in main site"), so its pages wear the site's chrome — sidebar,
+      # search, language selector. Cloned at the commit its instance records
+      # (`fhir-artifact-index/menu.json`), staged, and composed into
+      # `_docs/<instance>/` with its includes and data namespaced per IG.
+      # Only the IGs the staging cone reaches (bean `4j86`).
+      - name: Compose each IG into the docs source
+        env:
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: |
+          BASE="/${REPO_NAME}/STAGING/${STAGING_SLUG}"
+          curl -sSfL -o /tmp/plantuml.jar \
+            https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar
+          CF=(); [ -f "$RUNNER_TEMP/pr-files.txt" ] && CF=(--changed-files "$RUNNER_TEMP/pr-files.txt")
+          bun run fhir-harness/scripts/stage-ig-sites.ts --work ./_ig --baseurl "$BASE" \
+            --plantuml-jar /tmp/plantuml.jar --compose-into ./_docs "${CF[@]}" > ./_ig-list.txt
+
       # THE FULL IG PUBLISHER AST PIPELINE, rendered (bean wnhh, owner
       # 2026-10-02: "build an updated web interface for smart trust testing
       # full ast pipeline"). For each IG instance whose source repository
@@ -655,6 +673,14 @@ jobs:
 
       - name: Take ownership of Jekyll output
         run: sudo chown -R "$(id -u):$(id -g)" ./_site
+
+      # An IG's source can repeat an anchor, as the Publisher's output does.
+      # Keep the first copy, rename the rest, and report each — per IG.
+      - name: Rename repeated ids on the IG pages
+        run: |
+          while read -r INSTANCE SRC AT; do
+            bun run fhir-harness/scripts/build-ig-site.ts --dedupe-ids "./_site/${INSTANCE}"
+          done < ./_ig-list.txt
 
       # The preview serves the PUBLISHED index, or an empty one, never its own.
       #
@@ -723,42 +749,6 @@ jobs:
           --allow "https://cdn.jsdelivr.net/gh/$OWNER/"
           --allow "https://raw.githubusercontent.com/$OWNER/"
 
-      # ONE JEKYLL SITE PER IG (bean `bamf`, owner 2026-09-30), as the IG
-      # Publisher builds one: an IG's own pages keep `{{ site.data.fhir.* }}`
-      # unchanged because each site has its own `_data/fhir.json`. Which IGs,
-      # and from which commit, is DATA — each instance's
-      # `fhir-artifact-index/menu.json` records the repository and commit its
-      # menu was read from — so this workflow names no IG. Built with the
-      # docs Gemfile (jekyll + the just-the-docs gem), into
-      # `_site/<instance>/ig/`, after the main site so neither overwrites the
-      # other. PlantUML diagrams are rendered as the Publisher does.
-      - name: Set up Ruby for the IG sites
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.3"
-          bundler-cache: true
-          working-directory: cat-harness/docs
-
-      - name: Build each IG's own site
-        env:
-          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
-        run: |
-          BASE="/${{ github.event.repository.name }}/STAGING/${STAGING_SLUG}"
-          curl -sSfL -o /tmp/plantuml.jar \
-            https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar
-          # Only the IGs the staging cone reaches (bean `4j86`); no file list carries all.
-          CF=(); [ -f "$RUNNER_TEMP/pr-files.txt" ] && CF=(--changed-files "$RUNNER_TEMP/pr-files.txt")
-          bun run fhir-harness/scripts/stage-ig-sites.ts --work ./_ig --baseurl "$BASE" \
-            --plantuml-jar /tmp/plantuml.jar "${CF[@]}" > ./_ig-list.txt
-          while read -r INSTANCE SRC; do
-            BUNDLE_GEMFILE="$PWD/cat-harness/docs/Gemfile" bundle exec jekyll build \
-              --source "$SRC" --destination "./_site/${INSTANCE}/ig"
-            # An IG's source can repeat an anchor, and the Publisher's output
-            # repeats it too. Keep the first copy (where every link already
-            # lands), rename the rest, and report each one.
-            bun run fhir-harness/scripts/build-ig-site.ts --dedupe-ids "./_site/${INSTANCE}/ig"
-            echo "built ${INSTANCE}'s IG site -> ${BASE}/${INSTANCE}/ig/"
-          done < ./_ig-list.txt
 
       # No built page may carry the same `id` twice (bean `uknu`). Only a BUILD
       # shows this class: `nav_footer_custom.html` declared its checkbox once,
@@ -1272,6 +1262,9 @@ jobs:
           bun run cat-harness/scripts/qa-site-assets.ts verify \
             --site ./_site --results cat-harness/test/results \
             --state "$RUNNER_TEMP/qa-site-assets.state.json"
+          # The panels' links to each result file, judged on what was BUILT
+          # (bean `bejf`, #2217). Mirrored in `docs-site.yml`.
+          bun run check:qa-result-links --site ./_site
 
       # The same navbar-tile check `docs-site.yml` runs, mirrored here for the
       # same reason the witness copy above is: staging publishes the SAME

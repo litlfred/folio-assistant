@@ -181,9 +181,9 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 3 of 3 published.
 {: .fa-hx-dim }
 
-- [SMART Base]({{ '/smart-base/' | relative_url }})
-- [smart-immunizations]({{ '/smart-immunizations/' | relative_url }})
-- [smart-trust]({{ '/smart-trust/' | relative_url }})
+- [SMART Base]({{ '/smart-base/artifacts.html' | relative_url }})
+- [smart-immunizations]({{ '/smart-immunizations/artifacts.html' | relative_url }})
+- [smart-trust]({{ '/smart-trust/artifacts.html' | relative_url }})
 
 ### `folio`
 

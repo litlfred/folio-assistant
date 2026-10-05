@@ -79,6 +79,7 @@ import { isQaGraphUnknown, projectQaGraph } from "../content/pipeline/qa-graph-i
 import { tileCounts } from "../schemas/tile-count.js";
 import { OPEN_STATUSES as OPEN_BEAN_STATUSES } from "./bean-store-read.js";
 import { qaStorageOf } from "./qa-results.ts";
+import { qaResultLinkFor, siteLinkKey } from "./qa-result-link.ts";
 
 const INSTANCE_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -621,7 +622,7 @@ function qaIcons(page: WebPage, node: WebPageNode): string {
         // the corpus sweep took the set from 35 files to 134. Indentation was 32%
         // of 2.9 MB — a third of what every reader of the site would download for
         // whitespace nobody looks at.
-        emitWitness(abs, JSON.stringify(doc) + "\n");
+        emitWitness(abs, JSON.stringify(withSidecarLinks(doc)) + "\n");
         qaIndex[key] = { state: doc.state, counts: doc.counts };
       }
       // A sidecar that exists but will not project — malformed JSON, or a
@@ -688,7 +689,7 @@ function pageQaIcons(page: WebPage): string {
       qaUnswept.push(key);
     } else {
       const abs = join(QA_ASSET_DIR, slug, `${key}.json`);
-      emitWitness(abs, JSON.stringify(doc) + "\n");
+      emitWitness(abs, JSON.stringify(withSidecarLinks(doc)) + "\n");
       qaIndex[key] = { state: doc.state, counts: doc.counts };
     }
   }
@@ -1014,6 +1015,27 @@ function emitWitness(path: string, content: string): void {
   if (!check) mkdirSync(dirname(path), { recursive: true });
   emit(path, content, QA_ASSETS_STORED ? "stored" : "verdict");
   emittedQa.add(path);
+}
+
+/**
+ * The key of the `qa-reports` entry this build's evidence came from, read once
+ * from the `qa-site-assets` fetch state. `undefined` in a local build, where
+ * the links fall back to the branch tip.
+ */
+const QA_LINK_KEY = siteLinkKey();
+
+/**
+ * A witness projection with every sidecar's address stamped in: bean `bejf`,
+ * issue #2217. The browser renders `sidecarLinks` and composes no URL itself.
+ * It used to do so as `blob/main/` + an instance-relative path, which was
+ * wrong in both halves. The address comes from `qa-result-link.ts`, the one
+ * place that reads the store's declaration.
+ */
+function withSidecarLinks(doc: QaWitnessDoc): QaWitnessDoc {
+  const sidecarLinks = doc.sidecars.map((p) =>
+    qaResultLinkFor(resolve(INSTANCE_ROOT, p), { repoRoot: repoRootFor(INSTANCE_ROOT), repoWeb: REPO_WEB, key: QA_LINK_KEY }),
+  );
+  return { ...doc, sidecarLinks };
 }
 
 if (!existsSync(SRC_DIR)) {
@@ -1808,7 +1830,7 @@ function publishAuthoredPageTranslationQa(): void {
       const slug = relative(siteDir, p).replace(/\.md$/, "").replace(/\//g, "-");
       const key = `page.translation`;
       const abs2 = join(QA_ASSET_DIR, slug, `${key}.json`);
-      emitWitness(abs2, JSON.stringify(doc) + "\n");
+      emitWitness(abs2, JSON.stringify(withSidecarLinks(doc)) + "\n");
 
       emitWitness(
         join(QA_ASSET_DIR, slug, QA_INDEX_FILE),

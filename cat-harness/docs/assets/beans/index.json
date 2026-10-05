@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 911,
+      "count": 916,
       "unit": "beans"
     }
   },
@@ -4462,6 +4462,20 @@
       "file": "beans/defs/folio-assistant-bbza--s5-b-tool-implementations-land-on-their-layer-foli.md"
     },
     {
+      "id": "folio-assistant-bejf",
+      "title": "QA panel result links: one helper, addressed on qa-reports by the deployed commit's key",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-3fva",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T18:02:27Z",
+      "updatedAt": "2026-10-05T18:42:25Z",
+      "preview": "Issue #2217 (arc #1763). docs-ui.js qaBuildPanel links every QA result as hard-coded blob/main/ + an INSTANCE-relative path: wrong path today, wrong branch by declaration (every qa directory declares storage). One helper, decided per directory by the store's declaration; gen-docs-pages stamps sidecarLinks; docs-ui renders them; check:qa-result-links gates it.\n\n## Done when\n- [x] helper + unit test",
+      "file": "beans/defs/folio-assistant-bejf--qa-panel-result-links-one-helper-addressed-on-qa-r.md"
+    },
+    {
       "id": "folio-assistant-bf5l",
       "title": "WRONG DIRECTION on main: cat-harness/schemas/intake.ts imports folio-assistant-core, and two of three checks cannot see it",
       "status": "completed",
@@ -6554,6 +6568,20 @@
       "file": "beans/defs/folio-assistant-hcpz--seedready-per-layer-seeding-readiness-gateway-for.md"
     },
     {
+      "id": "folio-assistant-he8h",
+      "title": "QA-REPORTS: don't record a result when neither content nor result changed",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-3fva",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T18:45:22Z",
+      "updatedAt": "2026-10-05T19:16:49Z",
+      "preview": "## Why\n\nThe owner saw the same mechanical QA results repeated on the `cat/cat-harness/qa-reports`\nbranch (2026-10-05). Measured that day: `main/` holds 140 per-commit snapshots, and its\n`cat-harness/test/results/translation-qa` subtree has only **2 distinct trees** across\nthem (89 + 51 identical copies). 142 `pr/<n>` refs add more. Prune keeps everything on\nmain for 90 days, so nothing has gone ye",
+      "file": "beans/defs/folio-assistant-he8h--qa-reports-dont-record-a-result-when-neither-conte.md"
+    },
+    {
       "id": "folio-assistant-hf2q",
       "title": "PROGRAMME PROGRESS: an epic burn-down and a math-progress heat map as a board feed",
       "status": "todo",
@@ -8147,6 +8175,20 @@
       "updatedAt": "2026-10-04T17:37:49Z",
       "preview": "PR #2078 (`agy/wm63-non-who-ig-demo`, \"feat(fhir-harness): demonstrate bare pipeline on non-WHO IG (wm63, nsbb)\"), head `1d2cf9188ce9`. Owner-approved for landing 2026-10-04; owner, 14:40Z: \"2078 land if ready\". Handed back by the Merge Manager at 14:40Z, against main `32b1fb6fdb`.\n\n## Refused\n`merge:guard 2078` (evaluate only):\n- check 3 `ready-marker`: the PR body links no session, so no `ready:",
       "file": "beans/defs/folio-assistant-mfhc--merge-refused-2078-mergeguard-checks-3-and-5-no-ow.md"
+    },
+    {
+      "id": "folio-assistant-mftp",
+      "title": "ONE IG SITE AT THE ROOT: smart-trust's narrative and artefact pages build as one just-the-docs site at /smart-trust/, in production too",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T14:34:28Z",
+      "updatedAt": "2026-10-05T14:34:48Z",
+      "preview": "Owner, 2026-10-05, looking at https://litlfred.github.io/folio-assistant/smart-trust/ with WHO's v1.7.3 TOC beside it: *\"smart-trust is missing lots of pages\"*. Offered (1) publish /ig/ in production, (2) +profile tabs, (3) merge the two sites; chose 3: *\"1 but clean break on old beahviour, no redirect needed.\"* Follows `jut3` (P0) and `bamf`.\n\n## Measured 2026-10-05\n- Production /smart-trust/ is ",
+      "file": "beans/defs/folio-assistant-mftp--one-ig-site-at-the-root-smart-trusts-narrative-and.md"
     },
     {
       "id": "folio-assistant-mgxw",
@@ -10197,6 +10239,20 @@
       "file": "beans/defs/folio-assistant-sfjo--injection-the-retranslate-path-drops-front-matter.md"
     },
     {
+      "id": "folio-assistant-sg87",
+      "title": "Mounted instance pages carry the docs locale globe (#2219)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T18:07:13Z",
+      "updatedAt": "2026-10-05T18:24:51Z",
+      "preview": "Issue #2219. Owner chose B: same chrome as folio-assistant on mounted pages (fa-translation-meta + docs-ui band globe), every declared locale shown, untranslated ones greyed. No new UI.\n\n## Future work, NOT done here\n- C: make the who-iris replica's UI strings translatable (pot from gen-iris-pages.ts, per-locale builds at /<loc>/who-iris/ or /who-iris/<loc>/), and teach translation-index.ts to see",
+      "file": "beans/defs/folio-assistant-sg87--mounted-instance-pages-carry-the-docs-locale-globe.md"
+    },
+    {
       "id": "folio-assistant-sjic",
       "title": "ONE NAVBAR FOR EVERY FOLIO: combine the folio-assistant sidebar and the who-iris rail into a single component — fixed top, scrollable KG stack, fixed bottom",
       "status": "completed",
@@ -11929,6 +11985,20 @@
       "updatedAt": "2026-09-29T22:45:00Z",
       "preview": "Issue #1254. Found while building check:reference-direction (#1219, bean zhg2): gen-skill-docs, gen-schema-docs and gen-uml-overview wrote 769 occurrences of undeclared generated output into docs/, 54% of that check's original findings. docs/ is a content graph and correctly so, so the directory cannot answer for a generator's output inside it — the file must. Markers added in PR #1222 for the thr",
       "file": "beans/defs/folio-assistant-ws99--generated-output-every-generators-output-should-de.md"
+    },
+    {
+      "id": "folio-assistant-wujt",
+      "title": "STAGING EDIT LINKS: on a staging preview, view/edit links go to the previewed branch, not main — for every harness",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T18:17:58Z",
+      "updatedAt": "2026-10-05T18:17:58Z",
+      "preview": "Owner, 2026-10-05 (during bean `mftp`): *\"in general (not just for FHIR IGs, but other harneses) edit links on staging, should go to their staging edit links, not main.\"*\n\n## Measured 2026-10-05\n- View/edit links are composed by `sourceLinks(repoUrl, path, branch)` (`cat-harness/schemas/cat-harness.ts`), called by about eight generators (`gen-landing-data`, `gen-docs-pages`, `harness-panel`, `libr",
+      "file": "beans/defs/folio-assistant-wujt--staging-edit-links-on-a-staging-preview-viewedit-l.md"
     },
     {
       "id": "folio-assistant-wwi6",
@@ -14522,14 +14592,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 550,
+        "total": 553,
         "closed": 197,
-        "open": 353,
-        "inProgress": 135,
-        "todo": 217,
+        "open": 356,
+        "inProgress": 137,
+        "todo": 218,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.35818181818181816
+        "share": 0.3562386980108499
       },
       {
         "id": "folio-assistant-vuip",
@@ -14537,14 +14607,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 236,
+        "total": 238,
         "closed": 95,
-        "open": 141,
-        "inProgress": 77,
-        "todo": 63,
+        "open": 143,
+        "inProgress": 78,
+        "todo": 64,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4025423728813559
+        "share": 0.39915966386554624
       },
       {
         "id": "folio-assistant-yg29",
@@ -14563,8 +14633,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 532,
-    "coveredOpen": 529,
+    "openTotal": 537,
+    "coveredOpen": 534,
     "duplicateIds": 0
   }
 }
