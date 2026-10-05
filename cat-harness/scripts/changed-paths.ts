@@ -34,7 +34,9 @@
  * ## Never skipped
  *
  * A pair is ALWAYS affected when it declares no inputs, when it declares
- * `{tracked}` and anything at all changed, or when its footprint cannot be
+ * `{tracked}` and anything at all changed, when any script it runs passes
+ * `--against <ref>` (a qa-reports baseline moves with no path changing — see
+ * {@link hasAgainstRef}), or when its footprint cannot be
  * computed (a glob over nothing, a command that is not a script, a
  * non-literal dynamic import). Not knowing is never a reason to skip. And a
  * change set that could not be measured is `undefined`, which asks every pair.
@@ -79,6 +81,11 @@ export function footprintOf(
     if (e === undefined) return { always: `\`${s}\` does not resolve to script files` };
     entries.push(...e);
   }
+  // `seen` now holds every script the pair runs, `bun run` followed.
+  const against = [...seen].filter((s) => hasAgainstRef(scripts[s]));
+  if (against.length > 0) {
+    return { always: `judges against a qa-reports baseline, which is not a path (\`${against.join("`, `")}\` passes --against)` };
+  }
   const closure = sourceClosure(root, entries);
   if ("undetermined" in closure) return { always: `inputs could not be determined: ${closure.undetermined}` };
   const files = new Set([...declared.files, ...closure.files]);
@@ -87,6 +94,25 @@ export function footprintOf(
     for (let i = f.indexOf("/"); i > 0; i = f.indexOf("/", i + 1)) dirs.add(f.slice(0, i));
   }
   return { patterns, files, dirs, scriptNames: [...seen] };
+}
+
+/**
+ * Whether a command passes `--against <ref>` (or `--against=<ref>`).
+ *
+ * Such a check judges against the `qa-reports` entry for that ref, which moves
+ * whenever the ref publishes while no path in this repository changes. A
+ * change set made of paths cannot see it, so the pair is always asked. The
+ * input-hash cache answers the same hazard differently, by hashing the
+ * baseline's identity (`againstRefsOf` in `input-hash.ts`, #2157); this is the
+ * same token scan, kept here so neither change depends on the other. Callers
+ * apply it to every script the pair runs, so `bun run` nesting is covered.
+ */
+export function hasAgainstRef(command: string | undefined): boolean {
+  if (command === undefined) return false;
+  return command
+    .split(/\s+/)
+    .map((t) => t.replace(/^["']|["']$/g, ""))
+    .some((t) => t === "--against" || t.startsWith("--against="));
 }
 
 /** Whether a declared pattern names `path` — a glob match, the file itself, or a path under a plain directory. */

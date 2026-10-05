@@ -16,6 +16,7 @@ import {
   changedSince,
   diffSnapshots,
   footprintOf,
+  hasAgainstRef,
   patternHits,
   snapshotTree,
   type Footprint,
@@ -85,6 +86,36 @@ describe("an undeclared or {tracked} pair is never skipped", () => {
     } finally {
       r.cleanup();
     }
+  });
+
+  test("FALSIFIER: a narrowly declared pair passing --against is asked with NO path changed", () => {
+    const r = fixtureRepo();
+    try {
+      const scripts = {
+        "q:check": "bun src/check.ts --check --against main",
+        q: "bun src/check.ts",
+        // Nested through `bun run`, and the `=` spelling.
+        "n:check": "bun run inner",
+        inner: "bun src/check.ts --against=refs/heads/main",
+      };
+      for (const names of [["q:check", "q"], ["n:check"]]) {
+        const fp = footprintOf(r.dir, scripts, names, NARROW);
+        const a = affects(fp, new Set());
+        expect(a.affected).toBe(true);
+        expect(a.why).toMatch(/judges against a qa-reports baseline, which is not a path/);
+      }
+      // The control: the same pair without --against is skippable.
+      expect(affects(footprintOf(r.dir, r.scripts, ["p:check", "p"], NARROW), new Set()).affected).toBe(false);
+    } finally {
+      r.cleanup();
+    }
+  });
+
+  test("hasAgainstRef: both spellings, quoted, and absent", () => {
+    expect(hasAgainstRef("bun x.ts --against main")).toBe(true);
+    expect(hasAgainstRef('bun x.ts "--against=main"')).toBe(true);
+    expect(hasAgainstRef("bun x.ts --againstish")).toBe(false);
+    expect(hasAgainstRef(undefined)).toBe(false);
   });
 
   test("a command that is not a script file is always asked", () => {
