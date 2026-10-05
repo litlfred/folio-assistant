@@ -12,4 +12,5 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `folio-templates`, holdin
 |---|---|---|
 | [`document/`](document/) | _nothing declares what this holds_ | |
 | [`paper/`](paper/) | _nothing declares what this holds_ | |
+| [`public-comment/`](public-comment/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->
