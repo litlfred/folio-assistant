@@ -31,7 +31,8 @@
  * It was core's `cat-harness/schemas/dak-blocks.ts`, re-exported from core's
  * barrel, until bean `1335`. Core's content model named the `dak` adapter, so
  * the module could not leave without core importing a harness. It left once
- * the adapter and its kinds became a CONTRIBUTION (`smart-base/contributions.ts`)
+ * the adapter and its kinds became a CONTRIBUTION (nodes in `content-adapters/`
+ * and `block-kinds/` since bean riit; a `contributions.ts` before)
  * — core reads them from a `ContributionRegistry` now, and nothing in core
  * imports this file.
  *

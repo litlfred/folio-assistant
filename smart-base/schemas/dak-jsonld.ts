@@ -4,8 +4,9 @@
  * Moved out of core's `cat-harness/schemas/jsonld.ts` with the kinds themselves
  * (bean `1335`). Core's `typesForKind` still answers for every kind, a
  * DAK one included, but it learns a DAK kind's types from the CONTRIBUTION —
- * `smart-base/contributions.ts` hands `folioType` and `docoType` over with each
- * kind — so core no longer names a DAK kind to do it.
+ * each kind's `folio-block-kind/v1` node in `smart-base/block-kinds/` carries
+ * its `folioType` and `docoType`, registered by `loadContributions` (bean
+ * riit) — so core no longer names a DAK kind to do it.
  *
  * @module smart-base/schemas/dak-jsonld
  * @graphNode schema

@@ -49,7 +49,9 @@ describe("importClosure, on this checkout", () => {
   });
   it("resolves harness-config's computed import through the declared contributes modules", () => {
     expect(c.computed).toBeUndefined();
-    expect(c.files.has("smart-base/contributions.ts")).toBe(true);
+    // sci's: smart-base's was the first, and went in bean riit step 5 when
+    // its one contribution (the `dak` adapter) became a node.
+    expect(c.files.has("folio-assistant-sci/contributions.ts")).toBe(true);
   });
   it("a missing entry is a doubt, never an empty closure read as clean", () => {
     expect(importClosure("no/such.ts", REPO).doubt).toContain("does not exist");

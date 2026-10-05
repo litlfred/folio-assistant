@@ -35,7 +35,6 @@ import {
   COMPANION_ROLES,
 } from "../../../cat-harness/schemas/block-qa";
 import { ContributionRegistry } from "../../../cat-harness/schemas/contributions";
-import { DAK_COMPANION_ROLES } from "../../contributions";
 import { loadContributionsSync } from "../../../cat-harness/schemas/harness-config";
 
 /** smart-base's contribution, registered as `loadContributions` would. */
@@ -125,7 +124,10 @@ describe("dak-companion-present", () => {
     // requirement would fail every block that satisfies it.
     for (const [, role] of Object.entries(REQUIRED_COMPANION)) {
       expect(COMPANION_ROLES).toContain(role);
-      expect(DAK_COMPANION_ROLES).toContain(role);
+      // Through the registry, so the roles are the ones the `dak` node in
+      // smart-base/content-adapters/ declares and the loader registers (bean
+      // riit, step 5), not a constant beside the test.
+      expect(registry.adapterCompanionRoles("dak")).toContain(role);
     }
   });
 

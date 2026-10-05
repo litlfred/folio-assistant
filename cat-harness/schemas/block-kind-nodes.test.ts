@@ -9,7 +9,11 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { BLOCK_KIND_NODES, BLOCK_KINDS, DOCUMENT_BLOCK_KINDS, MATH_BLOCK_KINDS, discoverBlockKinds, kindForBuilder } from "./block-kinds";
+import {
+  BLOCK_KIND_NODES, BLOCK_KINDS, CONTENT_ADAPTERS, CONTENT_ADAPTER_NODES, DOCUMENT_BLOCK_KINDS, MATH_BLOCK_KINDS,
+  discoverBlockKinds, discoverContentAdapters, kindForBuilder, type ContentAdapter,
+} from "./block-kinds";
+import { ADAPTER_COMPANION_ROLES } from "./block-qa";
 import { KNOWN_LABEL_PREFIXES, LABEL_PREFIXES, typedBlockKinds } from "./constraints";
 import { BLOCK_KIND_TO_FOLIO_TYPE, KIND_PREFIXES, assertPrefixesInSync } from "./jsonld";
 import { kindHeading } from "./translation";
@@ -69,5 +73,45 @@ describe("block kinds are discovered, not listed", () => {
   test("a checkout that declares no block-kinds graph is refused rather than read as having no kinds", () => {
     const root = mkdtempSync(join(tmpdir(), "block-kinds-empty-"));
     expect(() => discoverBlockKinds(root)).toThrow(/no block kinds discovered/);
+  });
+});
+
+describe("content-adapter vocabularies are nodes (bean riit, step 5)", () => {
+  test("the typed vocabularies the nodes declare are the ones the code types", () => {
+    // `ContentAdapter` is a type, erased at runtime; an exhaustive Record over
+    // it is the one place tsc and the nodes meet. Add a typed vocabulary to
+    // the type without a node, or a `typed: true` node without the type, and
+    // this fails — at compile time or here.
+    const typed: Record<ContentAdapter, true> = { paper: true };
+    expect([...CONTENT_ADAPTERS].sort() as string[]).toEqual(Object.keys(typed).sort());
+  });
+
+  test("each typed vocabulary's companion roles come from its node", () => {
+    for (const n of CONTENT_ADAPTER_NODES.filter((x) => x.typed)) {
+      expect(ADAPTER_COMPANION_ROLES[n.name as ContentAdapter]).toEqual(n.companionRoles);
+    }
+    expect(ADAPTER_COMPANION_ROLES.paper).toEqual(["md", "ts", "lean"]);
+  });
+
+  test("every block-kind node names a vocabulary that has a node", () => {
+    const names = new Set(CONTENT_ADAPTER_NODES.map((n) => n.name));
+    for (const k of discoverBlockKinds()) expect(names.has(k.adapter)).toBe(true);
+  });
+
+  test("a vocabulary declared twice throws, and so does finding no typed one", () => {
+    const tmp = mkdtempSync(join(tmpdir(), "content-adapters-"));
+    const inst = (name: string, nodes: Record<string, unknown>) => {
+      mkdirSync(join(tmp, name, "content-adapters"), { recursive: true });
+      writeFileSync(
+        join(tmp, name, `${name}.json`),
+        JSON.stringify({ name, directories: [{ id: `${name}-ca`, path: "content-adapters/", graphKinds: ["content-adapters"] }] }),
+      );
+      for (const [f, n] of Object.entries(nodes)) writeFileSync(join(tmp, name, "content-adapters", f), JSON.stringify(n));
+    };
+    const node = (name: string, typed: boolean) => ({ $schema: "folio-content-adapter/v1", name, typed, companionRoles: ["md"] });
+    inst("a", { "x.json": node("x", false) });
+    expect(() => discoverContentAdapters(tmp)).toThrow(/no typed content adapter/);
+    inst("b", { "x.json": node("x", true) });
+    expect(() => discoverContentAdapters(tmp)).toThrow(/declared twice/);
   });
 });

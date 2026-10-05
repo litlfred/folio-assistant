@@ -654,6 +654,22 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "The block kinds a harness's adapter owns, one node per kind carrying its label prefix, " +
       "RDF types, profile and builder. Discovered across the instances; no module lists them.",
   },
+  // A content adapter's block VOCABULARY (bean riit, step 5): one
+  // `folio-content-adapter/v1` node per vocabulary. `block-kinds.ts` derives
+  // CONTENT_ADAPTERS from the typed ones; no module lists the vocabularies.
+  "content-adapters": {
+    description:
+      "the block VOCABULARIES a harness owns, one `folio-content-adapter/v1` node each (`schemas/content-adapter-node.ts`): the name every block-kind node's `adapter` names, the companion roles its blocks can have, whether cat-harness's code types it, and for an untyped one its vocabulary module. `schemas/block-kinds.ts` derives `CONTENT_ADAPTERS` from the typed nodes and `schemas/block-qa.ts` derives `ADAPTER_COMPANION_ROLES`; an untyped vocabulary reaches a folio through its dependency tree. Owner, 2026-10-05, option 1 of 3: the vocabulary is a node and the server adapter CLASS is not, since the two do not line up (`document` has a class and no vocabulary, `dak` a vocabulary and no class). Bean `riit`, step 5.",
+    title: "Content adapters",
+    renderable: false,
+    holds: "content",
+    nodeSchemas: {
+      "folio-content-adapter/v1": {},
+    },
+    summary:
+      "The block vocabularies a harness owns, one node per vocabulary carrying its companion roles " +
+      "and whether the platform's code types it. Discovered across the instances; no module lists them.",
+  },
   tools: {
     description:
       "Tool definitions, themselves nodes in the KG",

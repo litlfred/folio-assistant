@@ -653,7 +653,7 @@ export const RULES: Rule[] = [
       // module defining their schemas could not sit in a different repository
       // from the union naming them. That premise was removed rather than the
       // classification argued again: smart-base now CONTRIBUTES the `dak`
-      // adapter and its kinds (`smart-base/contributions.ts`), core's built-in
+      // adapter and its kinds (nodes in its own graphs since bean riit), core's built-in
       // vocabulary is `paper` only, and `dak-blocks.ts`, `qa-checkers-dak.ts`
       // and `gen-dak-components-figure.ts` moved to `smart-base/`, outside this
       // tool's scope. Nothing under `cat-harness/` imports them.
@@ -1086,6 +1086,7 @@ export const RULES: Rule[] = [
       "schemas/declared-nodes.ts",
       "schemas/validator-node.ts",
       "schemas/block-kind-node.ts",
+      "schemas/content-adapter-node.ts",
       "schemas/contribution-nodes.ts",
 
       // Roles, actors and the KG audit sidecar are harness-layer for the same

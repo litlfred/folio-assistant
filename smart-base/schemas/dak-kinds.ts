@@ -6,8 +6,9 @@
  * `1335` (stage D of the smart-* separation, #1767). Core's content model named
  * the `dak` adapter, so `dak-blocks.ts` could not leave for smart-base without
  * core importing a harness. They reach core now the other way round: smart-base
- * CONTRIBUTES the adapter and its kinds through `smart-base/contributions.ts`,
- * which `loadContributions` registers at load time, and core reads them from a
+ * CONTRIBUTES the adapter and its kinds as nodes — `content-adapters/dak.json`
+ * and `block-kinds/` (bean riit, steps 3 and 5) — which `loadContributions`
+ * registers through a folio's dependency tree, and core reads them from a
  * `ContributionRegistry` rather than from a module constant. See
  * `cat-harness/docs/proposals/dak-kinds-contribution-2026-10-02.md`.
  *

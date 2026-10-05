@@ -67,6 +67,14 @@
       ]
     },
     {
+      "id": "folio-assistant-sci-content-adapters",
+      "path": "content-adapters/",
+      "description": "The paper block VOCABULARY's node, folio-content-adapter/v1 (bean riit, step 5): its name, its companion roles (md, ts, lean) and that cat-harness's code types it. cat-harness/schemas/block-kinds.ts derives CONTENT_ADAPTERS from the typed nodes, and block-qa.ts derives ADAPTER_COMPANION_ROLES. Owner, 2026-10-05, option 1: the vocabulary is a node; the server adapter class stays in contentAdapters.",
+      "graphKinds": [
+        "content-adapters"
+      ]
+    },
+    {
       "id": "folio-assistant-sci-kinds",
       "path": "kinds/",
       "description": "The graph kinds folio-assistant-sci owns, one folio-graph-kind/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph.",

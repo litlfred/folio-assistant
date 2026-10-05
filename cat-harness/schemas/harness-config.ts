@@ -382,6 +382,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve, sep } from "node:path";
 import { flattenDependencies as flattenSteps } from "./dependency-order";
 import { BlockKindNodeSchema, builderOf } from "./block-kind-node";
+import { ContentAdapterNodeSchema } from "./content-adapter-node";
 import { PipelinePluginNodeSchema, QaCheckerNodeSchema, splitOwnCodeRef } from "./contribution-nodes";
 import {
   describeRepository,
@@ -1782,13 +1783,30 @@ function registerDeclaredContributions<C extends { name: string }>(folioRoot: st
       pipelinePlugins.push({ kind: n.slot, implementation: tableEntry(dep, file, n.implementation, n.slot, "object") });
     }
 
-    if (blockKinds.length + qaCheckers.length + pipelinePlugins.length === 0) continue;
-    registerPinned(registry, dep, {
-      name: dep.dependency.name,
-      ...(blockKinds.length ? { blockKinds } : {}),
-      ...(qaCheckers.length ? { qaCheckers } : {}),
-      ...(pipelinePlugins.length ? { pipelinePlugins } : {}),
-    } as unknown as C);
+    if (blockKinds.length + qaCheckers.length + pipelinePlugins.length > 0) {
+      registerPinned(registry, dep, {
+        name: dep.dependency.name,
+        ...(blockKinds.length ? { blockKinds } : {}),
+        ...(qaCheckers.length ? { qaCheckers } : {}),
+        ...(pipelinePlugins.length ? { pipelinePlugins } : {}),
+      } as unknown as C);
+    }
+
+    // Content-adapter vocabularies (bean riit, step 5). A TYPED one is the
+    // platform's own and is read off the nodes at load, like a built-in
+    // kind; an untyped one is what this dependency contributes, with its
+    // companion roles and its vocabulary module. One registration each,
+    // since a contribution carries one adapter.
+    for (const { file, raw } of declaredNodesOf(dep.rootPath, "content-adapters")) {
+      const parsed = ContentAdapterNodeSchema.safeParse(raw);
+      if (!parsed.success) throw new Error(`${file} is not a folio-content-adapter/v1 node: ${parsed.error.message}`);
+      const n = parsed.data;
+      if (n.typed || (registry.acceptsDeclaredKind && !registry.acceptsDeclaredKind(n.name))) continue;
+      registerPinned(registry, dep, {
+        name: dep.dependency.name,
+        adapter: { name: n.name, module: n.vocabulary ?? "", companionRoles: n.companionRoles },
+      } as unknown as C);
+    }
   }
 }
 

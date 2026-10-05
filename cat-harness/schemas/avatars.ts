@@ -392,6 +392,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 32,
     reads: "stacked blocks, the top one tagged — block kinds, each declared by the harness that owns it",
   },
+  "content-adapters": {
+    // A book with a bookmark: a vocabulary, the words its blocks are made of.
+    // Bean riit, step 5.
+    glyph: "M6 4h10a2 2 0 0 1 2 2v14H8a2 2 0 0 1-2-2zM6 18a2 2 0 0 1 2-2h10M13 4v6l2-1.5 2 1.5V4",
+    tone: 44,
+    reads: "a book with a bookmark — a content adapter's block vocabulary, declared by the harness that owns it",
+  },
   validators: {
     // A check mark inside a shield: code that judges a node, declared as a node.
     // Bean riit.

@@ -31,6 +31,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { BlockKindNodeSchema, builderOf, type BlockKindNode } from "./block-kind-node";
+import { ContentAdapterNodeSchema, type ContentAdapterNode } from "./content-adapter-node";
 import { declaredNodeFiles } from "./declared-nodes";
 import type { Block } from "./types";
 
@@ -74,12 +75,46 @@ export function discoverBlockKinds(repoRoot: string = PLATFORM_ROOT): BlockKindN
 const PLATFORM_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 /**
- * The BUILT-IN content adapters. Declared here, ahead of discovery, because
- * discovery is split by it: see {@link BLOCK_KIND_NODES}. Its full rationale
- * is on the adapter-scoping section below.
+ * Every content-adapter VOCABULARY node in the platform checkout, sorted by
+ * name: one `folio-content-adapter/v1` node per vocabulary, in the
+ * `content-adapters/` graph of the harness that owns it (bean riit, step 5;
+ * owner 2026-10-05, option 1). Two nodes naming one vocabulary throw, and so
+ * does finding none — a typed vocabulary is what every block kind is split by.
  */
-export const CONTENT_ADAPTERS = ["paper"] as const;
-export type ContentAdapter = (typeof CONTENT_ADAPTERS)[number];
+export function discoverContentAdapters(repoRoot: string = PLATFORM_ROOT): ContentAdapterNode[] {
+  const byName = new Map<string, { file: string; node: ContentAdapterNode }>();
+  for (const { file, raw } of declaredNodeFiles(repoRoot, "content-adapters")) {
+    const parsed = ContentAdapterNodeSchema.safeParse(raw);
+    if (!parsed.success) throw new Error(`${file} is not a folio-content-adapter/v1 node: ${parsed.error.message}`);
+    const prior = byName.get(parsed.data.name);
+    if (prior) throw new Error(`content adapter "${parsed.data.name}" is declared twice: ${prior.file} and ${file}`);
+    byName.set(parsed.data.name, { file, node: parsed.data });
+  }
+  if (![...byName.values()].some((v) => v.node.typed)) {
+    throw new Error(`no typed content adapter discovered under ${repoRoot}: no instance declares a readable content-adapters graph`);
+  }
+  return [...byName.values()].map((v) => v.node).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/** Every discovered content-adapter node, typed or contributed. */
+export const CONTENT_ADAPTER_NODES: readonly ContentAdapterNode[] = discoverContentAdapters();
+
+/**
+ * The vocabulary cat-harness's CODE types — `BlockSchema` in `types.ts` is a
+ * union of its kinds. A type is erased, so it cannot be read off the nodes;
+ * this is the code's assertion, and `block-kind-nodes.test.ts` holds it equal
+ * to the nodes that say `typed: true` through an exhaustive
+ * `Record<ContentAdapter, true>`, so neither can change alone.
+ */
+export type ContentAdapter = "paper";
+
+/**
+ * The BUILT-IN content adapters: the vocabularies whose node says `typed`.
+ * Derived here, ahead of block-kind discovery, because that is split by it:
+ * see {@link BLOCK_KIND_NODES}. Its full rationale is on the adapter-scoping
+ * section below.
+ */
+export const CONTENT_ADAPTERS = CONTENT_ADAPTER_NODES.filter((n) => n.typed).map((n) => n.name) as readonly ContentAdapter[];
 
 /** Every discovered block-kind node in the platform checkout, built-in or contributed, sorted by kind. */
 export const DISCOVERED_BLOCK_KIND_NODES: readonly BlockKindNode[] = discoverBlockKinds();

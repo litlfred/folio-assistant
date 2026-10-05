@@ -28,6 +28,14 @@
       ]
     },
     {
+      "id": "smart-base-content-adapters",
+      "path": "content-adapters/",
+      "description": "The dak block VOCABULARY's node, folio-content-adapter/v1 (bean riit, step 5): its name, its companion roles, and its vocabulary module schemas/dak-blocks.ts. It is untyped by cat-harness, so loadContributions registers it for a folio only through that folio's dependency tree. It replaces the adapter contributions.ts returned in code.",
+      "graphKinds": [
+        "content-adapters"
+      ]
+    },
+    {
       "id": "smart-base-translations",
       "path": "translations/",
       "description": "The gettext side of smart-base's own strings, one directory per target locale: today the `processes/` templates of the BPMN diagrams this instance draws. Moved here from cat-harness/translations/ on the owner's ruling of 2026-10-04, \"move things to semantically appropriate place\" (bean riit): a diagram's templates sit with the instance that draws it.",
