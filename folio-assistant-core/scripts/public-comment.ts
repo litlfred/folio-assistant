@@ -999,8 +999,8 @@ if (import.meta.main) {
         let c = store.get(positional);
         const anchors = name === "reassign" || (name === "triage" && opt("to")) ? store.anchors() : undefined;
         const target = opt("to");
-        if (anchors && target && !anchors.blocks.some((b) => b.label === target) && !anchors.sections.some((s) => s.label === target)) {
-          throw new Error(`${target} is not a block or section label in the folio`);
+        if (anchors && target && !anchors.blocks.some((b) => b.label === target) && !anchors.sections.some((s) => s.label === target) && !anchors.chapters.some((ch) => ch.label === target)) {
+          throw new Error(`${target} is not a block, section or chapter label in the folio`);
         }
         c = transition(c, name, {
           by,
