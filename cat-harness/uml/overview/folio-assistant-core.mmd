@@ -1,5 +1,10 @@
 classDiagram
   direction LR
+  namespace folio_assistant_core__folio_assistant_core_docs {
+    class n_folio_assistant_core_folio_assistant_core_docs_docs["docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace folio_assistant_core__folio_assistant_core_translations {
     class folio_assistant_core_folio_assistant_core_translations_TranslationConfig["TranslationConfig"] {
       <<json: TranslationConfigSchema>>
@@ -447,6 +452,8 @@ classDiagram
       superseded [0..1] object
     }
   }
+  cssClass "n_folio_assistant_core_folio_assistant_core_docs_docs" fa_uml_kind_docs
+  cssClass "n_folio_assistant_core_folio_assistant_core_docs_docs" fa_uml_undetermined
   cssClass "folio_assistant_core_folio_assistant_core_translations_TranslationConfig" fa_uml_kind_translation_sources
   cssClass "folio_assistant_core_folio_assistant_core_block_kinds_folio_block_kind_v1_folio_block_kind_v1" fa_uml_kind_block_kinds
   cssClass "folio_assistant_core_folio_assistant_core_validators_folio_validator_v1_folio_validator_v1" fa_uml_kind_validators

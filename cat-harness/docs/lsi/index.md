@@ -52,6 +52,7 @@ it, drawn from the evidence that build fetched.
 | `folio-assistant-core/core-library` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `folio-assistant-core/core-methodologies` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `folio-assistant-core/core-skills` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
+| `folio-assistant-core/folio-assistant-core-docs` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `folio-assistant-core/folios` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `folio-assistant-core/glossary` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `folio-assistant-sci/library` | <span class="lv-na">below the need-an-index threshold — not judged</span> |

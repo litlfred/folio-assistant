@@ -30,6 +30,23 @@ published today.
 
 {% include harness_details.html instance="folio-assistant-core" %}
 
+## What a folio is made of here
+
+A folio is a set of content objects. Each object is a file triple: a typed
+manifest, a markdown body and, for a formal claim, a Lean sibling. This layer
+says which kinds of block exist and what each one must carry. Each kind is
+a node in the `block-kinds/` graph with a required profile, so no kind can
+go unclassified. The `document` adapter serves structured prose. The `paper`
+adapter extends it with the kinds whose assertion is a formal mathematical
+claim, typeset through LaTeX.
+
+The rest of the instance supports that model. `validators/` names the checks
+the code provides, one node per graph kind and schema family. `glossary/`
+holds the content vocabulary. `methodologies/` holds the authoring methods a
+folio draws on. `processes/` holds the executable BPMN diagrams for the
+authoring and review work. `skills/` holds the instructions an agent loads to
+carry that work out.
+
 ## The rule this layer turns on
 
 This repository is the platform, not the content. A folio's chapters,

@@ -144,11 +144,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `docs`
 
-6 of 6 published.
+7 of 7 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/cat-harness/auto-docs/index/docs/docs/' | relative_url }})
 - [Folio Assistant]({{ '/cat-harness/auto-docs/index/docs/root-docs/' | relative_url }})
+- [folio-assistant-core]({{ '/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/' | relative_url }})
 - [SMART Base]({{ '/cat-harness/auto-docs/index/docs/smart-base-docs/' | relative_url }})
 - [smart-immunizations]({{ '/cat-harness/auto-docs/index/docs/smart-immunizations-docs/' | relative_url }})
 - [smart-trust]({{ '/cat-harness/auto-docs/index/docs/smart-trust-docs/' | relative_url }})
