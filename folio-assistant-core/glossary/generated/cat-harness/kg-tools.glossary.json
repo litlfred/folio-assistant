@@ -639,6 +639,14 @@
       "status": "candidate"
     },
     {
+      "id": "site-build-local",
+      "prefLabel": "Build the docs site locally",
+      "definition": "Build the published site on this machine, so a page can be looked at rather than described: the same Jekyll build `pages-publish` runs in CI, into a directory of your choosing, and never pushed. The local half of the two site builds (owner, 2026-10-05: local and GitHub builds are two Tools for one skill).",
+      "notation": "site-build-local",
+      "source": "cat-harness/tools/index.ts#site-build-local",
+      "status": "candidate"
+    },
+    {
       "id": "site-search-index",
       "prefLabel": "Site search index",
       "definition": "The just-the-docs search index, `assets/js/search-data.json`, which the theme writes as part of the Jekyll site build: one entry per page section, searched by every page's search box. Built implicitly by the build rather than by a command of its own.",

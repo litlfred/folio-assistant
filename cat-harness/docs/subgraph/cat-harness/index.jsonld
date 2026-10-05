@@ -34,6 +34,11 @@
       "name": "auto-docs"
     },
     {
+      "@id": "cat-harness:graphKind/basic-cdn-site",
+      "@type": "bootstrap:GraphKind",
+      "name": "basic-cdn-site"
+    },
+    {
       "@id": "cat-harness:graphKind/cat-harness",
       "@type": "bootstrap:GraphKind",
       "name": "cat-harness"
@@ -590,6 +595,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas",
       "@type": "bootstrap:Subgraph",
       "name": "schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/site",
+      "@type": "bootstrap:Subgraph",
+      "name": "site"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/subscriptions",
@@ -1613,6 +1623,12 @@
       "title": "session-survey"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/site",
+      "@type": "cat-harness:Schema",
+      "name": "site",
+      "title": "site"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/site-indexes",
       "@type": "cat-harness:Schema",
       "name": "site-indexes",
@@ -2397,6 +2413,12 @@
       "@type": "cat-harness:Tool",
       "name": "sibling-sessions",
       "title": "Sibling sessions in a window"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/site-build-local",
+      "@type": "cat-harness:Tool",
+      "name": "site-build-local",
+      "title": "Build the docs site locally"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/site-search-index",

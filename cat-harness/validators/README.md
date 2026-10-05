@@ -10,6 +10,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-validators`,
 
 | file | what it is | used by |
 |---|---|---|
+| [`basic-cdn-site.json`](basic-cdn-site.json) | data |  |
 | [`bean-index.json`](bean-index.json) | data |  |
 | [`beans-merge-queue-entry.json`](beans-merge-queue-entry.json) | data |  |
 | [`beans-session-survey.json`](beans-session-survey.json) | data |  |
@@ -19,6 +20,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-validators`,
 | [`block-summaries-sidecar.json`](block-summaries-sidecar.json) | data |  |
 | [`board-positions.json`](board-positions.json) | data |  |
 | [`boards-board.json`](boards-board.json) | data |  |
+| [`cdn-site.json`](cdn-site.json) | data |  |
 | [`code-list.json`](code-list.json) | data |  |
 | [`computation-witness.json`](computation-witness.json) | data |  |
 | [`content-adapter-node.json`](content-adapter-node.json) | data |  |
