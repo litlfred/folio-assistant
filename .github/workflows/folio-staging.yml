@@ -711,7 +711,7 @@ jobs:
           PROSE=$(jq -n --arg s "$BRANCH's site published at the root" '{summary:$s}')
           bun run "$PLATFORM_DIR/cat-harness/scripts/render-log.ts" --dir pages \
             --event rendered --kind main-site \
-            --path "." --slug "$BRANCH" \
+            --path "/" --slug "$BRANCH" \
             --branch "$BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL" <<<"$PROSE"
           git -C pages config user.name 'github-actions[bot]'
           git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'

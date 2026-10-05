@@ -3,9 +3,10 @@
 title: 'GATE NAME DESCRIBES ONE OF TWO FAILURE MODES: ''viewer pages keep the navbar they had'' goes red when the sidecar is ABSENT, and the same run says 0 pages regressed'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-10-03T01:08:12Z
-updated_at: 2026-10-03T01:08:12Z
-parent: folio-assistant-p5wm
+updated_at: 2026-10-05T04:57:14Z
+parent: folio-assistant-rwmf
 ---
 
 The step name in `code-quality-gates.yml` names the REGRESSION branch of
