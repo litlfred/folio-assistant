@@ -19,8 +19,8 @@ Guidelines и руководств по реализации FHIR — на ба�
 доступом на основе ролей и типизированной объектной модели контента.
 {: .fs-6 .fw-300 }
 
-[Начать работу](../start/getting-started.html){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[Установить](../start/installation.html){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Начать работу]({{ '/docs/cat-harness/start/getting-started.html' | relative_url }}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Установить]({{ '/docs/cat-harness/start/installation.html' | relative_url }}){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [Посмотреть на GitHub](https://github.com/litlfred/folio-assistant){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
@@ -28,7 +28,7 @@ Guidelines и руководств по реализации FHIR — на ба�
 ## Четыре вещи, по порядку
 
 **1. План работы — это место, где вы говорите, что делаете.**
-Не сообщение в чате и не комментарий, а [beans]({{ '/guides/beans-and-todos.html' | relative_url }}) — хранилище под контролем версий, которое может прочитать любая сессия или агент. Займите задачу до начала работы, чтобы соседняя сессия не взяла её же; ненужный bean помечается `scrapped` с указанием причин и никогда не удаляется.
+Не сообщение в чате и не комментарий, а [beans]({{ '/docs/cat-harness/guides/beans-and-todos.html' | relative_url }}) — хранилище под контролем версий, которое может прочитать любая сессия или агент. Займите задачу до начала работы, чтобы соседняя сессия не взяла её же; ненужный bean помечается `scrapped` с указанием причин и никогда не удаляется.
 
 ```sh
 cat-harness/scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
@@ -43,14 +43,14 @@ beans <id> --status in-progress     # занять задачу, у всех н�
 bun run init-folio --help
 ```
 
-Затем раздел [Начало работы]({{ '/start/getting-started.html' | relative_url }}) проводит первый блок через проверку, рендеринг и рецензирование.
+Затем раздел [Начало работы]({{ '/docs/cat-harness/start/getting-started.html' | relative_url }}) проводит первый блок через проверку, рендеринг и рецензирование.
 
-**3. Знайте, что именно вы пишете.** *Документ* — это структурированная проза; *статья* (paper) — это то же самое плюс типы блоков, утверждение которых является формальным утверждением, подкреплённым Lean и свёрстанным через LaTeX. Выбор определяет, какие блоки допустимы и какие проверки запускаются: [Типы контента]({{ '/concepts/content-types.html' | relative_url }}).
+**3. Знайте, что именно вы пишете.** *Документ* — это структурированная проза; *статья* (paper) — это то же самое плюс типы блоков, утверждение которых является формальным утверждением, подкреплённым Lean и свёрстанным через LaTeX. Выбор определяет, какие блоки допустимы и какие проверки запускаются: [Типы контента]({{ '/docs/cat-harness/concepts/content-types.html' | relative_url }}).
 
 **4. Документация, которую вы никогда не прочтёте.**
-[Вся она]({{ '/guides/index.html' | relative_url }}) — руководства по написанию, архитектура, процесс публикации, сгенерированный справочник по схемам и навыкам. Она здесь, она подробная, и честно говоря, вы придёте к ней из поисковика ровно в тот момент, когда что-то сломается. Это нормальный способ ею пользоваться. Три шага выше — те, что стоит прочитать сейчас.
+[Вся она]({{ '/docs/cat-harness/guides/index.html' | relative_url }}) — руководства по написанию, архитектура, процесс публикации, сгенерированный справочник по схемам и навыкам. Она здесь, она подробная, и честно говоря, вы придёте к ней из поисковика ровно в тот момент, когда что-то сломается. Это нормальный способ ею пользоваться. Три шага выше — те, что стоит прочитать сейчас.
 
-Когда вас озадачивает не написание, а *механизм* — кто что делает, в каком процессе, с каким навыком, — начните с раздела [Платформа]({{ '/platform.html' | relative_url }}). Одно предложение там содержит всю модель, и каждое слово в нём — отдельно объявленный объект.
+Когда вас озадачивает не написание, а *механизм* — кто что делает, в каком процессе, с каким навыком, — начните с раздела [Платформа]({{ '/docs/cat-harness/platform.html' | relative_url }}). Одно предложение там содержит всю модель, и каждое слово в нём — отдельно объявленный объект.
 
 ---
 
@@ -86,32 +86,32 @@ folio-assistant **расширяем** — каждый тип контента 
 
 | Тип контента | Артефакты | Пакет навыков |
 |--------------|-----------|---------------|
-| **Научные статьи и книги** | Формализация Lean 4 + LaTeX/Markdown | [`authoring-math`](../concepts/content-types.html#scientific-papers--books) |
-| **Комплекты цифровой адаптации (DAK) руководств ВОЗ SMART Guidelines** | Артефакты L2 — BPMN, DMN, словари данных Excel, персоны | [`authoring-who-smart-guidelines`](../concepts/content-types.html#who-smart-guidelines-daks-l2) |
-| **Руководства по реализации ВОЗ SMART Guidelines** | Ресурсы FHIR L3, FSH, выходные данные IG Publisher | [`authoring-who-smart-guidelines`](../concepts/content-types.html#who-smart-implementation-guides-l3) |
-| **Другие** | Расширяемость — добавьте новый адаптер + пакет навыков | [Добавление типа контента](../guides/new-content-type.html) |
+| **Научные статьи и книги** | Формализация Lean 4 + LaTeX/Markdown | [`authoring-math`]({{ site.baseurl }}/docs/cat-harness/concepts/content-types.html#scientific-papers--books) |
+| **Комплекты цифровой адаптации (DAK) руководств ВОЗ SMART Guidelines** | Артефакты L2 — BPMN, DMN, словари данных Excel, персоны | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/concepts/content-types.html#who-smart-guidelines-daks-l2) |
+| **Руководства по реализации ВОЗ SMART Guidelines** | Ресурсы FHIR L3, FSH, выходные данные IG Publisher | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/concepts/content-types.html#who-smart-implementation-guides-l3) |
+| **Другие** | Расширяемость — добавьте новый адаптер + пакет навыков | [Добавление типа контента]({{ site.baseurl }}/docs/cat-harness/guides/new-content-type.html) |
 
-Сквозной пакет [`content-lifecycle`](../concepts/content-types.html#the-content-lifecycle)
+Сквозной пакет [`content-lifecycle`]({{ '/docs/cat-harness/concepts/content-types.html' | relative_url }}#the-content-lifecycle)
 (планирование → написание → валидация → рецензирование → тестирование → публикация → обратная связь → вывод из эксплуатации)
 применим ко всем типам контента.
-[Процесс публикации](../process/publication-workflow.html) моделирует его должным образом —
+[Процесс публикации]({{ '/docs/cat-harness/process/publication-workflow.html' | relative_url }}) моделирует его должным образом —
 в виде дорожек BPMN (swimlanes), с ролями, этапом валидации HCI и общим
 планом работ.
 
 ## Куда перейти дальше
 
-- **[Установка](../start/installation.html)** — предварительные требования, клонирование, `bun install`, проверка возможностей.
-- **[Начало работы](../start/getting-started.html)** — подключите MCP-сервер к вашей LLM и запустите свой первый навык.
-- **[Руководство: Написание статьи с помощью folio-assistant](../guides/writing-a-paper.html)** — пошаговое руководство под управлением LLM с имитацией сессии чата.
-- **[Типы контента](../concepts/content-types.html)** — формализм каждого предметного домена создания контента.
-- **[Процесс публикации](../process/publication-workflow.html)** — диаграммы дорожек BPMN процессов редактирования и публикации: этап валидации HCI, кто что рецензирует и общий план работ.
-- **[Онбординг агента](../guides/agent-onboarding.html)** — вводный инструктаж для LLM-агента, подключенного к фолио: первые шаги, поиск навыков, объектная модель контента, вспомогательные QA-файлы.
-- **[Навыки и роли](../concepts/skills.html)** — описание каждого навыка и роли и их совместная работа с LLM.
+- **[Установка]({{ '/docs/cat-harness/start/installation.html' | relative_url }})** — предварительные требования, клонирование, `bun install`, проверка возможностей.
+- **[Начало работы]({{ '/docs/cat-harness/start/getting-started.html' | relative_url }})** — подключите MCP-сервер к вашей LLM и запустите свой первый навык.
+- **[Руководство: Написание статьи с помощью folio-assistant]({{ '/docs/cat-harness/guides/writing-a-paper.html' | relative_url }})** — пошаговое руководство под управлением LLM с имитацией сессии чата.
+- **[Типы контента]({{ '/docs/cat-harness/concepts/content-types.html' | relative_url }})** — формализм каждого предметного домена создания контента.
+- **[Процесс публикации]({{ '/docs/cat-harness/process/publication-workflow.html' | relative_url }})** — диаграммы дорожек BPMN процессов редактирования и публикации: этап валидации HCI, кто что рецензирует и общий план работ.
+- **[Онбординг агента]({{ '/docs/cat-harness/guides/agent-onboarding.html' | relative_url }})** — вводный инструктаж для LLM-агента, подключенного к фолио: первые шаги, поиск навыков, объектная модель контента, вспомогательные QA-файлы.
+- **[Навыки и роли]({{ '/docs/cat-harness/concepts/skills.html' | relative_url }})** — описание каждого навыка и роли и их совместная работа с LLM.
 - **[Справочник схем навыков](../reference/skills/)** — сгенерированные контракты входных и выходных данных для каждого навыка.
 - **[Справочник по TypeScript API](../api/)** — объектная модель контента (`Block`, `Chapter`, `Paper`, строители, ограничения Zod).
-- **[Архитектура](../concepts/architecture.html)** — адаптеры, MCP-сервер, RBAC, блочная модель.
-- **[Граф знаний](../concepts/knowledge-graph.html)** — таксономия подграфов, направление ссылок и распределение работы между репозиториями.
-- **[The Harness](../concepts/harness.html)** — инстанцирование, обход зависимостей и обязательства при оснащении каталога.
+- **[Архитектура]({{ '/docs/cat-harness/concepts/architecture.html' | relative_url }})** — адаптеры, MCP-сервер, RBAC, блочная модель.
+- **[Граф знаний]({{ '/docs/cat-harness/concepts/knowledge-graph.html' | relative_url }})** — таксономия подграфов, направление ссылок и распределение работы между репозиториями.
+- **[The Harness]({{ '/docs/cat-harness/concepts/harness.html' | relative_url }})** — инстанцирование, обход зависимостей и обязательства при оснащении каталога.
 
 Два навыка стоит прочитать до страниц выше, поскольку все остальное опирается на них: [`getting-started`](../reference/skill-instructions/getting-started.html) определяет маршрут того, что вы на самом деле пытаетесь сделать, а [`placement`](../reference/skill-instructions/placement.html) определяет, где должен находиться новый узел, прежде чем вы его создадите.
 

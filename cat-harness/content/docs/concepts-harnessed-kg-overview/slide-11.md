@@ -1,7 +1,7 @@
 *caaaaatt → caa∞aat → ca&at → c@t → **cat-harness***. The name compresses one
 letter at a time. The harness is the platform layer every folio builds on.
 
-![A grumpy cat in a green C@T hoodie sits in the rain beneath an empty thought bubble carrying the C@T logo.](../assets/img/harness/landing-laptop.webp)
+![A grumpy cat in a green C@T hoodie sits in the rain beneath an empty thought bubble carrying the C@T logo.]({{ '/assets/img/harness/landing-laptop.webp' | relative_url }})
 
 **Sources:** [the harness](harness.html); `cat-harness/cat-harness.json`.
 

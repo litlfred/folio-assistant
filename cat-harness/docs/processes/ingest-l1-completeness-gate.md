@@ -27,7 +27,7 @@ work plan in beans/.
 
 - **Called by:** [L1 document ingestion — a document to the L1 source knowledge graph](l1-document-ingestion.html)
 - **Calls:** [Adjudication](adjudication.html)
-- **Presented on:** [Document ingestion — The L1 completeness gate](../guides/document-ingestion.html#the-l1-completeness-gate)
+- **Presented on:** [Document ingestion — The L1 completeness gate](../docs/cat-harness/guides/document-ingestion.html#the-l1-completeness-gate)
 
 ## Lanes — who acts
 

@@ -441,4 +441,4 @@ evidence would move it, it is an opinion wearing a heading.
 | `folio-assistant-4dbr` | forge portability as Tool nodes, not a sixth repo. Its §"Sovereign compute" already separates *which service hosts change proposals* from *running with no external service at all*, and records that the portability claim is asserted and never exercised |
 | [`serving-renderings`](../reference/skill-instructions/serving-renderings.html) | per-host media types, and the three enforcement states. Explicitly leaves "how to run a server" uncovered — the hole bean `folio-assistant-0hi8` fills |
 | [`cat-harness-minimum`](../architecture/cat-harness-minimum.html) | the written claim that the harness runs with no forge and no MCP. 614 lines, and untested |
-| [`swarm-management`](../guides/swarm-management.html) | a swarm is asked for every time, per swarm, with agent count, model level and rough cost. Unchanged by this proposal |
+| [`swarm-management`]({{ site.baseurl }}/docs/cat-harness/guides/swarm-management.html) | a swarm is asked for every time, per swarm, with agent count, model level and rough cost. Unchanged by this proposal |

@@ -25,7 +25,7 @@ work plan in beans/.
 
 - **Called by:** [Content lifecycle](content-lifecycle.html)
 - **Calls:** [Editing and HCI validation](editing-hci-validation.html), [Public comment on a review draft](public-comment.html)
-- **Presented on:** [Publication workflow — From corpus to published folio](../process/publication-workflow.html#from-corpus-to-published-folio)
+- **Presented on:** [Publication workflow — From corpus to published folio](../docs/cat-harness/process/publication-workflow.html#from-corpus-to-published-folio)
 
 ## Lanes — who acts
 

@@ -25,7 +25,7 @@ work plan in beans/.
 
 - **Called by:** [Content lifecycle](content-lifecycle.html), [Draft, review and publish](draft-to-publication.html)
 - **Calls:** [Evidence for a recommendation](evidence-retrieval.html), [Options analysis](options-analysis.html)
-- **Presented on:** [Publication workflow — Editing and the HCI validation gate](../process/publication-workflow.html#editing-and-the-hci-validation-gate)
+- **Presented on:** [Publication workflow — Editing and the HCI validation gate](../docs/cat-harness/process/publication-workflow.html#editing-and-the-hci-validation-gate)
 
 ## Lanes — who acts
 

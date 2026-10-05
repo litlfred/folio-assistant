@@ -20,14 +20,14 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 > **The rules behind this page.** Architecture describes the shape; the Skills
 > govern the decisions. Adapters against profiles —
-> [`content-profiles`](../reference/skill-instructions/content-profiles.html).
+> [`content-profiles`]({{ '/reference/skill-instructions/content-profiles.html' | relative_url }}).
 > Where a new node belongs before you create it —
-> [`placement`](../reference/skill-instructions/placement.html). The repository
+> [`placement`]({{ '/reference/skill-instructions/placement.html' | relative_url }}). The repository
 > layout and every graph typology —
-> [`directory-conventions`](../reference/skill-instructions/directory-conventions.html).
+> [`directory-conventions`]({{ '/reference/skill-instructions/directory-conventions.html' | relative_url }}).
 > Composing and verifying the MCP surface —
-> [`mcp-assembly`](../reference/skill-instructions/mcp-assembly.html) and
-> [`mcp-contract`](../reference/skill-instructions/mcp-contract.html).
+> [`mcp-assembly`]({{ '/reference/skill-instructions/mcp-assembly.html' | relative_url }}) and
+> [`mcp-contract`]({{ '/reference/skill-instructions/mcp-contract.html' | relative_url }}).
 > Where this page and a Skill disagree, the Skill wins.
 
 folio-assistant is an **MCP server** with a pluggable **content adapter** layer,
@@ -117,7 +117,7 @@ skills with `skill_list` and loads instructions with `skill_fetch`. The full
 list of skills and roles — and how they compose with the LLM (RBAC, capabilities,
 requirements) — is on the [Skills & roles](skills.html) page; each skill's
 input/output contract is published in the
-[Skill schema reference](../reference/skills/).
+[Skill schema reference]({{ '/reference/skills/' | relative_url }}).
 
 ## The content-object model
 
@@ -127,7 +127,7 @@ For papers, content is a tree of typed **blocks** validated at runtime with Zod:
 - `schemas/constraints.ts` — Zod schemas and constraint rules
 - `schemas/builders.ts` — validated constructors (`definition()`, `theorem()`, …)
 
-These are documented in the generated [TypeScript API reference](../api/).
+These are documented in the generated [TypeScript API reference]({{ '/api/' | relative_url }}).
 
 ## Access control — ODRL, checked before every task
 
@@ -147,7 +147,7 @@ evaluated by `permits()` / `decide()` in `schemas/odrl.ts`. Two callers ask it:
 
 Until issue #1207 (2026-09-23), `rbac.ts` was a separate viewer < collaborator
 < owner ladder and the executor checked nothing. The discipline is the
-[`task-authorization`](../reference/skill-instructions/task-authorization.html)
+[`task-authorization`]({{ '/reference/skill-instructions/task-authorization.html' | relative_url }})
 skill.
 
 ## Work-plan priming (cross-harness)

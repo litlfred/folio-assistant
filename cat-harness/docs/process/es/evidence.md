@@ -80,11 +80,11 @@ publicadora. Trazar ese carril dentro de los límites del sistema convertiría
 «autorizada» en una autoevaluación.
 
 <div class="bpmn-figure" id="figure-the-subprocess">
-  <img src="../../es/assets/img/workflows/evidence-retrieval.svg"
+  <img src="{{ '/es/assets/img/workflows/evidence-retrieval.svg' | relative_url }}"
        alt="Diagrama de carriles BPMN a lo largo de cuatro carriles. El autor revisa las directrices ya presentes en su contenido, luego formula la pregunta como PICO. Una compuerta paralela se bifurca en tres tareas de recuperación ejecutadas por el agente de evidencia: fuentes de confianza L1 en library/, contenido de confianza L2 DAK y L3 IG, y repositorios de datos y conjuntos de datos estadísticos. Los candidatos convergen, y el carril de registros de confianza verifica la autoridad de cada uno frente a la API del organismo publicador; una compuerta exclusiva redirige una cita no confirmada a un bean en el plan de trabajo antes de converger nuevamente. El autor evalúa y grada entonces el cuerpo de evidencia, y una segunda compuerta exclusiva pregunta si es suficiente para una recomendación: si no lo es, la brecha se registra como un bean y el proceso finaliza sin una recomendación; si lo es, la evidencia se adjunta a la recomendación.">
 </div>
 
-[Fuente BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/evidence-retrieval.bpmn) · [SVG a tamaño completo](../../assets/img/workflows/evidence-retrieval.svg)
+[Fuente BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/evidence-retrieval.bpmn) · [SVG a tamaño completo]({{ '/assets/img/workflows/evidence-retrieval.svg' | relative_url }})
 {: .bpmn-source }
 
 ## El primer paso mira hacia adentro

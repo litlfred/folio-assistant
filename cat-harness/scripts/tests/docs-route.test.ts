@@ -3,9 +3,9 @@
  * agrees with Jekyll about it.
  *
  * Owner, 2026-10-05 (issue #2188, PR #2189, bean `kc7k`): ONLY cat-harness's
- * own docs-folder pages move — `architecture.md` to
- * `/docs/cat-harness/architecture.html`, its locale copies with it — with no
- * redirects. Every harness landing page, the viewers under `/cat-harness/`, the
+ * own docs-folder pages move — `concepts/architecture.md` to
+ * `/docs/cat-harness/concepts/architecture.html`, its locale copies with it —
+ * with no redirects. Every harness landing page, the viewers under `/cat-harness/`, the
  * kind directories and the root exports keep their URLs. The move is a set of
  * `permalink` defaults in `_config.yml`; this holds that list to the route
  * `docs-route.ts` reads from the declaration, and checks the coverage both
@@ -59,39 +59,43 @@ describe("the route", () => {
     expect(config.baseurl).toBe("/folio-assistant");
   });
 
-  test("every permalink default either publishes under the route or pins a locale landing page where it was", () => {
+  test("every permalink default publishes under the route", () => {
     expect(DEFAULTS.length).toBeGreaterThan(0);
     for (const d of DEFAULTS) {
-      const landing = /^([a-z]{2})\/index\.md$/.exec(d.path);
-      if (landing) expect(d.permalink).toBe(`/${landing[1]}/`);
-      else expect(d.permalink.startsWith(`/${ROUTE}/`), `${d.path} → ${d.permalink}`).toBe(true);
+      expect(d.permalink.startsWith(`/${ROUTE}/`), `${d.path} → ${d.permalink}`).toBe(true);
     }
   });
 });
 
 describe("what moves and what stays — read off the real tree", () => {
-  const topLevel = readdirSync(SITE).filter((f) => f.endsWith(".md") && f !== "README.md");
+  // The chapters the docs graph groups its pages into (bean `xka5`), and the
+  // one top-level page beside the landing page. Each is authored in this
+  // folder; each publishes under the route.
+  const MOVED_DIRS = ["start", "concepts", "guides", "process", "fhir", "research-and-analysis", "quality"];
 
-  test("every top-level page but the landing page moves", () => {
-    for (const f of topLevel) {
-      if (f === "index.md") expect(url(f)).toBe("/");
-      else if (/^---/.test(readFileSync(join(SITE, f), "utf-8"))) {
-        expect(url(f)).toBe(`/${ROUTE}/${f.replace(/\.md$/, ".html")}`);
+  test("every authored chapter's pages move, locale copies with them", () => {
+    for (const d of MOVED_DIRS) {
+      for (const f of readdirSync(join(SITE, d)).filter((x) => x.endsWith(".md") && x !== "README.md")) {
+        expect(url(`${d}/${f}`)).toBe(`/${ROUTE}/${d}/${f.replace(/\.md$/, ".html")}`);
       }
     }
-    expect(url("architecture.md")).toBe(`/${ROUTE}/architecture.html`);
+    expect(url("concepts/architecture.md")).toBe(`/${ROUTE}/concepts/architecture.html`);
+    expect(url("concepts/fr/architecture.md")).toBe(`/${ROUTE}/concepts/fr/architecture.html`);
+    expect(url("concepts/architecture/theming.md")).toBe(`/${ROUTE}/concepts/architecture/theming.html`);
+    expect(url("platform.md")).toBe(`/${ROUTE}/platform.html`);
   });
 
-  test("each locale's pages move with their source, and its landing page stays", () => {
-    for (const l of LOCALES) {
-      expect(url(`${l}/architecture.md`)).toBe(`/${ROUTE}/${l}/architecture.html`);
-      expect(url(`${l}/index.md`)).toBe(`/${l}/`);
+  test("no top-level page is left behind but the landing page", () => {
+    const pages = readdirSync(SITE).filter((f) => f.endsWith(".md") && /^---/.test(readFileSync(join(SITE, f), "utf-8")));
+    for (const f of pages) {
+      if (f === "index.md") expect(url(f)).toBe("/");
+      else expect(url(f).startsWith(`/${ROUTE}/`), f).toBe(true);
     }
   });
 
-  test("the authored sections move", () => {
-    expect(url("guides/agent-onboarding.md")).toBe(`/${ROUTE}/guides/agent-onboarding.html`);
-    expect(url("architecture/theming.md")).toBe(`/${ROUTE}/architecture/theming.html`);
+  test("the landing pages stay — the site's and each locale's", () => {
+    expect(url("index.md")).toBe("/");
+    for (const l of LOCALES) expect(url(`${l}/index.md`)).toBe(`/${l}/index.html`);
   });
 
   test("kind directories and viewers stay where they are", () => {
@@ -100,6 +104,7 @@ describe("what moves and what stays — read off the real tree", () => {
       "glossary/index.md",
       "proposals/index.md",
       "requirements/index.md",
+      "methodologies/index.md",
       "bootstrap/initialization.md",
       "fr/glossary/index.md",
     ]) {
@@ -148,13 +153,13 @@ describe("the permalink rule", () => {
 
 describe("the helpers generators use", () => {
   test("publishedPagePath reads the site's own config and front matter", () => {
-    expect(publishedPagePath(SITE, "content-types")).toBe(`${ROUTE}/content-types.html`);
+    expect(publishedPagePath(SITE, "concepts/content-types")).toBe(`${ROUTE}/concepts/content-types.html`);
     expect(publishedPagePath(SITE, "index")).toBe("");
     expect(publishedPagePath(SITE, "processes/index")).toBe("processes/index.html");
   });
 
   test("publishedHref rewrites a page authored at its source location, and nothing else", () => {
-    expect(publishedHref(SITE, "/content-types.html#x")).toBe(`/${ROUTE}/content-types.html#x`);
+    expect(publishedHref(SITE, "/concepts/content-types.html#x")).toBe(`/${ROUTE}/concepts/content-types.html#x`);
     expect(publishedHref(SITE, "/guides/index.html")).toBe(`/${ROUTE}/guides/index.html`);
     expect(publishedHref(SITE, "/guides/")).toBe(`/${ROUTE}/guides/index.html`);
     expect(publishedHref(SITE, "/processes/")).toBe("/processes/");

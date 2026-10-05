@@ -42,11 +42,11 @@ LLM workflow** are.
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/../folio-assistant-sci/processes/content/authoring-a-paper.bpmn){: .fa-node-edit title="Edit ../folio-assistant-sci/processes/content/authoring-a-paper.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-end-to-end-workflow.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/the-end-to-end-workflow.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-paper/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" data-qa-family="translation" data-qa-key="the-end-to-end-workflow.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/the-end-to-end-workflow.translation.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-paper/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-end-to-end-workflow.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/the-end-to-end-workflow.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-paper/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-the-end-to-end-workflow">
-  <img src="../assets/img/workflows/authoring-a-paper.svg"
+  <img src="{{ '/assets/img/workflows/authoring-a-paper.svg' | relative_url }}"
        alt="BPMN swimlane diagram: the author plans, the plan is seeded as beans, the authoring agent scaffolds the repo and drafts blocks, Lean formalisation loops until the build is green with no sorries, the build pipeline validates and renders, a reviewer either sends it back to authoring or approves it for publication.">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-paper.bpmn) · [full-size SVG](../assets/img/workflows/authoring-a-paper.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-paper.bpmn) · [full-size SVG]({{ '/assets/img/workflows/authoring-a-paper.svg' | relative_url }})
 {: .bpmn-source }
 
 Every step is something the LLM does *for you* by calling folio-assistant's MCP
@@ -176,7 +176,7 @@ Two deliberate exclusions:
 > ```
 
 Each block carries typed front-matter validated against the
-[content-object model](../api/). A definition block, for example:
+[content-object model]({{ '/api/' | relative_url }}). A definition block, for example:
 
 ```markdown
 ---
@@ -204,7 +204,7 @@ Ask the agent to draft prose and statements; review and refine conversationally.
 
 A mock of the chat-driven authoring session:
 
-![Mock chat: the author and the assistant drafting blocks](../assets/img/mock-chat.svg)
+![Mock chat: the author and the assistant drafting blocks]({{ '/assets/img/mock-chat.svg' | relative_url }})
 
 ## Step 4 — Formalize in Lean
 {: #step-4-formalize-in-lean data-fa-label="sec:guides-writing-a-paper-step-4-formalize-in-lean" }
@@ -278,7 +278,7 @@ The agent renders a PDF (and/or HTML) with the paper adapter.
 > **Assistant:** *(calls `paper_render_pdf`, then `paper_preview`)* Rendered
 > `harmonic-series.pdf` (3 pages). Preview below.
 
-![Mock screenshot: rendered PDF preview in the viewer](../assets/img/mock-viewer.svg)
+![Mock screenshot: rendered PDF preview in the viewer]({{ '/assets/img/mock-viewer.svg' | relative_url }})
 
 You can set rendering preferences (engine, scope, math renderer) via the
 `paper_preferences` tool:
@@ -337,10 +337,10 @@ beans <id> --status resolved
 
 - [Content types — papers & books](../concepts/content-types.html#scientific-papers--books)
 - Skill contracts:
-  [`latex-authoring`](../reference/skills/latex-authoring.html),
-  [`lean-formalization`](../reference/skills/lean-formalization.html),
-  [`proof-verification`](../reference/skills/proof-verification.html)
-- [TypeScript API reference](../api/) — the block model in detail
+  [`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}),
+  [`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}),
+  [`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }})
+- [TypeScript API reference]({{ '/api/' | relative_url }}) — the block model in detail
 - [Architecture](../concepts/architecture.html) — how the paper adapter is wired
 
 > **Note on the screenshots.** The images above are *mockups* illustrating the

@@ -25,7 +25,7 @@ work plan in beans/.
 
 - **Called by:** no call activity names this process
 - **Calls:** none
-- **Presented on:** [Writing a paper with folio-assistant — The end-to-end workflow](../guides/writing-a-paper.html#the-end-to-end-workflow)
+- **Presented on:** [Writing a paper with folio-assistant — The end-to-end workflow](../docs/cat-harness/guides/writing-a-paper.html#the-end-to-end-workflow)
 
 ## Lanes — who acts
 

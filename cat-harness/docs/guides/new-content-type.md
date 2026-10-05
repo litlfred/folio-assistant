@@ -99,7 +99,7 @@ bun run scripts/gen-schema-docs.ts
 ```
 
 Your skill pages appear automatically in the
-[Skill schema reference](../reference/skills/).
+[Skill schema reference]({{ '/reference/skills/' | relative_url }}).
 
 ## 4. Reuse the lifecycle
 

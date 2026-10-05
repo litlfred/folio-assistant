@@ -3,7 +3,7 @@ The owner, 2026-09-23, naming the skill this spectrum is about:
 > **BPMN Execution Skill:** given a Process, Context, State and Role, utilize
 > one or more Skills in order to execute a Task.
 
-![BPMN execution, from deterministic to agentic. A colour bar runs from "deterministic" (blue, left: managed agent execution of a single task) to "agentic" (green, right: agents across most or all tasks). Left, under a gear-and-engine icon: "BPMN Execution Tool: one of any open-source BPMN engines, state and swimlanes strictly enforced", over a flat swimlane diagram of the folio lifecycle with one sticky note, one bean cluster, a person and a cat-robot beside the lanes. Right, under a cat-robot icon: "BPMN Execution Tool: agentic swarm with ungoverned state. Agents 'relax' swimlanes, mitigated by mechanical + agentic QA/QC reports", over the same diagram tilted in perspective, beans scattered across every lane and many cat-robots beneath it.](../assets/img/bpmn-execution-spectrum.webp)
+![BPMN execution, from deterministic to agentic. A colour bar runs from "deterministic" (blue, left: managed agent execution of a single task) to "agentic" (green, right: agents across most or all tasks). Left, under a gear-and-engine icon: "BPMN Execution Tool: one of any open-source BPMN engines, state and swimlanes strictly enforced", over a flat swimlane diagram of the folio lifecycle with one sticky note, one bean cluster, a person and a cat-robot beside the lanes. Right, under a cat-robot icon: "BPMN Execution Tool: agentic swarm with ungoverned state. Agents 'relax' swimlanes, mitigated by mechanical + agentic QA/QC reports", over the same diagram tilted in perspective, beans scattered across every lane and many cat-robots beneath it.]({{ '/assets/img/bpmn-execution-spectrum.webp' | relative_url }})
 
 **One skill, two kinds of Tool.** The skill is the same at both ends: take the
 process, the context, the current state and the role, pick the skills, and do
@@ -26,7 +26,7 @@ if the rules and the record are data a report can read, which is the case for
 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) as the permission language
 and [W3C PROV-O](https://www.w3.org/TR/prov-o/) as the execution log (owner,
 2026-09-23; the schema this implies is the
-[actors, ODRL and PROV-O proposal](../proposals/odrl-prov-actor-model.html)).
+[actors, ODRL and PROV-O proposal]({{ '/proposals/odrl-prov-actor-model.html' | relative_url }})).
 
 **Most real runs sit between the ends**, and per task rather than per process:
 the [previous section](#deterministic-and-agentic) already counts which

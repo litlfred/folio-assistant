@@ -41,9 +41,9 @@ Both entries exist and they are different files on purpose:
 
 - **A person** starts here, then the
   [documentation site](https://litlfred.github.io/folio-assistant/) —
-  [installation](https://litlfred.github.io/folio-assistant/installation.html),
-  [getting started](https://litlfred.github.io/folio-assistant/getting-started.html),
-  [architecture](https://litlfred.github.io/folio-assistant/architecture.html).
+  [installation](https://litlfred.github.io/folio-assistant/docs/cat-harness/start/installation.html),
+  [getting started](https://litlfred.github.io/folio-assistant/docs/cat-harness/start/getting-started.html),
+  [architecture](https://litlfred.github.io/folio-assistant/docs/cat-harness/concepts/architecture.html).
 - **An agent** starts at [`AGENTS.md`](AGENTS.md), which does not restate this
   file. It carries what a cold agent has to *do* — the order of operations,
   which store answers which question, and the rules that bind before the first

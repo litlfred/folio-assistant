@@ -117,17 +117,17 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 当请求被归类为内容工作（撰写、评审、摄取）时，智能体将遵循相应的 BPMN 工作流。现有文档页面对此进行了详细阐述：
 
-- **[发布工作流](https://litlfred.github.io/folio-assistant/publication-workflow.html)** —
+- **[发布工作流](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/publication-workflow.html)** —
   从草稿到验证、渲染和发布的内容生命周期。涵盖各个角色（作者、评审人、编辑）、基础流程、活动及技能。
 
-- **[文档摄取](https://litlfred.github.io/folio-assistant/document-ingestion.html)** —
+- **[文档摄取](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/document-ingestion.html)** —
   放入的文件如何转化为 L1 源：提取结构、派生内容、构建 L1 知识图谱以及完整性关卡。
 
 - **撰写指南：**
-  - [撰写论文](https://litlfred.github.io/folio-assistant/guides-writing-a-paper.html)
-  - [撰写文档](https://litlfred.github.io/folio-assistant/guides-writing-a-document.html)
-  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/guides-who-smart-dak.html)
-  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/guides-who-smart-ig.html)
+  - [撰写论文](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html)
+  - [撰写文档](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html)
+  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-dak.html)
+  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-ig.html)
 
 本框架并未重新定义这些工作流。它提供了**入口点**——对请求进行分类并路由至正确的工作流——以及**出口点**——在工作流完成时返回空闲状态，或在用户切换上下文时予以挂起。
 
@@ -142,7 +142,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 现在网关会指明其属于哪一种。`<cat-harness.processes:decision>` 意味着由表格进行计算，手工提供的结果将被拒绝；`<cat-harness.processes:judgement reason="…">` 意味着这是某人的主观判断，且必须提供原因。在该标记出现之前，“没有表格是因为这属于主观判断”与“没有表格是因为没人编写”之间是无法区分的——现在 `bun run check:workflow-refs` 会打印三向分类结果，因此“*其中有多少是由模型决定的？*”这个问题有了一个经过统计而非仅凭主观宣称的答案。
 
-**这一统计数据的用途在于研究，且该议题保持开放。** 哪些判断节点存在安全风险、有多少内容必须是确定性的，以及在受控的上下文和记忆叠加下模型在各个子工作流中的表现如何对比，这是当前仓库能够提出但尚未解答的三个问题。包含每项主张（标记为已测量、已决定或假设）的研究议程见 [`deterministic-and-agentic`](../../reference/skill-instructions/deterministic-and-agentic.html)。请将其视为一份议程：其中假设多于实测，文内亦已如实说明。
+**这一统计数据的用途在于研究，且该议题保持开放。** 哪些判断节点存在安全风险、有多少内容必须是确定性的，以及在受控的上下文和记忆叠加下模型在各个子工作流中的表现如何对比，这是当前仓库能够提出但尚未解答的三个问题。包含每项主张（标记为已测量、已决定或假设）的研究议程见 [`deterministic-and-agentic`]({{ '/reference/skill-instructions/deterministic-and-agentic.html' | relative_url }})。请将其视为一份议程：其中假设多于实测，文内亦已如实说明。
 
 ## BPMN 执行：一项技能，两个引擎
 {: #bpmn-execution data-fa-label="sec:harness-bpmn_execution" }
@@ -153,7 +153,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 > **BPMN 执行技能：** 给定流程、上下文、状态和角色，运用一项或多项技能以执行任务。
 
-![BPMN 执行，从确定性到智能体化。一条色带从“确定性”（蓝色，左侧：托管智能体执行单一任务）延伸至“智能体化”（绿色，右侧：智能体跨越大部分或所有任务）。左侧，在齿轮与引擎图标下方：“BPMN 执行工具：任何开源 BPMN 引擎，严格强制执行状态和泳道”，下方是带有便签、bean 集群、泳道旁的真人及猫机器人的 folio 生命周期平视泳道图。右侧，在猫机器人图标下方：“BPMN 执行工具：状态非托管的智能体集群。智能体‘放宽’泳道限制，由机械 + 智能体 QA/QC 报告进行缓解”，下方是相同的图表（以透视倾斜呈现），beans 分散在每个泳道中，其下方有许多猫机器人。](../../assets/img/bpmn-execution-spectrum.webp)
+![BPMN 执行，从确定性到智能体化。一条色带从“确定性”（蓝色，左侧：托管智能体执行单一任务）延伸至“智能体化”（绿色，右侧：智能体跨越大部分或所有任务）。左侧，在齿轮与引擎图标下方：“BPMN 执行工具：任何开源 BPMN 引擎，严格强制执行状态和泳道”，下方是带有便签、bean 集群、泳道旁的真人及猫机器人的 folio 生命周期平视泳道图。右侧，在猫机器人图标下方：“BPMN 执行工具：状态非托管的智能体集群。智能体‘放宽’泳道限制，由机械 + 智能体 QA/QC 报告进行缓解”，下方是相同的图表（以透视倾斜呈现），beans 分散在每个泳道中，其下方有许多猫机器人。]({{ '/assets/img/bpmn-execution-spectrum.webp' | relative_url }})
 
 **一项技能，两类工具。** 两端的技能是相同的：获取流程、上下文、当前状态和角色，选取技能，并执行任务。发生变化的是运行它的**工具**，正如这里的其他所有工具一样，技能背后的工具是可以替换的。
 
@@ -165,7 +165,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 | **泳道** | 强制执行：仅泳道对应的角色可执行其任务 | 放宽限制：智能体可跨泳道操作 |
 | **保障机制** | 引擎在步骤发生之前予以拒绝 | 机械 + 智能体 QA/QC 报告在事后从记录中发现 |
 
-**两种极端在规则检查的*时机*上有所不同，而非检查*何种*规则。** 相同的流程、相同的角色和相同的权限对两者均适用。引擎在任务启动**之前**检查规则并进行拒绝；智能体集群先行操作，而 QA/QC 报告在**事后**根据操作记录进行检查。这仅在规则和记录均为报告可读取的数据时方可生效，而作为权限语言的 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) 和作为执行日志的 [W3C PROV-O](https://www.w3.org/TR/prov-o/) 正是如此（所有者，2026-09-23；此举所蕴含的 Schema 即为[参与者、ODRL 与 PROV-O 提案](../../proposals/odrl-prov-actor-model.html)）。
+**两种极端在规则检查的*时机*上有所不同，而非检查*何种*规则。** 相同的流程、相同的角色和相同的权限对两者均适用。引擎在任务启动**之前**检查规则并进行拒绝；智能体集群先行操作，而 QA/QC 报告在**事后**根据操作记录进行检查。这仅在规则和记录均为报告可读取的数据时方可生效，而作为权限语言的 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) 和作为执行日志的 [W3C PROV-O](https://www.w3.org/TR/prov-o/) 正是如此（所有者，2026-09-23；此举所蕴含的 Schema 即为[参与者、ODRL 与 PROV-O 提案]({{ '/proposals/odrl-prov-actor-model.html' | relative_url }})）。
 
 **大多数实际运行介于两端之间**，并且是针对单个任务而非整个流程：[上一节](#deterministic-and-agentic)已经统计了哪些网关是计算得出的，哪些是主观判断。在通常由智能体自主执行的运行中，签名步骤可以由引擎强制执行，这是该任务本身的属性，而非整张流程图的属性。
 
@@ -176,7 +176,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/feature-request-workflow.md){: .fa-node-edit title="Edit content/docs/agentic-harness/feature-request-workflow.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="feature-request-workflow.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/agentic-harness/feature-request-workflow.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/agentic-harness/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-当请求被归类为功能需求时，智能体进入 **CRDM 需求工作流**（[完整文档](https://litlfred.github.io/folio-assistant/crdm-methodology.html)，[BPMN](../../../processes/process/crdm-requirements.bpmn)）。
+当请求被归类为功能需求时，智能体进入 **CRDM 需求工作流**（[完整文档](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/crdm-methodology.html)，[BPMN](../../../processes/process/crdm-requirements.bpmn)）。
 
 功能需求工作流是本框架文档价值最显著之处，因为它描述了一种此前一直处于隐性状态的行为。撰写和评审工作流数月前就已形成文档；而需求工作流此前仅存在于零散的对话中。
 

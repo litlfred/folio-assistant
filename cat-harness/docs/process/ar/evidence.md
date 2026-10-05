@@ -75,11 +75,11 @@ _تم توليد هذه الصفحة من [`content/docs/evidence/`](https://git
 المسار داخل حدود النظام كان سيجعل "الموثوقية" مجرد تقييم ذاتي.
 
 <div class="bpmn-figure" id="figure-the-subprocess">
-  <img src="../../ar/assets/img/workflows/evidence-retrieval.svg"
+  <img src="{{ '/ar/assets/img/workflows/evidence-retrieval.svg' | relative_url }}"
        alt="مخطط مسارات BPMN عبر أربعة مسارات. يراجع المؤلف التوجيهات الموجودة بالفعل في محتواهم، ثم يصيغ السؤال وفق نموذج PICO. تنبثق بوابة متوازية لتتفرع إلى ثلاث مهام استرجاع يُشغلها وكيل الأدلة: مصادر L1 الموثوقة تحت library/، ومحتوى L2 DAK وL3 IG الموثوق، ومستودعات البيانات ومجموعات البيانات الإحصائية. تلتقي المرشحات، ويتحقق مسار السجلات الموثوقة من موثوقية كل منها مقابل واجهة برمجة التطبيقات الخاصة بهيئة النشر؛ وتوجه بوابة حصرية أي اقتباس غير مؤكد إلى عنصر bean في خطة العمل قبل العودة للمسار. بعد ذلك يقيّم المؤلف ويحدد درجة مجمل الأدلة، وتسأل بوابة حصرية ثانية عما إذا كانت كافية لتقديم توصية: إذا لم تكن كذلك، تُسجل الفجوة كـ bean وتنتهي العملية دون توصية؛ وإذا كانت كافية، تُرفق الأدلة بالتوصية.">
 </div>
 
-[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/evidence-retrieval.bpmn) · [ملف SVG بالحجم الكامل](../../assets/img/workflows/evidence-retrieval.svg)
+[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/evidence-retrieval.bpmn) · [ملف SVG بالحجم الكامل]({{ '/assets/img/workflows/evidence-retrieval.svg' | relative_url }})
 {: .bpmn-source }
 
 ## الخطوة الأولى تتجه للداخل

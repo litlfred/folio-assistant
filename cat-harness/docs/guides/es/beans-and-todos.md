@@ -73,7 +73,7 @@ primero.
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/bean-lifecycle.bpmn){: .fa-node-edit title="Edit processes/sdlc/bean-lifecycle.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-agent-bean-lifecycle.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/beans-and-todos/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-agent-bean-lifecycle.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/beans-and-todos/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-the-agent-bean-lifecycle">
-  <img src="../../es/assets/img/workflows/bean-lifecycle.svg"
+  <img src="{{ '/es/assets/img/workflows/bean-lifecycle.svg' | relative_url }}"
        alt="Diagrama de carriles BPMN con dos carriles. En el carril del agente: se identifica trabajo duradero, el agente ejecuta una búsqueda por título exacto antes de crear nada, luego una compuerta pregunta si el bean ya existe. Si no, crea uno; si existe, una segunda compuerta pregunta de quién es. Un bean que pertenece a otra persona o sesión se enruta al carril inferior —sesión hermana o humano— donde la única acción es dejarlo estar y coordinar, terminando allí. El bean propio del agente o uno no reclamado se reclama como in-progress, se trabaja en él manteniendo el cuerpo actualizado, y luego llega a una compuerta de resultados con tres ramas: hecho va a complete, no deseado va a scrap con motivos y nunca delete, y bloqueado va a registrar el bloqueador y devolverlo. Las tres convergen en un único evento final, con el estado registrado.">
 </div>
 
@@ -182,7 +182,7 @@ ningún agente debería estar actuando.
 
 El resto de esta página explica lo que un bean **es**. Esta sección explica lo que el
 almacén actualmente **contiene** —leído en vivo desde
-[`/assets/beans/index.json`](../../assets/beans/index.json), la proyección que
+[`/assets/beans/index.json`]({{ '/assets/beans/index.json' | relative_url }}), la proyección que
 `gen-docs-pages.ts` escribe a partir de `beans/defs/` en cada compilación, junto al índice
 de tareas (todos) que ha publicado desde hace más tiempo.
 
@@ -238,7 +238,7 @@ mitad del bean `v49e`. Dicha unión necesita `beans/workflows/`, el grafo declar
 <div class="fa-workplan" data-fa-workplan>
   <p class="fa-workplan-fallback">
     El panel en vivo del plan de trabajo requiere JavaScript. La proyección que lee es
-    <a href="../../es/assets/beans/index.json">un archivo JSON sin formato</a> y se puede leer
+    <a href="{{ '/es/assets/beans/index.json' | relative_url }}">un archivo JSON sin formato</a> y se puede leer
     directamente.
   </p>
 </div>

@@ -24,8 +24,8 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
   note — authored content on one page, not chrome — and the forge remains
   reachable from the navbar's Source tile regardless.
 -->
-[开始使用](../start/getting-started.html){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[安装](../start/installation.html){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[开始使用]({{ '/docs/cat-harness/start/getting-started.html' | relative_url }}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[安装]({{ '/docs/cat-harness/start/installation.html' | relative_url }}){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [在 GitHub 上查看](https://github.com/litlfred/folio-assistant){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
@@ -33,7 +33,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ## 按顺序的四件事
 
 **1. 工作计划是你说明自己在做什么的地方。**
-不是聊天消息，也不是评论——而是 [beans]({{ '/guides/beans-and-todos.html' | relative_url }})，一个纳入版本管理、任何会话或智能体都能读取的存储。开始工作前先认领，以免并行会话领取同一项；最终不需要的 bean 标记为 `scrapped` 并写明原因，绝不删除。
+不是聊天消息，也不是评论——而是 [beans]({{ '/docs/cat-harness/guides/beans-and-todos.html' | relative_url }})，一个纳入版本管理、任何会话或智能体都能读取的存储。开始工作前先认领，以免并行会话领取同一项；最终不需要的 bean 标记为 `scrapped` 并写明原因，绝不删除。
 
 ```sh
 cat-harness/scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
@@ -48,14 +48,14 @@ beans <id> --status in-progress     # 认领它，让大家可见
 bun run init-folio --help
 ```
 
-然后，[开始使用](../start/getting-started.html) 会带着第一个块走完验证、渲染和审阅。
+然后，[开始使用]({{ '/docs/cat-harness/start/getting-started.html' | relative_url }}) 会带着第一个块走完验证、渲染和审阅。
 
-**3. 弄清你在写哪一类东西。** *文档*是结构化的散文；*论文*（paper）在此之上还包含那些断言为形式化命题的块类型，由 Lean 支撑并通过 LaTeX 排版。这一选择决定了哪些块合法、哪些检查会运行：[内容类型]({{ '/concepts/content-types.html' | relative_url }})。
+**3. 弄清你在写哪一类东西。** *文档*是结构化的散文；*论文*（paper）在此之上还包含那些断言为形式化命题的块类型，由 Lean 支撑并通过 LaTeX 排版。这一选择决定了哪些块合法、哪些检查会运行：[内容类型]({{ '/docs/cat-harness/concepts/content-types.html' | relative_url }})。
 
 **4. 你永远不会读的文档。**
-[全部文档]({{ '/guides/index.html' | relative_url }})——写作指南、架构、发布流程、自动生成的模式与技能参考。它就在这里，内容详尽，而实话实说，你多半会在某样东西出问题的那一刻从搜索引擎来到这里。这样用它完全没问题。上面三步才是现在值得读的。
+[全部文档]({{ '/docs/cat-harness/guides/index.html' | relative_url }})——写作指南、架构、发布流程、自动生成的模式与技能参考。它就在这里，内容详尽，而实话实说，你多半会在某样东西出问题的那一刻从搜索引擎来到这里。这样用它完全没问题。上面三步才是现在值得读的。
 
-如果让你困惑的是*机制*而不是写作——谁做某件事、在哪个流程中、用哪项技能——请从 [平台]({{ '/platform.html' | relative_url }}) 开始。那里的一句话承载了整个模型，其中每个词都是一个单独声明的对象。
+如果让你困惑的是*机制*而不是写作——谁做某件事、在哪个流程中、用哪项技能——请从 [平台]({{ '/docs/cat-harness/platform.html' | relative_url }}) 开始。那里的一句话承载了整个模型，其中每个词都是一个单独声明的对象。
 
 ---
 
@@ -82,32 +82,32 @@ folio-assistant 是**可插拔的**——每种内容类型都由一个内容*�
 
 | 内容类型 | 制品 | 技能包 |
 |--------------|-----------|---------------|
-| **科学论文与专著** | Lean 4 形式化 + LaTeX/Markdown | [`authoring-math`](../concepts/content-types.html#scientific-papers--books) |
-| **WHO SMART 指南 DAK** | L2 制品——BPMN、DMN、Excel 数据字典、用户画像（personas） | [`authoring-who-smart-guidelines`](../concepts/content-types.html#who-smart-guidelines-daks-l2) |
-| **WHO SMART 实施指南** | L3 FHIR 资源、FSH、IG Publisher 输出 | [`authoring-who-smart-guidelines`](../concepts/content-types.html#who-smart-implementation-guides-l3) |
-| **其他** | 可插拔——添加新适配器 + 技能包 | [添加内容类型](../guides/new-content-type.html) |
+| **科学论文与专著** | Lean 4 形式化 + LaTeX/Markdown | [`authoring-math`]({{ site.baseurl }}/docs/cat-harness/concepts/content-types.html#scientific-papers--books) |
+| **WHO SMART 指南 DAK** | L2 制品——BPMN、DMN、Excel 数据字典、用户画像（personas） | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/concepts/content-types.html#who-smart-guidelines-daks-l2) |
+| **WHO SMART 实施指南** | L3 FHIR 资源、FSH、IG Publisher 输出 | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/concepts/content-types.html#who-smart-implementation-guides-l3) |
+| **其他** | 可插拔——添加新适配器 + 技能包 | [添加内容类型]({{ site.baseurl }}/docs/cat-harness/guides/new-content-type.html) |
 
-通用横切 [`content-lifecycle`](../concepts/content-types.html#the-content-lifecycle)
+通用横切 [`content-lifecycle`]({{ '/docs/cat-harness/concepts/content-types.html' | relative_url }}#the-content-lifecycle)
 包（规划 → 创作 → 验证 → 审阅 → 测试 → 发布 → 反馈 → 归档）适用于每种内容类型。
-[发布工作流](../process/publication-workflow.html)对其进行了规范建模——采用 BPMN 泳道图形式，涵盖各项角色、HCI 验证关卡以及共享工作计划。
+[发布工作流]({{ '/docs/cat-harness/process/publication-workflow.html' | relative_url }})对其进行了规范建模——采用 BPMN 泳道图形式，涵盖各项角色、HCI 验证关卡以及共享工作计划。
 
 ## 后续指引
 
-- **[安装 (Installation)](../start/installation.html)** — 前置要求、克隆、`bun install`、能力检查。
-- **[快速入门 (Getting started)](../start/getting-started.html)** — 将 MCP 服务器连接至您的 LLM 并运行您的第一个技能。
-- **[教程：使用 folio-assistant 撰写论文 (Tutorial: Writing a paper with folio-assistant)](../guides/writing-a-paper.html)** — 包含模拟对话会话的完整 LLM 驱动演练。
-- **[内容类型 (Content types)](../concepts/content-types.html)** — 各个创作领域的形式化规范。
-- **[发布工作流 (Publication workflow)](../process/publication-workflow.html)** — 编辑与发布流程的 BPMN 泳道图：HCI 验证关卡、人员分工审阅以及共享工作计划。
-- **[智能体引导 (Agent onboarding)](../guides/agent-onboarding.html)** — 针对接入 folio 的 LLM 智能体指引：入门步骤、查找技能、内容对象模型、QA 伴随文件。
-- **[技能与角色 (Skills & roles)](../concepts/skills.html)** — 详述各项技能与角色，以及它们如何与 LLM 协同工作。
-- **[工作计划与待办事项 (Beans and todos)](../guides/beans-and-todos.html)** — 共享工作计划，以及为何将其纳入版本控制。
-- **[文档摄取 (Document ingestion)](../guides/document-ingestion.html)** — 上传文件如何转化为 L1 源：提取结构、衍生内容、构建 L1 知识图谱与完整性关卡。
-- **[证据评估 (Evidence)](../process/evidence.html)** — 证据检索、提取与审阅流程。
+- **[安装 (Installation)]({{ '/docs/cat-harness/start/installation.html' | relative_url }})** — 前置要求、克隆、`bun install`、能力检查。
+- **[快速入门 (Getting started)]({{ '/docs/cat-harness/start/getting-started.html' | relative_url }})** — 将 MCP 服务器连接至您的 LLM 并运行您的第一个技能。
+- **[教程：使用 folio-assistant 撰写论文 (Tutorial: Writing a paper with folio-assistant)]({{ '/docs/cat-harness/guides/writing-a-paper.html' | relative_url }})** — 包含模拟对话会话的完整 LLM 驱动演练。
+- **[内容类型 (Content types)]({{ '/docs/cat-harness/concepts/content-types.html' | relative_url }})** — 各个创作领域的形式化规范。
+- **[发布工作流 (Publication workflow)]({{ '/docs/cat-harness/process/publication-workflow.html' | relative_url }})** — 编辑与发布流程的 BPMN 泳道图：HCI 验证关卡、人员分工审阅以及共享工作计划。
+- **[智能体引导 (Agent onboarding)]({{ '/docs/cat-harness/guides/agent-onboarding.html' | relative_url }})** — 针对接入 folio 的 LLM 智能体指引：入门步骤、查找技能、内容对象模型、QA 伴随文件。
+- **[技能与角色 (Skills & roles)]({{ '/docs/cat-harness/concepts/skills.html' | relative_url }})** — 详述各项技能与角色，以及它们如何与 LLM 协同工作。
+- **[工作计划与待办事项 (Beans and todos)]({{ '/docs/cat-harness/guides/beans-and-todos.html' | relative_url }})** — 共享工作计划，以及为何将其纳入版本控制。
+- **[文档摄取 (Document ingestion)]({{ '/docs/cat-harness/guides/document-ingestion.html' | relative_url }})** — 上传文件如何转化为 L1 源：提取结构、衍生内容、构建 L1 知识图谱与完整性关卡。
+- **[证据评估 (Evidence)]({{ '/docs/cat-harness/process/evidence.html' | relative_url }})** — 证据检索、提取与审阅流程。
 - **[技能模式参考 (Skill schema reference)](../reference/skills/)** — 为每项技能生成的输入/输出契约。
 - **[TypeScript API 参考 (TypeScript API reference)](../api/)** — 内容对象模型（`Block`、`Chapter`、`Paper`、构建器、Zod 约束）。
-- **[架构 (Architecture)](../concepts/architecture.html)** — 适配器、MCP 服务器、RBAC、块模型。
-- **[知识图谱 (The Knowledge Graph)](../concepts/knowledge-graph.html)** — 子图分类法、引用的流向以及仓库之间如何划分工作。
-- **[测试框架 (The Harness)](../concepts/harness.html)** — 实例化、依赖遍历以及对目录进行测试封装所承担的义务。
+- **[架构 (Architecture)]({{ '/docs/cat-harness/concepts/architecture.html' | relative_url }})** — 适配器、MCP 服务器、RBAC、块模型。
+- **[知识图谱 (The Knowledge Graph)]({{ '/docs/cat-harness/concepts/knowledge-graph.html' | relative_url }})** — 子图分类法、引用的流向以及仓库之间如何划分工作。
+- **[测试框架 (The Harness)]({{ '/docs/cat-harness/concepts/harness.html' | relative_url }})** — 实例化、依赖遍历以及对目录进行测试封装所承担的义务。
 
 在阅读上述页面之前，有两项技能值得先行了解，因为其他所有内容都以它们为前提：[`getting-started`](../reference/skill-instructions/getting-started.html) 用于指引你实际要完成的目标，而 [`placement`](../reference/skill-instructions/placement.html) 则在创建新节点之前确定其归属位置。
 

@@ -20,14 +20,14 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 > **Las reglas detrás de esta página.** La arquitectura describe la forma; las habilidades
 > rigen las decisiones. Adaptadores frente a perfiles —
-> [`content-profiles`](../../reference/skill-instructions/content-profiles.html).
+> [`content-profiles`]({{ '/reference/skill-instructions/content-profiles.html' | relative_url }}).
 > A dónde pertenece un nuevo nodo antes de crearlo —
-> [`placement`](../../reference/skill-instructions/placement.html). La estructura del
+> [`placement`]({{ '/reference/skill-instructions/placement.html' | relative_url }}). La estructura del
 > repositorio y cada tipo de grafo —
-> [`directory-conventions`](../../reference/skill-instructions/directory-conventions.html).
+> [`directory-conventions`]({{ '/reference/skill-instructions/directory-conventions.html' | relative_url }}).
 > Composición y verificación de la superficie MCP —
-> [`mcp-assembly`](../../reference/skill-instructions/mcp-assembly.html) y
-> [`mcp-contract`](../../reference/skill-instructions/mcp-contract.html).
+> [`mcp-assembly`]({{ '/reference/skill-instructions/mcp-assembly.html' | relative_url }}) y
+> [`mcp-contract`]({{ '/reference/skill-instructions/mcp-contract.html' | relative_url }}).
 > Donde esta página y una habilidad discrepen, la habilidad prevalece.
 
 folio-assistant es un **servidor MCP** con una capa conectable de **adaptadores de contenido**,
@@ -117,7 +117,7 @@ habilidades con `skill_list` y carga instrucciones con `skill_fetch`. La lista
 completa de habilidades y roles —y cómo se combinan con el LLM (RBAC, capacidades,
 requisitos)— se encuentra en la página [Habilidades y roles](skills.html); el contrato de
 entrada/salida de cada habilidad está publicado en la
-[Referencia de esquemas de habilidades](../../reference/skills/).
+[Referencia de esquemas de habilidades]({{ '/reference/skills/' | relative_url }}).
 
 ## El modelo de objetos de contenido
 
@@ -127,7 +127,7 @@ Para los artículos, el contenido es un árbol de **bloques** tipados y validado
 - `schemas/constraints.ts` — esquemas de Zod y reglas de restricciones
 - `schemas/builders.ts` — constructores validados (`definition()`, `theorem()`, …)
 
-Estos están documentados en la [Referencia de la API de TypeScript](../../es/api/) generada.
+Estos están documentados en la [Referencia de la API de TypeScript]({{ '/es/api/' | relative_url }}) generada.
 
 ## Control de acceso — ODRL, comprobado antes de cada tarea
 
@@ -147,7 +147,7 @@ evaluadas por `permits()` / `decide()` en `schemas/odrl.ts`. Dos invocadores lo 
 
 Hasta el issue #1207 (23-09-2026), `rbac.ts` era una escala independiente de visor < colaborador
 < propietario y el ejecutor no comprobaba nada. La disciplina correspondiente es la
-habilidad [`task-authorization`](../../reference/skill-instructions/task-authorization.html).
+habilidad [`task-authorization`]({{ '/reference/skill-instructions/task-authorization.html' | relative_url }}).
 
 ## Preparación del plan de trabajo (entre arneses)
 

@@ -59,7 +59,7 @@ _本页面生成自 [`content/docs/beans-and-todos/`](https://github.com/litlfre
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/bean-lifecycle.bpmn){: .fa-node-edit title="Edit processes/sdlc/bean-lifecycle.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-agent-bean-lifecycle.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/beans-and-todos/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-agent-bean-lifecycle.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/beans-and-todos/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-the-agent-bean-lifecycle">
-  <img src="../../zh/assets/img/workflows/bean-lifecycle.svg"
+  <img src="{{ '/zh/assets/img/workflows/bean-lifecycle.svg' | relative_url }}"
        alt="包含两个泳道的 BPMN 泳道图。在智能体泳道中：识别持久工作，智能体在创建任何内容之前先执行精确标题搜索，然后网关询问该 bean 是否已存在。如果不存在，则创建一个；如果已存在，第二个网关询问它属于谁。归他人所有的 bean 会路由到下方泳道——同胞会话或人类——在此处的唯一操作是不予干涉并进行协调，流程在此结束。属于智能体自身或尚未认领的 bean 会被认领为进行中（in-progress），进行处理并保持正文最新，然后到达具有三个分支的结果网关：已完成走向完成，不需要走向废弃并附带原因且绝不删除，被阻塞走向记录阻塞因素并移交。三者最终汇聚于单一结束事件：状态已记录。">
 </div>
 
@@ -121,7 +121,7 @@ CLI 中存在 `beans delete` 命令。**请勿使用它。**
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/work-plan-state.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/work-plan-state.md" } <span class="fa-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-本页面的其余部分阐述了 bean **是什么**。本节则说明了存储区当前**包含的内容**——实时读取自 [`/assets/beans/index.json`](../../assets/beans/index.json)，即 `gen-docs-pages.ts` 在每次构建时从 `beans/defs/` 生成的投影，与其早已发布的 todo 索引并列。
+本页面的其余部分阐述了 bean **是什么**。本节则说明了存储区当前**包含的内容**——实时读取自 [`/assets/beans/index.json`]({{ '/assets/beans/index.json' | relative_url }})，即 `gen-docs-pages.ts` 在每次构建时从 `beans/defs/` 生成的投影，与其早已发布的 todo 索引并列。
 
 在 2026-09-20 之前，这里无物可放。`todos/` 拥有读取器、公开发布的索引以及基于它的看板；而 `beans/` 这三者皆无，尽管后者的存储规模要大上两个数量级。一个无人能查阅的工作计划，就是一个无人会去核验的计划。
 
@@ -140,6 +140,6 @@ CLI 中存在 `beans delete` 命令。**请勿使用它。**
 <div class="fa-workplan" data-fa-workplan>
   <p class="fa-workplan-fallback">
     实时工作计划仪表盘需要 JavaScript。其读取的投影是
-    <a href="../../zh/assets/beans/index.json">一个纯 JSON 文件</a>，可以直接读取。
+    <a href="{{ '/zh/assets/beans/index.json' | relative_url }}">一个纯 JSON 文件</a>，可以直接读取。
   </p>
 </div>

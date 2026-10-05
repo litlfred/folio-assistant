@@ -109,8 +109,9 @@ describe("living deck: every claim about the KG still holds", () => {
 
   test("every generated asset the deck shows exists", () => {
     const md = readdirSync(DECK).filter((f) => f.endsWith(".md")).map((f) => read(join(DECK, f))).join("\n");
-    // The page lives at `concepts/`, so its links climb one level to reach `assets/`.
-    const assets = [...md.matchAll(/\]\((?:\.\.\/)?(assets\/[^)\s]+)\)/g)].map((m) => m[1]!);
+    // Written through `relative_url`: the page publishes under
+    // `docs/cat-harness/concepts/` (bean `kc7k`), where a relative path would not reach `assets/`.
+    const assets = [...md.matchAll(/\]\(\{\{ '\/(assets\/[^']+)' \| relative_url \}\}\)/g)].map((m) => m[1]!);
     expect(assets.length).toBeGreaterThan(0);
     for (const a of assets) expect(existsSync(join(SITE, a)), a).toBe(true);
   });

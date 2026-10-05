@@ -26,7 +26,7 @@ work plan in beans/.
 - **Called by:** no call activity names this process
 - **Calls:** none
 - **Names the `l2-dak-authoring` skill without calling this process:** [L3 FHIR IG pipeline](l3-fhir-pipeline.html) — `activity-calls-skill-process` asks whether each should be a call activity.
-- **Presented on:** [Content types — WHO SMART Guidelines DAKs (L2)](../concepts/content-types.html#who-smart-guidelines-daks-l2), [Authoring a WHO SMART DAK (L2) — The L2 artifacts](../guides/who-smart-dak.html#the-l2-artifacts)
+- **Presented on:** [Content types — WHO SMART Guidelines DAKs (L2)](../docs/cat-harness/concepts/content-types.html#who-smart-guidelines-daks-l2), [Authoring a WHO SMART DAK (L2) — The L2 artifacts](../docs/cat-harness/guides/who-smart-dak.html#the-l2-artifacts)
 - **Skill:** [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html)
 
 ## Lanes — who acts

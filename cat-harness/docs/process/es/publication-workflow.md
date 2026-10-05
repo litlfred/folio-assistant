@@ -48,7 +48,7 @@ de ellas fallaba por **dieciséis** cuando finalmente se comprobó: afirmaba
 treinta y nueve frente a cincuenta y cinco.
 
 Un recuento en prosa es una afirmación; un índice derivado es evidencia. Por lo tanto, el número reside
-en [el índice derivado de procesos](../../cat-harness/auto-docs/index/processes/),
+en [el índice derivado de procesos]({{ '/cat-harness/auto-docs/index/processes/' | relative_url }}),
 que se genera a partir de la declaración mediante `bun run auto:docs`, está controlado en CI
 y no puede desviarse de los diagramas que contabiliza. **El trabajo de esta página es la mitad
 que no se puede generar**: para qué *sirve* cada proceso, cuándo te encontrarías
@@ -90,8 +90,8 @@ bootstrap, o ninguna de las dos.**
 
 | Diagrama | Respuestas |
 |---|---|
-| `bootstrap/workflows/bootstrap.bpmn` | Se ha dirigido a un agente a un repositorio y no sabe nada. ¿Es esto ya una instancia —cargarla— o no, en cuyo caso en qué debería convertirse? La única entrada es una **referencia de instancia**; el tipo de arnés, el grafo de conocimiento y la voz se leen a partir de la declaración de *esa* instancia. Consulta [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) y la [propuesta](../../proposals/bootstrap.html) |
-| `bootstrap/workflows/initialize-harness.bpmn` | Se ha dirigido a un agente a un repositorio y no sabe nada. **El único proceso en bootstrap que un actor INICIA** —un agente de inicialización (*Bootstrapping Agent*) que ha leído `bootstrap/README.md` se encuentra en su evento de inicio y no tiene ningún otro lugar por donde comenzar. Tres carriles: Bootstrapping Agent, Solicitante (Requestor) y el Almacén de Datos del Grafo de Conocimiento. Consulta [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) y la [propuesta](../../proposals/bootstrap.html) |
+| `bootstrap/workflows/bootstrap.bpmn` | Se ha dirigido a un agente a un repositorio y no sabe nada. ¿Es esto ya una instancia —cargarla— o no, en cuyo caso en qué debería convertirse? La única entrada es una **referencia de instancia**; el tipo de arnés, el grafo de conocimiento y la voz se leen a partir de la declaración de *esa* instancia. Consulta [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) y la [propuesta]({{ site.baseurl }}/proposals/bootstrap.html) |
+| `bootstrap/workflows/initialize-harness.bpmn` | Se ha dirigido a un agente a un repositorio y no sabe nada. **El único proceso en bootstrap que un actor INICIA** —un agente de inicialización (*Bootstrapping Agent*) que ha leído `bootstrap/README.md` se encuentra en su evento de inicio y no tiene ningún otro lugar por donde comenzar. Tres carriles: Bootstrapping Agent, Solicitante (Requestor) y el Almacén de Datos del Grafo de Conocimiento. Consulta [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) y la [propuesta]({{ site.baseurl }}/proposals/bootstrap.html) |
 | `bootstrap/workflows/discussion.bpmn` | Dos hechos **no tienen respuesta en ningún archivo al que un Bootstrapping Agent pueda acceder**: en qué arnés debe convertirse este repositorio y de qué repositorios se lee y en cuáles se escribe. Son juicios que corresponden a quien solicitó el arnés, por lo que ningún cuerpo de instrucciones los produce. Se ingresa desde el interior de `initialize-harness` cuando se necesita dicho hecho, razón por la cual bootstrap contiene un segundo proceso: es *presupuesto* por cada tarea en lugar de indicado por una |
 | `bootstrap/workflows/log-message.bpmn` | **Un subproceso, nunca un punto de entrada** —alcanzado mediante una actividad de llamada (*call activity*), nunca iniciado por sí mismo, razón por la cual el README de bootstrap aún puede decir que hay un solo proceso con el que se comienza. Invocable opcionalmente desde cualquier tarea (un actor que registra lo que está haciendo no necesita permiso) o requerido por un diagrama que dibuja la llamada explícitamente; el mismo subproceso en cualquier caso, y la diferencia es si el invocador lo dibujó. Reside en bootstrap en lugar del arnés porque bootstrap no puede importar el arnés, por lo que un registrador definido aguas arriba sería inutilizable por el actor con mayor necesidad de expresar lo que está haciendo |
 | `getting-started.bpmn` | Alguien dijo "crear un folio". ¿A cuál de las cinco cosas se refería y qué debe cumplirse antes de escribir nada? |
@@ -120,7 +120,7 @@ se sitúan *dentro* de `Draft the block edit` del nivel 3, y conviven con sus gu
 | `authoring-a-paper.bpmn` | Artículos científicos y libros | [Redacción de un artículo](../../guides/writing-a-paper.html#the-end-to-end-workflow) |
 | `l2-dak-authoring.bpmn` | DAK de directrices SMART de la OMS (L2) | [Autoría de un DAK SMART de la OMS](../../guides/who-smart-dak.html#the-l2-artifacts) |
 | `l3-fhir-pipeline.bpmn` | Guía de implementación SMART de la OMS (L3) | [Autoría de una IG SMART de la OMS](../../guides/who-smart-ig.html#the-l3-pipeline) |
-| `ig-incremental-build.bpmn` | IG SMART de la OMS (L3) —el carril de compilación, incremental por cono de dependencias (propuesto) | [Hacer la compilación incremental](../../guides/who-smart-ig.html#making-the-build-incremental) · [la descripción general](../../es/proposals/ig-incremental-build-overview.html) |
+| `ig-incremental-build.bpmn` | IG SMART de la OMS (L3) —el carril de compilación, incremental por cono de dependencias (propuesto) | [Hacer la compilación incremental](../../guides/who-smart-ig.html#making-the-build-incremental) · [la descripción general]({{ site.baseurl }}/es/proposals/ig-incremental-build-overview.html) |
 
 **Proceso de agente** —cómo trabaja un agente, en lugar de cómo se crea el contenido.
 Estos se ejecutan junto a los procesos de contenido y no dentro de ellos:
@@ -331,7 +331,7 @@ del editor quede registrada, porque hasta entonces no hay ninguna señal (*token
 Eso es secuenciación, no imposición forzosa: nada impide aún que un agente invoque una
 herramienta de capacidad directamente. La justificación para hacerlo vinculante —y el argumento
 de que el límite de confirmación (*commit boundary*) es el lugar adecuado— se encuentra en la
-[Propuesta: orquestación de flujos de trabajo](../../es/proposals/workflow-orchestration.html).
+[Propuesta: orquestación de flujos de trabajo]({{ '/es/proposals/workflow-orchestration.html' | relative_url }}).
 
 ### Algunas decisiones se calculan, no se juzgan
 {: #some-decisions-are-computed-not-judged data-fa-label="sec:publication-workflow-some-decisions-are-computed-not-judged" }
@@ -421,7 +421,7 @@ Este es el diagrama que más importa en el día a día: **un cambio propuesto en
 bloque de contenido**.
 
 <div class="bpmn-figure" id="figure-editing-and-the-hci-validation-gate">
-  <img src="../../es/assets/img/workflows/editing-hci-validation.svg"
+  <img src="{{ '/es/assets/img/workflows/editing-hci-validation.svg' | relative_url }}"
        alt="Diagrama de carriles BPMN: un editor describe un cambio, un agente de autoría lo redacta, el cambio propuesto se bifurca a través de la validación mecánica y no mecánica, los hallazgos se muestran al editor, y únicamente un cambio aceptado se confirma (commit) en el corpus.">
 </div>
 
@@ -469,27 +469,27 @@ excusa una revisión ausente, y una revisión limpia no excusa una compilación 
 | Actividad | Carril | Habilidad |
 |---|---|---|
 | Describir el cambio previsto | Editor / autor | — (humano) |
-| Reclamar o abrir el bean | Plan de trabajo | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
-| Redactar la edición del bloque | Agente de autoría | [`content-author`](../../reference/skills/content-author.html) |
-| Comprobaciones de esquema y restricciones | Validación mecánica | [`content-validate`](../../reference/skills/content-validate.html) |
-| Sintaxis, ortografía y enlaces | Validación mecánica | [`content-validate`](../../reference/skills/content-validate.html) |
-| Compuertas de compilación y QA | Validación mecánica | [`content-test`](../../reference/skills/content-test.html) |
-| Revisión del cambio por el agente | Validación no mecánica | [`content-review`](../../reference/skills/content-review.html) |
-| Revisión humana / por SME | Validación no mecánica | [`content-review`](../../reference/skills/content-review.html) |
+| Reclamar o abrir el bean | Plan de trabajo | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
+| Redactar la edición del bloque | Agente de autoría | [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) |
+| Comprobaciones de esquema y restricciones | Validación mecánica | [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) |
+| Sintaxis, ortografía y enlaces | Validación mecánica | [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) |
+| Compuertas de compilación y QA | Validación mecánica | [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) |
+| Revisión del cambio por el agente | Validación no mecánica | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Revisión humana / por SME | Validación no mecánica | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
 | Recopilar los hallazgos en un informe | Canalización de validación de HCI | — (canalización) |
-| Registrar los hallazgos en el bean | Plan de trabajo | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
+| Registrar los hallazgos en el bean | Plan de trabajo | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 | Revisar los hallazgos | Editor / autor | — (humano — esta es la compuerta) |
-| Revisar el cambio propuesto | Agente de autoría | [`content-author`](../../reference/skills/content-author.html) |
+| Revisar el cambio propuesto | Agente de autoría | [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) |
 | Confirmar (*commit*) en el corpus | Corpus | — (sujeto al requisito `commit-hygiene`) |
-| Resolver o reabrir el bean | Plan de trabajo | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
+| Resolver o reabrir el bean | Plan de trabajo | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 
 Las comprobaciones específicas del dominio dependen de `content-validate` / `content-test` según
 el tipo de contenido:
-[`lean-formalization`](../../reference/skills/lean-formalization.html) y
-[`proof-verification`](../../reference/skills/proof-verification.html) para artículos científicos,
-[`fhir-validation`](../../reference/skills/fhir-validation.html) y
-[`quality-control`](../../reference/skills/quality-control.html) para IGs,
-[`latex-authoring`](../../reference/skills/latex-authoring.html) para renderizado.
+[`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}) y
+[`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }}) para artículos científicos,
+[`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) y
+[`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}) para IGs,
+[`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}) para renderizado.
 
 ---
 
@@ -502,7 +502,7 @@ El corpus no es la publicación. A partir de él se compila un **borrador**, que
 revisado en su totalidad por el equipo de revisión, y solo entonces se publica.
 
 <div class="bpmn-figure" id="figure-from-corpus-to-published-folio">
-  <img src="../../es/assets/img/workflows/draft-to-publication.svg"
+  <img src="{{ '/es/assets/img/workflows/draft-to-publication.svg' | relative_url }}"
        alt="Diagrama de carriles BPMN: el corpus se compila en una publicación en borrador, se ejecutan las compuertas de QA, el responsable de publicación lo distribuye, el equipo de revisión y los expertos en la materia (SME) revisan en paralelo, las solicitudes de cambio se convierten en beans que vuelven a entrar en edición, y un borrador aprobado es autorizado por el responsable del programa y publicado.">
 </div>
 
@@ -525,17 +525,17 @@ Tres aspectos a destacar:
 
 | Actividad | Carril | Habilidad |
 |---|---|---|
-| Abrir o reclamar el bean de lanzamiento | Plan de trabajo | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
-| Compilar la publicación en borrador | Corpus + canalización de compilación | [`content-publish`](../../reference/skills/content-publish.html) |
-| Ejecutar compuertas de QA de la publicación | Corpus + canalización de compilación | [`content-test`](../../reference/skills/content-test.html) · [`quality-control`](../../reference/skills/quality-control.html) |
+| Abrir o reclamar el bean de lanzamiento | Plan de trabajo | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
+| Compilar la publicación en borrador | Corpus + canalización de compilación | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) |
+| Ejecutar compuertas de QA de la publicación | Corpus + canalización de compilación | [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) · [`quality-control`]({{ site.baseurl }}/reference/skills/quality-control.html) |
 | Edición y validación de HCI | Editores + agentes de autoría | actividad de llamada → [diagrama 3](#editing-and-the-hci-validation-gate) |
-| Distribuir el borrador | Responsable de publicación | [`content-review`](../../reference/skills/content-review.html) |
-| Revisar la publicación en borrador | Equipo de revisión | [`content-review`](../../reference/skills/content-review.html) |
-| Visto bueno clínico / científico | Expertos en la materia (SME) | [`content-review`](../../reference/skills/content-review.html) |
-| Abrir beans para las solicitudes de cambio | Plan de trabajo | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) · [`content-feedback`](../../reference/skills/content-feedback.html) |
-| Autorizar el lanzamiento | Responsable del programa | [`content-publish`](../../reference/skills/content-publish.html) |
-| Versionar, etiquetar y publicar | Responsable de publicación | [`content-publish`](../../reference/skills/content-publish.html) · [`ig-publication`](../../reference/skills/ig-publication.html) |
-| Cerrar los beans de lanzamiento | Plan de trabajo | [`todo-manager`](../../reference/skill-instructions/todo-manager.html) |
+| Distribuir el borrador | Responsable de publicación | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Revisar la publicación en borrador | Equipo de revisión | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Visto bueno clínico / científico | Expertos en la materia (SME) | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Abrir beans para las solicitudes de cambio | Plan de trabajo | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) · [`content-feedback`]({{ site.baseurl }}/reference/skills/content-feedback.html) |
+| Autorizar el lanzamiento | Responsable del programa | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) |
+| Versionar, etiquetar y publicar | Responsable de publicación | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) · [`ig-publication`]({{ site.baseurl }}/reference/skills/ig-publication.html) |
+| Cerrar los beans de lanzamiento | Plan de trabajo | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 
 Este diagrama implementa las compuertas de fase de `req:content-lifecycle`:
 `validate-before-review`, `review-before-test`, `test-before-publish`,
@@ -553,7 +553,7 @@ Un ciclo de un folio, desde planificar hasta retirar. Ambos diagramas anteriores
 como actividades de llamada.
 
 <div class="bpmn-figure" id="figure-content-lifecycle-overview">
-  <img src="../../es/assets/img/workflows/content-lifecycle.svg"
+  <img src="{{ '/es/assets/img/workflows/content-lifecycle.svg' | relative_url }}"
        alt="Diagrama de carriles BPMN: el responsable del programa planifica, el plan se siembra como beans, la edición y la validación de HCI se ejecutan, prueba de integración y barrido de QA, borrador-revisión-publicación, la retroalimentación se clasifica y registra como beans, y luego otro ciclo o el retiro.">
 </div>
 
@@ -596,7 +596,7 @@ Por qué está modelado como un carril y no como una nota:
 - **`beans create` no es idempotente.** Comprueba si existe un bean mediante el título exacto
   antes de crear uno —la protección y el incidente que la motiva
   se describen en
-  [`todo-manager`](../../reference/skill-instructions/todo-manager.html).
+  [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}).
 - **Los beans no son archivos accesorios (*sidecars*).** Las colas generadas por máquinas (QA `*.qa.json`, archivos
   de testimonio, colas de vigilancia) siguen siendo JSON en masa; nunca se convierten en beans.
 
@@ -694,11 +694,11 @@ implica actores que realizan actividades a lo largo del tiempo, algo que ninguno
 
 | Diagrama | Notación | Por qué |
 |---|---|---|
-| `README.md`, [inicio](../../es/index.html) — "Qué hace" | Mermaid | Mapa de componentes / flujo de datos de la plataforma, no una secuencia de actividades |
+| `README.md`, [inicio]({{ site.baseurl }}/es/index.html) — "Qué hace" | Mermaid | Mapa de componentes / flujo de datos de la plataforma, no una secuencia de actividades |
 | [Arquitectura](../../concepts/es/architecture.html) — servidor y adaptadores | Mermaid | Estructura de despliegue y módulos |
 | [Habilidades y roles](../../concepts/es/skills.html) — cómo se componen los cinco conceptos | Mermaid | Composición conceptual, sin eje temporal |
 | [Habilidades y roles](../../concepts/es/skills.html) — `viewer → reviewer → author → admin` | Mermaid | Una estructura reticular de herencia, no un flujo |
-| [Inicio](../../es/index.html) — mapa de documentación | Mermaid | Grafo de navegación |
+| [Inicio]({{ site.baseurl }}/es/index.html) — mapa de documentación | Mermaid | Grafo de navegación |
 | [Añadir un tipo de contenido](../../guides/new-content-type.html) — "Lo que proporcionas" | Mermaid | Lo que entregas, no lo que haces |
 | [Redacción de un artículo](../../guides/writing-a-paper.html) — la sesión de Lean | Mermaid `sequenceDiagram` | Una transcripción de interacción entre tú, el asistente y el servidor MCP. El equivalente en BPMN —una colaboración con flujos de mensajes— añadiría complejidad ceremonial sin aportar significado |
 
@@ -714,5 +714,5 @@ pertenece a `processes/` como BPMN, no dentro de un bloque de Mermaid.
 
 - [Tipos de contenido](../../concepts/es/content-types.html) — el ciclo de vida lineal y lo que produce cada tipo
 - [Habilidades y roles](../../concepts/es/skills.html) — cada habilidad y rol, y cómo se componen con el LLM
-- [Referencia de esquemas de habilidades](../../reference/skills/) — entrada/salida tipada por habilidad
+- [Referencia de esquemas de habilidades]({{ '/reference/skills/' | relative_url }}) — entrada/salida tipada por habilidad
 - [Incorporación de agentes](../../guides/agent-onboarding.html) — orientación para un agente situado en un folio

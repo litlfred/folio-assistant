@@ -12,7 +12,7 @@ authors the L2 artifacts:
 - **Personas, scenarios, indicators, requirements**
 
 Relevant skill schemas:
-[`l2-dak-authoring`](../reference/skills/l2-dak-authoring.html),
-[`bpmn-authoring`](../reference/skills/bpmn-authoring.html),
-[`dmn-authoring`](../reference/skills/dmn-authoring.html),
-[`terminology-management`](../reference/skills/terminology-management.html).
+[`l2-dak-authoring`]({{ '/reference/skills/l2-dak-authoring.html' | relative_url }}),
+[`bpmn-authoring`]({{ '/reference/skills/bpmn-authoring.html' | relative_url }}),
+[`dmn-authoring`]({{ '/reference/skills/dmn-authoring.html' | relative_url }}),
+[`terminology-management`]({{ '/reference/skills/terminology-management.html' | relative_url }}).

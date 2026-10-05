@@ -13,7 +13,7 @@ execution anywhere on the deterministic-to-agentic spectrum.
 - <img src="{{ '/assets/img/kg-deck/img-p006-3.webp' | relative_url }}" alt="" height="24" style="height:24px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> **Human state:** *todos*, attached to process steps or knowledge assets
   ("please review this change in medication").
 
-![Folio lifecycle — one cycle, plan to retire. A BPMN collaboration of six lanes: programme manager, work plan (beans shared by humans and agents), editors and authoring agents, validation and QA, review team and SMEs, publication manager. Tasks in order: plan scope, team and artefacts; seed the work plan; editing and HCI validation; integration test and QA sweep; draft, review and publish; triage published feedback; file feedback as beans; then a gateway, more content, which loops back to editing or ends in retire or archive.](../assets/img/workflows/content-lifecycle.svg)
+![Folio lifecycle — one cycle, plan to retire. A BPMN collaboration of six lanes: programme manager, work plan (beans shared by humans and agents), editors and authoring agents, validation and QA, review team and SMEs, publication manager. Tasks in order: plan scope, team and artefacts; seed the work plan; editing and HCI validation; integration test and QA sweep; draft, review and publish; triage published feedback; file feedback as beans; then a gateway, more content, which loops back to editing or ends in retire or archive.]({{ '/assets/img/workflows/content-lifecycle.svg' | relative_url }})
 
 <details markdown="1"><summary>The diagram as it appeared on the slide (2026-09-30)</summary>
 

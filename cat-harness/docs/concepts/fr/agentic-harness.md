@@ -151,20 +151,20 @@ Lorsqu'une requête est classée comme travail de contenu (rédaction, relecture
 l'agent suit le flux de travail BPMN correspondant. Les pages de documentation
 existantes décrivent ces flux en détail :
 
-- **[Flux de publication](https://litlfred.github.io/folio-assistant/publication-workflow.html)** —
+- **[Flux de publication](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/publication-workflow.html)** —
   le cycle de vie du contenu, du brouillon à la validation, au rendu et à la
   publication. Couvre les rôles (auteur, relecteur, éditeur), les processus de base,
   les activités et les compétences.
 
-- **[Ingestion de documents](https://litlfred.github.io/folio-assistant/document-ingestion.html)** —
+- **[Ingestion de documents](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/document-ingestion.html)** —
   comment un fichier déposé devient une source L1 : extraire la structure, dériver le contenu,
   construire le graphe de connaissances L1, passerelle d'exhaustivité (completeness gate).
 
 - **Guides de rédaction :**
-  - [Rédiger un article](https://litlfred.github.io/folio-assistant/guides-writing-a-paper.html)
-  - [Rédiger un document](https://litlfred.github.io/folio-assistant/guides-writing-a-document.html)
-  - [DAK SMART de l'OMS](https://litlfred.github.io/folio-assistant/guides-who-smart-dak.html)
-  - [IG SMART de l'OMS](https://litlfred.github.io/folio-assistant/guides-who-smart-ig.html)
+  - [Rédiger un article](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html)
+  - [Rédiger un document](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html)
+  - [DAK SMART de l'OMS](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-dak.html)
+  - [IG SMART de l'OMS](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-ig.html)
 
 Le harnais ne redéfinit pas ces flux de travail. Il fournit le **point d'entrée** —
 la classification de la requête et son acheminement vers le flux approprié — ainsi que le **point de sortie** —
@@ -204,7 +204,7 @@ présentent des risques pour la sécurité, quelle part doit être déterministe
 entre sous-flux de travail sous une superposition contrôlée de contexte et de mémoires sont trois
 questions que ce dépôt peut maintenant poser et auxquelles il n'a pas encore répondu. Le programme d'action, où
 chaque affirmation est marquée comme mesurée, décidée ou hypothèse, se trouve dans
-[`deterministic-and-agentic`](../../reference/skill-instructions/deterministic-and-agentic.html).
+[`deterministic-and-agentic`]({{ '/reference/skill-instructions/deterministic-and-agentic.html' | relative_url }}).
 Considérez-le comme un programme de travail : il comporte plus d'hypothèses que de mesures, et il
 l'indique explicitement.
 
@@ -218,7 +218,7 @@ Le propriétaire, 2026-09-23, nommant la compétence dont traite ce spectre :
 > **Compétence d'exécution BPMN (BPMN Execution Skill) :** étant donné un Processus, un Contexte, un État et un Rôle, utiliser
 > une ou plusieurs Compétences afin d'exécuter une Tâche.
 
-![Exécution BPMN, du déterministe à l'agentique. Une barre de couleur va de « déterministe » (bleu, à gauche : exécution gérée par agent d'une tâche unique) à « agentique » (vert, à droite : des agents sur la plupart ou la totalité des tâches). À gauche, sous une icône d'engrenage et de moteur : « Outil d'exécution BPMN : n'importe quel moteur BPMN open source, état et couloirs strictement appliqués », sur un diagramme plat de couloirs du cycle de vie du folio avec un pense-bête, un groupe de beans, une personne et un robot-chat à côté des couloirs. À droite, sous une icône de robot-chat : « Outil d'exécution BPMN : essaim agentique à l'état non gouverné. Les agents assouplissent les couloirs, compensé par des rapports QA/QC mécaniques et agentiques », sur le même diagramme incliné en perspective, des beans dispersés sur chaque couloir et de nombreux robots-chats en dessous.](../../assets/img/bpmn-execution-spectrum.webp)
+![Exécution BPMN, du déterministe à l'agentique. Une barre de couleur va de « déterministe » (bleu, à gauche : exécution gérée par agent d'une tâche unique) à « agentique » (vert, à droite : des agents sur la plupart ou la totalité des tâches). À gauche, sous une icône d'engrenage et de moteur : « Outil d'exécution BPMN : n'importe quel moteur BPMN open source, état et couloirs strictement appliqués », sur un diagramme plat de couloirs du cycle de vie du folio avec un pense-bête, un groupe de beans, une personne et un robot-chat à côté des couloirs. À droite, sous une icône de robot-chat : « Outil d'exécution BPMN : essaim agentique à l'état non gouverné. Les agents assouplissent les couloirs, compensé par des rapports QA/QC mécaniques et agentiques », sur le même diagramme incliné en perspective, des beans dispersés sur chaque couloir et de nombreux robots-chats en dessous.]({{ '/assets/img/bpmn-execution-spectrum.webp' | relative_url }})
 
 **Une compétence, deux types d'Outil.** La compétence est la même aux deux extrémités : prendre le
 processus, le contexte, l'état actuel et le rôle, choisir les compétences et accomplir
@@ -241,7 +241,7 @@ que si les règles et l'historique sont des données qu'un rapport peut lire, ce
 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) comme langage d'autorisations
 et [W3C PROV-O](https://www.w3.org/TR/prov-o/) comme journal d'exécution (propriétaire,
 2026-09-23 ; le schéma que cela implique est la
-[proposition acteurs, ODRL et PROV-O](../../proposals/odrl-prov-actor-model.html)).
+[proposition acteurs, ODRL et PROV-O]({{ '/proposals/odrl-prov-actor-model.html' | relative_url }})).
 
 **La plupart des exécutions réelles se situent entre ces deux extrémités**, et par tâche plutôt que par processus :
 la [section précédente](#deterministic-and-agentic) dénombre déjà quelles
@@ -263,7 +263,7 @@ proposition dispose d'un point de comparaison mesurable.
 
 Lorsqu'une requête est classée comme demande de fonctionnalité, l'agent intègre le
 **flux de travail des exigences CRDM**
-([documentation complète](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
+([documentation complète](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/crdm-methodology.html),
 [BPMN](../../../processes/process/crdm-requirements.bpmn)).
 
 Le flux de travail des demandes de fonctionnalités est le domaine où ce document sur le harnais apporte le plus

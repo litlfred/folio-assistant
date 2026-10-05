@@ -164,7 +164,7 @@ PROV-O already has every piece the log needs:
 
 ## 3. Why this fits both BPMN engines
 
-See [BPMN execution: one skill, two engines](../concepts/agentic-harness.html#bpmn-execution).
+See [BPMN execution: one skill, two engines]({{ '/docs/cat-harness/concepts/agentic-harness.html' | relative_url }}#bpmn-execution).
 
 - **The deterministic engine** reads the ODRL policy **before** each task and
   refuses one that no permission covers. It writes the `prov:Activity` as it

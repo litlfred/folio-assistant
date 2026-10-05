@@ -26,7 +26,7 @@ requirements and implementation.
    - Has a clear title describing the deliverable
    - Is scoped to a single PR-sized unit of work
    - Is created using the [check-before-create
-     protocol](https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html)
+     protocol](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/agent-onboarding.html)
      to avoid duplicates
 
 5. **Record the decision** — the sign-off comment on the issue serves as the

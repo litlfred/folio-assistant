@@ -40,20 +40,20 @@ covers authoring the L2 artifacts with folio-assistant and an LLM.
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/../smart-base/processes/content/l2-dak-authoring.bpmn){: .fa-node-edit title="Edit ../smart-base/processes/content/l2-dak-authoring.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-l2-artifacts.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-who-smart-dak/the-l2-artifacts.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-who-smart-dak/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" data-qa-family="translation" data-qa-key="the-l2-artifacts.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-who-smart-dak/the-l2-artifacts.translation.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-who-smart-dak/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-l2-artifacts.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/guides-who-smart-dak/the-l2-artifacts.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-who-smart-dak/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-the-l2-artifacts">
-  <img src="../assets/img/workflows/l2-dak-authoring.svg"
+  <img src="{{ '/assets/img/workflows/l2-dak-authoring.svg' | relative_url }}"
        alt="BPMN swimlane diagram: the programme manager scopes the DAK, the plan is seeded as beans, then a parallel gateway fans out the five business-analyst artifacts (personas, BPMN processes, DMN decision logic, data dictionary, indicators) alongside the terminologist's bindings; a clinical SME validates, and the DAK is assembled once accurate.">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn) · [full-size SVG](../assets/img/workflows/l2-dak-authoring.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn) · [full-size SVG]({{ '/assets/img/workflows/l2-dak-authoring.svg' | relative_url }})
 {: .bpmn-source }
 
 | Artifact | Skill | Format |
 |----------|-------|--------|
-| Business processes | [`bpmn-authoring`](../reference/skills/bpmn-authoring.html) | BPMN 2.0 XML |
-| Decision logic | [`dmn-authoring`](../reference/skills/dmn-authoring.html) | DMN tables |
-| Data dictionary | [`l2-dak-authoring`](../reference/skills/l2-dak-authoring.html) | Excel / structured |
-| Terminology | [`terminology-management`](../reference/skills/terminology-management.html) | code systems / value sets |
-| Review | [`content-review`](../reference/skills/content-review.html) | criteria-based |
+| Business processes | [`bpmn-authoring`]({{ site.baseurl }}/reference/skills/bpmn-authoring.html) | BPMN 2.0 XML |
+| Decision logic | [`dmn-authoring`]({{ site.baseurl }}/reference/skills/dmn-authoring.html) | DMN tables |
+| Data dictionary | [`l2-dak-authoring`]({{ site.baseurl }}/reference/skills/l2-dak-authoring.html) | Excel / structured |
+| Terminology | [`terminology-management`]({{ site.baseurl }}/reference/skills/terminology-management.html) | code systems / value sets |
+| Review | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) | criteria-based |
 
 The table is the authoring skills, not the DAK. A DAK has **ten components**
 (owner, 2026-09-30): the original eight, plus **scheduling logic**, split out
