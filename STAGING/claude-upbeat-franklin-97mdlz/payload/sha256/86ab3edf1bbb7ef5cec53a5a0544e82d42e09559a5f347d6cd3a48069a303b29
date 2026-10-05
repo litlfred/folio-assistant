@@ -1,0 +1,234 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "skills-in-openai-api-notebook",
+  "blocks": [
+    {
+      "id": "library/skills-in-openai-api-notebook/blocks/prose-s001-skills-in-openai-api",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Skills in OpenAI API",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s001-skills-in-openai-api.md",
+      "narrative": null,
+      "content": "# Skills in OpenAI API\n\nPackage a CSV analysis workflow as a skill, upload it, and run it with GPT-6 Astra in hosted shell. You can also expose the same files to a local shell runtime. For the full reference, see the [Skills documentation](https://developers.openai.com/api/docs/guides/tools-skills).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/skills-in-openai-api-notebook/blocks/prose-s002-what-is-a-skill",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "What is a skill?",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s002-what-is-a-skill.md",
+      "narrative": null,
+      "content": "## What is a skill?\n\nA skill is a reusable bundle of files (instructions + scripts + assets), packaged as a folder and anchored by a required `SKILL.md` manifest. OpenAI copies that bundle into an execution environment so the model can read instructions and run code as needed.\n\nIn hosted shell, here's what happens when you attach skills to the shell tool environment (`environment.type=\"container_auto\"`):\n\n\n- The service uploads and unzips skills into the runtime\n- The service reads `SKILL.md` frontmatter (name/description), then adds each skill’s `name`, `description`, and `path` to user promp",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/skills-in-openai-api-notebook/blocks/prose-s003-when-to-use-skills",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "When to use skills",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s003-when-to-use-skills.md",
+      "narrative": null,
+      "content": "### When to use skills\n\n**Skills are particularly appropriate and powerful when…**\n\n1. **You want a reusable, independently versionable set of behaviors.**\nExamples: “PowerPoint formatting procedure,” “company-specific report generator,” “standard data-cleaning pipeline.”\n2. **Your workflow is highly conditional, or branches like a complex flow chart.**\nExample: If X → do this; else if Y → do that; plus validation + retries.\n3. **Your workflow needs code execution and local artifacts.**\nAnything that benefits from scripts, templates, test fixtures, or reference assets that should live beside t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/skills-in-openai-api-notebook/blocks/prose-s004-skills-vs-tools-vs-system-prompts",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Skills vs. tools vs. system prompts",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s004-skills-vs-tools-vs-system-prompts.md",
+      "narrative": null,
+      "content": "## Skills vs. tools vs. system prompts\n\nSystem prompts and tool schemas become heavy when the boundary isn’t crisp. Use all three to stay organized and help models perform better. Here’s a simple framework:\n\n**System prompt: global behavior and constraints**\n\nUse for:\n- Safety boundaries, tone, refusal style\n- “Always do X” principles that apply every turn\n- Small, stable policies\n\nAvoid:\n\n- Putting long, multi-step procedures here (it bloats every turn and becomes brittle)\n\n**Tools: “do something in the world”**\n\nUse tools when the model must:\n\n- Call external services or databases\n- Create s",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/skills-in-openai-api-notebook/blocks/prose-s005-skill-packaging-skill-md-and-folder-layout",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Skill packaging: SKILL.md and folder layout",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s005-skill-packaging-skill-md-and-folder-layout.md",
+      "narrative": null,
+      "content": "## Skill packaging: SKILL.md and folder layout",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/skills-in-openai-api-notebook/blocks/prose-s006-folder-structure",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Folder structure",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s006-folder-structure.md",
+      "narrative": null,
+      "content": "### Folder structure\n\nA skill is just a folder bundle. Here's an example:\n- `SKILL.md` (required)\n- Scripts, like `*.py`, `*.js` (optional)\n- Helpers and `requirements.txt`\n- Assets, templates, sample inputs",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/skills-in-openai-api-notebook/blocks/prose-s007-skill-md-frontmatter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "SKILL.md frontmatter",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s007-skill-md-frontmatter.md",
+      "narrative": null,
+      "content": "### SKILL.md frontmatter\n\nOpenAI models expect names and descriptions to come from frontmatter (important for discovery and routing). Put name and description in the `SKILL.md` frontmatter. Use each API `create` call to upload one skill bundle (one top-level folder) containing exactly one `SKILL.md`/`skill.md`. To upload multiple skills, upload multiple bundles.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/skills-in-openai-api-notebook/blocks/prose-s008-creating-skills-via-api",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Creating skills via API",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s008-creating-skills-via-api.md",
+      "narrative": null,
+      "content": "## Creating skills via API\n\nAfter you assemble your skill in a folder, create the skill with an API call.\n\n### Directory upload or zip upload\n\n\nUse `POST /v1/skills` to upload and validate your skill, extracting name and description from the manifest frontmatter. You can either upload a zip bundle or upload multiple files in your request.\n\n**Option A: Upload files (multipart)**\n\n```bash\ncurl --fail-with-body 'https://api.openai.com/v1/skills' \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -F 'files[]=@./csv_insights_skill/SKILL.md;filename=csv_insights_skill/SKILL.md;type=text/markdown' \\",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/skills-in-openai-api-notebook/blocks/prose-s009-mounting-skills-into-execution",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Mounting skills into execution",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s009-mounting-skills-into-execution.md",
+      "narrative": null,
+      "content": "## Mounting skills into execution\n\nTo use skills in the Responses API, attach them to the shell tool with `tools[].environment.skills`.\n\n### How to reference skills\n\n- **Hosted shell** (`environment.type=\"container_auto\"`): use `skill_reference` with a `skill_id` and optional `version`, or an `inline` base64 zip bundle.\n- **Local shell** (`environment.type=\"local\"`): provide `name`, `description`, and `path` for files available in your runtime. Local shell does not accept hosted `skill_reference` attachments. Your application executes the requested commands and returns their outputs.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/skills-in-openai-api-notebook/blocks/prose-s010-runnable-example-csv-insights-skill-skill",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Runnable example: `csv_insights_skill` Skill",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s010-runnable-example-csv-insights-skill-skill.md",
+      "narrative": null,
+      "content": "## Runnable example: `csv_insights_skill` Skill\n\nThis walkthrough creates files on disk and then runs Python snippets; it is not a notebook to execute with **Run All**. Save the script below as `csv_insights_skill/run.py`.\n\nPrerequisites: Python 3.10 or later, `curl`, `zip`, and an `OPENAI_API_KEY` environment variable for a project with access to `gpt-6-astra` and hosted shell. Install the current Python SDK with `python -m pip install --upgrade openai`.\n\nThe upload commands create a skill in your API project. Responses API calls incur [model and container charges](https://developers.openai.c",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/skills-in-openai-api-notebook/blocks/prose-s011-operational-best-practices",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Operational best practices",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s011-operational-best-practices.md",
+      "narrative": null,
+      "content": "## Operational best practices\n\n**1) Keep skills “discoverable”**\n\n* Put a **clear** `name` and `description` in frontmatter.\n* In `SKILL.md`, include: when to use, how to run, expected outputs, gotchas.\n\n- Add explicit routing guidance: “Use when…” vs. “Don’t use when…”, and a few key edge cases, all in `SKILL.md`.\n\n- Include negative examples (when the skill should *not* be triggered) alongside positive examples to improve routing accuracy.\n\n- If routing feels inconsistent, iterate on name, description, and examples before changing code.\n\nThis came up in “bulk upload” discussions: name and de",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/skills-in-openai-api-notebook/blocks/prose-s012-conclusion",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s012-conclusion.md",
+      "narrative": null,
+      "content": "## Conclusion\n\nSkills are the missing “middle layer” between prompts and tools: **prompts** define always-on behavior, **tools** provide atomic capabilities and side effects, and **skills** package repeatable procedures (instructions + scripts + assets) that the model can **mount and execute only when needed.**\n\n**Use skills to keep your system prompts lean and your workflows durable.** Start small—bundle one stable procedure with a clear `SKILL.md`, make it runnable as a tiny CLI, and ship it. After it’s in production, pin versions for reproducibility, iterate safely by publishing new version",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}
