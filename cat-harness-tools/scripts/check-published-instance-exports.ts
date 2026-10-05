@@ -62,7 +62,7 @@ import { basename, dirname, join, resolve } from "node:path";
 
 // `declarationPathIn` only, deliberately: it answers "is there a declaration
 // here" from the FILENAME convention and parses nothing, so this gate needs
-// no graph-kind registered to ask. `readDeclaration` would, and a gate that
+// no graph-typology registered to ask. `readDeclaration` would, and a gate that
 // throws on an unregistered kind reports a break it did not find.
 import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
 import { againstRef, qaResultPath, qaResultState, readQaResult, type QaResultState } from "../../cat-harness/scripts/qa-results.js";
@@ -274,7 +274,7 @@ function subjectsFrom(names: readonly string[], covered: readonly Invocation[]):
 
 /**
  * The stub `kg-export` names an instance's sidecar with — the declaration's
- * `stub ?? name` (`artefactStub`), read RAW so this gate needs no graph kind
+ * `stub ?? name` (`artefactStub`), read RAW so this gate needs no graph typology
  * registered. It was `basename(path)`, which is the same answer for
  * `./bootstrap` and the wrong one for `.`: the checkout root's directory is
  * named after wherever it was cloned, while its stub is its declared name

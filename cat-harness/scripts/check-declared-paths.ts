@@ -220,8 +220,8 @@ function declaredPrefixes(root: string): string[] {
  * discoverable half is the access pattern that needs guarding, and a directory
  * is a place to look that may hold more than one part of a graph.
  */
-export function isAddressedByPath(d: { graphKinds?: readonly string[] }): boolean {
-  const kinds = d.graphKinds ?? [];
+export function isAddressedByPath(d: { graphTypologies?: readonly string[] }): boolean {
+  const kinds = d.graphTypologies ?? [];
   return kinds.length > 0 && kinds.every((k) => k === "code");
 }
 
@@ -239,7 +239,7 @@ const RESULT_KINDS = new Set(["qa", "health"]);
  */
 export function absentResultDirs(root: string): string[] {
   return resolveDirectories([{ name: "(local)", root, own: true }])
-    .filter((d) => (d.graphKinds ?? []).some((k) => RESULT_KINDS.has(k)))
+    .filter((d) => (d.graphTypologies ?? []).some((k) => RESULT_KINDS.has(k)))
     .map((d) => d.absPath)
     .filter((abs) => !existsSync(abs));
 }

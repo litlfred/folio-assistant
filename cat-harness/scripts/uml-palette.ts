@@ -3,7 +3,7 @@
  * are declared.
  *
  * The Mermaid pages take their colours from that stylesheet through a CSS
- * class per graph kind. PlantUML cannot: its SVG carries no class hooks, and
+ * class per graph typology. PlantUML cannot: its SVG carries no class hooks, and
  * under ELK it drops a package's background colour too (measured 2026-09-23;
  * a class's colour survives). So the `.puml` files write a colour onto each
  * class, and this module is how they get the SAME colour the page would
@@ -19,7 +19,7 @@ import { readDeclaration, siteDir } from "../schemas/cat-harness.js";
 export interface UmlPalette {
   /** `schema` | `scenario` | `process` | `state` | `test` → hex. */
   family: Record<string, string>;
-  /** Graph kind → hex, falling back to the neutral tint for an unplaced kind. */
+  /** Graph typology → hex, falling back to the neutral tint for an unplaced kind. */
   kind(kind: string): string;
   /** Formalization status (and `reviewed_human` / `reviewed_agentic`) → hex. */
   status: Record<string, string>;

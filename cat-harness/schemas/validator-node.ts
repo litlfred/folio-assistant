@@ -28,7 +28,7 @@ export const ValidatorNodeSchema = z
     $schema: z.literal(VALIDATOR_NODE_TAG),
     /** This validator's own name, as its file is named. */
     id: z.string().regex(/^[a-z][a-z0-9-]*$/, "a lower-case id, e.g. ig-ast-manifest"),
-    /** What it validates: a graph kind, and the `$schema` family within it when the kind has several. */
+    /** What it validates: a graph typology, and the `$schema` family within it when the kind has several. */
     validates: z
       .object({
         kind: z.string().min(1),

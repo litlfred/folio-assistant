@@ -23,8 +23,8 @@
  *
  * ## Why a separate preload
  *
- * Imports are hoisted, and `test-preload.ts` imports the graph-kind registry,
- * which scans declared `kinds/` graphs at load. The variable must be set
+ * Imports are hoisted, and `test-preload.ts` imports the graph-typology registry,
+ * which scans declared `typologies/` graphs at load. The variable must be set
  * before that, so this file imports only the two leaves it needs and runs
  * first (`bunfig.toml`).
  */

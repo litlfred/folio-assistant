@@ -1,6 +1,6 @@
 # AGENTS.md — cat-openapi
 
-The **OpenAPI harness**. It holds OpenAPI 3 documents as nodes of graph kind
+The **OpenAPI harness**. It holds OpenAPI 3 documents as nodes of graph typology
 `openapi`, and gives every **operation** in them a page and an IRI.
 
 ## The one rule
@@ -15,7 +15,7 @@ operation says is a fix upstream, then a re-ingest.
 
 ## What an instance declares
 
-1. A directory of graph kind `openapi`, `served: true`, in its `<instance>.json`.
+1. A directory of graph typology `openapi`, `served: true`, in its `<instance>.json`.
 2. `cat-openapi.config.json` at its own root, naming that directory and each
    document's source (`schemas/openapi.ts`, `OpenApiConfigSchema`).
 3. `cat-openapi` in its `needs`.
@@ -46,7 +46,7 @@ never suffixed — a suffix would be an IRI nobody chose.
 bootstrap → bootstrap-tools → cat-harness → cat-openapi → (instances that hold OpenAPI documents)
 ```
 
-This layer may import `cat-harness`, and nothing above it. The graph kind sits
+This layer may import `cat-harness`, and nothing above it. The graph typology sits
 in the harness's registry beside `fhir-artifact-index`, with a `nodeSchemas`
 pointer back here, because every checker that reads an instance declaration
 must know the kind and the harness cannot import this layer.

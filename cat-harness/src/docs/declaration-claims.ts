@@ -64,7 +64,7 @@ export function declaredGraphs(repoRoot: string): GraphSources {
     if (file === undefined) continue;
     const decl = readDeclaration(instance);
     for (const entry of decl?.directories ?? []) {
-      for (const graph of entry.graphKinds ?? []) {
+      for (const graph of entry.graphTypologies ?? []) {
         (out.get(graph) ?? out.set(graph, new Set()).get(graph)!).add(join(instance, file));
       }
     }
@@ -203,7 +203,7 @@ export function claimsIn(markdown: string, file: string, graphs: GraphSources): 
  * hand-written list is the duplicated-fact defect this repository has a rule
  * about:
  *
- * | graph kind | why its prose is not a claim |
+ * | graph typology | why its prose is not a claim |
  * |---|---|
  * | `fsh-guts` | *"the trashcan that is kept"* — the declared destination for deprecated content. A retired document naming a retired filename is correct history, and rewriting it destroys the record |
  * | `beans`, `bean-defs`, `workflow-state` | a bean records what was true when it was written; the same argument, and the reason a bean is scrapped rather than deleted |
@@ -221,7 +221,7 @@ export function historicalPrefixes(repoRoot: string): string[] {
   const out = new Set<string>();
   for (const instance of instanceRootsIn(repoRoot)) {
     for (const entry of readDeclaration(instance)?.directories ?? []) {
-      if (!(entry.graphKinds ?? []).some((g) => historical.has(g))) continue;
+      if (!(entry.graphTypologies ?? []).some((g) => historical.has(g))) continue;
       const path = entry.path.replace(/^\.\//, "").replace(/\/?$/, "/");
       // REPO-relative, not instance-relative — measured, after a draft that
       // prefixed each path with its declaring instance produced

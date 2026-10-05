@@ -55,11 +55,11 @@ const INSTANCE = "cat-harness";
  * `site-dir-single-answer.test.ts` guards against. The fixture derives them.
  */
 const ENTRIES = [
-  { id: "docs", path: "docs/", graphKinds: ["docs"] },
-  { id: "root-docs", path: "docs/", scope: "repository", graphKinds: ["docs"] },
+  { id: "docs", path: "docs/", graphTypologies: ["docs"] },
+  { id: "root-docs", path: "docs/", scope: "repository", graphTypologies: ["docs"] },
   // A non-docs entry, so the filter is doing something rather than happening
   // to match everything.
-  { id: "schemas", path: "schemas/", graphKinds: ["schemas"] },
+  { id: "schemas", path: "schemas/", graphTypologies: ["schemas"] },
 ] as const;
 
 const layerDir = (root: string, id: string): string => {

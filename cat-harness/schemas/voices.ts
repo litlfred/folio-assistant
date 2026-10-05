@@ -64,7 +64,7 @@ import { z } from "zod";
 import { RepoFullNameSchema } from "./repo-full-name.js";
 
 import { kgNodeLabelShape, type KgNodeLabels } from "./kg-node";
-import { defaultGraphKinds, directoryForGraph } from "./cat-harness.js";
+import { defaultGraphTypologies, directoryForGraph } from "./cat-harness.js";
 import { BLOCK_KINDS } from "./block-kinds.js";
 import { ProcessElementIdSchema } from "./process-element-id.js";
 
@@ -702,7 +702,7 @@ export function voiceFilesIn(dir: string, kind: string = "voices"): { id: string
   // 2026-09-30: "vendors/<id>/ should be declared subgraphs along with
   // vendors/"). It names the sub-graphs this directory holds, and it is not a
   // voice, so it is not read as one.
-  const declFile = defaultGraphKinds.get(kind)?.declarationFile;
+  const declFile = defaultGraphTypologies.get(kind)?.declarationFile;
   const subgraphs = declaredSubgraphs(dir, declFile);
   for (const e of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
     if (e.isDirectory()) {
@@ -743,9 +743,9 @@ export function voiceFilesIn(dir: string, kind: string = "voices"): { id: string
 }
 
 /** The file name of a voices directory's from-within declaration, if the kind has one. */
-export const VOICES_DECLARATION_FILE = defaultGraphKinds.get("voices")?.declarationFile;
+export const VOICES_DECLARATION_FILE = defaultGraphTypologies.get("voices")?.declarationFile;
 
-/** The sub-graphs `dir`'s declaration names: directory name → its graph kind. */
+/** The sub-graphs `dir`'s declaration names: directory name → its graph typology. */
 function declaredSubgraphs(dir: string, declFile: string | undefined): Map<string, string> {
   const out = new Map<string, string>();
   if (declFile === undefined) return out;
@@ -754,11 +754,11 @@ function declaredSubgraphs(dir: string, declFile: string | undefined): Map<strin
   // A declaration that will not parse throws, as a malformed voice does: an
   // unreadable declaration must not present as a directory with no sub-graphs.
   const parsed = JSON.parse(readFileSync(p, "utf-8")) as {
-    directories?: Array<{ path?: string; graphKinds?: string[] }>;
+    directories?: Array<{ path?: string; graphTypologies?: string[] }>;
   };
   for (const d of parsed.directories ?? []) {
     const name = (d.path ?? "").replace(/^\.\//, "").replace(/\/+$/, "");
-    const kind = d.graphKinds?.[0];
+    const kind = d.graphTypologies?.[0];
     if (name !== "" && !name.includes("/") && kind !== undefined) out.set(name, kind);
   }
   return out;

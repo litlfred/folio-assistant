@@ -93,15 +93,15 @@ export function outDirFor(source: string): string {
 
 /** The catalogue nodes directory, through the source instance's declaration. */
 export function catalogueNodesDir(source: string): string {
-  const d = dirsOf(source).find((x) => x.graphKinds.includes("catalogue" as never));
-  if (!d) throw new Error(`${source} declares no directory of graph kind "catalogue"`);
+  const d = dirsOf(source).find((x) => x.graphTypologies.includes("catalogue" as never));
+  if (!d) throw new Error(`${source} declares no directory of graph typology "catalogue"`);
   const cat = JSON.parse(readFileSync(join(d.absPath, "catalogue.json"), "utf8")) as { nodesDir: string };
   return join(d.absPath, cat.nodesDir);
 }
 
 /** The library directory of `source`, through its declaration. */
 export function libraryDirOfSource(source: string): string {
-  const d = dirsOf(source).find((x) => x.graphKinds.includes("library" as never));
+  const d = dirsOf(source).find((x) => x.graphTypologies.includes("library" as never));
   if (!d) throw new Error(`${source} declares no library directory`);
   return d.absPath;
 }

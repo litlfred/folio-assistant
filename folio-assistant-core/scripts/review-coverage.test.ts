@@ -49,7 +49,7 @@ describe("the command", () => {
     git("config", "user.email", "t@example.org");
     git("config", "user.name", "t");
     mkdirSync(join(dir, "todos", "verdicts"), { recursive: true });
-    writeFileSync(join(dir, "todos", "todos.json"), JSON.stringify({ name: "t", directories: [{ id: "verdicts", path: "verdicts", graphKinds: ["review-verdicts"] }] }));
+    writeFileSync(join(dir, "todos", "todos.json"), JSON.stringify({ name: "t", directories: [{ id: "verdicts", path: "verdicts", graphTypologies: ["review-verdicts"] }] }));
     writeFileSync(join(dir, "changeset.json"), JSON.stringify(changeset));
     writeFileSync(join(dir, "blocks.json"), JSON.stringify(blocks));
     writeFileSync(join(dir, "review-comments.json"), JSON.stringify(rc));

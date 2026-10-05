@@ -79,7 +79,7 @@ describe("a declared directory that is not there is a ROW, not a silence", () =>
           {
             id: "voices",
             path: "skills/voices/",
-            graphKinds: ["voices"],
+            graphTypologies: ["voices"],
             description: "declared and deliberately absent — the fixture for this test",
           },
         ],
@@ -297,7 +297,7 @@ describe("vendor overrides live in DECLARED sub-graphs of voices", () => {
       profile("base-voice-acme", "base-voice"),
     );
     const decl = (ids: string[]) =>
-      JSON.stringify({ name: "t", directories: ids.map((id) => ({ id, path: id, graphKinds: ["voice-vendors"] })) });
+      JSON.stringify({ name: "t", directories: ids.map((id) => ({ id, path: id, graphTypologies: ["voice-vendors"] })) });
     writeFileSync(join(voices, "voices.json"), decl(["vendors"]));
     writeFileSync(join(voices, "vendors", "vendors.json"), decl(["base-voice-acme"]));
     return root;

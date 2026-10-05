@@ -4,7 +4,7 @@
 
 # cat-openapi-validators
 
-The validators cat-openapi's code provides, one folio-validator/v1 node each naming the graph kind and $schema family it checks (bean riit). Owner, 2026-10-04: validators are KG nodes, and the validator names the family.
+The validators cat-openapi's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit). Owner, 2026-10-04: validators are KG nodes, and the validator names the family.
 
 Part of [C@T OpenAPI](../README.md) 0.1.0, declared as `cat-openapi-validators`, holding `validators`.
 

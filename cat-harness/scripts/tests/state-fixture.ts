@@ -31,7 +31,7 @@ export function git(cwd: string, ...args: string[]): string {
 
 /** A declaration with one directory, `todos/`, sourced as given. */
 export function writeDeclaration(root: string, source: object | undefined): void {
-  const entry = { id: ID, path: `${ID}/`, graphKinds: [ID], ...(source ? { source } : {}) };
+  const entry = { id: ID, path: `${ID}/`, graphTypologies: [ID], ...(source ? { source } : {}) };
   writeFileSync(join(root, "t.json"), JSON.stringify({ name: "t", directories: [entry] }, null, 2) + "\n");
 }
 

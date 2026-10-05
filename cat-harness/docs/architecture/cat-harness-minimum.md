@@ -94,7 +94,7 @@ The harness owns the vocabulary of *work*, not of *content*.
 | `Process` (BPMN) / `Decision` (DMN) | the deterministic workflow itself |
 | **`Todo`** | user/agent workflow state (16:28, explicit). **Already exists** — `TodoItem`, `schemas/types.ts:1330`. It moves; it does not need writing. |
 | **`Bean`** | ditto, and **this one is genuinely missing**. `BeanRef` (`src/workflow/bean-link.ts:40`) is a *reference* to a bean, not a schema for one. |
-| `CatHarness` declaration | which directories an instance scans, and each one's graph kind — already built, `schemas/cat-harness.ts` |
+| `CatHarness` declaration | which directories an instance scans, and each one's graph typology — already built, `schemas/cat-harness.ts` |
 | `Content` (abstract) | the *base* only: identity, label, provenance. No block kinds, no profiles. |
 
 **Of the two, only `Bean` is the gap** — I checked rather than assuming, and
@@ -150,7 +150,7 @@ Classified by reading each skill's description, not its filename — the
 | `getting-started` | folio-creation triage (16:13, explicit) |
 | `repo-conversion` | laying the harness over an existing repo — bootstrap |
 | `integration-watcher` *(abstract parent only)* | the shared watcher mechanics; the concrete watchers are downstream |
-| `directory-conventions` | the declaration and its graph kinds |
+| `directory-conventions` | the declaration and its graph typologies |
 
 | `process-state` | reading a BPMN swimlane as process state for the role you are playing, and recovering when you find yourself outside it |
 | `skills-and-tools` | the skill/Tool separation — the SOP every other skill follows |
@@ -606,8 +606,8 @@ id points at `skills/`, flat. The layout above is the target for
 ## What is deliberately not here
 
 - **No implementation.** Nothing in this page creates a repo or moves a file.
-- **The `folio` graph kind is currently mis-sited.** `schemas/cat-harness.ts`
-  lists `folio` among the harness's graph kinds, which contradicts 16:28 —
+- **The `folio` graph typology is currently mis-sited.** `schemas/cat-harness.ts`
+  lists `folio` among the harness's graph typologies, which contradicts 16:28 —
   a renderable kind belongs to core. Tracked separately; it is a small
   correction, not a rewrite.
 - **Swarm management** (14:48 — model levels, swarm size, CPU) is named as a

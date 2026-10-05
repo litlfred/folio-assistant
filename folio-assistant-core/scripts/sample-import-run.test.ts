@@ -42,7 +42,7 @@ function fixture(): string {
     name: "t",
     stub: "t",
     canonicalUrl: "https://example.invalid/t",
-    directories: [{ id: "fsh-guts", path: "kept-trash/", description: "trashcan", graphKinds: ["fsh-guts"] }],
+    directories: [{ id: "fsh-guts", path: "kept-trash/", description: "trashcan", graphTypologies: ["fsh-guts"] }],
   }));
   const copy = (rel: string) => {
     const to = join(root, "who-iris", rel);

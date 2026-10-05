@@ -11,7 +11,7 @@ until the owner ruled on 2026-09-30:
 *"who voices style guide is derivative KG content from who-iris, merge content
 into subgraph. including docs."* Bean `qsx4` carried it in by `git mv`:
 
-| was | is | graph kind |
+| was | is | graph typology |
 |---|---|---|
 | `who-style-guide/skills/voices/` | [`who-iris/skills/voices/`](../skills/voices/) | `voices`, declared from within by `skills/skills.json` |
 | `who-style-guide/glossary/` | [`who-iris/glossary/`](../glossary/) | `glossary` |

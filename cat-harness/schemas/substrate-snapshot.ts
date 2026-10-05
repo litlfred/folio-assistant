@@ -50,8 +50,8 @@ export const KG_PART_RECORD_SCHEMA = "folio-kg-materialization/v1";
  */
 export const KG_NODES_RECORD_SCHEMA = "folio-kg-nodes/v1";
 
-/** The graph kind of the directory an instance keeps its snapshots in. Found through the declaration, never by path. */
-export const SNAPSHOT_GRAPH_KIND = "substrate-snapshot";
+/** The graph typology of the directory an instance keeps its snapshots in. Found through the declaration, never by path. */
+export const SNAPSHOT_GRAPH_TYPOLOGY = "substrate-snapshot";
 
 /** A snapshot's filename: `<subscription id>.substrate.json`. */
 export const SNAPSHOT_SUFFIX = ".substrate.json";
@@ -75,7 +75,7 @@ export const SubstrateSnapshotSchema = z
         name: z.string().min(1),
         title: z.string().optional(),
         version: z.string().optional(),
-        subgraphs: z.array(z.object({ id: z.string().min(1), graphKinds: z.array(z.string().min(1)) }).strict()),
+        subgraphs: z.array(z.object({ id: z.string().min(1), graphTypologies: z.array(z.string().min(1)) }).strict()),
         harnesses: z.array(z.string().min(1)).min(1),
       })
       .strict(),

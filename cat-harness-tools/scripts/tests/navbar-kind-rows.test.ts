@@ -1,11 +1,11 @@
 /**
- * The graph-kind rows a REAL instance's rail is built from declare themselves
+ * The graph-typology rows a REAL instance's rail is built from declare themselves
  * kind rows (#2151).
  *
  * Owner, 2026-10-05: *"alignment of harnesses is off"*. `fa-nav-kind`, the
  * strip-column indent, used to be inferred from "has an SVG glyph", and #2122
  * gave harness rows glyph marks too. It is now `NavItem.kind`, set by
- * `graphKindRowDecor`. `cat-harness/scripts/tests/navbar.test.ts` asserts the
+ * `graphTypologyRowDecor`. `cat-harness/scripts/tests/navbar.test.ts` asserts the
  * markup from rows built by that function directly. This file asserts that
  * `declaredGraphs` threads the field through for a real instance.
  *

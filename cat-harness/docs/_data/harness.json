@@ -141,7 +141,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 898,
+      "count": 910,
       "unit": "beans"
     },
     {
@@ -479,7 +479,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 19
         },
         {
@@ -785,7 +785,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 7
         },
         {
@@ -929,7 +929,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 4
         },
         {
@@ -1031,7 +1031,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 1
         },
         {
@@ -1099,7 +1099,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 16
         },
         {
@@ -1397,7 +1397,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 12
         },
         {
@@ -1627,7 +1627,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 16
         },
         {
@@ -1656,11 +1656,6 @@
           "kind": "content-adapters",
           "note": "no viewer yet",
           "label": "Content adapters"
-        },
-        {
-          "kind": "kinds",
-          "note": "no viewer yet",
-          "label": "Graph kinds"
         },
         {
           "kind": "library",
@@ -1714,6 +1709,11 @@
           "label": "Translation sources"
         },
         {
+          "kind": "typologies",
+          "note": "no viewer yet",
+          "label": "Graph typologies"
+        },
+        {
           "kind": "voices",
           "path": "/cat-harness/voices/folio-assistant-sci/",
           "label": "Voices"
@@ -1745,7 +1745,7 @@
           "path": "folio-assistant-sci/translations/"
         },
         {
-          "id": "folio-assistant-sci-block-kinds",
+          "id": "folio-assistant-sci-block-typologies",
           "kinds": [
             "block-kinds"
           ],
@@ -1761,12 +1761,12 @@
           "path": "folio-assistant-sci/content-adapters/"
         },
         {
-          "id": "folio-assistant-sci-kinds",
+          "id": "folio-assistant-sci-typologies",
           "kinds": [
-            "kinds"
+            "typologies"
           ],
           "where": "local",
-          "path": "folio-assistant-sci/kinds/"
+          "path": "folio-assistant-sci/typologies/"
         },
         {
           "id": "library",
@@ -1866,7 +1866,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 10 graph(s) with no published viewer — attestations, block-kinds, code, content-adapters, kinds, pipeline-plugins, qa, qa-checkers, tools, translation-sources. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 10 graph(s) with no published viewer — attestations, block-kinds, code, content-adapters, pipeline-plugins, qa, qa-checkers, tools, translation-sources, typologies. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -1908,7 +1908,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 9
         },
         {
@@ -1922,11 +1922,6 @@
           "kind": "code",
           "note": "no viewer yet",
           "label": "Code"
-        },
-        {
-          "kind": "kinds",
-          "note": "no viewer yet",
-          "label": "Graph kinds"
         },
         {
           "kind": "library",
@@ -1959,6 +1954,11 @@
           "label": "Translation sources"
         },
         {
+          "kind": "typologies",
+          "note": "no viewer yet",
+          "label": "Graph typologies"
+        },
+        {
           "kind": "validators",
           "note": "no viewer yet",
           "label": "Validators"
@@ -1982,12 +1982,12 @@
           "path": "fhir-harness/validators/"
         },
         {
-          "id": "fhir-harness-kinds",
+          "id": "fhir-harness-typologies",
           "kinds": [
-            "kinds"
+            "typologies"
           ],
           "where": "local",
-          "path": "fhir-harness/kinds/"
+          "path": "fhir-harness/typologies/"
         },
         {
           "id": "library",
@@ -2039,7 +2039,7 @@
         }
       ],
       "findings": [
-        "fhir-harness: declares 6 graph(s) with no published viewer — code, kinds, qa, tools, translation-sources, validators. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: declares 6 graph(s) with no published viewer — code, qa, tools, translation-sources, typologies, validators. Declared and not rendered is a gap, not a dead link.",
         "fhir-harness: a viewer is published at /cat-harness/schemas/fhir-harness/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it.",
         "fhir-harness: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/fhir-harness/) rather than the instance's own themed root."
       ],
@@ -2055,9 +2055,9 @@
     },
     {
       "name": "folio-assistant-core",
-      "title": "Folio Assistant Core",
-      "label": "Folio Assistant Core",
-      "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph kind itself.",
+      "title": "folio-assistant-core",
+      "label": "folio-assistant-core",
+      "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph typology itself.",
       "footer": false,
       "needs": [
         "cat-harness",
@@ -2100,24 +2100,24 @@
       "toneFrom": "avatar",
       "reads": "a leaf of paper with lines — the folio itself",
       "genericAvatar": false,
-      "instantiated": true,
-      "href": "/folio-assistant-core/",
-      "hrefKind": "folio",
+      "instantiated": false,
+      "href": "/cat-harness/schemas/folio-assistant-core/",
+      "hrefKind": "viewer",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 18
+          "value": 17
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 17
+          "label": "declared graph typologies",
+          "value": 16
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 9
+          "value": 8
         }
       ],
       "visualisations": [
@@ -2138,11 +2138,6 @@
           "label": "Code"
         },
         {
-          "kind": "docs",
-          "path": "/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/",
-          "label": "Docs"
-        },
-        {
           "kind": "folio",
           "note": "no viewer yet",
           "label": "Folio"
@@ -2151,11 +2146,6 @@
           "kind": "glossary",
           "path": "/glossary/",
           "label": "Glossary"
-        },
-        {
-          "kind": "kinds",
-          "note": "no viewer yet",
-          "label": "Graph kinds"
         },
         {
           "kind": "library",
@@ -2198,6 +2188,11 @@
           "label": "Translation sources"
         },
         {
+          "kind": "typologies",
+          "note": "no viewer yet",
+          "label": "Graph typologies"
+        },
+        {
           "kind": "validators",
           "note": "no viewer yet",
           "label": "Validators"
@@ -2210,14 +2205,6 @@
       ],
       "subgraphs": [
         {
-          "id": "folio-assistant-core-docs",
-          "kinds": [
-            "docs"
-          ],
-          "where": "local",
-          "path": "folio-assistant-core/docs/"
-        },
-        {
           "id": "folio-assistant-core-translations",
           "kinds": [
             "translation-sources"
@@ -2226,7 +2213,7 @@
           "path": "folio-assistant-core/translations/"
         },
         {
-          "id": "folio-assistant-core-block-kinds",
+          "id": "folio-assistant-core-block-typologies",
           "kinds": [
             "block-kinds"
           ],
@@ -2242,12 +2229,12 @@
           "path": "folio-assistant-core/validators/"
         },
         {
-          "id": "folio-assistant-core-kinds",
+          "id": "folio-assistant-core-typologies",
           "kinds": [
-            "kinds"
+            "typologies"
           ],
           "where": "local",
-          "path": "folio-assistant-core/kinds/"
+          "path": "folio-assistant-core/typologies/"
         },
         {
           "id": "core-schemas",
@@ -2356,7 +2343,8 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 8 graph(s) with no published viewer — block-kinds, code, folio, kinds, qa, tools, translation-sources, validators. Declared and not rendered is a gap, not a dead link."
+        "folio-assistant-core: declares 8 graph(s) with no published viewer — block-kinds, code, folio, qa, tools, translation-sources, typologies, validators. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
         "close",
@@ -2372,7 +2360,7 @@
       "name": "cat-openapi",
       "title": "C@T OpenAPI",
       "label": "C@T OpenAPI",
-      "description": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph kind `openapi`, and gives every operation in them a page and an IRI, rendered in the browser from the served document.",
+      "description": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph typology `openapi`, and gives every operation in them a page and an IRI, rendered in the browser from the served document.",
       "footer": false,
       "needs": [
         "cat-harness"
@@ -2397,7 +2385,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 4
         },
         {
@@ -2413,14 +2401,14 @@
           "label": "Code"
         },
         {
-          "kind": "kinds",
-          "note": "no viewer yet",
-          "label": "Graph kinds"
-        },
-        {
           "kind": "schemas",
           "path": "/cat-harness/schemas/cat-openapi/",
           "label": "Schemas"
+        },
+        {
+          "kind": "typologies",
+          "note": "no viewer yet",
+          "label": "Graph typologies"
         },
         {
           "kind": "validators",
@@ -2438,12 +2426,12 @@
           "path": "cat-openapi/validators/"
         },
         {
-          "id": "cat-openapi-kinds",
+          "id": "cat-openapi-typologies",
           "kinds": [
-            "kinds"
+            "typologies"
           ],
           "where": "local",
-          "path": "cat-openapi/kinds/"
+          "path": "cat-openapi/typologies/"
         },
         {
           "id": "cat-openapi-schemas",
@@ -2463,7 +2451,7 @@
         }
       ],
       "findings": [
-        "cat-openapi: declares 3 graph(s) with no published viewer — code, kinds, validators. Declared and not rendered is a gap, not a dead link.",
+        "cat-openapi: declares 3 graph(s) with no published viewer — code, typologies, validators. Declared and not rendered is a gap, not a dead link.",
         "cat-openapi: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/cat-openapi/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -2504,7 +2492,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 1
         },
         {
@@ -2651,7 +2639,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 29
         },
         {
@@ -3274,7 +3262,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 5
         },
         {
@@ -3421,7 +3409,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 5
         },
         {
@@ -3680,93 +3668,6 @@
     ]
   },
   "railScopes": [
-    {
-      "name": "folio-assistant-core",
-      "title": "Folio Assistant Core",
-      "href": "/folio-assistant-core/",
-      "folders": [
-        {
-          "kind": "block-kinds",
-          "label": "Block kinds",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "code",
-          "label": "Code",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "docs",
-          "label": "Docs",
-          "path": "/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/"
-        },
-        {
-          "kind": "folio",
-          "label": "Folio",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "glossary",
-          "label": "Glossary",
-          "path": "/glossary/"
-        },
-        {
-          "kind": "kinds",
-          "label": "Graph kinds",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "library",
-          "label": "Library",
-          "path": "/cat-harness/library/folio-assistant-core/"
-        },
-        {
-          "kind": "methodology",
-          "label": "Methodologies",
-          "path": "/methodologies/"
-        },
-        {
-          "kind": "processes",
-          "label": "Processes",
-          "path": "/processes/"
-        },
-        {
-          "kind": "qa",
-          "label": "QA",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "schemas",
-          "label": "Schemas",
-          "path": "/cat-harness/schemas/folio-assistant-core/"
-        },
-        {
-          "kind": "skills",
-          "label": "Skills",
-          "path": "/cat-harness/auto-docs/index/skills/core-skills/"
-        },
-        {
-          "kind": "tools",
-          "label": "Tools",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "translation-sources",
-          "label": "Translation sources",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "validators",
-          "label": "Validators",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "voices",
-          "label": "Voices",
-          "path": "/cat-harness/voices/folio-assistant-core/"
-        }
-      ]
-    },
     {
       "name": "smart-immunizations",
       "title": "smart-immunizations",
@@ -4808,7 +4709,7 @@
           },
           {
             "key": "directories",
-            "summary": "9: fhir-harness-translations, fhir-harness-validators, fhir-harness-kinds, library, fhir-ig-…"
+            "summary": "9: fhir-harness-translations, fhir-harness-validators, fhir-harness-typologies, library, fhi…"
           },
           {
             "key": "needs",
@@ -4826,8 +4727,8 @@
       },
       {
         "name": "folio-assistant-core",
-        "title": "Folio Assistant Core",
-        "group": "instantiated",
+        "title": "folio-assistant-core",
+        "group": "checkout",
         "declaredIn": "folio-assistant-core/folio-assistant-core.json",
         "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/folio-assistant-core.json",
         "editHref": "https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/folio-assistant-core.json",
@@ -4835,10 +4736,6 @@
           {
             "key": "name",
             "summary": "folio-assistant-core"
-          },
-          {
-            "key": "title",
-            "summary": "Folio Assistant Core"
           },
           {
             "key": "description",
@@ -4866,7 +4763,7 @@
           },
           {
             "key": "directories",
-            "summary": "17: folio-assistant-core-docs, folio-assistant-core-translations, folio-assistant-core-block-…"
+            "summary": "16: folio-assistant-core-translations, folio-assistant-core-block-typologies, folio-assistant…"
           },
           {
             "key": "stickies",
@@ -4904,7 +4801,7 @@
           },
           {
             "key": "description",
-            "summary": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph kind `openapi`, and give…"
+            "summary": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph typology `openapi`, and …"
           },
           {
             "key": "avatar",
@@ -4928,7 +4825,7 @@
           },
           {
             "key": "directories",
-            "summary": "4: cat-openapi-validators, cat-openapi-kinds, cat-openapi-schemas, cat-openapi-scripts"
+            "summary": "4: cat-openapi-validators, cat-openapi-typologies, cat-openapi-schemas, cat-openapi-scripts"
           },
           {
             "key": "needs",

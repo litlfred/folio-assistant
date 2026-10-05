@@ -68,7 +68,7 @@ The owner's design, on the render pipeline:
 
 So the runner cannot own one policy — two steps must stop the build and the
 rest must not. The field is **required rather than defaulted**, for the same
-reason a graph kind must state `holds`: a default lets a step ship without
+reason a graph typology must state `holds`: a default lets a step ship without
 anybody deciding, and the two policies are not interchangeable.
 
 **A failure skips what NEEDED it**, computed transitively from `needs` — not

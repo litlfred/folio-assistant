@@ -168,16 +168,75 @@
   .searchbar input {
     flex: 1; padding: 0.7rem 0.9rem; font-size: 1rem; font-family: inherit;
     border: 1px solid var(--iris-edge); border-right: none; border-radius: 4px 0 0 4px;
-    background: #fff; color: var(--iris-muted);
+    background: #fff; color: var(--iris-ink);
   }
   .searchbar button {
     padding: 0.7rem 1.4rem; font-size: 1rem; font-family: inherit; font-weight: 600;
     border: 1px solid var(--iris-accent); border-radius: 0 4px 4px 0;
-    background: var(--iris-accent); color: #fff;
+    background: var(--iris-accent); color: #fff; cursor: pointer;
   }
-  /* The disabled attribute already communicates this to a pointer; the cursor
-     says it to a reader who hovers before clicking. */
-  .searchbar input[disabled], .searchbar button[disabled] { cursor: not-allowed; opacity: 1; }
+  .searchbar button:hover, .searchbar button:focus {
+    background: var(--iris-dark);
+  }
+  .search-results-panel {
+    margin: 1rem 0 1.5rem;
+    border: 1px solid var(--iris-edge);
+    border-radius: 4px;
+    background: var(--iris-surface);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 1rem;
+  }
+  .search-results-panel h3 {
+    margin: 0 0 0.8rem;
+    font-size: 1.05rem;
+    color: var(--iris-dark);
+  }
+  .search-results-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .search-result-item {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--iris-edge);
+    border-radius: 4px;
+    background: var(--iris-wash);
+  }
+  .search-result-item a {
+    font-weight: 600;
+    font-size: 1.02rem;
+  }
+  .search-result-meta {
+    font-size: 0.88rem;
+    color: var(--iris-muted);
+    margin-top: 0.25rem;
+  }
+  .search-result-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    background: var(--iris-accent);
+    color: #fff;
+    margin-right: 0.5rem;
+  }
+  .search-remote-box {
+    border-top: 1px solid var(--iris-edge);
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+    font-size: 0.92rem;
+  }
+  mark.search-mark {
+    background: #ffeb3b;
+    color: inherit;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
   .searchnote { font-size: 0.88rem; color: var(--iris-muted); margin: 0.4rem 0 2rem; }
   .ordering { font-size: 0.88rem; color: var(--iris-muted); margin: 0.2rem 0 1.4rem; }
 

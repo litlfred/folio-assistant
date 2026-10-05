@@ -87,7 +87,7 @@ subsumes the other:
 
 | layer | reaches | fails when |
 |---|---|---|
-| `linkTarget` / `decodeLinkTarget` | **every** generated README link, in every graph kind, including directory names | never — it is total over what the generator writes |
+| `linkTarget` / `decodeLinkTarget` | **every** generated README link, in every graph typology, including directory names | never — it is total over what the generator writes |
 | this check | `uploads` and `library` **names**, before anything links them | a name reaches something that is not that generator |
 
 The encoder is the one that keeps `main` green. This check is the one that keeps

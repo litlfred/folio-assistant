@@ -1,5 +1,5 @@
 /**
- * Resolving a graph kind's **validator** — the one parameter that turns
+ * Resolving a graph typology's **validator** — the one parameter that turns
  * "validate a node" from one case per schema into a lookup.
  *
  * Bean `folio-assistant-i31r`, route A of `folio-assistant-3lbz`, issue #223
@@ -10,9 +10,9 @@
  * 199 exported Zod schemas, and a Tool per schema would be 199 nodes nobody
  * invokes. The owner, 2026-09-20: *"a Tool per Zod schema... no, but there
  * should be common patterns (single pattern?) with some parameters more or
- * less"*. The parameter is the **graph kind**: `harness.json` already says
+ * less"*. The parameter is the **graph typology**: `harness.json` already says
  * which directory holds which kind, so "what is this file" is already
- * answerable, and {@link GraphKindDef.validator} supplies the other half.
+ * answerable, and {@link GraphTypologyDef.validator} supplies the other half.
  *
  * ## The business case, since it is not this repository's
  *
@@ -47,15 +47,15 @@ import type { z } from "zod";
 import ts from "typescript";
 
 import {
-  defaultGraphKinds,
+  defaultGraphTypologies,
   declaresInstance,
   instanceRootsIn,
   readDeclaration,
   siblingScopeFor,
-  resolveGraphKind,
-  type GraphKindRegistry,
+  resolveGraphTypology,
+  type GraphTypologyRegistry,
 } from "./cat-harness.js";
-import type { NodeSchemaRef } from "./graph-kind-registry.js";
+import type { NodeSchemaRef } from "./graph-typology-registry.js";
 
 /** A validator reference, split from its `module#Export` form. */
 export interface ValidatorRef {
@@ -126,7 +126,7 @@ export function isZodSchema(v: unknown): v is z.ZodTypeAny {
 }
 
 /**
- * The validator for a graph kind, or a stated reason there is none.
+ * The validator for a graph typology, or a stated reason there is none.
  *
  * `instanceRoot` is the INSTANCE root, not the repository root — the two
  * parted company when `#437` moved this instance under `cat-harness/`, and
@@ -135,19 +135,19 @@ export function isZodSchema(v: unknown): v is z.ZodTypeAny {
 export async function resolveKindValidator(
   kind: string,
   instanceRoot: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): Promise<KindValidator> {
-  const canonical = resolveGraphKind(kind).kind;
+  const canonical = resolveGraphTypology(kind).kind;
   const def = registry.get(canonical);
   if (!def) {
-    return { state: "unresolvable", kind: canonical, reason: `no such graph kind` };
+    return { state: "unresolvable", kind: canonical, reason: `no such graph typology` };
   }
   if (!def.validator) {
     return {
       state: "undeclared",
       kind: canonical,
       reason:
-        `graph kind "${canonical}" declares no validator, so a node of this kind ` +
+        `graph typology "${canonical}" declares no validator, so a node of this kind ` +
         `cannot be checked. Not a failure and not a pass.`,
     };
   }
@@ -219,7 +219,7 @@ async function loadValidator(
       reason:
         `${ref.module}#${ref.exportName} is not a Zod schema — it has no safeParse. ` +
         `A TypeScript interface documents a shape and cannot check one; that is the ` +
-        `distinction GraphKindDef.schema and .validator exist to keep apart.`,
+        `distinction GraphTypologyDef.schema and .validator exist to keep apart.`,
     };
   }
   return { state: "resolved", ref, schema: exported };
@@ -349,9 +349,9 @@ export function readShape(instanceRoot: string, shape: string): { ref: Validator
 export async function resolveNodeSchemas(
   kind: string,
   instanceRoot: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): Promise<NodeSchemaResolution[]> {
-  const canonical = resolveGraphKind(kind).kind;
+  const canonical = resolveGraphTypology(kind).kind;
   const map = (registry.get(canonical)?.nodeSchemas ?? {}) as Record<string, NodeSchemaRef>;
   const out: NodeSchemaResolution[] = [];
   for (const [tag, ref] of Object.entries(map)) {

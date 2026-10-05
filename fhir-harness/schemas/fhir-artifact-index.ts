@@ -18,7 +18,7 @@
  * an IG.
  *
  * So: different code, not different rules — the test AGENTS.md sets for adding
- * a content type, applied one level down to a graph kind.
+ * a content type, applied one level down to a graph typology.
  *
  * ## The index is RECONSTRUCTED, never downloaded
  *

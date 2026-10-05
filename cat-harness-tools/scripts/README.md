@@ -48,7 +48,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`check-escaped-markup.ts`](check-escaped-markup.ts) | a file |  |
 | [`check-folio-mount.ts`](check-folio-mount.ts) | a file |  |
 | [`check-foreign-paths.ts`](check-foreign-paths.ts) | a file |  |
-| [`check-graph-kind-work.ts`](check-graph-kind-work.ts) | a file |  |
+| [`check-graph-typology-work.ts`](check-graph-typology-work.ts) | a file |  |
 | [`check-harness-dirs.ts`](check-harness-dirs.ts) | a file |  |
 | [`check-harness-state.ts`](check-harness-state.ts) | a file |  |
 | [`check-image-roles.ts`](check-image-roles.ts) | a file |  |

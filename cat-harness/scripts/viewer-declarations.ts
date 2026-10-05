@@ -182,7 +182,7 @@ export function handledDirectories(
  */
 export function viewerPageFor(
   dirPath: string,
-  graphKinds: readonly string[],
+  graphTypologies: readonly string[],
   pages: readonly ViewerPage[],
   kindsByTool: ReadonlyMap<string, readonly string[]>,
 ): string | undefined {
@@ -190,7 +190,7 @@ export function viewerPageFor(
   const depth = (p: string): number => p.split("/").length;
   return pages
     .filter((p) => p.renders.includes(want))
-    .filter((p) => p.renderedBy !== undefined && (kindsByTool.get(p.renderedBy) ?? []).some((k) => graphKinds.includes(k)))
+    .filter((p) => p.renderedBy !== undefined && (kindsByTool.get(p.renderedBy) ?? []).some((k) => graphTypologies.includes(k)))
     .sort((a, b) => a.renders.length - b.renders.length || depth(b.page) - depth(a.page) || a.page.localeCompare(b.page))[0]?.page;
 }
 
@@ -201,7 +201,7 @@ export interface ViewedDirectory {
   id: string;
   path: string;
   scope?: string;
-  graphKinds?: readonly string[];
+  graphTypologies?: readonly string[];
   coverage?: Parameters<typeof visualisationsOf>[0];
   tile?: Tile;
 }
@@ -245,7 +245,7 @@ export function viewersOf(
   if (declared.length > 0) return declared;
   const { pages, kindsByTool } = index(repoRoot);
   const dirPath = renderedPath(repoRoot, join(d.scope === "repository" ? repoRoot : instanceRoot, d.path));
-  const page = viewerPageFor(dirPath, d.graphKinds ?? [], pages, kindsByTool);
+  const page = viewerPageFor(dirPath, d.graphTypologies ?? [], pages, kindsByTool);
   if (page === undefined) return [];
   return [{ ...d.tile, ref: page, title: d.tile?.title ?? d.id }];
 }

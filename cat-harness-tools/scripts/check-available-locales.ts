@@ -52,7 +52,7 @@
  * should judge what the repository holds, and an untracked scratch page under
  * `docs/` is not that.
  *
- * `docs` is the graph kind this audits — `cat-harness.json` declares `docs/`
+ * `docs` is the graph typology this audits — `cat-harness.json` declares `docs/`
  * with `graphs: ["docs"]`, and the locale subtrees walked here are part of it.
  * Declared rather than inferred, per `3srh`: a gate that does not say what it
  * audits turns every "unaudited" count into an upper bound rather than a

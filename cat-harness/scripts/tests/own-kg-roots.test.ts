@@ -48,12 +48,12 @@ function repo(dirs: string[], opts: { sibling?: string[] } = {}): { repoRoot: st
     JSON.stringify({
       name: "inst",
       directories: [
-        ...dirs.map((d) => ({ id: d.replace(/\//g, "-"), path: `${d}/`, graphKinds: ["cat-harness"] })),
+        ...dirs.map((d) => ({ id: d.replace(/\//g, "-"), path: `${d}/`, graphTypologies: ["cat-harness"] })),
         ...(opts.sibling ?? []).map((d) => ({
           id: `sib-${d.replace(/\//g, "-")}`,
           path: `${d}/`,
           scope: "repository",
-          graphKinds: ["cat-harness"],
+          graphTypologies: ["cat-harness"],
         })),
       ],
     }),

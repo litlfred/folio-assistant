@@ -38,7 +38,7 @@ function repo(instances: Record<string, string | null>): string {
     mkdirSync(join(inst, "tools"), { recursive: true });
     writeDeclaration(inst, {
       name,
-      directories: [{ id: "tools", path: "tools/", graphKinds: ["tools"] }],
+      directories: [{ id: "tools", path: "tools/", graphTypologies: ["tools"] }],
     });
     if (index !== null) writeFileSync(join(inst, "tools", "index.ts"), index);
   }

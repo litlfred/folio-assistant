@@ -426,12 +426,12 @@ before assuming a generator change is fine.
 
 ## Where the boundaries are
 
-- **`schemas/` holds content.** `BASE_GRAPH_KINDS.schemas` carries
+- **`schemas/` holds content.** `BASE_GRAPH_TYPOLOGIES.schemas` carries
   `holds: "content"` — a shape is the subject matter of the schema graph, and
   it is true before anything is validated against it. See
   [`content-context-and-state-graphs`](content-context-and-state-graphs.md).
-- **Adding a graph KIND is a different job** —
-  [`directory-conventions`](directory-conventions.md) §"Adding a graph kind",
+- **Adding a graph TYPOLOGY is a different job** —
+  [`directory-conventions`](directory-conventions.md) §"Adding a graph typology",
   and decide which layer owns it first: if it renders, it is not the harness's.
 - **Publishing a schema at a dereferenceable `$id`** is
   `harness-schema-export`, a separate rendering with a separate consumer.

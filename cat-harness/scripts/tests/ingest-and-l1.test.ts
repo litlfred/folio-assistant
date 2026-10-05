@@ -336,7 +336,7 @@ describe("L1 completeness", () => {
     mkdirSync(join(root, "library"), { recursive: true });
     writeDeclaration(root, JSON.stringify({
         name: "t",
-        directories: [{ id: "library", path: "library/", graphKinds: ["library"] }],
+        directories: [{ id: "library", path: "library/", graphTypologies: ["library"] }],
       }));
     expect(checkAll(root)).toEqual([]);
   });

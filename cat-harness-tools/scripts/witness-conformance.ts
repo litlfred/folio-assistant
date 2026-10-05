@@ -104,7 +104,7 @@ function main(): number {
     : [...new Set(instanceRootsIn(root).flatMap((inst) => directoriesForGraph(inst, "computation-witness")))];
   if (dirs.length === 0) {
     console.error(
-      "witness:conformance: no directory declares the `computation-witness` graph kind here, so there is " +
+      "witness:conformance: no directory declares the `computation-witness` graph typology here, so there is " +
         "nothing to check. Declare one in the instance's <instance>.json, or pass --dir.",
     );
     return 2;

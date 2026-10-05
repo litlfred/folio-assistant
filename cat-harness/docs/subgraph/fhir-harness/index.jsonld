@@ -4,9 +4,9 @@
   "@type": "bootstrap:Subgraph",
   "hasMember": [
     {
-      "@id": "cat-harness:graphKind/kinds",
-      "@type": "bootstrap:GraphKind",
-      "name": "kinds"
+      "@id": "cat-harness:graphTypology/typologies",
+      "@type": "bootstrap:GraphTypology",
+      "name": "typologies"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#asset/agent-instructions",
@@ -31,14 +31,14 @@
       "title": "fhir-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-kinds",
-      "@type": "bootstrap:Subgraph",
-      "name": "fhir-harness-kinds"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-translations",
       "@type": "bootstrap:Subgraph",
       "name": "fhir-harness-translations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-typologies",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-typologies"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-validators",
@@ -72,8 +72,8 @@
     "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/skills/"
   ],
   "holdsGraph": [
-    "bootstrap:graphKind/processes",
-    "bootstrap:graphKind/skills"
+    "bootstrap:graphTypology/processes",
+    "bootstrap:graphTypology/skills"
   ],
   "name": "fhir-harness",
   "path": "./",

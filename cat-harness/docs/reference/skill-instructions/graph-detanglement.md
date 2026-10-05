@@ -131,7 +131,7 @@ exist yet: `smart-base/methodologies/diig.md`, declared at repository scope in
 2026-09-24, when GRADE became a skill plus code lists — bean `wg7r`.)
 
 **Declaring is cheap and extracting is expensive, which is the point.** The
-`methodology` graph kind is defined by exactly this property: *"extractable
+`methodology` graph typology is defined by exactly this property: *"extractable
 (somebody else's work, adopted, so it lifts out with its declaration when the
 field moves on)"*.
 
