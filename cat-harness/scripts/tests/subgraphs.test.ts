@@ -107,6 +107,12 @@ describe("subgraph containment is derived from declared paths", () => {
   });
 });
 
+// Both tests below rescan the WHOLE checkout. That is a few seconds of real
+// work on a CI runner and sits on bun's 5000 ms default: main timed out on the
+// second at 365f80f0d, and a larger corpus tips the first over too. A scan
+// that finishes is not a hang, so the budget is explicit rather than default.
+const CORPUS_SCAN_TIMEOUT_MS = 30_000;
+
 describe("the entanglement report", () => {
   const report = scanSubgraphs(ROOT);
 
@@ -128,7 +134,7 @@ describe("the entanglement report", () => {
     // And the corpus itself is clean — stated as its own assertion so that
     // "clean" and "not computed" can never be the same passing test.
     expect(probe.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
-  });
+  }, CORPUS_SCAN_TIMEOUT_MS);
 
   test("a DERIVED graph's unresolved links are never dangling", () => {
     // A library section is machine-produced FROM a source document, so a
@@ -298,5 +304,5 @@ describe("the `../` too many count is COMPUTED (bean `syrl`)", () => {
     expect(existsSync(siteDir), `${siteDir} must exist or this asserts nothing`).toBe(true);
     const { siteResolved } = scanSubgraphs(ROOT);
     expect(overDeepLinks(ROOT, siteResolved).map((l) => `${l.from} -> ${l.target}`)).toEqual([]);
-  });
+  }, CORPUS_SCAN_TIMEOUT_MS);
 });
