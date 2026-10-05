@@ -140,10 +140,11 @@ export const PATTERNS: readonly ConflictPattern[] = [
       // is the VIEWER of uploads/, not an upload: it must match here, before
       // the `uploads` refusal below catches it. Found 2026-10-01 on #1764.
       "cat-harness/docs/{beans,todos,health,issue-marks,swimlane-glossary,uploads,attestations}/index.html",
-      // document-kinds:viz writes this page whole from the declared document
-      // kinds. It and attestations/ above both refused a merge of #2082 on
-      // 2026-10-04 with "no declared pattern".
-      "cat-harness/docs/cat-harness/document-kinds/index.html",
+      // document-kinds:viz writes these pages whole from the declared document
+      // kinds: the index and one page per instance. The index and attestations/
+      // above refused a merge of #2082 on 2026-10-04 with "no declared
+      // pattern"; the per-instance smart-base page refused the next one.
+      "cat-harness/docs/cat-harness/document-kinds/**/index.html",
       // fsh-guts:viz writes this page whole (writeFileSync) from fsh-guts/**;
       // refused on #1766 2026-10-03 when main archived new uploads into fsh-guts/.
       "cat-harness/docs/fsh-guts/index.md",
