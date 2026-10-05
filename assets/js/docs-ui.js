@@ -3312,6 +3312,10 @@
     // GLASS passes it, because only the glass pans — see `nudge` for why a
     // window keeps its clamp (`l4zi`) and a card on the glass does not.
     var unbounded = !!(opts && opts.unbounded);
+    // `opts.noResize`, OPTIONAL: Shift+arrows MOVE rather than resize. The
+    // glass card passes it — owner, 2026-10-05: *"No keyboard resize thing.
+    // Only the plus minus"* — so its size has one route, the card's −/+.
+    var noResize = !!(opts && opts.noResize);
 
     // THE KEYBOARD PATH, and it acts only in the mode. Outside it the arrows
     // go on scrolling the page, which is what a reader expects of them.
@@ -3324,7 +3328,7 @@
         panel.dispatchEvent(new CustomEvent("fa:move-mode", { detail: { on: false } }));
         return;
       }
-      if (nudge(panel, e.key, e.shiftKey, unbounded)) {
+      if (nudge(panel, e.key, e.shiftKey && !noResize, unbounded)) {
         e.preventDefault();
         e.stopPropagation();
         settle();
@@ -3460,7 +3464,7 @@
     // BUTTON — the glass's move bar, for a reader who cannot press arrows.
     return {
       step: function (key, shift) {
-        if (!nudge(panel, key, shift, unbounded)) return false;
+        if (!nudge(panel, key, shift && !noResize, unbounded)) return false;
         settle();
         return true;
       },
@@ -6040,28 +6044,11 @@
       moveBar.appendChild(b);
       return { b: b, st: st };
     });
-    /* SIZE, AS WELL AS PLACE — issue #1900, owner 2026-10-02: *"is [+] icon
-     * anything differfent then just drag and drop? do we need icon? remove if
-     * not needed"*. The card's own −/+ went; a corner drag is the pointer
-     * accelerator. But a drag is never the ONLY way in (`board-windows`, the
-     * floor; WCAG 2.5.7), so the single-press path to size lives here, in the
-     * mode, beside the steps that move — and in this bar it cannot drift
-     * under the pointer as the card grows, which was the 2026-10-01 complaint
-     * about the card's own buttons. */
-    var sizeButtons = [
-      { d: -1, glyph: "\u2212", word: "smaller" },
-      { d: 1, glyph: "+", word: "larger" },
-    ].map(function (sz) {
-      var b = el("button", { type: "button", class: "fa-glass-zoom-btn fa-glass-move-size", "data-fa-size": sz.word }, sz.glyph);
-      b.addEventListener("click", function () { if (moving && moving.resize) moving.resize(sz.d); });
-      moveBar.appendChild(b);
-      return { b: b, sz: sz };
-    });
     var moveDone = el("button", { type: "button", class: "fa-glass-zoom-btn fa-glass-move-done", "data-fa-step": "done" },
       "Done");
     moveDone.addEventListener("click", function () { if (moving) moving.done(); });
     moveBar.appendChild(moveDone);
-    // The mode's KEYS work here too: arrows step (Shift resizes), and Escape
+    // The mode's KEYS work here too: arrows step, and Escape
     // leaves the mode — stopped, so the glass's own Escape does not also put
     // the glass away under a reader who only meant "stop moving".
     moveBar.addEventListener("keydown", function (e) {
@@ -6072,26 +6059,19 @@
         moving.done();
         return;
       }
-      var grow = resizeKeyOf(e);
-      if (grow && moving.resize) { e.preventDefault(); moving.resize(grow); return; }
       if (moving.mover.step(e.key, e.shiftKey)) e.preventDefault();
     });
     zoomBar.appendChild(moveBar);
 
-    function showMoveBar(card, title, mover, done, resize) {
+    function showMoveBar(card, title, mover, done) {
       if (moving && moving.card !== card) moving.done();
-      moving = { card: card, mover: mover, done: done, resize: resize };
+      moving = { card: card, mover: mover, done: done };
       moveBar.setAttribute("aria-label", "Move " + title);
       moveSay.textContent = "Moving “" + title + "”: use these buttons or the arrow keys; " +
-        "+ and − resize (so do Shift + arrows). Escape or Done to finish.";
+        "Escape or Done to finish.";
       stepButtons.forEach(function (x) {
         x.b.setAttribute("aria-label", "Move " + title + " " + x.st.word);
         x.b.title = "Move " + x.st.word;
-      });
-      sizeButtons.forEach(function (x) {
-        x.b.hidden = !resize;
-        x.b.setAttribute("aria-label", "Make " + title + " " + x.sz.word);
-        x.b.title = x.sz.word.charAt(0).toUpperCase() + x.sz.word.slice(1) + " (+ / − keys)";
       });
       moveDone.setAttribute("aria-label", "Done moving " + title);
       moveBar.removeAttribute("hidden");
@@ -6264,13 +6244,6 @@
         });
     }
 
-    /** `+`/`=` grow and `-`/`_` shrink; with a modifier the key is the browser's (Ctrl + = zooms the page). */
-    function resizeKeyOf(e) {
-      if (e.ctrlKey || e.metaKey || e.altKey) return 0;
-      if (e.key === "+" || e.key === "=") return 1;
-      if (e.key === "-" || e.key === "_" || e.key === "−") return -1;
-      return 0;
-    }
 
     /* WHERE A LIBRARY ASSET LIVES — issue #1900, owner 2026-10-02: *"as will
      * all library assets in folio, i cant click to open/view them"*.
@@ -6450,7 +6423,7 @@
         "data-fa-control": "move",
         "aria-label": "Move " + label + " around the glass",
         "aria-pressed": "false",
-        title: "Move (arrow keys; + and − resize)",
+        title: "Move (arrow keys)",
       }, CONTROL_GLYPHS.move || "✜");
       // Leaving the mode by any route — Escape or Enter on the card, Escape or
       // Done on the move bar — is this one path, so the bar, the pressed state
@@ -6463,21 +6436,20 @@
         var on = card.getAttribute("data-fa-moving") !== "true";
         if (!on) { leaveMoveMode(); return; }
         setMoveMode(card, true, live);
-        live.textContent = "Move mode on. Arrow keys move this card; + and − resize it; Escape to finish.";
+        live.textContent = "Move mode on. Arrow keys move this card; Escape to finish.";
         moveBtn.setAttribute("aria-pressed", "true");
-        showMoveBar(card, label, mover, leaveMoveMode, function (dir) { resizeBy(dir * 2 * RESIZE_STEP); });
+        showMoveBar(card, label, mover, leaveMoveMode);
       });
       card.addEventListener("fa:move-mode", function () {
         moveBtn.setAttribute("aria-pressed", "false");
         hideMoveBar(card);
         moveBtn.focus();
       });
-      /* SIZE, from one place for every route in: the corner drag, the `+`/`−`
-       * keys in move mode, and the move bar's size buttons. The card grows
-       * from its top-left corner — every control that sizes it is now either
-       * under the pointer by construction (the corner) or in the move bar,
-       * which does not move with the card, so the 2026-10-01 re-aim defect
-       * the old anchor arithmetic existed for cannot recur. */
+      /* SIZE has ONE route: the card's own − and + buttons. Owner,
+       * 2026-10-05: *"No keyboard resize thing. Only the plus minus"* — so
+       * the corner drag, the `+`/`−` keys in move mode, the move bar's size
+       * buttons and Shift+arrows (`noResize` on `wireMove` below) are gone.
+       * The card grows from its top-left corner. */
       function resizeTo(g) {
         g.width = Math.max(MIN_WINDOW, Math.round(g.width));
         g.height = Math.max(Math.round(MIN_WINDOW * 0.5), Math.round(g.height));
@@ -6492,26 +6464,33 @@
         live.textContent = (card.getAttribute("data-fa-zoom") === "avatar"
           ? "Smaller: showing the avatar only." : "Size " + g.width + " by " + g.height + ".");
       }
-      function resizeBy(d) {
+      /* THE PRESSED BUTTON STAYS UNDER THE POINTER. Owner, 2026-10-01:
+       * *"when zoom in/out, the buttons dont stay same place so have to move
+       * cursor"* — and this instance's profile is low-dexterity, so a target
+       * that moves after each press is a re-aim per press. The card grows
+       * from its top-left corner and the buttons sit on its right, so each
+       * press would carry them; the card is shifted back by however far the
+       * pressed button drifted, measured (the tool row wraps, and the avatar
+       * state lays it out differently), in the shelf's own pixels. */
+      function resizeBy(d, anchor) {
         var g = geometryOf(card);
+        var before = anchor ? anchor.getBoundingClientRect() : null;
         var ratio = g.height / g.width;
         g.width = Math.max(MIN_WINDOW, g.width + d);
         g.height = Math.round(g.width * ratio);
-        settleSize(resizeTo(g));
+        resizeTo(g);
+        if (before) {
+          var after = anchor.getBoundingClientRect();
+          var sc = view.s || 1;
+          g.left = Math.round(g.left + (before.left - after.left) / sc);
+          g.top = Math.round(g.top + (before.top - after.top) / sc);
+          applyGeometry(card, g);
+        }
+        settleSize(g);
       }
-      // +/= and −/_ in move mode. Seen BEFORE `wireMove`'s own handler (this
-      // listener is added first) and only in the mode, so outside it the keys
-      // are the page's.
       card.addEventListener("keydown", function (e) {
         if (e.target !== card) return;
-        if (card.getAttribute("data-fa-moving") === "true") {
-          var dir = resizeKeyOf(e);
-          if (!dir) return;
-          e.preventDefault();
-          e.stopPropagation();
-          resizeBy(dir * 2 * RESIZE_STEP);
-          return;
-        }
+        if (card.getAttribute("data-fa-moving") === "true") return;
         // ENTER OPENS a library card — the keyboard half of the click below.
         // Not in move mode: there Enter is "done moving" (`wireMove`).
         if (place && e.key === "Enter" && !e.defaultPrevented) {
@@ -6520,59 +6499,20 @@
         }
       });
 
-      /* THE CORNER: drag to resize, the accelerator over the keys above.
-       * Pointer events, so a finger and a pen size a card as a mouse does; in
-       * the card's own pixels, so the view's scale (`view.s`) is divided out
-       * and the corner stays under the pointer at every zoom. `data-fa-control`
-       * keeps `wireMove` from taking the press as a move. Escape cancels, as
-       * it does a move: a gesture with no inverse is `l4zi` for pointers. */
-      var grip = el("span", {
-        class: "fa-glass-asset-resize",
-        "data-fa-control": "resize",
-        "aria-hidden": "true",
-        title: "Drag to resize (or ✜ then + / −)",
-      });
-      var sizing = null;
-      function endSizing(commit) {
-        if (!sizing) return;
-        var s0 = sizing;
-        sizing = null;
-        document.removeEventListener("pointermove", onSizeMove);
-        document.removeEventListener("pointerup", onSizeUp);
-        document.removeEventListener("pointercancel", onSizeUp);
-        document.removeEventListener("keydown", onSizeKey, true);
-        card.removeAttribute("data-fa-sizing");
-        if (commit) settleSize(geometryOf(card));
-        else { resizeTo(s0.g); live.textContent = "Resize cancelled; back to the size it was."; }
+      function sizeBtn(d, glyph, word) {
+        var btn = el("button", {
+          type: "button",
+          class: "fa-glass-asset-tool",
+          "data-fa-control": "size",
+          "data-fa-size": word,
+          "aria-label": "Make " + label + " " + word,
+          title: word.charAt(0).toUpperCase() + word.slice(1),
+        }, glyph);
+        btn.addEventListener("click", function () { resizeBy(d * 2 * RESIZE_STEP, btn); });
+        return btn;
       }
-      function onSizeMove(e) {
-        if (!sizing || e.pointerId !== sizing.id) return;
-        if (e.pointerType === "mouse" && e.buttons === 0) { endSizing(true); return; }
-        var sc = view.s || 1;
-        resizeTo({ left: sizing.g.left, top: sizing.g.top,
-                   width: sizing.g.width + (e.clientX - sizing.x) / sc,
-                   height: sizing.g.height + (e.clientY - sizing.y) / sc });
-      }
-      function onSizeUp(e) { if (sizing && e.pointerId === sizing.id) endSizing(true); }
-      function onSizeKey(e) {
-        if (!sizing || e.key !== "Escape") return;
-        e.preventDefault();
-        e.stopPropagation();
-        endSizing(false);
-      }
-      grip.addEventListener("pointerdown", function (e) {
-        if (e.pointerType === "mouse" && e.button !== 0) return;
-        e.preventDefault();
-        e.stopPropagation();
-        endSizing(true);
-        sizing = { id: e.pointerId, x: e.clientX, y: e.clientY, g: geometryOf(card) };
-        card.setAttribute("data-fa-sizing", "true");
-        try { grip.setPointerCapture(e.pointerId); } catch (_e) { /* document listeners still see it */ }
-        document.addEventListener("pointermove", onSizeMove);
-        document.addEventListener("pointerup", onSizeUp);
-        document.addEventListener("pointercancel", onSizeUp);
-        document.addEventListener("keydown", onSizeKey, true);
-      });
+      var smaller = sizeBtn(-1, "\u2212", "smaller");
+      var larger = sizeBtn(1, "+", "larger");
 
       // CLOSE, and the word matters. "Remove" and "delete" both say the
       // asset stops being the reader's, which is exactly what does NOT
@@ -6593,9 +6533,10 @@
         confirmShelve(key, a, label, close);
       });
       tools.appendChild(moveBtn);
+      tools.appendChild(smaller);
+      tools.appendChild(larger);
       tools.appendChild(close);
       card.appendChild(tools);
-      card.appendChild(grip);
       card.appendChild(live);
       wireCardMeta(card);
 
@@ -6674,7 +6615,7 @@
         placeOnGlass(key, g);
         fitShelf();
         applyView();
-      }, { unbounded: true });
+      }, { unbounded: true, noResize: true });
       if (a.kind === "todos" && key.indexOf("todo/") === 0) {
         var todoId = key.slice("todo/".length);
         glassTodoIndex(function (idx) {
@@ -11212,7 +11153,15 @@
   }
 
   function mountNavIconRow() {
-    var bar = document.querySelector(".side-bar");
+    // EITHER NAVBAR, ONE ROW — bean `wckf` (#2147), owner 2026-10-05: *"still
+    // no LHS icons top navbar on who-iris page"*, and then *"this should be a
+    // common navbar functionality in harness"* (bean `9rq1`). This bound
+    // `.side-bar` only, so every page railed by `lib/navbar.ts` — the who-iris
+    // replicas, the standalone viewers — had the harness's navbar without the
+    // harness's row. `injectRail` now writes the same `#fa-navbar-row` the
+    // theme writes, and this draws it into whichever navbar the page has. The
+    // theme's sidebar first: a page carries one or the other, never both.
+    var bar = document.querySelector(".side-bar") || document.querySelector("nav.fa-nav");
     if (!bar || bar.querySelector(".fa-nav-icons")) return;
     var row = readNavbarRow();
     if (row === undefined) return;
@@ -11378,8 +11327,14 @@
     host.appendChild(scheme);
 
     // AFTER the header: line 1 is the avatar and the name, line 2 is this.
+    // On the rail the row goes straight under its fixed top — the mark, the
+    // instance's root and the page's own section — inside `.fa-nav-in`, whose
+    // OPEN width every rail child keeps (`navbarCss`). On the theme's sidebar,
+    // under `.site-header`, as before.
+    var railTop = bar.matches("nav.fa-nav") ? bar.querySelector(".fa-nav-in > .fa-nav-top") : null;
     var header = bar.querySelector(".site-header");
-    if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
+    if (railTop) railTop.parentNode.insertBefore(host, railTop.nextSibling);
+    else if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
     else bar.appendChild(host);
 
     holdStripForTips(bar, host);

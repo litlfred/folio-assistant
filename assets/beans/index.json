@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 884,
+      "count": 886,
       "unit": "beans"
     }
   },
@@ -2073,14 +2073,14 @@
     {
       "id": "folio-assistant-5ea6",
       "title": "PDF INLINE VIEWER: pinned pdf.js generic viewer on the site, embed on who-iris item pages, as skill + Tool node",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T18:40:22Z",
-      "updatedAt": "2026-10-04T19:16:24Z",
+      "updatedAt": "2026-10-05T05:35:26Z",
       "preview": "Owner request 2026-10-04: lightweight inline PDF viewer (search, scroll, jump to page, print, download) for CDN-hosted PDFs, e.g. who-iris item pages. Owner chose option 2 (pdf.js generic viewer copied onto the site) and asked for it as a skill and a tool.\n\n## Todo\n- [x] vendor script: pinned pdf.js release, sha256-verified, pruned, installed into _site at build time (not committed)\n- [x] cross-or",
       "file": "beans/defs/folio-assistant-5ea6--pdf-inline-viewer-pinned-pdfjs-generic-viewer-on-t.md"
     },
@@ -3729,6 +3729,20 @@
       "updatedAt": "2026-09-27T08:07:02Z",
       "preview": "## The gap\n\n`publishedPairs` in `cat-harness/content/pipeline/derive-po.ts` reads the site\ndirectory with a single `readdirSync`, so it sees pages at the root and nothing\nbelow it. Measured on `main` at `c6960465301`:\n\n| | |\n|---|---|\n| published translated pages | **14** |\n| of those, found by discovery | 13 (top level) |\n| **invisible** | **1** — `guides/agent-onboarding.md`, in ar, es, fr, ru, ",
       "file": "beans/defs/folio-assistant-9rnf--discovery-publishedpairs-scans-the-site-root-only.md"
+    },
+    {
+      "id": "folio-assistant-9rq1",
+      "title": "ONE NAVBAR: every navbar capability is a harness feature, drawn by one mechanism on every layout (.side-bar, .fa-nav rail, viewer pages)",
+      "status": "todo",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-rwmf",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T05:37:13Z",
+      "updatedAt": "2026-10-05T08:39:49Z",
+      "preview": "Owner, 2026-10-05, choosing how to fix the missing harness icon row on who-iris pages (#2147): '1... this should be a common navbar funcationliatyt in harness. should be a bean about this'.\n\n## The gap this names\nThe navbar's capabilities are defined per LAYOUT, not per harness. The harness icon row (mountNavIconRow in docs-ui.js) binds only just-the-docs's .side-bar and reads data that only head_",
+      "file": "beans/defs/folio-assistant-9rq1--one-navbar-every-navbar-capability-is-a-harness-fe.md"
     },
     {
       "id": "folio-assistant-9rrb",
@@ -11349,6 +11363,20 @@
       "file": "beans/defs/folio-assistant-w91p--b7a-1168-the-10-gen-viz-scripts-become-tools-rende.md"
     },
     {
+      "id": "folio-assistant-wckf",
+      "title": "WHO-IRIS LHS ICON ROW: harness icon row missing on .fa-nav rail pages (mountNavIconRow binds .side-bar only)",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-9rq1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T05:32:26Z",
+      "updatedAt": "2026-10-05T05:37:13Z",
+      "preview": "Owner, 2026-10-05: 'still no LHS icons top navbar on who-iris page' — confirmed it is the harness icon row (todos, beans, processes, kg, fsh-guts, launcher). Likely cause: docs-ui.js mountNavIconRow() requires .side-bar (just-the-docs); who-iris replica pages carry the harness rail nav.fa-nav instead. who-iris.json declares no navbarIcons (absent = inherit cat-harness's). Related, not duplicate: 2",
+      "file": "beans/defs/folio-assistant-wckf--who-iris-lhs-icon-row-harness-icon-row-missing-on.md"
+    },
+    {
       "id": "folio-assistant-wczm",
       "title": "Regenerate gaps: no writer for check:l1-complete or smart-kg-l1 --entry; merge-base takes main's side on a fast-forwardable gitlink; merge-main bot doesn't clear needs-merge-human",
       "status": "completed",
@@ -14144,14 +14172,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 529,
-        "closed": 191,
-        "open": 338,
+        "total": 531,
+        "closed": 192,
+        "open": 339,
         "inProgress": 125,
-        "todo": 212,
+        "todo": 213,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3610586011342155
+        "share": 0.3615819209039548
       },
       {
         "id": "folio-assistant-vuip",
@@ -14185,8 +14213,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 514,
-    "coveredOpen": 511,
+    "openTotal": 515,
+    "coveredOpen": 512,
     "duplicateIds": 0
   }
 }

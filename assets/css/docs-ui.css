@@ -5745,6 +5745,39 @@ a.fa-nav-folders__link:focus-visible {
   border-bottom: 1px solid rgba(128, 128, 128, 0.25);
 }
 
+/* THE SAME ROW ON THE RAIL — bean `wckf` (#2147). `mountNavIconRow` now draws
+ * into `nav.fa-nav` too, under its fixed top inside `.fa-nav-in`. The rail
+ * clips every child at its collapsed width rather than reflowing them
+ * (`navbarCss`), so — exactly as on `.side-bar` above — the row wraps to one
+ * icon per line at rest, and lies flat once the rail is open by hover, by
+ * keyboard focus or by its pinned checkbox: the rail's own three open
+ * selectors, not a fourth idea of "open". At ANY width: the rail has no
+ * 50rem mode, unlike the theme's sidebar. */
+nav.fa-nav .fa-nav-in > .fa-nav-icons {
+  /* Border-box HERE, not inherited: the rail lands in somebody else's page,
+     and a page that leaves `content-box` would add the row's 16px of padding
+     to the strip's width (measured: 72px in a 56px rail). */
+  box-sizing: border-box;
+  width: var(--fa-nav-collapsed);
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+}
+/* The rail styles EVERY link in it as a nav row — `.fa-nav a{padding:8px
+ * 12px;gap:8px}` (`navbarCss`) — so the row's four LINK slots inherited 24px
+ * of horizontal padding inside a 32px box and drew their glyph 8px wide, while
+ * the BUTTON slots beside them drew at 18px. Measured in Chromium on the
+ * who-iris replica, 2026-10-05. A row icon is not a nav row. */
+nav.fa-nav .fa-nav-icons > a.fa-nav-icon {
+  padding: 0;
+  gap: 0;
+}
+nav.fa-nav:hover .fa-nav-in > .fa-nav-icons,
+nav.fa-nav:has(:focus-visible) .fa-nav-in > .fa-nav-icons,
+nav.fa-nav:has(.fa-nav-open:checked) .fa-nav-in > .fa-nav-icons {
+  width: auto;
+  flex-wrap: nowrap;
+}
+
 .fa-nav-icon {
   display: flex;
   flex: none;
@@ -7945,7 +7978,7 @@ a.fa-harness-tab__body:focus-visible {
   /* A position means nothing in a column, so the controls that set one go.
      Close and Return stay: they are about WHERE IT LIVES, not where it sits. */
   .fa-sticky-layer [data-fa-control="move"],
-  .fa-glass-asset-resize,
+  .fa-glass-shelf [data-fa-control="size"],
   .fa-glass-tidy { display: none; }
 }
 
@@ -8137,29 +8170,10 @@ a.fa-harness-tab__body:focus-visible {
   .fa-glass-shelf > .fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) { min-height: 16rem; }
 }
 
-/* ── Issue #1900: open, resize by the corner, confirm the close ──────────
+/* ── Issue #1900: open, and confirm the close ────────────────────────────
  *
- * THE CORNER is the pointer's way to size a card (owner, 2026-10-02: the
- * card's own −/+ went — *"remove if not needed"*). It is an accelerator: the
- * keys in move mode and the move bar's −/+ do the same without a drag
- * (`board-windows`, the floor). The tool row keeps clear of it, so the corner
- * never sits on top of ×. Drawn in the glass's edge token, so every glass
- * theme (and a themed sticky's own edge) colours it. */
-.fa-glass-asset-resize {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  width: 1.5rem;
-  height: 1.5rem;
-  cursor: nwse-resize;
-  touch-action: none;
-  background: linear-gradient(135deg,
-    transparent 0 52%, var(--fa-sticky-edge, var(--fa-glass-edge)) 52% 58%,
-    transparent 58% 70%, var(--fa-sticky-edge, var(--fa-glass-edge)) 70% 76%,
-    transparent 76% 88%, var(--fa-sticky-edge, var(--fa-glass-edge)) 88% 94%, transparent 94%);
-}
-.fa-glass-shelf .fa-glass-asset:has(> .fa-glass-asset-resize) > .fa-glass-asset-tools { padding-right: 1.75rem; }
+ * A card is SIZED by its own − and + only (owner, 2026-10-05: *"No keyboard
+ * resize thing. Only the plus minus"*), so there is no corner grip. */
 /* A library card OPENS its entry, so it is a tab stop; its focus is drawn. */
 .fa-glass-asset[data-fa-opens]:focus-visible {
   outline: 3px solid var(--fa-glass-accent);
