@@ -88,12 +88,15 @@ const REPO = repoRootFor(HARNESS_ROOT);
  * was about the LOGO, and the owner has now separated the two: *"no logo on
  * who-iris icon (for now). just WHO blue"*. Using an organisation's published
  * colour with a neutral glyph is not inventing its identity, which is what the
- * exemption existed to prevent. `smart-trust` still carries art of its own and
- * is unaffected either way.
+ * exemption existed to prevent.
+ *
+ * `smart-trust` LEFT IT on 2026-10-04 (bean `2vpn`), on the same line. Its
+ * entry was an agent's call, not a ruling, and the "art of its own" it
+ * pointed at was the platform owner's shared operations card. Offered the
+ * choice, the owner picked a WHO-blue glyph, so the list is empty — and an
+ * instance that needs to join it now needs a stated reason, as before.
  */
-export const EXEMPT: Readonly<Record<string, string>> = {
-  "smart-trust": "a content library replicating WHO's identity — its mark is not this repository's to choose",
-};
+export const EXEMPT: Readonly<Record<string, string>> = {};
 
 /** Every instantiated harness: a `<name>.config.json` at the repository root. */
 export function instantiatedNames(root: string): string[] {
