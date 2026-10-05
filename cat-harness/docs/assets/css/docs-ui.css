@@ -1817,7 +1817,24 @@ a.fa-lang-tab:hover:not(.is-current) {
 .fa-page-lang-current { font-weight: bold; }
 .fa-page-lang-caret { font-size: 0.8em; }
 .fa-page-lang-list { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px; }
-.fa-page-lang-bar[data-open="false"] .fa-page-lang-list { display: none; }
+
+/* WIDE: THE SIX TABS INLINE, ONE CLICK TO SWITCH — owner, reviewing #2202:
+   *"dropdown on phone only"*. The toggle is not drawn and the list is always
+   shown, whatever `data-open` says, so a phone that opened it and then
+   rotated is not left with a stale state on screen.
+
+   NARROW (40rem and below): the dropdown. 40rem is where the tabs stop
+   fitting: globe and six tabs are ~252px from the panel's start, the Folio
+   handle (~92px) is centred on the WINDOW and sits over the band once the
+   page is scrolled, so the tabs clear it only while 14px + 252px stays left
+   of (width / 2 - 46px) — about 640px. */
+.fa-page-lang-toggle { display: none; }
+.fa-page-lang-globe--inline { display: inline-block; padding: 0 2px; }
+@media (max-width: 40rem) {
+  .fa-page-lang-toggle { display: inline-flex; }
+  .fa-page-lang-globe--inline { display: none; }
+  .fa-page-lang-bar[data-open="false"] .fa-page-lang-list { display: none; }
+}
 
 .fa-page-lang-tab {
   display: inline-block;

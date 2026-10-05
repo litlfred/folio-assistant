@@ -97,6 +97,12 @@ const home = ".fa-search-home";
 const input = "#search-input";
 const lang = ".fa-page-lang-bar";
 const langToggle = ".fa-page-lang-toggle";
+const tab = ".fa-page-lang-tab";
+/** Owner, reviewing #2202: "dropdown on phone only". At and below 40rem
+ *  (640px) the tabs collapse behind the toggle; above it they are inline. */
+const isPhone = (width: number) => width <= 640;
+/** The locale control a reader presses first at this width. */
+const langControl = (width: number) => (isPhone(width) ? langToggle : ".fa-page-lang-list");
 const handle = ".fa-glass-handle";
 
 async function load(page: Page, width: number) {
@@ -213,8 +219,48 @@ for (const width of [1280, 390]) {
       expect(Math.abs(after.y - ib.y)).toBeLessThanOrEqual(2);
       const row = await rect(page, home);
       expect(row.x).toBeGreaterThanOrEqual(after.x + after.width);
-      expect(await pressable(page, langToggle)).toBe("yes");
+      expect(await pressable(page, isPhone(width) ? langToggle : `${tab}[href]`)).toBe("yes");
     });
+
+    if (!isPhone(width)) {
+      test("wide: the six tabs are inline, one click to switch, no dropdown", async ({ page }) => {
+        await expect(page.locator(langToggle)).toBeHidden();
+        await expect(page.locator(tab)).toHaveCount(6);
+        for (let i = 0; i < 6; i++) await expect(page.locator(tab).nth(i)).toBeVisible();
+        // All six on the band's one line, beside search.
+        const b = await rect(page, band);
+        const tops = await page.locator(tab).evaluateAll((ns) => ns.map((n) => Math.round(n.getBoundingClientRect().top)));
+        expect(new Set(tops).size).toBe(1);
+        const m = await rect(page, peek);
+        const last = await rect(page, `${tab} >> nth=5`);
+        expect(last.x + last.width).toBeLessThan(m.x);
+        expect(last.y + last.height).toBeLessThanOrEqual(b.y + b.height);
+        // One click: an available locale is a link, pressable as it stands.
+        const fr = page.locator(tab, { hasText: "FR" });
+        await expect(fr).toHaveAttribute("href", /\/fr\//);
+        expect(await pressable(page, `${tab}[href*="/fr/"]`)).toBe("yes");
+        // And with search open they stay put, still one click away.
+        const before = await rect(page, `${tab} >> nth=0`);
+        await page.locator(peek).click();
+        const after = await rect(page, `${tab} >> nth=0`);
+        expect(Math.abs(after.y - before.y)).toBeLessThanOrEqual(0.5);
+        expect(Math.abs(after.x - before.x)).toBeLessThanOrEqual(0.5);
+        await expect(fr).toBeVisible();
+        expect(await pressable(page, `${tab}[href*="/fr/"]`)).toBe("yes");
+      });
+    } else {
+      test("phone: the tabs collapse into the globe dropdown", async ({ page }) => {
+        const t = page.locator(langToggle);
+        await expect(t).toBeVisible();
+        await expect(t).toContainText("EN");
+        await expect(page.locator(tab).first()).toBeHidden();
+        await t.click();
+        await expect(t).toHaveAttribute("aria-expanded", "true");
+        for (let i = 0; i < 6; i++) await expect(page.locator(tab).nth(i)).toBeVisible();
+        await t.click();
+        await expect(page.locator(tab).first()).toBeHidden();
+      });
+    }
 
     test("the Folio tab hides while a band item is open, and comes back", async ({ page }) => {
       const h = page.locator(handle);
@@ -224,12 +270,16 @@ for (const width of [1280, 390]) {
       await expect(h).toBeHidden();
       await page.locator(peek).click();
       await expect(h).toBeVisible();
-      // The locale selector: the same button opens and closes its list.
+      if (!isPhone(width)) {
+        // Wide: inline tabs are never "open", so they do not hide it.
+        await expect(page.locator(tab).first()).toBeVisible();
+        await expect(h).toBeVisible();
+        return;
+      }
+      // Phone: the same button opens and closes the list.
       const t = page.locator(langToggle);
-      await expect(page.locator(".fa-page-lang-tab").first()).toBeHidden();
       await t.click();
       await expect(t).toHaveAttribute("aria-expanded", "true");
-      await expect(page.locator(".fa-page-lang-tab").first()).toBeVisible();
       await expect(h).toBeHidden();
       await t.click();
       await expect(t).toHaveAttribute("aria-expanded", "false");
@@ -255,10 +305,10 @@ for (const width of [1280, 390]) {
         expect(Math.abs(bb.y - hb.y), `band top at scrollY ${y}`).toBeLessThanOrEqual(1);
         expect(bb.height).toBeGreaterThanOrEqual(hb.height);
         expect(await pressable(page, peek)).toBe("yes");
-        expect(await pressable(page, langToggle)).toBe("yes");
+        expect(await pressable(page, isPhone(width) ? langToggle : `${tab}[href]`)).toBe("yes");
         // The handle sits between the two, touching neither.
         const m = await rect(page, peek);
-        const l = await rect(page, langToggle);
+        const l = await rect(page, langControl(width));
         expect(hb.x).toBeGreaterThanOrEqual(l.x + l.width);
         expect(hb.x + hb.width).toBeLessThanOrEqual(m.x);
       }
