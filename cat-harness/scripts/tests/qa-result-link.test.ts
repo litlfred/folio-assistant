@@ -113,7 +113,7 @@ describe("this repository's declaration", () => {
   test("its derived translation results are stored, so their link is on the branch, never blob/main", () => {
     const instance = join(import.meta.dir, "..", "..");
     const repoRoot = repoRootFor(instance);
-    const l = qaResultLinkFor(join(instance, "test", "results", "translation-qa", "docs", "index.ar.translation-qa.json"), {
+    const l = qaResultLinkFor(join(repoRoot, PATH), {
       repoRoot,
       repoWeb: WEB,
       key: `main/${SHA}`,
