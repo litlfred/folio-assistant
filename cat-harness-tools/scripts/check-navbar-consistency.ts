@@ -44,8 +44,8 @@
  *
  * ## Two registries draw the same ids, so they can disagree
  *
- * `ROW_GLYPHS` (the navbar row) and `TILE_GLYPHS` (the glass tile panel) are
- * separate literals in the same file. `ROW_GLYPHS`'s own comment insists on
+ * `ROW_GLYPHS` (the navbar row, in `navbar-row.js`) and `TILE_GLYPHS` (the
+ * glass tile panel, in `docs-ui.js`) are separate literals. `ROW_GLYPHS`'s own comment insists on
  * **five distinct drawings** because *"a row where four slots are
  * indistinguishable is a row that says nothing"* — an argument that applies
  * verbatim to the panel and is not enforced there. Where an id appears in both,
@@ -86,7 +86,7 @@
  * a declaration that will not load.
  */
 import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 
 import {
   instanceRootsIn,
@@ -243,8 +243,19 @@ function main(): number {
     return 2;
   }
 
+  // THE ROW'S REGISTRY IS IN `navbar-row.js`, beside the client (beans `lhvt`,
+  // `9rq1`): the row is drawn on pages that never load `docs-ui.js`. Same
+  // refusal when it cannot be read.
+  const rowFile = join(dirname(client), "navbar-row.js");
+  let rowSrc: string;
+  try {
+    rowSrc = readFileSync(rowFile, "utf8");
+  } catch {
+    console.error(`✗ could not read ${rowFile} — the row's glyph registry lives there.`);
+    return 2;
+  }
   const tiles = registry(src, "TILE_GLYPHS");
-  const row = registry(src, "ROW_GLYPHS");
+  const row = registry(rowSrc, "ROW_GLYPHS");
   if (tiles === undefined || row === undefined) {
     console.error(
       `✗ could not locate ${tiles === undefined ? "TILE_GLYPHS" : ""}` +

@@ -19,7 +19,7 @@ A navbar capability is declared once for the harness (cat-harness.json navbarIco
 
 ## Done when
 - [ ] inventory: every navbar capability x every layout it appears on, measured on built pages
-- [ ] each capability drawn by one mechanism on every layout (first: harness icon row, bean wckf / #2147)
+- [ ] each capability drawn by one mechanism on every layout (first: harness icon row — done, bean wckf / #2149)
 - [ ] a gate fails when a harness navbar on any layout lacks a capability its harness declares
 - [ ] the navbar skill states the rule
 
