@@ -119,7 +119,13 @@
     if (!u.self) { const h = el(`h${Math.min(6, u.level)}`); h.append(link(href(u.path), u.title)); box.append(h); }
     content.append(box);
     const nodes = await Promise.all(u.blocks.map((b) => getJSON(pbase + b).catch((e) => ({ html: `<p class="muted">${String(e.message)}</p>` }))));
-    for (const n of nodes) { const d = el("div", { class: "block" }); d.innerHTML = n.html || ""; box.append(d); }
+    for (const n of nodes) {
+      const d = el("div", { class: "block" });
+      d.innerHTML = n.html || "";
+      // Pre-rendered figures name a path below the paper; resolve it here, since this block may sit at any depth.
+      for (const img of d.querySelectorAll("img[data-src]")) img.src = pbase + img.getAttribute("data-src");
+      box.append(d);
+    }
     await watchMath(box);
     return true;
   };

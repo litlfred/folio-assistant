@@ -14,3 +14,6 @@ table { border-collapse: collapse; } th, td { border: 1px solid var(--muted); pa
 dfn.defterm { font-style: normal; font-weight: 600; } .cite { color: var(--muted); }
 :target { scroll-margin-top: 1rem; }
 @media (max-width: 52rem) { body { display: block; } #toc { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--rule); } }
+.tex-svg { margin: 1rem 0; text-align: center; } .tex-svg img { max-width: 100%; height: auto; }
+@media (prefers-color-scheme: dark) { .tex-svg img { filter: invert(1) hue-rotate(180deg); } }
+.tex-ph { border: 1px dashed var(--rule); padding: .5rem .75rem; margin: 1rem 0; } .tex-ph pre { overflow-x: auto; font-size: .85rem; }

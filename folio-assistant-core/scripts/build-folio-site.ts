@@ -42,13 +42,15 @@
  * absolute is baked in. A cross-reference `#label` that is not on the current
  * page is resolved through the outline to the section page that holds it.
  */
-import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { copyFileSync, cpSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
 import { readHarnessConfig } from "../../cat-harness/schemas/harness-config.js";
 import type { Block, Chapter, Paper, Section, SectionRef } from "../../cat-harness/schemas/types.js";
 import { renderBlockMarkdown } from "../../cat-harness/content/pipeline/render-markdown.js";
 import { documentManifests, katexMacros, renderDocumentHtml } from "./build-document-site.js";
+import { addToReport, emptyReport, imageExistsUnder, qaBlockHtml, type SiteQaReport } from "./folio-site-qa.js";
 
 export const SITE_OUTLINE_SCHEMA = "folio-site-outline/v1" as const;
 
@@ -118,8 +120,96 @@ export function shellHtml(title: string, depth: number, scope: { paper?: string;
 `;
 }
 
+
+/**
+ * A block's fenced ```tex blocks, made readable. The paper pipeline has no
+ * HTML for raw TeX environments, so on the site they were code listings.
+ *
+ * 1. A PRE-RENDERED SVG, when the block manifest's `rendered[]` lists one whose
+ *    `hash` equals this fence's — sha256 of the trimmed source, first 12 hex,
+ *    exactly as `render-tex-blocks.ts` computes it. Matched by HASH, never by
+ *    position: a manifest can list an asset for a fence that has since changed
+ *    or gone, and showing it would show the wrong picture.
+ * 2. Display MATH, when the fence is an environment KaTeX renders (anything but
+ *    `tikzcd` / `tikzpicture` / `tabular`), with `equation` unwrapped and
+ *    `\label` dropped. Only when math is on.
+ * 3. Otherwise a labelled placeholder with the source behind a disclosure, as
+ *    the viewer does.
+ *
+ * An SVG is emitted as `<img data-src="rendered/<chapter>/<file>">`, a path
+ * below the paper, and the loader resolves it against the paper's base: the
+ * same block is shown on pages at different depths.
+ */
+export function texFences(
+  md: string,
+  opts: { math: boolean; rendered: Array<{ hash?: string; url: string; mime?: string }>; asset: (url: string) => string | undefined },
+): string {
+  return md.replace(/^([ \t]*)```tex[^\n]*\n([\s\S]*?)^[ \t]*```[ \t]*$/gm, (_m, indent: string, body: string) => {
+    const source = body.trim();
+    const hash = createHash("sha256").update(source).digest("hex").slice(0, 12);
+    const hit = opts.rendered.find((r) => r.hash === hash && (r.mime ?? "image/svg+xml").startsWith("image/"));
+    const src = hit ? opts.asset(hit.url) : undefined;
+    const escSrc = source.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
+    if (src) return `${indent}<figure class="tex-svg"><img data-src="${src}" alt="${escSrc}" loading="lazy"></figure>`;
+    const diagram = /\\begin\{(tikzcd|tikzpicture|tabular)\}/.exec(source);
+    if (opts.math && !diagram) {
+      const inner = source
+        .replace(/\\label\{[^}]*\}/g, "")
+        .replace(/\\begin\{equation\*?\}|\\end\{equation\*?\}/g, "")
+        .replace(/^\\\[|\\\]$/g, "")
+        .trim();
+      return `${indent}$$\n${inner}\n$$`;
+    }
+    const label = diagram?.[1] === "tabular" ? "Table" : "Diagram";
+    return `${indent}<div class="tex-ph"><strong>[${label}]</strong><details><summary>LaTeX source</summary><pre>${escSrc}</pre></details></div>`;
+  });
+}
+
+
+/** The brace-balanced group starting at `s[i] === "{"`; returns its body and the index after it. */
+function group(s: string, i: number): [string, number] | undefined {
+  if (s[i] !== "{") return undefined;
+  let depth = 0;
+  for (let j = i; j < s.length; j++) {
+    if (s[j] === "\\") { j++; continue; }
+    if (s[j] === "{") depth++;
+    else if (s[j] === "}" && --depth === 0) return [s.slice(i + 1, j), j + 1];
+  }
+  return undefined;
+}
+
+/**
+ * KaTeX macros from a paper's own LaTeX preamble (`folio/<paper>/latex/*.tex`):
+ * `\newcommand` / `\renewcommand` / `\providecommand` (with or without an
+ * argument count) and `\DeclareMathOperator`. qou defines `\pp` there and
+ * deliberately NOT in the manifest's `macros`, so without this 46 equations
+ * reached the reader as "undefined control sequence". The manifest wins on a
+ * name both define. A definition this cannot parse is skipped, not guessed.
+ */
+export function preambleMacros(paperDir: string): Record<string, string> {
+  const dir = join(paperDir, "latex");
+  const out: Record<string, string> = {};
+  if (!existsSync(dir)) return out;
+  for (const f of readdirSync(dir).filter((n) => n.endsWith(".tex")).sort()) {
+    const src = readFileSync(join(dir, f), "utf-8").replace(/(^|[^\\])%.*$/gm, "$1");
+    const re = /\\(newcommand|renewcommand|providecommand|DeclareMathOperator)\*?\s*\{?\s*(\\[A-Za-z]+)\s*\}?/g;
+    for (let m = re.exec(src); m; m = re.exec(src)) {
+      let i = re.lastIndex;
+      while (src[i] === " ") i++;
+      if (src[i] === "[") i = src.indexOf("]", i) + 1; // argument count: KaTeX infers #1… from the body
+      while (src[i] === " ") i++;
+      if (src[i] === "[") break; // an optional-argument default: not representable, skip the rest safely
+      const g = group(src, i);
+      if (!g) continue;
+      out[m[2]!] = m[1] === "DeclareMathOperator" ? `\\operatorname{${g[0]}}` : g[0];
+      re.lastIndex = g[1];
+    }
+  }
+  return out;
+}
+
 export interface FolioSiteResult {
-  papers: { slug: string; blocks: number; pages: number }[];
+  papers: { slug: string; blocks: number; pages: number; qa: SiteQaReport }[];
   errors: string[];
 }
 
@@ -155,11 +245,12 @@ export async function buildFolioSite(
       slug: d.slug,
       title: paper.title ?? d.slug,
       math,
-      macros: math ? katexMacros(paper.macros) : {},
+      macros: math ? { ...preambleMacros(docDir), ...katexMacros(paper.macros) } : {},
       chapters: [],
       labels: {},
     };
     let blockCount = 0;
+    const qa = emptyReport();
     let pages = 1;
     const writeShell = (path: string, title: string) => {
       const depth = path ? path.split("/").length + 1 : 1;
@@ -197,12 +288,27 @@ export async function buildFolioSite(
             const block = (await import(ts)).default as Block;
             const mdPath = join(chDir, `${root}.md`);
             const mdContent = existsSync(mdPath) ? readFileSync(mdPath, "utf-8") : "";
-            const html = await renderDocumentHtml(renderBlockMarkdown({ block, mdContent }), { math });
+            const rendered = (block as { rendered?: Array<{ hash?: string; url: string; mime?: string }> }).rendered ?? [];
+            const body = texFences(mdContent, {
+              math,
+              rendered,
+              asset: (url) => {
+                const from = join(chDir, url);
+                if (!existsSync(from)) return undefined;
+                const rel = `rendered/${chRef.dir}/${url.replace(/^rendered\//, "")}`;
+                mkdirSync(dirname(join(paperOut, rel)), { recursive: true });
+                copyFileSync(from, join(paperOut, rel));
+                return rel;
+              },
+            });
+            const html = await renderDocumentHtml(renderBlockMarkdown({ block, mdContent: body }), { math });
             const jsonld = join(chDir, `${root}.jsonld`);
             const node: Record<string, unknown> = existsSync(jsonld)
               ? JSON.parse(readFileSync(jsonld, "utf-8"))
               : { kind: block.kind, ...("label" in block && block.label ? { label: block.label } : {}), ...("title" in block && block.title ? { title: block.title } : {}) };
             node.html = html;
+            const q = await qaBlockHtml(`${chRef.dir}/${root}`, html, { math, macros: outline.macros, imageExists: imageExistsUnder(paperOut) });
+            addToReport(qa, q.findings, q.katexUnknown);
             const rel = `blocks/${chRef.dir}/${root}.json`;
             mkdirSync(join(paperOut, "blocks", chRef.dir), { recursive: true });
             writeFileSync(join(paperOut, rel), JSON.stringify(node) + "\n");
@@ -222,9 +328,11 @@ export async function buildFolioSite(
     }
     mkdirSync(paperOut, { recursive: true });
     writeFileSync(join(paperOut, "outline.json"), JSON.stringify(outline) + "\n");
+    // The rendered-content QA, beside the site it judges (folio-site-qa.ts).
+    writeFileSync(join(paperOut, "qa.json"), JSON.stringify(qa, null, 1) + "\n");
     writeFileSync(join(paperOut, "index.html"), shellHtml(outline.title, 1, { paper: d.slug, path: "" }));
     papers.push({ slug: d.slug, title: outline.title });
-    result.papers.push({ slug: d.slug, blocks: blockCount, pages });
+    result.papers.push({ slug: d.slug, blocks: blockCount, pages, qa });
   }
   writeFileSync(join(base, "papers.json"), JSON.stringify({ papers }) + "\n");
   writeFileSync(join(base, "index.html"), shellHtml("Folio", 0, {}));
@@ -239,7 +347,7 @@ if (import.meta.main) {
   };
   if (args.includes("--help")) {
     console.log(
-      "usage: bun run folio-assistant-core/scripts/build-folio-site.ts [--repo <folio root>] [--out _site] [--route cat-harness/folio] [--math | --no-math]",
+      "usage: bun run folio-assistant-core/scripts/build-folio-site.ts [--repo <folio root>] [--out _site] [--route cat-harness/folio] [--math | --no-math] [--strict]",
     );
     process.exit(0);
   }
@@ -247,7 +355,20 @@ if (import.meta.main) {
   const out = resolve(repo, opt("out") ?? "_site");
   const math = args.includes("--math") ? true : args.includes("--no-math") ? false : undefined;
   const r = await buildFolioSite(repo, out, { route: opt("route"), math });
-  for (const p of r.papers) console.error(`  ${p.slug}: ${p.blocks} block(s), ${p.pages} page(s)`);
+  let qaTotal = 0;
+  for (const p of r.papers) {
+    const c = p.qa.counts;
+    qaTotal += p.qa.findings.length;
+    console.error(
+      `  ${p.slug}: ${p.blocks} block(s), ${p.pages} page(s); rendered QA: raw-tex ${c["raw-tex"]}, raw-directive ${c["raw-directive"]}, ` +
+        `stray-dollar ${c["stray-dollar"]}, katex ${c.katex}, missing-image ${c["missing-image"]}` +
+        (p.qa.unknown.length ? `; UNKNOWN: ${p.qa.unknown.join(", ")}` : ""),
+    );
+  }
+  if (args.includes("--strict") && (qaTotal > 0 || r.papers.some((p) => p.qa.unknown.length))) {
+    console.error(`✗ rendered QA: ${qaTotal} finding(s) (--strict); see <route>/<paper>/qa.json`);
+    process.exit(1);
+  }
   if (r.errors.length > 0) {
     for (const e of r.errors) console.error(`✗ ${e}`);
     process.exit(1);
