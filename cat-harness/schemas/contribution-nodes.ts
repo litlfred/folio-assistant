@@ -24,6 +24,7 @@
  * A LEAF: Zod only.
  *
  * @module cat-harness/schemas/contribution-nodes
+ * @graphNode schema
  */
 import { z } from "zod";
 

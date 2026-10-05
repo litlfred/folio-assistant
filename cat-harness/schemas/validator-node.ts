@@ -17,6 +17,7 @@
  * A LEAF: Zod only.
  *
  * @module cat-harness/schemas/validator-node
+ * @graphNode schema
  */
 import { z } from "zod";
 

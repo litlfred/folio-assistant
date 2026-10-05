@@ -19,6 +19,7 @@
  * at module load) can parse with it without a cycle.
  *
  * @module cat-harness/schemas/block-kind-node
+ * @graphNode schema
  */
 import { z } from "zod";
 

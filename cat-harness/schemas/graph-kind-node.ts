@@ -19,6 +19,7 @@
  * A LEAF: Zod only, so the registry can import it without a cycle.
  *
  * @module cat-harness/schemas/graph-kind-node
+ * @graphNode schema
  */
 import { z } from "zod";
 

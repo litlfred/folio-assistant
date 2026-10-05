@@ -10,6 +10,7 @@
  * fuzzy is still returned, because no catalogue it reads uses them.
  *
  * @module cat-harness/schemas/po-strings
+ * @graphNode none — a parser for .po catalogue strings; no schema
  */
 import { readFileSync } from "node:fs";
 

@@ -8,6 +8,7 @@
  * `instance-roots.ts` only.
  *
  * @module cat-harness/schemas/declared-nodes
+ * @graphNode none — a function library over the declared directories; it defines no schema
  */
 import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";

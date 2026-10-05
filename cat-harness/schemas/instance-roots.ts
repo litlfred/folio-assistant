@@ -8,6 +8,7 @@
  * registry. Moved verbatim from `cat-harness.ts`, which re-exports all four.
  *
  * @module cat-harness/schemas/instance-roots
+ * @graphNode none — constants and functions that locate an instance's declaration; no schema
  */
 import { readdirSync, readFileSync, type Dirent } from "node:fs";
 import { basename, join, resolve } from "node:path";
