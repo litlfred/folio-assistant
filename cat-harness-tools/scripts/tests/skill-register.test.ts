@@ -361,7 +361,7 @@ describe("the real corpus", () => {
 describe("flags", () => {
   test("every flag is off by default, so a bare run regenerates and reports", () => {
     const f = parseFlags([]);
-    expect(f).toEqual({ check: false, dryRun: false, json: false, noReport: false });
+    expect(f).toEqual({ check: false, dryRun: false, json: false, noReport: false, declarationsOnly: false });
   });
 
   test("each flag is recognised on its own", () => {
@@ -369,6 +369,7 @@ describe("flags", () => {
     expect(parseFlags(["--dry-run"]).dryRun).toBe(true);
     expect(parseFlags(["--json"]).json).toBe(true);
     expect(parseFlags(["--no-report"]).noReport).toBe(true);
+    expect(parseFlags(["--declarations-only"]).declarationsOnly).toBe(true);
   });
 
   test("an unrelated argument sets nothing", () => {
@@ -379,6 +380,7 @@ describe("flags", () => {
       dryRun: false,
       json: false,
       noReport: false,
+      declarationsOnly: false,
     });
   });
 

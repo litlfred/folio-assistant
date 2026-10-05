@@ -38,6 +38,14 @@ import { defaultGraphKinds, type GraphKindDef, type GraphKindRegistry } from "./
 
 /** The one renderable graph kind. */
 export const FOLIO_GRAPH_KIND: GraphKindDef = {
+  // Said, not silent (bean riit: the validator sweep now reaches the kinds core
+  // registers in code, and found this one had said nothing).
+  validatorNotApplicable:
+    "its nodes are `.ts` block manifests and `.md` prose, TypeScript that the content pipeline loads and " +
+    "`content_validate` checks against the Block union, not JSON a runtime Zod schema could parse.",
+    description:
+      "authored content an AUTHOR creates using the graph — a note, a visualization, a paper. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`.",
+    renderableNote: "just-the-docs renders it to a website",
   layer: "core",
   renderable: true,
   // The subject matter itself — a folio IS the thing a reader came for, which

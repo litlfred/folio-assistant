@@ -196,3 +196,29 @@ describe("the mount routes are ASKED for, not guessed", () => {
     expect(routes).not.toContain("cat-harness");
   });
 });
+
+describe("a FOLIO's site (folio-staging.yml): platform links point at the platform's site", () => {
+  // Measured 2026-10-05 on litlfred/smart-ra: a document folio's pages carried
+  // no navbar at all, and re-basing the platform's graphs against the FOLIO's
+  // root would have made every one of them a 404 on the folio's Pages site.
+  const BASE = "https://litlfred.github.io/folio-assistant";
+
+  test("graphs and harnesses are absolute on the platform site; home is the folio's own root", () => {
+    const root = mkdtempSync(join(tmpdir(), "folio-rail-"));
+    mkdirSync(join(root, "dpi-h-ra"), { recursive: true });
+    writeFileSync(join(root, "dpi-h-ra", "index.html"), page("<h1>Doc</h1><h2>Chapter</h2>"));
+    const r = railStandalonePages(root, "cat-harness", "cat-harness", [], { platformBase: BASE, homeLabel: "smart-ra" });
+    expect(r.injected).toBe(1);
+
+    const html = readFileSync(join(root, "dpi-h-ra", "index.html"), "utf-8");
+    expect(html).toMatch(/<nav class="fa-nav"/);
+    const hrefs = [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]!);
+    // Every link the platform owns resolves on the platform's site...
+    const platform = hrefs.filter((h) => !h.startsWith("#") && h !== "../");
+    expect(platform.length).toBeGreaterThan(0);
+    for (const h of platform) expect(h.startsWith(`${BASE}/`)).toBe(true);
+    // ...and home, named for the folio, is the folio site's own root.
+    expect(hrefs).toContain("../");
+    expect(html).toContain("smart-ra");
+  });
+});

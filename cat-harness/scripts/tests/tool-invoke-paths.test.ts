@@ -38,7 +38,8 @@ import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { unresolvedPaths } from "../check-tools.ts";
-import { tools } from "../../tools/discover.js";
+import { tools, toolsOf } from "../../tools/discover.js";
+import { instanceRootsIn } from "../../schemas/cat-harness.js";
 import { resolveImplementingPath } from "../../schemas/harness-config.js";
 
 const INSTANCE = resolve(import.meta.dir, "../..");
@@ -80,12 +81,18 @@ describe("the two roots, asserted separately because conflating them breaks 20 n
     // "The instance" is the declaring one OR the one instance whose own `needs`
     // names it (owner ruling T1, bean `70lx`): the definitions stay here while
     // the code moves up a layer, and the path is not rewritten to say so.
-    const mods = tools()
-      .map((t) => ({ id: t.id, mod: (t.invoke as { inProcess?: { module?: string } })?.inProcess?.module }))
-      .filter((x): x is { id: string; mod: string } => typeof x.mod === "string");
+    //
+    // Each node is resolved from the instance that DECLARES it — the harness's
+    // from cat-harness, sci's `lean-formal-edges` from folio-assistant-sci —
+    // which is how both MCP servers resolve them (bean riit, 3c).
+    const mods = instanceRootsIn(REPO).flatMap((inst) =>
+      toolsOf(inst)
+        .map((t) => ({ inst, id: t.id, mod: (t.invoke as { inProcess?: { module?: string } })?.inProcess?.module }))
+        .filter((x): x is { inst: string; id: string; mod: string } => typeof x.mod === "string"),
+    );
     expect(mods.length).toBeGreaterThan(10);
-    for (const { id, mod } of mods) {
-      expect(resolveImplementingPath(INSTANCE, mod).state, `${id}: ${mod} under the implementing instance`).toBe("found");
+    for (const { inst, id, mod } of mods) {
+      expect(resolveImplementingPath(inst, mod).state, `${id}: ${mod} under the implementing instance`).toBe("found");
       expect(existsSync(join(REPO, mod)), `${id}: ${mod} must NOT be repo-relative`).toBe(false);
     }
   });

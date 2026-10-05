@@ -202,6 +202,13 @@ export const RULES: Rule[] = [
       // instance a BPMN's `<skill ref>` reaches. Harness for the same reason —
       // it reads declarations, BPMN extension elements and skill file names,
       // consumes the same `layer-direction.ts`, and no folio content.
+      // HARNESS, for the same reason: it judges directory declarations'
+      // `derivedFrom` edges with the same reach, and reads no folio content.
+      "scripts/check-derived-from.ts",
+      "scripts/derived-from.baseline.ts",
+      // HARNESS: the staging cone (bean `4j86`) computes over declarations and
+      // module specifiers, and reads no folio content.
+      "scripts/staging-cone.ts",
       "scripts/process-bindings.baseline.ts",
       // HARNESS on the same argument: its subjects are this repository's own
       // generated navigation (`_data/harness.json`, the navbar include, the
@@ -602,7 +609,7 @@ export const RULES: Rule[] = [
       // module defining their schemas could not sit in a different repository
       // from the union naming them. That premise was removed rather than the
       // classification argued again: smart-base now CONTRIBUTES the `dak`
-      // adapter and its kinds (`smart-base/contributions.ts`), core's built-in
+      // adapter and its kinds (nodes in its own graphs since bean riit), core's built-in
       // vocabulary is `paper` only, and `dak-blocks.ts`, `qa-checkers-dak.ts`
       // and `gen-dak-components-figure.ts` moved to `smart-base/`, outside this
       // tool's scope. Nothing under `cat-harness/` imports them.
@@ -992,6 +999,20 @@ export const RULES: Rule[] = [
       // distinction `folio-graph-kind.ts` argues. Left to triage it landed
       // in core on a keyword, which had the ownership exactly backwards.
       "schemas/graph-kind-registry.ts",
+      // declared-path-literal: a partition plan names modules by path, the
+      // same base case as the TARGET layouts above. dmx1's and riit's leaves,
+      // imported by the registry and the declaration schema: instance discovery
+      // (moved verbatim out of cat-harness.ts), the graph-kind, validator,
+      // block-kind and contribution node schemas, and the declared-node scan.
+      // Harness for the same reason as their importers.
+      "schemas/instance-roots.ts",
+      "schemas/graph-kind-node.ts",
+      "schemas/declared-nodes.ts",
+      "schemas/validator-node.ts",
+      "schemas/block-kind-node.ts",
+      "schemas/content-adapter-node.ts",
+      "schemas/contribution-nodes.ts",
+
       // Roles, actors and the KG audit sidecar are harness-layer for the same
       // reason and on the same terms: `role-graph.ts` imports only
       // `namespaces.ts`, `kg-qa.ts` imports zod and `portable-path.ts` below.
@@ -1276,6 +1297,7 @@ export const RULES: Rule[] = [
       "scripts/gate-tree-guard.ts",         // ...and which gate changed the tree under it (bean `ymsu`). Harness for the same reason the runner is: it asks a question only the runner is positioned to ask, since no gate can observe what another gate did
       "scripts/task-pool.ts",               // the worker pool `gates` and `regen` share (bean `xpcu`): scheduling only, knows nothing about any content type
       "scripts/task-io.ts",                 // ...what each check script reads and writes, declared in one place, which the pool and the skip read
+      "scripts/pair-cover.ts",              // ...and which regen pairs FOLD into one another's check (bean `8qyc`): a gate whose chain the pool already asks is replaced by its residual. Scheduling only, beside the pool for the same reason
       "scripts/input-hash.ts",              // ...and `regen`'s input-hash skip: a local cache over the declared inputs, harness for the same reason `regen` is
       "scripts/decisions-named-not-asked.ts", // the `Stop` layer of `interaction-modality` §4.1 (bean `ahvw`). Harness: it reads a transcript and enforces how a QUESTION is put, which no content type varies
       "scripts/kind-table.ts",              // the reader over the graph-kind TABLE in `directory-conventions.md`, which `kind-register` and `graph-kind-docs.test.ts` both ask. Harness: the table is the harness's own documentation of its own registry

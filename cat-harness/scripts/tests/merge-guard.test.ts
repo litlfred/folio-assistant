@@ -20,11 +20,14 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import {
+  CannotAsk,
   evaluate,
+  getAll,
   isBotMerge,
   openQuestions,
   parseMergeMainDispatches,
   readyMarkers,
+  sameRepoNext,
   signingSession,
   untickedItems,
   SELF_WORKFLOW_FILE,
@@ -500,5 +503,73 @@ describe("the commit-status state: pending for unfinished, failure for a defect"
     expect(evaluate(s).state).toBe("success");
     s.runs = { state: "cannot-ask", reason: "HTTP 502" };
     expect(evaluate(s).state).toBe("error");
+  });
+});
+
+/**
+ * Paging (issue #2137). GitHub's `Link: rel="next"` names the numeric
+ * `/repositories/<id>/…` form, which the agent proxy refuses with a 403, so a
+ * PR with more than 100 commits or timeline events was COULD NOT DETERMINE
+ * from every agent session. The walk now follows the `repos/{owner}/{repo}/…`
+ * form; a page that still cannot be read still throws {@link CannotAsk},
+ * which `main` reports as COULD NOT DETERMINE (exit 2).
+ */
+describe("paging — page 2 is asked in the repos/{owner}/{repo} form", () => {
+  const API = "https://api.github.com";
+  const START = "repos/litlfred/folio-assistant/pulls/1955/commits?per_page=100";
+  const NUMERIC_NEXT = `${API}/repositories/1189760173/pulls/1955/commits?per_page=100&page=2`;
+  const NAMED_NEXT = `${API}/repos/litlfred/folio-assistant/pulls/1955/commits?per_page=100&page=2`;
+
+  /** A fetch that serves `pages` by URL and records what it was asked; any other URL gets the proxy's 403. */
+  function fakeFetch(pages: Record<string, { body: unknown; next?: string }>): { fetch: typeof fetch; asked: string[] } {
+    const asked: string[] = [];
+    const impl = async (input: string | URL | Request): Promise<Response> => {
+      const url = String(input);
+      asked.push(url);
+      const page = pages[url];
+      if (!page) {
+        return new Response(
+          JSON.stringify({ message: "Numeric-ID repository paths (repositories/{id}/...) are not supported through this proxy." }),
+          { status: 403, headers: { "content-type": "application/json" } },
+        );
+      }
+      const headers: Record<string, string> = { "content-type": "application/json" };
+      if (page.next) headers.link = `<${page.next}>; rel="next", <${page.next}>; rel="last"`;
+      return new Response(JSON.stringify(page.body), { status: 200, headers });
+    };
+    return { fetch: impl as unknown as typeof fetch, asked };
+  }
+
+  test("sameRepoNext rewrites the numeric form to the walk's own repos/{owner}/{repo} prefix", () => {
+    expect(sameRepoNext(NUMERIC_NEXT, START)).toBe(NAMED_NEXT);
+    expect(sameRepoNext(NUMERIC_NEXT, `${API}/${START}`)).toBe(NAMED_NEXT);
+  });
+
+  test("sameRepoNext leaves a next it cannot place unchanged", () => {
+    expect(sameRepoNext(NAMED_NEXT, START)).toBe(NAMED_NEXT);
+    expect(sameRepoNext(NUMERIC_NEXT, "user/repos?per_page=100")).toBe(NUMERIC_NEXT);
+  });
+
+  test("a two-page list is read whole, with page 2 asked by name and never by numeric id", async () => {
+    const { fetch, asked } = fakeFetch({
+      [`${API}/${START}`]: { body: [{ sha: "a" }, { sha: "b" }], next: NUMERIC_NEXT },
+      [NAMED_NEXT]: { body: [{ sha: "c" }] },
+    });
+    const got = await getAll<{ sha: string }>(START, fetch);
+    expect(got.map((c) => c.sha)).toEqual(["a", "b", "c"]);
+    expect(asked).toEqual([`${API}/${START}`, NAMED_NEXT]);
+    expect(asked.some((u) => u.includes("/repositories/"))).toBe(false);
+  });
+
+  test("a page 2 that cannot be read is CannotAsk (could-not-determine), never a short list", async () => {
+    // page 2 deliberately absent: the fake answers it with the proxy's 403
+    const { fetch } = fakeFetch({ [`${API}/${START}`]: { body: [{ sha: "a" }], next: NUMERIC_NEXT } });
+    const err = await getAll(START, fetch).then(
+      () => undefined,
+      (e: unknown) => e,
+    );
+    expect(err).toBeInstanceOf(CannotAsk);
+    expect((err as Error).message).toContain(`GET ${NAMED_NEXT}: HTTP 403`);
+    expect((err as Error).message).toContain("not supported through this proxy");
   });
 });

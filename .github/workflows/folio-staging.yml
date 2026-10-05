@@ -276,6 +276,22 @@ jobs:
         # env rather than interpolated into the script text.
         run: bash -c "$BUILD_COMMAND"
 
+      - name: Give every page the harness navbar and rail
+        # A folio's build writes standalone pages with no navigation (smart-ra,
+        # 2026-10-05: "has no navbar/harness"). This is the same last-step pass
+        # the platform's own site runs, with the platform's graph and harness
+        # links pointing at the PLATFORM's published site, since none of them
+        # exists on the folio's; home is the folio's own root. Idempotent: a
+        # page that already carries a navigation, or declines one with
+        # <meta name="folio-navbar" content="none">, is left alone.
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          SITE_DIR: ${{ inputs.site_dir }}
+          FOLIO_NAME: ${{ github.event.repository.name }}
+        run: |
+          bun run "$PLATFORM_DIR/cat-harness/scripts/rail-standalone-pages.ts" \
+            --site "$SITE_DIR" --built cat-harness --foreign-site --home-label "$FOLIO_NAME"
+
       - name: Compute the ChangeSet
         # What changed, block by block, against the base: the review page and
         # the change heat map read it (epic q4jm). An unresolvable base is an
@@ -681,6 +697,22 @@ jobs:
         env:
           BUILD_COMMAND: ${{ inputs.build_command }}
         run: bash -c "$BUILD_COMMAND"
+
+      - name: Give every page the harness navbar and rail
+        # A folio's build writes standalone pages with no navigation (smart-ra,
+        # 2026-10-05: "has no navbar/harness"). This is the same last-step pass
+        # the platform's own site runs, with the platform's graph and harness
+        # links pointing at the PLATFORM's published site, since none of them
+        # exists on the folio's; home is the folio's own root. Idempotent: a
+        # page that already carries a navigation, or declines one with
+        # <meta name="folio-navbar" content="none">, is left alone.
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          SITE_DIR: ${{ inputs.site_dir }}
+          FOLIO_NAME: ${{ github.event.repository.name }}
+        run: |
+          bun run "$PLATFORM_DIR/cat-harness/scripts/rail-standalone-pages.ts" \
+            --site "$SITE_DIR" --built cat-harness --foreign-site --home-label "$FOLIO_NAME"
 
       - name: Check out the publish branch, or start it
         # The first publish of a new folio finds no publish branch, so it

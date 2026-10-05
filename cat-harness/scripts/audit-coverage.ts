@@ -414,7 +414,8 @@ export function census(dir: string, skip: ReadonlySet<string> = new Set([SELF_SI
  *   tip-keyed directories, so a caller with none needs no git repository.
  */
 export function censusDirectories(
-  dirs: ReadonlyArray<{ id?: string; absPath: string; storage?: { branch: string; keyedBy?: string }; source?: SubgraphSource }>,
+  // `storage` as the declaration holds it — read only through the resolver, which parses it.
+  dirs: ReadonlyArray<{ id?: string; absPath: string; storage?: unknown; source?: SubgraphSource }>,
   skip?: ReadonlySet<string>,
   repoRoot: string = process.cwd(),
 ): { files: number; sidecars: number; stored: number; undetermined: number; uncounted: number } {

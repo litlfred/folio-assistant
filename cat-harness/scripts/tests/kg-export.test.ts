@@ -34,6 +34,7 @@ import { PUBLISHED_ELSEWHERE, declaresOwnCanonical, instanceExportPlan } from ".
 import { buildDeclarationSchema, buildSkillIoContracts } from "../harness-schema-export.js";
 import { artefactStub, findDeclarationFile, instanceRootsIn, readDeclaration, repoRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../../schemas/namespaces.js";
+import { inAggregate } from "../../test/support/checkout.js";
 
 /**
  * Does this IRI sit in ANY of the three folio namespaces?
@@ -715,7 +716,9 @@ describe("every self-URL the export publishes resolves to something published", 
     return out;
   }
 
-  test("no absolute self-URL names a path the deploy does not write", async () => {
+  // Reads other instances' exports, so it runs only where those instances
+  // exist; skipped visibly when cat-harness stands alone (bean `ho66`).
+  test.skipIf(!inAggregate())("no absolute self-URL names a path the deploy does not write", async () => {
     const doc = EXPORT_CANONICAL;
     const seen = new Set<string>();
     const walk = (o: unknown) => {
@@ -993,7 +996,9 @@ describe("a package's id is declared, not derived from its path", () => {
     (EXPORT_CHECKOUT["@graph"] as Array<Record<string, unknown>>).filter((n) => n["@type"] === termIri("SkillPackage"));
   const witness = () => checkoutPackages().find((x) => String(x["@id"]).endsWith(`#package/${WITNESS}`));
 
-  test("in the PUBLISHED graph the witness is a tombstone forwarding to its own instance's document", () => {
+  // Reads other instances' exports, so it runs only where those instances
+  // exist; skipped visibly when cat-harness stands alone (bean `ho66`).
+  test.skipIf(!inAggregate())("in the PUBLISHED graph the witness is a tombstone forwarding to its own instance's document", () => {
     const at = `${EXPORT["@id"]}#package/${WITNESS}`;
     const t = (EXPORT["@graph"] as Array<Record<string, unknown>>).find((n) => n["@id"] === at);
     expect(t).toEqual({ "@id": at, deprecated: true, isReplacedBy: publishedIdentity(join(REPO, WITNESS)).docIri });
@@ -1282,9 +1287,10 @@ describe("DMN decisions are nodes, linked to their gateways and to DMN 1.3", () 
       expect(typeof p.summary).toBe("string");
       expect(String(p.description).startsWith(String(p.summary).replace(/…$/, ""))).toBe(true);
     }
-    // `review-task`, cat-harness's own: `content-lifecycle` was the witness
-    // until it left with folio-assistant-core's graph (bean `4ak5` item 2).
-    const review = processes.find((p) => String(p.sourcePath).endsWith("review-task.bpmn"))!;
+    // The witness is one of cat-harness's OWN diagrams, so the case holds where
+    // cat-harness is its own clone with no higher instance beside it (bean
+    // `ho66`); `content-lifecycle` was folio-assistant-core's.
+    const review = processes.find((p) => String(p.sourcePath).endsWith("content/review-task.bpmn"))!;
     expect(review.description).toBeDefined();
     expect(String(review.sourceUrl)).toMatch(/^https:\/\/github\.com\/.+\/blob\/main\/.+review-task\.bpmn$/);
     expect(String(review.depiction)).toMatch(/\/assets\/img\/workflows\/review-task\.svg$/);
@@ -1295,9 +1301,10 @@ describe("DMN decisions are nodes, linked to their gateways and to DMN 1.3", () 
     const calls = byType("ProcessNode").filter((n) => n.calledElement !== undefined);
     expect(calls.length).toBeGreaterThan(0);
     for (const c of calls) expect(procIds.has(c.calledElement as string)).toBe(true);
-    // `review-task` calls `review-narrative` — the edge the page reads.
-    const review = byType("Process").find((p) => String(p.sourcePath).endsWith("review-task.bpmn"))!;
-    const narrative = byType("Process").find((p) => String(p.sourcePath).endsWith("review-narrative.bpmn"))!;
+    // `review-task` calls `review-narrative` — an edge between two of
+    // cat-harness's own diagrams, so it is there standalone too (bean `ho66`).
+    const review = byType("Process").find((p) => String(p.sourcePath).endsWith("content/review-task.bpmn"))!;
+    const narrative = byType("Process").find((p) => String(p.sourcePath).endsWith("content/review-narrative.bpmn"))!;
     expect(calls.some((c) => c.partOf === review["@id"] && c.calledElement === narrative["@id"])).toBe(true);
   });
 });
@@ -1357,7 +1364,9 @@ describe("the published graph is this instance's own (bean 4ak5 item 2)", () => 
     expect(outside).toEqual([]);
   });
 
-  test("every @id the checkout-scope graph mints and this one lacks is a tombstone", () => {
+  // Reads other instances' exports, so it runs only where those instances
+  // exist; skipped visibly when cat-harness stands alone (bean `ho66`).
+  test.skipIf(!inAggregate())("every @id the checkout-scope graph mints and this one lacks is a tombstone", () => {
     // Two WHOLE builds, so a collector that becomes scope-dependent without
     // `tombstonesFor` re-running it fails here rather than leaving an `@id`
     // with no forwarding address.
@@ -1397,7 +1406,9 @@ describe("the published graph is this instance's own (bean 4ak5 item 2)", () => 
     expect(lost).toEqual([]);
   });
 
-  test("nothing left behind links to a node that moved", () => {
+  // Reads other instances' exports, so it runs only where those instances
+  // exist; skipped visibly when cat-harness stands alone (bean `ho66`).
+  test.skipIf(!inAggregate())("nothing left behind links to a node that moved", () => {
     // `danglingLinks` is computed before the tombstones are appended, so a
     // link to a node that LEFT is reported rather than resolved by its own
     // forwarding address — a role's skill held by a stacked instance is

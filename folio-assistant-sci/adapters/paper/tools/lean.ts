@@ -275,6 +275,20 @@ export function registerLeanTools(server: McpServer): void {
       checks.uv = hasCommand("uv") ? "available" : "not installed";
       checks.ripgrep = hasCommand("rg") ? "available" : "not installed (optional)";
 
+      // lean-lsp-mcp — whether the language-server bridge itself runs, not
+      // only whether `uv` is installed. Ported from the viewer server's fork
+      // of this tool when the fork was deleted (bean riit, 3c).
+      checks["lean-lsp-mcp"] = hasCommand("uvx")
+        ? (() => {
+          try {
+            execSync("uvx lean-lsp-mcp --help", { stdio: "pipe", timeout: 10_000 });
+            return "available (via uvx)";
+          } catch {
+            return "uvx available but lean-lsp-mcp failed";
+          }
+        })()
+        : "uvx not installed";
+
       // Toolchain
       const tcFile = join(LEAN_DIR, "lean-toolchain");
       checks.toolchain = existsSync(tcFile)

@@ -85,7 +85,9 @@ describe("the root index", () => {
     expect(await expandFindings(built.doc, localLoader(dir))).toEqual([]);
   });
   test("an instance with no export is a PROBLEM, never a shorter index", () => {
-    const r = buildRootIndex(site(["who-iris"]));
-    expect(r.problems.some((p) => p.startsWith("who-iris: no export"))).toBe(true);
+    // `bootstrap` is in cat-harness's own closure, so it is declared wherever
+    // cat-harness runs — the aggregate or its own clone (bean `ho66`).
+    const r = buildRootIndex(site(["bootstrap"]));
+    expect(r.problems.some((p) => p.startsWith("bootstrap: no export"))).toBe(true);
   });
 });

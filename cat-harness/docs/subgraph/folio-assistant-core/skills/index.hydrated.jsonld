@@ -4,32 +4,22 @@
   "@type": "bootstrap:Subgraph",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-      "@type": "bootstrap:Subgraph",
-      "contentSource": {
-        "declaredIn": "default",
-        "kind": "directory"
-      },
-      "description": "The skills core owns. `skills/voices/` is declared separately above as the `voices` kind: a voice partitions how prose READS and is a different graph from an instruction body, so the nesting is two kinds in one place rather than one kind declared twice.",
-      "fileCount": 65,
-      "holdsGraph": [
-        "bootstrap:graphKind/skills"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-      "name": "core-skills",
-      "path": "skills/",
-      "readmePath": "skills/README.md"
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/skills",
+      "@type": "cat-harness:SkillPackage",
+      "hasManifest": false,
+      "name": "skills",
+      "path": "../folio-assistant-core/skills"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/deep-document-research",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deep-document-research",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Answer a question from a corpus this folio already holds, iteratively, and stop on a stated condition. The four roles, the two stopping conditions and why both are load-bearing, the granularity choice, and the three things this repository must NOT adopt along with the method.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/skills",
       "instructionLines": 102,
-      "instructionsPath": "skills/deep-document-research.md",
+      "instructionsPath": "../folio-assistant-core/skills/deep-document-research.md",
       "name": "deep-document-research",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e6d92eb50cc82a0dd274c07d3452c1896bb8c53d12760f7a2324b8d9c822b1ce",
@@ -49,14 +39,21 @@
           "@type": "bootstrap:Subgraph",
           "hasMember": [
             {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/quality-control",
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle-ext",
+              "@type": "cat-harness:SkillPackage",
+              "hasManifest": true,
+              "name": "content-lifecycle-ext",
+              "path": "../folio-assistant-core/skills/content/content-lifecycle-ext"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/quality-control",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
               "hasIOContract": false,
               "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle-ext",
               "instructionLines": 70,
-              "instructionsPath": "skills/content/content-lifecycle-ext/quality-control.md",
+              "instructionsPath": "../folio-assistant-core/skills/content/content-lifecycle-ext/quality-control.md",
               "name": "quality-control",
               "payload": {
                 "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c083976b7b6f9ee100f6b1eda32e01745aaf1698d76ddbf7dcbe0316122f97fa",
@@ -77,14 +74,21 @@
           "@type": "bootstrap:Subgraph",
           "hasMember": [
             {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-authoring",
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
+              "@type": "cat-harness:SkillPackage",
+              "hasManifest": true,
+              "name": "folio-document-adapter",
+              "path": "../folio-assistant-core/skills/content/folio-document-adapter"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-authoring",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
               "hasIOContract": false,
               "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
               "instructionLines": 92,
-              "instructionsPath": "skills/content/folio-document-adapter/document-authoring.md",
+              "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/document-authoring.md",
               "name": "document-authoring",
               "payload": {
                 "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d4d459e5e0ea55089cfcbe0c10a3bb057c4e031443c42207f98359fee716f0ba",
@@ -94,14 +98,14 @@
               "title": "document-authoring"
             },
             {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-publishing",
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-publishing",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
               "hasIOContract": false,
               "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
               "instructionLines": 82,
-              "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
+              "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/document-publishing.md",
               "name": "document-publishing",
               "payload": {
                 "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/078453880e1c8cb5171ed7069cde0a704bffba019244d475def34a99c062512d",
@@ -111,14 +115,14 @@
               "title": "document-publishing"
             },
             {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-structure",
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-structure",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
               "hasIOContract": false,
               "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
               "instructionLines": 64,
-              "instructionsPath": "skills/content/folio-document-adapter/document-structure.md",
+              "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/document-structure.md",
               "name": "document-structure",
               "payload": {
                 "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3b8b381875663d9398577c7e72b0c36e1dc97b52d7b85e16f673a4e91ad96e1d",
@@ -128,14 +132,14 @@
               "title": "document-structure"
             },
             {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/normative-statements",
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/normative-statements",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
               "hasIOContract": false,
               "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
               "instructionLines": 85,
-              "instructionsPath": "skills/content/folio-document-adapter/normative-statements.md",
+              "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/normative-statements.md",
               "name": "normative-statements",
               "payload": {
                 "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9b8f41a3efb6f406fccc533b5223d0e89052465c3bc52e84ebc2c73b20258038",
@@ -145,19 +149,19 @@
               "title": "normative-statements"
             },
             {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment",
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/public-comment",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
               "hasIOContract": false,
               "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-              "instructionLines": 150,
-              "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
+              "instructionLines": 152,
+              "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/public-comment.md",
               "name": "public-comment",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/578ceb1c8a2a06d4bd7be6af3bbb3692d15ed5c4f62d6ba565d0c981146d13f1",
-                "bytes": 7984,
-                "sha256": "578ceb1c8a2a06d4bd7be6af3bbb3692d15ed5c4f62d6ba565d0c981146d13f1"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/072171938364fb644d650a4af890c7ee123e3dcade0462ec506b4aaf40770c24",
+                "bytes": 8044,
+                "sha256": "072171938364fb644d650a4af890c7ee123e3dcade0462ec506b4aaf40770c24"
               },
               "title": "public-comment"
             }
@@ -184,15 +188,22 @@
           "@type": "bootstrap:Subgraph",
           "hasMember": [
             {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/dublin-core-renderings",
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/catalogue",
+              "@type": "cat-harness:SkillPackage",
+              "hasManifest": true,
+              "name": "catalogue",
+              "path": "../folio-assistant-core/skills/library/catalogue"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dublin-core-renderings",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
               "description": "Render a catalogue's Dublin Core records in the two standard forms an outside reader can use: Dublin Core XML, which a harvester reads, and JSON-LD bound to DCMI Metadata Terms. Each rendering is published beside the item's page. Covers which records get one, which XML form is used and why, how every field maps from the record's own data (never composed), what cannot be expressed and how that is reported, and the gate. Read this before changing the mapping, adding a catalogue instance, or linking a rendering from a page.",
               "hasIOContract": false,
               "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/catalogue",
               "instructionLines": 164,
-              "instructionsPath": "skills/library/catalogue/dublin-core-renderings.md",
+              "instructionsPath": "../folio-assistant-core/skills/library/catalogue/dublin-core-renderings.md",
               "name": "dublin-core-renderings",
               "payload": {
                 "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b864303d3daee8372480e64472fdaade599f2432e4c4928c15cd666a19df8360",
