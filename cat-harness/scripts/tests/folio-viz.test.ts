@@ -120,7 +120,7 @@ describe("the committed projection is MACHINE-INDEPENDENT", () => {
   test("no FILESYSTEM path in the committed artefact is absolute", () => {
     // The fields that carry paths, named rather than sniffed. The first
     // draft of this spec flagged every string beginning with "/" and failed
-    // on nine LINK HREFS — `/concepts/skills.html`, `/concepts/architecture.html` — which are
+    // on nine LINK HREFS — `/skills.html`, `/architecture.html` — which are
     // site-root-relative URLs and exactly what a sticky is supposed to
     // carry. A test that cannot tell a URL from a path would have to be
     // switched off the first time a sticky linked to a page.
@@ -175,7 +175,7 @@ describe("node links resolve on the page (qgjh)", () => {
     expect(linkHref("https://github.com/x")).toBe("https://github.com/x");
   });
   test("a site-rooted link resolves against the site root", () => {
-    expect(linkHref("/concepts/agentic-harness.html")).toBe("../../agentic-harness.html");
+    expect(linkHref("/agentic-harness.html")).toBe("../../agentic-harness.html");
   });
   test("a protocol-relative or unknown href stays text", () => {
     expect(linkHref("//evil.example/x")).toBe("");

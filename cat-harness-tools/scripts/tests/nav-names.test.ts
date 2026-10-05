@@ -175,8 +175,8 @@ describe("what is and is not a name", () => {
 
   test("a sticky link is compared only where navigation links the same page", () => {
     const s = [
-      { surface: "sticky card links", source: "x", href: "/concepts/content-types.html", label: "Content" },
-      { surface: "sticky card links", source: "x", href: "/concepts/content-types.html", label: "Know which kind of thing you are writing" },
+      { surface: "sticky card links", source: "x", href: "/content-types.html", label: "Content" },
+      { surface: "sticky card links", source: "x", href: "/content-types.html", label: "Know which kind of thing you are writing" },
       { surface: "sticky card links", source: "x", href: "/who-iris/", label: "The IRIS replica" },
       { surface: "harness rows", source: "y", href: "/who-iris/", label: "WHO IRIS" },
     ];

@@ -187,7 +187,7 @@ describe("the guard fires", () => {
   test("on a raw readFileSync of a sidecar path — the 78a399ee5 shape", () => {
     const bad = `
       const BLOCK_JSON = readFileSync(
-        join(ROOT, "test/results/witnesses/crdm-methodology/what-is-not-built-yet.block.json"),
+        join(ROOT, "test/results/witnesses/process-crdm-methodology/what-is-not-built-yet.block.json"),
         "utf8",
       );
       await expect(firstRow.locator(".fa-qa-chip").first()).toHaveText("fail");`;

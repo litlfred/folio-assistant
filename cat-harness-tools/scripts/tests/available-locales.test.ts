@@ -38,9 +38,9 @@ function index(): TranslationIndex {
     locales: ["fr", "zh"],
     pages: {
       architecture: {
-        sourceUrl: "/concepts/architecture.html",
+        sourceUrl: "/architecture.html",
         sourceTitle: "Architecture",
-        translations: { fr: page("/fr/concepts/architecture.html"), zh: page("/zh/concepts/architecture.html") },
+        translations: { fr: page("/fr/architecture.html"), zh: page("/zh/architecture.html") },
       },
       "guides/who-smart-ig": {
         sourceUrl: "/guides/who-smart-ig.html",
@@ -128,8 +128,8 @@ describe("sourceKeyByTranslation — the inversion", () => {
   test("keys are NORMALISED, not raw URLs", () => {
     // `pageKey` strips the extension and leading slash, because Jekyll serves
     // one page at several spellings under a `baseurl` this code does not know.
-    // Matching on `/fr/concepts/architecture.html` would work here and break on any
+    // Matching on `/fr/architecture.html` would work here and break on any
     // instance with a baseurl.
-    expect(bySource.has("/fr/concepts/architecture.html")).toBe(false);
+    expect(bySource.has("/fr/architecture.html")).toBe(false);
   });
 });

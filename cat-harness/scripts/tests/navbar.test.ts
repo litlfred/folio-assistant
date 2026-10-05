@@ -817,9 +817,9 @@ describe("a coverage path is a SOURCE file, not a URL — `publishedUrlOf`", () 
   it("any OTHER page addresses as itself, with `.html`", () => {
     // This is the row that stops the obvious fix from being right. Stripping
     // `.md` would give `/tool-graph/`, which is a 404 — measured against the
-    // built site, where `/concepts/tool-graph.html` is 200 and `/tool-graph/` is not.
-    expect(publishedUrlOf("tool-graph.md")).toBe("/concepts/tool-graph.html");
-    expect(publishedUrlOf("subgraph-viewers.md")).toBe("/concepts/subgraph-viewers.html");
+    // built site, where `/tool-graph.html` is 200 and `/tool-graph/` is not.
+    expect(publishedUrlOf("tool-graph.md")).toBe("/tool-graph.html");
+    expect(publishedUrlOf("subgraph-viewers.md")).toBe("/subgraph-viewers.html");
   });
 
   it("a directory is already a URL and is left alone", () => {
