@@ -3,8 +3,8 @@ title: "Example QuestionnaireReponse for Capture Client History for Typhoid — 
 description: "QuestionnaireResponse/Example.IMMZ.D1.QuestionnaireResponse.Typhoid in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/immunizations">smart.who.int.immunizations</a></div>
@@ -39,4 +39,4 @@ not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
 
 <footer id="ig-footer" data-prev="QuestionnaireResponse-Example.IMMZ.D1.QuestionnaireResponse.Tetanus.html" data-next="QuestionnaireResponse-Example.IMMZ.D1.QuestionnaireResponse.Varicella.html" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

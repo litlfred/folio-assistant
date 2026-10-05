@@ -8,7 +8,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, composeIgSite, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
 import { copyDocsInto, igSiteDocs, webpagePalette } from "./stage-ig-sites";
 import type { IgReleases } from "../schemas/ig-releases.ts";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
@@ -447,5 +447,46 @@ describe("sourceHeadings: each section's line in the IG's source (bean `mftp`)",
       { t: "A link and bold", l: 7 },
       { t: "Last", l: 8 },
     ]);
+  });
+});
+
+// Bean `mftp`, owner 2026-10-05: "Build in main site" — the IG's pages wear the
+// host site's chrome, with the IG's includes and data namespaced per IG.
+describe("composeIgSite: a staged IG moved into a host Jekyll source", () => {
+  test("pages nest under the IG, includes and data are namespaced, chrome is injected", () => {
+    const d = mkdtempSync(join(tmpdir(), "ig-compose-"));
+    const src = join(d, "src");
+    mkdirSync(join(src, "input", "pagecontent"), { recursive: true });
+    mkdirSync(join(src, "input", "includes"), { recursive: true });
+    writeFileSync(join(src, "sushi-config.yaml"), "id: x.ig\ntitle: X IG\n");
+    writeFileSync(join(src, "input", "pagecontent", "index.md"), "# Home\n\n{{ site.data.fhir.packageId }}\n");
+    writeFileSync(join(src, "input", "pagecontent", "concepts.md"), "# C\n\n{% include note.md %}\n");
+    writeFileSync(join(src, "input", "includes", "note.md"), "a note");
+    const staged = join(d, "site");
+    stageIgSite(src, staged, { menu: { groups: [{ label: "Home", items: [{ label: "Summary", href: "index.html" }] }, { label: "Business", items: [{ label: "Concepts", href: "concepts.html" }] }] }, baseurl: "/b/x" });
+    const host = join(d, "host");
+    mkdirSync(host, { recursive: true });
+    const c = composeIgSite(staged, host, "x");
+    expect(c.collisions).toEqual([]);
+    const index = readFileSync(join(host, "x", "index.md"), "utf-8");
+    expect(index).toMatch(/^---\ntitle: "X IG"\nhas_children: true\n/);
+    expect(index).toContain('site.data.ig["x"].fhir.packageId');
+    expect(index).toContain("{% include ig/x/_top.html %}");
+    expect(index).toContain("{% include ig/_bottom.html %}");
+    const concepts = readFileSync(join(host, "x", "concepts.md"), "utf-8");
+    expect(concepts).toContain('parent: "Business"');
+    expect(concepts).toContain('grand_parent: "X IG"');
+    expect(concepts).toContain("layout: default");
+    expect(concepts).toContain("{% include ig/x/note.md %}");
+    const group = readFileSync(join(host, "x", "menu-business.md"), "utf-8");
+    expect(group).toContain('parent: "X IG"');
+    expect(existsSync(join(host, "_includes", "ig", "x", "note.md"))).toBe(true);
+    expect(existsSync(join(host, "_data", "ig", "x", "fhir.json"))).toBe(true);
+    expect(readFileSync(join(host, "_includes", "ig", "x", "_top.html"), "utf-8")).toContain('class="ig-topbar"');
+    expect(existsSync(join(host, "x", "_config.yml"))).toBe(false);
+    expect(existsSync(join(host, "x", "_layouts"))).toBe(false);
+    // A second compose of the same IG is two answers for one URL.
+    expect(composeIgSite(staged, host, "x").collisions.length).toBeGreaterThan(0);
+    rmSync(d, { recursive: true, force: true });
   });
 });

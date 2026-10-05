@@ -641,7 +641,12 @@ function shell(
   // page renders as an ordinary folio page: a mirror nobody could build is
   // reported by the build, never faked with a hand-typed palette.
   const wearsChrome = chrome === "fixture" && CHROME !== undefined;
-  const link = (file: string) => `<link rel="stylesheet" href="{{ '${SITE_PREFIX}/${file}' | relative_url }}">`;
+  // An igSite instance's pages all sit one level down (`artifact/`), and are
+  // built either inside the host site at `/<instance>/` or as the IG's own
+  // site at its root (bean `mftp`); a RELATIVE href is right in both, where a
+  // site-absolute one is right in only one.
+  const assetHref = (file: string) => (IG_SITE ? `../${file}` : `{{ '${SITE_PREFIX}/${file}' | relative_url }}`);
+  const link = (file: string) => `<link rel="stylesheet" href="${assetHref(file)}">`;
   const links = `${link(PAGES_CSS)}${wearsChrome ? `\n${link(CHROME_CSS)}` : ""}`;
   const banner = wearsChrome ? `${igBanner(IX)}\n\n` : "";
   // The footer is drawn by its loader from the IG's own metadata; the page
@@ -655,7 +660,7 @@ function shell(
       ? // In the chrome's scope when the page wears it, which is where the
         // mirrored `--footer-*` tokens are defined.
         `\n\n${FOOTER_TAG}${wearsChrome ? ` class="${CHROME_SCOPE.slice(1)}"` : ""}></footer>\n` +
-        `<script src="{{ '${SITE_PREFIX}/${IG_FOOTER_SCRIPT}' | relative_url }}" defer></script>`
+        `<script src="${assetHref(IG_FOOTER_SCRIPT)}" defer></script>`
       : "";
   return `${fm}${links}\n\n${banner}${body.trim()}${footer}\n`;
 }

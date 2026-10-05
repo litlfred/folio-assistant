@@ -4,8 +4,8 @@ description: "The JSON-LD sidecar of ValueSet/CDHIv1.2, from the IG's DAK API."
 nav_exclude: true
 ig_api: {"label":"JSON-LD","file":"ValueSet-CDHIv1.2.jsonld","src":"../fhir-artifact-index/dak/ValueSet-CDHIv1.2.jsonld","artifact":{"title":"Digital Health Interventions for Health Workers","page":"ValueSet-CDHIv1.2.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-CDHIv1.2.html","active":false},{"label":"XML","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDHIv1.2.xml","active":false},{"label":"JSON","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDHIv1.2.json","active":false},{"label":"TTL","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDHIv1.2.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-CDHIv1.2.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-CDHIv1.2.jsonld.html","active":true}],"script":"../assets/ig-api-view.js"}
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/base">smart.who.int.base</a></div>
@@ -36,4 +36,4 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <script src="{{ page.ig_api.script }}" defer></script>
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

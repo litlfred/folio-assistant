@@ -4,8 +4,8 @@ description: "The JSON representation of Requirements/DistributeBusinessRules."
 nav_exclude: true
 json_view: {"heading":"Distribute business rules - JSON Representation","package":"../fhir-artifact-index/package.tgz","entry":"package/Requirements-DistributeBusinessRules.json","raw":"https://litlfred.github.io/smart-trust/Requirements-DistributeBusinessRules.json","rawName":"Requirements-DistributeBusinessRules.json","tabs":[{"label":"Narrative Content","href":"Requirements-DistributeBusinessRules.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Requirements-DistributeBusinessRules.xml","active":false},{"label":"JSON","href":"Requirements-DistributeBusinessRules.json.html","active":true},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Requirements-DistributeBusinessRules.ttl","active":false}],"script":"../assets/resource-json.js"}
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -39,4 +39,4 @@ page: `resource-json.js` reads it out of the package in the browser (`visualizer
 <script src="{{ page.json_view.script }}" defer></script>
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

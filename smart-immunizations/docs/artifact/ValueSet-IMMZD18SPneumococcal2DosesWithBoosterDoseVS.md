@@ -3,8 +3,8 @@ title: "IMMZD18SPneumococcal2DosesWithBoosterDose ValueSet for Decision Table â€
 description: "ValueSet/IMMZD18SPneumococcal2DosesWithBoosterDoseVS in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/immunizations">smart.who.int.immunizations</a></div>
@@ -45,4 +45,4 @@ IG rather than a gap in this index.
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SPneumococcal2DosesWithBoosterDoseVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SPneumococcal2DosesWithBoosterDoseVS.jsonld` Â· [view](ValueSet-IMMZD18SPneumococcal2DosesWithBoosterDoseVS.jsonld.html) |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD18SMumpsVS.html" data-next="ValueSet-IMMZD18SPneumococcal3DosesVS.html" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

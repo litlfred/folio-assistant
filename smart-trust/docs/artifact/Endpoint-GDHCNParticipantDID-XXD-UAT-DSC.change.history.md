@@ -6,8 +6,8 @@ resolvable at https://tng-cdn-uat.who.int/v2/trustlist/-/XXD/DSC/did.json - Chan
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Endpoint-GDHCNParticipantDID-XXD-UAT-DSC.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-XXD-UAT-DSC.xml","active":false},{"label":"JSON","href":"Endpoint-GDHCNParticipantDID-XXD-UAT-DSC.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-XXD-UAT-DSC.ttl","active":false}],"heading":"UAT Participant XXD Trustlist (DID v2) - UAT - Document Signing Certificates\ndid:web:tng-cdn.who.int:v2:trustlist:-:XXD:DSC\nresolvable at https://tng-cdn-uat.who.int/v2/trustlist/-/XXD/DSC/did.json - Change History","sections":[{"text":"History of changes for GDHCNParticipantDID-XXD-UAT-DSC ."}]}
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -36,4 +36,4 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endfor %}
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

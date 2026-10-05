@@ -4,8 +4,8 @@ description: "The JSON Schema sidecar of ValueSet/CDSCv2.A, from the IG's DAK AP
 nav_exclude: true
 ig_api: {"label":"JSON Schema","file":"ValueSet-CDSCv2.A.schema.json","src":"../fhir-artifact-index/dak/ValueSet-CDSCv2.A.schema.json","artifact":{"title":"Services and Application Types: Point of Service","page":"ValueSet-CDSCv2.A.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-CDSCv2.A.html","active":false},{"label":"XML","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.A.xml","active":false},{"label":"JSON","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.A.json","active":false},{"label":"TTL","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.A.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-CDSCv2.A.schema.json.html","active":true},{"label":"JSON-LD","href":"ValueSet-CDSCv2.A.jsonld.html","active":false}],"script":"../assets/ig-api-view.js"}
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/base">smart.who.int.base</a></div>
@@ -36,4 +36,4 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <script src="{{ page.ig_api.script }}" defer></script>
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

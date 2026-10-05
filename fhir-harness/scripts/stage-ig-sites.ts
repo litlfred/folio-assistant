@@ -31,6 +31,13 @@
  * `--changed-files` (one path per line) builds only the IGs the staging cone
  * reaches (bean `4j86`); each decision is printed with its reason.
  *
+ * `--compose-into <docs source>` moves each staged IG INTO the host site's
+ * Jekyll source at `<docs source>/<instance>/` (`composeIgSite`), so the
+ * host's own build renders it with the host's chrome — sidebar, search,
+ * language selector — rather than as a site of its own (bean `mftp`, owner:
+ * "Build in main site"). The build list is still printed, for the per-IG
+ * duplicate-id pass after the host's build.
+ *
  * `--only <instance> --source <dir>` builds ONE IG from a local checkout of
  * its source instead of cloning the recorded commit — what an IG's own
  * repository runs in its CI, so the site is built from the commit being
@@ -48,7 +55,7 @@ import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, wri
 import { basename, join, relative, resolve, sep } from "node:path";
 import { instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
 import { instanceThemes } from "../../cat-harness/schemas/theme-by-ref.js";
-import { describeStage, stageIgSite, type IgMenu, type IndexedArtifact, type SitePalette, type StageOptions } from "./build-ig-site";
+import { composeIgSite, describeStage, stageIgSite, type IgMenu, type IndexedArtifact, type SitePalette, type StageOptions } from "./build-ig-site";
 import { IgReleasesSchema, type IgReleases } from "../schemas/ig-releases.ts";
 import { readChangedFiles, siteFilter } from "../../cat-harness/scripts/staging-cone.ts";
 
@@ -258,7 +265,7 @@ if (import.meta.main) {
   const work = opt("--work");
   const base = opt("--baseurl");
   if (!work || base === undefined) {
-    console.error("usage: stage-ig-sites.ts --work <dir> --baseurl <site baseurl> [--plantuml-jar <jar>] [--remote-theme <owner/repo@ref>] [--changed-files <file>] [--only <instance> [--source <dir>]]");
+    console.error("usage: stage-ig-sites.ts --work <dir> --baseurl <site baseurl> [--plantuml-jar <jar>] [--remote-theme <owner/repo@ref>] [--changed-files <file>] [--compose-into <docs source>] [--only <instance> [--source <dir>]]");
     process.exit(2);
   }
   const all = igsToBuild(resolve("."));
@@ -319,6 +326,15 @@ if (import.meta.main) {
       console.error(`${ig.instance}: igSite — ${c.copied} file(s) from ${relative(resolve("."), docs)} built into the IG site at /${ig.instance}/${c.merged.length ? `; front matter laid onto ${c.merged.join(", ")}` : ""}`);
       if (c.collisions.length) {
         console.error(`${ig.instance}: ${c.collisions.length} file(s) the IG site already writes — refusing two answers for one URL:\n  ${c.collisions.slice(0, 20).join("\n  ")}`);
+        process.exit(1);
+      }
+    }
+    const into = opt("--compose-into");
+    if (into) {
+      const c = composeIgSite(site, resolve(into), ig.instance);
+      console.error(`${ig.instance}: composed into ${relative(resolve("."), resolve(into, ig.instance))} — ${c.pages} page(s), ${c.files - c.pages} other file(s), ${c.includes} include(s)`);
+      if (c.collisions.length) {
+        console.error(`${ig.instance}: ${c.collisions.length} path(s) already in the host source — refusing two answers for one URL:\n  ${c.collisions.slice(0, 20).join("\n  ")}`);
         process.exit(1);
       }
     }

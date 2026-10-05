@@ -3,8 +3,8 @@ title: "IMMZ.Z.DE4 ValueSet for Hib-containing vaccines — WHO SMART Immunizati
 description: "ValueSet/IMMZ.Z.DE4 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/immunizations">smart.who.int.immunizations</a></div>
@@ -45,4 +45,4 @@ IG rather than a gap in this index.
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.Z.DE4.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE4.jsonld` · [view](ValueSet-IMMZ.Z.DE4.jsonld.html) |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZ.Z.DE34.html" data-next="ValueSet-IMMZ.Z.DE5.html" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

@@ -4,8 +4,8 @@ description: "The JSON representation of ValueSet/Domains-DEV."
 nav_exclude: true
 json_view: {"heading":"WHO GDHCN Trust Domains - DEV - JSON Representation","package":"../fhir-artifact-index/package.tgz","entry":"package/ValueSet-Domains-DEV.json","raw":"https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.json","rawName":"ValueSet-Domains-DEV.json","tabs":[{"label":"Narrative Content","href":"ValueSet-Domains-DEV.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.xml","active":false},{"label":"JSON","href":"ValueSet-Domains-DEV.json.html","active":true},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-Domains-DEV.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-Domains-DEV.jsonld.html","active":false}],"script":"../assets/resource-json.js"}
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -39,4 +39,4 @@ page: `resource-json.js` reads it out of the package in the browser (`visualizer
 <script src="{{ page.json_view.script }}" defer></script>
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

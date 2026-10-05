@@ -4,8 +4,8 @@ description: "The JSON Schema sidecar of StructureDefinition/DecisionSupportLogi
 nav_exclude: true
 ig_api: {"label":"JSON Schema","file":"StructureDefinition-DecisionSupportLogic.schema.json","src":"../fhir-artifact-index/dak/StructureDefinition-DecisionSupportLogic.schema.json","artifact":{"title":"Decision-Support Logic (DAK)","page":"StructureDefinition-DecisionSupportLogic.html"},"tabs":[{"label":"Narrative Content","href":"StructureDefinition-DecisionSupportLogic.html","active":false},{"label":"XML","href":"https://worldhealthorganization.github.io/smart-base/StructureDefinition-DecisionSupportLogic.xml","active":false},{"label":"JSON","href":"https://worldhealthorganization.github.io/smart-base/StructureDefinition-DecisionSupportLogic.json","active":false},{"label":"TTL","href":"https://worldhealthorganization.github.io/smart-base/StructureDefinition-DecisionSupportLogic.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-DecisionSupportLogic.schema.json.html","active":true}],"script":"../assets/ig-api-view.js"}
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/base">smart.who.int.base</a></div>
@@ -36,4 +36,4 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <script src="{{ page.ig_api.script }}" defer></script>
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

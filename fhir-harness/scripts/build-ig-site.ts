@@ -37,7 +37,7 @@
 
 import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
-import { basename, extname, join, resolve } from "node:path";
+import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { parse as parseYaml } from "yaml";
 import { describeSiteData, igSiteData, type IgSiteDataResult } from "./ig-site-data";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
@@ -319,6 +319,124 @@ if(line)link(h,"ig-src",src,"This section's source, line "+line+", on GitHub","\
 if(repo){var here=location.href.split("#")[0]+(h.id?"#"+h.id:"");
 var body="**Page:** "+here+"\\n**Section:** "+text+"\\n**Source:** "+src+"\\n\\n**Feedback:**\\n\\n";
 link(h,"ig-feedback",repo+"/issues/new?title="+encodeURIComponent("Feedback: "+document.title.split(" | ")[0]+" \\u2014 "+text)+"&body="+encodeURIComponent(body),"Give feedback on this section (opens a GitHub issue)","\\uD83D\\uDCE3")}})})();`;
+
+/**
+ * The IG's chrome that goes INTO a page when the IG is built inside a host
+ * site (`composeIgSite`): the IG's own top bar at the top, and at the bottom
+ * the edit link and the per-section source and feedback links. The host's
+ * layout supplies everything else — sidebar, search, language selector — so
+ * an IG page wears the same chrome as every other page of the site (owner,
+ * 2026-10-05, bean `mftp`: *"the chrome is not the standrad harness chrome.
+ * missing search bar/locale selctor"*).
+ */
+export function igChromeIncludes(topBar: string): { top: string; bottom: string } {
+  return {
+    top: `<style>${IG_TOPBAR_CSS.trim()}</style>\n${topBar}\n`,
+    bottom: [
+      '{% if page.ig_edit_url %}<p class="ig-edit"><a href="{{ page.ig_edit_url }}">Edit this page on GitHub</a></p>{% endif %}',
+      '{% if page.ig_source_lines %}<script type="application/json" id="ig-source-lines">{"blob": {{ page.ig_source_blob | jsonify }}, "lines": {{ page.ig_source_lines | jsonify }}}</script>',
+      `<script>${SOURCE_LINKS_JS}</script>{% endif %}`,
+      "",
+    ].join("\n"),
+  };
+}
+
+/**
+ * Move a staged IG site INTO a host Jekyll source at `<docsRoot>/<instance>/`,
+ * so the host's own build renders it with the host's chrome (bean `mftp`,
+ * owner's choice: "Build in main site"). What made a separate site per IG
+ * necessary (bean `bamf`) is namespaced instead of isolated:
+ *
+ * - the IG's `_includes/` go to `_includes/ig/<instance>/`, and every
+ *   `{% include x %}` naming one of them is rewritten to that path;
+ * - its `_data/*.json` go to `_data/ig/<instance>/`, and `site.data.fhir` /
+ *   `site.data.ig_releases` become `site.data.ig["<instance>"].…`;
+ * - its navigation nests under ONE entry: the IG's index becomes the IG's
+ *   top-level page (titled after the IG), each menu group its child, each
+ *   item a grandchild (`grand_parent`), so a group called "Home" cannot
+ *   collide with another site's "Home";
+ * - each page gets the IG's top bar above and the edit / source / feedback
+ *   links below (`igChromeIncludes`);
+ * - artefact pages stay out of search, which would otherwise index thousands
+ *   of near-identical pages.
+ *
+ * The staged `_layouts/`, `_sass/` and `_config.yml` are the standalone
+ * site's and are not carried. A file already at a destination path is
+ * reported, never overwritten.
+ */
+export function composeIgSite(staged: string, docsRoot: string, instance: string): { pages: number; files: number; includes: number; collisions: string[] } {
+  const title = /^title:\s*(.+)$/m.exec(readFileSync(join(staged, "_config.yml"), "utf-8"))?.[1]?.replace(/^"(.*)"$/, "$1") ?? instance;
+  const q = JSON.stringify(title);
+  const dest = join(docsRoot, instance);
+  const incDest = join(docsRoot, "_includes", "ig", instance);
+  const dataDest = join(docsRoot, "_data", "ig", instance);
+  const collisions: string[] = [];
+  const incNames = new Set(files(join(staged, "_includes")));
+  const rewrite = (text: string): string =>
+    text
+      .replace(/(\{%-?\s*include\s+)([^\s%}]+)/g, (whole, pre: string, name: string) => (incNames.has(name) ? `${pre}ig/${instance}/${name}` : whole))
+      .replace(/site\.data\.fhir\b/g, `site.data.ig[${JSON.stringify(instance)}].fhir`)
+      .replace(/site\.data\.ig_releases\b/g, `site.data.ig[${JSON.stringify(instance)}].ig_releases`);
+  const put = (to: string, body: string | Buffer): void => {
+    if (existsSync(to)) {
+      collisions.push(relative(docsRoot, to));
+      return;
+    }
+    mkdirSync(dirname(to), { recursive: true });
+    writeFileSync(to, body);
+  };
+  let includes = 0;
+  for (const f of incNames) {
+    put(join(incDest, f), rewrite(readFileSync(join(staged, "_includes", f), "utf-8")));
+    includes++;
+  }
+  for (const f of files(join(staged, "_data"))) put(join(dataDest, f), readFileSync(join(staged, "_data", f)));
+  const topBar = /<div class="ig-topbar"[\s\S]*?<\/div>(?=\n|$)/.exec(existsSync(join(staged, "_layouts", "default.html")) ? readFileSync(join(staged, "_layouts", "default.html"), "utf-8") : "")?.[0] ?? "";
+  const chrome = igChromeIncludes(topBar);
+  put(join(incDest, "_top.html"), chrome.top);
+  const bottom = join(docsRoot, "_includes", "ig", "_bottom.html");
+  if (!existsSync(bottom)) put(bottom, chrome.bottom);
+  let pages = 0;
+  let count = 0;
+  const walk = (rel: string): void => {
+    for (const name of readdirSync(join(staged, rel)).sort()) {
+      const r = rel ? join(rel, name) : name;
+      if (!rel && (name.startsWith("_") || name === "Gemfile")) continue;
+      const abs = join(staged, r);
+      if (statSync(abs).isDirectory()) {
+        walk(r);
+        continue;
+      }
+      count++;
+      const isPage = /\.(md|html)$/.test(name) && readFileSync(abs, "utf-8").startsWith("---\n");
+      if (!isPage) {
+        put(join(dest, r), readFileSync(abs));
+        continue;
+      }
+      const text = rewrite(readFileSync(abs, "utf-8"));
+      const end = text.indexOf("\n---", 3);
+      let fm = text.slice(4, end);
+      const body = text.slice(end + 4).replace(/^\n/, "");
+      if (r === "index.md") {
+        fm = fm.replace(/^(parent|grand_parent|nav_exclude|has_children|nav_order|title):.*\n?/gm, "");
+        fm = `title: ${q}\nhas_children: true\nnav_order: 900\n${fm}`;
+      } else if (/^has_children:\s*true/m.test(fm)) {
+        if (!/^parent:/m.test(fm)) fm += `\nparent: ${q}`;
+      } else if (/^parent:/m.test(fm) && !/^grand_parent:/m.test(fm)) {
+        fm += `\ngrand_parent: ${q}`;
+      }
+      if (r.startsWith(`artifact${"/"}`) && !/^search_exclude:/m.test(fm)) fm += "\nsearch_exclude: true";
+      // Named, not inherited: GitHub Pages' default-layout plugin assigns one
+      // and a plain Jekyll build does not, so the page says which it uses.
+      if (!/^layout:/m.test(fm)) fm += "\nlayout: default";
+      fm = fm.replace(/\n+$/, "");
+      put(join(dest, r), `---\n${fm}\n---\n{% include ig/${instance}/_top.html %}\n\n${body.replace(/\s*$/, "")}\n\n{% include ig/_bottom.html %}\n`);
+      pages++;
+    }
+  };
+  walk("");
+  return { pages, files: count, includes, collisions };
+}
 
 const files = (dir: string) => (existsSync(dir) ? readdirSync(dir).filter((f) => statSync(join(dir, f)).isFile()) : []);
 

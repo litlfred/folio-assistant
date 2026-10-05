@@ -3,8 +3,8 @@ title: "Dublin Core Metadata Element Set — WHO SMART Base artefact"
 description: "StructureDefinition/DublinCore in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/base">smart.who.int.base</a></div>
@@ -45,4 +45,4 @@ IG rather than a gap in this index.
 | JSON-LD | *not published for this artefact* | |
 
 <footer id="ig-footer" data-prev="StructureDefinition-DecisionSupportLogicSource.html" data-next="StructureDefinition-FHIRSchemaBase.html" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

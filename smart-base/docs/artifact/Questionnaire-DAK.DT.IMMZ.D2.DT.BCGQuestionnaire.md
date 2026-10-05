@@ -3,8 +3,8 @@ title: "Questionnaire for IMMZ.D2 Determine required vaccination(s) if any — W
 description: "Questionnaire/DAK.DT.IMMZ.D2.DT.BCGQuestionnaire in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/base">smart.who.int.base</a></div>
@@ -39,4 +39,4 @@ not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
 
 <footer id="ig-footer" data-prev="ConceptMap-CDSCv1toCDSCv2.html" data-next="Requirements-SGAuthoring.Skills.AuthorActorDefinitions.html" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

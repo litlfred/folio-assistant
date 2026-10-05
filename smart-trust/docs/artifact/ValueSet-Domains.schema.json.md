@@ -4,8 +4,8 @@ description: "The JSON Schema sidecar of ValueSet/Domains, from the IG's DAK API
 nav_exclude: true
 ig_api: {"label":"JSON Schema","file":"ValueSet-Domains.schema.json","src":"../fhir-artifact-index/dak/ValueSet-Domains.schema.json","artifact":{"title":"WHO GDHCN Trust Domains","page":"ValueSet-Domains.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-Domains.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains.xml","active":false},{"label":"JSON","href":"ValueSet-Domains.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-Domains.schema.json.html","active":true},{"label":"JSON-LD","href":"ValueSet-Domains.jsonld.html","active":false}],"script":"../assets/ig-api-view.js"}
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -36,4 +36,4 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <script src="{{ page.ig_api.script }}" defer></script>
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

@@ -3,8 +3,8 @@ title: "IMMZD2DTRubellaLowIncidenceLogic — WHO SMART Immunizations artefact"
 description: "Library/IMMZD2DTRubellaLowIncidenceLogic in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/immunizations">smart.who.int.immunizations</a></div>
@@ -39,4 +39,4 @@ not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
 
 <footer id="ig-footer" data-prev="Library-IMMZD2DTRubellaHighIncidenceLogic.html" data-next="Library-IMMZD2DTSeasonalinfluenzaElements.html" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

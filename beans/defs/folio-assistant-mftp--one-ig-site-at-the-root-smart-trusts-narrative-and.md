@@ -55,3 +55,13 @@ Viewer: the retired index carried the `fhir-artifact-index` viewer declaration. 
 - Owner: *"make sure scripts you use go into Tools"*: `stage-ig-sites`, `ingest-ig-menu` (fhir-harness) and `rail-standalone-pages` (cat-harness) are now Tool nodes; `build-ig-site` and `ig-pages` were already, and their descriptions now say what they do here.
 - Owner: *"build on the fork... instantiate smart-base there"*, *"see beans"*, *"...sibling work"*: follows `rbz3`'s `claude/seed-smart-base` on litlfred/smart-trust. The forks never run the Publisher's Actions (smart-immunizations has no runs and no gh-pages), so a fork's own workflow publishes its site at its gh-pages root.
 - Owner: *"use https://github.com/litlfred/smart-trust as staging too. folio-assistant/smart-trust will just be a 'remote mounted' verison of (first) litlfred/smart-trust"* — recorded; not done here.
+
+## 2026-10-05, evening: the IG pages are built INSIDE the main site
+
+Owner: *"working except the chrome is not the standrad harness chrome. missing search bar/locale selctor"*, then chose *"Build in main site"* over copying the chrome per IG. This reverses `bamf`'s one-Jekyll-site-per-IG for the platform's own site:
+
+- `composeIgSite` (fhir-harness `build-ig-site.ts`) moves a staged IG into the host's Jekyll source at `<instance>/`: includes → `_includes/ig/<instance>/` with `{% include %}` rewritten, data → `_data/ig/<instance>/` with `site.data.fhir` → `site.data.ig["<instance>"].fhir`, navigation nested under one entry (IG index = top level, group = child, item = grandchild via `grand_parent`), `layout: default` explicit, artefact pages `search_exclude`, and the IG's top bar + edit / source / feedback links as includes.
+- `stage-ig-sites --compose-into ./_docs` runs before the main Jekyll build in `docs-site.yml` and `feature-staging.yml`; the separate per-IG Jekyll builds are gone; the duplicate-id pass runs per IG on `_site/<instance>/`.
+- Artefact pages link their CSS relatively (`../assets/…`), right both in the host site and in a fork's standalone site.
+- Local full build (jekyll 4.4.1 + just-the-docs 0.12.0): 4,352 pages, 74 s, no duplicate ids, no escaped markup; language selector, search, LHS navbar and the IG's TOC in the site nav verified in a browser.
+- The standalone layout (`chrome: harness` path, rail-injected navbar) remains for an IG repository building its own site (litlfred/smart-immunizations' `folio-site.yml`).

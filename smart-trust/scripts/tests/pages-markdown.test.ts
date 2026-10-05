@@ -424,8 +424,8 @@ describe("left-hand nav — three roles, one per page kind", () => {
 
 describe("an artefact page addresses the IG site it builds into (bean `mftp`)", () => {
   const holder = readFileSync(join(ARTIFACTS, "ActorDefinition-Holder.md"), "utf-8");
-  it("links its CSS from the IG site's root, whose baseurl already ends in /smart-trust", () => {
-    expect(holder).toContain(`{{ '/assets/ig-pages.css' | relative_url }}`);
+  it("links its CSS relatively, right both inside the host site and as the IG's own site", () => {
+    expect(holder).toContain(`href="../assets/ig-pages.css"`);
     expect(holder).not.toContain("'/smart-trust/assets/");
   });
   it("sends 'all artefacts' to the IG site's Artifact Index, not the home page", () => {

@@ -4,8 +4,8 @@ description: "The JSON representation of ActorDefinition/Holder."
 nav_exclude: true
 json_view: {"heading":"Holder - JSON Representation","package":"../fhir-artifact-index/package.tgz","entry":"package/ActorDefinition-Holder.json","raw":"https://litlfred.github.io/smart-trust/ActorDefinition-Holder.json","rawName":"ActorDefinition-Holder.json","tabs":[{"label":"Narrative Content","href":"ActorDefinition-Holder.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ActorDefinition-Holder.xml","active":false},{"label":"JSON","href":"ActorDefinition-Holder.json.html","active":true},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ActorDefinition-Holder.ttl","active":false}],"script":"../assets/resource-json.js"}
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -39,4 +39,4 @@ page: `resource-json.js` reads it out of the package in the browser (`visualizer
 <script src="{{ page.json_view.script }}" defer></script>
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

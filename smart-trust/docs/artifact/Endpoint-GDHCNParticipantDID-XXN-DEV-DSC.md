@@ -3,8 +3,8 @@ title: "GDHCNParticipantDID-XXN-DEV-DSC — WHO SMART Trust artefact"
 description: "Endpoint/GDHCNParticipantDID-XXN-DEV-DSC in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -37,4 +37,4 @@ not a gap in this index — sidecars are published per artefact, and
 19 of 678 carry one.
 
 <footer id="ig-footer" data-prev="Endpoint-GDHCNParticipantDID-XXN-DEV-All.html" data-next="Endpoint-GDHCNParticipantDID-XXN-DEV-SCA.html" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

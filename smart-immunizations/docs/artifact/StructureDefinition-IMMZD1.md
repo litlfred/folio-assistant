@@ -3,8 +3,8 @@ title: "IMMZ.D1.Capture or update client history — WHO SMART Immunizations art
 description: "StructureDefinition/IMMZD1 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/immunizations">smart.who.int.immunizations</a></div>
@@ -45,4 +45,4 @@ IG rather than a gap in this index.
 | JSON-LD | *not published for this artefact* | |
 
 <footer id="ig-footer" data-prev="StructureDefinition-IMMZC4.html" data-next="StructureDefinition-IMMZD13.html" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

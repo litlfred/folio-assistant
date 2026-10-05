@@ -4,8 +4,8 @@ description: "ValueSet/SGAuthoringPersonaTypesVS in the WHO SMART Base IG, with 
 nav_exclude: true
 ig_api_openapi: {"src":"../fhir-artifact-index/dak/ValueSet-SGAuthoringPersonaTypesVS.openapi.json","script":"../assets/ig-api-openapi.js"}
 ---
-<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/base">smart.who.int.base</a></div>
@@ -60,4 +60,4 @@ artefact page, and a whitespace-stripping opening tag ate the blank line after t
 <script src="{{ page.ig_api_openapi.script }}" defer></script>
 
 <footer id="ig-footer" data-prev="ValueSet-ISCO08ValueSet.html" data-next="ValueSet-SGAuthoringSkillsVS.html" class="st-ig"></footer>
-<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>
