@@ -145,15 +145,6 @@
       }
     },
     {
-      "id": "merge-queue",
-      "shape": "branch",
-      "name": "cat/cat-harness/merge-queue",
-      "legacy": [],
-      "holds": "the merge steward's DECISIONS about open pull requests (beans/queue/), one live copy at the tip (`source.keyedBy: tip`); AUTHORITATIVE from the seed 8d652ac1 (2026-10-04), unlike the beans and todos seeds — main never holds this graph again, because the steward that writes it may not open a pull request (bean najo, epic hfag)",
-      "writers": ["cat-harness/scripts/merge-queue-store.ts via scripts/branch-store.ts — `bun run merge:queue:record`, then `bun run state:push --id queue`"],
-      "repos": "this repository"
-    },
-    {
       "id": "fsh-guts",
       "shape": "branch",
       "name": "cat/cat-harness/fsh-guts",

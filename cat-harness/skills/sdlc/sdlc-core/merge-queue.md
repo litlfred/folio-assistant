@@ -184,7 +184,7 @@ both directions:
 [`coordinate`](coordinate.md) §"What actually reaches a sibling" has the
 measurements of which tool reaches which kind of session.
 
-### The steward answers in the queue
+### The steward answers in the queue, and the queue lives on the beans branch
 
 Once the steward has decided something about your PR (a placement, a hold,
 an ejection), that decision is an entry under `beans/queue/<pr>.json`. The
@@ -192,12 +192,24 @@ entry carries `pr` and **`beans`**, the beans and epics the PR serves; name
 them in your PR body so the steward can copy them. That list is the
 association between a PR and its beans.
 
-**Where to read it:** on the queue's own branch, `cat/cat-harness/merge-queue`,
-not on `main` and not inside the beans branch — §"Where the queue IS" below
-carries the commands and why. The edited-in-place status comment on your PR is
-a courtesy that points at the entry.
+**Where to read it depends on the state-branch cutover** (arc `fs43`, bean
+`9ofm`). Bean `ugxd` moves the queue to its OWN branch,
+`cat/cat-harness/merge-queue`, ahead of `fs43` — §"Where the queue is GOING"
+below — and where the two disagree, that section is the newer plan:
+- **Before the cutover**, `main` is authoritative. Entries reach it only through
+  the steward's own PRs, a PR cycle late, so the edited-in-place status comment
+  on your PR is the live answer.
+- **After the cutover**, `beans/` (with `queue/` inside it) is authoritative on
+  the orphan branch **`cat/cat-harness/beans`**. Read it with
+  `bun run state:mount`. The steward writes an entry the moment it decides,
+  then `bun run state:push`, which splices only the changed paths onto the tip
+  and stops on a conflicting write instead of overwriting it. The entry is then
+  live for everyone, and the status comment is a courtesy that points at it.
 
-**The beans cutover (arc `fs43`) changes what a bean can do here.** Today a bean created on
+The branch's `manifest.json` says which state it is in (`"authoritative"`).
+Read that rather than this paragraph.
+
+**The cutover also changes what a bean can do here.** Today a bean created on
 your branch is invisible until your PR lands, so it cannot carry a merge
 request. After the cutover, a bean written through `state:push` is visible at
 once. A submitter can then note on the PR's bean that it is submitted, and the
@@ -209,20 +221,25 @@ repository (bean `1hjm`). The `merge-guard` commit status (bean `uoob`) checks
 the six submission points mechanically; once it lands, run it against your own
 PR before you announce.
 
-## Where the queue IS, and how a decision gets written (bean `najo`)
+## Where the queue is GOING, and the tool that will write it (bean `najo`)
 
-**The queue is not on `main`.** It is the `merge-queue` graph on
-`cat/cat-harness/merge-queue`, declared by the `queue` entry in
-`beans/beans.json`, and that branch's `manifest.json` says `authoritative:
-true`. Read the manifest rather than this paragraph.
+**Not cut over yet.** The queue is still on `main` under `beans/queue/`
+(owner, 2026-10-05: *"Land code now, switch later"*). The store and CLI below
+landed first; the cutover to its own branch, `cat/cat-harness/merge-queue`, is
+bean `ugxd`, a separate small PR during which the steward pauses queue writes.
+Until it lands, `merge:queue:read` reads the checkout and `merge:queue:record`
+**refuses** — keep committing entries to `main` as §"The steward answers in the
+queue" describes. The branch's `manifest.json` says which state it is in.
 
-The reason is structural, and it is the only reason that matters here: an entry
-on `main` arrives only through a pull request, and **the steward does no
-development work** — it must not open PRs of its own, which would have it
-setting its own priority in the queue it manages, spending the CI the queue is
-starved of, and judging its own head. For the two days after the graph was
-declared it therefore held **no entry at all**: the one actor whose decisions it
-records was the one actor that could not write to it.
+Why the queue comes off `main` at all is structural: an entry on `main` arrives
+only through a pull request, and **the steward does no development work** — it
+must not open PRs of its own, which would have it setting its own priority in
+the queue it manages, spending the CI the queue is starved of, and judging its
+own head. For the two days after the graph was declared it therefore held **no
+entry at all**: the one actor whose decisions it records was the one actor that
+could not write to it.
+
+After the cutover:
 
 ```sh
 bun run state:mount                  # the queue on disk at its declared path
