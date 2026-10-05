@@ -1394,6 +1394,7 @@ export const RULES: Rule[] = [
       "scripts/task-pool.ts",               // the worker pool `gates` and `regen` share (bean `xpcu`): scheduling only, knows nothing about any content type
       "scripts/task-io.ts",                 // ...what each check script reads and writes, declared in one place, which the pool and the skip read
       "scripts/input-hash.ts",              // ...and `regen`'s input-hash skip: a local cache over the declared inputs, harness for the same reason `regen` is
+      "scripts/changed-paths.ts",           // ...and `regen --changed` / the narrowed fixpoint (bean `94zs`): which pairs a set of changed paths can reach, over the same declarations
       "scripts/decisions-named-not-asked.ts", // the `Stop` layer of `interaction-modality` §4.1 (bean `ahvw`). Harness: it reads a transcript and enforces how a QUESTION is put, which no content type varies
       "scripts/kind-table.ts",              // the reader over the graph-kind TABLE in `directory-conventions.md`, which `kind-register` and `graph-kind-docs.test.ts` both ask. Harness: the table is the harness's own documentation of its own registry
       "scripts/route-authority.ts",         // WHICH COPY a route-keyed generator's --check compares against — the checkout, the branch, or both. Harness: it reads a declaration and a branch manifest and knows nothing about any content type. Its `unknown` state is the point (bean `xsrv` Done-when 3: a branch it cannot fetch is never a pass)
