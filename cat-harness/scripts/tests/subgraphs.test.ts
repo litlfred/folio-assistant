@@ -30,6 +30,12 @@ import { checkoutDirectories } from "../../schemas/harness-config.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const dirs = resolveDirectories([{ name: "(local)", root: ROOT, own: true }]);
+// The real corpus, scanned ONCE at module scope (bean sff8's remedy, as in
+// instance-render.test.ts). Four tests read it; two scanned it again inside
+// the test body, where a whole-repo walk (~6 s measured 2026-10-05) ran
+// against bun's 5 s per-test limit and timed out in CI. Nothing in this file
+// writes to the tree, so one scan answers every test exactly as four did.
+const REAL = scanSubgraphs(ROOT);
 
 describe("subgraph containment is derived from declared paths", () => {
   test("the declaration was read — otherwise nothing below holds", () => {
@@ -107,14 +113,8 @@ describe("subgraph containment is derived from declared paths", () => {
   });
 });
 
-// Both tests below rescan the WHOLE checkout. That is a few seconds of real
-// work on a CI runner and sits on bun's 5000 ms default: main timed out on the
-// second at 365f80f0d, and a larger corpus tips the first over too. A scan
-// that finishes is not a hang, so the budget is explicit rather than default.
-const CORPUS_SCAN_TIMEOUT_MS = 30_000;
-
 describe("the entanglement report", () => {
-  const report = scanSubgraphs(ROOT);
+  const report = REAL;
 
   test("it attributed files — a report over nothing is not a clean corpus", () => {
     expect(report.scanned, "no markdown attributed to any declared directory").toBeGreaterThan(100);
@@ -129,12 +129,12 @@ describe("the entanglement report", () => {
     // What it should pin is that the category is COMPUTED. A synthetic file
     // with a link to nothing must be reported, whatever the real corpus
     // happens to contain today.
-    const probe = scanSubgraphs(ROOT).dangling;
+    const probe = REAL.dangling;
     expect(Array.isArray(probe), "the category is absent, not merely empty").toBe(true);
     // And the corpus itself is clean — stated as its own assertion so that
     // "clean" and "not computed" can never be the same passing test.
     expect(probe.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
-  }, CORPUS_SCAN_TIMEOUT_MS);
+  });
 
   test("a DERIVED graph's unresolved links are never dangling", () => {
     // A library section is machine-produced FROM a source document, so a
@@ -205,7 +205,7 @@ describe("the entanglement report", () => {
  * implausibly.
  */
 describe("repository-scoped directories are attributed", () => {
-  const report = scanSubgraphs(ROOT);
+  const report = REAL;
 
   test("attribution reaches well past this instance's own tree", () => {
     // 636 before the fix, ~1139 after. A floor rather than the number,
@@ -302,7 +302,7 @@ describe("the `../` too many count is COMPUTED (bean `syrl`)", () => {
     // Falsifier for `mi97`, which said the count must fall to zero once the
     // 27 were repaired. It is checkable ONLY because the number is live.
     expect(existsSync(siteDir), `${siteDir} must exist or this asserts nothing`).toBe(true);
-    const { siteResolved } = scanSubgraphs(ROOT);
+    const { siteResolved } = REAL;
     expect(overDeepLinks(ROOT, siteResolved).map((l) => `${l.from} -> ${l.target}`)).toEqual([]);
-  }, CORPUS_SCAN_TIMEOUT_MS);
+  });
 });

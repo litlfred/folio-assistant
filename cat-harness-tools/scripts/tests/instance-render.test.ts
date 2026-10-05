@@ -125,14 +125,25 @@ describe("declared means TRANSITIVELY declared", () => {
   });
 });
 
-// Renders EVERY instance in the checkout, one after another. That is a few
-// seconds of real work on a CI runner and sat on bun's 5000 ms default
-// (5073 and 5262 ms on shard 4/4). A render that finishes is not a hang, so
-// the budget is explicit rather than default.
-const RENDER_ALL_TIMEOUT_MS = 30_000;
+/**
+ * Every instance in this repository, rendered ONCE at module scope.
+ *
+ * The same remedy bean `sff8` settled on for `tools.test.ts`: module scope
+ * belongs to no test's timeout, while a raised budget decays as the corpus
+ * grows. "every instance renders" rendered all of them inside one test and
+ * timed out at 5073 ms of 5000 on CI (#2139) — the cost grows with every
+ * instance added, which is a rate, not a flake. `renderInstance` only READS
+ * (it collects nodes into memory and writes nothing), and nothing below
+ * mutates the repository, so one render per instance gives every test the
+ * answer it would have computed itself.
+ */
+const OWN_REPO = repoRootFor(resolve(import.meta.dir, "../.."));
+const OWN_RENDERS = new Map<string, Awaited<ReturnType<typeof renderInstance>>>();
+for (const root of instancesIn(OWN_REPO)) OWN_RENDERS.set(root, await renderInstance(root));
+const ownRender = (root: string) => OWN_RENDERS.get(root)!;
 
 describe("this repository's own instances", () => {
-  const REPO = repoRootFor(resolve(import.meta.dir, "../.."));
+  const REPO = OWN_REPO;
 
   test("every instance is found — otherwise everything below is vacuous", () => {
     // This asserted exactly `["cat-harness", "bootstrap"]`, and it PASSED for
@@ -225,18 +236,18 @@ describe("this repository's own instances", () => {
 
   test("every instance renders, and none renders nothing", async () => {
     for (const root of instancesIn(REPO)) {
-      const r = await renderInstance(root);
+      const r = ownRender(root);
       expect({ [r.name]: r.verdict }).toEqual({ [r.name]: "rendered" });
       expect(r.nodeCount).toBeGreaterThan(0);
     }
-  }, RENDER_ALL_TIMEOUT_MS);
+  });
 
   test("bootstrap's OWN skills are in its render — the silent drop, pinned", async () => {
     // `confirm-harness` lives only in `bootstrap/skills/`. When `skillMdDirs`
     // resolved that repository-scoped directory against the instance root, the
     // skill vanished from the graph and `hasSkill` dangled. Nothing failed.
     const boot = instancesIn(REPO).find((p) => p.endsWith("bootstrap"))!;
-    const r = await renderInstance(boot);
+    const r = ownRender(boot);
     expect(r.nodeCount).toBeGreaterThan(10);
   });
 
@@ -253,7 +264,7 @@ describe("this repository's own instances", () => {
     // declares instead of all 16. The finding is fatal from the same change,
     // which is the repository's standing rule applied rather than deferred.
     const boot = instancesIn(REPO).find((p) => p.endsWith("bootstrap"))!;
-    const r = await renderInstance(boot);
+    const r = ownRender(boot);
     expect(r.verdict).toBe("rendered");
     expect(r.undeclared).toEqual([]);
     // `beans` was the named example of a kind bootstrap advertised and could
@@ -266,7 +277,7 @@ describe("this repository's own instances", () => {
     // which is the `dh4f` defect this whole check exists to refuse. So assert
     // the positive half too.
     const boot = instancesIn(REPO).find((p) => p.endsWith("bootstrap"))!;
-    const r = await renderInstance(boot);
+    const r = ownRender(boot);
     expect(r.published.length).toBeGreaterThan(0);
     expect(r.declared.length).toBeGreaterThan(0);
     // Was `published > declared` — the 16-vs-1 gap, asserted as an inequality

@@ -298,15 +298,30 @@ So the rule is not "resolve conflicts carefully". It is:
 artefacts the merge actually broke rather than a wholesale rewrite:
 
 ```sh
-bun run regen             # repair what is stale in the fast gate set
-bun run regen --all       # ...including the browser workflows' gates
-bun run regen --dry-run   # report what is stale, change nothing
+bun run regen                   # repair what is stale in the whole gate set
+bun run regen --fast            # ...only the jobs that install no browser
+bun run regen --dry-run         # report what is stale, change nothing
+bun run regen --changed <base>  # ask only the pairs whose inputs changed since <base>
+bun run regen --explain         # say, per pair, why it was asked or not
 ```
 
 It reports four states, and **`unrepaired` is the one to read**: a check that
 still fails after its writer ran is a real defect, not staleness, and the
 command exits non-zero rather than claiming a repair it did not make. So is a
 check with **no writer**.
+
+**`--changed` asks less, and says what it assumed** (bean `94zs`). A pair whose
+declared inputs, script sources and commands meet none of the paths changed
+since `<base>` (plus the working tree) is **not asked**: its answer is its
+answer at `<base>`. Undeclared and `{tracked}` pairs are always asked, as is
+any pair whose inputs cannot be determined. `bun run merge:main` passes the
+merge's **fork point**, so a skipped pair is one NEITHER side touched, and it is
+current if the fork point, the branch tip or the base tip was current.
+`merge:main -- --full-regen` asks every pair. Separately, every pass after
+the first asks only the pairs whose inputs the previous pass actually changed
+(measured from `git`, not declared). Both cuts are only as good as the
+`task-io.ts` declarations. The whole-tree pairs (`kg:audit:all:check`,
+`skill:register:check`, `kg:audit:check`) still run after every merge.
 
 ### Submodules: check the pointers BEFORE you stage the merge (STRICT)
 
