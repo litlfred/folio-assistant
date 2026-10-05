@@ -4,12 +4,19 @@
  * a gen-ig-pages.ts change carries every IG.
  */
 import { describe, expect, it } from "bun:test";
-import { resolve } from "node:path";
+import { existsSync } from "node:fs";
+import { join, resolve } from "node:path";
 
 import { judge, readTree, renderingOrder } from "../check-derived-from.ts";
 import { type Closure, cone, type ConeDir, importClosure, siteInCone } from "../staging-cone.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
+/**
+ * The "on this checkout" measurements are about the IGs, so they need the
+ * instances that hold them. Standing alone (check:cat-harness-standalone)
+ * those are absent: skipped and named as skipped, never passed over nothing.
+ */
+const HAS_IGS = ["fhir-harness", "smart-base", "smart-trust", "smart-immunizations"].every((i) => existsSync(join(REPO, i)));
 
 const dirs: ConeDir[] = [
   { node: "a/index", path: "a/index/" },
@@ -41,7 +48,7 @@ describe("the cone, on a planted tree", () => {
   });
 });
 
-describe("importClosure, on this checkout", () => {
+describe.skipIf(!HAS_IGS)("importClosure, on this checkout", () => {
   const c = importClosure("fhir-harness/scripts/gen-ig-pages.ts", REPO);
   it("reaches gen-ig-pages' own imports", () => {
     expect(c.files.has("fhir-harness/scripts/gen-ig-pages.ts")).toBe(true);
@@ -61,7 +68,7 @@ describe("importClosure, on this checkout", () => {
   });
 });
 
-describe("the Done-when measurements, on this checkout", () => {
+describe.skipIf(!HAS_IGS)("the Done-when measurements, on this checkout", () => {
   const tree = readTree(REPO);
   const { edges: realEdges } = judge(tree);
   const realOrder = renderingOrder(tree, realEdges);

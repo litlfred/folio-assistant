@@ -18,6 +18,21 @@ import { KNOWN_LABEL_PREFIXES, LABEL_PREFIXES, typedBlockKinds } from "./constra
 import { BLOCK_KIND_TO_FOLIO_TYPE, KIND_PREFIXES, assertPrefixesInSync } from "./jsonld";
 import { kindHeading } from "./translation";
 
+/**
+ * Run `fn` with the standalone fixture switched off. Standing alone the test
+ * preload points discovery at test/fixtures/standalone-checkout/, which a test
+ * about an EMPTY or planted checkout must not see.
+ */
+function withoutFixture<T>(fn: () => T): T {
+  const saved = process.env.FOLIO_FIXTURE_CHECKOUT;
+  delete process.env.FOLIO_FIXTURE_CHECKOUT;
+  try {
+    return fn();
+  } finally {
+    if (saved !== undefined) process.env.FOLIO_FIXTURE_CHECKOUT = saved;
+  }
+}
+
 describe("block kinds are discovered, not listed", () => {
   test("every typed kind is discovered, and every discovered kind is typed", () => {
     expect([...BLOCK_KINDS].map(String).sort()).toEqual(typedBlockKinds().sort());
@@ -77,7 +92,7 @@ describe("block kinds are discovered, not listed", () => {
     // "None" is guarded where it could lie: a malformed node throws (above),
     // and THIS checkout, which does declare them, must find them (below).
     const root = mkdtempSync(join(tmpdir(), "block-kinds-empty-"));
-    expect(discoverBlockKinds(root)).toEqual([]);
+    expect(withoutFixture(() => discoverBlockKinds(root))).toEqual([]);
     expect(BLOCK_KINDS.length).toBeGreaterThan(0);
   });
 });
@@ -123,9 +138,9 @@ describe("content-adapter vocabularies are nodes (bean riit, step 5)", () => {
     };
     const node = (adapter: string, typed: boolean) => ({ $schema: "folio-content-adapter/v1", adapter, typed, companionRoles: ["md"] });
     inst("a", { "x.json": node("x", false) });
-    expect(discoverContentAdapters(tmp).map((n) => n.adapter)).toEqual(["x"]);
+    expect(withoutFixture(() => discoverContentAdapters(tmp)).map((n) => n.adapter)).toEqual(["x"]);
     expect(CONTENT_ADAPTERS.length).toBeGreaterThan(0);
     inst("b", { "x.json": node("x", true) });
-    expect(() => discoverContentAdapters(tmp)).toThrow(/declared twice/);
+    expect(() => withoutFixture(() => discoverContentAdapters(tmp))).toThrow(/declared twice/);
   });
 });

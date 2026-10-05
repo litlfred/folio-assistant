@@ -3,6 +3,8 @@
  * an edge between derived graphs is only checkable if a wrong one is refused.
  */
 import { describe, expect, it } from "bun:test";
+import { existsSync } from "node:fs";
+import { join, resolve } from "node:path";
 
 import { analyse, downstreamOf, type Inst, judge, ratchet, readTree, renderingOrder } from "../check-derived-from.ts";
 
@@ -122,7 +124,12 @@ describe("downstream of a change", () => {
   });
 });
 
-describe("this checkout's IG pages", () => {
+/** The real-tree cases need the IG instances; standing alone they are skipped, named as skipped. */
+const HAS_IGS = ["fhir-harness", "smart-base", "smart-trust", "smart-immunizations"].every((i) =>
+  existsSync(join(resolve(import.meta.dir, "..", "..", ".."), i)),
+);
+
+describe.skipIf(!HAS_IGS)("this checkout's IG pages", () => {
   it("re-render when smart-base's chrome changes", () => {
     const tree = readTree();
     const { edges } = judge(tree);
@@ -138,7 +145,7 @@ describe("writer", () => {
       { kind: "missing-writer", instance: "top", directory: "pages", writer: "gen/missing.ts" },
     ]);
   });
-  it("this checkout's IG page sets name gen-ig-pages as their writer", () => {
+  it.skipIf(!HAS_IGS)("this checkout's IG page sets name gen-ig-pages as their writer", () => {
     const pages = readTree().flatMap((i) => i.dirs.filter((d) => d.id === `${i.name}-docs` && d.writer).map((d) => d.writer));
     expect(pages).toHaveLength(3);
     for (const w of pages) expect(w).toContain("fhir-harness/scripts/gen-ig-pages.ts");

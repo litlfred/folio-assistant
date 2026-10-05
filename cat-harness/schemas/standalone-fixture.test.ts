@@ -33,7 +33,9 @@ const copies = filesUnder(FIXTURE).filter((f) => {
   const rel = relative(FIXTURE, f).split("/");
   return !(rel.length === 2 && rel[1] === `${rel[0]}.json`);
 });
-const sourcesPresent = existsSync(join(CHECKOUT, "folio-assistant-core")) && existsSync(join(CHECKOUT, "folio-assistant-sci"));
+/** The instances the fixture copies from: one directory per instance, as in a checkout. */
+const FIXTURE_INSTANCES = readdirSync(FIXTURE).filter((e) => statSync(join(FIXTURE, e)).isDirectory());
+const sourcesPresent = FIXTURE_INSTANCES.every((i) => existsSync(join(CHECKOUT, i)));
 
 describe("the standalone fixture copies the real nodes", () => {
   test("it carries the paper vocabulary and core's kinds", () => {
@@ -41,6 +43,7 @@ describe("the standalone fixture copies the real nodes", () => {
     expect(rels).toContain("folio-assistant-sci/content-adapters/paper.json");
     expect(rels.filter((r) => r.includes("/block-kinds/") && r.endsWith(".json")).length).toBe(16);
     expect(rels).toContain("folio-assistant-core/kinds/review-verdicts.json");
+    expect(rels).toContain("fhir-harness/kinds/ig-metadata-index.json");
   });
 
   test.skipIf(!sourcesPresent)("every copy is byte-equal to the file it copies", () => {
@@ -53,10 +56,10 @@ describe("the standalone fixture copies the real nodes", () => {
     expect(drifted.map((f) => relative(FIXTURE, f))).toEqual([]);
   });
 
-  test.skipIf(!sourcesPresent)("every block-kinds and content-adapters node the real instances declare is copied", () => {
+  test.skipIf(!sourcesPresent)("every block-kinds, content-adapters and kinds node the copied instances declare is copied", () => {
     const missing: string[] = [];
-    for (const inst of ["folio-assistant-core", "folio-assistant-sci"]) {
-      for (const dir of ["block-kinds", "content-adapters"]) {
+    for (const inst of FIXTURE_INSTANCES) {
+      for (const dir of ["block-kinds", "content-adapters", "kinds"]) {
         const real = join(CHECKOUT, inst, dir);
         if (!existsSync(real)) continue;
         for (const f of readdirSync(real).filter((x) => x.endsWith(".json"))) {
