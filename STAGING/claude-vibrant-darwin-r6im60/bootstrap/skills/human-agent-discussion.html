@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Asking a person, in one reusable way</title><style>
+  :root { color-scheme: light dark; --fg: #1b1f23; --bg: #ffffff; --muted: #57606a; --line: #d0d7de; --link: #0b5cad; }
+  @media (prefers-color-scheme: dark) { :root { --fg: #e6edf3; --bg: #0d1117; --muted: #8d96a0; --line: #30363d; --link: #58a6ff; } }
+  body { font: 16px/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); max-width: 50rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  a { color: var(--link); }
+  code, pre { font-family: ui-monospace, monospace; font-size: 0.92em; }
+  pre { overflow-x: auto; padding: 0.75rem; border: 1px solid var(--line); border-radius: 6px; }
+  table { border-collapse: collapse; display: block; overflow-x: auto; }
+  th, td { border: 1px solid var(--line); padding: 0.35rem 0.6rem; text-align: left; vertical-align: top; }
+  blockquote { margin-left: 0; padding-left: 1rem; border-left: 3px solid var(--line); color: var(--muted); }
+  hr { border: 0; border-top: 1px solid var(--line); }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-jy53xd630e.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/css/navbar-row.css"><script src="../../assets/js/navbar-row.js" defer></script></head><body><script type="application/json" id="fa-navbar-row" data-fa-root="../..">{"icons":["close","todos","beans","language","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-jy53xd630e"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">C@T Harness</a></nav><h1>Asking a person, in one reusable way</h1><p><strong>You are the agent that needs something only a person can supply</strong>: a
+choice, a judgement, or a step only they have the rights to perform. Every
+diagram in bootstrap that needs one calls
+<a href="../processes/human-agent-discussion.bpmn"><code>processes/human-agent-discussion.bpmn</code></a>
+as a call activity rather than drawing its own asking. A caller that draws
+its own has a second answer to "how do I ask", free to drift from this one.</p><h2>Before you ask: determine where you are</h2><p>Owner, 2026-10-01: <em>"i wanted to see more about determining context / role /
+process as part of precondition.. and that needs to be clarified as part of
+discussion/interaction."</em> So the diagram's first three tasks come before any
+question, and each is declared as a precondition of the first one
+(<code>bootstrap.processes:precondition … before="A_GiveContext"</code>):</p><table><thead><tr><th>determine</th><th>what you must be able to say</th><th>why it comes first</th></tr></thead><tbody><tr><td><strong>the context</strong> (<code>A_DetermineContext</code>)</td><td>what is already known, each fact with where it came from; which declaration governs it (the instance's <code>&#x3C;name>.json</code>, the diagram you are in, the Skill its task names); and whether the question has <strong>already been decided</strong> — earlier in the conversation, or in a declaration that quotes the person's ruling</td><td>a settled question asked again reopens a decision and spends the person's attention twice. Cite what you read, not what you remember</td></tr><tr><td><strong>the Roles</strong> (<code>A_DetermineRoles</code>)</td><td>which Role you are acting as — the lane of the task that called this discussion — and which Role the person you ask holds</td><td>an Actor performs a task in a Process <strong>as</strong> a Role; nothing is a Role by nature. Who holds the decision decides whom you may ask: only the Requestor chooses a harness</td></tr><tr><td><strong>the Process and task</strong> (<code>A_DetermineProcess</code>)</td><td>the Process, the lane and the task the question belongs to — <em>"Process: Initialize a harness, at Determine the harness and repositories, as the Bootstrapping Agent"</em> — <strong>or</strong> that you are in none: you are <strong>idle</strong>, classifying a request to find the Process it belongs to</td><td>a reader who does not know which Process you are in assumes the last one's rules still hold</td></tr></tbody></table><p>Say all three in the message, as the first part of the context. A caller that
+already determined them hands them in; you check them rather than re-derive
+them.</p><p><strong>You are out of process — the Process is undetermined — when</strong> you cannot
+name it, when two candidates fit, when the step you believed was next is not
+the one the diagram enables, or when the work in hand is not what you said
+you would do. Do not infer your way back in.</p><h3>What cannot be determined is asked first</h3><p>When any of the three cannot be determined, that becomes <strong>the first
+question of this same discussion</strong> (<code>A_AskUndeterminedFirst</code>), and the
+caller's question waits, counted. Ask about the outermost first — the
+Process, then the Role, then the context — since the outer answer usually
+settles the inner. It goes through the same order as every question below,
+and it allows <strong>no default</strong>: a Process or a Role assumed rather than
+confirmed is an authority nobody gave you. Its answer is recorded, the three
+are determined again, and only then is the caller's question put. If it is
+declined or met with silence, record what is still open and stop: a step
+completed in the wrong Process records an authority that was never given.</p><blockquote><p>I am in <strong>Initialize a harness</strong>, at <em>Determine the harness and
+repositories</em>, acting as the Bootstrapping Agent. I cannot tell whether you
+are the person who wants this repository set up, or relaying for someone:
+the request came from another agent's message. If you are, I will ask you
+which harness next; if not, I will stop and record that the Requestor is
+unknown, since only the Requestor chooses. <strong>Are you the person who wants
+it set up?</strong> (One more question after this one.)</p></blockquote><h2>The order is the rule</h2><ol><li><strong>Context.</strong> Where you are (the three determinations above), what is
+being decided, what depends on it, and what you already know, each fact with where it came from. In the message itself:
+a link is where somebody goes for <em>more</em>, never where the terms are
+defined.</li><li><strong>Options.</strong> Every option still open after you narrowed from context,
+each with what it costs and what it makes hard to undo. An option you
+could have ruled out yourself wastes the reader's attention.</li><li><strong>Recommendation.</strong> The option you would take, marked, and why.</li><li><strong>What happens with no answer.</strong> Said <em>before</em> the question, so silence
+has a meaning both sides agreed to before it happened: the default, when
+the caller allows one, or "the question stays open and the work stops".</li><li><strong>One question</strong>, answerable by picking. With several decisions open,
+ask one in full and give a <strong>count</strong> for the rest.</li></ol><p>The test before you send it: <strong>can the reader answer without opening
+anything?</strong> If not, the question is not ready.</p><h2>What can come back, and where each ends</h2><table><thead><tr><th>what came back</th><th>what you do</th><th>end</th></tr></thead><tbody><tr><td>an answer that settles it</td><td>record it, and who gave it (a person or an agent)</td><td><em>Answered</em> — or, when it answered a question about where you are, determine again and put the caller's question</td></tr><tr><td>an answer that does not settle it (a kind instead of an option; two options)</td><td>follow up <strong>once</strong>, narrower, naming what is still open</td><td>back to the answer</td></tr><tr><td>a refusal</td><td>record what was asked and what is still open</td><td><em>Still open</em></td></tr><tr><td>nothing</td><td>apply the default <strong>only if the caller allows one</strong>, and say so; otherwise record what is still open</td><td><em>Default applied</em> or <em>Still open</em></td></tr></tbody></table><p><strong>A default is the caller's to allow, never yours.</strong> A caller allows one
+only when the decision is reversible and its own instructions name the
+default. It is recorded as <em>assumed</em>, with the default named, never as the
+person's answer, and the next message tells them it was applied so they can
+reverse it. Which harness a repository becomes allows <strong>none</strong>: a wrong
+answer does not fail, it succeeds at being the wrong thing
+(<a href="confirm-harness.html"><code>confirm-harness</code></a>).</p><h2>The record</h2><p>In the form the caller asks for. For bootstrap's harness question that is a
+document conforming to
+<a href="../schemas/discussion.output.schema.json"><code>discussion.output.schema.json</code></a>
+(<a href="discussion.html"><code>discussion</code></a>). For a step only the person can perform
+(<a href="../processes/complete-initialization.bpmn"><code>complete-initialization</code></a>), it
+is the step with the person's word beside it. A person saying "done" is
+recorded as their word, and the next check decides whether it holds.</p><h2>Symmetric in its participants</h2><p>The answering lane is a person or a sibling agent that already holds the
+answer. The record says which, because the two are evidence of different
+weight. Neither is refused, and they are not conflated.</p></body></html>
