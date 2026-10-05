@@ -79,7 +79,7 @@ import {
   type ViewerNavQa,
 } from "../../cat-harness/schemas/viewer-nav-qa.ts";
 import { declinesNavbar, isStandalonePage, sitePathForPage } from "../../cat-harness/scripts/viewer-page.ts";
-import { wantsLinkedRail } from "../../cat-harness/scripts/lib/harness-rail.ts";
+import { RAIL_DATA_DIR, expandRail, railDataJson, wantsLinkedRail } from "../../cat-harness/scripts/lib/harness-rail.ts";
 import { againstOrUsage, qaResultsFile, readBaseline } from "../../cat-harness/scripts/qa-results.ts";
 
 const ROOT = HARNESS_ROOT;
@@ -337,11 +337,20 @@ export function markedHarnessNames(docs: string): Set<string> {
   }
 }
 
+/** A shared rail data file's JSON, read from the docs it was committed under. */
+function railData(docs: string, name: string): string | undefined {
+  const f = join(docs, RAIL_DATA_DIR, `${name}.js`);
+  if (!existsSync(f)) return undefined;
+  return railDataJson(readFileSync(f, "utf-8"));
+}
+
 export function audit(docs: string, repo: string): ViewerNavQa {
   const pages: ViewerNavPage[] = [];
   const marked = markedHarnessNames(docs);
   for (const abs of pagesUnder(docs)) {
-    const html = readFileSync(abs, "utf-8");
+    // A rail drawn from SHARED data (bean `lnoy`) is graded as the reader sees
+    // it: expanded with the same code `navbar.js` runs.
+    const html = expandRail(readFileSync(abs, "utf-8"), (name) => railData(docs, name));
     // A source page with YAML front matter gets the theme's sidebar from the
     // layout and is not this family. Read off the CONTENT, because "no layout
     // will wrap this" is a property of the file, not of its path.

@@ -420,11 +420,18 @@ function withSharedRail(html: string, o: RailOptions, root: string, documentInde
   let out = html.slice(0, at) + block + nav + html.slice(at);
   const tags =
     `<link rel="stylesheet" href="${root}/${NAVBAR_CSS}">` +
-    `<script src="${root}/${asset.file}" defer></script>` +
+    // The DATA is written into the site being railed, so it is fetched from
+    // this page's own root; the drawing and its style are the platform's.
+    `<script src="${o.toRoot}/${asset.file}" defer></script>` +
     `<script src="${root}/${NAVBAR_JS}" defer></script>`;
   const head = /<\/head\s*>/i.exec(out);
   out = head ? out.slice(0, head.index) + tags + out.slice(head.index) : out.slice(0, at) + tags + out.slice(at);
   return out;
+}
+
+/** The shared JSON inside a rail data file's body (what {@link railDataAsset} wrote). */
+export function railDataJson(body: string): string {
+  return JSON.parse(body.slice(body.indexOf("]=") + 2, body.lastIndexOf(";"))) as string;
 }
 
 /** Read a page's own rail block back, or `undefined` when it has none. */
