@@ -15,6 +15,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`extension-namespace.test.ts`](extension-namespace.test.ts) | a file |  |
 | [`folio-dir.test.ts`](folio-dir.test.ts) | a file |  |
 | [`harness-config.test.ts`](harness-config.test.ts) | a file |  |
+| [`instance-roots-worktrees.test.ts`](instance-roots-worktrees.test.ts) | a file |  |
 | [`instance-versioning.test.ts`](instance-versioning.test.ts) | a file |  |
 | [`kg-qa.test.ts`](kg-qa.test.ts) | a file |  |
 | [`kind-validator.test.ts`](kind-validator.test.ts) | a file |  |
@@ -25,6 +26,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`reference-direction-declaration.test.ts`](reference-direction-declaration.test.ts) | a file |  |
 | [`schema-graph.test.ts`](schema-graph.test.ts) | a file |  |
 | [`skill-overlay.test.ts`](skill-overlay.test.ts) | a file |  |
+| [`spdx-license-expression.test.ts`](spdx-license-expression.test.ts) | a file |  |
 | [`todo.test.ts`](todo.test.ts) | a file |  |
 | [`viz-generators.test.ts`](viz-generators.test.ts) | a file |  |
 <!-- kg:subgraph:end -->

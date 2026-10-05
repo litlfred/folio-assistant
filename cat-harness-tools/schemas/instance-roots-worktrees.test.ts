@@ -20,13 +20,13 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { checkoutRootFor, isForeignCheckout, instanceRootsIn, repoRootFor, rootForScope, siblingScopeFor } from "./cat-harness.js";
-import { declareInstance } from "../test/support/instance-fixture.js";
-import { skillMdDirs } from "../scripts/known-skills.js";
-import { findPublishWorkflows } from "../scripts/pages-bootstrap.js";
-import { scan as retiredScan } from "../../cat-harness-tools/scripts/check-retired-front-matter.js";
-import { auditInstance } from "../../cat-harness-tools/scripts/check-subgraph-coverage.js";
-import { readSchemaGraph } from "../scripts/schema-graph.js";
+import { checkoutRootFor, isForeignCheckout, instanceRootsIn, repoRootFor, rootForScope, siblingScopeFor } from "../../cat-harness/schemas/cat-harness.js";
+import { declareInstance } from "../../cat-harness/test/support/instance-fixture.js";
+import { skillMdDirs } from "../../cat-harness/scripts/known-skills.js";
+import { findPublishWorkflows } from "../../cat-harness/scripts/pages-bootstrap.js";
+import { scan as retiredScan } from "../scripts/check-retired-front-matter.js";
+import { auditInstance } from "../scripts/check-subgraph-coverage.js";
+import { readSchemaGraph } from "../../cat-harness/scripts/schema-graph.js";
 
 /** Whether `p` lies inside `dir` (or is it). */
 function inside(p: string, dir: string): boolean {
