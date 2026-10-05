@@ -6,7 +6,7 @@ description: >
   them against the context, and returns the ranked applicable methods with
   rationale. Extends methodology-adoption's four-question protocol with
   quantitative method-selection criteria from the MCDM literature.
-graph-kinds:
+graph-typologies:
   - methodology
 ---
 

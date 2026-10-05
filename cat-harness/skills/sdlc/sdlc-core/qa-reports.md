@@ -8,7 +8,7 @@ description: >
   resolve, cite or delete anything under `test/results/` or `test/attestations/`.
 adapters: [document, paper, dak]
 profiles: [document, paper]
-graph-kinds:
+graph-typologies:
   - qa
   - attestations
 ---
@@ -24,7 +24,7 @@ two on that line, by the owner's rulings of 2026-10-01:
 | | derived | judgement |
 |---|---|---|
 | what | every `reviewer.kind: script` entry: `kg-qa/**`, `*.qa-results.json`, witnesses, `lsi/`, `tool-runs/`, the health report | agent, human and **baseline-pair** attestations (the owner ruled a baseline is a judgement) |
-| graph kind | `qa` (and `health`) | `attestations` |
+| graph typology | `qa` (and `health`) | `attestations` |
 | written to | `<instance>/test/results/**`, the **working copy** | `<instance>/test/attestations/<family>/<mirrored subject path>.attestations.json` |
 | record | the orphan **`qa-reports`** branch, `main/<sha>/` or `pr/<n>/<sha>/` | **`main`** (ruling D2 (a)) |
 | schema | the family's own | `qa-attestations/v1`, `schemas/qa-attestations.ts` |

@@ -46,7 +46,7 @@ describe("the two questions are reported APART", () => {
     withTree(
       {
         "alpha/alpha.json": instance("alpha", [
-          { id: "code", path: "src/", graphKinds: ["code"] },
+          { id: "code", path: "src/", graphTypologies: ["code"] },
         ]),
         "alpha/src/orphan.ts": "export const x = 1;\n",
         "package.json": JSON.stringify({ scripts: {} }),
@@ -88,8 +88,8 @@ describe("the two questions are reported APART", () => {
     withTree(
       {
         "alpha/alpha.json": instance("alpha", [
-          { id: "schemas", path: "schemas/", graphKinds: ["schemas"] },
-          { id: "code", path: "src/", graphKinds: ["code"] },
+          { id: "schemas", path: "schemas/", graphTypologies: ["schemas"] },
+          { id: "code", path: "src/", graphTypologies: ["code"] },
         ]),
         "alpha/schemas/a.ts": "export const a = 1;\n",
         "alpha/src/b.ts": "export const b = 1;\n",

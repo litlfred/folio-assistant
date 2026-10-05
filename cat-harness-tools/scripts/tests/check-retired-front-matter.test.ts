@@ -43,8 +43,8 @@ function fixture(files: Record<string, string>, declare = true): string {
     writeDeclaration(root, JSON.stringify({
         name: "fixture",
         directories: [
-          { id: "skills", path: "skills/", graphKinds: ["cat-harness"] },
-          { id: "fsh-guts", path: "fsh-guts/", scope: "repository", graphKinds: ["fsh-guts"] },
+          { id: "skills", path: "skills/", graphTypologies: ["cat-harness"] },
+          { id: "fsh-guts", path: "fsh-guts/", scope: "repository", graphTypologies: ["fsh-guts"] },
         ],
       }));
     // Every retirement's record has to exist, or `missingRecords` fires and
@@ -182,7 +182,7 @@ describe("the guards", () => {
   });
 });
 
-describe("the graph-kind exemption", () => {
+describe("the graph-typology exemption", () => {
   test("`roles:` in a memory entry is NOT a finding — different kind, real reader", () => {
     // The failure that produced this exemption: the first `qif9` pass
     // excised the key from all 140 files, the 26 `folio-memory/v1` entries

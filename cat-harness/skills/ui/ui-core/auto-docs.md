@@ -95,7 +95,7 @@ is a fact while the first is an unfinished feature.
 
 ## Two rules the generator keeps, and why they are not incidental
 
-**A type names the GRAPH KIND its artefacts live in.** The first draft walked
+**A type names the GRAPH TYPOLOGY its artefacts live in.** The first draft walked
 every declared directory and reported **1,522** skills where `knownSkills()`
 finds 219 — `docs/` is declared too, and holds a generated markdown rendering
 of every skill, so each was counted again as a second skill. *A rendering of an

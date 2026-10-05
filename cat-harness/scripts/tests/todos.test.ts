@@ -3,7 +3,7 @@
  *
  * All three, because the failure mode is the middle one going missing.
  * `schemas/todo.ts`, `schemas/todo-graph.ts` and the `todos` / `todo-items`
- * graph kinds existed before any todo did, and `harness.json` did not
+ * graph typologies existed before any todo did, and `harness.json` did not
  * declare `todos/`. A schema ahead of its graph is harmless. A **declared
  * directory nothing reads** is the bean `dh4f` defect — a consumer scans
  * nothing and reports a clean run over it.
@@ -25,7 +25,7 @@ describe("the declaration and the directory agree", () => {
     // The ROOT instance's, since placement PR0 (bean `ejye`): `todos/` sits at
     // the checkout's root and belongs to the checkout, not to the platform.
     const d = readDeclaration(repoRootFor(ROOT));
-    const entry = d?.directories?.find((x) => x.graphKinds?.includes("todos"));
+    const entry = d?.directories?.find((x) => x.graphTypologies?.includes("todos"));
     expect(entry?.path).toBe("todos/");
   });
 

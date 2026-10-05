@@ -28,7 +28,7 @@
  *
  * ## The kind axis is `check-avatar-coverage`, and they are different questions
  *
- * That one asks whether every declared graph KIND has art. This asks whether
+ * That one asks whether every declared graph TYPOLOGY has art. This asks whether
  * every INSTANTIATED harness does. The table serves both key spaces, which is
  * exactly why one check over it cannot answer both.
  *

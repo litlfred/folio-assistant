@@ -49,7 +49,7 @@ A gate names the kinds it covers in its own module docblock:
 
 ```
  * @covers bean-defs, beans
- * @covers none — .github/workflows/ is not a declared graph kind
+ * @covers none — .github/workflows/ is not a declared graph typology
  * @covers computed — it sweeps whichever kinds declare `nodeSchemas`
 ```
 
@@ -74,7 +74,7 @@ could-not-determine rendered as clean.
 `none` and `undeclared` are different facts and collapsing them would leave a
 gate that genuinely audits no graph with silence as its only honest answer.
 `computed` exists because writing today's answer as a literal is the snapshot
-`BASE_GRAPH_KINDS`' own doc refuses for counts in prose.
+`BASE_GRAPH_TYPOLOGIES`' own doc refuses for counts in prose.
 
 **An undeclared gate is counted and printed, never zero**, and every "unaudited"
 verdict is stated as an **upper bound** while any remain. That is
@@ -253,7 +253,7 @@ is a gate that gets switched off within a week.
 
 - **A new gate**: add `@covers` in the same change. If you cannot tell which kind
   its subject is, leave it off — the count is the honest answer.
-- **A new graph kind**: it appears in the report the moment it is registered,
+- **A new graph typology**: it appears in the report the moment it is registered,
   because the denominator is the registry. Expect it to read `unaudited` until it
   declares a validator and `typed-only` until something judges it — and say in
   the sidecar why it needs nothing if that is the answer, never by letting the

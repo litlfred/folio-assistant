@@ -65,7 +65,7 @@
  *
  * `recordsWork: false`. Live state, but nothing anybody is partway through: a
  * published release is a completed fact, and an arriving agent cannot pick one
- * up. `check:graph-kind-work` refuses a `state` kind that has not decided,
+ * up. `check:graph-typology-work` refuses a `state` kind that has not decided,
  * and it is right to — "state" alone does not say whether a reader is looking
  * at a queue or at a ledger.
  *

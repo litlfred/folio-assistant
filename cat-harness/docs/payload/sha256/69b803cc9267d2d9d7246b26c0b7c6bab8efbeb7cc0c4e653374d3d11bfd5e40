@@ -1,6 +1,6 @@
 ---
 name: swimlane-glossary
-graph-kinds:
+graph-typologies:
   - swimlane-glossary
 ---
 
@@ -115,7 +115,7 @@ delete a role and its concept simply stops appearing, which is what
 alike ([`deletion-requires-confirmation`](../../conduct/conduct-core/deletion-requires-confirmation.md)),
 so the one non-derivable fact — **this term was once minted** — is
 committed at `<instance>/glossary/glossary-ledger.json`, declared as
-graph kind `swimlane-glossary` (`holds: "state"`; renamed from `glossary` on
+graph typology `swimlane-glossary` (`holds: "state"`; renamed from `glossary` on
 2026-09-23, when that name went to core's glossary kind; see
 [`glossary-terms`](../../library/library-core/glossary-terms.md), whose `glossary/` page reads this ledger as one source).
 

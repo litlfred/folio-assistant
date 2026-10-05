@@ -89,7 +89,7 @@ export function typescriptFiles(root: string): string[] {
 export interface DeclaredDirs {
   /** Absolute paths of every declared directory, whatever its kind. */
   any: string[];
-  /** ...and the subset whose `graphKinds` include `code`. */
+  /** ...and the subset whose `graphTypologies` include `code`. */
   code: string[];
 }
 
@@ -106,7 +106,7 @@ export function declaredDirectories(repoRoot: string): DeclaredDirs {
     for (const e of decl?.directories ?? []) {
       const abs = resolve(root, e.path);
       any.push(abs);
-      if ((e.graphKinds ?? []).includes("code")) code.push(abs);
+      if ((e.graphTypologies ?? []).includes("code")) code.push(abs);
     }
   }
   return { any, code };

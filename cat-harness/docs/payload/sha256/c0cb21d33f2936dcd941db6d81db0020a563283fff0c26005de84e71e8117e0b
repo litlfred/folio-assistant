@@ -227,7 +227,7 @@ Directory node carries `readmePath`.
 
 **Everything shown is read from the Knowledge Graph**, never composed: the
 heading is the directory's declared `title`, the paragraph its `description`,
-the kinds its `graphKinds`, each file row what the file says it is, and "used
+the kinds its `graphTypologies`, each file row what the file says it is, and "used
 by" only a relation a diagram records.
 
 **The layout is Liquid**, in `bootstrap-tools/scripts/templates/readme/`,

@@ -10,7 +10,7 @@ description: >
   half of that axis; the mechanical half, in `scripts/skill-voice-review.ts`,
   only says whether a current review exists.
 allowed-tools: Read Bash Grep Glob
-graph-kinds:
+graph-typologies:
   - voices
 ---
 

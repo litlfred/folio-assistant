@@ -33,7 +33,7 @@ export function sectionsWithSoftHyphens(): Array<{ file: string; count: number }
   const out: Array<{ file: string; count: number }> = [];
   for (const root of instanceRootsIn(REPO)) {
     for (const g of declaredGraphs(root)) {
-      if (!g.absPath || !g.graphKinds.includes("library") || seen.has(g.absPath) || !existsSync(g.absPath)) continue;
+      if (!g.absPath || !g.graphTypologies.includes("library") || seen.has(g.absPath) || !existsSync(g.absPath)) continue;
       seen.add(g.absPath);
       for (const doc of readdirSync(g.absPath, { withFileTypes: true })) {
         const sec = join(g.absPath, doc.name, "sections");

@@ -332,7 +332,7 @@ export const HarnessConfigSchema = z.object({
    * The interactivity axis — issue #764, O1, settled by the owner
    * 2026-09-22. Vocabulary and the full argument: `CONTENT_INTERACTIVITY`.
    *
-   * Here rather than beside `graphKinds` because it is a fact about the
+   * Here rather than beside `graphTypologies` because it is a fact about the
    * CONTENT, which is what `contentType` and `adapter` next to it are also
    * about. The visualiser axis went the other way, onto the directory, and
    * the two placements are the axes' own difference rather than an
@@ -418,7 +418,7 @@ import {
  * from here, where every existing caller looks for it.
  */
 export { ExactVersionSchema };
-// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// The `folio` graph typology is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
 // COMMAND that runs carries it — and since #840 every caller does, because
@@ -1378,7 +1378,7 @@ export function checkoutDirectoriesForGraph(
   opts: { stackedOn?: string } = {},
 ): string[] {
   return checkoutDirectories(start, opts)
-    .filter((d) => d.graphKinds.includes(kind as never))
+    .filter((d) => d.graphTypologies.includes(kind as never))
     .map((d) => d.absPath);
 }
 
@@ -1816,10 +1816,10 @@ function registerDeclaredContributions<C extends { name: string }>(folioRoot: st
   }
 }
 
-/** Every `*.json` in every directory ONE instance declares with `graphKind`, files sorted. */
-function declaredNodesOf(root: string, graphKind: string): { file: string; raw: unknown }[] {
+/** Every `*.json` in every directory ONE instance declares with `graphTypology`, files sorted. */
+function declaredNodesOf(root: string, graphTypology: string): { file: string; raw: unknown }[] {
   const out: { file: string; raw: unknown }[] = [];
-  for (const dir of directoriesForGraph(root, graphKind)) {
+  for (const dir of directoriesForGraph(root, graphTypology)) {
     let files: string[];
     try {
       files = readdirSync(dir).filter((f) => f.endsWith(".json")).sort();

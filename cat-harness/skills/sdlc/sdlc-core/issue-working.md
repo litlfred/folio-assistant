@@ -7,7 +7,7 @@ description: >
   else's.
 adapters: [document, paper, dak]
 profiles: [document, paper]
-graph-kinds:
+graph-typologies:
   - issue-marks
 ---
 

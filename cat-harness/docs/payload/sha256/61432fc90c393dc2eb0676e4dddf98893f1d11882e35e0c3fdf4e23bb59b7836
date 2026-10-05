@@ -12,9 +12,9 @@ What is specific to this layer, and it is one rule:
 > is actually PRESENT belongs here. A schema describing skills, workflows,
 > roles or tools belongs in `cat-harness/`.
 
-The line is not stylistic. `BASE_GRAPH_KINDS` in
+The line is not stylistic. `BASE_GRAPH_TYPOLOGIES` in
 `cat-harness/schemas/cat-harness.ts` records the owner's own phrasing of it, and
-`schemas/folio-graph-kind.ts` shows what goes wrong when a layer owns a kind it
+`schemas/folio-graph-typology.ts` shows what goes wrong when a layer owns a kind it
 cannot serve.
 
 **Before adding anything here**, read [`README.md`](README.md) — in particular

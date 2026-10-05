@@ -7,7 +7,7 @@ description: >
   checked against.
 conformsTo:
   - dcmi-terms
-graph-kinds:
+graph-typologies:
   - catalogue
 ---
 

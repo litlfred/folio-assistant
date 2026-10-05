@@ -2,7 +2,7 @@
  * Tests for the CatHarness root declaration — issue #223, Phase 0.3.
  *
  * The shape under test: an instance declares the directories it scans and the
- * graph kind each holds, and a downstream instance INHERITS its dependencies'
+ * graph typology each holds, and a downstream instance INHERITS its dependencies'
  * directories without restating them.
  */
 import { describe, it, test, expect, beforeAll, afterAll } from "bun:test";
@@ -11,11 +11,11 @@ import { existsSync, mkdirSync, mkdtempSync, writeFileSync, rmSync } from "node:
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
-import { registerFolioGraphKind } from "../../cat-harness/schemas/folio-graph-kind";
+import { registerFolioGraphTypology } from "../../cat-harness/schemas/folio-graph-typology";
 import { THEMES } from "../../cat-harness/schemas/themes";
 import { BEAN_GRAPH_FILE } from "../../cat-harness/schemas/bean-graph";
 import { TODO_GRAPH_FILE } from "../../cat-harness/schemas/todo-graph";
-import { defaultGraphKinds, graphKindIri, GraphKindRegistry, graphLayer, isContentGraph, isContextGraph, isStateGraph, processMayWrite, graphKindsOfLayer, BASE_GRAPH_KINDS, GraphKindConflictError, isRenderable, readDeclaration, keepMarker, materialiseDirectories, renderableDirectories, DEFAULT_DIRECTORIES, declaredKinds, directoryForGraph, directoriesForGraph, resolveDirectories, resolveGraphKind, ContentDirectorySchema, GraphNodeDirectorySchema, instanceRootsIn, ownDirectoryById, toJsonLd, type ResolvedDirectory } from "../../cat-harness/schemas/cat-harness";
+import { defaultGraphTypologies, graphTypologyIri, GraphTypologyRegistry, graphLayer, isContentGraph, isContextGraph, isStateGraph, processMayWrite, graphTypologiesOfLayer, BASE_GRAPH_TYPOLOGIES, GraphTypologyConflictError, isRenderable, readDeclaration, keepMarker, materialiseDirectories, renderableDirectories, DEFAULT_DIRECTORIES, declaredKinds, directoryForGraph, directoriesForGraph, resolveDirectories, resolveGraphTypology, ContentDirectorySchema, GraphNodeDirectorySchema, instanceRootsIn, ownDirectoryById, toJsonLd, type ResolvedDirectory } from "../../cat-harness/schemas/cat-harness";
 import { writeDeclaration } from "../../cat-harness/test/support/instance-fixture.js";
 import { checkoutDirectories, corpusDirectoriesForGraph } from "../../cat-harness/schemas/harness-config";
 
@@ -33,19 +33,19 @@ beforeAll(() => {
   writeDeclaration(HARNESS, JSON.stringify({
       name: "agentic-harness",
       directories: [
-        { id: "tools", path: "tools/", graphKinds: ["tools"] },
-        { id: "kg", path: "kg/", graphKinds: ["kg"] },
-        { id: "schemas", path: "schemas/", graphKinds: ["schemas"] },
+        { id: "tools", path: "tools/", graphTypologies: ["tools"] },
+        { id: "kg", path: "kg/", graphTypologies: ["kg"] },
+        { id: "schemas", path: "schemas/", graphTypologies: ["schemas"] },
       ],
     }));
 
   // core declares ONLY folio/ — the other three are inherited.
   mkdirSync(CORE, { recursive: true });
-  writeDeclaration(CORE, JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", graphKinds: ["folio"] }] }));
+  writeDeclaration(CORE, JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", graphTypologies: ["folio"] }] }));
 
   // An instance that moves its knowledge graph somewhere else.
   mkdirSync(RELOCATED, { recursive: true });
-  writeDeclaration(RELOCATED, JSON.stringify({ name: "relocated", directories: [{ id: "kg", path: "graph/knowledge/", graphKinds: ["kg"] }] }));
+  writeDeclaration(RELOCATED, JSON.stringify({ name: "relocated", directories: [{ id: "kg", path: "graph/knowledge/", graphTypologies: ["kg"] }] }));
 
   mkdirSync(BROKEN, { recursive: true });
   writeDeclaration(BROKEN, "{ not json", "broken");
@@ -54,7 +54,7 @@ beforeAll(() => {
 afterAll(() => rmSync(TMP, { recursive: true, force: true }));
 
 describe("reading a declaration", () => {
-  it("reads directories and their graph kinds", () => {
+  it("reads directories and their graph typologies", () => {
     const d = readDeclaration(HARNESS)!;
     expect(d.name).toBe("agentic-harness");
     expect(d.directories.map((x) => x.id).sort()).toEqual(["kg", "schemas", "tools"]);
@@ -79,17 +79,17 @@ describe("reading a declaration", () => {
     mkdirSync(legacy, { recursive: true });
     writeDeclaration(legacy, JSON.stringify({
         name: "x",
-        directories: [{ id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] }],
+        directories: [{ id: "uploads", path: "uploads/", dependents: "reproduce", graphTypologies: ["uploads"] }],
       }));
     const decl = readDeclaration(legacy)!;
     expect(decl.directories![0]!.id).toBe("uploads");
     expect("dependents" in decl.directories![0]!).toBe(false);
   });
 
-  it("rejects an unknown graph kind rather than accepting it", () => {
+  it("rejects an unknown graph typology rather than accepting it", () => {
     const bad = join(TMP, "bad-kind");
     mkdirSync(bad, { recursive: true });
-    writeDeclaration(bad, JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", graphKinds: ["wishful"] }] }));
+    writeDeclaration(bad, JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", graphTypologies: ["wishful"] }] }));
     // The message must name the offending kind AND what is known, so the
     // author can see whether they typo'd or forgot to register a dependency's
     // contribution — those need different fixes.
@@ -99,7 +99,7 @@ describe("reading a declaration", () => {
     } catch (e) {
       err = e;
     }
-    expect((err as Error).message).toContain('unknown graph kind "wishful"');
+    expect((err as Error).message).toContain('unknown graph typology "wishful"');
     expect((err as Error).message).toContain("Known kinds:");
     expect((err as Error).message).toContain("tools");
   });
@@ -109,13 +109,13 @@ describe("reading a declaration", () => {
     mkdirSync(ld, { recursive: true });
     writeDeclaration(ld, JSON.stringify(toJsonLd(readDeclaration(HARNESS)!)));
     const back = readDeclaration(ld)!;
-    // The fixture declares `id: "kg"` with `graphKinds: ["kg"]`, the pre-rename
+    // The fixture declares `id: "kg"` with `graphTypologies: ["kg"]`, the pre-rename
     // spelling.
     //
     // **The id survives and the kind CANONICALISES**, and the asymmetry is
     // right. An id is the instance's own handle — `AGENTS.md` requires it to
     // be stable across a relocation — so a projection must hand it back
-    // unchanged. A graph KIND is projected as its type IRI, and the IRI is
+    // unchanged. A graph TYPOLOGY is projected as its type IRI, and the IRI is
     // the identity: `kg` and `cat-harness` are two spellings of
     // `cat:KGraph`, of which only one is current. Reading the
     // projection back resolves the IRI to the current name.
@@ -124,7 +124,7 @@ describe("reading a declaration", () => {
     // declaration written against the old vocabulary, rather than a way to
     // lose information.
     expect(back.directories.map((d) => d.id).sort()).toEqual(["kg", "schemas", "tools"]);
-    expect(back.directories.find((d) => d.id === "kg")!.graphKinds).toEqual(["cat-harness"]);
+    expect(back.directories.find((d) => d.id === "kg")!.graphTypologies).toEqual(["cat-harness"]);
   });
 });
 
@@ -170,7 +170,7 @@ describe("inheritance — the Phase 0.3 gate", () => {
     const root = mkdtempSync(join(tmpdir(), "renamed-id-"));
     try {
       mkdirSync(join(root, "old-skills"));
-      writeDeclaration(root, { name: "older", directories: [{ id: "cat-harness", path: "old-skills/", graphKinds: ["skills"] }] });
+      writeDeclaration(root, { name: "older", directories: [{ id: "cat-harness", path: "old-skills/", graphTypologies: ["skills"] }] });
       const dirs = resolveDirectories([{ name: "older", root, own: true }]);
       expect(dirs.filter((d) => d.id === "cat-harness")).toEqual([]);
       expect(dirs.filter((d) => d.id === "skills").map((d) => d.path)).toEqual(["old-skills/"]);
@@ -208,7 +208,7 @@ describe("layering", () => {
   });
 });
 
-describe("graph kinds — the harness declares its own, core adds folio", () => {
+describe("graph typologies — the harness declares its own, core adds folio", () => {
   it("the harness owns exactly one renderable kind — the one it can serve", () => {
     // The whole point of the re-siting: cat-harness is NOT self-documenting,
     // so a layer that cannot render must not own the renderable kind.
@@ -218,7 +218,7 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     // change that was correct, and the failure said "the list differs" rather
     // than "something renderable appeared". Same pinned-count antipattern this
     // repo keeps paying for, one level along: a list nothing derives it from.
-    const renderable = Object.entries(BASE_GRAPH_KINDS)
+    const renderable = Object.entries(BASE_GRAPH_TYPOLOGIES)
       .filter(([, def]) => def.renderable)
       .map(([name]) => name);
     // `docs` was added 2026-09-20 and IS renderable, which is why this is no
@@ -230,23 +230,23 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     // `folio` is STILL genuinely not here, and that is the same rule applied
     // rather than an exception to it: it needs block viewers, LaTeX, QA badges
     // and translation overlays, none of which the harness has.
-    expect(Object.keys(BASE_GRAPH_KINDS)).not.toContain("folio");
+    expect(Object.keys(BASE_GRAPH_TYPOLOGIES)).not.toContain("folio");
   });
 
   it("a bare harness registry does not know `folio` at all", () => {
     // Not merely "documented as core's" — genuinely absent. A declaration
     // naming it against a bare registry is refused.
-    const bare = new GraphKindRegistry();
+    const bare = new GraphTypologyRegistry();
     expect(bare.has("folio")).toBe(false);
     expect(bare.get("folio")).toBeUndefined();
     // A bare registry is exactly the harness's own vocabulary and nothing
     // more. Derived rather than listed, for the reason above.
-    expect(bare.names().sort()).toEqual(Object.keys(BASE_GRAPH_KINDS).sort());
+    expect(bare.names().sort()).toEqual(Object.keys(BASE_GRAPH_TYPOLOGIES).sort());
   });
 
   it("core's registration adds it, and it is the renderable one", () => {
-    const reg = new GraphKindRegistry();
-    registerFolioGraphKind(reg);
+    const reg = new GraphTypologyRegistry();
+    registerFolioGraphTypology(reg);
     expect(reg.has("folio")).toBe(true);
     expect(isRenderable("folio", reg)).toBe(true);
     for (const k of ["tools", "cat-harness", "schemas", "beans", "bean-defs", "workflow-state"]) {
@@ -255,21 +255,21 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
   });
 
   it("importing core registers folio into the shared registry", () => {
-    // folio-graph-kind.ts registers on import; this file imports it.
-    expect(defaultGraphKinds.has("folio")).toBe(true);
+    // folio-graph-typology.ts registers on import; this file imports it.
+    expect(defaultGraphTypologies.has("folio")).toBe(true);
   });
 
   it("registering the same kind twice is a no-op — a diamond is not a conflict", () => {
-    const reg = new GraphKindRegistry();
-    registerFolioGraphKind(reg);
-    expect(() => registerFolioGraphKind(reg)).not.toThrow();
+    const reg = new GraphTypologyRegistry();
+    registerFolioGraphTypology(reg);
+    expect(() => registerFolioGraphTypology(reg)).not.toThrow();
   });
 
   it("registering a DIFFERENT definition under one name throws", () => {
-    const reg = new GraphKindRegistry();
-    registerFolioGraphKind(reg);
+    const reg = new GraphTypologyRegistry();
+    registerFolioGraphTypology(reg);
     expect(() => reg.register("folio", { renderable: false, holds: "content", summary: "x" }))
-      .toThrow(GraphKindConflictError);
+      .toThrow(GraphTypologyConflictError);
   });
 
   it("every registered kind says what a process does with it", () => {
@@ -277,7 +277,7 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     // built dynamically, where the type is erased. A kind that has not said is
     // the `dh4f` shape on a new axis: every consumer asking for content is
     // handed it, and reports a clean run.
-    for (const name of defaultGraphKinds.names()) {
+    for (const name of defaultGraphTypologies.names()) {
       expect([name, graphLayer(name)]).toEqual([name, expect.stringMatching(/^(content|context|state|derived)$/)]);
     }
   });
@@ -306,8 +306,8 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     //
     // The ARITY is still pinned, deliberately: adding a layer must be a
     // deliberate edit here, not something a registry change does quietly.
-    const layers = (["content", "context", "state", "derived"] as const).map((l) => graphKindsOfLayer(l));
-    expect(layers.flat().length).toBe(defaultGraphKinds.names().length);
+    const layers = (["content", "context", "state", "derived"] as const).map((l) => graphTypologiesOfLayer(l));
+    expect(layers.flat().length).toBe(defaultGraphTypologies.names().length);
     expect(new Set(layers.flat()).size).toBe(layers.flat().length);
     for (const l of layers) expect(l.length).toBeGreaterThan(0);
   });
@@ -315,7 +315,7 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
   it("only `state` is writable by a running step", () => {
     // The property `context` exists for. A step writing to a context graph is
     // a defect, and this is what lets a consumer ask.
-    for (const name of defaultGraphKinds.names()) {
+    for (const name of defaultGraphTypologies.names()) {
       expect([name, processMayWrite(name)]).toEqual([name, graphLayer(name) === "state"]);
     }
   });
@@ -370,18 +370,18 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     // one name on opposite sides of the line would have passed and the first
     // would silently have won — the "one name, two answers" failure the
     // registry throws to prevent, reintroduced by the field added to end it.
-    const reg = new GraphKindRegistry();
+    const reg = new GraphTypologyRegistry();
     const def = { type: "urn:probe", renderable: false, holds: "content", summary: "x" } as const;
     reg.register("probe", def);
     expect(() => reg.register("probe", def)).not.toThrow();
-    expect(() => reg.register("probe", { ...def, holds: "state" })).toThrow(GraphKindConflictError);
+    expect(() => reg.register("probe", { ...def, holds: "state" })).toThrow(GraphTypologyConflictError);
     // ...while prose differing is still a diamond: `summary` is descriptive.
     expect(() => reg.register("probe", { ...def, summary: "worded differently" })).not.toThrow();
   });
 
-  it("every registered kind is a distinct GraphKind individual", () => {
-    const names = defaultGraphKinds.names();
-    const iris = names.map((n) => graphKindIri(n, defaultGraphKinds.get(n)));
+  it("every registered kind is a distinct GraphTypology individual", () => {
+    const names = defaultGraphTypologies.names();
+    const iris = names.map((n) => graphTypologyIri(n, defaultGraphTypologies.get(n)));
     expect(new Set(iris).size).toBe(names.length);
   });
 });
@@ -399,7 +399,7 @@ describe("materialiseDirectories", () => {
   ): ResolvedDirectory => ({
     id,
     path,
-    graphKinds: ["kg"],
+    graphTypologies: ["kg"],
     declaredBy: "test",
     absPath: path,
     own: true,
@@ -416,13 +416,13 @@ describe("materialiseDirectories", () => {
   describe("an inherited WORKING STORE is reproduced; inherited content is not (option A)", () => {
     // Inheritance is automatic since 2026-09-30 (owner: "make dependents:
     // reproduce automatic behaviour so don't need it"). Whether a dependent
-    // gets its own copy is read from the graph kind: a process WRITES a
+    // gets its own copy is read from the graph typology: a process WRITES a
     // `state` store and REBUILDS a `derived` one, and that process runs in the
     // dependent too. Authored content is never created empty — the `dh4f` shape.
     test("an inherited state store (uploads) is created in the dependent", () => {
       const root = tmpRoot();
       const out = materialiseDirectories(
-        [resolved("uploads", "uploads/", { own: false, graphKinds: ["uploads"] })],
+        [resolved("uploads", "uploads/", { own: false, graphTypologies: ["uploads"] })],
         root,
       );
       expect(existsSync(join(root, "uploads"))).toBe(true);
@@ -432,7 +432,7 @@ describe("materialiseDirectories", () => {
     test("an inherited content subgraph (schemas) is not created", () => {
       const root = tmpRoot();
       const out = materialiseDirectories(
-        [resolved("schemas", "schemas/", { own: false, graphKinds: ["schemas"] })],
+        [resolved("schemas", "schemas/", { own: false, graphTypologies: ["schemas"] })],
         root,
       );
       expect(existsSync(join(root, "schemas"))).toBe(false);
@@ -442,7 +442,7 @@ describe("materialiseDirectories", () => {
     test("an inherited repository-scoped entry is not created — it has one location", () => {
       const root = tmpRoot();
       const out = materialiseDirectories(
-        [resolved("beans", "beans/", { own: false, scope: "repository", graphKinds: ["beans"] })],
+        [resolved("beans", "beans/", { own: false, scope: "repository", graphTypologies: ["beans"] })],
         root,
       );
       expect(out).toEqual([]);
@@ -507,7 +507,7 @@ describe("materialiseDirectories", () => {
         resolved("library", "library/", {
           declaredBy: "folio-assist-core",
           own: false,
-          graphKinds: ["library"],
+          graphTypologies: ["library"],
           absPath: join(depCheckout, "library"),
         }),
       ],
@@ -552,7 +552,7 @@ describe("materialiseDirectories", () => {
     // call their entries.
     const dirs = resolveDirectories([{ name: "folio-assistant", root: INSTANCE_ROOT, own: true }]);
     expect(dirs.map((d) => d.id)).toContain("uploads");
-    const libraries = dirs.filter((d) => d.graphKinds.includes("library"));
+    const libraries = dirs.filter((d) => d.graphTypologies.includes("library"));
     expect(libraries.length, "no library graph reachable from the platform root").toBeGreaterThan(0);
 
     // SEVERAL, and that is the assertion. The platform declares `library` and
@@ -616,7 +616,7 @@ describe("the `kg` → `cat-harness` rename keeps old declarations working", () 
    * somebody else's repository.
    */
   it("a registry resolves the deprecated spelling to the new kind", () => {
-    const reg = new GraphKindRegistry();
+    const reg = new GraphTypologyRegistry();
     expect(reg.has("kg")).toBe(true);
     expect(reg.get("kg")).toBe(reg.get("cat-harness"));
     // And it is an alias, not a second entry: `names()` lists what EXISTS.
@@ -624,12 +624,12 @@ describe("the `kg` → `cat-harness` rename keeps old declarations working", () 
     expect(reg.names()).not.toContain("kg");
   });
 
-  it("resolveGraphKind says WHICH spelling was used, so a caller can warn", () => {
+  it("resolveGraphTypology says WHICH spelling was used, so a caller can warn", () => {
     // The deprecation has to be reportable. An alias that resolves silently
     // is an alias nobody ever removes.
-    expect(resolveGraphKind("kg")).toEqual({ kind: "cat-harness", deprecated: "kg" });
-    expect(resolveGraphKind("cat-harness")).toEqual({ kind: "cat-harness" });
-    expect(resolveGraphKind("tools")).toEqual({ kind: "tools" });
+    expect(resolveGraphTypology("kg")).toEqual({ kind: "cat-harness", deprecated: "kg" });
+    expect(resolveGraphTypology("cat-harness")).toEqual({ kind: "cat-harness" });
+    expect(resolveGraphTypology("tools")).toEqual({ kind: "tools" });
   });
 
   it("a declaration written against the OLD vocabulary still loads", () => {
@@ -637,10 +637,10 @@ describe("the `kg` → `cat-harness` rename keeps old declarations working", () 
     // instance's `harness.json` looked like before the rename.
     const old = join(TMP, "old-vocabulary");
     mkdirSync(join(old, "skills"), { recursive: true });
-    writeDeclaration(old, JSON.stringify({ name: "downstream", directories: [{ id: "kg", path: "skills/", graphKinds: ["kg"] }] }));
+    writeDeclaration(old, JSON.stringify({ name: "downstream", directories: [{ id: "kg", path: "skills/", graphTypologies: ["kg"] }] }));
     const d = readDeclaration(old);
     expect(d).toBeDefined();
-    expect(d!.directories[0]!.graphKinds).toEqual(["kg"]);
+    expect(d!.directories[0]!.graphTypologies).toEqual(["kg"]);
   });
 });
 
@@ -689,7 +689,7 @@ describe("default directories — inherit the convention, declare only the devia
     mkdirSync(join(moved, "tools"), { recursive: true });
     writeDeclaration(moved, JSON.stringify({
         name: "relocated",
-        directories: [{ id: "skills", path: "graph/knowledge/", graphKinds: ["cat-harness"] }],
+        directories: [{ id: "skills", path: "graph/knowledge/", graphTypologies: ["cat-harness"] }],
       }));
     const d = resolveDirectories([{ name: "relocated", root: moved, own: true }]);
     expect(d.find((x) => x.id === "skills")!.path).toBe("graph/knowledge/");
@@ -711,9 +711,9 @@ describe("default directories — inherit the convention, declare only the devia
     // `folio` is CORE's and is registered at load; the harness cannot default
     // a directory to a kind it has never heard of, or `readDeclaration` would
     // refuse its own defaults.
-    const bare = new GraphKindRegistry();
+    const bare = new GraphTypologyRegistry();
     for (const d of DEFAULT_DIRECTORIES) {
-      for (const g of d.graphKinds) expect(bare.has(g)).toBe(true);
+      for (const g of d.graphTypologies) expect(bare.has(g)).toBe(true);
     }
   });
 });
@@ -736,7 +736,7 @@ describe("the scope trap", () => {
     try {
       // The content is at the REPOSITORY root; the entry omits `scope`.
       const dirs = [
-        { id: "shared", path: "shared/", graphKinds: ["beans"], declaredBy: "(t)", absPath: "", own: true },
+        { id: "shared", path: "shared/", graphTypologies: ["beans"], declaredBy: "(t)", absPath: "", own: true },
       ] as unknown as Parameters<typeof materialiseDirectories>[0];
       expect(() => materialiseDirectories(dirs, instance)).toThrow(/scope/);
       // ...and it did not create the twin on the way to throwing.
@@ -754,7 +754,7 @@ describe("the scope trap", () => {
     mkdirSync(instance, { recursive: true });
     try {
       const dirs = [
-        { id: "own", path: "own/", graphKinds: ["beans"], declaredBy: "(t)", absPath: "", own: true },
+        { id: "own", path: "own/", graphTypologies: ["beans"], declaredBy: "(t)", absPath: "", own: true },
       ] as unknown as Parameters<typeof materialiseDirectories>[0];
       const out = materialiseDirectories(dirs, instance);
       expect(out[0]?.created).toBe(true);
@@ -792,8 +792,8 @@ describe("directoryForGraph refuses an ambiguous kind rather than picking one", 
     writeDeclaration(root, JSON.stringify({
         name: "amb",
         directories: [
-          { id: "first", path: "a/", graphKinds: ["schemas", "cat-harness"] },
-          { id: "second", path: "b/", graphKinds: ["cat-harness"] },
+          { id: "first", path: "a/", graphTypologies: ["schemas", "cat-harness"] },
+          { id: "second", path: "b/", graphTypologies: ["cat-harness"] },
         ],
       }));
     return root;
@@ -879,8 +879,8 @@ describe("a nested declaration is named by its KIND, not by its directory", () =
    * finding somewhere else.
    *
    * The owner settled the general rule on 2026-09-20 — each type declares its
-   * own filename — and `GraphKindDef.declarationFile` is that rule at the
-   * graph-kind level.
+   * own filename — and `GraphTypologyDef.declarationFile` is that rule at the
+   * graph-typology level.
    */
   function withNested(dirPath: string, fileName: string): string {
     const root = mkdtempSync(join(tmpdir(), "nested-"));
@@ -890,12 +890,12 @@ describe("a nested declaration is named by its KIND, not by its directory", () =
       join(dir, fileName),
       JSON.stringify({
         name: "n",
-        directories: [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }],
+        directories: [{ id: "defs", path: "defs", graphTypologies: ["bean-defs"] }],
       }),
     );
     writeDeclaration(root, JSON.stringify({
         name: "n",
-        directories: [{ id: "beans", path: `${dirPath}/`, graphKinds: ["beans"] }],
+        directories: [{ id: "beans", path: `${dirPath}/`, graphTypologies: ["beans"] }],
       }));
     return root;
   }
@@ -932,9 +932,9 @@ describe("a nested declaration is named by its KIND, not by its directory", () =
       mkdirSync(join(root, "qa"), { recursive: true });
       writeFileSync(
         join(root, "qa", "qa.json"),
-        JSON.stringify({ name: "n", directories: [{ id: "x", path: "x", graphKinds: ["health"] }] }),
+        JSON.stringify({ name: "n", directories: [{ id: "x", path: "x", graphTypologies: ["health"] }] }),
       );
-      writeDeclaration(root, JSON.stringify({ name: "n", directories: [{ id: "qa", path: "qa/", graphKinds: ["qa"] }] }));
+      writeDeclaration(root, JSON.stringify({ name: "n", directories: [{ id: "qa", path: "qa/", graphTypologies: ["qa"] }] }));
       const decl = readDeclaration(root)!;
       expect([...declaredKinds(root, decl)].sort()).toEqual(["health", "qa"]);
     } finally {
@@ -951,8 +951,8 @@ describe("a nested declaration is named by its KIND, not by its directory", () =
     // nothing, which is the vacuous-assertion shape this repository keeps
     // paying for.
     expect({
-      beans: defaultGraphKinds.get("beans")?.declarationFile,
-      todos: defaultGraphKinds.get("todos")?.declarationFile,
+      beans: defaultGraphTypologies.get("beans")?.declarationFile,
+      todos: defaultGraphTypologies.get("todos")?.declarationFile,
     }).toEqual({ beans: BEAN_GRAPH_FILE, todos: TODO_GRAPH_FILE });
     expect(BEAN_GRAPH_FILE).toBe("beans.json");
     expect(TODO_GRAPH_FILE).toBe("todos.json");
@@ -1090,13 +1090,13 @@ describe("instanceRootsIn — discovered, never listed", () => {
   });
 });
 
-describe("`graphKinds` was `graphs` until 2026-09-21, and the old key still reads", () => {
+describe("`graphTypologies` was `graphs` until 2026-09-21, and the old key still reads", () => {
   // WHY AN ALIAS RATHER THAN A SWEEP. Every in-tree declaration was migrated by
   // the commit that renamed the field, so none of this fires here. A DOWNSTREAM
   // folio's declaration was not, and `readDeclaration` throws on a
   // present-but-unreadable declaration rather than falling back — so without the
   // alias an unmigrated folio stops resolving its own directories on upgrade.
-  // Same failure `GRAPH_KIND_ALIASES` prevents one layer down, for the same
+  // Same failure `GRAPH_TYPOLOGY_ALIASES` prevents one layer down, for the same
   // kind of rename.
   const base = { id: "voices", path: "voices/" } as const;
 
@@ -1104,25 +1104,25 @@ describe("`graphKinds` was `graphs` until 2026-09-21, and the old key still read
     ["GraphNodeDirectorySchema", GraphNodeDirectorySchema],
     ["ContentDirectorySchema", ContentDirectorySchema],
   ] as const) {
-    it(`${name} reads a legacy \`graphs\` key as \`graphKinds\``, () => {
+    it(`${name} reads a legacy \`graphs\` key as \`graphTypologies\``, () => {
       const r = schema.safeParse({ ...base, graphs: ["voices"] });
       expect(r.success).toBe(true);
-      if (r.success) expect((r.data as { graphKinds: string[] }).graphKinds).toEqual(["voices"]);
+      if (r.success) expect((r.data as { graphTypologies: string[] }).graphTypologies).toEqual(["voices"]);
     });
 
     it(`${name} takes the canonical key unchanged`, () => {
-      const r = schema.safeParse({ ...base, graphKinds: ["voices"] });
+      const r = schema.safeParse({ ...base, graphTypologies: ["voices"] });
       expect(r.success).toBe(true);
-      if (r.success) expect((r.data as { graphKinds: string[] }).graphKinds).toEqual(["voices"]);
+      if (r.success) expect((r.data as { graphTypologies: string[] }).graphTypologies).toEqual(["voices"]);
     });
 
-    it(`${name} lets \`graphKinds\` WIN when a declaration carries both`, () => {
+    it(`${name} lets \`graphTypologies\` WIN when a declaration carries both`, () => {
       // Deliberately not a merge. Two spellings that disagree is the one case
       // where guessing which is current would be worse than either answer, so
       // the canonical key is taken and the legacy one ignored.
-      const r = schema.safeParse({ ...base, graphs: ["stale"], graphKinds: ["voices"] });
+      const r = schema.safeParse({ ...base, graphs: ["stale"], graphTypologies: ["voices"] });
       expect(r.success).toBe(true);
-      if (r.success) expect((r.data as { graphKinds: string[] }).graphKinds).toEqual(["voices"]);
+      if (r.success) expect((r.data as { graphTypologies: string[] }).graphTypologies).toEqual(["voices"]);
     });
   }
 
@@ -1137,7 +1137,7 @@ describe("`graphKinds` was `graphs` until 2026-09-21, and the old key still read
 describe("a directory declares the theme it renders on (owner, 2026-09-20)", () => {
   it("is optional — absent means the instance's own theme", () => {
     const r = ContentDirectorySchema.safeParse({
-      id: "x", path: "x/", graphKinds: ["cat-harness"],
+      id: "x", path: "x/", graphTypologies: ["cat-harness"],
     });
     expect(r.success).toBe(true);
     if (r.success) expect(r.data.theme).toBeUndefined();
@@ -1146,7 +1146,7 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
   it("refuses an empty theme — absent and blank are different claims", () => {
     expect(
       ContentDirectorySchema.safeParse({
-        id: "x", path: "x/", graphKinds: ["cat-harness"], theme: "",
+        id: "x", path: "x/", graphTypologies: ["cat-harness"], theme: "",
       }).success,
     ).toBe(false);
   });
@@ -1224,8 +1224,8 @@ describe("ownDirectoryById — two entries, one path, different scopes", () => {
 
   test("picks the instance-scoped entry over a repository-scoped one at the same path", () => {
     const root = tree([
-      { id: "root-docs", path: "docs/", scope: "repository", graphKinds: ["docs"] },
-      { id: "docs", path: "docs/", graphKinds: ["docs"] },
+      { id: "root-docs", path: "docs/", scope: "repository", graphTypologies: ["docs"] },
+      { id: "docs", path: "docs/", graphTypologies: ["docs"] },
     ]);
     expect(ownDirectoryById(root, DIR, "NOPE")).toBe(join(root, DIR));
   });
@@ -1234,7 +1234,7 @@ describe("ownDirectoryById — two entries, one path, different scopes", () => {
     // The falsifier. If the scope filter is dropped, this returns the entry
     // and the caller silently resolves against the wrong root — which is the
     // failure mode, not an exception.
-    const root = tree([{ id: "docs", path: "docs/", scope: "repository", graphKinds: ["docs"] }]);
+    const root = tree([{ id: "docs", path: "docs/", scope: "repository", graphTypologies: ["docs"] }]);
     expect(ownDirectoryById(root, "docs", "fallback")).toBe(join(root, "fallback"));
   });
 
@@ -1255,7 +1255,7 @@ describe("resolveDirectories — from-within declarations", () => {
       JSON.stringify({
         name: "fw",
         directories: declareSkills
-          ? [{ id: "skills", path: "skills/", graphKinds: ["skills"] }]
+          ? [{ id: "skills", path: "skills/", graphTypologies: ["skills"] }]
           : [],
       }),
     );
@@ -1264,7 +1264,7 @@ describe("resolveDirectories — from-within declarations", () => {
       JSON.stringify({
         name: "fw-skills",
         topics: [],
-        directories: [{ id: "voices", path: "voices", graphKinds: ["voices"], subgraph: true }],
+        directories: [{ id: "voices", path: "voices", graphTypologies: ["voices"], subgraph: true }],
       }),
     );
     return root;

@@ -4,7 +4,7 @@ description: >-
   Draw any graph in a harness (schemas, processes, a paper's block graph, a
   Lean proof's dependencies, a detangle partition) so the picture is derived,
   checkable and readable. Ten rules learned on the UML overview, which engine
-  to lay a graph out with and why, and how each graph kind here applies them.
+  to lay a graph out with and why, and how each graph typology here applies them.
 ---
 
 # Graph rendering: one set of rules for every drawn graph
@@ -101,7 +101,7 @@ a different graph.
 
 | graph | source | groups | edge kinds | renderer today | owes |
 |---|---|---|---|---|---|
-| **schemas** | graph-kind registry, Zod schemas | `<instance>/<sub-graph>` | composition; field-carried vs declared elsewhere | `gen-uml-overview.ts`, `gen-object-model-uml.ts` | meets all ten |
+| **schemas** | graph-typology registry, Zod schemas | `<instance>/<sub-graph>` | composition; field-carried vs declared elsewhere | `gen-uml-overview.ts`, `gen-object-model-uml.ts` | meets all ten |
 | **processes** | `.bpmn` files | pools and lanes | sequence, message, call | `render-bpmn.ts` (stored layout) | rule 6 (orientation) does not apply: the author placed it |
 | **paper blocks** and **Lean proofs** | `buildContentGraph` in `content/pipeline/content-graph.ts`; status from `proof-objects.json` | chapters | `editorial` (`uses[]`, `interprets`), solid, vs `formal` (Lean `type` / `value`), dashed purple | `gen-content-graph-uml.ts` (Tool `content-graph-uml`), run from a folio | meets rules 1 to 8. Rule 9 waits on a folio page to show it; rule 10 on detangle scanning a paper |
 | **detangle partition** | the sidecars under `detangleResultsDir` | detangle groups | enforced / recorded / prose | numbers only; the UML pages show them (rule 10) | a drawing of the cross-group edges themselves |

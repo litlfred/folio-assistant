@@ -24,7 +24,7 @@ import {
 import {
   INSTANCE_README_ROLE,
   owesVisualiser,
-  GraphKindRegistry,
+  GraphTypologyRegistry,
   resolveCoveragePath,
   siteDirFor,
 } from "../../../cat-harness/schemas/cat-harness";
@@ -43,7 +43,7 @@ import { writeDeclaration } from "../../../cat-harness/test/support/instance-fix
  */
 function instance(
   coverage: unknown,
-  opts: { name?: string; realTargets?: string[]; graphKinds?: string[] } = {},
+  opts: { name?: string; realTargets?: string[]; graphTypologies?: string[] } = {},
 ): { root: string; cleanup: () => void } {
   const base = mkdtempSync(join(tmpdir(), "coverage-"));
   const root = join(base, opts.name ?? "inst");
@@ -57,7 +57,7 @@ function instance(
   // directory: a fixture asking for `skill: "x"` gets a skill file whose
   // front matter names the directory's kinds, and the directory names none.
   const { skill, docs, ...rest } = (coverage ?? {}) as Record<string, unknown>;
-  const kinds = opts.graphKinds ?? ["cat-harness"];
+  const kinds = opts.graphTypologies ?? ["cat-harness"];
   // Likewise the docs page (#1168 B7c): a fixture asking for `docs: "x.md"`
   // gets that page declaring the directory's kinds under `documents:`. Only
   // when the page is meant to exist — a fixture naming a page it never
@@ -72,7 +72,7 @@ function instance(
     mkdirSync(join(root, "skills"), { recursive: true });
     writeFileSync(
       join(root, "skills", `${skill}.md`),
-      `---\nname: ${skill}\ngraph-kinds:\n${kinds.map((k) => `  - ${k}\n`).join("")}---\n# ${skill}\n`,
+      `---\nname: ${skill}\ngraph-typologies:\n${kinds.map((k) => `  - ${k}\n`).join("")}---\n# ${skill}\n`,
     );
   }
   writeDeclaration(root, JSON.stringify({
@@ -81,7 +81,7 @@ function instance(
         {
           id: "thing",
           path: "thing/",
-          graphKinds: kinds,
+          graphTypologies: kinds,
           ...(coverage === undefined ? {} : { coverage: rest }),
         },
       ],
@@ -288,7 +288,7 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
   it("a kind that OWES a visualiser and has none is MAJOR", () => {
     const { root, cleanup } = instance(
       { docs: "doc.md", skill: "some-skill" },
-      { realTargets: ["doc.md"], graphKinds: ["beans"] },
+      { realTargets: ["doc.md"], graphTypologies: ["beans"] },
     );
     const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
     expect(viz).toHaveLength(1);
@@ -302,7 +302,7 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
     // unmet obligation would demand a second rendering of the same thing.
     const { root, cleanup } = instance(
       { docs: "doc.md", skill: "some-skill" },
-      { realTargets: ["doc.md"], graphKinds: ["docs"] },
+      { realTargets: ["doc.md"], graphTypologies: ["docs"] },
     );
     const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
     expect(viz).toHaveLength(1);
@@ -322,7 +322,7 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
     for (const kind of ["beans", "fsh-guts"]) {
       const { root, cleanup } = instance(
         { docs: "doc.md", skill: "some-skill" },
-        { realTargets: ["doc.md"], graphKinds: [kind] },
+        { realTargets: ["doc.md"], graphTypologies: [kind] },
       );
       const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
       expect({ kind, severity: viz[0]?.severity }).toEqual({ kind, severity: "major" });
@@ -332,7 +332,7 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
 
   it("an UNKNOWN kind owes one by default — tested on the function, not a fixture", () => {
     // Tested directly because it cannot be reached through a declaration: the
-    // schema rejects an unregistered graph kind, so `auditInstance` never sees
+    // schema rejects an unregistered graph typology, so `auditInstance` never sees
     // one. The branch is still the load-bearing default — a kind nobody has
     // classified must not escape the obligation by being unmentioned — and a
     // test routed through a fixture would have quietly asserted nothing.
@@ -359,7 +359,7 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
     // is a claim nobody has checked, so this builds the case that separates
     // them — a renderable kind that is not content — rather than leaving the
     // line as untested intent.
-    const registry = new GraphKindRegistry({
+    const registry = new GraphTypologyRegistry({
       "live-board": {
         renderable: true,
         holds: "state",
@@ -377,7 +377,7 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
     // would pass all four tests above.
     const { root, cleanup } = instance(
       { visualiser: "viz.html", docs: "doc.md", skill: "some-skill", serialisations: "thing.jsonld" },
-      { realTargets: ["viz.html", "doc.md", "thing.jsonld"], graphKinds: ["beans"] },
+      { realTargets: ["viz.html", "doc.md", "thing.jsonld"], graphTypologies: ["beans"] },
     );
     expect(auditInstance(root).findings.filter((f) => f.criterion === "visualiser")).toHaveLength(0);
     cleanup();
@@ -612,7 +612,7 @@ describe("coverage.* resolves against the REPOSITORY root and nothing else — b
           {
             id: "thing",
             path: "thing/",
-            graphKinds: ["cat-harness"],
+            graphTypologies: ["cat-harness"],
             coverage: { visualiser: "viz.html" },
           },
         ],
@@ -750,11 +750,11 @@ function processInstance(opts: { process?: string; withDiagram?: boolean }): {
     JSON.stringify({
       name: "inst",
       directories: [
-        { id: "processes", path: "processes/", graphKinds: ["processes"] },
+        { id: "processes", path: "processes/", graphTypologies: ["processes"] },
         {
           id: "thing",
           path: "thing/",
-          graphKinds: ["cat-harness"],
+          graphTypologies: ["cat-harness"],
           ...(opts.process === undefined ? {} : { coverage: { process: opts.process } }),
         },
       ],

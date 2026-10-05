@@ -16,7 +16,7 @@
  * rule on harnesses that instantiate a director like fsh-guts, docs/ library/
  * need to create a visualize for them."*
  *
- * So a mount point is keyed on the **graph kind**: a harness that instantiates
+ * So a mount point is keyed on the **graph typology**: a harness that instantiates
  * a directory gets a visualiser for it, and that visualiser lives at
  *
  *     <base-url>/<kind>/<instance>/
@@ -108,7 +108,7 @@ import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js"
 import { instanceDirectories, declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
 import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js";
 import { navMarkFields, type HarnessMark } from "./lib/harness-mark.js";
-import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
+import { graphTypologyRowDecor } from "./lib/graph-typology-nav.js";
 import { kindTitle } from "./lib/nav-label.js";
 import { viewersOf } from "./viewer-declarations.js";
 
@@ -279,14 +279,14 @@ export function toRootFor(route: string, fileUnder: string): string {
 export function publishedDocsPrefix(repo: string, built: string): string | undefined {
   const decl = declarationPathIn(join(repo, built));
   if (decl === undefined || !existsSync(decl)) return undefined;
-  let d: { directories?: { path?: string; graphKinds?: string[]; scope?: string }[] };
+  let d: { directories?: { path?: string; graphTypologies?: string[]; scope?: string }[] };
   try {
     d = JSON.parse(readFileSync(decl, "utf-8"));
   } catch {
     return undefined;
   }
   const entry = (d.directories ?? []).find(
-    (x) => x.path && x.scope !== "repository" && (x.graphKinds ?? []).includes("docs"),
+    (x) => x.path && x.scope !== "repository" && (x.graphTypologies ?? []).includes("docs"),
   );
   return entry === undefined ? undefined : join(built, entry.path!);
 }
@@ -389,7 +389,7 @@ export function declaredGraphs(
 ): NavItem[] {
   const decl = declarationPathIn(join(REPO, instanceDirName));
   if (decl === undefined || !existsSync(decl)) return [];
-  let d: { directories?: { graphKinds?: string[] }[] };
+  let d: { directories?: { graphTypologies?: string[] }[] };
   try {
     // Own entries AND those declared from within (bean `cmsl`): `voices` is
     // declared in `skills/skills.json` now, and the raw file dropped it from
@@ -408,7 +408,7 @@ export function declaredGraphs(
   // finding 6. Read from the same `harness.json` as the rows' hrefs.
   const who = harnessName ?? instanceDirName;
   for (const entry of d.directories ?? []) {
-    for (const kind of entry.graphKinds ?? []) {
+    for (const kind of entry.graphTypologies ?? []) {
       if (seen.has(kind)) continue;
       seen.add(kind);
       const fallback = site.get(kind);
@@ -426,7 +426,7 @@ export function declaredGraphs(
       // clicked the wrong one.
       out.push({
         label: fallback?.label ?? kindTitle(kind),
-        ...graphKindRowDecor(kind, who),
+        ...graphTypologyRowDecor(kind, who),
         ...(href ? { href } : {}),
         ...(note ? { note } : {}),
       });
@@ -1061,7 +1061,7 @@ export function mountRoutes(built: string): string[] {
 interface DeclaredEntry {
   id?: string;
   path?: string;
-  graphKinds?: string[];
+  graphTypologies?: string[];
   instanceRoot?: boolean;
   kindRouteRedirect?: boolean;
   composed?: boolean;
@@ -1151,7 +1151,7 @@ function mountable(): Mountable[] {
     // rather than re-derived later: the declaration is the only place that
     // knows, and a second answer is free to disagree with it.
     const visualiser = viewerOf({ instanceDir, entry });
-    for (const kind of entry.graphKinds ?? []) {
+    for (const kind of entry.graphTypologies ?? []) {
       out.push({
         name,
         kind,
@@ -1383,7 +1383,7 @@ export function kindRouteRedirects(docsPrefix: string | undefined): { redirects:
       );
       continue;
     }
-    for (const kind of x.entry.graphKinds ?? []) redirects.push({ route: `${kind}/${x.name}`, target });
+    for (const kind of x.entry.graphTypologies ?? []) redirects.push({ route: `${kind}/${x.name}`, target });
   }
   return { redirects: redirects.sort((a, b) => a.route.localeCompare(b.route)), problems };
 }

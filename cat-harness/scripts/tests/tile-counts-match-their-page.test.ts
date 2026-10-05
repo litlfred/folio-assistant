@@ -35,7 +35,7 @@ import { join } from "node:path";
 
 import { readTileCounts } from "../../schemas/tile-count.ts";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
-import "../../schemas/folio-graph-kind.js";
+import "../../schemas/folio-graph-typology.js";
 
 /**
  * Resolved, never written down. `check:site-root` forbids the literal in

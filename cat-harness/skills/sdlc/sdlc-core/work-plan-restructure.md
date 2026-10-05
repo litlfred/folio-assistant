@@ -9,7 +9,7 @@ description: >
   its own inverse, the owner approves it by class or by row, and the apply is
   batched and reversible. Scrap, never delete. Read before changing the parent,
   type or status of more than a handful of beans at once.
-graph-kinds:
+graph-typologies:
   - beans
 ---
 

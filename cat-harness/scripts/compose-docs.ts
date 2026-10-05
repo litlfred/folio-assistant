@@ -130,7 +130,7 @@ interface DeclEntry {
   id?: string;
   path?: string;
   scope?: string;
-  graphKinds?: string[];
+  graphTypologies?: string[];
 }
 
 /**
@@ -187,7 +187,7 @@ export function docsLayers(repo = REPO): { layers: DocsLayer[]; missing: DocsLay
   ];
   const found: DocsLayer[] = [];
   for (const e of entries) {
-    if (!e.path || !e.id || !(e.graphKinds ?? []).includes("docs")) continue;
+    if (!e.path || !e.id || !(e.graphTypologies ?? []).includes("docs")) continue;
     const repositoryScoped = e.scope === "repository";
     const root = repositoryScoped ? repo : join(repo, "cat-harness");
     found.push({ id: e.id, dir: join(root, e.path), repositoryScoped });
@@ -200,7 +200,7 @@ export function docsLayers(repo = REPO): { layers: DocsLayer[]; missing: DocsLay
   if (rootDeclPath !== undefined && existsSync(rootDeclPath)) {
     const rootDecl = JSON.parse(readFileSync(rootDeclPath, "utf-8")) as { directories?: DeclEntry[] };
     for (const e of rootDecl.directories ?? []) {
-      if (!e.path || !e.id || !(e.graphKinds ?? []).includes("docs")) continue;
+      if (!e.path || !e.id || !(e.graphTypologies ?? []).includes("docs")) continue;
       if (found.some((f) => f.id === e.id)) continue;
       found.push({ id: e.id, dir: join(repo, e.path), repositoryScoped: true });
     }

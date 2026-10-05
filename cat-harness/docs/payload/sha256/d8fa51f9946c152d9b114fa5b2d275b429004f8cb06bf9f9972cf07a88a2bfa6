@@ -48,7 +48,7 @@ below.
   change, not the change.** A `feat:` commit that removed something a
   consumer uses gives a minor bump and a broken consumer.
 - **From the declared surface**: diff what the package exports (for an
-  instance, the graph `kg-export` walks: graph kinds, skill ids, tool ids,
+  instance, the graph `kg-export` walks: graph typologies, skill ids, tool ids,
   block kinds) between the last tag and `HEAD`. A removal is major; an
   addition is minor; neither is patch. This is the method
   `docs/proposals/instance-versioning.md` §4.1 proposes for instances.

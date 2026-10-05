@@ -72,7 +72,7 @@ Five questions, in this order. The worked call for each term is in
 
 1. **Does the fact belong in the graph at all?** Five of the thirty-four were
    DENORMALISED copies of links already present — `implementsSkillNames`,
-   `satisfiesSkillNames`, `graphKinds`, `packagePaths`, `laneName`. Removed
+   `satisfiesSkillNames`, `graphTypologies`, `packagePaths`, `laneName`. Removed
    rather than declared, once every one of those links was shown to resolve for
    every node. A name beside the link that reaches it is a second answer that
    can go stale; what a consumer must never have to do is recover a fact by
@@ -276,7 +276,7 @@ instance's declared directories become nodes in `<stub>.jsonld`, so declaring
 rule has no destination — put its id, path and description into the published
 document.
 
-`UNPUBLISHED_GRAPH_KINDS` in `schemas/cat-harness.ts` is the one list, read by
+`UNPUBLISHED_GRAPH_TYPOLOGIES` in `schemas/cat-harness.ts` is the one list, read by
 every emitter, so two filters cannot disagree about what is excluded.
 
 **Three emitters had to be filtered, and the third was found only because the
@@ -284,7 +284,7 @@ first two were not enough:**
 
 | emitter | what leaked |
 |---|---|
-| graph kinds | the `fsh-guts` GraphKind node |
+| graph typologies | the `fsh-guts` GraphTypology node |
 | declared directories | the Directory node — id, path, description — and its `holdsGraph` edge |
 | **skills** | `skill/fsh-guts`, plus the `declaresSkill` edge from `package/folio-core` |
 
@@ -329,7 +329,7 @@ is how a merged graph acquires contradictory statements about the same node.
 
 ## The graph carries its own vocabulary
 
-Graph kinds are **nodes**, not just TypeScript. Follow `holdsGraph` from a
+Graph typologies are **nodes**, not just TypeScript. Follow `holdsGraph` from a
 directory and you arrive at a node saying what that kind holds and whether it
 renders. Without them the vocabulary needed to interpret the document lives
 only in code the consumer cannot fetch — which is the difference between a
@@ -375,7 +375,7 @@ cannot see the code that made the assumption look reasonable. See
 [`crdm-requirements-workflow`](../../sdlc/crdm/crdm-requirements-workflow.md) §"Consumer burden
 is a requirement".
 
-**Vocabulary nodes get no `alternateOf`.** Graph kinds are minted under the
+**Vocabulary nodes get no `alternateOf`.** Graph typologies are minted under the
 namespace, not the document, so they are byte-identical in both graphs. A
 blanket loop gave them one pointing at a canonical fragment that does not
 exist — a generated broken link is still a broken link, and a test now pins it.
@@ -977,7 +977,7 @@ Follow the `slice-sqlite-publish` process. In short:
 
 1. **Decide it is in this graph.** The `kg` graph holds skills, processes,
    roles, capabilities and the directory declaration. **Beans are not in it** —
-   `beans/` is its own graph kind with its own nodes (`defs`, `workflows`), and
+   `beans/` is its own graph typology with its own nodes (`defs`, `workflows`), and
    folding the work plan into the KG re-merges exactly what was separated.
 2. **Mint its `@id` with `makeIri`, and give it an `@type`.** Both are asserted
    by test. Never hand-build an IRI: `makeIri` is what keeps every node a
@@ -1015,6 +1015,6 @@ publish.
 > manifest, not the graph: measured 2026-09-18 it reported **23** skills
 > against 126 on disk, because it reads only `.claude/skills/local/*.json`.
 > Package skills appear in it as bare name lists with no instruction body, and
-> processes, the graph-kind registry and the declaration are absent entirely.
+> processes, the graph-typology registry and the declaration are absent entirely.
 > It is also uncommitted and published nowhere. The two coexist; only one is
 > the graph.

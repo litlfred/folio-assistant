@@ -34,7 +34,7 @@
  * for "why not", which is the owner's call, so it is reported, not graded.
  *
  * @module cat-harness/scripts/check-derived-from
- * @covers none — it judges directory declarations, which no graph kind holds
+ * @covers none — it judges directory declarations, which no graph typology holds
  */
 import { existsSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
@@ -193,7 +193,7 @@ export function readTree(repoRoot = REPO_ROOT): Inst[] {
       dirs: (decl?.directories ?? []).map((d, index) => ({
         id: d.id,
         index,
-        derived: d.graphKinds.some((k) => graphLayer(k) === "derived"),
+        derived: d.graphTypologies.some((k) => graphLayer(k) === "derived"),
         ...(d.derivedFrom ? { derivedFrom: d.derivedFrom } : {}),
         path: `${relative(repoRoot, join(i.root, d.path)).replace(/\/$/, "")}/`,
         ...(d.writer ? { writer: d.writer } : {}),

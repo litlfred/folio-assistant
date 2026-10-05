@@ -37,7 +37,7 @@ beforeAll(() => {
   writeDeclaration(demo, {
     name: "demo",
     version: "1.2.3",
-    directories: [{ id: "computations", path: "computations/", graphKinds: ["skills"] }],
+    directories: [{ id: "computations", path: "computations/", graphTypologies: ["skills"] }],
   });
   // An IG-style instance whose prefix is handed to Jekyll / the IG Publisher.
   const ig = join(repo, "ig");

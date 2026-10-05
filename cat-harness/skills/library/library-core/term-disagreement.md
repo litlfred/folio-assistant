@@ -9,7 +9,7 @@ description: >
   decision at all, how to choose, what each outcome writes and where, and
   what is NOT this skill (two judges disagreeing about a mapping).
 consulted: true
-graph-kinds:
+graph-typologies:
   - glossary
 ---
 

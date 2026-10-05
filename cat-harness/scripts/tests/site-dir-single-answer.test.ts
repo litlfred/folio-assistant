@@ -8,7 +8,7 @@
  * `docs/<stub>/` for the repo split moved all five at once; nothing stopped a
  * sixth appearing the next day.
  *
- * This is the same shape as `graph-kind-docs.test.ts` (bean `5o3a`): a fact
+ * This is the same shape as `graph-typology-docs.test.ts` (bean `5o3a`): a fact
  * that lives in code and in prose drifts unless something crosses between
  * them. Here both sides are code, which makes it cheaper, not less necessary.
  *

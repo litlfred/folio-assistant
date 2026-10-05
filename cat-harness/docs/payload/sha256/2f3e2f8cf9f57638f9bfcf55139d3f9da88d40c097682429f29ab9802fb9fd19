@@ -120,11 +120,11 @@ double run when lifting this step.
 Every one of these scripts instantiates a `QAReporter` and writes a phase report
 — `successes`, `warnings`, `errors`, `files_processed`, `files_expected`,
 `files_missing`, plus a summary with counts and a completion timestamp. **The
-data for the QA-report graph kind already exists and is thrown away**, because
+data for the QA-report graph typology already exists and is thrown away**, because
 nothing downstream read it.
 
 **It has somewhere to go now.** The owner ruled for the evidence-led option on
-2026-09-22 and `qa-report/v1` is registered — `schemas/qa-report.ts`, graph kind
+2026-09-22 and `qa-report/v1` is registered — `schemas/qa-report.ts`, graph typology
 `qa-report`, `holds: "state"`. The shape is whatever these scripts already emit,
 down to upstream's snake_case field names, because renaming them would insert a
 translation step between a producer we do not control and a consumer we do.

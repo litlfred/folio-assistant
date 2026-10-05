@@ -39,14 +39,14 @@
  * red is one nobody reads, which is the `ymsu` failure class the detector exists
  * to catch.
  *
- * `tools` is the graph kind: the subject is `.github/workflows/`, this harness's
+ * `tools` is the graph typology: the subject is `.github/workflows/`, this harness's
  * own CI definition, and no folio content is read. Declared rather than
  * inferred, per `3srh`.
  *
  * Usage:
  *   bun run check:bun-pin
  *
- * @covers none — .github/workflows/ is not a declared graph kind
+ * @covers none — .github/workflows/ is not a declared graph typology
  * @graphNode tool
  */
 import { readFileSync, readdirSync } from "node:fs";

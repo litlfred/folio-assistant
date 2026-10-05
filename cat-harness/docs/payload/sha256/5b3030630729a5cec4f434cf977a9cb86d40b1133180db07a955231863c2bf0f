@@ -8,7 +8,7 @@ description: >
   and never a delete candidate. Covers the treeless fetch that makes thousands
   of branches cheap, caching by tip sha, and the report's shape. Read before
   answering "which branches can go?" or "what work never landed?".
-graph-kinds:
+graph-typologies:
   - beans
 ---
 

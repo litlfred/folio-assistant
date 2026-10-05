@@ -13,7 +13,7 @@
  * depends on it (`check:partition`), and a core Tool is exactly that.
  *
  * The owner ruled **auto-discovery** (2026-09-22): every directory an instance
- * declares with graph kind `tools` is loaded, and its `tools()` export merged.
+ * declares with graph typology `tools` is loaded, and its `tools()` export merged.
  *
  * ## Why this adds no import edge
  *

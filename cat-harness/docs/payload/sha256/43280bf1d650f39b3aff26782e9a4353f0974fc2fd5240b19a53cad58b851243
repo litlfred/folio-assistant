@@ -393,8 +393,8 @@ its `.json` copy only). That is the open half of item 1's
 
 - **`fsh-guts`.** Owner, 2026-09-19: *"NEVER include fsh-guts, references to
   fsh-guts stripped out of KG before sending to publication."* The one list is
-  `UNPUBLISHED_GRAPH_KINDS` in `schemas/cat-harness.ts`. Every emitter filters
-  on it where the document is built, not at upload: `isPublishedGraphKind`,
+  `UNPUBLISHED_GRAPH_TYPOLOGIES` in `schemas/cat-harness.ts`. Every emitter filters
+  on it where the document is built, not at upload: `isPublishedGraphTypology`,
   `isPublishedDirectory` (a directory holding ANY unpublished kind),
   `isPublishedSkill` and `isPublishedSchemaModule`, plus a diagram's
   documentation prose (`publishableDocumentation`). The trashcan has its own

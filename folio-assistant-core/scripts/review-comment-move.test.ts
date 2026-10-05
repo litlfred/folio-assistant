@@ -32,7 +32,7 @@ function folio(): { root: string; fb: string; pub: string } {
   dir = mkdtempSync(join(tmpdir(), "rc-move-"));
   mkdirSync(join(dir, "todos"));
   writeFileSync(join(dir, "todos", "todos.json"), JSON.stringify({
-    name: "f", directories: [{ id: "feedback", path: "feedback", graphKinds: ["todo-feedback"] }],
+    name: "f", directories: [{ id: "feedback", path: "feedback", graphTypologies: ["todo-feedback"] }],
   }));
   const pub = join(dir, "review-comments.json");
   writeFileSync(pub, JSON.stringify(published()));
@@ -43,7 +43,7 @@ describe("where a status goes: the declared todo-feedback directory", () => {
   it("is read from the todos graph, and a graph without one is an error naming the remedy", () => {
     const f = folio();
     expect(f.fb).toBe(join(f.root, "todos", "feedback"));
-    writeFileSync(join(f.root, "todos", "todos.json"), JSON.stringify({ name: "f", directories: [{ id: "items", path: "items", graphKinds: ["todo-items"] }] }));
+    writeFileSync(join(f.root, "todos", "todos.json"), JSON.stringify({ name: "f", directories: [{ id: "items", path: "items", graphTypologies: ["todo-items"] }] }));
     expect(() => feedbackDir(join(f.root, "todos"))).toThrow(/todo-feedback/);
     expect(() => feedbackDir(join(f.root, "nowhere"))).toThrow(/declares no todos graph/);
   });

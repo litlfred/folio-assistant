@@ -8,7 +8,7 @@ description: >
   the certification table reads, and the four kg-audit criteria that judge a
   run afterwards. Read before executing a plan, re-executing a sample, or
   certifying a result.
-graph-kinds:
+graph-typologies:
   - test-plan
   - test-report
 ---

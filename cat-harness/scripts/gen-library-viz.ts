@@ -1109,7 +1109,7 @@ if (import.meta.main) {
   // ── Who references a slug — bean `jbx2`'s third ask ───────────────────
   //
   // The sources are DERIVED: every instance's own declaration, every
-  // directory it names, labelled by that directory's declared graph kind. So
+  // directory it names, labelled by that directory's declared graph typology. So
   // `catalogue` and `voices` appear because they are declared and carry the
   // field, not because this file lists them — and a new kind that starts
   // referencing slugs shows up the day it is declared.
@@ -1127,7 +1127,7 @@ if (import.meta.main) {
       for (const d of decl.directories ?? []) {
         const dir = join(inst, d.path);
         if (dir === siteDir || dir.startsWith(siteDir + "/")) continue;
-        for (const kind of d.graphKinds ?? []) sources.push({ kind, instance: decl.name ?? basename(inst), dir });
+        for (const kind of d.graphTypologies ?? []) sources.push({ kind, instance: decl.name ?? basename(inst), dir });
       }
     }
     const scan = scanLibraryRefs(sources, repo);

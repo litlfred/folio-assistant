@@ -13,7 +13,7 @@
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "fileCount": 278,
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "name": "skills",
@@ -599,7 +599,7 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/authoring/authoring-core",
           "path": "skills/authoring/authoring-core/"
@@ -812,14 +812,14 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/authoring/content-lifecycle",
           "path": "skills/authoring/content-lifecycle/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/authoring",
       "path": "skills/authoring/"
@@ -1106,7 +1106,7 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/conduct/conduct-core",
           "path": "skills/conduct/conduct-core/"
@@ -1189,14 +1189,14 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/conduct/security",
           "path": "skills/conduct/security/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/conduct",
       "path": "skills/conduct/"
@@ -1205,7 +1205,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/conventions/",
       "@type": "bootstrap:Subgraph",
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/conventions",
       "path": "skills/conventions/"
@@ -1333,7 +1333,7 @@
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/folio-core",
       "path": "skills/folio-core/"
@@ -1342,7 +1342,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/framework/",
       "@type": "bootstrap:Subgraph",
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/framework",
       "path": "skills/framework/"
@@ -1434,7 +1434,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-rendering",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph kind here applies them.",
+              "description": "Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph typology here applies them.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
@@ -1489,7 +1489,7 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/kg/graph-management",
           "path": "skills/kg/graph-management/"
@@ -1525,7 +1525,7 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uml-overview",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/vocabulary-authority"
               ],
-              "description": "How the knowledge graph is DECLARED, placed, exported, audited and published: directory conventions and graph kinds, placement, schema management, skill registration, audit coverage, kg-export and portal publication. Moved out of folio-core into the kg topic (bean 9umr, owner ruling 2026-09-30) so KG structure and use sit apart from the SDLC process skills; graph-management (restructuring) and kg-navigation (reading) are its siblings in the same topic.",
+              "description": "How the knowledge graph is DECLARED, placed, exported, audited and published: directory conventions and graph typologies, placement, schema management, skill registration, audit coverage, kg-export and portal publication. Moved out of folio-core into the kg topic (bean 9umr, owner ruling 2026-09-30) so KG structure and use sit apart from the SDLC process skills; graph-management (restructuring) and kg-navigation (reading) are its siblings in the same topic.",
               "hasManifest": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
               "name": "kg-core",
@@ -1706,7 +1706,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-requirements",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
+              "description": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph typology, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
@@ -1725,7 +1725,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-kinds",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH kind must declare. Read before naming a new instance, before adding a value to the graph-kind registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",
+              "description": "How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH kind must declare. Read before naming a new instance, before adding a value to the graph-typology registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",
               "hasIOContract": false,
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
@@ -1951,7 +1951,7 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/kg/kg-core",
           "path": "skills/kg/kg-core/"
@@ -1992,14 +1992,14 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/kg/kg-navigation",
           "path": "skills/kg/kg-navigation/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/kg",
       "path": "skills/kg/"
@@ -2126,7 +2126,7 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/library/large-datasets",
           "path": "skills/library/large-datasets/"
@@ -2393,21 +2393,21 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/library/library-core/library-ingestion/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/library/library-core/library-ingestion",
               "path": "skills/library/library-core/library-ingestion/"
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/library/library-core",
           "path": "skills/library/library-core/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/library",
       "path": "skills/library/"
@@ -2416,7 +2416,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/permissions/",
       "@type": "bootstrap:Subgraph",
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/permissions",
       "path": "skills/permissions/"
@@ -2582,7 +2582,7 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/process/process-core",
           "path": "skills/process/process-core/"
@@ -2623,7 +2623,7 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/process/raci",
           "path": "skills/process/raci/"
@@ -2928,14 +2928,14 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/process/workflow",
           "path": "skills/process/workflow/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/process",
       "path": "skills/process/"
@@ -2944,7 +2944,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/requirements/",
       "@type": "bootstrap:Subgraph",
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/requirements",
       "path": "skills/requirements/"
@@ -3092,7 +3092,7 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/sdlc/crdm",
           "path": "skills/sdlc/crdm/"
@@ -4294,7 +4294,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/sdlc/sdlc-core/coordinate/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/sdlc/sdlc-core/coordinate",
               "path": "skills/sdlc/sdlc-core/coordinate/"
@@ -4303,14 +4303,14 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/sdlc/sdlc-core/integration-watcher/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/sdlc/sdlc-core/integration-watcher",
               "path": "skills/sdlc/sdlc-core/integration-watcher/"
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/sdlc/sdlc-core",
           "path": "skills/sdlc/sdlc-core/"
@@ -4351,14 +4351,14 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/sdlc/spec-kit",
           "path": "skills/sdlc/spec-kit/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/sdlc",
       "path": "skills/sdlc/"
@@ -4367,7 +4367,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/skill-definitions/",
       "@type": "bootstrap:Subgraph",
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/skill-definitions",
       "path": "skills/skill-definitions/"
@@ -4554,7 +4554,7 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/ui/theming",
           "path": "skills/ui/theming/"
@@ -4711,7 +4711,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/incremental-render",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH KINDS rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.",
+              "description": "Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH TYPOLOGIES rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
@@ -4953,14 +4953,14 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/ui/ui-core",
           "path": "skills/ui/ui-core/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/ui",
       "path": "skills/ui/"
@@ -4973,7 +4973,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/agent-skill-authoring/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/agent-skill-authoring",
           "path": "skills/voices/agent-skill-authoring/"
@@ -4986,7 +4986,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/vendors/agent-skill-authoring-claude/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/voices/vendors/agent-skill-authoring-claude",
               "path": "skills/voices/vendors/agent-skill-authoring-claude/"
@@ -4995,7 +4995,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/vendors/agent-skill-authoring-gemini-cli/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/voices/vendors/agent-skill-authoring-gemini-cli",
               "path": "skills/voices/vendors/agent-skill-authoring-gemini-cli/"
@@ -5004,28 +5004,28 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/vendors/agent-skill-authoring-openai/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/voices/vendors/agent-skill-authoring-openai",
               "path": "skills/voices/vendors/agent-skill-authoring-openai/"
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/vendors",
           "path": "skills/voices/vendors/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/voices",
       "path": "skills/voices/"
     }
   ],
   "holdsGraph": [
-    "bootstrap:graphKind/skills"
+    "bootstrap:graphTypology/skills"
   ],
   "name": "skills",
   "path": "skills/"

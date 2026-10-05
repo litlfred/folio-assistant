@@ -84,7 +84,7 @@ export const VIEWER_DIR = join(REPO, "cat-harness/docs/lsi") + "/";
 
 export const NEED_UNITS = 100;
 export const NEED_WORDS = 20_000;
-/** Graph kinds whose files are prose a reader reads. `code`, `schemas`,
+/** Graph typologies whose files are prose a reader reads. `code`, `schemas`,
  *  `tools` and the like are indexed by their own structure, not by LSI. */
 const PROSE_KINDS = new Set(["library", "skills", "beans", "folio", "docs", "methodology", "memory", "policies", "glossary"]);
 const DEFAULT_OPTS: LsiOptions = { k: 100, weighting: "log-entropy", minDf: 2, maxDfShare: 0.5, powerIterations: 4, seed: 1990 };
@@ -115,9 +115,9 @@ function walk(dir: string, out: string[] = []): string[] {
 
 /** A library's unit is a SECTION — the chunking ingestion already produced.
  *  Everything else: one markdown file per unit. */
-export function unitsOf(absPath: string, graphKinds: string[], docs?: string[]): LsiUnit[] {
+export function unitsOf(absPath: string, graphTypologies: string[], docs?: string[]): LsiUnit[] {
   let files: string[];
-  if (graphKinds.includes("library")) {
+  if (graphTypologies.includes("library")) {
     const slugs = docs?.length ? docs : readdirSync(absPath, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name);
     // A section the library marks SPECIMEN (section-verdicts.json, bean
     // `fnqn`) is sample text, not the document speaking: indexing it teaches
@@ -147,7 +147,7 @@ export function unitsOf(absPath: string, graphKinds: string[], docs?: string[]):
 export interface GraphTarget {
   instance: string;
   id: string;
-  graphKinds: string[];
+  graphTypologies: string[];
   absPath: string;
 }
 
@@ -160,11 +160,11 @@ export function proseGraphs(): GraphTarget[] {
   for (const root of instanceRootsIn(REPO)) {
     for (const g of declaredGraphs(root)) {
       if (!g.absPath || !existsSync(g.absPath) || !statSync(g.absPath).isDirectory()) continue;
-      if (!g.graphKinds.some((k) => PROSE_KINDS.has(k))) continue;
+      if (!g.graphTypologies.some((k) => PROSE_KINDS.has(k))) continue;
       const owns = g.absPath.startsWith(root + "/") ? root.length : -1;
       const prev = byPath.get(g.absPath);
       if (prev && prev.rootLen >= owns) continue;
-      byPath.set(g.absPath, { instance: g.declaredBy, id: g.id, graphKinds: g.graphKinds, absPath: g.absPath, rootLen: owns });
+      byPath.set(g.absPath, { instance: g.declaredBy, id: g.id, graphTypologies: g.graphTypologies, absPath: g.absPath, rootLen: owns });
     }
   }
   return [...byPath.values()]
@@ -248,7 +248,7 @@ export function computeIndex(t: GraphTarget, docs?: string[], opts: LsiOptions =
   const key = !docs?.length && opts === DEFAULT_OPTS ? targetOf(t) : undefined;
   const hit = key ? computed.get(key) : undefined;
   if (hit) return hit;
-  const units = unitsOf(t.absPath, t.graphKinds, docs);
+  const units = unitsOf(t.absPath, t.graphTypologies, docs);
   const t0 = performance.now();
   const ix = buildLsi(units, opts);
   const ms = Math.round(performance.now() - t0);
@@ -367,10 +367,10 @@ export interface GraphVerdict {
  * read. `needed: false` carries the `n/a` verdict to report.
  */
 export function needOf(t: GraphTarget): { needed: false; verdict: GraphVerdict } | { needed: true; units: LsiUnit[]; words: number } {
-  const us = unitsOf(t.absPath, t.graphKinds);
+  const us = unitsOf(t.absPath, t.graphTypologies);
   const units = us.length;
   const words = us.reduce((s, u) => s + tokenize(u.text).length, 0);
-  if (t.graphKinds.some((k) => ON_DEMAND_KINDS.has(k)))
+  if (t.graphTypologies.some((k) => ON_DEMAND_KINDS.has(k)))
     return { needed: false, verdict: { result: "n/a", detail: `state graph — indexed on demand, never committed (${units} units)`, stableDetail: "state graph — indexed on demand, never committed", units, words } };
   if (!(units >= NEED_UNITS && words >= NEED_WORDS))
     return { needed: false, verdict: { result: "n/a", detail: `below threshold (${units} units, ${words} words)`, stableDetail: "below the need-an-index threshold — not judged", units, words } };
@@ -494,7 +494,7 @@ function audit(strict: boolean): number {
   for (const t of proseGraphs()) {
     const { result, detail, units, words } = graphVerdict(t);
     if (result === "fail") failing++;
-    rows.push({ instance: t.instance, graph: t.id, path: relative(REPO, t.absPath), kinds: t.graphKinds, units, words, result, detail });
+    rows.push({ instance: t.instance, graph: t.id, path: relative(REPO, t.absPath), kinds: t.graphTypologies, units, words, result, detail });
     console.log(`${result.padEnd(4)}  ${`${t.instance}/${t.id}`.padEnd(40)} ${detail}`);
   }
   const failed = (pred: (d: string) => boolean) =>
@@ -570,7 +570,7 @@ if (import.meta.main) {
     const text = process.argv[3] && !process.argv[3].startsWith("--") ? process.argv[3] : (await Bun.stdin.text()).trim();
     const top = Number(arg("top") ?? 10);
     for (const t of targets()) {
-      const units = unitsOf(t.absPath, t.graphKinds, args("doc"));
+      const units = unitsOf(t.absPath, t.graphTypologies, args("doc"));
       if (units.length < 3) continue;
       const ix = buildLsi(units, opts);
       console.log(`# ${t.instance}/${t.id} — latent hits (cosine in the k=${ix.k} space; NOT a lexical match)`);
@@ -585,7 +585,7 @@ if (import.meta.main) {
     // Cross-DOCUMENT link proposals inside one graph (a library's documents):
     // a floor, and hubs reported rather than penalised — bean 9udd.
     for (const t of targets()) {
-      const units = unitsOf(t.absPath, t.graphKinds, args("doc"));
+      const units = unitsOf(t.absPath, t.graphTypologies, args("doc"));
       if (units.length < 3) continue;
       const ix = buildLsi(units, opts);
       const docOf = (id: string) => id.split("/").slice(0, -2).join("/");

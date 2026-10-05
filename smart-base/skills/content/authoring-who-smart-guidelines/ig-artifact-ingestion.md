@@ -1,5 +1,5 @@
 ---
-graph-kinds:
+graph-typologies:
   - fhir-artifact-index
 governs:
   - smart-trust/smart-trust-docs
@@ -8,7 +8,7 @@ governs:
 # ig-artifact-ingestion
 
 > Skill id: `ig-artifact-ingestion` · Package: `authoring-who-smart-guidelines` ·
-> Named by the `fhir-artifact-index` graph kind in
+> Named by the `fhir-artifact-index` graph typology in
 > `cat-harness/schemas/cat-harness.ts`, which is the declaration that sends a
 > consumer here.
 

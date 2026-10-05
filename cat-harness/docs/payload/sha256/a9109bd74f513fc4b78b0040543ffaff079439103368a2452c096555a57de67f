@@ -38,7 +38,7 @@ tools adjacently in a flat list with no grouping mechanism.
 Two Tool nodes projecting to one name is an **error at assembly time**, not
 something to paper over by prefixing the loser.
 
-This is the same rule `ContributionRegistry` and `GraphKindRegistry` already
+This is the same rule `ContributionRegistry` and `GraphTypologyRegistry` already
 follow, for the same reason: automatic disambiguation means the name a caller
 gets depends on load order, and load order is not something anybody reasons
 about. Refuse, name both contributors, and make somebody choose.

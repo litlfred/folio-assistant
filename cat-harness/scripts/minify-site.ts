@@ -4,7 +4,7 @@
  * the inter-tag whitespace a browser never renders.
  *
  * @module scripts/minify-site
- * @covers none — `.github/workflows/` is not a declared graph kind, and the
+ * @covers none — `.github/workflows/` is not a declared graph typology, and the
  *   subject here is the assembled `_site/`, which is not one either. Its
  *   logic is covered by `minify-site.test.ts` in `bun test`, which runs over
  *   pages built as strings; its WIRING by `check:invocation-parity` and

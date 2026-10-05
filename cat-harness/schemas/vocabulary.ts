@@ -18,9 +18,9 @@
  *
  * ## What is NOT here, deliberately
  *
- * **The graph kinds.** `tools`, `cat-harness`, `beans` and the rest are
- * `GraphKind` individuals, not classes (bean `3r47`), and each already carries
- * a `summary` in `BASE_GRAPH_KINDS`, so `ns-export` reads it from there. Restating them here would be a second answer to one question,
+ * **The graph typologies.** `tools`, `cat-harness`, `beans` and the rest are
+ * `GraphTypology` individuals, not classes (bean `3r47`), and each already carries
+ * a `summary` in `BASE_GRAPH_TYPOLOGIES`, so `ns-export` reads it from there. Restating them here would be a second answer to one question,
  * free to disagree — the drift this repository keeps paying for. A gloss below
  * for a term the registry already describes is a bug, and the completeness
  * test says so.
@@ -163,7 +163,7 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   /**
    * The two CONTENT-TYPE markers — what a repository asserts it is.
    *
-   * Distinct from a graph kind, which says what is in a DIRECTORY. These say
+   * Distinct from a graph typology, which says what is in a DIRECTORY. These say
    * what the REPOSITORY is, and a repository is a set of them: `smart-base` is
    * a DAK and a SUSHI project at once. `DAK` is not here because it is WHO's
    * term in WHO's namespace, which is the point — a marker's type IRI belongs
@@ -250,7 +250,7 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   RoleGraph: {
     gloss: "The role registry as a graph — every role, what it inherits, and the lanes it binds.",
   },
-  // Registered outside BASE_GRAPH_KINDS — `folio-graph-kind.ts` adds the first
+  // Registered outside BASE_GRAPH_TYPOLOGIES — `folio-graph-typology.ts` adds the first
   // and the other two are reporting states — so they carry no `summary` for
   // `ns-export` to read and are glossed here instead.
   FolioGraph: {
@@ -278,7 +278,7 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   UnknownGraph: {
     layer: "core",
     gloss:
-      "A declared graph kind nothing recognises — reported as its own state, never silently treated as empty.",
+      "A declared graph typology nothing recognises — reported as its own state, never silently treated as empty.",
   },
 };
 
@@ -359,8 +359,8 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "new surface could exist.",
   },
   nodeKind: { gloss: "Which kind of node this is, where the type alone is not specific enough." },
-  graphKind: { gloss: "The kind of graph a directory declares it holds." },
-  holdsGraph: { gloss: "A graph kind found in this directory.", replacedBy: "dcterms:type" },
+  graphTypology: { gloss: "The kind of graph a directory declares it holds." },
+  holdsGraph: { gloss: "A graph typology found in this directory.", replacedBy: "dcterms:type" },
   renderable: { gloss: "Whether a directory's contents are published as a website." },
   scans: { gloss: "A directory an instance will look in." },
   scope: { gloss: "Which root a declared path resolves against — the instance's or the repository's." },
@@ -405,7 +405,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
     gloss:
       "RETIRED 2026-09-30: whether an instance depending on this one materialised its own copy of a declared directory. " +
       "Inheritance is now automatic — every instance whose directory exists is a member of the declared subgraph — " +
-      "and whether a dependent gets one created is its graph kind's `perInstance`.",
+      "and whether a dependent gets one created is its graph typology's `perInstance`.",
   },
 
   // ── The trashcan ─────────────────────────────────────────────────────
@@ -614,7 +614,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
  *
  * `namespaces.ts` calls this to decide which namespace a term hangs off, so
  * the layer and the IRI cannot disagree. An earlier draft kept a separate
- * `GRAPH_KIND_LAYERS` map inside `ns-export.ts`, which decided the same fact a
+ * `GRAPH_TYPOLOGY_LAYERS` map inside `ns-export.ts`, which decided the same fact a
  * second time and in a different file from the one that mints the type — the
  * shape of drift this repository keeps paying for.
  *
@@ -627,6 +627,6 @@ export function termLayer(name: string): TermLayer {
   return CLASS_GLOSSES[name]?.layer ?? PROPERTY_GLOSSES[name]?.layer ?? "harness";
 }
 
-// There is no per-kind class, so no layer table for one: a graph kind states
-// its own layer (`GraphKindDef.layer`) and is named by its individual,
-// `<ns>graphKind/<name>` (owner, 2026-09-30, bean `3r47`).
+// There is no per-kind class, so no layer table for one: a graph typology states
+// its own layer (`GraphTypologyDef.layer`) and is named by its individual,
+// `<ns>graphTypology/<name>` (owner, 2026-09-30, bean `3r47`).

@@ -290,12 +290,12 @@ describe("kg export", () => {
 
   test("a name is not carried beside the link that already reaches it", () => {
     // The other half of `ovkk`: five properties were DENORMALISED copies of
-    // link data — `implementsSkillNames`, `satisfiesSkillNames`, `graphKinds`,
+    // link data — `implementsSkillNames`, `satisfiesSkillNames`, `graphTypologies`,
     // `packagePaths`, `laneName` — and the right treatment of a redundant copy
     // is removal, not a predicate IRI for a second answer that can go stale.
     // Each was removed only after its link form was shown to resolve for every
     // node; this pins that they do not come back.
-    const retired = ["implementsSkillNames", "satisfiesSkillNames", "graphKinds", "packagePaths", "laneName"];
+    const retired = ["implementsSkillNames", "satisfiesSkillNames", "graphTypologies", "packagePaths", "laneName"];
     const seen = new Set(EXPORT["@graph"].flatMap((n) => Object.keys(n)));
     expect(retired.filter((k) => seen.has(k))).toEqual([]);
     // And the facts they carried are still reachable, by link: a ProcessNode's
@@ -320,14 +320,14 @@ describe("kg export", () => {
 
   test("the graph carries its own vocabulary", () => {
     // Self-describing: following `holdsGraph` from a directory must land on a
-    // GraphKind node, not on a term that only exists in TypeScript.
-    const kinds = typed("GraphKind");
+    // GraphTypology node, not on a term that only exists in TypeScript.
+    const kinds = typed("GraphTypology");
     expect(kinds.length).toBeGreaterThanOrEqual(5);
     expect(kinds.some((k) => k.name === "folio" && k.renderable === true)).toBe(true);
     const ids = new Set(EXPORT["@graph"].map((n) => n["@id"]));
     // `holdsGraph` is a LIST: `graph` became `graphs[]` upstream because a
     // directory may hold more than one graph — `schemas/` holds both its own
-    // and `kg`. Every entry must still land on a GraphKind node.
+    // and `kg`. Every entry must still land on a GraphTypology node.
     // `Subgraph` — bootstrap's word — since 2026-09-30; it was `Directory`,
     // and a loop over a type nothing carries any more passes over nothing.
     const dirs = typed("Subgraph");
@@ -453,7 +453,7 @@ describe("kg export", () => {
     // dropped it on merge because my fallback had already hidden the symptom.
     const outside = mkdtempSync(join(tmpdir(), "kg-export-outside-"));
     try {
-      writeFileSync(join(outside, "outside.json"), JSON.stringify({ name: "outside", graphKinds: [] }));
+      writeFileSync(join(outside, "outside.json"), JSON.stringify({ name: "outside", graphTypologies: [] }));
       const id = exportIdentity({ instanceRoot: outside });
       expect(id.publishedHere).toBe(false);
       // Document-relative, NOT a fabricated absolute one.
@@ -544,12 +544,12 @@ describe("kg export", () => {
   });
 
   test("vocabulary nodes get no alternateOf — they are identical in both graphs", () => {
-    // A blanket loop gave GraphKind nodes an alternateOf pointing at a
+    // A blanket loop gave GraphTypology nodes an alternateOf pointing at a
     // canonical fragment that does not exist: they are minted under the
     // NAMESPACE, not the document, so they are byte-identical in a preview and
     // in the canonical graph. Marking them as alternates of themselves-by-
     // another-name was a broken link, and a generated one is still a broken one.
-    const kinds = typed("GraphKind");
+    const kinds = typed("GraphTypology");
     expect(kinds.length).toBeGreaterThan(0);
     for (const k of kinds) expect(inFolioNs(String(k["@id"]))).toBe(true);
   });
@@ -1156,7 +1156,7 @@ describe("exporting ANOTHER instance's graph", () => {
 
 /*
  * THE STANDARDS A GRAPH IS WRITTEN IN, reachable from the graph. Owner,
- * 2026-09-27, on the `processes` GraphKind: "i would have expected to see
+ * 2026-09-27, on the `processes` GraphTypology: "i would have expected to see
  * schemas more accessible (e.g. bpmn, or others) when viewing". The registry
  * knew `processes` is BPMN; the export dropped it.
  */
@@ -1200,8 +1200,8 @@ describe("schemas and standards are nodes, and graphs link to them", () => {
     for (const f of other) expect(tagOf(f)).toBe("folio-pinned-terminology/v1");
   });
 
-  test("the processes GraphKind conforms to BPMN AND DMN, and says why it has no validator", () => {
-    const kind = byType("GraphKind").find((n) => n.name === "processes")!;
+  test("the processes GraphTypology conforms to BPMN AND DMN, and says why it has no validator", () => {
+    const kind = byType("GraphTypology").find((n) => n.name === "processes")!;
     const to = kind.conformsTo as string[];
     expect(to).toContain(idOf("omg-bpmn-2.0"));
     expect(to).toContain(idOf("omg-dmn-1.3"));
@@ -1210,7 +1210,7 @@ describe("schemas and standards are nodes, and graphs link to them", () => {
 
   test("a kind with a runtime validator links to its Schema node", () => {
     const schemas = new Set(byType("Schema").map((n) => n["@id"]));
-    const withValidator = byType("GraphKind").filter((n) => n.validator !== undefined);
+    const withValidator = byType("GraphTypology").filter((n) => n.validator !== undefined);
     expect(withValidator.length).toBeGreaterThan(0);
     for (const k of withValidator) expect(schemas.has(k.validator)).toBe(true);
   });

@@ -4,7 +4,7 @@ description: >
   How a named external methodology enters the knowledge graph, and how an agent
   picks which one applies. Read before following a judgement method, before
   adopting a new one, and before writing a house method instead of adopting one.
-graph-kinds:
+graph-typologies:
   - methodology
 ---
 

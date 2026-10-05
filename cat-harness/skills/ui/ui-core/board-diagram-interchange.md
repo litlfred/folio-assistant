@@ -67,7 +67,7 @@ The first guards the failure that actually happens: somebody adding coordinates
 to a note "for convenience", which makes a `content` node carry `state` and
 gives one note two answers on two boards.
 
-## Two graph kinds, because they are two things
+## Two graph typologies, because they are two things
 
 | kind | holds | what it is |
 |---|---|---|
@@ -75,7 +75,7 @@ gives one note two answers on two boards.
 | `board-positions` | **state** | where each note was drawn |
 
 `content-context-and-state-graphs` refuses a content node that carries state,
-which is the same rule one level up. And `check:graph-kind-work` asks a
+which is the same rule one level up. And `check:graph-typology-work` asks a
 sharper question of the second: it *is* state, written by a running process
 every time somebody moves a note — but **state that records a position in a
 PROCESS is work, and state that records a position on a CANVAS is not.** Both

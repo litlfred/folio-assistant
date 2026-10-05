@@ -4,7 +4,7 @@ description: Establish how to talk to the person in front of you before deciding
 user_invocable: true
 satisfies:
   - "req:agent-workflow#context-before-question"
-graph-kinds:
+graph-typologies:
   - interaction
 ---
 

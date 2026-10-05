@@ -7,7 +7,7 @@ description: >
 allowed-tools: Read Grep Glob TodoWrite AskUserQuestion
 satisfies:
   - "req:agent-workflow#work-is-visible"
-graph-kinds:
+graph-typologies:
   - beans
   - board-positions
   - boards

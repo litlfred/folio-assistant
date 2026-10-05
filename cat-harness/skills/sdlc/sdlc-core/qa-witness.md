@@ -5,7 +5,7 @@ description: >
   says, which three families produce one, how to read a verdict and the witness
   behind it, and why "could not determine" is a third state everywhere in them.
 consulted: true
-graph-kinds:
+graph-typologies:
   - qa
 ---
 

@@ -274,7 +274,7 @@ with a new patch release and move the parent's pin back.
 ## Worked example — bootstrap + bootstrap-tools
 
 - Stages 1–5: bean `r3gy` groups A–E (#1486, #1503) — wrong facts, folio-only
-  names, root-relative paths, graph kinds and `$schema` tags and QA out, IRIs
+  names, root-relative paths, graph typologies and `$schema` tags and QA out, IRIs
   under `https://litlfred.github.io/bootstrap/` with semver.
 - Stage 6: bean `xsqm` — `bootstrap-tools/` re-created as a sibling; the Zod
   source moved down; import cone from 19 files / 11,577 lines to 12 / 2,249,

@@ -480,7 +480,7 @@ in the corpus in three places, none of which had been read as answering it:
 |---|---|
 | `folio-assistant-core/schemas/materialization.ts` | **three states** — `referenced` (we know where, we hold no bytes), `materialized` (the bytes are here), `unknown` (we have not established which) — with **no default**, plus five gates, and `localPath` present **iff** `materialized` |
 | `cat-harness/processes/library/materialize-remote.bpmn` | the act itself, as an executable **STRICT** process running five gates in a fixed order; `unknown` on any one keeps the node `referenced` |
-| `skills/kg/kg-core/directory-conventions.md` | the `catalogue` graph kind — *"a remote catalogue modelled BY REFERENCE … Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is"* |
+| `skills/kg/kg-core/directory-conventions.md` | the `catalogue` graph typology — *"a remote catalogue modelled BY REFERENCE … Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is"* |
 
 **So: yes.** The knowledge graph is static and modelled by reference;
 materialisation is a separate, gated, checked act that produces bytes.
@@ -495,8 +495,8 @@ the reader's REPOSITORY**, of which `library/` and `uploads/` are already
 declared parts:
 
 ```
-{ id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] },
-{ id: "library", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
+{ id: "uploads", path: "uploads/", dependents: "reproduce", graphTypologies: ["uploads"] },
+{ id: "library", path: "library/", dependents: "reproduce", graphTypologies: ["library"] },
 ```
 
 `dependents: "reproduce"` (retired 2026-09-30; now the `perInstance` flag on the kind) was the schema saying **this is the reader's own
@@ -513,7 +513,7 @@ Had the owner chosen the literal reading, it would have been a migration into
 a known breakage, and the recommendation put alongside the options did not say
 so because this had not been measured yet.
 
-`folio/` is also the **renderable** graph kind, so the literal reading would
+`folio/` is also the **renderable** graph typology, so the literal reading would
 additionally have put a 40 MB PDF into the site build.
 
 **R27 is therefore already satisfied, and already gated.**

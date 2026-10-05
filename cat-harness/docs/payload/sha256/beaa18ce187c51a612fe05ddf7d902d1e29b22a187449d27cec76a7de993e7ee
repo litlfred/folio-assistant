@@ -8,7 +8,7 @@ description: >
 adapters: [document, paper, dak]
 profiles: [document, paper]
 consulted: true
-graph-kinds:
+graph-typologies:
   - memory
   - waiver
 ---
@@ -155,7 +155,7 @@ an update.** The owner, on issue #592: *"its static content at process runtime
 and treated as an asset like memories"* — which is `context` word for word, and
 the same layer agent memory holds, which is what *"like memories"* asks for.
 `processMayWriteAsset(role)` answers it, through the same `layerIsWritable`
-rule the graph kinds use: assets and directories cannot come to disagree about
+rule the graph typologies use: assets and directories cannot come to disagree about
 what `context` permits, because there is one rule and not two spellings of
 `=== "state"`. For a role this layer does not govern it returns `undefined` —
 the third state, and never to be read as permission.

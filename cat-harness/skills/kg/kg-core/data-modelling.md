@@ -79,7 +79,7 @@ recoverable from the diagram that executes it.
 ### 6. Declare it where a tool can read it
 
 A model in prose is a proposal. A model in the declaration is a model. In this
-repository that means a graph kind in `<name>.json`, a Zod schema under the
+repository that means a graph typology in `<name>.json`, a Zod schema under the
 declared `schemas` directory, and a node kind that `kg-export` knows —
 `placement` is the skill that decides which.
 
@@ -166,7 +166,7 @@ the pointer lives on the task.
 | a user story is for a role | the story (`role`, in `scenarios/stories.json`) | the role (`useCases`) | stories are added by whoever writes them, not by editing the role |
 | a Tool satisfies a skill | the Tool (`satisfies`) | the skill (`scripts`, `validators`, `mcpServices`) | several Tools may satisfy one skill, and a script is added without editing the skill |
 | a skill or capability discharges a requirement statement | the skill's front matter or the capability (`satisfies: req:<id>#<key>`) | the statement (`satisfiedBy`) | a requirement is written once; what discharges it arrives later |
-| a skill says how to read a graph kind | the skill's front matter (`graph-kinds:`) | the kind (`skill`) | a kind is registered once; skills that read it come and go |
+| a skill says how to read a graph typology | the skill's front matter (`graph-typologies:`) | the kind (`skill`) | a kind is registered once; skills that read it come and go |
 | a skill takes and produces a contract | the skill's front matter (`input:`, `output:` — a path into the instance or an https IRI) | a directory named after the skill | the skill can then say its contract is elsewhere, and a contract no skill names is visible as unclaimed |
 | a test checks a skill's contract | the test run (`skill`, with its `cases` checked against the skill's `input:`/`output:`) | the skill | tests come and go; the contract does not |
 
@@ -184,7 +184,7 @@ is how a general node stays complete without naming its users.
 **Declare which nodes are general, and let the audit hold the line.** Which
 nodes are general is a modelling decision, so it is written down: the schema
 declaration's doc comment carries `@general`. Today that is Role, Skill,
-Requirement statement, Graph kind, Capability, Actor and Process (#1168, B5).
+Requirement statement, Graph typology, Capability, Actor and Process (#1168, B5).
 `kg:audit`'s `arrow-direction` criterion then reports two things: a `@general`
 schema whose `@ref` names a declaration that is not general, and a BPMN
 `<folio:…>` element pointing from a process at anything but a skill, role,

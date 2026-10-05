@@ -58,7 +58,7 @@
  *                                    # resolves at its SOURCE depth but not its own
  *   bun run translated-links:fix     # prepend exactly one `../` to each, verified
  *
- * `docs` is the graph kind this audits — `cat-harness.json` declares `docs/`
+ * `docs` is the graph typology this audits — `cat-harness.json` declares `docs/`
  * with `graphs: ["docs"]`, and the locale subtrees this walks are part of it.
  * Declared rather than inferred: `audit:coverage:require-all` refused this
  * gate for having no `@covers` line, which is `3srh` working — a gate that
@@ -167,7 +167,7 @@ export function translatedLinkDepth(root: string = ROOT): DepthReport {
   // the same thing.
   const siteDirs = new Map<string, string>();
   for (const d of resolveDirectories([{ name: "(local)", root, own: true }])) {
-    if (d.graphKinds.some((g) => isRenderable(g))) siteDirs.set(d.id, d.path);
+    if (d.graphTypologies.some((g) => isRenderable(g))) siteDirs.set(d.id, d.path);
   }
 
   for (const link of report.siteResolved) {

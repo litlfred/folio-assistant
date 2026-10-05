@@ -1,8 +1,8 @@
 /**
- * The files of every declared directory of one graph kind, across the
+ * The files of every declared directory of one graph typology, across the
  * instances of a checkout: the one scan behind each node graph a harness
- * declares instead of a central table (`kinds/`, bean dmx1; `validators/`,
- * bean riit). Reads each declaration RAW (`directories[].graphKinds`, `path`,
+ * declares instead of a central table (`typologies/`, bean dmx1; `validators/`,
+ * bean riit). Reads each declaration RAW (`directories[].graphTypologies`, `path`,
  * `scope`) because the declaration's Zod schema lives in `cat-harness.ts`,
  * which imports the registry that calls this. A LEAF: filesystem and
  * `instance-roots.ts` only.
@@ -28,32 +28,32 @@ import { findDeclarationFile, instanceRootsIn } from "./instance-roots";
  */
 const FIXTURE_ENV = "FOLIO_FIXTURE_CHECKOUT";
 
-/** Every directory declared with `graphKind`, across the instances of a checkout (absolute paths, declaration order). */
-export function declaredDirectories(repoRoot: string, graphKind: string): string[] {
+/** Every directory declared with `graphTypology`, across the instances of a checkout (absolute paths, declaration order). */
+export function declaredDirectories(repoRoot: string, graphTypology: string): string[] {
   const fixture = process.env[FIXTURE_ENV];
   const roots = [...instanceRootsIn(repoRoot), ...(fixture ? instanceRootsIn(fixture) : [])];
-  return roots.flatMap((root) => ownDeclaredDirectories(root, graphKind, repoRoot));
+  return roots.flatMap((root) => ownDeclaredDirectories(root, graphTypology, repoRoot));
 }
 
-/** The directories ONE instance declares with `graphKind` (absolute paths). `repository`-scoped paths resolve against `repoRoot`. */
-export function ownDeclaredDirectories(root: string, graphKind: string, repoRoot: string = root): string[] {
+/** The directories ONE instance declares with `graphTypology` (absolute paths). `repository`-scoped paths resolve against `repoRoot`. */
+export function ownDeclaredDirectories(root: string, graphTypology: string, repoRoot: string = root): string[] {
   const declFile = findDeclarationFile(root);
   if (declFile === undefined) return [];
-  let decl: { directories?: { path?: string; scope?: string; graphKinds?: string[] }[] };
+  let decl: { directories?: { path?: string; scope?: string; graphTypologies?: string[] }[] };
   try {
     decl = JSON.parse(readFileSync(join(root, declFile), "utf-8")) as typeof decl;
   } catch {
     return []; // an unreadable declaration is `readDeclaration`'s finding, with its own message
   }
   return (decl.directories ?? [])
-    .filter((d) => d.path && (d.graphKinds ?? []).includes(graphKind))
+    .filter((d) => d.path && (d.graphTypologies ?? []).includes(graphTypology))
     .map((d) => join(d.scope === "repository" ? resolve(repoRoot) : root, d.path!));
 }
 
-/** `{ file, raw }` for every `*.json` in every directory declared with `graphKind`, files sorted. */
-export function declaredNodeFiles(repoRoot: string, graphKind: string): { file: string; raw: unknown }[] {
+/** `{ file, raw }` for every `*.json` in every directory declared with `graphTypology`, files sorted. */
+export function declaredNodeFiles(repoRoot: string, graphTypology: string): { file: string; raw: unknown }[] {
   const out: { file: string; raw: unknown }[] = [];
-  for (const dir of declaredDirectories(repoRoot, graphKind)) {
+  for (const dir of declaredDirectories(repoRoot, graphTypology)) {
     let files: string[];
     try {
       files = readdirSync(dir).filter((f) => f.endsWith(".json")).sort();

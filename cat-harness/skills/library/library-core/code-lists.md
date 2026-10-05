@@ -5,7 +5,7 @@ description: >-
   label, a definition and a source, kept as a node and published as SKOS.
   Use when a diagram, a schema or a script needs a fixed set of values
   (adjudication answers, namespace IRIs) instead of strings in code.
-graph-kinds:
+graph-typologies:
   - code-list
 ---
 
@@ -20,7 +20,7 @@ entry, not editing code.
 
 ## Where they live
 
-The `code-list` graph kind, declared in `<instance>.json` (here
+The `code-list` graph typology, declared in `<instance>.json` (here
 `cat-harness/code-lists/`). One file per list, `"$schema":
 "folio-code-list/v1"`; the shape is `schemas/code-list.ts`. An instance sees
 its own lists and every dependency's (`codeListDirs`), and a list with the same

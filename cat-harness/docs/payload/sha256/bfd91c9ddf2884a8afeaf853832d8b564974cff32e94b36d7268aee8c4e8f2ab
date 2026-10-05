@@ -42,7 +42,7 @@ text:
   folio as data. A literal naming one folio is the failure this layer exists
   to prevent.
 - **A directory is declared or it does not exist.** Add one to
-  [`cat-harness.json`](cat-harness.json) with its graph kinds in the same change;
+  [`cat-harness.json`](cat-harness.json) with its graph typologies in the same change;
   a declared-but-absent directory makes a consumer scan nothing and report a
   clean run. `kg-core/directory-conventions`.
 - **The discipline lives in the skill.** Changing how agents behave means

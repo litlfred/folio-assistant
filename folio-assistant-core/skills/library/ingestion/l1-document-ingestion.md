@@ -6,7 +6,7 @@ description: >
   L1 entry holds, why an inferred structure is refused rather than guessed,
   and the archive, dataset, narrative, image and vector-label arms. Refines the
   harness's basic `library-ingestion` flow; one entry point: `bun run ingest`.
-graph-kinds:
+graph-typologies:
   - library
   - uploads
 ---
@@ -707,7 +707,7 @@ Bean `p67i`.
 ## Related
 
 - [`library-ingestion`](../../../../cat-harness/skills/library/library-core/library-ingestion.md) — the basic flow this refines: the two entry points, the upload's retirement, the remote half
-- [`directory-conventions`](../../../../cat-harness/skills/kg/kg-core/directory-conventions.md) — the graph kinds and who declares them
+- [`directory-conventions`](../../../../cat-harness/skills/kg/kg-core/directory-conventions.md) — the graph typologies and who declares them
 - [`bib-qa`](../cataloguing/bib-qa.md) — auditing what is already in `library/`
 - [`tabular-metadata`](tabular-metadata.md) — the CSVW model behind the dataset arm
 - `processes/library/l1-document-ingestion.bpmn` — this method, executable; it calls the harness's `Process_Ingestion` first

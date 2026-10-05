@@ -28,7 +28,7 @@ memorise.** An instance says where its graph is, in its declaration at its
 repository root. It may put it anywhere. In *this* instance the entry reads:
 
 ```json
-{ "id": "skills", "path": "skills/", "graphKinds": ["skills"] }
+{ "id": "skills", "path": "skills/", "graphTypologies": ["skills"] }
 ```
 
 Read that as three separate things, because they change independently:
@@ -37,14 +37,14 @@ Read that as three separate things, because they change independently:
 |---|---|---|
 | `id` | this instance's name for the directory | stable across a relocation — that is its job |
 | `path` | where it happens to be **here** | not stable, and not yours to assume |
-| `graphKinds` | what kind of graph lives there | the vocabulary, shared across instances |
+| `graphTypologies` | what kind of graph lives there | the vocabulary, shared across instances |
 
 An agent that learned `skills/` learned the one column that is allowed to
 change. Ask for the graph; do not navigate to the path.
 
 > **`kg` is the old name for the kind and still reads.** It was renamed to
 > `cat-harness` on 2026-09-19 so the kind is named for the layer that defines
-> it, like `CatHarness` itself. `GRAPH_KIND_ALIASES` in
+> it, like `CatHarness` itself. `GRAPH_TYPOLOGY_ALIASES` in
 > `schemas/cat-harness.ts` maps `kg` → `cat-harness`, so a declaration or a
 > query using `kg` resolves and is marked deprecated. **Do not read `kg` as a
 > directory `id`** — in this instance the id is `skills`, and text that
@@ -105,7 +105,7 @@ exists* is the capability, and an agent that only knows the MCP route is an
 agent that stops when the server is absent. See
 [`skills-and-tools`](../../folio-core/skills-and-tools.md) for why that distinction is enforced
 rather than merely preferred, and [`directory-conventions`](../kg-core/directory-conventions.md)
-for the declaration's schema and the full list of graph kinds.
+for the declaration's schema and the full list of graph typologies.
 
 ## Not everything under the path is a skill
 

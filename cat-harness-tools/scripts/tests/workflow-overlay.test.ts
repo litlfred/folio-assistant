@@ -46,7 +46,7 @@ function rootWithDependency(ownDiagram?: string): string {
   const root = mkdtempSync(join(tmpdir(), "wf-overlay-"));
   made.push(root);
   // Mirrors cat-harness's own `processes` entry, the shape a real instance declares.
-  const directories = ownDiagram ? [{ id: "processes", path: "processes/", graphKinds: ["processes"] }] : [];
+  const directories = ownDiagram ? [{ id: "processes", path: "processes/", graphTypologies: ["processes"] }] : [];
   writeFileSync(join(root, "t.json"), JSON.stringify({ name: "t", version: "0.0.0", title: "t", directories }));
   writeFileSync(
     join(root, "t.config.json"),

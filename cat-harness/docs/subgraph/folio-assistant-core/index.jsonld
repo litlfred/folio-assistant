@@ -4,13 +4,13 @@
   "@type": "bootstrap:Subgraph",
   "hasMember": [
     {
-      "@id": "cat-harness:graphKind/block-kinds",
-      "@type": "bootstrap:GraphKind",
+      "@id": "cat-harness:graphTypology/block-kinds",
+      "@type": "bootstrap:GraphTypology",
       "name": "block-kinds"
     },
     {
-      "@id": "folio-assistant-core:graphKind/glossary",
-      "@type": "bootstrap:GraphKind",
+      "@id": "folio-assistant-core:graphTypology/glossary",
+      "@type": "bootstrap:GraphTypology",
       "name": "glossary"
     },
     {
@@ -112,8 +112,8 @@
     "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/"
   ],
   "holdsGraph": [
-    "bootstrap:graphKind/processes",
-    "bootstrap:graphKind/skills"
+    "bootstrap:graphTypology/processes",
+    "bootstrap:graphTypology/skills"
   ],
   "name": "folio-assistant-core",
   "path": "./"

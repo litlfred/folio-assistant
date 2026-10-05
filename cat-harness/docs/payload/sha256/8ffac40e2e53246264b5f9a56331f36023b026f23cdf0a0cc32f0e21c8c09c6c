@@ -1,7 +1,7 @@
 # folio-assist-core
 
 **The content layer.** What a *folio* is — the content-object model, the block
-kinds, the adapters, and the `folio` graph kind itself.
+kinds, the adapters, and the `folio` graph typology itself.
 
 It sits between `bootstrap/` (what an agent reads before anything is installed)
 and the science layer, and it is composed **on top of** the agentic harness: it
@@ -26,7 +26,7 @@ the wrong way.
 | in scope | out of scope |
 |---|---|
 | the content-object model: what a block, a chapter, a document IS | the skills, schemas and MCP server that *operate* on it — those are the harness's |
-| the `folio` graph kind, and its registration | any particular folio's chapters, constants or vocabularies — those live in the folio's own repository |
+| the `folio` graph typology, and its registration | any particular folio's chapters, constants or vocabularies — those live in the folio's own repository |
 | content adapters (`document`, `paper`) and the profiles that nest inside them | the pipeline's transport and the tool surface |
 
 The rule the whole repository turns on: **this is the platform, not the
@@ -90,9 +90,9 @@ subgraphs' metadata under `library/<source>/` — recorded there as vocabulary.
 ## Why this is not in `cat-harness/`
 
 The owner, 2026-09-20: *"not in cat-harness, in folio-assitant-core/ as a named
-subgraph."* `BASE_GRAPH_KINDS` already carries the rule — *"skills/ schemas
+subgraph."* `BASE_GRAPH_TYPOLOGIES` already carries the rule — *"skills/ schemas
 beans all in cat-harness, voices, uploads library in folio-asst-core"* — and a
 Dublin Core record is on the same side of that line as the library entry it
 describes. The harness layer must not own a vocabulary for content it cannot
-render, which is the argument `schemas/folio-graph-kind.ts` makes for `folio`
+render, which is the argument `schemas/folio-graph-typology.ts` makes for `folio`
 itself.

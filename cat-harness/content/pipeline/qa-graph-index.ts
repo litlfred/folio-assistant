@@ -34,7 +34,7 @@
  *
  * {@link QaGraphIndex} has no cross-family verdict field, and a test asserts
  * its ABSENCE rather than trusting nobody to add one. That is the same
- * discipline `GraphKindDef.holds` uses — the type refuses the undecided case
+ * discipline `GraphTypologyDef.holds` uses — the type refuses the undecided case
  * at the keyboard rather than at review. `files` is a count of documents
  * scanned, which is not a verdict about any of them; {@link QaFamily.buckets}
  * is reported per family, in that family's own spelling, and is never summed.

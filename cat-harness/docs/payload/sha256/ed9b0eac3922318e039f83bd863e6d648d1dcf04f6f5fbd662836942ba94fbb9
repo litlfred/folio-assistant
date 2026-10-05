@@ -5,7 +5,7 @@ description: >
   instance. What the record carries, why `actor` is required and the rest are not, why
   the session's view of a node is advisory, and what a sibling session reads it
   for.
-graph-kinds:
+graph-typologies:
   - session-state
 ---
 
@@ -24,7 +24,7 @@ facts that belong to the actor — and the idle session, which is most of them,
 becomes unrepresentable. So it is its own record, **referencing** instances
 rather than containing them.
 
-Shape: `schemas/session-context.ts`. Graph kind: `session-state`, layer
+Shape: `schemas/session-context.ts`. Graph typology: `session-state`, layer
 `state` — a session writes its own record as it goes, which is exactly what
 [`content-context-and-state-graphs`](../../kg/kg-core/content-context-and-state-graphs.md)
 means by live state.

@@ -5,7 +5,7 @@ description: >-
   extraction and injection, TranslationNode manifests as KG nodes,
   official vs unofficial translations, staleness tracking, sign-off workflow,
   automatic badge rendering, and the poSources fallback resolution chain.
-graph-kinds:
+graph-typologies:
   - translation-sources
 ---
 
@@ -481,7 +481,7 @@ simply has the wrong entries in it. Put the French page at `accueil-fr.md`
 beside its source and it is indexed correctly; put an English page in a folder
 called `fr/` and it is left alone.
 
-**There is deliberately no `translated-content` graph kind.** A first draft of
+**There is deliberately no `translated-content` graph typology.** A first draft of
 PR #351 added one, with a `locale` field on `ContentDirectory` and one
 `cat-harness.json` entry per locale subtree — ten entries for five locales
 across two subtrees. It worked and it was the wrong axis: it restated what all
@@ -657,7 +657,7 @@ pipeline (IG Publisher) are complementary and independent.
   French because it says `lang: fr`. A subtag match is wrong in both
   directions and neither failure announces itself — see
   [The navbar filters by locale](#the-navbar-filters-by-locale).
-- **Do not add a graph kind for translated content.** It is the same kind of
+- **Do not add a graph typology for translated content.** It is the same kind of
   thing as the page it translates, differing by a field the file declares.
   Translatability is a property of a FORMAT within a content type —
   `schemas/translation-tools.ts` and `isTranslatable` — not of a directory.

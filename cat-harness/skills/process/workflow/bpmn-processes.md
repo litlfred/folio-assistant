@@ -8,7 +8,7 @@ description: >
 adapters: [document, paper, dak]
 profiles: [document, paper]
 consulted: true
-graph-kinds:
+graph-typologies:
   - processes
 ---
 
