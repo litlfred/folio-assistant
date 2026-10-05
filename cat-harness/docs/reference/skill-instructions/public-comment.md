@@ -108,7 +108,15 @@ adjudicated when no one decided it.
 | author (`author`), human or agentic | once a comment is dispensed with a changing decision, make the edit on a feature branch | `edit <ref> --branch … [--to <login>]` |
 | pipeline (`build-pipeline`) | build the change set's staging preview, mark it incorporated on merge | staging workflow, `incorporate` |
 
-Only logins listed in the store's `config.json` can move a comment from GitHub.
+Who can move a comment from GitHub:
+
+- **Committee: the repository's collaborators, by default.** GitHub marks
+  every comment with the commenter's relationship to the repository, and an
+  owner, member or collaborator counts. Adding someone to the committee means
+  adding them as a collaborator, and nothing else. A `committee` list in
+  `config.json` replaces the default with exactly those logins.
+- **Editors: only the logins listed in `config.json` `editors`.** Deciding is
+  never inherited from repository access.
 Anyone may *discuss* a comment there, but the record is not open to everyone.
 
 The five decision codes (owner, 2026-10-04): `accepted`, `accepted-modified`,

@@ -345,6 +345,20 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "mount-instance-docs.test.ts in `bun test`",
   },
   {
+    // The inline PDF viewer (bean `folio-assistant-5ea6`). A DEPLOY step like
+    // the mount above it: it downloads the pinned pdf.js release and writes it
+    // into `./_site`, which only the deploy and staging jobs produce, and it
+    // needs the network the fast set must not. The allowlist shim, the root
+    // derivation and the install helpers are run as shipped bytes by
+    // `pdf-viewer.test.ts` in `bun test`.
+    match: "pdf-viewer.ts --site",
+    kind: "ci-only",
+    reason:
+      "a DEPLOY step, not a check: it installs the pinned, hash-checked pdf.js viewer into ./_site, " +
+      "which only exists inside the site-build job, and it fetches the release over the network. " +
+      "Its shim, embed and install helpers are covered by pdf-viewer.test.ts in `bun test`",
+  },
+  {
     // Its sibling, and exempt for the same reason. `compose-docs.ts` lays the
     // declared `docs` layers into one tree for Jekyll to build — base
     // (`cat-harness/docs/`) then the repository root's overlay. It COPIES
