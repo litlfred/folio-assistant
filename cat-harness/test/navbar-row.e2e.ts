@@ -264,6 +264,30 @@ test.describe("the icon row — line 2 of the fixed top", () => {
     expect(tail).toEqual(["scheme"]);
   });
 
+  test("a VISIBLE language control on line 1 when the row is present — bean 82qs", async ({ page }) => {
+    // Owner, 2026-10-05: "we lost locale selector in top navbar LHS again".
+    // The row hid `.fa-lang-mini` and gave Language nowhere visible to go.
+    // It stays on line 1 beside the name (the row has no room for an eighth
+    // control: measured 280px in the 264px sidebar).
+    await page.setViewportSize({ width: 1280, height: 800 });
+    const { errors } = await load(page, LIVE);
+    expect(errors).toEqual([]);
+    await expect(page.locator(".side-bar .fa-nav-icons")).toHaveCount(1);
+    await page.hover(".side-bar");
+    const lang = page.locator(".side-bar .fa-lang-mini");
+    await expect(lang).toBeVisible();
+    await expect(lang).toHaveAttribute("aria-label", "Language");
+    // Inside the sidebar, not clipped past its edge.
+    const fits = await page.evaluate(() => {
+      const b = document.querySelector(".side-bar .fa-lang-mini")!.getBoundingClientRect();
+      const sb = document.querySelector(".side-bar")!.getBoundingClientRect();
+      return b.right <= sb.right && b.left >= sb.left;
+    });
+    expect(fits).toBe(true);
+    await lang.click();
+    await expect(page.locator(".fa-tiles .fa-tiles-title")).toHaveText("Language");
+  });
+
   test("FIVE DISTINCT drawings — a row where slots look alike says nothing", async ({ page }) => {
     // `glyphFor` falls back to one net glyph, which would have given four of
     // these five the same picture. The count of distinct markup is the check;

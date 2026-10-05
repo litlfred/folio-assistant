@@ -5711,7 +5711,7 @@ a.fa-nav-folders__link:focus-visible {
 /* LINE 1 IS THE AVATAR AND THE NAME, and nothing else.
  *
  * The header carried three controls beside the title — the scheme mini, the
- * language mini and the panel launcher. With the title shrunk they still left
+ * language mini and the panel launcher (Language is back; see below). With the title shrunk they still left
  * it ellipsised to "C@..." at 264px, which is the measurement that made the
  * second line necessary rather than merely tidier.
  *
@@ -5725,10 +5725,18 @@ a.fa-nav-folders__link:focus-visible {
  * declares no icons and `mountNavIconRow` deliberately draws nothing — this
  * selector does not match and the three controls stay exactly where they are.
  * A reader never loses a control to a row that failed to arrive.
+ *
+ * EXCEPT LANGUAGE, which stays on line 1 — owner, 2026-10-05: *"we lost
+ * locale selector in top navbar LHS again"* (bean `82qs`). "One tap away"
+ * read as GONE: the row took the launcher and the bulb, so those two moved,
+ * but Language had nowhere visible to go. Not into the row either: with it
+ * the opened row is EIGHT controls, measured 280px in the 264px sidebar with
+ * the bulb past the edge. On line 1 beside the name it measured 236–264px
+ * with "folio-assistant" unclipped — one mini is not the three that gave
+ * "C@...".
  */
 @media (min-width: 50rem) {
   .side-bar:has(.fa-nav-icons) .fa-scheme-mini,
-  .side-bar:has(.fa-nav-icons) .fa-lang-mini,
   .side-bar:has(.fa-nav-icons) .fa-tiles-toggle {
     display: none;
   }
