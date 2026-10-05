@@ -140,27 +140,28 @@ describe("stripFlags — the same two questions of the docs site's strip", () =>
   const DOCS = join(INSTANCE, siteDirFor(INSTANCE));
   const JS = readFileSync(join(DOCS, "assets", "js", "docs-ui.js"), "utf-8");
   const CSS = readFileSync(join(DOCS, "assets", "css", "docs-ui.css"), "utf-8");
+  const ROW = readFileSync(join(DOCS, "assets", "js", "navbar-row.js"), "utf-8");
 
-  it("passes the shipped docs-ui.js and docs-ui.css", () => {
-    expect(stripFlags(JS, CSS)).toEqual([]);
+  it("passes the shipped docs-ui.js, navbar-row.js and docs-ui.css", () => {
+    expect(stripFlags(JS, CSS, ROW)).toEqual([]);
   });
 
   it("flags a row control built without data-fa-tip", () => {
-    const js = JS.replace(/, "data-fa-tip": LABELS\.launcher/, "");
-    expect(js).not.toBe(JS);
-    expect(stripFlags(js, CSS)).toEqual(["rail-tips"]);
+    const row = ROW.replace(/, "data-fa-tip": LABELS\.launcher/, "");
+    expect(row).not.toBe(ROW);
+    expect(stripFlags(JS, CSS, row)).toEqual(["rail-tips"]);
   });
 
   it("flags the light/dark switch when its painter stops writing the tooltip", () => {
     const js = JS.replace(/\s*scheme\.setAttribute\("data-fa-tip", said\);/, "");
     expect(js).not.toBe(JS);
-    expect(stripFlags(js, CSS)).toEqual(["rail-tips"]);
+    expect(stripFlags(js, CSS, ROW)).toEqual(["rail-tips"]);
   });
 
   it("flags a stylesheet that shows the tooltip on hover only", () => {
     const css = CSS.replace(/,\s*\.side-bar \[data-fa-tip\]:focus-visible::after/, "");
     expect(css).not.toBe(CSS);
-    expect(stripFlags(JS, css)).toEqual(["rail-tips"]);
+    expect(stripFlags(JS, css, ROW)).toEqual(["rail-tips"]);
   });
 
   it("flags ▦ Harnesses left to the at-rest lists, which hide it", () => {
@@ -168,7 +169,7 @@ describe("stripFlags — the same two questions of the docs site's strip", () =>
     // `.fa-nav-harness-group` beside the footer's group in one rule.
     const css = CSS.replace(/\.side-bar \.fa-nav-bottom > \.fa-nav-group > summary(?:,\s*[^{,]+)* \{[^}]*\}/, "");
     expect(css).not.toBe(CSS);
-    expect(stripFlags(JS, css)).toEqual(["harnesses-at-rest"]);
+    expect(stripFlags(JS, css, ROW)).toEqual(["harnesses-at-rest"]);
   });
 });
 

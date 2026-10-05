@@ -273,19 +273,22 @@ export function hidesSummaryAtRest(css: string): boolean {
  * at load and so has no markup a page walk can read. Asked of the two files
  * that make it instead:
  *
- * - `rail-tips` — every control `mountNavIconRow` creates carries
- *   `data-fa-tip`, and `docs-ui.css` paints it on hover and on focus;
+ * - `rail-tips` — every control `navbar-row.js` creates, and the light/dark
+ *   switch `mountNavIconRow` adds, carries `data-fa-tip`, and `docs-ui.css`
+ *   paints it on hover and on focus;
  * - `harnesses-at-rest` — the bottom disclosure's summary is declared
  *   visible at rest. The rest state there is a FLAG (`--fa-nav-text`) the
  *   generic lists scale everything by, so "hidden" is not a literal `0` this
  *   could grep for; what is checked is the override that undoes it. The
  *   rendered proof is `rail-tips.e2e.ts`, which measures it in a browser.
  */
-export function stripFlags(js: string, css: string): ViewerNavFlag[] {
+export function stripFlags(js: string, css: string, rowJs: string): ViewerNavFlag[] {
   const flags: ViewerNavFlag[] = [];
   const at = js.indexOf("function mountNavIconRow(");
   const body = at < 0 ? "" : js.slice(at, js.indexOf("\n  function ", at + 10));
-  const built = [...body.matchAll(/el\("(?:a|button|span)",\s*\{([\s\S]*?)\}\)/g)]
+  // THE ROW'S CONTROLS ARE BUILT IN `navbar-row.js` (beans `lhvt`, `9rq1`);
+  // only the light/dark switch is still `docs-ui.js`'s, in `mountNavIconRow`.
+  const built = [...rowJs.matchAll(/el\("(?:a|button|span)",\s*\{([\s\S]*?)\}\)/g)]
     .map((m) => m[1]!)
     .filter((o) => /class:\s*"fa-nav-icon\b/.test(o));
   // The light/dark switch is NAMED BY A PAINTER (its name changes with the
@@ -294,7 +297,9 @@ export function stripFlags(js: string, css: string): ViewerNavFlag[] {
   const switchVar = /var (\w+) = el\("button",\s*\{[^}]*fa-nav-scheme/.exec(body)?.[1];
   const paintsTip = switchVar !== undefined && body.includes(`${switchVar}.setAttribute("data-fa-tip"`);
   const untipped = built.filter((o) => !/"data-fa-tip":/.test(o) && !(/fa-nav-scheme/.test(o) && paintsTip));
-  if (at < 0 || built.length === 0 || untipped.length > 0 || !paintsTips(css, ".side-bar")) {
+  // The switch itself is now built in `docs-ui.js` alone, so it is not among
+  // `built`; its painter is required to write the tooltip all the same.
+  if (at < 0 || built.length === 0 || untipped.length > 0 || !paintsTip || !paintsTips(css, ".side-bar")) {
     flags.push("rail-tips");
   }
   const shown = cssRules(css).some(
@@ -505,9 +510,10 @@ if (import.meta.main) {
   const strip = stripFlags(
     readFileSync(join(DOCS, "assets", "js", "docs-ui.js"), "utf-8"),
     readFileSync(join(DOCS, "assets", "css", "docs-ui.css"), "utf-8"),
+    readFileSync(join(DOCS, "assets", "js", "navbar-row.js"), "utf-8"),
   );
   for (const f of strip) {
-    console.error(`  ✗ the docs site's sidebar strip fails ${f} (docs-ui.js / docs-ui.css)`);
+    console.error(`  ✗ the docs site's sidebar strip fails ${f} (docs-ui.js / navbar-row.js / docs-ui.css)`);
     if (check || strict) failed++;
   }
 

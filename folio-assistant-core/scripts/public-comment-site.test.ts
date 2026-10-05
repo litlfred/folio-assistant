@@ -61,4 +61,12 @@ describe("public-comment-site", () => {
     expect(dashboardHtml(rows, { title: "T", slug: "doc", generated: "g" })).not.toContain("<the>");
     expect(overlaySnippet(rows)).not.toContain("</script><b>");
   });
+
+  test("the count tiles are toggles, and every row carries what they filter on (owner, 2026-10-05)", () => {
+    const html = dashboardHtml(siteComments([comment({})], anchors, { slug: "doc" }), { title: "T", slug: "doc", generated: "g" });
+    for (const key of ["all", "open", "unplaced", "editing", "decided", "incorporated"]) {
+      expect(html).toMatch(new RegExp(`<button type="button" class="tile" data-tile="${key}" aria-pressed="false"`));
+    }
+    expect(html).toMatch(/<tr id="PC-0001" data-phase="\w+" data-status="\w+" data-placed="[01]"/);
+  });
 });

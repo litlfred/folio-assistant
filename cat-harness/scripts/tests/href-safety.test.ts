@@ -28,6 +28,8 @@ import { safeHref } from "../../schemas/safe-url.js";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 const CLIENT = join(ROOT, siteDirFor(ROOT), "assets/js/docs-ui.js");
+/** The harness icon row's drawing, loaded on pages without `docs-ui.js` (beans `lhvt`, `9rq1`). */
+const ROW_CLIENT = join(ROOT, siteDirFor(ROOT), "assets/js/navbar-row.js");
 const LISTING = join(ROOT, "scripts/todo-listing.ts");
 
 /** `href: <expr>` / `href="<expr>"` sites, with their line numbers. */
@@ -90,6 +92,31 @@ describe("every href in the client goes through the check", () => {
     expect(declared, "the client declares its allow-list").not.toBeNull();
     const clientSchemes = [...declared![1]!.matchAll(/"([^"]+)"/g)].map((m) => m[1]);
     expect(clientSchemes).toEqual(["http:", "https:", "mailto:", "tel:"]);
+  });
+});
+
+describe("every href in the navbar row's own script goes through the check", () => {
+  const source = readFileSync(ROW_CLIENT, "utf-8");
+
+  test("there IS an href site", () => {
+    expect(hrefSites(source).length).toBeGreaterThan(0);
+  });
+
+  test("each one renders a value `safeHref` returned, with no exemption", () => {
+    const boundFromCheck = new Set([...source.matchAll(/var\s+(\w+)\s*=\s*safeHref\(/g)].map((m) => m[1]!));
+    const offenders = hrefSites(source).filter(({ text }) => {
+      if (text.includes("safeHref") || text.includes("ALLOWED_URL_SCHEMES")) return false;
+      const value = /\bhref\s*:\s*([A-Za-z_$][\w$]*)\b/.exec(text);
+      return !(value && boundFromCheck.has(value[1]!));
+    });
+    expect(offenders.map((o) => `${o.line}: ${o.text.trim()}`)).toEqual([]);
+  });
+
+  test("its allow-list is the client's, scheme for scheme", () => {
+    const list = (src: string) =>
+      [...(src.match(/var ALLOWED_URL_SCHEMES = \[(.*?)\]/s)?.[1] ?? "").matchAll(/"([^"]+)"/g)].map((m) => m[1]);
+    expect(list(source)).toEqual(list(readFileSync(CLIENT, "utf-8")));
+    expect(list(source).length).toBeGreaterThan(0);
   });
 });
 
