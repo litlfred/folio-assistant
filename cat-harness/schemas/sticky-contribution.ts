@@ -13,13 +13,13 @@
  * `landing-sticky.ts` shipped the board as a **fixed set of three**, returned by
  * `landingStickies()`. That is a list this repository owns, and the ask inverts
  * the ownership: the set is **composed from the layers present** rather than
- * enumerated in one place. `folio-graph-kind.ts` already states the principle —
+ * enumerated in one place. `folio-graph-typology.ts` already states the principle —
  * *a layer owns what it can serve, and the layer above does not enumerate it.*
  *
  * ## Why a DECLARATION and not a code registry
  *
  * The obvious design is `registerStickyContributor()`, matching
- * `registerFolioGraphKind`. It cannot work here, and the reason is the one that
+ * `registerFolioGraphTypology`. It cannot work here, and the reason is the one that
  * motivates the whole change:
  *
  * | | code registry | declaration |

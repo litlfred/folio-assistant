@@ -140,7 +140,7 @@ export function publishedProcesses(outDir: string = OUT): { processes: Published
     for (const topIri of list(root.hasSubgraph).map(String)) {
       const topFile = fileOf(topIri, SUBGRAPH_INDEX_FILE);
       const top = topFile ? read(topFile, SubgraphIndexSchema) : undefined;
-      if (!top || !list(top.holdsGraph).some((k) => /graphKind\/processes$/.test(String(k)))) continue;
+      if (!top || !list(top.holdsGraph).some((k) => /graphTypology\/processes$/.test(String(k)))) continue;
       const hydFile = fileOf(topIri, SUBGRAPH_HYDRATED_FILE);
       const hyd = hydFile ? read(hydFile, SubgraphHydratedSchema) : undefined;
       if (!hyd) continue;

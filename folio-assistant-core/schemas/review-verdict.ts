@@ -49,7 +49,7 @@
  *
  * A review comment is a todo (it asks for something). A verdict asks for
  * nothing; it records that something happened. So it is a plain node in
- * its own declared directory, of graph kind `review-verdicts`, and not a
+ * its own declared directory, of graph typology `review-verdicts`, and not a
  * kind whose parent is the todo.
  */
 import { z } from "zod";

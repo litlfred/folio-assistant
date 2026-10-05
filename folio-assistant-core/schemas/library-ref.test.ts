@@ -147,10 +147,10 @@ describe("library location is read from the declaration", () => {
     // documents — never by a pattern, so folio content arriving here still
     // fails, by name, exactly as before.
     const decl = JSON.parse(readFileSync(declarationPathIn(PLATFORM)!, "utf8")) as {
-      directories?: Array<{ graphKinds?: string[]; heldEntries?: string[] }>;
+      directories?: Array<{ graphTypologies?: string[]; heldEntries?: string[] }>;
     };
     const admitted = new Set(
-      (decl.directories ?? []).filter((d) => d.graphKinds?.includes("library")).flatMap((d) => d.heldEntries ?? []),
+      (decl.directories ?? []).filter((d) => d.graphTypologies?.includes("library")).flatMap((d) => d.heldEntries ?? []),
     );
 
     const uncited = entries.filter((e) => !cited.has(e) && !admitted.has(e));
@@ -290,8 +290,8 @@ describe("an instance's library is ITS OWN, not the first one declared", () => {
 
   it("ignores a repository-scoped entry even when it is declared FIRST", () => {
     const root = instance([
-      { id: "other", path: "elsewhere/library/", scope: "repository", graphKinds: ["library"] },
-      { id: "library", path: "library/", graphKinds: ["library"] },
+      { id: "other", path: "elsewhere/library/", scope: "repository", graphTypologies: ["library"] },
+      { id: "library", path: "library/", graphTypologies: ["library"] },
     ]);
     expect(libraryDirOf(root)).toBe(resolve(root, "library"));
     rmSync(root, { recursive: true, force: true });
@@ -300,8 +300,8 @@ describe("an instance's library is ITS OWN, not the first one declared", () => {
   it("and the answer does not change when the order does", () => {
     // The whole point: the same declaration, written the other way round.
     const root = instance([
-      { id: "library", path: "library/", graphKinds: ["library"] },
-      { id: "other", path: "elsewhere/library/", scope: "repository", graphKinds: ["library"] },
+      { id: "library", path: "library/", graphTypologies: ["library"] },
+      { id: "other", path: "elsewhere/library/", scope: "repository", graphTypologies: ["library"] },
     ]);
     expect(libraryDirOf(root)).toBe(resolve(root, "library"));
     rmSync(root, { recursive: true, force: true });
@@ -312,8 +312,8 @@ describe("an instance's library is ITS OWN, not the first one declared", () => {
     // different and wrong fact. Two libraries of one's own has no answer to
     // "where does this instance keep its corpus".
     const root = instance([
-      { id: "a", path: "library/", graphKinds: ["library"] },
-      { id: "b", path: "elsewhere/library/", graphKinds: ["library"] },
+      { id: "a", path: "library/", graphTypologies: ["library"] },
+      { id: "b", path: "elsewhere/library/", graphTypologies: ["library"] },
     ]);
     expect(() => libraryDirOf(root)).toThrow(/no single answer/);
     rmSync(root, { recursive: true, force: true });

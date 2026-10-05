@@ -3,7 +3,7 @@ page disagree, **the Skill wins and this page is wrong**.
 
 | question | where it is answered |
 |---|---|
-| How an instance declares its directories, and every graph kind | [`directory-conventions`](reference/skill-instructions/directory-conventions.html) |
+| How an instance declares its directories, and every graph typology | [`directory-conventions`](reference/skill-instructions/directory-conventions.html) |
 | What `content`, `context`, `state` and `derived` each promise a consumer | [`content-context-and-state-graphs`](reference/skill-instructions/content-context-and-state-graphs.html) |
 | Actors, Roles, Permissions, and why a Role is a swimlane | [`role-model`](reference/skill-instructions/role-model.html) |
 | Authoring a Workflow activity, and what a bean-marked step performs | [`bpmn-processes`](reference/skill-instructions/bpmn-processes.html) |

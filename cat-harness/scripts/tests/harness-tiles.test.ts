@@ -59,7 +59,7 @@ function giveOwnSite(repo: string, name: string): void {
 
 const host = (extra: Record<string, unknown> = {}) => ({
   name: "host",
-  directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }],
+  directories: [{ id: "beans", path: "beans/", graphTypologies: ["beans"] }],
   ...extra,
 });
 
@@ -159,7 +159,7 @@ describe("the ORDER is the declared dependency stack, bottom to top", () => {
 describe("a link is DECLARATION-driven and PRESENCE-checked", () => {
   test("a declared graph with a published page becomes a link", () => {
     const f = fixture(
-      { host: host(), who: { name: "who", directories: [{ id: "lib", path: "library/", graphKinds: ["library"] }] } },
+      { host: host(), who: { name: "who", directories: [{ id: "lib", path: "library/", graphTypologies: ["library"] }] } },
       ["host/library/who"],
     );
     const who = tilesOf(f).find((t) => t.name === "who")!;
@@ -172,7 +172,7 @@ describe("a link is DECLARATION-driven and PRESENCE-checked", () => {
     // satisfy "not linked" and hide the gap.
     const f = fixture({
       host: host(),
-      who: { name: "who", directories: [{ id: "lib", path: "library/", graphKinds: ["library"] }] },
+      who: { name: "who", directories: [{ id: "lib", path: "library/", graphTypologies: ["library"] }] },
     });
     const who = tilesOf(f).find((t) => t.name === "who")!;
     expect(who.visualisations).toEqual([{ kind: "library", label: "Library", note: "no viewer yet" }]);
@@ -197,7 +197,7 @@ describe("a link is DECLARATION-driven and PRESENCE-checked", () => {
   test("a sibling gets NO page at the elided path — that namespace is the owner's", () => {
     // `/beans/` is the host's. A sibling declaring a `beans` graph must not
     // pick up the host's page as though it were its own.
-    const f = fixture({ host: host(), who: { name: "who", directories: [{ id: "b", path: "b/", graphKinds: ["beans"] }] } }, [
+    const f = fixture({ host: host(), who: { name: "who", directories: [{ id: "b", path: "b/", graphTypologies: ["beans"] }] } }, [
       "beans",
     ]);
     expect(tilesOf(f).find((t) => t.name === "who")!.visualisations).toEqual([{ kind: "beans", label: "Beans", note: "no viewer yet" }]);
@@ -212,8 +212,8 @@ describe("the stats are DERIVED, so they cannot disagree with the tile", () => {
         who: {
           name: "who",
           directories: [
-            { id: "lib", path: "library/", graphKinds: ["library"] },
-            { id: "sch", path: "schemas/", graphKinds: ["schemas"] },
+            { id: "lib", path: "library/", graphTypologies: ["library"] },
+            { id: "sch", path: "schemas/", graphTypologies: ["schemas"] },
           ],
         },
       },
@@ -234,8 +234,8 @@ describe("the stats are DERIVED, so they cannot disagree with the tile", () => {
     const f = fixture({
       host: host({
         directories: [
-          { id: "a", path: "a/", graphKinds: ["beans"] },
-          { id: "b", path: "b/", graphKinds: ["beans"] },
+          { id: "a", path: "a/", graphTypologies: ["beans"] },
+          { id: "b", path: "b/", graphTypologies: ["beans"] },
         ],
       }),
     });
@@ -293,7 +293,7 @@ describe("the tile opens the INSTANCE, not a kind handler's view of it", () => {
     // Owner, 2026-09-21: "cliking shoud go to folio view, not the schema
     // viweer", and `mount-instance-docs`: "who-iris themed at `/who-iris/`".
     const f = fixture(
-      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphKinds: ["schemas"] }] } },
+      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphTypologies: ["schemas"] }] } },
       ["host/schemas/who"],
     );
     giveOwnSite(f.repo, "who");
@@ -305,7 +305,7 @@ describe("the tile opens the INSTANCE, not a kind handler's view of it", () => {
 
   test("an instance WITHOUT its own docs/ falls back to a viewer, and says so", () => {
     const f = fixture(
-      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphKinds: ["schemas"] }] } },
+      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphTypologies: ["schemas"] }] } },
       ["host/schemas/who"],
     );
     const who = tilesOf(f).find((t) => t.name === "who")!;
@@ -326,7 +326,7 @@ describe("the tile opens the INSTANCE, not a kind handler's view of it", () => {
     // The defect the owner reported: the first version took whichever viewer
     // sorted first, which for a schemas-only instance is the schema viewer.
     const f = fixture(
-      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphKinds: ["schemas"] }] } },
+      { host: host(), who: { name: "who", directories: [{ id: "s", path: "s/", graphTypologies: ["schemas"] }] } },
       ["host/schemas/who"],
     );
     giveOwnSite(f.repo, "who");
@@ -341,7 +341,7 @@ describe("an icon is PUBLISHED, never declared — owner: \"broken image on LHS 
   /** An instance declaring an icon at a path under its own site directory. */
   const withIcon = (name: string, extra: Record<string, unknown> = {}) => ({
     name,
-    directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }],
+    directories: [{ id: "beans", path: "beans/", graphTypologies: ["beans"] }],
     icon: "mark",
     // The site directory is read from the DECLARATION, not from disk: this
     // runs before the fixture has written anything, and hardcoding the default
@@ -383,8 +383,8 @@ describe("an icon is PUBLISHED, never declared — owner: \"broken image on LHS 
       host: host(),
       sibling: withIcon("sibling", {
         directories: [
-          { id: "beans", path: "beans/", graphKinds: ["beans"] },
-          { id: "site", path: `${siteDir({ name: "sibling", stub: "sibling" })}/`, graphKinds: ["docs"] },
+          { id: "beans", path: "beans/", graphTypologies: ["beans"] },
+          { id: "site", path: `${siteDir({ name: "sibling", stub: "sibling" })}/`, graphTypologies: ["docs"] },
         ],
       }),
     });
@@ -409,7 +409,7 @@ describe("an icon is PUBLISHED, never declared — owner: \"broken image on LHS 
     const f = fixture({
       host: {
         name: "host",
-        directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }],
+        directories: [{ id: "beans", path: "beans/", graphTypologies: ["beans"] }],
         icon: "mark",
         images: [{ id: "mark", src: "elsewhere/mark.svg", title: "M" }],
       },
@@ -426,8 +426,8 @@ describe("a LABEL identifies its subject, or it is not a label", () => {
     // repository root acting as an instance, and `cat-harness`, whose declared
     // title is the product's name. Both linked `/`.
     const f = fixture({
-      host: { name: "host", title: "Shared", directories: [{ id: "b", path: "b/", graphKinds: ["beans"] }] },
-      other: { name: "other", title: "Shared", directories: [{ id: "b", path: "b/", graphKinds: ["beans"] }] },
+      host: { name: "host", title: "Shared", directories: [{ id: "b", path: "b/", graphTypologies: ["beans"] }] },
+      other: { name: "other", title: "Shared", directories: [{ id: "b", path: "b/", graphTypologies: ["beans"] }] },
     });
     const labels = tilesOf(f).map((t) => t.label);
     expect(new Set(labels).size).toBe(labels.length);
@@ -447,8 +447,8 @@ describe("a LABEL identifies its subject, or it is not a label", () => {
 
   test("`name (name)` is never emitted — it says nothing twice", () => {
     const f = fixture({
-      host: { name: "host", title: "host", directories: [{ id: "b", path: "b/", graphKinds: ["beans"] }] },
-      other: { name: "other", title: "host", directories: [{ id: "b", path: "b/", graphKinds: ["beans"] }] },
+      host: { name: "host", title: "host", directories: [{ id: "b", path: "b/", graphTypologies: ["beans"] }] },
+      other: { name: "other", title: "host", directories: [{ id: "b", path: "b/", graphTypologies: ["beans"] }] },
     });
     const labels = tilesOf(f).map((t) => t.label);
     expect(labels).toContain("host");
@@ -476,7 +476,7 @@ describe("a LABEL identifies its subject, or it is not a label", () => {
 describe("a render-exempt instance links to one of its own files, as published", () => {
   const exempt = (reachableAt?: string) => ({
     name: "floor",
-    directories: [{ id: "skills", path: "skills/", graphKinds: ["skills"] }],
+    directories: [{ id: "skills", path: "skills/", graphTypologies: ["skills"] }],
     renderExemption: {
       of: ["visualiser"],
       reason: "the bottom of the stack renders nothing",
@@ -567,7 +567,7 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
 
   const withViewer = (ref: string) => ({
     name: "who",
-    directories: [{ id: "lib", path: "library/", graphKinds: ["library"], coverage: { visualiser: ref } }],
+    directories: [{ id: "lib", path: "library/", graphTypologies: ["library"], coverage: { visualiser: ref } }],
   });
 
   test("a resolving, published visualiser links its kind at the path it names", () => {
@@ -649,8 +649,8 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
         decorate({
           name: "who",
           directories: [
-            { id: "lib", path: "library/", graphKinds: ["library"], coverage: { visualiser: ref } },
-            { id: "up", path: "uploads/", graphKinds: ["uploads"] },
+            { id: "lib", path: "library/", graphTypologies: ["library"], coverage: { visualiser: ref } },
+            { id: "up", path: "uploads/", graphTypologies: ["uploads"] },
           ],
         }),
         null,
@@ -673,7 +673,7 @@ describe("a render-exempt instance is not missing what it was excused from", () 
    * excused from exactly that, which is the noise the bean names. */
   const exempt = (extra: Record<string, unknown> = {}) => ({
     name: "floor",
-    directories: [{ id: "skills", path: "skills/", graphKinds: ["skills"] }],
+    directories: [{ id: "skills", path: "skills/", graphTypologies: ["skills"] }],
     renderExemption: {
       of: ["visualiser"],
       reason: "the bottom of the stack renders nothing",
@@ -720,7 +720,7 @@ describe("a render-exempt instance is not missing what it was excused from", () 
   test("an instance with NO exemption is unaffected", () => {
     const f = fixture({
       host: host(),
-      who: { name: "who", directories: [{ id: "lib", path: "library/", graphKinds: ["library"] }] },
+      who: { name: "who", directories: [{ id: "lib", path: "library/", graphTypologies: ["library"] }] },
     });
     const who = tilesOf(f).find((t) => t.name === "who")!;
     expect(who.findings.join(" ")).toContain("no published viewer");
@@ -751,7 +751,7 @@ describe("an icon's URL is the SITE DIRECTORY's mount, not the instance's front 
     name,
     icon: "mark",
     images: [{ id: "mark", src: `${siteDir({ name })}/assets/m.svg`, title: "M", description: "d" }],
-    directories: [{ id: `${name}-site`, path: `${siteDir({ name })}/`, graphKinds: [kind] }],
+    directories: [{ id: `${name}-site`, path: `${siteDir({ name })}/`, graphTypologies: [kind] }],
   });
 
   test("a mounted instance addresses its icon under its site dir's KIND", () => {
@@ -790,7 +790,7 @@ describe("an icon's URL is the SITE DIRECTORY's mount, not the instance's front 
         images: [{ id: "mark", src: `${siteDir({ name: "guest" })}/assets/m.svg`, title: "M", description: "d" }],
         // A registered kind, on a path that is NOT the site directory — so the
         // site dir itself is classified by nothing.
-        directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }],
+        directories: [{ id: "beans", path: "beans/", graphTypologies: ["beans"] }],
       },
     });
     giveOwnSite(f.repo, "guest");
@@ -886,7 +886,7 @@ describe("one name per destination (bean `ob3m` finding 6)", () => {
     const f = fixture(
       {
         host: host(),
-        who: { name: "who", directories: [{ id: "s", path: "schemas/", graphKinds: ["schemas", "cat-harness"] }] },
+        who: { name: "who", directories: [{ id: "s", path: "schemas/", graphTypologies: ["schemas", "cat-harness"] }] },
       },
       ["host/schemas/who", "host/cat-harness/who"],
     );
@@ -903,7 +903,7 @@ describe("one name per destination (bean `ob3m` finding 6)", () => {
   test("an INSTANTIATED harness with no folio opens its landing section, not a graph's viewer", () => {
     // Bootstrap's row linked `/processes/` and named that page "Bootstrap".
     const f = fixture(
-      { host: host(), who: { name: "who", directories: [{ id: "p", path: "processes/", graphKinds: ["processes"] }] } },
+      { host: host(), who: { name: "who", directories: [{ id: "p", path: "processes/", graphTypologies: ["processes"] }] } },
       ["host/processes/who"],
     );
     writeFileSync(join(f.repo, "who.config.json"), "{}");
@@ -917,8 +917,8 @@ describe("one name per destination (bean `ob3m` finding 6)", () => {
 
 describe("subgraphsOf — every declared graph, marked local or remote (603s)", () => {
   const dirs = [
-    { id: "library", path: "who/library/", graphKinds: ["library"] },
-    { id: "docs", path: "who/docs/", graphKinds: ["docs"] },
+    { id: "library", path: "who/library/", graphTypologies: ["library"] },
+    { id: "docs", path: "who/docs/", graphTypologies: ["docs"] },
   ];
 
   test("lists the declared directories as LOCAL, in declared order, with their paths", () => {
@@ -931,7 +931,7 @@ describe("subgraphsOf — every declared graph, marked local or remote (603s)", 
     const sha = "0123456789abcdef0123456789abcdef01234567";
     const rows = subgraphsOf(
       {
-        remoteGraphs: [{ id: "upstream", url: "https://example.org/kg", graphKinds: ["skills"] }],
+        remoteGraphs: [{ id: "upstream", url: "https://example.org/kg", graphTypologies: ["skills"] }],
         subscriptions: [{ id: "smart", repository: "WorldHealthOrganization/smart-base", ref: sha, subgraphs: ["library"] }],
       } as Parameters<typeof subgraphsOf>[0],
       dirs,
@@ -957,7 +957,10 @@ describe("every harness's navbar MARK is resolved once — bean `2vpn`", () => {
   // needs to be consistent and consolidated"*. who-iris's mark was a registry
   // glyph, and the resolver only knew theme cards and declared icons.
   test("an instance with its own registry glyph and no image carries the GLYPH as its mark", () => {
-    const f = fixture({ "smart-base": { name: "smart-base", directories: [] }, host: host() });
+    // The glyph is the declaration's own `avatar` (sod4 #4), so the fixture
+    // carries it rather than leaning on the real checkout's smart-base.json.
+    const avatar = { glyph: "M0 0h1v1z", tone: 210, reads: "test" };
+    const f = fixture({ "smart-base": { name: "smart-base", directories: [], avatar }, host: host() });
     const sb = tilesOf(f).find((t) => t.name === "smart-base")!;
     expect(sb.mark?.glyph).toMatch(/^M/);
     expect(sb.mark?.src).toBeUndefined();

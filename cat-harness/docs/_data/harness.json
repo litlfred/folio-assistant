@@ -141,7 +141,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 898,
+      "count": 912,
       "unit": "beans"
     },
     {
@@ -479,7 +479,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 19
         },
         {
@@ -749,8 +749,6 @@
         "close",
         "todos",
         "beans",
-        "processes",
-        "kg",
         "fsh-guts",
         "launcher"
       ]
@@ -785,7 +783,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 7
         },
         {
@@ -807,10 +805,9 @@
         },
         {
           "kind": "fhir-artifact-index",
-          "path": "/smart-trust/",
+          "path": "/smart-trust/artifacts.html",
           "readOnly": true,
-          "label": "smart-trust",
-          "sameAs": "smart-trust"
+          "label": "FHIR artefact index"
         },
         {
           "kind": "ig-ast",
@@ -894,8 +891,6 @@
         "close",
         "todos",
         "beans",
-        "processes",
-        "kg",
         "fsh-guts",
         "launcher"
       ]
@@ -929,7 +924,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 4
         },
         {
@@ -946,10 +941,9 @@
         },
         {
           "kind": "fhir-artifact-index",
-          "path": "/smart-immunizations/",
+          "path": "/smart-immunizations/artifacts.html",
           "readOnly": true,
-          "label": "smart-immunizations",
-          "sameAs": "smart-immunizations"
+          "label": "FHIR artefact index"
         },
         {
           "kind": "ig-pages",
@@ -998,8 +992,6 @@
         "close",
         "todos",
         "beans",
-        "processes",
-        "kg",
         "fsh-guts",
         "launcher"
       ]
@@ -1031,7 +1023,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 1
         },
         {
@@ -1064,8 +1056,6 @@
         "close",
         "todos",
         "beans",
-        "processes",
-        "kg",
         "fsh-guts",
         "launcher"
       ]
@@ -1099,7 +1089,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 16
         },
         {
@@ -1136,10 +1126,9 @@
         },
         {
           "kind": "fhir-artifact-index",
-          "path": "/smart-base/",
+          "path": "/smart-base/artifacts.html",
           "readOnly": true,
-          "label": "SMART Base",
-          "sameAs": "smart-base"
+          "label": "FHIR artefact index"
         },
         {
           "kind": "ig-pages",
@@ -1341,8 +1330,6 @@
         "close",
         "todos",
         "beans",
-        "processes",
-        "kg",
         "fsh-guts",
         "launcher"
       ]
@@ -1397,7 +1384,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 12
         },
         {
@@ -1592,8 +1579,6 @@
         "close",
         "todos",
         "beans",
-        "processes",
-        "kg",
         "fsh-guts",
         "launcher"
       ]
@@ -1627,7 +1612,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 16
         },
         {
@@ -1656,11 +1641,6 @@
           "kind": "content-adapters",
           "note": "no viewer yet",
           "label": "Content adapters"
-        },
-        {
-          "kind": "kinds",
-          "note": "no viewer yet",
-          "label": "Graph kinds"
         },
         {
           "kind": "library",
@@ -1714,6 +1694,11 @@
           "label": "Translation sources"
         },
         {
+          "kind": "typologies",
+          "note": "no viewer yet",
+          "label": "Graph typologies"
+        },
+        {
           "kind": "voices",
           "path": "/cat-harness/voices/folio-assistant-sci/",
           "label": "Voices"
@@ -1745,7 +1730,7 @@
           "path": "folio-assistant-sci/translations/"
         },
         {
-          "id": "folio-assistant-sci-block-kinds",
+          "id": "folio-assistant-sci-block-typologies",
           "kinds": [
             "block-kinds"
           ],
@@ -1761,12 +1746,12 @@
           "path": "folio-assistant-sci/content-adapters/"
         },
         {
-          "id": "folio-assistant-sci-kinds",
+          "id": "folio-assistant-sci-typologies",
           "kinds": [
-            "kinds"
+            "typologies"
           ],
           "where": "local",
-          "path": "folio-assistant-sci/kinds/"
+          "path": "folio-assistant-sci/typologies/"
         },
         {
           "id": "library",
@@ -1866,15 +1851,13 @@
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 10 graph(s) with no published viewer — attestations, block-kinds, code, content-adapters, kinds, pipeline-plugins, qa, qa-checkers, tools, translation-sources. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 10 graph(s) with no published viewer — attestations, block-kinds, code, content-adapters, pipeline-plugins, qa, qa-checkers, tools, translation-sources, typologies. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
         "close",
         "todos",
         "beans",
-        "processes",
-        "kg",
         "fsh-guts",
         "launcher"
       ]
@@ -1908,7 +1891,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 9
         },
         {
@@ -1922,11 +1905,6 @@
           "kind": "code",
           "note": "no viewer yet",
           "label": "Code"
-        },
-        {
-          "kind": "kinds",
-          "note": "no viewer yet",
-          "label": "Graph kinds"
         },
         {
           "kind": "library",
@@ -1959,6 +1937,11 @@
           "label": "Translation sources"
         },
         {
+          "kind": "typologies",
+          "note": "no viewer yet",
+          "label": "Graph typologies"
+        },
+        {
           "kind": "validators",
           "note": "no viewer yet",
           "label": "Validators"
@@ -1982,12 +1965,12 @@
           "path": "fhir-harness/validators/"
         },
         {
-          "id": "fhir-harness-kinds",
+          "id": "fhir-harness-typologies",
           "kinds": [
-            "kinds"
+            "typologies"
           ],
           "where": "local",
-          "path": "fhir-harness/kinds/"
+          "path": "fhir-harness/typologies/"
         },
         {
           "id": "library",
@@ -2039,7 +2022,7 @@
         }
       ],
       "findings": [
-        "fhir-harness: declares 6 graph(s) with no published viewer — code, kinds, qa, tools, translation-sources, validators. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: declares 6 graph(s) with no published viewer — code, qa, tools, translation-sources, typologies, validators. Declared and not rendered is a gap, not a dead link.",
         "fhir-harness: a viewer is published at /cat-harness/schemas/fhir-harness/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it.",
         "fhir-harness: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/fhir-harness/) rather than the instance's own themed root."
       ],
@@ -2047,8 +2030,6 @@
         "close",
         "todos",
         "beans",
-        "processes",
-        "kg",
         "fsh-guts",
         "launcher"
       ]
@@ -2057,7 +2038,7 @@
       "name": "folio-assistant-core",
       "title": "folio-assistant-core",
       "label": "folio-assistant-core",
-      "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph kind itself.",
+      "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph typology itself.",
       "footer": false,
       "needs": [
         "cat-harness",
@@ -2111,7 +2092,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 16
         },
         {
@@ -2146,11 +2127,6 @@
           "kind": "glossary",
           "path": "/glossary/",
           "label": "Glossary"
-        },
-        {
-          "kind": "kinds",
-          "note": "no viewer yet",
-          "label": "Graph kinds"
         },
         {
           "kind": "library",
@@ -2193,6 +2169,11 @@
           "label": "Translation sources"
         },
         {
+          "kind": "typologies",
+          "note": "no viewer yet",
+          "label": "Graph typologies"
+        },
+        {
           "kind": "validators",
           "note": "no viewer yet",
           "label": "Validators"
@@ -2213,7 +2194,7 @@
           "path": "folio-assistant-core/translations/"
         },
         {
-          "id": "folio-assistant-core-block-kinds",
+          "id": "folio-assistant-core-block-typologies",
           "kinds": [
             "block-kinds"
           ],
@@ -2229,12 +2210,12 @@
           "path": "folio-assistant-core/validators/"
         },
         {
-          "id": "folio-assistant-core-kinds",
+          "id": "folio-assistant-core-typologies",
           "kinds": [
-            "kinds"
+            "typologies"
           ],
           "where": "local",
-          "path": "folio-assistant-core/kinds/"
+          "path": "folio-assistant-core/typologies/"
         },
         {
           "id": "core-schemas",
@@ -2343,15 +2324,13 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 8 graph(s) with no published viewer — block-kinds, code, folio, kinds, qa, tools, translation-sources, validators. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: declares 8 graph(s) with no published viewer — block-kinds, code, folio, qa, tools, translation-sources, typologies, validators. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
         "close",
         "todos",
         "beans",
-        "processes",
-        "kg",
         "fsh-guts",
         "launcher"
       ]
@@ -2360,7 +2339,7 @@
       "name": "cat-openapi",
       "title": "C@T OpenAPI",
       "label": "C@T OpenAPI",
-      "description": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph kind `openapi`, and gives every operation in them a page and an IRI, rendered in the browser from the served document.",
+      "description": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph typology `openapi`, and gives every operation in them a page and an IRI, rendered in the browser from the served document.",
       "footer": false,
       "needs": [
         "cat-harness"
@@ -2385,7 +2364,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 4
         },
         {
@@ -2401,14 +2380,14 @@
           "label": "Code"
         },
         {
-          "kind": "kinds",
-          "note": "no viewer yet",
-          "label": "Graph kinds"
-        },
-        {
           "kind": "schemas",
           "path": "/cat-harness/schemas/cat-openapi/",
           "label": "Schemas"
+        },
+        {
+          "kind": "typologies",
+          "note": "no viewer yet",
+          "label": "Graph typologies"
         },
         {
           "kind": "validators",
@@ -2426,12 +2405,12 @@
           "path": "cat-openapi/validators/"
         },
         {
-          "id": "cat-openapi-kinds",
+          "id": "cat-openapi-typologies",
           "kinds": [
-            "kinds"
+            "typologies"
           ],
           "where": "local",
-          "path": "cat-openapi/kinds/"
+          "path": "cat-openapi/typologies/"
         },
         {
           "id": "cat-openapi-schemas",
@@ -2451,15 +2430,13 @@
         }
       ],
       "findings": [
-        "cat-openapi: declares 3 graph(s) with no published viewer — code, kinds, validators. Declared and not rendered is a gap, not a dead link.",
+        "cat-openapi: declares 3 graph(s) with no published viewer — code, typologies, validators. Declared and not rendered is a gap, not a dead link.",
         "cat-openapi: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/cat-openapi/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
         "close",
         "todos",
         "beans",
-        "processes",
-        "kg",
         "fsh-guts",
         "launcher"
       ]
@@ -2492,7 +2469,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 1
         },
         {
@@ -2565,8 +2542,6 @@
         "close",
         "todos",
         "beans",
-        "processes",
-        "kg",
         "fsh-guts",
         "launcher"
       ]
@@ -2639,7 +2614,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 29
         },
         {
@@ -3227,8 +3202,6 @@
         "close",
         "todos",
         "beans",
-        "processes",
-        "kg",
         "fsh-guts",
         "launcher"
       ]
@@ -3262,7 +3235,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 5
         },
         {
@@ -3348,8 +3321,6 @@
         "close",
         "todos",
         "beans",
-        "processes",
-        "kg",
         "fsh-guts",
         "launcher"
       ]
@@ -3409,7 +3380,7 @@
         },
         {
           "id": "kinds",
-          "label": "declared graph kinds",
+          "label": "declared graph typologies",
           "value": 5
         },
         {
@@ -3495,8 +3466,6 @@
         "close",
         "todos",
         "beans",
-        "processes",
-        "kg",
         "fsh-guts",
         "launcher"
       ]
@@ -3507,16 +3476,12 @@
       "close",
       "todos",
       "beans",
-      "processes",
-      "kg",
       "fsh-guts",
       "launcher"
     ],
     "hrefs": {
       "todos": "/todos/",
       "beans": "/beans/",
-      "processes": "/processes/",
-      "kg": "/../../cat-harness/",
       "fsh-guts": "/fsh-guts/"
     },
     "notes": {},
@@ -3679,6 +3644,11 @@
           "path": "/cat-harness/auto-docs/index/docs/smart-immunizations-docs/"
         },
         {
+          "kind": "fhir-artifact-index",
+          "label": "FHIR artefact index",
+          "path": "/smart-immunizations/artifacts.html"
+        },
+        {
           "kind": "qa",
           "label": "QA",
           "note": "no viewer yet"
@@ -3768,6 +3738,11 @@
           "path": "/cat-harness/auto-docs/index/docs/smart-trust-docs/"
         },
         {
+          "kind": "fhir-artifact-index",
+          "label": "FHIR artefact index",
+          "path": "/smart-trust/artifacts.html"
+        },
+        {
           "kind": "ig-ast",
           "label": "IG AST",
           "note": "no viewer yet"
@@ -3813,6 +3788,11 @@
           "kind": "external-schema",
           "label": "External schemas",
           "note": "no viewer yet"
+        },
+        {
+          "kind": "fhir-artifact-index",
+          "label": "FHIR artefact index",
+          "path": "/smart-base/artifacts.html"
         },
         {
           "kind": "library",
@@ -3992,6 +3972,15 @@
       },
       {
         "key": "alsoWritten",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
+        "key": "avatar",
         "skills": [
           {
             "name": "harness-tiles",
@@ -4317,6 +4306,10 @@
             "summary": "This repository as a working instance: the platform and the folios it hosts."
           },
           {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
+          },
+          {
             "key": "assets",
             "summary": "2: agent-instructions, instance-readme"
           },
@@ -4359,6 +4352,10 @@
             "summary": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconst…"
           },
           {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
+          },
+          {
             "key": "assets",
             "summary": "2: agent-instructions, instance-readme"
           },
@@ -4399,6 +4396,10 @@
           {
             "key": "description",
             "summary": "WHO SMART Immunizations (smart.who.int.immunizations) v0.2.0, FHIR 4.0.1 — the published …"
+          },
+          {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
           },
           {
             "key": "assets",
@@ -4447,6 +4448,10 @@
             "summary": "The L3 layer — a WHO SMART Guideline's FHIR Implementation Guide, and what one owes beyon…"
           },
           {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
+          },
+          {
             "key": "assets",
             "summary": "2: agent-instructions, instance-readme"
           },
@@ -4491,6 +4496,10 @@
           {
             "key": "description",
             "summary": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodo…"
+          },
+          {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
           },
           {
             "key": "assets",
@@ -4541,6 +4550,10 @@
           {
             "key": "description",
             "summary": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057…"
+          },
+          {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
           },
           {
             "key": "images",
@@ -4601,6 +4614,10 @@
             "summary": "Scientific source material used by folios that formalise mathematics, and the methodologi…"
           },
           {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
+          },
+          {
             "key": "assets",
             "summary": "2: agent-instructions, readme"
           },
@@ -4651,6 +4668,10 @@
             "summary": "The bare FHIR IG pipeline — SUSHI, the IG Publisher, Jekyll assembly and publication — wi…"
           },
           {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
+          },
+          {
             "key": "assets",
             "summary": "2: agent-instructions, instance-readme"
           },
@@ -4668,7 +4689,7 @@
           },
           {
             "key": "directories",
-            "summary": "9: fhir-harness-translations, fhir-harness-validators, fhir-harness-kinds, library, fhir-ig-…"
+            "summary": "9: fhir-harness-translations, fhir-harness-validators, fhir-harness-typologies, library, fhi…"
           },
           {
             "key": "needs",
@@ -4701,6 +4722,10 @@
             "summary": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio…"
           },
           {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
+          },
+          {
             "key": "assets",
             "summary": "2: agent-instructions, readme"
           },
@@ -4718,7 +4743,7 @@
           },
           {
             "key": "directories",
-            "summary": "16: folio-assistant-core-translations, folio-assistant-core-block-kinds, folio-assistant-core…"
+            "summary": "16: folio-assistant-core-translations, folio-assistant-core-block-typologies, folio-assistant…"
           },
           {
             "key": "stickies",
@@ -4756,7 +4781,11 @@
           },
           {
             "key": "description",
-            "summary": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph kind `openapi`, and give…"
+            "summary": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph typology `openapi`, and …"
+          },
+          {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
           },
           {
             "key": "assets",
@@ -4776,7 +4805,7 @@
           },
           {
             "key": "directories",
-            "summary": "4: cat-openapi-validators, cat-openapi-kinds, cat-openapi-schemas, cat-openapi-scripts"
+            "summary": "4: cat-openapi-validators, cat-openapi-typologies, cat-openapi-schemas, cat-openapi-scripts"
           },
           {
             "key": "needs",
@@ -4807,6 +4836,10 @@
           {
             "key": "description",
             "summary": "What implements the harness's Tool definitions: the MCP servers, their tool registrars an…"
+          },
+          {
+            "key": "avatar",
+            "summary": "{ glyph, tone, reads }"
           },
           {
             "key": "assets",
@@ -4888,7 +4921,7 @@
           },
           {
             "key": "navbarIcons",
-            "summary": "close, todos, beans, processes, kg, fsh-guts, launcher"
+            "summary": "close, todos, beans, fsh-guts, launcher"
           },
           {
             "key": "glassStrip",

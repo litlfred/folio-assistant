@@ -25,7 +25,7 @@ The table's labels are in the source language: it reports counts per scheme, com
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>3293</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>3293</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>3322</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>3322</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -96,7 +96,7 @@ be a term this corpus is right to coin.</p>
 
 | 术语 | 替代标签 | 定义 |
 |---|---|---|
-| **证据质量** | 证据确定性; 对效应估计值的信心 | 在指南制定中，指对效应估计值足以支持某一具体决定或推荐意见的信心程度。分为高、中、低、极低四级。 |
+| **证据质量** | 证据确定性; 对效应估计值的信心 | 在指南制定的背景下，对效应估计值足以支持某一特定决定或推荐意见的信心。评定为高、中、低或极低。 |
 
 ## 来源
 

@@ -17,10 +17,17 @@
  * `.claude/skills/local/*.json`, while the tree holds 126 skill `.md` files.
  * Package skills appear in it as bare name lists inside `registry.packages`,
  * so the thing an agent actually reads — the instruction body's front matter —
- * is absent. BPMN processes, DMN tables, the graph-kind registry and the
+ * is absent. BPMN processes, DMN tables, the graph-typology registry and the
  * directory declaration are absent entirely.
  *
  * This exports the graph; the registry stays what it is, a runtime manifest.
+ *
+ * ## The publication rules are not here
+ *
+ * Which instance's document is published where, under which base, with which
+ * schema, for how long a moved `@id` keeps a tombstone, and what is stripped:
+ * `skills/kg/kg-core/instance-publication.md` §"What each instance publishes"
+ * (bean `4ak5` item 4). This module carries the mechanics those rules need.
  *
  * ## The edges are the point
  *
@@ -78,17 +85,17 @@ import { NS_PREFIXES, propertyIri, termIri } from "../schemas/namespaces.js";
 import { applyVocabMapping, contextBindings, vocabMapping, type VocabMapping } from "../schemas/vocab-mapping.js";
 import { STANDARD_PREFIXES } from "../schemas/vocab-mapping-fhir.js";
 import { readPolicyGrants } from "../schemas/odrl.js";
-import { KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
+import { KG_CONTENT_GRAPH_TYPOLOGIES, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
 import { type RoleDef, actorsDir, capabilitiesDir, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
   artefactStub,
-  defaultGraphKinds,
+  defaultGraphTypologies,
   findInstanceRoot,
-  graphKindIri,
+  graphTypologyIri,
   isPublishedDirectory,
-  isPublishedGraphKind,
+  isPublishedGraphTypology,
   isPublishedSchemaModule,
   isPublishedSkill,
   forgeLocation,
@@ -96,7 +103,7 @@ import {
   readDeclaration,
   renderingPath,
   siteDirFor,
-  UNPUBLISHED_GRAPH_KINDS,
+  UNPUBLISHED_GRAPH_TYPOLOGIES,
 } from "../schemas/cat-harness.js";
 import { firstHeading, frontMatter } from "./front-matter.js";
 import { packageDirsIn } from "./skill-topics.js";
@@ -117,8 +124,15 @@ import { auditSchemaNodes } from "./schema-nodes.js";
 import { loadSpecs } from "./external-schemas.js";
 import { declaredNamespaces } from "../schemas/external-schema.js";
 import { toolsOf } from "../tools/discover.js";
-import { declaresOwnCanonical } from "./instance-exports.js";
-import { skillIoIri } from "./harness-schema-export.js";
+import { declaresOwnCanonical, publishesInstanceSchema } from "./instance-exports.js";
+import {
+  buildInstanceSchemas,
+  instanceSchemaIndexIri,
+  scanInstanceZodSchemas,
+  skillIoIri,
+  type InstanceSchemaExport,
+  type ZodSchemaScan,
+} from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
 import {
   QA_RESULTS_DIR,
@@ -232,10 +246,10 @@ function findBpmnDirs(root: string = ROOT, scope: CorpusScope = corpusScopeFor(r
 
 // ── JSON-LD context ─────────────────────────────────────────────
 
-/** The namespace a declared graph kind's nodes belong in. */
-/** A kind's individual, `<layer ns>graphKind/<name>` — the registry's one answer. */
-export function graphKindId(kindName: string): string {
-  return graphKindIri(kindName, defaultGraphKinds.get(kindName));
+/** The namespace a declared graph typology's nodes belong in. */
+/** A kind's individual, `<layer ns>graphTypology/<name>` — the registry's one answer. */
+export function graphTypologyId(kindName: string): string {
+  return graphTypologyIri(kindName, defaultGraphTypologies.get(kindName));
 }
 
 /** A type IRI with whichever folio namespace it carries removed. */
@@ -414,7 +428,7 @@ export function buildContext(): Record<string, unknown> {
 
     // ── The standards a graph is written in, and what validates it ──────
     //
-    // Owner, 2026-09-27, looking at the `processes` GraphKind: *"i would have
+    // Owner, 2026-09-27, looking at the `processes` GraphTypology: *"i would have
     // expected to see schemas more accessible (e.g. bpmn, or others) when
     // viewing"*. The registry knew `processes` is BPMN and the exporter
     // dropped it. `conformsTo` and `validator` are LINKS to nodes this
@@ -477,7 +491,7 @@ export function buildContext(): Record<string, unknown> {
     // (`bpmn:UserTask`), NOT an IRI: coercing it to `@id` would resolve it
     // against this document and mint `<base>/bpmn:UserTask`, which nothing
     // serves. `nodeKind` was emitted as the bare term `kind`, which this
-    // document already uses in another sense -- a GraphKind is a "kind" too --
+    // document already uses in another sense -- a GraphTypology is a "kind" too --
     // so the term now says which one it is.
     bpmnType: termIri("bpmnType"),
     // Convention terms (bean `3190`). All LITERALS — none is a link, so none
@@ -876,6 +890,13 @@ interface Export {
   /** On a preview: the canonical document this one is an alternate of. */
   canonicalDocument?: string;
   /**
+   * The instance's schema index — `<stub>/schema/<stub>.schema.json` at its
+   * published identity — for an instance `instance-exports.ts` publishes one
+   * for (bean `4ak5` item 1). `dcterms:conformsTo`. Absent for the host, whose
+   * `<stub>.schema.json` is the shared declaration schema itself.
+   */
+  conformsTo?: string;
+  /**
    * Instance-bound collectors that were NOT run, for a foreign instance.
    *
    * Carried so a reader can tell *"this instance has no tools"* from *"tools
@@ -1078,7 +1099,9 @@ function collectSkills(
   // contract under its own instance's `schemas/skills/` (placement PR1, bean
   // `ybwt`), which this instance's schema export does not publish — so minting
   // an IRI under this base would name a path nothing serves, the defect the
-  // published-paths test exists for. Left unset until that instance publishes.
+  // published-paths test exists for. That instance DOES publish it now, under
+  // its own `<stub>/schema/` (bean `4ak5` item 1, `publishedInstanceSchemas`);
+  // pointing this edge there is not yet done, so it is still left unset.
   const own = resolve(ROOT);
   const contractIri = (instanceRoot: string, ref: string): string | undefined => {
     if (isExternalContract(ref)) return ref;
@@ -1097,7 +1120,7 @@ function collectSkills(
   // publishing it advertises the trashcan. Bean `folio-assistant-uv09`.
   //
   // TWO inputs, deliberately. `isPublishedSkill` matches the NAME against
-  // `UNPUBLISHED_GRAPH_KINDS`; `unpublishedSkills` reads a skill's own
+  // `UNPUBLISHED_GRAPH_TYPOLOGIES`; `unpublishedSkills` reads a skill's own
   // `published: false`. Its own note asked for the second — *"if that ever
   // stops being true this needs its own list, not a cleverer derivation"* —
   // and the declaration is that list, kept with the file rather than in
@@ -1222,7 +1245,7 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
   const nodes: Node[] = [];
   // What an actor may do lives in the ODRL policies since issue #1180, not on
   // the actor file. Restored here so `permissionName` still says what it held.
-  // declared-path-literal: the convention home of the policies graph kind,
+  // declared-path-literal: the convention home of the policies graph typology,
   // resolved beside the actor registry this function already reads by path.
   const grants = readPolicyGrants(join(ROOT, "policies"));
   for (const [group, type] of Object.entries(REGISTRY_GROUPS)) {
@@ -1688,7 +1711,7 @@ async function collectProcesses(
     // mixed `["schemas","cat-harness"]` entries the moment the split landed —
     // a declared-but-absent skills directory would have stopped being
     // reported, which is the `dh4f` shape this very loop exists to catch.
-    if (!d.graphKinds.some((k) => KG_CONTENT_GRAPH_KINDS.includes(k))) continue;
+    if (!d.graphTypologies.some((k) => KG_CONTENT_GRAPH_TYPOLOGIES.includes(k))) continue;
     if (!existsSync(d.absPath)) {
       problems.push(`declared knowledge-graph directory is absent: ${d.path}`);
     }
@@ -1773,7 +1796,7 @@ async function collectProcesses(
         // workflow page's row text is this, so a sentence about a process is
         // written once, in the process.
         //
-        // A text that NAMES an unpublished graph kind is not carried — the
+        // A text that NAMES an unpublished graph typology is not carried — the
         // owner's 2026-09-19 rule that references to `fsh-guts` are stripped
         // before publication covers prose as much as edges. The first
         // sentence is kept when it alone is clean, so the row still says what
@@ -1873,10 +1896,10 @@ async function collectProcesses(
   return nodes;
 }
 
-/** `summary` and `description` from a diagram's documentation, minus any text naming an unpublished graph kind. */
+/** `summary` and `description` from a diagram's documentation, minus any text naming an unpublished graph typology. */
 function publishableDocumentation(doc: string | undefined): { summary?: string; description?: string } {
   if (!doc) return {};
-  const clean = (t: string): boolean => !UNPUBLISHED_GRAPH_KINDS.some((k) => t.includes(k));
+  const clean = (t: string): boolean => !UNPUBLISHED_GRAPH_TYPOLOGIES.some((k) => t.includes(k));
   const summary = firstSentence(doc);
   return { ...(clean(summary) ? { summary } : {}), ...(clean(doc) ? { description: doc } : {}) };
 }
@@ -1890,7 +1913,7 @@ export function firstSentence(s: string, max = 260): string {
 }
 
 /**
- * The graph kinds themselves, as nodes.
+ * The graph typologies themselves, as nodes.
  *
  * This is the self-describing half. `holdsGraph` on a directory points at a
  * kind, and without these the vocabulary a reader needs in order to interpret
@@ -1898,7 +1921,7 @@ export function firstSentence(s: string, max = 260): string {
  * published graph carries its own terms: follow `holdsGraph` and you arrive at
  * a node saying what that kind holds and whether it renders.
  *
- * Note this imports `folio-graph-kind`, so the export sees the kind
+ * Note this imports `folio-graph-typology`, so the export sees the kind
  * `folio-assist-core` registers and not just the harness's four. It takes no
  * document IRI because these nodes are minted under the NAMESPACE: a graph
  * kind means the same thing in a preview and in the canonical graph, so its
@@ -2020,7 +2043,7 @@ function collectTools(doc: string, base: string, problems: string[], scope: Corp
  *
  * ## Why this did not exist until 2026-09-19
  *
- * `harness.json` has declared `schemas/` with `graphKinds: ["schemas", "kg"]`
+ * `harness.json` has declared `schemas/` with `graphTypologies: ["schemas", "kg"]`
  * since Phase 0.3, and the export produced **zero** nodes of that kind —
  * measured on `814b693e`, 11 node types and none a schema. So the instance's
  * own declaration promised a graph nothing backed: a consumer resolving the
@@ -2123,7 +2146,7 @@ function diagramFiles(dir: string): string[] {
 }
 
 /**
- * Link graph kinds and processes to the standards and schemas behind them.
+ * Link graph typologies and processes to the standards and schemas behind them.
  *
  * A POST-PASS over the built graph, not a field set in each collector, for
  * one reason: a link may only be written when its target is IN this graph
@@ -2131,12 +2154,12 @@ function diagramFiles(dir: string): string[] {
  * omitted node is the dangling-link defect). So each link is written only
  * after its target is found among the emitted nodes.
  *
- * - A `GraphKind` `conformsTo` the specification its registry `schema` names
+ * - A `GraphTypology` `conformsTo` the specification its registry `schema` names
  *   (`external-schemas/<id>.json`), plus every specification whose namespace
  *   a diagram in one of its declared directories binds. That is how
  *   `processes` reaches DMN 1.3 as well as BPMN 2.0: the registry names one,
  *   and the decision tables under it declare the other.
- * - A `GraphKind` `validator` links to the Schema node for its registry
+ * - A `GraphTypology` `validator` links to the Schema node for its registry
  *   `validator` module; one with no node here keeps the reference as text,
  *   and `validatorNotApplicable` says why a kind has none.
  * - A `Process` or `Decision` `conformsTo` the specification its own file's
@@ -2165,8 +2188,8 @@ function linkSchemas(graph: Node[], root: string = ROOT): void {
   };
 
   for (const n of graph) {
-    if (n["@type"] === termIri("GraphKind") && typeof n.name === "string") {
-      const def = defaultGraphKinds.get(n.name);
+    if (n["@type"] === termIri("GraphTypology") && typeof n.name === "string") {
+      const def = defaultGraphTypologies.get(n.name);
       if (!def) continue;
       const links = new Set<string>();
       const named = def.schema && /^external-schemas\/([a-z0-9.-]+)\.json$/.exec(def.schema)?.[1];
@@ -2271,18 +2294,18 @@ function collectDeclaredRoles(
   }));
 }
 
-function collectGraphKinds(root: string = ROOT): Node[] {
-  // `fsh-guts` and anything else in UNPUBLISHED_GRAPH_KINDS never reaches a
+function collectGraphTypologies(root: string = ROOT): Node[] {
+  // `fsh-guts` and anything else in UNPUBLISHED_GRAPH_TYPOLOGIES never reaches a
   // published graph. Filtered HERE, where the document is built, rather than
   // at upload: a strip that runs only on the happy path leaves a graph that
   // LOOKS clean and is not. Bean `folio-assistant-uv09`.
-  const published = defaultGraphKinds.names().filter(isPublishedGraphKind);
+  const published = defaultGraphTypologies.names().filter(isPublishedGraphTypology);
 
   // ── EMIT ONLY WHAT THIS INSTANCE DECLARES.
   //
-  // `defaultGraphKinds` is the UNIVERSAL registry — every kind any layer
+  // `defaultGraphTypologies` is the UNIVERSAL registry — every kind any layer
   // defines. Emitting all of it into every instance's graph made `bootstrap`,
-  // whose whole premise is that it knows nothing yet, publish 16 GraphKind
+  // whose whole premise is that it knows nothing yet, publish 16 GraphTypology
   // nodes when its declaration names exactly ONE (`cat-harness`, across both
   // its directories). It advertised `folio`, `voices` and `library` — core's —
   // and `beans` and `todos` — cat-harness's — none of which it can reach.
@@ -2295,7 +2318,7 @@ function collectGraphKinds(root: string = ROOT): Node[] {
   //
   // Reuses `declaredKinds` rather than re-deriving: it already follows the
   // NESTED declarations (`beans/beans.json` naming `bean-defs` and
-  // `workflow-state`), which a plain read of `directories[].graphKinds` misses —
+  // `workflow-state`), which a plain read of `directories[].graphTypologies` misses —
   // and missing them here would drop kinds the instance really does own.
   //
   // Falls back to the full set when there is no declaration, because an
@@ -2306,14 +2329,14 @@ function collectGraphKinds(root: string = ROOT): Node[] {
   const emitted = owned ? published.filter((n) => owned.has(n)) : published;
 
   return emitted.map((name) => {
-    const def = defaultGraphKinds.get(name)!;
+    const def = defaultGraphTypologies.get(name)!;
     return {
       // The individual IS the kind — there is no class per kind (owner,
       // 2026-09-30, bean `3r47`). Its namespace is its layer's: `skills` is
-      // bootstrap's, `voices` core's. `graphKindIri` is the one answer, so a
+      // bootstrap's, `voices` core's. `graphTypologyIri` is the one answer, so a
       // directory's `holdsGraph` and this node cannot disagree.
-      "@id": graphKindId(name),
-      "@type": termIri("GraphKind"),
+      "@id": graphTypologyId(name),
+      "@type": termIri("GraphTypology"),
       name,
       renderable: def.renderable,
       summary: def.summary,
@@ -2380,7 +2403,7 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
       directories?: Array<{
         id: string;
         path: string;
-        graphKinds?: string[];
+        graphTypologies?: string[];
         title?: string;
         description?: string;
         source?: SubgraphSource;
@@ -2398,7 +2421,7 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
       // `graph` became `graphs[]` — a directory may hold more than one graph,
       // and `schemas/` is the first real use of that. Both spellings are read
       // so this does not break on a declaration written before the change.
-      const kinds = x.graphKinds ?? [];
+      const kinds = x.graphTypologies ?? [];
       let contentSource: Record<string, unknown> | undefined;
       try {
         contentSource = contentSourceJsonLd(resolveSubgraphSource(x, overrides), d.repository);
@@ -2411,9 +2434,9 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
         name: x.id,
         path: x.path,
         ...(contentSource ? { contentSource } : {}),
-        holdsGraph: kinds.map(graphKindId),
-        // `graphKinds: kinds` was here. REMOVED as denormalised: `holdsGraph`
-        // lands on a GraphKind node whose `name` is the kind, and the export's
+        holdsGraph: kinds.map(graphTypologyId),
+        // `graphTypologies: kinds` was here. REMOVED as denormalised: `holdsGraph`
+        // lands on a GraphTypology node whose `name` is the kind, and the export's
         // own test already asserts every one of those links resolves.
         title: x.title,
         description: x.description,
@@ -2456,7 +2479,7 @@ const LINK_TERMS = [
  *
  * Only *internal* fragments are checked — a link to another document's IRI is
  * not this graph's business and reporting it would be noise. `holdsGraph`
- * points at a graph-kind IRI in the namespace, which is a vocabulary term
+ * points at a graph-typology IRI in the namespace, which is a vocabulary term
  * rather than a node here, so it is excluded by the same rule.
  */
 /**
@@ -2469,8 +2492,8 @@ const LINK_TERMS = [
 export const COLLECTOR_SCOPE = {
   /** Reads only DECLARED directories, so any instance with a declaration works. */
   generic: ["skills", "processes", "declaredRoles", "declaration"],
-  /** Reads nothing instance-specific at all — the global graph-kind registry. */
-  universal: ["graphKinds"],
+  /** Reads nothing instance-specific at all — the global graph-typology registry. */
+  universal: ["graphTypologies"],
   /**
    * Bound to THIS repository, and each for a different reason:
    *
@@ -2523,7 +2546,7 @@ export async function collectInstanceNodes(
   const nodes = [
     ...collectSkills(doc, base, problems, root),
     ...(await collectProcesses(doc, problems, root, notes, siteBase)),
-    ...collectGraphKinds(root),
+    ...collectGraphTypologies(root),
     ...collectDeclaredRoles(doc, root),
     ...collectDeclaration(doc, problems, root),
     ...collectDeclaredAssets(doc, problems, root),
@@ -2922,6 +2945,35 @@ export function publishedIdentity(instanceRoot: string, baseUrl?: string): Retur
   return exportIdentity({ instanceRoot, ...(baseUrl !== undefined && !own ? { baseUrl } : {}) });
 }
 
+/**
+ * The schema directory an instance publishes beside its document — bean
+ * `4ak5` item 1, owner ruling 2026-10-05 (option B).
+ *
+ * Here rather than in `harness-schema-export.ts` for one reason: the `$id`s
+ * are minted at the instance's PUBLISHED identity, and that is
+ * {@link publishedIdentity}'s answer, which lives in this module. The builder
+ * takes the identity as an argument; this is the one place the two meet, so
+ * the deploy (`instance-exports.ts`) and the gate that checks it
+ * (`check:published-instance-exports`) cannot compose them differently.
+ */
+export function publishedInstanceSchemas(instanceRoot: string, baseUrl?: string, zod?: ZodSchemaScan): InstanceSchemaExport {
+  return buildInstanceSchemas(instanceRoot, publishedIdentity(instanceRoot, baseUrl), { baseUrl, ...(zod ? { zod } : {}) });
+}
+
+/**
+ * {@link publishedInstanceSchemas} WITH the instance's public Zod schemas —
+ * what the deploy writes (part 2, owner ruling 2026-10-05, option C: "every
+ * exported *Schema").
+ *
+ * Async because the scan imports modules. The synchronous form stays for the
+ * callers whose question does not depend on the scan (the index `$id`, the
+ * contracts); the deploy and the gate's Zod check both call THIS, so they
+ * cannot compose the scan and the build differently.
+ */
+export async function scannedInstanceSchemas(instanceRoot: string, baseUrl?: string): Promise<InstanceSchemaExport> {
+  return publishedInstanceSchemas(instanceRoot, baseUrl, await scanInstanceZodSchemas(instanceRoot));
+}
+
 // ── TOMBSTONES — ONE RELEASE ONLY; REMOVE IN THE NEXT (bean `4ak5` item 2) ──
 //
 // Owner ruling 2026-10-05 (option B): `cat-harness.jsonld` is built in
@@ -3072,6 +3124,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     stub,
     docIri,
     base,
+    docPath,
     canonicalIri,
     isPreview,
     instanceDir: exportedInstance,
@@ -3167,7 +3220,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
           ...collectTools(docIri, base, problems, scope),
           ...collectSchemas(docIri, base, scope),
           ...collectExternalSchemas(docIri),
-          ...collectGraphKinds(),
+          ...collectGraphTypologies(),
           ...collectDeclaredRoles(docIri, ROOT, scope, base),
           ...collectDeclaration(docIri, problems),
           ...collectDeclaredAssets(docIri, problems),
@@ -3191,7 +3244,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     for (const n of graph) {
       const id = String(n["@id"]);
       // Only nodes that are fragments of THIS document have an alternate.
-      // Vocabulary nodes (graph kinds) are minted under the namespace, not the
+      // Vocabulary nodes (graph typologies) are minted under the namespace, not the
       // document, so they are byte-identical in both graphs — giving them an
       // `alternateOf` pointing at a canonical fragment that does not exist was
       // a broken link generated by a blanket loop.
@@ -3231,10 +3284,24 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     counts[t] = (counts[t] ?? 0) + 1;
   }
 
+  // The instance's schema index (bean `4ak5` item 1), linked from the document
+  // ONLY when the deploy writes it: `instance-exports.ts` publishes a
+  // `schema/` directory for exactly the instances in its plan, so the test is
+  // that plan's own answer rather than a second list. `dcterms:conformsTo`,
+  // the term this export already uses for "the specification a node is
+  // written against" — here, of the instance's declaration and contracts.
+  // Minted from THIS export's identity, which is the published one whenever
+  // the deploy runs it (`publishedIdentity`).
+  const schemaIndex =
+    foreign && publishesInstanceSchema(exportedInstance)
+      ? instanceSchemaIndexIri({ stub, base, docPath })
+      : undefined;
+
   return {
     "@context": buildContext(),
     danglingLinks: findDanglingLinks(graph, docIri),
     "@id": docIri,
+    ...(schemaIndex !== undefined ? { conformsTo: schemaIndex } : {}),
     // A preview says so in its TYPE, not only in a side-car field: "is this
     // the canonical graph?" must be answerable from the document's own type
     // without reading a convention. This is where the `#STAGING` marker idea

@@ -134,10 +134,8 @@ describe("the thin page", () => {
   test("canonical self, JSON-LD alternate, no content written in, config readable back", () => {
     const html = todoPageHtml(ITEM, { targetHref: "../../p.html#n" });
     expect(html).toContain(`<link rel="canonical" href="./">`);
-    // The todo's document is at the SITE root its `@id` names, out of the docs
-    // tree the page sits in (`docs/cat-harness/todos/<id>/`, issue #2188).
-    expect(html).toContain(`<link rel="alternate" type="application/ld+json" href="../../../../todos/a-todo.jsonld">`);
-    expect(html).toContain(`<meta name="folio-navbar" content="none">`);
+    expect(html).toContain(`<link rel="alternate" type="application/ld+json" href="../a-todo.jsonld">`);
+    expect(html).toContain(`<meta name="folio-navbar" content="linked">`);
     expect(html).not.toContain(ITEM.summary);
     expect(isTodoPage(html)).toBe(true);
     expect(thinPageConfigOf(html, TODO_PAGE_CONFIG_ID)).toMatchObject({ id: "a-todo", targetHref: "../../p.html#n" });

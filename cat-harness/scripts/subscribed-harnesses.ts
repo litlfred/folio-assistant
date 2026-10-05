@@ -12,7 +12,7 @@
  * `kg-subscribe.ts` in core. Reading a snapshot is the half both need, so it
  * lives here, below both, and the snapshot's node schema
  * (`schemas/substrate-snapshot.ts`) is harness for the same reason: the
- * harness registers the `substrate-snapshot` graph kind, and a kind's node
+ * harness registers the `substrate-snapshot` graph typology, and a kind's node
  * schema belongs with the kind.
  *
  * Every reader here is offline: what a tile shows is what was recorded at the
@@ -30,18 +30,18 @@ import { type CatHarnessDeclaration, type Subscription, rootForScope } from "../
 import { instanceConfigFilename } from "../schemas/harness-config.js";
 import type { DeclarationScope } from "../schemas/kg-node.js";
 import {
-  SNAPSHOT_GRAPH_KIND,
+  SNAPSHOT_GRAPH_TYPOLOGY,
   SNAPSHOT_SUFFIX,
   SubstrateSnapshotSchema,
   type SubstrateSnapshot,
 } from "../schemas/substrate-snapshot.js";
 import type { HarnessTile } from "./harness-tiles.js";
 
-type DirLike = { path: string; graphKinds?: readonly string[]; scope?: DeclarationScope };
+type DirLike = { path: string; graphTypologies?: readonly string[]; scope?: DeclarationScope };
 
 /** The directory an instance keeps its substrate snapshots in, or undefined when it declares none. */
 export function snapshotDirFor(instanceRoot: string, decl: { directories?: readonly DirLike[] }): string | undefined {
-  const d = (decl.directories ?? []).find((x) => (x.graphKinds ?? []).includes(SNAPSHOT_GRAPH_KIND));
+  const d = (decl.directories ?? []).find((x) => (x.graphTypologies ?? []).includes(SNAPSHOT_GRAPH_TYPOLOGY));
   return d ? resolve(rootForScope(instanceRoot, d.scope), d.path) : undefined;
 }
 
@@ -55,7 +55,7 @@ export type SnapshotRead =
  */
 export function readSnapshot(instanceRoot: string, decl: { directories?: readonly DirLike[] }, s: Subscription): SnapshotRead {
   const dir = snapshotDirFor(instanceRoot, decl);
-  if (!dir) return { state: "absent", reason: `the subscriber declares no \`${SNAPSHOT_GRAPH_KIND}\` directory, so no snapshot of \`${s.id}\` can exist` };
+  if (!dir) return { state: "absent", reason: `the subscriber declares no \`${SNAPSHOT_GRAPH_TYPOLOGY}\` directory, so no snapshot of \`${s.id}\` can exist` };
   const file = join(dir, `${s.id}${SNAPSHOT_SUFFIX}`);
   if (!existsSync(file)) {
     return { state: "absent", reason: `no snapshot of \`${s.id}\` at ${file} — run \`bun run kg:subscribe ${s.repository}@${s.ref}\`` };
@@ -88,7 +88,7 @@ export type HarnessDeclaration = {
   name: string;
   title?: string;
   description?: string;
-  directories: { id: string; path: string; graphKinds: string[] }[];
+  directories: { id: string; path: string; graphTypologies: string[] }[];
   needs?: string[];
 };
 
@@ -104,7 +104,7 @@ export function harnessDeclarationIn(snap: SubstrateSnapshot, harness: string): 
     name: d.name,
     ...(d.title !== undefined ? { title: d.title } : {}),
     ...(d.description !== undefined ? { description: d.description } : {}),
-    directories: (d.directories ?? []).map((x) => ({ id: x.id, path: x.path, graphKinds: x.graphKinds.map(String) })),
+    directories: (d.directories ?? []).map((x) => ({ id: x.id, path: x.path, graphTypologies: x.graphTypologies.map(String) })),
     ...(d.needs !== undefined ? { needs: [...d.needs] } : {}),
   };
 }
@@ -159,7 +159,7 @@ export function subscribedTile(h: SubscribedHarness): HarnessTile {
   const findings: string[] = [];
   if (h.snapshot.state !== "read") findings.push(`${h.harness}: could not read its declaration — ${h.snapshot.reason}`);
   else if (!decl) findings.push(`${h.harness}: the snapshot of \`${s.id}\` does not declare it at the pin`);
-  const kinds = [...new Set((decl?.directories ?? []).flatMap((d) => d.graphKinds))];
+  const kinds = [...new Set((decl?.directories ?? []).flatMap((d) => d.graphTypologies))];
   const title = decl?.title ?? h.harness;
   return {
     name: h.harness,
@@ -178,7 +178,7 @@ export function subscribedTile(h: SubscribedHarness): HarnessTile {
     ...(decl?.needs !== undefined ? { needs: decl.needs } : {}),
     stats: [
       { id: "directories", label: "declared directories", value: decl?.directories.length ?? 0 },
-      { id: "kinds", label: "declared graph kinds", value: kinds.length },
+      { id: "kinds", label: "declared graph typologies", value: kinds.length },
       { id: "views", label: "visualisations you can open", value: 0 },
     ],
     visualisations: kinds.map((kind) => ({ kind, note: `referenced from ${pin}, not held here` })),
@@ -187,7 +187,7 @@ export function subscribedTile(h: SubscribedHarness): HarnessTile {
     // names are the ones copied in — materialised, still remote in origin.
     subgraphs: (decl?.directories ?? []).map((d) => ({
       id: d.id,
-      kinds: [...d.graphKinds],
+      kinds: [...d.graphTypologies],
       where: "remote" as const,
       url: `https://github.com/${s.repository}/tree/${s.ref}/${d.path}`,
       via: "subscription" as const,

@@ -13,7 +13,7 @@
       "description": "Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth, not illustrations of one: a lane binds a Role, an activity names the Skill to run through `<folio:skill ref>`, and `workflow_complete` refuses a step that is not enabled. WHERE A RUNNING INSTANCE GOT TO is not here — that is `beans/workflows/`, kind `workflow-state`, which is `state` rather than `content`. Two questions, two graphs. GROUPED BY CONCERN since placement PR3 (bean `63wl`): `processes.json` names the groups, each diagram sits in `processes/<group>/` and a DMN in `processes/<group>/decisions/` beside the diagrams that read it; the content-type diagrams moved up to the instances that own their skills (folio-assistant-core, folio-assistant-sci, fhir-harness), whose same-named `processes/<group>/` are members of these groups.",
       "fileCount": 71,
       "holdsGraph": [
-        "bootstrap:graphKind/processes"
+        "bootstrap:graphTypology/processes"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "processes",
@@ -906,7 +906,7 @@
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/processes"
+        "bootstrap:graphTypology/processes"
       ],
       "name": "processes/content",
       "path": "processes/content/"
@@ -3529,14 +3529,14 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/processes"
+            "bootstrap:graphTypology/processes"
           ],
           "name": "processes/kg/decisions",
           "path": "processes/kg/decisions/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/processes"
+        "bootstrap:graphTypology/processes"
       ],
       "name": "processes/kg",
       "path": "processes/kg/"
@@ -7436,7 +7436,7 @@
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/processes"
+        "bootstrap:graphTypology/processes"
       ],
       "name": "processes/library",
       "path": "processes/library/"
@@ -10693,7 +10693,7 @@
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/processes"
+        "bootstrap:graphTypology/processes"
       ],
       "name": "processes/process",
       "path": "processes/process/"
@@ -19757,14 +19757,14 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/processes"
+            "bootstrap:graphTypology/processes"
           ],
           "name": "processes/sdlc/decisions",
           "path": "processes/sdlc/decisions/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/processes"
+        "bootstrap:graphTypology/processes"
       ],
       "name": "processes/sdlc",
       "path": "processes/sdlc/"
@@ -20935,14 +20935,14 @@
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/processes"
+        "bootstrap:graphTypology/processes"
       ],
       "name": "processes/ui",
       "path": "processes/ui/"
     }
   ],
   "holdsGraph": [
-    "bootstrap:graphKind/processes"
+    "bootstrap:graphTypology/processes"
   ],
   "name": "processes",
   "path": "processes/"

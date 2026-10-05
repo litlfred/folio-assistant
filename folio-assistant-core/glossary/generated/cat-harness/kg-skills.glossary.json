@@ -665,7 +665,7 @@
     {
       "id": "graph-rendering",
       "prefLabel": "graph-rendering",
-      "definition": "Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph kind here applies them.",
+      "definition": "Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph typology here applies them.",
       "notation": "graph-rendering",
       "source": "cat-harness/skills/kg/graph-management/graph-rendering.md",
       "status": "candidate"
@@ -681,7 +681,7 @@
     {
       "id": "harness-requirements",
       "prefLabel": "harness-requirements",
-      "definition": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
+      "definition": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph typology, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
       "notation": "harness-requirements",
       "source": "cat-harness/skills/kg/kg-core/harness-requirements.md",
       "status": "candidate"
@@ -712,7 +712,7 @@
     {
       "id": "incremental-render",
       "prefLabel": "incremental-render",
-      "definition": "Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH KINDS rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.",
+      "definition": "Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH TYPOLOGIES rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.",
       "notation": "incremental-render",
       "source": "cat-harness/skills/ui/ui-core/incremental-render.md",
       "status": "candidate"
@@ -728,7 +728,7 @@
     {
       "id": "instance-kinds",
       "prefLabel": "instance-kinds",
-      "definition": "How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH kind must declare. Read before naming a new instance, before adding a value to the graph-kind registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",
+      "definition": "How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH typology must declare. Read before naming a new instance, before adding a value to the graph-typology registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",
       "notation": "instance-kinds",
       "source": "cat-harness/skills/kg/kg-core/instance-kinds.md",
       "status": "candidate"
@@ -736,7 +736,7 @@
     {
       "id": "instance-publication",
       "prefLabel": "instance-publication",
-      "definition": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft.",
+      "definition": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft. Also the one home for which graph each instance publishes, where, under which IRI and schema, and what is stripped from it.",
       "notation": "instance-publication",
       "source": "cat-harness/skills/kg/kg-core/instance-publication.md",
       "status": "candidate"

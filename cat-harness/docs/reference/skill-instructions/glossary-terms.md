@@ -20,7 +20,7 @@ preferred way.
 
 ## Where terms go
 
-Core's `glossary` graph kind. Core declares `glossary/` with
+Core's `glossary` graph typology. Core declares `glossary/` with
 `dependents: reproduce`, so every folio built on core has one. Each
 `*.glossary.json` is one SKOS concept scheme, `$schema: "folio-glossary/v1"`
 (`folio-assistant-core/schemas/glossary.ts`).
@@ -31,7 +31,7 @@ Core's `glossary` graph kind. Core declares `glossary/` with
 |---|---|
 | a term somebody else already defines in SKOS (ISCO-08, an EU authority table, a W3C vocabulary) | a local term with `exactMatch` (or `closeMatch`, `broadMatch`, `narrowMatch`) to the external concept IRI. **Do not copy its definition.** |
 | a list of external terms this folio uses | `members`: the external concept IRIs, emitted as a `skos:Collection` |
-| a whole external scheme | a `remoteGraphs` entry in the declaration with `graphKinds: ["glossary"]`: known about, not held |
+| a whole external scheme | a `remoteGraphs` entry in the declaration with `graphTypologies: ["glossary"]`: known about, not held |
 | a term only this folio defines | a local term with `prefLabel`, `definition`, and `notation` for its code |
 
 ## Three states, never two (bean `lqo9`)
@@ -251,7 +251,7 @@ The definition is the `:defterm` paragraph, verbatim, with directives replaced
 by their labels. The slug is the term's `notation`. Never edit the scheme:
 edit the paper and re-run the builder. `glossary.json` and `glossary.tex` are
 unchanged. An instance that declares no glossary directory gets a notice and
-no scheme; add `{ "id": "glossary", "path": "glossary/", "dependents": "reproduce", "graphKinds": ["glossary"] }`.
+no scheme; add `{ "id": "glossary", "path": "glossary/", "dependents": "reproduce", "graphTypologies": ["glossary"] }`.
 
 ## Not here
 

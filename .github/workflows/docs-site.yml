@@ -113,6 +113,12 @@ on:
       # bean `iwtn`), so a change to any of them changes the site.
       - 'bootstrap/**'
       - 'bootstrap-tools/**'
+      # The IG sites this workflow builds (bean `mftp`): the stager and the
+      # page generator, each IG instance's index, menu and pages. Without these
+      # an IG re-ingest or a generator fix would not redeploy what it changes.
+      - 'fhir-harness/scripts/**'
+      - '*/fhir-artifact-index/**'
+      - 'smart-trust/**'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
@@ -357,13 +363,21 @@ jobs:
       - name: Compose the docs layers
         run: bun run cat-harness/scripts/compose-docs.ts --out ./_docs
 
-      # WHERE THE DOCS TREE GOES under the site — `docs/<built>`, the `docs`
-      # kind and the built instance's declared name (`docs-route.ts`). Captured
-      # once so no later step spells it; `docs-route.test.ts` holds
-      # `_config.yml`'s `baseurl` to the same answer.
-      - name: Resolve the docs route
-        id: route
-        run: echo "route=$(bun run cat-harness/scripts/docs-route.ts --built cat-harness)" >> "$GITHUB_OUTPUT"
+      # EACH IG IS BUILT INSIDE THIS SITE (bean `mftp`, owner 2026-10-05:
+      # "Build in main site"), so its pages wear this site's chrome — sidebar,
+      # search, language selector — rather than a site of their own. Each IG
+      # whose instance records its source (`fhir-artifact-index/menu.json`) is
+      # cloned at that commit, staged, and composed into `_docs/<instance>/`,
+      # its includes and data namespaced per IG. Which IGs is DATA, so this
+      # names none. Before the Jekyll build, which is what renders them.
+      - name: Compose each IG into the docs source
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: |
+          curl -sSfL -o /tmp/plantuml.jar \
+            https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar
+          bun run fhir-harness/scripts/stage-ig-sites.ts --work ./_ig --baseurl "/${REPO_NAME}" \
+            --plantuml-jar /tmp/plantuml.jar --compose-into ./_docs > ./_ig-list.txt
 
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
@@ -380,15 +394,14 @@ jobs:
       - name: Take ownership of the Jekyll output
         run: sudo chown -R "$(id -u):$(id -g)" ./_site
 
-      # THE IDENTIFIERS STAY WHERE THEY ARE. The docs tree carries JSON-LD
-      # documents that are not pages — site nodes, library entries, todos, the
-      # named subgraphs — each published at the address its own `@id` names.
-      # Moving the pages must not move those addresses (thousands of committed
-      # documents name them), so each document whose `@id` is a site-root
-      # address goes back to it. Read off the document, never a list of
-      # directories: `todos/` holds both a todo's document and its page.
-      - name: Hoist root-addressed documents out of the docs tree
-        run: bun run cat-harness/scripts/hoist-addressed-documents.ts --site ./_site --built cat-harness
+      # An IG's source can repeat an anchor, and the Publisher's output repeats
+      # it too. Keep the first copy (where every link already lands), rename
+      # the rest, and report each one — per IG, over its composed pages.
+      - name: Rename repeated ids on the IG pages
+        run: |
+          while read -r INSTANCE SRC AT; do
+            bun run fhir-harness/scripts/build-ig-site.ts --dedupe-ids "./_site/${INSTANCE}"
+          done < ./_ig-list.txt
 
       # Mount every OTHER instance's rendered content under the built site.
       #
@@ -404,6 +417,7 @@ jobs:
       # with a front door of its own. No change here when it does.
       - name: Mount instance-rendered content
         run: bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
+
 
       # The inline PDF viewer (bean `folio-assistant-5ea6`): pdf.js, pinned and
       # hash-checked in `pdf-viewer.ts`, installed into the BUILT site and never
@@ -467,7 +481,7 @@ jobs:
       # Serve the prebuilt static output as-is (just-the-docs is already rendered;
       # /api is TypeDoc HTML).
       # The harness has no renderer of its own — `folio` is the only renderable
-      # graph kind and it belongs to folio-assistant-core — so its knowledge graph
+      # graph typology and it belongs to folio-assistant-core — so its knowledge graph
       # is published as DATA rather than as a page. Something else may draw it.
       # A non-zero exit means a source could not be read, and a partial graph
       # must not be published as a whole one.
@@ -498,11 +512,9 @@ jobs:
       # below from a checkout, so a break in them is visible before a merge
       # rather than only in this workflow's own run (bean `u1iu`).
       #
-      # `--scope instance` (the default, said aloud): this document holds
-      # cat-harness's own directories only, and each instance stacked on it
-      # publishes its own below (`instance-exports.ts`). An `@id` that moved
-      # keeps a tombstone here for one release — owner ruling 2026-10-05,
-      # bean `4ak5` item 2.
+      # `--scope instance` (the default, said aloud). Which instance publishes
+      # what, where, and the one-release tombstones for an `@id` that moved:
+      # `instance-publication` §"What each instance publishes" (bean `4ak5`).
       - name: Export the knowledge graph and its schema
         env:
           ROUTE: ${{ steps.route.outputs.route }}
@@ -646,10 +658,8 @@ jobs:
           # THE TRASHCAN, reachable BY NAME and by nothing else.
           #
           # The export above STRIPS `fsh-guts` from every graph it publishes,
-          # so nothing in `<stub>.jsonld` links here. That is the owner's
-          # rule and the reason this is a second document rather than a
-          # subgraph: a consumer may fetch it deliberately, and a crawler
-          # walking the knowledge graph never arrives.
+          # so nothing in `<stub>.jsonld` links here. Why it is a second
+          # document: `instance-publication` §"What each instance publishes".
           #
           # `fsh-guts/logs/` sits inside the tree it walks and is NOT in it.
           # The exporter admits a file only if it declares
@@ -746,13 +756,12 @@ jobs:
 
           # The ROOT INDEX (bean `4ak5` item 3): `<site>/index.jsonld` and its
           # `.json` alias name every declared instance at depth 1 — its export,
-          # where this site serves it, its directories and graph kinds, its
+          # where this site serves it, its directories and graph typologies, its
           # dependencies, its subgraph root, and a node count and digest of
           # the document. LAST in this step because it reads what the lines
           # above wrote, and it exits 1 on any instance whose export is not
           # there rather than publishing a shorter map. Built here and never
-          # committed (owner, 2026-10-04): a committed copy conflicts whenever
-          # two PRs change the set of harnesses.
+          # committed: `instance-publication` §"What each instance publishes".
           bun run cat-harness/scripts/root-index.ts --site ./_site
 
           # THE SITE ROOT'S OWN PAGE. Until 2026-10-05 the root `index.html`
@@ -849,6 +858,11 @@ jobs:
           bun run cat-harness/scripts/qa-site-assets.ts verify \
             --site "./_site/${ROUTE}" --results cat-harness/test/results \
             --state "$RUNNER_TEMP/qa-site-assets.state.json"
+          # The panels' links to each result file, judged on what was BUILT
+          # (bean `bejf`, #2217): every projection carries `sidecarLinks`, and
+          # none addresses a stored result on `main`. Mirrored in
+          # `feature-staging.yml`.
+          bun run check:qa-result-links --site ./_site
 
       # THE NAVBAR TILES POINT AT FILES THIS BUILD PUBLISHES -- checked, not
       # composed.

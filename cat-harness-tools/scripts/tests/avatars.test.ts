@@ -11,8 +11,8 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { AVATARS, GENERIC, avatarFor, avatarKinds, hasAvatar } from "../../../cat-harness/schemas/avatars.ts";
-import { BASE_GRAPH_KINDS, defaultGraphKinds, instanceRootsIn, readDeclaration } from "../../../cat-harness/schemas/cat-harness.ts";
+import { allAvatars, GENERIC, avatarFor, avatarKinds, hasAvatar } from "../../../cat-harness/schemas/avatars.ts";
+import { BASE_GRAPH_TYPOLOGIES, defaultGraphTypologies, instanceRootsIn, readDeclaration } from "../../../cat-harness/schemas/cat-harness.ts";
 import { avatarsCssPath, renderAvatarsCss } from "../../../cat-harness/scripts/gen-avatars-css.ts";
 import { coverage, requiredKinds, trashDerivationPresent } from "../check-avatar-coverage.ts";
 import { HARNESS_ROOT } from "../lib/roots.ts";
@@ -26,10 +26,10 @@ describe("the registry", () => {
     expect(avatarKinds().length).toBeGreaterThan(10);
   });
 
-  test("every declared graph kind has an avatar of its own", () => {
+  test("every declared graph typology has an avatar of its own", () => {
     // Named, not counted: `toHaveLength(n)` breaks on the next kind and says
     // nothing about which one is missing.
-    const missing = defaultGraphKinds.names().filter((k) => !hasAvatar(k));
+    const missing = defaultGraphTypologies.names().filter((k) => !hasAvatar(k));
     expect(missing).toEqual([]);
   });
 
@@ -43,7 +43,7 @@ describe("the registry", () => {
   test("every avatar says what it reads as", () => {
     // The field exists so the next person deciding whether to redraw one has
     // the intent rather than only the path data.
-    for (const [kind, a] of Object.entries(AVATARS)) {
+    for (const [kind, a] of allAvatars()) {
       expect(a.reads.length, `${kind} has no \`reads\``).toBeGreaterThan(8);
       expect(a.glyph.length, `${kind} has no glyph`).toBeGreaterThan(8);
     }
@@ -54,7 +54,7 @@ describe("the registry", () => {
     // fixed per scheme by the generator, so legibility is not a per-kind
     // decision anybody can get wrong. `y8cm` and `rptk` are what that
     // prevents.
-    for (const [kind, a] of Object.entries(AVATARS)) {
+    for (const [kind, a] of allAvatars()) {
       expect(a.tone, `${kind}`).toBeGreaterThanOrEqual(0);
       expect(a.tone, `${kind}`).toBeLessThan(360);
       expect(Number.isInteger(a.tone), `${kind}`).toBe(true);
@@ -65,7 +65,7 @@ describe("the registry", () => {
     // Two kinds that look identical convey nothing, and the fan would show
     // the same mark twice with no way to tell which was which.
     const byGlyph = new Map<string, string[]>();
-    for (const [kind, a] of Object.entries(AVATARS)) {
+    for (const [kind, a] of allAvatars()) {
       byGlyph.set(a.glyph, [...(byGlyph.get(a.glyph) ?? []), kind]);
     }
     const shared = [...byGlyph.values()].filter((ks) => ks.length > 1);
@@ -81,7 +81,7 @@ describe("the generated stylesheet", () => {
   test("every kind is styled in BOTH schemes", () => {
     // The pair, not one of them. A kind coloured only for light is invisible
     // in dark and nothing else would say so.
-    for (const kind of Object.keys(AVATARS)) {
+    for (const [kind] of allAvatars()) {
       const light = CSS.match(new RegExp(`data-fa-scheme="light"[\\s\\S]*?${kind}"\\]`));
       const dark = CSS.match(new RegExp(`data-fa-scheme="dark"[\\s\\S]*?${kind}"\\]`));
       expect(light, `${kind} has no light rule`).not.toBeNull();
@@ -133,17 +133,17 @@ describe("the generated stylesheet", () => {
 
 describe("coverage is a QA axis, not a promise", () => {
   test("the answer does not depend on what the caller imported", () => {
-    // MEASURED, and it is why this test exists. `defaultGraphKinds` is a live
+    // MEASURED, and it is why this test exists. `defaultGraphTypologies` is a live
     // registry that modules write into on import: run from the CLI the check
     // saw 16 kinds and reported full coverage, run inside the suite it saw
     // 17 — and the seventeenth was `folio`, the one RENDERABLE kind, with no
     // avatar at all. A check whose result changes with the importer is not a
     // check, so `requiredKinds` unions the base table in explicitly.
     const { required } = requiredKinds(ROOT);
-    for (const k of Object.keys(BASE_GRAPH_KINDS)) expect(required).toContain(k);
-    // `folio` is registered ON IMPORT by `folio-graph-kind.ts` and is absent
+    for (const k of Object.keys(BASE_GRAPH_TYPOLOGIES)) expect(required).toContain(k);
+    // `folio` is registered ON IMPORT by `folio-graph-typology.ts` and is absent
     // from the base table, so it is the exact case the union exists for.
-    expect(Object.keys(BASE_GRAPH_KINDS)).not.toContain("folio");
+    expect(Object.keys(BASE_GRAPH_TYPOLOGIES)).not.toContain("folio");
     expect(required).toContain("folio");
     expect(hasAvatar("folio")).toBe(true);
   });
@@ -162,7 +162,7 @@ describe("coverage is a QA axis, not a promise", () => {
   });
 
   test("an INSTANCE-keyed avatar is REPORTED on the kind axis, not pruned", () => {
-    // These two are keyed on a declared INSTANCE name, not on a graph kind —
+    // These two are keyed on a declared INSTANCE name, not on a graph typology —
     // `harness-tiles` calls `avatarFor(decl.name)`. So this check, which asks
     // only about kinds, is right to report them and will go on doing so.
     //
@@ -177,9 +177,15 @@ describe("coverage is a QA axis, not a promise", () => {
     // core")` returned GENERIC — the question mark meaning "none declared" —
     // while the art sat under a name nothing carries. This assertion is what
     // now fails if the key drifts off the declared name again.
+    //
+    // Since sod4 #4 an instance's avatar lives on its own declaration, so
+    // `folio-assistant-core` is no longer a table key and no longer reported.
+    // `bootstrap` stays in the table (it is below the harness and declares no
+    // avatar field of its own), so it still is.
     const orphaned = coverage(ROOT).orphaned;
     expect(orphaned).toContain("bootstrap");
-    expect(orphaned).toContain("folio-assistant-core");
+    expect(orphaned).not.toContain("folio-assistant-core");
+    expect(avatarFor("folio-assistant-core")).not.toBe(GENERIC);
   });
 
   test("every instance-keyed avatar resolves for the name an instance declares", () => {

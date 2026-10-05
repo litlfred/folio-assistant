@@ -85,7 +85,7 @@ describe("dependenciesFromNeeds resolves siblings of a ROOT-declared instance", 
   });
 
   test("and the overlay it feeds reaches that dependency's skills", () => {
-    withTree({ base: { name: "base", directories: [{ id: "skills", path: "skills/", graphKinds: ["skills"] }] } }, (root) => {
+    withTree({ base: { name: "base", directories: [{ id: "skills", path: "skills/", graphTypologies: ["skills"] }] } }, (root) => {
       mkdirSync(join(root, "base", "skills"), { recursive: true });
       rootInstance(root, "top", { needs: ["base"], directories: [] });
       const dirs = resolveSkillDirs(root);

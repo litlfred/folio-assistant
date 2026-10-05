@@ -66,7 +66,7 @@ the way, scrap it *with its reasons* first, then archive if you like.
 
 One consequence for readers of this store: `readBeans` is the **active** store
 and `readArchivedBeans` is the view, and they are separate on purpose. They share
-the graph kind `bean-defs`, so anything resolving by KIND gets whichever is
+the graph typology `bean-defs`, so anything resolving by KIND gets whichever is
 declared first; resolve the archive by its **id**.
 
 **Claiming and closing are separately scoped.** Claim before you work, so two

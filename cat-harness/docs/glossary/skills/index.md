@@ -903,7 +903,7 @@ graph-detanglement <span class="fa-gloss-status">candidate, extracted</span>
 graph-rendering <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph kind here applies them.</p>
+<p>Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph typology here applies them.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/graph-rendering.md"><code>cat-harness/skills/kg/graph-management/graph-rendering.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--groebner-basis" data-fa-state="extracted" data-fa-gloss="">
@@ -928,7 +928,7 @@ handover-report <span class="fa-gloss-status">candidate, extracted</span>
 harness-requirements <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading <code>check:subgraph-coverage</code>. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is &quot;is this the static knowledge graph&quot;, and which single obligation a harness may never waive.</p>
+<p>What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph typology, and when reading <code>check:subgraph-coverage</code>. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is &quot;is this the static knowledge graph&quot;, and which single obligation a harness may never waive.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/harness-requirements.md"><code>cat-harness/skills/kg/kg-core/harness-requirements.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--harness-tiles" data-fa-state="extracted" data-fa-gloss="">
@@ -1037,7 +1037,7 @@ ig-site-theme <span class="fa-gloss-status">candidate, extracted</span>
 incremental-render <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH KINDS rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.</p>
+<p>Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH TYPOLOGIES rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/incremental-render.md"><code>cat-harness/skills/ui/ui-core/incremental-render.md</code></a></p>
 </dd>
 <dt id="bootstrap--kg-skills--initialization-steps" data-fa-state="extracted" data-fa-gloss="">
@@ -1058,14 +1058,14 @@ injection-boundaries <span class="fa-gloss-status">candidate, extracted</span>
 instance-kinds <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH kind must declare. Read before naming a new instance, before adding a value to the graph-kind registry, and before building a visualiser. Carries the test that usually says &quot;this is not a new kind&quot;.</p>
+<p>How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH typology must declare. Read before naming a new instance, before adding a value to the graph-typology registry, and before building a visualiser. Carries the test that usually says &quot;this is not a new kind&quot;.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/instance-kinds.md"><code>cat-harness/skills/kg/kg-core/instance-kinds.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--instance-publication" data-fa-state="extracted" data-fa-gloss="">
 instance-publication <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and <code>published</code> is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft.</p>
+<p>Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and <code>published</code> is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft. Also the one home for which graph each instance publishes, where, under which IRI and schema, and what is stripped from it.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/instance-publication.md"><code>cat-harness/skills/kg/kg-core/instance-publication.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--integration-audit" data-fa-state="extracted" data-fa-gloss="">

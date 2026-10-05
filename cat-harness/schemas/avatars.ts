@@ -35,7 +35,7 @@
  *
  * ## `kind` is open, so there is a fallback and it is reported
  *
- * `BASE_GRAPH_KINDS` is an open registry and `fsh-guts` node kinds are open
+ * `BASE_GRAPH_TYPOLOGIES` is an open registry and `fsh-guts` node kinds are open
  * by design. An unknown kind gets {@link GENERIC} and shows up as a QA
  * finding — never as a blank, which is the third-state rule applied to art.
  *
@@ -43,7 +43,15 @@
  * @graphNode schema
  */
 
-import { defaultGraphKinds } from "./graph-kind-registry";
+import { readFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import { defaultGraphTypologies } from "./graph-typology-registry";
+import { findDeclarationFile, instanceRootsIn } from "./instance-roots";
+
+/** The platform checkout this module sits in — where instances are scanned from. */
+const PLATFORM_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 /**
  * One avatar.
@@ -69,7 +77,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // Owner: *"bootstrap has avatar, so does cat-harness, folio-asst"*.
   //
   // THIS TABLE SERVES TWO KEY SPACES, and the entries below are the second
-  // one. `kind-fan` and `gen-avatars-css` key by GRAPH KIND; `harness-tiles`
+  // one. `kind-fan` and `gen-avatars-css` key by GRAPH TYPOLOGY; `harness-tiles`
   // calls `avatarFor(decl.name)` — an INSTANCE's declared name. Most entries
   // are kinds; these three are instances, which is why `check-avatar-coverage`
   // reports them as "an avatar for a kind this instance does not declare" and
@@ -100,114 +108,6 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 9V6l3 2h10l3-2v3m0 0v9H4V9zM8 13h.01M16 13h.01M10 17h4",
     tone: 268,
     reads: "a framed face with ears — the harness the instance is held in",
-  },
-  // WHO BLUE, AND NO EMBLEM. Owner, 2026-09-23: *"no logo on who-iris icon
-  // (for now). just WHO blue"* — reversing their own choice of 2026-09-22,
-  // which had the WHO emblem-and-wordmark cropped to the emblem. The image
-  // stays declared in `who-iris.json`; only the `icon` pointer to it is gone,
-  // so restoring it is one field rather than a re-ingest.
-  //
-  // 199 is MEASURED from #0093D5, the organisation's blue as `who-iris.json`
-  // already records it: rgb(0,147,213), max channel blue, so the hue is
-  // 4 + (0-147)/213 sixths of a turn = 198.6°, rounded. Written as an angle
-  // rather than as the hex because that is what this table holds and what the
-  // stylesheet builds both schemes from — a literal colour here would be
-  // legible in one mode and not the other, which is the `y8cm` failure.
-  //
-  // Without this entry `avatarFor("who-iris")` falls to GENERIC, so the tile
-  // would have taken the generic hue and reported a finding — "no avatar
-  // declared" is true of an instance nobody has decided about, and this one
-  // has been decided about twice.
-  // SMART-BASE — THE SAME WHO BLUE, AND FOR THE SAME REASON. Owner,
-  // 2026-09-23: *"smart-base avatar: use who-iris route, WHO blue no logo"*,
-  // taking the route this instance's exemption had named as open and
-  // preferable rather than leaving it exempt.
-  //
-  // TONE 199 IS SHARED WITH `who-iris` ON PURPOSE, not by oversight. It is
-  // measured from the same #0093D5 — the organisation's own blue — and these
-  // are two instances of the SAME organisation's material. A reader scanning
-  // the navbar should see them as a family; giving smart-base a near-miss hue
-  // would assert a distinction that does not exist. The registry requires
-  // distinct GLYPHS, not distinct tones, and that is the right constraint:
-  // the glyph says which instance, the tone says whose.
-  //
-  // And no emblem, which is the whole of "the who-iris route": an
-  // organisation's published colour with a neutral glyph is not inventing its
-  // identity, where cropping its logo would be.
-  "smart-base": {
-    // A broad base with three narrowing courses above it — the layer the rest
-    // of the stack rests on. smart-base is exactly that: `fhir-harness` sits
-    // under it, and `smart-ig` (and the IGs that need it) is built on top,
-    // so the glyph reads the instance's position rather than its subject.
-    glyph: "M3 18h18M6 14h12M9 10h6M11 6h2",
-    tone: 199,
-    reads: "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
-  },
-  "smart-trust": {
-    // A shield with a keyhole — a trust framework, about who may open what.
-    // NOT the shield-with-check: that is `qa`'s, and the registry refuses two
-    // kinds sharing a glyph. WHO BLUE, like smart-base:
-    // an organisation's published colour on a neutral glyph is not its
-    // identity, which is the line the owner drew for who-iris on 2026-09-23.
-    // Added 2026-10-04 (bean `2vpn`) when the owner chose a glyph over the
-    // shared operations card it had borrowed through a sticky.
-    glyph: "M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6zM12 9.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM12 12.5v3",
-    tone: 199,
-    reads: "a shield with a keyhole — the trust framework, in WHO blue",
-  },
-  "who-iris": {
-    // An open book with a band across it — a repository of published
-    // documents, which is what IRIS is. The FALLBACK mark since 2026-10-04:
-    // the owner restored the WHO emblem as who-iris's declared `icon`
-    // (bean `2vpn`), which `harness-tiles.ts` prefers; this glyph draws only
-    // where the emblem cannot. It was the mark itself from 2026-09-23, when
-    // the owner asked for the colour without the logo.
-    glyph: "M4 6h6a2 2 0 012 2v10a2 2 0 00-2-2H4zM20 6h-6a2 2 0 00-2 2v10a2 2 0 012-2h6zM4 6v10M20 6v10",
-    tone: 199,
-    reads: "an open book — a repository of published documents, in WHO blue",
-  },
-  // ── The instances that had NO mark, 2026-10-04 (bean `2vpn`) ───────────
-  //
-  // Owner: *"all needs to be consistent and consolidated"*, then, offered a
-  // glyph per instance, chose *"Glyphs I propose"*. Until these, each drew its
-  // LETTER in the navbar — the floor for a harness with no mark. A `-tools`
-  // instance takes its parent's tone on purpose: `kind-register` reads a
-  // shared tone as a family colour, and that is what a tools layer is.
-  "smart-ig": {
-    // A page with a folded corner and lines — an implementation guide.
-    glyph: "M6 3h9l3 3v15H6zM15 3v3h3M9 11h6M9 15h6",
-    tone: 229,
-    reads: "a published guide page — the IG built on the SMART base",
-  },
-  "smart-immunizations": {
-    // A syringe: plunger, barrel, needle.
-    glyph: "M18 3l3 3M16 5l3 3M17.5 6.5L9 15l-3 1 1-3 8.5-8.5M10 10l4 4M6 18l-3 3",
-    tone: 352,
-    reads: "a syringe — the immunization guide",
-  },
-  "folio-assistant-sci": {
-    // A conical flask with a fill line — the scientific-paper profile.
-    glyph: "M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3M7 15h10",
-    tone: 56,
-    reads: "a laboratory flask — folios that are scientific papers",
-  },
-  "fhir-harness": {
-    // A flame, for FHIR's own pun on its name.
-    glyph: "M12 3c1 4 5 6 5 11a5 5 0 01-10 0c0-3 2-4 2-7 1 1 2 2 3 4 0-3 0-5 0-8z",
-    tone: 10,
-    reads: "a flame — the FHIR implementation-guide harness",
-  },
-  "cat-openapi": {
-    // A pair of braces — an interface described as data.
-    glyph: "M9 4c-2 0-3 1-3 3v2c0 1-1 2-2 3 1 1 2 2 2 3v2c0 2 1 3 3 3M15 4c2 0 3 1 3 3v2c0 1 1 2 2 3-1 1-2 2-2 3v2c0 2-1 3-3 3",
-    tone: 76,
-    reads: "braces — an API described as data",
-  },
-  "cat-harness-tools": {
-    // A wrench — what implements the harness's tool definitions.
-    glyph: "M14.5 5.5a4 4 0 005 5L11 19a2.1 2.1 0 01-3-3l8.5-8.5a4 4 0 01-2-2zM8.5 16.5h.01",
-    tone: 268,
-    reads: "a wrench, in cat-harness's colour — the code that implements its tools",
   },
   "bootstrap-tools": {
     // A trowel — the tool that plants bootstrap's seed.
@@ -248,42 +148,11 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 304,
     reads: "a shield with a tick — what each Actor is permitted to do",
   },
-  // THE ROOT INSTANCE, and it had no entry until 2026-09-22 — bean `zc7m`.
-  //
-  // Owner, reporting it: *"folio assistant icon is messed up still. I want
-  // theme like in avaatars"*. It was the GENERIC question mark, which is what
-  // `avatarFor` returns for a name nothing declares, and the table's own
-  // header has carried the instruction the whole time: *"bootstrap has
-  // avatar, so does cat-harness, folio-asst"*. Two of those three were here.
-  //
-  // TONE 236, between `folio` (224) and `tools` (250), and deliberately near
-  // `folio-assistant-core`'s 212 — the same reasoning the three kinds below
-  // `cat-harness` are given: these are parts of one graph and a reader
-  // scanning a legend should see them as a family. Far enough to tell apart,
-  // close enough that neither reads as belonging somewhere else.
-  //
-  // THE GLYPH IS THE CORE'S LEAF, HELD. `folio-assistant-core` is the leaf of
-  // paper; the root instance is what holds one, so this is that leaf inside a
-  // frame rather than a second unrelated mark. An instance and its core
-  // drawn as two unrelated things would be the same drift the tones avoid.
-  "folio-assistant": {
-    glyph: "M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2zM8 7h5l3 3v7H8zM13 7v3h3",
-    tone: 236,
-    reads: "a leaf of paper held in a frame — the folio, and the instance that holds it",
-  },
-  // Keyed on the DECLARED NAME, which is `folio-assistant-core` — directory
-  // and name both spelled in full, per the owner's ruling of 2026-09-20 and
-  // as `folio-assistant-core/harness.json` records against itself.
-  "folio-assistant-core": {
-    glyph: "M6 3h9l4 4v14H6zM15 3v4h4M9 12h7M9 16h5",
-    tone: 212,
-    reads: "a leaf of paper with lines — the folio itself",
-  },
 
   // THE ONE RENDERABLE KIND, and the one this whole platform exists for.
   //
-  // Registered by `schemas/folio-graph-kind.ts` ON IMPORT rather than sitting
-  // in `BASE_GRAPH_KINDS`, which is why it was missing from the first draft
+  // Registered by `schemas/folio-graph-typology.ts` ON IMPORT rather than sitting
+  // in `BASE_GRAPH_TYPOLOGIES`, which is why it was missing from the first draft
   // of this registry and why `check-avatar-coverage` now seeds from the base
   // table explicitly: a check that reads only the live registry reports a
   // clean run whenever the module that registers a kind was not imported.
@@ -406,12 +275,12 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 132,
     reads: "a shield with a tick — a validator, declared by the harness whose code it is",
   },
-  kinds: {
+  typologies: {
     // A stack of three cards, the top one tagged: a graph whose nodes are the
     // KINDS of the other graphs. Bean dmx1.
     glyph: "M5 8h12v11H5zM7 5h12v11M9 2h12v11M8 12h6M8 15h4",
     tone: 300,
-    reads: "a stack of type cards — the graph kinds a harness declares it owns",
+    reads: "a stack of type cards — the graph typologies a harness declares it owns",
   },
   tools: {
     glyph: "M14 4a4 4 0 00-5 5l-5 5 2 2 5-5a4 4 0 005-5l-2 2-2-2 2-2z",
@@ -737,23 +606,61 @@ export const GENERIC: Avatar = {
  * is not a second central registry for kinds it does not list.
  */
 function declaredAvatar(kind: string): Avatar | undefined {
-  return defaultGraphKinds.get(kind)?.avatar;
+  return defaultGraphTypologies.get(kind)?.avatar;
 }
 
-/** Has this kind got an avatar of its own? */
+/**
+ * An INSTANCE that declares its own mark (bean sod4 #4): the `avatar` field of
+ * its `<instance>.json`. Eleven instances' marks sat in AVATARS until
+ * 2026-10-05; only the two submodules, `bootstrap` and `bootstrap-tools`,
+ * remain there, because their declarations live in other repositories and a
+ * mark for a layer BELOW this one is a reference in the allowed direction.
+ *
+ * Read RAW, for the reason `instanceSiteDir` gives: the full declaration
+ * reader imports the registry, which imports this file.
+ */
+let instanceAvatarCache: Map<string, Avatar> | undefined;
+function instanceAvatars(): Map<string, Avatar> {
+  if (instanceAvatarCache) return instanceAvatarCache;
+  const out = new Map<string, Avatar>();
+  for (const root of instanceRootsIn(PLATFORM_ROOT)) {
+    const file = findDeclarationFile(root);
+    if (file === undefined) continue;
+    try {
+      const d = JSON.parse(readFileSync(join(root, file), "utf-8")) as { name?: string; avatar?: Avatar };
+      if (d.name && d.avatar) out.set(d.name, d.avatar);
+    } catch {
+      // an unreadable declaration is `readDeclaration`'s finding, with its own message
+    }
+  }
+  instanceAvatarCache = out;
+  return out;
+}
+
+/** Has this kind, or this instance, got an avatar of its own? */
 export function hasAvatar(kind: string): boolean {
-  return Object.prototype.hasOwnProperty.call(AVATARS, kind) || declaredAvatar(kind) !== undefined;
+  return Object.prototype.hasOwnProperty.call(AVATARS, kind) || declaredAvatar(kind) !== undefined || instanceAvatars().has(kind);
 }
 
-/** The avatar for a kind, falling back to {@link GENERIC}. */
+/** The avatar for a kind or an instance, falling back to {@link GENERIC}. */
 export function avatarFor(kind: string): Avatar {
-  return AVATARS[kind] ?? declaredAvatar(kind) ?? GENERIC;
+  return AVATARS[kind] ?? declaredAvatar(kind) ?? instanceAvatars().get(kind) ?? GENERIC;
 }
 
-/** Every kind that has one: this table's, in declaration order, then the declared kinds'. */
+/**
+ * Every key that has one: this table's, in declaration order, then the
+ * declared kinds', then the declared instances'.
+ */
 export function avatarKinds(): string[] {
   const listed = Object.keys(AVATARS);
-  return [...listed, ...defaultGraphKinds.names().filter((k) => !listed.includes(k) && declaredAvatar(k) !== undefined)];
+  const kinds = defaultGraphTypologies.names().filter((k) => !listed.includes(k) && declaredAvatar(k) !== undefined);
+  const insts = [...instanceAvatars().keys()].filter((k) => !listed.includes(k) && !kinds.includes(k));
+  return [...listed, ...kinds, ...insts];
+}
+
+/** Every avatar, keyed as {@link avatarKinds} orders them — the table, then declared kinds and instances. */
+export function allAvatars(): [string, Avatar][] {
+  return avatarKinds().map((k) => [k, avatarFor(k)]);
 }
 
 /**

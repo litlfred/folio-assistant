@@ -87,7 +87,7 @@ function main(): number {
       "::error::check:bean-archive: `beans/beans.json` declares no `archive` node.\n" +
         "Bean `e8m3`: 631 bean-defs sat in an undeclared `beans/defs/archive/` and no\n" +
         "directory check could see it, because they compare declarations against disk\n" +
-        "and not the reverse. Declare it, with `graphKinds: [\"bean-defs\"]`.",
+        "and not the reverse. Declare it, with `graphTypologies: [\"bean-defs\"]`.",
     );
     return 1;
   }

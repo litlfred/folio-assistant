@@ -60,7 +60,7 @@ import { baseDocsDir } from "./compose-docs.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const TAG = "folio-fsh-guts/v1";
-/** The graph kind this renders — the one literal, and it is a KIND, not a path. */
+/** The graph typology this renders — the one literal, and it is a KIND, not a path. */
 const KIND = "fsh-guts";
 
 /** How a file meets — or fails — the graph's self-declaration contract. */
@@ -118,12 +118,12 @@ export function pageRelPath(repo = REPO): string | undefined {
     if (!declPath || !existsSync(declPath)) return [];
     return (
       JSON.parse(readFileSync(declPath, "utf-8")) as {
-        directories?: { graphKinds?: string[]; coverage?: { visualiser?: unknown } }[];
+        directories?: { graphTypologies?: string[]; coverage?: { visualiser?: unknown } }[];
       }
     ).directories ?? [];
   });
   for (const e of entries) {
-    if (!(e.graphKinds ?? []).includes(KIND)) continue;
+    if (!(e.graphTypologies ?? []).includes(KIND)) continue;
     const v = e.coverage?.visualiser;
     for (const one of Array.isArray(v) ? v : [v]) {
       const ref = typeof one === "string" ? one : (one as { ref?: string } | undefined)?.ref;
@@ -320,7 +320,7 @@ if (import.meta.main) {
   if (dir === undefined || !existsSync(dir)) {
     // A declared graph with no directory is the `dh4f` shape: scanning nothing
     // and reporting a clean run. Refuse rather than write an empty page.
-    console.error("::error::gen-fsh-guts-viz: no directory declared for graph kind 'fsh-guts'");
+    console.error("::error::gen-fsh-guts-viz: no directory declared for graph typology 'fsh-guts'");
     process.exit(1);
   }
   const files = gutsFiles(dir);
@@ -334,7 +334,7 @@ if (import.meta.main) {
   if (PAGE === undefined) {
     // No declared visualiser means no withholding either, so writing a page
     // here would publish it. Refuse rather than choose a path.
-    console.error(`::error::gen-fsh-guts-viz: no visualiser declared for graph kind '${KIND}'`);
+    console.error(`::error::gen-fsh-guts-viz: no visualiser declared for graph typology '${KIND}'`);
     process.exit(1);
   }
   const out = join(baseDocsDir(REPO), PAGE);

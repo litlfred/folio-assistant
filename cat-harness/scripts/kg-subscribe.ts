@@ -24,11 +24,11 @@
  *    every field bootstrap does not define is an Extension it may carry.
  * 2. **It declares at least one harness.** Bootstrap defines the term: *"A
  *    Knowledge Graph whose Subgraphs hold Skills, Roles or Processes."* And
- *    bootstrap names the Graph Kind for each: `skills` holds Skills,
+ *    bootstrap names the Graph Typology for each: `skills` holds Skills,
  *    `scenarios` holds Roles, `processes` holds Processes
- *    (`BOOTSTRAP_GRAPH_KINDS`). So a declaration IS a harness when at least
- *    one of its `directories` lists one of those three kinds in `graphKinds`
- *    — {@link HARNESS_GRAPH_KINDS}, {@link harnessesOf}.
+ *    (`BOOTSTRAP_GRAPH_TYPOLOGIES`). So a declaration IS a harness when at least
+ *    one of its `directories` lists one of those three kinds in `graphTypologies`
+ *    — {@link HARNESS_GRAPH_TYPOLOGIES}, {@link harnessesOf}.
  *
  * ### Why that rule, and not the two nearer ones
  *
@@ -38,7 +38,7 @@
  *   instantiated by the subscriber (slice 7), so requiring the upstream to
  *   have instantiated its own would refuse exactly the repositories a
  *   subscription exists for.
- * - **Not this harness's own graph kinds.** A kind cat-harness registers
+ * - **Not this harness's own graph typologies.** A kind cat-harness registers
  *   (`methodology`, `cat-harness`, …) is an Extension to a reader that knows
  *   only bootstrap, and the owner's definition says the substrate meets
  *   BOOTSTRAP's requirements. Judging it by our vocabulary would make "is a
@@ -71,7 +71,7 @@
  *   asset and harness starts referenced. A re-subscribe at the same pin keeps
  *   whatever the subscriber has chosen since and changes no byte.
  * - A {@link SubstrateSnapshotSchema} node, `<id>.substrate.json`, in the
- *   subscriber's OWN directory declared with graph kind `substrate-snapshot`.
+ *   subscriber's OWN directory declared with graph typology `substrate-snapshot`.
  *   Found through the declaration, never by a path literal; an instance that
  *   declares none is refused with what to declare. Why a wrapper rather than a
  *   copy of `<name>.json` is on the schema.
@@ -101,6 +101,8 @@ import { declarationFileIn } from "../../bootstrap-tools/schemas/declaration.ts"
 import { KnowledgeGraphDeclarationSchema } from "../../bootstrap-tools/schemas/graph.ts";
 import {
   CatHarnessDeclarationSchema,
+  KG_CONTENT_GRAPH_TYPOLOGIES,
+  KG_GRAPH_TYPOLOGY,
   type Subscription,
   findDeclarationFile,
   instanceRootsIn,
@@ -111,7 +113,7 @@ import {
 import { RepoFullNameSchema } from "../schemas/repo-full-name.js";
 import {
   KG_PART_RECORD_SCHEMA,
-  SNAPSHOT_GRAPH_KIND,
+  SNAPSHOT_GRAPH_TYPOLOGY,
   SNAPSHOT_SUFFIX,
   SUBSTRATE_SNAPSHOT_SCHEMA,
   SubstrateSnapshotSchema,
@@ -121,15 +123,17 @@ import { git, pinnedRef, shallowFetch } from "./sync-remote-skills.js";
 
 const INSTANCE = join(import.meta.dir, "..");
 
-/** The graph kind of the directory a snapshot is written to, and a snapshot's filename suffix: defined beside the schema. */
-export { SNAPSHOT_GRAPH_KIND, SNAPSHOT_SUFFIX };
+/** The graph typology of the directory a snapshot is written to, and a snapshot's filename suffix: defined beside the schema. */
+export { SNAPSHOT_GRAPH_TYPOLOGY, SNAPSHOT_SUFFIX };
 
 /**
- * Bootstrap's Graph Kinds whose Subgraphs hold what makes a Knowledge Graph a
+ * Bootstrap's Graph Typologies whose Subgraphs hold what makes a Knowledge Graph a
  * Harness: Skills, Roles (`scenarios`) and Processes. Read against
- * `BOOTSTRAP_GRAPH_KINDS`' own sentences; a test holds the two together.
+ * `BOOTSTRAP_GRAPH_TYPOLOGIES`' own sentences; a test holds the two together.
  */
-export const HARNESS_GRAPH_KINDS: readonly string[] = ["skills", "scenarios", "processes"];
+// The kinds split out of the `cat-harness` umbrella: knowledge-graph content
+// (`kgContent`, sod4 #5) other than the umbrella itself.
+export const HARNESS_GRAPH_TYPOLOGIES: readonly string[] = KG_CONTENT_GRAPH_TYPOLOGIES.filter((k) => k !== KG_GRAPH_TYPOLOGY);
 
 export type SubstrateVerdict =
   | {
@@ -162,8 +166,8 @@ export function parseTarget(arg: string): { ok: true; repository: string; ref: s
 }
 
 /** The harnesses a bootstrap declaration declares, by the rule in the module docblock. */
-export function harnessesOf(decl: { name: string; directories?: { graphKinds: readonly string[] }[] }): string[] {
-  const isHarness = (decl.directories ?? []).some((d) => d.graphKinds.some((k) => HARNESS_GRAPH_KINDS.includes(k)));
+export function harnessesOf(decl: { name: string; directories?: { graphTypologies: readonly string[] }[] }): string[] {
+  const isHarness = (decl.directories ?? []).some((d) => d.graphTypologies.some((k) => HARNESS_GRAPH_TYPOLOGIES.includes(k)));
   return isHarness ? [decl.name] : [];
 }
 
@@ -211,7 +215,7 @@ export function judgeDeclaration(name: string, raw: string): SubstrateVerdict {
       state: "not-a-substrate",
       reason:
         `\`${name}\` declares no harness: none of its ${(decl.directories ?? []).length} Subgraph(s) holds ` +
-        `${HARNESS_GRAPH_KINDS.map((k) => `\`${k}\``).join(", ")} — bootstrap's kinds for Skills, Roles and Processes. ` +
+        `${HARNESS_GRAPH_TYPOLOGIES.map((k) => `\`${k}\``).join(", ")} — bootstrap's kinds for Skills, Roles and Processes. ` +
         `Only the root declaration is read; harnesses declared by nested instances are not seen`,
     };
   }
@@ -223,7 +227,7 @@ export function judgeDeclaration(name: string, raw: string): SubstrateVerdict {
       name: decl.name,
       ...(decl.title !== undefined ? { title: decl.title } : {}),
       ...(decl.version !== undefined ? { version: decl.version } : {}),
-      subgraphs: (decl.directories ?? []).map((d) => ({ id: d.id, graphKinds: d.graphKinds.map(String) })),
+      subgraphs: (decl.directories ?? []).map((d) => ({ id: d.id, graphTypologies: d.graphTypologies.map(String) })),
       harnesses,
     },
   };
@@ -343,8 +347,8 @@ export interface SubscribeOptions {
 
 /** The instance's declared `substrate-snapshot` directory, resolved; `undefined` when it declares none. */
 export function snapshotDirOf(instanceRoot: string, raw: Record<string, unknown>): string | undefined {
-  const dirs = (raw["directories"] ?? []) as { path: string; graphKinds?: string[]; scope?: "repository" }[];
-  const d = dirs.find((x) => (x.graphKinds ?? []).includes(SNAPSHOT_GRAPH_KIND));
+  const dirs = (raw["directories"] ?? []) as { path: string; graphTypologies?: string[]; scope?: "repository" }[];
+  const d = dirs.find((x) => (x.graphTypologies ?? []).includes(SNAPSHOT_GRAPH_TYPOLOGY));
   return d ? resolve(rootForScope(instanceRoot, d.scope), d.path) : undefined;
 }
 
@@ -365,7 +369,7 @@ export async function subscribe(opts: SubscribeOptions): Promise<SubscribeResult
       ok: false,
       state: "refused",
       reason:
-        `${declName} declares no directory of graph kind \`${SNAPSHOT_GRAPH_KIND}\` to cache the substrate's declaration in. ` +
+        `${declName} declares no directory of graph typology \`${SNAPSHOT_GRAPH_TYPOLOGY}\` to cache the substrate's declaration in. ` +
         `Declare one (cat-harness's \`subscriptions\` entry is the pattern) and re-run`,
     };
   }
@@ -457,7 +461,7 @@ export function checkSubscriptions(instanceRoot: string): string[] {
   const dir = snapshotDirOf(instanceRoot, raw);
   const out: string[] = [];
   if (!dir) {
-    if (subs.length) out.push(`${declName}: ${subs.length} subscription(s) and no \`${SNAPSHOT_GRAPH_KIND}\` directory to hold their snapshots`);
+    if (subs.length) out.push(`${declName}: ${subs.length} subscription(s) and no \`${SNAPSHOT_GRAPH_TYPOLOGY}\` directory to hold their snapshots`);
     return out;
   }
   const seen = new Set<string>();

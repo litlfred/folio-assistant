@@ -6,7 +6,7 @@
   },
   "subject": {
     "kind": "audit-coverage",
-    "id": "graph-kinds"
+    "id": "graph-typologies"
   },
   "families": {
     "coverage-measured": {
@@ -202,7 +202,7 @@
             "satisfies-resolves",
             "skill-contract-claimed",
             "skill-contract-resolves",
-            "skill-graph-kinds-resolve",
+            "skill-graph-typologies-resolve",
             "skill-has-entry-point",
             "skill-in-role-or-process",
             "story-role-resolves",
@@ -227,7 +227,7 @@
             "bun run check:declared-assets",
             "bun run check:declared-dirs",
             "bun run check:declared-paths",
-            "bun run check:graph-kind-work",
+            "bun run check:graph-typology-work",
             "bun run check:harness-dirs",
             "bun run check:image-roles",
             "bun run check:instance-config",
@@ -508,7 +508,7 @@
         },
         {
           "kind": "fsh-guts",
-          "state": "undetermined",
+          "state": "empty",
           "directories": [
             "fsh-guts"
           ],
@@ -1419,8 +1419,15 @@
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "kind": "fsh-guts",
+          "directories": [
+            "fsh-guts"
+          ]
+        }
+      ]
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
@@ -1489,5 +1496,5 @@
       "entries": []
     }
   },
-  "total": 77
+  "total": 78
 }

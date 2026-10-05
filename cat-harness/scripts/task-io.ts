@@ -142,7 +142,7 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "check:escaped-markup:source": READ_ONLY,
   "check:fallback-roles": READ_ONLY,
   "check:folio-mount": READ_ONLY,
-  "check:graph-kind-work": READ_ONLY,
+  "check:graph-typology-work": READ_ONLY,
   "check:harness-dirs": READ_ONLY,
   "check:harness-state:check": READ_ONLY,
   "check:image-roles": READ_ONLY,

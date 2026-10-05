@@ -13,7 +13,7 @@
  * - every `swimlane-glossary` directory (the harness's ledger): counted and
  *   linked to the page that already renders it, never copied, because a
  *   second rendering of the same terms is a second answer free to drift;
- * - every `remoteGraphs` entry with `graphKinds: ["glossary"]`: an external
+ * - every `remoteGraphs` entry with `graphTypologies: ["glossary"]`: an external
  *   SKOS scheme, listed with its link. Referenced, never held;
  * - every KG asset with a title and a description (skills, Tools, BPMN
  *   activities, DMN decisions, documented schema fields), extracted by
@@ -328,7 +328,7 @@ export function collect(repo: string = REPO): {
     const dirs = resolveDirectories([{ name: decl.name, root, own: true }]).filter((d) => d.own);
     for (const d of dirs) {
       if (!existsSync(d.absPath)) continue;
-      const kinds = d.graphKinds ?? [];
+      const kinds = d.graphTypologies ?? [];
       if (kinds.includes("glossary")) {
         for (const f of readdirSync(d.absPath).filter((f) => f.endsWith(".glossary.json")).sort()) {
           const p = join(d.absPath, f);
@@ -390,7 +390,7 @@ export function collect(repo: string = REPO): {
       }
     }
     for (const g of decl.remoteGraphs ?? []) {
-      if (g.graphKinds.includes("glossary")) external.push({ instance: decl.name, id: g.id, url: g.url, title: g.title });
+      if (g.graphTypologies.includes("glossary")) external.push({ instance: decl.name, id: g.id, url: g.url, title: g.title });
     }
   }
   // Extracted schemes, in the OWNING instance's namespace. Derived here on

@@ -66,7 +66,7 @@ package "who-iris/who-iris-skills" as pkg_who_iris_who_iris_skills <<skills>> {
     id [1] : string
     path [1] : string
     subgraph [1] : true
-    graphKinds [1..*] : string[]
+    graphTypologies [1..*] : string[]
   }
   class "skill-topics/v1" as who_iris_who_iris_skills_skill_topics_v1_skill_topics_v1 <<json: SkillTopicsSchema>> #e8f0ee {
     $schema [1] : 'skill-topics/v1'

@@ -134,7 +134,7 @@ import {
 import { basename, dirname, join, relative, resolve, sep } from "node:path";
 
 import {
-  graphKindsOfLayer,
+  graphTypologiesOfLayer,
   instanceRootFor,
   isStateGraph,
   readDeclaration,
@@ -212,8 +212,8 @@ const KG_RENDER_JS = readFileSync(join(SITE, "assets", "js", "kg-render.js"), "u
 const BEAN_INDEX_SCHEMA = "folio-bean-index/v1";
 const TODO_INDEX_SCHEMA = "folio-todo-index/v1";
 
-/** Every graph kind whose `holds` is `state`, asked of the registry. */
-const STATE_KINDS = new Set(graphKindsOfLayer("state"));
+/** Every graph typology whose `holds` is `state`, asked of the registry. */
+const STATE_KINDS = new Set(graphTypologiesOfLayer("state"));
 
 /**
  * Declared ids this generator will not publish under.
@@ -266,7 +266,7 @@ interface StateGraph {
   id: string;
   /** Its path, relative to the instance root, as declared. */
   path: string;
-  /** The graph kinds in it that are `state`. */
+  /** The graph typologies in it that are `state`. */
   kinds: string[];
   state: GraphState;
   description: string;
@@ -383,7 +383,7 @@ export function declaredVisualiserFor(
 function stateGraphsOf(decl: CatHarnessDeclaration): StateGraph[] {
   const out: StateGraph[] = [];
   for (const d of decl.directories ?? []) {
-    const kinds = (d.graphKinds ?? []).filter((g) => STATE_KINDS.has(g) && isStateGraph(g));
+    const kinds = (d.graphTypologies ?? []).filter((g) => STATE_KINDS.has(g) && isStateGraph(g));
     if (kinds.length === 0) continue;
     out.push({
       id: d.id,

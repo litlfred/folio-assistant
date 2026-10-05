@@ -7,13 +7,13 @@ description: >-
 # advertises it to every consumer of the folio's graph, which is the precise
 # thing the owner's 2026-09-19 instruction forbids: "NEVER include fsh-guts,
 # references to fsh-guts stripped out of KG before sending to publication."
-# It was ALREADY stripped, by a name match against UNPUBLISHED_GRAPH_KINDS.
+# It was ALREADY stripped, by a name match against UNPUBLISHED_GRAPH_TYPOLOGIES.
 # Declaring it states the fact where the author is looking, rather than
-# inferring it from a collision between this skill's name and a graph kind's
+# inferring it from a collision between this skill's name and a graph typology's
 # — which `isPublishedSkill` itself flags as the thing to replace: "if that
 # ever stops being true this needs its own list, not a cleverer derivation".
 published: false
-graph-kinds:
+graph-typologies:
   - fsh-guts
 ---
 
@@ -34,7 +34,7 @@ Owner, 2026-09-19:
 
 ## What makes it different from every other non-renderable graph
 
-The declaration declares nine graph kinds and none of them renders. That makes
+The declaration declares nine graph typologies and none of them renders. That makes
 `renderable: false` look like a weak signal, and for the others it is: `tools`,
 `schemas`, `beans` and the rest are graphs a **tool** reads, and there was
 never a page to make of them.
@@ -160,7 +160,9 @@ shipped and then corrected the same day.
 A consumer may fetch `fsh-guts.jsonld` deliberately. It must never **arrive**
 there by following an edge. Mechanism and the three emitters that had to be
 filtered: [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published
-graph".
+graph". Where this sits among everything else the site publishes, and what
+else is never published: [`instance-publication`](instance-publication.md)
+§"What each instance publishes".
 
 Reaching it as a human is the dead-fish icon under settings, with a node
 counter and a select dialog. Bean `folio-assistant-7vhe`; until that exists,

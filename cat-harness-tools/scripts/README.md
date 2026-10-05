@@ -48,7 +48,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`check-escaped-markup.ts`](check-escaped-markup.ts) | a file |  |
 | [`check-folio-mount.ts`](check-folio-mount.ts) | a file |  |
 | [`check-foreign-paths.ts`](check-foreign-paths.ts) | a file |  |
-| [`check-graph-kind-work.ts`](check-graph-kind-work.ts) | a file |  |
+| [`check-graph-typology-work.ts`](check-graph-typology-work.ts) | a file |  |
 | [`check-harness-dirs.ts`](check-harness-dirs.ts) | a file |  |
 | [`check-harness-state.ts`](check-harness-state.ts) | a file |  |
 | [`check-image-roles.ts`](check-image-roles.ts) | a file |  |
@@ -80,6 +80,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`check-published-refs.ts`](check-published-refs.ts) | a file |  |
 | [`check-python-deps.ts`](check-python-deps.ts) | a file |  |
 | [`check-qa-corpus.ts`](check-qa-corpus.ts) | a file |  |
+| [`check-qa-result-links.ts`](check-qa-result-links.ts) | a file |  |
 | [`check-qa-reviewer-permission.ts`](check-qa-reviewer-permission.ts) | a file |  |
 | [`check-quiet-claim-liveness.ts`](check-quiet-claim-liveness.ts) | a file |  |
 | [`check-read-only-graphs.ts`](check-read-only-graphs.ts) | a file |  |

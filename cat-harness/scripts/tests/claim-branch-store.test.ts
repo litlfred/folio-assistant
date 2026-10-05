@@ -51,7 +51,7 @@ function world(status = "todo"): { repo: string; url: string; storeDir: string }
   git(base, "clone", "-q", url, work);
   writeFileSync(join(work, "manifest.json"), JSON.stringify({ $schema: "state-manifest/v1", status: "store", authoritative: true, keyedBy: "tip" }, null, 2) + "\n");
   mkdirSync(join(work, "beans", "defs"), { recursive: true });
-  writeFileSync(join(work, "beans", "beans.json"), JSON.stringify({ name: "f", directories: [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }] }));
+  writeFileSync(join(work, "beans", "beans.json"), JSON.stringify({ name: "f", directories: [{ id: "defs", path: "defs", graphTypologies: ["bean-defs"] }] }));
   writeFileSync(join(work, "beans", "defs", FILE), BEAN.replace("status: todo", `status: ${status}`));
   git(work, "add", "-A");
   git(work, "commit", "-qm", "seed");
@@ -66,7 +66,7 @@ function world(status = "todo"): { repo: string; url: string; storeDir: string }
   git(repo, "remote", "add", "origin", url);
   writeFileSync(
     join(repo, "fixture.json"),
-    JSON.stringify({ $schema: "folio-harness/v1", name: "fixture", directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: { branch: BRANCH, keyedBy: "tip" } }] }, null, 2),
+    JSON.stringify({ $schema: "folio-harness/v1", name: "fixture", directories: [{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: { branch: BRANCH, keyedBy: "tip" } }] }, null, 2),
   );
   return { repo, url, storeDir: join(base, "store.git") };
 }

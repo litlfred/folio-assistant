@@ -376,9 +376,17 @@ describe("the IRIS home replica", () => {
     expect(home).toContain(`${n} nodes`);
   });
 
-  it("the search box is inert and says so", () => {
-    expect(home).toContain("<button type=\"button\" disabled>");
-    expect(home).toContain("Disabled.");
+  it("the search box is active and provides search", () => {
+    expect(home).toContain("id=\"iris-search-input\"");
+    expect(home).toContain("id=\"iris-search-form\"");
+    expect(home).not.toContain("<button type=\"button\" disabled>");
+    expect(home).toContain("action=\"../id-lookup/\"");
+    expect(home).toContain("name=\"index\" value=\"who-iris/\"");
+    expect(home).toContain("id=\"iris-search-results\"");
+    expect(home).toContain("Publication and information products style guide");
+    expect(home).toContain("WHO handbook for guideline development");
+    expect(home).toContain("WHO editorial style manual");
+    expect(home).toContain("../id-lookup/?index=who-iris/");
   });
 });
 
@@ -494,5 +502,32 @@ describe("library/withheld.json is the catalogue's gates, for the mount — bean
 
   it("every withheld path exists under library/ — a stale entry would hide nothing", () => {
     for (const p of listed) expect(existsSync(join(LIB, p)), `${p} is listed but absent`).toBe(true);
+  });
+});
+
+/**
+ * The search box's highlighter escapes each typed term before building a
+ * RegExp from it. The escape class once read `[.*+?^${}()|[\]\]` in the emitted
+ * page: the `]` closed the class early and `\` was missing, so a lone `(` or
+ * `[` went through unescaped and `new RegExp("(()")` threw on every keystroke.
+ * Asserted against the RENDERED page's own escape pattern, so the template's
+ * double-escaping cannot drift from what the browser runs.
+ */
+describe("the search highlighter escapes every regex metacharacter", () => {
+  const html = readFileSync(join(SITE, "index.html"), "utf-8");
+  const m = html.match(/t\.replace\((\/\[.*?\]\/g), "\\\\\$&"\)/);
+
+  it("the rendered page carries the escape call", () => {
+    expect(m).not.toBeNull();
+  });
+
+  it("every metacharacter typed alone compiles and matches literally", () => {
+    const pattern = m![1]!;
+    const cls = new RegExp(pattern.slice(1, pattern.lastIndexOf("/")), "g");
+    const esc = (t: string) => t.replace(cls, "\\$&");
+    for (const t of ["(", ")", "[", "]", "{", "}", ".", "*", "+", "?", "^", "$", "|", "\\", "c++", "who?"]) {
+      const re = new RegExp("(" + esc(t) + ")", "gi");
+      expect(re.test(`pre ${t} post`)).toBe(true);
+    }
   });
 });

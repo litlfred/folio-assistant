@@ -1,10 +1,10 @@
 #!/usr/bin/env bun
 /**
- * Every artefact a NEW GRAPH KIND owes, performed and then verified — the
+ * Every artefact a NEW GRAPH TYPOLOGY owes, performed and then verified — the
  * `skill:register` of kinds.
  *
  * @module scripts/kind-register
- * @covers cat-harness, kinds — it loads every declared kind node (which parses each against folio-graph-kind/v1) and checks each owes nothing
+ * @covers cat-harness, typologies — it loads every declared kind node (which parses each against folio-graph-typology/v1) and checks each owes nothing
  *
  * ## The measurement that made this a command rather than a list
  *
@@ -66,12 +66,12 @@
  */
 import { spawnSync } from "node:child_process";
 
-import { defaultGraphKinds } from "../../cat-harness/schemas/cat-harness.js";
-import { AVATARS, hasAvatar } from "../../cat-harness/schemas/avatars.js";
+import { defaultGraphTypologies } from "../../cat-harness/schemas/cat-harness.js";
+import { allAvatars, hasAvatar } from "../../cat-harness/schemas/avatars.js";
 import { documentedKinds, KIND_TABLE_DOC } from "../../cat-harness/scripts/kind-table.ts";
 // `folio` is registered by CORE as a load-time side effect, so the harness alone
 // does not know it exists. Same import, same reason, as `check-declared-dirs`.
-import "../../cat-harness/schemas/folio-graph-kind.js";
+import "../../cat-harness/schemas/folio-graph-typology.js";
 
 export interface Step {
   /** What to run, as `bun run` arguments. */
@@ -94,7 +94,7 @@ export const STEPS: readonly Step[] = [
     write: ["kind:table"],
     verify: ["kind:table:check"],
     because:
-      "the graph-kind TABLE in skills/kg/kg-core/directory-conventions.md, generated from each kind's " +
+      "the graph-typology TABLE in skills/kg/kg-core/directory-conventions.md, generated from each kind's " +
       "`description` since the owner moved the prose onto the kinds (bean dmx1). Edit the kind, not the row",
   },
   {
@@ -139,19 +139,19 @@ export interface AuthoredGap {
  * The authored obligations, per registered kind.
  *
  * Reported against the KIND, which is the point: `avatars:css:check` fails
- * naming a stylesheet, and `graph-kind-docs.test.ts` fails naming a table, and
+ * naming a stylesheet, and `graph-typology-docs.test.ts` fails naming a table, and
  * neither says which kind you added.
  */
 export function authoredGaps(root?: string): AuthoredGap[] {
   const out: AuthoredGap[] = [];
   const documented = new Set(documentedKinds(root));
-  for (const kind of defaultGraphKinds.names()) {
+  for (const kind of defaultGraphTypologies.names()) {
     if (!hasAvatar(kind)) {
       out.push({
         kind,
         owes: "avatar",
         detail:
-          `no avatar: an \`avatar\` on its \`kinds/\` node for a declared kind, else an entry in \`schemas/avatars.ts\`. It needs a glyph (24x24 path data), a \`tone\` ` +
+          `no avatar: an \`avatar\` on its \`typologies/\` node for a declared kind, else an entry in \`schemas/avatars.ts\`. It needs a glyph (24x24 path data), a \`tone\` ` +
           `(hue, 0-359) and a \`reads\` sentence saying why that mark. Check the clearance report ` +
           `below before choosing the tone.`,
       });
@@ -190,7 +190,7 @@ export interface HueReport {
  */
 export function hueReport(): HueReport {
   const byTone = new Map<number, string[]>();
-  for (const [kind, a] of Object.entries(AVATARS)) {
+  for (const [kind, a] of allAvatars()) {
     byTone.set(a.tone, [...(byTone.get(a.tone) ?? []), kind]);
   }
   const collisions = [...byTone.entries()]
@@ -203,7 +203,7 @@ export function hueReport(): HueReport {
     const d = Math.abs(a - b) % 360;
     return Math.min(d, 360 - d);
   };
-  const entries = Object.entries(AVATARS);
+  const entries = allAvatars();
   const nearest = entries
     .map(([kind, a]) => {
       let neighbour = "";
@@ -234,10 +234,10 @@ function verifyQuietly(args: readonly string[]): { code: number; output: string 
 
 export function main(argv: readonly string[]): number {
   const check = argv.includes("--check");
-  const kinds = defaultGraphKinds.names();
+  const kinds = defaultGraphTypologies.names();
 
   if (!check) {
-    console.log(`Writing — ${STEPS.length} generated artefact(s) a graph kind owes:\n`);
+    console.log(`Writing — ${STEPS.length} generated artefact(s) a graph typology owes:\n`);
     for (const s of STEPS) {
       const rc = run(s.write);
       if (rc !== 0) {

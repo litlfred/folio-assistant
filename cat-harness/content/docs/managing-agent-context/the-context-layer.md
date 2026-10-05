@@ -1,4 +1,4 @@
-The Context layer is declared, not inferred. Five graph kinds currently sit in
+The Context layer is declared, not inferred. Five graph typologies currently sit in
 it, and the schema requires each kind to say which layer it belongs to, so a
 kind that has not decided does not compile:
 
@@ -10,7 +10,7 @@ kind that has not decided does not compile:
 | `methodology` | an adopted way of reaching a judgement, kept whole |
 | `fsh-guts` | deprecated and throwaway structured content, kept addressable |
 
-Ask the code rather than this table — `graphKindsOfLayer("context")` returns
+Ask the code rather than this table — `graphTypologiesOfLayer("context")` returns
 the live answer, and a count written into prose is a claim nothing re-derives.
 The shapes are in
 [`schemas/cat-harness.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts).

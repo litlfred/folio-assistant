@@ -35,7 +35,7 @@
  *
  * A file git accounts for under the instance root whose extension is a
  * programming language's — see {@link CODE_EXTENSIONS}. EXCEPT files under a
- * directory the instance declares as graph kind `folio`: a folio's block
+ * directory the instance declares as graph typology `folio`: a folio's block
  * manifests are authored CONTENT that happens to be written as TypeScript
  * data (they import `../schema/builders`), and reporting them would make every
  * folio fail a rule about tooling.
@@ -59,7 +59,7 @@ export const CODE_EXTENSIONS: readonly string[] = [
   ".py", ".sh", ".bash", ".bat", ".cmd", ".ps1", ".rb", ".go", ".rs", ".java", ".lean",
 ];
 
-/** Graph kinds whose directories hold authored content written as code-shaped data. */
+/** Graph typologies whose directories hold authored content written as code-shaped data. */
 export const CONTENT_MANIFEST_KINDS: readonly string[] = ["folio"];
 
 /** Why an instance is content, or `undefined` when nothing declares it so. */
@@ -85,7 +85,7 @@ export function contentBasis(instanceRoot: string, siblings: readonly string[]):
 function manifestDirs(instanceRoot: string): string[] {
   const decl = readDeclaration(instanceRoot);
   return (decl?.directories ?? [])
-    .filter((d) => d.graphKinds.some((k) => CONTENT_MANIFEST_KINDS.includes(k)))
+    .filter((d) => d.graphTypologies.some((k) => CONTENT_MANIFEST_KINDS.includes(k)))
     .map((d) => d.path.replace(/\/+$/, ""));
 }
 

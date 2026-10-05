@@ -85,7 +85,7 @@ modify its own context, the second run would not be the same experiment.
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/managing-agent-context/the-context-layer.md){: .fa-node-edit title="Edit content/docs/managing-agent-context/the-context-layer.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-context-layer.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/managing-agent-context/the-context-layer.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/managing-agent-context/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" data-qa-family="translation" data-qa-key="the-context-layer.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/managing-agent-context/the-context-layer.translation.json' | relative_url }}" data-qa-index="{{ '/assets/qa/managing-agent-context/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
-The Context layer is declared, not inferred. Five graph kinds currently sit in
+The Context layer is declared, not inferred. Five graph typologies currently sit in
 it, and the schema requires each kind to say which layer it belongs to, so a
 kind that has not decided does not compile:
 
@@ -97,7 +97,7 @@ kind that has not decided does not compile:
 | `methodology` | an adopted way of reaching a judgement, kept whole |
 | `fsh-guts` | deprecated and throwaway structured content, kept addressable |
 
-Ask the code rather than this table — `graphKindsOfLayer("context")` returns
+Ask the code rather than this table — `graphTypologiesOfLayer("context")` returns
 the live answer, and a count written into prose is a claim nothing re-derives.
 The shapes are in
 [`schemas/cat-harness.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts).

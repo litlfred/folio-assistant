@@ -233,7 +233,7 @@ export function qaResultsFile(root: string, rel: string): string {
 }
 
 /**
- * The graph kinds the `qa-reports` arc moves off `main` — proposal
+ * The graph typologies the `qa-reports` arc moves off `main` — proposal
  * `qa-reports-branch-and-test-process` §2.1: every DERIVED `qa` verdict, and
  * the `health` report. Attestations stay (D2) but live in their own
  * directory, so they are not a reason to expect a `qa` directory here.
@@ -248,9 +248,9 @@ export const OFF_MAIN_KINDS: readonly string[] = ["qa", "health"];
  * the results moved aside, `readme:subgraphs` counted all 15 such directories
  * as `absent-directory` findings.
  */
-export function mayLeaveMain(dir: { graphKinds?: readonly string[]; storage?: unknown }): boolean {
+export function mayLeaveMain(dir: { graphTypologies?: readonly string[]; storage?: unknown }): boolean {
   if (dir.storage) return true;
-  const kinds = dir.graphKinds ?? [];
+  const kinds = dir.graphTypologies ?? [];
   return kinds.length > 0 && kinds.every((k) => OFF_MAIN_KINDS.includes(k));
 }
 

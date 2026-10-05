@@ -13,6 +13,8 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`backfill-materialized-fixity.ts`](backfill-materialized-fixity.ts) | a file |  |
 | [`build-document-site.test.ts`](build-document-site.test.ts) | a file |  |
 | [`build-document-site.ts`](build-document-site.ts) | a file |  |
+| [`build-folio-site.test.ts`](build-folio-site.test.ts) | a file |  |
+| [`build-folio-site.ts`](build-folio-site.ts) | a file |  |
 | [`build-glossary-skos.test.ts`](build-glossary-skos.test.ts) | a file |  |
 | [`build-glossary-usage.test.ts`](build-glossary-usage.test.ts) | a file |  |
 | [`build-glossary.ts`](build-glossary.ts) | a file |  |
@@ -26,8 +28,11 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`codemod-refterm.ts`](codemod-refterm.ts) | a file |  |
 | [`dc-render.ts`](dc-render.ts) | a file |  |
 | [`docx-structure.py`](docx-structure.py) | a file |  |
+| [`docx-structure.test.ts`](docx-structure.test.ts) | a file |  |
 | [`docx-to-folio.test.ts`](docx-to-folio.test.ts) | a file |  |
 | [`docx-to-folio.ts`](docx-to-folio.ts) | a file |  |
+| [`folio-site-chrome-check.ts`](folio-site-chrome-check.ts) | a file |  |
+| [`folio-site-qa.ts`](folio-site-qa.ts) | a file |  |
 | [`gen-covers.test.ts`](gen-covers.test.ts) | a file |  |
 | [`gen-covers.ts`](gen-covers.ts) | a file |  |
 | [`glossary-extract.ts`](glossary-extract.ts) | a file |  |
@@ -43,6 +48,7 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`local-path.test.ts`](local-path.test.ts) | a file |  |
 | [`materialized-fixity.test.ts`](materialized-fixity.test.ts) | a file |  |
 | [`pdf-line-map.py`](pdf-line-map.py) | a file |  |
+| [`public-comment-changesets.ts`](public-comment-changesets.ts) | a file |  |
 | [`public-comment-site.test.ts`](public-comment-site.test.ts) | a file |  |
 | [`public-comment-site.ts`](public-comment-site.ts) | a file |  |
 | [`public-comment.test.ts`](public-comment.test.ts) | a file |  |
@@ -58,6 +64,8 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`sample-import-run.ts`](sample-import-run.ts) | a file |  |
 | [`source-liveness.test.ts`](source-liveness.test.ts) | a file |  |
 | [`source-liveness.ts`](source-liveness.ts) | a file |  |
+| [`stage-folio-local.ts`](stage-folio-local.ts) | a file |  |
+| [`folio-site-assets/`](folio-site-assets/) | _nothing declares what this holds_ | |
 | [`lib/`](lib/) | _nothing declares what this holds_ | |
 | [`tests/`](tests/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

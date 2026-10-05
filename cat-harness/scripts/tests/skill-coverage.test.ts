@@ -116,7 +116,7 @@ describe("skill coverage", () => {
         .filter((n) => String(n["@type"]).endsWith("Skill"))
         .map((n) => n.name as string),
     );
-    // UNPUBLISHED_GRAPH_KINDS names skills that are deliberately stripped
+    // UNPUBLISHED_GRAPH_TYPOLOGIES names skills that are deliberately stripped
     // from the published graph — `fsh-guts` documents the trashcan, and the
     // owner's rule is that no published graph references it. They are
     // resolvable skills that must NOT be nodes, so this invariant excludes

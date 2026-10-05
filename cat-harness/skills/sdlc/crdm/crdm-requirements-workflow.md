@@ -1,6 +1,6 @@
 ---
 name: crdm-requirements-workflow
-graph-kinds:
+graph-typologies:
   - proposals
   - requirements
 ---

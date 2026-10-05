@@ -430,14 +430,14 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/NodeInstance"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
       },
       "skos:prefLabel": [
         {
-          "@value": "Graph Kind",
+          "@value": "Graph Typology",
           "@language": "en"
         },
         {
@@ -493,9 +493,9 @@
         }
       ],
       "rdfs:isDefinedBy": {
-        "@id": "https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/GraphKind"
+        "@id": "https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/GraphTypology"
       },
-      "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/GraphKind"
+      "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/GraphTypology"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Declaration",
@@ -662,7 +662,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A directory entry of a Declaration: an id, a directory, and the Graph Kinds its Node Instances' kinds belong to.",
+          "@value": "A directory entry of a Declaration: an id, a directory, and the Graph Typologies its Node Instances' kinds belong to.",
           "@language": "en"
         },
         {
@@ -691,7 +691,7 @@
           "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Declaration"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology"
         },
         {
           "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeInstance"
@@ -1599,7 +1599,7 @@
             "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeInstance"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology"
           },
           {
             "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Declaration"

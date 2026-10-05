@@ -20,7 +20,7 @@ plan comes to disagree with itself.**
 
 ## Which store answers which question
 
-| question | store | graph kind | layer |
+| question | store | graph typology | layer |
 |---|---|---|---|
 | what does this process DO? | `processes/**/*.bpmn` | `cat-harness` | **content** |
 | where did this instance GET TO? | the workflow-state node of the bean graph | `workflow-state` | **state** |

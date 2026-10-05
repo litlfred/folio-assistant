@@ -23,7 +23,7 @@
  *
  * ## `folio` IS RENDERED ALREADY, and that is not the same thing
  *
- * `folio` is the only `renderable` graph kind — a folio graph comes out the
+ * `folio` is the only `renderable` graph typology — a folio graph comes out the
  * other end as a website — and `gen-landing-data.ts` already turns these
  * nodes into the landing board a reader sees. So there is a rendering of the
  * folio's CONTENT.

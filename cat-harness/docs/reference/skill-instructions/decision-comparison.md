@@ -42,7 +42,7 @@ tool will happily render them.
 
 ### Worked example — this agent, 2026-09-20
 
-Asked the repo owner to choose how a graph kind gets registered. Four options,
+Asked the repo owner to choose how a graph typology gets registered. Four options,
 each with a real cost written into its `description`, a recommendation marked,
 and a default stated. It passed every item in `interaction-modality` §4.2.
 

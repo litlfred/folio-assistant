@@ -81,7 +81,7 @@ function fixture(): Fixture {
   writeDeclaration(root, {
     name: "probe",
     description: "one folio directory",
-    directories: [{ id: "folio", path: "content/", graphKinds: ["folio"] }],
+    directories: [{ id: "folio", path: "content/", graphTypologies: ["folio"] }],
   });
   mkdirSync(join(root, "content", "ch1"), { recursive: true });
   const blockRoot = join(root, "content", "ch1", "blk");

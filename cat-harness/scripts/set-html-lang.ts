@@ -61,7 +61,7 @@
  *
  * Idempotent: a second run finds every tag already correct and writes nothing.
  *
- * `tools` is the graph kind this audits — the subject is the emitted site, which
+ * `tools` is the graph typology this audits — the subject is the emitted site, which
  * is harness output rather than any folio's content. Declared rather than
  * inferred, per `3srh`.
  *

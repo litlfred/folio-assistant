@@ -17,9 +17,9 @@ package "cat-openapi/cat-openapi-validators" as pkg_cat_openapi_cat_openapi_vali
     rationale [0..1] : string
   }
 }
-package "cat-openapi/cat-openapi-kinds" as pkg_cat_openapi_cat_openapi_kinds <<kinds>> {
-  class "folio-graph-kind/v1" as cat_openapi_cat_openapi_kinds_folio_graph_kind_v1_folio_graph_kind_v1 <<json: GraphKindNodeSchema>> #f4f4f1 {
-    $schema [1] : 'folio-graph-kind/v1'
+package "cat-openapi/cat-openapi-typologies" as pkg_cat_openapi_cat_openapi_typologies <<typologies>> {
+  class "folio-graph-typology/v1" as cat_openapi_cat_openapi_typologies_folio_graph_typology_v1_folio_graph_typology_v1 <<json: GraphTypologyNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-graph-typology/v1'
     kind [1] : string
     title [0..1] : string
     layer [0..1] : 'core'
@@ -37,6 +37,9 @@ package "cat-openapi/cat-openapi-kinds" as pkg_cat_openapi_cat_openapi_kinds <<k
     within [0..1] : string
     avatar [0..1] : object
     tileIcon [0..1] : string
+    published [0..1] : false
+    skillBearing [0..1] : true
+    kgContent [0..1] : true
     description [0..1] : string
     renderableNote [0..1] : string
     anyLayer [0..1] : true
@@ -50,7 +53,7 @@ package "cat-openapi/cat-openapi-scripts" as pkg_cat_openapi_cat_openapi_scripts
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_cat_openapi_cat_openapi_scripts_code
 }
 
-' grid: portrait, 2 column(s) — pkg_cat_openapi_cat_openapi_validators pkg_cat_openapi_cat_openapi_kinds pkg_cat_openapi_cat_openapi_schemas pkg_cat_openapi_cat_openapi_scripts
+' grid: portrait, 2 column(s) — pkg_cat_openapi_cat_openapi_validators pkg_cat_openapi_cat_openapi_typologies pkg_cat_openapi_cat_openapi_schemas pkg_cat_openapi_cat_openapi_scripts
 pkg_cat_openapi_cat_openapi_validators -[hidden]down- pkg_cat_openapi_cat_openapi_schemas
-pkg_cat_openapi_cat_openapi_kinds -[hidden]down- pkg_cat_openapi_cat_openapi_scripts
+pkg_cat_openapi_cat_openapi_typologies -[hidden]down- pkg_cat_openapi_cat_openapi_scripts
 @enduml

@@ -24,9 +24,9 @@
  * document, and none has a `contentType` in the `document | paper` sense.
  *
  * So the general object is not "a folio with instances" but **an instance with
- * directories, each holding a graph**. `folio` is then one graph kind among
+ * directories, each holding a graph**. `folio` is then one graph typology among
  * several — distinguished only by being renderable to a website (see
- * {@link GRAPH_KINDS}). An instance with no `folio/` directory is completely
+ * {@link GRAPH_TYPOLOGIES}). An instance with no `folio/` directory is completely
  * ordinary; `agentic-harness` is exactly that.
  *
  * ## Inheritance
@@ -56,6 +56,7 @@
  * @graphNode schema
  */
 
+import { KindAvatarSchema, type KindAvatar } from "./graph-typology-node";
 import {
   existsSync,
   mkdirSync,
@@ -149,31 +150,33 @@ export function unparseableConfigsIn(dir: string): string[] {
     })
     .sort();
 }
-// ── Graph kinds ─────────────────────────────────────────────────
+// ── Graph typologies ─────────────────────────────────────────────────
 //
-// MOVED to `schemas/graph-kind-registry.ts`, and re-exported here so no caller
-// changed. The move exists to break one cycle: `folio-graph-kind.ts` imported
-// this module for `defaultGraphKinds`, so this module could not import IT back
+// MOVED to `schemas/graph-typology-registry.ts`, and re-exported here so no caller
+// changed. The move exists to break one cycle: `folio-graph-typology.ts` imported
+// this module for `defaultGraphTypologies`, so this module could not import IT back
 // to trigger core's registration — and the cost was paid by every caller, as
 // an import-order dependency nobody could see. See that module's header, and
 // the import at the foot of this file.
-export * from "./graph-kind-registry.js";
+export * from "./graph-typology-registry.js";
 // ...and imported as well as re-exported, because the predicates below
 // (`isRenderable`, `graphLayer`, the layer tests) stayed in this module and
 // default their `registry` parameter to the shared instance. `export *`
 // forwards a name; it does not bring it into local scope.
 import {
-  defaultGraphKinds,
-  graphKindIri,
+  BASE_GRAPH_TYPOLOGIES,
+  defaultGraphTypologies,
+  graphTypologyIri,
   REGISTRATION_MODULE,
-  resolveGraphKind,
-  type GraphKind,
-  type GraphKindRegistry,
+  resolveGraphTypology,
+  type GraphTypology,
+  type GraphTypologyDef,
+  type GraphTypologyRegistry,
   type GraphLayer,
-} from "./graph-kind-registry.js";
+} from "./graph-typology-registry.js";
 
 /** Is a graph of this kind expected to render as a website? */
-export function isRenderable(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+export function isRenderable(kind: string, registry: GraphTypologyRegistry = defaultGraphTypologies): boolean {
   return registry.get(kind)?.renderable === true;
 }
 
@@ -187,12 +190,12 @@ export function isRenderable(kind: string, registry: GraphKindRegistry = default
  * where they asked for a skill. The predicates below are deliberately NOT each
  * other's negations for the same reason.
  */
-export function graphLayer(kind: string, registry: GraphKindRegistry = defaultGraphKinds): GraphLayer | undefined {
+export function graphLayer(kind: string, registry: GraphTypologyRegistry = defaultGraphTypologies): GraphLayer | undefined {
   return registry.get(kind)?.holds;
 }
 
 /** Does this kind hold the subject matter? False for an unregistered kind. */
-export function isContentGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+export function isContentGraph(kind: string, registry: GraphTypologyRegistry = defaultGraphTypologies): boolean {
   return graphLayer(kind, registry) === "content";
 }
 
@@ -204,7 +207,7 @@ export function isContentGraph(kind: string, registry: GraphKindRegistry = defau
  * "may a step write this" are different questions, and one predicate answering
  * both is how two call sites come to disagree about which they asked.
  */
-export function isContextGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+export function isContextGraph(kind: string, registry: GraphTypologyRegistry = defaultGraphTypologies): boolean {
   return graphLayer(kind, registry) === "context";
 }
 
@@ -216,7 +219,7 @@ export function isContextGraph(kind: string, registry: GraphKindRegistry = defau
  * a memory entry. Anything that meant "not content" must now say which of the
  * two it meant.
  */
-export function isStateGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+export function isStateGraph(kind: string, registry: GraphTypologyRegistry = defaultGraphTypologies): boolean {
   return graphLayer(kind, registry) === "state";
 }
 
@@ -245,7 +248,7 @@ export function isStateGraph(kind: string, registry: GraphKindRegistry = default
  * it or re-author it?"* says regenerate — and the skill's instruction for that
  * case is to **say so rather than picking**. This layer is saying so.
  */
-export function isDerivedGraph(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+export function isDerivedGraph(kind: string, registry: GraphTypologyRegistry = defaultGraphTypologies): boolean {
   return graphLayer(kind, registry) === "derived";
 }
 
@@ -262,7 +265,7 @@ export function isDerivedGraph(kind: string, registry: GraphKindRegistry = defau
  * the HCI validation gate and the commit boundary, not a bookkeeping write a
  * step performs in passing. Those are the writes this predicate is about.
  */
-export function processMayWrite(kind: string, registry: GraphKindRegistry = defaultGraphKinds): boolean {
+export function processMayWrite(kind: string, registry: GraphTypologyRegistry = defaultGraphTypologies): boolean {
   const layer = graphLayer(kind, registry);
   return layer === undefined ? false : layerIsWritable(layer);
 }
@@ -276,7 +279,7 @@ export function processMayWrite(kind: string, registry: GraphKindRegistry = defa
  * one edit rather than a search, is only true while there is one site to edit.
  *
  * It takes a {@link GraphLayer} and not a kind on purpose: a declared asset
- * has a layer and no graph kind, so a kind-shaped rule could not have been
+ * has a layer and no graph typology, so a kind-shaped rule could not have been
  * reused and would have been copied instead.
  */
 export function layerIsWritable(layer: GraphLayer): boolean {
@@ -284,7 +287,7 @@ export function layerIsWritable(layer: GraphLayer): boolean {
 }
 
 /** Every registered kind on one side of the line, sorted. */
-export function graphKindsOfLayer(layer: GraphLayer, registry: GraphKindRegistry = defaultGraphKinds): string[] {
+export function graphTypologiesOfLayer(layer: GraphLayer, registry: GraphTypologyRegistry = defaultGraphTypologies): string[] {
   return registry.names().filter((n) => graphLayer(n, registry) === layer).sort();
 }
 
@@ -331,7 +334,7 @@ export interface GraphNodeDirectory extends KgNodeLabels {
    * `graph: "kg"` here and `kinds: ["bean-defs"]` there, two spellings of one
    * concept.
    */
-  graphKinds: GraphKind[];
+  graphTypologies: GraphTypology[];
 }
 
 /**
@@ -354,6 +357,8 @@ export interface ContentDirectory extends GraphNodeDirectory {
    * `dependents` did the day it landed. See {@link SubgraphCoverageSchema}.
    */
   coverage?: SubgraphCoverage;
+  /** Built into the instance's own IG site at `/<instance>/` (bean `mftp`); see `igSite` on the shape below. */
+  igSite?: boolean;
 
   /**
    * This directory holds MATERIALIZED content: readable, and not editable here.
@@ -509,6 +514,8 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   summary?: string;
   /** Other spellings of the name, listed on the landing (`ob3m` 5). */
   alsoWritten?: string[];
+  /** The instance's own avatar (sod4 #4); the table in avatars.ts covers only the instances below the harness. */
+  avatar?: KindAvatar;
   /**
    * Images this instance names — its marks, in the graph rather than beside it.
    *
@@ -784,7 +791,7 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
  * need it." Every declared subgraph is now inherited automatically — each
  * instance in the chain whose same-named directory exists is a MEMBER of it
  * ({@link ResolvedDirectory.member}) — and whether an inherited directory is
- * CREATED is a fact about its graph kind, `GraphKindDef.perInstance`, stated
+ * CREATED is a fact about its graph typology, `GraphTypologyDef.perInstance`, stated
  * once rather than per entry (the per-entry field disagreed with itself:
  * `docs` was `reproduce` once and `skip` four times). A legacy `dependents`
  * key still parses and is dropped, so a folio written before the change keeps
@@ -812,25 +819,25 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
  * `bean-graph.ts` and `todo-graph.ts` were reusing it for.
  */
 /**
- * Accept the pre-2026-09-21 spelling `graphs` where `graphKinds` is absent.
+ * Accept the pre-2026-09-21 spelling `graphs` where `graphTypologies` is absent.
  *
  * An in-tree declaration is migrated by the same commit that renames the
  * field; a DOWNSTREAM one is not, and `readDeclaration` throws on a
  * present-but-unreadable declaration rather than falling back. Without this an
  * unmigrated folio would stop resolving its own directories — the breakage
- * `GRAPH_KIND_ALIASES` exists to prevent one layer down, for exactly the same
+ * `GRAPH_TYPOLOGY_ALIASES` exists to prevent one layer down, for exactly the same
  * kind of rename.
  *
- * Deliberately NOT a merge: if a declaration carries both, `graphKinds` wins
+ * Deliberately NOT a merge: if a declaration carries both, `graphTypologies` wins
  * and the legacy key is ignored, because two spellings that disagree is the
  * one case where guessing which is current would be worse than either answer.
  */
 function acceptLegacyGraphsKey(v: unknown): unknown {
   if (typeof v !== "object" || v === null) return v;
   const o = v as Record<string, unknown>;
-  if (o.graphKinds !== undefined || o.graphs === undefined) return v;
+  if (o.graphTypologies !== undefined || o.graphs === undefined) return v;
   const { graphs, ...rest } = o;
-  return { ...rest, graphKinds: graphs };
+  return { ...rest, graphTypologies: graphs };
 }
 
 export const GraphNodeDirectoryShape = z.object({
@@ -842,14 +849,14 @@ export const GraphNodeDirectoryShape = z.object({
   // has registered `folio` — so the enum would reject the one kind the whole
   // rendering pipeline depends on.
   //
-  // NAMED `graphKinds` SINCE 2026-09-21, AND THE OLD NAME WAS THE CONFLATION.
-  // The field lists KINDS, never graphs: `{ path: "voices/", graphKinds: ["voices"] }`
+  // NAMED `graphTypologies` SINCE 2026-09-21, AND THE OLD NAME WAS THE CONFLATION.
+  // The field lists KINDS, never graphs: `{ path: "voices/", graphTypologies: ["voices"] }`
   // says the graph here is OF KIND `voices`, but read literally it asserts the
   // directory IS the voices graph — and `cat-harness` is declared by 22
   // directories, so twenty-two of them each claimed to be the one cat-harness
-  // graph. That is why `GraphKind` read as redundant beside it: the type was
+  // graph. That is why `GraphTypology` read as redundant beside it: the type was
   // honest and the data was not.
-  graphKinds: z.array(z.string().min(1)).min(1),
+  graphTypologies: z.array(z.string().min(1)).min(1),
   /**
    * This directory is DECLARED and deliberately not on disk, with the reason.
    *
@@ -884,10 +891,43 @@ export const GraphNodeDirectoryShape = z.object({
   absent: z
     .object({ reason: z.string().min(1, "an absent directory's reason cannot be empty") })
     .optional(),
+  /**
+   * This entry is an instance SUBGRAPH, not a part of its parent's graph.
+   *
+   * Bean `cmsl`: `resolveDirectories` lists a `"subgraph": true` entry exactly
+   * as if `<instance>.json` had declared it (`skills.json`'s `voices`,
+   * `beans.json`'s `queue`), while an entry without the marker — `beans.json`'s
+   * `defs`, `docs.json`'s `proposals` — is one graph's interior and stays out
+   * of the instance list.
+   *
+   * Declared here because `promoteFromWithin` has read it off the raw JSON
+   * since `cmsl` and this schema did not carry it, so every consumer going
+   * through `parseBeanGraph` lost it. `z.object` STRIPS an unknown key rather
+   * than refusing it, which is why the loss was silent.
+   */
+  subgraph: z.literal(true).optional(),
+  /**
+   * Where this entry's content comes from, when it is not the checkout.
+   *
+   * The same field `ContentDirectory` carries, for the same reason and read by
+   * the same resolver: a from-within entry can be kept on a branch too. Bean
+   * `najo` cut `beans/queue/` over to `cat/cat-harness/merge-queue`, and
+   * before this field existed here `parseBeanGraph` dropped the `source` —
+   * so `contentIsOffCheckout` answered `false` for a graph that is not in the
+   * checkout at all, and a reader of the parsed graph demanded a directory on
+   * disk that is deliberately absent.
+   *
+   * `storage` is the legacy spelling (#1764) and is accepted for the reason
+   * `resolveSubgraphSource` accepts it: a consumer must not get a different
+   * answer because of which field an author wrote. `z.lazy` because
+   * `DirectoryStorageSchema` is declared further down this module.
+   */
+  source: SubgraphSourceSchema.optional(),
+  storage: z.lazy(() => DirectoryStorageSchema).optional(),
   ...kgNodeLabelShape,
 });
 
-/** The directory schema callers use — legacy `graphs` accepted, `graphKinds` canonical. */
+/** The directory schema callers use — legacy `graphs` accepted, `graphTypologies` canonical. */
 export const GraphNodeDirectorySchema = z.preprocess(acceptLegacyGraphsKey, GraphNodeDirectoryShape);
 
 /**
@@ -971,7 +1011,7 @@ export const VisualisationSchema = z.object({
   ref: z.string().min(1),
   /**
    * What a tile calls it. Absent, the tile takes the display name of the
-   * directory's first graph kind (`kindTitle`, via `scripts/lib/nav-label.ts`),
+   * directory's first graph typology (`kindTitle`, via `scripts/lib/nav-label.ts`),
    * which is what every other surface calls that page. Declare one only when
    * the page is not simply "the kind's viewer". Never add the harness as a
    * suffix ("Docs — cat-harness"): the qualifier is appended by the surface
@@ -1135,7 +1175,7 @@ export const SubgraphCoverageSchema = z.object({
   // WebPage manifest) or `<meta name="documents">` — #1168 B7c,
   // `scripts/docs-declarations.ts`. A waiver is still `exempt.docs` below.
   // NO `skill`: the governing skill is read from the SKILLS, whose front
-  // matter names the kinds (`graph-kinds:`) or the directory (`governs:`)
+  // matter names the kinds (`graph-typologies:`) or the directory (`governs:`)
   // they govern — #1168 B7b, `scripts/skill-governance.ts`. The directory
   // named its skill until then, pointing at what depends on it. A waiver for
   // a directory nobody governs on purpose is still `exempt.skill` below.
@@ -1259,7 +1299,7 @@ export type SubgraphCoverage = z.infer<typeof SubgraphCoverageSchema>;
  * misclassification rather than an obstacle produced the better placement.
  *
  * WHERE IT ATTACHES is per graph — issue #764, O2, settled 2026-09-22 — on
- * {@link ContentDirectorySchema}, beside `graphKinds`. Per instance
+ * {@link ContentDirectorySchema}, beside `graphTypologies`. Per instance
  * cannot distinguish the two graphs one folio shows (F2: the library and the
  * working documents, and which one a node came from must stay visible); per
  * node kind inverts F1, where a folio renders nodes of OTHER objects and a
@@ -1476,11 +1516,11 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    *
    * ## ONE VALUE PER DIRECTORY, and what would change that
    *
-   * A directory may list several `graphKinds`, so this is strictly coarser
+   * A directory may list several `graphTypologies`, so this is strictly coarser
    * than "per graph" wherever that happens. It is one value today because
    * `folio` is the only member, which makes the coarseness unobservable. The
    * day two kinds in one directory need different visualisers, this becomes
-   * a map from graph kind to visualiser — a schema change with a migration,
+   * a map from graph typology to visualiser — a schema change with a migration,
    * not a field to quietly reinterpret.
    *
    * ABSENT means not declared, never a default. A consumer that reads an
@@ -1653,6 +1693,29 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    */
   composed: z.boolean().optional(),
   /**
+   * This directory is built INTO the instance's own IG site, which is served
+   * at `/<instance>/` — never composed into the main site.
+   *
+   * An instance that mirrors a FHIR IG and records its source
+   * (`fhir-artifact-index/menu.json`) gets one Jekyll site of its own, built
+   * by `fhir-harness/scripts/stage-ig-sites.ts` from the IG's narrative pages
+   * (bean `bamf`). Without this field that site sits at `/<instance>/ig/`
+   * BESIDE the instance's composed pages: two sites, two menus, and the
+   * reader at `/<instance>/` sees only the artefact index. With it, the IG
+   * site IS `/<instance>/` and this directory's pages (the artefact pages and
+   * their assets) build inside it, under the IG's own menu — one site, as the
+   * IG Publisher builds one.
+   *
+   * Owner, 2026-10-05 (bean `mftp`), choosing the merged site for smart-trust
+   * with *"clean break on old beahviour, no redirect needed"*.
+   *
+   * **Opt-in, never inferred from `menu.json`.** smart-base holds a menu too,
+   * but `/smart-base/` is a harness landing page (bean `n3ni`); inferring
+   * would silently replace it. Refused together with `composed`: a directory
+   * built into two different sites has two answers for one URL.
+   */
+  igSite: z.boolean().optional(),
+  /**
    * This directory's BYTES are published verbatim, at `/<instance>/<path>`, for
    * the site's own pages to fetch.
    *
@@ -1745,14 +1808,17 @@ export const ContentDirectorySchema = z.preprocess(
     (d) =>
       !(
         (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route" || d.storage?.keyedBy === "route-family") &&
-        (d.graphKinds as readonly string[] | undefined)?.includes("qa")
+        (d.graphTypologies as readonly string[] | undefined)?.includes("qa")
       ),
     {
       message:
         'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos), `keyedBy: "route"` for regenerable rendered pages, and `keyedBy: "route-family"` for a family of them named at publish time',
       path: ["storage", "keyedBy"],
     },
-  ),
+  ).refine((d) => !(d.igSite === true && d.composed === true), {
+    message: "`igSite` and `composed` name two different sites for one directory; declare one",
+    path: ["igSite"],
+  }),
 );
 
 // THERE IS NO `locale` FIELD HERE, and that is a decision rather than an
@@ -1828,9 +1894,9 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   // the rule "every entry carries one" free of an exception nobody would
   // remember — and if either ever loses that scope, the classification it
   // already has is the right one.
-  { id: "tools", path: "tools/", graphKinds: ["tools"] },
-  { id: "schemas", path: "schemas/", graphKinds: ["schemas", "cat-harness"] },
-  { id: "skills", path: "skills/", graphKinds: ["skills"] },
+  { id: "tools", path: "tools/", graphTypologies: ["tools"] },
+  { id: "schemas", path: "schemas/", graphTypologies: ["schemas", "cat-harness"] },
+  { id: "skills", path: "skills/", graphTypologies: ["skills"] },
   // THE CONVENTION, as of 2026-09-21: an instance's Knowledge Graph is five sibling
   // directories rather than one with subdirectories. `scenarios/` and
   // `processes/` were `skills/roles/` and `skills/workflows/`, found by
@@ -1846,12 +1912,12 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   //
   // Existence-filtered like every other entry, so an instance that has no
   // `processes/` is not claimed to have an empty one — the `dh4f` defect.
-  { id: "scenarios", path: "scenarios/", graphKinds: ["scenarios"] },
-  { id: "processes", path: "processes/", graphKinds: ["processes"] },
-  { id: "beans", path: "beans/", graphKinds: ["beans"] },
-  { id: "todos", path: "todos/", graphKinds: ["todos"] },
-  { id: "uploads", path: "uploads/", graphKinds: ["uploads"] },
-  { id: "library", path: "library/", graphKinds: ["library"] },
+  { id: "scenarios", path: "scenarios/", graphTypologies: ["scenarios"] },
+  { id: "processes", path: "processes/", graphTypologies: ["processes"] },
+  { id: "beans", path: "beans/", graphTypologies: ["beans"] },
+  { id: "todos", path: "todos/", graphTypologies: ["todos"] },
+  { id: "uploads", path: "uploads/", graphTypologies: ["uploads"] },
+  { id: "library", path: "library/", graphTypologies: ["library"] },
   // `skills/voices/`, not `voices/`, since 2026-09-21 — a voice IS a skill, and
   // the four this repository ships moved under `skills/` with the rest of the
   // `kg` graph (bean `btuv`). The convention stated here and the fallback
@@ -1867,7 +1933,7 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   // The LEGACY path is not dropped: `loadVoices` probes `voices/` when the new
   // one is absent, for the same reason `voiceFilesIn` reads both file layouts
   // — a downstream folio must not be broken by an upgrade it did not ask for.
-  { id: "voices", path: "skills/voices/", graphKinds: ["voices"] },
+  { id: "voices", path: "skills/voices/", graphTypologies: ["voices"] },
 ];
 
 /**
@@ -2176,7 +2242,7 @@ export interface RemoteGraph extends KgNodeLabels {
   /** Where it is. A reader may follow this; a consumer wanting its bytes may not, without the gates. */
   url: string;
   /** Which parts of the knowledge graph live there. */
-  graphKinds: GraphKind[];
+  graphTypologies: GraphTypology[];
 }
 
 /**
@@ -2189,7 +2255,7 @@ export interface RemoteGraph extends KgNodeLabels {
  *
  * ## Not a remote graph, not a dependency
  *
- * - {@link RemoteGraph} is a GRAPH known but not held: graph kinds at a URL. An
+ * - {@link RemoteGraph} is a GRAPH known but not held: graph typologies at a URL. An
  *   associated harness is an INSTANCE — a declaration of its own — so it is a
  *   separate list, not a `RemoteGraph` with more fields.
  * - It is **not** `needs`: it fixes no build order, adds nothing to the overlay,
@@ -2339,7 +2405,7 @@ export const RemoteGraphSchema = z
   .object({
     id: z.string().min(1),
     url: z.string().url(),
-    graphKinds: z.array(z.string().min(1)).min(1),
+    graphTypologies: z.array(z.string().min(1)).min(1),
     ...kgNodeLabelShape,
   })
   // STRICT, and that is the point rather than tidiness: without it a stray
@@ -2567,6 +2633,10 @@ export function renderExemptionProblems(
  * rather than in place of anything: *"i wanted fsh guts icon here with the
  * others"* (#1925). The cap moved with the ruling; it is still a cap.
  *
+ * 2026-10-05: cat-harness's own row dropped `processes` and `kg` (owner). A
+ * row globe was tried and taken out the same day: the owner kept ONE globe,
+ * the locale toggle in the glass band (#2211).
+ *
  * Refused rather than truncated. Truncating drops whichever the instance
  * listed last, silently, and an instance that declared seven has made a
  * decision the navbar would then be overruling without saying so.
@@ -2602,7 +2672,7 @@ export const NavbarIconsSchema = z
  * - `{ "chrome": … }` — one of the glass's OWN controls ({@link GLASS_CHROME}),
  *   which belong to no graph. A closed set: a free string could name a control
  *   nothing draws.
- * - `{ "kind": … }` — a graph KIND. It resolves to ONE tile, the first glass
+ * - `{ "kind": … }` — a graph TYPOLOGY. It resolves to ONE tile, the first glass
  *   tile whose directory holds that kind (`resolveGlassStrip` in
  *   `scripts/graph-tiles.ts`), so a kind several harnesses publish gets one
  *   slot on the strip and the rest wait in More with their qualifiers.
@@ -2766,6 +2836,13 @@ export const CatHarnessDeclarationSchema = z.object({
    * Owner's choice, 2026-10-01: keep the spellings visible, as a list.
    */
   alsoWritten: z.array(z.string().min(1)).nonempty().optional(),
+  /**
+   * The instance's mark — the same shape a kind node carries (bean sod4 #4).
+   * It sat in `schemas/avatars.ts`'s AVATARS beside the kinds' until
+   * 2026-10-05, so a new instance needed an edit to cat-harness to get a face;
+   * declared here, it brings its own. `avatarFor(name)` reads it.
+   */
+  avatar: KindAvatarSchema.optional(),
   images: z.array(KgImageSchema).optional(),
   /**
    * Declared non-image artefacts — `AGENTS.md` first among them.
@@ -2786,7 +2863,7 @@ export const CatHarnessDeclarationSchema = z.object({
    * is this instance's own answer and overrides what it inherits.
    *
    * Absent and `[]` must not collapse into each other. They are the same
-   * failure `renderExemption` and the graph-kind declarations already guard:
+   * failure `renderExemption` and the graph-typology declarations already guard:
    * "nobody has said" rendered as "nothing to show" is a decision nobody made,
    * and here it would make an un-migrated instance indistinguishable from one
    * that deliberately wants a bare navbar.
@@ -2850,7 +2927,7 @@ export const CatHarnessDeclarationSchema = z.object({
    * carry → the JSON Schema that defines it (an IRI, or a path relative to
    * the declaration). Bootstrap's field (`graph.ts`, owner 2026-09-29: the
    * schema-reference table "should be in bootstrap"), inherited here because
-   * this declaration is a Subkind of bootstrap's. The graph-kind registry's
+   * this declaration is a Subkind of bootstrap's. The graph-typology registry's
    * `nodeSchemas` keeps the harness's TypeScript-backed forms (`validator`,
    * `shape`); this one names only published schemas, which is all a reader
    * with nothing installed can follow.
@@ -3052,11 +3129,11 @@ export function artefactStub(d: Pick<CatHarnessDeclaration, "name" | "stub">): s
  * the site's internal layout is untouched and every
  * `litlfred.github.io/folio-assistant/...` link resolves exactly as before.
  *
- * **This is NOT the `folio` graph-kind declaration**, and it deliberately
+ * **This is NOT the `folio` graph-typology declaration**, and it deliberately
  * stops short of it. `docs/` cannot be declared a directory of this instance
  * yet: `folio` is registered by CORE, and re-measured 2026-09-19 with the
  * entry added, `harness:dirs`, `kg:schema:check` and `docs:harness:check` all
- * throw `unknown graph kind "folio"` and 5 tests fail. What this function does
+ * throw `unknown graph typology "folio"` and 5 tests fail. What this function does
  * fix is the OTHER half of bean `x4a6` — the site root was spelled out
  * separately in `translation-index.ts`, `gen-docs-pages.ts`,
  * `gen-skill-docs.ts`, `gen-schema-docs.ts` and `translation-qa-sweep.ts`,
@@ -3493,7 +3570,7 @@ export function siteDirFor(root: string): string {
  * declaration — the RAW read, for the same reason {@link siteDirFor} takes one.
  *
  * `readDeclaration` validates the whole declaration, which means it throws
- * when ANY directory in it names a graph kind the harness layer has not
+ * when ANY directory in it names a graph typology the harness layer has not
  * registered. `siteDirFor` documents that hazard above and avoids it; this is
  * the missing half, and its absence was a real cost rather than a tidiness
  * point: the 2026-09-21 stub rename (issue #649) needed the published artefact
@@ -3678,7 +3755,21 @@ export function renderingPath(base: string, ...segments: string[]): string {
 }
 
 /**
- * Graph kinds that must NEVER reach a published knowledge graph.
+ * The kinds whose definition satisfies `test`, in registry order (sod4 #5).
+ * The per-kind lists below were hand-kept arrays of kind names beside the
+ * registry; each is now a FIELD on the kind (`published`, `skillBearing`,
+ * `kgContent`), so a kind's properties are stated once, where the kind is.
+ * Read from cat-harness's own kinds: a kind another harness declares as a
+ * node carries the same fields, and the predicates below ask the registry.
+ */
+function kindsWith(test: (d: GraphTypologyDef) => boolean): string[] {
+  return Object.entries(BASE_GRAPH_TYPOLOGIES)
+    .filter(([, d]) => test(d as GraphTypologyDef))
+    .map(([k]) => k);
+}
+
+/**
+ * Graph typologies that must NEVER reach a published knowledge graph.
  *
  * Owner, 2026-09-19: *"NEVER include fsh-guts, references to fsh-guts
  * stripped out of KG before sending to publication."*
@@ -3698,11 +3789,11 @@ export function renderingPath(base: string, ...segments: string[]): string {
  * One list, read by every emitter, so two filters cannot disagree about what
  * is excluded.
  */
-export const UNPUBLISHED_GRAPH_KINDS: readonly string[] = ["fsh-guts"] as const;
+export const UNPUBLISHED_GRAPH_TYPOLOGIES: readonly string[] = kindsWith((d) => d.published === false);
 
-/** Is this graph kind allowed into a published graph? */
-export function isPublishedGraphKind(name: string): boolean {
-  return !UNPUBLISHED_GRAPH_KINDS.includes(name);
+/** Is this graph typology allowed into a published graph? */
+export function isPublishedGraphTypology(name: string): boolean {
+  return !UNPUBLISHED_GRAPH_TYPOLOGIES.includes(name);
 }
 
 /**
@@ -3757,7 +3848,7 @@ export function isPublishedGraphKind(name: string): boolean {
  */
 export function owesVisualiser(
   kind: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): boolean {
   const def = registry.get(kind);
   // An UNKNOWN kind owes one, and that is deliberate rather than a fallback.
@@ -3778,7 +3869,7 @@ export function owesVisualiser(
  *
  * The skill that documents an unpublished kind is itself unpublished, and it
  * carries the kind's name. Leaving it in was the second leak found while
- * building this: the graph-kind and directory nodes were filtered, and
+ * building this: the graph-typology and directory nodes were filtered, and
  * `skill/fsh-guts` plus the `declaresSkill` edge from `package/folio-core`
  * still named the trashcan, its purpose and its path.
  *
@@ -3792,7 +3883,7 @@ export function owesVisualiser(
  * derivation.
  */
 export function isPublishedSkill(name: string): boolean {
-  return !UNPUBLISHED_GRAPH_KINDS.includes(name);
+  return !UNPUBLISHED_GRAPH_TYPOLOGIES.includes(name);
 }
 
 /**
@@ -3816,7 +3907,7 @@ export function isPublishedSkill(name: string): boolean {
  */
 export function isPublishedSchemaModule(modulePath: string): boolean {
   const basename = modulePath.split("/").pop()?.replace(/\.[^.]+$/, "") ?? modulePath;
-  return isPublishedGraphKind(basename);
+  return isPublishedGraphTypology(basename);
 }
 
 /**
@@ -3827,8 +3918,8 @@ export function isPublishedSchemaModule(modulePath: string): boolean {
  * part of the graph, so an "all" test would publish a directory that holds
  * both `kg` and `fsh-guts`, naming the trashcan's path in the process.
  */
-export function isPublishedDirectory(d: { graphKinds?: readonly string[] }): boolean {
-  return (d.graphKinds ?? []).every(isPublishedGraphKind);
+export function isPublishedDirectory(d: { graphTypologies?: readonly string[] }): boolean {
+  return (d.graphTypologies ?? []).every(isPublishedGraphTypology);
 }
 
 /**
@@ -3842,7 +3933,7 @@ export function isPublishedDirectory(d: { graphKinds?: readonly string[] }): boo
  *
  * A RAW read of the one field, like `siteDirFor` and for the same reason: a
  * consumer asking where the site publishes must not fail because some
- * unrelated directory declares a graph kind this layer has not registered.
+ * unrelated directory declares a graph typology this layer has not registered.
  */
 export function publicationHost(root: string): PublicationHost | undefined {
   const file = findDeclarationFile(root);
@@ -3955,7 +4046,7 @@ export function renderingMediaType(path: string): string | undefined {
  */
 export function readDeclaration(
   instanceRoot: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): CatHarnessDeclaration | undefined {
   const file = findDeclarationFile(instanceRoot);
   if (file === undefined) return undefined;
@@ -3984,10 +4075,10 @@ export function readDeclaration(
 
 const declarationCache = new Map<
   string,
-  { text: string; registry: GraphKindRegistry; kinds: number; value: CatHarnessDeclaration }
+  { text: string; registry: GraphTypologyRegistry; kinds: number; value: CatHarnessDeclaration }
 >();
 
-function parseDeclarationText(p: string, text: string, registry: GraphKindRegistry): CatHarnessDeclaration {
+function parseDeclarationText(p: string, text: string, registry: GraphTypologyRegistry): CatHarnessDeclaration {
   let raw: unknown;
   try {
     raw = JSON.parse(text);
@@ -4016,10 +4107,10 @@ function parseDeclarationText(p: string, text: string, registry: GraphKindRegist
   // vocabulary is open: the set of valid kinds is whatever has been registered
   // by the time the declaration is read, not what existed at module load.
   for (const dir of parsed.data.directories) {
-    for (const g of dir.graphKinds) {
+    for (const g of dir.graphTypologies) {
       if (!registry.has(g)) {
         throw new Error(
-          `${p}: directory "${dir.id}" declares unknown graph kind "${g}". ` +
+          `${p}: directory "${dir.id}" declares unknown graph typology "${g}". ` +
             `Known kinds: ${registry.names().join(", ")}. ` +
             `A kind contributed by a dependency must be registered before the ` +
             `declaration is read.` +
@@ -4051,7 +4142,7 @@ function parseDeclarationText(p: string, text: string, registry: GraphKindRegist
   }
   // A self-contradictory topology is REFUSED rather than reported, which is
   // the one thing bean `folio-assistant-g7vb` asks for that a table of prose
-  // cannot do. Refusing here, on the same path as an unregistered graph kind
+  // cannot do. Refusing here, on the same path as an unregistered graph typology
   // and an icon naming no image, is deliberate: those are also declarations
   // that parse and cannot be true, and a consumer that got a valid-looking
   // object back would carry the contradiction onward.
@@ -4073,7 +4164,7 @@ function parseDeclarationText(p: string, text: string, registry: GraphKindRegist
  * the graph projection stays derivable — the same split as
  * `schemas/jsonld.ts` draws for blocks.
  */
-function stripJsonLd(raw: unknown, registry: GraphKindRegistry): unknown {
+function stripJsonLd(raw: unknown, registry: GraphTypologyRegistry): unknown {
   if (typeof raw !== "object" || raw === null) return raw;
   const o = { ...(raw as Record<string, unknown>) };
   delete o["@context"];
@@ -4083,17 +4174,17 @@ function stripJsonLd(raw: unknown, registry: GraphKindRegistry): unknown {
     o.directories = o.directories.map((d) => {
       if (typeof d !== "object" || d === null) return d;
       const e = { ...(d as Record<string, unknown>) };
-      // `holdsGraph` recovers `graphKinds`, in both projected forms: one stays
+      // `holdsGraph` recovers `graphTypologies`, in both projected forms: one stays
       // a string, several become a list. An individual the registry does not
       // know is DROPPED rather than guessed — recovering the wrong kind is
       // worse than recovering none, because the reader has no way to tell.
-      if (e.graphKinds === undefined && e.holdsGraph !== undefined) {
+      if (e.graphTypologies === undefined && e.holdsGraph !== undefined) {
         const iris = Array.isArray(e.holdsGraph) ? e.holdsGraph : [e.holdsGraph];
         const kinds = iris
           .filter((t): t is string => typeof t === "string")
           .map((t) => registry.forIri(t))
           .filter((k): k is string => k !== undefined);
-        if (kinds.length > 0) e.graphKinds = kinds;
+        if (kinds.length > 0) e.graphTypologies = kinds;
       }
       delete e["@type"];
       delete e.holdsGraph;
@@ -4320,7 +4411,7 @@ export function ownDirectoryById(root: string, id: string, fallback: string): st
 
 export function resolveDirectories(
   chain: Array<{ name: string; root: string; own?: boolean }>,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): ResolvedDirectory[] {
   const byId = new Map<string, ResolvedDirectory>();
 
@@ -4409,7 +4500,7 @@ export function resolveDirectories(
       const m = { ...d, absPath: abs, own: link.own === true, member };
       out.push(m);
       work.push(m);
-      for (const nd of declaredFromWithin(m.absPath, m.graphKinds, registry)) {
+      for (const nd of declaredFromWithin(m.absPath, m.graphTypologies, registry)) {
         const nAbs = join(m.absPath, nd.sub);
         if (seen.has(nAbs)) continue;
         seen.add(nAbs);
@@ -4438,10 +4529,10 @@ export function resolveDirectories(
  */
 function declaredFromWithin(
   absPath: string,
-  graphKinds: readonly string[],
-  registry: GraphKindRegistry,
+  graphTypologies: readonly string[],
+  registry: GraphTypologyRegistry,
 ): Array<{ sub: string; entry: ContentDirectory }> {
-  const files = graphKinds
+  const files = graphTypologies
     .map((g) => registry.get(g)?.declarationFile)
     .filter((f): f is string => typeof f === "string");
   const out: Array<{ sub: string; entry: ContentDirectory }> = [];
@@ -4502,7 +4593,7 @@ function declaredFromWithin(
 export function instanceDirectories(
   root: string,
   decl: CatHarnessDeclaration | undefined = readDeclaration(root),
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): Array<ContentDirectory & { within?: string }> {
   if (!decl) return [];
   const authored = decl.directories ?? [];
@@ -4517,7 +4608,7 @@ export function instanceDirectories(
 function promoteFromWithin(
   d: ResolvedDirectory,
   byId: Map<string, ResolvedDirectory>,
-  registry: GraphKindRegistry,
+  registry: GraphTypologyRegistry,
   seen: Set<string>,
   rootLink: { name: string; own?: boolean } | undefined,
 ): void {
@@ -4529,7 +4620,7 @@ function promoteFromWithin(
   // Following it made cat-harness resolve core's `voices/` as its own the
   // moment core declared it from within (measured 2026-09-30).
   if (d.scope === "repository") return;
-  const files = d.graphKinds
+  const files = d.graphTypologies
     .map((g) => registry.get(g)?.declarationFile)
     .filter((f): f is string => typeof f === "string");
   for (const f of [...new Set(files)]) {
@@ -4576,7 +4667,7 @@ function promoteFromWithin(
 }
 
 /**
- * The graph kind that holds skills, workflows and roles.
+ * The graph typology that holds skills, workflows and roles.
  *
  * Named once because two different resolvers ask for it, and a second spelling
  * is how one of them goes missing when the layout moves.
@@ -4614,7 +4705,7 @@ export interface AssetRoleDef {
   /**
    * Which {@link GraphLayer} the role's file belongs to.
    *
-   * **REQUIRED, for {@link GraphKindDef.holds}'s reason.** An optional field
+   * **REQUIRED, for {@link GraphTypologyDef.holds}'s reason.** An optional field
    * would make "did not say" indistinguishable from `content`, and the whole
    * point of declaring it is that a step writing to a `context` asset is a
    * DEFECT rather than an update. `tsc` refuses a role that does not say.
@@ -4699,7 +4790,7 @@ export const ASSET_ROLES: Readonly<Record<string, AssetRoleDef>> = {
 /**
  * What a role's asset is for, or `undefined` for a role this layer does not
  * govern. The accessor exists so a caller reads {@link ASSET_ROLES} through
- * one door, as the graph-kind registry is read through `get`.
+ * one door, as the graph-typology registry is read through `get`.
  */
 export function assetRolePurpose(role: string): string | undefined {
   return ASSET_ROLES[role]?.purpose;
@@ -4824,14 +4915,14 @@ export const REQUIRED_ASSET_ROLES = [INSTANCE_README_ROLE, AGENT_INSTRUCTIONS_RO
  *
  * ## Derived, never listed
  *
- * The set is read from {@link GraphKindDef.recordsWork}, so adding a graph
+ * The set is read from {@link GraphTypologyDef.recordsWork}, so adding a graph
  * kind forces the decision at the kind rather than requiring somebody to
  * remember a list here. A hardcoded set would be a list pretending to be a
  * rule — the shape this repository keeps paying for.
  */
 export function workPlanGraphsIn(
   repoRoot: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): { plan: Array<{ instance: string; kinds: string[] }>; unreadable: string[] } {
   const plan: Array<{ instance: string; kinds: string[] }> = [];
   const unreadable: string[] = [];
@@ -4849,7 +4940,7 @@ export function workPlanGraphsIn(
     }
     if (decl === undefined) continue;
     const kinds = [
-      ...new Set((decl.directories ?? []).flatMap((d) => d.graphKinds ?? [])),
+      ...new Set((decl.directories ?? []).flatMap((d) => d.graphTypologies ?? [])),
     ].filter((k) => registry.get(k)?.recordsWork === true);
     if (kinds.length > 0) plan.push({ instance: decl.name ?? root, kinds: kinds.sort() });
   }
@@ -4866,7 +4957,7 @@ export function workPlanGraphsIn(
  */
 export function isActiveKg(
   repoRoot: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): boolean | undefined {
   const { plan, unreadable } = workPlanGraphsIn(repoRoot, registry);
   if (plan.length > 0) return true;
@@ -4876,7 +4967,7 @@ export function isActiveKg(
 /**
  * State kinds that have not said whether they record work.
  *
- * Empty is the contract, enforced by `check:graph-kind-work`. The field is
+ * Empty is the contract, enforced by `check:graph-typology-work`. The field is
  * optional in the TYPE because it is meaningless for `content`, `context` and
  * `derived` — a required field would force three layers to answer a question
  * that does not apply to them — so the "cannot ship undecided" property lives
@@ -4884,7 +4975,7 @@ export function isActiveKg(
  * elsewhere.
  */
 export function undecidedWorkKinds(
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): string[] {
   // `names()` then `get()`, because the registry is not iterable — it exposes
   // `has`/`get`/`names` so that a deprecated kind spelling resolves in exactly
@@ -4920,7 +5011,7 @@ export function undecidedWorkKinds(
 export function declaredAssetPath(
   root: string,
   role: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): string | undefined {
   return declaredAssets(root, registry).find((a) => a.role === role)?.absPath;
 }
@@ -4937,7 +5028,7 @@ export function declaredAssetPath(
  */
 export function declaredAssets(
   root: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): Array<KgAsset & { absPath: string; exists: boolean }> {
   const decl = readDeclaration(root, registry);
   return (decl?.assets ?? []).map((a) => {
@@ -4946,7 +5037,7 @@ export function declaredAssets(
   });
 }
 
-export const KG_GRAPH_KIND = "cat-harness";
+export const KG_GRAPH_TYPOLOGY = "cat-harness";
 
 /**
  * The kinds whose directories hold SKILL BODIES, and may be scanned for them.
@@ -4966,23 +5057,18 @@ export const KG_GRAPH_KIND = "cat-harness";
  * quote the paragraph. It also still said `workflows` after that kind was
  * renamed to `processes`.
  */
-export const SKILL_BEARING_GRAPH_KINDS: readonly string[] = ["skills", KG_GRAPH_KIND];
+export const SKILL_BEARING_GRAPH_TYPOLOGIES: readonly string[] = kindsWith((d) => d.skillBearing === true);
 
 /**
  * Every kind that IS harness knowledge-graph content — the umbrella and the
  * three kinds split out of it.
  *
- * Distinct from {@link SKILL_BEARING_GRAPH_KINDS}, and the difference is the
+ * Distinct from {@link SKILL_BEARING_GRAPH_TYPOLOGIES}, and the difference is the
  * whole point of the split: a consumer asking "is this the Knowledge Graph?" wants all
  * four, while one asking "may I scan this for skill bodies?" wants two. One
  * list serving both questions is what made `cat-harness` ambiguous.
  */
-export const KG_CONTENT_GRAPH_KINDS: readonly string[] = [
-  KG_GRAPH_KIND,
-  "skills",
-  "processes",
-  "scenarios",
-];
+export const KG_CONTENT_GRAPH_TYPOLOGIES: readonly string[] = kindsWith((d) => d.kgContent === true);
 
 /**
  * Does this directory hold ONLY the knowledge graph?
@@ -5000,7 +5086,7 @@ export const KG_CONTENT_GRAPH_KINDS: readonly string[] = [
  * scanned for it; one holding several has to say which file is which.
  */
 export function isKgOnlyDirectory(d: ContentDirectory): boolean {
-  return d.graphKinds.length === 1 && SKILL_BEARING_GRAPH_KINDS.includes(d.graphKinds[0]!);
+  return d.graphTypologies.length === 1 && SKILL_BEARING_GRAPH_TYPOLOGIES.includes(d.graphTypologies[0]!);
 }
 
 /**
@@ -5024,7 +5110,7 @@ export function isKgOnlyDirectory(d: ContentDirectory): boolean {
  * measured reason given on the narrow one.
  */
 export function isKgContentDirectory(d: ContentDirectory): boolean {
-  return d.graphKinds.length === 1 && KG_CONTENT_GRAPH_KINDS.includes(d.graphKinds[0]!);
+  return d.graphTypologies.length === 1 && KG_CONTENT_GRAPH_TYPOLOGIES.includes(d.graphTypologies[0]!);
 }
 
 /**
@@ -5070,7 +5156,7 @@ export function isKgContentDirectory(d: ContentDirectory): boolean {
  */
 export function ownDirectories(
   link: { name: string; root: string; own?: boolean },
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): ResolvedDirectory[] {
   const decl = readDeclaration(link.root, registry);
 
@@ -5223,16 +5309,16 @@ export interface MaterialisedDirectory {
 
 /**
  * Does each instance have its own directory of every kind this one holds
- * ({@link GraphKindDef.perInstance})? Such a directory is reproduced in each
+ * ({@link GraphTypologyDef.perInstance})? Such a directory is reproduced in each
  * dependent by {@link materialiseDirectories}; an unregistered kind has said
  * nothing, so it is not.
  */
 export function isPerInstance(
-  dir: Pick<ContentDirectory, "graphKinds">,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  dir: Pick<ContentDirectory, "graphTypologies">,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): boolean {
-  const kinds = dir.graphKinds ?? [];
-  return kinds.length > 0 && kinds.every((k) => registry.get(resolveGraphKind(k).kind)?.perInstance === true);
+  const kinds = dir.graphTypologies ?? [];
+  return kinds.length > 0 && kinds.every((k) => registry.get(resolveGraphTypology(k).kind)?.perInstance === true);
 }
 
 /**
@@ -5299,7 +5385,7 @@ export function materialiseDirectories(
     // `mkdirSync`.
     // Option A (owner 2026-09-30): "make dependents: reproduce automatic
     // behaviour so [we] don't need it." Whether an inherited entry is created
-    // here is now read from its graph KIND ({@link GraphKindDef.perInstance}):
+    // here is now read from its graph TYPOLOGY ({@link GraphTypologyDef.perInstance}):
     // a folio has its own `uploads/`, `library/`, `docs/`, work plan; it has
     // no use for an empty `schemas/` or `tools/`. Anything else is a MEMBER of
     // the inherited subgraph exactly where it already exists, never created
@@ -5391,11 +5477,11 @@ export function materialiseDirectories(
 /** The resolved directories holding renderable (website) graphs. */
 export function renderableDirectories(
   dirs: ResolvedDirectory[],
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): ResolvedDirectory[] {
   // Renderable if ANY declared graph is: a directory holding a folio plus
   // something else still renders.
-  return dirs.filter((d) => d.graphKinds.some((g) => isRenderable(g, registry)));
+  return dirs.filter((d) => d.graphTypologies.some((g) => isRenderable(g, registry)));
 }
 
 /**
@@ -5473,7 +5559,7 @@ export function renderableDirectories(
 export function directoryForGraph(
   root: string,
   graph: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): string | undefined {
   const all = matchingDirectories(root, graph, registry);
   if (all.length > 1) {
@@ -5537,7 +5623,7 @@ export function directoryForGraph(
 export function translationsHomeFor(
   instanceRoot: string,
   hostRoot?: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): { root: string; scope: readonly string[]; by: "own" | "hosted" | "convention" } {
   const own = matchingDirectories(instanceRoot, "translation-sources", registry);
   if (own.length > 0 && own[0] !== undefined) {
@@ -5616,7 +5702,7 @@ export function localeDirIn(
 export function kgQaHomeFor(
   instanceRoot: string,
   hostRoot?: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): { root: string; by: "own" | "hosted" | "convention" } {
   const own = matchingDirectories(instanceRoot, "qa", registry)[0];
   if (own !== undefined) return { root: own.absPath, by: "own" };
@@ -5652,7 +5738,7 @@ export function kgQaHomeFor(
 export function glossaryHomeFor(
   instanceRoot: string,
   hostRoot?: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): { root: string; by: "own" | "hosted" | "convention" } {
   const own = matchingDirectories(instanceRoot, "swimlane-glossary", registry)[0];
   if (own !== undefined) return { root: own.absPath, by: "own" };
@@ -5671,10 +5757,10 @@ export function glossaryHomeFor(
 function matchingDirectories(
   root: string,
   graph: string,
-  registry: GraphKindRegistry,
+  registry: GraphTypologyRegistry,
 ): ResolvedDirectory[] {
   return resolveDirectories([{ name: "(local)", root, own: true }], registry).filter((d) =>
-    d.graphKinds.includes(graph as GraphKind),
+    d.graphTypologies.includes(graph as GraphTypology),
   );
 }
 
@@ -5690,9 +5776,31 @@ function matchingDirectories(
 export function directoriesForGraph(
   root: string,
   graph: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): string[] {
   return matchingDirectories(root, graph, registry).map((d) => d.absPath);
+}
+
+/**
+ * {@link directoriesForGraph}, with the fields a path alone cannot carry — the
+ * entry's `id` and its declared `source`.
+ *
+ * Both are needed the moment a graph's content can be somewhere other than the
+ * checkout. A consumer holding only `absPath` cannot ask `graphReadPath` where
+ * to READ (that is keyed on the id), and cannot tell an empty directory from a
+ * graph kept at a branch tip that this checkout has not mounted. Measured on
+ * bean `najo`: `check:kind-validators` reported *"EXAMINED NOTHING"* over the
+ * merge queue in all three states — absent, unmounted, and mounted-and-empty —
+ * because a path is the same path in each.
+ *
+ * The same resolution as its sibling, so the two cannot answer differently.
+ */
+export function directoryEntriesForGraph(
+  root: string,
+  graph: string,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
+): ResolvedDirectory[] {
+  return matchingDirectories(root, graph, registry);
 }
 
 /**
@@ -5745,14 +5853,14 @@ export function folioDir(root: string): string {
     return directoryForGraph(root, "folio") ?? join(root, "folio");
   } catch (e) {
     // An instance whose declaration does not KNOW the `folio` kind — core
-    // registers it by load-time side effect (`schemas/folio-graph-kind.ts`)
+    // registers it by load-time side effect (`schemas/folio-graph-typology.ts`)
     // and a harness-only process may not have reached it. That is `ot9a`'s
     // fragility, and the convention is the right answer for it.
     //
     // Narrow deliberately: any OTHER failure is a malformed declaration, and
     // swallowing it would report a guess as an answer. "Could not determine"
     // is never rendered as a clean result.
-    if (e instanceof Error && /unknown graph kind "folio"/.test(e.message)) {
+    if (e instanceof Error && /unknown graph typology "folio"/.test(e.message)) {
       // DO NOT fall back here. This was the first version and it was wrong in
       // the one way that matters: with the kind unregistered, the declaration
       // cannot be READ, so returning the convention answers a question nobody
@@ -5763,9 +5871,9 @@ export function folioDir(root: string): string {
       // "Could not determine" is never rendered as a clean result. Fail, and
       // say what to import.
       throw new Error(
-        `folioDir(${root}): the \`folio\` graph kind is not registered, so the ` +
+        `folioDir(${root}): the \`folio\` graph typology is not registered, so the ` +
           `instance's declaration cannot be read and its folio directory is ` +
-          `UNKNOWN — not "folio/". Import \`schemas/folio-graph-kind.js\` for ` +
+          `UNKNOWN — not "folio/". Import \`schemas/folio-graph-typology.js\` for ` +
           `its load-time registration before calling this. Falling back to the ` +
           `convention here would silently ignore a folio that declares another ` +
           `path (bean hs08; the fragility is ot9a).`,
@@ -5946,7 +6054,7 @@ export function deferResolution<T>(
 export function instanceDirectoriesForGraph(
   root: string,
   graph: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): string[] {
   return matchingDirectories(root, graph, registry)
     .filter((d) => d.own && d.scope !== "repository")
@@ -5956,7 +6064,7 @@ export function instanceDirectoriesForGraph(
 export function instanceDirectoryForGraph(
   root: string,
   graph: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): string | undefined {
   const here = matchingDirectories(root, graph, registry).filter(
     (d) => d.own && d.scope !== "repository",
@@ -5987,7 +6095,7 @@ export function instanceDirectoryForGraph(
  */
 export interface DeclaredGraph extends KgNodeLabels {
   id: string;
-  graphKinds: GraphKind[];
+  graphTypologies: GraphTypology[];
   declaredBy: string;
   /** Set iff the graph is HERE. */
   absPath?: string;
@@ -5997,7 +6105,7 @@ export interface DeclaredGraph extends KgNodeLabels {
 
 export function declaredGraphs(
   root: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): DeclaredGraph[] {
   const decl = readDeclaration(root, registry);
   if (!decl) return [];
@@ -6038,7 +6146,7 @@ export function localPathOf(d: { path?: string; url?: string }): string | undefi
  */
 export function toJsonLd(
   decl: CatHarnessDeclaration,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): Record<string, unknown> {
   return {
     "@context": {
@@ -6072,7 +6180,7 @@ export function toJsonLd(
       // `holdsGraph` → each kind's individual (owner, 2026-09-30, bean `3r47`:
       // "Drop per-kind classes"). A kind the registry does not know still
       // gets an individual in the harness's namespace rather than vanishing.
-      const kinds = d.graphKinds.map((g) => graphKindIri(resolveGraphKind(g).kind, registry.get(g)));
+      const kinds = d.graphTypologies.map((g) => graphTypologyIri(resolveGraphTypology(g).kind, registry.get(g)));
       return {
         "@id": `#${d.id}`,
         "@type": termIri("Subgraph"),
@@ -6095,28 +6203,28 @@ export function toJsonLd(
 }
 
 /**
- * The graph kinds an instance DECLARES — its own, not the universal registry's.
+ * The graph typologies an instance DECLARES — its own, not the universal registry's.
  *
  * Moved here from `scripts/check-instance-render.ts` (bean `3jj9`) so the two
  * exporters can read one fact. `kg-export` needs it to stop emitting every
  * kind any layer defines into every instance's graph: `bootstrap` published
- * 16 GraphKind nodes while declaring exactly one. The render check already
+ * 16 GraphTypology nodes while declaring exactly one. The render check already
  * imports `kg-export`, so importing back would have been a cycle — and a
  * declaration's own contents belong beside the declaration reader anyway.
  *
  * Follows NESTED declarations, which is the part a plain read of
- * `directories[].graphKinds` misses: `beans/beans.json` is what says `bean-defs`
+ * `directories[].graphTypologies` misses: `beans/beans.json` is what says `bean-defs`
  * and `workflow-state` exist, and an instance that owns them would otherwise
  * be reported as not owning them.
  */
 export function declaredKinds(
   root: string,
   decl: CatHarnessDeclaration,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): Set<string> {
   const kinds = new Set<string>();
   for (const d of decl.directories ?? []) {
-    for (const g of d.graphKinds ?? []) kinds.add(g);
+    for (const g of d.graphTypologies ?? []) kinds.add(g);
     // The nested declaration, if the directory carries one — how `beans/` says
     // what its inner nodes are without `harness.json` restating them.
     //
@@ -6134,7 +6242,7 @@ export function declaredKinds(
     // whose kind declares no filename is unmigrated, not broken, and an
     // instance that never relocates behaves exactly as before.
     const dirName = basename(d.path.replace(/\/+$/, ""));
-    const declared = (d.graphKinds ?? [])
+    const declared = (d.graphTypologies ?? [])
       .map((g) => registry.get(g)?.declarationFile)
       .filter((f): f is string => typeof f === "string");
     for (const candidate of [...declared, `${dirName}.json`, "graph.json"]) {
@@ -6142,10 +6250,10 @@ export function declaredKinds(
       if (!existsSync(p)) continue;
       try {
         const nested = JSON.parse(readFileSync(p, "utf-8")) as {
-          directories?: Array<{ graphKinds?: string[]; kinds?: string[] }>;
+          directories?: Array<{ graphTypologies?: string[]; kinds?: string[] }>;
         };
         for (const nd of nested.directories ?? []) {
-          for (const g of [...(nd.graphKinds ?? []), ...(nd.kinds ?? [])]) kinds.add(g);
+          for (const g of [...(nd.graphTypologies ?? []), ...(nd.kinds ?? [])]) kinds.add(g);
         }
       } catch {
         // A nested file that will not parse is not this check's finding to
@@ -6159,10 +6267,47 @@ export function declaredKinds(
   // Deeper levels: a nested entry whose own kind names a declaration file
   // (`voices/vendors/vendors.json`, bean `rkqp`). The loop above reads one
   // level only.
-  for (const n of nestedDirectories(root, decl, registry)) for (const g of n.graphKinds) kinds.add(g);
+  for (const n of nestedDirectories(root, decl, registry)) for (const g of n.graphTypologies) kinds.add(g);
   return kinds;
 }
 
+
+/**
+ * One entry a declaration names FROM WITHIN another — {@link nestedDirectories}'s row.
+ *
+ * `id` is COMPOSED (`beans/queue`), so a reader can see which declaration holds
+ * it; `ownId` is the id the entry gives itself, which is the id every OTHER
+ * mechanism keys on — `promoteFromWithin` lists a `subgraph: true` entry under
+ * `nd.id` verbatim, so that is what `resolveDirectories`, `tipLocations` and a
+ * mount marker spell. Both are carried because conflating them is silent and
+ * wrong in both directions.
+ *
+ * Measured 2026-10-04 (bean `najo`), on the first nested entry ever to carry a
+ * branch `source`: `check:declared-dirs` asked `readMarker(root, "beans/queue")`
+ * for a graph mounted under the id `queue`, and `markerPath` refuses an id with
+ * a slash — so the gate reported a MOUNTED graph as `unmounted`, with "could
+ * not determine" as the reason. A from-within graph could therefore never read
+ * as mounted, which is the state the whole cutover produces.
+ *
+ * `subgraph` says whether the entry is an instance subgraph at all
+ * (bean `cmsl`). Without it a consumer cannot tell "mounted under its own id"
+ * from "no mount can reach this entry, because nothing lists it".
+ */
+export interface NestedDirectory {
+  /** `<parent id>/<own id>` — unique across the instance, and says who declares it. */
+  id: string;
+  /** The entry's OWN id, as `resolveDirectories` and a mount marker spell it. */
+  ownId: string;
+  path: string;
+  graphTypologies: string[];
+  description?: string;
+  absent?: { reason: string };
+  storage?: unknown;
+  source?: unknown;
+  /** `true` when the entry declares itself an instance subgraph (bean `cmsl`). */
+  subgraph?: boolean;
+  parentId: string;
+}
 
 /** Where a declared directory actually is, honouring `scope`. */
 function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string }): string {
@@ -6187,30 +6332,12 @@ function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string 
 export function nestedDirectories(
   root: string,
   decl: CatHarnessDeclaration,
-  registry: GraphKindRegistry = defaultGraphKinds,
-): Array<{
-  id: string;
-  path: string;
-  graphKinds: string[];
-  description?: string;
-  absent?: { reason: string };
-  storage?: unknown;
-  source?: unknown;
-  parentId: string;
-}> {
-  const out: Array<{
-  id: string;
-  path: string;
-  graphKinds: string[];
-  description?: string;
-  absent?: { reason: string };
-  storage?: unknown;
-  source?: unknown;
-  parentId: string;
-}> = [];
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
+): NestedDirectory[] {
+  const out: NestedDirectory[] = [];
   for (const d of decl.directories ?? []) {
     const parent = d.path.replace(/\/+$/, "");
-    walkNested(declaredKindsEntryRoot(root, d), parent, d.id, d.graphKinds ?? [], registry, out, new Set());
+    walkNested(declaredKindsEntryRoot(root, d), parent, d.id, d.graphTypologies ?? [], registry, out, new Set());
   }
   return out;
 }
@@ -6229,17 +6356,8 @@ function walkNested(
   rel: string,
   id: string,
   kinds: readonly string[],
-  registry: GraphKindRegistry,
-  out: Array<{
-  id: string;
-  path: string;
-  graphKinds: string[];
-  description?: string;
-  absent?: { reason: string };
-  storage?: unknown;
-  source?: unknown;
-  parentId: string;
-}>,
+  registry: GraphTypologyRegistry,
+  out: NestedDirectory[],
   seen: Set<string>,
 ): void {
   if (seen.has(abs)) return;
@@ -6252,11 +6370,12 @@ function walkNested(
       directories?: Array<{
         id?: string;
         path?: string;
-        graphKinds?: string[];
+        graphTypologies?: string[];
         description?: string;
         absent?: { reason: string };
         storage?: unknown;
         source?: unknown;
+        subgraph?: unknown;
       }>;
     };
     try {
@@ -6267,10 +6386,12 @@ function walkNested(
     for (const nd of nested.directories ?? []) {
       if (!nd.id || !nd.path) continue;
       const sub = nd.path.replace(/^\.\//, "").replace(/\/+$/, "");
-      const entry = {
+      const entry: NestedDirectory = {
         id: `${id}/${nd.id}`,
+        // The id every OTHER mechanism keys on — see {@link NestedDirectory}.
+        ownId: nd.id,
         path: `${rel}/${sub}/`,
-        graphKinds: nd.graphKinds ?? [],
+        graphTypologies: nd.graphTypologies ?? [],
         ...(nd.description ? { description: nd.description } : {}),
         // Carried through, not dropped. `absent`, `storage` and `source` each
         // say that the directory is NOT where its path says, or is not meant
@@ -6281,15 +6402,18 @@ function walkNested(
         // an unexplained absence, because the reason never arrived. The same
         // loss would make an eventual `storage: { keyedBy: "route" }` on a
         // nested entry read as a missing directory — `contentIsOffCheckout`
-        // cannot see a field it was not given. Latent until that test: no
-        // nested entry carries any of the three today.
+        // cannot see a field it was not given. Latent until bean `najo`, which
+        // gave the `queue` entry a branch `source` and found the next loss one
+        // field over: `subgraph`, without which a consumer cannot tell a graph
+        // mounted under its own id from one no mount can reach.
         ...(nd.absent ? { absent: nd.absent } : {}),
         ...(nd.storage ? { storage: nd.storage } : {}),
         ...(nd.source ? { source: nd.source } : {}),
+        ...(nd.subgraph === true ? { subgraph: true as const } : {}),
         parentId: id,
       };
       out.push(entry);
-      walkNested(join(abs, sub), `${rel}/${sub}`, entry.id, entry.graphKinds, registry, out, seen);
+      walkNested(join(abs, sub), `${rel}/${sub}`, entry.id, entry.graphTypologies, registry, out, seen);
     }
   }
 }
@@ -6302,11 +6426,11 @@ function walkNested(
 // has to REMEMBER to trigger the registration: a reader lives in this module,
 // so loading this module is a precondition of calling one, and this import
 // makes the registration part of that load. The failure mode it replaces —
-// `unknown graph kind "folio"`, thrown on a perfectly valid declaration
+// `unknown graph typology "folio"`, thrown on a perfectly valid declaration
 // because of what the process happened to import first — is now unreachable
 // rather than merely unlikely.
 //
-// LAST in the file on purpose. `folio-graph-kind.ts` imports the registry
+// LAST in the file on purpose. `folio-graph-typology.ts` imports the registry
 // leaf and nothing here, so there is no cycle at any position; placing it at
 // the foot keeps it visibly a side effect of loading this module rather than
 // something the declarations above depend on.
@@ -6318,7 +6442,7 @@ function walkNested(
 // this is now its only home. Before the trigger moved here, every module that
 // resolved a declared directory had to carry its own copy. Measured
 // 2026-09-20 across the 20 modules that do: **10 of them threw** `unknown
-// graph kind "folio"` on a valid declaration — including `narratives.ts` and
+// graph typology "folio"` on a valid declaration — including `narratives.ts` and
 // the `translation` MCP tool — **while every gate and all 3298 tests
 // passed.** Nothing covered the path. That is the #464 class, and the reason
 // the fix had to be a precondition of loading a reader rather than a rule
@@ -6327,13 +6451,13 @@ function walkNested(
 // The 74 redundant copies were removed by bean `z9ax` once this made them
 // no-ops. Two were NOT removed and are the mechanism rather than instances of
 // the problem: this import, and `schemas/test-preload.ts`.
-import "./folio-graph-kind.js";
+import "./folio-graph-typology.js";
 // Core's `glossary` kind, registered the same way and for the same reason
 // (issue: owner 2026-09-23, "put glossary into folio-assistant-core").
-import "./glossary-graph-kind.js";
+import "./glossary-graph-typology.js";
 import { ThemeRefSchema, type ThemeRef } from "./theme";
 import { CONFIG_SUFFIX, DECLARATION_SUFFIX, findDeclarationFile, instanceRootsIn, isForeignCheckout } from "./instance-roots";
-// Instance DISCOVERY lives in a leaf module (bean dmx1), so the graph-kind
+// Instance DISCOVERY lives in a leaf module (bean dmx1), so the graph-typology
 // registry can find each harness's declared `kinds/` without importing this
 // file, which imports the registry. Re-exported here so no caller moves.
 export { CONFIG_SUFFIX, DECLARATION_SUFFIX, findDeclarationFile, instanceRootsIn, isForeignCheckout } from "./instance-roots";

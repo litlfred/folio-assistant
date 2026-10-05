@@ -68,6 +68,7 @@ import { join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
 import { fetchQa, QaUsageError } from "./qa-store.ts";
+import { siteFetchStatePath } from "./qa-result-link.ts";
 
 export const AVAILABILITY_SCHEMA = "folio-qa-availability/v1" as const;
 export const STATE_SCHEMA = "folio-qa-fetch-state/v1" as const;
@@ -295,7 +296,9 @@ function repoRoot(): string {
   return r.stdout.trim();
 }
 
-const defaultState = () => join(process.env.RUNNER_TEMP ?? tmpdir(), "qa-site-assets.state.json");
+// One answer for this writer and for `gen-docs-pages.ts`, which reads the state
+// to name the entry its result links point at (bean `bejf`).
+const defaultState = () => siteFetchStatePath();
 
 function annotate(level: "notice" | "warning" | "error", msg: string): void {
   // A GitHub annotation in CI, a plain line elsewhere; the text is the same.

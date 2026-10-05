@@ -528,3 +528,18 @@ was fixed by keying on `CONFIG_SUFFIX` or by going through
 **[x] REPLACE or beside?** — Settled by the owner's reversal (2026-09-21): the PAIR, `<name>.json` (declaration) + `<name>.config.json` (config). Verified on `main` (d1a5d6ea): no instance-level `harness.json` remains (the only one is the generated `cat-harness/docs/_data/harness.json`); seven `<name>.config.json` files sit beside their declarations; `findDeclarationFile` (`cat-harness/schemas/cat-harness.ts:186`) resolves the declaration. Ticked on that evidence, not on the ruling alone.
 
 **Not ticked, and why:** item 3 says *"7u3g fixed"*; **7u3g is `scrapped`, not fixed**. Whether scrapping it satisfies this precondition is a judgement about why it was scrapped, and it is left for the owner or the bean's next holder rather than read into the status. Items 2, 4, 5, 6 unchanged.
+
+## 2026-10-05: two modes for a remote IG, and the user chooses (owner, during bean `mftp`)
+
+Owner, verbatim: *"one should still keep skills/tools to build a remote site locally (like if i didnt branch to litlfred/smart-trust but wanted to keep it under litlfred/folio-assistant. user choice... skill/process needs user clarification)"*, *"part of "initiation" process"*, and *"essntially we are syaing a user can choose to materialize a remote IG-KG or not and render pages from there, or a user can put a harness on a (remote) KG that doesnt have a harness and go from there"*. Also: *"dont assume just b/c you have access to git repo, that you are meant to change it. assume read only."*, *"get user permission."*
+
+The two modes, both buildable after `mftp` (#2194):
+
+| mode | where the site is built | tool |
+|---|---|---|
+| **materialize** (or reference) a remote IG-KG and render pages HERE | this harness's site, at `/<instance>/` | `stage-ig-sites` (clones the commit `menu.json` records) |
+| **put a harness on** the remote KG, which has none, and build THERE | the remote repository's own CI | `stage-ig-sites --only <instance> --source .` |
+
+## Done when (added)
+- [ ] the initiation process ASKS which mode, with materialize-or-reference as its own question — never inferred from having push access to the remote
+- [ ] instantiating on a remote repository writes nothing there without the user's explicit permission for that repository

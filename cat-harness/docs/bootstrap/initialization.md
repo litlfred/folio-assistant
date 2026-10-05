@@ -40,7 +40,7 @@ Go back to [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/b
 The order is the load-bearing part, not the individual steps.
 
 1. **Write this repository's declaration** from what the upstream
-   declaration said — its `name`, and the directories and graph kinds it
+   declaration said — its `name`, and the directories and graph typologies it
    implies. Not before reading theirs: a declaration written first leaves a
    window in which this repository claims to be something it is not, and every
    consumer that reads a declaration would believe it.
@@ -98,7 +98,7 @@ Files that are a MECHANISM rather than a pointer are the opposite: they belong
 to the layer that ships them, and editing one is a platform change with every
 gate that implies.
 
-The naming rules, the prefix families, what a new graph kind must declare, and
+The naming rules, the prefix families, what a new graph typology must declare, and
 the test that usually says *"this is not a new kind"* are in the
 [`instance-kinds`](https://litlfred.github.io/folio-assistant/docs/cat-harness/reference/skill-instructions/instance-kinds.html) skill.
 

@@ -87,11 +87,11 @@ export const DECLARED_COMPUTED_IMPORTS: Record<string, (repoRoot: string) => str
   "cat-harness/schemas/harness-config.ts": (repoRoot) =>
     contributingDependencies(repoRoot).map((c) => relative(repoRoot, c.modulePath)),
   // `loadBlockModule`: a folio's block manifests, which live in the directories
-  // declared with graph kind `folio`.
+  // declared with graph typology `folio`.
   "cat-harness/content/pipeline/block-module.ts": (repoRoot) =>
     instanceRootsIn(repoRoot).flatMap((root) =>
       (readDeclaration(root)?.directories ?? [])
-        .filter((d) => d.graphKinds.includes("folio"))
+        .filter((d) => d.graphTypologies.includes("folio"))
         .flatMap((d) => tsFilesUnder(join(root, d.path)).map((f) => relative(repoRoot, f))),
     ),
 };

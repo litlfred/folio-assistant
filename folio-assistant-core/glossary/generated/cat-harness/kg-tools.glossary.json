@@ -281,7 +281,7 @@
     {
       "id": "kg-validate",
       "prefLabel": "Validate a node in the graph",
-      "definition": "Check one file against the schema for its graph kind. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
+      "definition": "Check one file against the schema for its graph typology. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
       "notation": "kg-validate",
       "source": "cat-harness/tools/index.ts#kg-validate",
       "status": "candidate"
@@ -567,6 +567,14 @@
       "status": "candidate"
     },
     {
+      "id": "rail-standalone-pages",
+      "prefLabel": "Give every page Jekyll did not lay out the folio-assistant navbar",
+      "definition": "A LAST pass over the finished site: inject the shared navbar (`lib/navbar.ts`, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated instance pages, and each IG site built by `stage-ig-sites`. A page under an `igSite` instance's route is railed as THAT instance's page (its name, mark and graphs); a page may declare its own section (`data-fa-visualiser-nav`) and its label (`fa-visualiser-label`). Mount routes are left to the mount pass, and a page that declines (`folio-navbar: none`) is left bare.",
+      "notation": "rail-standalone-pages",
+      "source": "cat-harness/tools/index.ts#rail-standalone-pages",
+      "status": "candidate"
+    },
+    {
       "id": "readme-audit",
       "prefLabel": "Audit README links",
       "definition": "Verify every Markdown link in a folio's README still resolves — relative paths against the tree, repo refs against a real ls-tree, Pages URLs against the publish ref. Writes nothing.",
@@ -705,7 +713,7 @@
     {
       "id": "subgraph-readmes",
       "prefLabel": "Directory READMEs from the Knowledge Graph",
-      "definition": "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
+      "definition": "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Typologies, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
       "notation": "subgraph-readmes",
       "source": "cat-harness/tools/index.ts#subgraph-readmes",
       "status": "candidate"
@@ -881,7 +889,7 @@
     {
       "id": "uml-overview",
       "prefLabel": "UML overview per named sub-graph",
-      "definition": "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
+      "definition": "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph typology's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
       "notation": "uml-overview",
       "source": "cat-harness/tools/index.ts#uml-overview",
       "status": "candidate"

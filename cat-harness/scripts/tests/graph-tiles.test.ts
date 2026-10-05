@@ -417,10 +417,10 @@ describe("one tile per page (#1168 B7a-2b)", () => {
 });
 
 
-describe("a tile with no icon of its own takes its graph KIND's (ob3m finding 11)", () => {
+describe("a tile with no icon of its own takes its graph TYPOLOGY's (ob3m finding 11)", () => {
   const kinded = (id: string, kinds: string[], icon?: string): TiledDirectory => ({
     id,
-    graphKinds: kinds,
+    graphTypologies: kinds,
     coverage: SubgraphCoverageSchema.parse({ visualiser: [{ ref: `${id}.html`, ...(icon ? { icon } : {}) }] }),
   });
 
@@ -446,7 +446,7 @@ describe("a tile says the destination's ONE name (bean `ob3m` finding 6)", () =>
   // `docs`, and called cat-harness's "Docs — cat-harness".
   const docs = (id: string, title?: string): TiledDirectory => ({
     id,
-    graphKinds: ["docs"],
+    graphTypologies: ["docs"],
     coverage: SubgraphCoverageSchema.parse({ visualiser: [{ ref: `site/${id}/index.html`, ...(title ? { title } : {}) }] }),
   });
 

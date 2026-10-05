@@ -33,5 +33,5 @@ one declared directory — the thing a visualiser draws and a Skill governs. Thi
 page uses it for a branch of the topical taxonomy. One topical subgraph is
 usually several declared directories across several instances, so the two
 readings are related but do not count the same things. Where the number
-matters, this page says *declared directory* or *graph kind* and leaves
+matters, this page says *declared directory* or *graph typology* and leaves
 *subgraph* for the taxonomy.

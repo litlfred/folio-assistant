@@ -255,7 +255,9 @@ test.describe("the icon row — line 2 of the fixed top", () => {
     // accessible name carries the live count after a dash, so only its stem is
     // pinned here; the count states are `fshGutsCount`'s to test.
     expect(labels.map((l) => (l ?? "").split(" — ")[0])).toEqual([
-      "Todos", "Beans", "Processes", "Knowledge graph", "fsh-guts, discarded items", "More actions",
+      // Processes and Knowledge graph left the row (owner, 2026-10-05, bean
+      // `82qs`); language is the glass band's globe (#2211), not a row slot.
+      "Todos", "Beans", "fsh-guts, discarded items", "More actions",
     ]);
     // ...then the switch, last. No [x] after it (ob3m finding 8).
     const tail = await page.locator(".fa-nav-icons > *").evaluateAll((ns) =>
@@ -281,7 +283,8 @@ test.describe("the icon row — line 2 of the fixed top", () => {
     // slot is rendered, and it is not an anchor.
     const { errors } = await load(page, CUSTOM);
     expect(errors).toEqual([]);
-    const todos = page.locator('.fa-nav-icons [aria-label="Todos"]');
+    // `^=`: the name gains its live count once `count.json` is read (bean `gkv6`).
+    const todos = page.locator('.fa-nav-icons [aria-label^="Todos"]');
     // WITH THE BASEURL. `#fa-navbar-row` is `jsonify`d raw, unlike
     // `#fa-site-links`, which Liquid has already run `relative_url` over — so
     // a site-root path arriving here is unprefixed and composing it without
@@ -394,14 +397,15 @@ test.describe("the middle — controlled folders, then the harness navigation, O
       .locator(".fa-nav-middle > *")
       .evaluateAll((ns) => ns.map((n) => n.className));
     // The viewer rail's order (ob3m finding 7, owner 2026-10-01): the page's
-    // own index, the page list's heading and the list, then the folded Graphs
-    // group that now holds the folders. sidebar-rail.e2e.ts asserts the
-    // layout against the real footer; this asserts the move in this fixture.
+    // own index, the page list's heading and the list, then Folders as a
+    // top-level section of its own -- no "Graphs" wrapper since the owner's
+    // ruling on #2150. sidebar-rail.e2e.ts asserts the layout against the
+    // real footer; this asserts the move in this fixture.
     expect(order[0]).toContain("fa-doc-index");
     expect(order[1]).toContain("fa-nav-pages");
     expect(order[2]).toContain("site-nav");
-    expect(order[3]).toContain("fa-nav-graphs-group");
-    await expect(page.locator(".fa-nav-graphs-group > .fa-nav-folders")).toHaveCount(1);
+    expect(order[3]).toContain("fa-nav-folders");
+    await expect(page.locator(".fa-nav-middle > .fa-nav-folders")).toHaveCount(1);
   });
 
   test("every declared kind is listed; one with no viewer is a non-link", async ({ page }) => {
@@ -484,8 +488,6 @@ test.describe("the middle — controlled folders, then the harness navigation, O
     // tests below — so asserting it visible here would be asserting that the
     // strip still shows words.
     await page.hover(".side-bar");
-    // Inside the Graphs group, which is folded too (ob3m finding 7).
-    await page.locator(".fa-nav-graphs-group__heading").click();
     await expect(page.locator(".fa-nav-folders__count")).toBeVisible();
     await page.locator(".fa-nav-folders__heading").click();
     await expect(page.locator(".fa-nav-folders")).toHaveAttribute("open", "");
@@ -526,6 +528,28 @@ test.describe("the document index — the fixed top, about the page rather than 
     expect(rows.join(" ")).not.toContain("Unlinkable");
     expect(rows.join(" ")).not.toContain("Too deep");
     await expect(page.locator(".fa-doc-index__item--sub")).toHaveCount(1);
+  });
+
+  test("sub-sections FOLD under their section, closed, below its link — owner, 2026-10-05", async ({ page }) => {
+    // "on this page should have sub-sections collapsible" (bean `r2ld`).
+    const { errors } = await load(page, CUSTOM);
+    expect(errors).toEqual([]);
+    await page.hover(".side-bar");
+    await page.locator(".fa-doc-index__heading").click();
+    const one = page.locator(".fa-doc-index__list:not(.fa-doc-index__list--sub) > .fa-doc-index__item").first();
+    const fold = one.locator(":scope > details.fa-doc-index__fold");
+    await expect(fold).toHaveCount(1);
+    await expect(fold).not.toHaveAttribute("open", "");
+    // The section's own link stays a link, OUTSIDE the summary.
+    await expect(one.locator(":scope > a.fa-doc-index__link")).toHaveText("One");
+    await expect(fold.locator("summary a")).toHaveCount(0);
+    await expect(fold.locator("summary")).toHaveText("1 sub-section");
+    await expect(page.locator(".fa-doc-index__item--sub .fa-doc-index__link")).toBeHidden();
+    await fold.locator("summary").click();
+    await expect(fold).toHaveAttribute("open", "");
+    await expect(page.locator(".fa-doc-index__item--sub .fa-doc-index__link")).toBeVisible();
+    // A section with no sub-sections has no fold.
+    await expect(page.locator(".fa-doc-index__fold")).toHaveCount(1);
   });
 
   test("is ABSENT below two rows, not an empty or one-row menu", async ({ page }) => {
@@ -661,7 +685,7 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     await page.hover(".side-bar");
     await page.waitForTimeout(250);
     const shown = (await page.evaluate(visibleText)).join(" | ");
-    for (const region of ["fa-site-title", "fa-doc-index__heading", "fa-nav-graphs-group__heading",
+    for (const region of ["fa-site-title", "fa-doc-index__heading", "fa-nav-folders__heading",
                           "fa-harness-tabs__heading", "fa-harness-tab__label", "fa-nav-home__label"]) {
       expect(shown).toContain(region);
     }
@@ -782,7 +806,7 @@ test.describe("every row in the navbar is a target", () => {
     // has no box to measure, and a sweep that skipped them would report clean
     // over the rows most likely to be wrong.
     await page.hover(".side-bar");
-    for (const heading of [".fa-doc-index__heading", ".fa-nav-graphs-group__heading", ".fa-nav-folders__heading", ".fa-harness-tabs__heading"]) {
+    for (const heading of [".fa-doc-index__heading", ".fa-nav-folders__heading", ".fa-harness-tabs__heading"]) {
       const h = page.locator(".side-bar " + heading);
       if (await h.count()) await h.click();
     }
@@ -1008,8 +1032,6 @@ test.describe("a page withheld from this deploy is not linked", () => {
     // `<details>`, so comparing two of them there compares "" with "" and
     // passes whatever the notes say — which is how the first version of this
     // test passed while asserting nothing.
-    // Inside the folded Graphs group since ob3m finding 7.
-    await page.locator(".fa-nav-graphs-group__heading").click();
     await page.locator(".fa-nav-folders__heading").click();
     await page.waitForTimeout(200);
     const note = (kind: string) =>
@@ -1054,8 +1076,6 @@ test.describe("a sub-graph is drawn INSIDE its parent's row, folded — issue #1
   test("the children sit under their parent, in a disclosure that starts CLOSED", async ({ page }) => {
     await load(page, NESTED);
     await page.hover(".side-bar");
-    // Inside the folded Graphs group since ob3m finding 7.
-    await page.locator(".fa-nav-graphs-group__heading").click();
     await page.locator(".fa-nav-folders__heading").click();
     const docs = page.locator(".fa-nav-folders__list > .fa-nav-folders__item", { hasText: /^docs/ });
     const sub = docs.locator(":scope > .fa-nav-folders__sub");
@@ -1073,8 +1093,6 @@ test.describe("a sub-graph is drawn INSIDE its parent's row, folded — issue #1
   test("a child whose parent is not listed stands on its own", async ({ page }) => {
     await load(page, NESTED);
     await page.hover(".side-bar");
-    // Inside the folded Graphs group since ob3m finding 7.
-    await page.locator(".fa-nav-graphs-group__heading").click();
     await page.locator(".fa-nav-folders__heading").click();
     await expect(page.locator(".fa-nav-folders__list:not(.fa-nav-folders__list--sub) > .fa-nav-folders__item",
       { hasText: "orphan" })).toHaveCount(1);

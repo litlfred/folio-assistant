@@ -478,7 +478,7 @@ scrolled out of view from a tile that does not exist.
 - **The pinned set is DECLARED, never written into a surface.** `glassStrip`
   on the instance's declaration lists the pins in order: `{ "chrome": … }` for
   the glass's own controls (`todos`, `filter`, `settings`) and
-  `{ "kind": … }` for a graph kind. It is inherited along `needs` like
+  `{ "kind": … }` for a graph typology. It is inherited along `needs` like
   `navbarIcons`, so absent inherits and `[]` pins nothing.
   `sync-docs-harness.ts` resolves each kind to ONE tile (`resolveGlassStrip`):
   the directory named for the kind, else the first glass tile that holds it.

@@ -3,8 +3,8 @@
  *
  * ## What went wrong
  *
- * `folio` is registered into the graph-kind registry by an IMPORT SIDE EFFECT
- * at the bottom of `schemas/folio-graph-kind.ts`, and that module's own
+ * `folio` is registered into the graph-typology registry by an IMPORT SIDE EFFECT
+ * at the bottom of `schemas/folio-graph-typology.ts`, and that module's own
  * comment says why: *"Registering on import is what makes `folio` available to
  * anything that imports core. The harness alone never sees it."* The layering
  * is deliberate — `folio` is CORE's kind and the harness must not know it.
@@ -12,7 +12,7 @@
  * The consequence is not deliberate. Whether a script works depends on whether
  * something in its import graph happened to pull that module in. Measured
  * 2026-09-20 across the 20 modules that call `directoriesForGraph`: **10 threw**
- * `unknown graph kind "folio"` on their first call — among them
+ * `unknown graph typology "folio"` on their first call — among them
  * `scripts/narratives.ts`, the human review queue, and `src/tools/translation.ts`,
  * an MCP tool.
  *
@@ -161,7 +161,7 @@ describe("a module that resolves a declared directory can resolve one", () => {
           { cwd: ROOT },
         );
         const err = new TextDecoder().decode(r.stderr);
-        if (err.includes("unknown graph kind")) broken.push(m);
+        if (err.includes("unknown graph typology")) broken.push(m);
       }
       expect(broken).toEqual([]);
     },

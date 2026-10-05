@@ -55,6 +55,22 @@
    * platform's own site, the platform's absolute address on a folio's site,
    * and the ONLY answer for an inlined copy of this script, which has no
    * address of its own; then this script's own address. */
+  /* THE ADDRESS THIS DOCUMENT WAS LOADED FROM, not where the address bar is
+   * now. `data-fa-root` is RELATIVE to the document, and a page may
+   * `history.replaceState` before this runs: the library page turns a legacy
+   * `#instance/id` into `<lib>/<instance>/<id>/`, one segment deeper, so a
+   * root resolved against `location.href` afterwards came out one level too
+   * deep and the count fetches 404'd — on some loads only, by which ran
+   * first (measured: 6 of 12 loads of `library/smart-base/#smart-base%2F…`).
+   * The navigation entry keeps the URL the document was fetched from. */
+  function loadedFrom() {
+    try {
+      var nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+      if (nav && nav.name) return nav.name;
+    } catch (_e) { /* older engines: the address bar is the best there is */ }
+    return location.href;
+  }
+
   function siteBaseurl() {
     var meta = document.querySelector('meta[name="fa-baseurl"]');
     var v = (meta && meta.getAttribute("content")) || "";
@@ -63,7 +79,7 @@
     var root = data && data.getAttribute("data-fa-root");
     if (root) {
       try {
-        var u = new URL(root.replace(/\/*$/, "/"), location.href);
+        var u = new URL(root.replace(/\/*$/, "/"), loadedFrom());
         var path = u.pathname.replace(/\/+$/, "");
         return u.origin === location.origin ? path : u.origin + path;
       } catch (_e) { /* fall through to the script's own address */ }
@@ -188,12 +204,60 @@
    * a click and reads as a broken site; a silent omission answers "where is
    * beans" with nothing). Every control carries `data-fa-tip`, the SAME string
    * as its `aria-label` (`ob3m` finding 1). */
+  /* COUNT BADGES ON TODOS AND BEANS — owner, 2026-10-05: *"why no count on
+   * beans and todos on LHS top navbar as badges like fsh-guts has?"* (bean
+   * `gkv6`). Fetched, never baked into the page: a number written at build
+   * time is the build's, not this reader's, and would make every bean change
+   * restale every railed page. `count.json` is the tiny file `gen-docs-pages.ts`
+   * writes beside each index (the bean index is ~900 KB). Beans count OPEN
+   * work, the owner's choice. The same four states as the fish: `pending`,
+   * `some`/`zero`, `error` ("?"), and `absent` (nothing published: hidden).
+   * The tooltip IS the accessible name, so the number goes into both. */
+  var COUNTED = { todos: "outstanding", beans: "open" };
+  var countCache = {};
+  function fetchCount(id, done) {
+    if (countCache[id]) return countCache[id].then(done);
+    var url = withBase("/assets/" + id + "/count.json");
+    countCache[id] = (typeof fetch === "function" ? fetch(url) : Promise.reject(new Error("no fetch")))
+      .then(function (r) {
+        // The body is CONSUMED on every path: an unread 404 body leaves the
+        // request open, which held a test's `networkidle` for its full 180 s.
+        if (r.status === 404) return r.text().then(function () { return { absent: true }; }, function () { return { absent: true }; });
+        if (!r.ok) return r.text().then(function () { throw new Error("HTTP " + r.status); });
+        return r.json().then(function (doc) {
+          var n = doc && doc.tile && doc.tile[id] && doc.tile[id].count;
+          if (typeof n !== "number") throw new Error("no tile." + id + ".count");
+          return { n: n };
+        });
+      })
+      .catch(function (e) { return { error: e.message }; });
+    return countCache[id].then(done);
+  }
+  function countBadge(a, id, label) {
+    a.classList.add("fa-nav-icon--counted");
+    var badge = el("span", { class: "fa-nav-count", "data-fa-count-state": "pending", "aria-hidden": "true" }, "\u2026");
+    a.appendChild(badge);
+    fetchCount(id, function (c) {
+      var state, text, words;
+      if (c.absent) { state = "absent"; text = ""; words = null; }
+      else if (c.error) { state = "error"; text = "?"; words = "count could not be read (" + c.error + ")"; }
+      else { state = c.n === 0 ? "zero" : "some"; text = String(c.n); words = c.n + " " + COUNTED[id]; }
+      badge.textContent = text;
+      badge.setAttribute("data-fa-count-state", state);
+      var name = words ? label + " — " + words : label;
+      a.setAttribute("aria-label", name);
+      a.setAttribute("title", name);
+      a.setAttribute("data-fa-tip", name);
+    });
+  }
+
   function linkSlot(id, label, href, notes) {
     // `safeHref` AFTER `withBase`, so what is checked is the href written.
     var at = safeHref(withBase(href));
     if (at) {
       var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label, "data-fa-tip": label });
       a.innerHTML = rowGlyph(id);
+      if (Object.prototype.hasOwnProperty.call(COUNTED, id)) countBadge(a, id, label);
       return a;
     }
     var why = typeof notes[id] === "string" ? notes[id] : "reason not recorded";

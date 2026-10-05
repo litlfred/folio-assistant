@@ -7,7 +7,7 @@
  *
  * ## The defect this exists for
  *
- * `cat-harness/schemas/graph-kind-registry.ts` imports
+ * `cat-harness/schemas/graph-typology-registry.ts` imports
  * `../../bootstrap-tools/schemas/graph`, and `bootstrap-tools` is a git
  * SUBMODULE. So any `bun run` of a platform script that reaches the schema
  * layer dies on `Cannot find module` unless its checkout carried
