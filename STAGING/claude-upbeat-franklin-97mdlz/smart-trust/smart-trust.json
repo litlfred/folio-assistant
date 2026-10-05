@@ -344,10 +344,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T14:57:15.632Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/65fc11062224545f1a59b28b6a33dc8902f1e1b4",
-  "sourceCommitSha": "65fc11062224545f1a59b28b6a33dc8902f1e1b4",
-  "sourceCommitAt": "2026-10-05T14:48:59Z",
+  "generatedAt": "2026-10-05T15:37:03.323Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/dc1b64fc75d19eb4972c020b4c98c764458f0c23",
+  "sourceCommitSha": "dc1b64fc75d19eb4972c020b4c98c764458f0c23",
+  "sourceCommitAt": "2026-10-05T15:28:48Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -475,7 +475,7 @@
       ],
       "description": "The reader-facing pages, generated from `fhir-artifact-index/index.json` by `smart-trust:pages` (`fhir-harness/scripts/gen-ig-pages.ts`). SINCE 2026-10-05 THESE ARE THE ARTEFACT PAGES OF ONE SITE (`igSite`, bean `mftp`): they build into smart-trust's own IG site at `/smart-trust/` under the IG's menu, and the index, menu-section and category pages this description goes on to mention are no longer written -- the IG's own index, toc and artifacts pages replace them. What follows is the history of how the directory got here. THE REASON THIS EXISTS: `fhir-artifact-index` is registered `renderable: false`, and until 2026-09-21 this instance declared only that kind — so 674 ingested artefacts were reachable at no URL, which is how the owner found it, by asking where `/smart-trust` was. Only `docs` and `folio` are renderable, and `mount-instance-docs.ts` copies any declared `docs` directory as FINISHED HTML (Jekyll's source is hardcoded to `cat-harness/docs`, so an instance's own pages are built by nothing). `instanceRoot: true` is what makes THIS kind answer at `/smart-trust/` rather than the choice falling to sort order — the defect `withRoutes` documents. It is the only renderable kind here today, so nothing is ambiguous yet; declaring it now means adding a second one later cannot silently move the root. Generated, never authored: `smart-trust:pages:check` is the gate. The viewer for this instance's docs, BUILT BY cat-harness — the owner's rule that a harness which instantiates a directory makes a visualiser for it. Declared HERE, in this instance's own file, rather than in the root's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a COMPOSITION LAYER, so declaring this directory there would overlay this instance's `index.md` onto the site's own. Measured — `compose-docs.test.ts` failed exactly that way when tried. The ref resolves because `injectRails` measures against the BUILT instance's docs prefix (cat-harness's), not the declaring instance's, which is the same reason `who-iris-library`'s cat-harness-built ref resolves today. This directory is NOT mounted: `mount-instance-docs` skips a docs directory with no `index.html`, and this one has none. The viewer is real regardless — `auto-docs` indexes the 20 pages it holds and publishes that page. \"No verbatim mount\" and \"no viewer\" are different facts, and declaring this is what stops the second being inferred from the first.",
       "readmePath": "docs/README.md",
-      "fileCount": 2153,
+      "fileCount": 2154,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-upbeat-franklin-97mdlz/smart-trust/smart-trust.jsonld#directory/smart-trust-docs",
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#directory/smart-trust-docs"
     },
@@ -541,8 +541,8 @@
   ],
   "staging": {
     "branch": "claude/upbeat-franklin-97mdlz",
-    "sha": "a7cdc3d4a1719c096354edb262885890aa122bec",
+    "sha": "06720d7762ada1a6c4d71601340ad278479e90af",
     "pr": "2194/merge",
-    "run": "37327788524"
+    "run": "37333172967"
   }
 }

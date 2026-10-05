@@ -1651,7 +1651,7 @@
         "folio-assistant-e0hw"
       ],
       "createdAt": "2026-10-02T21:36:29Z",
-      "updatedAt": "2026-10-05T05:09:44Z",
+      "updatedAt": "2026-10-05T13:42:54Z",
       "preview": "Owner, 2026-10-02, verbatim: \"bean: please make sure harnesses generate json(ld)+schema for their semi-static KGs, their subgraphs etc. there are some rules in the KG corpsu but scattered. right now, i dont see folio-assistnat.jsonld in gh-pagaes for example. i think all subsumted into cat-harness? these should be split out into their component sub-grpah/harnesses. see related beans. maybe we also",
       "file": "beans/defs/folio-assistant-4ak5--per-harness-kg-export-every-instance-publishes-its.md"
     },
@@ -3894,7 +3894,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:29:44Z",
-      "updatedAt": "2026-09-29T21:43:13Z",
+      "updatedAt": "2026-10-05T13:39:00Z",
       "preview": "Owner ruling, 2026-09-23: *\"all assets get a version and are in 'draft' publication. formal publication process needs to be deinfed/neeeds tools/depends on instance\"*.\n\nCorrects §3.1 as `snjh` shipped it. Not a gap in that work — a different model.\n\n## What §3.1 got wrong, precisely\n\nIt models `publishable?: boolean` with three states, and REFUSES id and version unless `publishable: true`:\n\n    re",
       "file": "beans/defs/folio-assistant-9wb0--publication-is-a-state-not-a-boolean-every-asset-c.md"
     },
@@ -7006,14 +7006,14 @@
     {
       "id": "folio-assistant-j9cs",
       "title": "MOUNT TOOLS DECLARED ON STORAGE: a subgraph names the tool that mounts it; no central mounter (owner ruling 2026-10-04)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T17:04:23Z",
-      "updatedAt": "2026-10-04T17:04:23Z",
+      "updatedAt": "2026-10-05T14:33:45Z",
       "preview": "Owner, 2026-10-04, verbatim: *\"there should not be a central registry for declaring mount tools and subgraph types\"*.\n\n## What exists, measured 2026-10-04\n- `state:mount` (`branch-store.ts`) mounts every tip-keyed directory. It switches on `keyedBy` centrally: tip mounts, route is read by its generator's `--check`, and commit belongs to qa-store.\n- Family-keyed graphs are mounted by tools nobody d",
       "file": "beans/defs/folio-assistant-j9cs--mount-tools-declared-on-storage-a-subgraph-names-t.md"
     },
@@ -7593,14 +7593,14 @@
     {
       "id": "folio-assistant-lehh",
       "title": "DERIVED NODE SCHEMAS: declare ig-ast (pick up fhir-harness/schemas/ig-ast.ts), lake-cache and gh-pages as graphs with schemas",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-nama",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T13:52:13Z",
-      "updatedAt": "2026-10-04T17:21:55Z",
+      "updatedAt": "2026-10-05T14:33:29Z",
       "preview": "Owner, 2026-10-04: *\"bean - was an AST schema somewhere. pickup. add schemas for lean-cache (cat/folio-assistant-sci/lean-cache branch?) and gh-pages too\"*\n\n## Found (2026-10-04)\n- **ig-ast**: the schema exists. `fhir-harness/schemas/ig-ast.ts` (Zod) has generated JSON Schemas `ig-ast.schema.json`, `ig-ast-plan.schema.json` and `ig-ast-dependencies.schema.json` (bean l0lq), gated by `ig-ast:schema",
       "file": "beans/defs/folio-assistant-lehh--derived-node-schemas-declare-ig-ast-pick-up-fhir-h.md"
     },
@@ -11800,7 +11800,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T05:59:28Z",
-      "updatedAt": "2026-09-20T04:05:17Z",
+      "updatedAt": "2026-10-05T13:38:59Z",
       "preview": "_2026-09-19T05:59:49Z_ — THE ASK (owner, 2026-09-19, answering where the harness schemas should move): 'toplevel topical directories like: bootstrap =/ KG w/ only tool the CLI fallback for beans. minimal workflow, init, absolutely minimal skills and bpms listt to get going.' So the organising axis is TOPIC, not layer — which also settles the earlier layer question by construction, since math/ and ",
       "file": "beans/defs/folio-assistant-x3bd--top-level-topical-kg-directories-bootstrap-first.md"
     },
@@ -14357,8 +14357,8 @@
         "total": 539,
         "closed": 196,
         "open": 343,
-        "inProgress": 126,
-        "todo": 216,
+        "inProgress": 128,
+        "todo": 214,
         "draft": 1,
         "unclassified": 0,
         "share": 0.36363636363636365
