@@ -806,6 +806,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-library-entry/v1": { validator: "schemas/site-indexes.ts#LibraryEntrySchema", generated: true },
       "folio-voices-index/v1": { validator: "schemas/site-indexes.ts#VoicesIndexSchema", generated: true },
       "folio-graph-projection/v1": { validator: "schemas/site-indexes.ts#FolioGraphProjectionSchema", generated: true },
+      // The media-type sidecar beside each content-addressed payload under
+      // docs/payload/sha256/ (bean `f233`), written by gen-subgraph-jsonld.
+      "cat-harness-payload/v1": { validator: "schemas/subgraph-manifest.ts#PayloadSidecarSchema", generated: true },
     },
     summary:
       "Documentation ABOUT the knowledge graph — how the harness works, what its " +

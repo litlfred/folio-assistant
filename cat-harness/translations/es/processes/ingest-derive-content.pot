@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ingest-derive-content\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.780Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.321Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -39,6 +39,11 @@ msgstr ""
 msgid "Cite the author of every narrative"
 msgstr ""
 
+#: processes/library/ingest-derive-content.bpmn:26
+#. Diagram element documentation
+msgid "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance. folio-assistant — Ingestion subprocess — derive content from the assets. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
+msgstr ""
+
 #: processes/library/ingest-derive-content.bpmn:133
 #. Diagram label
 msgid "Derived"
@@ -47,11 +52,6 @@ msgstr ""
 #: processes/library/ingest-derive-content.bpmn:75
 #. Diagram label
 msgid "File info, sizes, hashes, timestamps, mimetype"
-msgstr ""
-
-#: processes/library/ingest-derive-content.bpmn:26
-#. Diagram element documentation
-msgid "folio-assistant — Ingestion subprocess — derive content from the assets. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
 #: processes/library/ingest-derive-content.bpmn:39

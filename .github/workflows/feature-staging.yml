@@ -179,6 +179,11 @@ jobs:
     # job-level group is the only thing they had in common. Two staging
     # previews lost, silently, and a cancelled job reads as intentional.
     #
+    # The same reason rules the group out for the RATE LIMIT (#1956): every
+    # waiting preview would sit pending in one group, and each arrival would
+    # cancel the last. The gate in the deploy step waits inside the job
+    # instead, and git's fast-forward check is what serialises the pushes.
+    #
     # The retry below is the mechanism that actually works here, and it is safe
     # for the same reason it is in `discoverability-docs`: each branch writes
     # its own `STAGING/<slug>/` with `keep_files: true`, so a re-clone picks up
@@ -1072,6 +1077,38 @@ jobs:
           # unchanged.
           mkdir -p "./_site/ns/content"
           cp ./cat-harness/ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
+          # The named-subgraph context (bean `c1m4`): every
+          # `docs/subgraph/**/index*.jsonld` names it by URL rather than inlining it.
+          mkdir -p "./_site/ns/subgraph"
+          cp ./cat-harness/ns/subgraph/v1.jsonld "./_site/ns/subgraph/v1.jsonld"
+          # Content-addressed payloads (bean `f233`): `<BASE_URL>/payload/sha256/<hex>`
+          # plus each `<hex>.json` sidecar. Copied VERBATIM, never through Jekyll
+          # (excluded in _config.yml): a rendered body would not hash to its name.
+          mkdir -p "./_site/payload"
+          cp -R ./cat-harness/docs/payload/. "./_site/payload/"
+          # The SQLite slices (bean `q8ar`), one line each, built from the tree
+          # being deployed rather than committed, because their sources move
+          # on most merges (every session writes `beans/`). The deploy payloads
+          # (bean files, todo files, published library entries) are
+          # content-addressed in the same `payload/sha256/` namespace, added
+          # here and never to the committed `docs/payload/`, whose orphan audit
+          # admits KG nodes only. The `kg` slice writes none: it points at the
+          # committed KG payloads copied just above. Each run also rewrites
+          # `assets/slices/index.json`, which lists every slice built so far.
+          # Searched at `slices/search.html?slice=<name>`.
+          # The database is CONTENT-ADDRESSED, `<slice>.<sha256>.sqlite3`, and
+          # the fixed `<slice>.sqlite3.json` manifest names it (bean `wixl`), so
+          # a CDN cannot pair a fresh manifest with stale bytes. Old builds do
+          # not pile up: each run writes only the current file, the deploy step `rm -rf`s
+          # `STAGING/<slug>/` before copying `_site` in, and `staging-rotate.ts`
+          # caps how many previews exist at all.
+          # A CDN may still hold, for one TTL (Pages: max-age=600), a stale
+          # manifest and the older file it names -- a self-consistent pair --
+          # or a stale manifest whose file is gone, which the page reports.
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
           # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
           # each term is defined by its layer's own document, below, and the
           # Glossary publishes SKOS for every scheme. bootstrap's document is
@@ -1176,6 +1213,12 @@ jobs:
           # that cannot show whether the railing worked, which is exactly how
           # this defect was found in the first place.
           bun run cat-harness/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness
+
+          # The root index (bean `4ak5` item 3), as the deploy builds it: LAST,
+          # over the exports written above. Here because `check:invocation-parity`
+          # requires it, and a preview without it cannot show whether the map
+          # is whole. `--base-url` so its `@id`s and `url`s name the preview.
+          bun run cat-harness/scripts/root-index.ts --site ./_site --base-url "$BASE"
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.
@@ -1267,15 +1310,14 @@ jobs:
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll
 
-      # The queue above covers staging-vs-staging. It does NOT cover the five
-      # OTHER workflows that push to `gh-pages` — blueprint, discoverability-docs,
-      # docs-site, lean_ci and publish — because a concurrency group only
-      # serialises the jobs that name it, and none of them do. So the push is
-      # also retried once: the action re-fetches `gh-pages` on the second run,
-      # which is exactly what the rejection asked for.
-      #
-      # `continue-on-error` on the first attempt only. If the retry fails too,
-      # it fails the job — a lost staging deploy must stay visible.
+      # Contention with the OTHER workflows that push to `gh-pages` —
+      # docs-site, discoverability-docs, publish, and a folio's blueprint and
+      # lean_ci — is handled by the deploy step's own loop, not by a
+      # concurrency group: this job names none (see the note on the job), and
+      # a group serialises only the jobs that name it. The loop re-reads the
+      # branch on every attempt, and since #1956 it also waits out the Pages
+      # build of whatever was pushed last (`staging-push-gate.ts`). If it
+      # cannot push, it fails the job — a lost staging deploy must stay visible.
       # ── Deploy and log, in ONE commit ────────────────────────
       #
       # Bean `bm6d`. This used to be a `peaceiris` deploy (plus two retries)
@@ -1314,7 +1356,50 @@ jobs:
           path: pages
           persist-credentials: true
 
+      # THE PREVIEW IS STAGED BEFORE IT IS PUSHED — issue #1956. The deploy
+      # below may wait for the rate-limit window, so the reviewer is told now
+      # that the build is done, that it is queued, and when it should be live —
+      # estimated against the `gh-pages` tip just checked out. The step after
+      # the deploy rewrites the same comment once the push lands.
+      #
+      # `continue-on-error`: a comment that could not be written must not stop
+      # a deploy that can still succeed. The body is built in
+      # `staging-push-gate.ts` (`stagingComment`, tested), and every value from
+      # the PR reaches it through `env`, never through the script's source text
+      # — the `j0zs` rule on the step after the deploy.
+      - name: Comment on the PR that the preview is queued
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        uses: actions/github-script@v9
+        env:
+          SLUG: ${{ steps.slug.outputs.slug }}
+          BRANCH: ${{ steps.slug.outputs.branch }}
+          SHA: ${{ github.sha }}
+        with:
+          script: |
+            const out = `${process.env.RUNNER_TEMP}/staging-comment.md`;
+            const args = ['--state', 'queued', '--dir', 'pages', '--out', out];
+            const { readFileSync } = require('fs');
+            await exec.exec('bun', ['run', 'cat-harness/scripts/staging-push-gate.ts', 'comment', ...args]);
+            const body = readFileSync(out, 'utf8');
+            const { owner, repo } = context.repo;
+            // Ours by the marker; by the old heading for a comment written before
+            // the rate limit (#1956), so it is updated in place, not duplicated.
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner, repo, issue_number: context.issue.number, per_page: 100,
+            });
+            const existing = comments.find(c =>
+              c.user.login === 'github-actions[bot]' &&
+              (c.body.includes('<!-- staging-preview-comment -->') || c.body.includes('Staging preview deployed'))
+            );
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number: context.issue.number, body });
+            }
+
       - name: Deploy the preview and log the render, in one commit
+        id: deploy
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
@@ -1422,9 +1507,36 @@ jobs:
           # `publish-gh-pages.sh` already does for the same reason, and it also
           # makes the render-log union attribute (`pb4n`) unnecessary here —
           # this run's entry is appended to the fresh file, never merged.
-          for attempt in 1 2 3; do
+          #
+          # THE RATE LIMIT — owner ruling 2026-10-03, option 1 (issues #1868,
+          # #1956, bean `j27s`). Pages keeps only the newest build, so a push
+          # cancels the build in flight; previews pushed every minute or two
+          # cancelled the main site's build with theirs. `staging-push-gate.ts`
+          # holds each push until the `gh-pages` tip is older than a Pages
+          # build (5 min after a staging commit, 10 after any other publisher),
+          # and exits 75 after SLEEPING when it is not, so the loop re-reads
+          # and asks again. Its header carries the argument; the short form is
+          # that git's fast-forward rule makes it exact: two jobs that both see
+          # the window open build on the same tip, one push is rejected, and
+          # the loser re-reads a tip younger than the window and waits.
+          #
+          # So a rejection is not always a failure, and the two are counted
+          # apart. Rejected while the tip MOVED is a lost race — somebody's
+          # push landed, the gate will now hold this one for that push's
+          # window, and no attempt is spent. Rejected with the tip UNMOVED is
+          # this run's own failure, and three of those fail the job. The gate's
+          # own deadline (`MAX_WAIT_MS`) bounds the first kind.
+          QUEUED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          attempt=1
+          while [ "$attempt" -le 3 ]; do
             git -C pages fetch --depth=1 origin gh-pages
             git -C pages reset --hard FETCH_HEAD
+            # The `&&`/`||` pair keeps a non-zero exit from tripping `set -e`:
+            # 75 means "slept, re-read", anything else is a refusal.
+            bun run cat-harness/scripts/staging-push-gate.ts gate --dir pages --queued-at "$QUEUED_AT" && gate=0 || gate=$?
+            if [ "$gate" = 75 ]; then continue; fi
+            if [ "$gate" != 0 ]; then exit 1; fi
+            BASE=$(git -C pages rev-parse HEAD)
             rm -rf "pages/STAGING/$STAGING_SLUG"
             mkdir -p "pages/STAGING/$STAGING_SLUG"
             cp -R _site/. "pages/STAGING/$STAGING_SLUG/"
@@ -1465,7 +1577,13 @@ jobs:
             git -C pages commit "${MSG[@]}" || exit 0
             if git -C pages push origin gh-pages; then
               echo "pushed on attempt $attempt"
+              echo "pushed_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
               exit 0
+            fi
+            REMOTE=$(git -C pages ls-remote origin refs/heads/gh-pages | cut -f1)
+            if [ -n "$REMOTE" ] && [ "$REMOTE" != "$BASE" ]; then
+              echo "push rejected: gh-pages moved to $REMOTE — a lost race, not a failure; back to the gate"
+              continue
             fi
             if [ "$attempt" = 3 ]; then
               echo "::error::could not deploy the staging preview after 3 attempts"
@@ -1479,6 +1597,7 @@ jobs:
             # names, on the ref it cites as contended, written by the very
             # sessions it says contend on it.
             bun run cat-harness/scripts/backoff-sleep.ts --attempt "$attempt"
+            attempt=$((attempt + 1))
           done
 
       - name: Comment staging URL on PR
@@ -1505,39 +1624,32 @@ jobs:
         env:
           SLUG: ${{ steps.slug.outputs.slug }}
           BRANCH: ${{ steps.slug.outputs.branch }}
+          SHA: ${{ github.sha }}
+          PUSHED_AT: ${{ steps.deploy.outputs.pushed_at }}
         with:
           script: |
-            const slug = process.env.SLUG;
-            const sha = context.sha.substring(0, 7);
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const url = `https://${owner}.github.io/${repo}/STAGING/${slug}/`;
-            const body = `## 🔍 Staging preview deployed
-
-            **URL:** ${url}
-            **Commit:** \`${sha}\`
-            **Branch:** \`${process.env.BRANCH}\`
-
-            Every page carries a sage banner linking back to the branch, this PR, the issue it is for, the main site, and the build log.
-
-            > Compare with [main site](https://${owner}.github.io/${repo}/) to review changes.`;
-            
-            // Update existing comment or create new one
-            const comments = await github.rest.issues.listComments({
-              owner, repo, issue_number: context.issue.number,
+            // PUSHED, not live: whether Pages has served it is not observable
+            // from here, so the comment gives the time to check by (#1956).
+            const out = `${process.env.RUNNER_TEMP}/staging-comment.md`;
+            const args = ['--state', 'pushed', '--out', out];
+            if (process.env.PUSHED_AT) args.push('--pushed-at', process.env.PUSHED_AT);
+            const { readFileSync } = require('fs');
+            await exec.exec('bun', ['run', 'cat-harness/scripts/staging-push-gate.ts', 'comment', ...args]);
+            const body = readFileSync(out, 'utf8');
+            const { owner, repo } = context.repo;
+            // Ours by the marker; by the old heading for a comment written before
+            // the rate limit (#1956), so it is updated in place, not duplicated.
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner, repo, issue_number: context.issue.number, per_page: 100,
             });
-            const existing = comments.data.find(c => 
-              c.user.login === 'github-actions[bot]' && 
-              c.body.includes('Staging preview deployed')
+            const existing = comments.find(c =>
+              c.user.login === 'github-actions[bot]' &&
+              (c.body.includes('<!-- staging-preview-comment -->') || c.body.includes('Staging preview deployed'))
             );
             if (existing) {
-              await github.rest.issues.updateComment({
-                owner, repo, comment_id: existing.id, body,
-              });
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
             } else {
-              await github.rest.issues.createComment({
-                owner, repo, issue_number: context.issue.number, body,
-              });
+              await github.rest.issues.createComment({ owner, repo, issue_number: context.issue.number, body });
             }
 
   # ── Cleanup: remove STAGING/<slug>/ when PR is closed ─────────

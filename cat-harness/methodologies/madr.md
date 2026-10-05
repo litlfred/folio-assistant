@@ -38,7 +38,7 @@ Nygard's shape.
 The ingest pipeline has no rung that reads markdown, and the archive rung
 stages but cannot be promoted — `l1-blocks` derives a manifest from a
 `structure.json` that only the PDF rungs write. So there is nothing to cite.
-Bean `t3n8` carries the measurement and the per-file hashes.
+Bean `ke1w` (filed as `t3n8`, re-id'd by `4vg7`) carries the measurement and the per-file hashes.
 
 **`evidence` is therefore absent rather than pointing at the queued archive.**
 A `library/` reference means a source a reader can open from this checkout;

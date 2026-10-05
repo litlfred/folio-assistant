@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_PublishVerification` · strict · 1 step(s)
 
-Bean vigi, owner 2026-09-23: a set of post-processing tools that verify what the build produced, run BEFORE deployment and blocking — "a failure triggers an alert to the publisher manager". This process only verifies and says how it went; the caller (docs-site-publish) blocks the deploy on anything but a pass and routes the failure through Process_PublishAlert, the one alert every step after the publish button shares.
+Run the verifier set over the built tree between the export and the deploy, blocking it: pass, fail or could-not-tell, and the caller deploys only on a pass. Bean vigi, owner 2026-09-23: a set of post-processing tools that verify what the build produced, run BEFORE deployment and blocking — "a failure triggers an alert to the publisher manager". This process only verifies and says how it went; the caller (docs-site-publish) blocks the deploy on anything but a pass and routes the failure through Process_PublishAlert, the one alert every step after the publish button shares.
 
 <img src="../assets/img/workflows/publish-verification.svg" alt="BPMN diagram: Verify the export before it is deployed" style="max-width:100%">
 

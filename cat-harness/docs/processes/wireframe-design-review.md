@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_WireframeDesignReview` · strict (defaulted) · 6 step(s)
 
-WireGen (methodologies/wiregen) made executable: a written design intent, at least two mid-fidelity candidates each with a web AND a mobile layout, mechanical checks, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. A wireframe is part of the design process for adjudication (owner, 2026-09-23). Operating skill: wireframe-design-review. Issue #1023.
+WireGen (methodologies/wiregen) made executable: a written design intent, at least two mid-fidelity candidates each with a web AND a mobile layout, mechanical checks, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. A wireframe is part of the design process for adjudication (owner, 2026-09-23). Operating skill: wireframe-design-review. Issue #1023. The same mechanical checks back the as-is wireframe every declared visualiser owes, which `check:wireframes` runs.
 
 <img src="../assets/img/workflows/wireframe-design-review.svg" alt="BPMN diagram: Wireframe design review" style="max-width:100%">
 

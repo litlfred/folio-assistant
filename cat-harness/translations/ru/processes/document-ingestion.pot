@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: document-ingestion\n"
-"POT-Creation-Date: 2026-10-03T16:20:22.049Z\n"
+"POT-Creation-Date: 2026-10-04T12:26:41.583Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -92,11 +92,6 @@ msgstr ""
 #: processes/library/document-ingestion.bpmn:128
 #. Diagram label
 msgid "Extract structure [document-intake]"
-msgstr ""
-
-#: processes/library/document-ingestion.bpmn:30
-#. Diagram element documentation
-msgid "folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
 #: processes/library/document-ingestion.bpmn:260
@@ -217,6 +212,11 @@ msgstr ""
 #: processes/library/document-ingestion.bpmn:200
 #. Diagram element documentation
 msgid "The verdict of the L1 completeness gate. `gap` records the gap as a bean; `complete` promotes the source into library/<bib-slug>/."
+msgstr ""
+
+#: processes/library/document-ingestion.bpmn:30
+#. Diagram element documentation
+msgid "The whole path from a file landing in `uploads/` to a citeable L1 source knowledge graph, calling the ingestion subprocesses in turn. folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
 #: processes/library/document-ingestion.bpmn:44
