@@ -107,6 +107,7 @@ import { skillPageHref, skillPagesOf } from "../../cat-harness/scripts/lib/skill
 import { ownElementPattern } from "../../cat-harness/schemas/namespaces.js";
 import { renderedPath, withRenders } from "../../cat-harness/scripts/viewer-declarations.js";
 import { visualiserNavDeclaration } from "../../cat-harness/scripts/lib/navbar.ts";
+import { publishPlan } from "../../cat-harness/scripts/derive-at-publish.ts";
 import { HARNESS_ROOT } from "./lib/roots.ts";
 
 function decodeEntities(s: string): string {
@@ -690,7 +691,10 @@ export const TYPES: AutoDocType[] = [
       // pages, which is the `dh4f` shape: a consumer scanning nothing and
       // calling the result clean. Measured before this was written.
       const items: AutoDocItem[] = [];
-      const withheld = stagingOnlyRefs();
+      // A page BUILT AT PUBLISH (bean 0b8c) is derived, never authored, and
+      // is on disk only where `derive:publish` happened to run — counting it
+      // made this index differ between a local tree and CI's.
+      const withheld = new Set([...stagingOnlyRefs(), ...publishPlan(REPO).map((a) => a.artefact)]);
       for (const d of docsDirectoriesAcrossInstances()) {
         for (const abs of walk(d.absPath, (n) => n.endsWith(".md") || n.endsWith(".html"))) {
           const rel = relative(REPO, abs).split("\\").join("/");
