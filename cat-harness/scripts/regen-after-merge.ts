@@ -142,6 +142,16 @@ import {
   type PairIO,
   type SkipDecision,
 } from "./input-hash.ts";
+import {
+  affects,
+  changedBaseFromArgv,
+  changedSince,
+  diffSnapshots,
+  footprintOf,
+  scriptsChangedSince,
+  snapshotTree,
+  type Affected,
+} from "./changed-paths.ts";
 import { ReadWriteGate, jobsFromArgv, orderedEmitter, runCaptured, runPool } from "./task-pool.ts";
 import { pairIO } from "./task-io.ts";
 import { repoRootFor } from "../schemas/cat-harness.ts";
@@ -357,6 +367,12 @@ export interface Result {
   outcome: Outcome;
   /** `current` because its inputs hash to its last green run, not because it was asked. */
   skipped?: boolean;
+  /**
+   * `current` because `--changed` touched nothing it reads, so its answer is
+   * its answer at the base — ASSUMED, never measured here. Such a pair records
+   * no hash in the input-hash cache.
+   */
+  assumed?: boolean;
 }
 
 /** One verify/write pair, with what it declares about its files (`task-io.ts`). */
@@ -512,15 +528,40 @@ export async function regenToFixpoint(
   pairs: readonly Pair[],
   runner: Runner,
   maxPasses = DEFAULT_MAX_PASSES,
-  opts: Omit<PassOptions, "dryRun"> & { onPass?: (pass: number) => void } = {},
+  opts: PassOptions & FixpointOptions = {},
 ): Promise<{ results: Result[]; passes: number; settled: boolean }> {
   const final = new Map<string, Result>();
   let passes = 0;
   let settled = false;
+  // What the previous pass changed: `null` before the first pass, `undefined`
+  // when it could not be measured (which asks every pair).
+  let lastChange: ReadonlySet<string> | undefined | null = null;
   while (passes < maxPasses) {
     passes++;
     opts.onPass?.(passes);
-    const { results, writerRan } = await regenPass(pairs, runner, opts);
+    const asked: Pair[] = [];
+    for (const pair of pairs) {
+      const sel =
+        lastChange === null
+          ? opts.firstPass?.(pair)
+          : opts.narrow === undefined
+            ? undefined
+            : opts.narrow.affects(pair, lastChange);
+      if (sel === undefined || sel.affected) {
+        asked.push(pair);
+        continue;
+      }
+      opts.onNotAsked?.(pair, sel.why, passes);
+      // Never asked at all: its answer is ASSUMED from the base, and the
+      // result says so (`hashesToRecord` will not record a hash for it).
+      // Asked in an earlier pass: that answer stands — nothing it reads moved.
+      if (!final.has(pair.check)) {
+        final.set(pair.check, { check: pair.check, writer: pair.writer, outcome: "current", skipped: true, assumed: true });
+      }
+    }
+    const measure = opts.narrow?.begin();
+    const { results, writerRan } = await regenPass(asked, runner, opts);
+    lastChange = measure === undefined ? undefined : measure();
     for (const r of results) {
       const prev = final.get(r.check);
       final.set(r.check, prev?.outcome === "regenerated" && r.outcome === "current" ? prev : r);
@@ -531,6 +572,36 @@ export async function regenToFixpoint(
     }
   }
   return { results: pairs.map((p) => final.get(p.check)!), passes, settled };
+}
+
+/**
+ * Which pairs a pass asks — bean `94zs`. Every hook is optional, and with none
+ * of them every pass asks every pair, exactly as before.
+ */
+export interface FixpointOptions {
+  onPass?: (pass: number) => void;
+  /**
+   * `--changed <base>`: whether the FIRST pass asks this pair. A pair it
+   * declines was not touched by the change since `<base>`.
+   */
+  firstPass?: (pair: Pair) => Affected;
+  /**
+   * The narrowed fixpoint. `begin()` is called before every pass and returns
+   * a function that, called after it, says which paths the pass ACTUALLY
+   * changed (`undefined`: could not be measured). The next pass asks only the
+   * pairs `affects` says that change touched.
+   *
+   * Why the settling guarantee survives: a pair not re-asked has the answer it
+   * gave in an earlier pass, and by induction nothing it reads has changed
+   * since it gave it — it was read from a tree identical, on its footprint, to
+   * this one. A pass that asks nobody runs no writer, and so settles.
+   */
+  narrow?: {
+    begin: () => () => ReadonlySet<string> | undefined;
+    affects: (pair: Pair, changed: ReadonlySet<string> | undefined) => Affected;
+  };
+  /** Called for each pair a pass does not ask, before the pass runs. */
+  onNotAsked?: (pair: Pair, why: string, pass: number) => void;
 }
 
 /** Why a run exited as it did — one of these, never a bare number. */
@@ -798,6 +869,10 @@ export function hashesToRecord(
   pairs.forEach((pair, i) => {
     const key = cacheKey(pair);
     const r = results[i];
+    // Assumed from the base rather than asked: a green hash recorded now
+    // would launder that premise into a measurement. Leave whatever a real
+    // run recorded (if it still matches, it still holds).
+    if (r?.assumed === true) return;
     const green = r !== undefined && (r.outcome === "current" || r.outcome === "regenerated");
     if (!settled || !green) {
       delete next.pairs[key];
@@ -818,6 +893,7 @@ if (import.meta.main) {
   const jobs = jobsFromArgv(process.argv);
   const maxPasses = maxPassesFromArgv(process.argv);
   const useCache = cacheEnabled(process.argv, process.env);
+  const changedBase = changedBaseFromArgv(process.argv);
   const t0 = performance.now();
 
   const gates = loadGates(repoRoot, { all });
@@ -868,15 +944,60 @@ if (import.meta.main) {
       }
     : undefined;
 
+  // Bean `94zs`. A footprint is recomputed each pass: a writer can create a
+  // file a glob now matches. Memoised within the pass.
+  let footprints = new Map<string, ReturnType<typeof footprintOf>>();
+  const footprint = (pair: Pair) => {
+    let f = footprints.get(pair.check);
+    if (f === undefined) footprints.set(pair.check, (f = footprintOf(repoRoot, scripts, scriptsOf(pair), pair.io)));
+    return f;
+  };
+  let firstPass: ((pair: Pair) => Affected) | undefined;
+  if (changedBase !== undefined) {
+    const ch = changedSince(repoRoot, changedBase);
+    if ("undetermined" in ch) {
+      console.log(`  --changed ${changedBase}: COULD NOT DETERMINE the change (${ch.undetermined}) — asking every pair`);
+    } else {
+      const scriptsChanged = scriptsChangedSince(repoRoot, ch.baseSha, scripts);
+      firstPass = (pair) => affects(footprint(pair), ch.paths, { scriptsChanged });
+      const untouched = repairable.filter((p) => !firstPass!(p).affected).length;
+      console.log(
+        `  --changed ${changedBase} (${ch.baseSha.slice(0, 10)}): ${ch.paths.size} path(s) changed; ` +
+          `${untouched} of ${repairable.length} pair(s) read none of them and are not asked — ` +
+          "their answer is their answer at the base",
+      );
+    }
+  }
+  const narrow = {
+    begin: () => {
+      const before = snapshotTree(repoRoot);
+      return () => {
+        footprints = new Map();
+        const after = snapshotTree(repoRoot);
+        return before === undefined || after === undefined ? undefined : diffSnapshots(before, after);
+      };
+    },
+    affects: (pair: Pair, changed: ReadonlySet<string> | undefined) => affects(footprint(pair), changed),
+  };
+  const onNotAsked = explain
+    ? (pair: Pair, why: string, pass: number) =>
+        console.log(`    skip ${pair.check} — not asked${pass === 1 ? ` (--changed ${changedBase})` : " (unaffected by the last pass)"}: ${why}`)
+    : undefined;
+
   let results: Result[];
   let settled = false;
   if (dryRun) {
-    results = (await regenPass(repairable, asyncRun, { dryRun: true, jobs, skip, report })).results;
+    results = (
+      await regenToFixpoint(repairable, asyncRun, 1, { dryRun: true, jobs, skip, report, firstPass, onNotAsked })
+    ).results;
   } else {
     const fx = await regenToFixpoint(repairable, asyncRun, maxPasses, {
       jobs,
       skip,
       report,
+      firstPass,
+      narrow,
+      onNotAsked,
       onPass: (n) => {
         digests = new FileDigests(repoRoot);
         if (explain) console.log(`  pass ${n}:`);
@@ -927,9 +1048,14 @@ if (import.meta.main) {
   }
 
   const by = (o: Outcome): Result[] => results.filter((r) => r.outcome === o);
-  const skippedCount = results.filter((r) => r.skipped).length;
+  const assumedCount = results.filter((r) => r.assumed).length;
+  const skippedCount = results.filter((r) => r.skipped && !r.assumed).length;
+  const skipNotes = [
+    ...(skippedCount > 0 ? [`${skippedCount} skipped: inputs unchanged since their last green run`] : []),
+    ...(assumedCount > 0 ? [`${assumedCount} not asked: --changed touched nothing they read`] : []),
+  ];
   console.log(
-    `\n${by("current").length} current${skippedCount > 0 ? ` (${skippedCount} skipped: inputs unchanged since their last green run)` : ""}, ` +
+    `\n${by("current").length} current${skipNotes.length > 0 ? ` (${skipNotes.join("; ")})` : ""}, ` +
       `${by("regenerated").length} ` +
       `${dryRun ? "stale" : "regenerated"}, ${by("unrepaired").length} unrepaired, ` +
       `${by("no-writer").length} without a writer, ${by("writer-failed").length} with a failing writer, ` +
