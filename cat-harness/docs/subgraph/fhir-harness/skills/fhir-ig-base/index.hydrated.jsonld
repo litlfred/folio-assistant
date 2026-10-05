@@ -112,6 +112,24 @@
       "title": "ig-render-jekyll"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-site-links",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "What happens to an IG's links when its pages are rendered on our site rather than by the IG Publisher: which are rewritten (artefact pages, a case-only mismatch, the Publisher's downloads and pages, files of the IG's repository, the OpenAPI index), which are reported as the IG's own dead links, and the two gates that keep a generator from linking a page it does not write. Read before changing build-ig-site's relinking, gen-ig-pages' links, or before concluding an IG page's broken link is ours.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
+      "instructionLines": 68,
+      "instructionsPath": "skills/fhir-ig-base/ig-site-links.md",
+      "name": "ig-site-links",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2a8c0a63f44efad3db4810773e6304d8678c9ebc5b51363334c0bf6897583e99",
+        "bytes": 3784,
+        "sha256": "2a8c0a63f44efad3db4810773e6304d8678c9ebc5b51363334c0bf6897583e99"
+      },
+      "title": "ig-site-links"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-site-theme",
       "@type": "bootstrap:Skill",
       "ambiguous": false,

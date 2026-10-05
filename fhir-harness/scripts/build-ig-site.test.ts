@@ -8,7 +8,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, composeIgSite, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, relinkPublisherOutputs, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, composeIgSite, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, relinkOffSite, rubyLiquidStrings, relinkPublisherOutputs, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
 import { copyDocsInto, igSiteDocs, webpagePalette } from "./stage-ig-sites";
 import type { IgReleases } from "../schemas/ig-releases.ts";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
@@ -502,5 +502,53 @@ describe("relinkPublisherOutputs — the Publisher's downloads live on the publi
     const r = relinkPublisherOutputs(t, "http://c");
     expect(r.text).toBe("[a](index.html) [b](files/x.zip) [c](https://x.org/y.zip) <a href=\"http://c/z.tgz\">");
     expect(r.count).toBe(1);
+  });
+});
+
+describe("relinkArtifacts — a case-only mismatch", () => {
+  test("resolves to the one artefact page it can mean", () => {
+    const r = relinkArtifacts("[model](StructureDefinition-hcert.html)", new Set(["StructureDefinition-HCert"]), "artifact/");
+    expect(r.text).toBe("[model](artifact/StructureDefinition-HCert.html)");
+  });
+  test("is left alone when two pages differ only in case", () => {
+    const r = relinkArtifacts("[x](A-b.html)", new Set(["A-B", "a-B"]), "artifact/");
+    expect(r.text).toBe("[x](A-b.html)");
+    expect(r.count).toBe(0);
+  });
+});
+
+describe("relinkOffSite — what this build cannot serve goes where it is served", () => {
+  const src = mkdtempSync(join(tmpdir(), "offsite-"));
+  mkdirSync(join(src, ".github", "skills"), { recursive: true });
+  writeFileSync(join(src, ".github", "skills", "s.yaml"), "x");
+  mkdirSync(join(src, "input", "bpmn"), { recursive: true });
+  writeFileSync(join(src, "input", "bpmn", "D.bpmn"), "x");
+  const o = { canonical: "http://smart.who.int/trust", sourceBlob: "https://github.com/o/r/blob/main", srcRoot: src, isServed: (t: string) => t === "index.html" };
+  test("a Publisher-only page goes to the published IG", () => {
+    expect(relinkOffSite('<a href="qa.html">QA</a>', o).text).toBe('<a href="http://smart.who.int/trust/qa.html">QA</a>');
+  });
+  test("a repository file goes to GitHub, found at its path or under input/", () => {
+    const r = relinkOffSite("[s](.github/skills/s.yaml) [d](bpmn/D.bpmn)", o);
+    expect(r.text).toBe("[s](https://github.com/o/r/blob/main/.github/skills/s.yaml) [d](https://github.com/o/r/blob/main/input/bpmn/D.bpmn)");
+    expect(r.count).toBe(2);
+  });
+  test("a page nothing serves is left as written and REPORTED", () => {
+    const r = relinkOffSite("[v](video_tutorial.html) [i](index.html)", o);
+    expect(r.text).toBe("[v](video_tutorial.html) [i](index.html)");
+    expect(r.dead).toEqual(["video_tutorial.html"]);
+  });
+});
+
+describe("rubyLiquidStrings — a Publisher Liquid string Jekyll can read", () => {
+  test("an escaped-quote assign becomes single-quoted with plain quotes", () => {
+    const src = '{% assign x__link__html = "<a href=\\"V.html\\">V</a>" %}';
+    const r = rubyLiquidStrings(src);
+    expect(r.text).toBe(`{% assign x__link__html = '<a href="V.html">V</a>' %}`);
+    expect(r.count).toBe(1);
+  });
+  test("a plain string, and one holding an apostrophe, are left as written", () => {
+    const plain = '{% assign a = "plain" %}';
+    const apos = '{% assign b = "it\'s <a href=\\"x\\">" %}';
+    expect(rubyLiquidStrings(plain + apos).text).toBe(plain + apos);
   });
 });
