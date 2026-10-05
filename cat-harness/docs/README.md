@@ -35,7 +35,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`external-schemas/`](external-schemas/) | _nothing declares what this holds_ | |
 | [`fhir/`](fhir/README.md) | FHIR: FHIR content and the IG Publisher. | |
 | [`fr/`](fr/) | _nothing declares what this holds_ | |
-| [`fsh-guts/`](fsh-guts/) | _nothing declares what this holds_ | |
 | [`glossary/`](glossary/) | _nothing declares what this holds_ | |
 | [`guides/`](guides/README.md) | Authoring guides: how to do a task with the harness, one guide per task. | |
 | [`health/`](health/) | _nothing declares what this holds_ | |

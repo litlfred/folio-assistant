@@ -8906,6 +8906,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.visualisationschema.writer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VisualisationSchema.writer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The GENERATOR that writes this page: repo-relative script files, run with `bun run <file>` — the same field, with the same meaning, as a directory's `writer`. Bean `0b8c` (#2230)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.writer",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/code-list.codelistschema.description",
       "@type": "skos:Concept",
       "skos:inScheme": {
