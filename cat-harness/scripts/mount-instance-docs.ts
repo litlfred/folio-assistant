@@ -112,6 +112,7 @@ import { graphTypologyRowDecor } from "./lib/graph-typology-nav.js";
 import { kindTitle } from "./lib/nav-label.js";
 import { withSavedScheme } from "./lib/scheme-css.js";
 import { viewersOf } from "./viewer-declarations.js";
+import { translationMetaBlock, withTranslationMeta } from "./lib/translation-meta.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -761,7 +762,7 @@ export function instanceMark(
  * rail links pointed at a directory that does not exist. Caught by resolving
  * every emitted href against the built tree, not by reading the code.
  */
-function injectRails<T extends { name: string; kind: string; route: string; visualiser?: string }>(
+function injectRails<T extends { name: string; kind: string; route: string; visualiser?: string; instanceDir?: string }>(
   siteAbs: string,
   mounts: readonly T[],
   docsPrefix: string | undefined,
@@ -862,7 +863,8 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
         skipped.push(file.slice(siteAbs.length + 1));
         continue;
       }
-      writeFileSync(file, after);
+      // The docs pages' own locale chrome, on a page Jekyll never laid out (#2219).
+      writeFileSync(file, m.instanceDir ? withTranslationMeta(after, translationMetaBlock(m.instanceDir)) : after);
       injected++;
     }
   }

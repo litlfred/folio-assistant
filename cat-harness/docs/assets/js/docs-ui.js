@@ -475,7 +475,12 @@
     var path = window.location.pathname;
     var basePath = deriveBasePath(path, currentLang);
 
-    var mainContent = document.querySelector(".main-content, #main-content");
+    // Or `main`, on a page that DECLARES its locales (#2219): a mounted page
+    // (`mount-instance-docs.ts`) is finished HTML with no just-the-docs layout,
+    // and `glassBandSlot` already falls back to `main`. Without the block it is
+    // a page nobody said anything about, and it keeps its layout.
+    var mainContent = document.querySelector(".main-content, #main-content") ||
+      (meta ? document.querySelector("main") : null);
     if (!mainContent) return;
 
     // No inline colours, here or below. Every one of this bar's pairs is a
