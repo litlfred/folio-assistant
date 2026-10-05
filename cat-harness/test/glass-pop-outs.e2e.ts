@@ -346,8 +346,9 @@ test.describe("a popped-out sticky is the sticky — \"themed square sticky avat
     await page.locator(`${sticky} [data-fa-control="move"]`).focus();
     await page.keyboard.press("Enter");
     await expect(page.locator(sticky)).toHaveAttribute("data-fa-moving", "true");
-    // Size is a key in the mode now (issue #1900 took the card's −/+ off it).
-    await page.keyboard.press("+");
+    await page.keyboard.press("Escape");
+    // Size is the card's own + (owner, 2026-10-05: only the −/+).
+    await page.locator(`${sticky} [data-fa-size="larger"]`).click();
     const b = await box(page, sticky);
     // Still square after a resize: the ratio is kept.
     expect(Math.abs(b.width - b.height)).toBeLessThanOrEqual(1);
