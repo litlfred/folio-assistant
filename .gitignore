@@ -293,3 +293,11 @@ cat-harness/docs/assets/slices/
 
 # paper_preferences (cat-harness-tools/src/tools/preferences.ts)
 .folio-prefs.json
+
+# The fsh-guts viewer is DERIVED from `fsh-guts/`, which is kept on a branch
+# (above), so it cannot be current in a commit: one `state:push` would make a
+# committed copy stale on main and on every open PR at once (2026-10-05).
+# `bun run derive:publish` builds it at site-build time from the mount, after
+# `state:mount`. `check:derived-from` refuses it if it is ever tracked again.
+# Bean `0b8c`, #2230.
+/cat-harness/docs/fsh-guts/index.md
