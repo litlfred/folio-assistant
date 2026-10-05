@@ -1,0 +1,1268 @@
+{
+  "@context": {
+    "name": "https://litlfred.github.io/cat-harness/0.1.0/ns#name",
+    "stub": "https://litlfred.github.io/cat-harness/0.1.0/ns#stub",
+    "title": "https://litlfred.github.io/cat-harness/0.1.0/ns#title",
+    "description": "https://litlfred.github.io/cat-harness/0.1.0/ns#description",
+    "version": "https://litlfred.github.io/cat-harness/0.1.0/ns#version",
+    "path": "https://litlfred.github.io/cat-harness/0.1.0/ns#path",
+    "nodes": "https://litlfred.github.io/cat-harness/0.1.0/ns#nodes",
+    "bytes": "https://litlfred.github.io/cat-harness/0.1.0/ns#bytes",
+    "sha256": "https://litlfred.github.io/cat-harness/0.1.0/ns#sha256",
+    "dependsOn": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#dependsOn",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "directory": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#directory",
+      "@container": "@set"
+    },
+    "graphTypologies": {
+      "@id": "http://purl.org/dc/terms/type",
+      "@container": "@set"
+    },
+    "subgraph": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasSubgraph",
+      "@type": "@id"
+    },
+    "url": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentUrl",
+      "@type": "@id"
+    },
+    "hasHarness": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasMember",
+      "@container": "@set"
+    }
+  },
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/index.jsonld",
+  "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#KnowledgeGraph",
+  "hasHarness": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/bootstrap/bootstrap.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "bootstrap",
+      "stub": "bootstrap",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/bootstrap/bootstrap.jsonld",
+      "title": "Bootstrap",
+      "description": "The graph an agent reads before it knows what this repository is.",
+      "version": "0.1.0",
+      "directory": [
+        {
+          "name": "skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "schemas",
+          "path": "schemas/",
+          "graphTypologies": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "scenarios",
+          "path": "scenarios/",
+          "graphTypologies": [
+            "scenarios"
+          ]
+        },
+        {
+          "name": "processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "models",
+          "path": "models/",
+          "graphTypologies": [
+            "models"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/bootstrap/subgraph/",
+      "nodes": 166,
+      "bytes": 134577,
+      "sha256": "961f1ac38733635bc12ddd6324e2c195dace08f198d072476caaa7b257b627d3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/bootstrap-tools/bootstrap-tools.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "bootstrap-tools",
+      "stub": "bootstrap-tools",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/bootstrap-tools/bootstrap-tools.jsonld",
+      "title": "Bootstrap tools",
+      "description": "The Zod source of bootstrap's schemas, the generators that write bootstrap's JSON Schemas, schema page and READMEs, and the checks bootstrap's content must pass — runnable by an agent, with zod, liquidjs, Playwright and bpmn-js as its dependencies.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/bootstrap/bootstrap.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "bootstrap-tools-schemas",
+          "path": "schemas/",
+          "graphTypologies": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-scenarios",
+          "path": "scenarios/",
+          "graphTypologies": [
+            "scenarios"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/bootstrap-tools/subgraph/",
+      "nodes": 43,
+      "bytes": 70255,
+      "sha256": "05ac8d6df06a312f19cab1edf6ff78d4786c1504486da5b1f24d37d1e73a6090"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/cat-harness.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "cat-harness",
+      "stub": "cat-harness",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/cat-harness.jsonld",
+      "title": "C@T Harness",
+      "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/bootstrap/bootstrap.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/bootstrap-tools/bootstrap-tools.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "cat-harness-validators",
+          "path": "validators/",
+          "graphTypologies": [
+            "validators"
+          ]
+        },
+        {
+          "name": "tools",
+          "path": "tools/",
+          "graphTypologies": [
+            "tools"
+          ]
+        },
+        {
+          "name": "external-schemas",
+          "path": "external-schemas/",
+          "graphTypologies": [
+            "external-schema"
+          ]
+        },
+        {
+          "name": "subscriptions",
+          "path": "subscriptions/",
+          "graphTypologies": [
+            "substrate-snapshot"
+          ]
+        },
+        {
+          "name": "code-lists",
+          "path": "code-lists/",
+          "graphTypologies": [
+            "code-list"
+          ]
+        },
+        {
+          "name": "vocab-mappings",
+          "path": "vocab-mappings/",
+          "graphTypologies": [
+            "vocab-mapping"
+          ]
+        },
+        {
+          "name": "schemas",
+          "path": "schemas/",
+          "graphTypologies": [
+            "schemas",
+            "cat-harness"
+          ]
+        },
+        {
+          "name": "uml",
+          "path": "uml/",
+          "graphTypologies": [
+            "uml"
+          ]
+        },
+        {
+          "name": "skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "scenarios",
+          "path": "scenarios/",
+          "graphTypologies": [
+            "scenarios"
+          ]
+        },
+        {
+          "name": "policies",
+          "path": "policies/",
+          "graphTypologies": [
+            "policies"
+          ]
+        },
+        {
+          "name": "processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "methodologies",
+          "path": "methodologies/",
+          "graphTypologies": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        },
+        {
+          "name": "attestations",
+          "path": "test/attestations/",
+          "graphTypologies": [
+            "attestations"
+          ]
+        },
+        {
+          "name": "health",
+          "path": "test/health/results/",
+          "graphTypologies": [
+            "health"
+          ]
+        },
+        {
+          "name": "uploads",
+          "path": "uploads/",
+          "graphTypologies": [
+            "uploads"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "translation-sources",
+          "path": "translations/",
+          "graphTypologies": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "folio",
+          "path": "folio/",
+          "graphTypologies": [
+            "folio"
+          ]
+        },
+        {
+          "name": "docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
+        {
+          "name": "swimlane-glossary",
+          "path": "glossary/",
+          "graphTypologies": [
+            "swimlane-glossary"
+          ]
+        },
+        {
+          "name": "cat-harness-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-src",
+          "path": "src/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-adapters",
+          "path": "adapters/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tests",
+          "path": "test/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "folio-templates",
+          "path": "templates/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-deploy",
+          "path": "deploy/",
+          "graphTypologies": [
+            "code"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/",
+      "nodes": 3406,
+      "bytes": 3615280,
+      "sha256": "b5dd2ce745ec2a3db69a99b8d65da2dd1a34e4029c7e32e41664c386e6fd0b4c"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/cat-harness-tools.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "cat-harness-tools",
+      "stub": "cat-harness-tools",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/cat-harness-tools/cat-harness-tools.jsonld",
+      "title": "C@T Harness Tools",
+      "description": "What implements the harness's Tool definitions: the MCP servers, their tool registrars and routes. Definitions stay in cat-harness; this layer runs them.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/cat-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/bootstrap-tools/bootstrap-tools.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "cat-harness-tools-adapters",
+          "path": "adapters/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-schemas",
+          "path": "schemas/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-id-lookup",
+          "path": "id-lookup/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-tests",
+          "path": "test/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-src",
+          "path": "src/",
+          "graphTypologies": [
+            "code"
+          ]
+        }
+      ],
+      "nodes": 9,
+      "bytes": 23500,
+      "sha256": "3cf573922da8d1659e610ac084db4335c126e9084bd388ff4f15e08e3946b856"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/cat-openapi.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "cat-openapi",
+      "stub": "cat-openapi",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/cat-openapi/cat-openapi.jsonld",
+      "title": "C@T OpenAPI",
+      "description": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph typology `openapi`, and gives every operation in them a page and an IRI, rendered in the browser from the served document.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/cat-harness.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "cat-openapi-validators",
+          "path": "validators/",
+          "graphTypologies": [
+            "validators"
+          ]
+        },
+        {
+          "name": "cat-openapi-typologies",
+          "path": "typologies/",
+          "graphTypologies": [
+            "typologies"
+          ]
+        },
+        {
+          "name": "cat-openapi-schemas",
+          "path": "schemas/",
+          "graphTypologies": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "cat-openapi-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        }
+      ],
+      "nodes": 10,
+      "bytes": 20660,
+      "sha256": "3e5fcc16b51da0b34a86404385b77b1e7f473745aa9b4f1ecb749e50fb383804"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/fhir-harness.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "fhir-harness",
+      "stub": "fhir-harness",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/fhir-harness/fhir-harness.jsonld",
+      "title": "FHIR IG Harness",
+      "description": "The bare FHIR IG pipeline — SUSHI, the IG Publisher, Jekyll assembly and publication — with no WHO, DAK or SMART assumption. What a non-WHO implementation guide instantiates.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/folio-assistant-core/folio-assistant-core.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "fhir-harness-translations",
+          "path": "translations/",
+          "graphTypologies": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "fhir-harness-validators",
+          "path": "validators/",
+          "graphTypologies": [
+            "validators"
+          ]
+        },
+        {
+          "name": "fhir-harness-typologies",
+          "path": "typologies/",
+          "graphTypologies": [
+            "typologies"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "fhir-ig-skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "fhir-ig-tools",
+          "path": "tools/",
+          "graphTypologies": [
+            "tools"
+          ]
+        },
+        {
+          "name": "fhir-ig-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "fhir-harness-processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/",
+      "nodes": 152,
+      "bytes": 166014,
+      "sha256": "7c586e8fbfce4ea08b0be65d84abfb6e2caac71c25a8521f010c3bfe34724e61"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/folio-assistant/folio-assistant.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "folio-assistant",
+      "stub": "folio-assistant",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/folio-assistant/folio-assistant.jsonld",
+      "title": "Folio Assistant",
+      "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/bootstrap/bootstrap.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/bootstrap-tools/bootstrap-tools.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/cat-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/cat-harness-tools.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/fhir-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/folio-assistant-core/folio-assistant-core.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/folio-assistant-sci/folio-assistant-sci.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-base.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-ig/smart-ig.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-immunizations/smart-immunizations.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-trust/smart-trust.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/who-iris/who-iris.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "uploads",
+          "path": "uploads/",
+          "graphTypologies": [
+            "uploads"
+          ]
+        },
+        {
+          "name": "root-tools",
+          "path": "tools/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "fsh-guts",
+          "path": "fsh-guts/",
+          "graphTypologies": [
+            "fsh-guts"
+          ]
+        },
+        {
+          "name": "beans",
+          "path": "beans/",
+          "graphTypologies": [
+            "beans"
+          ]
+        },
+        {
+          "name": "todos",
+          "path": "todos/",
+          "graphTypologies": [
+            "todos"
+          ]
+        },
+        {
+          "name": "memory",
+          "path": "memory/",
+          "graphTypologies": [
+            "memory",
+            "waiver"
+          ]
+        },
+        {
+          "name": "interaction",
+          "path": "interaction/",
+          "graphTypologies": [
+            "interaction"
+          ]
+        },
+        {
+          "name": "issue-marks",
+          "path": "issue-marks/",
+          "graphTypologies": [
+            "issue-marks"
+          ]
+        },
+        {
+          "name": "root-docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs"
+          ]
+        }
+      ],
+      "nodes": 31,
+      "bytes": 40539,
+      "sha256": "3d1d289608130624728f1265fa273d56169a15025465a34eb239d9d7336e131d"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/folio-assistant-core/folio-assistant-core.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "folio-assistant-core",
+      "stub": "folio-assistant-core",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/folio-assistant-core/folio-assistant-core.jsonld",
+      "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph typology itself.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/cat-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/cat-harness-tools.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "folio-assistant-core-translations",
+          "path": "translations/",
+          "graphTypologies": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-block-typologies",
+          "path": "block-kinds/",
+          "graphTypologies": [
+            "block-kinds"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-validators",
+          "path": "validators/",
+          "graphTypologies": [
+            "validators"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-typologies",
+          "path": "typologies/",
+          "graphTypologies": [
+            "typologies"
+          ]
+        },
+        {
+          "name": "core-schemas",
+          "path": "schemas/",
+          "graphTypologies": [
+            "schemas",
+            "cat-harness"
+          ]
+        },
+        {
+          "name": "folios",
+          "path": "folios/",
+          "graphTypologies": [
+            "folio"
+          ]
+        },
+        {
+          "name": "glossary",
+          "path": "glossary/",
+          "graphTypologies": [
+            "glossary"
+          ]
+        },
+        {
+          "name": "core-tools",
+          "path": "tools/",
+          "graphTypologies": [
+            "tools"
+          ]
+        },
+        {
+          "name": "core-adapters",
+          "path": "adapters/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "core-src",
+          "path": "src/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "core-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "core-library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "core-methodologies",
+          "path": "methodologies/",
+          "graphTypologies": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "core-skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "core-processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/",
+      "nodes": 661,
+      "bytes": 991804,
+      "sha256": "2786d5314fc0a0915a62429e0c807cb1971ffbe379237b22f70bd4c5647c1e09"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/folio-assistant-sci/folio-assistant-sci.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "folio-assistant-sci",
+      "stub": "folio-assistant-sci",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/folio-assistant-sci/folio-assistant-sci.jsonld",
+      "description": "Scientific source material used by folios that formalise mathematics, and the methodologies for formalising it in Lean that this layer adopts from that material.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/folio-assistant-core/folio-assistant-core.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "folio-assistant-sci-qa-checkers",
+          "path": "qa-checkers/",
+          "graphTypologies": [
+            "qa-checkers"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-pipeline-plugins",
+          "path": "pipeline-plugins/",
+          "graphTypologies": [
+            "pipeline-plugins"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-translations",
+          "path": "translations/",
+          "graphTypologies": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-block-typologies",
+          "path": "block-kinds/",
+          "graphTypologies": [
+            "block-kinds"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-content-adapters",
+          "path": "content-adapters/",
+          "graphTypologies": [
+            "content-adapters"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-typologies",
+          "path": "typologies/",
+          "graphTypologies": [
+            "typologies"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "sci-methodologies",
+          "path": "methodologies/",
+          "graphTypologies": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "sci-adapters",
+          "path": "adapters/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "sci-tools",
+          "path": "tools/",
+          "graphTypologies": [
+            "tools"
+          ]
+        },
+        {
+          "name": "sci-sources",
+          "path": "sources/",
+          "graphTypologies": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "sci-processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        },
+        {
+          "name": "attestations",
+          "path": "test/attestations/",
+          "graphTypologies": [
+            "attestations"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/",
+      "nodes": 133,
+      "bytes": 176236,
+      "sha256": "1579ad954f0459d6561e5d4cc34e02276a2c8cbe9102ea8d89dc7d9668d39625"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-base.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "smart-base",
+      "stub": "smart-base",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-base/smart-base.jsonld",
+      "title": "SMART Base",
+      "description": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/fhir-harness.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "smart-base-qa-checkers",
+          "path": "qa-checkers/",
+          "graphTypologies": [
+            "qa-checkers"
+          ]
+        },
+        {
+          "name": "smart-base-block-kinds",
+          "path": "block-kinds/",
+          "graphTypologies": [
+            "block-kinds"
+          ]
+        },
+        {
+          "name": "smart-base-content-adapters",
+          "path": "content-adapters/",
+          "graphTypologies": [
+            "content-adapters"
+          ]
+        },
+        {
+          "name": "smart-base-translations",
+          "path": "translations/",
+          "graphTypologies": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "methodologies",
+          "path": "methodologies/",
+          "graphTypologies": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "processes",
+          "path": "methodologies/processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "smart-base-house-processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "smart-base-artifact-index",
+          "path": "fhir-artifact-index/",
+          "graphTypologies": [
+            "fhir-artifact-index"
+          ]
+        },
+        {
+          "name": "tools",
+          "path": "tools/",
+          "graphTypologies": [
+            "tools"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        },
+        {
+          "name": "smart-base-themes",
+          "path": "themes/",
+          "graphTypologies": [
+            "themes"
+          ]
+        },
+        {
+          "name": "smart-base-docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs",
+            "ig-pages"
+          ]
+        },
+        {
+          "name": "smart-base-document-kinds",
+          "path": "document-kinds/",
+          "graphTypologies": [
+            "document-kinds"
+          ]
+        },
+        {
+          "name": "smart-base-findings",
+          "path": "findings/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
+        {
+          "name": "smart-base-external-schemas",
+          "path": "external-schemas/",
+          "graphTypologies": [
+            "external-schema"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/",
+      "nodes": 114,
+      "bytes": 108942,
+      "sha256": "ba3cf4257ffcaa172256a9c08e5ec59629e0eccc4624aab36e2168dacccc70ad"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-ig/smart-ig.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "smart-ig",
+      "stub": "smart-ig",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-ig/smart-ig.jsonld",
+      "title": "SMART IG",
+      "description": "The L3 layer — a WHO SMART Guideline's FHIR Implementation Guide, and what one owes beyond a bare FHIR IG.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-base.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        }
+      ],
+      "nodes": 4,
+      "bytes": 18506,
+      "sha256": "997bbef301388ab0715cafaa14ee970d7fe6241754978770e9314eef8111bb12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-immunizations/smart-immunizations.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "smart-immunizations",
+      "stub": "smart-immunizations",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-immunizations/smart-immunizations.jsonld",
+      "description": "WHO SMART Immunizations (smart.who.int.immunizations) v0.2.0, FHIR 4.0.1 — the published IG's artefact index, reconstructed: 748 artefacts known, 200 materialized.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-ig/smart-ig.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "smart-immunizations-artifact-index",
+          "path": "fhir-artifact-index/",
+          "graphTypologies": [
+            "fhir-artifact-index"
+          ]
+        },
+        {
+          "name": "smart-immunizations-docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs",
+            "ig-pages"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        }
+      ],
+      "nodes": 9,
+      "bytes": 23750,
+      "sha256": "9d30a7049ebead30a14128b4a9b42260ec88311f92e1b38db08a0e0c5caff9a4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-trust/smart-trust.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "smart-trust",
+      "stub": "smart-trust",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-trust/smart-trust.jsonld",
+      "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/smart-ig/smart-ig.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/cat-openapi.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "smart-trust-ast",
+          "path": "fhir-ast/",
+          "graphTypologies": [
+            "ig-ast"
+          ]
+        },
+        {
+          "name": "smart-trust-artifact-index",
+          "path": "fhir-artifact-index/",
+          "graphTypologies": [
+            "fhir-artifact-index"
+          ]
+        },
+        {
+          "name": "smart-trust-openapi",
+          "path": "openapi/",
+          "graphTypologies": [
+            "openapi"
+          ]
+        },
+        {
+          "name": "smart-trust-docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs",
+            "ig-pages"
+          ]
+        },
+        {
+          "name": "smart-trust-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        }
+      ],
+      "nodes": 15,
+      "bytes": 31404,
+      "sha256": "6921294f6bb671e4f4c1fe3fdeeac1e781b43bdea12f9bb19a13fe2d1c6066c8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/who-iris/who-iris.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "who-iris",
+      "stub": "who-iris",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/who-iris/who-iris.jsonld",
+      "title": "WHO IRIS",
+      "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/folio-assistant-core/folio-assistant-core.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "who-iris-translations",
+          "path": "translations/",
+          "graphTypologies": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "who-iris-site",
+          "path": "site/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
+        {
+          "name": "who-iris-catalogue",
+          "path": "catalogue/",
+          "graphTypologies": [
+            "catalogue"
+          ]
+        },
+        {
+          "name": "who-iris-uploads",
+          "path": "uploads/",
+          "graphTypologies": [
+            "uploads"
+          ]
+        },
+        {
+          "name": "who-iris-skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "glossary",
+          "path": "glossary/",
+          "graphTypologies": [
+            "glossary"
+          ]
+        },
+        {
+          "name": "who-iris-themes",
+          "path": "themes/",
+          "graphTypologies": [
+            "themes"
+          ]
+        },
+        {
+          "name": "who-iris-docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
+        {
+          "name": "who-iris-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "who-iris-sources",
+          "path": "sources/",
+          "graphTypologies": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "id-lookup",
+          "path": "id-lookup/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/",
+      "nodes": 28,
+      "bytes": 41971,
+      "sha256": "521f785f6da64cc6fc7287965ee4f9378234c9e9969ab56f458909abdd25ee8b"
+    }
+  ]
+}
