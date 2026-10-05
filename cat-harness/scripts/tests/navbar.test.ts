@@ -27,7 +27,7 @@ import {
   type NavGroup,
   type NavbarModel,
 } from "../lib/navbar.js";
-import { injectRail, railModel, withNavbarRow } from "../lib/harness-rail.js";
+import { NAVBAR_ROW_CSS, NAVBAR_ROW_JS, injectRail, railModel, withNavbarRow } from "../lib/harness-rail.js";
 import { documentIndexOf } from "../lib/navbar.js";
 import {
   BEGIN,
@@ -1110,6 +1110,47 @@ describe("the harness row's data reaches a railed page (bean wckf, #2147)", () =
     expect(injectRail(SHELL, { ...opts, navbarRow: null })).toContain('id="fa-navbar-row">null</script>');
     expect(injectRail(SHELL, { ...opts })).not.toContain("fa-navbar-row");
   });
+
+  // WHAT DRAWS IT — bean `lhvt`. #2149 wrote the data and nothing else, and on
+  // the 2,709 railed pages without `docs-ui.js` nothing drew it.
+  it("links the row's script and stylesheet, once, in <head>, at the page's own depth", () => {
+    const out = injectRail(SHELL, { ...opts, navbarRow: { icons: ["todos"] } })!;
+    const head = out.slice(0, out.indexOf("</head>"));
+    expect(head).toContain(`<script src="../${NAVBAR_ROW_JS}" defer></script>`);
+    expect(head).toContain(`<link rel="stylesheet" href="../${NAVBAR_ROW_CSS}">`);
+    expect(withNavbarRow(out, { icons: ["todos"] }, "..")).toBe(out);
+    expect(out.split(NAVBAR_ROW_JS).length - 1).toBe(1);
+  });
+
+  it("no row data, no row script — and a declined row still gets one, to say so", () => {
+    expect(injectRail(SHELL, { ...opts })).not.toContain(NAVBAR_ROW_JS);
+    expect(injectRail(SHELL, { ...opts, navbarRow: null })).toContain(NAVBAR_ROW_JS);
+  });
+});
+
+describe("the row's glyphs are docs-ui.js's glyphs (bean lhvt)", () => {
+  // `navbar-row.js` carries copies of the six drawings; `docs-ui.js` still
+  // draws them on its tiles. Evaluated, not grepped: the constants are string
+  // concatenations, so the comparison is of the SVG each produces.
+  const js = join(import.meta.dir, "../../docs/assets/js");
+  const glyphs = (file: string): Record<string, string> => {
+    const src = readFileSync(join(js, file), "utf-8");
+    const out: Record<string, string> = {};
+    for (const name of ["STICKY_GLYPH", "BEANS_GLYPH", "PROCESS_GLYPH", "NET_GLYPH", "TILES_GLYPH", "FISH_GLYPH"]) {
+      const m = new RegExp(`var ${name} =([\\s\\S]*?);\\n`).exec(src);
+      if (!m) throw new Error(`${file}: ${name} not found`);
+      const expr = m[1]!.replace(/^\s*\/\/.*$/gm, "");
+      out[name] = new Function(`return (${expr});`)() as string;
+    }
+    return out;
+  };
+
+  it("all six are identical in both files", () => {
+    const row = glyphs("navbar-row.js");
+    const ui = glyphs("docs-ui.js");
+    expect(Object.keys(row).length).toBe(6);
+    expect(row).toEqual(ui);
+  });
 });
 
 describe("every committed railed page carries the harness row's data (bean wckf, #2147)", () => {
@@ -1123,11 +1164,15 @@ describe("every committed railed page carries the harness row's data (bean wckf,
   const pages = new Bun.Glob("**/*.html").scanSync({ cwd: docs });
   const railed: string[] = [];
   const missing: string[] = [];
+  const undrawn: string[] = [];
   for (const rel of pages) {
     const html = readFileSync(join(docs, rel), "utf-8");
     if (!html.includes('<nav class="fa-nav"')) continue;
     railed.push(rel);
     if (!html.includes('id="fa-navbar-row"')) missing.push(rel);
+    // The data alone drew nothing on 2,709 published pages (bean `lhvt`): a
+    // railed page must also load what draws it, itself or through docs-ui.js.
+    if (!html.includes(NAVBAR_ROW_JS)) undrawn.push(rel);
   }
 
   it("there are railed pages to check — an empty scan is not a clean one", () => {
@@ -1136,5 +1181,9 @@ describe("every committed railed page carries the harness row's data (bean wckf,
 
   it("none of them is missing the row's data", () => {
     expect(missing).toEqual([]);
+  });
+
+  it("every one of them loads navbar-row.js, which draws it (bean lhvt)", () => {
+    expect(undrawn).toEqual([]);
   });
 });

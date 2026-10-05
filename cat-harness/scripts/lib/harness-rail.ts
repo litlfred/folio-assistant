@@ -180,11 +180,15 @@ export function injectRail(html: string, o: RailOptions): string | undefined {
   const label = o.visualiserLabel ?? "Contents";
   const documentIndex = o.documentIndex ?? visualiserNavOf(html, label) ?? documentIndexOf(html, label);
   const railed = injectNavbar(html, railModel({ ...o, ...(documentIndex ? { documentIndex } : {}) }));
-  return railed === undefined ? undefined : withNavbarRow(railed, o.navbarRow);
+  return railed === undefined ? undefined : withNavbarRow(railed, o.navbarRow, o.toRoot);
 }
 
 /** The id `docs-ui.js`'s `readNavbarRow` looks for — the same one `head_custom.html` writes. */
 export const NAVBAR_ROW_ID = "fa-navbar-row";
+
+/** Where the row's drawing and style are published, relative to the site root. */
+export const NAVBAR_ROW_JS = "assets/js/navbar-row.js";
+export const NAVBAR_ROW_CSS = "assets/css/navbar-row.css";
 
 /**
  * The navbar row's data block, written right after the opening `<body>` —
@@ -193,12 +197,29 @@ export const NAVBAR_ROW_ID = "fa-navbar-row";
  * `<` is escaped so a value can never close the script element early: the
  * hrefs are generated, but "generated" is not "trusted" (`docs-ui.js`
  * `safeHref`'s own argument), and the bytes land inside somebody else's page.
+ *
+ * WITH `toRoot`, ALSO WHAT DRAWS IT — beans `lhvt`, `9rq1`. The data alone
+ * was written onto 2,747 railed pages by #2149, and on the 2,709 of them that
+ * never load `docs-ui.js` nothing drew it. `navbar-row.js` and its stylesheet
+ * are linked before `</head>`, each once; a row the instance declined (`null`)
+ * still gets them, so the decline is reported the same way on every page.
  */
-export function withNavbarRow(html: string, row: unknown): string {
-  if (row === undefined || html.includes(`id="${NAVBAR_ROW_ID}"`)) return html;
-  const body = /<body\b[^>]*>/i.exec(html);
-  if (!body) return html;
-  const at = body.index + body[0].length;
-  const json = JSON.stringify(row).replace(/</g, "\\u003c");
-  return html.slice(0, at) + `<script type="application/json" id="${NAVBAR_ROW_ID}">${json}</script>` + html.slice(at);
+export function withNavbarRow(html: string, row: unknown, toRoot?: string): string {
+  if (row === undefined) return html;
+  let out = html;
+  if (!out.includes(`id="${NAVBAR_ROW_ID}"`)) {
+    const body = /<body\b[^>]*>/i.exec(out);
+    if (!body) return html;
+    const at = body.index + body[0].length;
+    const json = JSON.stringify(row).replace(/</g, "\\u003c");
+    out = out.slice(0, at) + `<script type="application/json" id="${NAVBAR_ROW_ID}">${json}</script>` + out.slice(at);
+  }
+  if (toRoot === undefined || out.includes(NAVBAR_ROW_JS)) return out;
+  const tags =
+    `<link rel="stylesheet" href="${toRoot}/${NAVBAR_ROW_CSS}">` +
+    `<script src="${toRoot}/${NAVBAR_ROW_JS}" defer></script>`;
+  const head = /<\/head\s*>/i.exec(out);
+  if (head) return out.slice(0, head.index) + tags + out.slice(head.index);
+  const body = /<body\b[^>]*>/i.exec(out);
+  return body ? out.slice(0, body.index + body[0].length) + tags + out.slice(body.index + body[0].length) : out;
 }

@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-05T10:15:18Z
-updated_at: 2026-10-05T11:15:06Z
+updated_at: 2026-10-05T11:33:19Z
 parent: folio-assistant-9rq1
 ---
 
@@ -46,3 +46,10 @@ Capabilities, rendered in Chromium (one sample page per layout: index, architect
 1. **#2147's fix reaches 38 of 2,747 railed pages.** The row data is written on all of them, but only pages that load docs-ui.js draw it. navbar.test.ts's gate checks the data block, not that anything draws it, so it is green over the 2,709. The defect is in the gate as well as the pages.
 2. 95 pages have no harness navbar at all (cf. #2170 for folio sites).
 3. The rail lacks five capabilities the theme sidebar has: document index, folders, search, language switch, QR/tiles. Whether each belongs on the rail is a design question for the owner, not a measurement.
+
+
+## Fix, owner's choice 2026-10-05: '1. Small shared script'; launcher on pages without docs-ui.js: '1. Leave it out'
+- [x] navbar-row.js + navbar-row.css: the one drawing of the row. FULL when docs-ui.js calls it (launcher, fsh-guts dialog, light/dark switch); LITE otherwise (link slots, fsh-guts as a link, launcher left out). Full replaces lite in either load order.
+- [x] injectRail links both before </head> on every railed page; head_custom.html loads them before docs-ui.
+- [x] gate: every committed railed page loads navbar-row.js (navbar.test.ts); glyph copies equal docs-ui.js's.
+- [x] e2e: lite row on a bare railed page (links, base prefix, 18px, 56px at rest, no launcher), both load orders end full.
