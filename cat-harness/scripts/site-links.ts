@@ -61,6 +61,7 @@ import { join, resolve } from "node:path";
 
 import { artefactStub, readDeclaration, renderingPath } from "../schemas/cat-harness.js";
 import type { CatHarnessDeclaration } from "../schemas/cat-harness.js";
+import { docsRouteFor, upFromDocs } from "./docs-route.js";
 
 /**
  * Anything whose destination can be checked against a built tree.
@@ -99,10 +100,11 @@ export interface SiteLink extends CheckableLink {
   /** Stable key; `docs-ui.js` looks the tile up by this. */
   id: "kg" | "jsonld" | "source";
   /**
-   * Site-root-relative path, for a target this build publishes. Liquid's
-   * `relative_url` prepends the site's `baseurl`, so this must NOT carry it —
-   * writing the baseurl in here and applying `relative_url` too would double
-   * it, which is its own 404.
+   * Path relative to the DOCS tree's base, for a target this build publishes.
+   * Liquid's `relative_url` prepends the docs `baseurl`, so this must NOT carry
+   * it — writing the baseurl in here and applying `relative_url` too would
+   * double it, which is its own 404. A target at the SITE root climbs out of
+   * the docs tree (`/../../<stub>.jsonld`); `target` below is where it lands.
    */
   path?: string;
 }
@@ -134,7 +136,15 @@ export function siteLinks(
   // prepends the site's `baseurl` to a site-ROOT-relative path. So the slash
   // is added here, once, where the difference between an identity and a link
   // is the whole point, rather than being smuggled into the shared helper.
-  const sitePath = (...segments: string[]): string => `/${renderingPath("", ...segments)}`;
+  //
+  // AND THE CLIMB. Since 2026-10-05 the pages this path is written into live
+  // at `<base-url>/docs/<owner>/` (issue #2188, bean `kc7k`) and `relative_url`
+  // prefixes THAT, while the viewer and the graph document are published at
+  // the site root. So the path climbs out of the docs tree — `/../../x` —
+  // which `relative_url` (Addressable normalises dot segments) and a browser
+  // both resolve to `<base-url>/x` under any base, staging included.
+  const up = upFromDocs(docsRouteFor(decl.name));
+  const sitePath = (...segments: string[]): string => `/${up}/${renderingPath("", ...segments)}`;
   const out: SiteLink[] = [
     // The viewer. A DIRECTORY, because Pages resolves an extensionless
     // `<base>/<stub>` only to a directory index — so the file that has to be

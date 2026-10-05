@@ -46,7 +46,12 @@
  * instance ever claims a path a kind handler already owns, it is refused and
  * named rather than silently overwriting.
  *
- * The root of the site stays the main docs pipeline, unchanged.
+ * The root of the site was the main docs pipeline until 2026-10-05. The owner
+ * then moved it by the same rule (issue #2188, bean `kc7k`): the built
+ * instance's documentation is at `/docs/<built>/` — `docs-route.ts` — and the
+ * root carries only what identifiers name, plus a landing page. Every path
+ * this file reads out of the built docs' `_data/harness.json` is therefore
+ * composed against `<toRoot>/docs/<built>`, never against the root itself.
  *
  * ## Collisions, and the rule that settles them
  *
@@ -111,6 +116,8 @@ import { navMarkFields, type HarnessMark } from "./lib/harness-mark.js";
 import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
 import { kindTitle } from "./lib/nav-label.js";
 import { viewersOf } from "./viewer-declarations.js";
+import { builtDocsRoute } from "./docs-route.js";
+import { composedInstances } from "./compose-docs.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -267,7 +274,7 @@ export function toRootFor(route: string, fileUnder: string): string {
  * Read off the built instance's own declaration (its non-repository-scoped
  * `docs` directory) rather than written down here. The workflows pass that
  * same directory as Jekyll's `source:`, so a page committed at
- * `<prefix>/x/y/index.html` is published at `/x/y/`; hardcoding the prefix
+ * `<prefix>/x/y/index.html` is published at `/docs/<built>/x/y/`; hardcoding the prefix
  * would be a second copy of a fact the declaration already carries, free to
  * disagree with it the day the directory moves.
  *
@@ -768,6 +775,11 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
 
   let injected = 0;
   const skipped: string[] = [];
+  // THE DOCS TREE IS NOT THE SITE ROOT since 2026-10-05 (issue #2188, bean
+  // `kc7k`): the built instance's pages, assets and `_data/harness.json` paths
+  // are all under `<base>/docs/<built>/`. Every path read from that data is
+  // composed against it; a mount route (`/who-iris/`) stays against the root.
+  const docsRoute = builtDocsRoute(built, REPO);
 
   /**
    * Where a kind's link goes: its DECLARED visualiser when that visualiser is
@@ -797,6 +809,7 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
 
     for (const file of htmlUnder(mountAbs)) {
       const toRoot = toRootFor(m.route, file.slice(mountAbs.length + 1));
+      const toDocs = `${toRoot}/${docsRoute}`;
       // Every route this instance answers at, so the rail can move between
       // them -- the owner's "with who-iris and then link to docs on side in
       // navbar". Rebuilt per file because `toRoot` is per file.
@@ -820,19 +833,22 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
       for (const o of byInstance.get(m.name) ?? []) {
         if (o.route === o.name) continue;
         const visual = target.get(o.route);
-        linked.set(o.kind, `${toRoot}/${visual ?? `${o.route}/`}`);
+        // A published VISUALISER is in the docs tree; the mount route is not.
+        linked.set(o.kind, visual !== undefined ? `${toDocs}/${visual}` : `${toRoot}/${o.route}/`);
       }
 
       const named = railNames(built, m.name);
-      const links: NavItem[] = declaredGraphs(m.name, linked, publishedGraphs(built, m.name, toRoot), named.harness);
+      const links: NavItem[] = declaredGraphs(m.name, linked, publishedGraphs(built, m.name, toDocs), named.harness);
 
-      const harnesses = instantiatedHarnesses(built, toRoot);
+      const harnesses = instantiatedHarnesses(built, toDocs);
       const before = readFileSync(file, "utf-8");
-      const mark = instanceMark(built, m.name, toRoot);
+      const mark = instanceMark(built, m.name, toDocs);
       const after = injectRail(before, {
         instance: named.harness ?? m.name,
         ...(named.site ? { homeLabel: named.site } : {}),
         toRoot,
+        // The row's files and its hrefs are the docs tree's.
+        assetRoot: toDocs,
         ...(mark ? { mark } : {}),
         ...(root[0] ? { root: root[0] } : {}),
         links,
@@ -961,6 +977,10 @@ export function railStandalonePages(
   const skipped: string[] = [];
   let injected = 0;
   let alreadyNavigated = 0;
+  // See `injectRails`: the platform's pages, assets and harness data are under
+  // its docs route, on this site and on the platform's alike.
+  const docsRoute = builtDocsRoute(built, REPO);
+  const platformDocs = foreign ? `${foreign.platformBase}/${docsRoute}` : undefined;
   let redirects = 0;
   let declined = 0;
 
@@ -1006,7 +1026,7 @@ export function railStandalonePages(
       const toRoot = depth === 0 ? "." : new Array(depth).fill("..").join("/");
       const named = railNames(built, instanceName);
       // The platform's links resolve against the platform's site; only home is this site's.
-      const linkRoot = foreign?.platformBase ?? toRoot;
+      const linkRoot = platformDocs ?? `${toRoot}/${docsRoute}`;
       const links = declaredGraphs(instanceName, new Map(), publishedGraphs(built, instanceName, linkRoot), named.harness);
       const harnesses = instantiatedHarnesses(built, linkRoot);
       const mark = instanceMark(built, instanceName, linkRoot);
@@ -1020,13 +1040,13 @@ export function railStandalonePages(
         ...(mark ? { mark } : {}),
         links,
         ...(harnesses ? { harnesses } : {}),
-        navbarRow: foreign ? rebaseNavbarRow(navbarRowData(built), foreign.platformBase) : navbarRowData(built),
+        navbarRow: platformDocs ? rebaseNavbarRow(navbarRowData(built), platformDocs) : navbarRowData(built),
       });
       if (after === undefined) {
         skipped.push(rel);
         continue;
       }
-      writeFileSync(abs, foreign ? withPlatformUi(after, foreign.platformBase) : after);
+      writeFileSync(abs, platformDocs ? withPlatformUi(after, platformDocs) : after);
       injected++;
     }
   };
@@ -1452,7 +1472,7 @@ function main(): number {
 
   const found = mountable().filter((m) => {
     if (m.name === built && m.kind === "docs") {
-      console.log(`  skip ${m.kind}/${m.name} — already built at the site root`);
+      console.log(`  skip ${m.kind}/${m.name} — already built by Jekyll, at /${builtDocsRoute(built, REPO)}/`);
       return false;
     }
     return true;
@@ -1514,7 +1534,15 @@ function main(): number {
   // defect the walk rule exists to prevent.
   const servedProblems: string[] = [];
   const servedDone: { route: string; files: number }[] = [];
+  // A COMPOSED instance's pages are in the docs tree, under the built
+  // instance's docs route since 2026-10-05 (issue #2188), so its served data
+  // goes beside them there — "the same place the instance's composed pages sit
+  // under" is the rule, and the place moved. A mounted instance's stays at the
+  // root beside its mount.
+  const docsRoute = builtDocsRoute(built, REPO);
+  const composed = new Set(composedInstances(REPO).map((c) => c.under));
   for (const sv of servedDirectories()) {
+    if (composed.has(sv.name)) sv.route = `${docsRoute}/${sv.route}`;
     const dest = join(siteAbs, sv.route);
     if (existsSync(dest)) {
       servedProblems.push(`/${sv.route}/ is declared served, but the site already publishes something there`);
@@ -1577,7 +1605,8 @@ function main(): number {
       continue;
     }
     mkdirSync(dirname(at), { recursive: true });
-    writeFileSync(at, redirectHtml(r.route, r.target));
+    // The target is a visualiser in the docs tree, which is under its route.
+    writeFileSync(at, redirectHtml(r.route, `${docsRoute}/${r.target}`));
     written.push(r);
   }
 

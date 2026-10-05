@@ -41,9 +41,11 @@ describe("siteLinks", () => {
   test("resolves the viewer and the graph through the published layout", () => {
     const byId = Object.fromEntries(siteLinks(DECL, "https://github.com/o/r").map((l) => [l.id, l]));
     // `<base>/<stub>/` and `<base>/<stub>.jsonld` — what `renderingPath`
-    // documents and what the Pages workflow builds.
-    expect(byId.kg.path).toBe("/folio-assistant/");
-    expect(byId.jsonld.path).toBe("/folio-assistant.jsonld");
+    // documents and what the Pages workflow builds — written as a climb out
+    // of the docs tree (`<base>/docs/<name>/`, issue #2188), because the path
+    // is composed against the DOCS base and the renderings are at the root.
+    expect(byId.kg.path).toBe("/../../folio-assistant/");
+    expect(byId.jsonld.path).toBe("/../../folio-assistant.jsonld");
     expect(byId.source.url).toBe("https://github.com/o/r");
   });
 
@@ -68,21 +70,24 @@ describe("siteLinks", () => {
     const byId = Object.fromEntries(
       siteLinks({ name: "smart-base", stub: "base" }).map((l) => [l.id, l]),
     );
-    expect(byId.kg.path).toBe("/base/");
-    expect(byId.jsonld.path).toBe("/base.jsonld");
+    expect(byId.kg.path).toBe("/../../base/");
+    expect(byId.jsonld.path).toBe("/../../base.jsonld");
   });
 
   test("no detectable forge means no source link, not a guessed one", () => {
     expect(siteLinks(DECL, undefined).some((l) => l.id === "source")).toBe(false);
   });
 
-  test("paths are site-ROOT-relative, so `relative_url` can prepend the baseurl", () => {
+  test("paths are absolute under the docs base, so `relative_url` can prepend the baseurl", () => {
     // Without the leading slash Liquid resolves against the current page and
     // the tile breaks on every page but the site root. With the baseurl
     // baked in as well, it doubles. Exactly one of the two, here.
     for (const l of siteLinks(DECL)) {
       if (!l.path) continue;
       expect(l.path.startsWith("/")).toBe(true);
+      // And they resolve to the SITE root once the docs base is prepended.
+      expect(new URL(`https://h/s/docs/x${l.path}`).pathname.startsWith("/s/")).toBe(true);
+      expect(new URL(`https://h/s/docs/x${l.path}`).pathname.startsWith("/s/docs/")).toBe(false);
       expect(l.path.startsWith("/folio-assistant/folio-assistant")).toBe(false);
     }
   });

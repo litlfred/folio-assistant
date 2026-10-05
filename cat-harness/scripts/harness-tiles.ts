@@ -85,6 +85,7 @@ import { withViewers } from "./viewer-declarations.js";
 import { subscribedHarnesses, subscribedTile } from "./subscribed-harnesses.js";
 import { labelVisualisations, nameInstanceRoot } from "./lib/nav-label.js";
 import type { HarnessMark } from "./lib/harness-mark.js";
+import { docsRouteFor, upFromDocs } from "./docs-route.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
@@ -475,14 +476,37 @@ function siteDirMount(
   decl: CatHarnessDeclaration,
   instanceDir: string,
   ownsSite: boolean,
+  outside: (sitePath: string) => string,
 ): string | undefined {
   if (ownsSite) return "/";
   const site = siteDirFor(instanceDir);
   const entry = (decl.directories ?? []).find(
     (d) => (d.path ?? "").replace(/\/$/, "") === site,
   );
+  // A COMPOSED site directory is laid into the docs tree under the instance's
+  // name (`compose-docs.ts`), so it is served beside the owner's pages rather
+  // than at a kind route the mount never writes.
+  if ((entry as { composed?: boolean } | undefined)?.composed === true) return `/${decl.name}/`;
   const kind = entry?.graphKinds?.[0];
-  return kind === undefined ? undefined : `/${kind}/${decl.name}/`;
+  return kind === undefined ? undefined : outside(`/${kind}/${decl.name}/`);
+}
+
+/**
+ * A SITE-ROOT path, written as a path under the docs tree that climbs out of it.
+ *
+ * Every path in `_data/harness.json` is relative to the docs tree's base,
+ * because that is what Liquid's `relative_url` and `docs-ui.js`'s `withBase`
+ * prefix. Since 2026-10-05 the docs tree is `<base-url>/docs/<owner>/` (issue
+ * #2188, bean `kc7k`), and a mount route — `/who-iris/`, `/docs/who-iris/` —
+ * is published at the site root, outside it. So the path names the climb:
+ * `/../../who-iris/`. A browser, Jekyll's `relative_url` (Addressable
+ * normalises dot segments) and `withBase` all resolve that to
+ * `<base-url>/who-iris/` under ANY base, the staging prefix included — which a
+ * baked-in site root could not do, and which no consumer has to special-case.
+ */
+export function outsideDocs(owner: string): (sitePath: string) => string {
+  const up = upFromDocs(docsRouteFor(owner));
+  return (sitePath) => `/${up}${sitePath.startsWith("/") ? sitePath : `/${sitePath}`}`;
 }
 
 /**
@@ -537,7 +561,13 @@ export function ownStatePage(kind: string): string {
  * The site owner's root is the site root: `mount-instance-docs` leaves it to
  * the main docs pipeline, unchanged.
  */
-function folioRoot(repoRoot: string, name: string, atSiteRoot: boolean): string | undefined {
+function folioRoot(
+  repoRoot: string,
+  name: string,
+  atSiteRoot: boolean,
+  outside: (sitePath: string) => string,
+  composed: boolean,
+): string | undefined {
   if (atSiteRoot) return "/";
   const dir = join(repoRoot, name);
   // The instance's OWN site directory, read from its OWN declaration rather
@@ -546,7 +576,11 @@ function folioRoot(repoRoot: string, name: string, atSiteRoot: boolean): string 
   // this function would have quietly answered "no folio view" for one that
   // did.
   if (findDeclarationFile(dir) === undefined) return undefined;
-  return existsSync(join(dir, siteDirFor(dir))) ? `/${name}/` : undefined;
+  if (!existsSync(join(dir, siteDirFor(dir)))) return undefined;
+  // COMPOSED into the docs tree (`compose-docs.ts`), so beside the owner's
+  // pages; MOUNTED at the site root otherwise (`mount-instance-docs.ts`),
+  // which is outside the docs tree — see `outsideDocs`.
+  return composed ? `/${name}/` : outside(`/${name}/`);
 }
 
 /** Every `harness.json` in the tree: the repository root and one level down. Exported for `harness-panel.ts`. */
@@ -991,14 +1025,18 @@ function tileFor(
   // which the site-owning harness supplies, and the repository root instance IS
   // the checkout that pipeline publishes. Saying so beats giving one of them a
   // link that 404s — `docs/cat-harness/` has viewers beneath it and no index.
-  const folio = folioRoot(repoRoot, decl.name, ownsSite || isRepoRoot);
+  const outside = outsideDocs(handler);
+  const siteEntry = (decl.directories ?? []).find(
+    (d) => (d.path ?? "").replace(/\/$/, "") === siteDirFor(instanceDir),
+  ) as { composed?: boolean } | undefined;
+  const folio = folioRoot(repoRoot, decl.name, ownsSite || isRepoRoot, outside, siteEntry?.composed === true);
 
   // THE ICON, published rather than declared — see `publishedIcon`. Resolved
   // here rather than beside `icon` because it needs the mount, and the mount
   // is `folio`.
   // The SITE-DIR mount, not `folio` — see `publishedIcon`. `folio` is the
   // instance's front door, which for who-iris is its 1,378-file library.
-  const siteMount = siteDirMount(decl, instanceDir, ownsSite || isRepoRoot);
+  const siteMount = siteDirMount(decl, instanceDir, ownsSite || isRepoRoot, outside);
   const iconSrc = icon ? publishedIcon(instanceDir, icon.src, siteMount) : undefined;
   if (icon && iconSrc === undefined) {
     // Reported, never rendered as a placeholder. The instance ASKED for a

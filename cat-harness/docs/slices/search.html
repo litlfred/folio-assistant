@@ -20,11 +20,18 @@
 
   A page of its own, not a panel on the dashboard: it downloads a multi-MB
   database and must never do that on a page that did not ask. Plain HTML with no
-  Liquid, so it serves identically from Jekyll's output and from
-  `cat-harness/docs/` as it is, which lets a browser test run against the checkout.
+  Liquid, so it serves identically from Jekyll's output and from the checkout's
+  `cat-harness/docs/` laid out under `docs/cat-harness/` with the payloads at the
+  root — which is how `slice-sqlite.e2e.ts` runs it against the checkout.
 -->
 <meta name="fa-slices" content="../assets/slices/">
-<meta name="fa-payload-base" content="../payload/sha256/">
+<!--
+  The payloads are at the SITE root, where their IRIs
+  (`<BASE_URL>/payload/sha256/<hex>`) name them; this page is in the docs tree,
+  `<site>/docs/cat-harness/slices/`, since 2026-10-05 (issue #2188). So the
+  climb is three levels: out of `slices/`, then out of `docs/cat-harness/`.
+-->
+<meta name="fa-payload-base" content="../../../payload/sha256/">
 <style>
 :root { --sv-bg: #0d0d0d; --sv-ink: #ffffff; --sv-ink-2: #c3c2b7; --sv-line: rgba(255,255,255,0.12); }
 :root[data-fa-scheme="light"] { --sv-bg: #f9f9f7; --sv-ink: #0b0b0b; --sv-ink-2: #52514e; --sv-line: rgba(11,11,11,0.12); }

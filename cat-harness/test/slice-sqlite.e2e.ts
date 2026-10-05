@@ -2,9 +2,10 @@ import { test, expect, type Page } from "@playwright/test";
 import { execFileSync, spawn, type ChildProcess } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 
 import { siteDirFor } from "../schemas/cat-harness.ts";
+import { builtDocsRoute } from "../scripts/docs-route.ts";
 
 /**
  * Every SQLite slice in a real Chromium, through the ONE search page. Bean `q8ar`.
@@ -50,15 +51,24 @@ const beans = readdirSync(DEFS)
 const PHRASE = /[A-Za-z]{5,}\s+[A-Za-z]{5,}/;
 
 let site = "";
+/**
+ * The docs tree under the site, as the deploy lays it out since 2026-10-05
+ * (issue #2188): the pages and their assets at `<site>/docs/cat-harness/`,
+ * the payloads at the site root, where their IRIs name them.
+ */
+const ROUTE = builtDocsRoute(basename(INSTANCE), REPO);
+let docsRoot = "";
 let server: ChildProcess | undefined;
 const PORT = 8600 + Math.floor(Math.random() * 300);
 const BASE = `http://127.0.0.1:${PORT}`;
 
 test.beforeAll(async () => {
   site = mkdtempSync(join(tmpdir(), "q8ar-site-"));
-  for (const e of readdirSync(DOCS)) if (e !== "assets" && e !== "payload") symlinkSync(join(DOCS, e), join(site, e));
-  mkdirSync(join(site, "assets"));
-  for (const e of readdirSync(join(DOCS, "assets"))) if (e !== "slices") symlinkSync(join(DOCS, "assets", e), join(site, "assets", e));
+  docsRoot = join(site, ROUTE);
+  mkdirSync(docsRoot, { recursive: true });
+  for (const e of readdirSync(DOCS)) if (e !== "assets" && e !== "payload") symlinkSync(join(DOCS, e), join(docsRoot, e));
+  mkdirSync(join(docsRoot, "assets"));
+  for (const e of readdirSync(join(DOCS, "assets"))) if (e !== "slices") symlinkSync(join(DOCS, "assets", e), join(docsRoot, "assets", e));
   // The committed KG payloads, which the `kg` slice points at, are COPIED in
   // as links one by one, so the deploy payloads can be written beside them.
   const payloads = join(site, "payload", "sha256");
@@ -67,14 +77,14 @@ test.beforeAll(async () => {
   if (existsSync(committed)) for (const f of readdirSync(committed)) symlinkSync(join(committed, f), join(payloads, f));
   execFileSync("bun", [
     "run", join(INSTANCE, "scripts", "gen-slice-sqlite.ts"),
-    "--out", join(site, "assets", "slices"),
+    "--out", join(docsRoot, "assets", "slices"),
     "--payload-out", payloads,
   ], { stdio: "inherit" });
 
   server = spawn("python3", ["-m", "http.server", String(PORT), "--bind", "127.0.0.1", "--directory", site], { stdio: "ignore" });
   for (let i = 0; i < 100; i++) {
     try {
-      if ((await fetch(`${BASE}/slices/search.html`)).ok) return;
+      if ((await fetch(`${BASE}/${ROUTE}/slices/search.html`)).ok) return;
     } catch { /* not up yet */ }
     await new Promise((r) => setTimeout(r, 100));
   }
@@ -96,7 +106,7 @@ const search = (page: Page, text: string) =>
   page.evaluate((t) => (window as unknown as { __sliceSearch(t: string): Promise<Search> }).__sliceSearch(t), text);
 
 async function open(page: Page, slice: string, mode: RegExp | string = /.+/) {
-  await page.goto(`${BASE}/slices/search.html?slice=${slice}`);
+  await page.goto(`${BASE}/${ROUTE}/slices/search.html?slice=${slice}`);
   await expect(page.locator("html")).toHaveAttribute("data-slice-ready", mode, { timeout: 60_000 });
   return page.locator("html").getAttribute("data-slice-ready");
 }
@@ -139,7 +149,7 @@ test("beans: mounts in OPFS, a phrase search finds a known bean, its body is fet
 });
 
 test("beans: the old bean-search address sends the browser to the slice page", async ({ page }) => {
-  await page.goto(`${BASE}/beans/search.html`);
+  await page.goto(`${BASE}/${ROUTE}/beans/search.html`);
   await expect(page).toHaveURL(/\/slices\/search\.html\?slice=beans$/);
   await expect(page.locator("html")).toHaveAttribute("data-slice-ready", /.+/, { timeout: 60_000 });
 });
@@ -209,7 +219,7 @@ test("kg: the whole-repo slice finds a skill node, and its instruction body is t
   expect(hit, JSON.stringify(r.rows.slice(0, 5))).toBeDefined();
   expect(hit!.payload).toMatch(/^[0-9a-f]{64}$/);
   console.log(`[q8ar] kg first open: ${r.info.ms} ms; "todo manager" → ${r.rows.length} row(s)`);
-  const body = await page.evaluate(async (hex) => (await fetch(`../payload/sha256/${hex}`)).text(), hit!.payload!);
+  const body = await page.evaluate(async (hex) => (await fetch(`../../../payload/sha256/${hex}`)).text(), hit!.payload!);
   expect(body).toContain("beans");
 });
 
@@ -217,12 +227,12 @@ test("kg: the whole-repo slice finds a skill node, and its instruction body is t
 
 type Manifest = { slice: string; file: string; sha256: string } & Record<string, unknown>;
 const manifestOf = (slice: string) =>
-  JSON.parse(readFileSync(join(site, "assets", "slices", `${slice}.sqlite3.json`), "utf-8")) as Manifest;
+  JSON.parse(readFileSync(join(docsRoot, "assets", "slices", `${slice}.sqlite3.json`), "utf-8")) as Manifest;
 
 test("wixl: the manifest names a content-addressed database, and that named file is what the page downloads", async ({ page }) => {
   const m = manifestOf("beans");
   expect(m.file).toBe(`beans.${m.sha256}.sqlite3`);
-  const files = readdirSync(join(site, "assets", "slices"));
+  const files = readdirSync(join(docsRoot, "assets", "slices"));
   // Only the current build is published: no fixed-path database beside it.
   expect(files).not.toContain("beans.sqlite3");
   expect(files.filter((f) => f.startsWith("beans.") && f.endsWith(".sqlite3"))).toEqual([m.file]);
@@ -241,7 +251,7 @@ function writeMismatch(slice: string) {
   const todosM = manifestOf("todos");
   expect(todosM.sha256).not.toBe(beansM.sha256);
   writeFileSync(
-    join(site, "assets", "slices", `${slice}.sqlite3.json`),
+    join(docsRoot, "assets", "slices", `${slice}.sqlite3.json`),
     JSON.stringify({ ...beansM, slice, file: todosM.file }),
   );
   return todosM.file;
@@ -249,7 +259,7 @@ function writeMismatch(slice: string) {
 
 test("wixl: a manifest whose named file has a different sha256 is refused with a visible message (Worker + OPFS)", async ({ page }) => {
   const file = writeMismatch("mismatch");
-  await page.goto(`${BASE}/slices/search.html?slice=mismatch`);
+  await page.goto(`${BASE}/${ROUTE}/slices/search.html?slice=mismatch`);
   await expect(page.locator("html")).toHaveAttribute("data-slice-ready", "failed", { timeout: 60_000 });
   await expect(page.locator("html")).toHaveAttribute("data-slice-error", "integrity");
   const state = page.locator("#state");
@@ -264,14 +274,14 @@ test("wixl: a manifest whose named file has a different sha256 is refused with a
 test("wixl: the same mismatch is refused in memory too, with no Worker to fall back from", async ({ page }) => {
   writeMismatch("mismatch-mem");
   await page.addInitScript(() => { delete (window as unknown as { Worker?: unknown }).Worker; });
-  await page.goto(`${BASE}/slices/search.html?slice=mismatch-mem`);
+  await page.goto(`${BASE}/${ROUTE}/slices/search.html?slice=mismatch-mem`);
   await expect(page.locator("html")).toHaveAttribute("data-slice-ready", "failed", { timeout: 60_000 });
   await expect(page.locator("html")).toHaveAttribute("data-slice-error", "integrity");
   await expect(page.locator("#state")).toContainText("the manifest and the database disagree");
 });
 
 test("with no slice named, the page lists every built slice and opens none", async ({ page }) => {
-  await page.goto(`${BASE}/slices/search.html`);
+  await page.goto(`${BASE}/${ROUTE}/slices/search.html`);
   await expect(page.locator("html")).toHaveAttribute("data-slice-ready", "none");
   await expect(page.locator("#slices a")).toHaveText(["beans", "kg", "library", "todos"]);
 });

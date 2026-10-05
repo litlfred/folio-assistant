@@ -18,6 +18,7 @@
 import type { TodoIndexItem } from "../schemas/todo-index.js";
 import { escHtml, thinPageConfigOf, thinPageHtml } from "./thin-page.ts";
 import { segment } from "./todo-graph.ts";
+import { builtDocsRoute, upFromDocs } from "./docs-route.ts";
 
 /** The config block's id — how a todo page names itself, and how its generator recognises it. */
 export const TODO_PAGE_CONFIG_ID = "fa-todo-page-config";
@@ -35,19 +36,23 @@ export interface TodoPageOptions {
   targetHref?: string;
 }
 
-/** The page, for a todo at `<site>/todos/<id>/` — every href is two levels below the site root. */
+/** The page, for a todo at `<docs>/todos/<id>/` — every href to the docs tree is two levels up; the todo's own document is at the site root. */
 export function todoPageHtml(item: TodoIndexItem, opts: TodoPageOptions = {}): string {
   const toRoot = "../../";
   const id = segment(item.id);
+  // The todo's DOCUMENT is published at the SITE root its `@id` names
+  // (`hoist-addressed-documents.ts`), while this page is under the docs route
+  // since 2026-10-05 (issue #2188) — so its link climbs out of the docs tree.
+  const own = `${toRoot}${upFromDocs(builtDocsRoute("cat-harness"))}/todos/${id}.jsonld`;
   return thinPageHtml({
     title: `Todo: ${item.id}`,
-    jsonld: `../${id}.jsonld`,
+    jsonld: own,
     script: `${toRoot}${TODO_PAGE_SCRIPT}`,
     stylesheet: `${toRoot}${TODO_PAGE_STYLESHEET}`,
     configId: TODO_PAGE_CONFIG_ID,
     config: {
       id: item.id,
-      jsonld: `../${id}.jsonld`,
+      jsonld: own,
       graph: `${toRoot}todos.jsonld`,
       pages: "../",
       ...(opts.targetHref ? { targetHref: opts.targetHref } : {}),

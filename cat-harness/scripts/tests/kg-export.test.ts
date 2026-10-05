@@ -678,14 +678,15 @@ describe("every self-URL the export publishes resolves to something published", 
       // The generated stylesheets, reached because `themes-css` and
       // `avatars-css` DECLARE them through `maintains` and the export publishes
       // that relation. Jekyll copies `assets/` from the site directory, so these
-      // are served wherever the site is.
+      // are served wherever the DOCS tree is — under `docs/cat-harness/` since
+      // 2026-10-05 (issue #2188).
       //
       // Listed as literals like everything else here on purpose: a `maintains`
       // claim asserts the artefact is published, and this set is what turns that
       // assertion into a test. Deriving it from the declarations would make the
       // check tautological — every claim would confirm itself.
-      "assets/css/themes.css",
-      "assets/css/avatars.css",
+      "docs/cat-harness/assets/css/themes.css",
+      "docs/cat-harness/assets/css/avatars.css",
     ]);
     // One document per NAMESPACE. Splitting `folio:` into three made three
     // new stems, and a stem nothing serves is the defect this whole check
@@ -712,7 +713,8 @@ describe("every self-URL the export publishes resolves to something published", 
     // DIRECTORY, not from the nodes — a depiction naming a file that is not
     // there must fail here, not confirm itself.
     const svgDir = join(import.meta.dir, "../..", siteDirFor(join(import.meta.dir, "../..")), "assets", "img", "workflows");
-    for (const f of readdirSync(svgDir)) if (f.endsWith(".svg")) out.add(`assets/img/workflows/${f}`);
+    // Under the docs route, where the docs tree is published (issue #2188).
+    for (const f of readdirSync(svgDir)) if (f.endsWith(".svg")) out.add(`docs/cat-harness/assets/img/workflows/${f}`);
     return out;
   }
 

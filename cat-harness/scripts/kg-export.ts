@@ -144,6 +144,7 @@ import {
 } from "../schemas/harness-config.js";
 import { contentSourceContext, contentSourceJsonLd, resolveSubgraphSource, type SubgraphSource } from "../schemas/subgraph-source.js";
 import { subgraphIri } from "./subgraph-node.js";
+import { builtDocsRoute } from "./docs-route.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -1577,7 +1578,13 @@ async function collectProcesses(
   const depictionOf = (abs: string): string | undefined => {
     if (svgDir === undefined) return undefined;
     const name = `${basename(abs, ".bpmn")}.svg`;
-    return existsSync(join(svgDir, name)) ? `${base!.replace(/\/+$/, "")}/assets/img/workflows/${name}` : undefined;
+    // Under the DOCS route: the SVG sits in this instance's docs tree, which
+    // publishes at `<base>/docs/<instance>/` since 2026-10-05 (issue #2188,
+    // bean `kc7k`). A depiction is a link to a rendering, not an identifier,
+    // so it follows the file rather than staying where the file used to be.
+    return existsSync(join(svgDir, name))
+      ? `${base!.replace(/\/+$/, "")}/${builtDocsRoute(basename(ROOT), join(ROOT, ".."))}/assets/img/workflows/${name}`
+      : undefined;
   };
   // Zero diagrams is a determined empty ONLY if we looked. Say which.
   //

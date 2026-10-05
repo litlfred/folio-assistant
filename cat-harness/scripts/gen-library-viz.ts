@@ -69,6 +69,7 @@ import { makeEmit, type ViewerNav, subjectNames, subjectSection } from "./viewer
 import { escHtml, thinPageConfigOf, thinPageHtml } from "./thin-page.ts";
 import { renderedPath, withRenders, withViewers } from "./viewer-declarations.js";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
+import { builtDocsRoute, upFromDocs } from "./docs-route.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "library-viewer";
@@ -1407,7 +1408,13 @@ if (import.meta.main) {
         const dest = join(site, libraryAssetSitePath(subject, e.id));
         wantedJsonld.add(dest);
         emitBytes(dest, readFileSync(src));
-        jsonld = relative(shellDir, dest).split(sep).join("/");
+        // The FILE is written into the docs source, but the deploy publishes
+        // it at the SITE root its IRI names (`hoist-addressed-documents.ts`),
+        // while this shell is published under the docs route (issue #2188). So
+        // the shell's link climbs out of the docs tree: in source-path terms
+        // that is the same `..` count, taken from the docs directory upward.
+        const published = join(site, upFromDocs(builtDocsRoute(basename(ROOT), join(ROOT, ".."))), libraryAssetSitePath(subject, e.id));
+        jsonld = relative(shellDir, published).split(sep).join("/");
       }
       // `emit`, not `emitPage`: the viewer rail is ~14 KB of style and markup
       // INLINED by `withViewerNav`, which would make every shell as heavy as
