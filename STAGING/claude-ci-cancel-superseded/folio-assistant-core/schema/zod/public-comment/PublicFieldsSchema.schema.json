@@ -1,0 +1,359 @@
+{
+  "$ref": "#/definitions/PublicFields",
+  "definitions": {
+    "PublicFields": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "pattern": "^PC-\\d{4,}$"
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "channel": {
+              "type": "string",
+              "enum": [
+                "comment-matrix",
+                "online-form",
+                "narrative",
+                "github",
+                "manual"
+              ]
+            },
+            "batch": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string"
+            },
+            "sheet": {
+              "type": "string"
+            },
+            "row": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "entry": {
+              "type": "string"
+            },
+            "series": {
+              "type": "string"
+            },
+            "segment": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "receivedAt": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "channel",
+            "batch"
+          ]
+        },
+        "reviewer": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string"
+            },
+            "organisation": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "acknowledge": {
+              "type": "boolean"
+            },
+            "github": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "citation": {
+          "type": "object",
+          "properties": {
+            "section": {
+              "type": "string"
+            },
+            "page": {
+              "type": "string"
+            },
+            "lines": {
+              "type": "string"
+            },
+            "caption": {
+              "type": "string"
+            },
+            "raw": {
+              "type": "string"
+            }
+          }
+        },
+        "anchor": {
+          "type": "object",
+          "properties": {
+            "targetLabel": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "method": {
+              "type": "string",
+              "enum": [
+                "page-line",
+                "page",
+                "caption",
+                "section",
+                "quote",
+                "manual",
+                "unplaced"
+              ]
+            },
+            "confidence": {
+              "type": "string",
+              "enum": [
+                "high",
+                "medium",
+                "low"
+              ]
+            },
+            "candidates": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "targetLabel",
+            "method",
+            "confidence"
+          ]
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "general",
+            "technical",
+            "editorial"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "suggestedRevision": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "assignees": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "recommendations": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "by": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "default": "review-committee-member",
+                "type": "string",
+                "minLength": 1
+              },
+              "code": {
+                "type": "string",
+                "enum": [
+                  "accepted",
+                  "accepted-modified",
+                  "not-accepted",
+                  "noted",
+                  "deferred"
+                ]
+              },
+              "rationale": {
+                "default": "",
+                "type": "string"
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "at": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "by",
+              "code",
+              "at"
+            ]
+          }
+        },
+        "decision": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "enum": [
+                "accepted",
+                "accepted-modified",
+                "not-accepted",
+                "noted",
+                "deferred"
+              ]
+            },
+            "reason": {
+              "default": "",
+              "type": "string"
+            },
+            "by": {
+              "type": "string",
+              "minLength": 1
+            },
+            "at": {
+              "type": "string",
+              "minLength": 1
+            },
+            "changeSet": {
+              "type": "object",
+              "properties": {
+                "branch": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "pr": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "stagingUrl": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "before": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "after": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [
+                "branch"
+              ]
+            }
+          },
+          "required": [
+            "code",
+            "by",
+            "at"
+          ]
+        },
+        "duplicateOf": {
+          "type": "string"
+        },
+        "discussion": {
+          "type": "string",
+          "format": "uri"
+        },
+        "history": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "at": {
+                "type": "string",
+                "minLength": 1
+              },
+              "transition": {
+                "type": "string",
+                "minLength": 1
+              },
+              "by": {
+                "type": "string",
+                "minLength": 1
+              },
+              "task": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "at",
+              "transition",
+              "by",
+              "task"
+            ]
+          }
+        }
+      },
+      "required": [
+        "ref",
+        "source",
+        "reviewer",
+        "citation",
+        "anchor",
+        "text"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-cancel-superseded/folio-assistant-core/schema/zod/public-comment/PublicFieldsSchema.schema.json",
+  "title": "PublicFieldsSchema",
+  "description": "Generated from `PublicFieldsSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/ci-cancel-superseded",
+    "sha": "b16bf97cb662c1a7299cd722be2898404fe58bc7",
+    "pr": "2239/merge",
+    "run": "37376482510"
+  }
+}
