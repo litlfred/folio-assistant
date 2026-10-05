@@ -72,7 +72,12 @@ test("every glyph in the rail's row is drawn at full size — links as well as b
 test("at rest the row is one icon wide; open, it lies flat", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await serve(page, railed(LIVE));
+  // AT REST means the pointer is not over the rail. Playwright's pointer can
+  // start at (0, 0) — which IS the rail — so the strip measured open (248px)
+  // in CI and at rest locally. Put it over the page body first.
+  await page.mouse.move(900, 600);
   const box = () => page.locator("nav.fa-nav .fa-nav-icons").evaluate((r) => r.getBoundingClientRect());
+  await expect.poll(async () => Math.round((await box()).width)).toBe(56);
   const rest = await box();
   expect(Math.round(rest.width)).toBe(56); // --fa-nav-collapsed, 3.5rem
   await page.hover("nav.fa-nav");

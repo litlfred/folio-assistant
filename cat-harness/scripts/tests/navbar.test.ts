@@ -1108,3 +1108,30 @@ describe("the harness row's data reaches a railed page (bean wckf, #2147)", () =
     expect(injectRail(SHELL, { ...opts })).not.toContain("fa-navbar-row");
   });
 });
+
+describe("every committed railed page carries the harness row's data (bean wckf, #2147)", () => {
+  // THE GATE. A page with the rail and no `#fa-navbar-row` shows the harness's
+  // navbar without the harness's row — the defect the owner reported on
+  // who-iris. It reached 92 committed pages across nine generators before this
+  // existed, because each generator had to be regenerated to pick the block up
+  // and CI named them one at a time. Reads only `cat-harness/docs`, so it holds
+  // standing alone too.
+  const docs = join(import.meta.dir, "../../docs");
+  const pages = new Bun.Glob("**/*.html").scanSync({ cwd: docs });
+  const railed: string[] = [];
+  const missing: string[] = [];
+  for (const rel of pages) {
+    const html = readFileSync(join(docs, rel), "utf-8");
+    if (!html.includes('<nav class="fa-nav"')) continue;
+    railed.push(rel);
+    if (!html.includes('id="fa-navbar-row"')) missing.push(rel);
+  }
+
+  it("there are railed pages to check — an empty scan is not a clean one", () => {
+    expect(railed.length).toBeGreaterThan(20);
+  });
+
+  it("none of them is missing the row's data", () => {
+    expect(missing).toEqual([]);
+  });
+});
