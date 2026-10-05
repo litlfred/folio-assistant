@@ -275,14 +275,12 @@
       "definition": "Reads a change and judges it. Cannot accept it — that is the editor's lane — and the separation is why review findings are advice rather than commits. The GENERIC review position: what kind of thing changed decides which subprocess it descends into (review-task.bpmn), and the actor takes on that inner lane's role for the call path only.",
       "altLabel": [
         "Reviewer",
-        "Reviewer (SME or editor)",
         "Subject-Matter Expert / Reviewer"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Review/Lane_Reviewer",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Reviewer",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_L1Gate/Lane_1",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Reviewer"
@@ -305,15 +303,6 @@
       "label": "Subject-Matter Expert / Reviewer",
       "scopeNote": "The one reviewer lane in this corpus where sign-off is acceptance: Task_Signoff makes the translation official directly, with no separate editor lane after it, because translation fidelity is the acceptance criterion and there is no different judgement left for an editor to add.",
       "source": "cat-harness/processes/library/human-translation-workflow.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_L1Gate/Lane_1",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/reviewer",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate",
-      "label": "Reviewer (SME or editor)",
-      "scopeNote": "The only human involvement anywhere in this subprocess: Lane_0 runs both checks and records the verdict unattended, so this lane exists solely for the single case machine QA cannot resolve on its own — a flagged passage where round-trip translation produced two different readings and somebody has to say which is right.",
-      "source": "cat-harness/processes/library/ingest-l1-completeness-gate.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
@@ -1163,10 +1152,6 @@
       "usage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Ingestion/Lane_1",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_BuildL1Kg/Lane_0",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_DeriveContent/Lane_0",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_ExtractStructure/Lane_0",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_L1Gate/Lane_0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_1",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_1",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_1",
@@ -1190,44 +1175,8 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
       "label": "Ingestion Engine (agent, runs unattended)",
-      "scopeNote": "Runs the whole pipeline from Task_Detect through Task_Promote, and then Task_SummaryQueue, where it drains a few prose blocks of the advisory summary queue — including the theme branch, which stays in THIS lane rather than dipping into Lane_2: deciding a document is a theme source is the engine asking its author a question, not a write to the shared work plan. It does not stop at a gap: Gateway_Complete's 'gap' branch leaves this lane only long enough for Lane_2 to record the bean, then Flow_i8 returns control here at CallActivity_Derive rather than ending the run — so an incomplete L1 build is this lane's problem to keep working until Gateway_Complete says otherwise.",
+      "scopeNote": "Runs the basic flow from the metadata step to the placement in library/, unattended: every decision in it is decidable from the material and its declarations. It asks one question — is the asset materialized? — and that is answered from the materialization state vocabulary (`schemas/materialization-state.ts`, placement PR5), not by judgement. It does NOT choose a reader for the bytes, derive sections or blocks, or describe images: those are a refining process's work, which calls this flow first.\n\nTHE FLOW ENDS IN THIS LANE. The asset catalogued in library/ — held, or recorded as referenced — is the terminal state, and every knowledge-graph reference to it resolves through library/ from here; a refining process continues from it rather than being drawn into this one. There is no separate corpus lane: it would hold only the end event, and a lane with no activity has no performer to describe.",
       "source": "cat-harness/processes/library/document-ingestion.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_BuildL1Kg/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/ingestion-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BuildL1Kg",
-      "label": "Ingestion Engine (agent, runs unattended)",
-      "scopeNote": "Writes four records in a fixed order and touches the corpus graph in none of them — dublin-core as the record of truth, a manifest that references it, assets[] kept as a SIBLING of library: because that tree is regenerated and would drop anything written inside it, and finally the slug binding Task_Link depends on. Getting the order or the placement wrong here is invisible until the next sync silently drops it.",
-      "source": "cat-harness/processes/library/ingest-build-l1-kg.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_DeriveContent/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/ingestion-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeriveContent",
-      "label": "Ingestion Engine (agent, runs unattended)",
-      "scopeNote": "The only lane in this subprocess, so nothing produced here is checked by a different party before it reaches the L1 graph. Five of these six tasks carry their own NOT IMPLEMENTED note; Task_Provenance does not, and its citation of who or what wrote each narrative is what is meant to stand between a generated description and its being treated as source material.",
-      "source": "cat-harness/processes/library/ingest-derive-content.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_ExtractStructure/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/ingestion-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ExtractStructure",
-      "label": "Ingestion Engine (agent, runs unattended)",
-      "scopeNote": "Two provenance paths converge on the same Task_Sections output — an embedded text layer extracted directly, or OCR that leaves the fuller text in ocr/ with only a stub in sections/ — and which branch this lane took is invisible downstream except to a grep that knows to check the fourth tier. Task_Candidates is the last step and it stays a proposal: theorems and definitions extracted here are never adjudicated verdicts, so nothing downstream may treat this lane's output as settled.",
-      "source": "cat-harness/processes/library/ingest-extract-structure.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_L1Gate/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/ingestion-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate",
-      "label": "Ingestion Engine (agent, runs unattended)",
-      "scopeNote": "Runs both QA checks unattended and hands off exactly where the role's persona says it must: Gateway_Drift's 'drift' branch leaves this lane the moment a passage needs a judgement about which of two readings is right, rather than guessing — but Task_Verdict, which records the outcome either way, stays in this lane, so Lane_1 adjudicates a single passage while this lane still owns the completeness verdict as a whole.",
-      "source": "cat-harness/processes/library/ingest-l1-completeness-gate.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_1",
@@ -1761,23 +1710,8 @@
       "title": "Work plan (beans)",
       "notation": "work-plan",
       "definition": "The shared store, modelled as a lane because tasks act ON it and a reader needs to see where the plan is touched. No actor takes this role on; it is acted upon.",
-      "altLabel": [
-        "Work plan — beans (shared by humans and agents)"
-      ],
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
-      "actedUpon": true,
-      "usage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Ingestion/Lane_2"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Ingestion/Lane_2",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/work-plan",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
-      "label": "Work plan — beans (shared by humans and agents)",
-      "scopeNote": "A one-task detour from the Ingestion Engine's own loop: it exists as its own lane rather than a step inside Lane_1 specifically so that recording an incomplete L1 build is visible as a write to the SHARED plan — a bean anyone can see and pick up — rather than a private retry the engine keeps to itself.",
-      "source": "cat-harness/processes/library/document-ingestion.bpmn"
+      "actedUpon": true
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/corpus",
@@ -1795,8 +1729,6 @@
       "actedUpon": true,
       "usage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Source",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Ingestion/Lane_3",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_BuildL1Kg/Lane_1",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_2",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_2",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_2",
@@ -1811,24 +1743,6 @@
       "label": "Source graph — read-only",
       "scopeNote": "This lane holds exactly one task and it WRITES NOTHING, which is the point of drawing it at all. A lane that is only ever read from is the visible form of the rule: the arrow runs out of here and never back. Task_ReadSource is where the process would go wrong if anybody added a step, so its emptiness is load-bearing rather than incidental.",
       "source": "cat-harness/processes/library/copy-out-materialized.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Ingestion/Lane_3",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/corpus",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
-      "label": "Corpus — L1 source knowledge graph",
-      "scopeNote": "The terminal state the whole diagram exists to reach: once Task_Promote lands material in library/&lt;bib-slug&gt;/, this lane is where that fact is recorded as available, and it is the boundary this diagram stops at — everything that depends on the source afterward, such as authoring-a-document.bpmn's citations, starts from here rather than being drawn into this process.",
-      "source": "cat-harness/processes/library/document-ingestion.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_BuildL1Kg/Lane_1",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/corpus",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BuildL1Kg",
-      "label": "Corpus — L1 source knowledge graph",
-      "scopeNote": "The single moment the four records Lane_0 wrote become reachable by reference rather than just present on disk: Task_Link is what a knowledge-graph reference in a paper, an L2 or an L3 artefact actually resolves through, and until it runs, dublin-core.jsonld and its siblings are files in library/ that nothing in the graph points to yet.",
-      "source": "cat-harness/processes/library/ingest-build-l1-kg.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_2",

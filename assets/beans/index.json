@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 889,
+      "count": 895,
       "unit": "beans"
     }
   },
@@ -191,6 +191,20 @@
       "updatedAt": "2026-09-22T21:02:55Z",
       "preview": "Owner: *\"review ... skills for document review for large things like a DAK or\nL1 digital transofrmation hadbook\"* and *\"put into folio-assistant-core\"*.\n\n**What.** A `review` skill package at `folio-assistant-core/skills/review/`,\ndeclared in folio-assistant-core.json:\n- `large-document-review`: the method. Slice the document by the folio/\n  graph, not by page. Assign slices to reviewer roles by s",
       "file": "beans/defs/folio-assistant-0jtl--skills-a-review-package-in-folio-assistant-core-la.md"
+    },
+    {
+      "id": "folio-assistant-0kbt",
+      "title": "gen-docs-pages publishes a QA count that includes the witness files it deletes in the same run",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T09:39:59Z",
+      "updatedAt": "2026-10-04T09:39:59Z",
+      "preview": "The `qa` tile and `assets/qa/index.json` are projected BEFORE the orphan sweep removes witness files whose section no longer exists, so one run after a section is renamed or removed publishes a count that includes a file that run itself deleted.\n\nMEASURED on the #1898 branch, 2026-10-04, while bean `vqlp` was being fixed. A section `the-basic-flow` was added, generated (writing `witnesses/document",
+      "file": "beans/defs/folio-assistant-0kbt--gen-docs-pages-publishes-a-qa-count-that-includes-.md"
     },
     {
       "id": "folio-assistant-0lde",
@@ -1929,6 +1943,20 @@
       "file": "beans/defs/folio-assistant-4y2i--topology-sovereign-cloud-hosted-forge-jurisdiction.md"
     },
     {
+      "id": "folio-assistant-4z5o",
+      "title": "Generated GitHub edit/source URLs escape the repo with ../ for every cross-instance figure",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T09:08:59Z",
+      "updatedAt": "2026-10-04T09:08:59Z",
+      "preview": "Generated pages compose GitHub URLs by joining an instance-relative path that leaves the instance root, producing links with `/main/../` in them:\n\n    https://github.com/litlfred/folio-assistant/edit/main/../folio-assistant-core/processes/library/l1-document-ingestion.bpmn\n    https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/...   (the blob form is correct)\n\nThe `edit/` f",
+      "file": "beans/defs/folio-assistant-4z5o--generated-github-edit-source-urls-escape-the-repo-.md"
+    },
+    {
       "id": "folio-assistant-502c",
       "title": "EXPERIMENT: forced along a BPMN vs managing it — do outcomes change, at what compute?",
       "status": "todo",
@@ -3097,6 +3125,20 @@
       "file": "beans/defs/folio-assistant-7x8o--translations-9-published-pages-carry-less-than-the.md"
     },
     {
+      "id": "folio-assistant-7xmc",
+      "title": "MERGE ROUND TRIM: write the owner-approved trimmed merge-main procedure into merge-conflict-patterns / prepare-merge",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-d33q",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T05:11:08Z",
+      "updatedAt": "2026-10-05T05:11:15Z",
+      "preview": "Owner ruling 2026-10-05: 'trim duplicated steps'. Measured 2026-10-04 on PR #1898's merge rounds: one round cost ~45 min — merge:main incl. its regen 5–10 min; skill:register 1–2 min; a standalone regen after merge:main 4–5 min (redundant, same tree); full local gates ~24 min (1429 s, bun test on 3–4 cores; CI shards 4 ways in ~5 min); fresh-checkout regen no-op 4–5 min (duplicates CI's clean chec",
+      "file": "beans/defs/folio-assistant-7xmc--merge-round-trim-write-the-owner-approved-trimmed.md"
+    },
+    {
       "id": "folio-assistant-8107",
       "title": "LMA systems for SE (2404.04834v4): the SDLC landscape review — which stages folio-assistant covers and which it does not",
       "status": "todo",
@@ -4157,9 +4199,9 @@
     {
       "id": "folio-assistant-apcg",
       "title": "Placement PR6: library/ingestion split — basic flow stays in the harness, l1-document-ingestion goes to core",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-iirv",
       "blocking": [
         "folio-assistant-f8wp",
@@ -4173,7 +4215,7 @@
         "folio-assistant-tlat"
       ],
       "createdAt": "2026-10-01T06:58:01Z",
-      "updatedAt": "2026-10-01T06:58:01Z",
+      "updatedAt": "2026-10-02T17:53:42Z",
       "preview": "Placement proposal §2 (owner rulings 2026-09-30 §6; process: review → resolve issues → staged PRs). Parent of PR0/PR1 is `9umr`; PR2–PR9 sit under the separation epic because D4 (owner, 2026-10-01, option 3) interleaves them with the split stages into one ordered sequence. Every PR: references move with the subject; generated trees regenerated, never hand-edited; `beans/**` not rewritten; kg-qa si",
       "file": "beans/defs/folio-assistant-apcg--placement-pr6-libraryingestion-split-basic-flow-st.md"
     },
@@ -7591,6 +7633,20 @@
       "file": "beans/defs/folio-assistant-lodp--vocabulary-drift-d1d3-role-naming-fsh-guts-descrip.md"
     },
     {
+      "id": "folio-assistant-loxz",
+      "title": "regen reports audit:coverage:strict current while the artefact on disk differs from what its writer produces",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T12:18:57Z",
+      "updatedAt": "2026-10-04T12:18:57Z",
+      "preview": "A verify/write pair whose CHECK is a judge-mode baseline rather than a byte comparison cannot detect a stale artefact, and `regen` counts it as `current`. So \"0 unrepaired\" is not evidence that every generated artefact matches its writer.\n\nMEASURED on the #1898 branch, 2026-10-04, in one worktree, in this order:\n\n1. `regen` run with `fsh-guts/` NOT mounted (main has cut it over, so it is absent fr",
+      "file": "beans/defs/folio-assistant-loxz--regen-reports-audit-coverage-strict-current-while-.md"
+    },
+    {
       "id": "folio-assistant-lptq",
       "title": "DELETED 2026-10-02: qa-reports-spike and qa-reports-spike-b, with the SHAs to restore them",
       "status": "todo",
@@ -10205,6 +10261,20 @@
       "file": "beans/defs/folio-assistant-t5dm--instance-name-from-the-checkout-folder-library-gra.md"
     },
     {
+      "id": "folio-assistant-t5j5",
+      "title": "kg-audit: a call activity whose target is loadable from the PARENT root must resolve, not read unknown",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T09:08:59Z",
+      "updatedAt": "2026-10-04T09:08:59Z",
+      "preview": "Owner, 2026-10-04: the audit should resolve across instances.\n\nToday a `bpmn:callActivity` whose target process lives in a DIFFERENT declared instance reads `unknown`, with evidence that says in as many words that the audit cannot tell two different things apart:\n\n    CallActivity_Basic: calls \"Process_Ingestion\", which is the id of no\n    process this instance can load. That is either a typo or a",
+      "file": "beans/defs/folio-assistant-t5j5--kg-audit-a-call-activity-whose-target-is-loadable-.md"
+    },
+    {
       "id": "folio-assistant-t6ht",
       "title": "STICKIES BOARD: remove the Visualisations tile strip (owner 2026-10-02, reverses v0jv) — issue #1905",
       "status": "completed",
@@ -11013,14 +11083,14 @@
     {
       "id": "folio-assistant-vihx",
       "title": "merge-guard has no mergeability check: a stale green head with a valid ready marker passes while it conflicts with main (#1898)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T07:39:03Z",
-      "updatedAt": "2026-10-05T07:39:03Z",
+      "updatedAt": "2026-10-05T11:13:43Z",
       "preview": "Reported by the merge manager 2026-10-05 (session_01VfkKocGaQW7Msro2t5S66U).\n\n## The gap\nNone of merge-guard's seven checks (cat-harness/scripts/merge-guard.ts: base, ready-for-review, ready-marker, labels, ci, checklist, open-question) asks whether the head still merges cleanly into main. Check 5 judges the head's own `pull_request` runs, which tested the head merged with main AS IT WAS WHEN THE ",
       "file": "beans/defs/folio-assistant-vihx--merge-guard-has-no-mergeability-check-a-stale-gree.md"
     },
@@ -11157,6 +11227,20 @@
       "updatedAt": "2026-09-24T05:25:53Z",
       "preview": "User asked (2026-09-23) whether other open-source projects take a similar approach, then chose 'Write a prior-art doc'. Add a reader-facing comparison page under cat-harness/docs, verified against each project's repo.\n\n## Done when\n- [x] cat-harness/docs/research-and-analysis/prior-art.md exists (moved there on the owner's ask, new section), each project verified online with licence and what overl",
       "file": "beans/defs/folio-assistant-vq8o--prior-art-page-open-source-projects-taking-a-simil.md"
+    },
+    {
+      "id": "folio-assistant-vqlp",
+      "title": "Placement PR6 leaves Process_Ingestion with no docs page section, so the harness's own basic flow has no KG witness",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T09:08:33Z",
+      "updatedAt": "2026-10-04T09:46:54Z",
+      "preview": "#1898 repoints `content/docs/document-ingestion/nodes/the-pipeline.jsonld`'s `sourceDocument` from `cat-harness/processes/library/document-ingestion.bpmn` to `folio-assistant-core/processes/library/l1-document-ingestion.bpmn`. That is deliberate and the prose was rewritten to match. The side effect is not: the harness's own basic flow, which the PR says STAYS in the harness, is then presented by n",
+      "file": "beans/defs/folio-assistant-vqlp--placement-pr6-leaves-process-ingestion-with-no-doc.md"
     },
     {
       "id": "folio-assistant-vrfx",
@@ -14065,7 +14149,7 @@
       "kind": "blocker-closed",
       "bean": "folio-assistant-63wl",
       "blocks": "folio-assistant-apcg",
-      "detail": "is completed but still blocks `folio-assistant-apcg`, which is todo"
+      "detail": "is completed but still blocks `folio-assistant-apcg`, which is in-progress"
     },
     {
       "kind": "blocker-closed",
@@ -14155,7 +14239,7 @@
       "kind": "blocker-closed",
       "bean": "folio-assistant-tlat",
       "blocks": "folio-assistant-apcg",
-      "detail": "is completed but still blocks `folio-assistant-apcg`, which is todo"
+      "detail": "is completed but still blocks `folio-assistant-apcg`, which is in-progress"
     },
     {
       "kind": "blocker-closed",
@@ -14214,14 +14298,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 533,
+        "total": 537,
         "closed": 192,
-        "open": 341,
-        "inProgress": 126,
-        "todo": 214,
+        "open": 345,
+        "inProgress": 128,
+        "todo": 216,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3602251407129456
+        "share": 0.3575418994413408
       },
       {
         "id": "folio-assistant-vuip",
@@ -14229,14 +14313,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 234,
+        "total": 235,
         "closed": 95,
-        "open": 139,
-        "inProgress": 76,
+        "open": 140,
+        "inProgress": 77,
         "todo": 62,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.405982905982906
+        "share": 0.40425531914893614
       },
       {
         "id": "folio-assistant-yg29",
@@ -14255,8 +14339,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 518,
-    "coveredOpen": 515,
+    "openTotal": 523,
+    "coveredOpen": 520,
     "duplicateIds": 0
   }
 }
