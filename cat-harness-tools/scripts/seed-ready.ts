@@ -712,15 +712,84 @@ export function closureOf(decls: LayerDecl[], name: string): LayerDecl[] {
   return [...out.values()];
 }
 
-/** `N fail` from `bun test`'s summary, and the `(fail)` lines above it. */
+/**
+ * `N fail` from `bun test`'s summary, and the `(fail)` lines above it.
+ *
+ * Each name is keyed `<test file> > <test>` and has its `[1.2ms]` timing
+ * removed: a name is compared across runs by `check:standalone`, and neither
+ * a timing nor a describe path shared by two files may make one failure look
+ * like another. The file is the last `<path>.test.ts:` header bun printed.
+ */
 export function parseBunTest(output: string): { failed: number; names: string[] } | undefined {
   const m = /^\s*(\d+)\s+fail\b/m.exec(output);
   if (!m) return undefined;
-  const names = output
-    .split("\n")
-    .filter((l) => l.trimStart().startsWith("(fail)"))
-    .map((l) => l.trim().replace(/^\(fail\)\s*/, ""));
+  const names: string[] = [];
+  let file: string | undefined;
+  for (const raw of output.split("\n")) {
+    // `::group::` is bun's GitHub Actions spelling of a file header; it is
+    // stripped as well as avoided (see probeStandalone), so a log captured in CI
+    // parses the same as one captured locally.
+    const header = /^(?:::group::|##\[group\])?(\S.*\.test\.[cm]?[jt]sx?):$/.exec(raw);
+    if (header) {
+      file = header[1];
+      continue;
+    }
+    const l = raw.trim();
+    if (!l.startsWith("(fail)")) continue;
+    const name = l.replace(/^\(fail\)\s*/, "").replace(/\s*\[[\d.]+\s*m?s\]$/, "");
+    names.push(file ? `${file} > ${name}` : name);
+  }
   return { failed: Number(m[1]), names: [...new Set(names)] };
+}
+
+/**
+ * The failing tests in a `bun test --reporter=junit` report, keyed
+ * `<test file> > <describe…> > <test>`.
+ *
+ * Why the report and not the console: bun's console layout depends on where
+ * it runs. Under CI it wraps or drops the `<file>:` headers the console
+ * parser keys on, so #1977's first two CI runs keyed every failure wrongly:
+ * first with a `::group::` prefix, then all under one file. The report carries
+ * each test's file and describe path as data, in every environment.
+ *
+ * A small tag walk rather than an XML library: the report is bun's own,
+ * flat-attributed, and this reads three element names from it. `undefined`
+ * when the text is not a report, which the caller turns into an error.
+ */
+export function parseJunitFailures(xml: string): string[] | undefined {
+  if (!/<testsuites\b/.test(xml)) return undefined;
+  const decode = (v: string): string =>
+    v.replace(/&(lt|gt|quot|apos|amp|#(\d+));/g, (_, e: string, n?: string) =>
+      n ? String.fromCodePoint(Number(n)) : ({ lt: "<", gt: ">", quot: '"', apos: "'", amp: "&" } as Record<string, string>)[e]!,
+    );
+  const attr = (tag: string, name: string): string | undefined => {
+    const m = new RegExp(`\\s${name}="([^"]*)"`).exec(tag);
+    return m ? decode(m[1]!) : undefined;
+  };
+  const suites: string[] = [];
+  const out = new Set<string>();
+  let current: { key: string; failed: boolean } | undefined;
+  for (const m of xml.matchAll(/<(\/?)(testsuite|testcase|failure|error)\b[^>]*?(\/?)>/g)) {
+    const [tag, closing, name, selfClosing] = m as unknown as [string, string, string, string];
+    if (name === "testsuite") {
+      if (closing) suites.pop();
+      else if (!selfClosing) suites.push(attr(tag, "name") ?? "");
+    } else if (name === "testcase") {
+      if (closing) {
+        if (current?.failed) out.add(current.key);
+        current = undefined;
+        continue;
+      }
+      // The outermost suite is the file; the rest is the describe path.
+      const file = attr(tag, "file") ?? suites[0] ?? "";
+      const key = [file, ...suites.slice(1), attr(tag, "name") ?? ""].join(" > ");
+      if (selfClosing) continue; // no child, so no failure
+      current = { key, failed: false };
+    } else if (!closing && current) {
+      current.failed = true;
+    }
+  }
+  return [...out];
 }
 
 /**
@@ -728,7 +797,8 @@ export function parseBunTest(output: string): { failed: number; names: string[] 
  *
  * Copies the TRACKED files of the layer and of everything it needs into a
  * scratch workspace as sibling directories — no aggregate declaration at the
- * root — links the checkout's `node_modules` beside them, and runs `bun test`
+ * root — makes each one a git repository, as a clone is, links the
+ * checkout's `node_modules` beside them, and runs `bun test`
  * in the layer's directory. The root `package.json`, `tsconfig.json` and
  * `bunfig.toml` are copied too, standing in for the ones each seeded
  * repository will carry; none of them is a declaration, so discovery still
@@ -741,12 +811,12 @@ export function probeStandalone(
   repoRoot: string,
   layerName: string,
   decls: LayerDecl[],
-  opts: { timeoutMs?: number } = {},
+  opts: { timeoutMs?: number; minFreeBytes?: number } = {},
 ): Probe {
   try {
     const st = statfsSync(tmpdir());
     const free = Number(st.bavail) * Number(st.bsize);
-    if (free < REHEARSAL_MIN_FREE_BYTES) {
+    if (free < (opts.minFreeBytes ?? REHEARSAL_MIN_FREE_BYTES)) {
       return { state: "error", note: `only ${(free / 1024 ** 3).toFixed(1)} GB free under ${tmpdir()}; the rehearsal needs 3` };
     }
   } catch (e) {
@@ -775,6 +845,21 @@ export function probeStandalone(
         mkdirSync(dirname(dst), { recursive: true });
         copyFileSync(src, dst);
       }
+      // A clone IS a git repository, and tests that ask git for the corpus
+      // would otherwise fail as an artefact of the rehearsal (bean `ho66`:
+      // worth 6 of 469 on cat-harness, 2026-10-03).
+      const at = join(ws, rel);
+      mkdirSync(at, { recursive: true });
+      const git = (args: string[]): void => {
+        execFileSync("git", ["-c", "user.name=rehearsal", "-c", "user.email=rehearsal@invalid", "-c", "commit.gpgsign=false", ...args], {
+          cwd: at,
+          stdio: "ignore",
+          maxBuffer: 256 * 1024 * 1024,
+        });
+      };
+      git(["init", "-q"]);
+      git(["add", "-A"]);
+      git(["commit", "-q", "--allow-empty", "-m", "rehearsal"]);
     }
     for (const f of ["package.json", "tsconfig.json", "bunfig.toml"]) {
       if (existsSync(join(repoRoot, f))) copyFileSync(join(repoRoot, f), join(ws, f));
@@ -782,8 +867,20 @@ export function probeStandalone(
     if (existsSync(join(repoRoot, "node_modules"))) symlinkSync(join(repoRoot, "node_modules"), join(ws, "node_modules"));
 
     const cwd = join(ws, relative(repoRoot, rootOf(repoRoot, layer)));
-    const run = spawnSync("bun", ["test"], {
+    // bun prints its file headers as `::group::<file>:` when it sees GitHub
+    // Actions, so the same failure keyed differently in CI than locally and
+    // `check:standalone` read every baseline entry as fixed (#1977's first CI
+    // run). The rehearsal's output is parsed, not shown, so it runs plain.
+    const env = { ...process.env };
+    for (const k of ["GITHUB_ACTIONS", "CI", "TEAMCITY_VERSION", "BUILDKITE"]) delete env[k];
+    // BUN_OPTIONS is prepended to EVERY bun invocation, and CI's test shards set
+    // `--shard=N/4` there: inherited, it made this rehearsal run a quarter of the
+    // layer, and #1977's one-test falsifier ran nothing at all (CI, 2026-10-03).
+    delete env.BUN_OPTIONS;
+    const report = join(ws, ".standalone-junit.xml");
+    const run = spawnSync("bun", ["test", "--reporter=junit", `--reporter-outfile=${report}`], {
       cwd,
+      env,
       encoding: "utf-8",
       maxBuffer: 512 * 1024 * 1024,
       timeout: opts.timeoutMs ?? 60 * 60 * 1000,
@@ -791,10 +888,15 @@ export function probeStandalone(
     if (run.error) return { state: "error", note: `bun test could not run: ${message(run.error)}` };
     const parsed = parseBunTest(`${run.stdout}\n${run.stderr}`);
     if (!parsed) return { state: "error", note: `bun test exited ${run.status} with no summary to read` };
+    // A run that executed nothing is not a run with nothing failing.
+    const passed = Number(/^\s*(\d+)\s+pass\b/m.exec(`${run.stdout}\n${run.stderr}`)?.[1] ?? 0);
+    if (passed + parsed.failed === 0) return { state: "error", note: "bun test ran no tests, so nothing was measured" };
+    const names = existsSync(report) ? parseJunitFailures(readFileSync(report, "utf-8")) : undefined;
+    if (!names) return { state: "error", note: `bun test wrote no readable JUnit report at ${report}` };
     return {
       state: "measured",
       count: parsed.failed,
-      findings: parsed.names,
+      findings: names,
       note: `${members.map((m) => m.name).join(", ")} laid out as siblings`,
     };
   } catch (e) {

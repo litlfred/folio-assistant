@@ -352,6 +352,8 @@
     "bootstrap:vocabulary": "bun run bootstrap-tools/scripts/gen-vocabulary.ts",
     "bootstrap:vocabulary:check": "bun run bootstrap-tools/scripts/gen-vocabulary.ts --check",
     "check:bootstrap-standalone": "bun run bootstrap-tools/scripts/rehearse-standalone.ts",
+    "check:cat-harness-standalone": "bun run cat-harness-tools/scripts/check-standalone.ts --layer cat-harness",
+    "standalone:baseline": "bun run cat-harness-tools/scripts/check-standalone.ts --layer cat-harness --update",
     "ns:check": "bun run cat-harness/scripts/ns-export.ts --check",
     "ns:export": "bun run cat-harness/scripts/ns-export.ts",
     "pages:bootstrap": "bun run cat-harness/scripts/pages-bootstrap.ts",

@@ -8,6 +8,7 @@ import {
   exitCodeFor,
   HEAVY_MOVER_LABEL,
   parseBunTest,
+  parseJunitFailures,
   planLayer,
   probeUpwardPaths,
   readLayers,
@@ -183,8 +184,39 @@ describe("the gateway", () => {
 describe("the probes", () => {
   test("bun test's summary is read for the failure count and names", () => {
     const out = "(pass) a\n(fail) b > c [1.2ms]\n\n 10 pass\n 1 fail\n 22 expect() calls\n";
-    expect(parseBunTest(out)).toEqual({ failed: 1, names: ["b > c [1.2ms]"] });
+    expect(parseBunTest(out)).toEqual({ failed: 1, names: ["b > c"] });
+    const two = "x/a.test.ts:\n(fail) d > e [3.00ms]\n\ny/b.test.ts:\n(fail) d > e [10.1ms]\n 2 fail\n";
+    expect(parseBunTest(two)).toEqual({ failed: 2, names: ["x/a.test.ts > d > e", "y/b.test.ts > d > e"] });
+    // bun's GitHub Actions spelling of the same output keys the same (#1977).
+    const ci = "::group::x/a.test.ts:\n(fail) d > e [3.00ms]\n\n::endgroup::\n 1 fail\n";
+    expect(parseBunTest(ci)).toEqual({ failed: 1, names: ["x/a.test.ts > d > e"] });
     expect(parseBunTest("Killed")).toBeUndefined();
+  });
+
+  test("the JUnit report is read for failing names, keyed file > describe > test", () => {
+    // bun 1.3.14's own report for two files, one nested describe (#1977).
+    const xml = [
+      '<?xml version="1.0" encoding="UTF-8"?>',
+      '<testsuites name="bun test" tests="3" failures="2">',
+      '  <testsuite name="t.test.ts" file="t.test.ts" tests="2" failures="1">',
+      '    <testsuite name="D" file="t.test.ts" line="2">',
+      '      <testsuite name="E" file="t.test.ts" line="2">',
+      '        <testcase name="x &gt; y" classname="E &amp;gt; D" file="t.test.ts" line="2">',
+      '          <failure type="AssertionError" />',
+      "        </testcase>",
+      "      </testsuite>",
+      "    </testsuite>",
+      '    <testcase name="ok" classname="" file="t.test.ts" line="3" assertions="0" />',
+      "  </testsuite>",
+      '  <testsuite name="sub/u.test.ts" file="sub/u.test.ts" tests="1" failures="1">',
+      '    <testcase name="z" classname="" file="sub/u.test.ts" line="2">',
+      '      <failure type="AssertionError" />',
+      "    </testcase>",
+      "  </testsuite>",
+      "</testsuites>",
+    ].join("\n");
+    expect(parseJunitFailures(xml)).toEqual(["t.test.ts > D > E > x > y", "sub/u.test.ts > z"]);
+    expect(parseJunitFailures("Killed")).toBeUndefined();
   });
 
   test("upward paths: cat-harness declares paths, and none resolves only above it (measured 2026-10-04)", () => {
