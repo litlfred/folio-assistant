@@ -261,6 +261,9 @@ if (import.meta.main) {
       releases: releasesFor(ig.root),
       // The IG's post-processing output, where its source holds only a marker.
       fills: [igApiHubFill(ig.root, docs ? "" : "../")].filter((x) => x !== undefined),
+      // An igSite IG wears the folio-assistant navbar (the rail pass adds it)
+      // and keeps its own top bar; a site beside an instance keeps just-the-docs'.
+      ...(docs ? { chrome: "harness" as const } : {}),
     });
     console.error(`${ig.instance} (${ig.repo}@${ig.ref.slice(0, 7)}):\n${describeStage(r)}`);
     if (r.siteData.refused.length) process.exit(1);

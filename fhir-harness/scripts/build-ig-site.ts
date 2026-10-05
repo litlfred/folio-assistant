@@ -174,6 +174,90 @@ export function relinkArtifacts(text: string, pageNames: ReadonlySet<string>, pa
   return { text: out, count };
 }
 
+/** A menu href made site-absolute under `baseurl`; an absolute or external one is kept. */
+const siteHref = (baseurl: string, href: string): string =>
+  /^([a-z][a-z0-9+.-]*:|\/|#)/i.test(href) ? href : `${baseurl.replace(/\/$/, "")}/${href}`;
+
+const escHtml = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/**
+ * The IG's TOC as a DECLARED navbar section (`visualiserNavOf` in
+ * `cat-harness/scripts/lib/navbar.ts`): one row per menu group, its items one
+ * level below — the depth the navbar allows, and the shape of the IG's own
+ * menu. The rail lifts it into the folio-assistant LHS navbar.
+ */
+export function igTocNav(menu: IgMenu, baseurl: string, extra: ReadonlyArray<{ label: string; href: string }> = []): string {
+  const rows = [
+    ...menu.groups.map((g) => ({
+      label: g.label,
+      ...(g.items?.length ? { items: g.items.map((it) => ({ label: it.label, href: siteHref(baseurl, it.href) })) } : {}),
+    })),
+    ...extra.map((e) => ({ label: e.label, href: siteHref(baseurl, e.href) })),
+  ];
+  return `<script type="application/json" data-fa-visualiser-nav>${JSON.stringify(rows).replace(/</g, "\\u003c")}</script>`;
+}
+
+/**
+ * The IG's own top bar, preserved: the Publisher's menu as a row of
+ * dropdowns, one per group. `<details>`, so it needs no script; and not a
+ * `<nav class="fa-nav">`, which the rail pass would read as "already
+ * navigated" and skip.
+ */
+export function igTopBar(menu: IgMenu, baseurl: string, title: string): string {
+  const groups = menu.groups
+    .map((g) =>
+      g.items?.length
+        ? `<details class="ig-topbar-group"><summary>${escHtml(g.label)}</summary><ul>${g.items
+            .map((it) => `<li><a href="${escHtml(siteHref(baseurl, it.href))}">${escHtml(it.label)}</a></li>`)
+            .join("")}</ul></details>`
+        : `<span class="ig-topbar-group">${escHtml(g.label)}</span>`,
+    )
+    .join("");
+  return `<div class="ig-topbar" role="navigation" aria-label="${escHtml(title)} menu"><a class="ig-topbar-home" href="${escHtml(siteHref(baseurl, "index.html"))}">${escHtml(title)}</a>${groups}</div>`;
+}
+
+/** The top bar's style: a horizontal row, dropdowns that overlay the page. */
+const IG_TOPBAR_CSS = `
+.ig-topbar{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 1rem;padding:.5rem 1rem;background:var(--ig-topbar-bg,#1c4b7c);color:#fff;font-size:.95rem}
+.ig-topbar a{color:#fff;text-decoration:none}
+.ig-topbar-home{font-weight:600;margin-right:.5rem}
+.ig-topbar-group{position:relative}
+.ig-topbar-group summary{cursor:pointer;list-style:none}
+.ig-topbar-group summary::after{content:" \\25BE"}
+.ig-topbar-group ul{position:absolute;z-index:20;margin:.25rem 0 0;padding:.25rem 0;min-width:16rem;list-style:none;background:#fff;border:1px solid #ccc;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.ig-topbar-group li a{display:block;padding:.25rem .75rem;color:#1c4b7c}
+.ig-topbar-group li a:hover{background:#eef3f8}
+.ig-main{max-width:60rem;padding:1rem 1.5rem 3rem}
+`;
+
+/**
+ * The plain layout for `chrome: "harness"`: just-the-docs' stylesheet for the
+ * prose (and the IG's colour scheme), the IG's top bar and TOC declaration,
+ * the page — and no sidebar, so the rail pass supplies the navbar.
+ */
+export function harnessLayout(topBar: string, tocNav: string): string {
+  return [
+    "<!DOCTYPE html>",
+    '<html lang="{{ page.lang | default: site.lang | default: \'en\' }}">',
+    "<head>",
+    '<meta charset="UTF-8">',
+    '<meta name="viewport" content="width=device-width, initial-scale=1">',
+    "<title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>",
+    "<link rel=\"stylesheet\" href=\"{{ '/assets/css/just-the-docs-default.css' | relative_url }}\">",
+    `<style>${IG_TOPBAR_CSS.trim()}</style>`,
+    "</head>",
+    "<body>",
+    tocNav,
+    topBar,
+    '<main class="ig-main main-content" id="main-content">',
+    "{{ content }}",
+    "</main>",
+    "</body>",
+    "</html>",
+    "",
+  ].join("\n");
+}
+
 const files = (dir: string) => (existsSync(dir) ? readdirSync(dir).filter((f) => statSync(join(dir, f)).isFile()) : []);
 
 /**
@@ -221,6 +305,18 @@ export interface StageOptions {
    * `releases` page lists them; the bytes stay on GitHub (bean `b8ip`).
    */
   releases?: IgReleases;
+  /**
+   * Whose navigation the pages wear. `"theme"` (default): just-the-docs' own
+   * sidebar, built from the menu. `"harness"`: a plain layout carrying the
+   * IG's own TOP BAR (the Publisher's menu, as published) and the IG's TOC
+   * DECLARED as the page's navbar section (`data-fa-visualiser-nav`), with no
+   * sidebar of its own — so the post-build rail pass (`rail-standalone-pages`)
+   * gives the page the folio-assistant LHS navbar every harness wears, with
+   * the TOC as its section. Owner, 2026-10-05 (bean `mftp`): *"use
+   * folio-assistnat LHS navbar, not custome one"*, and *"the orignal topnvar
+   * bar should be preserved"*.
+   */
+  chrome?: "theme" | "harness";
 }
 
 /** The fields of a `folio-fhir-artifact/v1` entry this build reads. */
@@ -637,6 +733,13 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
     writeFileSync(join(out, "_sass", "color_schemes", "ig.scss"), scheme.scss);
     mkdirSync(join(out, "_sass", "custom"), { recursive: true });
     writeFileSync(join(out, "_sass", "custom", "custom.scss"), SIDEBAR_SCSS);
+  }
+  if (opts.chrome === "harness" && opts.menu) {
+    // The extra rows are the IG-level pages the Publisher links outside its
+    // menu: its own table of contents, and the releases page when written.
+    const extra = [{ label: "Table of Contents", href: "toc.html" }, ...(generated.includes("releases.md") ? [{ label: "Releases", href: "releases.html" }] : [])];
+    mkdirSync(join(out, "_layouts"), { recursive: true });
+    writeFileSync(join(out, "_layouts", "default.html"), harnessLayout(igTopBar(opts.menu, baseurl, title), igTocNav(opts.menu, baseurl, extra)));
   }
   writeFileSync(
     join(out, "_config.yml"),

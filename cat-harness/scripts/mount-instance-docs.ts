@@ -1004,15 +1004,18 @@ export function railStandalonePages(
       // `..` per directory the page sits under; the filename is not one.
       const depth = rel.split("/").length - 1;
       const toRoot = depth === 0 ? "." : new Array(depth).fill("..").join("/");
-      const named = railNames(built, instanceName);
+      // A page of an `igSite` instance's own IG site (bean `mftp`) is THAT
+      // instance's page: its name, mark and graphs, not the platform's.
+      const owner = foreign ? instanceName : (igSiteOwner(rel.split("/")[0]!) ?? instanceName);
+      const named = railNames(built, owner);
       // The platform's links resolve against the platform's site; only home is this site's.
       const linkRoot = foreign?.platformBase ?? toRoot;
-      const links = declaredGraphs(instanceName, new Map(), publishedGraphs(built, instanceName, linkRoot), named.harness);
+      const links = declaredGraphs(owner, new Map(), publishedGraphs(built, owner, linkRoot), named.harness);
       const harnesses = instantiatedHarnesses(built, linkRoot);
-      const mark = instanceMark(built, instanceName, linkRoot);
+      const mark = instanceMark(built, owner, linkRoot);
       const homeLabel = foreign ? foreign.homeLabel : named.site;
       const after = injectRail(before, {
-        instance: named.harness ?? instanceName,
+        instance: named.harness ?? owner,
         ...(homeLabel ? { homeLabel } : {}),
         toRoot,
         // The row's files and its site-root hrefs are the PLATFORM's (bean `lhvt`).
@@ -1032,6 +1035,23 @@ export function railStandalonePages(
   };
   if (existsSync(siteAbs)) walk(siteAbs);
   return { injected, alreadyNavigated, redirects, declined, skipped };
+}
+
+/**
+ * The instance whose own IG site is served at `/<segment>/`, when that
+ * directory's declaration marks a docs directory `igSite` (bean `mftp`):
+ * its IG pages are built by `stage-ig-sites`, and railed here as ITS pages.
+ */
+export function igSiteOwner(segment: string): string | undefined {
+  if (!segment || segment.includes(".")) return undefined;
+  const at = declarationPathIn(join(REPO, segment));
+  if (at === undefined || !existsSync(at)) return undefined;
+  try {
+    const d = JSON.parse(readFileSync(at, "utf-8")) as { directories?: { igSite?: boolean }[] };
+    return d.directories?.some((x) => x.igSite === true) ? segment : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 /**

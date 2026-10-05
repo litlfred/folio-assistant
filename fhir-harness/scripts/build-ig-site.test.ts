@@ -8,7 +8,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, contrast, dedupeIds, includeTargets, pageNav, relinkArtifacts, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
 import { copyDocsInto, igSiteDocs, webpagePalette } from "./stage-ig-sites";
 import type { IgReleases } from "../schemas/ig-releases.ts";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
@@ -377,5 +377,41 @@ describe("webpagePalette inherits along needs (bean `mftp`)", () => {
     expect(t.palette).toBeDefined();
     expect(t.note).toContain("inherited from smart-base");
     expect(webpagePalette(root, "smart-base").note).not.toContain("inherited");
+  });
+});
+
+// Bean `mftp`, owner 2026-10-05: the folio-assistant navbar, not just-the-docs'
+// sidebar, and the IG's own top bar preserved.
+describe("chrome: harness — the IG's top bar, and its TOC declared for the navbar", () => {
+  const menu = { groups: [{ label: "Home", items: [{ label: "Summary", href: "overview.html" }] }, { label: "Indices", items: [{ label: "Artifact Index", href: "artifacts.html" }, { label: "Spec", href: "https://example.org/x" }] }] };
+  test("the TOC is a visualiser declaration the navbar reads, rows under each group, hrefs under the baseurl", () => {
+    const decl = igTocNav(menu, "/b/smart-trust", [{ label: "Table of Contents", href: "toc.html" }]);
+    expect(decl.startsWith('<script type="application/json" data-fa-visualiser-nav>')).toBe(true);
+    const rows = JSON.parse(decl.replace(/^<script[^>]*>/, "").replace(/<\/script>$/, ""));
+    expect(rows).toEqual([
+      { label: "Home", items: [{ label: "Summary", href: "/b/smart-trust/overview.html" }] },
+      { label: "Indices", items: [{ label: "Artifact Index", href: "/b/smart-trust/artifacts.html" }, { label: "Spec", href: "https://example.org/x" }] },
+      { label: "Table of Contents", href: "/b/smart-trust/toc.html" },
+    ]);
+  });
+  test("the top bar is one dropdown per group, and never reads as the folio navbar", () => {
+    const bar = igTopBar(menu, "/b/smart-trust", "WHO SMART Trust");
+    expect(bar).toContain('<summary>Home</summary>');
+    expect(bar).toContain('href="/b/smart-trust/overview.html"');
+    expect(bar).not.toContain("fa-nav");
+    expect(bar).not.toContain('id="site-nav"');
+  });
+  test("a harness-chrome site has a layout with no sidebar of its own", () => {
+    const d = mkdtempSync(join(tmpdir(), "ig-chrome-"));
+    const src = join(d, "src");
+    mkdirSync(join(src, "input", "pagecontent"), { recursive: true });
+    writeFileSync(join(src, "sushi-config.yaml"), "id: x.ig\ntitle: X IG\n");
+    writeFileSync(join(src, "input", "pagecontent", "index.md"), "# Hi\n");
+    stageIgSite(src, join(d, "out"), { menu, chrome: "harness", baseurl: "/b/x" });
+    const layout = readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8");
+    expect(layout).toContain("data-fa-visualiser-nav");
+    expect(layout).toContain('class="ig-topbar"');
+    expect(layout).not.toContain("site-nav");
+    rmSync(d, { recursive: true, force: true });
   });
 });
