@@ -123,3 +123,10 @@ export {
 export {
   type BlockBase,
 } from "../cat-harness/schemas/types.js";
+export {
+  IgIdentitySchema,
+  readIgIdentity,
+} from "../fhir-harness/schemas/ig-identity.js";
+export {
+  igSiteData,
+} from "../fhir-harness/scripts/ig-site-data.js";

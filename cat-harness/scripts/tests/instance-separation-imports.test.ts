@@ -110,11 +110,14 @@ const PLATFORM_LAYERS = new Set([
 
 /**
  * Covered instances that still climb without a shim, each with its measured
- * climb count as a CEILING (2026-10-04). Lower it when climbs are rerouted;
- * remove the entry when it reaches zero.
+ * climb count as a CEILING. Lower it when climbs are rerouted; remove the
+ * entry when it reaches zero. who-iris was 18 on 2026-10-04 and is 19 as
+ * re-measured when this guard reached `main` on 2026-10-05: `main` added
+ * `gen-iris-pages.ts → cat-harness/scripts/pdf-viewer.ts` before the guard
+ * was there to refuse it. From here it may only fall.
  */
 const NOT_YET_SHIMMED: Record<string, number> = {
-  "who-iris": 18,
+  "who-iris": 19,
 };
 
 describe("staged instances reach the platform only through platform.ts", () => {
