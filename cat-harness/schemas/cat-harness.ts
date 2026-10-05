@@ -62,6 +62,7 @@ import {
   mkdirSync,
   readFileSync,
   readdirSync,
+  statSync,
   writeFileSync,
 } from "node:fs";
 import { isAbsolute, join, relative, resolve, basename } from "node:path";
@@ -3469,11 +3470,26 @@ export function instanceRootsIn(repoRoot: string): string[] {
     return out;
   }
 
+  // Inside a checkout, any nested checkout git does not declare is foreign
+  // (bean `g43f`). Outside one, the children are either worktrees — a `.git`
+  // FILE, another session's tree, as under `.claude/worktrees/` — or the
+  // sibling CLONES a seeded instance stands among (`.git` a directory), each
+  // its own repository and each an instance to discover. Excluding the clones
+  // too made the standalone rehearsal (`check:cat-harness-standalone`) find no
+  // instance at all, and with it no Tool, no skill and no graph.
   const submodules = submodulePathsOf(root);
+  const rootIsCheckout = existsSync(join(root, ".git"));
+  const isWorktree = (p: string): boolean => {
+    try {
+      return statSync(join(p, ".git")).isFile();
+    } catch {
+      return false;
+    }
+  };
   const subs = entries
     .filter((e) => e.isDirectory() && !e.name.startsWith("."))
     .map((e) => join(root, e.name))
-    .filter((p) => !isForeignCheckout(p, submodules))
+    .filter((p) => !(isForeignCheckout(p, submodules) && (rootIsCheckout || isWorktree(p))))
     .filter((p) => findDeclarationFile(p) !== undefined)
     .sort();
 
