@@ -1,10 +1,10 @@
 ---
 # folio-assistant-vihx
 title: 'merge-guard has no mergeability check: a stale green head with a valid ready marker passes while it conflicts with main (#1898)'
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-05T07:39:03Z
-updated_at: 2026-10-05T07:39:03Z
+updated_at: 2026-10-05T11:13:43Z
 parent: folio-assistant-hfag
 ---
 
@@ -23,3 +23,5 @@ An eighth check, `mergeable`:
 
 ## Done when
 The owner picks A or B (or both, with B authoritative); the check is added with a test built from #1898's conflicting state; and merge-queue.md lists it.
+
+_2026-10-05T11:13:43Z_ — Claimed by claude/zealous-gates-3o9ma2-guard-mergeable — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

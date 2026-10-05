@@ -535,7 +535,7 @@ them:**
 
 | rule | why |
 |---|---|
-| **at most ONE push per PR**, after `bun run gates` locally | each push runs full CI **and** deploys a staging preview into `gh-pages`, which has a size budget. Pushing speculatively spends both |
+| **at most ONE push per PR**, after `bun run gates` locally — or, when every conflict was generated, after the targeted checks of [`merge-conflict-patterns`](merge-conflict-patterns.md) §"A merge round — run each check ONCE" | each push runs full CI **and** deploys a staging preview into `gh-pages`, which has a size budget. Pushing speculatively spends both |
 | no `workflow_dispatch`, re-run, empty commit or close/reopen | the same budget, and a dispatched run is not an owed run (above) |
 | merge commits only: no rebase, amend or force-push | it is somebody else's branch |
 | authored conflict → resolve only dead code, or a pure addition carried over verbatim; otherwise quote both sides and stand down | choosing between two behaviours is the author's call |
