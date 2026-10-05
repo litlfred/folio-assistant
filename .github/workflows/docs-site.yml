@@ -506,11 +506,9 @@ jobs:
       # below from a checkout, so a break in them is visible before a merge
       # rather than only in this workflow's own run (bean `u1iu`).
       #
-      # `--scope instance` (the default, said aloud): this document holds
-      # cat-harness's own directories only, and each instance stacked on it
-      # publishes its own below (`instance-exports.ts`). An `@id` that moved
-      # keeps a tombstone here for one release — owner ruling 2026-10-05,
-      # bean `4ak5` item 2.
+      # `--scope instance` (the default, said aloud). Which instance publishes
+      # what, where, and the one-release tombstones for an `@id` that moved:
+      # `instance-publication` §"What each instance publishes" (bean `4ak5`).
       - name: Export the knowledge graph and its schema
         run: |
           STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)
@@ -652,10 +650,8 @@ jobs:
           # THE TRASHCAN, reachable BY NAME and by nothing else.
           #
           # The export above STRIPS `fsh-guts` from every graph it publishes,
-          # so nothing in `<stub>.jsonld` links here. That is the owner's
-          # rule and the reason this is a second document rather than a
-          # subgraph: a consumer may fetch it deliberately, and a crawler
-          # walking the knowledge graph never arrives.
+          # so nothing in `<stub>.jsonld` links here. Why it is a second
+          # document: `instance-publication` §"What each instance publishes".
           #
           # `fsh-guts/logs/` sits inside the tree it walks and is NOT in it.
           # The exporter admits a file only if it declares
@@ -755,8 +751,7 @@ jobs:
           # the document. LAST in this step because it reads what the lines
           # above wrote, and it exits 1 on any instance whose export is not
           # there rather than publishing a shorter map. Built here and never
-          # committed (owner, 2026-10-04): a committed copy conflicts whenever
-          # two PRs change the set of harnesses.
+          # committed: `instance-publication` §"What each instance publishes".
           bun run cat-harness/scripts/root-index.ts --site ./_site
 
       # Every `maintains` claim, checked where the answer exists.
