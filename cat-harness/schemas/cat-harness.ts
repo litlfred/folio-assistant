@@ -3469,15 +3469,48 @@ export function instanceRootsIn(repoRoot: string): string[] {
     return out;
   }
 
+  // Foreign only INSIDE a checkout. Where `root` is a plain directory of peer
+  // checkouts — the post-split layout `siblingScopeFor` resolves into, and the
+  // one `check:cat-harness-standalone` rehearses — there is no enclosing tree
+  // for a sibling to be foreign to, and filtering it listed NO instance at all.
+  const enclosed = insideCheckout(root);
   const submodules = submodulePathsOf(root);
   const subs = entries
     .filter((e) => e.isDirectory() && !e.name.startsWith("."))
     .map((e) => join(root, e.name))
-    .filter((p) => !isForeignCheckout(p, submodules))
+    .filter((p) => !enclosed || !isForeignCheckout(p, submodules))
     .filter((p) => findDeclarationFile(p) !== undefined)
     .sort();
 
   return out.concat(subs);
+}
+
+/**
+ * Whether `dir`, or a directory above it, holds a `.git` — i.e. whether `dir`
+ * lies inside a git checkout, so that a nested `.git` below it marks a
+ * DIFFERENT repository from the enclosing one.
+ *
+ * {@link isForeignCheckout}'s rule — "a nested checkout is not part of the
+ * enclosing tree unless it is a declared submodule" — presupposes an enclosing
+ * tree. `.claude/worktrees/` has one (the main checkout above it), which is the
+ * escape `g43f` closed. A directory of sibling clones with no repository above
+ * it (`~/src/{cat-harness,bootstrap}`, or the standalone rehearsal's temp
+ * directory) has none: its children are peers, and every one of them is an
+ * instance — the layout {@link siblingScopeFor} exists to resolve into.
+ *
+ * Measured 2026-10-05: without this, `check:cat-harness-standalone` grew by 85
+ * failures, every one a reader that found no instance beside cat-harness. #1955
+ * added the filter one merge after #1977 measured the baseline, so neither PR's
+ * own CI could see it.
+ */
+function insideCheckout(dir: string): boolean {
+  let d = resolve(dir);
+  for (;;) {
+    if (existsSync(join(d, ".git"))) return true;
+    const up = resolve(d, "..");
+    if (up === d) return false;
+    d = up;
+  }
 }
 
 /**

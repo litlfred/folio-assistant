@@ -16,7 +16,7 @@
  */
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -91,6 +91,24 @@ describe("instanceRootsIn with git worktrees present", () => {
     expect(instanceRootsIn(repoRootFor(wtA))).toEqual([]);
   });
 
+  test("peer clones with NO repository above them are all instances — the post-split layout", () => {
+    // The shape `check:cat-harness-standalone` rehearses: each layer its own
+    // `git init`, side by side in a plain directory. There is no enclosing
+    // tree for either to be foreign to, so the worktree rule must not fire;
+    // when it did (#1955), every reader standing alone found no instance and
+    // the standalone gate grew by 85 failures.
+    const peers = join(base, "peers");
+    for (const name of ["layer-a", "layer-b"]) {
+      mkdirSync(join(peers, name), { recursive: true });
+      declareInstance(join(peers, name), name);
+      git(join(peers, name), "init", "-q");
+    }
+    expect(instanceRootsIn(peers)).toEqual([join(peers, "layer-a"), join(peers, "layer-b")]);
+    expect(siblingScopeFor(join(peers, "layer-a"))).toBe(peers);
+    // ...while the same two clones inside a checkout stay foreign, as above.
+    expect(instanceRootsIn(join(checkout, ".claude", "worktrees"))).toEqual([]);
+  });
+
   test("siblingScopeFor keeps the root instance inside its own checkout", () => {
     expect(siblingScopeFor(wtA)).toBe(wtA);
     expect(instanceRootsIn(siblingScopeFor(wtA)).some((p) => p.startsWith(wtB))).toBe(false);
@@ -114,8 +132,15 @@ describe("instanceRootsIn with git worktrees present", () => {
 describe("checkoutRootFor — repository-level reads stay inside the checkout (g43f)", () => {
   test("THIS checkout — the main one or a nested agent worktree — answers itself", () => {
     const here = resolve(import.meta.dir, "..", "..");
+    const harness = join(here, "cat-harness");
     expect(checkoutRootFor(here)).toBe(here);
-    expect(checkoutRootFor(join(here, "cat-harness"))).toBe(here);
+    // In the monorepo cat-harness is a plain subdirectory, so its checkout is
+    // the aggregate. Standing alone (`check:cat-harness-standalone`, or after
+    // the split) it is a clone of its own beside its peers, and it IS its
+    // checkout — the same `.git` marker the function reads, so both layouts
+    // are asserted rather than the monorepo's alone.
+    const ownClone = existsSync(join(harness, ".git"));
+    expect(checkoutRootFor(harness)).toBe(ownClone ? harness : here);
   });
 
   test("the root instance of a worktree, of the main checkout, and a nested instance", () => {
