@@ -103,10 +103,11 @@ import { cleanRendered, renderInline, renderSideBySide, renderVisual, renderWord
 import { computeHeat, heatBucket, renderHeat } from "./review-heat.js";
 import { crumbFor, renderMinimap, renderOutline } from "./review-nav.js";
 import { wordDiff } from "./word-diff.js";
+import { darkRules } from "./lib/scheme-css.ts";
 
 const STYLE = `
   :root { color-scheme: light dark; --fg: #1b1b1b; --bg: #fdfdfb; --muted: #5b5b5b; --link: #0b5cad; --rule: #d8d8d4; }
-  @media (prefers-color-scheme: dark) { :root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; --rule: #3a3a38; } }
+  ${darkRules(`:root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; --rule: #3a3a38; }`)}
   body { margin: 0; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
   /* Column and gutters belong to main: the harness rail owns body padding-left. */
   main { max-width: 78rem; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
@@ -144,7 +145,7 @@ const STYLE = `
   pre.diff { white-space: pre-wrap; font: .95rem/1.5 ui-monospace, monospace; }
   ins { background: #d7f5dc; color: #0b3d17; text-decoration: underline; }
   del { background: #fbdada; color: #5c0b0b; text-decoration: line-through; }
-  @media (prefers-color-scheme: dark) { ins { background: #12391d; color: #c8f2d0; } del { background: #45181a; color: #f5caca; } }
+  ${darkRules(`ins { background: #12391d; color: #c8f2d0; } del { background: #45181a; color: #f5caca; }`)}
   .diff-sbs { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
   .diff-sbs iframe { width: 100%; height: 22rem; border: 1px solid var(--rule); border-radius: .3rem; background: #fff; }
   @media (max-width: 40rem) { .diff-sbs { grid-template-columns: 1fr; } }
@@ -168,7 +169,7 @@ const STYLE = `
   table.heat thead th { font-weight: 600; border-bottom: 1px solid var(--rule); }
   table.heat td { font-variant-numeric: tabular-nums; }
   .h1 { background: #86b6ef; color: #1b1b1b; } .h2 { background: #3987e5; color: #1b1b1b; } .h3 { background: #1c5cab; color: #ffffff; }
-  @media (prefers-color-scheme: dark) { .h1 { background: #184f95; color: #ffffff; } .h2 { background: #256abf; color: #ffffff; } .h3 { background: #3987e5; color: #161616; } }
+  ${darkRules(`.h1 { background: #184f95; color: #ffffff; } .h2 { background: #256abf; color: #ffffff; } .h3 { background: #3987e5; color: #161616; }`)}
   button.linklike { border: 0; padding: 0; min-height: 0; background: none; color: var(--link); text-decoration: underline; cursor: pointer; font: inherit; text-align: left; }
   h2:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
 `;
