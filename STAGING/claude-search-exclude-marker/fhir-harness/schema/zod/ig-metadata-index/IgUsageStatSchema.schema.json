@@ -1,0 +1,43 @@
+{
+  "$ref": "#/definitions/IgUsageStat",
+  "definitions": {
+    "IgUsageStat": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject": {
+          "type": "string",
+          "enum": [
+            "extension",
+            "profile"
+          ]
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "url",
+        "subject",
+        "paths"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-metadata-index/IgUsageStatSchema.schema.json",
+  "title": "IgUsageStatSchema",
+  "description": "Generated from `IgUsageStatSchema` in schemas/ig-metadata-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/search-exclude-marker",
+    "sha": "caeb0e01a8fcf96f2f29772b771a6d8f5f60f13c",
+    "pr": "2234/merge",
+    "run": "37386546178"
+  }
+}
