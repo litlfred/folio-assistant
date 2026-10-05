@@ -196,7 +196,10 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     // The fast set runs their verdict as `slice:sqlite:check` (determinism,
     // the row digest against the source, FTS5, the payload audit, for every
     // slice), so these lines only write.
-    match: "gen-slice-sqlite.ts --out ./_site",
+    // `--out` alone, not `--out ./_site`: since 2026-10-05 the slices are
+    // written into the DOCS tree, `./_site/${ROUTE}/assets/slices` (issue
+    // #2188), so the old literal matched no step and left all four UNCLASSIFIED.
+    match: "gen-slice-sqlite.ts --out",
     kind: "covered-by",
     reason:
       "a DEPLOY build into ./_site, which only the deploy and staging jobs produce; its verdict is " +
@@ -214,6 +217,42 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason:
       "a DEPLOY build into ./_site over the exports only the deploy writes, with no committed copy to check; " +
       "it exits 1 rather than publish a shorter map, and root-index.test.ts pins both the map and that refusal",
+  },
+  {
+    // Issue #2188, bean `kc7k` (owner, 2026-10-05): cat-harness's docs publish
+    // under `/docs/cat-harness/`. A SETUP step: it prints the route, read from
+    // the declaration, into `$GITHUB_OUTPUT` for the steps below it, and has
+    // no verdict. That the route agrees with `_config.yml`'s `baseurl` is
+    // asserted by docs-route.test.ts in `bun test`.
+    match: "scripts/docs-route.ts --built",
+    kind: "ci-only",
+    reason:
+      "a SETUP step writing the docs route into $GITHUB_OUTPUT for later steps; the route and its agreement " +
+      "with _config.yml's baseurl are pinned by docs-route.test.ts in `bun test`",
+  },
+  {
+    // Its deploy-time partner: moves every JSON-LD document whose `@id` names a
+    // site-root address back out of the built docs tree, so moving the pages
+    // moves no identifier. Writes into a BUILT `./_site`, which only the deploy
+    // and staging jobs produce; the rule and the refusal on collision are
+    // pinned by docs-route.test.ts over a fixture site.
+    match: "scripts/hoist-addressed-documents.ts --site",
+    kind: "ci-only",
+    reason:
+      "a DEPLOY step: it moves files inside the built ./_site that only the deploy and staging jobs produce; " +
+      "which documents move, and the refusal to overwrite, are pinned by docs-route.test.ts in `bun test`",
+  },
+  {
+    // And the site root's own page, now that the docs are not it: a landing
+    // listing each `docs/<instance>/` the built site holds. Built at publish
+    // time from what the deploy wrote, never committed, so there is nothing
+    // for a `--check` to compare; it refuses to overwrite and refuses a site
+    // missing the built docs, and docs-route.test.ts pins the page.
+    match: "scripts/root-landing.ts --site",
+    kind: "ci-only",
+    reason:
+      "a DEPLOY build of the site root's landing over the built ./_site, with no committed copy to check; " +
+      "its listing and that it is not a redirect are pinned by docs-route.test.ts in `bun test`",
   },
   {
     // Bean `bamf`: each IG's own just-the-docs site, staged from the source

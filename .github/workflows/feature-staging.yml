@@ -207,6 +207,14 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
+      # WHERE THE DOCS TREE GOES under the preview — `docs/<built>` since
+      # 2026-10-05 (issue #2188, bean `kc7k`), read from the declaration by
+      # `docs-route.ts` exactly as `docs-site.yml` reads it. Resolved this early
+      # because the search-index fetch and the `baseurl` both need it.
+      - name: Resolve the docs route
+        id: route
+        run: echo "route=$(bun run cat-harness/scripts/docs-route.ts --built cat-harness)" >> "$GITHUB_OUTPUT"
+
       - name: Determine staging slug
         id: slug
         # `head.ref` is ATTACKER-CONTROLLED on a fork PR: a branch may be named
@@ -421,6 +429,7 @@ jobs:
         # `check-workflow-injection.ts` now grades it free text by provenance
         # rather than trusting the id it came through.
         env:
+          DOCS_ROUTE: ${{ steps.route.outputs.route }}
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
         run: |
@@ -481,7 +490,9 @@ jobs:
           # OWNER AND REPO ARE READ, NEVER SPELLED — bean `kuxk`, the same rule
           # the baseurl block below states. A literal here would point every
           # fork's preview at this repository's index.
-          SEARCH_SRC="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/assets/js/search-data.json"
+          # Under the DOCS route, where the theme's index is published since
+          # 2026-10-05 (issue #2188).
+          SEARCH_SRC="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${DOCS_ROUTE}/assets/js/search-data.json"
           SEARCH_STATE="unavailable"
           if curl -fsSL --max-time 60 -o /tmp/published-search-data.json "$SEARCH_SRC" \
              && [ -s /tmp/published-search-data.json ] \
@@ -540,12 +551,17 @@ jobs:
         # above for why its sanitisation is not a reason to trust it here.
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          DOCS_ROUTE: ${{ steps.route.outputs.route }}
         run: |
           SLUG="$STAGING_SLUG"
           REPO="${{ github.event.repository.name }}"
+          # BOTH keys, as `_config.yml` carries them: `site_root` is the
+          # preview's own root, where the graph documents and mounts are;
+          # `baseurl` is the docs tree under it (issue #2188).
           echo "" >> cat-harness/docs/_config.yml
           echo "# Auto-appended by feature-staging.yml" >> cat-harness/docs/_config.yml
-          echo "baseurl: \"/${REPO}/STAGING/${SLUG}\"" >> cat-harness/docs/_config.yml
+          echo "site_root: \"/${REPO}/STAGING/${SLUG}\"" >> cat-harness/docs/_config.yml
+          echo "baseurl: \"/${REPO}/STAGING/${SLUG}/${DOCS_ROUTE}\"" >> cat-harness/docs/_config.yml
 
       # COMPOSE the documentation tree before Jekyll sees it.
       #
@@ -651,10 +667,15 @@ jobs:
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./_docs
-          destination: ./_site
+          destination: ./_site/${{ steps.route.outputs.route }}
 
       - name: Take ownership of Jekyll output
         run: sudo chown -R "$(id -u):$(id -g)" ./_site
+
+      # As `docs-site.yml`: the documents whose `@id` names a site-root address
+      # go back to it rather than moving with the pages (issue #2188).
+      - name: Hoist root-addressed documents out of the docs tree
+        run: bun run cat-harness/scripts/hoist-addressed-documents.ts --site ./_site --built cat-harness
 
       # The preview serves the PUBLISHED index, or an empty one, never its own.
       #
@@ -670,8 +691,10 @@ jobs:
       # Empty plus a warning is honest; stale plus a warning about the wrong
       # thing is not.
       - name: Serve the published search index, or none
+        env:
+          ROUTE: ${{ steps.route.outputs.route }}
         run: |
-          DEST="./_site/assets/js/search-data.json"
+          DEST="./_site/${ROUTE}/assets/js/search-data.json"
           mkdir -p "$(dirname "$DEST")"
           # `-s` alone is correct HERE only because the stamp step deletes the
           # file when it is not a usable index. The validation lives there, with
@@ -687,14 +710,18 @@ jobs:
       # The identifier lookup, as on deploy (bean `1br0`): before the split,
       # which links the search box to it.
       - name: Publish the identifier lookup
-        run: bun run cat-harness-tools/scripts/publish-id-lookup.ts --site ./_site
+        env:
+          ROUTE: ${{ steps.route.outputs.route }}
+        run: bun run cat-harness-tools/scripts/publish-id-lookup.ts --site "./_site/${ROUTE}"
 
       # Split the index THIS preview serves — the published one, or `{}` —
       # never one built here: a preview's scopes must be cut from the same
       # index its pages search, or `search-scopes` reports the split stale
       # (issue #1972, bean `m7mn`).
       - name: Split the served search index per scope
-        run: bun run cat-harness/scripts/search-split.ts --dir ./_site
+        env:
+          ROUTE: ${{ steps.route.outputs.route }}
+        run: bun run cat-harness/scripts/search-split.ts --dir "./_site/${ROUTE}"
 
       # Mount every OTHER instance's rendered content under the built site.
       #
@@ -742,8 +769,11 @@ jobs:
       - name: Build each IG's own site
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          ROUTE: ${{ steps.route.outputs.route }}
         run: |
-          BASE="/${{ github.event.repository.name }}/STAGING/${STAGING_SLUG}"
+          # Beside the composed instance's pages, which are in the docs tree
+          # since 2026-10-05 (issue #2188) — so under its route too.
+          BASE="/${{ github.event.repository.name }}/STAGING/${STAGING_SLUG}/${ROUTE}"
           curl -sSfL -o /tmp/plantuml.jar \
             https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar
           # Only the IGs the staging cone reaches (bean `4j86`); no file list carries all.
@@ -752,11 +782,11 @@ jobs:
             --plantuml-jar /tmp/plantuml.jar "${CF[@]}" > ./_ig-list.txt
           while read -r INSTANCE SRC; do
             BUNDLE_GEMFILE="$PWD/cat-harness/docs/Gemfile" bundle exec jekyll build \
-              --source "$SRC" --destination "./_site/${INSTANCE}/ig"
+              --source "$SRC" --destination "./_site/${ROUTE}/${INSTANCE}/ig"
             # An IG's source can repeat an anchor, and the Publisher's output
             # repeats it too. Keep the first copy (where every link already
             # lands), rename the rest, and report each one.
-            bun run fhir-harness/scripts/build-ig-site.ts --dedupe-ids "./_site/${INSTANCE}/ig"
+            bun run fhir-harness/scripts/build-ig-site.ts --dedupe-ids "./_site/${ROUTE}/${INSTANCE}/ig"
             echo "built ${INSTANCE}'s IG site -> ${BASE}/${INSTANCE}/ig/"
           done < ./_ig-list.txt
 
@@ -865,10 +895,11 @@ jobs:
         env:
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          ROUTE: ${{ steps.route.outputs.route }}
         run: |
           npx --yes typedoc \
             --gitRevision "$STAGING_BRANCH" \
-            --out ./_site/api \
+            --out "./_site/${ROUTE}/api" \
             --entryPointStrategy expand \
             --readme none \
             --hideGenerator \
@@ -1044,6 +1075,7 @@ jobs:
         env:
           KG_BRANCH: ${{ steps.slug.outputs.branch }}
           SLUG: ${{ steps.slug.outputs.slug }}
+          ROUTE: ${{ steps.route.outputs.route }}
         run: |
           BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/STAGING/${SLUG}"
           STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)
@@ -1121,10 +1153,10 @@ jobs:
           # A CDN may still hold, for one TTL (Pages: max-age=600), a stale
           # manifest and the older file it names -- a self-consistent pair --
           # or a stale manifest whose file is gone, which the page reports.
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out "./_site/${ROUTE}/assets/slices" --payload-out ./_site/payload/sha256 --slice beans
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out "./_site/${ROUTE}/assets/slices" --payload-out ./_site/payload/sha256 --slice todos
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out "./_site/${ROUTE}/assets/slices" --payload-out ./_site/payload/sha256 --slice library
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out "./_site/${ROUTE}/assets/slices" --payload-out ./_site/payload/sha256 --slice kg
           # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
           # each term is defined by its layer's own document, below, and the
           # Glossary publishes SKOS for every scheme. bootstrap's document is
@@ -1235,6 +1267,8 @@ jobs:
           # requires it, and a preview without it cannot show whether the map
           # is whole. `--base-url` so its `@id`s and `url`s name the preview.
           bun run cat-harness/scripts/root-index.ts --site ./_site --base-url "$BASE"
+          # The preview root's own page, as on deploy (`docs-site.yml`).
+          bun run cat-harness/scripts/root-landing.ts --site ./_site --built cat-harness
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.
@@ -1256,10 +1290,12 @@ jobs:
       # a shortfall against what the source held fails the step, and
       # `assets/qa/availability.json` names the source.
       - name: Publish the QA witnesses and results
+        env:
+          ROUTE: ${{ steps.route.outputs.route }}
         run: |
-          mkdir -p ./_site/assets/qa
+          mkdir -p "./_site/${ROUTE}/assets/qa"
           if [ -d cat-harness/test/results/witnesses ]; then
-            cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
+            cp -rT cat-harness/test/results/witnesses "./_site/${ROUTE}/assets/qa"
           fi
           # The RESULTS beside them. `kg-export` writes this during the export
           # step above, so the copy picks up THIS run's findings rather than
@@ -1267,10 +1303,10 @@ jobs:
           # no longer carries them, so this file is the only place a consumer
           # can see what the QA pass found about the document it just fetched.
           if [ -d cat-harness/test/results ]; then
-            find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
+            find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} "./_site/${ROUTE}/assets/qa/" \;
           fi
           bun run cat-harness/scripts/qa-site-assets.ts verify \
-            --site ./_site --results cat-harness/test/results \
+            --site "./_site/${ROUTE}" --results cat-harness/test/results \
             --state "$RUNNER_TEMP/qa-site-assets.state.json"
 
       # The same navbar-tile check `docs-site.yml` runs, mirrored here for the
@@ -1300,7 +1336,9 @@ jobs:
       # or a declared-empty one (the step above), so its coverage is the
       # published site's and only presence and parsing are asked (bean fq5u).
       - name: Verify the export before deploying the preview
-        run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --search-index borrowed
+        env:
+          ROUTE: ${{ steps.route.outputs.route }}
+        run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --docs "${ROUTE}" --search-index borrowed
 
       # MINIFY LAST — the deploy's pass, mirrored here because
       # `check:invocation-parity` requires it and because a preview whose

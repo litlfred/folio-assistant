@@ -1,6 +1,6 @@
 # Jekyll configuration for the folio-assistant documentation site.
 #
-# Published to GitHub Pages at https://litlfred.github.io/folio-assistant/
+# Published to GitHub Pages at https://litlfred.github.io/folio-assistant/docs/cat-harness/
 # Built and deployed by .github/workflows/docs-site.yml.
 #
 # Theme: just-the-docs (via remote_theme — the jekyll-remote-theme plugin is
@@ -43,8 +43,28 @@ description: >-
 # free to disagree with the build.
 remote_theme: just-the-docs/just-the-docs@v0.12.0
 
-# Site lives under /folio-assistant/ on litlfred.github.io.
-baseurl: "/folio-assistant"
+# THE SITE lives under /folio-assistant/ on litlfred.github.io; THESE PAGES
+# live one route further in, at /folio-assistant/docs/cat-harness/.
+#
+# Owner, 2026-10-05 (issue #2188, bean `kc7k`): cat-harness's documentation
+# publishes under `<base-url>/docs/cat-harness/`, not at the site root —
+# "clean break/migration", no redirects at the old addresses. It is the
+# addressing rule of 2026-09-20 (`<base-url>/<kind>/<instance>/`) reaching the
+# one instance it had not: who-iris's docs were already at `/docs/who-iris/`.
+#
+# `baseurl` is what Jekyll prefixes every `relative_url` with, so every page,
+# stylesheet and data file this tree publishes is addressed under the docs
+# route. `site_root` is the SITE's own base: the address of what the deploy
+# publishes OUTSIDE this tree — the knowledge-graph documents and their
+# viewer, the TypeDoc reference, the build stamp, other instances' mounts.
+# A link to one of those is `{{ path | prepend: site.site_root }}`, never
+# `relative_url`, which would put it under the docs route where it is not.
+#
+# The route `docs/cat-harness` is the `docs` kind and this instance's declared
+# name, which `scripts/docs-route.ts` reads; `docs-route.test.ts` checks this
+# literal against it. A staging build appends BOTH keys (`feature-staging.yml`).
+site_root: "/folio-assistant"
+baseurl: "/folio-assistant/docs/cat-harness"
 url: "https://litlfred.github.io"
 
 # just-the-docs options
@@ -79,7 +99,10 @@ footer_content: >-
   every push to main.
 
 # The TypeDoc API reference is generated HTML; let it pass through untouched
-# rather than being processed as Jekyll pages.
+# rather than being processed as Jekyll pages. (Since the docs moved to
+# `/docs/cat-harness/` the reference is written at the SITE root, outside this
+# tree's destination, so nothing is kept here any more; the key is retained so
+# a local `jekyll build` into a tree that has one still leaves it alone.)
 keep_files:
   - api
 

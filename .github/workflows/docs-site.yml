@@ -2,7 +2,25 @@
 name: Docs site (GitHub Pages)
 
 # Builds and deploys the folio-assistant documentation site to GitHub Pages at
-# https://litlfred.github.io/folio-assistant/.
+# https://litlfred.github.io/folio-assistant/ — cat-harness's documentation at
+# https://litlfred.github.io/folio-assistant/docs/cat-harness/ since 2026-10-05
+# (owner, issue #2188, bean `kc7k`: "clean break/migration", no redirects).
+#
+# THE SITE ROOT AND THE DOCS TREE ARE TWO PLACES NOW, and every step below
+# writes into exactly one of them:
+#
+#   _site/docs/<built>/  the Jekyll build — every page, its assets, the search
+#                        index, the QA evidence, the slices, the API
+#                        reference, the identifier lookup. `_config.yml`'s
+#                        `baseurl` says the same thing to every `relative_url`.
+#   _site/               what an IDENTIFIER names: the knowledge-graph
+#                        documents and their viewer, the vocabularies, the
+#                        payloads, every JSON-LD document whose own `@id` is a
+#                        root address (`hoist-addressed-documents.ts`), the
+#                        other instances' mounts — plus the root landing page.
+#
+# The route `docs/<built>` is read from the declaration (`docs-route.ts`), never
+# spelled here; the `route` step below captures it once for every step.
 #
 # Serving model: the built static site is published to the **gh-pages branch**
 # (with .nojekyll so it is served exactly as built). Enable it once under
@@ -339,11 +357,19 @@ jobs:
       - name: Compose the docs layers
         run: bun run cat-harness/scripts/compose-docs.ts --out ./_docs
 
+      # WHERE THE DOCS TREE GOES under the site — `docs/<built>`, the `docs`
+      # kind and the built instance's declared name (`docs-route.ts`). Captured
+      # once so no later step spells it; `docs-route.test.ts` holds
+      # `_config.yml`'s `baseurl` to the same answer.
+      - name: Resolve the docs route
+        id: route
+        run: echo "route=$(bun run cat-harness/scripts/docs-route.ts --built cat-harness)" >> "$GITHUB_OUTPUT"
+
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./_docs
-          destination: ./_site
+          destination: ./_site/${{ steps.route.outputs.route }}
 
       # actions/jekyll-build-pages runs Jekyll in a container as root, so _site/
       # comes back owned by root and every later step — which runs as `runner` —
@@ -353,6 +379,16 @@ jobs:
       # while the published site sat unchanged.
       - name: Take ownership of the Jekyll output
         run: sudo chown -R "$(id -u):$(id -g)" ./_site
+
+      # THE IDENTIFIERS STAY WHERE THEY ARE. The docs tree carries JSON-LD
+      # documents that are not pages — site nodes, library entries, todos, the
+      # named subgraphs — each published at the address its own `@id` names.
+      # Moving the pages must not move those addresses (thousands of committed
+      # documents name them), so each document whose `@id` is a site-root
+      # address goes back to it. Read off the document, never a list of
+      # directories: `todos/` holds both a todo's document and its page.
+      - name: Hoist root-addressed documents out of the docs tree
+        run: bun run cat-harness/scripts/hoist-addressed-documents.ts --site ./_site --built cat-harness
 
       # Mount every OTHER instance's rendered content under the built site.
       #
@@ -413,10 +449,14 @@ jobs:
       # unnecessary: it walks what is there. Adding a schema now publishes its
       # reference with no second edit, which is the same rule
       # `check:schema-nodes` enforces for the graph itself.
+      # Into the DOCS tree: the reference is part of cat-harness's documentation,
+      # and every page links it as `../api/` from beside it.
       - name: Generate TypeScript API reference (TypeDoc)
+        env:
+          ROUTE: ${{ steps.route.outputs.route }}
         run: |
           npx --yes typedoc \
-            --out ./_site/api \
+            --out "./_site/${ROUTE}/api" \
             --entryPointStrategy expand \
             --readme none \
             --hideGenerator \
@@ -464,6 +504,8 @@ jobs:
       # keeps a tombstone here for one release — owner ruling 2026-10-05,
       # bean `4ak5` item 2.
       - name: Export the knowledge graph and its schema
+        env:
+          ROUTE: ${{ steps.route.outputs.route }}
         run: |
           STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)
           bun run cat-harness/scripts/kg-export.ts             --scope instance --out "./_site/${STUB}.jsonld"
@@ -670,7 +712,9 @@ jobs:
           # admits KG nodes only. The `kg` slice writes none: it points at the
           # committed KG payloads copied just above. Each run also rewrites
           # `assets/slices/index.json`, which lists every slice built so far.
-          # Searched at `slices/search.html?slice=<name>`.
+          # Searched at `slices/search.html?slice=<name>`. The slices go in the
+          # DOCS tree beside that page; the payloads stay at the root, where
+          # their IRIs (`<BASE_URL>/payload/sha256/<hex>`) name them.
           # The database is CONTENT-ADDRESSED, `<slice>.<sha256>.sqlite3`, and
           # the fixed `<slice>.sqlite3.json` manifest names it (bean `wixl`), so
           # a CDN cannot pair a fresh manifest with stale bytes. Old builds do
@@ -680,10 +724,10 @@ jobs:
           # A CDN may still hold, for one TTL (Pages: max-age=600), a stale
           # manifest and the older file it names -- a self-consistent pair --
           # or a stale manifest whose file is gone, which the page reports.
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
-          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out "./_site/${ROUTE}/assets/slices" --payload-out ./_site/payload/sha256 --slice beans
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out "./_site/${ROUTE}/assets/slices" --payload-out ./_site/payload/sha256 --slice todos
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out "./_site/${ROUTE}/assets/slices" --payload-out ./_site/payload/sha256 --slice library
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out "./_site/${ROUTE}/assets/slices" --payload-out ./_site/payload/sha256 --slice kg
           # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
           # each term is defined by its layer's own document, below, and the
           # Glossary publishes SKOS for every scheme. bootstrap's document is
@@ -710,6 +754,14 @@ jobs:
           # committed (owner, 2026-10-04): a committed copy conflicts whenever
           # two PRs change the set of harnesses.
           bun run cat-harness/scripts/root-index.ts --site ./_site
+
+          # THE SITE ROOT'S OWN PAGE. Until 2026-10-05 the root `index.html`
+          # WAS the docs home; the docs moved to `/<route>/`, so the root lists
+          # where each instance's documentation lives. A landing page, not a
+          # redirect — the owner ruled out redirects for the old addresses.
+          # LAST, because it lists what the steps above published under
+          # `docs/`, and it refuses to overwrite anything already at the root.
+          bun run cat-harness/scripts/root-landing.ts --site ./_site --built cat-harness
 
       # Every `maintains` claim, checked where the answer exists.
       #
@@ -774,13 +826,17 @@ jobs:
       # `assets/qa/availability.json` naming the source. A silent shrink was
       # the defect — this step used to print a smaller count and stay green.
       - name: Publish the QA witnesses and results
+        env:
+          ROUTE: ${{ steps.route.outputs.route }}
         run: |
-          mkdir -p ./_site/assets/qa
+          # Into the DOCS tree: every `data-qa-src` is composed by
+          # `relative_url`, which is the docs tree's base.
+          mkdir -p "./_site/${ROUTE}/assets/qa"
           # Guarded: with no corpus and nothing generated there is no
           # directory, and `verify` below — not a `cp` error — says what that
           # means.
           if [ -d cat-harness/test/results/witnesses ]; then
-            cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
+            cp -rT cat-harness/test/results/witnesses "./_site/${ROUTE}/assets/qa"
           fi
           # The RESULTS beside them. `kg-export` writes this during the export
           # step above, so the copy picks up THIS run's findings rather than
@@ -788,10 +844,10 @@ jobs:
           # no longer carries them, so this file is the only place a consumer
           # can see what the QA pass found about the document it just fetched.
           if [ -d cat-harness/test/results ]; then
-            find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
+            find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} "./_site/${ROUTE}/assets/qa/" \;
           fi
           bun run cat-harness/scripts/qa-site-assets.ts verify \
-            --site ./_site --results cat-harness/test/results \
+            --site "./_site/${ROUTE}" --results cat-harness/test/results \
             --state "$RUNNER_TEMP/qa-site-assets.state.json"
 
       # THE NAVBAR TILES POINT AT FILES THIS BUILD PUBLISHES -- checked, not
@@ -818,8 +874,11 @@ jobs:
       # into the Jekyll source, which the client says it must not sit under.
       # BEFORE the split, which names every lookup it finds as a `remote` entry
       # the search box links to.
+      # Into the DOCS tree, beside the search index whose manifest names it.
       - name: Publish the identifier lookup
-        run: bun run cat-harness-tools/scripts/publish-id-lookup.ts --site ./_site
+        env:
+          ROUTE: ${{ steps.route.outputs.route }}
+        run: bun run cat-harness-tools/scripts/publish-id-lookup.ts --site "./_site/${ROUTE}"
 
       # One search index per scope — each instance, each target locale, the
       # platform — cut from the index Jekyll just wrote, plus the manifest a
@@ -827,7 +886,9 @@ jobs:
       # verify step, whose `search-scopes` verifier checks the split matches
       # THIS index and partitions it exactly.
       - name: Split the search index per scope
-        run: bun run cat-harness/scripts/search-split.ts --dir ./_site
+        env:
+          ROUTE: ${{ steps.route.outputs.route }}
+        run: bun run cat-harness/scripts/search-split.ts --dir "./_site/${ROUTE}"
 
       # VERIFY BEFORE DEPLOYING, AND BLOCK — bean `vigi`, owner 2026-09-23:
       # "a set of post processing tools for verification that a failure
@@ -838,7 +899,9 @@ jobs:
       # carries the report to the publication manager.
       - name: Verify the export before deploying
         id: verify
-        run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --report "$RUNNER_TEMP/publish-verify.md"
+        env:
+          ROUTE: ${{ steps.route.outputs.route }}
+        run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --docs "${ROUTE}" --report "$RUNNER_TEMP/publish-verify.md"
 
       # MINIFY LAST, and it is a POST-BUILD PASS rather than a Jekyll plugin
       # on purpose. CI builds with `actions/jekyll-build-pages@v1` -- the
