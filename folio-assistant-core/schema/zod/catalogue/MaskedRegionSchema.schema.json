@@ -1,0 +1,51 @@
+{
+  "$ref": "#/definitions/MaskedRegion",
+  "definitions": {
+    "MaskedRegion": {
+      "type": "object",
+      "properties": {
+        "x0": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "y0": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "x1": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "y1": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "x0",
+        "y0",
+        "x1",
+        "y1",
+        "reason"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/catalogue/MaskedRegionSchema.schema.json",
+  "title": "MaskedRegionSchema",
+  "description": "Generated from `MaskedRegionSchema` in schemas/catalogue.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "main",
+    "sha": "0ad37cd33ee9e81f3377a271b8dd5c6c242db42b",
+    "pr": "main",
+    "run": "37353345516"
+  }
+}
