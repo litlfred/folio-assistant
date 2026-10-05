@@ -5,8 +5,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T17:33:33Z
-updated_at: 2026-10-04T17:41:44Z
-parent: folio-assistant-dmx1
+updated_at: 2026-10-05T12:23:07Z
+parent: folio-assistant-fs43
 ---
 
 Owner, 2026-10-04: *"dispatch agent: other stuff in typescript that should be in KG?"* This is the read-only audit that answered it. The principle comes from the same day's ruling, *"there should not be a central registry for declaring mount tools and subgraph types"*: a fact OWNED by one harness is declared there as a KG node, not hardcoded in a cat-harness table.
@@ -65,3 +65,7 @@ The open question is answered: **every contribution is a node, and validators ar
 
 ## 2026-10-05: #5 revisited (#2180)
 The five local side tables that were left in place are now derived from fields on the kind definitions rather than written by hand, so a new kind cannot be missing from one of them. REGISTRY_GROUPS stays: it is keyed by scenarios directories, not by kinds.
+
+
+## 2026-10-05: re-parented from dmx1 to folio-assistant-fs43
+dmx1 closed (#2180), and check:bean-rollup refuses a completed container with an open child. sod4's open rows are not distributed-kinds work: #2 is the QA criteria, and the small rows belong to other beans. So sod4 moves up one level, under dmx1's own parent, instead of keeping dmx1 open.
