@@ -1,0 +1,463 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/kg/kg-core/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "@type": "cat-harness:SkillPackage",
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/artefact-reachability",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/associate-harness",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/audit-coverage",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-node-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-context-and-state-graphs",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/corpus-grep",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/data-modelling",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/directory-conventions",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/flushable-containers",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-requirements",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-kinds",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-publication",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-contribution-offer",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-export",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-to-portal",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/placement",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/schema-management",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skill-registration",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skill-voice-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/surprise-to-corpus",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uml-overview",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/vocabulary-authority"
+      ],
+      "description": "How the knowledge graph is DECLARED, placed, exported, audited and published: directory conventions and graph kinds, placement, schema management, skill registration, audit coverage, kg-export and portal publication. Moved out of folio-core into the kg topic (bean 9umr, owner ruling 2026-09-30) so KG structure and use sit apart from the SDLC process skills; graph-management (restructuring) and kg-navigation (reading) are its siblings in the same topic.",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "name": "kg-core",
+      "path": "skills/kg/kg-core",
+      "version": "0.1.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/artefact-reachability",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Which declared executable artefacts can be reached — decision tables, BPMN diagrams, self-declared entry points. Read before trusting that a .dmn works because it loads, before concluding a script has a caller, and before building any reachability report: load is not evaluability, a test is not a caller, and where a grep fails in both directions the subject has to be narrowed rather than the signals.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 314,
+      "instructionsPath": "skills/kg/kg-core/artefact-reachability.md",
+      "name": "artefact-reachability",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/29228d7efe09740579d570fa07274cad885b6a26ea75816fa59b28121afb3252",
+        "bytes": 16057,
+        "sha256": "29228d7efe09740579d570fa07274cad885b6a26ea75816fa59b28121afb3252"
+      },
+      "title": "Artefact reachability — load is not evaluability, and a test is not a caller"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/associate-harness",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Declare a harness this one knows about and does not hold (`associatedHarnesses`): a folio in another repository, published at its own site. Referenced, never loaded, never materialized. Issue #1146.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 90,
+      "instructionsPath": "skills/kg/kg-core/associate-harness.md",
+      "name": "associate-harness",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1f7b7167774dee04f57b90c9de8ef9212641ce4476ff8f6a1526490e4f2e5756",
+        "bytes": 3651,
+        "sha256": "1f7b7167774dee04f57b90c9de8ef9212641ce4476ff8f6a1526490e4f2e5756"
+      },
+      "title": "Associate a harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/audit-coverage",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the stored record holds the relation rather than the census.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 277,
+      "instructionsPath": "skills/kg/kg-core/audit-coverage.md",
+      "name": "audit-coverage",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3fbcf6dc26ce7157d15be227476a5f2dc9cae9a905da204131ab7f28ce6fe2a1",
+        "bytes": 13910,
+        "sha256": "3fbcf6dc26ce7157d15be227476a5f2dc9cae9a905da204131ab7f28ce6fe2a1"
+      },
+      "title": "Audit coverage — measured, with denominators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-node-review",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Review the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/` — for the joins a reader cannot see: that a node declares what it is, that what it names resolves, and that the mechanism it describes is the one that actually runs.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 111,
+      "instructionsPath": "skills/kg/kg-core/code-node-review.md",
+      "name": "code-node-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/38c77f3bcb7f46639659a1ceb3cd8d80c5f42471aa61e891ceb2c3e01a93e229",
+        "bytes": 5627,
+        "sha256": "38c77f3bcb7f46639659a1ceb3cd8d80c5f42471aa61e891ceb2c3e01a93e229"
+      },
+      "title": "Code node review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-context-and-state-graphs",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Every declared graph is the subject a process produces, static context it reads, or live state it writes. The one question that settles it, the classification of every kind with its reason, what a consumer may assume of each layer, and why agent memory is context rather than state.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 371,
+      "instructionsPath": "skills/kg/kg-core/content-context-and-state-graphs.md",
+      "name": "content-context-and-state-graphs",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/adae4e675b5e812202e8e2abd265deadf481e9af35988dd9f02033ee417400e2",
+        "bytes": 20959,
+        "sha256": "adae4e675b5e812202e8e2abd265deadf481e9af35988dd9f02033ee417400e2"
+      },
+      "title": "Content, context and state graphs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/corpus-grep",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Pre-declaration corpus check. Before declaring any item \"open\", \"gap\", \"TODO\", \"open problem\", \"pending derivation\" — or asserting in chat that something is unresolved in the corpus — run the four-path grep checklist. A source file's `## Status` note lags the corpus by weeks; the corpus is the source of truth. An item is open only after all four paths come back empty (modulo the originating file itself).",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 152,
+      "instructionsPath": "skills/kg/kg-core/corpus-grep.md",
+      "name": "corpus-grep",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fed1c8ac505b1893b24d3c72a65fc7b7a118ab8e8f7e9806dd91e5b343ef2f4d",
+        "bytes": 6886,
+        "sha256": "fed1c8ac505b1893b24d3c72a65fc7b7a118ab8e8f7e9806dd91e5b343ef2f4d"
+      },
+      "title": "Corpus-Grep Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/data-modelling",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Build a data model: identify the entities a body of work is actually about, the relations between them, and the cardinalities — then declare it where the tools can read it. Process-agnostic technique; the CRDM phase that invokes it is `crdm-data-model`.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 265,
+      "instructionsPath": "skills/kg/kg-core/data-modelling.md",
+      "name": "data-modelling",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/decd46aa05267b7a7d7e4a44f5f00539f033e09b633ece95fa0a545b506387ce",
+        "bytes": 14866,
+        "sha256": "decd46aa05267b7a7d7e4a44f5f00539f033e09b633ece95fa0a545b506387ce"
+      },
+      "title": "Data modelling — the entities, before the fields"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/directory-conventions",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 1529,
+      "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
+      "name": "directory-conventions",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/234c8c2a7eab9b5d59d8edcc7c225e73fe31a750d7b7ab6d475459ebaa71b46d",
+        "bytes": 117545,
+        "sha256": "234c8c2a7eab9b5d59d8edcc7c225e73fe31a750d7b7ab6d475459ebaa71b46d"
+      },
+      "title": "Directory conventions — what an instance declares it scans"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/flushable-containers",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "A flushable container is a named store that accumulates by design — a trash you can recover from, a review preview, a console log. It declares a buffer limit, badges when over it, and offers three flush actions: flush all, trim to limit, and select to prune. What \"flush\" means, and which end of the order is expendable, are declared per container and differ.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 176,
+      "instructionsPath": "skills/kg/kg-core/flushable-containers.md",
+      "name": "flushable-containers",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9c139a7b347a96c2bb08db16e0f1cbb40c4411781c6f161b9eda4c9c01a07135",
+        "bytes": 9632,
+        "sha256": "9c139a7b347a96c2bb08db16e0f1cbb40c4411781c6f161b9eda4c9c01a07135"
+      },
+      "title": "Flushable containers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-requirements",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 253,
+      "instructionsPath": "skills/kg/kg-core/harness-requirements.md",
+      "name": "harness-requirements",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a7d9cfa9452f402ca90a523666b9694ceedade9381e1a50d5d377d8ee62f4328",
+        "bytes": 13034,
+        "sha256": "a7d9cfa9452f402ca90a523666b9694ceedade9381e1a50d5d377d8ee62f4328"
+      },
+      "title": "Harness requirements — what an instance owes for what it declares"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-kinds",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH kind must declare. Read before naming a new instance, before adding a value to the graph-kind registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 289,
+      "instructionsPath": "skills/kg/kg-core/instance-kinds.md",
+      "name": "instance-kinds",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/74f877024d9b8c871fb61d49e0ce5b7fa5f6cff0d5ea5bcf96cee7a00afb9181",
+        "bytes": 14202,
+        "sha256": "74f877024d9b8c871fb61d49e0ce5b7fa5f6cff0d5ea5bcf96cee7a00afb9181"
+      },
+      "title": "Instance kinds — naming one, and what a new kind must declare"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-publication",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft. Also the one home for which graph each instance publishes, where, under which IRI and schema, and what is stripped from it.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 455,
+      "instructionsPath": "skills/kg/kg-core/instance-publication.md",
+      "name": "instance-publication",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/43280bf1d650f39b3aff26782e9a4353f0974fc2fd5240b19a53cad58b851243",
+        "bytes": 25354,
+        "sha256": "43280bf1d650f39b3aff26782e9a4353f0974fc2fd5240b19a53cad58b851243"
+      },
+      "title": "instance-publication — draft is a state, not an absence of one"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-contribution-offer",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Ask whether agreed requirements should become knowledge-graph content, and as what — in a form the person can answer by selecting. Use at the end of CRDM sign-off, or whenever a body of agreed work could become a skill, a process, a schema or a bean and nobody has been asked. Offers \"none\" as a first-class answer.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 238,
+      "instructionsPath": "skills/kg/kg-core/kg-contribution-offer.md",
+      "name": "kg-contribution-offer",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8e702786603201707a960ac36f9846b8e8f79484971d200757ab1a72205fe870",
+        "bytes": 11636,
+        "sha256": "8e702786603201707a960ac36f9846b8e8f79484971d200757ab1a72205fe870"
+      },
+      "title": "Offering the knowledge graph — the question nobody was asking"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-export",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Serialize an instance's knowledge graph to one JSON document, for publication and inspection. Read when asked to visualize, audit or share the KG, and before adding a node type to the export.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 1021,
+      "instructionsPath": "skills/kg/kg-core/kg-export.md",
+      "name": "kg-export",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/115d2005d64a73f9ff6909ce77e0a0f5e992505566aa37e052e241e40d3df4c1",
+        "bytes": 55721,
+        "sha256": "115d2005d64a73f9ff6909ce77e0a0f5e992505566aa37e052e241e40d3df4c1"
+      },
+      "title": "KG export — publishing the graph as linked data, not as a page"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-to-portal",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Getting a knowledge graph out to a public portal — the six stages between \"the graph is in the repository\" and \"a reader's browser has the bytes\", why a CDN is a layer rather than a publication host, and which decisions are the deployment's to make rather than the pipeline's.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 241,
+      "instructionsPath": "skills/kg/kg-core/kg-to-portal.md",
+      "name": "kg-to-portal",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8b6060b454a52da1d7c8baa3dbf67c1a8d0e5c10e2564cefe0c0ac0418b04a52",
+        "bytes": 13424,
+        "sha256": "8b6060b454a52da1d7c8baa3dbf67c1a8d0e5c10e2564cefe0c0ac0418b04a52"
+      },
+      "title": "KG → package → distribution → portal"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/placement",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Establish where a new node belongs BEFORE you create it — which instance, which declared graph, which kind of node, and which of the two \"stub\" conventions applies. Read before adding a skill, role, actor, workflow, decision table, schema, tool or content object, and before writing any literal that names one folio.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 337,
+      "instructionsPath": "skills/kg/kg-core/placement.md",
+      "name": "placement",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f3e2d55911d049c9d05ce59b9158bdd4097866ca8bb4a40a9e20e88d6456567f",
+        "bytes": 17863,
+        "sha256": "f3e2d55911d049c9d05ce59b9158bdd4097866ca8bb4a40a9e20e88d6456567f"
+      },
+      "title": "Placement — decide where it goes before you write it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/schema-management",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Manage a schema over its life — add one, change one, read the schema graph and its viewer, and act on what the reader could not determine. The layout rule lives in `directory-conventions`; the entity question lives in `data-modelling`; this is the work in between.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 444,
+      "instructionsPath": "skills/kg/kg-core/schema-management.md",
+      "name": "schema-management",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fa54602fb8956b4ce8cf48827d2baf90bca5ec060b70fc23c02f7621e654b1c9",
+        "bytes": 22804,
+        "sha256": "fa54602fb8956b4ce8cf48827d2baf90bca5ec060b70fc23c02f7621e654b1c9"
+      },
+      "title": "Managing a schema — the graph, the viewer, and the three answers that are not \"fine\""
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skill-registration",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Adding a skill is never a one-file change. What a new skill file owes, the one command that performs the derived half, the one declaration it deliberately leaves to you, why running it once is not enough, and the two orphan directions it reports rather than fixes. Read this before adding, renaming or removing a skill.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 138,
+      "instructionsPath": "skills/kg/kg-core/skill-registration.md",
+      "name": "skill-registration",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/19104094799f5127dab38b3549693353e6bffcf1e3a9d4ca6645f917eeb2010a",
+        "bytes": 6797,
+        "sha256": "19104094799f5127dab38b3549693353e6bffcf1e3a9d4ca6645f917eeb2010a"
+      },
+      "title": "Adding a skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skill-voice-review",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Reviews a skill against a voice that judges skills — the base `agent-skill-authoring` voice or a vendor override such as Claude's, Gemini CLI's or OpenAI's — rule by rule, with each rule's citation open, and records the verdicts with `voice:review`. Use when `skill-voice-review-current` reports a skill never reviewed or reviewed before the skill or the voice changed, or when asked whether a skill follows a vendor's authoring guidance. The agent half of that axis; the mechanical half, in `scripts/skill-voice-review.ts`, only says whether a current review exists.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 102,
+      "instructionsPath": "skills/kg/kg-core/skill-voice-review.md",
+      "name": "skill-voice-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/406ce1e45b5daacb16826b5cb446b787947e0c8df6b22b98c8e879c236d62e6b",
+        "bytes": 4743,
+        "sha256": "406ce1e45b5daacb16826b5cb446b787947e0c8df6b22b98c8e879c236d62e6b"
+      },
+      "title": "Skill voice review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/surprise-to-corpus",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "What was unexpected in that task, and does it belong in the corpus? Logical surprise is the detectable kind, recurrence is the filter that stops this generating noise every turn, and the agent PROMPTS — it never writes corpus guidance unasked.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 193,
+      "instructionsPath": "skills/kg/kg-core/surprise-to-corpus.md",
+      "name": "surprise-to-corpus",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/52c146dd9b0ec68abc0017f979c52d8693a75bf1820a90bb6aa7dc2c9a52422c",
+        "bytes": 10015,
+        "sha256": "52c146dd9b0ec68abc0017f979c52d8693a75bf1820a90bb6aa7dc2c9a52422c"
+      },
+      "title": "Surprise to corpus — notice it, filter it, then ask"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uml-overview",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Read, regenerate or extend the UML class diagrams of a harness: one per harness and one per named sub-graph it declares, plus the harness object model. Every box is generated from a declaration and a schema, never drawn by hand, so a wrong diagram is fixed at the declaration or the schema, and a dashed \"could not determine\" box is a finding about the registry.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 178,
+      "instructionsPath": "skills/kg/kg-core/uml-overview.md",
+      "name": "uml-overview",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f0b2a672ba9c2e1556a8dd5730cc0290dce149d7c89c079b5c938cfa203ed937",
+        "bytes": 10061,
+        "sha256": "f0b2a672ba9c2e1556a8dd5730cc0290dce149d7c89c079b5c938cfa203ed937"
+      },
+      "title": "UML overview: generated from declarations and schemas, never drawn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/vocabulary-authority",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "One vocabulary is authoritative for one kind of fact, and every other is a derived rendering reached by a declared mapping. Which vocabulary owns what here, the pros and cons behind each ruling, how DC and SKOS overlap and what stops them drifting, and the normalisation-first rule for any modelling or mapping exercise.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 173,
+      "instructionsPath": "skills/kg/kg-core/vocabulary-authority.md",
+      "name": "vocabulary-authority",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a3705fc04842173aeb4d14eebad83b6ecd2db7711dc7d3e8b2cda2617c670a7b",
+        "bytes": 8498,
+        "sha256": "a3705fc04842173aeb4d14eebad83b6ecd2db7711dc7d3e8b2cda2617c670a7b"
+      },
+      "title": "Vocabulary authority — one fact, one home, N renderings"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/kg/kg-core",
+  "path": "skills/kg/kg-core/"
+}
