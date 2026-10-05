@@ -133,27 +133,27 @@
  * cannot be falsified — red once, green on the rerun (`generalise-the-fix`
  * Move 3).
  *
- * ## It is NOT WIRED INTO CI YET, and that is not the same as passing
+ * ## Wired, and the wiring arrived with the name
  *
- * There is no `audit:reachability:check` alias and no step in
- * `code-quality-gates.yml`, so `gates.ts` does not derive this and **`bun run
- * gates` does not run it.** A gate that does not fire is indistinguishable from
- * one that passed — bean `1xhc`, the epic this work sits under — so the absence
- * is stated here rather than left to be discovered.
+ * `audit:reachability:check` is a step in `code-quality-gates.yml`, so
+ * `gates.ts` derives it and `bun run gates` runs it. The step, the
+ * `package.json` alias and this paragraph landed in ONE change, separately from
+ * the script, which came first with no step at all — `merge-main`'s resolution
+ * push carries no `workflows` scope, so a pull request touching that file needs
+ * a human push on every main-merge round (9 of 20 open PRs, owner ruling
+ * 2026-10-04).
  *
- * Both land in one follow-up pull request, together: the workflow file had to
- * leave this change because `merge-main`'s resolution push carries no
- * `workflows` scope, so any PR touching it cannot be resolved by the bot (9 of
- * 20 open PRs, owner ruling 2026-10-04). Splitting a gate's NAME from its
- * WIRING is how a check becomes registered-and-never-run (`t373`; `1xhc`
- * measured 21 of 33), so the alias waits for its step rather than arriving
- * ahead of it.
+ * The seam was chosen so that nothing could sit registered-and-never-run in
+ * between: the gate's NAME travels with its WIRING, and `gates.ts`'s own
+ * `unrunScripts` ratchet is what refuses any other split. `1xhc` measured 21 of
+ * 33 `check:` scripts in no workflow, and `t373` is the one that was RED on
+ * `main` while CI reported green, because nothing ran it.
  *
  * Usage:
- *   bun run audit:reachability                                  # report, write the working copy
- *   bun run cat-harness/scripts/audit-reachability.ts --check    # judge, write nothing
- *   bun run cat-harness/scripts/audit-reachability.ts --check --against main
- *   bun run cat-harness/scripts/audit-reachability.ts --check --strict
+ *   bun run audit:reachability                      # report, write the working copy
+ *   bun run audit:reachability:check                # judge, write nothing
+ *   bun run audit:reachability:check -- --against main   # ...against the qa-reports branch
+ *   bun run audit:reachability:strict               # ...and fail on an unrun entry point
  *
  * @module scripts/audit-reachability
  * @covers processes, code
