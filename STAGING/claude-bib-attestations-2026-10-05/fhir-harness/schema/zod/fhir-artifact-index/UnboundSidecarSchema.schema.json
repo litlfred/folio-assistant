@@ -1,0 +1,41 @@
+{
+  "$ref": "#/definitions/UnboundSidecar",
+  "definitions": {
+    "UnboundSidecar": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "enumeration": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "filename",
+        "enumeration",
+        "reason"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-artifact-index/UnboundSidecarSchema.schema.json",
+  "title": "UnboundSidecarSchema",
+  "description": "Generated from `UnboundSidecarSchema` in schemas/fhir-artifact-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/bib-attestations-2026-10-05",
+    "sha": "98353430c611b8f1d498745aed95df64626fc605",
+    "pr": "2232/merge",
+    "run": "37365979552"
+  }
+}
