@@ -133,7 +133,11 @@ export function instanceView(harnesses: readonly Harness[], instance: string, li
   const byName = new Map(harnesses.map((h) => [h.name, h]));
   const reach = new Set([instance]);
   for (const queue = [instance]; queue.length > 0; ) {
-    for (const n of byName.get(queue.shift()!)?.needs ?? []) if (!reach.has(n)) (reach.add(n), queue.push(n));
+    for (const n of byName.get(queue.shift()!)?.needs ?? []) {
+      if (reach.has(n)) continue;
+      reach.add(n);
+      queue.push(n);
+    }
   }
   const root = linkRoot.replace(/\/$/, "");
   const own = `/${instance}/`;
