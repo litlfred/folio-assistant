@@ -47,6 +47,17 @@ classDiagram
       rationale [0..1] string
     }
   }
+  namespace folio_assistant_sci__folio_assistant_sci_content_adapters {
+    class folio_assistant_sci_folio_assistant_sci_content_adapters_folio_content_adapter_v1_folio_content_adapter_v1["folio-content-adapter/v1"] {
+      <<json: ContentAdapterNodeSchema>>
+      $schema [1] 'folio-content-adapter/v1'
+      adapter [1] string
+      typed [1] boolean
+      companionRoles [1..*] enum(9)[]
+      vocabulary [0..1] string
+      rationale [0..1] string
+    }
+  }
   namespace folio_assistant_sci__folio_assistant_sci_kinds {
     class folio_assistant_sci_folio_assistant_sci_kinds_folio_graph_kind_v1_folio_graph_kind_v1["folio-graph-kind/v1"] {
       <<json: GraphKindNodeSchema>>
@@ -361,6 +372,7 @@ classDiagram
   cssClass "folio_assistant_sci_folio_assistant_sci_pipeline_plugins_folio_pipeline_plugin_v1_folio_pipeline_plugin_v1" fa_uml_kind_pipeline_plugins
   cssClass "folio_assistant_sci_folio_assistant_sci_translations_TranslationConfig" fa_uml_kind_translation_sources
   cssClass "folio_assistant_sci_folio_assistant_sci_block_kinds_folio_block_kind_v1_folio_block_kind_v1" fa_uml_kind_block_kinds
+  cssClass "folio_assistant_sci_folio_assistant_sci_content_adapters_folio_content_adapter_v1_folio_content_adapter_v1" fa_uml_kind_content_adapters
   cssClass "folio_assistant_sci_folio_assistant_sci_kinds_folio_graph_kind_v1_folio_graph_kind_v1" fa_uml_kind_kinds
   cssClass "folio_assistant_sci_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "folio_assistant_sci_library_folio_image_verdicts_v1" fa_uml_kind_library

@@ -134,6 +134,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - C@T Harness — *declared, not published*
 
+### `content-adapters`
+
+0 of 2 published.
+{: .fa-hx-dim }
+
+- folio-assistant-sci — *declared, not published*
+- SMART Base — *declared, not published*
+
 ### `docs`
 
 6 of 6 published.

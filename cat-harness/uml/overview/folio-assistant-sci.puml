@@ -51,6 +51,16 @@ package "folio-assistant-sci/folio-assistant-sci-block-kinds" as pkg_folio_assis
     rationale [0..1] : string
   }
 }
+package "folio-assistant-sci/folio-assistant-sci-content-adapters" as pkg_folio_assistant_sci_folio_assistant_sci_content_adapters <<content-adapters>> {
+  class "folio-content-adapter/v1" as folio_assistant_sci_folio_assistant_sci_content_adapters_folio_content_adapter_v1_folio_content_adapter_v1 <<json: ContentAdapterNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-content-adapter/v1'
+    adapter [1] : string
+    typed [1] : boolean
+    companionRoles [1..*] : enum(9)[]
+    vocabulary [0..1] : string
+    rationale [0..1] : string
+  }
+}
 package "folio-assistant-sci/folio-assistant-sci-kinds" as pkg_folio_assistant_sci_folio_assistant_sci_kinds <<kinds>> {
   class "folio-graph-kind/v1" as folio_assistant_sci_folio_assistant_sci_kinds_folio_graph_kind_v1_folio_graph_kind_v1 <<json: GraphKindNodeSchema>> #f4f4f1 {
     $schema [1] : 'folio-graph-kind/v1'
@@ -340,11 +350,12 @@ folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_So
 folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Pattern : patterns
 folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Terminology : terminology
 folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_Rule : rules
-' grid: portrait, 3 column(s) — pkg_folio_assistant_sci_folio_assistant_sci_qa_checkers pkg_folio_assistant_sci_folio_assistant_sci_pipeline_plugins pkg_folio_assistant_sci_folio_assistant_sci_translations pkg_folio_assistant_sci_folio_assistant_sci_block_kinds pkg_folio_assistant_sci_folio_assistant_sci_kinds pkg_folio_assistant_sci_library pkg_folio_assistant_sci_sci_methodologies pkg_folio_assistant_sci_skills pkg_folio_assistant_sci_sci_adapters pkg_folio_assistant_sci_sci_tools pkg_folio_assistant_sci_sci_sources pkg_folio_assistant_sci_sci_processes pkg_folio_assistant_sci_qa pkg_folio_assistant_sci_attestations pkg_folio_assistant_sci_voices pkg_folio_assistant_sci_lean_skills pkg_folio_assistant_sci_data_skills
+' grid: portrait, 3 column(s) — pkg_folio_assistant_sci_folio_assistant_sci_qa_checkers pkg_folio_assistant_sci_folio_assistant_sci_pipeline_plugins pkg_folio_assistant_sci_folio_assistant_sci_translations pkg_folio_assistant_sci_folio_assistant_sci_block_kinds pkg_folio_assistant_sci_folio_assistant_sci_content_adapters pkg_folio_assistant_sci_folio_assistant_sci_kinds pkg_folio_assistant_sci_library pkg_folio_assistant_sci_sci_methodologies pkg_folio_assistant_sci_skills pkg_folio_assistant_sci_sci_adapters pkg_folio_assistant_sci_sci_tools pkg_folio_assistant_sci_sci_sources pkg_folio_assistant_sci_sci_processes pkg_folio_assistant_sci_qa pkg_folio_assistant_sci_attestations pkg_folio_assistant_sci_voices pkg_folio_assistant_sci_lean_skills pkg_folio_assistant_sci_data_skills
 pkg_folio_assistant_sci_folio_assistant_sci_qa_checkers -[hidden]down- pkg_folio_assistant_sci_folio_assistant_sci_block_kinds
-pkg_folio_assistant_sci_folio_assistant_sci_pipeline_plugins -[hidden]down- pkg_folio_assistant_sci_folio_assistant_sci_kinds
-pkg_folio_assistant_sci_folio_assistant_sci_translations -[hidden]down- pkg_folio_assistant_sci_library
-pkg_folio_assistant_sci_folio_assistant_sci_block_kinds -[hidden]down- pkg_folio_assistant_sci_sci_methodologies
+pkg_folio_assistant_sci_folio_assistant_sci_pipeline_plugins -[hidden]down- pkg_folio_assistant_sci_folio_assistant_sci_content_adapters
+pkg_folio_assistant_sci_folio_assistant_sci_translations -[hidden]down- pkg_folio_assistant_sci_folio_assistant_sci_kinds
+pkg_folio_assistant_sci_folio_assistant_sci_block_kinds -[hidden]down- pkg_folio_assistant_sci_library
+pkg_folio_assistant_sci_folio_assistant_sci_content_adapters -[hidden]down- pkg_folio_assistant_sci_sci_methodologies
 pkg_folio_assistant_sci_folio_assistant_sci_kinds -[hidden]down- pkg_folio_assistant_sci_skills
 pkg_folio_assistant_sci_library -[hidden]down- pkg_folio_assistant_sci_sci_adapters
 pkg_folio_assistant_sci_sci_methodologies -[hidden]down- pkg_folio_assistant_sci_sci_tools

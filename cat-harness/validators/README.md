@@ -21,6 +21,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-validators`,
 | [`boards-board.json`](boards-board.json) | data |  |
 | [`code-list.json`](code-list.json) | data |  |
 | [`computation-witness.json`](computation-witness.json) | data |  |
+| [`content-adapter-node.json`](content-adapter-node.json) | data |  |
 | [`document-kind-coverage.json`](document-kind-coverage.json) | data |  |
 | [`document-kind.json`](document-kind.json) | data |  |
 | [`external-schema-external-schema.json`](external-schema-external-schema.json) | data |  |
@@ -43,6 +44,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-validators`,
 | [`memory-node.json`](memory-node.json) | data |  |
 | [`merge-queue-merge-queue-entry.json`](merge-queue-merge-queue-entry.json) | data |  |
 | [`odrl-policy.json`](odrl-policy.json) | data |  |
+| [`payload-sidecar.json`](payload-sidecar.json) | data |  |
 | [`pinned-terminology.json`](pinned-terminology.json) | data |  |
 | [`pipeline-plugin-node.json`](pipeline-plugin-node.json) | data |  |
 | [`qa-attestations.json`](qa-attestations.json) | data |  |
