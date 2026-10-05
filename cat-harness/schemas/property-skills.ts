@@ -31,6 +31,8 @@ export const PROPERTY_SKILLS = {
   // section on the landing page (bean `ob3m` findings 4–5).
   summary: { skills: ["harness-tiles"] },
   alsoWritten: { skills: ["harness-tiles"] },
+  // The instance's own avatar, moved off the table in avatars.ts (sod4 #4).
+  avatar: { skills: ["harness-tiles"] },
   images: { skills: ["theme-declaration", "harness-tiles"] },
   assets: { skills: ["directory-conventions"] },
   icon: { skills: ["theme-declaration", "harness-tiles"] },

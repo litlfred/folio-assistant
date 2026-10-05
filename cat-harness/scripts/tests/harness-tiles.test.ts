@@ -955,7 +955,10 @@ describe("every harness's navbar MARK is resolved once — bean `2vpn`", () => {
   // needs to be consistent and consolidated"*. who-iris's mark was a registry
   // glyph, and the resolver only knew theme cards and declared icons.
   test("an instance with its own registry glyph and no image carries the GLYPH as its mark", () => {
-    const f = fixture({ "smart-base": { name: "smart-base", directories: [] }, host: host() });
+    // The glyph is the declaration's own `avatar` (sod4 #4), so the fixture
+    // carries it rather than leaning on the real checkout's smart-base.json.
+    const avatar = { glyph: "M0 0h1v1z", tone: 210, reads: "test" };
+    const f = fixture({ "smart-base": { name: "smart-base", directories: [], avatar }, host: host() });
     const sb = tilesOf(f).find((t) => t.name === "smart-base")!;
     expect(sb.mark?.glyph).toMatch(/^M/);
     expect(sb.mark?.src).toBeUndefined();

@@ -64,6 +64,9 @@ package "folio-assistant-core/folio-assistant-core-kinds" as pkg_folio_assistant
     within [0..1] : string
     avatar [0..1] : object
     tileIcon [0..1] : string
+    published [0..1] : false
+    skillBearing [0..1] : true
+    kgContent [0..1] : true
     description [0..1] : string
     renderableNote [0..1] : string
     anyLayer [0..1] : true
