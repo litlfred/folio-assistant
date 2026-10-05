@@ -128,6 +128,11 @@ export async function buildFolioSite(
   outDir: string,
   opts: { route?: string; math?: boolean } = {},
 ): Promise<FolioSiteResult> {
+  // declared-path-literal: this is the published URL ROUTE the owner named
+  // (2026-10-05: "<base_url>/cat-harness/folio/<paper>/<chapter>/<section>"),
+  // under the OUTPUT directory — not cat-harness's declared `folio/` graph, and
+  // nothing is read from that directory. Resolving the declaration here would
+  // tie a URL to wherever an instance keeps its sources. `--route` overrides it.
   const route = (opts.route ?? "cat-harness/folio").replace(/^\/+|\/+$/g, "");
   const base = join(outDir, route);
   const math = opts.math ?? readHarnessConfig(repoRoot)?.contentType === "paper";
