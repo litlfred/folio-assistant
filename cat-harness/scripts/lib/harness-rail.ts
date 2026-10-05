@@ -165,10 +165,12 @@ export function railModel(o: RailOptions): NavbarModel & { graphs: NavGroup } {
     // is open"*.
     ...(o.documentIndex ? { visualiser: o.documentIndex } : {}),
     // Collapsible so the whole stack folds in one click -- the owner's
-    // "librarues should be in hambuger menu so can collase all". Open only
-    // when the page has no section of its own; `navbarRegionsHtml` folds it
-    // whenever a visualiser section is present.
-    graphs: { label: "Graphs", icon: "\u25A4", items: o.links, collapsible: true, open: true },
+    // "librarues should be in hambuger menu so can collase all" -- and FOLDED
+    // on arrival on every page: owner, 2026-10-05 (#2150), *"also have the
+    // "Graphs" section start closed on LHS navbar"*. It was open whenever the
+    // page had no section of its own. `navbarRegionsHtml` still opens it when
+    // one of its rows is the current page, so the reader's place stays visible.
+    graphs: { label: "Graphs", icon: "\u25A4", items: o.links, collapsible: true, open: false },
     ...(harnesses ? { harnesses } : {}),
     home: { href: `${o.toRoot}/`, label: o.homeLabel ?? "folio-assistant", icon: "\u2302" },
   };

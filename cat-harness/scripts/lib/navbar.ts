@@ -86,6 +86,21 @@ export interface NavItem {
    */
   glyphPath?: string;
   /**
+   * This row opens a GRAPH KIND — a `docs`, `library`, `beans` row — rather
+   * than a harness, a page or an index entry. Set by `graphKindRowDecor`, the
+   * one place a kind row is decorated.
+   *
+   * DECLARED, never inferred from the mark. A kind row sits in the strip's
+   * column (bean `yag0`, the `a.fa-nav-kind` rule in {@link navbarCss}), and
+   * that class used to be read off `glyphPath`: "an SVG mark means a kind".
+   * True only until #2122 gave seven HARNESSES glyph marks — smart-trust and
+   * SMART Base then took the kind rows' indent and sat flush left of the
+   * avatar-marked harnesses beside them (#2151, owner: *"alignment of
+   * harnesses is off"*). What a row IS decides where it sits; what its mark
+   * is drawn with does not.
+   */
+  kind?: boolean;
+  /**
    * The rest of the row's ACCESSIBLE NAME, after {@link label} — rendered as
    * visually-hidden text inside the link and as its `title`. The visible
    * label stays short; the name a screen reader or a hover gives is full, and
@@ -652,10 +667,10 @@ function itemHtml(i: NavItem, c: Ctx): string {
     // and a live one sit at the same indent (and a dead NON-kind row at the
     // same indent as its linked siblings — the schemas rail put `all` one
     // step left of the subjects beside it, owner 2026-10-01).
-    const deadKind = i.glyphPath && !i.icon ? " fa-nav-kind" : "";
+    const deadKind = i.kind ? " fa-nav-kind" : "";
     row = `<span class="fa-nav-dead${deadKind}"${d}${title}>${body}${note}</span>`;
   } else {
-    const kind = i.glyphPath && !i.icon ? ' class="fa-nav-kind"' : "";
+    const kind = i.kind ? ' class="fa-nav-kind"' : "";
     row = `<a href="${href(i.href, c)}"${kind}${d}${title}${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
   }
   if (!i.action && !i.children) return row;
@@ -678,6 +693,26 @@ function itemHtml(i: NavItem, c: Ctx): string {
   // positioned against a row it is not inside, which is the kind of geometry
   // `navbar-geometry.ts` exists to stop being re-decided.
   return `<div class="fa-nav-row">${row}${action}${kids}</div>`;
+}
+
+/** Does this row, or any row beneath it, stand for the page being read? */
+function holdsCurrent(i: NavItem): boolean {
+  return i.current === true || (i.children ?? []).some(holdsCurrent);
+}
+
+/**
+ * The graphs group's state on arrival (#2150).
+ *
+ * FOLDED when the page has a section of its own: that section IS where the
+ * reader is, and it is the one disclosure open on arrival (#1757's
+ * *"only the current pages visualiers LHS navbar is open"*, graded by
+ * `check-viewer-nav.ts` `single-open`). Otherwise as declared — folded, from
+ * `railModel` — UNLESS one of its rows is the page being read: a folded
+ * default must not hide where the reader is.
+ */
+function graphsOnArrival(g: NavGroup, hasOwnSection: boolean): NavGroup {
+  if (hasOwnSection) return { ...g, open: false };
+  return g.items.some(holdsCurrent) ? { ...g, open: true } : g;
 }
 
 function groupHtml(g: NavGroup, c: Ctx): string {
@@ -781,7 +816,7 @@ export function navbarRegionsHtml(m: NavbarModel): string {
     (m.graphs || m.visualiser
       ? `<div class="fa-nav-graphs">` +
         (m.visualiser ? groupHtml({ ...m.visualiser, collapsible: true, open: true }, c) : "") +
-        (m.graphs ? groupHtml(m.visualiser ? { ...m.graphs, open: false } : m.graphs, c) : "") +
+        (m.graphs ? groupHtml(graphsOnArrival(m.graphs, m.visualiser !== undefined), c) : "") +
         `</div>`
       : "") +
     `<div class="fa-nav-bottom">` +

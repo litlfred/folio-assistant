@@ -45,11 +45,13 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { gitCorpus } from "../../cat-harness/schemas/git-corpus.ts";
 import { dirname, join, relative, resolve } from "node:path";
 
-import { directoriesForGraph, findInstanceRoot, instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
+import { directoryEntriesForGraph, findInstanceRoot, instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
 import { resolveKindValidator, resolveNodeSchemas, stripAnnotations } from "../../cat-harness/schemas/kind-validator.js";
 import { HARNESS_ROOT, REPO_ROOT } from "./lib/roots.ts";
 import { ContributionRegistry } from "../../cat-harness/schemas/contributions.js";
 import { loadContributionsSync } from "../../cat-harness/schemas/harness-config.js";
+import { resolveSubgraphSource } from "../../cat-harness/schemas/subgraph-source.js";
+import { graphReadPath } from "../../cat-harness/scripts/graph-read.ts";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 const instanceRoot = HARNESS_ROOT;
@@ -139,6 +141,37 @@ export interface FamilySweep {
   invalid: { file: string; issue: string }[];
   /** No instance declares a directory of this kind — nested, or not yet present. */
   noDirectory?: boolean;
+  /**
+   * Every declared directory of this kind keeps its content on a branch TIP
+   * that this checkout has not mounted, so there was nothing here to read.
+   *
+   * **Could not determine — never a pass and never `EXAMINED NOTHING`.** The
+   * two are different claims: `EXAMINED NOTHING` says the graph was read and
+   * found to hold no node, and that is false of a graph this checkout cannot
+   * reach. The gate that FAILS on an unmounted cutover is
+   * `check:declared-dirs` (its `unmounted` finding, whose remedy is
+   * `bun run state:mount`); duplicating the failure here would give one defect
+   * two red gates and a reader no way to see which is the real one.
+   *
+   * Carries the reason `graphReadPath` refused with, so the remedy travels.
+   */
+  unreachable?: { id: string; reason: string }[];
+  /**
+   * The graph WAS read — in the checkout or at its mount — and holds no node,
+   * and that is a legitimate state for it.
+   *
+   * Only for a kind whose content is kept at a branch TIP: one live copy that
+   * a running process writes, where zero nodes means zero decisions have been
+   * taken yet. A determined empty, not an unexamined corpus. Bean `najo`: the
+   * merge queue's first entry is a steward's to write, and a gate that went
+   * red until somebody wrote one would be answered by writing a FABRICATED
+   * decision — which is exactly what bean `30jr` refused to do.
+   *
+   * A graph tracked in the checkout gets no such allowance: there, emptiness
+   * is a corpus that should be there and is not, which is what
+   * `EXAMINED NOTHING` is for.
+   */
+  emptyLiveStore?: { id: string; at: string }[];
   /** Directories of this kind stored on a branch FAMILY: by declaration not in the checkout (bean lehh). */
   onFamily?: number;
 }
@@ -201,25 +234,66 @@ export async function sweepFamilies(root: string): Promise<FamilySweep[]> {
     const byTag = new Map(fams.map((f) => [f.tag, f]));
     const s: FamilySweep = { kind, counts: {}, unmapped: [], unresolvable: [], invalid: [] };
     for (const f of fams) if (f.state === "unresolvable") s.unresolvable.push({ tag: f.tag, reason: f.reason });
+    const repoRoot = join(root, "..");
+    // WHERE TO READ, not where the declaration points. A graph kept at a branch
+    // tip is read at its mount, and when nothing is mounted there is no
+    // directory to read at all — which is a different answer from an empty one.
+    // Bean `najo`; `graphReadPath` is the one implementation of the question.
     const dirs = new Set<string>();
     // A directory stored on a BRANCH FAMILY (bean lehh) holds its nodes on the
     // family's branches by declaration, never in the checkout: named, not swept.
     const onFamily = new Set<string>();
-    for (const inst of instanceRootsIn(join(root, ".."))) {
+    const liveStores = new Map<string, string>();
+    let declared = 0;
+    for (const inst of instanceRootsIn(repoRoot)) {
       for (const e of readDeclaration(inst)?.directories ?? []) {
         const st = e.storage as { keyedBy?: string } | undefined;
         const src = e.source as { kind?: string } | undefined;
         if (e.graphKinds.includes(kind as never) && (st?.keyedBy === "family" || src?.kind === "family")) onFamily.add(join(inst, e.path).replace(/\/$/, ""));
       }
-      for (const d of directoriesForGraph(inst, kind)) if (!onFamily.has(d.replace(/\/$/, ""))) dirs.add(d);
+      for (const d of directoryEntriesForGraph(inst, kind)) {
+        if (onFamily.has(d.absPath.replace(/\/$/, ""))) continue;
+        declared++;
+        const src = (() => {
+          try {
+            return resolveSubgraphSource(d);
+          } catch {
+            // A contradictory declaration is `check:declared-dirs`'s finding,
+            // and not a reason for this sweep to stop reading.
+            return null;
+          }
+        })();
+        const atTip = src?.kind === "branch" && src.keyedBy === "tip";
+        // A directory in the checkout is read where its own instance declares
+        // it. `graphReadPath` resolves an id across the whole repository, so
+        // two instances' `glossary` would both resolve to one of them — only a
+        // branch-stored graph needs it, to find its mount.
+        if (src?.kind !== "branch") {
+          dirs.add(d.absPath);
+          continue;
+        }
+        const where = graphReadPath(d.id, repoRoot);
+        if (where.state === "refused") {
+          (s.unreachable ??= []).push({ id: d.id, reason: where.reason });
+          continue;
+        }
+        const at = where.state === "ok" ? where.at : d.absPath;
+        dirs.add(at);
+        if (atTip) liveStores.set(d.id, at);
+      }
     }
     s.onFamily = onFamily.size;
-    if (dirs.size === 0 && onFamily.size > 0) {
+    if (declared === 0 && onFamily.size > 0) {
+      out.push(s);
+      continue;
+    }
+    if (declared === 0) {
+      s.noDirectory = true;
       out.push(s);
       continue;
     }
     if (dirs.size === 0) {
-      s.noDirectory = true;
+      // Every directory of this kind is cut over and unmounted here.
       out.push(s);
       continue;
     }
@@ -248,6 +322,11 @@ export async function sweepFamilies(root: string): Promise<FamilySweep[]> {
         else s.invalid.push({ file: rel, issue: `${r.error.issues[0]?.path.join(".")}: ${r.error.issues[0]?.message}` });
       }
     }
+    // A live store that was READ and holds nothing: recorded here so the
+    // reporter can say "determined empty" rather than "examined nothing".
+    if (Object.values(s.counts).reduce((a, c) => a + c.nodes, 0) === 0 && liveStores.size > 0) {
+      s.emptyLiveStore = [...liveStores].map(([id, at]) => ({ id, at: relative(repoRoot, at) || "." }));
+    }
     out.push(s);
   }
   return out;
@@ -273,6 +352,25 @@ async function main(): Promise<number> {
       console.log(`  · ${f.onFamily} director(ies) on a branch FAMILY by declaration — the nodes are on the family's branches, not in this checkout, so not examined here`);
     } else if (f.noDirectory) {
       console.log(`  · no instance declares a ${f.kind} directory — nothing to route (a nested kind is reached through its parent)`);
+    } else if (f.unreachable && nodes === 0) {
+      // COULD NOT DETERMINE. Never printed as a pass, and never as
+      // `EXAMINED NOTHING`: nothing read this graph, so "no node was found" is
+      // a claim this run is not entitled to. `check:declared-dirs` is the gate
+      // that fails on it — one defect, one red gate. Bean `najo`.
+      for (const u of f.unreachable) {
+        console.log(`  ⚠ could not determine — ${f.kind} at \`${u.id}\` was not read: ${u.reason}`);
+      }
+    } else if (f.emptyLiveStore && nodes === 0) {
+      // A DETERMINED empty: read, and holding nothing, which is a legitimate
+      // state for one live copy a process writes. The alternative is a gate
+      // whose only remedy is to fabricate a node (bean `30jr` refused that).
+      for (const e of f.emptyLiveStore) {
+        console.log(
+          `  · ${f.kind} at \`${e.id}\` (${e.at}) was READ and holds no node — a determined empty, ` +
+            `not an unexamined corpus: its content is one live copy at a branch tip that a running ` +
+            `process writes, so zero nodes means zero have been written yet`,
+        );
+      }
     } else if (nodes === 0) {
       console.log(`  ✗ EXAMINED NOTHING — ${f.kind} declares nodeSchemas and no node was found`);
       familyFail = true;

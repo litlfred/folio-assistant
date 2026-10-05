@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 905,
+      "count": 910,
       "unit": "beans"
     }
   },
@@ -4886,6 +4886,20 @@
       "file": "beans/defs/folio-assistant-cn8y--page-follows-the-remembered-locale-mark-source-lan.md"
     },
     {
+      "id": "folio-assistant-cnhh",
+      "title": "LHS navbar: glyph-marked harness rows lose child indent (#2151)",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T05:36:04Z",
+      "updatedAt": "2026-10-05T14:40:27Z",
+      "preview": "Owner 2026-10-05: 'alignment of harnesses is off'. Issue #2151. itemHtml infers fa-nav-kind from glyphPath, so #2122's glyph harness marks got the kind-row padding. Make kind a declared NavItem field.\n\n\n\n## Completed by PR #2152 (2026-10-05)\n\nLands with #2152 (owner: \"finish and merge\" #2152, 2026-10-05), rendered-verified with Playwright screenshots on the PR. Its parent p5wm was closed on main b",
+      "file": "beans/defs/folio-assistant-cnhh--lhs-navbar-glyph-marked-harness-rows-lose-child-in.md"
+    },
+    {
       "id": "folio-assistant-cpmo",
       "title": "SMART-BASE CROSSWALKS: the v1 to v2 ConceptMaps exist, are draft, and one is incomplete",
       "status": "completed",
@@ -6042,6 +6056,20 @@
       "file": "beans/defs/folio-assistant-g43f--worktree-contaminated-sweeps-two-more-root-walking.md"
     },
     {
+      "id": "folio-assistant-g4o0",
+      "title": "SEARCH BAND: search + locale selector in the fa-glass-band; no overlap, magnifier right, one-click toggle",
+      "status": "todo",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T15:09:32Z",
+      "updatedAt": "2026-10-05T15:10:06Z",
+      "preview": "Owner, 2026-10-05 (two screenshots): the open search draws its 'Search everywhere' status line on top of the input; the magnifier jumps left when open; opening search pushes the locale selector to the next line. Wanted: status line below the input, magnifier on the right in both states, one button toggles, text preserved, locale selector on the same line, both controls in the fa-glass-band, Folio ",
+      "file": "beans/defs/folio-assistant-g4o0--search-band-search-locale-selector-in-the-fa-glass.md"
+    },
+    {
       "id": "folio-assistant-g4oc",
       "title": "Upstream DAK post-processing defects: view-page tabs, stale schemas/ copies, dead hub links",
       "status": "todo",
@@ -6160,12 +6188,12 @@
       "title": "NAVBAR ROW COUNTS: beans and todos icons carry count badges, as fsh-guts does",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-9rq1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T15:14:38Z",
-      "updatedAt": "2026-10-05T15:54:01Z",
+      "updatedAt": "2026-10-05T16:15:58Z",
       "preview": "Owner, 2026-10-05: \"why no count on beans and todos on LHS top navbar as badges like fsh-guts has?\" Find how fsh-guts draws the count badges, then make the shared row (navbar-row.js) show the bean and todo counts. Must work in both FULL and LITE row modes.\n\n_2026-10-05T15:53:58Z_ — Claimed by claude/vibrant-darwin-r6im60 — pushed to main so sibling sessions see it before this branch has a PR (bean",
       "file": "beans/defs/folio-assistant-gkv6--navbar-row-counts-beans-and-todos-icons-carry-coun.md"
     },
@@ -6235,7 +6263,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T14:39:33Z",
-      "updatedAt": "2026-10-05T15:27:50Z",
+      "updatedAt": "2026-10-05T16:18:11Z",
       "preview": "Owner, 2026-10-05: 'graphs containing ONLY folders is weird. combine w/ badge of count.' mountSidebarRail wraps mountInstanceGraphs' 'Folders N' details in a second 'Graphs' details. Make one disclosure titled Graphs carrying the count.\n\n## Done when\n- [ ] one 'Graphs N' disclosure on the theme sidebar; the rail already has one\n- [ ] e2e updated\n\n_2026-10-05T15:25:10Z_ — Claimed by claude/vibrant-",
       "file": "beans/defs/folio-assistant-gpbc--graphs-and-folders-are-one-heading-with-the-count.md"
     },
@@ -7307,6 +7335,20 @@
       "file": "beans/defs/folio-assistant-k9yq--sticky-art-default-square-crop-faded-unless-the-to.md"
     },
     {
+      "id": "folio-assistant-kd85",
+      "title": "LHS navbar: Graphs section starts closed (#2150)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T05:36:04Z",
+      "updatedAt": "2026-10-05T14:40:26Z",
+      "preview": "Owner 2026-10-05: 'also have the \"Graphs\" section start closed on LHS navbar'. Issue #2150. railModel declares graphs open:false; a group holding the current page opens; Jekyll sidebar opens Graphs when a folder link is the current page.\n\n\n\n## Completed by PR #2152 (2026-10-05)\n\nLands with #2152 (owner: \"finish and merge\" #2152, 2026-10-05), rendered-verified with Playwright screenshots on the PR.",
+      "file": "beans/defs/folio-assistant-kd85--lhs-navbar-graphs-section-starts-closed-2150.md"
+    },
+    {
       "id": "folio-assistant-ke1w",
       "title": "The archive rung stages but can never promote, and no rung reads plain text at all",
       "status": "todo",
@@ -8307,6 +8349,20 @@
       "updatedAt": "2026-09-30T00:33:58Z",
       "preview": "Found 2026-09-23 while ingesting the `doc-researcher` methodology (bean `ctp3`).\nA **reporting** inconsistency, not a wrong answer: both generators are internally\nright and they disagree about what \"this corpus\" means.\n\n## Measured\n\n`folio-assistant-core/processes/deep-document-research.bpmn` declares a lane\n`Deep researcher`, bound to the `deep-researcher` role.\n\n| generator | reaches that diagra",
       "file": "beans/defs/folio-assistant-nafz--glossary-export-walks-one-instances-diagrams-while.md"
+    },
+    {
+      "id": "folio-assistant-najo",
+      "title": "MERGE QUEUE OFF MAIN: the queue graph on its own branch store, so a steward can record a decision without opening a PR",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T08:20:32Z",
+      "updatedAt": "2026-10-04T08:21:20Z",
+      "preview": "## Brief\n\n**What and why.** `beans/queue/` holds no entries — only its README — and the reason is\nstructural. `main` is authoritative for `beans/`, so an entry reaches it only through a PR,\nand the owner has ruled that the merge steward does no development work: it must not open\nPRs of its own, because that has it setting its own priority in the queue it manages,\nspending the CI the queue is starv",
+      "file": "beans/defs/folio-assistant-najo--merge-queue-off-main-the-queue-graph-on-its-own-br.md"
     },
     {
       "id": "folio-assistant-nama",
@@ -10893,6 +10949,20 @@
       "updatedAt": "2026-09-26T09:00:43Z",
       "preview": "Found 2026-09-22 while re-deriving `j41m`'s own numbers adversarially, in the\nspirit of `w4tq`. **Not fixed, because it cannot be confirmed from here** —\nsee §\"Why this is a bean and not a push\".\n\n## What the files say\n\n    .github/workflows/discoverability-docs.yml:206   working-directory: folio-assistant\n    .github/workflows/publish.yml:566                working-directory: folio-assistant\n\nNei",
       "file": "beans/defs/folio-assistant-u9r9--two-typedoc-steps-name-a-working-directory-that-do.md"
+    },
+    {
+      "id": "folio-assistant-ugxd",
+      "title": "MERGE QUEUE CUTOVER: flip beans/queue to cat/cat-harness/merge-queue and move the main entries, as its own small PR",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T11:46:51Z",
+      "updatedAt": "2026-10-05T11:46:51Z",
+      "preview": "Split out of #2065 (bean folio-assistant-najo) by owner ruling 2026-10-05 (\"Land code now, switch later\", relayed by the merge manager). #2065 lands the code only: merge-queue-store.ts, merge-queue-cli.ts + tests, the checker ownId/unmountable fixes, steward read-back, merge:queue:* scripts. The queue stays on main until this lands.\n\n## What this PR does\n- [ ] Steward PAUSES queue writes on main f",
+      "file": "beans/defs/folio-assistant-ugxd--merge-queue-cutover-flip-beansqueue-to-catcat-harn.md"
     },
     {
       "id": "folio-assistant-uhkv",
@@ -14423,8 +14493,8 @@
         "file": "beans/defs/folio-assistant-p5wm--goal-2-lhs-navbar-working-with-instantiated-harnes.md",
         "status": "completed",
         "epics": 0,
-        "total": 3,
-        "closed": 3,
+        "total": 5,
+        "closed": 5,
         "open": 0,
         "inProgress": 0,
         "todo": 0,
@@ -14438,14 +14508,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 546,
+        "total": 549,
         "closed": 197,
-        "open": 349,
-        "inProgress": 132,
-        "todo": 216,
+        "open": 352,
+        "inProgress": 133,
+        "todo": 218,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3608058608058608
+        "share": 0.3588342440801457
       },
       {
         "id": "folio-assistant-vuip",
@@ -14479,8 +14549,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 528,
-    "coveredOpen": 525,
+    "openTotal": 531,
+    "coveredOpen": 528,
     "duplicateIds": 0
   }
 }

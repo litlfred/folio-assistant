@@ -478,22 +478,50 @@
     var mainContent = document.querySelector(".main-content, #main-content");
     if (!mainContent) return;
 
-    // Find the first h1 to place the bar after it
-    var h1 = mainContent.querySelector("h1");
-    var insertTarget = h1 ? h1.nextSibling : mainContent.firstChild;
-
     // No inline colours, here or below. Every one of this bar's pairs is a
     // per-scheme token in `docs-ui.css` with its measured ratio written beside
     // it -- bean `rptk`, where a literal written against the sidebar's dark
     // card came out at 1.34:1 on the page's light one.
-    var container = el("div", { class: "fa-page-lang-bar" });
+    var container = el("div", { class: "fa-page-lang-bar", "data-open": "false" });
 
-    // Globe emoji
-    var globe = el("span", {
-      class: "fa-page-lang-globe",
-      title: "Available translations for this page"
-    }, "\uD83C\uDF10");
-    container.appendChild(globe);
+    /* A DISCLOSURE IN THE BAND -- issue #2201. The bar was six tabs under the
+     * first heading; it now shares the band's row with search and the Folio
+     * handle, which on a 390px phone leaves no room for six tabs beside a
+     * magnifier. So the row shows the globe and the page's own language, and
+     * the same button opens the tabs beside it and closes them again (`l4zi`:
+     * the inverse is the same control in the same place). Its NAME is
+     * "Language"; the state is `aria-expanded`, as on the magnifier. */
+    var listId = "fa-page-lang-list";
+    var toggle = el("button", {
+      type: "button",
+      class: "fa-page-lang-toggle",
+      "aria-expanded": "false",
+      "aria-controls": listId,
+      "aria-label": "Language: " + (LOCALE_NAMES[currentLang] || currentLang.toUpperCase()),
+      title: "Available translations for this page",
+    });
+    toggle.appendChild(el("span", { class: "fa-page-lang-globe", "aria-hidden": "true" }, "\uD83C\uDF10"));
+    toggle.appendChild(el("span", { class: "fa-page-lang-current" }, currentLang.toUpperCase()));
+    toggle.appendChild(el("span", { class: "fa-page-lang-caret", "aria-hidden": "true" }, "\u25BE"));
+    container.appendChild(toggle);
+    var list = el("span", { class: "fa-page-lang-list", id: listId });
+
+    function paintLangOpen(open) {
+      container.setAttribute("data-open", open ? "true" : "false");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      glassBandActive("locale", open);
+    }
+    toggle.addEventListener("click", function () {
+      paintLangOpen(container.getAttribute("data-open") !== "true");
+    });
+    container.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape" || container.getAttribute("data-open") !== "true") return;
+      e.preventDefault();
+      e.stopPropagation();
+      paintLangOpen(false);
+      toggle.focus();
+    });
+    glassBandItem("locale", function () { paintLangOpen(false); });
 
     var remembered = rememberedLocale(currentLang, available);
 
@@ -525,36 +553,16 @@
           link.addEventListener("click", function () { setGlobalLocale(locale); });
         })(loc, tab);
       }
-      container.appendChild(tab);
+      list.appendChild(tab);
     }
+    container.appendChild(list);
 
-    // GUARDED, and this is a live crash rather than a precaution.
-    //
-    // `insertTarget` is `h1.nextSibling`, and the `h1` is not always inside
-    // `mainContent` -- so `insertBefore` throws `NotFoundError` and takes the
-    // REST of `init()` down with it. On this site that is `inlineDiagrams`
-    // and `mountFigures`, which is why no figure on the front page has zoom
-    // or full-width.
-    //
-    // MEASURED AS PRE-EXISTING, not inferred: the same throw, at this same
-    // line, reproduces on a build of `origin/main` (2026-09-22, Chromium, a
-    // `pageerror` listener on `/index.html`). It is fixed here rather than
-    // left because this change adds three more mounts to the same `init()`,
-    // and a function that eats everything downstream of it is a trap for the
-    // next one.
-    //
-    // Fallback chain: badges container → first child (not `null` which
-    // appends at the end — the landing page's h1 is outside mainContent,
-    // so `null` put the bar at y=5519).
-    if (insertTarget && insertTarget.parentNode !== mainContent) {
-      var badges = mainContent.querySelector(".fa-translation-badges");
-      insertTarget = badges ? badges.nextSibling : mainContent.firstChild;
-    }
-    // The badges row can ALSO sit outside `mainContent` (it is lifted under
-    // the h1), so its sibling is no safer than the h1's. Checked again, 2026-09-27:
-    // the throw was back on the home page, measured with a `pageerror` listener.
-    if (insertTarget && insertTarget.parentNode !== mainContent) insertTarget = mainContent.firstChild;
-    mainContent.insertBefore(container, insertTarget);
+    // IN THE BAND, at its inline-start (issue #2201). It used to be inserted
+    // after the first h1, guarded against an h1 outside `.main-content` that
+    // made `insertBefore` throw and took the rest of `init()` down with it
+    // (2026-09-22, 2026-09-27). Appending to a slot this file created has no
+    // reference node to go stale.
+    glassBandSlot("start").appendChild(container);
   }
 
   /* ── Colour scheme ───────────────────────────────────────────────────── */
@@ -1938,12 +1946,14 @@
      *
      * So there is ONE place and TWO states, and the place does not move:
      *
-     *   closed  the magnifier alone, floated to the inline-end of the display
-     *           panel's first line, so content flows beside it and it costs
-     *           no vertical space. `aria-expanded="false"`.
-     *   open    the magnifier, then the field across the FULL width of the
-     *           display panel, results the same width beneath it. Focus goes
-     *           into the field. `aria-expanded="true"`.
+     *   closed  the magnifier alone, at the inline-end of the glass band's
+     *           row (issue #2201; it was floated in the panel until then).
+     *           `aria-expanded="false"`.
+     *   open    the field across the rest of the band, then the magnifier —
+     *           in the SAME place, with the same look — and everything that
+     *           is not the field (results, the theme's status lines, a
+     *           preview's notice) dropped below it. Focus goes into the
+     *           field. `aria-expanded="true"`.
      *
      * The magnifier is the toggle in both states, and Escape anywhere inside
      * closes and returns focus to it (`l4zi`: the inverse is always the same
@@ -2003,6 +2013,31 @@
       searchHolder = el("div", { class: "fa-search-holder", id: "fa-search-holder" });
       searchHolder.appendChild(adopted);
 
+      /* EVERYTHING THAT IS NOT THE FIELD DROPS BELOW IT — issue #2201.
+       *
+       * Owner, 2026-10-05: the status line *"Search everywhere (15601
+       * entries, 16.9 MB) — now searching smart-trust"* was drawn ON TOP of
+       * the field, so neither the placeholder nor the typed text could be
+       * read. Measured on the gh-pages build of `smart-trust/index.html` at
+       * 1280px: the `.search-everywhere` button at x=124, y=92, inside the
+       * input's own box (x=124, y=92, 1124x36).
+       *
+       * The theme's script puts that button after `#search-results` and the
+       * identifier-lookup links at the end of the results' parent, and it
+       * does so when ITS fetch settles, which may be before or after this
+       * runs. So the results list moves into one container under the field,
+       * and the theme's own inserts land there by construction; anything
+       * that landed first is moved in after it. The container hangs below
+       * the field (`.fa-search-drop` in `docs-ui.css`), so nothing it holds
+       * can share the field's box. */
+      var searchDrop = el("div", { class: "fa-search-drop" });
+      var results = adopted.querySelector("#search-results, .search-results");
+      adopted.appendChild(searchDrop);
+      if (results) searchDrop.appendChild(results);
+      Array.prototype.forEach.call(
+        adopted.querySelectorAll(".search-everywhere, .search-remote"),
+        function (n) { if (n.parentNode !== searchDrop) searchDrop.appendChild(n); });
+
       /* The notice goes ON THE SEARCH SURFACE, not only in the staging banner.
        * Somebody who types into the box has not necessarily read the banner at
        * the top of the page — and the banner is about the PREVIEW, while this
@@ -2013,7 +2048,7 @@
       if (searchNotice) {
         var noticeEl = el("p", { class: "fa-search-notice", role: "status" });
         noticeEl.textContent = searchNotice;
-        searchHolder.appendChild(noticeEl);
+        searchDrop.appendChild(noticeEl);
       }
 
       searchHome = el("div", { class: "fa-search-home", "data-open": "false" });
@@ -2073,21 +2108,20 @@
         return nativeScroll.apply(window, arguments);
       };
 
-      searchHome.appendChild(searchToggle);
+      /* FIELD FIRST, MAGNIFIER LAST — issue #2201. The owner: *"the
+       * magnifier stays on the right always"*. It was first in the row, so
+       * opening slid it from the inline-end (closed, floated) to the
+       * inline-start (open, before the field). Last in DOM order, in a row
+       * that sits at the band's inline-end, it is in the same place in both
+       * states and the field opens towards the inline-start beside it. */
       searchHome.appendChild(searchHolder);
+      searchHome.appendChild(searchToggle);
 
-      /* The display panel's own content column. `.main-header` is NOT used:
-       * the theme hides it below its nav breakpoint, which once made search
-       * compute to 0x0 at 700px. `.main-content-wrap` is never hidden. The
-       * fallbacks exist because a theme that renamed the wrap may still have
-       * the header, and search in the wrong place beats search nowhere. */
-      var panelTop = firstMatch([".main-content-wrap", ".main-header", "#main-header"]);
-      if (panelTop) panelTop.insertBefore(searchHome, panelTop.firstChild);
-      else {
-        var mainEl = firstMatch(["#main-content", ".main-content", "main"]);
-        if (mainEl && mainEl.parentNode) mainEl.parentNode.insertBefore(searchHome, mainEl);
-        else document.body.appendChild(searchHome);
-      }
+      /* IN THE BAND, at its inline-end — issue #2201. The band is the row the
+       * page's own controls share with the Folio handle; `glassBandSlot`
+       * says where it is mounted and why. */
+      glassBandSlot("end").appendChild(searchHome);
+      glassBandItem("search", function () { closeSearch(false); });
 
       paintSearchOpen(storedSearchOpen());
     } else {
@@ -2099,7 +2133,19 @@
       if (!searchHome) return;
       searchHome.setAttribute("data-open", open ? "true" : "false");
       searchToggle.setAttribute("aria-expanded", open ? "true" : "false");
-      searchToggle.setAttribute("title", open ? "Close search (Esc)" : "Search this site");
+      // NO TOOLTIP WHILE OPEN — issue #2201. The owner's screenshot had
+      // "Close search (Esc)" drawn over the lines under the field. Closed, the
+      // tooltip is how a pointer reader learns what the glyph does; open, the
+      // field beside it already says so, and Escape is announced by
+      // `aria-keyshortcuts` instead.
+      if (open) {
+        searchToggle.removeAttribute("title");
+        searchToggle.setAttribute("aria-keyshortcuts", "Escape");
+      } else {
+        searchToggle.setAttribute("title", "Search this site");
+        searchToggle.removeAttribute("aria-keyshortcuts");
+      }
+      glassBandActive("search", open);
     }
 
     function rememberSearchOpen(open) {
@@ -5462,12 +5508,15 @@
    * covers the side bar's own controls.
    */
   function placeHandleBand(handle) {
-    var band = el("div", { class: "fa-glass-band", "aria-hidden": "true", hidden: "" });
-    document.body.insertBefore(band, handle);
+    var band = glassBand();
+    // A band that already holds the page's controls is in the content column
+    // and sticky by its stylesheet; only the bare strip goes beside the handle.
+    if (!band.hasAttribute("data-fa-band-tools")) document.body.insertBefore(band, handle);
     var queued = false;
     function update() {
       queued = false;
       if (!handle.isConnected) return;
+      if (band.hasAttribute("data-fa-band-tools")) return;
       var on = (window.scrollY || document.documentElement.scrollTop || 0) > 0;
       if (!on) { band.hidden = true; return; }
       var hb = handle.getBoundingClientRect();
@@ -5508,6 +5557,101 @@
     window.addEventListener("scroll", queue, { passive: true });
     window.addEventListener("resize", queue);
     update();
+  }
+
+  /**
+   * THE BAND HOLDS THE PAGE'S OWN CONTROLS — issue #2201.
+   *
+   * Owner, 2026-10-05: *"ideally, the search and the locale selector both
+   * live in the fa-glass-band, so they are always on the page, at least
+   * partially. While a fa-glass-band item is in use, the Folio tab hides so
+   * it doesn't block them."*
+   *
+   * Before this the three were in three places: the magnifier floated at the
+   * display panel's inline-end, the locale bar under the first heading, the
+   * band a decorative strip behind the handle that existed only while the
+   * page was scrolled. Opening search turned the floated magnifier into a
+   * full-width row, which cleared the float and pushed the locale bar onto
+   * the next line (y=96 to y=164 on the gh-pages `smart-trust/index.html` at
+   * 1280px).
+   *
+   * Now there is ONE row: the band, `position: sticky` at the top of the
+   * display panel with two slots, the locale selector at the inline-start and
+   * search at the inline-end. At rest it is the panel's first line; scrolled,
+   * it sticks at the handle's offset, so it is still the opaque strip the
+   * handle sits on (#1693), and its controls are on screen at every scroll
+   * position (#1732).
+   *
+   * TWO MODES, and the second is the old one unchanged. A page with none of
+   * these controls (a replica, a viewer, a fixture) keeps the bare strip that
+   * `placeHandleBand` shows behind the handle only while scrolled, so its
+   * resting layout gains no empty row. The first control to arrive moves the
+   * band into the content column and marks it `data-fa-band-tools`, which
+   * `placeHandleBand`'s update then leaves alone.
+   *
+   * Mounted where the magnifier was: `.main-content-wrap`, never hidden by
+   * the theme (`.main-header` is, below its nav breakpoint, which once made
+   * search 0x0 at 700px). The fallbacks put it in the wrong place rather
+   * than nowhere.
+   */
+  var glassBandEl = null;
+  function glassBand() {
+    if (glassBandEl) return glassBandEl;
+    glassBandEl = el("div", { class: "fa-glass-band", "aria-hidden": "true", hidden: "" });
+    glassBandEl.appendChild(el("div", { class: "fa-band-slot fa-band-start" }));
+    glassBandEl.appendChild(el("div", { class: "fa-band-slot fa-band-end" }));
+    return glassBandEl;
+  }
+
+  /** The band's `start` or `end` slot, moving the band into the panel the first time. */
+  function glassBandSlot(which) {
+    var band = glassBand();
+    if (!band.hasAttribute("data-fa-band-tools")) {
+      band.setAttribute("data-fa-band-tools", "");
+      // It holds controls now, so it is no longer decoration.
+      band.removeAttribute("aria-hidden");
+      band.setAttribute("role", "group");
+      band.setAttribute("aria-label", "Page tools");
+      band.hidden = false;
+      // The strip mode's geometry, if it had run, is the stylesheet's now.
+      band.style.top = "";
+      band.style.height = "";
+      band.style.left = "";
+      band.removeAttribute("data-fa-band-fallback");
+      var panelTop = firstMatch([".main-content-wrap", ".main-header", "#main-header"]);
+      if (panelTop) panelTop.insertBefore(band, panelTop.firstChild);
+      else {
+        var mainEl = firstMatch(["#main-content", ".main-content", "main"]);
+        if (mainEl && mainEl.parentNode) mainEl.parentNode.insertBefore(band, mainEl);
+        else document.body.insertBefore(band, document.body.firstChild);
+      }
+    }
+    return band.querySelector(".fa-band-" + which);
+  }
+
+  /*
+   * ONE BAND ITEM OPEN AT A TIME. Each item registers how to close itself;
+   * opening one closes the others, so an open locale list never squeezes an
+   * open search field to nothing on a phone. Closing never discards: search
+   * keeps its text, because closing it is `display: none` on the holder.
+   *
+   * The open item is written to `<html data-fa-band-active>`, which is what
+   * hides the Folio handle (`docs-ui.css`) — the owner's *"the Folio tab
+   * hides so it doesn't block them"*. On the root, so the rule is one
+   * attribute selector and needs no knowledge of where either control is.
+   */
+  var glassBandItems = {};
+  function glassBandItem(name, close) { glassBandItems[name] = close; }
+  function glassBandActive(name, open) {
+    var root = document.documentElement;
+    if (open) {
+      Object.keys(glassBandItems).forEach(function (other) {
+        if (other !== name && root.getAttribute("data-fa-band-active") === other) glassBandItems[other]();
+      });
+      root.setAttribute("data-fa-band-active", name);
+    } else if (root.getAttribute("data-fa-band-active") === name) {
+      root.removeAttribute("data-fa-band-active");
+    }
   }
 
   var glassLayer = null;
@@ -11617,15 +11761,23 @@
    *      arrival (*"any indices/toc should be closed"*, 2026-09-23).
    *   2. The page list -- the only group open on arrival, so it gets the
    *      height. The rail's `single-open` rule, applied to this surface.
-   *   3. "Graphs" -- FOLDERS, in a disclosure that starts folded and keeps
-   *      FOLDERS' own fold inside it.
+   *   3. "Folders" -- a TOP-LEVEL section of its own, folded on arrival,
+   *      with no "Graphs" wrapper around it. Owner's ruling on #2150,
+   *      2026-10-05, option (a): *"Folders becomes its own top-level section
+   *      on the Jekyll sidebar, next to "On this page" and "Pages". Drop the
+   *      Jekyll Graphs wrapper, which would otherwise be empty."* That
+   *      SUPERSEDES this ruling's original step 3, which put FOLDERS inside a
+   *      folded "Graphs" group -- so a folded Graphs hid Folders, and the
+   *      owner read it as gone (*"there used to be"*). Its heading takes the
+   *      slot Graphs had: pinned to the scroller's bottom while folded, above
+   *      ▦, so it is one row away however long the page list is.
    *   4. "▦ Harnesses" -- the harness group, moved out of the footer, folded,
-   *      LAST and BESIDE Graphs rather than inside it. That is where the
+   *      LAST and BESIDE Folders rather than inside it. That is where the
    *      viewer rail keeps it too (`navbarHtml`: graphs in the middle,
    *      harnesses below them), and it is what keeps the owner's ruling on
    *      finding 1 (#1805): *"Make ▦ Harnesses visible on the landing page
    *      too"* -- ▦ is a mark in the 56px strip at rest and ONE click shows
-   *      the harnesses. Folded inside Graphs it would be invisible at rest and
+   *      the harnesses. Folded inside another group it would be invisible at rest and
    *      two clicks away, which is the state that ruling removed. Both folded
    *      headings are pinned to the scroller's bottom edge, ▦ lowest, so the
    *      one-scroller property of this ruling is unchanged.
@@ -11642,11 +11794,16 @@
    * touched: just-the-docs renders the same include a second time for the
    * phone layout, outside `.side-bar`, and that copy is not this region.
    */
+  /** A path as the Folders section compares it: no `index.html`, one trailing slash. */
+  function foldersPathKey(path) {
+    return String(path || "").replace(/index\.html$/, "").replace(/\/*$/, "/");
+  }
+
   function mountSidebarRail() {
     var bar = document.querySelector(".side-bar");
     var nav = bar && bar.querySelector(".site-nav");
     if (!bar || !nav) return;
-    if (bar.querySelector(".fa-nav-graphs-group, .fa-nav-harness-group")) return;
+    if (bar.querySelector(".fa-nav-folders--rail, .fa-nav-harness-group")) return;
 
     // THE ONE SCROLLER. `mountInstanceGraphs` builds it when the folder row
     // could be read; when it could not, the nav still needs a region to share
@@ -11681,24 +11838,31 @@
     }
 
     if (folders) {
-      var group = el("details", { class: "fa-nav-graphs-group" });
-      var groupSum = el("summary", { class: "fa-nav-graphs-group__heading" }, "Graphs");
-      group.appendChild(groupSum);
-      /* ONE HEADING, "GRAPHS N" — owner, 2026-10-05: *"graphs containing ONLY
-       * folders is weird. combine w/ badge of count."* (bean `gpbc`). The
-       * group held one thing, a second fold titled "Folders N", so a reader
-       * opened two disclosures to reach one list. The count moves up onto
-       * this heading and Folders' own fold is held OPEN with its heading
-       * hidden: the rows are still Folders' nodes, MOVED (the rule above),
-       * and every pin rule written against this group still applies. */
-      var folderCount = folders.querySelector(":scope > summary > .fa-nav-folders__count");
-      if (folderCount) groupSum.appendChild(folderCount);
-      folders.open = true;
-      folders.classList.add("fa-nav-folders--in-graphs");
-      group.appendChild(folders);
-      middle.appendChild(group);
-      mirrorExpanded(group);
-      toTopOnOpen(group);
+      // MOVED to the end of the scroller, after the page list, and marked so
+      // a second run finds it done. Its fold, its count and its
+      // `aria-expanded` are the ones `mountInstanceGraphs` already gave it:
+      // folded on arrival and not remembered, as before the ruling.
+      folders.classList.add("fa-nav-folders--rail");
+      middle.appendChild(folders);
+      // UNLESS THE PAGE BEING READ IS ONE OF ITS ROWS: a folded default must
+      // not hide where the reader is (#2150). Then it opens, with any
+      // "Sub-graphs of" fold that holds the row, and the row says so to
+      // assistive technology.
+      var here = foldersPathKey(window.location.pathname);
+      var mine = null;
+      Array.prototype.forEach.call(folders.querySelectorAll("a[href]"), function (a) {
+        if (mine) return;
+        var to;
+        try { to = new URL(a.getAttribute("href"), window.location.href).pathname; } catch (_e) { return; }
+        if (foldersPathKey(to) === here) mine = a;
+      });
+      if (mine) {
+        mine.setAttribute("aria-current", "page");
+        for (var up = mine.parentNode; up && up !== middle; up = up.parentNode) {
+          if (up.tagName === "DETAILS") up.open = true;
+        }
+      }
+      toTopOnOpen(folders);
     }
 
     if (harnesses) {
@@ -11706,11 +11870,11 @@
       middle.appendChild(harnesses);
       mirrorExpanded(harnesses);
       toTopOnOpen(harnesses);
-      // THE FOLDED GRAPHS HEADING SITS ON TOP OF ▦, not under it: both are
-      // pinned to the bottom edge, so Graphs is offset by ▦'s height. That
+      // THE FOLDED FOLDERS HEADING SITS ON TOP OF ▦, not under it: both are
+      // pinned to the bottom edge, so Folders is offset by ▦'s height. That
       // height changes between the strip and the open bar, so it is measured
       // rather than restated (`--fa-nav-harness-rest`, read by docs-ui.css).
-      // The FOLDED box is what sits under Graphs, so it is read only while
+      // The FOLDED box is what sits under Folders, so it is read only while
       // folded; the stylesheet stops reading it once ▦ is opened.
       var setRest = function () {
         if (!harnesses.open) middle.style.setProperty("--fa-nav-harness-rest", harnesses.offsetHeight + "px");

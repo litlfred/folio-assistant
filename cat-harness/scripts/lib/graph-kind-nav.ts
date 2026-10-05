@@ -45,6 +45,8 @@ export function kindSummaryHead(kind: string): string | undefined {
 
 /** What a graph-kind navbar row carries besides its href: mark, hue and description. */
 export interface GraphKindRowDecor {
+  /** Always `true`: the row IS a kind row — `NavItem.kind`, declared rather than read off the mark (#2151). */
+  kind: true;
   icon?: string;
   glyphPath?: string;
   tone?: number;
@@ -61,8 +63,8 @@ export interface GraphKindRowDecor {
 export function graphKindRowDecor(kind: string, instance?: string): GraphKindRowDecor {
   const head = kindSummaryHead(kind);
   const description = [head, instance].filter((x): x is string => Boolean(x)).join(", ");
-  const mark: GraphKindRowDecor = hasAvatar(kind)
+  const mark: Omit<GraphKindRowDecor, "kind"> = hasAvatar(kind)
     ? { glyphPath: avatarFor(kind).glyph, tone: avatarFor(kind).tone }
     : { icon: kind.slice(0, 1).toUpperCase() };
-  return { ...mark, ...(description ? { description } : {}) };
+  return { kind: true, ...mark, ...(description ? { description } : {}) };
 }

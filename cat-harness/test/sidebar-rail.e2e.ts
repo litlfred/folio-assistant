@@ -23,7 +23,9 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  *   - exactly ONE element in the sidebar scrolls, and the sidebar itself
  *     hides nothing it cannot scroll to -- on arrival AND with every
  *     disclosure open, because nested scrollers only appear once things open;
- *   - the Graphs group (FOLDERS) and the harness group beside it are both
+ *   - FOLDERS -- a top-level section since the owner's ruling on #2150
+ *     (2026-10-05, option (a): no "Graphs" wrapper on this surface) -- and
+ *     the harness group beside it are both
  *     folded on arrival, and both headings are on screen -- ▦ Harnesses
  *     stays its own disclosure, as on the viewer rail, so the strip still
  *     shows it at rest (ob3m finding 1, #1805; `rail-tips.e2e.ts`);
@@ -52,7 +54,7 @@ const JS = readFileSync(join(ROOT, SITE, "assets/js/navbar-row.js"), "utf8") + "
 const QR = readFileSync(join(ROOT, SITE, "assets/js/vendor/qrcode.js"), "utf8");
 const BASEURL = "/folio-assistant";
 
-type Folder = { kind: string; label?: string; path?: string; note?: string };
+type Folder = { kind: string; label?: string; path?: string; note?: string; stagingOnly?: true };
 const HARNESS = JSON.parse(readFileSync(join(ROOT, SITE, "_data/harness.json"), "utf8")) as {
   navbar: { folders?: Folder[] } | null;
   railScopes?: { name: string; title: string; href: string; folders: Folder[] }[];
@@ -140,6 +142,8 @@ function page(scoped = false): string {
 </body></html>`;
 }
 
+const fixturePage = (): string => page();
+
 async function load(p: Page, scoped = false): Promise<string[]> {
   const errors: string[] = [];
   p.on("pageerror", (e) => errors.push(String(e)));
@@ -216,27 +220,35 @@ test.describe("the theme sidebar has the viewer rail's layout (ob3m finding 7)",
     expect(open.clipped).toBe(0);
   });
 
-  test("the order is the rail's: On this page, the page list, then Graphs", async ({ page }) => {
+  test("the order is the rail's: On this page, the page list, then Folders", async ({ page }) => {
     await load(page);
     const order = await page
       .locator(".side-bar > .fa-nav-middle > *")
       .evaluateAll((ns) => ns.map((n) => n.className.split(" ")[0]));
-    expect(order).toEqual(["fa-doc-index", "fa-nav-pages", "site-nav", "fa-nav-graphs-group", "fa-nav-group"]);
+    expect(order).toEqual(["fa-doc-index", "fa-nav-pages", "site-nav", "fa-nav-folders", "fa-nav-group"]);
   });
 
-  test("FOLDERS is the Graphs group and ▦ Harnesses sits beside it, both folded in the one scroller", async ({ page }) => {
+  test("FOLDERS is a top-level section with NO Graphs wrapper, and ▦ Harnesses sits beside it, both folded (#2150)", async ({ page }) => {
+    // Owner's ruling on #2150, 2026-10-05, option (a): "Folders becomes its
+    // own top-level section on the Jekyll sidebar, next to On this page and
+    // Pages. Drop the Jekyll Graphs wrapper." Before it, a folded "Graphs"
+    // hid FOLDERS and the owner read it as gone.
     await load(page);
-    const group = page.locator(".side-bar .fa-nav-graphs-group");
+    const group = page.locator(".side-bar > .fa-nav-middle > details.fa-nav-folders");
     await expect(group).toHaveCount(1);
     await expect(group).not.toHaveAttribute("open", "");
-    await expect(group.locator(":scope > .fa-nav-folders")).toHaveCount(1);
-    // BESIDE Graphs, not inside it: the viewer rail's order, and what keeps
+    await expect(page.locator(".side-bar .fa-nav-graphs-group")).toHaveCount(0);
+    expect(await page.locator(".side-bar summary").allTextContents()).not.toContain("Graphs");
+    // It lists the active harness's declared directories, every one.
+    await expect(group.locator(":scope > .fa-nav-folders__list .fa-nav-folders__item"))
+      .toHaveCount(HARNESS.navbar!.folders!.length);
+    // BESIDE Folders, not inside it: the viewer rail's order, and what keeps
     // ▦ a mark in the strip at rest (ob3m finding 1, #1805).
     const harnesses = page.locator(".side-bar > .fa-nav-middle > details.fa-nav-harness-group");
     await expect(harnesses).toHaveCount(1);
     await expect(harnesses).not.toHaveAttribute("open", "");
     await expect(harnesses.locator(":scope > summary")).toBeInViewport();
-    // Both headings are pinned to the bottom edge; Graphs stands ON TOP of ▦.
+    // Both headings are pinned to the bottom edge; Folders stands ON TOP of ▦.
     const g = await group.locator(":scope > summary").boundingBox();
     const h = await harnesses.locator(":scope > summary").boundingBox();
     expect(g!.y + g!.height).toBeLessThanOrEqual(h!.y + 1);
@@ -249,11 +261,32 @@ test.describe("the theme sidebar has the viewer rail's layout (ob3m finding 7)",
     await expect(heading).toBeInViewport();
     await heading.click();
     await expect(group).toHaveAttribute("open", "");
-    // ONE heading, "Graphs N" (bean `gpbc`): the count is on it and the rows
-    // show on the first open, with no "Folders" fold inside.
-    await expect(heading.locator(".fa-nav-folders__count")).toHaveCount(1);
-    await expect(group.locator(".fa-nav-folders__heading")).toBeHidden();
-    await expect(group.locator(".fa-nav-folders__item").first()).toBeInViewport();
+    await expect(group.locator(":scope > .fa-nav-folders__list")).toBeVisible();
+  });
+
+  test("FOLDERS opens from the keyboard and states aria-expanded (#2150)", async ({ page }) => {
+    await load(page);
+    const heading = page.locator(".side-bar > .fa-nav-middle > .fa-nav-folders > summary");
+    await expect(heading).toHaveAttribute("aria-expanded", "false");
+    await heading.focus();
+    await page.keyboard.press("Enter");
+    await expect(heading).toHaveAttribute("aria-expanded", "true");
+    await expect(page.locator(".side-bar .fa-nav-folders")).toHaveAttribute("open", "");
+  });
+
+  test("FOLDERS opens on arrival when the page being read is one of its rows (#2150)", async ({ page }) => {
+    // A folded default must not hide where the reader is.
+    const at = (HARNESS.navbar!.folders ?? []).find((f) => f.path && !f.stagingOnly);
+    test.skip(!at, "no published folder in this instance's row");
+    const errors: string[] = [];
+    page.on("pageerror", (e) => errors.push(String(e)));
+    await page.route("http://sidebar.fixture/**", (r) => r.fulfill({ contentType: "text/html", body: fixturePage() }));
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("http://sidebar.fixture" + BASEURL + at!.path, { waitUntil: "load" });
+    expect(errors).toEqual([]);
+    await expect(page.locator(".side-bar .fa-nav-folders")).toHaveAttribute("open", "");
+    await expect(page.locator(".side-bar .fa-nav-folders > summary")).toHaveAttribute("aria-expanded", "true");
+    await expect(page.locator('.side-bar .fa-nav-folders a[aria-current="page"]')).toHaveCount(1);
   });
 
   test("the tooltips (#1805) still name the rows AFTER the move", async ({ page }) => {
@@ -373,7 +406,7 @@ test.describe("the rail is scoped to the instance being viewed (#1902)", () => {
       .locator(".side-bar > .fa-nav-middle > *")
       .evaluateAll((ns) => ns.map((n) => n.className.split(" ")[0]));
     expect(order.indexOf("fa-nav-pages")).toBeGreaterThanOrEqual(0);
-    expect(order.indexOf("fa-nav-pages")).toBeLessThan(order.indexOf("fa-nav-graphs-group"));
+    expect(order.indexOf("fa-nav-pages")).toBeLessThan(order.indexOf("fa-nav-folders"));
   });
 
   test("outside every instance the whole site is listed, as before", async ({ page }) => {
@@ -388,7 +421,7 @@ test.describe("every disclosure in the column wears the same caret and states (#
   const HEADINGS = [
     ".fa-doc-index > summary",
     ".fa-nav-pages",
-    ".fa-nav-graphs-group > summary",
+    ".fa-nav-folders > summary",
   ];
 
   test("one glyph, turned the same way when folded and when open", async ({ page }) => {
@@ -398,9 +431,6 @@ test.describe("every disclosure in the column wears the same caret and states (#
         const s = getComputedStyle(e, "::before");
         return { content: s.content, transform: s.transform };
       });
-    // Open the Graphs group (one heading since bean `gpbc`).
-    await page.locator(".side-bar .fa-nav-graphs-group > summary").click();
-    await page.waitForTimeout(300);
     const pages = await caret(".fa-nav-pages");
     expect(pages.content).not.toBe("none");
     for (const sel of HEADINGS) {
@@ -412,13 +442,15 @@ test.describe("every disclosure in the column wears the same caret and states (#
     await page.waitForTimeout(300); // the caret turns over 120ms
     const folded = await caret(".fa-nav-pages");
     expect((await caret(".fa-doc-index > summary")).transform).toBe(folded.transform);
-    const open = await caret(".fa-nav-graphs-group > summary");
+    expect((await caret(".fa-nav-folders > summary")).transform).toBe(folded.transform);
+    await page.locator(".side-bar .fa-nav-folders > summary").click();
+    await page.waitForTimeout(300);
+    const open = await caret(".fa-nav-folders > summary");
     expect(open.transform).not.toBe(folded.transform);
   });
 
   test("each heading states aria-expanded and toggles from the keyboard", async ({ page }) => {
     await load(page);
-    await page.locator(".side-bar .fa-nav-graphs-group > summary").click();
     for (const sel of HEADINGS) {
       const h = page.locator(".side-bar " + sel);
       const before = await h.getAttribute("aria-expanded");
