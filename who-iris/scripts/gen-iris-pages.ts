@@ -48,19 +48,29 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "fs";
 import { basename, dirname, join, posix, relative, resolve, sep } from "path";
 
-import { readDeclaration, repoRootFor, siteDirFor } from "../../cat-harness/schemas/cat-harness.js";
-import { fragment as folioMountFragment } from "../../cat-harness/scripts/folio-mount.ts";
-import { embed as pdfViewer } from "../../cat-harness/scripts/pdf-viewer.ts";
-import { subjectPage } from "../../cat-harness/scripts/harness-tiles.js";
-import { withRoutes } from "../../cat-harness/scripts/mount-instance-docs.ts";
-import { libraryResolver } from "../../cat-harness/scripts/lib/library-links.ts";
-import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
+import {
+  bytesFor,
+  dcRenderingsFor,
+  folioMountFragment,
+  formatPot,
+  libraryResolver,
+  parsePo,
+  parsePoEntries,
+  pdfViewer,
+  publicationBlockers,
+  readDeclaration,
+  repoRelative,
+  repoRootFor,
+  resolvableIri,
+  siteDirFor,
+  subjectPage,
+  withInlineCode,
+  withRoutes,
+  withViewerNav,
+  type CatalogueNode,
+  type PotEntry,
+} from "../platform.ts";
 import { whoThemeById } from "../themes/themes.js";
-import { bytesFor, repoRelative } from "../../folio-assistant-core/scripts/lib/bytes.js";
-import { resolvableIri, type CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
-import { dcRenderingsFor } from "../../folio-assistant-core/scripts/dc-render.ts";
-import { publicationBlockers } from "../../folio-assistant-core/schemas/materialization.js";
-import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 
 
 const INSTANCE = resolve(import.meta.dir, "..");
