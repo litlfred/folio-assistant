@@ -1452,7 +1452,7 @@ export function harnessTiles(
  * | source | served at | measured |
  * |---|---|---|
  * | `processes/index.md` | `/processes/` | 200 |
- * | `tool-graph.md` | `/tool-graph.html` | 200 |
+ * | `tool-graph.md` | `/concepts/tool-graph.html` | 200 |
  * | `tool-graph.md` | ~~`/tool-graph/`~~ | **404** |
  *
  * So an `index` leaf addresses as its directory and every other page addresses

@@ -477,7 +477,7 @@ generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pag
 
 Bean `8c6v`: **none** of the 17 was named by a pattern, so `classify()`
 returned `refuse / — none —` and the merge handed back for hand-editing the
-files that forbid it. `docs/publication-workflow.md` was one of the **2**
+files that forbid it. `docs/process/publication-workflow.md` was one of the **2**
 refusals on #1888 after **53** of its 55 conflicts had resolved by pattern —
 one undeclared family holding up a 53-file resolution is the all-or-nothing
 rule working as designed, and the gap it exposed.
@@ -522,8 +522,8 @@ matter names `gen-skill-docs.ts`, and `skill-instructions` is declared before
 all three facts.
 
 **The authored neighbour is the source, and it stays refused.**
-`cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md`
-is the hand-written INPUT for `docs/publication-workflow.md`; on #1888 both
+`cat-harness/content/docs/process-publication-workflow/every-workflow-in-the-repo.md`
+is the hand-written INPUT for `docs/process/publication-workflow.md`; on #1888 both
 sides had only *added* rows to it, but a union of additions is a property of
 that instance and not of the path, so the next conflict there could be a
 contested edit. A test pins the pair, and pins that nothing under `content/`

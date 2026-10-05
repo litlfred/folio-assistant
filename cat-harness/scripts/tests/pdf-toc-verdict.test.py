@@ -14,7 +14,7 @@ which is a SAMPLE TABLE the guide reproduces as a design example. Every one was
 stamped `page: 22`, so the collision was visible in the output and nothing
 acted on it.
 
-That is worse than shipping nothing. `content/docs/document-ingestion/` argues
+That is worse than shipping nothing. `content/docs/guides-document-ingestion/` argues
 an un-ingested source is worse than an absent one "because it produces false
 confidence rather than a gap"; a misnamed section is that failure one level in,
 because it is greppable, it sits in `library/`, and it answers a question

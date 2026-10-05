@@ -4090,7 +4090,7 @@ WebPage.nodes <span class="fa-gloss-status">candidate, extracted</span>
 WebPage.slug <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>URL stem. <code>document-ingestion</code> publishes to <code>docs/document-ingestion.md</code> and thus to <code>&lt;baseurl&gt;/document-ingestion.html</code>, which is what existing inbound links already use.</p>
+<p>URL stem. <code>document-ingestion</code> publishes to <code>docs/guides/document-ingestion.md</code> and thus to <code>&lt;baseurl&gt;/guides/document-ingestion.html</code>, which is what existing inbound links already use.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/webpage.ts"><code>cat-harness/schemas/webpage.ts#WebPage.slug</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--webpage.webpageasset.alt" data-fa-state="extracted" data-fa-gloss="">

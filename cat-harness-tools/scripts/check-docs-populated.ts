@@ -3,7 +3,9 @@
  * Every harness owes at least one MEANINGFULLY POPULATED documentation page.
  *
  * @module scripts/check-docs-populated
- * @covers docs
+ * @covers docs, doc-group — the docs graph's named groups (bean `xka5`) are
+ *   folders of docs pages, and `pagesOfExt` walks every folder of the site, so
+ *   their pages are read here exactly as the top-level ones are.
  *
  * Usage: `bun run check:docs-populated [--json] [--strict]`
  * Exit:  0 every harness has one · 1 one is thin · 2 could not determine
@@ -448,7 +450,7 @@ export function assessSubject(subjects: Subjects, pages: Array<{ path: string; t
 
   // Ranked by (score, then length), and NOT short-circuited on the first full
   // hit. The first draft broke on the first page scoring 3 and reported
-  // `cat-harness/docs/ar/architecture.md` — the ARABIC TRANSLATION of a page
+  // `cat-harness/docs/concepts/ar/architecture.md` — the ARABIC TRANSLATION of a page
   // whose English original scores the same. It won on `readdirSync().sort()`
   // order, because `ar/` precedes `architecture/`. A verdict decided by
   // alphabetical order is a verdict about the filesystem, so every eligible
