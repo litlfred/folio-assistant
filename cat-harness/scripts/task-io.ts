@@ -306,6 +306,18 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "smart-immunizations:pages:check": READ_ONLY, // `if (CHECK)` compares; the rebuild is the else
   "smart-trust:openapi:check": READ_ONLY, //       exits before `--source` is even read
   "smart-trust:openapi:pages:check": READ_ONLY,
+  // These five DO write, and only into a directory each makes for itself with
+  // `mkdtemp` (strace `-y` resolved every write fd: nothing outside
+  // `/tmp/<own prefix>-XXXXXX`, Chromium's per-launch profile included) and
+  // removes before exiting. No other process can name that directory, so
+  // nothing another pair reads moves — which is the property `outputs: []`
+  // exists to assert. Two were RED when measured (a stale skill payload on
+  // `main`), so the red `--check` path was traced as well as read.
+  "check:published-instance-exports": READ_ONLY, // 49 s; exports into `published-instance-export-*`, `--qa-root` there too (bean `ymsu`)
+  "kg:export:check": READ_ONLY, //                  13 s; `sidecarMode("check")` judges, `writeQaResult` is the write mode's
+  "render:bpmn:check": READ_ONLY, //                5 s; `emit` returns before `writeFile` under `--check`
+  "slice:sqlite:check": READ_ONLY, //               12 s; `checkSlice` builds in `slice-check-*` / `slice-sqlite-*`
+  "subgraph:jsonld:check": READ_ONLY, //            15 s; `if (check)` returns before `rmSync` / `writeFileSync`
 };
 
 /**
