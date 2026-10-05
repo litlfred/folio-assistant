@@ -159,3 +159,41 @@ export const ComputationWitnessConformanceSchema = z
 
 /** The file suffix every witness producer writes. */
 export const WITNESS_SUFFIX = ".witness.json";
+
+/**
+ * Fields that change on every run of an unchanged producer — commit, timing
+ * and environment — and so carry no information about what it COMPUTED.
+ *
+ * Masked at every depth when deciding whether a re-run reproduced a witness.
+ * The list is litlfred/qou's `_EPHEMERAL_META_FIELDS` (`qou_substrate.witness`),
+ * where it was settled one field at a time against real reds (`elapsed_s`,
+ * owner ruling 2026-09-05), adopted here unchanged so the platform and the
+ * producer library agree on what "the same witness" means. `environment` is
+ * masked for the comparison and READ separately, because a witness computed
+ * under different package versions is not a reproduction test at all.
+ */
+export const WITNESS_EPHEMERAL_FIELDS: ReadonlySet<string> = new Set([
+  "commitSha",
+  "scriptCommitSha",
+  "computedAt",
+  "durationMs",
+  "durationSeconds",
+  "duration_sec",
+  "environment",
+  "elapsed_seconds",
+  "elapsed_sec",
+  "elapsed_s",
+]);
+
+/** A copy of `node` with every {@link WITNESS_EPHEMERAL_FIELDS} key removed, at every depth. */
+export function stripEphemeral(node: unknown, extra: ReadonlySet<string> = new Set()): unknown {
+  if (Array.isArray(node)) return node.map((n) => stripEphemeral(n, extra));
+  if (node && typeof node === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(node as Record<string, unknown>)) {
+      if (!WITNESS_EPHEMERAL_FIELDS.has(k) && !extra.has(k)) out[k] = stripEphemeral(v, extra);
+    }
+    return out;
+  }
+  return node;
+}

@@ -220,12 +220,49 @@ test("the banner is FLUSH on a page that never reset body's margin", async ({ pa
     };
   });
   expect(box.top).toBe(0);
-  // `padLeft`, NOT zero — the first draft of this test asserted 0 and failed
-  // against the fix, because the banner correctly sits inside the body's
-  // content box. The defect was `padLeft + 8`; the margin is what is being
-  // falsified here, not the padding.
-  expect(box.left).toBe(box.padLeft);
+  // ZERO, not `padLeft`, since 2026-10-04: the owner asked for the corner
+  // above the rail to be green too, so the banner is fixed and full width and
+  // the body's own padding no longer reaches it.
+  expect(box.padLeft).toBe(56);
+  expect(box.left).toBe(0);
   expect(box.right).toBe(box.vw);
+});
+
+test("it is at the top ON LOAD on a page that pads body's top, and nothing sits under it", async ({ page }) => {
+  // Owner, 2026-10-04, three screenshots of a replica page: "banner is wrong
+  // on page load, scrolls, and then is at top. should always be at top". The
+  // folio glass band pads a replica's body by 2.25rem; a banner in body's flow
+  // rendered 36px down until the page scrolled. Measured on the served bytes
+  // before the fix: [56, 36] at load, [56, 0] scrolled.
+  await page.route("**/*", async (route) => {
+    const url = new URL(route.request().url());
+    if (url.pathname.endsWith("staging.json")) {
+      return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(FACTS) });
+    }
+    return route.fulfill({
+      status: 200,
+      contentType: "text/html",
+      body: BARE_PAGE.replace("body{padding-left:56px}", "body{padding-left:56px;padding-top:2.25rem}"),
+    });
+  });
+  await page.goto(`http://127.0.0.1:8080${ROOT}index.html`);
+  await page.waitForLoadState("networkidle");
+  const at = async () =>
+    page.evaluate(() => {
+      const b = document.querySelector("[data-fa-staging-banner]")!.getBoundingClientRect();
+      const h = document.querySelector("h1")!.getBoundingClientRect();
+      return { top: b.top, left: b.left, bottom: b.bottom, h1Top: h.top };
+    });
+  const load = await at();
+  expect(load.top).toBe(0);
+  expect(load.left).toBe(0);
+  // Reserved, not overlapped: the first heading starts below the banner.
+  expect(load.h1Top).toBeGreaterThanOrEqual(load.bottom);
+  await page.evaluate(() => {
+    document.body.style.minHeight = "3000px";
+    window.scrollTo(0, 300);
+  });
+  expect((await at()).top).toBe(0);
 });
 
 test("it pushes `.fa-nav` down too, not only just-the-docs' `.side-bar`", async ({ page }) => {

@@ -709,6 +709,18 @@ jobs:
       - name: Mount instance-rendered content
         run: bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
 
+      # The inline PDF viewer (bean `folio-assistant-5ea6`): pdf.js, pinned and
+      # hash-checked in `pdf-viewer.ts`, installed into the BUILT site and never
+      # committed. `--allow` is this repository's own owner on the two hosts its
+      # pages link PDFs from; the viewer refuses any other cross-origin `?src=`.
+      - name: Install the inline PDF viewer
+        env:
+          OWNER: ${{ github.repository_owner }}
+        run: >-
+          bun run cat-harness/scripts/pdf-viewer.ts --site ./_site
+          --allow "https://cdn.jsdelivr.net/gh/$OWNER/"
+          --allow "https://raw.githubusercontent.com/$OWNER/"
+
       # ONE JEKYLL SITE PER IG (bean `bamf`, owner 2026-09-30), as the IG
       # Publisher builds one: an IG's own pages keep `{{ site.data.fhir.* }}`
       # unchanged because each site has its own `_data/fhir.json`. Which IGs,

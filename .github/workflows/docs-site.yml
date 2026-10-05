@@ -369,6 +369,18 @@ jobs:
       - name: Mount instance-rendered content
         run: bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
 
+      # The inline PDF viewer (bean `folio-assistant-5ea6`): pdf.js, pinned and
+      # hash-checked in `pdf-viewer.ts`, installed into the BUILT site and never
+      # committed. `--allow` is this repository's own owner on the two hosts its
+      # pages link PDFs from; the viewer refuses any other cross-origin `?src=`.
+      - name: Install the inline PDF viewer
+        env:
+          OWNER: ${{ github.repository_owner }}
+        run: >-
+          bun run cat-harness/scripts/pdf-viewer.ts --site ./_site
+          --allow "https://cdn.jsdelivr.net/gh/$OWNER/"
+          --allow "https://raw.githubusercontent.com/$OWNER/"
+
       # WCAG 3.1.1 (Language of Page). Bean `zru7`: the pinned theme emits
       # `<html lang="{{ site.lang | default: 'en-US' }}">` — `site.lang`, not
       # `page.lang` — so all 70 translated pages were served declaring en-US, and
