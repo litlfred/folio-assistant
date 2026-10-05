@@ -144,9 +144,29 @@ already said so before this skill existed:
 > It is READ from upstream rather than chosen here, so it is a fact about
 > smart-base and not a decision about where this staging directory publishes.
 
-So `canonicalUrl` records the **subject**. It must not drive **our** identity.
-A declaration that carries an upstream canonical is describing what it mirrors,
-not asserting where it lives.
+So, for a **true mirror**, `canonicalUrl` records the **subject**. It must not
+drive **our** identity. A mirror's declaration that carries an upstream
+canonical is describing what it mirrors, not asserting where it lives.
+
+### Three questions that must not be merged — publication, staging, mirroring
+
+Owner, 2026-10-05: *"there is staging vs publication being conflated here."*
+Three different questions answer to "what is this instance's address", and
+each has its own field:
+
+| question | answered by | example |
+|---|---|---|
+| **Publication identity** — where the artefact lives once formally published | the `@id` its document mints; for an instance staged here for publication elsewhere, its declared `canonicalUrl` | `smart-base` → `http://smart.who.int/base/smart-base.jsonld` |
+| **Staging location** — where this repository's site serves a draft copy now | the root index's `url`, never the `@id` | `smart-base` → `<site>/smart-base/smart-base.jsonld` |
+| **True mirror** — this repository's index *about* someone else's artefact | its own identity on this site; the subject's ids are held as **data** | `smart-trust` is not the WHO SMART Trust IG |
+
+**An instance staged here for publication at its `canonicalUrl` is not a
+mirror.** It IS the thing that will be published there, so its `@id` is the
+publication identity and this site is only where it is staged. The mirror rule
+above applies to the third row and to nothing else. Reading this site's address
+as an instance's identity is the conflation the owner named: it would mint ids
+that change the day the artefact is published, which is exactly what a
+publication identity exists to prevent.
 
 ## Release IRIs — one address, two audiences, derived from the version
 
@@ -302,7 +322,9 @@ host document minted and the instance-scope one does not keeps a node:
 `dcterms:isReplacedBy`. The replacement is minted the way the deploy
 publishes the owner (`publishedIdentity` in `kg-export.ts`): an instance that
 declares its own `canonicalUrl` is forwarded to its `canonicalUrl`-based
-`@id`, so `smart-base`'s tombstones point under `http://smart.who.int/base/`.
+`@id`, so `smart-base`'s tombstones point under `http://smart.who.int/base/`, its
+publication identity. Until that site serves it, the root index's `url` says
+where this site stages it.
 A node no owner's document mints (a package, a schema module) forwards to the
 owner's DOCUMENT. A node with no home, or two, is a `problems[]` entry, and
 the export exits non-zero rather than publish a tombstone that points
@@ -325,9 +347,10 @@ own `canonicalUrl` is the host of its own base**, so its `@id` is
 `<canonicalUrl>/<stub>.jsonld` (#1548), and the deploy passes it no
 `--base-url` (`declaresOwnCanonical` in `instance-exports.ts`). Measured
 2026-10-05, those are `cat-harness-tools`, `cat-openapi`, `fhir-harness` and
-`smart-base`. **This site still serves their bytes at
-`<site>/<stub>/<stub>.jsonld`.** The root index records both: `@id` is what
-the document is, `url` is where this site serves it. Anything that names a
+`smart-base`. **This site serves their bytes at `<site>/<stub>/<stub>.jsonld`,
+and that is their STAGING location, not their identity** (§"Three questions
+that must not be merged" above). The root index records both: `@id` is the
+publication identity, `url` is where this site stages it. Anything that names a
 node in another instance's document mints with `publishedIdentity`, or it
 names a document nobody writes. `iriBase` is a different field, for
 identifiers that carry the release (§"Release IRIs" above).
