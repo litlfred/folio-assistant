@@ -64,7 +64,7 @@ import { dirname, relative, sep } from "node:path";
 import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js";
 import { VISUALISER_NAV_ATTR, visualiserNavDeclaration, type VisualiserNavEntry } from "./lib/navbar.js";
 import { kindTitle } from "./lib/nav-label.js";
-import { declaredGraphs, instanceMark, instantiatedHarnesses, publishedGraphs, railNames } from "./mount-instance-docs.js";
+import { declaredGraphs, instanceMark, instantiatedHarnesses, navbarRowData, publishedGraphs, railNames } from "./mount-instance-docs.js";
 
 /**
  * The opt-out a visualisation writes into its own page.
@@ -269,6 +269,7 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
     ...(visualiserLabel ? { visualiserLabel } : {}),
     links,
     ...(harnesses ? { harnesses } : {}),
+    navbarRow: navbarRowData(o.built),
   });
   return railed === undefined ? undefined : withNarrowViewport(withSavedScheme(railed));
 }
