@@ -11,7 +11,7 @@
  * @graphNode none — constants and functions that locate an instance's declaration; no schema
  */
 import { existsSync, readdirSync, readFileSync, type Dirent } from "node:fs";
-import { basename, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 
 /**
  * The suffix every instance declaration carries — `<name>.config.json`.
@@ -206,10 +206,17 @@ export function instanceRootsIn(repoRoot: string): string[] {
   }
 
   const submodules = submodulePathsOf(root);
+  // Only a directory INSIDE a checkout has foreign checkouts to exclude. A
+  // plain directory of sibling clones — the separated layout, and the
+  // standalone rehearsal (bean `ho66`) that lays it out — has no repository
+  // for a clone to be foreign to, so every clone in it is an instance. Without
+  // this, g43f's filter dropped all of them: `needs` resolved to nothing and
+  // 86 tests failed standalone on `main` at 24b5c12 (2026-10-05).
+  const inCheckout = insideGitCheckout(root);
   const subs = entries
     .filter((e) => e.isDirectory() && !e.name.startsWith("."))
     .map((e) => join(root, e.name))
-    .filter((p) => !isForeignCheckout(p, submodules))
+    .filter((p) => !inCheckout || !isForeignCheckout(p, submodules))
     .filter((p) => findDeclarationFile(p) !== undefined)
     .sort();
 
@@ -256,3 +263,14 @@ export function isForeignCheckout(dir: string, submodules: ReadonlySet<string> =
   return !submodules.has(basename(dir));
 }
 
+/**
+ * Whether `dir` or any ancestor holds a `.git` — that is, whether `dir` lies
+ * inside some checkout. Read from the filesystem: a spawned `git rev-parse`
+ * would be slower on a hot path and no more correct.
+ */
+function insideGitCheckout(dir: string): boolean {
+  for (let d = resolve(dir); ; d = dirname(d)) {
+    if (existsSync(join(d, ".git"))) return true;
+    if (dirname(d) === d) return false;
+  }
+}
