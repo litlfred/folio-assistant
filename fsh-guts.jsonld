@@ -26,7 +26,7 @@
   "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsGraph",
   "name": "cat-harness — fsh-guts",
   "description": "The trashcan that is kept: deprecated and throwaway structured content, addressable and exported and deliberately absent from the rendered site. Reachable BY NAME only — every other published graph has its references stripped, so nothing links here. Activity logs live under this tree and are excluded: a file is included only if it declares itself folio-fsh-guts/v1.",
-  "nodeCount": 80,
+  "nodeCount": 82,
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bootstrap-split.md",
@@ -341,6 +341,32 @@
       "bean": "folio-assistant-nfgo",
       "description": "The generalised recipe for phases 2–5 of the computations subdirectory refactor — git mv, witness co-move by scriptFile, path-bridge shim injection, HERE.parent fixups — driven by a cluster name and a glob. Retired because its subject is absent from this repository, but it is the one of the eight that is worth reading: it is the PATTERN the six one-off fixers were each a partial, bug-fixed instance of.",
       "body": "# `migrate-cluster-phase.py`\n\n**The one of the eight with transferable content.** Its own docstring says what it\nis — *\"Generalization of `scripts/migrate-probes-phase1.py` for phases 2-5\"* — and\nthat is the interesting fact: the repository first wrote the move by hand for one\ncluster, then generalised it, and then needed three further scripts to fix what\nthe hand-written version had got wrong.\n\n## Why it is here rather than in `scripts/`\n\nIts subject does not exist in this repository. Measured 2026-09-20:\n`cat-harness/computations/` holds **one** file, a `.witness.json`, and **no Python\nat all** — no `substrate/`, no `*_probe.py`, and the proposal it cites\n(`docs/proposals/computations-subdirectory-refactor.md`) is gone. The phases it\nexecutes are numbered and complete. **A phase script is spent by construction.**\n\nPer [`fsh-guts`](../../cat-harness/skills/kg/kg-core/fsh-guts.md): delete means\nrelocate. It is still addressable, greppable and citable.\n\n## The lesson, extracted so it survives the script\n\nFour steps in a fixed order, and the order is the content:\n\n1. **`git mv`**, so history follows the file rather than recording an add and a\n   delete — which is what makes `git log --follow` able to answer \"where did this\n   come from\" a year later. (Worth stating because the opposite happened to these\n   very files: the `cat-harness/` inversion recorded an Add at the new path, so\n   `--diff-filter=A` on all seventeen of them names one bulk import and tells you\n   nothing. `--follow` was needed to recover 2026-09-17.)\n2. **Co-move the witness by `scriptFile`**, not by filename adjacency. A witness\n   belongs to the script that declares it, and a move that pairs them by directory\n   silently re-parents any witness whose name does not match its producer.\n3. **Inject the path bridge**, because a moved script's `HERE`-relative loads now\n   resolve one level too deep. This is the step the six one-off fixers were each\n   repairing after the fact.\n4. **`HERE.parent` fixups** last, since 3 changes what 4 has to look for.\n\nAnd the meta-lesson, which is the reason the bean that retired these exists:\n\n> **A codemod is a commit, not a committed script.** Ten of the seventeen files in\n> this family exist because a bulk edit was preserved as a file instead of being\n> preserved as a diff. The diff is in the history either way; the file then rots\n> in `scripts/` pointing at a layout nobody can reconstruct.\n\n## Its own partner\n\n`migrate-probes-phase1.py` is the hand-written phase 1 this generalises, and the\ntwo reference each other. They moved together, so the cross-reference still\nresolves."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/special-branches.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "special-branches.json",
+      "nodeKind": "script",
+      "sourcePath": "fsh-guts/scripts/special-branches.md",
+      "movedOn": "2026-10-05",
+      "movedFrom": "cat-harness/scripts/special-branches.json",
+      "issue": "2191",
+      "bean": "folio-assistant-rva2",
+      "description": "The central table of special-branch names, legacy names, writers, budgets and the files that copied them. Retired at the owner's word (\"dont use /get rid of\", then \"mv to fsh-guts\", 2026-10-05): a branch's name is now the declaring directory's `storage`, each cache script keeps its names only as a built-in fallback, and the five size budgets moved to cat-harness/test/health/branch-budgets.json, a file the health check owns (owner's choice 3 of 3).",
+      "body": "# `special-branches.json`\n\n**Superseded by the declarations.** It described itself as *\"the ONE\ndeclaration of the names\"* and as INTERIM in the same breath; the owner ruled\non 2026-10-03 that there is no central table — *\"each harness declares it,\n(and each instance can also declare), why centralize?\"* — and on 2026-10-05\nasked for it to go.\n\nWhat replaced each part:\n\n| part | now |\n|---|---|\n| a branch's NAME | the declaring directory's `storage.branch` / `storage.branchPrefix` (or `source`) |\n| legacy names | each script's built-in fallback list, kept in step by `cache-family-fallbacks.test.ts` |\n| the folio's own family | read first by every cache script (`lake-cache.sh`, `lake-cache-fetch.sh`, the two Python mirrors, `reseed-lean-cache.sh`, `ig-cache.sh`) — bean rva2, #2192 |\n| size budgets | `cat-harness/test/health/branch-budgets.json`, owned by the `special-branch-size` check, rows copied verbatim |\n| `mirrors` | gone: there is no table left for a copy to agree with |\n| `writers` | gone; the writer list was only ever cross-checked against workflows by the test beside this record |\n\nMoved here rather than deleted, per the `fsh-guts` skill: delete means\nrelocate, and relocate is reversible. The test that checked every copy against\nit (`special-branches.test.ts`) is beside it."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/special-branches.test.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "special-branches.test.ts",
+      "nodeKind": "script",
+      "sourcePath": "fsh-guts/scripts/special-branches.test.md",
+      "movedOn": "2026-10-05",
+      "movedFrom": "cat-harness/scripts/tests/special-branches.test.ts",
+      "issue": "2191",
+      "bean": "folio-assistant-rva2",
+      "description": "The test that held every copy of a special-branch name to special-branches.json, checked the table's own shape, and cross-checked its writer list against the workflows. Retired with the table (owner, 2026-10-05). Its one job still worth doing — the cache scripts' built-in fallback names agreeing with each other — is cache-family-fallbacks.test.ts.",
+      "body": "# `special-branches.test.ts`\n\nRetired with [`special-branches.json`](special-branches.md), which it read on\nevery line. Kept beside it here because it records what the table promised:\nnew-name-first resolution, whole-token matching (`lake-cache` is a substring of\nboth newer names), and the writers-versus-workflows cross-check.\n\n`fsh-guts/**` is in `bunfig.toml`'s `pathIgnorePatterns`, so this file is not\nrun from here."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/split-docs-page.md",
@@ -1039,6 +1065,14 @@
     },
     {
       "path": "fsh-guts/scripts/migrate-probes-phase1.py",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/scripts/special-branches.json",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/scripts/special-branches.test.ts",
       "reason": "declares no $schema, so it is not a node of this graph"
     },
     {
