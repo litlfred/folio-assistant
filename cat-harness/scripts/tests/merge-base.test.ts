@@ -211,7 +211,7 @@ describe("classify", () => {
     expect(classify("cat-harness/translations/ar/publication-workflow.po").strategy).toBe("refuse");
     // The unsafe neighbours: authored translations, and a locale no generator writes.
     expect(classify("cat-harness/docs/ar/index.md").strategy).toBe("refuse");
-    expect(classify("cat-harness/docs/fr/start/getting-started.md").strategy).toBe("refuse");
+    expect(classify("cat-harness/docs/start/fr/getting-started.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/de/glossary/index.md").strategy).toBe("refuse");
   });
 

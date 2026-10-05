@@ -448,7 +448,7 @@ export function assessSubject(subjects: Subjects, pages: Array<{ path: string; t
 
   // Ranked by (score, then length), and NOT short-circuited on the first full
   // hit. The first draft broke on the first page scoring 3 and reported
-  // `cat-harness/docs/ar/concepts/architecture.md` — the ARABIC TRANSLATION of a page
+  // `cat-harness/docs/concepts/ar/architecture.md` — the ARABIC TRANSLATION of a page
   // whose English original scores the same. It won on `readdirSync().sort()`
   // order, because `ar/` precedes `architecture/`. A verdict decided by
   // alphabetical order is a verdict about the filesystem, so every eligible

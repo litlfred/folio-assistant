@@ -28,7 +28,7 @@ import { extractMarkdown, MD_CODE_FENCE_RE } from "./pot-extract.ts";
 import { SITE_DIR } from "./translation-index.ts";
 
 /** The five pages and five locales this instance publishes, for corpus-wide tests. */
-const PAGES_ALL = ["accessibility", "content-types", "contributing", "getting-started", "installation"];
+const PAGES_ALL = ["start/accessibility", "concepts/content-types", "start/contributing", "start/getting-started", "start/installation"];
 const LOCALES_ALL = ["ar", "es", "fr", "ru", "zh"];
 import { injectMarkdown } from "./po-inject.ts";
 
@@ -263,7 +263,7 @@ describe("write", () => {
 });
 
 describe("this repository's five uncatalogued pages", () => {
-  const PAGES = ["accessibility", "content-types", "contributing", "getting-started", "installation"];
+  const PAGES = ["start/accessibility", "concepts/content-types", "start/contributing", "start/getting-started", "start/installation"];
   const LOCALES = ["ar", "es", "fr", "ru", "zh"];
 
   it("splits 25 pairs into derivable and refused, and every pair is accounted for", () => {
@@ -667,7 +667,7 @@ describe("a source that GREW since its translation is still alignable", () => {
     // translated since, `untranslated > 0` and the INCOMPLETE banner must agree
     // — in both directions — and a count can never exceed the entries it counts.
     const root = resolve(import.meta.dir, "..", "..");
-    const r = derive(root, ["installation"], LOCALES_ALL);
+    const r = derive(root, ["start/installation"], LOCALES_ALL);
     expect(r.derived.length).toBeGreaterThan(0);
     for (const d of r.derived) {
       expect(d.untranslated).toBeLessThanOrEqual(d.entries);
@@ -826,7 +826,7 @@ describe("the pages to catalogue are DISCOVERED, not listed in the script", () =
     expect(findings).toEqual([]);
     // Anti-vacuity, and it must include a page #1404 added — the whole point.
     expect(pages.length).toBeGreaterThan(5);
-    expect(pages).toContain("architecture");
+    expect(pages).toContain("concepts/architecture");
     // Bean `9rnf`: the nested page, named rather than counted. A count would go
     // 13 -> 14 for any reason at all; this says WHICH page was invisible.
     expect(pages).toContain("guides/agent-onboarding");

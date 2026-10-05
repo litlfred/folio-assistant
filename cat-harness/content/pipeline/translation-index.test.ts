@@ -373,7 +373,7 @@ describe("URL normalisation matches navKey in docs-ui.js", () => {
   const cases: Array<[string, string]> = [
     ["/", ""],
     ["/index.html", ""],
-    ["/start/getting-started.html", "getting-started"],
+    ["/getting-started.html", "getting-started"],
     ["/getting-started/", "getting-started"],
     ["/guides/agent-onboarding.html", "guides/agent-onboarding"],
     ["/fr/index.html", "fr"],

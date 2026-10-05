@@ -225,7 +225,7 @@ export function isTranslatable(text: string): boolean {
   // Measured over 660 files / 46 800 msgids before the change: this admits
   // **exactly two strings, four times each** — `是` and `否`, in yes/no cells of
   // comparison tables in `docs/guides/zh/agent-onboarding.md`,
-  // `docs/zh/guides/document-ingestion.md` and `docs/zh/start/getting-started.md`. Eight cells.
+  // `docs/guides/zh/document-ingestion.md` and `docs/start/zh/getting-started.md`. Eight cells.
   //
   // **It does not improve alignment, and must never be cited as if it did.**
   // `derive-po` reports 57 derived / 13 refused either way, with an identical
