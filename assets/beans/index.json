@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 869,
+      "count": 870,
       "unit": "beans"
     }
   },
@@ -2041,6 +2041,20 @@
       "file": "beans/defs/folio-assistant-5blc--digital-transformation-handbook-dth-a-voice-an-l1.md"
     },
     {
+      "id": "folio-assistant-5ea6",
+      "title": "PDF INLINE VIEWER: pinned pdf.js generic viewer on the site, embed on who-iris item pages, as skill + Tool node",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T18:40:22Z",
+      "updatedAt": "2026-10-04T19:16:24Z",
+      "preview": "Owner request 2026-10-04: lightweight inline PDF viewer (search, scroll, jump to page, print, download) for CDN-hosted PDFs, e.g. who-iris item pages. Owner chose option 2 (pdf.js generic viewer copied onto the site) and asked for it as a skill and a tool.\n\n## Todo\n- [x] vendor script: pinned pdf.js release, sha256-verified, pruned, installed into _site at build time (not committed)\n- [x] cross-or",
+      "file": "beans/defs/folio-assistant-5ea6--pdf-inline-viewer-pinned-pdfjs-generic-viewer-on-t.md"
+    },
+    {
       "id": "folio-assistant-5ge1",
       "title": "MERGE GATE IS SPECIFIED AS BLOCKING, OWNER RULED WARN-ONLY: reconcile merge-gate-2026-10-02.md and nok9 with the 2026-10-02 ruling",
       "status": "completed",
@@ -3283,14 +3297,14 @@
     {
       "id": "folio-assistant-8j9e",
       "title": "A merge silently drops a gitignored-but-tracked file: green locally, red in CI (#2000)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-nok9",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T13:33:34Z",
-      "updatedAt": "2026-10-04T13:33:34Z",
+      "updatedAt": "2026-10-05T05:12:29Z",
       "preview": "Related: `blgm` (the merge pipeline tools: `merge-base.ts` is where the check belongs). Filed under epic `nok9` because a bean can only have an epic, milestone or feature as its parent.\n\nA merge can silently delete a file that `main` tracks but `.gitignore` covers, and nothing catches it until CI fails on a fresh checkout. Every local check stays green, because regen rewrites the file on disk and ",
       "file": "beans/defs/folio-assistant-8j9e--a-merge-silently-drops-a-gitignored-but-tracked-fi.md"
     },
@@ -13885,14 +13899,14 @@
         "file": "beans/defs/folio-assistant-p5wm--goal-2-lhs-navbar-working-with-instantiated-harnes.md",
         "status": "in-progress",
         "epics": 6,
-        "total": 121,
+        "total": 122,
         "closed": 45,
-        "open": 76,
-        "inProgress": 19,
+        "open": 77,
+        "inProgress": 20,
         "todo": 57,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.371900826446281
+        "share": 0.36885245901639346
       },
       {
         "id": "folio-assistant-rwmf",
@@ -13903,8 +13917,8 @@
         "total": 400,
         "closed": 149,
         "open": 251,
-        "inProgress": 96,
-        "todo": 154,
+        "inProgress": 97,
+        "todo": 153,
         "draft": 1,
         "unclassified": 0,
         "share": 0.3725
@@ -13941,8 +13955,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 505,
-    "coveredOpen": 500,
+    "openTotal": 506,
+    "coveredOpen": 501,
     "duplicateIds": 0
   }
 }
