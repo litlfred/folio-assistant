@@ -42,6 +42,7 @@ function site(): string {
   put("who-iris/item.html", page("<p>a mount route</p>"));
   put("STAGING/branch/page.html", page("<p>a preview of somebody's branch</p>"));
   put("fragment.html", "<p>html by extension only</p>\n");
+  put("assets/vendor/pdfjs/web/viewer.html", page("<div id=\"viewerContainer\"></div>"));
   return root;
 }
 
@@ -50,6 +51,14 @@ const railed = (root: string, rel: string): boolean =>
   /<nav class="fa-nav"/.test(readFileSync(join(root, rel), "utf-8"));
 
 describe("what it rails", () => {
+  test("never the pinned pdf.js viewer — it is framed inside a railed page (bean folio-assistant-5ea6)", () => {
+    // Measured on the first staging preview: the rail drew the site's whole
+    // navigation inside the PDF frame, above pdf.js's own toolbar.
+    const root = site();
+    run(root);
+    expect(railed(root, "assets/vendor/pdfjs/web/viewer.html")).toBe(false);
+  });
+
   test("a standalone page with no navigation gets one", () => {
     const root = site();
     run(root);
