@@ -59,7 +59,7 @@
  * @module scripts/viewer-page
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, relative, sep } from "node:path";
+import { dirname, join, relative, sep } from "node:path";
 
 import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js";
 import { VISUALISER_NAV_ATTR, visualiserNavDeclaration, type VisualiserNavEntry } from "./lib/navbar.js";
@@ -120,6 +120,15 @@ export interface ViewerNav {
    * one. {@link subjectSection} builds the common shape.
    */
   section?: readonly VisualiserNavEntry[];
+  /**
+   * Where the rail's SHARED data goes — the absolute path and the bytes
+   * (bean `lnoy`, owner: *"4. Option 3 everywhere"*). Given, the page carries
+   * only its own rail block and links the shared data, `navbar.css` and
+   * `navbar.js`; {@link makeEmit} supplies it with the same check-or-write
+   * contract as the page. Absent, the rail is rendered into the page, so a
+   * page that must fetch nothing (the state dashboards) still has one.
+   */
+  emitAsset?: (path: string, body: string) => void;
 }
 
 /**
@@ -242,8 +251,11 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
     // Compared against the RESOLVED href rather than the kind, because a kind
     // may be published at a path that does not contain its name.
     if (item.href === undefined || item.href !== `${toRoot}${here}`) return item;
-    const { href: _here, ...rest } = item;
     visualiserLabel = item.label;
+    // From SHARED data the browser marks it (`renderRailRegions`, given
+    // `here`): the data is the same for every page that shares it.
+    if (o.emitAsset) return item;
+    const { href: _here, ...rest } = item;
     return { ...rest, current: true };
   });
 
@@ -272,7 +284,9 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
     navbarRow: navbarRowData(o.built),
     // INLINED, like the narrow-viewport rules below: these pages fetch nothing
     // (`state-visualizer.test.ts` holds them to it). Bean `lhvt`.
-    inlineRowAssets: navbarRowAssets(),
+    ...(o.emitAsset
+      ? { here, emitRailData: (file: string, body: string) => o.emitAsset!(join(o.docsRoot, file), body) }
+      : { inlineRowAssets: navbarRowAssets() }),
   });
   return railed === undefined ? undefined : withNarrowViewport(withSavedScheme(railed));
 }
@@ -398,8 +412,24 @@ export interface EmitOptions {
  * generator — a gate that cannot see what it is gating.
  */
 export function makeEmit(o: EmitOptions): (path: string, content: string) => void {
+  // The rail's shared data (bean `lnoy`): many pages name one file, so it is
+  // checked or written once per run, under the same contract as a page.
+  const seen = new Set<string>();
+  const emitAsset = (path: string, body: string): void => {
+    if (seen.has(path)) return;
+    seen.add(path);
+    if (o.check) {
+      const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
+      if (current === body) return;
+      console.error(`  ✗ ${path} ${existsSync(path) ? "is stale" : "is missing"}`);
+      o.onStale();
+      return;
+    }
+    mkdirSync(dirname(path), { recursive: true });
+    writeFileSync(path, body);
+  };
   return (path: string, content: string): void => {
-    const railed = o.nav ? withViewerNav(content, path, o.nav) : undefined;
+    const railed = o.nav ? withViewerNav(content, path, { ...o.nav, emitAsset }) : undefined;
     const final = railed ?? content;
 
     if (o.check) {

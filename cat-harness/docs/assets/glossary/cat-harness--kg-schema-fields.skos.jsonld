@@ -7709,6 +7709,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.graphnodedirectoryshape.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphNodeDirectoryShape.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where this entry's content comes from, when it is not the checkout."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.graphnodedirectoryshape.subgraph",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphNodeDirectoryShape.subgraph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "This entry is an instance SUBGRAPH, not a part of its parent's graph."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.subgraph",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.instancelocation.path",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -8010,6 +8048,63 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#MaterialisedDirectory.scope",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.nesteddirectory.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NestedDirectory.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`<parent id>/<own id>` — unique across the instance, and says who declares it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#NestedDirectory.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.nesteddirectory.ownid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NestedDirectory.ownId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The entry's OWN id, as `resolveDirectories` and a mount marker spell it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#NestedDirectory.ownId",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.nesteddirectory.subgraph",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NestedDirectory.subgraph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`true` when the entry declares itself an instance subgraph (bean `cmsl`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#NestedDirectory.subgraph",
       "skos:note": "candidate"
     },
     {
