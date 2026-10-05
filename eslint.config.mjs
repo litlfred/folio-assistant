@@ -47,6 +47,10 @@ export default tseslint.config(
       // failure that belongs to nobody's diff, which is the one thing a gate
       // must not do.
       ".claude/worktrees/**",
+      // GENERATED and minified: `gen-navbar-assets.ts` bundles it from
+      // `navbar-client.ts`, which IS linted; `navbar-assets.test.ts` holds the
+      // bundle to its source byte for byte (bean `lnoy`).
+      "cat-harness/docs/assets/js/navbar.js",
       "**/.lake/**",
       // `**/`, not root-anchored: a PUBLISHABLE package builds into its own
       // `dist/`, and since `check:published-packages` builds it (bean `rsi6`),

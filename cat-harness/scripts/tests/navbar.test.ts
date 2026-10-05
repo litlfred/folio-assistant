@@ -27,8 +27,9 @@ import {
   type NavGroup,
   type NavbarModel,
 } from "../lib/navbar.js";
-import { NAVBAR_ROW_CSS, NAVBAR_ROW_INLINE, NAVBAR_ROW_JS, injectRail, railModel, withNavbarRow } from "../lib/harness-rail.js";
-import { documentIndexOf } from "../lib/navbar.js";
+import { NAVBAR_LINKED, NAVBAR_ROW_CSS, NAVBAR_ROW_INLINE, NAVBAR_ROW_JS, declinesNavbar, injectRail, wantsLinkedRail, railModel, withNavbarRow } from "../lib/harness-rail.js";
+import { NAVBAR_CSS, documentIndexOf } from "../lib/navbar.js";
+import { thinPageHtml } from "../thin-page.js";
 import {
   BEGIN,
   END,
@@ -1208,6 +1209,40 @@ describe("the harness row's data reaches a railed page (bean wckf, #2147)", () =
   it("no row data, no row script — and a declined row still gets one, to say so", () => {
     expect(injectRail(SHELL, { ...opts })).not.toContain(NAVBAR_ROW_JS);
     expect(injectRail(SHELL, { ...opts, navbarRow: null })).toContain(NAVBAR_ROW_JS);
+  });
+});
+
+describe("a thin page asks for the rail with its style LINKED (bean lnoy)", () => {
+  // Owner, 2026-10-05: "1. Shared rail style first". Inlined, the rail was
+  // 7.9 KB (4.3 KB of CSS) on pages of 1.4-3 KB, which is why they declined it.
+  const opts = { instance: "C@T Harness", toRoot: "../..", links: [{ label: "Library", href: "../../library/" }], navbarRow: { icons: ["todos"] } };
+  const thin = `<!doctype html><html><head>${NAVBAR_LINKED}<title>x</title></head><body><main>x</main></body></html>`;
+
+  it("links navbar.css and the row's files, and inlines neither", () => {
+    const out = injectRail(thin, { ...opts, inlineRowAssets: { js: "/*JS*/", css: "/*CSS*/" } })!;
+    expect(out).toContain(`<link rel="stylesheet" href="../../${NAVBAR_CSS}">`);
+    expect(out).toContain(`<script src="../../${NAVBAR_ROW_JS}" defer></script>`);
+    expect(out).not.toContain("<style>");
+    expect(out).not.toContain("/*JS*/");
+    expect(out).toContain('<nav class="fa-nav"');
+  });
+
+  it("is a fraction of the inlined rail's weight", () => {
+    const plain = thin.replace(NAVBAR_LINKED, "");
+    const inlined = injectRail(plain, opts)!.length - plain.length;
+    const linked = injectRail(thin, opts)!.length - thin.length;
+    expect(linked).toBeLessThan(inlined / 2);
+  });
+
+  it("the meta is read in either attribute order, and `none` is still `none`", () => {
+    expect(wantsLinkedRail('<meta content="linked" name="folio-navbar">')).toBe(true);
+    expect(wantsLinkedRail('<meta name="folio-navbar" content="none">')).toBe(false);
+  });
+
+  it("thinPageHtml writes `linked`, not `none`", () => {
+    const html = thinPageHtml({ title: "x", configId: "x-config", config: {}, body: "<main></main>", script: "x.js", jsonld: "x.jsonld" });
+    expect(wantsLinkedRail(html)).toBe(true);
+    expect(declinesNavbar(html)).toBe(false);
   });
 });
 

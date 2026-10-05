@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { siteDirFor } from "../schemas/cat-harness.ts";
@@ -80,8 +80,15 @@ function landing(): string {
 </body></html>`;
 }
 
-const ROW_JS = readFileSync(join(SITE, "assets/js/navbar-row.js"), "utf8");
-const ROW_CSS = readFileSync(join(SITE, "assets/css/navbar-row.css"), "utf8");
+/** A file under the site's `assets/`, served as itself — `undefined` for anything else. */
+function siteAsset(path: string): { contentType: string; body: string } | undefined {
+  const at = path.indexOf("/assets/");
+  if (at < 0) return undefined;
+  const file = join(SITE, path.slice(at + 1));
+  if (!existsSync(file)) return undefined;
+  const type = file.endsWith(".css") ? "text/css" : file.endsWith(".js") ? "text/javascript" : "application/octet-stream";
+  return { contentType: type, body: readFileSync(file, "utf8") };
+}
 
 async function open(p: Page, which: "landing" | "viewer"): Promise<string[]> {
   const errors: string[] = [];
@@ -90,8 +97,9 @@ async function open(p: Page, which: "landing" | "viewer"): Promise<string[]> {
     // A committed viewer links the row's own files (`injectRail`, bean
     // `lhvt`); serve the real ones there rather than the page's HTML.
     const path = new URL(r.request().url()).pathname;
-    if (path.endsWith("/assets/js/navbar-row.js")) return r.fulfill({ contentType: "text/javascript", body: ROW_JS });
-    if (path.endsWith("/assets/css/navbar-row.css")) return r.fulfill({ contentType: "text/css", body: ROW_CSS });
+    // The site's own assets — the row's and the rail's files a railed page links (beans `lhvt`, `lnoy`).
+    const asset = siteAsset(path);
+    if (asset) return r.fulfill(asset);
     return r.fulfill({ contentType: "text/html", body: which === "landing" ? landing() : VIEWER });
   });
   await p.goto("http://rail.fixture/" + which + "/", { waitUntil: "load" });
