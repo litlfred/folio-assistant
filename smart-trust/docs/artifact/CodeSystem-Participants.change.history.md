@@ -4,8 +4,8 @@ description: "Participants - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"CodeSystem-Participants.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/CodeSystem-Participants.xml","active":false},{"label":"JSON","href":"CodeSystem-Participants.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/CodeSystem-Participants.ttl","active":false}],"heading":"Participants - Change History","sections":[{"text":"History of changes for Participants ."}]}
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -34,4 +34,4 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endfor %}
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

@@ -4,8 +4,8 @@ description: "Portugal - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Organization-GDHCNParticipant-PRT.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-PRT.xml","active":false},{"label":"JSON","href":"Organization-GDHCNParticipant-PRT.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-PRT.ttl","active":false}],"heading":"Portugal - Change History","sections":[{"text":"History of changes for GDHCNParticipant-PRT ."}]}
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -34,4 +34,4 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endfor %}
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

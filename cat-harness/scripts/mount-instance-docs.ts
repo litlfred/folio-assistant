@@ -1065,6 +1065,7 @@ interface DeclaredEntry {
   instanceRoot?: boolean;
   kindRouteRedirect?: boolean;
   composed?: boolean;
+  igSite?: boolean;
   served?: boolean;
   scope?: string;
   coverage?: Parameters<typeof visualisationsOf>[0];
@@ -1145,6 +1146,8 @@ function mountable(): Mountable[] {
     // composed directory that happened to carry an `index.html` would be
     // double-published while looking fine.
     if (entry.composed === true) continue;
+    // Built into the instance's own IG site by `stage-ig-sites.ts` (bean `mftp`); mounting it too would publish it twice.
+    if (entry.igSite === true) continue;
     if (!existsSync(abs) || !statSync(abs).isDirectory()) continue;
     if (!existsSync(join(abs, "index.html"))) continue;
     // The directory's own declared visualiser, if it has one. Read here

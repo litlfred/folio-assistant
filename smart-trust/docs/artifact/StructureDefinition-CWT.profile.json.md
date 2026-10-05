@@ -4,8 +4,8 @@ description: "The JSON representation of StructureDefinition/CWT."
 nav_exclude: true
 json_view: {"heading":"Logical Model: CWT - JSON Profile","package":"../fhir-artifact-index/package.tgz","entry":"package/StructureDefinition-CWT.json","raw":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT.json","rawName":"StructureDefinition-CWT.json","tabs":[{"label":"Content","href":"StructureDefinition-CWT.html","active":false},{"label":"Detailed Descriptions","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT-definitions.html","active":false},{"label":"Mappings","href":"StructureDefinition-CWT-mappings.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT.xml","active":false},{"label":"JSON","href":"StructureDefinition-CWT.profile.json.html","active":true},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-CWT.schema.json.html","active":false}],"script":"../assets/resource-json.js","intro":"JSON representation of the CWT logical model."}
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -39,4 +39,4 @@ page: `resource-json.js` reads it out of the package in the browser (`visualizer
 <script src="{{ page.json_view.script }}" defer></script>
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

@@ -7,8 +7,13 @@
  * WHERE the menu was read: `source.of` (the IG repository) and `source.ref`
  * (the commit). That pair is the declared source, so no workflow names an IG:
  * this clones `of` at `ref`, stages it with `build-ig-site` using the IG's own
- * menu, and prints one `<instance> <jekyll source>` line per IG for the
- * caller to build into `<site>/<instance>/ig/`.
+ * menu, and prints one `<instance> <jekyll source> <at>` line per IG for the
+ * caller to build into `<site>/<instance>/<at>/` — `ig` beside the instance's
+ * own pages, or `.` when the instance's docs directory declares `igSite`
+ * (bean `mftp`): the IG site is then the instance's root, and the docs
+ * directory's pages (artefact pages, their assets) are copied into its
+ * Jekyll source to build under the IG's own menu. One site, one menu, as the
+ * Publisher builds one.
  *
  * An instance with no menu, or a menu with no sushi-config source, is skipped
  * and reported: nothing to build is not the same as a build that failed.
@@ -33,7 +38,7 @@
 
 import { igApiHubFill } from "./ig-api-views.ts";
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, join, relative, resolve, sep } from "node:path";
 import { instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
 import { instanceThemes } from "../../cat-harness/schemas/theme-by-ref.js";
@@ -74,12 +79,55 @@ export function webpagePalette(repoRoot: string, instance: string): { palette?: 
  * from the IG site is `../artifact/`. Read off the disk, not assumed: an
  * instance with an index and no artefact pages gets no `artifacts` page.
  */
-export function artifactsFor(root: string): StageOptions["artifacts"] {
+export function artifactsFor(root: string, pagesHref = "../artifact/"): StageOptions["artifacts"] {
   const index = join(root, "fhir-artifact-index", "index.json");
   // declared-path-literal: the staged IG instance's own docs/artifact/ under `root`, not folio-assistant's docs/
   if (!existsSync(index) || !existsSync(join(root, "docs", "artifact"))) return undefined;
   const ix = JSON.parse(readFileSync(index, "utf-8")) as { artifacts: IndexedArtifact[] };
-  return { list: ix.artifacts, pagesHref: "../artifact/" };
+  return { list: ix.artifacts, pagesHref };
+}
+
+/**
+ * The instance's docs directory when it declares `igSite` (bean `mftp`):
+ * built INTO the IG's own site at `/<instance>/`. Undefined otherwise — the
+ * IG site then sits at `/<instance>/ig/` beside it. Read off the declaration,
+ * never inferred from the menu: smart-base holds a menu too, and its root is
+ * a harness landing page.
+ */
+export function igSiteDocs(root: string): string | undefined {
+  const d = readDeclaration(root)?.directories?.find((x) => x.igSite === true && x.graphKinds?.includes("docs"));
+  return d ? join(root, d.path) : undefined;
+}
+
+/**
+ * Copy an `igSite` docs directory into a staged IG site's Jekyll source,
+ * refusing to overwrite: a file the IG's own build already wrote at the same
+ * path is two answers for one URL, and the generator is supposed to have
+ * dropped every page the IG site writes itself. The directory's README is
+ * repository documentation, not a page.
+ */
+export function copyDocsInto(docs: string, site: string): { copied: number; collisions: string[] } {
+  let copied = 0;
+  const collisions: string[] = [];
+  const walk = (rel: string): void => {
+    for (const name of readdirSync(join(docs, rel)).sort()) {
+      const r = rel ? join(rel, name) : name;
+      if (!rel && name === "README.md") continue;
+      if (statSync(join(docs, r)).isDirectory()) {
+        walk(r);
+        continue;
+      }
+      if (existsSync(join(site, r))) {
+        collisions.push(r);
+        continue;
+      }
+      mkdirSync(join(site, rel), { recursive: true });
+      cpSync(join(docs, r), join(site, r));
+      copied++;
+    }
+  };
+  walk("");
+  return { copied, collisions };
 }
 
 /**
@@ -139,20 +187,29 @@ if (import.meta.main) {
     git("checkout", "-q", "FETCH_HEAD");
     const theme = webpagePalette(resolve("."), ig.declaredAs);
     console.error(theme.note);
+    const docs = igSiteDocs(ig.root);
     const r = stageIgSite(src, site, {
       palette: theme.palette,
-      baseurl: `${base.replace(/\/$/, "")}/${ig.instance}/ig`,
+      baseurl: `${base.replace(/\/$/, "")}/${ig.instance}${docs ? "" : "/ig"}`,
       plantumlJar: opt("--plantuml-jar"),
       menu: JSON.parse(readFileSync(ig.menuPath, "utf-8")) as IgMenu,
       remoteTheme: opt("--remote-theme"),
-      artifacts: artifactsFor(ig.root),
+      artifacts: artifactsFor(ig.root, docs ? "artifact/" : "../artifact/"),
       releases: releasesFor(ig.root),
       // The IG's post-processing output, where its source holds only a marker.
-      fills: [igApiHubFill(ig.root)].filter((x) => x !== undefined),
+      fills: [igApiHubFill(ig.root, docs ? "" : "../")].filter((x) => x !== undefined),
     });
     console.error(`${ig.instance} (${ig.repo}@${ig.ref.slice(0, 7)}):\n${describeStage(r)}`);
     if (r.siteData.refused.length) process.exit(1);
+    if (docs) {
+      const c = copyDocsInto(docs, site);
+      console.error(`${ig.instance}: igSite — ${c.copied} file(s) from ${relative(resolve("."), docs)} built into the IG site at /${ig.instance}/`);
+      if (c.collisions.length) {
+        console.error(`${ig.instance}: ${c.collisions.length} file(s) the IG site already writes — refusing two answers for one URL:\n  ${c.collisions.slice(0, 20).join("\n  ")}`);
+        process.exit(1);
+      }
+    }
     // stdout carries only the build list, one IG per line.
-    console.log(`${ig.instance} ${site}`);
+    console.log(`${ig.instance} ${site} ${docs ? "." : "ig"}`);
   }
 }

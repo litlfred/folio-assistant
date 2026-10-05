@@ -4,8 +4,8 @@ description: "Logical Model: COSEHeader - Mappings."
 nav_exclude: true
 mappings: {"tabs":[{"label":"Content","href":"StructureDefinition-COSEHeader.html","active":false},{"label":"Detailed Descriptions","href":"https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader-definitions.html","active":false},{"label":"Mappings","href":"StructureDefinition-COSEHeader-mappings.html","active":true},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader.xml","active":false},{"label":"JSON","href":"StructureDefinition-COSEHeader.profile.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-COSEHeader.schema.json.html","active":false}],"heading":"Logical Model: COSEHeader - Mappings","status":"Active as of 2026-10-01","intro":"Mappings for the COSEHeader logical model.","inIg":[],"toOther":[],"other":[{"name":"RIM Mapping","uri":"http://hl7.org/v3","rows":[{"label":"COSEHeader","depth":0,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader-definitions.html#COSEHeader","title":"COSE Headers (DRAFT)","value":"n/a"},{"label":"1","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader-definitions.html#COSEHeader.1","title":"Encryption Algorithm","value":""},{"label":"4","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader-definitions.html#COSEHeader.4","title":"Key ID used to verify the signature of the certificate","value":""}]}],"legend":"https://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#table-views"}
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -47,4 +47,4 @@ values are markdown-escaped by the generator; an empty section prints the Publis
 [Documentation for this format]({{ page.mappings.legend }})
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

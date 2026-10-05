@@ -6,8 +6,8 @@ resolvable at https://tng-cdn.who.int/v2/trustlist/-/CZE/SCA/did.json - Change H
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Endpoint-GDHCNParticipantDID-CZE-SCA.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-CZE-SCA.xml","active":false},{"label":"JSON","href":"Endpoint-GDHCNParticipantDID-CZE-SCA.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-CZE-SCA.ttl","active":false}],"heading":"Czechia Trustlist (DID v2) - Certificate Signing Authority\ndid:web:tng-cdn.who.int:v2:trustlist:-:CZE:SCA\nresolvable at https://tng-cdn.who.int/v2/trustlist/-/CZE/SCA/did.json - Change History","sections":[{"text":"History of changes for GDHCNParticipantDID-CZE-SCA ."}]}
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -36,4 +36,4 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endfor %}
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

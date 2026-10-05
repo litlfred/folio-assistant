@@ -4,8 +4,8 @@ description: "CodeSystem: WHO GDHCN Transactions CodeSystem - Testing (Experimen
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"CodeSystem-Transactions.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/CodeSystem-Transactions.xml","active":false},{"label":"JSON","href":"CodeSystem-Transactions.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/CodeSystem-Transactions.ttl","active":false}],"heading":"CodeSystem: WHO GDHCN Transactions CodeSystem - Testing (Experimental)","status":"Active as of 2026-10-01","sections":[{"heading":"Test Plans","text":"No test plans are currently available for the CodeSystem."},{"heading":"Test Scripts","text":"No test scripts are currently available for the CodeSystem."}]}
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -34,4 +34,4 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endfor %}
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

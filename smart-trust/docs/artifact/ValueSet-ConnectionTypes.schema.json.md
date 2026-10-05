@@ -4,8 +4,8 @@ description: "The JSON Schema sidecar of ValueSet/ConnectionTypes, from the IG's
 nav_exclude: true
 ig_api: {"label":"JSON Schema","file":"ValueSet-ConnectionTypes.schema.json","src":"../fhir-artifact-index/dak/ValueSet-ConnectionTypes.schema.json","artifact":{"title":"WHO GDHCN Connection Types","page":"ValueSet-ConnectionTypes.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-ConnectionTypes.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-ConnectionTypes.xml","active":false},{"label":"JSON","href":"ValueSet-ConnectionTypes.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-ConnectionTypes.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-ConnectionTypes.schema.json.html","active":true},{"label":"JSON-LD","href":"ValueSet-ConnectionTypes.jsonld.html","active":false}],"script":"../assets/ig-api-view.js"}
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -36,4 +36,4 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <script src="{{ page.ig_api.script }}" defer></script>
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

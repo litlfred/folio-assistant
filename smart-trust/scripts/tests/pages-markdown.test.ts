@@ -22,12 +22,20 @@
  *    is `.md` either way — so the only test that could catch it is one that
  *    reads the href and resolves it back to a file.
  *
+ * SINCE 2026-10-05 (bean `mftp`) these are the artefact pages of ONE site:
+ * `docs/` declares `igSite`, so they build into smart-trust's own IG site at
+ * `/smart-trust/`, whose index, toc and artifacts pages `build-ig-site`
+ * writes. The generator no longer writes an index, menu sections or category
+ * pages here, and the assertions about them were retargeted at what replaced
+ * them — the IG site's `artifacts` page links — rather than deleted silently.
+ *
  * @module smart-trust/scripts/tests/pages-markdown.test
  */
 import { describe, expect, it } from "bun:test";
 import { VIEW_PAGE } from "../../platform.ts";
 import { existsSync, readFileSync, readdirSync } from "fs";
 import { join, resolve } from "path";
+import { artifactVariables } from "../../../fhir-harness/scripts/build-ig-site";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const DOCS = join(INSTANCE, "docs");
@@ -79,7 +87,6 @@ const SITE_CSS = `${cssFile("ig-pages.css")}\n${cssFile("ig-chrome.css")}`;
 
 /** Every generated page, index first, as `[label, source]`. */
 const pages: [string, string][] = [
-  ["index.md", indexSrc],
   ...artifactFiles.map(
     (f) => [`artifact/${f}`, readFileSync(join(ARTIFACTS, f), "utf-8")] as [string, string],
   ),
@@ -107,8 +114,14 @@ describe("smart-trust pages are generated at all", () => {
    * an empty `docs/` would make the whole file green while publishing nothing
    * — the `dh4f` shape: a sweep over an empty corpus reporting a clean run.
    */
-  it("has an index and one page per artefact", () => {
-    expect(indexSrc.length).toBeGreaterThan(0);
+  it("writes no index, menu or category page of its own, and one page per artefact", () => {
+    // The IG site writes the index, toc and artifacts pages (`igSite`, bean
+    // `mftp`); a copy here would be a second answer at the same URL, which
+    // `stage-ig-sites` refuses at build time.
+    expect(existsSync(join(DOCS, "index.md"))).toBe(false);
+    expect(existsSync(join(DOCS, "menu"))).toBe(false);
+    expect(existsSync(CATEGORIES)).toBe(false);
+    expect(artifactFiles.length).toBeGreaterThan(0);
     // ONE PER ARTEFACT, counted from the index rather than hardcoded. This
     // read `toBe(19)` while only sidecar-bearing artefacts were rendered; the
     // owner chose full parity 2026-09-22, and a literal would have had to be
@@ -290,23 +303,28 @@ describe("every artefact link resolves to a page that exists", () => {
    * there, and only the second kind 404s loudly. The first just never gets
    * visited.
    */
-  it("every artefact page is linked from exactly one index or category page", () => {
-    const linked = [
-      ...hrefs.map((h) => h.replace(/^\.\/artifact\//, "")),
-      ...categoryHrefs.map((c) => c.href.replace(/^\.\.\/artifact\//, "")),
-    ].map((n) => n.replace(/\.html$/, ""));
-
-    expect(linked.length).toBe(ix.artifacts.length);
-    expect(new Set(linked).size).toBe(ix.artifacts.length);
-    expect([...linked].sort()).toEqual(artifactFiles.map((f) => f.replace(/\.md$/, "")).sort());
-  });
-
-  it("the split actually happened — the index does not carry all 674", () => {
-    // A vacuity guard on the assertion above: if every artefact were still
-    // inlined, the union test would pass with an empty category set and the
-    // `INLINE_LIMIT` behaviour would be untested.
-    expect(hrefs.length).toBeLessThan(ix.artifacts.length);
-    expect(categoryHrefs.length).toBeGreaterThan(0);
+  /**
+   * EVERY ARTEFACT PAGE IS REACHABLE — from the IG site's `artifacts` page,
+   * which `build-ig-site` writes from `site.data.fhir.artifacts`. The links
+   * are the same `artifactVariables` the build computes, read with the
+   * `pagesHref` an `igSite` instance is staged with, and resolved back to
+   * source files here: a link to a page that is not there 404s, and a page
+   * nothing links is never visited.
+   */
+  it("every artefact page is linked exactly once from the IG site's artifacts page", () => {
+    const { vars } = artifactVariables(ix.artifacts as never, "artifact/");
+    // What the `artifacts` template iterates: the categories, as the
+    // Publisher's `artifacts.html` lists them.
+    const listed = vars.artifact_categories.flatMap((c) => c.keys).map((k) => vars.artifacts[k]!.url.page);
+    const linked = listed.map((h) => h.replace(/^artifact\//, "").replace(/\.html$/, ""));
+    expect(new Set(linked).size).toBe(linked.length);
+    for (const n of linked) expect(existsSync(join(ARTIFACTS, `${n}.md`))).toBe(true);
+    // The pages it does NOT link are exactly the artefacts the Publisher's
+    // page does not list either (no category: the ImplementationGuide itself).
+    const unlisted = artifactFiles.map((f) => f.replace(/\.md$/, "")).filter((n) => !linked.includes(n));
+    const uncategorised = Object.values(vars.artifacts).filter((a) => a.category === undefined).map((a) => a.url.page.replace(/^artifact\//, "").replace(/\.html$/, ""));
+    expect(unlisted.sort()).toEqual(uncategorised.sort());
+    expect(linked.length).toBeGreaterThan(ix.artifacts.length - 5);
   });
 
   for (const href of hrefs) {
@@ -384,27 +402,6 @@ describe("left-hand nav — three roles, one per page kind", () => {
   const fm = (page: string): string => page.slice(0, page.indexOf("\n---", 4) + 4);
   const readDoc = (rel: string): string => readFileSync(join(DOCS, rel), "utf-8");
 
-  it("the index CARRIES children", () => {
-    const f = fm(indexSrc);
-    expect(f).toContain("has_children: true");
-    expect(f).not.toContain("nav_exclude");
-    expect(f).not.toContain("parent:");
-  });
-
-  it("a category page is a LISTED child, named against the index's exact title", () => {
-    const name = categoryFiles[0];
-    expect(name).toBeDefined();
-    const f = fm(readDoc(join("category", name!)));
-    // The parent string must be the index's own `title`, byte for byte —
-    // just-the-docs matches a child to its parent by that string, so a
-    // re-titled index orphans every section and the sidebar quietly flattens.
-    const indexTitle = /title: (.+)/.exec(fm(indexSrc))![1]!;
-    expect(f).toContain(`parent: ${indexTitle}`);
-    expect(f).toMatch(/nav_order: \d+/);
-    // The whole point: a section is NOT excluded.
-    expect(f).not.toContain("nav_exclude");
-  });
-
   it("an artefact page stays EXCLUDED — 674 leaves would bury the sidebar", () => {
     const f = fm(readFileSync(join(ARTIFACTS, "CodeSystem-Actors.md"), "utf-8"));
     expect(f).toContain("nav_exclude: true");
@@ -418,16 +415,23 @@ describe("left-hand nav — three roles, one per page kind", () => {
    * which is how the original defect survived, since an empty sidebar section
    * looks exactly like a folio that has none.
    */
-  it("no category page is nav-excluded, and every artefact page is", () => {
-    expect(categoryFiles.length).toBeGreaterThan(0);
-    for (const c of categoryFiles) {
-      expect(fm(readFileSync(join(CATEGORIES, c), "utf-8"))).not.toContain("nav_exclude");
-    }
+  it("every artefact page is nav-excluded — the IG's own menu is the sidebar", () => {
     const leaves = artifactFiles.slice(0, 25);
     expect(leaves.length).toBeGreaterThan(0);
     for (const a of leaves) {
       expect(fm(readFileSync(join(ARTIFACTS, a), "utf-8"))).toContain("nav_exclude: true");
     }
+  });
+});
+
+describe("an artefact page addresses the IG site it builds into (bean `mftp`)", () => {
+  const holder = readFileSync(join(ARTIFACTS, "ActorDefinition-Holder.md"), "utf-8");
+  it("links its CSS from the IG site's root, whose baseurl already ends in /smart-trust", () => {
+    expect(holder).toContain(`{{ '/assets/ig-pages.css' | relative_url }}`);
+    expect(holder).not.toContain("'/smart-trust/assets/");
+  });
+  it("sends 'all artefacts' to the IG site's Artifact Index, not the home page", () => {
+    expect(holder).toMatch(/\[← all \d+ artefacts\]\(\.\.\/artifacts\.html\)/);
   });
 });
 
@@ -456,11 +460,6 @@ describe("the DAK API section is on exactly the pages the Publisher puts it on",
 // left-hand rail, and every page ends in the Publisher's footer, whose facts
 // come from the IG's own metadata.
 describe("the Publisher footer, and no in-page Contents box", () => {
-  it("the index carries no Contents box", () => {
-    expect(indexSrc).not.toContain('aria-label="Contents"');
-    expect(indexSrc).not.toContain("ig-toc");
-  });
-
   it("the footer's data is the IG's own, written once", () => {
     const d = JSON.parse(readFileSync(join(DOCS, "assets", "ig-footer.json"), "utf-8"));
     expect(d.packageId).toBe(ix.packageId);
@@ -472,20 +471,23 @@ describe("the Publisher footer, and no in-page Contents box", () => {
   // index lists them. Followed from the index, it must visit every artefact
   // page once and only resolve to pages that exist — a broken hop is a 404
   // in a footer on every page.
-  it("prev/next walk index -> every artefact page once, each hop resolving", () => {
+  // The first artefact page's <prev is `../` — the IG site's own index, the
+  // instance root since `mftp` — and the chain from there visits every
+  // artefact page once, each hop resolving.
+  it("prev/next walk the IG root -> every artefact page once, each hop resolving", () => {
     const attr = (src: string, name: string) => src.match(new RegExp(`<footer id="ig-footer"[^>]*\\b${name}="([^"]+)"`))?.[1];
     const read = (rel: string) => readFileSync(join(DOCS, rel), "utf-8");
+    const first = artifactFiles.filter((f) => attr(read(join("artifact", f)), "data-prev") === "../");
+    expect(first.length).toBe(1);
     const seen: string[] = [];
-    let at = "index.md";
-    for (let next = attr(indexSrc, "data-next"); next !== undefined; ) {
-      const target = join(at === "index.md" ? "" : "artifact", next).replace(/\.html$/, ".md");
-      expect(existsSync(join(DOCS, target))).toBe(true);
-      const src = read(target);
-      const back = attr(src, "data-prev")!;
-      expect(join("artifact", back).replace(/\.html$/, ".md").replace(/^\.\/?$/, "index.md")).toBe(at === "index.md" ? "index.md" : at);
-      seen.push(target);
+    for (let at: string | undefined = join("artifact", first[0]!); at !== undefined; ) {
+      expect(existsSync(join(DOCS, at))).toBe(true);
+      seen.push(at);
+      const next = attr(read(at), "data-next");
+      if (next === undefined) break;
+      const target = join("artifact", next).replace(/\.html$/, ".md");
+      expect(attr(read(target), "data-prev")).toBe(at.replace(/^artifact\//, "").replace(/\.md$/, ".html"));
       at = target;
-      next = attr(src, "data-next");
     }
     expect(seen.length).toBe(ix.artifacts.length);
     expect(new Set(seen).size).toBe(seen.length);

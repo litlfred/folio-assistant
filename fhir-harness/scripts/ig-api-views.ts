@@ -138,7 +138,7 @@ export function igApiServed(instanceRoot: string): { ok: true } | { ok: false; w
   // `smart-base/` and the declaration is still `smart-trust.json` (bean `rbz3`).
   const at = declarationPathIn(instanceRoot);
   if (at === undefined) return { ok: false, why: `${basename(instanceRoot)}/ holds no instance declaration` };
-  let d: { directories?: { path?: string; graphKinds?: string[]; served?: boolean; instanceRoot?: boolean; composed?: boolean }[] };
+  let d: { directories?: { path?: string; graphKinds?: string[]; served?: boolean; instanceRoot?: boolean; composed?: boolean; igSite?: boolean }[] };
   try {
     d = JSON.parse(readFileSync(at, "utf8"));
   } catch {
@@ -149,7 +149,9 @@ export function igApiServed(instanceRoot: string): { ok: true } | { ok: false; w
   // declared-path-literal: matches an entry in the STAGED instance's own declaration by its path; no folio-assistant directory is read
   const docs = dirs.find((x) => x.path === "docs/");
   if (!index?.served) return { ok: false, why: "its fhir-artifact-index directory is not declared `served`" };
-  if (!(docs?.instanceRoot && docs.composed)) return { ok: false, why: "its docs/ is not the composed instance root, so `../` does not reach the served data" };
+  // Composed into the main site or built into the IG's own (bean `mftp`): either way the
+  // pages sit at the instance root, where `../` from `artifact/` reaches the served data.
+  if (!(docs?.instanceRoot && (docs.composed || docs.igSite))) return { ok: false, why: "its docs/ is not the instance root (composed or igSite), so `../` does not reach the served data" };
   return { ok: true };
 }
 
@@ -188,7 +190,12 @@ export function igApiHubData(ix: FhirArtifactIndex, fragment: string, prefix: st
  * post-processing writes the hub there. Undefined, with nothing
  * filled, when the instance holds no hub or does not serve its graph.
  */
-export function igApiHubFill(instanceRoot: string): { marker: string; body: string; data: Record<string, unknown> } | undefined {
+/**
+ * `prefix` is where the instance root is from the IG site's root: `"../"` for
+ * a site at `/<instance>/ig/`, `""` for one served AT `/<instance>/` (an
+ * `igSite` instance, bean `mftp`).
+ */
+export function igApiHubFill(instanceRoot: string, prefix = "../"): { marker: string; body: string; data: Record<string, unknown> } | undefined {
   let ix: FhirArtifactIndex;
   try {
     ix = JSON.parse(readFileSync(join(instanceRoot, "fhir-artifact-index", "index.json"), "utf8"));
@@ -197,5 +204,5 @@ export function igApiHubFill(instanceRoot: string): { marker: string; body: stri
   }
   if (!ix.igApiHub?.localPath || !igApiServed(instanceRoot).ok) return undefined;
   const fragment = igApiHubFragment(instanceRoot, ix.igApiHub.localPath);
-  return { marker: ix.igApiHub.placeholder ?? IG_API_PLACEHOLDER, body: readFileSync(IG_API_HUB_TEMPLATE, "utf8"), data: { hub: igApiHubData(ix, fragment, "../") } };
+  return { marker: ix.igApiHub.placeholder ?? IG_API_PLACEHOLDER, body: readFileSync(IG_API_HUB_TEMPLATE, "utf8"), data: { hub: igApiHubData(ix, fragment, prefix) } };
 }

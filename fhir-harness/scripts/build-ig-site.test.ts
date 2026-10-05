@@ -8,7 +8,8 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, contrast, dedupeIds, includeTargets, pageNav, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, contrast, dedupeIds, includeTargets, pageNav, relinkArtifacts, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { copyDocsInto, igSiteDocs } from "./stage-ig-sites";
 import type { IgReleases } from "../schemas/ig-releases.ts";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
 
@@ -307,5 +308,48 @@ describe("the releases page: pointers to release binaries, never the bytes (bean
     } finally {
       rmSync(d, { recursive: true, force: true });
     }
+  });
+});
+
+// Bean `mftp`: the IG's prose links an artefact at the Publisher's flat path;
+// this site keeps artefact pages under `pagesHref`.
+describe("relinkArtifacts", () => {
+  const names = new Set(["ValueSet-Domains", "CodeSystem-Actors"]);
+  test("rewrites a markdown link and an href to an artefact page, and nothing else", () => {
+    const src = "[d](ValueSet-Domains.html) [a](CodeSystem-Actors.html#x) <a href=\"ValueSet-Domains.html\">v</a> [c](concepts.html) [e](https://x.org/ValueSet-Domains.html) [s](sub/ValueSet-Domains.html)";
+    const r = relinkArtifacts(src, names, "artifact/");
+    expect(r.count).toBe(3);
+    expect(r.text).toBe("[d](artifact/ValueSet-Domains.html) [a](artifact/CodeSystem-Actors.html#x) <a href=\"artifact/ValueSet-Domains.html\">v</a> [c](concepts.html) [e](https://x.org/ValueSet-Domains.html) [s](sub/ValueSet-Domains.html)");
+  });
+  test("is a no-op when the source links no artefact", () => {
+    expect(relinkArtifacts("[c](concepts.html)", names, "../artifact/")).toEqual({ text: "[c](concepts.html)", count: 0 });
+  });
+});
+
+describe("copyDocsInto (an igSite instance's pages built into its IG site)", () => {
+  test("copies every file but the README, and refuses to overwrite one the IG site wrote", () => {
+    const d = mkdtempSync(join(tmpdir(), "ig-docs-"));
+    const docs = join(d, "docs");
+    const site = join(d, "site");
+    mkdirSync(join(docs, "artifact"), { recursive: true });
+    mkdirSync(site, { recursive: true });
+    writeFileSync(join(docs, "README.md"), "repo docs");
+    writeFileSync(join(docs, "artifact", "A.md"), "a");
+    writeFileSync(join(docs, "artifacts.md"), "mine");
+    writeFileSync(join(site, "artifacts.md"), "the IG site's");
+    const c = copyDocsInto(docs, site);
+    expect(c).toEqual({ copied: 1, collisions: ["artifacts.md"] });
+    expect(readFileSync(join(site, "artifact", "A.md"), "utf-8")).toBe("a");
+    expect(readFileSync(join(site, "artifacts.md"), "utf-8")).toBe("the IG site's");
+    expect(existsSync(join(site, "README.md"))).toBe(false);
+    rmSync(d, { recursive: true, force: true });
+  });
+});
+
+describe("igSiteDocs", () => {
+  test("only an instance that DECLARES igSite builds its IG site at its root", () => {
+    expect(igSiteDocs(join(import.meta.dir, "..", "..", "smart-trust"))).toBe(join(import.meta.dir, "..", "..", "smart-trust", "docs/"));
+    // smart-base holds an IG menu too, but its root is a harness landing page.
+    expect(igSiteDocs(join(import.meta.dir, "..", "..", "smart-base"))).toBeUndefined();
   });
 });

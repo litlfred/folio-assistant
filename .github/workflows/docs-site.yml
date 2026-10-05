@@ -95,6 +95,12 @@ on:
       # bean `iwtn`), so a change to any of them changes the site.
       - 'bootstrap/**'
       - 'bootstrap-tools/**'
+      # The IG sites this workflow builds (bean `mftp`): the stager and the
+      # page generator, each IG instance's index, menu and pages. Without these
+      # an IG re-ingest or a generator fix would not redeploy what it changes.
+      - 'fhir-harness/scripts/**'
+      - '*/fhir-artifact-index/**'
+      - 'smart-trust/**'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
@@ -368,6 +374,46 @@ jobs:
       # with a front door of its own. No change here when it does.
       - name: Mount instance-rendered content
         run: bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
+
+      # ONE JEKYLL SITE PER IG, in production too (bean `mftp`). Until
+      # 2026-10-05 only `feature-staging.yml` built these, so the deployed
+      # `/smart-trust/` carried an artefact index and none of WHO's 42
+      # narrative pages — the owner found it by comparing it with WHO's TOC.
+      # Same steps as the preview's, minus the staging cone: production builds
+      # every IG. Which IGs, from which commit, is DATA
+      # (`fhir-artifact-index/menu.json`), so this names none. After the mount,
+      # merged in, because `jekyll build` empties its destination.
+      - name: Set up Ruby for the IG sites
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: cat-harness/docs
+
+      - name: Build each IG's own site
+        run: |
+          BASE="/${{ github.event.repository.name }}"
+          curl -sSfL -o /tmp/plantuml.jar \
+            https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar
+          bun run fhir-harness/scripts/stage-ig-sites.ts --work ./_ig --baseurl "$BASE" \
+            --plantuml-jar /tmp/plantuml.jar > ./_ig-list.txt
+          # Each line is `<instance> <jekyll source> <at>`: `ig` builds beside the
+          # instance's own pages, `.` IS the instance root (`igSite`, bean `mftp`).
+          # Built into a scratch directory and merged in, because `jekyll build`
+          # empties its destination, and `/<instance>/` already holds the served
+          # graphs mounted above.
+          while read -r INSTANCE SRC AT; do
+            OUT="./_ig/${INSTANCE}/out"
+            BUNDLE_GEMFILE="$PWD/cat-harness/docs/Gemfile" bundle exec jekyll build \
+              --source "$SRC" --destination "$OUT"
+            # An IG's source can repeat an anchor, and the Publisher's output
+            # repeats it too. Keep the first copy (where every link already
+            # lands), rename the rest, and report each one.
+            bun run fhir-harness/scripts/build-ig-site.ts --dedupe-ids "$OUT"
+            mkdir -p "./_site/${INSTANCE}/${AT}"
+            cp -a "$OUT/." "./_site/${INSTANCE}/${AT}/"
+            echo "built ${INSTANCE}'s IG site -> ${BASE}/${INSTANCE}/${AT}/"
+          done < ./_ig-list.txt
 
       # The inline PDF viewer (bean `folio-assistant-5ea6`): pdf.js, pinned and
       # hash-checked in `pdf-viewer.ts`, installed into the BUILT site and never

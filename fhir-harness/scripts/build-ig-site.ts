@@ -146,9 +146,32 @@ export interface StageResult {
   notRendered: string[];
   /** `input/images` data files (`.json`, `.jsonld`) that do not parse: not published, with the parser's reason. */
   unparseable: string[];
+  /** Links the IG's source writes to an artefact's flat Publisher page (`ValueSet-X.html`), pointed at this site's artefact page instead. */
+  relinked: number;
   /** The colour scheme written from the instance's palette; undefined when none was declared. */
   scheme: ColourScheme | undefined;
   siteData: IgSiteDataResult;
+}
+
+/**
+ * Point the IG source's links to an artefact page at THIS site's copy.
+ *
+ * The Publisher writes every artefact page flat beside the narrative pages,
+ * so the IG's own prose links `ValueSet-Domains.html`. This site keeps them
+ * under `pagesHref` (`artifact/`), so those links 404 unless rewritten.
+ * Only a bare relative link whose page name IS an artefact page is touched —
+ * in a markdown link target or an `href` — so a narrative page that happens
+ * to share a name is never redirected. Measured on smart-trust at `25771f6`
+ * (bean `mftp`): 34 such links over 4 artefacts.
+ */
+export function relinkArtifacts(text: string, pageNames: ReadonlySet<string>, pagesHref: string): { text: string; count: number } {
+  let count = 0;
+  const out = text.replace(/(\]\(|href=["'])([A-Za-z0-9][A-Za-z0-9._-]*)\.html(?=[#)"'?])/g, (whole, pre: string, name: string) => {
+    if (!pageNames.has(name)) return whole;
+    count++;
+    return `${pre}${pagesHref}${name}.html`;
+  });
+  return { text: out, count };
 }
 
 const files = (dir: string) => (existsSync(dir) ? readdirSync(dir).filter((f) => statSync(join(dir, f)).isFile()) : []);
@@ -478,6 +501,14 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   const unlisted: string[] = [];
   const filled: string[] = [];
   const usedMarkers = new Set<string>();
+  const artifactPages = new Set((opts.artifacts?.list ?? []).map((a) => artifactPageName(a)));
+  let relinked = 0;
+  const relink = (text: string): string => {
+    if (!opts.artifacts) return text;
+    const r = relinkArtifacts(text, artifactPages, opts.artifacts.pagesHref);
+    relinked += r.count;
+    return r.text;
+  };
   for (const f of files(pagecontent).filter((f) => f.endsWith(".md"))) {
     const name = basename(f, ".md");
     let n = nav.get(name);
@@ -487,7 +518,7 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
       // Under a menu it stays reachable but out of the nav, as on the IG.
       n = { title: name, navOrder: 1000 + unlisted.length, ...(fromMenu ? { navExclude: true } : {}) };
     }
-    let body = readFileSync(join(pagecontent, f), "utf-8");
+    let body = relink(readFileSync(join(pagecontent, f), "utf-8"));
     // Standard HL7 IG Publisher macro for localized includes: {% lang-fragment <file> %}
     body = body.replace(/\{%-?\s*lang-fragment\s+([^\s%]+)\s*-?%\}/g, "{% include $1 %}");
     let data: Record<string, unknown> = {};
@@ -542,7 +573,9 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   let includes = 0;
   for (const dir of [join(src, "input", "includes"), pagecontent]) {
     for (const f of files(dir)) {
-      copyFileSync(join(dir, f), join(out, "_includes", f));
+      // A transcluded page carries the same flat artefact links as a page does.
+      if (dir === pagecontent && f.endsWith(".md")) writeFileSync(join(out, "_includes", f), relink(readFileSync(join(dir, f), "utf-8")));
+      else copyFileSync(join(dir, f), join(out, "_includes", f));
       includes++;
     }
   }
@@ -620,7 +653,7 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
     ].join("\n"),
   );
   const fillsResult = opts.fills?.length ? { filled, unused: opts.fills.map((x) => x.marker).filter((m) => !usedMarkers.has(m)) } : undefined;
-  return { pages: pages.sort(), generated, fills: fillsResult, variables: lifted ? { artifacts: Object.keys(lifted.vars.artifacts).length, notSourced: lifted.notSourced } : undefined, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, scheme, siteData };
+  return { pages: pages.sort(), generated, fills: fillsResult, variables: lifted ? { artifacts: Object.keys(lifted.vars.artifacts).length, notSourced: lifted.notSourced } : undefined, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, relinked, scheme, siteData };
 }
 
 /**
@@ -672,6 +705,7 @@ export function describeStage(r: StageResult): string {
     ...(r.fills?.filled.length ? [`post-processing filled: ${r.fills.filled.join(", ")}`] : []),
     ...(r.fills?.unused.length ? [`post-processing fill with no marker in any page (NOT applied): ${r.fills.unused.join(", ")}`] : []),
     ...(r.variables ? [`site.data.fhir.artifacts: ${r.variables.artifacts} artefact(s); elements not sourced (not written): ${r.variables.notSourced.join(", ") || "none"}`] : []),
+    ...(r.relinked ? [`artefact links pointed at this site's artefact pages: ${r.relinked}`] : []),
     ...(r.notRendered.length ? [`NOT RENDERED (a visible marker stands in): ${r.notRendered.join(", ")}`] : []),
     ...(r.unparseable.length ? [`NOT PUBLISHED (not valid JSON in the IG source): ${r.unparseable.join("; ")}`] : []),
     r.scheme

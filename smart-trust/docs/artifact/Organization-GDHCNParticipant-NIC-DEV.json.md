@@ -4,8 +4,8 @@ description: "The JSON representation of Organization/GDHCNParticipant-NIC-DEV."
 nav_exclude: true
 json_view: {"heading":"GDHCNParticipant-NIC-DEV - JSON Representation","package":"../fhir-artifact-index/package.tgz","entry":"package/Organization-GDHCNParticipant-NIC-DEV.json","raw":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-NIC-DEV.json","rawName":"Organization-GDHCNParticipant-NIC-DEV.json","tabs":[{"label":"Narrative Content","href":"Organization-GDHCNParticipant-NIC-DEV.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-NIC-DEV.xml","active":false},{"label":"JSON","href":"Organization-GDHCNParticipant-NIC-DEV.json.html","active":true},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-NIC-DEV.ttl","active":false}],"script":"../assets/resource-json.js"}
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -39,4 +39,4 @@ page: `resource-json.js` reads it out of the package in the browser (`visualizer
 <script src="{{ page.json_view.script }}" defer></script>
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

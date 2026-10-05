@@ -3,8 +3,8 @@ title: "WHO RefMart Jurisidiction List — WHO SMART Trust artefact"
 description: "CodeSystem/RefMartCountryList in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -14,7 +14,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/trust">http://smart.who.int/trust</a>.</p>
 </div>
 
-[← all 678 artefacts](../)
+[← all 678 artefacts](../artifacts.html)
 
 ## WHO RefMart Jurisidiction List
 
@@ -39,4 +39,4 @@ not a gap in this index — sidecars are published per artefact, and
 19 of 678 carry one.
 
 <footer id="ig-footer" data-prev="CodeSystem-Participants.html" data-next="CodeSystem-WHORegionalOffices.html" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

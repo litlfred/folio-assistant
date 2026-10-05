@@ -3,8 +3,8 @@ title: "Health Certificate — WHO SMART Trust artefact"
 description: "StructureDefinition/HCert in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -14,7 +14,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/trust">http://smart.who.int/trust</a>.</p>
 </div>
 
-[← all 678 artefacts](../)
+[← all 678 artefacts](../artifacts.html)
 
 ## Health Certificate
 
@@ -45,4 +45,4 @@ IG rather than a gap in this index.
 | JSON-LD | *not published for this artefact* | |
 
 <footer id="ig-footer" data-prev="StructureDefinition-COSEHeader.html" data-next="StructureDefinition-SchemeInformation.html" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

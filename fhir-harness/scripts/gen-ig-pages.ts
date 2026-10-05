@@ -166,6 +166,24 @@ const AST_LOADER = join(import.meta.dir, "templates", "ig-pages", "ast-resource.
 /** `--out` writes the pages somewhere other than the instance's committed `docs/`. */
 const OUT_ARG = arg("--out");
 const OUT = OUT_ARG ? resolve(process.cwd(), OUT_ARG) : join(INSTANCE, "docs");
+/**
+ * Whether these pages build INTO the instance's own IG site, served at
+ * `/<instance>/` (`igSite` on the docs directory, bean `mftp`), rather than
+ * composed into the main site. Read off the declaration, never inferred.
+ */
+const IG_SITE = readDeclaration(INSTANCE)?.directories?.find((d) => resolve(INSTANCE, d.path).replace(/\/+$/, "") === OUT.replace(/\/+$/, ""))?.igSite === true;
+/**
+ * The site-absolute path of this instance's docs root, for `relative_url`:
+ * the instance's own route in the main site, or the IG site's root, whose
+ * `baseurl` already ends in `/<instance>`.
+ */
+const SITE_PREFIX = IG_SITE ? "" : `/${INSTANCE_NAME}`;
+/**
+ * Where an artefact page's "all artefacts" link goes: the IG site's own
+ * Artifact Index (`artifacts.html`, written by `build-ig-site`) when the pages
+ * build into it, else this generator's index at the docs root.
+ */
+const ALL_ARTEFACTS_HREF = IG_SITE ? "../artifacts.html" : "../";
 /** The pages' shared stylesheets, under the docs root (one copy each, linked from every page). */
 const PAGES_CSS = "assets/ig-pages.css";
 const CHROME_CSS = "assets/ig-chrome.css";
@@ -617,7 +635,7 @@ function shell(
   // page renders as an ordinary folio page: a mirror nobody could build is
   // reported by the build, never faked with a hand-typed palette.
   const wearsChrome = chrome === "fixture" && CHROME !== undefined;
-  const link = (file: string) => `<link rel="stylesheet" href="{{ '/${INSTANCE_NAME}/${file}' | relative_url }}">`;
+  const link = (file: string) => `<link rel="stylesheet" href="{{ '${SITE_PREFIX}/${file}' | relative_url }}">`;
   const links = `${link(PAGES_CSS)}${wearsChrome ? `\n${link(CHROME_CSS)}` : ""}`;
   const banner = wearsChrome ? `${igBanner(IX)}\n\n` : "";
   // The footer is drawn by its loader from the IG's own metadata; the page
@@ -631,7 +649,7 @@ function shell(
       ? // In the chrome's scope when the page wears it, which is where the
         // mirrored `--footer-*` tokens are defined.
         `\n\n${FOOTER_TAG}${wearsChrome ? ` class="${CHROME_SCOPE.slice(1)}"` : ""}></footer>\n` +
-        `<script src="{{ '/${INSTANCE_NAME}/${IG_FOOTER_SCRIPT}' | relative_url }}" defer></script>`
+        `<script src="{{ '${SITE_PREFIX}/${IG_FOOTER_SCRIPT}' | relative_url }}" defer></script>`
       : "";
   return `${fm}${links}\n\n${banner}${body.trim()}${footer}\n`;
 }
@@ -885,7 +903,7 @@ function artifactTable(list: FhirArtifact[], base: string): string[] {
 function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: FhirArtifact[], order: number): string {
   const name = label ?? UNCATEGORISED;
   const body = [
-    `[← all ${ix.count} artefacts](../)`,
+    `[← all ${ix.count} artefacts](${ALL_ARTEFACTS_HREF})`,
     ``,
     `## ${name}`,
     ``,
@@ -982,7 +1000,7 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
   const body = [
     // `../` from `artifact/Name.html` is the mount root, which the server
     // resolves to its `index.html`.
-    `[← all ${ix.count} artefacts](../)`,
+    `[← all ${ix.count} artefacts](${ALL_ARTEFACTS_HREF})`,
     ``,
     `## ${name}`,
     ``,
@@ -1355,6 +1373,19 @@ for (const [label, list] of byCategory(ix.artifacts)) {
   if (list.length > INLINE_LIMIT) {
     sectionOrder += 1;
     pages.set(join("category", `${categoryName(label)}.md`), categoryPage(ix, label, list, sectionOrder));
+  }
+}
+
+// AN IG-SITE INSTANCE'S OWN NAVIGATION IS THE IG'S (bean `mftp`). Its index,
+// toc and artifacts pages, its menu sections and its DAK hub page are written
+// by `build-ig-site` from the IG's source and menu, so the copies above would
+// be a second index, a second menu and a second hub at the same URLs. Built
+// above and dropped here, rather than not built, so the footer's reading
+// order and every link computed from them are the same in both layouts.
+// The CSS, scripts and artefact pages stay: the IG site carries them.
+if (IG_SITE) {
+  for (const k of [...pages.keys()]) {
+    if (k === "index.md" || k.startsWith("menu/") || k.startsWith("category/") || (ix.igApiHub?.localPath && k === `${hubPage(ix)}.md`)) pages.delete(k);
   }
 }
 

@@ -4,8 +4,8 @@ description: "Domains-UAT - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"ValueSet-Domains-UAT.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-UAT.xml","active":false},{"label":"JSON","href":"ValueSet-Domains-UAT.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-UAT.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-Domains-UAT.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-Domains-UAT.jsonld.html","active":false}],"heading":"Domains-UAT - Change History","sections":[{"text":"History of changes for Domains-UAT ."}]}
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -34,4 +34,4 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endfor %}
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

@@ -3,8 +3,8 @@ title: "GDHCNParticipantDID-XXU-UAT-DSC — WHO SMART Trust artefact"
 description: "Endpoint/GDHCNParticipantDID-XXU-UAT-DSC in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -14,7 +14,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/trust">http://smart.who.int/trust</a>.</p>
 </div>
 
-[← all 678 artefacts](../)
+[← all 678 artefacts](../artifacts.html)
 
 ## GDHCNParticipantDID-XXU-UAT-DSC
 
@@ -37,4 +37,4 @@ not a gap in this index — sidecars are published per artefact, and
 19 of 678 carry one.
 
 <footer id="ig-footer" data-prev="Endpoint-GDHCNParticipantDID-XXU-UAT-All.html" data-next="Endpoint-GDHCNParticipantDID-XXU-UAT-SCA.html" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

@@ -685,7 +685,8 @@ function tileFor(
   // names. #1767, stage C3.
   const instanceRel = relative(repoRoot, instanceDir).split(sep).join("/");
   const composedPrefixes = (decl.directories ?? [])
-    .filter((d) => (d as { composed?: boolean }).composed === true && typeof d.path === "string")
+    // An `igSite` directory is served at the same `/<name>/` route, inside the IG's own site (bean `mftp`).
+    .filter((d) => ((d as { composed?: boolean }).composed === true || (d as { igSite?: boolean }).igSite === true) && typeof d.path === "string")
     .map((d) => `${instanceRel}/${d.path!.replace(/^\.?\/+/, "").replace(/\/*$/, "/")}`);
   const publishedRefOf = (ref: string): string | undefined => {
     if (ref.startsWith(sitePrefix)) return publishedUrlOf(ref.slice(sitePrefix.length));
