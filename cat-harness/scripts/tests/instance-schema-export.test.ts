@@ -144,7 +144,7 @@ describe("the host's schema outputs are unchanged by the generalisation", () => 
       // end and changed every published host contract; this is what caught it.
       const source = JSON.parse(readFileSync(join(INSTANCE, c.source), "utf-8")) as Record<string, unknown>;
       expect(Object.keys(c.schema)).toEqual(Object.keys(source));
-      expect({ ...c.schema, $id: source.$id }).toEqual(source);
+      expect({ ...c.schema, $id: source.$id } as Record<string, unknown>).toEqual(source);
     }
   });
 });
