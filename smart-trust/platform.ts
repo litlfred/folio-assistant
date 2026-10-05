@@ -16,6 +16,12 @@
  * here does not make the fork run — the platform still has to be present —
  * but it makes the one place to re-point it findable.
  *
+ * `artifactVariables` joined it in bean `mftp`: since smart-trust's pages
+ * build into its IG site, the artefact links a reader follows are the IG
+ * site's `artifacts` page's, and `pages-markdown.test.ts` checks them with
+ * the same function the build computes them with.
+ *
  * @module smart-trust/platform
  */
 export { VIEW_PAGE } from "../fhir-harness/scripts/resource-views.ts";
+export { artifactVariables } from "../fhir-harness/scripts/build-ig-site.ts";

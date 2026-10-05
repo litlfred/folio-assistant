@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import { siteDirFor } from "../schemas/cat-harness.ts";
 import { UN_LOCALES } from "../schemas/translation.ts";
+import { qaResultHref } from "../scripts/qa-result-link.ts";
 
 /**
  * What the reader is told about translation, at the top of every page.
@@ -436,6 +437,64 @@ test.describe("a hand-authored page builds its own TR badge", () => {
     );
     await page.locator('.fa-qa-badge[data-qa-key="page.translation"]').click();
     await expect(page.locator(".fa-qa-chip.fa-qa-locale")).toHaveCount(2);
+  });
+
+  /**
+   * The panel's links to the result files: bean `bejf`, issue #2217. The owner
+   * found `…/blob/main/test/results/translation-qa/docs/index.ar…json` dead on
+   * `/fr/`. The panel composed it as `blob/main/` + an instance-relative path.
+   * It now renders the href the generator stamped (`qa-result-link.ts`) and
+   * composes nothing, so these drive the RENDERED anchor, not the helper.
+   */
+  const SHA = "941df8d8eb29173e60cd5ed56d02aa8a425bbb56";
+  const REPO_PATH = "cat-harness/test/results/translation-qa/docs/index.fr.translation-qa.json";
+  const rollUp = (extra: Record<string, unknown>) => ({
+    $schema: "qa-witness/v1",
+    family: "translation",
+    subject: "index — translations",
+    sidecars: ["test/results/translation-qa/docs/index.fr.translation-qa.json"],
+    state: "warn",
+    counts: { fail: 0, warn: 1, pass: 0, na: 0, unknown: 0 },
+    criteria: [
+      { id: "translation-coverage", result: "warn", locale: "fr", witnesses: [{ kind: "script", id: "x", freshness: "fresh" }] },
+    ],
+    ...extra,
+  });
+
+  test("a result file links to its entry on the qa-reports branch, never to blob/main", async ({ page }) => {
+    const link = qaResultHref({
+      repoWeb: "https://github.com/litlfred/folio-assistant",
+      repoPath: REPO_PATH,
+      storedOn: "cat/cat-harness/qa-reports",
+      key: `main/${SHA}`,
+    });
+    await serve(
+      page,
+      { lang: "fr", availableLocales: ["en", "fr"], translationQa: tq },
+      { index, projection: rollUp({ sidecarLinks: [link] }), list: listed },
+    );
+    await page.locator('.fa-qa-badge[data-qa-key="page.translation"]').click();
+    const a = page.locator("a.fa-qa-sidecar-link");
+    await expect(a).toHaveCount(1);
+    await expect(a).toHaveText(REPO_PATH);
+    await expect(a).toHaveAttribute(
+      "href",
+      `https://github.com/litlfred/folio-assistant/blob/cat/cat-harness/qa-reports/main/${SHA}/${REPO_PATH}`,
+    );
+    await expect(a).toHaveAttribute("data-qa-addressed-by", "entry");
+  });
+
+  test("a projection with no stamped links shows the paths and links nothing", async ({ page }) => {
+    // The old renderer composed a URL here. One that 404s invites the click
+    // that proves the page broken, so an unstamped projection gets plain text.
+    await serve(
+      page,
+      { lang: "fr", availableLocales: ["en", "fr"], translationQa: tq },
+      { index, projection: rollUp({}), list: listed },
+    );
+    await page.locator('.fa-qa-badge[data-qa-key="page.translation"]').click();
+    await expect(page.locator("a.fa-qa-sidecar-link")).toHaveCount(0);
+    await expect(page.locator("code.fa-qa-sidecar-link")).toHaveText("test/results/translation-qa/docs/index.fr.translation-qa.json");
   });
 });
 

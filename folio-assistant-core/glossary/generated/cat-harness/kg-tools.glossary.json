@@ -559,6 +559,14 @@
       "status": "candidate"
     },
     {
+      "id": "rail-standalone-pages",
+      "prefLabel": "Give every page Jekyll did not lay out the folio-assistant navbar",
+      "definition": "A LAST pass over the finished site: inject the shared navbar (`lib/navbar.ts`, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated instance pages, and each IG site built by `stage-ig-sites`. A page under an `igSite` instance's route is railed as THAT instance's page (its name, mark and graphs); a page may declare its own section (`data-fa-visualiser-nav`) and its label (`fa-visualiser-label`). Mount routes are left to the mount pass, and a page that declines (`folio-navbar: none`) is left bare.",
+      "notation": "rail-standalone-pages",
+      "source": "cat-harness/tools/index.ts#rail-standalone-pages",
+      "status": "candidate"
+    },
+    {
       "id": "readme-audit",
       "prefLabel": "Audit README links",
       "definition": "Verify every Markdown link in a folio's README still resolves — relative paths against the tree, repo refs against a real ls-tree, Pages URLs against the publish ref. Writes nothing.",

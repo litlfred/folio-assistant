@@ -357,6 +357,8 @@ export interface ContentDirectory extends GraphNodeDirectory {
    * `dependents` did the day it landed. See {@link SubgraphCoverageSchema}.
    */
   coverage?: SubgraphCoverage;
+  /** Built into the instance's own IG site at `/<instance>/` (bean `mftp`); see `igSite` on the shape below. */
+  igSite?: boolean;
 
   /**
    * This directory holds MATERIALIZED content: readable, and not editable here.
@@ -1699,6 +1701,29 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    */
   composed: z.boolean().optional(),
   /**
+   * This directory is built INTO the instance's own IG site, which is served
+   * at `/<instance>/` — never composed into the main site.
+   *
+   * An instance that mirrors a FHIR IG and records its source
+   * (`fhir-artifact-index/menu.json`) gets one Jekyll site of its own, built
+   * by `fhir-harness/scripts/stage-ig-sites.ts` from the IG's narrative pages
+   * (bean `bamf`). Without this field that site sits at `/<instance>/ig/`
+   * BESIDE the instance's composed pages: two sites, two menus, and the
+   * reader at `/<instance>/` sees only the artefact index. With it, the IG
+   * site IS `/<instance>/` and this directory's pages (the artefact pages and
+   * their assets) build inside it, under the IG's own menu — one site, as the
+   * IG Publisher builds one.
+   *
+   * Owner, 2026-10-05 (bean `mftp`), choosing the merged site for smart-trust
+   * with *"clean break on old beahviour, no redirect needed"*.
+   *
+   * **Opt-in, never inferred from `menu.json`.** smart-base holds a menu too,
+   * but `/smart-base/` is a harness landing page (bean `n3ni`); inferring
+   * would silently replace it. Refused together with `composed`: a directory
+   * built into two different sites has two answers for one URL.
+   */
+  igSite: z.boolean().optional(),
+  /**
    * This directory's BYTES are published verbatim, at `/<instance>/<path>`, for
    * the site's own pages to fetch.
    *
@@ -1798,7 +1823,10 @@ export const ContentDirectorySchema = z.preprocess(
         'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos), `keyedBy: "route"` for regenerable rendered pages, and `keyedBy: "route-family"` for a family of them named at publish time',
       path: ["storage", "keyedBy"],
     },
-  ),
+  ).refine((d) => !(d.igSite === true && d.composed === true), {
+    message: "`igSite` and `composed` name two different sites for one directory; declare one",
+    path: ["igSite"],
+  }),
 );
 
 // THERE IS NO `locale` FIELD HERE, and that is a decision rather than an
