@@ -50,6 +50,7 @@ import { basename, dirname, join, posix, relative, resolve, sep } from "path";
 
 import { readDeclaration, repoRootFor, siteDirFor } from "../../cat-harness/schemas/cat-harness.js";
 import { fragment as folioMountFragment } from "../../cat-harness/scripts/folio-mount.ts";
+import { embed as pdfViewer } from "../../cat-harness/scripts/pdf-viewer.ts";
 import { subjectPage } from "../../cat-harness/scripts/harness-tiles.js";
 import { withRoutes } from "../../cat-harness/scripts/mount-instance-docs.ts";
 import { libraryResolver } from "../../cat-harness/scripts/lib/library-links.ts";
@@ -1727,6 +1728,29 @@ ${rows}
 `;
 }
 
+/**
+ * The held PDF, readable in place — or nothing (bean `folio-assistant-5ea6`).
+ *
+ * Gated by the SAME decision as the download link: {@link linkOrWithheld}
+ * refuses to link bytes whose publication gates block, and an embedded viewer
+ * is a link that also renders. So a withheld item gets no viewer, and its page
+ * says nothing more than the "held here, not published" the Files row already
+ * says. Only PDFs: the viewer is pdf.js, and a held `.docx` in a PDF frame is
+ * an error page.
+ *
+ * The CDN URL rather than the raw one, for the reason the page already offers
+ * it — it is the one that serves the bytes with a cache in front.
+ * `FOLIO_ROUTE` finds the site root for the same reason it does for the folio
+ * mount: one page, several depths.
+ */
+function readHere(n: Node, a: ReturnType<typeof assetHref>): string {
+  if (!a || a.withheld.length > 0 || !/\.pdf$/i.test(a.name)) return "";
+  return `<h2>Read it here</h2>
+${pdfViewer({ src: a.cdn, title: n.title, route: FOLIO_ROUTE })}
+
+`;
+}
+
 /** An item page — where both links land on the real thing. */
 function itemPage(n: Node, all: Node[]): string {
   const a = assetHref(n);
@@ -1763,7 +1787,7 @@ ${bits}
 </tbody>
 </table>
 
-<h3>Both links, as asked for</h3>
+${readHere(n, a)}<h3>Both links, as asked for</h3>
 <table class="items">
 <thead><tr><th>Where</th><th>Link</th></tr></thead>
 <tbody>

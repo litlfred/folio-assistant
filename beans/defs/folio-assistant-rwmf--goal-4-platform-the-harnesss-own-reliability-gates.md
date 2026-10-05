@@ -5,7 +5,7 @@ status: in-progress
 type: milestone
 priority: high
 created_at: 2026-10-03T08:26:45Z
-updated_at: 2026-10-04T18:34:28Z
+updated_at: 2026-10-05T04:57:29Z
 ---
 
 ## There is no owner's quote on this bean, and that is deliberate
@@ -244,3 +244,8 @@ generalises) and `0ipy` (agentic SE literature, 11 open — the research behind
 ## Owner ruling on scope, 2026-10-04
 
 In session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi the owner was shown this milestone's derived title next to three alternative outcome sentences and chose **"Keep derived title"**. The title above is therefore the owner's record of this milestone's outcome, not only a derivation; the rule that the owner's framing wins still holds if they reword it later.
+
+
+## 2026-10-05 — GOAL 2's open UI work re-parented here, on the owner's ruling
+
+GOAL 2 (`p5wm`) closed with all three of its boxes met. Its 10 open direct children (76 open beans in total) were the UI work that grew around it, not part of its outcome. Asked where they go, the owner chose **"Move to GOAL 4 PLATFORM"** (session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi): `10uc`, `6lb8` (FOLIO BOARD), `8jt6` (MEMORY & TODOS), `o3xy` (UI & ACCESSIBILITY), `l4c5`, `gp2f`, `q4jm` (LARGE-DOCUMENT REVIEW), `yj32` (HARNESS AS INTERFACE), `4ccr` (WIREFRAME FINDINGS) and `68op`. PLATFORM's scope now reads to include the rendered surface.
