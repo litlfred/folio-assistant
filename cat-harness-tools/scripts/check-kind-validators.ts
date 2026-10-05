@@ -254,16 +254,24 @@ export async function sweepFamilies(root: string): Promise<FamilySweep[]> {
       for (const d of directoryEntriesForGraph(inst, kind)) {
         if (onFamily.has(d.absPath.replace(/\/$/, ""))) continue;
         declared++;
-        const atTip = (() => {
+        const src = (() => {
           try {
-            const src = resolveSubgraphSource(d);
-            return src.kind === "branch" && src.keyedBy === "tip";
+            return resolveSubgraphSource(d);
           } catch {
             // A contradictory declaration is `check:declared-dirs`'s finding,
             // and not a reason for this sweep to stop reading.
-            return false;
+            return null;
           }
         })();
+        const atTip = src?.kind === "branch" && src.keyedBy === "tip";
+        // A directory in the checkout is read where its own instance declares
+        // it. `graphReadPath` resolves an id across the whole repository, so
+        // two instances' `glossary` would both resolve to one of them — only a
+        // branch-stored graph needs it, to find its mount.
+        if (src?.kind !== "branch") {
+          dirs.add(d.absPath);
+          continue;
+        }
         const where = graphReadPath(d.id, repoRoot);
         if (where.state === "refused") {
           (s.unreachable ??= []).push({ id: d.id, reason: where.reason });

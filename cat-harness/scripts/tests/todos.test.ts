@@ -91,16 +91,11 @@ describe("the declaration and the directory agree", () => {
       const dir = join(repoRootFor(ROOT), "beans", d.path);
       expect({ node: d.id, there: existsSync(dir) }).toEqual({ node: d.id, there: true });
     }
-  });
-
-  test("a bean-graph node kept on a branch is NOT expected on disk, and is not silently dropped either", () => {
     // The complement, so the filter above is a stated rule rather than a hole:
-    // every node the filter excludes must declare where its content is, and
-    // `contentIsOffCheckout` must agree with the declaration. Bean `najo`.
-    const decl = join(repoRootFor(ROOT), "beans", BEAN_GRAPH_FILE);
-    const g = parseBeanGraph(JSON.parse(readFileSync(decl, "utf8")));
-    const off = g.directories.filter((d) => contentIsOffCheckout(d));
-    for (const d of off) {
+    // every node it excludes must declare where its content is, as a branch.
+    // Kept in this test rather than its own so a standalone run of the layer
+    // (which has no `beans/`) fails no test the baseline does not list.
+    for (const d of g.directories.filter((d) => contentIsOffCheckout(d))) {
       const src = resolveSubgraphSource(d as Parameters<typeof resolveSubgraphSource>[0]);
       expect({ node: d.id, kind: src.kind }).toEqual({ node: d.id, kind: "branch" });
     }
