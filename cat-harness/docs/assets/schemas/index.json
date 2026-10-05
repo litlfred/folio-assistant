@@ -9910,7 +9910,7 @@
         },
         {
           "name": "directories",
-          "type": "z .array( z .object({ id: z.string().min(1), path: z.string().min(1), subgraph: z.literal(true), graphTypologies: z.array(z.…",
+          "type": "z .array( z .object({ id: z.string().min(1), path: z.string().min(1), subgraph: z.literal(true), graphTypologies: z.arr…",
           "optional": true,
           "array": true,
           "doc": "Instance directories declared from within, as in `skills.json`."
@@ -18706,6 +18706,25 @@
       "exported": false
     },
     {
+      "id": "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
+      "name": "GraphLayer",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
+      "kind": "type-alias",
+      "doc": "What a running process does with a graph of this kind.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "content",
+        "context",
+        "state",
+        "derived"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
       "name": "GraphTypology",
       "module": "cat-harness/schemas/graph-typology-registry.ts",
@@ -18886,25 +18905,6 @@
         "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
         "cat-harness/schemas/graph-typology-registry.ts#NodeSchemaRef"
       ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
-      "name": "GraphLayer",
-      "module": "cat-harness/schemas/graph-typology-registry.ts",
-      "kind": "type-alias",
-      "doc": "What a running process does with a graph of this kind.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [
-        "content",
-        "context",
-        "state",
-        "derived"
-      ],
-      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true

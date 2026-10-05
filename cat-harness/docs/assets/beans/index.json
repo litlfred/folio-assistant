@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 898,
+      "count": 906,
       "unit": "beans"
     }
   },
@@ -1422,7 +1422,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-24T05:44:17Z",
       "updatedAt": "2026-09-24T13:08:49Z",
-      "preview": "Measured 2026-09-24 by `bun run audit:coverage` (bean `xutg`). Four declared\ngraph typologies hold files that **no `kg-audit` criterion and no gate declaring\n`@covers` reaches**:\n\n| kind | files | directories |\n|---|---|---|\n| `health` | 1 | `cat-harness/test/health/results` |\n| `interaction` | 1 | `interaction` |\n| `issue-marks` | 2 | `issue-marks` |\n| `todos` | 9 | `todos` |\n\n## This is an UPPER boun",
+      "preview": "Measured 2026-09-24 by `bun run audit:coverage` (bean `xutg`). Four declared\ngraph kinds hold files that **no `kg-audit` criterion and no gate declaring\n`@covers` reaches**:\n\n| kind | files | directories |\n|---|---|---|\n| `health` | 1 | `cat-harness/test/health/results` |\n| `interaction` | 1 | `interaction` |\n| `issue-marks` | 2 | `issue-marks` |\n| `todos` | 9 | `todos` |\n\n## This is an UPPER boun",
       "file": "beans/defs/folio-assistant-3oqj--four-kinds-nothing-audits-health-interaction-issue.md"
     },
     {
@@ -1469,7 +1469,7 @@
     },
     {
       "id": "folio-assistant-3r47",
-      "title": "Drop the per-kind graph classes (KGraph, SkillGraph, VoiceGraph, …): a directory is a Subgraph holding GraphTypology individuals",
+      "title": "Drop the per-kind graph classes (KGraph, SkillGraph, VoiceGraph, …): a directory is a Subgraph holding GraphKind individuals",
       "status": "completed",
       "type": "task",
       "priority": "normal",
@@ -1478,7 +1478,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-30T10:04:38Z",
       "updatedAt": "2026-09-30T20:04:55Z",
-      "preview": "## The ruling, owner 2026-09-30\n\nAsked *\"KGraph needs better name? CatHarness? … what is bootstrap's? consistent? why not just CatHarness? why need graph?\"*, then chose **\"Drop per-kind classes\"** over renaming.\n\n## Why (measured 2026-09-30)\n\n- bootstrap has no class per kind: a kind is a word (`skills`, `processes`) and one `bootstrap:GraphTypology` individual, `bootstrap:graphTypology/<kind>`; a declare",
+      "preview": "## The ruling, owner 2026-09-30\n\nAsked *\"KGraph needs better name? CatHarness? … what is bootstrap's? consistent? why not just CatHarness? why need graph?\"*, then chose **\"Drop per-kind classes\"** over renaming.\n\n## Why (measured 2026-09-30)\n\n- bootstrap has no class per kind: a kind is a word (`skills`, `processes`) and one `bootstrap:GraphKind` individual, `bootstrap:graphKind/<kind>`; a declare",
       "file": "beans/defs/folio-assistant-3r47--drop-the-per-kind-graph-classes-kgraph-skillgraph.md"
     },
     {
@@ -1520,7 +1520,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-24T05:44:18Z",
       "updatedAt": "2026-09-24T13:08:48Z",
-      "preview": "`bun run audit:coverage` (bean `xutg`) reports coverage per declared graph typology\nfrom `@covers` lines gates carry in their own module docblocks. 118 scripts\ndeclare; **10 gates have not said**, measured 2026-09-24:\n\n- `check:agents-claims`\n- `check:context-emission`\n- `check:image-roles`\n- `check:avatar-instances`\n- `check:asset-roles`\n- `check:retired-front-matter`\n- `check:wireframes`\n- `check:pa",
+      "preview": "`bun run audit:coverage` (bean `xutg`) reports coverage per declared graph kind\nfrom `@covers` lines gates carry in their own module docblocks. 118 scripts\ndeclare; **10 gates have not said**, measured 2026-09-24:\n\n- `check:agents-claims`\n- `check:context-emission`\n- `check:image-roles`\n- `check:avatar-instances`\n- `check:asset-roles`\n- `check:retired-front-matter`\n- `check:wireframes`\n- `check:pa",
       "file": "beans/defs/folio-assistant-3srh--ten-gates-have-not-declared-covers-so-every-audit.md"
     },
     {
@@ -1651,7 +1651,7 @@
         "folio-assistant-e0hw"
       ],
       "createdAt": "2026-10-02T21:36:29Z",
-      "updatedAt": "2026-10-05T05:09:44Z",
+      "updatedAt": "2026-10-05T13:42:54Z",
       "preview": "Owner, 2026-10-02, verbatim: \"bean: please make sure harnesses generate json(ld)+schema for their semi-static KGs, their subgraphs etc. there are some rules in the KG corpsu but scattered. right now, i dont see folio-assistnat.jsonld in gh-pagaes for example. i think all subsumted into cat-harness? these should be split out into their component sub-grpah/harnesses. see related beans. maybe we also",
       "file": "beans/defs/folio-assistant-4ak5--per-harness-kg-export-every-instance-publishes-its.md"
     },
@@ -1745,7 +1745,7 @@
     {
       "id": "folio-assistant-4j86",
       "title": "STAGING CONE (file level): a preview rebuilds only what a PR's changed files can reach — general rule, in the skills",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-fs43",
@@ -1754,7 +1754,7 @@
         "folio-assistant-nama"
       ],
       "createdAt": "2026-10-04T13:49:44Z",
-      "updatedAt": "2026-10-04T16:20:43Z",
+      "updatedAt": "2026-10-05T11:39:15Z",
       "preview": "Owner, 2026-10-04: *\"staging rebuild only what is dependency cone of changes (general rule. update skills)\"*. Asked how fine-grained, the owner chose FILE LEVEL (option 1 of 3).\n\n## Today (measured 2026-10-04, read-only map)\nfeature-staging.yml's cut is a PREFIX MATCH, not a cone:\n- compose-docs.ts `carriedInstances()` (bean ga8a) carries a composed instance only if a changed path starts with its ",
       "file": "beans/defs/folio-assistant-4j86--staging-cone-file-level-a-preview-rebuilds-only-wh.md"
     },
@@ -1804,7 +1804,7 @@
     },
     {
       "id": "folio-assistant-4l5q",
-      "title": "B7b (#1168): a skill declares the directories it governs (graph-typologies:, governs:); coverage.skill removed",
+      "title": "B7b (#1168): a skill declares the directories it governs (graph-kinds:, governs:); coverage.skill removed",
       "status": "completed",
       "type": "task",
       "priority": "normal",
@@ -1813,7 +1813,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-24T19:50:21Z",
       "updatedAt": "2026-09-24T19:59:59Z",
-      "preview": "Owner 2026-09-24: 'A' for coverage.skill, and 'skill names the directory' for a domain skill over a generic-kind directory. 24 kind claims added to skills' graph-typologies:; 5 directories whose kinds are all generic named in governs: as <instance>/<id>. scripts/skill-governance.ts reads both; a kind claim reaches the skill's instance, its dependents, and the platform. check-subgraph-coverage derives t",
+      "preview": "Owner 2026-09-24: 'A' for coverage.skill, and 'skill names the directory' for a domain skill over a generic-kind directory. 24 kind claims added to skills' graph-kinds:; 5 directories whose kinds are all generic named in governs: as <instance>/<id>. scripts/skill-governance.ts reads both; a kind claim reaches the skill's instance, its dependents, and the platform. check-subgraph-coverage derives t",
       "file": "beans/defs/folio-assistant-4l5q--b7b-1168-a-skill-declares-the-directories-it-gover.md"
     },
     {
@@ -3209,6 +3209,20 @@
       "file": "beans/defs/folio-assistant-81vy--deployment-awareness-the-agent-must-know-its-ui-su.md"
     },
     {
+      "id": "folio-assistant-82qs",
+      "title": "Locale selector back in the LHS navbar's top row",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-9rq1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T14:39:33Z",
+      "updatedAt": "2026-10-05T15:24:15Z",
+      "preview": "Owner, 2026-10-05: 'we lost locale selector in top navbar LHS again'. Cause (measured): docs-ui.css ~5729 hides .fa-lang-mini whenever .fa-nav-icons exists; the icon row took the launcher and the light/dark bulb but never a language control. Fix: a globe beside the bulb in the row's after-hook (opens the launcher on the language view), plus an e2e asserting a visible language control in .side-bar ",
+      "file": "beans/defs/folio-assistant-82qs--locale-selector-back-in-the-lhs-navbars-top-row.md"
+    },
+    {
       "id": "folio-assistant-872t",
       "title": "The Python half's WHEEL BUILD is unchecked — rsi6's lesson applied to only one of the two halves",
       "status": "todo",
@@ -3430,7 +3444,7 @@
     },
     {
       "id": "folio-assistant-8npa",
-      "title": "Working-notes graph typology: a folio's derivation notes, scoping docs and ledgers as declared context, not rendered content",
+      "title": "Working-notes graph kind: a folio's derivation notes, scoping docs and ledgers as declared context, not rendered content",
       "status": "todo",
       "type": "task",
       "priority": "",
@@ -3440,7 +3454,7 @@
       "createdAt": "2026-10-04T16:54:09Z",
       "updatedAt": "2026-10-04T16:54:09Z",
       "preview": "Downstream need from litlfred/qou (migration story S-REST-1, qou bean qou-pjfi; analysis docs/audits/2026-10-04-workplan-and-migration/REST_report.md in qou).\n\nqou has 512 non-audit docs/ files: 117 math-heavy derivation notes, cheat sheets, scoping docs and recorded refutations, none named by a block. No existing kind fits:\n- `docs` is renderable and would publish working notes as site pages;\n- `",
-      "file": "beans/defs/folio-assistant-8npa--working-notes-graph-typology-a-folios-derivation-notes.md"
+      "file": "beans/defs/folio-assistant-8npa--working-notes-graph-kind-a-folios-derivation-notes.md"
     },
     {
       "id": "folio-assistant-8pzh",
@@ -3746,7 +3760,7 @@
     },
     {
       "id": "folio-assistant-9mmu",
-      "title": "GENERIC ORPHAN DETECTION: one detector for an artefact that names a subject that is gone, across graph typologies",
+      "title": "GENERIC ORPHAN DETECTION: one detector for an artefact that names a subject that is gone, across graph kinds",
       "status": "todo",
       "type": "feature",
       "priority": "normal",
@@ -3894,7 +3908,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:29:44Z",
-      "updatedAt": "2026-09-29T21:43:13Z",
+      "updatedAt": "2026-10-05T13:39:00Z",
       "preview": "Owner ruling, 2026-09-23: *\"all assets get a version and are in 'draft' publication. formal publication process needs to be deinfed/neeeds tools/depends on instance\"*.\n\nCorrects §3.1 as `snjh` shipped it. Not a gap in that work — a different model.\n\n## What §3.1 got wrong, precisely\n\nIt models `publishable?: boolean` with three states, and REFUSES id and version unless `publishable: true`:\n\n    re",
       "file": "beans/defs/folio-assistant-9wb0--publication-is-a-state-not-a-boolean-every-asset-c.md"
     },
@@ -4698,7 +4712,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-18T23:02:16Z",
       "updatedAt": "2026-09-29T20:52:42Z",
-      "preview": "## What landed already (2026-09-18, `claude/festive-galileo-s7ibx0`)\n\nThe author's correction: *\"TodoItem = Todo is a human actor state management.\nit is content. should be moved into KG with declared dir like todos/\"*, then\n*\"should be tagged by Roles, processes, tasks, user identification (e.g. as\ntool github user)\"*.\n\nDone: three graph typologies (`todos`, `todo-items`, `todo-feedback`),\n`schemas/to",
+      "preview": "## What landed already (2026-09-18, `claude/festive-galileo-s7ibx0`)\n\nThe author's correction: *\"TodoItem = Todo is a human actor state management.\nit is content. should be moved into KG with declared dir like todos/\"*, then\n*\"should be tagged by Roles, processes, tasks, user identification (e.g. as\ntool github user)\"*.\n\nDone: three graph kinds (`todos`, `todo-items`, `todo-feedback`),\n`schemas/to",
       "file": "beans/defs/folio-assistant-c4rz--migrate-the-feedback-store-into-the-declared-todos.md"
     },
     {
@@ -4812,7 +4826,7 @@
       "blockedBy": [],
       "createdAt": "2026-10-04T15:10:08Z",
       "updatedAt": "2026-10-04T15:10:08Z",
-      "preview": "Recorded from the qou work-plan analysis, 2026-10-04 (session https://claude.ai/code/session_01NdDGeP1SyShmoUssLuRZ91). Not started: recorded so the gap has an owner. ConjectureBlock carries only an optional lean field. Proposed: a conjectures graph typology (holds: state) under the paper adapter, status lifecycle as DMN, source block, Lean stub, critical-path theorems that assume it (lean-formal-grap",
+      "preview": "Recorded from the qou work-plan analysis, 2026-10-04 (session https://claude.ai/code/session_01NdDGeP1SyShmoUssLuRZ91). Not started: recorded so the gap has an owner. ConjectureBlock carries only an optional lean field. Proposed: a conjectures graph kind (holds: state) under the paper adapter, status lifecycle as DMN, source block, Lean stub, critical-path theorems that assume it (lean-formal-grap",
       "file": "beans/defs/folio-assistant-ckej--conjecture-register-a-register-node-per-open-probl.md"
     },
     {
@@ -5146,17 +5160,17 @@
     },
     {
       "id": "folio-assistant-dmx1",
-      "title": "DISTRIBUTED GRAPH TYPOLOGIES: each harness declares the subgraph types it owns; no central registry (owner ruling 2026-10-04)",
-      "status": "in-progress",
+      "title": "DISTRIBUTED GRAPH KINDS: each harness declares the subgraph types it owns; no central registry (owner ruling 2026-10-04)",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T17:04:22Z",
-      "updatedAt": "2026-10-04T17:49:34Z",
-      "preview": "Owner, 2026-10-04, verbatim: *\"there should not be a central registry for declaring mount tools and subgraph types\"*.\n\n## What exists, measured 2026-10-04\n- `cat-harness/schemas/graph-typology-registry.ts` declares **57** graph typologies centrally. They include harness-specific ones: the FHIR kinds (`fhir-artifact-index`, `ig-metadata-index`, and, added today on #2082, `ig-pages` and `ig-ast`) and cat-ope",
-      "file": "beans/defs/folio-assistant-dmx1--distributed-graph-typologies-each-harness-declares-the.md"
+      "updatedAt": "2026-10-05T11:39:15Z",
+      "preview": "Owner, 2026-10-04, verbatim: *\"there should not be a central registry for declaring mount tools and subgraph types\"*.\n\n## What exists, measured 2026-10-04\n- `cat-harness/schemas/graph-kind-registry.ts` declares **57** graph kinds centrally. They include harness-specific ones: the FHIR kinds (`fhir-artifact-index`, `ig-metadata-index`, and, added today on #2082, `ig-pages` and `ig-ast`) and cat-ope",
+      "file": "beans/defs/folio-assistant-dmx1--distributed-graph-kinds-each-harness-declares-the.md"
     },
     {
       "id": "folio-assistant-do70",
@@ -5267,7 +5281,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-24T18:07:58Z",
       "updatedAt": "2026-09-24T18:51:25Z",
-      "preview": "## Owner decision 2026-09-24\n\"B: type all 9 now\". The graph-typology registry (@general) named the script writing each untyped family. Typing them removes the backwards pointer and the finding it recorded.\n\n## Families\nfolio-bean-index/v1, folio-translation-status/v1, folio-schema-graph/v1, folio-library-index/v1, folio-library-entry/v1, folio-voices-index/v1, folio-graph-projection/v1, folio-qa-index",
+      "preview": "## Owner decision 2026-09-24\n\"B: type all 9 now\". The graph-kind registry (@general) named the script writing each untyped family. Typing them removes the backwards pointer and the finding it recorded.\n\n## Families\nfolio-bean-index/v1, folio-translation-status/v1, folio-schema-graph/v1, folio-library-index/v1, folio-library-entry/v1, folio-voices-index/v1, folio-graph-projection/v1, folio-qa-index",
       "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
     },
     {
@@ -5386,7 +5400,7 @@
     },
     {
       "id": "folio-assistant-ec2a",
-      "title": "LSI over blocks and Lean declarations: extend lsi-indexing with folio and lean-decl graph typologies and a cross-graph query",
+      "title": "LSI over blocks and Lean declarations: extend lsi-indexing with folio and lean-decl graph kinds and a cross-graph query",
       "status": "todo",
       "type": "feature",
       "priority": "normal",
@@ -5523,7 +5537,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-24T18:07:57Z",
       "updatedAt": "2026-09-24T18:25:14Z",
-      "preview": "## Owner decision 2026-09-24\n\"Rule + stale check\": keep explanations; state the rule in data-modelling.md; add an advisory (minor, not gated) kg-audit criterion that flags a file named in a general node's prose that no longer resolves.\n\n## Measured\n22 diagrams' <bpmn:documentation> name 29 implementation files; GraphTypologyDef's field docs name 4 modules.\n\n## Done when\n- data-modelling.md states the ",
+      "preview": "## Owner decision 2026-09-24\n\"Rule + stale check\": keep explanations; state the rule in data-modelling.md; add an advisory (minor, not gated) kg-audit criterion that flags a file named in a general node's prose that no longer resolves.\n\n## Measured\n22 diagrams' <bpmn:documentation> name 29 implementation files; GraphKindDef's field docs name 4 modules.\n\n## Done when\n- data-modelling.md states the ",
       "file": "beans/defs/folio-assistant-epbt--b6c-1168-prose-may-name-a-file-as-explanation-refe.md"
     },
     {
@@ -6128,6 +6142,20 @@
       "file": "beans/defs/folio-assistant-ghgn--orphaned-viewer-pages-the-schema-viewer-and-uml-ge.md"
     },
     {
+      "id": "folio-assistant-gkv6",
+      "title": "NAVBAR ROW COUNTS: beans and todos icons carry count badges, as fsh-guts does",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-9rq1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T15:14:38Z",
+      "updatedAt": "2026-10-05T15:53:58Z",
+      "preview": "Owner, 2026-10-05: \"why no count on beans and todos on LHS top navbar as badges like fsh-guts has?\" Find how fsh-guts draws the count badges, then make the shared row (navbar-row.js) show the bean and todo counts. Must work in both FULL and LITE row modes.\n\n_2026-10-05T15:53:58Z_ — Claimed by claude/vibrant-darwin-r6im60 — pushed to main so sibling sessions see it before this branch has a PR (bean",
+      "file": "beans/defs/folio-assistant-gkv6--navbar-row-counts-beans-and-todos-icons-carry-coun.md"
+    },
+    {
       "id": "folio-assistant-gm9g",
       "title": "render:bpmn:check on bootstrap/processes/*.svg — two generators, one artefact; FIXED by #1663, and my 'flap' diagnosis retracted",
       "status": "completed",
@@ -6182,6 +6210,20 @@
       "updatedAt": "2026-10-05T04:57:14Z",
       "preview": "Issue #1885.\n\nOwner rulings, 2026-10-02:\n- \"~230KB per IG page mostly navigation/styling overhead... can we condense into common styling/libraries? so page size is small?\"\n- \"1 do all.\"\n- \"first document workplan and /coordinate in case active work on pages happening\"\n- \"(in genreal update agent-agent coorindation/hadover skills - if you are working on a refactor of the platform, review active age",
       "file": "beans/defs/folio-assistant-gp2f--page-weight-move-per-page-nav-harness-bar-icons-sc.md"
+    },
+    {
+      "id": "folio-assistant-gpbc",
+      "title": "Graphs and Folders are one heading, with the count badge",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-9rq1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T14:39:33Z",
+      "updatedAt": "2026-10-05T15:25:10Z",
+      "preview": "Owner, 2026-10-05: 'graphs containing ONLY folders is weird. combine w/ badge of count.' mountSidebarRail wraps mountInstanceGraphs' 'Folders N' details in a second 'Graphs' details. Make one disclosure titled Graphs carrying the count.\n\n## Done when\n- [ ] one 'Graphs N' disclosure on the theme sidebar; the rail already has one\n- [ ] e2e updated\n\n_2026-10-05T15:25:10Z_ — Claimed by claude/vibrant-",
+      "file": "beans/defs/folio-assistant-gpbc--graphs-and-folders-are-one-heading-with-the-count.md"
     },
     {
       "id": "folio-assistant-gpdo",
@@ -6570,7 +6612,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-20T10:02:53Z",
       "updatedAt": "2026-09-22T18:18:42Z",
-      "preview": "Owner, 2026-09-20: *\"content/ shouldnt be expected anymore. folio/ was\nrenamed as default/convention.\"* Then, on being shown a compatibility-fallback\ndesign: **\"no content/ fallback. excise!!!!!\"**\n\nMeasured on `0392892c`.\n\n## Where the rename HAS landed\n\n- `cat-harness/harness.json` declares `folio/` holding the `folio` graph, and\n  carries no `content` entry at all\n- the `folio` graph typology exist",
+      "preview": "Owner, 2026-09-20: *\"content/ shouldnt be expected anymore. folio/ was\nrenamed as default/convention.\"* Then, on being shown a compatibility-fallback\ndesign: **\"no content/ fallback. excise!!!!!\"**\n\nMeasured on `0392892c`.\n\n## Where the rename HAS landed\n\n- `cat-harness/harness.json` declares `folio/` holding the `folio` graph, and\n  carries no `content` entry at all\n- the `folio` graph kind exist",
       "file": "beans/defs/folio-assistant-hs08--migration-the-content-folio-rename-has-reached-the.md"
     },
     {
@@ -6862,6 +6904,20 @@
       "file": "beans/defs/folio-assistant-izx8--fhir-ig-api-rename-the-dak-named-ig-api-parts-in-f.md"
     },
     {
+      "id": "folio-assistant-j00t",
+      "title": "Retire the unused contributes config field and its module loader path",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T11:38:54Z",
+      "updatedAt": "2026-10-05T11:39:01Z",
+      "preview": "Left behind by riit. Every contribution is now a node: block kinds, content adapters, QA checkers, pipeline plugins and Tool nodes. No instance declares a `contributes` module; measured 2026-10-05, no `<instance>.json` carries the field.\n\nThe loader still reads it:\n- `harness-config.ts` has `contributes: z.string().optional()` at :364 and imports the module at :1862.\n- `harness.config.example.json",
+      "file": "beans/defs/folio-assistant-j00t--retire-the-unused-contributes-config-field-and-its.md"
+    },
+    {
       "id": "folio-assistant-j0zs",
       "title": "INJECTION: the gate reads `run:` only — `actions/github-script` blocks are JavaScript and carry the same laundering",
       "status": "completed",
@@ -6992,14 +7048,14 @@
     {
       "id": "folio-assistant-j9cs",
       "title": "MOUNT TOOLS DECLARED ON STORAGE: a subgraph names the tool that mounts it; no central mounter (owner ruling 2026-10-04)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T17:04:23Z",
-      "updatedAt": "2026-10-04T17:04:23Z",
+      "updatedAt": "2026-10-05T14:33:45Z",
       "preview": "Owner, 2026-10-04, verbatim: *\"there should not be a central registry for declaring mount tools and subgraph types\"*.\n\n## What exists, measured 2026-10-04\n- `state:mount` (`branch-store.ts`) mounts every tip-keyed directory. It switches on `keyedBy` centrally: tip mounts, route is read by its generator's `--check`, and commit belongs to qa-store.\n- Family-keyed graphs are mounted by tools nobody d",
       "file": "beans/defs/folio-assistant-j9cs--mount-tools-declared-on-storage-a-subgraph-names-t.md"
     },
@@ -7579,14 +7635,14 @@
     {
       "id": "folio-assistant-lehh",
       "title": "DERIVED NODE SCHEMAS: declare ig-ast (pick up fhir-harness/schemas/ig-ast.ts), lake-cache and gh-pages as graphs with schemas",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-nama",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T13:52:13Z",
-      "updatedAt": "2026-10-04T17:21:55Z",
+      "updatedAt": "2026-10-05T14:33:29Z",
       "preview": "Owner, 2026-10-04: *\"bean - was an AST schema somewhere. pickup. add schemas for lean-cache (cat/folio-assistant-sci/lean-cache branch?) and gh-pages too\"*\n\n## Found (2026-10-04)\n- **ig-ast**: the schema exists. `fhir-harness/schemas/ig-ast.ts` (Zod) has generated JSON Schemas `ig-ast.schema.json`, `ig-ast-plan.schema.json` and `ig-ast-dependencies.schema.json` (bean l0lq), gated by `ig-ast:schema",
       "file": "beans/defs/folio-assistant-lehh--derived-node-schemas-declare-ig-ast-pick-up-fhir-h.md"
     },
@@ -8239,6 +8295,20 @@
       "file": "beans/defs/folio-assistant-nafz--glossary-export-walks-one-instances-diagrams-while.md"
     },
     {
+      "id": "folio-assistant-najo",
+      "title": "MERGE QUEUE OFF MAIN: the queue graph on its own branch store, so a steward can record a decision without opening a PR",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T08:20:32Z",
+      "updatedAt": "2026-10-04T08:21:20Z",
+      "preview": "## Brief\n\n**What and why.** `beans/queue/` holds no entries — only its README — and the reason is\nstructural. `main` is authoritative for `beans/`, so an entry reaches it only through a PR,\nand the owner has ruled that the merge steward does no development work: it must not open\nPRs of its own, because that has it setting its own priority in the queue it manages,\nspending the CI the queue is starv",
+      "file": "beans/defs/folio-assistant-najo--merge-queue-off-main-the-queue-graph-on-its-own-br.md"
+    },
+    {
       "id": "folio-assistant-nama",
       "title": "DERIVED-GRAPH DEPENDENCIES: declare which derived/rendered subgraph is computed from which (fhir-ast -> ig-docs -> gh-pages; lean-cache), and walk them",
       "status": "in-progress",
@@ -8326,7 +8396,7 @@
     },
     {
       "id": "folio-assistant-nm7l",
-      "title": "B3a (#1168): scripts/validators/mcpServices become Tools; satisfiedBy and GraphTypologyDef.skill flipped",
+      "title": "B3a (#1168): scripts/validators/mcpServices become Tools; satisfiedBy and GraphKindDef.skill flipped",
       "status": "completed",
       "type": "task",
       "priority": "normal",
@@ -9445,6 +9515,20 @@
       "file": "beans/defs/folio-assistant-r279--decide-which-transcription-backend-and-what-ci-pay.md"
     },
     {
+      "id": "folio-assistant-r2ld",
+      "title": "'On this page': sections with sub-sections are collapsible",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-9rq1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T14:39:33Z",
+      "updatedAt": "2026-10-05T15:28:15Z",
+      "preview": "Owner, 2026-10-05: 'on this page should have sub-sections collapsible'. Both surfaces: mountDocumentIndex (docs-ui.js) and documentIndexOf (navbar.ts, rail) — independent implementations of one rule; nest h3 under h2 as a closed disclosure.\n\n## Done when\n- [ ] theme sidebar and rail both nest h3 under their h2, closed by default\n- [ ] e2e on both\n\n_2026-10-05T15:28:15Z_ — Claimed by claude/vibrant",
+      "file": "beans/defs/folio-assistant-r2ld--on-this-page-sections-with-sub-sections-are-collap.md"
+    },
+    {
       "id": "folio-assistant-r3gy",
       "title": "BOOTSTRAP OUTWARD REFERENCES: plan to reach zero before the repo split",
       "status": "in-progress",
@@ -9539,7 +9623,7 @@
       "blockedBy": [],
       "createdAt": "2026-10-01T09:13:21Z",
       "updatedAt": "2026-10-04T07:07:44Z",
-      "preview": "Stage B of cat-harness/docs/proposals/smart-separation-2026-10-01.md (#1767). Owner: \"push generic stuff as much as possible into fhir-harness first\".\n\n## Done when\n- [x] B1 ig-menu, ig-chrome, ig-metadata-index schemas (+tests) -> fhir-harness/schemas/; graph-typology registry validators repointed (fhir-harness:...)\n- [x] B2 ingest-ig-menu, ingest-ig-chrome (+test) -> fhir-harness/scripts/\n- [x] B3 w",
+      "preview": "Stage B of cat-harness/docs/proposals/smart-separation-2026-10-01.md (#1767). Owner: \"push generic stuff as much as possible into fhir-harness first\".\n\n## Done when\n- [x] B1 ig-menu, ig-chrome, ig-metadata-index schemas (+tests) -> fhir-harness/schemas/; graph-kind registry validators repointed (fhir-harness:...)\n- [x] B2 ingest-ig-menu, ingest-ig-chrome (+test) -> fhir-harness/scripts/\n- [x] B3 w",
       "file": "beans/defs/folio-assistant-r939--smart-separation-stage-b-fhir-generic-ig-schemas-a.md"
     },
     {
@@ -9611,7 +9695,7 @@
       "blockedBy": [],
       "createdAt": "2026-10-04T12:13:48Z",
       "updatedAt": "2026-10-04T12:52:00Z",
-      "preview": "Owner ruling, 2026-10-04, confirmed as its own PR sequenced after #2053. The\ncode already quoted the owner saying `auto-docs` — `graph-typology-registry.ts`'s\ncomment reads *\"auto-docs is one declared subgraph, with declared sub-sub-graphs\nper writer\"* while the key beside it said `docs-auto`.\n\nPR #2070. 194 files: 130 modified, 64 renamed.\n\n## Measured, not recalled\n\nOn `main@67acd90202`: **952 menti",
+      "preview": "Owner ruling, 2026-10-04, confirmed as its own PR sequenced after #2053. The\ncode already quoted the owner saying `auto-docs` — `graph-kind-registry.ts`'s\ncomment reads *\"auto-docs is one declared subgraph, with declared sub-sub-graphs\nper writer\"* while the key beside it said `docs-auto`.\n\nPR #2070. 194 files: 130 modified, 64 renamed.\n\n## Measured, not recalled\n\nOn `main@67acd90202`: **952 menti",
       "file": "beans/defs/folio-assistant-rc1e--rename-docs-auto-auto-docs-the-kind-and-every-deri.md"
     },
     {
@@ -9663,14 +9747,14 @@
     {
       "id": "folio-assistant-riit",
       "title": "CONTRIBUTIONS AND VALIDATORS AS KG NODES (owner 2026-10-04)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T17:42:33Z",
-      "updatedAt": "2026-10-05T05:29:21Z",
+      "updatedAt": "2026-10-05T11:39:15Z",
       "preview": "Owner, 2026-10-04, on the audit's open question (should `*/contributions.ts` become declared nodes?): **option 2, all of it as nodes, \"+ validators need to be in KG too\"**.\n\n## What exists, measured 2026-10-04\n- `schemas/contributions.ts` defines the contribution shapes in TypeScript: BlockKindContribution, AdapterContribution, ToolContribution, QaCheckerContribution, RendererContribution and Pipe",
       "file": "beans/defs/folio-assistant-riit--contributions-and-validators-as-kg-nodes-owner-202.md"
     },
@@ -9690,7 +9774,7 @@
     },
     {
       "id": "folio-assistant-rjug",
-      "title": "SCHEMA PROPOSAL: metadata indexes, binary releases and QA reports as declared graph typologies — options, not a single answer",
+      "title": "SCHEMA PROPOSAL: metadata indexes, binary releases and QA reports as declared graph kinds — options, not a single answer",
       "status": "in-progress",
       "type": "feature",
       "priority": "normal",
@@ -10136,11 +10220,11 @@
       "status": "in-progress",
       "type": "task",
       "priority": "normal",
-      "parent": "folio-assistant-dmx1",
+      "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T17:33:33Z",
-      "updatedAt": "2026-10-04T17:41:44Z",
+      "updatedAt": "2026-10-05T12:23:07Z",
       "preview": "Owner, 2026-10-04: *\"dispatch agent: other stuff in typescript that should be in KG?\"* This is the read-only audit that answered it. The principle comes from the same day's ruling, *\"there should not be a central registry for declaring mount tools and subgraph types\"*: a fact OWNED by one harness is declared there as a KG node, not hardcoded in a cat-harness table.\n\n**How it was measured.** `grep`",
       "file": "beans/defs/folio-assistant-sod4--audit-typescript-tables-that-are-really-kg-facts-o.md"
     },
@@ -10427,7 +10511,7 @@
       "blockedBy": [],
       "createdAt": "2026-10-02T07:01:24Z",
       "updatedAt": "2026-10-02T07:01:24Z",
-      "preview": "Found 2026-10-02 while trying to remove staging previews by hand, and the\nroot cause turned out to be why they could not be removed at all.\n\n## The failure\n\n`feature-staging.yml`'s `cleanup` job checks out the platform with no\n`submodules`. `cat-harness/schemas/graph-typology-registry.ts` imports\n`../../bootstrap-tools/schemas/graph`, and `bootstrap-tools` is a SUBMODULE,\nso every platform script the ",
+      "preview": "Found 2026-10-02 while trying to remove staging previews by hand, and the\nroot cause turned out to be why they could not be removed at all.\n\n## The failure\n\n`feature-staging.yml`'s `cleanup` job checks out the platform with no\n`submodules`. `cat-harness/schemas/graph-kind-registry.ts` imports\n`../../bootstrap-tools/schemas/graph`, and `bootstrap-tools` is a SUBMODULE,\nso every platform script the ",
       "file": "beans/defs/folio-assistant-tcd6--staging-cleanup-is-broken-the-cleanup-jobs-checkou.md"
     },
     {
@@ -10811,6 +10895,20 @@
       "file": "beans/defs/folio-assistant-u9r9--two-typedoc-steps-name-a-working-directory-that-do.md"
     },
     {
+      "id": "folio-assistant-ugxd",
+      "title": "MERGE QUEUE CUTOVER: flip beans/queue to cat/cat-harness/merge-queue and move the main entries, as its own small PR",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T11:46:51Z",
+      "updatedAt": "2026-10-05T11:46:51Z",
+      "preview": "Split out of #2065 (bean folio-assistant-najo) by owner ruling 2026-10-05 (\"Land code now, switch later\", relayed by the merge manager). #2065 lands the code only: merge-queue-store.ts, merge-queue-cli.ts + tests, the checker ownId/unmountable fixes, steward read-back, merge:queue:* scripts. The queue stays on main until this lands.\n\n## What this PR does\n- [ ] Steward PAUSES queue writes on main f",
+      "file": "beans/defs/folio-assistant-ugxd--merge-queue-cutover-flip-beansqueue-to-catcat-harn.md"
+    },
+    {
       "id": "folio-assistant-uhkv",
       "title": "SMART STACK: core → fhir-harness → smart-base → {smart-l1, smart-dak, smart-ig}",
       "status": "in-progress",
@@ -10868,7 +10966,7 @@
     },
     {
       "id": "folio-assistant-uoij",
-      "title": "kind:register — one command performs the SEVEN artefacts adding a graph typology obliges, the way skill:register does for a skill",
+      "title": "kind:register — one command performs the SEVEN artefacts adding a graph kind obliges, the way skill:register does for a skill",
       "status": "todo",
       "type": "task",
       "priority": "normal",
@@ -11527,7 +11625,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-24T19:50:21Z",
       "updatedAt": "2026-09-29T23:45:29Z",
-      "preview": "Owner 2026-09-24: 'A: viz scripts become Tools'. 36 coverage.visualiser entries (23 single, 13 lists); none of the 10 gen-*-viz scripts is a declared Tool (tools/index.ts has 61). Each becomes a Tool with renders: <graph typology> and maintains: its pages; per-instance pages computed from Tool + directory id; the 13 lists need a rule. Derive each directory's viewers; remove coverage.visualiser.\n\n\n\n## ",
+      "preview": "Owner 2026-09-24: 'A: viz scripts become Tools'. 36 coverage.visualiser entries (23 single, 13 lists); none of the 10 gen-*-viz scripts is a declared Tool (tools/index.ts has 61). Each becomes a Tool with renders: <graph kind> and maintains: its pages; per-instance pages computed from Tool + directory id; the 13 lists need a rule. Derive each directory's viewers; remove coverage.visualiser.\n\n\n\n## ",
       "file": "beans/defs/folio-assistant-w91p--b7a-1168-the-10-gen-viz-scripts-become-tools-rende.md"
     },
     {
@@ -11655,7 +11753,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-21T13:18:01Z",
       "updatedAt": "2026-09-29T18:14:47Z",
-      "preview": "The owner asked where `https://litlfred.github.io/folio-assistant/smart-trust` was. It did not exist, and that is a gap left by qsf5 rather than a bug: `fhir-artifact-index` is registered `renderable: false`, and `smart-trust/` declares exactly one directory of exactly that kind, so nothing was generated for it.\n\nOnly 2 of 29 graph typologies are renderable — `docs` and `folio`. `who-iris/` publishes b",
+      "preview": "The owner asked where `https://litlfred.github.io/folio-assistant/smart-trust` was. It did not exist, and that is a gap left by qsf5 rather than a bug: `fhir-artifact-index` is registered `renderable: false`, and `smart-trust/` declares exactly one directory of exactly that kind, so nothing was generated for it.\n\nOnly 2 of 29 graph kinds are renderable — `docs` and `folio`. `who-iris/` publishes b",
       "file": "beans/defs/folio-assistant-wjfu--smart-trust-pages-674-ingested-artefacts-had-no-re.md"
     },
     {
@@ -11786,7 +11884,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T05:59:28Z",
-      "updatedAt": "2026-09-20T04:05:17Z",
+      "updatedAt": "2026-10-05T13:38:59Z",
       "preview": "_2026-09-19T05:59:49Z_ — THE ASK (owner, 2026-09-19, answering where the harness schemas should move): 'toplevel topical directories like: bootstrap =/ KG w/ only tool the CLI fallback for beans. minimal workflow, init, absolutely minimal skills and bpms listt to get going.' So the organising axis is TOPIC, not layer — which also settles the earlier layer question by construction, since math/ and ",
       "file": "beans/defs/folio-assistant-x3bd--top-level-topical-kg-directories-bootstrap-first.md"
     },
@@ -12001,7 +12099,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-30T10:54:25Z",
       "updatedAt": "2026-09-30T14:29:18Z",
-      "preview": "Owner, 2026-09-30: Enum. KgRef.kind is a free string (todo.ts, carried-note.ts), so 'skil' parses. Build the enum from the graph-typology registry.\n\n## Done when\n- [ ] KgRefSchema.kind is an enum; every committed KgRef parses\n\n\n\n## Done\nOwner chose Enum anyway (2026-09-30) over the open-string alternative. KG_NODE_KINDS in carried-note.ts (+agent for memory scoping); kg-node-kinds.test holds it in ste",
+      "preview": "Owner, 2026-09-30: Enum. KgRef.kind is a free string (todo.ts, carried-note.ts), so 'skil' parses. Build the enum from the graph-kind registry.\n\n## Done when\n- [ ] KgRefSchema.kind is an enum; every committed KgRef parses\n\n\n\n## Done\nOwner chose Enum anyway (2026-09-30) over the open-string alternative. KG_NODE_KINDS in carried-note.ts (+agent for memory scoping); kg-node-kinds.test holds it in ste",
       "file": "beans/defs/folio-assistant-xha9--b9c-1168-kgrefkind-is-an-enum-of-registered-node-k.md"
     },
     {
@@ -12017,6 +12115,20 @@
       "updatedAt": "2026-09-29T18:14:47Z",
       "preview": "Owner, 2026-09-20, naming the pipeline verbatim:\n\n> 'using ghpages as CDN is a tool choice, other tools possible like cloudflare, doucment that in process/BPMNS/skills, part of publication piepleine, internal publication mamgement: (chief) editor signoff -> merge to main -> huamn eyes review last check -> publish to CDN (requires EXTREME care in URL handling) and make accessible from CDN'\n\nFOUR GA",
       "file": "beans/defs/folio-assistant-xies--publish-to-cdn-editor-signoff-merge-human-eyes-cdn.md"
+    },
+    {
+      "id": "folio-assistant-xka5",
+      "title": "Pages grouped by harness, following the URL; each harness owns its sub-doc graphs",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-9rq1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T14:39:33Z",
+      "updatedAt": "2026-10-05T14:39:33Z",
+      "preview": "Owner, 2026-10-05, asked how to group the 79 top-level pages: 'dont want additional categorization that will drift, needs maintain. do it by harnesses to follow urls <base>cat-harness/docs/<harness>. each harness is responsible for managing its own sub doc graphs (if any) which then make up the hierarchy'. Also: '(and alphabetization//locale dependent)' — order within a level alphabetical by the p",
+      "file": "beans/defs/folio-assistant-xka5--pages-grouped-by-harness-following-the-url-each-ha.md"
     },
     {
       "id": "folio-assistant-xl55",
@@ -12488,7 +12600,7 @@
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:47Z",
       "updatedAt": "2026-10-01T09:30:19Z",
-      "preview": "Arc `3fva`, proposal §3.2 and §4 items 5.1 and 5.2. Can be dispatched now: these are new files, and only the graph-typology registry edit is shared.\n\n- `test-plan/v1` has:\n  - `scope` (the system-under-test kind and version range)\n  - `requirements[]` as `req:` refs\n  - `testCases[]`, each with an id, assertions whose ids are criterion ids, `testData` refs and an optional Gherkin `.feature`\n  - `depen",
+      "preview": "Arc `3fva`, proposal §3.2 and §4 items 5.1 and 5.2. Can be dispatched now: these are new files, and only the graph-kind registry edit is shared.\n\n- `test-plan/v1` has:\n  - `scope` (the system-under-test kind and version range)\n  - `requirements[]` as `req:` refs\n  - `testCases[]`, each with an id, assertions whose ids are criterion ids, `testData` refs and an optional Gherkin `.feature`\n  - `depen",
       "file": "beans/defs/folio-assistant-ygzh--test-plan-schema-test-planv1-fhir-r5-testplan-shap.md"
     },
     {
@@ -12586,7 +12698,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-24T12:11:06Z",
       "updatedAt": "2026-09-24T13:16:02Z",
-      "preview": "Part of s4sp (plan B5, 'QA check first, then fixes'). @general on RoleDef, SkillDefinition, RequirementStatement, GraphTypologyDef, CapabilityDefinition, ActorDef, ActorDefinition, ProcessId (owner: core six + Process). schema-graph reads the tag; scripts/arrow-direction.ts checks schema @refs and BPMN folio pointers; kg-audit criterion arrow-direction (major). Reports 19 findings for later fixes: 9 f",
+      "preview": "Part of s4sp (plan B5, 'QA check first, then fixes'). @general on RoleDef, SkillDefinition, RequirementStatement, GraphKindDef, CapabilityDefinition, ActorDef, ActorDefinition, ProcessId (owner: core six + Process). schema-graph reads the tag; scripts/arrow-direction.ts checks schema @refs and BPMN folio pointers; kg-audit criterion arrow-direction (major). Reports 19 findings for later fixes: 9 f",
       "file": "beans/defs/folio-assistant-yo4m--b5-1168-arrow-direction-qa-general-nodes-point-onl.md"
     },
     {
@@ -12726,7 +12838,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-30T11:28:43Z",
       "updatedAt": "2026-09-30T19:49:54Z",
-      "preview": "Found 2026-09-30 during a goal review, and confirmed independently before\nbeing written down.\n\n`bun run audit:coverage` reports the `themes` graph typology as:\n\n```json\n{\"kind\": \"themes\", \"state\": \"covered\", \"directories\": [\"who-iris/themes\"],\n \"criteria\": [], \"gates\": [\"bun run check:theme-art:check\",\n \"bun run theme:page:check\", \"bun run themes:css:check\"],\n \"typed\": true, \"hasFiles\": true}\n```\n\n**N",
+      "preview": "Found 2026-09-30 during a goal review, and confirmed independently before\nbeing written down.\n\n`bun run audit:coverage` reports the `themes` graph kind as:\n\n```json\n{\"kind\": \"themes\", \"state\": \"covered\", \"directories\": [\"who-iris/themes\"],\n \"criteria\": [], \"gates\": [\"bun run check:theme-art:check\",\n \"bun run theme:page:check\", \"bun run themes:css:check\"],\n \"typed\": true, \"hasFiles\": true}\n```\n\n**N",
       "file": "beans/defs/folio-assistant-z6xd--false-coverage-three-gates-declare-covers-themes-a.md"
     },
     {
@@ -14340,14 +14452,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 540,
-        "closed": 193,
-        "open": 347,
-        "inProgress": 130,
+        "total": 547,
+        "closed": 196,
+        "open": 351,
+        "inProgress": 134,
         "todo": 216,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3574074074074074
+        "share": 0.3583180987202925
       },
       {
         "id": "folio-assistant-vuip",
@@ -14355,14 +14467,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 235,
+        "total": 236,
         "closed": 95,
-        "open": 140,
+        "open": 141,
         "inProgress": 77,
-        "todo": 62,
+        "todo": 63,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.40425531914893614
+        "share": 0.4025423728813559
       },
       {
         "id": "folio-assistant-yg29",
@@ -14381,8 +14493,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 525,
-    "coveredOpen": 522,
+    "openTotal": 530,
+    "coveredOpen": 527,
     "duplicateIds": 0
   }
 }
