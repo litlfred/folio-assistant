@@ -22,7 +22,7 @@
  *   it, the same function every exporter mints its `@id`s with;
  * - `name`, `title`, `description`, `version` — the declaration's;
  * - `dependsOn` — the declaration's `needs`, as the dependencies' `@id`s;
- * - `directory` — each declared directory's id, path and graph kinds;
+ * - `directory` — each declared directory's id, path and graph typologies;
  * - `subgraph` — its named-subgraph root, when the repository's subgraph
  *   index frames it (bean `c1m4`), or the `seeAlso` site that publishes it
  *   (bean `t8c4`);
@@ -73,7 +73,7 @@ export interface HarnessEntry {
   version?: string;
   dependsOn?: string[];
   /** Each declared directory: its id as `name` — a term the context defines, unlike a bare `id`. */
-  directory: Array<{ name: string; path: string; graphKinds: string[] }>;
+  directory: Array<{ name: string; path: string; graphTypologies: string[] }>;
   subgraph?: string;
   nodes: number;
   bytes: number;
@@ -147,7 +147,7 @@ export function buildRootIndex(site: string, opts: { baseUrl?: string; repo?: st
       ...(decl.description ? { description: decl.description } : {}),
       ...(decl.version ? { version: decl.version } : {}),
       ...(decl.needs?.length ? { dependsOn: [...decl.needs] } : {}),
-      directory: (decl.directories ?? []).map((d) => ({ name: d.id, path: d.path, graphKinds: [...(d.graphKinds ?? [])] })),
+      directory: (decl.directories ?? []).map((d) => ({ name: d.id, path: d.path, graphTypologies: [...(d.graphTypologies ?? [])] })),
       ...(subgraph ? { subgraph } : {}),
       nodes,
       bytes: bytes.length,
@@ -174,7 +174,7 @@ export function buildRootIndex(site: string, opts: { baseUrl?: string; repo?: st
       ...Object.fromEntries(["name", "stub", "title", "description", "version", "path", "nodes", "bytes", "sha256"].map((t) => [t, propertyIri(t)])),
       dependsOn: { "@id": propertyIri("dependsOn"), "@type": "@id", "@container": "@set" },
       directory: { "@id": propertyIri("directory"), "@container": "@set" },
-      graphKinds: { "@id": propertyIri("holdsGraph"), "@container": "@set" },
+      graphTypologies: { "@id": propertyIri("holdsGraph"), "@container": "@set" },
       subgraph: { "@id": propertyIri("hasSubgraph"), "@type": "@id" },
       url: { "@id": propertyIri("contentUrl"), "@type": "@id" },
       hasHarness: { "@id": propertyIri("hasMember"), "@container": "@set" },

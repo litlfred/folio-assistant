@@ -66,8 +66,8 @@ function instance(): string {
   write(join(root, "fixture.json"), {
     name: "fixture",
     directories: [
-      { id: "library", path: "library/", graphKinds: ["library"] },
-      { id: "catalogue", path: "catalogue/", graphKinds: ["catalogue"] },
+      { id: "library", path: "library/", graphTypologies: ["library"] },
+      { id: "catalogue", path: "catalogue/", graphTypologies: ["catalogue"] },
     ],
   });
   return root;

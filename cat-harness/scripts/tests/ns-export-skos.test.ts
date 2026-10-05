@@ -57,7 +57,7 @@ describe("the folio vocabulary emits SKOS", () => {
     const concepts = conceptsOf(build());
     expect(concepts.length).toBeGreaterThan(0);
     // ...and not a token handful. 110 terms are authored in `vocabulary.ts`
-    // plus the graph kinds' own summaries, so a collapse to a stub is caught
+    // plus the graph typologies' own summaries, so a collapse to a stub is caught
     // rather than read as a refactor.
     expect(concepts.length).toBeGreaterThan(100);
   });
@@ -184,10 +184,10 @@ describe("the folio vocabulary emits SKOS", () => {
     expect(broken).toEqual([]);
 
     // A term is a class or a property — or, since bootstrap's vocabulary names
-    // its Graph Kinds (2026-09-30), a named INDIVIDUAL typed by its class,
-    // `bootstrap:GraphKind`: `skills` is a Graph Kind, not a class of things.
+    // its Graph Typologies (2026-09-30), a named INDIVIDUAL typed by its class,
+    // `bootstrap:GraphTypology`: `skills` is a Graph Typology, not a class of things.
     const rdfsTyped = concepts.filter((c) =>
-      typesOf(c).some((t) => t === "rdfs:Class" || t === "rdf:Property" || t === "bootstrap:GraphKind"),
+      typesOf(c).some((t) => t === "rdfs:Class" || t === "rdf:Property" || t === "bootstrap:GraphTypology"),
     );
     expect(rdfsTyped).toHaveLength(concepts.length);
   });

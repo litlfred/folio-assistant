@@ -56,9 +56,9 @@
     return !!node && list(node["@type"]).some(function (t) { return localType(t) === "Process"; });
   }
 
-  /** Whether a subgraph node declares that it holds the `processes` graph kind. */
+  /** Whether a subgraph node declares that it holds the `processes` graph typology. */
   function holdsProcesses(node) {
-    return !!node && list(node.holdsGraph).some(function (k) { return /graphKind\/processes$/.test(String(k)); });
+    return !!node && list(node.holdsGraph).some(function (k) { return /graphTypology\/processes$/.test(String(k)); });
   }
 
   /**

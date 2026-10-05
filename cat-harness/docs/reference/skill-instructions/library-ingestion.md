@@ -87,7 +87,7 @@ down dep tree)"*.
   `ingest-document.ts`, `notebook-structure.ts`. Reading bytes is platform
   work, and the owner's standing instruction is that **OCR stays here**. The
   method that chooses among them is a refinement above (placement PR6). The
-  flow itself cannot move up: `uploads` and `library` are graph kinds this
+  flow itself cannot move up: `uploads` and `library` are graph typologies this
   layer declares, and a flow above would make the harness's own `library`
   writable only from a layer above it — a wrong-direction dependency, and
   after the split (issue #223) a circular one (bean `zlmp`).
@@ -126,7 +126,7 @@ families, the state after correction, and renaming — is in
 
 ## Related
 
-- [`directory-conventions`](directory-conventions.md) — the graph kinds and who declares them; `uploads` and `library` are both declared by this layer
+- [`directory-conventions`](directory-conventions.md) — the graph typologies and who declares them; `uploads` and `library` are both declared by this layer
 - [`content-acquisition`](content-acquisition.md) — accepting an offered resource, or asking for one, before this flow starts
 - `processes/library/document-ingestion.bpmn` — the flow above, as `Process_Ingestion`
 

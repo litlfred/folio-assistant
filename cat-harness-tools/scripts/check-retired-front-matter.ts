@@ -55,7 +55,7 @@ interface Retired {
   /**
    * `$schema` tags this retirement does NOT apply to.
    *
-   * A key is retired **for a graph kind**, not for the word. `roles:` was
+   * A key is retired **for a graph typology**, not for the word. `roles:` was
    * inert in skill markdown and is a LIVE axis in `folio-memory/v1` entries,
    * where `memoryForRoles` filters on `tags.roles` — the same seven letters,
    * a different field, a real reader.
@@ -65,7 +65,7 @@ interface Retired {
    * entries included, and `agent-memory.test.ts` caught it: the CI lane
    * stopped seeing more entries than another lane, because every entry had
    * become untagged and therefore visible to everyone. Sharing a key name
-   * across graph kinds is not sharing a field.
+   * across graph typologies is not sharing a field.
    */
   exceptSchemas?: string[];
   /**
@@ -132,7 +132,7 @@ export const RETIRED: Retired[] = [
  * directory reports a clean run over files it never opened, which is worse
  * than not running at all.
  *
- * **Every declared directory, not a chosen few graph kinds.** Two earlier
+ * **Every declared directory, not a chosen few graph typologies.** Two earlier
  * versions of this function each went blind within a day:
  *
  * - `skillMdDirs` enumerates skill PACKAGES, and `skills/memory/` was not

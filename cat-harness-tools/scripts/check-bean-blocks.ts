@@ -7,7 +7,7 @@
  * @covers bean-defs
  *
  * The `@covers` line is required by bean `3srh`, which landed on `main` after
- * this branch forked: every gate in the CI set declares which graph kind it
+ * this branch forked: every gate in the CI set declares which graph typology it
  * audits, or declares `none`. Without it `audit:coverage:require-all` counts
  * this gate as "has NOT said", and every kind it actually audits reads as
  * uncovered — so the report's "unaudited" figure becomes an upper bound rather
@@ -72,7 +72,7 @@ import { join, resolve } from "node:path";
 
 import { beanFindings, hasExpiry, readBeans, resolveBeanDefs, type BeanNode } from "../../cat-harness/scripts/beans.ts";
 import { repoRootFor } from "../../cat-harness/schemas/cat-harness.ts";
-import "../../cat-harness/schemas/folio-graph-kind.js";
+import "../../cat-harness/schemas/folio-graph-typology.js";
 // The HARNESS, not this layer: these scripts moved up in 70lx B2b and read cat-harness.
 import { HARNESS_ROOT } from "./lib/roots.ts";
 

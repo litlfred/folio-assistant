@@ -58,22 +58,22 @@ describe("which pages document a directory", () => {
 
   test("a kind claim reaches every directory of that kind within reach, and no further", () => {
     expect(
-      documentingPages({ instance: "domain", id: "beans", graphKinds: ["beans"] }, pages, root, reach),
+      documentingPages({ instance: "domain", id: "beans", graphTypologies: ["beans"] }, pages, root, reach),
     ).toEqual(["platform/docs/beans.md"]);
   });
 
   test("a directory claim names one directory, whatever its kind", () => {
     expect(
-      documentingPages({ instance: "platform", id: "tools", graphKinds: ["tools"] }, pages, root, reach),
+      documentingPages({ instance: "platform", id: "tools", graphTypologies: ["tools"] }, pages, root, reach),
     ).toEqual(["platform/docs/tool-graph.md"]);
     expect(
-      documentingPages({ instance: "domain", id: "tools", graphKinds: ["tools"] }, pages, root, reach),
+      documentingPages({ instance: "domain", id: "tools", graphTypologies: ["tools"] }, pages, root, reach),
     ).toEqual([]);
   });
 
   test("a directory nothing declares is undocumented", () => {
     expect(
-      documentingPages({ instance: "domain", id: "voices", graphKinds: ["voices"] }, pages, root, reach),
+      documentingPages({ instance: "domain", id: "voices", graphTypologies: ["voices"] }, pages, root, reach),
     ).toEqual([]);
   });
 });

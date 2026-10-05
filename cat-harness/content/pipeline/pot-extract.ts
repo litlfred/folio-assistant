@@ -366,7 +366,7 @@ export type PotEntryKind =
   | "blockquote"
   | "table-cell"
   // Not markdown at all. Named rather than made optional, so a new producer has
-  // to DECIDE — the rule this repository applies to graph kinds, where "a kind
+  // to DECIDE — the rule this repository applies to graph typologies, where "a kind
   // that has not decided does not compile". An optional field would let a
   // producer stay silent, and `derive-po.ts` would then align against entries
   // whose shape it cannot check.

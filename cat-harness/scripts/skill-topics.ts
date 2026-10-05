@@ -36,7 +36,7 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { SkillTopicsSchema, type SkillTopic } from "../schemas/skill-topics.ts";
-import { defaultGraphKinds } from "../schemas/graph-kind-registry.ts";
+import { defaultGraphTypologies } from "../schemas/graph-typology-registry.ts";
 import { groupedChildrenIn } from "./concern-groups.ts";
 
 /**
@@ -48,7 +48,7 @@ import { groupedChildrenIn } from "./concern-groups.ts";
  * two lists, `topics` here and `directories` there, and one place its name is
  * written.
  */
-export const TOPICS_FILE = defaultGraphKinds.get("skills")?.declarationFile ?? "skills.json";
+export const TOPICS_FILE = defaultGraphTypologies.get("skills")?.declarationFile ?? "skills.json";
 
 export type { SkillTopic };
 

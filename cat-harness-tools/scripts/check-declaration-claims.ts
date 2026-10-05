@@ -136,7 +136,7 @@ function formatReport(r: ClaimReport): string {
   }
   if (bad.length > 0) {
     out.push("");
-    out.push("  A declaration is `<instance>/<instance>.json` — directories and graph kinds.");
+    out.push("  A declaration is `<instance>/<instance>.json` — directories and graph typologies.");
     out.push("  `<name>.config.json` is the FOLIO config — content type, dependencies, skills.");
     out.push("  Naming the second while describing the first is the `hrv2` defect.");
   }

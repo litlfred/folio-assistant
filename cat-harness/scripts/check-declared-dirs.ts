@@ -105,7 +105,7 @@ import { existsSync, statSync } from "node:fs";
 import { basename, join, relative, resolve, sep } from "node:path";
 
 import { instanceRootsIn, nestedDirectories, readDeclaration } from "../schemas/cat-harness.js";
-import { defaultGraphKinds } from "../schemas/graph-kind-registry.js";
+import { defaultGraphTypologies } from "../schemas/graph-typology-registry.js";
 import {
   contentIsOffCheckout,
   resolveSubgraphSource,
@@ -117,11 +117,11 @@ import {
 // would drift the first time the marker moved — which it already did once,
 // from `--git-common-dir` to the per-worktree git dir (review on #1957).
 import { readMarker } from "./branch-store.ts";
-// The `folio` graph kind is registered by CORE as a load-time side effect, so
+// The `folio` graph typology is registered by CORE as a load-time side effect, so
 // the harness alone does not know it exists and `readDeclaration` throws on a
 // perfectly valid declaration that uses it. Same import, same reason, as
 // `check-declared-assets.ts` and `kg-export.ts` carry.
-import "../schemas/folio-graph-kind.js";
+import "../schemas/folio-graph-typology.js";
 
 export interface DirFinding {
   instance: string;
@@ -440,7 +440,7 @@ function auditNestedCount(
  * `assets/img/uml/` — a directory holding no declaration at all. Measured on
  * the first version of this function, whose finding sent a reader to exactly
  * that path. `declarationFile` on the kind is the one place that fact lives
- * (`graph-kind-registry.ts`), which is why it is asked rather than assumed.
+ * (`graph-typology-registry.ts`), which is why it is asked rather than assumed.
  *
  * Returns the parent's directory alone when the parent's kind names no
  * `declarationFile` — nothing else is known, and naming a file that may not
@@ -448,12 +448,12 @@ function auditNestedCount(
  */
 function declaringFile(
   parentId: string,
-  byId: ReadonlyMap<string, { path: string; graphKinds: readonly string[] }>,
+  byId: ReadonlyMap<string, { path: string; graphTypologies: readonly string[] }>,
 ): string {
   const parent = byId.get(parentId);
   if (!parent) return "(the declaration naming it)";
   const dir = `${parent.path.replace(/\/+$/, "")}/`;
-  const file = parent.graphKinds.map((g) => defaultGraphKinds.get(g)?.declarationFile).find((f) => typeof f === "string");
+  const file = parent.graphTypologies.map((g) => defaultGraphTypologies.get(g)?.declarationFile).find((f) => typeof f === "string");
   return file === undefined ? dir : `${dir}${file}`;
 }
 
@@ -567,7 +567,7 @@ function offCheckoutFindings(
 export function auditNested(
   instanceRoot: string,
   repoRoot: string,
-  decl: { directories?: ReadonlyArray<{ id: string; path: string; graphKinds?: readonly string[] }> } | undefined,
+  decl: { directories?: ReadonlyArray<{ id: string; path: string; graphTypologies?: readonly string[] }> } | undefined,
 ): DirFinding[] {
   const findings: DirFinding[] = [];
   // `nestedDirectories` wants the whole declaration shape; only `directories`
@@ -576,9 +576,9 @@ export function auditNested(
   const nested = nestedDirectories(instanceRoot, decl as Parameters<typeof nestedDirectories>[1]);
   // Every entry a parent id can name: the instance's own, then the nested ones
   // (`walkNested` goes to any depth, so a parent may itself be nested).
-  const byId = new Map<string, { path: string; graphKinds: readonly string[] }>();
-  for (const d of decl?.directories ?? []) byId.set(d.id, { path: d.path, graphKinds: d.graphKinds ?? [] });
-  for (const n of nested) byId.set(n.id, { path: n.path, graphKinds: n.graphKinds });
+  const byId = new Map<string, { path: string; graphTypologies: readonly string[] }>();
+  for (const d of decl?.directories ?? []) byId.set(d.id, { path: d.path, graphTypologies: d.graphTypologies ?? [] });
+  for (const n of nested) byId.set(n.id, { path: n.path, graphTypologies: n.graphTypologies });
   for (const n of nested) {
     const e = n as typeof n & { absent?: { reason: string }; storage?: { branch: string }; source?: SubgraphSource };
     const abs = join(instanceRoot, n.path);

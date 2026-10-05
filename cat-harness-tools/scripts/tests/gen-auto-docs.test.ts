@@ -30,7 +30,7 @@ const SITE = join(INSTANCE, siteDirFor(INSTANCE));
 const HANDLER = readDeclaration(INSTANCE)?.name;
 
 describe("the type registry", () => {
-  it("every type declares the graph kind its artefacts live in", () => {
+  it("every type declares the graph typology its artefacts live in", () => {
     // Not optional: without it the walk reaches `docs/`, and a RENDERING of an
     // artefact gets counted as a second artefact.
     expect(TYPES.length).toBeGreaterThan(0);
@@ -141,7 +141,7 @@ describe("declaredDirectories is filtered and existence-checked", () => {
   });
 
   it("an undeclared graph yields nothing rather than everything", () => {
-    expect(declaredDirectories("no-such-graph-kind")).toEqual([]);
+    expect(declaredDirectories("no-such-graph-typology")).toEqual([]);
   });
 });
 

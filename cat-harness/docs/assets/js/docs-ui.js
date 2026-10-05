@@ -1702,7 +1702,7 @@
     "</svg>";
 
   /*
-   * SIX KIND GLYPHS, one per graph kind a declared tile opens (ob3m finding
+   * SIX KIND GLYPHS, one per graph typology a declared tile opens (ob3m finding
    * 11: 12 of 14 declared tiles drew the same net, so the More panel told its
    * tiles apart by caption alone). One drawing per KIND rather than per tile:
    * "Skills — cat-harness" and "Skills — who-iris" are the same kind of place

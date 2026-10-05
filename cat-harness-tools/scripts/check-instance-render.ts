@@ -19,7 +19,7 @@
  *   not carry". CatBootstrap's skills left the published graph in silence;
  *   `confirm-harness` became a dangling `hasSkill` and `kg-navigation` only
  *   looked present because a second copy exists elsewhere (bean `v3se`).
- * - `bootstrap/bootstrap.jsonld` publishes **16** graph-kind nodes while
+ * - `bootstrap/bootstrap.jsonld` publishes **16** graph-typology nodes while
  *   `bootstrap/harness.json` declares **one**.
  *
  * Neither threw. So the question is not whether a render returned, it is
@@ -29,7 +29,7 @@
  *
  * ## Declared means transitively declared
  *
- * `harness.json` names a directory and the graph kinds in it; a graph file
+ * `harness.json` names a directory and the graph typologies in it; a graph file
  * inside that directory may name more. `beans/beans.json` declares
  * `bean-defs` and `workflow-state`, `todos/todos.json` declares `todo-items`
  * and `todo-feedback`. Those are the instance's, declared one level down, and
@@ -76,17 +76,17 @@ export interface InstanceRender {
   name: string;
   root: string;
   verdict: RenderVerdict;
-  /** Graph kinds the instance declares, transitively. */
+  /** Graph typologies the instance declares, transitively. */
   declared: string[];
-  /** Graph kinds it actually published nodes for. */
+  /** Graph typologies it actually published nodes for. */
   published: string[];
   /**
    * Published and not declared — REPORTED, not yet fatal.
    *
    * Measured on `35b868a45d`: cat-harness 1 (`folio`, contributed by core),
    * bootstrap 15. Both instances publish all 16 registered kinds because
-   * `collectGraphKinds()` takes no root — `COLLECTOR_SCOPE` files `graphKinds`
-   * as `universal`, "reads nothing instance-specific at all". A graph kind is
+   * `collectGraphTypologies()` takes no root — `COLLECTOR_SCOPE` files `graphTypologies`
+   * as `universal`, "reads nothing instance-specific at all". A graph typology is
    * contributed by a LAYER, so the registry is global in STORAGE and not in
    * OWNERSHIP, and that classification is what needs revisiting.
    *
@@ -95,15 +95,15 @@ export interface InstanceRender {
    * becomes an error once its count is zero. Failing on day one would mean
    * either a red gate nobody can clear or this module quietly deciding an
    * ownership question that belongs to bean `z4mq`. PROMOTE IT the moment
-   * `collectGraphKinds` becomes instance-scoped and this reaches zero.
+   * `collectGraphTypologies` becomes instance-scoped and this reaches zero.
    */
   undeclared: string[];
   /**
    * Nodes the instance itself contributed — skills, processes, roles, its
    * declaration. Zero is a FAILURE, not an empty success.
    *
-   * Excludes the graph-kind registry, which every instance gets for free
-   * because `collectGraphKinds()` takes no root. Counting those made the
+   * Excludes the graph-typology registry, which every instance gets for free
+   * because `collectGraphTypologies()` takes no root. Counting those made the
    * emptiness guard unreachable; see `renderInstance`.
    */
   nodeCount: number;
@@ -129,7 +129,7 @@ export interface InstanceRender {
 }
 
 /**
- * Every graph kind an instance declares, following nested graph files.
+ * Every graph typology an instance declares, following nested graph files.
  *
  * A directory entry names kinds; a graph file INSIDE that directory may name
  * more, and those are equally the instance's. Reading only `harness.json`
@@ -180,7 +180,7 @@ export async function renderInstance(root: string): Promise<InstanceRender> {
 
   // THE INSTANCE'S OWN NODES, which is not the node count.
   //
-  // `collectGraphKinds()` is classified `universal` — it takes no root and
+  // `collectGraphTypologies()` is classified `universal` — it takes no root and
   // emits the whole registry — so EVERY instance gets those nodes for free,
   // including one that declares nothing. The first version of this check
   // failed an instance on `nodes.length === 0`, and its own test proved that
@@ -192,11 +192,11 @@ export async function renderInstance(root: string): Promise<InstanceRender> {
   // itself. So the count that decides the verdict excludes what the universal
   // collector contributed, and `nodeCount` reports it separately from the
   // total so a reader can see both.
-  const isGraphKind = (n: (typeof nodes.nodes)[number]): boolean =>
-    String(n["@type"] ?? "").endsWith("#GraphKind");
-  const published = [...new Set(nodes.nodes.filter(isGraphKind).map((n) => String(n.name)))].sort();
+  const isGraphTypology = (n: (typeof nodes.nodes)[number]): boolean =>
+    String(n["@type"] ?? "").endsWith("#GraphTypology");
+  const published = [...new Set(nodes.nodes.filter(isGraphTypology).map((n) => String(n.name)))].sort();
   const undeclared = published.filter((k) => !declared.has(k));
-  const ownNodes = nodes.nodes.filter((n) => !isGraphKind(n)).length;
+  const ownNodes = nodes.nodes.filter((n) => !isGraphTypology(n)).length;
 
   // WHAT MAKES A RENDER FAIL, and what is merely reported. The split follows
   // this repository's own precedent, stated in `code-quality-gates.yml` for
@@ -205,7 +205,7 @@ export async function renderInstance(root: string): Promise<InstanceRender> {
   if (ownNodes === 0) {
     reasons.push(
       "rendered zero nodes of its own — an empty graph is a failure, not an empty success. " +
-        `(${nodes.nodes.length} node(s) total, all contributed by the universal graph-kind registry.)`,
+        `(${nodes.nodes.length} node(s) total, all contributed by the universal graph-typology registry.)`,
     );
   }
   for (const p of problems) reasons.push(`collector problem: ${p}`);
@@ -269,9 +269,9 @@ export function formatReport(rs: InstanceRender[]): string {
   out.push(`${rs.length - failed - undet} rendered, ${failed} failed, ${undet} undetermined.`);
   if (findings) {
     // FATAL since bean `3jj9`. The line here used to read "reported and not
-    // fatal … they become fatal when collectGraphKinds() is instance-scoped
+    // fatal … they become fatal when collectGraphTypologies() is instance-scoped
     // and the count reaches zero — bean z4mq". Both halves have happened:
-    // `collectGraphKinds` takes a root and filters by `declaredKinds`, and
+    // `collectGraphTypologies` takes a root and filters by `declaredKinds`, and
     // the count is zero across every instance in this repository.
     //
     // The repository's standing rule is that a check is an error only once
@@ -279,7 +279,7 @@ export function formatReport(rs: InstanceRender[]): string {
     // rather than later — a finding left advisory after it is clearable is
     // how the next instance quietly reacquires it.
     out.push(
-      `${findings} instance(s) publish a graph kind they do not declare. An instance that ` +
+      `${findings} instance(s) publish a graph typology they do not declare. An instance that ` +
         `advertises a vocabulary it cannot reach is a type that does not dereference.`,
     );
   }

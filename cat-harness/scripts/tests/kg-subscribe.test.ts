@@ -9,11 +9,11 @@ import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "no
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { BOOTSTRAP_GRAPH_KINDS } from "../../../bootstrap-tools/schemas/graph.ts";
+import { BOOTSTRAP_GRAPH_TYPOLOGIES } from "../../../bootstrap-tools/schemas/graph.ts";
 import { CatHarnessDeclarationSchema } from "../../schemas/cat-harness.ts";
 import { SubstrateSnapshotSchema } from "../../schemas/substrate-snapshot.ts";
 import {
-  HARNESS_GRAPH_KINDS,
+  HARNESS_GRAPH_TYPOLOGIES,
   type RootFetcher,
   checkSubscriptions,
   judgeSubstrate,
@@ -41,8 +41,8 @@ const SUBSTRATE = {
   title: "iHRIS Knowledge Base",
   version: "1.2.0",
   directories: [
-    { id: "kb", path: "kb/", graphKinds: ["folio"] },
-    { id: "kb-skills", path: "skills/", graphKinds: ["skills"] },
+    { id: "kb", path: "kb/", graphTypologies: ["folio"] },
+    { id: "kb-skills", path: "skills/", graphTypologies: ["skills"] },
   ],
   stickies: [{ id: "an-extension-bootstrap-ignores" }],
 };
@@ -71,7 +71,7 @@ function subscriber(opts: { snapshotDir?: boolean; extra?: string } = {}): { dir
       "id": "subscriptions",
       "path": "subscriptions/",
       "dependents": "skip",
-      "graphKinds": ["substrate-snapshot"]
+      "graphTypologies": ["substrate-snapshot"]
     }
   ]`;
   writeFileSync(
@@ -88,7 +88,7 @@ function subscriber(opts: { snapshotDir?: boolean; extra?: string } = {}): { dir
 
 describe("the harness rule is bootstrap's", () => {
   test("each harness kind is one bootstrap defines as holding Skills, Roles or Processes", () => {
-    const sentences = HARNESS_GRAPH_KINDS.map((k) => BOOTSTRAP_GRAPH_KINDS[k as keyof typeof BOOTSTRAP_GRAPH_KINDS]);
+    const sentences = HARNESS_GRAPH_TYPOLOGIES.map((k) => BOOTSTRAP_GRAPH_TYPOLOGIES[k as keyof typeof BOOTSTRAP_GRAPH_TYPOLOGIES]);
     expect(sentences.every((s) => typeof s === "string")).toBe(true);
     expect(sentences.join(" ")).toMatch(/Skills/);
     expect(sentences.join(" ")).toMatch(/Roles/);
@@ -129,7 +129,7 @@ describe("judgeSubstrate: three answers", () => {
 
   test("scenarios or processes alone also make a harness", async () => {
     for (const kind of ["scenarios", "processes"]) {
-      const d = { name: "p", directories: [{ id: "x", path: "x/", graphKinds: [kind] }] };
+      const d = { name: "p", directories: [{ id: "x", path: "x/", graphTypologies: [kind] }] };
       expect((await judgeSubstrate("o/p", SHA, fixture({ "p.json": d }))).state).toBe("substrate");
     }
   });
@@ -142,7 +142,7 @@ describe("judgeSubstrate: three answers", () => {
   });
 
   test("zero harnesses: refused, and the reason names the kinds and the root-only limit", async () => {
-    const noHarness = { name: "data", directories: [{ id: "d", path: "d/", graphKinds: ["folio", "methodology"] }] };
+    const noHarness = { name: "data", directories: [{ id: "d", path: "d/", graphTypologies: ["folio", "methodology"] }] };
     const v = await judgeSubstrate("o/data", SHA, fixture({ "data.json": noHarness }));
     expect(v.state).toBe("not-a-substrate");
     expect(v.state !== "substrate" && v.reason).toMatch(/declares no harness/);

@@ -80,7 +80,7 @@ skill that exists in three.
 
 This section used to list three directory paths instead. That is the practice
 `AGENTS.md` opens by warning against — *"hardcoding a path is how a skill goes
-missing the moment the layout moves"* — and one of the three names a graph kind
+missing the moment the layout moves"* — and one of the three names a graph typology
 that has since been renamed. The declaration is the answer; a path is a
 snapshot of it.
 

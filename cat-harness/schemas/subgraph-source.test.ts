@@ -17,7 +17,7 @@ import {
 } from "./subgraph-source";
 
 const REPO = resolve(import.meta.dir, "..", "..");
-const ENTRY = { id: "todos", path: "todos/", graphKinds: ["todos"] };
+const ENTRY = { id: "todos", path: "todos/", graphTypologies: ["todos"] };
 const BRANCH = { kind: "branch", branch: "cat/cat-harness/todos", keyedBy: "tip" } as const;
 
 describe("the union", () => {
@@ -60,7 +60,7 @@ describe("precedence — config, then source, then legacy storage, then director
     expect(() => resolveSubgraphSource({ ...ENTRY, source: BRANCH, storage: { branch: "x", keyedBy: "tip" } })).toThrow(/both/);
   });
   test("a qa subgraph keyed by tip is refused (#1937's rule, whichever field says it)", () => {
-    expect(() => resolveSubgraphSource({ id: "qa", path: "qa/", graphKinds: ["qa"], source: { ...BRANCH, branch: "cat/cat-harness/qa-reports" } })).toThrow(/qa/);
+    expect(() => resolveSubgraphSource({ id: "qa", path: "qa/", graphTypologies: ["qa"], source: { ...BRANCH, branch: "cat/cat-harness/qa-reports" } })).toThrow(/qa/);
   });
 });
 
@@ -117,7 +117,7 @@ describe("THE GATE — every declared subgraph in this checkout resolves", () =>
 });
 
 describe("a branch FAMILY (bean lehh)", () => {
-  const FAMILY_ENTRY = { id: "ig-ast", path: "ig-ast/", graphKinds: ["ig-ast"] };
+  const FAMILY_ENTRY = { id: "ig-ast", path: "ig-ast/", graphTypologies: ["ig-ast"] };
   test("the storage spelling resolves to kind family, never to one branch", () => {
     const r = resolveSubgraphSource(
       { ...FAMILY_ENTRY, storage: { branchPrefix: "cat/fhir-harness/fhir-ast/", keyedBy: "family", keyFrom: "the IG's package id" } },
@@ -134,7 +134,7 @@ describe("a branch FAMILY (bean lehh)", () => {
   });
   test("a qa subgraph cannot be a family", () => {
     expect(() =>
-      resolveSubgraphSource({ id: "qa", path: "test/results/", graphKinds: ["qa"], source: { kind: "family", branchPrefix: "cat/x/", keyFrom: "k" } }),
+      resolveSubgraphSource({ id: "qa", path: "test/results/", graphTypologies: ["qa"], source: { kind: "family", branchPrefix: "cat/x/", keyFrom: "k" } }),
     ).toThrow(/qa/);
   });
   test("is off the checkout, and its JSON-LD names the prefix and the key", () => {
@@ -145,7 +145,7 @@ describe("a branch FAMILY (bean lehh)", () => {
 });
 
 describe("a branch FAMILY's repository (owner: read remote, or materialise locally)", () => {
-  const E = { id: "ig-ast", path: "fhir-ast/", graphKinds: ["ig-ast"] };
+  const E = { id: "ig-ast", path: "fhir-ast/", graphTypologies: ["ig-ast"] };
   test("absent means this repository; present names the remote, through both spellings and the JSON-LD", () => {
     const local = resolveSubgraphSource({ ...E, storage: { branchPrefix: "cat/x/", keyedBy: "family", keyFrom: "k" } });
     expect(local.kind === "family" && local.repository).toBe(undefined);

@@ -26,7 +26,7 @@ export function lsiQueryText(text: string, opts: { instance?: string; graph?: st
   const words = tokenize(text);
   const out: string[] = [];
   for (const t of targets) {
-    const units = unitsOf(t.absPath, t.graphKinds);
+    const units = unitsOf(t.absPath, t.graphTypologies);
     if (units.length < 3) {
       out.push(`# ${t.instance}/${t.id}: ${units.length} unit(s) — too few to index; not searched`);
       continue;

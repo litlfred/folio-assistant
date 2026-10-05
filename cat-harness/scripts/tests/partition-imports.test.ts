@@ -91,8 +91,8 @@ describe("the real corpus — a guard against a regex that matches nothing", () 
     // Every assertion above is a literal, so a regex narrowed by a later edit
     // could keep them all passing. This reads the shape off the form the repo
     // actually writes.
-    expect(extractSpecifiers(`import "../../schemas/folio-graph-kind.js";\n`)).toEqual([
-      "../../schemas/folio-graph-kind.js",
+    expect(extractSpecifiers(`import "../../schemas/folio-graph-typology.js";\n`)).toEqual([
+      "../../schemas/folio-graph-typology.js",
     ]);
   });
 });

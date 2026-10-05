@@ -5,7 +5,7 @@
     "id": "Process_DocsSite",
     "path": "processes/sdlc/docs-site-publish.bpmn"
   },
-  "source_hash": "sha256:a80f59f959c67d6362f443855802efb49a1f56a521fb44bffe986aa31f4e24b4",
+  "source_hash": "sha256:c269f6b344cb9adc60fc385f921a7c800c6b66ef84f315e20a4edeeb0f540e24",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -109,13 +109,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/docs-site.yml",
-          "detail": ".github/workflows/docs-site.yml changed since cat-harness/processes/sdlc/docs-site-publish.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -123,8 +118,8 @@
     }
   },
   "totals": {
-    "pass": 16,
-    "fail": 2,
+    "pass": 17,
+    "fail": 1,
     "n/a": 7,
     "unknown": 0
   }

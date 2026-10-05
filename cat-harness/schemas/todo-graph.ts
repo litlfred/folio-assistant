@@ -51,15 +51,15 @@ import { z } from "zod";
 
 import {
   GraphNodeDirectorySchema,
-  defaultGraphKinds,
+  defaultGraphTypologies,
   type GraphNodeDirectory,
-  type GraphKindRegistry,
+  type GraphTypologyRegistry,
 } from "./cat-harness";
 
 /**
- * The graph kinds a todo graph's directories hold.
+ * The graph typologies a todo graph's directories hold.
  *
- * Registered in `BASE_GRAPH_KINDS`, not defined here — the vocabulary is
+ * Registered in `BASE_GRAPH_TYPOLOGIES`, not defined here — the vocabulary is
  * shared with `harness.json`. This is a convenience for callers wanting
  * the todo-specific subset, never a second source of truth.
  */
@@ -114,7 +114,7 @@ export type TodoGraph = z.infer<typeof TodoGraphSchema>;
  * `bean-graph.ts` for why the kind owns the name rather than this module or
  * the directory it sits in.
  */
-export const TODO_GRAPH_FILE = defaultGraphKinds.get("todos")?.declarationFile ?? "todos.json";
+export const TODO_GRAPH_FILE = defaultGraphTypologies.get("todos")?.declarationFile ?? "todos.json";
 
 /** Where the graph root sits, when a folio has not moved it. */
 export const DEFAULT_TODO_GRAPH_ROOT = "todos";
@@ -148,8 +148,8 @@ export const DEFAULT_TODO_GRAPH_ROOT = "todos";
 export const DEFAULT_TODO_GRAPH: TodoGraph = {
   name: "default",
   directories: [
-    { id: "items", path: "items", graphKinds: ["todo-items"] },
-    { id: "feedback", path: "feedback", graphKinds: ["todo-feedback"] },
+    { id: "items", path: "items", graphTypologies: ["todo-items"] },
+    { id: "feedback", path: "feedback", graphTypologies: ["todo-feedback"] },
   ],
 };
 
@@ -178,16 +178,16 @@ function pathEscapesRoot(p: string): boolean {
  */
 export function parseTodoGraph(
   raw: unknown,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): TodoGraph {
   const graph = TodoGraphSchema.parse(raw);
 
   const seen = new Set<string>();
   for (const node of graph.directories) {
-    for (const g of node.graphKinds) {
+    for (const g of node.graphTypologies) {
       if (!registry.has(g)) {
         throw new Error(
-          `todo graph: directory "${node.id}" declares unknown graph kind "${g}". ` +
+          `todo graph: directory "${node.id}" declares unknown graph typology "${g}". ` +
             `Known kinds: ${registry.names().join(", ")}.`,
         );
       }
@@ -220,5 +220,5 @@ export function parseTodoGraph(
  * and there is no shared mutable state for a second store to split.
  */
 export function nodeOfKind(graph: TodoGraph, kind: TodoNodeKind): TodoGraphNode | undefined {
-  return graph.directories.find((n) => n.graphKinds.includes(kind));
+  return graph.directories.find((n) => n.graphTypologies.includes(kind));
 }

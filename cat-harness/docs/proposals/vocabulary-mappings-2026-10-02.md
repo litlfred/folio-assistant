@@ -88,7 +88,7 @@ which predicate.
 | 18 | vocabulary term | gloss | `rdfs:comment` **and** `skos:definition` | fan-out | `:270`, `:277` |
 | 19 | vocabulary term | `<prefix>:<name>` | `skos:notation` | transform | `:282` |
 | 20 | vocabulary term | `replacedBy` | `owl:deprecated` + `dcterms:isReplacedBy` | conditional | `:295` |
-| 21 | graph kind | name, gloss, id | label + prefLabel, comment + definition, notation | fan-out ×2 | `:307-311` |
+| 21 | graph typology | name, gloss, id | label + prefLabel, comment + definition, notation | fan-out ×2 | `:307-311` |
 | 22 | layer scheme | `folio-assistant ${l} vocabulary` | `skos:prefLabel` **and** `dcterms:title` | fan-out (the `sl9u` rule again) | `:351-352` |
 | 23 | bootstrap vocabulary | `label` | `rdfs:label` **and** `skos:prefLabel` | fan-out | `:358` |
 
@@ -235,7 +235,7 @@ The row, written once so the options can be compared:
 interface VocabMapping {
   $schema: "folio-vocab-mapping/v1";
   id: string;                               // "role→skos"
-  source: { contentType: string };          // a declared graph kind or record type: "role", "lane", "code-list"
+  source: { contentType: string };          // a declared graph typology or record type: "role", "lane", "code-list"
   target: { vocabulary: string; nodeType?: string }; // "skos", "skos:Concept"
   status: "draft" | "active" | "retired";   // cpmo lesson 1
   rows: Array<{
@@ -270,7 +270,7 @@ inventory mechanically and reports D1–D5-style disagreements: the same
   directory. The row columns are chosen to line up with SSSOM's
   (`subject` / `predicate` / `object` / `mapping_justification`), so an SSSOM
   export is a later projection, not a rewrite.
-- **Against:** it is the largest build. It needs a new graph kind, a schema, a
+- **Against:** it is the largest build. It needs a new graph typology, a schema, a
   gate and the `skill:register` chain. Logic outside the closed set remains
   code, but now visibly so.
 
@@ -349,7 +349,7 @@ Owner, 2026-10-02, clarifying the two, verbatim:
 |---|---|
 | M, the table schema (zod), plus the relationship tables and the applier | `cat-harness/schemas/vocab-mapping.ts` |
 | ι `fromConceptMap` and π `toConceptMap`, R4 and R5 | `cat-harness/schemas/vocab-mapping-fhir.ts` |
-| the `vocab-mapping` graph kind and its declared directory | `schemas/graph-kind-registry.ts`, `cat-harness.json` → `cat-harness/vocab-mappings/` |
+| the `vocab-mapping` graph typology and its declared directory | `schemas/graph-typology-registry.ts`, `cat-harness.json` → `cat-harness/vocab-mappings/` |
 | the `vocab-map` Tool node (in-process, satisfies `vocabulary-authority`) | `cat-harness/tools/vocab-map.ts` |
 | the tests | `scripts/tests/vocab-mapping-fhir.test.ts`; the context-agreement test in `scripts/tests/glossary-export.test.ts` |
 

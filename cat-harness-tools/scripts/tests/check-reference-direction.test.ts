@@ -247,7 +247,7 @@ describe("analyse over a synthetic tree", () => {
   test("a directory DECLARED to hold a machine-written graph is not read", () => {
     const files = { "low/out/index.json": '{"x":"high"}\n', "low/notes.md": "about high\n" };
     // `qa` holds "state" — written by a process as it runs.
-    const r = tree(files, [{ id: "out", path: "out/", graphKinds: ["qa"] }]);
+    const r = tree(files, [{ id: "out", path: "out/", graphTypologies: ["qa"] }]);
     expect(verdicts(r)).toEqual(["low/notes.md wrong-direction"]);
     expect(analyse(r).skippedMachineWritten).toBe(1);
   });
@@ -255,7 +255,7 @@ describe("analyse over a synthetic tree", () => {
   test("a directory holding an AUTHORED graph is read — the exclusion is the declaration, not the shape", () => {
     const files = { "low/out/index.json": '{"x":"high"}\n' };
     // `docs` holds "content". Same file, same name, different declaration.
-    const r = tree(files, [{ id: "out", path: "out/", graphKinds: ["docs"] }]);
+    const r = tree(files, [{ id: "out", path: "out/", graphTypologies: ["docs"] }]);
     expect(verdicts(r)).toEqual(["low/out/index.json wrong-direction"]);
   });
 
@@ -281,14 +281,14 @@ describe("analyse over a synthetic tree", () => {
 });
 
 describe("a file whose own `$schema` is declared `generated` is not read", () => {
-  /** `folio-schema-graph/v1` is declared `generated: true` in the graph-kind registry. */
+  /** `folio-schema-graph/v1` is declared `generated: true` in the graph-typology registry. */
   const GENERATED = "folio-schema-graph/v1";
 
   test("it is skipped even though its DIRECTORY holds authored content", () => {
     // The 429-false-finding case: a generator's output sitting in a `docs`
     // graph, which is `content` because the directory holds documentation.
     const r = tree({ "low/index.json": JSON.stringify({ $schema: GENERATED, x: "high" }) }, [
-      { id: "d", path: "", graphKinds: ["docs"] },
+      { id: "d", path: "", graphTypologies: ["docs"] },
     ]);
     expect(analyse(r).classified).toEqual([]);
     expect(analyse(r).skippedGeneratorWritten).toBe(1);
@@ -298,7 +298,7 @@ describe("a file whose own `$schema` is declared `generated` is not read", () =>
     // It was skipped while the checker read `writtenBy`, which for this family
     // named its CONSUMER (library-graph.ts reads intake files; nothing writes them).
     const r = tree({ "low/index.json": JSON.stringify({ $schema: "folio-intake/v1", x: "high" }) }, [
-      { id: "d", path: "", graphKinds: ["docs"] },
+      { id: "d", path: "", graphTypologies: ["docs"] },
     ]);
     expect(analyse(r).skippedGeneratorWritten).toBe(0);
     expect(verdicts(r)).toEqual(["low/index.json wrong-direction"]);
@@ -379,8 +379,8 @@ describe("the repository-name collision, resolved from the occurrence and the de
         name: "repo",
         needs: ["low"],
         directories: [
-          { id: "uploads", path: "uploads/", graphKinds: ["docs"] },
-          { id: "root-tools", path: "tools/", graphKinds: ["code"] },
+          { id: "uploads", path: "uploads/", graphTypologies: ["docs"] },
+          { id: "root-tools", path: "tools/", graphTypologies: ["code"] },
         ],
       }),
     );
@@ -469,7 +469,7 @@ describe("a declared path resolves against the scope it declares, not against th
     // tree, and they are skipped because high's declaration says a process
     // writes them.
     const r = tree({ "low/out/x.md": "about high\n", "low/keep.md": "about high\n" }, [], [
-      { id: "out", path: "low/out/", scope: "repository", graphKinds: ["qa"] },
+      { id: "out", path: "low/out/", scope: "repository", graphTypologies: ["qa"] },
     ]);
     expect(verdicts(r)).toEqual(["low/keep.md wrong-direction"]);
     expect(analyse(r).skippedMachineWritten).toBe(1);
@@ -479,7 +479,7 @@ describe("a declared path resolves against the scope it declares, not against th
     // `high/low/out/` does not exist, so the directory is not found and
     // `low/out/x.md` is read -- the exact shape of the bug.
     const r = tree({ "low/out/x.md": "about high\n", "low/keep.md": "about high\n" }, [], [
-      { id: "out", path: "low/out/", graphKinds: ["qa"] },
+      { id: "out", path: "low/out/", graphTypologies: ["qa"] },
     ]);
     expect(verdicts(r).sort()).toEqual(["low/keep.md wrong-direction", "low/out/x.md wrong-direction"]);
     expect(analyse(r).skippedMachineWritten).toBe(0);

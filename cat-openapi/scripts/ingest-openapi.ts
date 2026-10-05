@@ -63,10 +63,10 @@ export function openapiDir(instanceRoot: string, config: OpenApiConfig): string 
   const found = findDeclarationFile(instanceRoot);
   if (found === undefined) throw new Error(`no instance declaration in ${resolve(instanceRoot)}`);
   const decl = join(instanceRoot, found);
-  const d = JSON.parse(readFileSync(decl, "utf8")) as { directories?: Array<{ id: string; path: string; graphKinds?: string[] }> };
+  const d = JSON.parse(readFileSync(decl, "utf8")) as { directories?: Array<{ id: string; path: string; graphTypologies?: string[] }> };
   const entry = d.directories?.find((x) => x.id === config.directory);
   if (!entry) throw new Error(`${decl}: no directory with id "${config.directory}" (named by ${CONFIG_FILE})`);
-  if (!entry.graphKinds?.includes("openapi")) throw new Error(`${decl}: directory "${config.directory}" is not of graph kind "openapi"`);
+  if (!entry.graphTypologies?.includes("openapi")) throw new Error(`${decl}: directory "${config.directory}" is not of graph typology "openapi"`);
   return join(instanceRoot, entry.path);
 }
 

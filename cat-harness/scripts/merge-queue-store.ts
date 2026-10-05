@@ -58,7 +58,7 @@
  *
  * ## It never spells the directory's path
  *
- * The id is resolved from the declared GRAPH KIND and the path from
+ * The id is resolved from the declared GRAPH TYPOLOGY and the path from
  * `graphReadPath`, so this module knows neither `beans/queue` nor the branch
  * name (bean `gz47`, `check:declared-paths`). Relocating the graph — or
  * mounting it with `--into` — moves this reader with it.
@@ -67,12 +67,12 @@ import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 import { directoryEntriesForGraph, instanceRootsIn } from "../schemas/cat-harness.js";
-import "../schemas/folio-graph-kind.js";
+import "../schemas/folio-graph-typology.js";
 import { MergeQueueEntrySchema, type MergeQueueEntry } from "../schemas/merge-queue.ts";
 import { RESERVED, pushMount, readMarker, type BranchStoreOptions, type PushResult } from "./branch-store.ts";
 import { graphReadPath } from "./graph-read.ts";
 
-/** The graph kind whose directory holds the queue. The declaration says where. */
+/** The graph typology whose directory holds the queue. The declaration says where. */
 export const QUEUE_KIND = "merge-queue";
 
 /** One entry, as it sits on the branch. */

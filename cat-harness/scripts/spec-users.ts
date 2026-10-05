@@ -13,7 +13,7 @@
  * | `tag` | a `@conformsTo <spec-id>` line in a TypeScript/JavaScript doc comment | `schemas/jsonld.ts` |
  * | `front-matter` | a `conformsTo:` list in a markdown file's front matter | a skill |
  * | `xmlns` | an XML namespace binding to one of the spec's namespaces — the file's own declaration, in its own syntax | every `.bpmn` |
- * | `kind` | a graph kind (or one `$schema` family of it) whose validator or shape module declares the spec | `folio-dublin-core/v1` → `dublin-core.ts` |
+ * | `kind` | a graph typology (or one `$schema` family of it) whose validator or shape module declares the spec | `folio-dublin-core/v1` → `dublin-core.ts` |
  *
  * The last is not a second authored list: a `*.dc.json` record declares its
  * `$schema`, the registry says which module types that family, and that module
@@ -33,7 +33,7 @@ export type SpecUseForm = "tag" | "front-matter" | "xmlns" | "kind";
 /** One user of one specification. */
 export interface SpecUse {
   spec: string;
-  /** A repository-relative file, or for `kind`, the graph kind / `$schema` family. */
+  /** A repository-relative file, or for `kind`, the graph typology / `$schema` family. */
   user: string;
   form: SpecUseForm;
   /** For `kind`: the module whose declaration it inherits. */
@@ -52,7 +52,7 @@ export interface SpecRef {
   namespaces: readonly string[];
 }
 
-/** The part of a graph kind this needs: its validator, and per-family refs. */
+/** The part of a graph typology this needs: its validator, and per-family refs. */
 export interface KindRef {
   validator?: string;
   nodeSchemas?: Readonly<Record<string, { validator?: string; shape?: string }>>;
@@ -105,7 +105,7 @@ export function refModule(ref: string, defaultInstance: string): string {
  * @param repo the repository root
  * @param files repository-relative files to read (the tracked set)
  * @param specs the external-schema records
- * @param kinds the graph-kind registry
+ * @param kinds the graph-typology registry
  * @param kindsInstance the instance directory the registry's unprefixed refs are relative to
  */
 export function specUsers(

@@ -87,8 +87,8 @@ describe("subgraph containment is derived from declared paths", () => {
   // because this instance stopped nesting would retire a guard for a defect
   // that is still reachable.
   const NESTED = [
-    { id: "outer", path: "outer/", absPath: `${ROOT}/outer`, graphKinds: ["cat-harness"] },
-    { id: "inner", path: "outer/inner/", absPath: `${ROOT}/outer/inner`, graphKinds: ["cat-harness"] },
+    { id: "outer", path: "outer/", absPath: `${ROOT}/outer`, graphTypologies: ["cat-harness"] },
+    { id: "inner", path: "outer/inner/", absPath: `${ROOT}/outer/inner`, graphTypologies: ["cat-harness"] },
   ];
 
   test("a node belongs to its DEEPEST subgraph, not to the outer one", () => {
@@ -160,7 +160,7 @@ describe("the entanglement report", () => {
     // a foreign directory labelled `<member>/<id>`, as the report labels it.
     const dirs = checkoutDirectories(ROOT, { stackedOn: ROOT });
     const derivedIds = new Set(
-      dirs.filter((d) => d.graphKinds.some((g) => isDerivedGraph(g))).flatMap((d) => [d.id, `${d.member}/${d.id}`]),
+      dirs.filter((d) => d.graphTypologies.some((g) => isDerivedGraph(g))).flatMap((d) => [d.id, `${d.member}/${d.id}`]),
     );
     expect(derivedIds.size, "no derived directory is declared, so this proves nothing").toBeGreaterThan(0);
 

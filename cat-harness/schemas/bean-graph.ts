@@ -53,14 +53,14 @@
  * ## It defers to `cat-harness.ts`, and does not restate it
  *
  * A bean-graph entry IS a {@link ContentDirectory}: an id, a path, and the
- * graph kinds found there. Same schema, same open registry, same JSON-LD
+ * graph typologies found there. Same schema, same open registry, same JSON-LD
  * projection.
  *
  * This file briefly had its own parallel vocabulary — `nodes` with
  * `kinds: BeanNodeKind[]`, a closed Zod enum — which said exactly what
- * `directories` with `graphs: GraphKind[]` already said, in different words.
+ * `directories` with `graphs: GraphTypology[]` already said, in different words.
  * Two spellings of one concept is the drift this repository keeps paying for,
- * so the kinds moved into `BASE_GRAPH_KINDS` and the shape is now imported
+ * so the kinds moved into `BASE_GRAPH_TYPOLOGIES` and the shape is now imported
  * rather than redeclared.
  *
  * What remains here is only what is SPECIFIC to the bean graph and not true
@@ -76,9 +76,9 @@ import { z } from "zod";
 
 import {
   GraphNodeDirectorySchema,
-  defaultGraphKinds,
+  defaultGraphTypologies,
   type GraphNodeDirectory,
-  type GraphKindRegistry,
+  type GraphTypologyRegistry,
 } from "./cat-harness";
 
 /**
@@ -96,9 +96,9 @@ import {
  * (Option A: two stores, one link).
  */
 /**
- * The graph kinds a bean graph's directories hold.
+ * The graph typologies a bean graph's directories hold.
  *
- * Both are registered in {@link BASE_GRAPH_KINDS}, not defined here — the
+ * Both are registered in {@link BASE_GRAPH_TYPOLOGIES}, not defined here — the
  * vocabulary is shared with `harness.json`, so a consumer that knows
  * one declaration knows the other. This constant is a convenience for callers
  * that want the bean-specific subset, never a second source of truth.
@@ -148,7 +148,7 @@ export type BeanGraph = z.infer<typeof BeanGraphSchema>;
  * filename, and falling back to the literal keeps the reader oriented rather
  * than crashing in a constant initialiser.
  */
-export const BEAN_GRAPH_FILE = defaultGraphKinds.get("beans")?.declarationFile ?? "beans.json";
+export const BEAN_GRAPH_FILE = defaultGraphTypologies.get("beans")?.declarationFile ?? "beans.json";
 
 /** Where the graph root sits, when a repo has not moved it. */
 export const DEFAULT_BEAN_GRAPH_ROOT = "beans";
@@ -162,8 +162,8 @@ export const DEFAULT_BEAN_GRAPH_ROOT = "beans";
 export const DEFAULT_BEAN_GRAPH: BeanGraph = {
   name: "default",
   directories: [
-    { id: "defs", path: "defs", graphKinds: ["bean-defs"] },
-    { id: "workflows", path: "workflows", graphKinds: ["workflow-state"] },
+    { id: "defs", path: "defs", graphTypologies: ["bean-defs"] },
+    { id: "workflows", path: "workflows", graphTypologies: ["workflow-state"] },
   ],
 };
 
@@ -193,7 +193,7 @@ function pathEscapesRoot(p: string): boolean {
  */
 export function parseBeanGraph(
   raw: unknown,
-  registry: GraphKindRegistry = defaultGraphKinds,
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): BeanGraph {
   const graph = BeanGraphSchema.parse(raw);
 
@@ -206,10 +206,10 @@ export function parseBeanGraph(
     // shape but not this check, and a test caught the gap — an unknown kind
     // was being accepted and ignored, which is the failure mode this schema's
     // own docstring forbids.
-    for (const g of node.graphKinds) {
+    for (const g of node.graphTypologies) {
       if (!registry.has(g)) {
         throw new Error(
-          `bean graph: directory "${node.id}" declares unknown graph kind "${g}". ` +
+          `bean graph: directory "${node.id}" declares unknown graph typology "${g}". ` +
             `Known kinds: ${registry.names().join(", ")}.`,
         );
       }
@@ -234,7 +234,7 @@ export function parseBeanGraph(
   // Not a uniqueness rule in general — a graph may one day hold several
   // definition stores — but exactly one workflow-state node is what every
   // consumer today assumes, and an unnoticed second would split the state.
-  const stateNodes = graph.directories.filter((n) => n.graphKinds.includes("workflow-state"));
+  const stateNodes = graph.directories.filter((n) => n.graphTypologies.includes("workflow-state"));
   if (stateNodes.length > 1) {
     throw new Error(
       `bean graph: ${stateNodes.length} workflow-state nodes ` +
@@ -255,7 +255,7 @@ export function parseBeanGraph(
  * problem rather than a layout choice.
  */
 export function nodeOfKind(graph: BeanGraph, kind: BeanNodeKind): BeanGraphNode | undefined {
-  return graph.directories.find((n) => n.graphKinds.includes(kind));
+  return graph.directories.find((n) => n.graphTypologies.includes(kind));
 }
 
 
