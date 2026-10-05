@@ -619,12 +619,13 @@ test.describe("the folio viewer page RUNS — not just 'the bytes are current'",
       if (url.pathname.endsWith("assets/js/docs-ui.js")) {
         return route.fulfill({ status: 200, contentType: "text/javascript", body: JS });
       }
-      // The row's own files, which the railed page links (bean `lhvt`).
-      if (url.pathname.endsWith("assets/js/navbar-row.js")) {
-        return route.fulfill({ status: 200, contentType: "text/javascript", body: readFileSync(join(SITE_ABS, "assets/js/navbar-row.js"), "utf8") });
-      }
-      if (url.pathname.endsWith("assets/css/navbar-row.css")) {
-        return route.fulfill({ status: 200, contentType: "text/css", body: readFileSync(join(SITE_ABS, "assets/css/navbar-row.css"), "utf8") });
+      // The row's and the rail's own files, which the railed page links (beans `lhvt`, `lnoy`).
+      {
+        const at = url.pathname.indexOf("/assets/");
+        const file = at < 0 ? "" : join(SITE_ABS, url.pathname.slice(at + 1));
+        if (file && /\/assets\/(navbar\/|js\/navbar|css\/navbar)/.test(url.pathname) && existsSync(file)) {
+          return route.fulfill({ status: 200, contentType: file.endsWith(".css") ? "text/css" : "text/javascript", body: readFileSync(file, "utf8") });
+        }
       }
       if (url.pathname.endsWith("folio/index.json")) {
         if (body === "__404__") return route.fulfill({ status: 404, body: "nope" });

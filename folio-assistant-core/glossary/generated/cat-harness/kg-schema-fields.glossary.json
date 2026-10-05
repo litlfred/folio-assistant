@@ -2828,6 +2828,20 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.graphnodedirectoryshape.source",
+      "prefLabel": "GraphNodeDirectoryShape.source",
+      "definition": "Where this entry's content comes from, when it is not the checkout.",
+      "source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.source",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.graphnodedirectoryshape.subgraph",
+      "prefLabel": "GraphNodeDirectoryShape.subgraph",
+      "definition": "This entry is an instance SUBGRAPH, not a part of its parent's graph.",
+      "source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.subgraph",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.instancelocation.path",
       "prefLabel": "InstanceLocation.path",
       "definition": "The instance's directory within it, repository-relative, no leading `./`.",
@@ -2937,6 +2951,27 @@
       "prefLabel": "MaterialisedDirectory.scope",
       "definition": "Which root `path` was resolved against; absent means the instance's.",
       "source": "cat-harness/schemas/cat-harness.ts#MaterialisedDirectory.scope",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.nesteddirectory.id",
+      "prefLabel": "NestedDirectory.id",
+      "definition": "`<parent id>/<own id>` — unique across the instance, and says who declares it.",
+      "source": "cat-harness/schemas/cat-harness.ts#NestedDirectory.id",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.nesteddirectory.ownid",
+      "prefLabel": "NestedDirectory.ownId",
+      "definition": "The entry's OWN id, as `resolveDirectories` and a mount marker spell it.",
+      "source": "cat-harness/schemas/cat-harness.ts#NestedDirectory.ownId",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.nesteddirectory.subgraph",
+      "prefLabel": "NestedDirectory.subgraph",
+      "definition": "`true` when the entry declares itself an instance subgraph (bean `cmsl`).",
+      "source": "cat-harness/schemas/cat-harness.ts#NestedDirectory.subgraph",
       "status": "candidate"
     },
     {

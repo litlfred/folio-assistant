@@ -137,12 +137,12 @@ describe("the shell template", () => {
     expect(shell).toContain('<link rel="stylesheet" href="../../../assets/library/viewer.css">');
     expect(shell).not.toContain("<style>");
   });
-  test("is a thin page (#1941): rail declined, both sources named, the mount after the script", () => {
+  test("is a thin page (#1941): rail LINKED (bean lnoy), both sources named, the mount after the script", () => {
     const mounted = entryPageHtml("../../../assets/library/index.json", "smart-base", "<script data-fa-folio-mount></script>", "../../", {
       id: "smart-trust",
       jsonld: "../../../assets/library/jsonld/smart-base/smart-trust/manifest.jsonld",
     });
-    expect(mounted).toContain('<meta name="folio-navbar" content="none">');
+    expect(mounted).toContain('<meta name="folio-navbar" content="linked">');
     expect(mounted).toContain('<a href="../../../assets/library/index.json">the library projection</a> and this entry from');
     expect(mounted).toMatch(/<script src="[^"]*viewer\.js"><\/script>\n<script data-fa-folio-mount><\/script>\n<\/body>/);
   });

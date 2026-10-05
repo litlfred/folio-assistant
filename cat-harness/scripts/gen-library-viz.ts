@@ -1409,11 +1409,9 @@ if (import.meta.main) {
         emitBytes(dest, readFileSync(src));
         jsonld = relative(shellDir, dest).split(sep).join("/");
       }
-      // `emit`, not `emitPage`: the viewer rail is ~14 KB of style and markup
-      // INLINED by `withViewerNav`, which would make every shell as heavy as
-      // the page it stands for. The shell declines it in its own markup
-      // (`folio-navbar: none`, which the viewer-nav audit reads as a decision)
-      // until the rail is itself a shared asset.
+      // `emit`, not `emitPage`: the shell declares `folio-navbar: linked`
+      // (`thinPageHtml`), and the build's rail pass gives it the rail with its
+      // style LINKED — the shared asset the shell waited for (bean `lnoy`).
       emit(
         join(shellDir, "index.html"),
         entryPageHtml(`../${sub.dataHref}`, subject, folioMount, "../../", { id: e.id, ...(jsonld ? { jsonld } : {}) }),
