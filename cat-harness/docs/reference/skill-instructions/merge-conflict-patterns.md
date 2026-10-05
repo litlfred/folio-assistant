@@ -125,7 +125,9 @@ authored change of yours to reconcile.
      must list only files `main` itself deleted. A gitignored-but-tracked file
      is dropped by a merge silently, local checks stay green because the
      writer recreated it on disk, and CI's fresh checkout fails (bean `8j9e`).
-     Re-stage each one with `git add -f`;
+     `merge:main` now refuses such a drop itself (§"When one side deleted
+     the file"); after a hand merge, restore each one main still tracks with
+     `git checkout HEAD^2 -- <path>`;
    - **submodule pins equal to `main`'s** —
      `git ls-tree HEAD bootstrap bootstrap-tools` against
      `git ls-tree origin/main bootstrap bootstrap-tools`. Not
