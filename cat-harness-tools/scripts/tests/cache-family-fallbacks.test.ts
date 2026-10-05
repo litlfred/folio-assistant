@@ -13,7 +13,7 @@
  * Each script names the names as whole tokens: `lake-cache` is a substring of
  * both newer names, so a bare `toContain` would pass a file that never names it.
  *
- * @module scripts/tests/cache-family-fallbacks
+ * @module cat-harness-tools/scripts/tests/cache-family-fallbacks
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
