@@ -3,12 +3,13 @@
 title: 'WIREFRAME FINDINGS: usability and accessibility defects the as-is wireframes observed (#1023)'
 status: todo
 type: epic
+priority: normal
 tags:
     - wireframe-findings
     - ui
 created_at: 2026-09-23T10:36:13Z
-parent: folio-assistant-p5wm
-updated_at: 2026-09-23T10:36:13Z
+updated_at: 2026-10-05T04:57:14Z
+parent: folio-assistant-rwmf
 ---
 
 The as-is wireframes merged in #1032 record, for every declared harness visualiser, what the page actually does at 1280×800 (web) and 390×844 (mobile). The `## Findings` section of each `cat-harness/docs/wireframes/<kind>/intent.md` holds only what was observed on the rendered page or read off its generator; nothing is inferred.
