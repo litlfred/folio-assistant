@@ -487,6 +487,14 @@ describe("composeIgSite: a staged IG moved into a host Jekyll source", () => {
     expect(existsSync(join(host, "x", "_layouts"))).toBe(false);
     // A second compose of the same IG is two answers for one URL.
     expect(composeIgSite(staged, host, "x").collisions.length).toBeGreaterThan(0);
+    // `atRoot` (#2235 F1): the IG IS the site — the same pages at the root.
+    const root = join(d, "root");
+    mkdirSync(root, { recursive: true });
+    expect(composeIgSite(staged, root, "x", { atRoot: true }).collisions).toEqual([]);
+    expect(existsSync(join(root, "index.md"))).toBe(true);
+    expect(existsSync(join(root, "concepts.md"))).toBe(true);
+    expect(existsSync(join(root, "x"))).toBe(false);
+    expect(existsSync(join(root, "_includes", "ig", "x", "_top.html"))).toBe(true);
     rmSync(d, { recursive: true, force: true });
   });
 });
