@@ -1,7 +1,9 @@
 /* folio-site: the one stylesheet every shell page shares (build-folio-site.ts). */
 :root { color-scheme: light dark; --fg: #1b1b1b; --bg: #fdfdfb; --muted: #5b5b5b; --link: #0b5cad; --rule: #e2e2dc; }
 @media (prefers-color-scheme: dark) { :root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; --rule: #333; } }
-body { margin: 0; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); display: grid; grid-template-columns: minmax(14rem, 18rem) 1fr; }
+body { margin: 0; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
+/* The grid is on a wrapper, not on body: the harness rail injects its own elements into body. */
+.folio-page { display: grid; grid-template-columns: minmax(14rem, 18rem) 1fr; }
 #toc { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 1.5rem 1rem; border-right: 1px solid var(--rule); font-size: .9rem; box-sizing: border-box; }
 #toc ul { list-style: none; margin: 0; padding-left: .9rem; } #toc > ul { padding-left: 0; }
 #toc li { margin: .15rem 0; } #toc a { text-decoration: none; } #toc a[aria-current] { font-weight: 600; }
@@ -13,7 +15,35 @@ table { border-collapse: collapse; } th, td { border: 1px solid var(--muted); pa
 .katex-display { overflow-x: auto; overflow-y: hidden; }
 dfn.defterm { font-style: normal; font-weight: 600; } .cite { color: var(--muted); }
 :target { scroll-margin-top: 1rem; }
-@media (max-width: 52rem) { body { display: block; } #toc { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--rule); } }
+@media (max-width: 52rem) { .folio-page { display: block; } #toc { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--rule); } }
 .tex-svg { margin: 1rem 0; text-align: center; } .tex-svg img { max-width: 100%; height: auto; }
 @media (prefers-color-scheme: dark) { .tex-svg img { filter: invert(1) hue-rotate(180deg); } }
 .tex-ph { border: 1px dashed var(--rule); padding: .5rem .75rem; margin: 1rem 0; } .tex-ph pre { overflow-x: auto; font-size: .85rem; }
+
+/* ── A math paper, not a web page (owner, 2026-10-05): the text face IS the math
+   face (KaTeX_Main is Computer Modern), at the same size — KaTeX's default
+   1.21em enlargement is what made prose and formulas jar — and the column
+   follows the screen instead of a fixed narrow measure. ── */
+body { font-family: KaTeX_Main, "Latin Modern Roman", "CMU Serif", "Times New Roman", serif; font-size: 1.15rem; line-height: 1.55; }
+.katex { font-size: 1em; }
+main { max-width: none; padding: 1.5rem clamp(1rem, 4vw, 4.5rem) 4rem; }
+main h1 { text-align: center; font-weight: 700; font-size: 1.75rem; margin: 1rem 0 1.5rem; }
+h2, h3, h4 { font-weight: 700; } .unit h2 { font-size: 1.4rem; } .unit h3 { font-size: 1.2rem; } .unit h4 { font-size: 1.05rem; }
+.unit h2 a, .unit h3 a, .unit h4 a, .crumbs a { color: inherit; text-decoration: none; }
+.unit { border-top: 0; margin-top: 2rem; }
+.thm-head b { font-weight: 700; }
+.kind-theorem p, .kind-lemma p, .kind-proposition p, .kind-corollary p, .kind-conjecture p { font-style: italic; }
+.kind-theorem .thm-head, .kind-lemma .thm-head, .kind-proposition .thm-head, .kind-corollary .thm-head, .kind-conjecture .thm-head { font-style: normal; }
+.kind-proof.qed > :last-child::after { content: "\220E"; float: right; }
+.block { margin: 1rem 0; } .block p { text-align: justify; hyphens: auto; }
+#toc { font-family: KaTeX_Main, serif; font-size: .95rem; }
+.cite { color: inherit; }
+
+/* In the harness: its navbar holds the contents, so the page is one column. */
+body.in-harness .folio-page { display: block; }
+.folio-contents ul { list-style: none; margin: 0; padding-left: .8rem; } .folio-contents a { display: block; padding: 2px 0; }
+/* Per-block actions: quiet until the block is hovered or focused. */
+.block { position: relative; }
+.block-links { float: right; margin-left: 1rem; font-family: system-ui, sans-serif; font-size: .75rem; opacity: .35; transition: opacity .15s; }
+.block:hover .block-links, .block-links:focus-within { opacity: 1; }
+.block-links a { margin-left: .6rem; text-decoration: none; }

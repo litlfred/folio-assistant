@@ -48,7 +48,8 @@ import { dirname, join, relative, resolve } from "node:path";
 
 import { readHarnessConfig } from "../../cat-harness/schemas/harness-config.js";
 import type { Block, Chapter, Paper, Section, SectionRef } from "../../cat-harness/schemas/types.js";
-import { renderBlockMarkdown } from "../../cat-harness/content/pipeline/render-markdown.js";
+import { kindHeading } from "../../cat-harness/schemas/translation.js";
+import { resolveLiquidValues } from "../../cat-harness/content/pipeline/liquid-values.js";
 import { documentManifests, katexMacros, renderDocumentHtml } from "./build-document-site.js";
 import { addToReport, emptyReport, imageExistsUnder, qaBlockHtml, type SiteQaReport } from "./folio-site-qa.js";
 
@@ -56,6 +57,8 @@ export const SITE_OUTLINE_SCHEMA = "folio-site-outline/v1" as const;
 
 export interface SiteSection {
   slug: string;
+  /** `2.3`, `2.3.1`: the section's number, as a paper prints it. */
+  number: string;
   title: string;
   label?: string;
   /** Block payload paths, relative to the paper directory. */
@@ -64,6 +67,7 @@ export interface SiteSection {
 }
 export interface SiteChapter {
   slug: string;
+  number: string;
   title: string;
   label?: string;
   sections: SiteSection[];
@@ -77,9 +81,16 @@ export interface SiteOutline {
   chapters: SiteChapter[];
   /** Block label -> its section's path below the paper (`<chapter>/<section>/…`). */
   labels: Record<string, string>;
+  /** Label -> its printed number (`Proposition 2.3.1` prints `2.3.1`), for `\ref` link text. */
+  numbers: Record<string, string>;
+  /** Where the sources live, for each block's edit / feedback / Lean links. Absent when undeclared. */
+  source?: { repository: string; ref: string };
 }
 
 const isRef = (s: Section | SectionRef): s is SectionRef => !("blocks" in s);
+
+/** The kinds a paper numbers (amsthm's theorem-like environments). Proofs, prose, equations and figures are not. */
+const NUMBERED_KINDS = new Set(["definition", "theorem", "lemma", "proposition", "corollary", "conjecture", "example", "remark", "algorithm"]);
 
 /** `sec:commutative-formal-group` -> `commutative-formal-group`; a title is slugified. */
 export function sectionSlug(sec: { label?: string; title: string }, taken: Set<string>): string {
@@ -109,12 +120,13 @@ export function shellHtml(title: string, depth: number, scope: { paper?: string;
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <link rel="stylesheet" href="${root}assets/folio-site.css">
 <script defer src="${root}assets/folio-site.js"></script>
 </head>
 <body data-root="${root}" data-paper="${esc(scope.paper ?? "")}" data-path="${esc(scope.path ?? "")}">
-<nav id="toc" aria-label="Contents"></nav>
-<main><p class="crumbs" id="crumbs"></p><h1>${esc(title)}</h1><div id="content"><p class="muted">Loading…</p></div></main>
+<div class="folio-page"><nav id="toc" aria-label="Contents"></nav>
+<main><p class="crumbs" id="crumbs"></p><h1>${esc(title)}</h1><div id="content"><p class="muted">Loading…</p></div></main></div>
 </body>
 </html>
 `;
@@ -208,6 +220,27 @@ export function preambleMacros(paperDir: string): Record<string, string> {
   return out;
 }
 
+/**
+ * The instance's declared repository (`<name>.json` → `repository`,
+ * `owner/repo`), for the edit and feedback links. The declaration is the
+ * file whose stem equals its own `name`, the rule `findDeclarationFile`
+ * applies. Absent when there is none: then the links are not drawn, rather
+ * than drawn at a guessed URL.
+ */
+export function declaredRepository(repoRoot: string): { repository: string; ref: string } | undefined {
+  for (const f of readdirSync(repoRoot).filter((n) => n.endsWith(".json") && !n.endsWith(".config.json"))) {
+    try {
+      const d = JSON.parse(readFileSync(join(repoRoot, f), "utf-8")) as { name?: string; repository?: string };
+      if (d.name && `${d.name}.json` === f && typeof d.repository === "string" && /^[\w.-]+\/[\w.-]+$/.test(d.repository)) {
+        return { repository: d.repository, ref: "main" };
+      }
+    } catch {
+      /* not a declaration */
+    }
+  }
+  return undefined;
+}
+
 export interface FolioSiteResult {
   papers: { slug: string; blocks: number; pages: number; qa: SiteQaReport }[];
   errors: string[];
@@ -216,7 +249,7 @@ export interface FolioSiteResult {
 export async function buildFolioSite(
   repoRoot: string,
   outDir: string,
-  opts: { route?: string; math?: boolean } = {},
+  opts: { route?: string; math?: boolean; repository?: string; ref?: string } = {},
 ): Promise<FolioSiteResult> {
   // declared-path-literal: this is the published URL ROUTE the owner named
   // (2026-10-05: "<base_url>/cat-harness/folio/<paper>/<chapter>/<section>"),
@@ -236,6 +269,7 @@ export async function buildFolioSite(
   cpSync(join(import.meta.dir, "folio-site-assets"), join(base, "assets"), { recursive: true });
 
   const papers: { slug: string; title: string }[] = [];
+  const sourceRepo = opts.repository ? { repository: opts.repository, ref: opts.ref ?? "main" } : declaredRepository(repoRoot);
   for (const d of docs) {
     const paper = (await import(d.path)).default as Paper;
     const docDir = dirname(d.path);
@@ -248,6 +282,8 @@ export async function buildFolioSite(
       macros: math ? { ...preambleMacros(docDir), ...katexMacros(paper.macros) } : {},
       chapters: [],
       labels: {},
+      numbers: {},
+      ...(sourceRepo ? { source: sourceRepo } : {}),
     };
     let blockCount = 0;
     const qa = emptyReport();
@@ -260,6 +296,7 @@ export async function buildFolioSite(
       pages++;
     };
 
+    let chIndex = 0;
     for (const chRef of paper.chapters) {
       const chDir = join(docDir, chRef.dir);
       const chPath = join(chDir, `${chRef.dir}.ts`);
@@ -268,17 +305,36 @@ export async function buildFolioSite(
         continue;
       }
       const chapter = (await import(chPath)).default as Chapter;
-      const ch: SiteChapter = { slug: chRef.dir, title: chapter.title, ...(chapter.label ? { label: chapter.label } : {}), sections: [] };
-      if (chapter.label) outline.labels[chapter.label] = chRef.dir;
+      const chNum = String(++chIndex);
+      const ch: SiteChapter = { slug: chRef.dir, number: chNum, title: chapter.title, ...(chapter.label ? { label: chapter.label } : {}), sections: [] };
+      if (chapter.label) {
+        outline.labels[chapter.label] = chRef.dir;
+        outline.numbers[chapter.label] = chNum;
+      }
 
-      const walk = async (secs: Array<Section | SectionRef>, parentPath: string, taken: Set<string>): Promise<SiteSection[]> => {
+      // amsthm numbering: theorem-like blocks share ONE counter per top-level
+      // section, so a statement prints as `Proposition <chapter>.<section>.<n>`;
+      // a subsection's blocks continue its section's counter.
+      const walk = async (
+        secs: Array<Section | SectionRef>,
+        parentPath: string,
+        taken: Set<string>,
+        parentNum: string,
+        counter: { section: string; n: number } | null,
+      ): Promise<SiteSection[]> => {
         const out: SiteSection[] = [];
+        let secIndex = 0;
         for (const sec of secs) {
           if (isRef(sec)) continue;
           const slug = sectionSlug(sec, taken);
           const path = `${parentPath}/${slug}`;
-          const s: SiteSection = { slug, title: sec.title, ...(sec.label ? { label: sec.label } : {}), blocks: [], sections: [] };
-          if (sec.label) outline.labels[sec.label] = path;
+          const number = `${parentNum}.${++secIndex}`;
+          const count = counter ?? { section: number, n: 0 };
+          const s: SiteSection = { slug, number, title: sec.title, ...(sec.label ? { label: sec.label } : {}), blocks: [], sections: [] };
+          if (sec.label) {
+            outline.labels[sec.label] = path;
+            outline.numbers[sec.label] = number;
+          }
           for (const root of sec.blocks) {
             const ts = join(chDir, `${root}.ts`);
             if (!existsSync(ts)) {
@@ -301,12 +357,26 @@ export async function buildFolioSite(
                 return rel;
               },
             });
-            const html = await renderDocumentHtml(renderBlockMarkdown({ block, mdContent: body }), { math });
+            // The heading (kind, number, title) is the loader's to typeset; the payload carries it as data.
+            const label = "label" in block && typeof block.label === "string" ? block.label : undefined;
+            const anchor = label ? `<a id="${esc(label)}"></a>` : "";
+            const html = anchor + (await renderDocumentHtml(resolveLiquidValues(body).trim(), { math })); // witnessed values, as render-markdown.ts resolves them
             const jsonld = join(chDir, `${root}.jsonld`);
             const node: Record<string, unknown> = existsSync(jsonld)
               ? JSON.parse(readFileSync(jsonld, "utf-8"))
               : { kind: block.kind, ...("label" in block && block.label ? { label: block.label } : {}), ...("title" in block && block.title ? { title: block.title } : {}) };
             node.html = html;
+            node.kind = block.kind;
+            // Repo-relative paths, so the loader can link the edit page and the Lean sibling.
+            node.source = relative(repoRoot, mdPath);
+            const leanSibling = join(chDir, `${root}.lean`);
+            if (existsSync(leanSibling)) node.leanSource = relative(repoRoot, leanSibling);
+            node.heading = block.kind === "prose" ? "" : kindHeading(block.kind, "en");
+            if ("title" in block && typeof block.title === "string") node.title = block.title;
+            if (NUMBERED_KINDS.has(block.kind)) {
+              node.number = `${count.section}.${++count.n}`;
+              if (label) outline.numbers[label] = node.number as string;
+            }
             const q = await qaBlockHtml(`${chRef.dir}/${root}`, html, { math, macros: outline.macros, imageExists: imageExistsUnder(paperOut) });
             addToReport(qa, q.findings, q.katexUnknown);
             const rel = `blocks/${chRef.dir}/${root}.json`;
@@ -316,13 +386,13 @@ export async function buildFolioSite(
             blockCount++;
             if ("label" in block && typeof block.label === "string") outline.labels[block.label] = path;
           }
-          if (sec.subsections) s.sections = await walk(sec.subsections, path, new Set());
+          if (sec.subsections) s.sections = await walk(sec.subsections, path, new Set(), number, count);
           writeShell(path, sec.title);
           out.push(s);
         }
         return out;
       };
-      ch.sections = await walk(chapter.sections, chRef.dir, new Set());
+      ch.sections = await walk(chapter.sections, chRef.dir, new Set(), chNum, null);
       writeShell(chRef.dir, chapter.title);
       outline.chapters.push(ch);
     }
@@ -347,14 +417,14 @@ if (import.meta.main) {
   };
   if (args.includes("--help")) {
     console.log(
-      "usage: bun run folio-assistant-core/scripts/build-folio-site.ts [--repo <folio root>] [--out _site] [--route cat-harness/folio] [--math | --no-math] [--strict]",
+      "usage: bun run folio-assistant-core/scripts/build-folio-site.ts [--repo <folio root>] [--out _site] [--route cat-harness/folio] [--math | --no-math] [--strict] [--source-repo owner/repo] [--source-ref main]",
     );
     process.exit(0);
   }
   const repo = resolve(opt("repo") ?? process.cwd());
   const out = resolve(repo, opt("out") ?? "_site");
   const math = args.includes("--math") ? true : args.includes("--no-math") ? false : undefined;
-  const r = await buildFolioSite(repo, out, { route: opt("route"), math });
+  const r = await buildFolioSite(repo, out, { route: opt("route"), math, repository: opt("source-repo"), ref: opt("source-ref") });
   let qaTotal = 0;
   for (const p of r.papers) {
     const c = p.qa.counts;
