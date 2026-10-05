@@ -3,8 +3,8 @@ title: "IMMZD2DTTyphoidTCVLogic — WHO SMART Immunizations artefact"
 description: "Library/IMMZD2DTTyphoidTCVLogic in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/smart-immunizations/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-immunizations/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/immunizations">smart.who.int.immunizations</a></div>
@@ -14,7 +14,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/immunizations">http://smart.who.int/immunizations</a>.</p>
 </div>
 
-[← all 748 artefacts](../)
+[← all 748 artefacts](../artifacts.html)
 
 ## IMMZD2DTTyphoidTCVLogic
 
@@ -39,4 +39,4 @@ not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
 
 <footer id="ig-footer" data-prev="Library-IMMZD2DTTyphoidEncounterElements.html" data-next="Library-IMMZD2DTTyphoidTy21aLogic.html" class="st-ig"></footer>
-<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

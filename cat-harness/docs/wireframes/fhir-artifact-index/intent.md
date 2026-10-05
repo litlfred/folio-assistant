@@ -6,7 +6,7 @@ The kind viewer for the `fhir-artifact-index` graph. One page per instance that 
 
 - `smart-trust/docs/artifacts.md`, the viewer declaration laid onto the IG site's own `artifacts` page, published at `/smart-trust/artifacts.html` (`igSite`, bean `mftp`)
 - `smart-base/docs/artifacts.md`, likewise, at `/smart-base/artifacts.html`
-- `smart-immunizations/docs/index.md`, published at `/smart-immunizations/` (with `--summary`)
+- `smart-immunizations/docs/artifacts.md`, likewise, at `/smart-immunizations/artifacts.html`
 
 The harness tile for each instance's `fhir-artifact-index` graph links the page. Stage C3 of the smart-* separation (#1767).
 

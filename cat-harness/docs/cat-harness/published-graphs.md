@@ -175,7 +175,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 {: .fa-hx-dim }
 
 - [SMART Base]({{ '/smart-base/artifacts.html' | relative_url }})
-- [smart-immunizations]({{ '/smart-immunizations/' | relative_url }})
+- [smart-immunizations]({{ '/smart-immunizations/artifacts.html' | relative_url }})
 - [smart-trust]({{ '/smart-trust/artifacts.html' | relative_url }})
 
 ### `folio`

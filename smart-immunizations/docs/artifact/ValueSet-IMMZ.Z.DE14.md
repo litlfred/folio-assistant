@@ -3,8 +3,8 @@ title: "IMMZ.Z.DE14 ValueSet for Poliovirus-containing vaccines — WHO SMART Im
 description: "ValueSet/IMMZ.Z.DE14 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/smart-immunizations/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-immunizations/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/immunizations">smart.who.int.immunizations</a></div>
@@ -14,7 +14,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/immunizations">http://smart.who.int/immunizations</a>.</p>
 </div>
 
-[← all 748 artefacts](../)
+[← all 748 artefacts](../artifacts.html)
 
 ## IMMZ.Z.DE14 ValueSet for Poliovirus-containing vaccines
 
@@ -45,4 +45,4 @@ IG rather than a gap in this index.
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.Z.DE14.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE14.jsonld` · [view](ValueSet-IMMZ.Z.DE14.jsonld.html) |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZ.Z.DE13.html" data-next="ValueSet-IMMZ.Z.DE15.html" class="st-ig"></footer>
-<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

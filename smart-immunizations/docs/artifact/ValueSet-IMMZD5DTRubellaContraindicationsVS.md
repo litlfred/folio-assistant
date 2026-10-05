@@ -3,8 +3,8 @@ title: "IMMZD5DTRubellaContraindications ValueSet for Decision Table — WHO SMA
 description: "ValueSet/IMMZD5DTRubellaContraindicationsVS in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/smart-immunizations/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-immunizations/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/immunizations">smart.who.int.immunizations</a></div>
@@ -14,7 +14,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/immunizations">http://smart.who.int/immunizations</a>.</p>
 </div>
 
-[← all 748 artefacts](../)
+[← all 748 artefacts](../artifacts.html)
 
 ## IMMZD5DTRubellaContraindications ValueSet for Decision Table
 
@@ -45,4 +45,4 @@ IG rather than a gap in this index.
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD5DTRubellaContraindicationsVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTRubellaContraindicationsVS.jsonld` · [view](ValueSet-IMMZD5DTRubellaContraindicationsVS.jsonld.html) |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD5DTRotavirusContraindicationsVS.html" data-next="ValueSet-IMMZD5DTTBEContraindicationsVS.html" class="st-ig"></footer>
-<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>
