@@ -334,10 +334,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-05T17:09:39.799Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/63138b9aabaf06b298082f5f105696cfb90ff0d6",
-  "sourceCommitSha": "63138b9aabaf06b298082f5f105696cfb90ff0d6",
-  "sourceCommitAt": "2026-10-05T18:58:55+02:00",
+  "generatedAt": "2026-10-05T17:37:32.678Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/941df8d8eb29173e60cd5ed56d02aa8a425bbb56",
+  "sourceCommitSha": "941df8d8eb29173e60cd5ed56d02aa8a425bbb56",
+  "sourceCommitAt": "2026-10-05T19:27:39+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -39764,7 +39764,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 3138,
+      "fileCount": 3140,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
     {
@@ -39798,7 +39798,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 922,
+      "fileCount": 923,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
     {
@@ -39849,7 +39849,7 @@
       ],
       "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
       "readmePath": "test/README.md",
-      "fileCount": 1194,
+      "fileCount": 1195,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
     {

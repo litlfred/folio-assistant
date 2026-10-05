@@ -5780,6 +5780,9 @@ a.fa-nav-folders__link:focus-visible {
  * declares no icons and `mountNavIconRow` deliberately draws nothing — this
  * selector does not match and the three controls stay exactly where they are.
  * A reader never loses a control to a row that failed to arrive.
+ *
+ * LANGUAGE is the glass band's globe (#2211); the owner kept that one globe
+ * rather than a second in the row (2026-10-05, bean `82qs`).
  */
 @media (min-width: 50rem) {
   .side-bar:has(.fa-nav-icons) .fa-scheme-mini,
@@ -6101,6 +6104,22 @@ a.fa-nav-folders__link:focus-visible {
   padding-left: calc(var(--fa-nav-pad) + var(--fa-nav-mark) + 0.5rem);
   opacity: 0.7;
 }
+
+/* THE SUB-SECTIONS' FOLD (bean `r2ld`), under its section's link and at the
+ * sub-items' indent, so the summary reads as the first row of what it hides.
+ * Sized like the folders' "Sub-graphs of …" fold: a 1.75rem target. */
+.fa-doc-index__fold-heading {
+  display: list-item;
+  min-height: 1.75rem;
+  line-height: 1.75rem;
+  padding-left: calc(var(--fa-nav-pad) + var(--fa-nav-mark) + 0.5rem);
+  cursor: pointer;
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+.fa-doc-index__fold-heading:hover,
+.fa-doc-index__fold-heading:focus-visible { opacity: 1; }
+.fa-doc-index__list--sub { margin: 0; }
 
 /* ═══ THE TONE IS A HUE, AND IT WAS BEING SPENT AS A COLOUR ════════════════
  *
