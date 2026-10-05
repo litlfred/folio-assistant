@@ -84,7 +84,7 @@ Two mechanical facts worth knowing before choosing:
 
 | destination | when | what it becomes |
 |---|---|---|
-| **`todos/items/`** — the default | somebody has an outstanding item | a `folio-todo/v1` node: `status`, `priority`, `origin`, plus the tags below |
+| **`todos/items/`** — the default | somebody has an outstanding item | a `todo/1.0.0` node: `status`, `priority`, `origin`, plus the tags below |
 | **`todos/feedback/`** | it is about a specific block, with the submitter's identity | the content-review feedback workflow the `todo-review` skill reads |
 | **`folio/`** | it belongs on a rendered page | a landing sticky — but a *page's* sticky is a layer's **contribution**, so it is declared in that layer's `<name>.json`, not written here |
 | **nowhere** | it was worth showing and not worth keeping | previewed in the conversation and left there |

@@ -297,7 +297,7 @@ Folio ChangeSet <span class="fa-gloss-status">candidate, extracted</span>
 Folio review comments <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Ingest a pull request's tagged conversation comments (<code>block: &lt;label&gt;</code> on the first line) into <code>folio-review-comment/v1</code> todos, and write them as <code>review-comments.json</code>. Idempotent over its previous output, whose statuses it keeps. Re-anchors every comment against the head's blocks, following <code>renamedFrom</code>, and orphans a comment whose block is gone rather than dropping it.</p>
+<p>Ingest a pull request's tagged conversation comments (<code>block: &lt;label&gt;</code> on the first line) into <code>review-comment/1.0.0</code> todos, and write them as <code>review-comments.json</code>. Idempotent over its previous output, whose statuses it keeps. Re-anchors every comment against the head's blocks, following <code>renamedFrom</code>, and orphans a comment whose block is gone rather than dropping it.</p>
 <p class="fa-gloss-meta">Tools of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/index.ts"><code>folio-assistant-core/tools/index.ts#folio-review-comments</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-tools--folio-review-coverage" data-fa-state="extracted" data-fa-gloss="">
@@ -696,7 +696,7 @@ Mirror FHIR packages from packages.fhir.org into a git repository <span class="f
 Move a review comment's status <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A review-process task moves one <code>folio-review-comment/v1</code> todo's status (address, send back, resolve, adjudicate, withdraw) through <code>transition()</code>, which refuses any move the named BPMN task may not make. The comment is written to the folio's todos graph (its declared <code>todo-feedback</code> directory) and, with <code>--commit</code>, committed to the edit-set's FEATURE branch. Refused on the base branch and on a detached HEAD.</p>
+<p>A review-process task moves one <code>review-comment/1.0.0</code> todo's status (address, send back, resolve, adjudicate, withdraw) through <code>transition()</code>, which refuses any move the named BPMN task may not make. The comment is written to the folio's todos graph (its declared <code>todo-feedback</code> directory) and, with <code>--commit</code>, committed to the edit-set's FEATURE branch. Refused on the base branch and on a detached HEAD.</p>
 <p class="fa-gloss-meta">Tools of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/index.ts"><code>folio-assistant-core/tools/index.ts#folio-review-comment-move</code></a></p>
 </dd>
 </dl>
