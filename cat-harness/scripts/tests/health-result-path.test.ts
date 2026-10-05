@@ -47,7 +47,7 @@ function mount(root: string, id: string, into: string): void {
   writeFileSync(p, JSON.stringify({ $schema: MOUNT_MARKER_SCHEMA, id, branch: TIP.branch, path: "test/health/results", into, tip: "0".repeat(40), files: {} }));
 }
 
-const HEALTH = { id: "health", path: "test/health/results/", graphKinds: ["health"] };
+const HEALTH = { id: "health", path: "test/health/results/", graphTypologies: ["health"] };
 
 describe("healthResultPath", () => {
   test("not moved: the declared directory in the checkout", () => {

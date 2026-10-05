@@ -29,8 +29,8 @@ import { writeDeclaration } from "../../test/support/instance-fixture.js";
 function instance(declareFshGuts = true): string {
   const root = mkdtempSync(join(tmpdir(), "log-writer-"));
   const directories = declareFshGuts
-    ? [{ id: "fsh-guts", path: "fsh-guts/", description: "trashcan", graphKinds: ["fsh-guts"] }]
-    : [{ id: "schemas", path: "schemas/", description: "schemas", graphKinds: ["schemas"] }];
+    ? [{ id: "fsh-guts", path: "fsh-guts/", description: "trashcan", graphTypologies: ["fsh-guts"] }]
+    : [{ id: "schemas", path: "schemas/", description: "schemas", graphTypologies: ["schemas"] }];
   for (const d of directories) mkdirSync(join(root, d.path), { recursive: true });
   writeDeclaration(root, JSON.stringify({ name: "t", stub: "t", directories }, null, 2));
   return root;

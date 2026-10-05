@@ -274,7 +274,7 @@ describe("the themes set is iterated, not hardcoded", () => {
     expect(out).not.toContain("covered the day it declares one");
   });
 
-  test("the themes denominator is read from `graphKinds`, not a guessed key", () => {
+  test("the themes denominator is read from `graphTypologies`, not a guessed key", () => {
     // Reading it as `graphs` measured `0 of 20` over a corpus where the answer
     // is 1. If this ever reads 0, the key has been guessed again.
     const { out } = run();

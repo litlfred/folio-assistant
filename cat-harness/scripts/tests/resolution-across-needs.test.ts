@@ -373,7 +373,7 @@ describe("skill refs resolve across the `needs` chain", () => {
             // rather than present as `null` — which the schema would reject and
             // which is a third thing again.
             ...(needs === undefined ? {} : { needs }),
-            directories: [{ id: "processes", path: "processes/", graphKinds: ["processes"] }],
+            directories: [{ id: "processes", path: "processes/", graphTypologies: ["processes"] }],
           },
           null,
           2,

@@ -18,7 +18,7 @@ import {
   serialiseAttestations,
   type KgAttestations,
 } from "./qa-attestations";
-import { defaultGraphKinds } from "./cat-harness";
+import { defaultGraphTypologies } from "./cat-harness";
 import { KgQaReportSchema } from "./kg-qa";
 
 const pair = {
@@ -68,8 +68,8 @@ describe("qa-attestations/v1", () => {
     expect(QaAttestationsSchema.safeParse({ ...file(), family: "lsi" }).success).toBe(false);
   });
 
-  test("the graph kind is registered, as state, with this validator", () => {
-    const kind = defaultGraphKinds.get("attestations");
+  test("the graph typology is registered, as state, with this validator", () => {
+    const kind = defaultGraphTypologies.get("attestations");
     expect(kind?.holds).toBe("state");
     expect(kind?.validator).toBe("schemas/qa-attestations.ts#QaAttestationsSchema");
   });

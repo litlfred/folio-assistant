@@ -10,7 +10,7 @@ import {
   igMetadataVerdict,
   type IgMetadataIndex,
 } from "./ig-metadata-index";
-import { defaultGraphKinds, graphKindIri, graphLayer, isDerivedGraph, isRenderable, processMayWrite } from "../../cat-harness/schemas/cat-harness";
+import { defaultGraphTypologies, graphTypologyIri, graphLayer, isDerivedGraph, isRenderable, processMayWrite } from "../../cat-harness/schemas/cat-harness";
 
 /**
  * A harvest of one IG, in the shape the three Publisher exports actually take.
@@ -148,9 +148,9 @@ describe("the file declares what it is", () => {
   });
 });
 
-describe("the graph kind it is held under", () => {
+describe("the graph typology it is held under", () => {
   test("registered, not renderable, and `derived`", () => {
-    expect(defaultGraphKinds.get("ig-metadata-index")).toBeDefined();
+    expect(defaultGraphTypologies.get("ig-metadata-index")).toBeDefined();
     expect(isRenderable("ig-metadata-index")).toBe(false);
     expect(graphLayer("ig-metadata-index")).toBe("derived");
     expect(isDerivedGraph("ig-metadata-index")).toBe(true);
@@ -164,7 +164,7 @@ describe("the graph kind it is held under", () => {
     // A reconstruction and a transcription. The test is here so a later
     // tidy-up that folds them cannot pass silently — which is exactly the
     // Option A the owner rejected as "making the index a bag".
-    const kinds = ["fhir-artifact-index", "ig-metadata-index"].map((k) => (defaultGraphKinds.has(k) ? graphKindIri(k, defaultGraphKinds.get(k)) : undefined));
+    const kinds = ["fhir-artifact-index", "ig-metadata-index"].map((k) => (defaultGraphTypologies.has(k) ? graphTypologyIri(k, defaultGraphTypologies.get(k)) : undefined));
     expect(new Set(kinds).size).toBe(2);
   });
 });

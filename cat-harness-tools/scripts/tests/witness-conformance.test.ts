@@ -14,7 +14,7 @@ import {
   ComputationWitnessConformanceSchema as Contract,
   ComputationWitnessSchema as Envelope,
 } from "../../../cat-harness/schemas/computation-witness.ts";
-import { BASE_GRAPH_KINDS, defaultGraphKinds } from "../../../cat-harness/schemas/cat-harness.js";
+import { BASE_GRAPH_TYPOLOGIES, defaultGraphTypologies } from "../../../cat-harness/schemas/cat-harness.js";
 import { checkWitnesses } from "../witness-conformance.ts";
 
 const CONFORMING = {
@@ -72,13 +72,13 @@ describe("the producer contract", () => {
   }
 });
 
-describe("the graph kind", () => {
+describe("the graph typology", () => {
   it("is registered as derived, with the envelope as its validator", () => {
     // Through the REGISTRY: since bean riit (step 1c) the validator is a
     // `validators/computation-witness.json` node the registry joins on, and
     // the code entry names none.
-    expect(BASE_GRAPH_KINDS["computation-witness"]).toBeDefined();
-    const k = defaultGraphKinds.get("computation-witness")!;
+    expect(BASE_GRAPH_TYPOLOGIES["computation-witness"]).toBeDefined();
+    const k = defaultGraphTypologies.get("computation-witness")!;
     expect(k.holds).toBe("derived");
     expect(k.validator).toBe("schemas/computation-witness.ts#ComputationWitnessSchema");
     expect(k.nodeSchemas).toBeUndefined();

@@ -44,7 +44,7 @@ are thin stubs pointing here.
 > - No MCP? Resolve the `kg` graph from the instance's `<instance>.json`
 >   (`schemas/cat-harness.ts`) and read from the directory it names.
 >
-> Conventions for the declaration and its graph kinds:
+> Conventions for the declaration and its graph typologies:
 > [`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md).
 >
 > **A dependency's skills ARE reachable** — `resolveSkillDirs` in
@@ -184,7 +184,7 @@ coincidence; a declaration inside the file is the contract.**
 
 **The discipline is in the skill, not here** —
 [`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md)
-carries the declaration schema and every graph kind, path resolution and the
+carries the declaration schema and every graph typology, path resolution and the
 dot-prefix guard that tests **every** segment, and the rule that an unavoidable
 duplicate is fine while an unchecked one is not. In this instance
 `bun run check:harness-dirs` is what checks the two that cannot be removed:
@@ -364,7 +364,7 @@ without anybody deciding it.
 
 `check:ci-health` asks whether the workflows pass; `bun run health` asks about
 the repository. **`bun run audit:coverage` asks what is audited at all** — per
-declared graph kind, how many directories are declared, how many files they
+declared graph typology, how many directories are declared, how many files they
 hold, how many `kg-audit` criteria reach the kind, and how many CI gates
 **declare** they cover it. Written as a sidecar under
 `cat-harness/test/results/` and stored on `qa-reports`

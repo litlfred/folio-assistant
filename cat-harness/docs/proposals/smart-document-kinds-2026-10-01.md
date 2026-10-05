@@ -45,7 +45,7 @@ Reference Architecture and DIIG concepts"* (bean `5blc`).
 
 ## The design
 
-### 1. A generic `document-kind` graph kind (core, names no WHO)
+### 1. A generic `document-kind` graph typology (core, names no WHO)
 
 A harness may declare **document kinds**: named structures a document authored
 with that harness follows. One schema, `folio-document-kind/v1`:
@@ -58,7 +58,7 @@ with that harness follows. One schema, `folio-document-kind/v1`:
 | `sections[]` | `{ id, title, required, description, computedFrom? }` — `computedFrom` names the declared graphs a section is derived from (e.g. `library`), so "computable from smart-base assets" is a checkable claim |
 | `sources[]` | where the structure itself comes from — a library entry and section — so a kind is never invented |
 
-It is a graph kind like `themes` or `voices`: declared in an instance's
+It is a graph typology like `themes` or `voices`: declared in an instance's
 `<instance>.json`, validated by `check:kind-validators`, rendered by a viewer
 Tool. **Core knows that document kinds exist; it never knows which.**
 
@@ -150,7 +150,7 @@ Owner, 2026-10-01:
 
 | step | what |
 |---|---|
-| D5a | this note; the `document-kind` schema + graph kind + registry entry in core |
+| D5a | this note; the `document-kind` schema + graph typology + registry entry in core |
 | D5b | `smart-base/document-kinds/dak.json` generated from `DAK_COMPONENTS` + its gate; the per-kind viewer |
 | D5c | the DAK view of each ingested IG (smart-trust, smart-base, smart-immunizations) |
 | D5d | `l1.json`, `l1-guideline.json`, `dth.json`, authored from the sources; the smart-kg pin (bean `pebe`) |

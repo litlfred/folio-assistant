@@ -72,7 +72,7 @@ import { gitCorpus } from "../schemas/git-corpus.ts";
 
 import {
   isDerivedGraph,
-  isPublishedGraphKind,
+  isPublishedGraphTypology,
   isRenderable,
   owningDirectory,
   resolveDirectories,
@@ -136,9 +136,9 @@ export interface SubgraphReport {
    * superseded, and its links pointing at what moved is EXPECTED; that is a
    * decision, and a decision should be readable.
    *
-   * Keyed on the declared graph kind rather than a new field, because
-   * `isPublishedGraphKind` already answers exactly this question and the
-   * directory already declares `graphKinds: ["fsh-guts"]`. Same shape as the
+   * Keyed on the declared graph typology rather than a new field, because
+   * `isPublishedGraphTypology` already answers exactly this question and the
+   * directory already declares `graphTypologies: ["fsh-guts"]`. Same shape as the
    * `published: false` a skill now carries: the thing says what it is.
    */
   exempt: string[];
@@ -377,7 +377,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
   // Declared directories that are absent and allowed to be: a link into one
   // cannot be judged from this checkout.
   const absentOffMain = dirs
-    .filter((d) => mayLeaveMain(d as { graphKinds?: string[]; storage?: unknown }))
+    .filter((d) => mayLeaveMain(d as { graphTypologies?: string[]; storage?: unknown }))
     .map((d) => resolve(d.absPath ?? join(root, d.path)))
     .filter((a) => !existsSync(a));
   const derivedLinks: SubgraphReport["derivedLinks"] = [];
@@ -391,7 +391,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
     const abs = dir.absPath ?? join(root, dir.path);
     if (!existsSync(abs) || !statSync(abs).isDirectory()) continue;
     // Retired content is not held to link resolution — see `exempt`.
-    if (dir.graphKinds.length > 0 && dir.graphKinds.every((g) => !isPublishedGraphKind(g))) {
+    if (dir.graphTypologies.length > 0 && dir.graphTypologies.every((g) => !isPublishedGraphTypology(g))) {
       exempt.push(`${label(dir)} (${dir.path})`);
       continue;
     }
@@ -437,13 +437,13 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
         }
         if (resolved === undefined) {
           // A renderable graph addresses the PUBLISHED tree, not this one.
-          const renderable = owner.graphKinds.some((g) => isRenderable(g));
+          const renderable = owner.graphTypologies.some((g) => isRenderable(g));
           // A DERIVED graph's links came from the SOURCE document rather than
           // from an author here — see `derivedLinks`. Tested after
           // `renderable` only because no kind is currently both; if one ever
           // is, addressing the published tree is the more specific claim and
           // should win.
-          const derived = owner.graphKinds.some((g) => isDerivedGraph(g));
+          const derived = owner.graphTypologies.some((g) => isDerivedGraph(g));
           const bucket = renderable ? siteResolved : derived ? derivedLinks : dangling;
           bucket.push({
             from: relative(root, file),
@@ -585,7 +585,7 @@ if (import.meta.main) {
 
   if (exempt.length > 0) {
     console.log(`\nEXEMPT BY DECLARATION — ${exempt.length} directory(ies) hold only`);
-    console.log("unpublished graph kinds, so their links are not held to resolution:\n");
+    console.log("unpublished graph typologies, so their links are not held to resolution:\n");
     for (const d of exempt) console.log(`  · ${d}`);
     console.log(
       "\nRetired content is superseded by definition, so a link of its pointing at\n" +

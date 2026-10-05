@@ -70,7 +70,7 @@ import { checkoutDirectories, orderedDependencies } from "../schemas/harness-con
 import { packageDirsIn } from "./skill-topics.js";
 import { checkoutRoleGraph } from "../schemas/scenario-overlay.js";
 import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-matter.js";
-// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// The `folio` graph typology is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
 // COMMAND that runs carries it — and since #840 every caller does, because
@@ -158,7 +158,7 @@ export function kgDirectories(
 ): Array<{ id: string; path: string; absPath: string }> {
   try {
     return (scope === "checkout" ? checkoutDirectories(root, { stackedOn: root }) : resolveDirectories([{ name: "(local)", root, own: true }]))
-      // EXACTLY ONE knowledge-graph kind, not merely including one.
+      // EXACTLY ONE knowledge-graph typology, not merely including one.
       //
       // `schemas/` declares `["schemas", "cat-harness"]` — a schema IS a
       // knowledge-graph node, which is why it carries the kind at all — but
@@ -666,7 +666,7 @@ export function consultedSkills(root: string, scope: CorpusScope = corpusScopeFo
  *
  * ## Why a declaration, when a name match already worked
  *
- * `isPublishedSkill` strips a skill whose NAME is an unpublished graph kind,
+ * `isPublishedSkill` strips a skill whose NAME is an unpublished graph typology,
  * and its own note says why that was enough and where it stops:
  *
  * > *"Same list, because the skill and the kind share a name by

@@ -12,7 +12,7 @@ import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { allAvatars, GENERIC, avatarFor, avatarKinds, hasAvatar } from "../../../cat-harness/schemas/avatars.ts";
-import { BASE_GRAPH_KINDS, defaultGraphKinds, instanceRootsIn, readDeclaration } from "../../../cat-harness/schemas/cat-harness.ts";
+import { BASE_GRAPH_TYPOLOGIES, defaultGraphTypologies, instanceRootsIn, readDeclaration } from "../../../cat-harness/schemas/cat-harness.ts";
 import { avatarsCssPath, renderAvatarsCss } from "../../../cat-harness/scripts/gen-avatars-css.ts";
 import { coverage, requiredKinds, trashDerivationPresent } from "../check-avatar-coverage.ts";
 import { HARNESS_ROOT } from "../lib/roots.ts";
@@ -26,10 +26,10 @@ describe("the registry", () => {
     expect(avatarKinds().length).toBeGreaterThan(10);
   });
 
-  test("every declared graph kind has an avatar of its own", () => {
+  test("every declared graph typology has an avatar of its own", () => {
     // Named, not counted: `toHaveLength(n)` breaks on the next kind and says
     // nothing about which one is missing.
-    const missing = defaultGraphKinds.names().filter((k) => !hasAvatar(k));
+    const missing = defaultGraphTypologies.names().filter((k) => !hasAvatar(k));
     expect(missing).toEqual([]);
   });
 
@@ -133,17 +133,17 @@ describe("the generated stylesheet", () => {
 
 describe("coverage is a QA axis, not a promise", () => {
   test("the answer does not depend on what the caller imported", () => {
-    // MEASURED, and it is why this test exists. `defaultGraphKinds` is a live
+    // MEASURED, and it is why this test exists. `defaultGraphTypologies` is a live
     // registry that modules write into on import: run from the CLI the check
     // saw 16 kinds and reported full coverage, run inside the suite it saw
     // 17 — and the seventeenth was `folio`, the one RENDERABLE kind, with no
     // avatar at all. A check whose result changes with the importer is not a
     // check, so `requiredKinds` unions the base table in explicitly.
     const { required } = requiredKinds(ROOT);
-    for (const k of Object.keys(BASE_GRAPH_KINDS)) expect(required).toContain(k);
-    // `folio` is registered ON IMPORT by `folio-graph-kind.ts` and is absent
+    for (const k of Object.keys(BASE_GRAPH_TYPOLOGIES)) expect(required).toContain(k);
+    // `folio` is registered ON IMPORT by `folio-graph-typology.ts` and is absent
     // from the base table, so it is the exact case the union exists for.
-    expect(Object.keys(BASE_GRAPH_KINDS)).not.toContain("folio");
+    expect(Object.keys(BASE_GRAPH_TYPOLOGIES)).not.toContain("folio");
     expect(required).toContain("folio");
     expect(hasAvatar("folio")).toBe(true);
   });
@@ -162,7 +162,7 @@ describe("coverage is a QA axis, not a promise", () => {
   });
 
   test("an INSTANCE-keyed avatar is REPORTED on the kind axis, not pruned", () => {
-    // These two are keyed on a declared INSTANCE name, not on a graph kind —
+    // These two are keyed on a declared INSTANCE name, not on a graph typology —
     // `harness-tiles` calls `avatarFor(decl.name)`. So this check, which asks
     // only about kinds, is right to report them and will go on doing so.
     //

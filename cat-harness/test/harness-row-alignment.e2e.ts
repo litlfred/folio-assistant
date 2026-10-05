@@ -12,10 +12,10 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  * avatar-marked rows (Folio Assistant, WHO IRIS, C@T Harness, Bootstrap) had
  * their mark at one x and the glyph-marked rows (smart-trust, SMART Base,
  * given glyphs by #2122) sat flush left at another. `itemHtml` used to infer
- * `fa-nav-kind`, the graph-kind row class that `navbarCss()` pulls back into
+ * `fa-nav-kind`, the graph-typology row class that `navbarCss()` pulls back into
  * the strip column, from "has an SVG glyph". Since #2122 a harness can have
  * one too. The class is now declared (`NavItem.kind`), set only by
- * `graphKindRowDecor`.
+ * `graphTypologyRowDecor`.
  *
  * WHAT IS SERVED, not a restatement: a GENERATED viewer page exactly as
  * committed (its own inline `navbarCss()`), and the Jekyll sidebar built the
@@ -127,7 +127,7 @@ for (const which of ["viewer", "landing"] as const) {
     expect(GLYPHED.length).toBeGreaterThan(0);
     expect(marks.some((m) => m.drawn === "glyph")).toBe(true);
     expect(marks.some((m) => m.drawn === "image")).toBe(true);
-    // A harness row is not a graph-kind row, whatever its mark is drawn with.
+    // A harness row is not a graph-typology row, whatever its mark is drawn with.
     expect(marks.filter((m) => m.kindClass).map((m) => m.label)).toEqual([]);
     const xs = new Set(marks.map((m) => m.x));
     expect([...xs], JSON.stringify(marks)).toHaveLength(1);

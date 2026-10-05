@@ -70,7 +70,7 @@ export interface OrderedStep {
    * Required rather than defaulted: a default would let a step ship without
    * anybody deciding, and the two policies are not interchangeable — one
    * stops the build, the other leaves a gap a reader may not notice. Same
-   * reason a graph kind must state `holds` rather than inherit one.
+   * reason a graph typology must state `holds` rather than inherit one.
    */
   fatal: boolean;
   /** Free-text, carried through to the report so a reader is not left guessing. */

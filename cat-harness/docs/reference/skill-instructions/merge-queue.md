@@ -48,6 +48,12 @@ steward's, and not on an issue such as #1800. Measured 2026-10-03/04 (bean
 merged, and the pokes on #1800 changed none of the three facts that kept
 #1968 out of the queue.
 
+### Ask the user before submitting
+
+**When you finish your work and are ready to merge, ask the user before submitting to the merge queue.** Do not apply `ready-to-merge` or post the `ready:` marker autonomously without asking the user if you should submit. Submitting to the queue requests landing the code on `main`; the user or owner confirms the submission.
+
+### Submitting to the queue
+
 To submit, do all of these on YOUR PR:
 
 1. **Owed CI is green on the head.** See §"Admission asks which runs are OWED".
@@ -62,6 +68,10 @@ To submit, do all of these on YOUR PR:
    `main` by hand, remove the label, and say why in a comment.
 6. **The body has no unticked box**, and there is no open question to the
    owner or the steward.
+
+### Watch status after submitting — never fire-and-forget
+
+**When you submit something to the merge queue, you need to watch what its status is.** Submitting is not the end of your turn. Watch the GitHub Actions runs on the head (`check:head-has-run`), evaluate `merge-guard`, and monitor whether the PR is admitted into a train or whether it is refused, held, or failing checks. If CI fails, diagnose and repair the failure immediately rather than leaving a failing PR in the queue.
 
 **Merge order goes on the PR, and setting an order is the owner's call.**
 - Write it in the `ready:` comment, on every PR it concerns ("merge before #N").

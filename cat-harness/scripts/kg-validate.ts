@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * Validate a node in the graph — **one Tool, parameterised by graph kind**.
+ * Validate a node in the graph — **one Tool, parameterised by graph typology**.
  *
  * Bean `folio-assistant-i31r`, route A of `folio-assistant-3lbz`. The owner,
  * 2026-09-20, on what shape this should take:
@@ -10,7 +10,7 @@
  *
  * So: give it a path, and it works out what the file *is* from the
  * declaration — which declared directory contains it, and therefore which
- * graph kind — then runs that kind's validator. 199 exported schemas, one
+ * graph typology — then runs that kind's validator. 199 exported schemas, one
  * lookup.
  *
  * ## What it refuses to call valid
@@ -42,7 +42,7 @@ export type Verdict =
   | { path: string; state: "undetermined"; reason: string; kind?: string };
 
 /**
- * Which declared graph kind owns this path.
+ * Which declared graph typology owns this path.
  *
  * The LONGEST matching directory wins, because declarations nest — `beans/`
  * contains `beans/defs/`, and answering with the outer one would validate a
@@ -51,7 +51,7 @@ export type Verdict =
 export function kindForPath(
   filePath: string,
   root: string,
-  dirs: { path: string; graphKinds: string[] }[],
+  dirs: { path: string; graphTypologies: string[] }[],
 ): string | undefined {
   const rel = relative(root, resolve(filePath));
   if (rel.startsWith("..")) return undefined;
@@ -62,8 +62,8 @@ export function kindForPath(
       // A directory may declare several graphs; one is unambiguous, more is
       // not, and guessing which would be the lie of precision the
       // `cat-harness` kind's own doc comment warns about.
-      if (d.graphKinds.length === 1 && (!best || dir.length > best.len)) {
-        best = { len: dir.length, kind: d.graphKinds[0] };
+      if (d.graphTypologies.length === 1 && (!best || dir.length > best.len)) {
+        best = { len: dir.length, kind: d.graphTypologies[0] };
       }
     }
   }
@@ -116,11 +116,11 @@ export function owningInstanceRoot(filePath: string, fallback: string): string {
  * Two roots, because they answer two questions (bean `676g`):
  *
  * - `root` — the instance whose DECLARATION says which directory owns the
- *   path, and therefore its graph kind. For a nested instance's file that is
+ *   path, and therefore its graph typology. For a nested instance's file that is
  *   the nested instance (see {@link owningInstanceRoot}).
  * - `schemaRoot` — what the kind's unqualified `module#Export` validator refs
  *   resolve against: the instance whose registry DEFINES the kind. The
- *   registry here is `defaultGraphKinds`, defined in this instance, so its
+ *   registry here is `defaultGraphTypologies`, defined in this instance, so its
  *   refs (`schemas/kg-qa.ts#…`) are relative to `cat-harness/`. Resolving them
  *   against `smart-dak/` instead reported "schemas/kg-qa.ts does not exist"
  *   for every nested sidecar — the second half of the same refusal.

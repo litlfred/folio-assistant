@@ -13,7 +13,7 @@ import { describe, expect, test } from "bun:test";
 
 // The whole REGISTRY: since bean dmx1 kinds are declared per harness, and the
 // sweep reaches every one of them (riit), not only the code list.
-import { defaultGraphKinds } from "../../../cat-harness/schemas/graph-kind-registry.js";
+import { defaultGraphTypologies } from "../../../cat-harness/schemas/graph-typology-registry.js";
 import { sweep } from "../check-kind-validators.js";
 import { HARNESS_ROOT } from "../lib/roots.ts";
 
@@ -40,7 +40,7 @@ describe("the three states partition the registry", () => {
       ...r.contradictory,
     ];
     expect(new Set(named).size).toBe(named.length);
-    expect(named.length).toBe(defaultGraphKinds.names().length);
+    expect(named.length).toBe(defaultGraphTypologies.names().length);
   });
 });
 
@@ -81,7 +81,7 @@ describe("a kind cannot claim both", () => {
     // parses my nodes" and "nothing can parse my nodes" are both true.
     const r = await sweep(INSTANCE);
     for (const n of r.notApplicable) {
-      const def = defaultGraphKinds.get(n.kind);
+      const def = defaultGraphTypologies.get(n.kind);
       expect(def?.validator, `${n.kind} declares a validator AND that none applies`).toBeUndefined();
       expect(def?.nodeSchemas, `${n.kind} declares nodeSchemas AND that none applies`).toBeUndefined();
     }

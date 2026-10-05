@@ -174,7 +174,7 @@
  * would see.
  *
  * @module scripts/check-workflow-paths
- * @covers none — .github/workflows/ is not a declared graph kind
+ * @covers none — .github/workflows/ is not a declared graph typology
  */
 import { HARNESS_ROOT } from "./lib/roots.ts";
 import { existsSync, readFileSync, readdirSync } from "node:fs";

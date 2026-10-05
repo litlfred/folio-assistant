@@ -38,7 +38,7 @@
  *
  * `could-not-determine` is its own result and is never clean: a snapshot that
  * is absent or will not parse, an unreadable declaration in the checkout while
- * a need is still unresolved, or a directory whose graph kinds this registry
+ * a need is still unresolved, or a directory whose graph typologies this registry
  * does not know, so whether it is a STATE directory cannot be said. Creating
  * it might write a directory the harness's processes never use; skipping it
  * might leave out one they write. Either guess is `dh4f`, so the run stops and
@@ -115,10 +115,10 @@ export function stateDirectoriesOf(decl: HarnessDeclaration): StateDirectories {
   const dirs: { id: string; path: string }[] = [];
   const undetermined: string[] = [];
   for (const d of decl.directories) {
-    const layers = d.graphKinds.map((k) => graphLayer(k));
+    const layers = d.graphTypologies.map((k) => graphLayer(k));
     if (layers.includes("state")) dirs.push({ id: d.id, path: d.path });
     else if (layers.includes(undefined)) {
-      const unknown = d.graphKinds.filter((k) => graphLayer(k) === undefined);
+      const unknown = d.graphTypologies.filter((k) => graphLayer(k) === undefined);
       undetermined.push(`\`${d.id}\` (${unknown.map((k) => `\`${k}\``).join(", ")})`);
     }
   }
@@ -127,7 +127,7 @@ export function stateDirectoriesOf(decl: HarnessDeclaration): StateDirectories {
       state: "could-not-determine",
       reason:
         `whether ${undetermined.length === 1 ? "this directory holds" : "these directories hold"} state cannot be said: ${undetermined.join("; ")} ` +
-        `— no graph kind registered here names its layer. Register the kind (with its \`holds\`) and re-run`,
+        `— no graph typology registered here names its layer. Register the kind (with its \`holds\`) and re-run`,
     };
   }
   return { state: "determined", dirs };

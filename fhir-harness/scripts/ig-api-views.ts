@@ -138,14 +138,14 @@ export function igApiServed(instanceRoot: string): { ok: true } | { ok: false; w
   // `smart-base/` and the declaration is still `smart-trust.json` (bean `rbz3`).
   const at = declarationPathIn(instanceRoot);
   if (at === undefined) return { ok: false, why: `${basename(instanceRoot)}/ holds no instance declaration` };
-  let d: { directories?: { path?: string; graphKinds?: string[]; served?: boolean; instanceRoot?: boolean; composed?: boolean }[] };
+  let d: { directories?: { path?: string; graphTypologies?: string[]; served?: boolean; instanceRoot?: boolean; composed?: boolean }[] };
   try {
     d = JSON.parse(readFileSync(at, "utf8"));
   } catch {
     return { ok: false, why: `${basename(at)} could not be read` };
   }
   const dirs = d.directories ?? [];
-  const index = dirs.find((x) => x.graphKinds?.includes("fhir-artifact-index"));
+  const index = dirs.find((x) => x.graphTypologies?.includes("fhir-artifact-index"));
   // declared-path-literal: matches an entry in the STAGED instance's own declaration by its path; no folio-assistant directory is read
   const docs = dirs.find((x) => x.path === "docs/");
   if (!index?.served) return { ok: false, why: "its fhir-artifact-index directory is not declared `served`" };

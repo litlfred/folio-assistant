@@ -74,7 +74,7 @@ export const SHARED_DECLARATIONS: readonly SharedDeclaration[] = [
     id: "instance-declaration",
     globs: [],
     match: isInstanceDeclaration,
-    why: "an instance's `<instance>.json`: every declared directory, graph kind and tile, so two PRs adding entries interact even when their hunks do not overlap",
+    why: "an instance's `<instance>.json`: every declared directory, graph typology and tile, so two PRs adding entries interact even when their hunks do not overlap",
   },
   {
     id: "roles",

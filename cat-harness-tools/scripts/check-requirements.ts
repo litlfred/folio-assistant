@@ -25,7 +25,7 @@
  *    is refused here, before the move, not discovered after.
  *
  * The directories are READ FROM THE DECLARATION — whatever the instance
- * declares with the `requirements` and `proposals` graph kinds, at its root or
+ * declares with the `requirements` and `proposals` graph typologies, at its root or
  * from within `docs/` — never hardcoded. A declared kind with no directory on disk is a failure: a clean
  * run over nothing is the defect this repository keeps re-finding.
  */
@@ -105,7 +105,7 @@ export function declaredDirFor(instanceRoot: string, kind: string): string {
   const decl = readDeclaration(instanceRoot);
   if (!decl) throw new Error(`no declaration could be read at ${instanceRoot}`);
   const all = [...(decl.directories ?? []), ...nestedDirectories(instanceRoot, decl)];
-  const hits = all.filter((e) => (e.graphKinds ?? []).includes(kind));
+  const hits = all.filter((e) => (e.graphTypologies ?? []).includes(kind));
   if (hits.length !== 1) {
     throw new Error(`the instance declares ${hits.length} directories of kind \`${kind}\`; exactly one is expected`);
   }

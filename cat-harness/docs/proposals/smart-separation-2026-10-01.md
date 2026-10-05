@@ -139,7 +139,7 @@ is both the harness and an IG that instantiates it?
 - (a) **Default.** Declare them in fhir-harness now, with a new fhir-harness skill for them to satisfy and the Python still run from WHO's checkout. The Library strippers set this precedent.
 - (b) Wait until the scripts themselves move.
 
-**Q7. Graph-kind registration** for `fhir-artifact-index`: keep the entries in
+**Q7. Graph-typology registration** for `fhir-artifact-index`: keep the entries in
 core, with validator pointers repointed into fhir-harness (**default**). A way
 for a harness to contribute kinds is a separate bean.
 

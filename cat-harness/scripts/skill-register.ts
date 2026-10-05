@@ -206,7 +206,7 @@
  *   `kgDirectories`, never from a list written here
  * @covers cat-harness — `v625`'s declaration, RETAINED across the merge rather
  *   than reversed, and flagged rather than quietly kept. Both names are real
- *   graph kinds (42 are registered in `BASE_GRAPH_KINDS`; `audit-coverage`
+ *   graph typologies (42 are registered in `BASE_GRAPH_TYPOLOGIES`; `audit-coverage`
  *   validates a `@covers` name against nothing, so being accepted is not
  *   evidence of being apt), and both are declared by many other gates, so
  *   `audit:coverage:require-all` is unaffected whichever stands. The reason to
@@ -258,7 +258,7 @@ export interface SkillPackage {
  * `check-retired-front-matter.ts`: that registry is the authority on what is
  * retired and why, and it refuses an entry without a record to point at. This
  * is the subset a *registration* can act on mechanically, which today is the
- * one key that keeps coming back. A key retired for a graph kind this command
+ * one key that keeps coming back. A key retired for a graph typology this command
  * does not touch has no business here.
  */
 const STRIPPABLE = ["roles", "package", "capability"] as const;

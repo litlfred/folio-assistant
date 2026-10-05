@@ -1232,14 +1232,14 @@ SubgraphCoverageSchema.visualiser <span class="fa-gloss-status">candidate, extra
 SubgraphNodeBase.holdsGraph <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The graph kinds it holds, as bootstrap's graph-kind individuals.</p>
+<p>The graph typologies it holds, as bootstrap's graph-typology individuals.</p>
 <p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/subgraph-export.ts"><code>bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.holdsGraph</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--subgraph-manifest.subgraphnodebase.holdsgraph" data-fa-state="extracted" data-fa-gloss="">
 SubgraphNodeBase.holdsGraph <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Links to the GraphKind nodes this subgraph holds.</p>
+<p>Links to the GraphTypology nodes this subgraph holds.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/subgraph-manifest.ts"><code>cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.holdsGraph</code></a></p>
 </dd>
 <dt id="bootstrap-tools--kg-schema-fields--subgraph-export.subgraphnodebase.name" data-fa-state="extracted" data-fa-gloss="">
@@ -2510,7 +2510,7 @@ ToolDefinitionSchema.maintains <span class="fa-gloss-status">candidate, extracte
 ToolDefinitionSchema.renders <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The graph KINDS this Tool draws a viewer for — one page per declared directory of the kind, placed by the Tool itself.</p>
+<p>The graph TYPOLOGIES this Tool draws a viewer for — one page per declared directory of the kind, placed by the Tool itself.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolDefinitionSchema.renders</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--tool.tooldefinitionschema.satisfies" data-fa-state="extracted" data-fa-gloss="">
@@ -3176,7 +3176,7 @@ ValidatorNodeSchema.schema <span class="fa-gloss-status">candidate, extracted</s
 ValidatorNodeSchema.validates <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>What it validates: a graph kind, and the <code>$schema</code> family within it when the kind has several.</p>
+<p>What it validates: a graph typology, and the <code>$schema</code> family within it when the kind has several.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/validator-node.ts"><code>cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.validates</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--kind-validator.validatorref.exportname" data-fa-state="extracted" data-fa-gloss="">
@@ -3547,7 +3547,7 @@ VisualisationSchema.theme <span class="fa-gloss-status">candidate, extracted</sp
 VisualisationSchema.title <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>What a tile calls it. Absent, the tile takes the display name of the directory's first graph kind (<code>kindTitle</code>, via <code>scripts/lib/nav-label.ts</code>), which is what every other surface calls that page. Declare one only when the page is not simply &quot;the kind's viewer&quot;. Never add the harness as a suffix (&quot;Docs — cat-harness&quot;): the qualifier is appended by the surface (bean <code>ob3m</code> finding 6, &quot;One name everywhere&quot;).</p>
+<p>What a tile calls it. Absent, the tile takes the display name of the directory's first graph typology (<code>kindTitle</code>, via <code>scripts/lib/nav-label.ts</code>), which is what every other surface calls that page. Declare one only when the page is not simply &quot;the kind's viewer&quot;. Never add the harness as a suffix (&quot;Docs — cat-harness&quot;): the qualifier is appended by the surface (bean <code>ob3m</code> finding 6, &quot;One name everywhere&quot;).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#VisualisationSchema.title</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--formalization-types.vizcamera.phi" data-fa-state="extracted" data-fa-gloss="">
@@ -4055,7 +4055,7 @@ WaiverNodeSchema.scope <span class="fa-gloss-status">candidate, extracted</span>
 WebPage.documents <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>What this page documents: graph kinds (<code>library</code>), or one directory as <code>&lt;instance&gt;/&lt;id&gt;</code> where the kind is too general. Emitted into the page's front matter, where the coverage check reads it — the page names the directory, and the directory names no page (#1168 B7c).</p>
+<p>What this page documents: graph typologies (<code>library</code>), or one directory as <code>&lt;instance&gt;/&lt;id&gt;</code> where the kind is too general. Emitted into the page's front matter, where the coverage check reads it — the page names the directory, and the directory names no page (#1168 B7c).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/webpage.ts"><code>cat-harness/schemas/webpage.ts#WebPage.documents</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--webpage.webpage.heading" data-fa-state="extracted" data-fa-gloss="">

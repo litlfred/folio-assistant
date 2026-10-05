@@ -108,7 +108,7 @@ import { subgraphSourceOverrides } from "../schemas/harness-config.js";
 import { resolveSubgraphSource } from "../schemas/subgraph-source.js";
 // `readDeclaration` throws on the `folio` kind unless core has registered it —
 // the same side-effect import `qa-store.ts` carries, same reason.
-import "../schemas/folio-graph-kind.js";
+import "../schemas/folio-graph-typology.js";
 import { waitFor } from "../src/core/retry.js";
 import { PUSH_BASE_MS, PUSH_CAP_MS } from "./backoff-sleep.js";
 

@@ -65,6 +65,7 @@ import { readHarnessConfig } from "../../cat-harness/schemas/harness-config.js";
 import type { Chapter, Paper, Section, SectionRef } from "../../cat-harness/schemas/types.js";
 import { buildDocumentMarkdown } from "../../cat-harness/content/pipeline/render-markdown.js";
 import { reviewPageHtml } from "../../cat-harness/scripts/gen-review-page.js";
+import { darkRules } from "../../cat-harness/scripts/lib/scheme-css.ts";
 
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
@@ -78,7 +79,7 @@ function page(title: string, body: string, math?: MathOptions): string {
 <title>${esc(title)}</title>
 <style>
   :root { color-scheme: light dark; --fg: #1b1b1b; --bg: #fdfdfb; --muted: #5b5b5b; --link: #0b5cad; }
-  @media (prefers-color-scheme: dark) { :root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; } }
+  ${darkRules(`:root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; }`)}
   body { margin: 0; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
   /* The column and its gutters belong to main, not body: the harness rail sets
      body padding-left to clear its strip, which replaced a body's own gutter and

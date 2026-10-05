@@ -70,7 +70,7 @@ function world(): { repo: string; url: string; storeDir: string; base: string } 
   git(repo, "remote", "add", "origin", url);
   writeFileSync(
     join(repo, "fixture.json"),
-    JSON.stringify({ $schema: "folio-harness/v1", name: "fixture", directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }] }, null, 2),
+    JSON.stringify({ $schema: "folio-harness/v1", name: "fixture", directories: [{ id: "beans", path: "beans/", graphTypologies: ["beans"] }] }, null, 2),
   );
   mkdirSync(join(repo, "beans"), { recursive: true });
   writeFileSync(
@@ -78,8 +78,8 @@ function world(): { repo: string; url: string; storeDir: string; base: string } 
     JSON.stringify({
       name: "fixture",
       directories: [
-        { id: "defs", path: "defs", graphKinds: ["bean-defs"] },
-        { id: "queue", path: "queue", subgraph: true, source: { kind: "branch", branch: BRANCH, keyedBy: "tip" }, graphKinds: ["merge-queue"] },
+        { id: "defs", path: "defs", graphTypologies: ["bean-defs"] },
+        { id: "queue", path: "queue", subgraph: true, source: { kind: "branch", branch: BRANCH, keyedBy: "tip" }, graphTypologies: ["merge-queue"] },
       ],
     }),
   );

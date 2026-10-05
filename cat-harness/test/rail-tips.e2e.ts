@@ -193,7 +193,12 @@ test.describe("landing: every icon in the strip is named on hover and on keyboar
     expect(await open(page, "landing")).toEqual([]);
     const icons = page.locator(".side-bar > .fa-nav-icons > .fa-nav-icon");
     const n = await icons.count();
-    expect(n).toBeGreaterThanOrEqual(6);
+    // Every declared slot (the retired `close` aside) plus the light/dark
+    // switch. Read from the declaration, not a number: the owner changes the
+    // row (2026-10-05 dropped processes and kg, bean `82qs`).
+    const declared = (JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "cat-harness.json"), "utf-8"))
+      .navbarIcons as string[]).filter((i) => i !== "close");
+    expect(n).toBe(declared.length + 1);
     for (let i = 0; i < n; i++) {
       const box = (await icons.nth(i).boundingBox())!;
       await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);

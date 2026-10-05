@@ -654,12 +654,12 @@ describe("the sub-graphs card says what the owner asked for", () => {
     }
   });
 
-  test("acquisition is described as a STEP, not a fifth graph kind", () => {
+  test("acquisition is described as a STEP, not a fifth graph typology", () => {
     // `readDeclaration` throws on an unknown kind, so prose naming a fifth one
     // would send the next agent looking for a directory that is not there. The
     // card now says so outright instead of merely avoiding the word.
     expect(body()).toContain("acquisition");
-    expect(body()).toMatch(/step rather than a graph kind/i);
+    expect(body()).toMatch(/step rather than a graph typology/i);
   });
 
   test("it says where acquisition's two ends are, since they are real directories", () => {

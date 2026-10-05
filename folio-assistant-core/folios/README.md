@@ -18,12 +18,12 @@ tools, and only the last is documentation *about* the tools.
 
 `folio` already exists — *"authored content, rendered to a website by the
 just-the-docs pipeline"* — registered by core in
-[`schemas/folio-graph-kind.ts`](../../cat-harness/schemas/folio-graph-kind.ts)
+[`schemas/folio-graph-typology.ts`](../../cat-harness/schemas/folio-graph-typology.ts)
 because only core can render it. A second kind for the same thing would be two
 spellings of one concept, which is the drift this repository keeps paying for.
 
 What is new is `docs`, in cat-harness, for the other subject. See
-[`schemas/docs-graph-kind.ts`](../../cat-harness/schemas/docs-graph-kind.ts).
+[`schemas/docs-graph-typology.ts`](../../cat-harness/schemas/docs-graph-typology.ts).
 
 ## Empty on purpose, and declared anyway
 
