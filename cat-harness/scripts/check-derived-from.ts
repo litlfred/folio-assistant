@@ -28,6 +28,25 @@
  *   generator from it (bean `4j86`), and a path that does not exist would
  *   silently shrink the cone rather than fail.
  *
+ * - **The storage clock** (bean `0b8c`, #2230). A derived artefact can be
+ *   current in a commit only if every input it is computed from — directly,
+ *   or through the `derivedFrom` edges upstream — is itself kept in the
+ *   commit. An input kept on a BRANCH (a `source` or `storage` that is not
+ *   the checkout) moves without a commit, so a committed artefact derived
+ *   from it is stale the moment somebody writes there, on main and on every
+ *   open PR at once. That was measured: the fsh-guts viewer, committed on
+ *   main while `fsh-guts/` lives on `cat/cat-harness/fsh-guts`, went red
+ *   everywhere on one `state:push` (2026-10-05). So:
+ *   - a TRACKED artefact with a branch-kept input is refused
+ *     (`committed-from-branch`): it must be built at publish instead;
+ *   - a publish-time visualisation that names no `writer` is refused
+ *     (`publish-without-writer`): `derive:publish` would have nothing to run.
+ *   A visualisation is derived from the directory it visualises — the edge
+ *   is implicit, because a viewer of X is computed from X by definition.
+ *   "Kept on a branch" is read from the COMMITTED declaration; a per-checkout
+ *   source override is a local choice and does not change what every
+ *   checkout shares.
+ *
  * And one ADVISORY count: directories in the `derived` layer that name no
  * `derivedFrom`. Absent means "not declared", and a `library/` is derived from
  * an external publication, not from a graph. Making silence fail needs a field
@@ -36,10 +55,11 @@
  * @module cat-harness/scripts/check-derived-from
  * @covers none — it judges directory declarations, which no graph typology holds
  */
+import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { graphLayer, readDeclaration } from "../schemas/cat-harness.ts";
+import { graphLayer, readDeclaration, visualisationsOf } from "../schemas/cat-harness.ts";
 import { ancestorsOf, flattenDependencies } from "../schemas/dependency-order.js";
 import { allowedFromNeeds } from "../schemas/layer-direction.js";
 import { readInstances } from "./check-import-direction.ts";
@@ -57,6 +77,10 @@ export interface Dir {
   path?: string;
   /** The generator, as declared (`writer`), repo-relative. */
   writer?: readonly string[];
+  /** Kept on a branch rather than in the checkout (`source` not a directory, or `storage` set). */
+  onBranch?: boolean;
+  /** The pages that visualise this directory, each derived from it. */
+  visualisers?: readonly { ref: string; writer?: readonly string[] }[];
 }
 
 export interface Inst {
@@ -71,7 +95,20 @@ export type Finding =
   | { kind: "layering-gap"; instance: string; directory: string; target: string; declaredBy: string[] }
   | { kind: "order"; instance: string; directory: string; target: string; detail: string }
   | { kind: "cycle"; nodes: string[] }
-  | { kind: "missing-writer"; instance: string; directory: string; writer: string };
+  | { kind: "missing-writer"; instance: string; directory: string; writer: string }
+  | { kind: "committed-from-branch"; instance: string; directory: string; artefact: string; via: string[] }
+  | { kind: "publish-without-writer"; instance: string; directory: string; artefact: string; via: string[] };
+
+/** A derived artefact that can only be current when built at publish: `derive:publish` runs its writer. */
+export interface PublishArtefact {
+  /** `instance/id` of the directory it derives from (itself, for a derived directory). */
+  node: string;
+  /** Repo-relative: a visualiser's page, or a derived directory's path. */
+  artefact: string;
+  writer: readonly string[];
+  /** The upstream chain to the first branch-kept input, consumer first. */
+  via: string[];
+}
 
 export interface Edge {
   from: string;
@@ -83,12 +120,18 @@ export interface Judgement {
   edges: Edge[];
   /** Derived-layer directories with no derivedFrom: advisory. */
   undeclared: string[];
+  /** Every artefact that must be built at publish, in no particular order (see {@link renderingOrder}). */
+  publish: PublishArtefact[];
 }
 
 const node = (instance: string, id: string) => `${instance}/${id}`;
 
 /** Pure: the rules, over already-read declarations. */
-export function judge(instances: readonly Inst[], exists: (repoRelative: string) => boolean = () => true): Judgement {
+export function judge(
+  instances: readonly Inst[],
+  exists: (repoRelative: string) => boolean = () => true,
+  tracked: (repoRelative: string) => boolean = () => false,
+): Judgement {
   const byName = new Map(instances.map((i) => [i.name, i]));
   const declares = (inst: string, id: string) => byName.get(inst)?.dirs.some((d) => d.id === id) ?? false;
   const findings: Finding[] = [];
@@ -101,6 +144,11 @@ export function judge(instances: readonly Inst[], exists: (repoRelative: string)
       // A dangling writer would silently SHRINK the staging cone, so it is refused.
       for (const w of d.writer ?? []) {
         if (!exists(w)) findings.push({ kind: "missing-writer", instance: inst.name, directory: d.id, writer: w });
+      }
+      for (const v of d.visualisers ?? []) {
+        for (const w of v.writer ?? []) {
+          if (!exists(w)) findings.push({ kind: "missing-writer", instance: inst.name, directory: d.id, writer: w });
+        }
       }
       for (const target of d.derivedFrom ?? []) {
         const owner = [inst.name, ...inst.ancestors].find((n) => declares(n, target));
@@ -154,7 +202,53 @@ export function judge(instances: readonly Inst[], exists: (repoRelative: string)
   };
   for (const n of out.keys()) if (colour.get(n) === undefined) visit(n);
 
-  return { findings, edges, undeclared };
+  // The storage clock: walk UPSTREAM from each directory to its first
+  // branch-kept input. A cycle is already refused above, so `seen` only
+  // guards the walk; it does not decide anything.
+  const dirOf = new Map(instances.flatMap((i) => i.dirs.map((d) => [node(i.name, d.id), d] as const)));
+  const branchInput = (start: string): string[] | undefined => {
+    const seenUp = new Set<string>();
+    const walk = (n: string, path: string[]): string[] | undefined => {
+      if (seenUp.has(n)) return undefined;
+      seenUp.add(n);
+      if (dirOf.get(n)?.onBranch) return [...path, n];
+      for (const m of out.get(n) ?? []) {
+        const hit = walk(m, [...path, n]);
+        if (hit) return hit;
+      }
+      return undefined;
+    };
+    return walk(start, []);
+  };
+  const publish: PublishArtefact[] = [];
+  for (const inst of instances) {
+    for (const d of inst.dirs) {
+      const self = node(inst.name, d.id);
+      // A derived DIRECTORY in the checkout whose input is on a branch.
+      if (!d.onBranch && d.derivedFrom && d.path) {
+        const via = branchInput(self);
+        if (via && tracked(d.path)) {
+          findings.push({ kind: "committed-from-branch", instance: inst.name, directory: d.id, artefact: d.path, via });
+        } else if (via && d.writer) {
+          publish.push({ node: self, artefact: d.path, writer: d.writer, via });
+        }
+      }
+      // A visualisation is derived from its own directory, branch-kept or not.
+      for (const v of d.visualisers ?? []) {
+        const via = branchInput(self);
+        if (!via) continue;
+        if (tracked(v.ref)) {
+          findings.push({ kind: "committed-from-branch", instance: inst.name, directory: d.id, artefact: v.ref, via });
+        } else if (!v.writer) {
+          findings.push({ kind: "publish-without-writer", instance: inst.name, directory: d.id, artefact: v.ref, via });
+        } else {
+          publish.push({ node: self, artefact: v.ref, writer: v.writer, via });
+        }
+      }
+    }
+  }
+
+  return { findings, edges, undeclared, publish };
 }
 
 /** The ratchet over layering gaps: a gap not in the baseline regresses; a baseline entry no longer a gap is stale. */
@@ -197,14 +291,24 @@ export function readTree(repoRoot = REPO_ROOT): Inst[] {
         ...(d.derivedFrom ? { derivedFrom: d.derivedFrom } : {}),
         path: `${relative(repoRoot, join(i.root, d.path)).replace(/\/$/, "")}/`,
         ...(d.writer ? { writer: d.writer } : {}),
+        onBranch: (d.source !== undefined && d.source.kind !== "directory") || d.storage !== undefined,
+        visualisers: visualisationsOf(d.coverage, d.id).map((v) => ({ ref: v.ref, ...(v.writer ? { writer: v.writer } : {}) })),
       })),
     };
   });
   return instances.sort((a, b) => (position.get(a.name) ?? 0) - (position.get(b.name) ?? 0));
 }
 
+/** Is this repo-relative path (a file, or a directory ending in `/`) tracked by git? Asks git, never the disk. */
+export function trackedIn(repoRoot = REPO_ROOT): (repoRelative: string) => boolean {
+  const r = spawnSync("git", ["ls-files", "-z"], { cwd: repoRoot, encoding: "utf8", maxBuffer: 1 << 28 });
+  if (r.status !== 0) throw new Error(`check:derived-from: git ls-files failed — ${r.stderr}`);
+  const files = new Set(r.stdout.split("\0").filter(Boolean));
+  return (p) => (p.endsWith("/") ? [...files].some((f) => f.startsWith(p)) : files.has(p));
+}
+
 export function analyse(repoRoot = REPO_ROOT): Judgement {
-  return judge(readTree(repoRoot), (p) => existsSync(join(repoRoot, p)));
+  return judge(readTree(repoRoot), (p) => existsSync(join(repoRoot, p)), trackedIn(repoRoot));
 }
 
 /**
@@ -263,7 +367,7 @@ export function downstreamOf(changed: readonly string[], order: readonly string[
 
 if (import.meta.main) {
   const tree = readTree();
-  const j = judge(tree, (p) => existsSync(join(REPO_ROOT, p)));
+  const j = judge(tree, (p) => existsSync(join(REPO_ROOT, p)), trackedIn(REPO_ROOT));
   const order = renderingOrder(tree, j.edges);
   const at = process.argv.indexOf("--downstream");
   if (at !== -1) {
@@ -288,6 +392,11 @@ if (import.meta.main) {
     else if (f.kind === "order") console.log(`  ✗ ${f.instance}/${f.directory}: derivedFrom "${f.target}" ${f.detail}`);
     else if (f.kind === "cycle") console.log(`  ✗ cycle: ${f.nodes.join(" → ")}`);
     else if (f.kind === "missing-writer") console.log(`  ✗ ${f.instance}/${f.directory}: writer "${f.writer}" does not exist`);
+    else if (f.kind === "committed-from-branch") {
+      console.log(`  ✗ ${f.artefact} is committed, but is derived from ${f.via.at(-1)}, which is kept on a branch (${f.via.join(" ← ")}). It cannot be current in a commit: untrack it and let \`derive:publish\` build it.`);
+    } else if (f.kind === "publish-without-writer") {
+      console.log(`  ✗ ${f.artefact} must be built at publish (derived from branch-kept ${f.via.at(-1)}) but its visualisation names no \`writer\` for \`derive:publish\` to run`);
+    }
   }
   for (const g of regressions) {
     if (g.kind === "layering-gap") {
@@ -297,5 +406,5 @@ if (import.meta.main) {
   for (const s of stale) console.log(`  ✗ STALE baseline: ${s.instance}/${s.directory} → ${s.target} is no longer a gap — remove it from derived-from.baseline.ts`);
   console.log(`  · ${j.undeclared.length} derived-layer director(ies) name no derivedFrom — advisory, not graded: ${j.undeclared.join(", ") || "none"}`);
   if (hard.length || regressions.length || stale.length) process.exit(1);
-  console.log(`  ✓ every edge resolves, no cycle, the interim order holds; ${BASELINE.length} baselined layering gap(s)`);
+  console.log(`  ✓ every edge resolves, no cycle, the interim order holds, nothing committed is derived from a branch; ${j.publish.length} artefact(s) built at publish; ${BASELINE.length} baselined layering gap(s)`);
 }
