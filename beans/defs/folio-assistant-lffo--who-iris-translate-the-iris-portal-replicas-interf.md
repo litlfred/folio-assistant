@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-05T18:46:23Z
-updated_at: 2026-10-05T19:04:00Z
+updated_at: 2026-10-05T21:42:56Z
 parent: folio-assistant-bzyu
 ---
 
@@ -783,3 +783,16 @@ Issue #2228. Owner, 2026-10-05: 'help make sure who-iris has all translations'; 
 | 113 | 在被引用节点中查找“{q}” → | Look up “{q}” among referenced nodes → | PASS |
 | 114 | 没有已实体化的条目或馆藏与“<strong>{q}</strong>”匹配。 | No materialized item or collection matches “<strong>{q}</strong>”. | PASS |
 | 115 | 在被引用节点的标识符查询中搜索“{q}”（{n} 个节点）→ | Search for “{q}” in the identifier lookup of referenced nodes ({n} nodes) → | PASS |
+
+
+## Status (2026-10-05)
+
+- [x] UI strings in SITE_STRINGS (who-iris/scripts/gen-iris-pages.ts), extracted to translations/<lc>/site/iris-site.pot
+- [x] .po for ar, es, fr, ru, zh — 116/116 each, 0 fuzzy, 0 empty
+- [x] site/<lc>/ pages: lang, dir=rtl, hreflang, language row, fa-translation-meta
+- [x] round-trip QA recorded above (self-check, not tool-isolated)
+- [x] iris:pages:check covers the catalogues; translation-status counts every instance
+- [ ] a person reviews the five catalogues (or an independent checker repeats the round trip) — then they can be signed off
+- [ ] rendered check of one page per locale, Arabic in particular — no browser was available here
+
+PR #2229 (draft), issue #2228.
