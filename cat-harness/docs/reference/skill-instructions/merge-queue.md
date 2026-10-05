@@ -455,7 +455,11 @@ The seven checks, each named in a refusal by number and id:
    is not a refusal — its deploy is held by the #1956 `gh-pages` rate limit,
    measured at up to 41 min with eight previews queued — and the verdict
    says so as **not waited for**. Once it finishes, red still refuses, since
-   `stage` runs real checks before it deploys. The list is
+   `stage` runs real checks before it deploys — **unless the only failed
+   step is the deploy itself** (`DEPLOY_ONLY_STEP`): a push window that
+   never opened, or three rejected pushes, is not a verdict on the tree
+   (owner ruling 2026-10-05). The guard reads the run's failed steps to
+   tell; if it cannot read them, red refuses as before. The list is
    `NOT_WAITED_FOR_WORKFLOW_FILES` in `merge-guard.ts`.
 6. **`checklist`** — no unticked `- [ ]` in the body.
 7. **`open-question`** — no comment after the marker asks the owner or the
