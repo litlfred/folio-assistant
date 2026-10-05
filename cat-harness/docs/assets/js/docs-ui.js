@@ -490,7 +490,19 @@
      * magnifier. So the row shows the globe and the page's own language, and
      * the same button opens the tabs beside it and closes them again (`l4zi`:
      * the inverse is the same control in the same place). Its NAME is
-     * "Language"; the state is `aria-expanded`, as on the magnifier. */
+     * "Language"; the state is `aria-expanded`, as on the magnifier.
+     *
+     * ON A PHONE ONLY. Owner, reviewing #2202: *"dropdown on phone only"* --
+     * where the six tabs fit beside search they stay inline, one click to
+     * switch, and the toggle is not drawn (`docs-ui.css`, 40rem). Both forms
+     * are in the DOM; the stylesheet picks one, so a resize needs no script.
+     * The inline form's globe is its own span: the toggle's is hidden with
+     * the toggle. */
+    container.appendChild(el("span", {
+      class: "fa-page-lang-globe fa-page-lang-globe--inline",
+      title: "Available translations for this page",
+      "aria-hidden": "true",
+    }, "🌐"));
     var listId = "fa-page-lang-list";
     var toggle = el("button", {
       type: "button",
