@@ -479,7 +479,15 @@ describe("the cut, on the REAL tree", () => {
     // The cut fired at all, and on something worth cutting. Without the second
     // claim this passes for a composer that dropped a single page.
     expect(cut.carried.some((d) => !d.carry)).toBe(true);
-    expect(nCut).toBeLessThan(nAll * 0.75);
+    // EVERY page of every stubbed instance is gone, each replaced by its one
+    // stub. This was a ratio (`nCut < 0.75 * nAll`) while smart-trust and
+    // smart-base were composed; since bean `mftp` they build into their own
+    // IG sites (`igSite`), whose cut is the staging cone in `stage-ig-sites`,
+    // so a ratio tuned to that corpus measured instances no longer here.
+    const stubbed = cut.carried.filter((d) => !d.carry).map((d) => `${d.instance.under}/`);
+    const theirs = Object.keys(all.suppliedBy).filter((k) => stubbed.some((u) => k.startsWith(u))).length;
+    expect(theirs).toBeGreaterThan(stubbed.length);
+    expect(nCut).toBeLessThanOrEqual(nAll - theirs + stubbed.length);
 
     // ...and what remains in place of each stubbed instance is its stub, not a
     // hole. A 404 where a tile links is the `pb04` defect this replaces.

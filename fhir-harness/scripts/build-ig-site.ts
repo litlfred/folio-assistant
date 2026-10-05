@@ -228,6 +228,11 @@ const IG_TOPBAR_CSS = `
 .ig-topbar-group li a{display:block;padding:.25rem .75rem;color:#1c4b7c}
 .ig-topbar-group li a:hover{background:#eef3f8}
 .ig-main{max-width:60rem;padding:1rem 1.5rem 3rem}
+.ig-edit{margin-top:2rem;font-size:.85rem}
+.ig-src{font-size:.7em;text-decoration:none;opacity:.45;margin-left:.25em}
+.ig-src:hover{opacity:1}
+.ig-feedback{font-size:.7em;text-decoration:none;opacity:.55;margin-left:.15em}
+.ig-feedback:hover{opacity:1}
 `;
 
 /**
@@ -235,7 +240,7 @@ const IG_TOPBAR_CSS = `
  * prose (and the IG's colour scheme), the IG's top bar and TOC declaration,
  * the page — and no sidebar, so the rail pass supplies the navbar.
  */
-export function harnessLayout(topBar: string, tocNav: string): string {
+export function harnessLayout(topBar: string, tocNav: string, sectionLabel?: string): string {
   return [
     "<!DOCTYPE html>",
     '<html lang="{{ page.lang | default: site.lang | default: \'en\' }}">',
@@ -245,18 +250,75 @@ export function harnessLayout(topBar: string, tocNav: string): string {
     "<title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>",
     "<link rel=\"stylesheet\" href=\"{{ '/assets/css/just-the-docs-default.css' | relative_url }}\">",
     `<style>${IG_TOPBAR_CSS.trim()}</style>`,
+    // The navbar section is named after the IG (owner, 2026-10-05).
+    ...(sectionLabel ? [`<meta name="fa-visualiser-label" content="${escHtml(sectionLabel)}">`] : []),
     "</head>",
     "<body>",
     tocNav,
     topBar,
     '<main class="ig-main main-content" id="main-content">',
     "{{ content }}",
+    '{% if page.ig_edit_url %}<p class="ig-edit"><a href="{{ page.ig_edit_url }}">Edit this page on GitHub</a></p>{% endif %}',
+    '{% if page.ig_source_lines %}<script type="application/json" id="ig-source-lines">{"blob": {{ page.ig_source_blob | jsonify }}, "lines": {{ page.ig_source_lines | jsonify }}}</script>',
+    `<script>${SOURCE_LINKS_JS}</script>{% endif %}`,
     "</main>",
     "</body>",
     "</html>",
     "",
   ].join("\n");
 }
+
+/**
+ * Every ATX heading of a markdown source with its 1-based line, outside code
+ * fences: `{ t, l }`, `t` the heading's text with markdown, links and a
+ * trailing `{#id}` removed — what a reader sees, which is what the layout
+ * matches it against. Setext headings are not read; a heading the reader
+ * sees and this does not simply gets no source link.
+ */
+export function sourceHeadings(md: string): Array<{ t: string; l: number }> {
+  const out: Array<{ t: string; l: number }> = [];
+  let fence: string | undefined;
+  md.split(/\r?\n/).forEach((line, i) => {
+    const f = /^\s{0,3}(```|~~~)/.exec(line);
+    if (f) {
+      fence = fence === undefined ? f[1] : fence === f[1] ? undefined : fence;
+      return;
+    }
+    if (fence !== undefined) return;
+    const h = /^\s{0,3}#{1,6}\s+(.*?)\s*#*\s*$/.exec(line);
+    if (!h) return;
+    const t = h[1]!
+      .replace(/\{[#:][^}]*\}\s*$/, "")
+      .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
+      .replace(/<[^>]+>/g, "")
+      .replace(/[*_`]/g, "")
+      .trim();
+    if (t) out.push({ t, l: i + 1 });
+  });
+  return out;
+}
+
+/**
+ * The layout's per-section links: each heading in the page body that matches
+ * a source heading (by its visible text, in order) gets a small link to that
+ * line on GitHub, and EVERY heading gets a feedback link — a new issue on the
+ * IG's repository, pre-filled with the page, the section and its source line
+ * (owner, 2026-10-05: "add [shoutout] Feedback icon that opens a github issue
+ * next to the section as well w/ preopopulted github issue content"). Script, because Jekyll has rendered the headings by
+ * the time a template could see them; matched by text, because an include can
+ * add headings the page's own source does not hold.
+ */
+const SOURCE_LINKS_JS = `(function(){var d=document.getElementById("ig-source-lines");if(!d)return;var m;try{m=JSON.parse(d.textContent)}catch(e){return}
+var repo=(m.blob.match(/^https:\\/\\/github\\.com\\/[^/]+\\/[^/]+/)||[])[0];
+var n=function(s){return s.toLowerCase().replace(/[^a-z0-9]+/g," ").trim()};var used={};
+var link=function(h,cls,href,title,glyph){var a=document.createElement("a");a.className=cls;a.href=href;a.title=title;a.textContent=glyph;a.rel="noopener";a.target="_blank";h.appendChild(document.createTextNode(" "));h.appendChild(a)};
+document.querySelectorAll("#main-content h1,#main-content h2,#main-content h3,#main-content h4,#main-content h5,#main-content h6").forEach(function(h){
+var text=h.textContent.trim(),k=n(text),line;for(var i=0;i<m.lines.length;i++){if(!used[i]&&n(m.lines[i].t)===k){used[i]=1;line=m.lines[i].l;break}}
+var src=line?m.blob+"#L"+line:m.blob;
+if(line)link(h,"ig-src",src,"This section's source, line "+line+", on GitHub","\\u270E");
+if(repo){var here=location.href.split("#")[0]+(h.id?"#"+h.id:"");
+var body="**Page:** "+here+"\\n**Section:** "+text+"\\n**Source:** "+src+"\\n\\n**Feedback:**\\n\\n";
+link(h,"ig-feedback",repo+"/issues/new?title="+encodeURIComponent("Feedback: "+document.title.split(" | ")[0]+" \\u2014 "+text)+"&body="+encodeURIComponent(body),"Give feedback on this section (opens a GitHub issue)","\\uD83D\\uDCE3")}})})();`;
 
 const files = (dir: string) => (existsSync(dir) ? readdirSync(dir).filter((f) => statSync(join(dir, f)).isFile()) : []);
 
@@ -306,17 +368,14 @@ export interface StageOptions {
    */
   releases?: IgReleases;
   /**
-   * Whose navigation the pages wear. `"theme"` (default): just-the-docs' own
-   * sidebar, built from the menu. `"harness"`: a plain layout carrying the
-   * IG's own TOP BAR (the Publisher's menu, as published) and the IG's TOC
-   * DECLARED as the page's navbar section (`data-fa-visualiser-nav`), with no
-   * sidebar of its own — so the post-build rail pass (`rail-standalone-pages`)
-   * gives the page the folio-assistant LHS navbar every harness wears, with
-   * the TOC as its section. Owner, 2026-10-05 (bean `mftp`): *"use
-   * folio-assistnat LHS navbar, not custome one"*, and *"the orignal topnvar
-   * bar should be preserved"*.
+   * Where the IG's source can be edited on GitHub, `https://github.com/<o>/<r>/edit/<branch>`.
+   * Given, every page read from `input/pagecontent/` carries `ig_edit_url`
+   * (`<editBase>/input/pagecontent/<file>`) and the layout links it, as the
+   * just-the-docs layout's "Edit this page" link did (owner, 2026-10-05, bean
+   * `mftp`: *"lost the links to edit the orignial source on github"*). A page
+   * this build GENERATES has no source to edit, so it gets none.
    */
-  chrome?: "theme" | "harness";
+  editBase?: string;
 }
 
 /** The fields of a `folio-fhir-artifact/v1` entry this build reads. */
@@ -617,7 +676,16 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
     let body = relink(readFileSync(join(pagecontent, f), "utf-8"));
     // Standard HL7 IG Publisher macro for localized includes: {% lang-fragment <file> %}
     body = body.replace(/\{%-?\s*lang-fragment\s+([^\s%]+)\s*-?%\}/g, "{% include $1 %}");
-    let data: Record<string, unknown> = {};
+    let data: Record<string, unknown> = opts.editBase
+      ? {
+          ig_edit_url: `${opts.editBase.replace(/\/$/, "")}/input/pagecontent/${f}`,
+          // Per-section source links (owner, 2026-10-05: "feedback on (sub-*)sections
+          // should link to line numbers if possible"): each heading's line in the
+          // ORIGINAL file, read before anything here rewrites it.
+          ig_source_blob: `${opts.editBase.replace(/\/$/, "").replace(/\/edit\//, "/blob/")}/input/pagecontent/${f}`,
+          ig_source_lines: sourceHeadings(readFileSync(join(pagecontent, f), "utf-8")),
+        }
+      : {};
     for (const fill of opts.fills ?? []) {
       if (!body.includes(fill.marker)) continue;
       body = body.split(fill.marker).join(fill.body);
@@ -734,12 +802,19 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
     mkdirSync(join(out, "_sass", "custom"), { recursive: true });
     writeFileSync(join(out, "_sass", "custom", "custom.scss"), SIDEBAR_SCSS);
   }
-  if (opts.chrome === "harness" && opts.menu) {
+  // EVERY IG site wears the folio-assistant navbar and keeps the IG's own top
+  // bar — one layout, no per-site choice to drift (owner, 2026-10-05, bean
+  // `mftp`: "use folio-assistnat LHS navbar, not custome one", "the orignal
+  // topnvar bar should be preserved", "make sure no drift issues"). The
+  // layout carries no sidebar, so the post-build rail pass supplies the
+  // navbar, with the IG's TOC declared as its section. Needs the IG's menu;
+  // without one the site keeps just-the-docs' layout and says so.
+  if (opts.menu) {
     // The extra rows are the IG-level pages the Publisher links outside its
     // menu: its own table of contents, and the releases page when written.
     const extra = [{ label: "Table of Contents", href: "toc.html" }, ...(generated.includes("releases.md") ? [{ label: "Releases", href: "releases.html" }] : [])];
     mkdirSync(join(out, "_layouts"), { recursive: true });
-    writeFileSync(join(out, "_layouts", "default.html"), harnessLayout(igTopBar(opts.menu, baseurl, title), igTocNav(opts.menu, baseurl, extra)));
+    writeFileSync(join(out, "_layouts", "default.html"), harnessLayout(igTopBar(opts.menu, baseurl, title), igTocNav(opts.menu, baseurl, extra), title));
   }
   writeFileSync(
     join(out, "_config.yml"),

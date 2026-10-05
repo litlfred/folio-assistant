@@ -101,6 +101,30 @@ export function webpagePalette(repoRoot: string, instance: string): { palette?: 
   return { note: `${instance}: no webpage theme, its own or along its needs (${misses.join("; ")})` };
 }
 
+/**
+ * `https://github.com/<o>/<r>/edit/<default branch>` for a GitHub repository,
+ * the branch ASKED of the remote (`git ls-remote --symref`), never assumed:
+ * an edit link on a branch that does not exist is a 404 a reader hits
+ * mid-correction. Undefined for a non-GitHub source, or when the remote
+ * cannot be asked — then pages carry no edit link, and the build says so.
+ */
+export function githubEditBase(repo: string): string | undefined {
+  const m = /^https:\/\/github\.com\/([^/]+)\/([^/]+?)(?:\.git)?\/?$/.exec(repo);
+  if (!m) return undefined;
+  try {
+    const out = execFileSync("git", ["ls-remote", "--symref", repo, "HEAD"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] });
+    const branch = /^ref: refs\/heads\/(\S+)\s+HEAD$/m.exec(out)?.[1];
+    if (!branch) {
+      console.error(`${repo}: no default branch reported — pages carry no edit link`);
+      return undefined;
+    }
+    return `https://github.com/${m[1]}/${m[2]}/edit/${branch}`;
+  } catch {
+    console.error(`${repo}: could not ask its default branch — pages carry no edit link`);
+    return undefined;
+  }
+}
+
 /** The instances `name` declares it `needs`, by name. */
 function instanceNeeds(repoRoot: string, name: string): string[] {
   const root = instanceRootsIn(repoRoot).find((r) => (readDeclaration(r)?.name ?? basename(r)) === name);
@@ -251,6 +275,7 @@ if (import.meta.main) {
     const theme = webpagePalette(resolve("."), ig.declaredAs);
     console.error(theme.note);
     const docs = igSiteDocs(ig.root);
+    const editBase = githubEditBase(ig.repo);
     const r = stageIgSite(src, site, {
       palette: theme.palette,
       baseurl: `${base.replace(/\/$/, "")}/${ig.instance}${docs ? "" : "/ig"}`,
@@ -259,11 +284,9 @@ if (import.meta.main) {
       remoteTheme: opt("--remote-theme"),
       artifacts: artifactsFor(ig.root, docs ? "artifact/" : "../artifact/"),
       releases: releasesFor(ig.root),
+      ...(editBase ? { editBase } : {}),
       // The IG's post-processing output, where its source holds only a marker.
       fills: [igApiHubFill(ig.root, docs ? "" : "../")].filter((x) => x !== undefined),
-      // An igSite IG wears the folio-assistant navbar (the rail pass adds it)
-      // and keeps its own top bar; a site beside an instance keeps just-the-docs'.
-      ...(docs ? { chrome: "harness" as const } : {}),
     });
     console.error(`${ig.instance} (${ig.repo}@${ig.ref.slice(0, 7)}):\n${describeStage(r)}`);
     if (r.siteData.refused.length) process.exit(1);

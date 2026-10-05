@@ -8,7 +8,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
 import { copyDocsInto, igSiteDocs, webpagePalette } from "./stage-ig-sites";
 import type { IgReleases } from "../schemas/ig-releases.ts";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
@@ -365,8 +365,10 @@ describe("copyDocsInto: a front-matter-only page declares something ABOUT a gene
 describe("igSiteDocs", () => {
   test("only an instance that DECLARES igSite builds its IG site at its root", () => {
     expect(igSiteDocs(join(import.meta.dir, "..", "..", "smart-trust"))).toBe(join(import.meta.dir, "..", "..", "smart-trust", "docs/"));
-    // smart-base holds an IG menu too, but its root is a harness landing page.
-    expect(igSiteDocs(join(import.meta.dir, "..", "..", "smart-base"))).toBeUndefined();
+    // Every smart-* IG with a menu does, the same way (owner: "no drift issues").
+    expect(igSiteDocs(join(import.meta.dir, "..", "..", "smart-base"))).toBe(join(import.meta.dir, "..", "..", "smart-base", "docs/"));
+    // An instance that holds no IG does not.
+    expect(igSiteDocs(join(import.meta.dir, "..", "..", "who-iris"))).toBeUndefined();
   });
 });
 
@@ -382,7 +384,7 @@ describe("webpagePalette inherits along needs (bean `mftp`)", () => {
 
 // Bean `mftp`, owner 2026-10-05: the folio-assistant navbar, not just-the-docs'
 // sidebar, and the IG's own top bar preserved.
-describe("chrome: harness — the IG's top bar, and its TOC declared for the navbar", () => {
+describe("every IG site: the IG's top bar, and its TOC declared for the navbar", () => {
   const menu = { groups: [{ label: "Home", items: [{ label: "Summary", href: "overview.html" }] }, { label: "Indices", items: [{ label: "Artifact Index", href: "artifacts.html" }, { label: "Spec", href: "https://example.org/x" }] }] };
   test("the TOC is a visualiser declaration the navbar reads, rows under each group, hrefs under the baseurl", () => {
     const decl = igTocNav(menu, "/b/smart-trust", [{ label: "Table of Contents", href: "toc.html" }]);
@@ -407,11 +409,43 @@ describe("chrome: harness — the IG's top bar, and its TOC declared for the nav
     mkdirSync(join(src, "input", "pagecontent"), { recursive: true });
     writeFileSync(join(src, "sushi-config.yaml"), "id: x.ig\ntitle: X IG\n");
     writeFileSync(join(src, "input", "pagecontent", "index.md"), "# Hi\n");
-    stageIgSite(src, join(d, "out"), { menu, chrome: "harness", baseurl: "/b/x" });
+    stageIgSite(src, join(d, "out"), { menu, baseurl: "/b/x" });
     const layout = readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8");
     expect(layout).toContain("data-fa-visualiser-nav");
     expect(layout).toContain('class="ig-topbar"');
     expect(layout).not.toContain("site-nav");
+    expect(layout).toContain('<meta name="fa-visualiser-label" content="X IG">');
     rmSync(d, { recursive: true, force: true });
+  });
+});
+
+describe("edit links to the IG's own source (bean `mftp`)", () => {
+  test("a pagecontent page carries its edit URL, a generated page none", () => {
+    const d = mkdtempSync(join(tmpdir(), "ig-edit-"));
+    const src = join(d, "src");
+    mkdirSync(join(src, "input", "pagecontent"), { recursive: true });
+    writeFileSync(join(src, "sushi-config.yaml"), "id: x.ig\ntitle: X IG\n");
+    writeFileSync(join(src, "input", "pagecontent", "concepts.md"), "# C\n");
+    stageIgSite(src, join(d, "out"), { menu: { groups: [{ label: "Home", items: [{ label: "C", href: "concepts.html" }] }] }, editBase: "https://github.com/o/r/edit/main" });
+    expect(readFileSync(join(d, "out", "concepts.md"), "utf-8")).toContain('ig_edit_url: "https://github.com/o/r/edit/main/input/pagecontent/concepts.md"');
+    expect(readFileSync(join(d, "out", "toc.md"), "utf-8")).not.toContain("ig_edit_url");
+    expect(readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8")).toContain("Edit this page on GitHub");
+    const layout = readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8");
+    // Per-section: a source-line link and a pre-filled feedback issue.
+    expect(layout).toContain('id="ig-source-lines"');
+    expect(layout).toContain("/issues/new?title=");
+    expect(readFileSync(join(d, "out", "concepts.md"), "utf-8")).toContain('ig_source_blob: "https://github.com/o/r/blob/main/input/pagecontent/concepts.md"');
+    rmSync(d, { recursive: true, force: true });
+  });
+});
+
+describe("sourceHeadings: each section's line in the IG's source (bean `mftp`)", () => {
+  test("ATX headings with their 1-based line, text as a reader sees it, fences skipped", () => {
+    const md = ["# Title {#t}", "", "text", "```", "# not a heading", "```", "### A [link](x.html) and **bold**", "## Last ##"].join("\n");
+    expect(sourceHeadings(md)).toEqual([
+      { t: "Title", l: 1 },
+      { t: "A link and bold", l: 7 },
+      { t: "Last", l: 8 },
+    ]);
   });
 });

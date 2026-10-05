@@ -29,7 +29,6 @@ import { join, resolve } from "node:path";
 import { IgIdentitySchema, igSiteData, readIgIdentity } from "../platform";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
-const page = (instance: string): string => readFileSync(join(ROOT, instance, "docs", "index.md"), "utf8");
 
 /** The banner markup only — the stylesheet above it legitimately names `.ig-status-draft`. */
 function banner(src: string): string {
@@ -48,8 +47,10 @@ describe("the committed pages: the banner's identity is the index's", () => {
     expect(b).toContain('class="ig-status-draft"');
   });
 
+  // smart-base's docs build into its IG site too (bean `mftp`, "no drift"):
+  // the banner is on every artefact page it commits.
   it("smart-base names itself and asserts no status borrowed from smart-trust", () => {
-    const b = banner(page("smart-base"));
+    const b = banner(readFileSync(join(ROOT, "smart-base", "docs", "artifact", "StructureDefinition-DAK.md"), "utf8"));
     expect(b).toContain(">smart.who.int.base</a>");
     expect(b).toContain("http://smart.who.int/base");
     expect(b).not.toContain("smart.who.int.trust");
@@ -58,13 +59,13 @@ describe("the committed pages: the banner's identity is the index's", () => {
 });
 
 describe("the committed pages: the landing page", () => {
-  it("smart-base's index opens with its own harness section, then the artefact index", () => {
-    const src = page("smart-base");
-    expect(src).toMatch(/^---\ntitle: "WHO SMART Base"\n/);
-    const include = src.indexOf('{% include harness_details.html instance="smart-base" %}');
-    const index = src.indexOf("## Artefact index");
-    expect(include).toBeGreaterThan(-1);
-    expect(index).toBeGreaterThan(include);
+  // Since bean `mftp` smart-base commits no landing page either: its IG
+  // site's own home page is the root, and the harness is reached through the
+  // navbar. What it commits for the artefact index is the viewer declaration.
+  it("smart-base commits no landing page, only the artefact index's viewer declaration", () => {
+    expect(existsSync(join(ROOT, "smart-base", "docs", "index.md"))).toBe(false);
+    const src = readFileSync(join(ROOT, "smart-base", "docs", "artifacts.md"), "utf8");
+    expect(src).toMatch(/^---\ntitle: "WHO SMART Base — artefact index"\nrenders:\n {2}- smart-base\/fhir-artifact-index\nrendered-by: ig-pages\n---\n$/);
   });
 
   // Since bean `mftp` smart-trust commits no landing page: its IG site's own

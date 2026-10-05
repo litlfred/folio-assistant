@@ -41,3 +41,10 @@ Local build of the merged site (fork `litlfred/smart-trust` @ `25771f6`, jekyll 
 Theme: smart-trust's IG site had no webpage theme (`no-themes-directory`: the theme moved to smart-base in `kg83`). Owner, 2026-10-05: *"fix upstream smart-base issues as needed"* -- `webpagePalette` now inherits the nearest webpage theme along `needs` (smart-trust -> smart-ig -> smart-base: `who-smart-ig`), and the site renders WHO blue.
 
 Viewer: the retired index carried the `fhir-artifact-index` viewer declaration. It now lives on a front-matter-only `docs/artifacts.md` that `copyDocsInto` lays onto the IG site's generated `artifacts` page; the navbar tile links `/smart-trust/artifacts.html`.
+
+## 2026-10-05, later: owner feedback on the merged site
+
+- *"use folio-assistnat LHS navbar, not custome one ... way too widf"* and *"the orignal topnvar bar should be preserved"*: every IG site now has a plain layout. It keeps WHO's top bar (the Publisher's menu as `<details>` dropdowns), declares the IG's TOC as the page's navbar section (`data-fa-visualiser-nav`), and has no sidebar. The post-build rail pass gives each page the shared navbar, railed as the owning instance's page (`igSiteOwner`). The section is named after the IG (owner chose "WHO SMART Trust") via `<meta name="fa-visualiser-label">`.
+- *"make sure changes you do for smart-trust are reflected in smart-base and so smart-*"* and *"make sure no drift issues"*: smart-base declares `igSite` too, and the harness chrome is the ONLY IG-site layout (no per-site option). smart-immunizations holds no ingested menu, so it has no IG site yet and keeps its composed artefact pages.
+- *"lost the links to edit the orignial source on github"*: each pagecontent page links `Edit this page on GitHub` at the IG's default branch, asked of the remote (`git ls-remote --symref`).
+- *"feedback on (sub-*)sections should link to line numbers"* and *"add [shoutout] Feedback icon that opens a github issue ... preopopulted"*: each heading gets ✎ (its source line, `blob/<branch>/…#L<n>`) and 📣 (a new issue on the IG's repository, pre-filled with page, section and source line).

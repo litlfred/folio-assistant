@@ -4,8 +4,8 @@ description: "ValueSet/CDHIv2.4 in the WHO SMART Base IG, with its canonical URL
 nav_exclude: true
 ig_api_openapi: {"src":"../fhir-artifact-index/dak/ValueSet-CDHIv2.4.openapi.json","script":"../assets/ig-api-openapi.js"}
 ---
-<link rel="stylesheet" href="{{ '/smart-base/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-base/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/base">smart.who.int.base</a></div>
@@ -15,7 +15,7 @@ ig_api_openapi: {"src":"../fhir-artifact-index/dak/ValueSet-CDHIv2.4.openapi.jso
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/base">http://smart.who.int/base</a>.</p>
 </div>
 
-[← all 225 artefacts](../)
+[← all 225 artefacts](../artifacts.html)
 
 ## Digital Health Interventions: Data Services
 
@@ -60,4 +60,4 @@ artefact page, and a whitespace-stripping opening tag ate the blank line after t
 <script src="{{ page.ig_api_openapi.script }}" defer></script>
 
 <footer id="ig-footer" data-prev="ValueSet-CDHIv2.3.html" data-next="ValueSet-CDSCv1.html" class="st-ig"></footer>
-<script src="{{ '/smart-base/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/ig-footer.js' | relative_url }}" defer></script>

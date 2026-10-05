@@ -46,7 +46,7 @@ export {
 } from "./navbar.js";
 export type { NavGroup, NavItem, NavbarModel } from "./navbar.js";
 
-import { documentIndexOf, injectNavbar, visualiserNavOf, type NavGroup, type NavItem, type NavbarModel } from "./navbar.js";
+import { documentIndexOf, injectNavbar, visualiserLabelOf, visualiserNavOf, type NavGroup, type NavItem, type NavbarModel } from "./navbar.js";
 
 /** What a mounted page needs in order to describe its own navbar. */
 export interface RailOptions {
@@ -189,7 +189,7 @@ export function declinesNavbar(html: string): boolean {
  * answer than the headings — a declared index in the graph, say.
  */
 export function injectRail(html: string, o: RailOptions): string | undefined {
-  const label = o.visualiserLabel ?? "Contents";
+  const label = o.visualiserLabel ?? visualiserLabelOf(html) ?? "Contents";
   const documentIndex = o.documentIndex ?? visualiserNavOf(html, label) ?? documentIndexOf(html, label);
   const railed = injectNavbar(html, railModel({ ...o, ...(documentIndex ? { documentIndex } : {}) }));
   return railed === undefined
