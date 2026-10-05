@@ -12,14 +12,14 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 419 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 158 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 419 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 160 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 682 terms and is 553 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 684 terms and is 556 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>682</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>682</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>684</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>684</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">682</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">684</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -416,6 +416,13 @@ Agent review of the change [content-review] <span class="fa-gloss-status">candid
 <dd>
 <p>A review agent judges what no checker can: accuracy, voice, exposition, whether the change says what the editor meant.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/editing-hci-validation.bpmn"><code>folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_AgentReview</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-bpmn-activities--process_publiccomment.task_groupchangesets" data-fa-state="extracted" data-fa-gloss="">
+Agree each change-set's requirements on its issue <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A change-set gets its primary GitHub issue the first time somebody engages with it (the Discuss form, a recommendation or decision on one of its comments, a mention, a PR), opened by the folio's public-comment workflow; any number of other issues may discuss it and are linked. People agree the requirements there, and the committee or editor changes the record with cs-add / cs-remove / cs-title / cs-requirements / cs-merge / cs-split / cs-close / cs-new. The issue's change-set section is rendered from the record and put back if hand-edited; the nightly reconcile keeps every issue in line. The issue is for requirements; the PR that closes it is for preview, review and approval.</p>
+<p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/public-comment.bpmn"><code>folio-assistant-core/processes/content/public-comment.bpmn#Task_GroupChangeSets</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_docssite.call_alert" data-fa-state="extracted" data-fa-gloss="">
 Alert the publication manager [publish-verification] <span class="fa-gloss-status">candidate, extracted</span>
@@ -1655,7 +1662,7 @@ Edit narrative content blocks <span class="fa-gloss-status">candidate, extracted
 Edit the document as decided, on a feature branch <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch that may answer several comments. Status: editing.</p>
+<p>public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch for one change-set. Its PR says Closes #N for the change-set issue, and opening it moves that issue's accepted comments to editing.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/public-comment.bpmn"><code>folio-assistant-core/processes/content/public-comment.bpmn#Task_AuthorEdits</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_translation.task_edittranslation" data-fa-state="extracted" data-fa-gloss="">
@@ -2485,7 +2492,7 @@ Map values onto the shared palette ROLES <span class="fa-gloss-status">candidate
 Mark incorporated when the change set merges <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>public-comment incorporate, naming the branch, PR and staging URL.</p>
+<p>public-comment incorporate, naming the branch, PR and staging URL; done by the folio's workflow when the PR that closes a change-set issue merges. A PR closed unmerged moves nothing.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/public-comment.bpmn"><code>folio-assistant-core/processes/content/public-comment.bpmn#Task_Incorporate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_subscribekg.call_materialize" data-fa-state="extracted" data-fa-gloss="">
@@ -3024,6 +3031,13 @@ Project a window onto the board <span class="fa-gloss-status">candidate, extract
 <dd>
 <p>Project a window onto the board for the chosen card. A window is not the card grown large: it survives zooming out, and only [x] closes it. The frame is fixed ([x] always present, always in the same place); the kind fills in its declared controls.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/ui/board-open-close.bpmn"><code>folio-assistant-core/processes/ui/board-open-close.bpmn#A_Open</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-bpmn-activities--process_publiccomment.task_proposechangesets" data-fa-state="extracted" data-fa-gloss="">
+Propose change-sets, as records with no issue yet <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>public-comment-changesets seed / propose: the agent groups the comments to be weighed into change-sets, one per change the document may need, each a record under changesets/ with its requirements and members. A PROPOSAL: nothing is decided, no GitHub issue is opened, and a comment may sit in zero, one or several change-sets. The record is the only one; everything shown about a change-set is rendered from it.</p>
+<p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/public-comment.bpmn"><code>folio-assistant-core/processes/content/public-comment.bpmn#Task_ProposeChangeSets</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_review.call_narrativecodereview" data-fa-state="extracted" data-fa-gloss="">
 Prose and the code it describes <span class="fa-gloss-status">candidate, extracted</span>
