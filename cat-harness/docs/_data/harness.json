@@ -141,7 +141,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 912,
+      "count": 916,
       "unit": "beans"
     },
     {
@@ -2610,12 +2610,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 52
+          "value": 62
         },
         {
           "id": "kinds",
           "label": "declared graph typologies",
-          "value": 29
+          "value": 30
         },
         {
           "id": "views",
@@ -2650,6 +2650,12 @@
           "kind": "code-list",
           "note": "no viewer yet",
           "label": "Code lists"
+        },
+        {
+          "kind": "doc-group",
+          "within": "docs",
+          "note": "no viewer yet",
+          "label": "Doc group"
         },
         {
           "kind": "docs",
@@ -3019,6 +3025,46 @@
           "path": "cat-harness/docs/requirements/"
         },
         {
+          "id": "docs/start",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/start/"
+        },
+        {
+          "id": "docs/concepts",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/concepts/"
+        },
+        {
+          "id": "docs/guides",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/guides/"
+        },
+        {
+          "id": "docs/process",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/process/"
+        },
+        {
+          "id": "docs/fhir",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/fhir/"
+        },
+        {
           "id": "docs/auto-docs",
           "kinds": [
             "auto-docs"
@@ -3097,6 +3143,46 @@
           ],
           "where": "local",
           "path": "cat-harness/docs/requirements/"
+        },
+        {
+          "id": "start",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/start/"
+        },
+        {
+          "id": "concepts",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/concepts/"
+        },
+        {
+          "id": "guides",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/guides/"
+        },
+        {
+          "id": "process",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/process/"
+        },
+        {
+          "id": "fhir",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/fhir/"
         },
         {
           "id": "auto-docs",
@@ -3196,7 +3282,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 10 graph(s) with no published viewer — auto-docs, code, code-list, policies, scenarios, substrate-snapshot, uml, validators, vocab-mapping, voice-vendors. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 11 graph(s) with no published viewer — auto-docs, code, code-list, doc-group, policies, scenarios, substrate-snapshot, uml, validators, vocab-mapping, voice-vendors. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -3505,6 +3591,12 @@
       {
         "kind": "code-list",
         "label": "Code lists",
+        "note": "no viewer yet"
+      },
+      {
+        "kind": "doc-group",
+        "label": "Doc group",
+        "within": "docs",
         "note": "no viewer yet"
       },
       {

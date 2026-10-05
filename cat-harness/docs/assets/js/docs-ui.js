@@ -11832,6 +11832,54 @@
     return String(path || "").replace(/index\.html$/, "").replace(/\/*$/, "/");
   }
 
+  /* ── THE PAGES LIST IN THE READER'S ALPHABETICAL ORDER ───────────────────
+   *
+   * Owner, 2026-10-05 (bean `xka5`): pages grouped by the docs graph's named
+   * sub-graphs (`_config.yml` `defaults`, one `parent` per folder), *"and
+   * alphabetization//locale dependent"*. just-the-docs orders by `nav_order`
+   * then title in the BUILD's collation, which is a hand-kept number and one
+   * language for every reader. So each level is re-sorted here with
+   * `Intl.Collator` in the page's own `lang`: Arabic, Chinese and Russian
+   * readers get their order, not English's. Home stays first — it is the
+   * root, not an entry in the alphabet. Reordering only: no node is made,
+   * dropped or relabelled, so every link and its state are the theme's.
+   */
+  function sortNavByLocale() {
+    var nav = document.querySelector(".side-bar .site-nav");
+    if (!nav || typeof Intl === "undefined" || !Intl.Collator) return;
+    // A list SCOPED to one harness (#1902, `scopeSiteNav`) is that harness's
+    // own table of contents, in the order it declares: the owner's ruling is
+    // that "each harness is responsible for managing its own sub doc graphs".
+    // Only the site's own list is put into the reader's alphabet.
+    if (nav.hasAttribute("data-fa-scope")) return;
+    var lang = document.documentElement.getAttribute("lang") || undefined;
+    var collator;
+    try { collator = new Intl.Collator(lang, { sensitivity: "base", numeric: true }); }
+    catch (_e) { collator = new Intl.Collator(undefined, { sensitivity: "base", numeric: true }); }
+    var label = function (li) {
+      var a = li.querySelector(":scope > a.nav-list-link");
+      return a ? (a.textContent || "").replace(/\s+/g, " ").trim() : "";
+    };
+    var isHome = function (li) {
+      var a = li.querySelector(":scope > a.nav-list-link");
+      if (!a) return false;
+      try {
+        var to = new URL(a.getAttribute("href"), window.location.href).pathname.replace(/index\.html$/, "");
+        return to === withBase("/").replace(/index\.html$/, "") || to === withBase("") + "/";
+      } catch (_e) { return false; }
+    };
+    Array.prototype.forEach.call(nav.querySelectorAll("ul.nav-list"), function (ul) {
+      var items = Array.prototype.filter.call(ul.children, function (c) { return c.tagName === "LI"; });
+      if (items.length < 2) return;
+      var sorted = items.slice().sort(function (x, y) {
+        var hx = isHome(x), hy = isHome(y);
+        if (hx !== hy) return hx ? -1 : 1;
+        return collator.compare(label(x), label(y));
+      });
+      sorted.forEach(function (li) { ul.appendChild(li); });
+    });
+  }
+
   function mountSidebarRail() {
     var bar = document.querySelector(".side-bar");
     var nav = bar && bar.querySelector(".site-nav");
@@ -12139,6 +12187,7 @@
     mountNavPagesHeading();
     // LAST of the sidebar mounts: it MOVES the index, the folders and the
     // harness group into the one middle, so all three must already exist.
+    sortNavByLocale();
     mountSidebarRail();
     // AFTER THE SITE INDEX, which is fetched rather than inlined since
     // 2026-10-02 — see the site-index block at the top of this file. It is the

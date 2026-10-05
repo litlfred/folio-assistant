@@ -4,7 +4,7 @@
  * Owner, 2026-09-21: **"keep tools and skills separate!"**
  *
  * They were not. `cat-harness.json`'s `tools` entry declared its documentation
- * as `cat-harness/docs/skills.md` — a page titled *"Skills & roles"* with no
+ * as `cat-harness/docs/concepts/skills.md` — a page titled *"Skills & roles"* with no
  * tools section in it. The tools graph had no documentation of its own and
  * named a page about something else.
  *

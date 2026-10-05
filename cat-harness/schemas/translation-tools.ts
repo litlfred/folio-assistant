@@ -211,7 +211,7 @@ export const CONTENT_TYPE_TRANSLATIONS: ContentTypeTranslation[] = [
     rtlSupported: true,
     bpmnDiagrams: [
       // Was "processes/publication-workflow.bpmn", which has never
-      // existed — `docs/publication-workflow.md` is a PAGE that embeds three
+      // existed — `docs/process/publication-workflow.md` is a PAGE that embeds three
       // diagrams, and no .bpmn of that name was ever written. The publication
       // process itself is draft-to-publication ("From corpus to published
       // folio"), so that is what this entry meant. A path that does not

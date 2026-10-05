@@ -3,6 +3,7 @@ layout: default
 title: Authoring guides
 nav_order: 8
 has_children: true
+parent: ""
 ---
 
 # Authoring guides
