@@ -119,7 +119,7 @@ const VIEWERS: Viewer[] = [
     title: "Node kind pages",
     description: "Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195).",
     script: "node-kind:pages",
-    renders: ["todo-items", "public-comments"],
+    renders: ["todo-items"],
   },
   {
     id: "state-viewer",

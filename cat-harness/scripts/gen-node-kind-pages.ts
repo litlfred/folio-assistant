@@ -45,7 +45,8 @@ import { nodeKindIndex, type NodeKindEntry, type NodeKindIndex } from "../schema
 import { nodesOfKind, type KindNode } from "../schemas/node-kind-nodes.ts";
 import { isNodeKind } from "../schemas/node-kind.ts";
 import { darkRules } from "./lib/scheme-css.ts";
-import { makeEmit, type ViewerNav } from "./viewer-page.ts";
+import type { VisualiserNavEntry } from "./lib/navbar.ts";
+import { makeEmit, subjectSection, type ViewerNav } from "./viewer-page.ts";
 
 /** The locales a page is written for. See the module comment for why only `en`. */
 export const LOCALES = ["en"] as const;
@@ -196,7 +197,7 @@ export function dashboardHtml(
     .map((f) => {
       const counts = f.options!.map((o) => [o, nodes.filter((n) => n.node[f.name] === o).length] as const).filter(([, c]) => c > 0);
       return counts.length
-        ? `<h2>By ${esc(f.name)}</h2><ul class="tiles">${counts.map(([o, c]) => `<li><b>${c}</b>${esc(o)}</li>`).join("")}</ul>`
+        ? `<h2 id="by-${esc(f.name)}">By ${esc(f.name)}</h2><ul class="tiles">${counts.map(([o, c]) => `<li><b>${c}</b>${esc(o)}</li>`).join("")}</ul>`
         : "";
     })
     .join("");
@@ -204,7 +205,7 @@ export function dashboardHtml(
   const where = harness
     ? `<p class="m">Held by <b>${esc(harness)}</b>. <a href="${href(here, base)}">Every harness</a></p>`
     : harnesses.length
-      ? `<h2>By harness</h2><ul class="tiles">${harnesses
+      ? `<h2 id="by-harness">By harness</h2><ul class="tiles">${harnesses
           .map((h) => `<li><b>${nodes.filter((n) => n.harness === h).length}</b><a href="${href(here, `${base}/${h}`)}">${esc(h)}</a></li>`)
           .join("")}</ul>`
       : "";
@@ -263,10 +264,45 @@ export function nodeHtml(k: NodeKindEntry, n: KindNode, locale: string): string 
     `${cell(name)} — ${k.id}`,
     `<h1>${esc(cell(name))}</h1>
 <p class="m">A <a href="${href(here, base)}">${esc(n.kind)}</a> node held by <a href="${href(here, `${base}/${n.harness}`)}">${esc(n.harness)}</a>, at <code>${esc(n.file)}</code>.</p>
-<dl>
+<dl id="fields">
 ${fields}
 </dl>`,
   );
+}
+
+/**
+ * The page's own rail section (#1757): every page carries one, with its own
+ * row OPEN and its regions under it, or `check:viewer-nav` flags it
+ * (`visualiser-nav`, `single-open`). The kind page and its harness pages are
+ * one level apart, the shape `subjectSection` draws; a node page sits deeper,
+ * so its section links up to its kind and its harness and opens on itself.
+ */
+export function dashboardSection(
+  k: NodeKindEntry,
+  nodes: readonly KindNode[],
+  fields: readonly FieldInfo[],
+  harness?: string,
+): VisualiserNavEntry[] {
+  const scoped = harness ? nodes.filter((n) => n.harness === harness) : nodes;
+  const regions = [
+    ...(harness || !scoped.length ? [] : [{ label: "By harness", id: "by-harness" }]),
+    ...fields
+      .filter((f) => f.type === "enum" && f.options?.some((o) => scoped.some((n) => n.node[f.name] === o)))
+      .map((f) => ({ label: `By ${f.name}`, id: `by-${f.name}` })),
+    ...(scoped.length ? [{ label: "Nodes", id: "nodes" }] : []),
+  ];
+  const harnesses = [...new Set(nodes.map((n) => n.harness))].sort();
+  return subjectSection(harnesses, harness, regions, (s) => ({ label: s ?? k.id }));
+}
+
+export function nodeSection(k: NodeKindEntry, n: KindNode): VisualiserNavEntry[] {
+  const depth = n.path.split("/").length;
+  const up = (levels: number) => "../".repeat(levels);
+  return [
+    { label: k.id, href: up(depth + 1) },
+    { label: n.harness, href: up(depth) },
+    { label: n.path.split("/").pop()!, items: [{ label: "Fields", href: "#fields" }] },
+  ];
 }
 
 /** Every page path (site-relative, no `index.html`) the index and nodes call for. */
@@ -316,7 +352,6 @@ if (import.meta.main) {
   }
   let stale = 0;
   const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
-  const emit = makeEmit({ check, onStale: () => { stale++; }, nav, quiet: true });
 
   const index = await nodeKindIndex(defaultGraphTypologies, ROOT, repoRoot);
   const byId = new Map(index.kinds.map((k) => [k.id, k]));
@@ -333,10 +368,10 @@ if (import.meta.main) {
   };
 
   const written = new Set<string>();
-  const write = (rel: string, html: string) => {
+  const write = (rel: string, html: string, section: VisualiserNavEntry[]) => {
     const file = join(site, rel, "index.html");
     written.add(file);
-    emit(file, html);
+    makeEmit({ check, onStale: () => { stale++; }, nav: { ...nav, section }, quiet: true })(file, html);
   };
   for (const locale of LOCALES) {
     for (const k of index.kinds) {
@@ -344,11 +379,11 @@ if (import.meta.main) {
       const nodes = nodesOf(k.id);
       const fields = await fieldsOfKind(k);
       const base = kindDir(locale, k);
-      write(base, dashboardHtml(k, nodes, fields, byId, locale));
+      write(base, dashboardHtml(k, nodes, fields, byId, locale), dashboardSection(k, nodes, fields));
       for (const h of new Set(nodes.map((n) => n.harness))) {
-        write(`${base}/${h}`, dashboardHtml(k, nodes.filter((n) => n.harness === h), fields, byId, locale, h));
+        write(`${base}/${h}`, dashboardHtml(k, nodes.filter((n) => n.harness === h), fields, byId, locale, h), dashboardSection(k, nodes, fields, h));
       }
-      for (const n of nodes) write(`${base}/${n.harness}/${n.path}`, nodeHtml(k, n, locale));
+      for (const n of nodes) write(`${base}/${n.harness}/${n.path}`, nodeHtml(k, n, locale), nodeSection(k, n));
     }
   }
 

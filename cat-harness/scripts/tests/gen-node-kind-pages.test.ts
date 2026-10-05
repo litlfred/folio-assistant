@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { z } from "zod";
 
-import { cell, columnsFor, dashboardHtml, fieldsOf, kindDir, nodeHtml, plannedPages, type FieldInfo } from "../gen-node-kind-pages.ts";
+import { cell, columnsFor, dashboardHtml, dashboardSection, fieldsOf, kindDir, nodeHtml, nodeSection, plannedPages, type FieldInfo } from "../gen-node-kind-pages.ts";
 import type { NodeKindEntry } from "../../schemas/node-kind-index.ts";
 import type { KindNode } from "../../schemas/node-kind-nodes.ts";
 
@@ -112,5 +112,33 @@ describe("plannedPages", () => {
     const pages = plannedPages(index, (id) => (id === "todo" ? [node("todo", "alpha", "t/a", {})] : []));
     expect(pages).toEqual(["en/core/todo", "en/core/todo/alpha", "en/core/todo/alpha/t/a"]);
     expect(kindDir("en", kind("todo"))).toBe("en/core/todo");
+  });
+});
+
+describe("each page's own rail section (#1757)", () => {
+  const k = kind("todo");
+  const fields = fieldsOf(z.object({ status: z.enum(["open", "done"]) }));
+  const nodes = [node("todo", "alpha", "t/a", { status: "open" }), node("todo", "beta", "t/b", {})];
+
+  test("the kind page opens on itself with its regions, and links each harness page", () => {
+    const s = dashboardSection(k, nodes, fields);
+    expect(s[0]).toEqual({ label: "todo", items: [
+      { label: "By harness", href: "#by-harness" }, { label: "By status", href: "#by-status" }, { label: "Nodes", href: "#nodes" },
+    ] });
+    expect(s.slice(1)).toEqual([{ label: "alpha", href: "alpha/" }, { label: "beta", href: "beta/" }]);
+  });
+
+  test("a harness page opens on its own row, and a tile region only where a value occurs", () => {
+    const s = dashboardSection(k, nodes, fields, "beta");
+    expect(s.find((e) => e.label === "beta")?.items).toEqual([{ label: "Nodes", href: "#nodes" }]);
+    expect(s[0]).toEqual({ label: "todo", href: "../" });
+  });
+
+  test("a node page links up to its kind and its harness, however deep its path", () => {
+    expect(nodeSection(k, node("todo", "alpha", "todos/items/x", {}))).toEqual([
+      { label: "todo", href: "../../../../" },
+      { label: "alpha", href: "../../../" },
+      { label: "x", items: [{ label: "Fields", href: "#fields" }] },
+    ]);
   });
 });
