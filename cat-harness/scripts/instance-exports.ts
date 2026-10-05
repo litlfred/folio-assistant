@@ -35,16 +35,25 @@
  * `docPath` `exportIdentity` gives a foreign instance (bean `dyd3`), with the
  * `.json` alias beside it because Pages serves `.jsonld` as octet-stream.
  *
+ * Beside it, `<out-dir>/<stub>/schema/`: the instance's own skill I/O
+ * contracts, its public Zod schemas under `zod/<module>/<Export>.schema.json`
+ * (owner ruling 2026-10-05, option C: every exported Zod `*Schema` const), and
+ * a `<stub>.schema.json` index (bean `4ak5` item 1, the "and a schema" half).
+ * A Zod module that fails to import or render fails the run, as a failed
+ * export does. Policy: `instance-publication` §"The schema".
+ *
  * Usage:
  *   bun run cat-harness/scripts/instance-exports.ts --out-dir ./_site [--base-url URL]
  *   bun run cat-harness/scripts/instance-exports.ts --list
  */
 import { spawnSync } from "node:child_process";
-import { copyFileSync, mkdirSync, mkdtempSync, rmSync } from "node:fs";
+import { copyFileSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, relative, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 
 import { artefactStub, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
+import { INSTANCE_SCHEMA_DIR } from "./harness-schema-export.js";
+import { stagingFields } from "./staging-stamp.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(ROOT);
@@ -104,6 +113,17 @@ export interface PlannedExport {
  */
 export function declaresOwnCanonical(decl: { canonicalUrl?: string } | undefined): boolean {
   return typeof decl?.canonicalUrl === "string" && decl.canonicalUrl !== "";
+}
+
+/**
+ * Does the deploy write this instance a `<stub>/schema/` directory (bean `4ak5`
+ * item 1)? Exactly when it is in {@link instanceExportPlan} — the plan's own
+ * answer, so `kg-export`'s link to the schema index and this script's write of
+ * it cannot disagree about which instances have one.
+ */
+export function publishesInstanceSchema(instanceRoot: string, repo: string = REPO): boolean {
+  const abs = resolve(instanceRoot);
+  return instanceExportPlan(repo).some((p) => resolve(repo, p.path) === abs);
 }
 
 /** Every declared instance's stub, readable declarations only. */
@@ -167,6 +187,11 @@ if (import.meta.main) {
     process.exit(2);
   }
   const baseUrl = arg("--base-url");
+  // Dynamic, and only here: `kg-export` imports this module (for
+  // `declaresOwnCanonical` and the plan), so a static import back would be a
+  // cycle, and `--list` has no use for the exporter's whole import graph.
+  const { scannedInstanceSchemas } = await import("./kg-export.js");
+  const staging = stagingFields();
   // The deploy publishes documents, not QA sidecars: those are committed and
   // compared by `kg:export:check`. A temp root keeps this run from writing
   // into the tree it publishes.
@@ -185,7 +210,37 @@ if (import.meta.main) {
         continue;
       }
       copyFileSync(doc, doc.replace(/\.jsonld$/, ".json"));
-      console.log(`  ✓ ${p.path} → ${relative(process.cwd(), doc)}`);
+      // ── AND ITS SCHEMA, beside it (bean `4ak5` item 1, owner ruling
+      // 2026-10-05, option B): its own skill I/O contracts and an index, at
+      // `<stub>/schema/`. `$id`s are its PUBLISHED identity's, from the same
+      // `publishedIdentity` its document's `@id` came from; this site is where
+      // the bytes are staged. Stamped like the host's (`harness-schema-export`).
+      //
+      // With its public Zod schemas under `schema/zod/` (part 2, owner ruling
+      // 2026-10-05, option C: "every exported *Schema").
+      const schemaDir = join(outDir, p.stub, INSTANCE_SCHEMA_DIR);
+      const built = await scannedInstanceSchemas(resolve(REPO, p.path), baseUrl);
+      for (const [rel, body] of built.files) {
+        const out = join(schemaDir, rel);
+        mkdirSync(dirname(out), { recursive: true });
+        writeFileSync(out, JSON.stringify({ ...body, ...staging }, null, 2) + "\n");
+      }
+      const zod = built.zodScanned ? `${built.zod.length} Zod schema(s)` : "Zod schemas NOT scanned";
+      // A module that would not import or an export that would not render is
+      // a FAILED instance, as a failed `kg-export` is: what did render is still
+      // written (the index lists the rest as `unrendered`), the loop goes on,
+      // and the run exits 1. Logging and exiting 0 would publish a partial
+      // `zod/` that reads as complete — the third-state failure.
+      if (built.zodProblems.length > 0 || !built.zodScanned) {
+        failed++;
+        console.error(`  ✗ ${p.path}: ${built.contracts.length} contract(s), ${zod}, ${built.zodProblems.length} failure(s)`);
+        for (const line of built.zodProblems) console.error(`      ${line}`);
+        continue;
+      }
+      console.log(
+        `  ✓ ${p.path} → ${relative(process.cwd(), doc)} + ${relative(process.cwd(), schemaDir)}/ ` +
+          `(${built.contracts.length} contract(s), ${zod})`,
+      );
     }
   } finally {
     rmSync(qaRoot, { recursive: true, force: true });
