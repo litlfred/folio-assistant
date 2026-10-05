@@ -10,7 +10,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { claimsEntry, judgePair, resolveCited, type PairClaim } from "../pair-claims";
+import { claimsEntry, judgePair, resolveCited, rootScripts, type PairClaim } from "../pair-claims";
 
 function repo(): string {
   const root = mkdtempSync(join(tmpdir(), "pair-claims-"));
@@ -94,5 +94,16 @@ describe("claimsEntry — the kg-qa criterion", () => {
     expect(claimsEntry([c("holds"), c("false")]).result).toBe("fail");
     expect(claimsEntry([c("undetermined"), c("undetermined")]).result).toBe("unknown");
     expect(claimsEntry([c("holds"), c("undetermined")]).result).toBe("pass");
+  });
+});
+
+describe("rootScripts", () => {
+  test("a checkout with no package.json has no scripts, rather than crashing the audit (ho66)", () => {
+    // A layer standing alone is its own checkout; the aggregate's package.json
+    // is not in it. Throwing here took every `kg:audit` run down standalone.
+    const dir = mkdtempSync(join(tmpdir(), "pair-claims-nopkg-"));
+    expect(rootScripts(dir).size).toBe(0);
+    writeFileSync(join(dir, "package.json"), JSON.stringify({ scripts: { gates: "x" } }));
+    expect([...rootScripts(dir)]).toEqual(["gates"]);
   });
 });
