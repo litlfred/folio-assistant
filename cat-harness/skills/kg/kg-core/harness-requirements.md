@@ -115,14 +115,43 @@ Rendered content is addressed by the three cases on bean `o7eq`:
 
 | # | URL | what it is |
 |---|---|---|
-| 1 | `<base>/` | the ROOT's rendering — its `docs/` is installed by cat-harness, so no segment |
+| 1 | `<base>/docs/<owner>/` | the site OWNER's documentation — its `docs/`, built by Jekyll. Was `<base>/` until 2026-10-05 |
 | 2 | `<base>/<instance>/` | the instance presented **as itself**, on its own theme |
-| 3 | `<base>/<owner>/<kind>/<subject>/` | a viewer of one instance's assets, rendered by another's machinery |
+| 3 | `<base>/docs/<owner>/<owner>/<kind>/<subject>/` | a viewer of one instance's assets, rendered by another's machinery — inside case 1, because the owner's docs tree carries it |
+
+**Case 1 moved, and the root is no longer anybody's documentation.** The owner,
+2026-10-05 (issue #2188, bean `kc7k`): cat-harness's pages publish under
+`<base>/docs/cat-harness/`, *"clean break/migration"*, no redirects at the old
+addresses. The root had grown to 108 entries mixing doc pages, instance mounts,
+graph-kind directories, locale directories and JSON-LD exports, with
+`architecture` and `skills` each both a page and a directory. It is the
+`<base>/<kind>/<instance>/` rule — `/docs/who-iris/` already followed it — now
+applied to the owner too. The route is the `docs` kind plus the owner's
+declared name, read by `scripts/docs-route.ts`; `_config.yml`'s `baseurl` is
+the one literal copy, and `docs-route.test.ts` holds it to the declaration.
+
+What stays at `<base>/` is what an IDENTIFIER names: the knowledge-graph
+documents and their viewer, the vocabularies, the payloads, the other
+instances' mounts — and every JSON-LD document whose own `@id` is a root
+address, which `hoist-addressed-documents.ts` moves back out of the docs tree
+by reading the `@id`, never by a list of directories. The root's own
+`index.html` is a landing page listing each `docs/<instance>/`
+(`root-landing.ts`) — a page, not a redirect.
+
+**Two bases, so say which one a path is against.** In Liquid,
+`relative_url` is the DOCS base; a root artefact is
+`{{ path | prepend: site.site_root }}`. In `_data/harness.json` every path is
+against the docs base, and one at the root CLIMBS out of it —
+`/../../who-iris/` — which `relative_url` (Addressable normalises dot
+segments), `docs-ui.js`'s `withBase` and a browser all resolve to
+`<base>/who-iris/` under any base, staging included, with no consumer
+special-casing it (`outsideDocs` in `harness-tiles.ts`, `siteLinks` in
+`site-links.ts`).
 
 Case 3 is why `docs/` has two roles at once — the owner, asked which it was,
 answered **"both are right"**. It is a directory cat-harness instantiates AND a
 namespace under which the docs-kind assets of another subgraph are rendered:
-`<base>/cat-harness/docs/who-iris/`.
+`<base>/docs/cat-harness/cat-harness/docs/who-iris/` since case 1 moved.
 
 So "which directory holds it" and "which URL serves it" are different
 questions, and a visualiser's declaration answers the first. Do not compose the

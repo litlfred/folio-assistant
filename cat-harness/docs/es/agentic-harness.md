@@ -150,20 +150,20 @@ Cuando una solicitud se clasifica como trabajo de contenido (autoría, revisión
 el agente sigue el flujo de trabajo BPMN correspondiente. Las páginas de documentación existentes
 los describen en detalle:
 
-- **[Flujo de trabajo de publicación](https://litlfred.github.io/folio-assistant/publication-workflow.html)** —
+- **[Flujo de trabajo de publicación](https://litlfred.github.io/folio-assistant/docs/cat-harness/publication-workflow.html)** —
   el ciclo de vida del contenido desde el borrador hasta la validación, renderizado y
   publicación. Cubre los roles (autor, revisor, editor), los procesos base,
   las actividades y las habilidades.
 
-- **[Ingesta de documentos](https://litlfred.github.io/folio-assistant/document-ingestion.html)** —
+- **[Ingesta de documentos](https://litlfred.github.io/folio-assistant/docs/cat-harness/document-ingestion.html)** —
   cómo un archivo depositado se convierte en una fuente L1: extraer estructura, derivar contenido,
   construir el grafo de conocimiento L1, control de completitud (*completeness gate*).
 
 - **Guías de redacción:**
-  - [Redacción de un paper](https://litlfred.github.io/folio-assistant/guides-writing-a-paper.html)
-  - [Redacción de un documento](https://litlfred.github.io/folio-assistant/guides-writing-a-document.html)
-  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/guides-who-smart-dak.html)
-  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/guides-who-smart-ig.html)
+  - [Redacción de un paper](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html)
+  - [Redacción de un documento](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html)
+  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-dak.html)
+  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-ig.html)
 
 El arnés no redefine estos flujos de trabajo. Proporciona el **punto de entrada** —
 clasificar la solicitud y enrutar a la adecuada — y el **punto de salida** —
@@ -260,7 +260,7 @@ propuesta tenga algo con qué contrastarse.
 
 Cuando una solicitud se clasifica como solicitud de funcionalidad (*feature request*), el agente ingresa al
 **flujo de trabajo de requisitos CRDM**
-([documentación completa](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
+([documentación completa](https://litlfred.github.io/folio-assistant/docs/cat-harness/crdm-methodology.html),
 [BPMN](../../processes/process/crdm-requirements.bpmn)).
 
 El flujo de trabajo de solicitudes de funcionalidad es donde este documento de arnés aporta el mayor

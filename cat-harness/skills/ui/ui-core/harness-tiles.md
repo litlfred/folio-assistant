@@ -150,6 +150,16 @@ routes:
 > `/docs/who-iris/` should be the cat-harness handler default for docs.
 > who-iris themed at `/who-iris/`.
 
+**A mount route is outside the docs tree, and the tile's path says so.** The
+tiles are rendered inside cat-harness's own docs, which publish under
+`<base>/docs/cat-harness/` since 2026-10-05 (issue #2188), and every path in
+`_data/harness.json` is against that base. So a target at the site root —
+`/who-iris/`, `/docs/who-iris/…`, the knowledge-graph viewer — is written as a
+climb out of it, `/../../who-iris/`, which every consumer resolves to
+`<base>/who-iris/` without special-casing it. A COMPOSED instance's root
+(`/smart-trust/`) is inside the docs tree and needs no climb.
+`harness-requirements` §"Where a visualiser is published" carries the rule.
+
 So the tile's target is the instance's **own themed root** when it has one, and
 a handler's viewer only when it does not — *"cliking shoud go to folio view,
 not the schema viweer"*. The viewers stay reachable, listed beneath.
