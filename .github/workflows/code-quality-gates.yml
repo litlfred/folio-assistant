@@ -1474,6 +1474,42 @@ jobs:
       - name: every kind with files is judged, not merely typed
         run: bun run audit:coverage:strict
 
+      # `audit:coverage` asks which audits reach which KIND of node. This asks
+      # which DECLARED EXECUTABLE ARTEFACTS can be reached at all — bean
+      # `dxqm`, under `1xhc`. Two defects on 2026-10-04 passed every gate in
+      # this file: `scripts/merge-queue.ts` ordered the merge queue and nothing
+      # called it, and `merge-priority.dmn` used `not("green")`, which this
+      # repo's FEEL evaluator refused, so the table was unevaluable by ANY
+      # caller — while its committed `kg-qa` sidecar read `"result": "pass"`,
+      # because the criterion that judges it calls `loadDecisionTable` and
+      # `possibleOutcomes` and NEITHER parses a unary test. **Load is not
+      # evaluability.**
+      #
+      # THIS STEP IS THE POINT OF THE CHANGE THAT CARRIES IT. The script, its
+      # tests and its skill landed in #2043 with no step here, because
+      # `merge-main`'s resolution push carries no `workflows` scope and any PR
+      # touching this file needs a human push on every main-merge round (9 of
+      # 20 open PRs, owner ruling 2026-10-04). The gate's NAME travels with its
+      # WIRING — `audit:reachability:check` is registered in `package.json` in
+      # this same commit — because splitting them is how a check becomes
+      # registered-and-never-run. `1xhc` measured 21 of 33 such scripts, and
+      # `gates.ts`'s own `unrunScripts` ratchet is what refuses the split.
+      #
+      # `--check` and NOT `--strict`, and the split is not the one
+      # `audit:coverage` makes two steps above. There, every finding is an
+      # unmet ambition, so only a NEW one fails. Here `failOn` carries BROKEN
+      # ARTEFACTS — a decision table nothing can evaluate, a diagram the
+      # resolver cannot reach, two diagrams answering to one name — and they
+      # fail whether or not a baseline calls them new, because a defect is not
+      # less of one for having been there yesterday. What `--strict` adds is
+      # the self-declared entry points nothing runs: a backlog, and a count
+      # left out of this comment on purpose, since a number in prose is the
+      # next thing to go stale. `failOnNew` is what makes the backlog bite
+      # meanwhile — the standing ones are inherited, the next one fails on the
+      # commit that introduces it. Bean `dxqm` holds the day `--strict` wires.
+      - name: every declared executable artefact can be reached
+        run: bun run audit:reachability:check
+
       # The detangle measurements are PINNED, not graded. This fails on a STALE
       # sidecar or an orphaned one — never on a number being "wrong", because
       # the carve is an adjudication a person makes (`detangle.ts`, "taste is a

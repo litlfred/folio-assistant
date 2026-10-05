@@ -125,7 +125,8 @@ const STYLE = `
   a { color: var(--link); }
   a:focus-visible, button:focus-visible, li:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
   .nav { display: flex; gap: .5rem; margin: 1rem 0; flex-wrap: wrap; align-items: center; }
-  button { font: inherit; padding: .5rem 1rem; min-height: 2.75rem; border: 1px solid var(--muted); border-radius: .4rem; background: transparent; color: var(--fg); cursor: pointer; }
+  /* Control rules are scoped to .layout: the harness rail's own controls sit outside it. */
+  .layout button { font: inherit; padding: .5rem 1rem; min-height: 2.75rem; border: 1px solid var(--muted); border-radius: .4rem; background: transparent; color: var(--fg); cursor: pointer; }
   h2 { font-size: 1.05rem; margin-top: 2rem; border-bottom: 1px solid var(--rule); padding-bottom: .25rem; }
   ul { list-style: none; padding: 0; }
   li { padding: .5rem .25rem; border-bottom: 1px solid var(--rule); }
@@ -136,8 +137,8 @@ const STYLE = `
   .comments { margin: .25rem 0 0 1rem; padding-left: .75rem; border-left: 3px solid var(--rule); }
   .comment { padding: .15rem 0; }
   .tagline { font-family: ui-monospace, monospace; font-size: .9rem; }
-  select { font: inherit; min-height: 2.75rem; padding: .25rem .5rem; color: var(--fg); background: var(--bg); border: 1px solid var(--muted); border-radius: .4rem; }
-  select:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
+  .layout select { font: inherit; min-height: 2.75rem; padding: .25rem .5rem; color: var(--fg); background: var(--bg); border: 1px solid var(--muted); border-radius: .4rem; }
+  .layout select:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
   .viewrow { margin: .5rem 0 .25rem; display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
   .diff { margin: .25rem 0 .5rem; padding: .5rem .75rem; border: 1px solid var(--rule); border-radius: .4rem; overflow-x: auto; }
   pre.diff { white-space: pre-wrap; font: .95rem/1.5 ui-monospace, monospace; }
