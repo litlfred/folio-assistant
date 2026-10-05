@@ -606,10 +606,20 @@
   // "default", never "dark" -- and "default" means whatever this site chose.
   function configuredScheme() {
     var node = document.getElementById("fa-site-scheme");
-    if (!node) return "light";
+    // No site declaration — a folio's page, outside the theme: its sheet
+    // follows the OS until the reader picks, so the switch starts from there.
+    if (!node) return osScheme();
     try {
       var scheme = JSON.parse(node.textContent).scheme;
       return scheme === "dark" ? "dark" : "light";
+    } catch (_e) {
+      return "light";
+    }
+  }
+
+  function osScheme() {
+    try {
+      return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     } catch (_e) {
       return "light";
     }
@@ -636,10 +646,13 @@
   }
 
   function applyScheme(name) {
+    // A FOLIO's page has no just-the-docs (issue #2208): it is styled by its
+    // own sheet, which follows `data-fa-scheme` (`lib/scheme-css.ts`), so the
+    // attribute alone IS the switch there. Owner, 2026-10-05, on smart-ra:
+    // the light bulb did nothing, because this returned before setting it.
     if (!window.jtd || typeof window.jtd.setTheme !== "function") {
-      console.warn("docs-ui: jtd.setTheme is unavailable; the colour scheme was not changed. " +
-                   "just-the-docs is an unpinned remote theme, so this is version drift.");
-      return false;
+      document.documentElement.setAttribute("data-fa-scheme", name);
+      return true;
     }
     // Always explicit. Passing "default" would work today and would break the
     // day _config.yml's color_scheme changes, because "default" is a moving
@@ -11323,12 +11336,16 @@
       // `mountActionTiles` owns the panel and its open/close state, so this
       // clicks that button rather than minting a rival with its own idea of
       // whether the panel is open (`l4zi`).
-      launcher: function () {
+      //
+      // ONLY WHERE THE PANEL EXISTS (issue #2208). `mountActionTiles` runs
+      // first and needs a sidebar header, which a folio's page does not have,
+      // so there the slot is LEFT OUT -- the rule the LITE row already follows
+      // (owner, 2026-10-05: *"1. Leave it out"*) -- rather than drawn as a
+      // button that does nothing.
+      launcher: document.querySelector(".fa-tiles-toggle") ? function () {
         var real = document.querySelector(".fa-tiles-toggle");
         if (real) real.click();
-        else console.warn("docs-ui: the actions panel launcher is not mounted; " +
-                          "the navbar's More button has nothing to open.");
-      },
+      } : undefined,
       after: function (host) {
         /* LIGHT / DARK IN THE ROW — owner, 2026-09-27: *"i want light dark
          * mode on main icon tab at top of LHS"*. The same switch as the
