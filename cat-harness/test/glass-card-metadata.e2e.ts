@@ -135,9 +135,8 @@ test.describe("ask 1 — a todo made small by its own − shows its first words"
   test("shrunk below the todo threshold at 100%, the themed sticky's gist is seen and readable", async ({ page }) => {
     await serveGlass(page);
     const card = page.locator(themed);
-    // Its own −: since issue #1900 that is the move bar's, in move mode.
-    await card.locator('[data-fa-control="move"]').click();
-    const smaller = page.locator('.fa-glass-move-bar [data-fa-size="smaller"]');
+    // Its own − (owner, 2026-10-05: only the card's −/+ size it).
+    const smaller = card.locator('[data-fa-size="smaller"]');
     for (let i = 0; i < 8 && (await card.getAttribute("data-fa-zoom")) !== "avatar"; i++) await smaller.click();
     await expect(card).toHaveAttribute("data-fa-zoom", "avatar");
     const gist = card.locator(".fa-glass-asset-gist");
