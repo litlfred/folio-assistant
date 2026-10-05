@@ -291,6 +291,7 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "check:source-licence:check": READ_ONLY,
   "check:undeclared-files:check": READ_ONLY, //    its one ftruncate is Bun's spawn-stdin memfd
   "kg:locale:check": READ_ONLY, //                 writes nothing; reads KG_BASE_URL, so still no `inputs`
+  "kind:register:check": READ_ONLY, //             `--check` skips the write loop; its five verifies are READ_ONLY here
   "check:wireframes:check": READ_ONLY,
   "dc:render:check": READ_ONLY, //                 returns before `writeFileSync`
   "document-kinds:viz:check": READ_ONLY, //        its one `rmSync` is in the not-`check` arm
