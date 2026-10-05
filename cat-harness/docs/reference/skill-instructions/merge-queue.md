@@ -450,7 +450,13 @@ The seven checks, each named in a refusal by number and id:
    it does not (Feature Staging, preview-only), and `unknown` if that line
    cannot be parsed. A green dispatch never rescues a `pull_request` run that
    executed and went red (#1937), and anywhere else it is reported and **not**
-   counted.
+   counted. **Feature Staging is judged, never waited for** (owner ruling
+   2026-10-05, bean `gnnj`): a staging run still in flight, or not started,
+   is not a refusal — its deploy is held by the #1956 `gh-pages` rate limit,
+   measured at up to 41 min with eight previews queued — and the verdict
+   says so as **not waited for**. Once it finishes, red still refuses, since
+   `stage` runs real checks before it deploys. The list is
+   `NOT_WAITED_FOR_WORKFLOW_FILES` in `merge-guard.ts`.
 6. **`checklist`** — no unticked `- [ ]` in the body.
 7. **`open-question`** — no comment after the marker asks the owner or the
    Merge Manager a question (a heuristic; its limits are on `openQuestions`
