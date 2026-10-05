@@ -30,14 +30,17 @@
  * `todoPageHtml` in `todo-page.ts` supply only their skeleton, their config
  * and — where a page loads more than its asset — their own `<noscript>`.
  *
- * ## The rail is declined, and that is a declaration
+ * ## The rail is LINKED, and that is a declaration
  *
- * {@link NAVBAR_OPT_OUT} is written by default, for the reason the library
- * shell gives: the viewer rail is ~14 KB of inlined markup and style, which
- * would make every per-asset page as heavy as the page it stands for.
- * `check-viewer-nav.ts` reads the meta as a decision, not as a missing rail.
+ * {@link NAVBAR_LINKED} is written by default. These pages declined the rail
+ * (`folio-navbar: none`) until 2026-10-05, because inlined it was ~8 KB of
+ * markup and style on a 1.4-3 KB page — "until the rail is itself a shared
+ * asset". It now is: `assets/css/navbar.css` and the row's own files are
+ * LINKED, so the page carries only the rail's markup (owner: *"1. Shared rail
+ * style first"*, bean `lnoy`). The build's rail passes honour the meta;
+ * `check-viewer-nav.ts` reads it as `linked`, railed at build.
  */
-import { NAVBAR_OPT_OUT } from "./viewer-page.ts";
+import { NAVBAR_LINKED } from "./lib/harness-rail.ts";
 
 /** HTML-escape for text and attribute values, both quote characters included. */
 export function escHtml(value: string): string {
@@ -124,7 +127,7 @@ export function thinPageHtml(p: ThinPage): string {
 <title>${escHtml(p.title)}</title>
 <link rel="canonical" href="./">
 <link rel="icon" href="${escHtml(p.icon ?? DEFAULT_ICON)}">
-${p.navbar ? "" : `${NAVBAR_OPT_OUT}\n`}${p.jsonld !== undefined ? `<link rel="alternate" type="application/ld+json" href="${escHtml(p.jsonld)}">\n` : ""}${p.stylesheet ? `<link rel="stylesheet" href="${escHtml(p.stylesheet)}">\n` : ""}</head>
+${p.navbar ? "" : `${NAVBAR_LINKED}\n`}${p.jsonld !== undefined ? `<link rel="alternate" type="application/ld+json" href="${escHtml(p.jsonld)}">\n` : ""}${p.stylesheet ? `<link rel="stylesheet" href="${escHtml(p.stylesheet)}">\n` : ""}</head>
 <body>
 ${p.body.trimEnd()}
 <noscript>${noscript}</noscript>

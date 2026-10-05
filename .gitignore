@@ -20,6 +20,10 @@ _site/
 # `:pages:check` could pass locally and fail on a clean checkout.
 !fhir-harness/scripts/templates/ig-pages/*.js
 !/*/docs/assets/*.js
+# ...and the rail's SHARED data (bean `lnoy`): generated, content-named, and
+# named by committed pages — untracked, every railed page's rail failed to
+# load on a clean checkout (the 404s the e2e and `*:viz:check` caught).
+!/*/docs/assets/navbar/*.js
 # ...and the OpenAPI harness's one loader (bean `s4ta`), for the same reason:
 # its template, and the copy `gen-openapi-pages` publishes into each
 # instance's openapi graph (`<instance>/<graph>/assets/openapi.js`) — by
