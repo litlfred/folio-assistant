@@ -5,15 +5,15 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-05T16:47:42Z
+updated_at: 2026-10-05T17:17:34Z
 parent: folio-assistant-fs43
 ---
 
 The general practice: every graph not on main is a declared sub-graph with a back-link {ref, sha} to the content commit it describes. build.json (bean r6es) is the first back-link.
 
 ## Done when
-- [ ] gh-pages declared
-- [ ] lake-cache/* declared
+- [x] gh-pages declared. cat-harness.json `site` (graphKind basic-cdn-site), `storage: {branch: gh-pages, keyedBy: route, tool: gh-pages}` (#2192)
+- [x] lake-cache/* declared — by the CONSUMING folio, per the owner's ruling: qou.json `lake-cache`, `storage: {branchPrefix: cat/folio-assistant-sci/lake-cache/, keyedBy: family}` (litlfred/qou#7523, merged 7eff5e5c3). All five platform mirrors read it (#2192)
 - [ ] audit:coverage sees all special branches
 
 Proposal: cat-harness/docs/proposals/state-branch-2026-10-02.md
@@ -149,3 +149,5 @@ Separately: `state-drift.declaredBranches` read only top-level instance entries,
 _2026-10-05_ — Step 3 begun on #2192. The two shell mirrors read the CONSUMING folio's declaration (a directory with graphKind `lake-cache` and `storage.keyedBy: "family"` in its `<instance>.json`): `lake-cache.sh` (d9dc953a83b6) makes the declared prefix primary and the built-in name the newest legacy; `lake-cache-fetch.sh` (02cab3614eae) tries the declared candidate first. qou declares it since litlfred/qou#7523 (merged 7eff5e5c3). Still on the central table: the two Python mirrors, both restore actions and lake-cache-refresh.yml. Step 4 (delete the table) still waits on qou having new-name branches.
 
 _2026-10-05_ — Step 3 done for lake-cache (#2192): all five lake-cache mirrors read the consuming folio's declaration first — lake-cache.sh (d9dc953a83b6), lake-cache-fetch.sh (02cab3614eae), the two Python mirrors (f963e2b1b968), reseed-lean-cache.sh (b677e885b119). The restore actions and lake-cache-refresh.yml inherit it through `lake-cache.sh resolve-branch`. Remaining before step 4 (delete special-branches.json): the ig-cache / fhir-ast mirrors, and qou carrying branches under the new name (observed, not assumed).
+
+_2026-10-05_ — Box 3 measured, NOT met: `audit:coverage` here reports `basic-cdn-site` (site) and `ig-ast` as `stored` and `lake-cache` as `no-directory` (only qou, a separate repo, declares it). Still undeclared: `merge-queue` (finding above: main still writes beans/queue/), and the route branches `cat/fhir-harness/ig-docs` and `cat/cat-harness/uml-overview`, which belong to beans lbz8 and xsrv (both claimed, in-progress) and are left to them.
