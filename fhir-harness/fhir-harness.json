@@ -137,6 +137,14 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#canonicalDocument",
       "@type": "@id"
     },
+    "deprecated": {
+      "@id": "http://www.w3.org/2002/07/owl#deprecated",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "isReplacedBy": {
+      "@id": "http://purl.org/dc/terms/isReplacedBy",
+      "@type": "@id"
+    },
     "conformsTo": {
       "@id": "http://purl.org/dc/terms/conformsTo",
       "@type": "@id"
@@ -332,10 +340,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T11:46:32.810Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/595f26991168146636296c9d620236854c6539ff",
-  "sourceCommitSha": "595f26991168146636296c9d620236854c6539ff",
-  "sourceCommitAt": "2026-10-05T13:41:09+02:00",
+  "generatedAt": "2026-10-05T12:20:47.328Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d21ef899555afbc4d86ff0100b4b820477647410",
+  "sourceCommitSha": "d21ef899555afbc4d86ff0100b4b820477647410",
+  "sourceCommitAt": "2026-10-05T14:14:18+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -523,6 +531,7 @@
       "enforcement": "advisory",
       "sourcePath": "processes/content/ig-incremental-build.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-incremental-build.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental/node/StartEvent_SourceChanged"
       ],
@@ -1458,6 +1467,7 @@
       "enforcement": "advisory",
       "sourcePath": "processes/content/ig-ast-delta-review.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-ast-delta-review.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-ast-delta-review.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview/node/Start_Ready"
       ],
@@ -1777,6 +1787,7 @@
       "enforcement": "advisory",
       "sourcePath": "processes/content/l3-fhir-pipeline.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/l3-fhir-pipeline.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l3-fhir-pipeline.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir/node/StartEvent_L2Ready"
       ],
@@ -2431,8 +2442,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "595f26991168146636296c9d620236854c6539ff",
+    "sha": "d21ef899555afbc4d86ff0100b4b820477647410",
     "pr": "main",
-    "run": "37304524260"
+    "run": "37308145095"
   }
 }

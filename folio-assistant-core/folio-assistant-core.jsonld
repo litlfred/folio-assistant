@@ -137,6 +137,14 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#canonicalDocument",
       "@type": "@id"
     },
+    "deprecated": {
+      "@id": "http://www.w3.org/2002/07/owl#deprecated",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "isReplacedBy": {
+      "@id": "http://purl.org/dc/terms/isReplacedBy",
+      "@type": "@id"
+    },
     "conformsTo": {
       "@id": "http://purl.org/dc/terms/conformsTo",
       "@type": "@id"
@@ -332,10 +340,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T11:46:36.184Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/595f26991168146636296c9d620236854c6539ff",
-  "sourceCommitSha": "595f26991168146636296c9d620236854c6539ff",
-  "sourceCommitAt": "2026-10-05T13:41:09+02:00",
+  "generatedAt": "2026-10-05T12:20:50.100Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d21ef899555afbc4d86ff0100b4b820477647410",
+  "sourceCommitSha": "d21ef899555afbc4d86ff0100b4b820477647410",
+  "sourceCommitAt": "2026-10-05T14:14:18+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -631,6 +639,7 @@
       "enforcement": "strict",
       "sourcePath": "processes/conduct/getting-started.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/conduct/getting-started.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/getting-started.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GettingStarted/node/StartEvent_AskToStart"
       ],
@@ -1232,6 +1241,7 @@
       "enforcement": "strict",
       "sourcePath": "processes/ui/board-relocate.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/ui/board-relocate.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/board-relocate.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_BoardRelocate/node/Start_Fishbone"
       ],
@@ -1515,6 +1525,7 @@
       "enforcement": "advisory",
       "sourcePath": "processes/ui/board-open-close.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/ui/board-open-close.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/board-open-close.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_BoardOpenClose/node/Start_Board"
       ],
@@ -1874,6 +1885,7 @@
       "enforcement": "advisory",
       "sourcePath": "processes/ui/board-place-note.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/ui/board-place-note.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/board-place-note.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_BoardPlaceNote/node/Start_Place"
       ],
@@ -2080,6 +2092,7 @@
       "enforcement": "advisory",
       "sourcePath": "processes/library/ingest-build-l1-kg.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ingest-build-l1-kg.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_BuildL1Kg/node/StartEvent_Derived2"
       ],
@@ -2306,6 +2319,7 @@
       "enforcement": "advisory",
       "sourcePath": "processes/library/ingest-extract-structure.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-extract-structure.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ingest-extract-structure.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ExtractStructure/node/StartEvent_Binary"
       ],
@@ -2564,6 +2578,7 @@
       "enforcement": "advisory",
       "sourcePath": "processes/library/ingest-derive-content.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-derive-content.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ingest-derive-content.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_DeriveContent/node/StartEvent_Assets"
       ],
@@ -2908,6 +2923,7 @@
       "enforcement": "advisory",
       "sourcePath": "processes/library/deep-document-research.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/deep-document-research.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/deep-document-research.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_DeepDocumentResearch/node/Start_Question"
       ],
@@ -3204,6 +3220,7 @@
       "enforcement": "advisory",
       "sourcePath": "processes/library/ingest-l1-completeness-gate.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ingest-l1-completeness-gate.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_L1Gate/node/StartEvent_KgBuilt"
       ],
@@ -3493,6 +3510,7 @@
       "enforcement": "advisory",
       "sourcePath": "processes/library/l1-document-ingestion.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l1-document-ingestion.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_L1DocumentIngestion/node/StartEvent_Document"
       ],
@@ -4022,6 +4040,7 @@
       "enforcement": "strict",
       "sourcePath": "processes/content/editing-hci-validation.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/editing-hci-validation.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/editing-hci-validation.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Editing/node/StartEvent_EditRequested"
       ],
@@ -4903,6 +4922,7 @@
       "enforcement": "strict",
       "sourcePath": "processes/content/public-comment.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/public-comment.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/public-comment.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_CommentsReturned",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_WithdrawRequested"
@@ -5460,6 +5480,7 @@
       "enforcement": "strict",
       "sourcePath": "processes/content/evidence-retrieval.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/evidence-retrieval.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/evidence-retrieval.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_EvidenceRetrieval/node/StartEvent_Recommendation"
       ],
@@ -6029,6 +6050,7 @@
       "enforcement": "strict",
       "sourcePath": "processes/content/content-lifecycle.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/content-lifecycle.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/content-lifecycle.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Lifecycle/node/StartEvent_Initiative"
       ],
@@ -6425,6 +6447,7 @@
       "enforcement": "advisory",
       "sourcePath": "processes/content/authoring-a-document.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/authoring-a-document.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/authoring-a-document.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_DocumentAuthoring/node/StartEvent_NewDocument"
       ],
@@ -6877,6 +6900,7 @@
       "enforcement": "strict",
       "sourcePath": "processes/content/draft-to-publication.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/draft-to-publication.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/draft-to-publication.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/StartEvent_CorpusUpdated"
       ],
@@ -7556,6 +7580,7 @@
       "enforcement": "strict",
       "sourcePath": "processes/content/content-change-review.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/content-change-review.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/content-change-review.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ContentChangeReview/node/Start_Author",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ContentChangeReview/node/Start_Agent",
@@ -9387,8 +9412,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "595f26991168146636296c9d620236854c6539ff",
+    "sha": "d21ef899555afbc4d86ff0100b4b820477647410",
     "pr": "main",
-    "run": "37304524260"
+    "run": "37308145095"
   }
 }

@@ -11153,237 +11153,64 @@
   }
 
   function mountNavIconRow() {
-    // EITHER NAVBAR, ONE ROW — bean `wckf` (#2147), owner 2026-10-05: *"still
-    // no LHS icons top navbar on who-iris page"*, and then *"this should be a
-    // common navbar functionality in harness"* (bean `9rq1`). This bound
-    // `.side-bar` only, so every page railed by `lib/navbar.ts` — the who-iris
-    // replicas, the standalone viewers — had the harness's navbar without the
-    // harness's row. `injectRail` now writes the same `#fa-navbar-row` the
-    // theme writes, and this draws it into whichever navbar the page has. The
-    // theme's sidebar first: a page carries one or the other, never both.
-    var bar = document.querySelector(".side-bar") || document.querySelector("nav.fa-nav");
-    if (!bar || bar.querySelector(".fa-nav-icons")) return;
-    var row = readNavbarRow();
-    if (row === undefined) return;
-    if (row === null) {
-      // Said once, at info level: this is a declaration gap in the instance,
-      // not a fault in the page, and a warning would push a reader toward the
-      // console for something only an author can fix.
-      console.info("docs-ui: this instance declares no navbarIcons and inherits none; " +
-                   "no navbar icon row was mounted.");
+    // THE ROW IS DRAWN BY `navbar-row.js` — beans `lhvt`, `9rq1`. That file is
+    // the one drawing for every navbar: it also runs on the 2,709 railed pages
+    // that never load this script (measured on the built site after #2149,
+    // where they carried the row's data and nothing drew it). Here it is
+    // called in FULL mode, with the three things only this script owns: the
+    // launcher's actions panel, the fsh-guts dialog and count (wired by
+    // `mountFshGutsNav` through the button's `data-fa-fsh-guts-open`), and the
+    // light/dark switch.
+    var hooks = {
+      full: true,
+      // The launcher is the EXISTING control, moved -- not a second one.
+      // `mountActionTiles` owns the panel and its open/close state, so this
+      // clicks that button rather than minting a rival with its own idea of
+      // whether the panel is open (`l4zi`).
+      launcher: function () {
+        var real = document.querySelector(".fa-tiles-toggle");
+        if (real) real.click();
+        else console.warn("docs-ui: the actions panel launcher is not mounted; " +
+                          "the navbar's More button has nothing to open.");
+      },
+      after: function (host) {
+        /* LIGHT / DARK IN THE ROW — owner, 2026-09-27: *"i want light dark
+         * mode on main icon tab at top of LHS"*. The same switch as the
+         * Settings tile and the header mini-button, so it REGISTERS a painter
+         * rather than owning the state: three controls over one fact. */
+        var scheme = el("button", { type: "button", class: "fa-nav-icon fa-nav-scheme" });
+        registerSchemePainter(function (name) {
+          scheme.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
+          var said = name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light";
+          scheme.setAttribute("aria-label", said);
+          scheme.setAttribute("data-fa-tip", said);
+          scheme.title = said;
+          scheme.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
+        });
+        scheme.addEventListener("click", toggleScheme);
+        host.appendChild(scheme);
+        // A row mounted LATE (the path below) has a fish nobody wired yet.
+        // Idempotent per button, so the synchronous path is unaffected.
+        mountFshGutsNav();
+      }
+    };
+    if (window.FaNavbarRow) {
+      window.FaNavbarRow.mount(hooks);
       return;
     }
-    var icons = Array.isArray(row.icons) ? row.icons : [];
-    var hrefs = row.hrefs && typeof row.hrefs === "object" ? row.hrefs : {};
-    // WHY a slot has no href — a separate map, because a slot has exactly one
-    // of the two and merging them would make "absent" mean both "resolved to
-    // nothing" and "never declared". See `navbarRow` in `sync-docs-harness.ts`.
-    var notes = row.notes && typeof row.notes === "object" ? row.notes : {};
-
-    /* EVERY CONTROL IN THIS ROW CARRIES `data-fa-tip`, and it is the SAME
-     * string as its `aria-label` — owner's ruling on `ob3m` finding 1,
-     * 2026-10-01: *"show each icon's name as a tooltip on hover or keyboard
-     * focus."* The row is glyphs with no words, so a sighted reader had no
-     * name at all until now; `title` names it for a pointer after a delay and
-     * never for a keyboard. The stylesheet paints the attribute beside the
-     * strip (`[data-fa-tip]::after` in docs-ui.css) with an EMPTY alternative
-     * text, so a screen reader still hears the `aria-label` once and the
-     * tooltip not at all. `check-navbar-consistency.ts` fails a row control
-     * built without it. */
-    var host = el("div", { class: "fa-nav-icons", role: "group", "aria-label": "Harness actions" });
-
-    var LABELS = {
-      todos: "Todos", beans: "Beans", processes: "Processes",
-      kg: "Knowledge graph", launcher: "More actions", "fsh-guts": "fsh-guts, discarded items"
-    };
-
-    // BUILT HERE, not at module scope, and the reason is ordering: STICKY_GLYPH
-    // and TILES_GLYPH are declared BELOW `TILE_GLYPHS`, so a map initialised
-    // beside that one would capture `undefined` for both. This runs at init,
-    // by which point every `var` in this IIFE is assigned.
-    //
-    // FIVE DISTINCT DRAWINGS. `glyphFor` falls back to NET_GLYPH, which would
-    // have given four of these five the same picture -- a row where four slots
-    // are indistinguishable is a row that says nothing.
-    var ROW_GLYPHS = {
-      todos: STICKY_GLYPH, beans: BEANS_GLYPH, processes: PROCESS_GLYPH,
-      kg: NET_GLYPH, launcher: TILES_GLYPH
-    };
-    var rowGlyph = function (id) {
-      return Object.prototype.hasOwnProperty.call(ROW_GLYPHS, id) ? ROW_GLYPHS[id] : NET_GLYPH;
-    };
-
-    for (var i = 0; i < icons.length; i++) {
-      var id = icons[i];
-      // `close` is the CSS-placed label described above. Skipped rather than
-      // dropped from the declaration, so the instance's list still says six.
-      if (id === "close") continue;
-
-      if (id === "fsh-guts") {
-        // THE TRASHCAN IN THE ROW, "with the others" — owner, 2026-10-02
-        // (#1925). A button, not a link: it opens the fsh-guts list and
-        // restore dialog and carries the live count, which `mountFshGutsNav`
-        // paints through `data-fa-fsh-guts-open` exactly as before.
-        var fish = el("button", {
-          type: "button", class: "fa-nav-icon fa-nav-icon--fsh-guts", "data-fa-fsh-guts-open": "",
-          "aria-label": LABELS["fsh-guts"], title: LABELS["fsh-guts"], "data-fa-tip": LABELS["fsh-guts"]
-        });
-        fish.innerHTML = FISH_GLYPH;
-        fish.appendChild(el("span", { class: "fa-nav-count", "data-fa-count-state": "pending", "aria-hidden": "true" }, "\u2026"));
-        host.appendChild(fish);
-        continue;
-      }
-
-      if (id === "launcher") {
-        // The launcher is the EXISTING control, moved -- not a second one.
-        // `mountActionTiles` owns the panel and its open/close state, so this
-        // clicks that button rather than minting a rival with its own idea of
-        // whether the panel is open. Two toggles over one state is the `l4zi`
-        // defect from the other direction.
-        var proxy = el("button", { type: "button", class: "fa-nav-icon", "aria-label": LABELS.launcher, "data-fa-tip": LABELS.launcher });
-        proxy.innerHTML = rowGlyph("launcher");
-        proxy.addEventListener("click", function () {
-          var real = document.querySelector(".fa-tiles-toggle");
-          if (real) real.click();
-          else console.warn("docs-ui: the actions panel launcher is not mounted; " +
-                            "the navbar's More button has nothing to open.");
-        });
-        host.appendChild(proxy);
-        continue;
-      }
-
-      var label = LABELS[id] || id;
-      // THROUGH `safeHref`, like every other href in this file. The value comes
-      // from `_data/harness.json`, which is generated -- but "generated" is not
-      // "trusted": the destinations are declared coverage paths, and a
-      // declaration is authored. `href-safety.test.ts` enforces this over the
-      // whole client for that reason, and it caught this exact line.
-      //
-      // `undefined` falls through to the non-link branch below, which is
-      // already the right rendering for a destination the row cannot use.
-      //
-      // THROUGH `withBase` FIRST, and it was not until the owner found the
-      // links live, 2026-09-23: *"beans and todos links wrong ...
-      // https://litlfred.github.io/beans/"*. The hrefs in `#fa-navbar-row` are
-      // site-root-relative (`/beans/`), and this site publishes under
-      // `/folio-assistant/`, so writing one unprefixed sends the reader to
-      // another repository's Pages root — a 404 that looks like a live site
-      // rather than like a broken link. `mountInstanceGraphs` two functions
-      // down has always done this for the folder list; only this row did not.
-      //
-      // `safeHref` AFTER `withBase`, so what is checked is the href actually
-      // written. That order is stated on the folder list too, for the same
-      // reason: checking the bare path clears a value the baseurl could still
-      // turn into something else.
-      var at = safeHref(withBase(hrefs[id]));
-      if (at) {
-        var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label, "data-fa-tip": label });
-        a.innerHTML = rowGlyph(id);
-        host.appendChild(a);
-      } else {
-        // DECLARED AND NOT PUBLISHED -- rendered, not dropped, and not a link.
-        // `pb04`: a dead link invites a click and then reads as a broken site,
-        // while a silent omission answers "where is beans" with nothing. The
-        // same choice the graph list in the harness tabs already makes.
-        //
-        // THE REASON IS IN THE ACCESSIBLE NAME, not only in a tooltip. This
-        // row is glyphs with no words at all, so `aria-label` is the ONLY
-        // channel a screen reader has -- and until now it said "Beans" for a
-        // slot that goes nowhere, which is a working control described to
-        // somebody who cannot see that it is grey. `title` carries the same
-        // string for a pointer user; neither is a substitute for the other.
-        //
-        // The wording is `row.notes`', carried from `harness-tiles.ts` where
-        // the four inert states are told apart, exactly as the folder list
-        // below does. The hardcoded "declared, with no published viewer" it
-        // replaced was one wording for four states.
-        var why = typeof notes[id] === "string" ? notes[id] : "reason not recorded";
-        var dead = el("span", {
-          class: "fa-nav-icon fa-nav-icon--dead",
-          "aria-label": label + " — " + why,
-          title: label + " — " + why,
-          "data-fa-tip": label + " — " + why
-        });
-        dead.innerHTML = rowGlyph(id);
-        host.appendChild(dead);
-      }
-    }
-
-    /* LIGHT / DARK IN THE ROW — owner, 2026-09-27: *"i want light dark mode
-     * on main icon tab at top of LHS"*. The same switch as the Settings tile
-     * and the header mini-button (which this row hides from 50rem up), so it
-     * REGISTERS a painter rather than owning the state: three controls over
-     * one fact, and none of them can disagree. */
-    var scheme = el("button", { type: "button", class: "fa-nav-icon fa-nav-scheme" });
-    registerSchemePainter(function (name) {
-      scheme.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
-      var said = name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light";
-      scheme.setAttribute("aria-label", said);
-      scheme.setAttribute("data-fa-tip", said);
-      scheme.title = said;
-      scheme.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
-    });
-    scheme.addEventListener("click", toggleScheme);
-    host.appendChild(scheme);
-
-    // AFTER the header: line 1 is the avatar and the name, line 2 is this.
-    // On the rail the row goes straight under its fixed top — the mark, the
-    // instance's root and the page's own section — inside `.fa-nav-in`, whose
-    // OPEN width every rail child keeps (`navbarCss`). On the theme's sidebar,
-    // under `.site-header`, as before.
-    var railTop = bar.matches("nav.fa-nav") ? bar.querySelector(".fa-nav-in > .fa-nav-top") : null;
-    var header = bar.querySelector(".site-header");
-    if (railTop) railTop.parentNode.insertBefore(host, railTop.nextSibling);
-    else if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
-    else bar.appendChild(host);
-
-    holdStripForTips(bar, host);
-  }
-
-  /* ARRIVING ON AN ICON DOES NOT OPEN THE STRIP — bean `ob3m` finding 1.
-   *
-   * Hover widens the strip, and widening re-flows this column into a row, so
-   * the icon a pointer arrived on moved out from under it before its tooltip
-   * could name it. The stylesheet holds the strip at rest while the bar
-   * carries `.fa-nav-tip-hold`; this decides when it does.
-   *
-   * WHY A REMEMBERED BOX, not `:hover` on the column. The column's place is
-   * only true AT REST — once the strip peeks it is a row somewhere else — so
-   * "is the pointer on the column" has to be asked of where the column WAS.
-   * `.fa-nav-icons:hover` alone held the strip shut under a pointer moving
-   * into the open row and made the row's icons unreachable.
-   *
-   * Set on ENTERING the bar only, so a reader already peeking keeps the open
-   * bar; cleared the moment the pointer leaves the box, so moving down the
-   * strip peeks exactly as before. Touch has no hover and is left alone. */
-  function holdStripForTips(bar, host) {
-    var rest = null;
-    function measure() {
-      if (bar.classList.contains("fa-nav-tip-hold")) return;
-      if (bar.matches(":hover") || bar.matches(":focus-within")) return;
-      if (bar.querySelector(".fa-nav-open:checked")) return;
-      var r = host.getBoundingClientRect();
-      if (r.width > 0 && r.height > 0) rest = { l: r.left, r: r.right, t: r.top, b: r.bottom };
-    }
-    function inside(e) {
-      return !!rest && e.clientX >= rest.l && e.clientX < rest.r && e.clientY >= rest.t && e.clientY < rest.b;
-    }
-    measure();
-    window.addEventListener("resize", measure);
-    bar.addEventListener("pointerenter", function (e) {
-      if (e.pointerType === "touch") return;
-      measure();
-      if (inside(e)) bar.classList.add("fa-nav-tip-hold");
-    });
-    bar.addEventListener("pointermove", function (e) {
-      if (bar.classList.contains("fa-nav-tip-hold") && !inside(e)) bar.classList.remove("fa-nav-tip-hold");
-    });
-    bar.addEventListener("pointerleave", function () {
-      bar.classList.remove("fa-nav-tip-hold");
-      // Re-measured once the bar is back at rest, so a box first measured
-      // while the pointer happened to be on the bar at load is not missing.
-      requestAnimationFrame(measure);
-    });
+    // `navbar-row.js` has not run yet. On a `folio-mount.ts` page this script
+    // is appended from an inline script, so it can run first; leave the hooks
+    // where `navbar-row.js` looks, and fetch it if no tag for it is coming.
+    // Fetched beside THIS script's own file, and only when this script came
+    // from one: an inlined copy (every e2e fixture) has no address to be
+    // beside, and its page inlines `navbar-row.js` too.
+    window.faNavbarRowHooks = hooks;
+    if (document.querySelector('script[src*="/navbar-row.js"]')) return;
+    var mine = document.querySelector('script[src*="/assets/js/docs-ui.js"]');
+    if (!mine) return;
+    var s = document.createElement("script");
+    s.src = mine.getAttribute("src").replace(/\/assets\/js\/docs-ui\.js.*$/, "/assets/js/navbar-row.js");
+    document.head.appendChild(s);
   }
 
   /* ── THE MIDDLE: this instance's controlled folders, then its navigation ──

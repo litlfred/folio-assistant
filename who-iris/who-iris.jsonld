@@ -137,6 +137,14 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#canonicalDocument",
       "@type": "@id"
     },
+    "deprecated": {
+      "@id": "http://www.w3.org/2002/07/owl#deprecated",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "isReplacedBy": {
+      "@id": "http://purl.org/dc/terms/isReplacedBy",
+      "@type": "@id"
+    },
     "conformsTo": {
       "@id": "http://purl.org/dc/terms/conformsTo",
       "@type": "@id"
@@ -332,10 +340,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T11:46:46.060Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/595f26991168146636296c9d620236854c6539ff",
-  "sourceCommitSha": "595f26991168146636296c9d620236854c6539ff",
-  "sourceCommitAt": "2026-10-05T13:41:09+02:00",
+  "generatedAt": "2026-10-05T12:20:58.263Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d21ef899555afbc4d86ff0100b4b820477647410",
+  "sourceCommitSha": "d21ef899555afbc4d86ff0100b4b820477647410",
+  "sourceCommitAt": "2026-10-05T14:14:18+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -686,8 +694,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "595f26991168146636296c9d620236854c6539ff",
+    "sha": "d21ef899555afbc4d86ff0100b4b820477647410",
     "pr": "main",
-    "run": "37304524260"
+    "run": "37308145095"
   }
 }
