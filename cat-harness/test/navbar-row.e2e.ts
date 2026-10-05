@@ -306,7 +306,8 @@ test.describe("the icon row — line 2 of the fixed top", () => {
     // slot is rendered, and it is not an anchor.
     const { errors } = await load(page, CUSTOM);
     expect(errors).toEqual([]);
-    const todos = page.locator('.fa-nav-icons [aria-label="Todos"]');
+    // `^=`: the name gains its live count once `count.json` is read (bean `gkv6`).
+    const todos = page.locator('.fa-nav-icons [aria-label^="Todos"]');
     // WITH THE BASEURL. `#fa-navbar-row` is `jsonify`d raw, unlike
     // `#fa-site-links`, which Liquid has already run `relative_url` over — so
     // a site-root path arriving here is unprefixed and composing it without

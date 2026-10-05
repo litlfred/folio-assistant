@@ -202,3 +202,42 @@ test("docs-ui.js running BEFORE the row script still ends with the full row", as
   await expect(row).toHaveAttribute("data-fa-row", "full");
   await expect(row).toHaveCount(1);
 });
+
+/* COUNT BADGES ON TODOS AND BEANS — bean `gkv6`. Owner, 2026-10-05: "why no
+ * count on beans and todos on LHS top navbar as badges like fsh-guts has?".
+ * Fetched from the `count.json` beside each index; drawn in the LITE row, so
+ * on every railed page, not only where `docs-ui.js` loads. */
+test.describe("the Todos and Beans icons carry a live count badge (bean gkv6)", () => {
+  const count = (id: string, n: number) => JSON.stringify({ tile: { [id]: { count: n, unit: id } } });
+
+  test("the published counts are drawn, and the name says them", async ({ page }) => {
+    await serve(page, railedBare(LIVE), {
+      "/folio-assistant/assets/todos/count.json": count("todos", 3),
+      "/folio-assistant/assets/beans/count.json": count("beans", 528),
+    });
+    const row = page.locator("nav.fa-nav .fa-nav-icons");
+    const beans = row.locator('a[aria-label^="Beans"]');
+    await expect(beans.locator(".fa-nav-count")).toHaveText("528");
+    await expect(beans.locator(".fa-nav-count")).toHaveAttribute("data-fa-count-state", "some");
+    await expect(beans).toHaveAttribute("aria-label", "Beans — 528 open");
+    await expect(beans).toHaveAttribute("data-fa-tip", "Beans — 528 open");
+    const todos = row.locator('a[aria-label^="Todos"]');
+    await expect(todos.locator(".fa-nav-count")).toHaveText("3");
+    await expect(todos).toHaveAttribute("aria-label", "Todos — 3 outstanding");
+    await expect(todos.locator(".fa-nav-count")).toBeVisible();
+  });
+
+  test("nothing published is NO badge, and an unreadable file says '?' — never a made-up number", async ({ page }) => {
+    await serve(page, railedBare(LIVE), {
+      "/folio-assistant/assets/beans/count.json": "not json",
+    });
+    const row = page.locator("nav.fa-nav .fa-nav-icons");
+    const todos = row.locator('a[aria-label^="Todos"]');
+    await expect(todos.locator(".fa-nav-count")).toHaveAttribute("data-fa-count-state", "absent");
+    await expect(todos.locator(".fa-nav-count")).toBeHidden();
+    await expect(todos).toHaveAttribute("aria-label", "Todos");
+    const beans = row.locator('a[aria-label^="Beans"]');
+    await expect(beans.locator(".fa-nav-count")).toHaveText("?");
+    await expect(beans.locator(".fa-nav-count")).toHaveAttribute("data-fa-count-state", "error");
+  });
+});
