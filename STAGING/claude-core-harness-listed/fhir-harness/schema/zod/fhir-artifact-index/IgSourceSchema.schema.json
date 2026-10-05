@@ -1,0 +1,45 @@
+{
+  "$ref": "#/definitions/IgSource",
+  "definitions": {
+    "IgSource": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "gh-pages",
+            "output",
+            "url"
+          ]
+        },
+        "of": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "readAt": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind",
+        "of",
+        "readAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-artifact-index/IgSourceSchema.schema.json",
+  "title": "IgSourceSchema",
+  "description": "Generated from `IgSourceSchema` in schemas/fhir-artifact-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/core-harness-listed",
+    "sha": "a7b7314c91f3a5deb943c5571e8dc79fc0df0e05",
+    "pr": "2197/merge",
+    "run": "37357324129"
+  }
+}

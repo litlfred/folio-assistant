@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>As-is wireframe: fhir-artifact-index — an IG's artefact index</title><link rel="stylesheet" href="../wireframe.css"><style>
+  .wrap { max-width: 68rem; margin: 0 auto; padding: 8px 16px 48px; }
+  h1 { font-size: 26px; margin: 16px 0 4px; }
+  h2 { font-size: 20px; margin: 24px 0 8px; }
+  .banner { border: 1px solid var(--line); border-radius: 4px; margin: 12px 0; }
+  .banner .bar { background: var(--fill); padding: 8px 12px; font-weight: 600; }
+  .banner .st { padding: 8px 12px; }
+  .banner .pub { padding: 6px 12px; font-size: 13px; color: var(--mute); border-top: 1px solid var(--line); }
+  .harness { border-left: 4px solid var(--line); padding: 8px 14px; margin: 16px 0; font-size: 14px; color: var(--mute); }
+  .grid { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; }
+  .stat { flex: 1 1 8rem; border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; }
+  .stat b { display: block; font-size: 20px; }
+  .stat span { font-size: 12px; color: var(--mute); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--fill); }
+  .p { color: var(--mute); font-size: 12px; font-family: ui-monospace, monospace; overflow-wrap: anywhere; }
+  .tag { display: inline-block; border: 1px solid currentColor; border-radius: 3px; padding: 0 6px; font-size: 12px; font-weight: 600; }
+  details { border: 1px solid var(--line); border-radius: 4px; margin: 8px 0; padding: 6px 10px; }
+  summary { cursor: pointer; }
+  .clip { width: 100%; overflow-x: auto; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-1tstgx8dr3c.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/css/navbar-row.css"><script src="../../assets/js/navbar-row.js" defer></script></head><body><script type="application/json" id="fa-navbar-row" data-fa-root="../..">{"icons":["close","todos","beans","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-1tstgx8dr3c"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">C@T Harness</a></nav><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><div class="wf-meta">As-is wireframe · fhir-artifact-index · covers: smart-trust/docs/index.md, smart-base/docs/index.md, smart-immunizations/docs/index.md (drawn: smart-base, the --summary form)</div><div class="wrap"><h1>WHO SMART Base</h1><div class="banner"><div class="bar"><a href="#canonical">smart.who.int.base</a></div><div class="st"><strong>WHO SMART Base</strong><br>0.3.0</div><div class="pub">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="#canonical">http://smart.who.int/base</a>.</div></div><div class="harness"><strong>Harness section</strong> (--summary pages only): the instance's own harness_details include — its tiles, graphs and findings.</div><h2>Artefact index</h2><p>The artefact index of the IG, rebuilt from what it publishes. Most of it is catalogued by reference: a <span class="tag">referenced</span> row means upstream, not broken.</p><div class="grid"><div class="stat"><b>225</b><span>artefacts indexed</span></div><div class="stat"><b>178</b><span>referenced — bytes upstream</span></div><div class="stat"><b>47</b><span>materialized here</span></div><div class="stat"><b>0.3.0</b><span>IG version</span></div><div class="stat"><b>4.0.1</b><span>FHIR version</span></div></div><h2>Where this came from</h2><div class="clip"><table aria-label="Provenance"><tbody><tr><td>packageManifest</td><td><span class="p">package.manifest.json</span></td></tr><tr><td>canonicals</td><td><span class="p">canonicals.json</span></td></tr><tr><td>artifactsHtml</td><td><span class="p">artifacts.html</span></td></tr><tr><td>sidecarEnumerations</td><td><span class="p">LogicalModels.schema.json, ValueSets.schema.json</span></td></tr><tr><td>canonical base</td><td><span class="p">http://smart.who.int/base</span></td></tr></tbody></table></div><h2>DAK API surface</h2><p>Heading from the caller's sidecar label ("API sidecars" by default). Four sidecars, counted separately.</p><div class="grid"><div class="stat"><b>47</b><span>JSON Schema</span></div><div class="stat"><b>22</b><span>displays</span></div><div class="stat"><b>47</b><span>OpenAPI</span></div><div class="stat"><b>22</b><span>JSON-LD</span></div></div><h2>Every artefact, by category</h2><details open><summary><strong>Conformance</strong> — 17</summary><div class="clip"><table aria-label="Conformance artefacts"><thead><tr><th>Artefact</th><th>Canonical URL</th><th>Published as</th><th>Bytes</th></tr></thead><tbody><tr><td><a href="#a1">SMART Guidelines ActivityDefinition</a><br><span class="p">StructureDefinition/SGActivityDefinition</span></td><td><span class="p">http://smart.who.int/base/StructureDefinition/SGActivityDefinition</span></td><td><a href="#j">json</a> · <a href="#x">xml</a> · <a href="#t">ttl</a> · <a href="#h">html</a></td><td><span class="tag">referenced</span></td></tr><tr><td><a href="#a2">SMART Guidelines Actor</a><br><span class="p">StructureDefinition/SGActor</span></td><td><span class="p">http://smart.who.int/base/StructureDefinition/SGActor</span></td><td><a href="#j">json</a> · <a href="#x">xml</a> · <a href="#t">ttl</a> · <a href="#h">html</a></td><td><span class="tag">referenced</span></td></tr></tbody></table></div></details><details><summary><strong>Requirements: Actor Definitions</strong> — 22</summary></details><details><summary><strong>Terminology: Value Sets</strong> — folded</summary></details></div></body></html>
