@@ -4,21 +4,14 @@
   "@type": "bootstrap:Subgraph",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-math",
-      "@type": "cat-harness:SkillPackage",
-      "hasManifest": true,
-      "name": "authoring-math",
-      "path": "../folio-assistant-sci/skills/content/authoring-math"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/latex-authoring",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/latex-authoring",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-math",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/skills",
       "instructionLines": 64,
-      "instructionsPath": "../folio-assistant-sci/skills/content/authoring-math/latex-authoring.md",
+      "instructionsPath": "skills/content/authoring-math/latex-authoring.md",
       "name": "latex-authoring",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a9ec4998b03612f940ba38340df71ba4e20373e951f9cdae4a69e2c028aa1816",
@@ -28,14 +21,14 @@
       "title": "latex-authoring"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lean-formalization",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-formalization",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-math",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/skills",
       "instructionLines": 95,
-      "instructionsPath": "../folio-assistant-sci/skills/content/authoring-math/lean-formalization.md",
+      "instructionsPath": "skills/content/authoring-math/lean-formalization.md",
       "name": "lean-formalization",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/93d655e6df349b12f8559425fc30283b699be6b9f4f7712544649ef28972b16f",
@@ -45,14 +38,14 @@
       "title": "lean-formalization"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/proof-verification",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/proof-verification",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-math",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/skills",
       "instructionLines": 69,
-      "instructionsPath": "../folio-assistant-sci/skills/content/authoring-math/proof-verification.md",
+      "instructionsPath": "skills/content/authoring-math/proof-verification.md",
       "name": "proof-verification",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c3a6213453e89bd7f7e9be06b83ee3c960e111200437a2a5513e9082be3e4a68",

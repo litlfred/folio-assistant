@@ -8,21 +8,14 @@
       "@type": "bootstrap:Subgraph",
       "hasMember": [
         {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-authoring",
-          "@type": "cat-harness:SkillPackage",
-          "hasManifest": true,
-          "name": "fhir-ig-authoring",
-          "path": "../fhir-harness/skills/content/fhir-ig-authoring"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/fhir-validation",
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-validation",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
           "hasIOContract": false,
           "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-authoring",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
           "instructionLines": 72,
-          "instructionsPath": "../fhir-harness/skills/content/fhir-ig-authoring/fhir-validation.md",
+          "instructionsPath": "skills/content/fhir-ig-authoring/fhir-validation.md",
           "name": "fhir-validation",
           "payload": {
             "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8d927f6e0039b5554cdb206c69456e6954d9e28142e98cec8c4bccbe43bf52c6",
@@ -32,14 +25,14 @@
           "title": "fhir-validation"
         },
         {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-publication",
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-publication",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
           "hasIOContract": false,
           "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-authoring",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
           "instructionLines": 118,
-          "instructionsPath": "../fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md",
+          "instructionsPath": "skills/content/fhir-ig-authoring/ig-publication.md",
           "name": "ig-publication",
           "payload": {
             "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1da6588ced1c9bd4931d948318384613c5d84934e02a6184c5e43f6ef50e9006",
@@ -49,14 +42,14 @@
           "title": "ig-publication"
         },
         {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/l3-fhir-authoring",
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/l3-fhir-authoring",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
           "hasIOContract": false,
           "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-authoring",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
           "instructionLines": 78,
-          "instructionsPath": "../fhir-harness/skills/content/fhir-ig-authoring/l3-fhir-authoring.md",
+          "instructionsPath": "skills/content/fhir-ig-authoring/l3-fhir-authoring.md",
           "name": "l3-fhir-authoring",
           "payload": {
             "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7d89e99802ee7309436e39bb1e7c6581d70c02efb13d33144f7c7cae0e07aab6",
@@ -66,14 +59,14 @@
           "title": "l3-fhir-authoring"
         },
         {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/terminology-management",
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/terminology-management",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
           "hasIOContract": false,
           "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-authoring",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
           "instructionLines": 63,
-          "instructionsPath": "../fhir-harness/skills/content/fhir-ig-authoring/terminology-management.md",
+          "instructionsPath": "skills/content/fhir-ig-authoring/terminology-management.md",
           "name": "terminology-management",
           "payload": {
             "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f93df935dcdea4a4b3775901d7e5e957be6e8768628b83f405850211d4afb5a4",

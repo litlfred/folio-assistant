@@ -4,22 +4,15 @@
   "@type": "bootstrap:Subgraph",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/cataloguing",
-      "@type": "cat-harness:SkillPackage",
-      "hasManifest": true,
-      "name": "cataloguing",
-      "path": "../folio-assistant-core/skills/library/cataloguing"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-arxiv",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/archiving-arxiv",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Materializing a paper from arXiv — why the version suffix is part of the identity rather than a detail, what to keep beside the PDF, and which facts must be read from the published API rather than recalled.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/cataloguing",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
       "instructionLines": 173,
-      "instructionsPath": "../folio-assistant-core/skills/library/cataloguing/archiving-arxiv.md",
+      "instructionsPath": "skills/library/cataloguing/archiving-arxiv.md",
       "name": "archiving-arxiv",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a17b8616e2875119cfbc985a78bd2ed8dae794ee45c505f6006a624627e25fe6",
@@ -29,15 +22,15 @@
       "title": "Materializing from arXiv"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-web-pages",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/archiving-web-pages",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Capturing a web page so it can be cited later — the two fidelities, what each one is evidence of, and why capturing only one of them loses something that cannot be recovered. A URL is not an archive.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/cataloguing",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
       "instructionLines": 87,
-      "instructionsPath": "../folio-assistant-core/skills/library/cataloguing/archiving-web-pages.md",
+      "instructionsPath": "skills/library/cataloguing/archiving-web-pages.md",
       "name": "archiving-web-pages",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dfb1f6017a230711e10d0e2622ba341655513e49736e91cc1849e4c0b10dfd82",
@@ -47,15 +40,15 @@
       "title": "Archiving a web page"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-human-review",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/bib-human-review",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Human-validated bibliography workflow. Flag references that have not been human-reviewed against their source; drive the acquisition ladder (source-in-repo → acquire-legally → physical-library); open one GitHub issue per reference needing physical review (full project context + bibliographic data + page-photo request, assigned to the repo owner); hand off uploaded photos to the bib-photo-ingestion watcher. Use when auditing bib human-review status, ingesting an uploaded paper's results, or preparing a physical-review issue.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/cataloguing",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
       "instructionLines": 76,
-      "instructionsPath": "../folio-assistant-core/skills/library/cataloguing/bib-human-review.md",
+      "instructionsPath": "skills/library/cataloguing/bib-human-review.md",
       "name": "bib-human-review",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d66b435ba4679b81ad5d283ad1cbe8f7d79412477aade2e329dd9d290680009c",
@@ -65,15 +58,15 @@
       "title": "bib-human-review"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-photo-ingestion-watcher",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/bib-photo-ingestion-watcher",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Integration-watcher for bib physical-review issues. When a page photo is uploaded to a `bib-physical-review` issue (or an in-repo source passage is agent-identified), OCR/read it, formalise the cited result (if the project has a formal-proof pipeline), confirm the project's usage matches the source, run machine + agent bib validation, then set the reference status to `validated` and refresh references.review.json. Use when processing a bib-physical-review issue that has an attached photo, or when ingesting an uploaded paper.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/cataloguing",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
       "instructionLines": 53,
-      "instructionsPath": "../folio-assistant-core/skills/library/cataloguing/bib-photo-ingestion-watcher.md",
+      "instructionsPath": "skills/library/cataloguing/bib-photo-ingestion-watcher.md",
       "name": "bib-photo-ingestion-watcher",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/129b2b280aebb60a869e8e421ff1a94aaa86c2df56de60fe5d81607ec8b4e0a6",
@@ -83,15 +76,15 @@
       "title": "bib-photo-ingestion-watcher"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-qa",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/bib-qa",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Bibliography quality-assurance agent — validates every reference in content/schema/references.ts against several QA checks: URL availability, URL resolution, metadata completeness, citation coverage, and screenshot/image evidence.  Generates bib-qa.json consumed by the standalone bib-qa.html dashboard.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/cataloguing",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
       "instructionLines": 354,
-      "instructionsPath": "../folio-assistant-core/skills/library/cataloguing/bib-qa.md",
+      "instructionsPath": "skills/library/cataloguing/bib-qa.md",
       "name": "bib-qa",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e5beb30b41a3306ff9d2881359f1135927f3df764b1db7b5844e9fe6254bb054",
@@ -101,15 +94,15 @@
       "title": "Bibliography QA Skill"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/filing-dublin-core",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/filing-dublin-core",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Cataloguing a source as it arrives — which facts are `dcterms`, which are this project's own, and why the line is drawn by the vocabulary rather than by convenience. The bibliographic layer only; the derived layer belongs to ingestion.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/cataloguing",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
       "instructionLines": 105,
-      "instructionsPath": "../folio-assistant-core/skills/library/cataloguing/filing-dublin-core.md",
+      "instructionsPath": "skills/library/cataloguing/filing-dublin-core.md",
       "name": "filing-dublin-core",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e065b8bdb342fbfc04f8b855325307aa0df2f61f69a9eb75312cbe64f999a044",
@@ -119,14 +112,14 @@
       "title": "Filing a source: what Dublin Core carries, and what it does not"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-build",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/glossary-build",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/cataloguing",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
       "instructionLines": 147,
-      "instructionsPath": "../folio-assistant-core/skills/library/cataloguing/glossary-build.md",
+      "instructionsPath": "skills/library/cataloguing/glossary-build.md",
       "name": "glossary-build",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8aba20e63dbbda332f5dfce3efd19dbe519d0cd015cff7604067b6cd6c820f2e",
@@ -136,15 +129,15 @@
       "title": "Glossary Build Skill"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ontologist",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/ontologist",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Semantic Ontologist — scans narrative text for ambiguous terms, generates a formal glossary/registry, and produces a mapping linking narrative strings to formal identifiers. Acts as the \"Gatekeeper\" ensuring every term has a unique type/identity assignment before formalization proceeds.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/cataloguing",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
       "instructionLines": 233,
-      "instructionsPath": "../folio-assistant-core/skills/library/cataloguing/ontologist.md",
+      "instructionsPath": "skills/library/cataloguing/ontologist.md",
       "name": "ontologist",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/200455548038e27c8689df8f66cf48008cfc9d8e843b9aaa60da9094f959a1a9",

@@ -4,22 +4,15 @@
   "@type": "bootstrap:Subgraph",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/lean",
-      "@type": "cat-harness:SkillPackage",
-      "hasManifest": false,
-      "name": "lean",
-      "path": "../folio-assistant-sci/skills/lean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lean-formal-edges",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-formal-edges",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Extract ELABORATED formal dependencies between a folio's lean.ref declarations — the trustworthy replacement for the lexical `--scan` cache. Use when the formal graph matters (impact analysis, staleness, a blueprint's \\uses), when `lean-formal-graph` reports source \"scan\", or before trusting a type/value split.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/lean",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/skills",
       "instructionLines": 142,
-      "instructionsPath": "../folio-assistant-sci/skills/lean/lean-formal-edges.md",
+      "instructionsPath": "skills/lean/lean-formal-edges.md",
       "name": "lean-formal-edges",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9535a1bf2adb5867984ca25dff54847fb08b5ac8f5b4957fe66a659b1ab11d5a",

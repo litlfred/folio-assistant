@@ -457,10 +457,16 @@ jobs:
       # `check:published-instance-exports` runs the `--instance` commands
       # below from a checkout, so a break in them is visible before a merge
       # rather than only in this workflow's own run (bean `u1iu`).
+      #
+      # `--scope instance` (the default, said aloud): this document holds
+      # cat-harness's own directories only, and each instance stacked on it
+      # publishes its own below (`instance-exports.ts`). An `@id` that moved
+      # keeps a tombstone here for one release — owner ruling 2026-10-05,
+      # bean `4ak5` item 2.
       - name: Export the knowledge graph and its schema
         run: |
           STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)
-          bun run cat-harness/scripts/kg-export.ts             --out "./_site/${STUB}.jsonld"
+          bun run cat-harness/scripts/kg-export.ts             --scope instance --out "./_site/${STUB}.jsonld"
           bun run cat-harness/scripts/harness-schema-export.ts --out-dir ./_site
           bun run cat-harness/scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
