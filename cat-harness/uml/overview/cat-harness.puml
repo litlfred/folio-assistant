@@ -787,6 +787,11 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     preview [1] : string
     file [1] : string
   }
+  class "Edge" as cat_harness_docs_folio_bean_index_v1_Edge <<json: BeanIndexSchema>> #f4f4f1 {
+    blocker [1] : string
+    blocked [1] : string
+    declaredOn [1..*] : list<blocked_by | blocking>
+  }
   class "Finding" as cat_harness_docs_folio_bean_index_v1_Finding <<json: BeanIndexSchema>> #f4f4f1 {
     kind [1] : blocked-without-expiry | blocker-closed | blocking-unknown
     bean [1] : string
@@ -798,6 +803,7 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     tile [0..1] : map<object>
     repoWeb [1] : string
     items [0..*] : Item[]
+    edges [0..*] : Edge[]
     findings [0..*] : Finding[]
     plan [0..1] : object
   }
@@ -1037,6 +1043,12 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     tile [0..1] : map<object>
     directories [0..*] : Directory[]
     nodes [0..*] : Node[]
+  }
+  class "cat-harness-payload/v1" as cat_harness_docs_cat_harness_payload_v1_cat_harness_payload_v1 <<json: PayloadSidecarSchema>> #f4f4f1 {
+    $schema [1] : 'cat-harness-payload/v1'
+    sha256 [1] : string
+    bytes [1] : integer
+    mediaType [1] : string
   }
 }
 package "cat-harness/swimlane-glossary" as pkg_cat_harness_swimlane_glossary <<swimlane-glossary>> {
@@ -1374,6 +1386,7 @@ cat_harness_library_folio_referenced_source_v1_folio_referenced_source_v1 *-- "0
 cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo_index_v1_Relation : relations
 cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_docs_folio_todo_index_v1_Item : items
 cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Item : items
+cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Edge : edges
 cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Finding : findings
 cat_harness_docs_folio_translation_status_v1_folio_translation_status_v1 *-- "0..*" cat_harness_docs_folio_translation_status_v1_Locale : locales
 cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Module : modules

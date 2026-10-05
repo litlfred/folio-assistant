@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ingest-extract-structure\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.782Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.323Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -49,14 +49,14 @@ msgstr ""
 msgid "Extract claim candidates"
 msgstr ""
 
+#: processes/library/ingest-extract-structure.bpmn:26
+#. Diagram element documentation
+msgid "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates. folio-assistant — Ingestion subprocess — extract structure. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
+msgstr ""
+
 #: processes/library/ingest-extract-structure.bpmn:62
 #. Diagram label
 msgid "Extract the text layer"
-msgstr ""
-
-#: processes/library/ingest-extract-structure.bpmn:26
-#. Diagram element documentation
-msgid "folio-assistant — Ingestion subprocess — extract structure. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
 #: processes/library/ingest-extract-structure.bpmn:39

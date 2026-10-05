@@ -41,8 +41,12 @@ When an agent pushes to a feature branch, `feature-staging.yml` automatically:
    log — **once**, to `staging.json` at the preview root
 3. Injects a **constant** staging banner at the top of every HTML page, which
    reads those facts in the browser
-4. Deploys to `gh-pages/STAGING/<branch-slug>/`
-5. Comments the staging URL on the PR
+4. Comments on the PR that the preview is **staged and queued**, with the
+   earliest push time and when it should be live
+5. Waits for the rate-limit window (§7), then deploys to
+   `gh-pages/STAGING/<branch-slug>/`
+6. Rewrites the same comment: **pushed** at a time, live by about five
+   minutes later
 
 ### 2. The staging banner
 
@@ -181,57 +185,62 @@ Two things to know when editing it:
   404 until the author pushes rather than lost work. Detail and the reviewer's
   remedy: [`staging-review`](staging-review.md) §"The cap".
 
-### 7. The cone — a preview rebuilds only what a changed file can reach
+### 7. The rate limit — a preview never cancels the main site's Pages build
 
-**Owner ruling, 2026-10-04 (bean `4j86`):** *"staging rebuild only what is
-dependency cone of changes (general rule)"*, at FILE level, with each derived
-directory's generator declared as `writer`. A general rule across rendered
-kinds, not a fact about IGs.
+**Owner ruling, 2026-10-03 (issues #1868, #1956, bean `j27s`), option 1:**
+push staging previews to `gh-pages` less often. GitHub's `pages build and
+deployment` keeps only the NEWEST run, so every push cancels the build in
+flight. A build takes about three minutes (2m20s–3m40s, measured 2026-10-03),
+and in busy stretches previews were pushed every one to two minutes — ten
+builds cancelled in a row between 07:50Z and 08:00Z that day, the main site's
+among them.
 
-A rendered directory is **in the cone** when a changed file is
+So before each push attempt the `stage` job re-reads `gh-pages` and runs
+`cat-harness/scripts/staging-push-gate.ts gate`, which holds the push until the
+branch tip is old enough:
 
-1. under its own path (its pages, or its source data), or
-2. in the import closure of a `writer` it declares, or under a writer
-   directory (a path ending in `/`: what a generator reads, such as its
-   templates, rather than imports), or
-3. in a directory it is `derivedFrom`, transitively (`check:derived-from
-   --downstream <instance/id>` prints that half on its own).
+| tip of `gh-pages` | wait until it is |
+|---|---|
+| a staging commit (`staging(...)`) | `STAGING_WINDOW_MS` — 5 min |
+| anything else: the main-site publish, `publish.yml`, any other publisher | `MAIN_WINDOW_MS` — 10 min |
 
-`cat-harness/scripts/staging-cone.ts` computes it; `compose-docs.ts`
-`carriedInstances` applies it to the composed instances. Three rules hold it
-honest:
+The numbers live once, in that script. Exit `75` means it slept until the
+window should open (plus up to a minute of jitter) and the loop must re-read
+and ask again; exit `1` means the job has waited `MAX_WAIT_MS` (two hours) and
+fails rather than pushing; exit `2` is an unreadable tip, never read as open.
 
-- **Any doubt carries.** No file list, a writer that does not exist, or an
-  import that does not resolve carries the directory, with the reason in the
-  build log. A preview missing the pages under review misleads a reviewer; an
-  oversized one costs bytes. Those are not symmetric.
-- **A computed `import()` is bounded, not ignored.** It can load only a
-  module, so it carries on a changed module file and never on a page. The two
-  such sites a generator reaches today (`harness-config.ts`'s `contributes`
-  loader and `block-module.ts`'s block loader) have DECLARED targets and are
-  walked exactly; `DECLARED_COMPUTED_IMPORTS` lists them.
-- **The old instance-prefix match is a floor.** The cone can only add to it.
-  Narrowing below it is a separate decision, made once the cone has been
-  measured in previews.
+Three things to know when editing it:
 
-Measured on 2026-10-04: a skill-only change carries no IG; a change to
-`gen-ig-pages.ts` or to `smart-base/themes/chrome.json` carries all three.
-Before the cone, those last two changes dropped every IG from the preview that
-existed to review them. `staging-cone.test.ts` holds all three as tests.
+- **git's fast-forward rule is the lock.** Two jobs that both find the window
+  open both build on the same tip; one push is rejected, re-reads, finds a tip
+  younger than the window, and waits. So at most one staging push lands per
+  window with no shared state. A rejection whose tip MOVED is therefore a lost
+  race, sent back to the gate without spending one of the three attempts; only
+  a rejection with the tip unmoved counts as a failure.
+- **No concurrency group, and none should be added.** Every waiting preview
+  would pend in one group and each arrival would cancel the last — the
+  2026-09-19 measurement on the `stage` job. The per-branch group at the
+  workflow level stays: a newer push to the same PR cancels a preview still
+  waiting at the gate, so a superseded preview is never pushed at all.
+- **A staging push BEFORE a main-site push is harmless; only one AFTER it
+  cancels the build that matters.** The main push then cancels the staging
+  build, and the build that runs carries both. That is why the gate looks at
+  the tip, and why it does not wait for `docs-site` runs that have not pushed
+  yet.
 
-**Built sites follow the same rule.** An IG's own Jekyll site and its AST
-site are BUILT in the preview from an upstream repository pinned in the
-instance's own files, not composed from the checkout. `stage-ig-sites.ts` and
-`stage-ast-sites.ts` take `--changed-files` and stage only the instances
-`siteInCone` reaches. Its reasons, in order: no file list; a change to the
-build environment (`SITE_ENVIRONMENT`: the docs Gemfile and this workflow); a
-change under the instance; the cone reaching any of the instance's
-directories (a theme change arrives this way); or a change in the stager's
-closure. Each decision is printed with its reason.
+**Why a rate limit rather than a batching "flush" job.** A flush job — previews
+uploaded as artifacts, one scheduled job pushing every pending one in one
+commit — batches harder, but costs a second workflow, an artifact round trip of
+200–500 MB per preview, a record of which artifact is already deployed, a
+schedule GitHub runs best-effort, and a write token over content built from a
+pull request. The gate is one script and one loop, and its correctness rests on
+git rather than on bookkeeping. The cost is latency under load: with K
+previews waiting, the last one pushes about 5 × K minutes later, and the PR
+comment says so with its own estimate.
 
-**When you add a generated directory, declare its `writer` and
-`derivedFrom`.** Without them the cone cannot reach it through code or data,
-and the prefix floor is all it gets.
+The `cleanup` and `cleanup-dispatch` jobs do NOT pass through the gate yet.
+They push once per closed PR rather than once per push, so they are far rarer;
+gating them is the next step if cancellations by cleanup are ever measured.
 
 ## Agent workflow
 
@@ -276,10 +285,12 @@ An author needs to change the immunization schedule:
 ## Before you hand a staging URL to a person
 
 **Check the ref, then say how long and come back.** A preview push is not a
-served page, and the bot's *"Staging preview deployed"* comment reports the
-first, not the second. List `STAGING/<slug>/` on `refs/heads/gh-pages` before
-relaying the URL; say the `stage` job takes ~2 minutes and Pages adds up to ten
-on top; schedule the re-check rather than promising it.
+served page, and the bot's *"Staging preview"* comment reports at most the
+first, not the second — and while it says **queued**, not even that. List
+`STAGING/<slug>/` on `refs/heads/gh-pages` before relaying the URL; quote the
+comment's own push and live-by times (the rate limit in §7 can hold a push for
+several windows), or say the `stage` job takes ~2 minutes plus the wait and
+Pages adds a few on top; schedule the re-check rather than promising it.
 
 The reason it is a rule: an agent relayed one preview URL to the owner **five
 times in a session** without checking anything, each time straight off the

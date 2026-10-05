@@ -10,7 +10,7 @@
  * @module cat-harness/schemas/instance-roots
  * @graphNode none — constants and functions that locate an instance's declaration; no schema
  */
-import { readdirSync, readFileSync, type Dirent } from "node:fs";
+import { existsSync, readdirSync, readFileSync, type Dirent } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
 /**
@@ -205,11 +205,54 @@ export function instanceRootsIn(repoRoot: string): string[] {
     return out;
   }
 
+  const submodules = submodulePathsOf(root);
   const subs = entries
     .filter((e) => e.isDirectory() && !e.name.startsWith("."))
     .map((e) => join(root, e.name))
+    .filter((p) => !isForeignCheckout(p, submodules))
     .filter((p) => findDeclarationFile(p) !== undefined)
     .sort();
 
   return out.concat(subs);
 }
+
+/**
+ * The submodule paths `root/.gitmodules` declares, or an empty set when it
+ * declares none. Git's own declaration of which nested checkouts belong to
+ * this repository — read rather than re-derived, so the answer is git's.
+ */
+function submodulePathsOf(root: string): ReadonlySet<string> {
+  const file = join(root, ".gitmodules");
+  if (!existsSync(file)) return new Set();
+  const out = new Set<string>();
+  for (const m of readFileSync(file, "utf-8").matchAll(/^\s*path\s*=\s*(.+?)\s*$/gm)) out.add(m[1]!);
+  return out;
+}
+
+/**
+ * Whether `dir` is a SEPARATE checkout — it holds its own `.git` (a directory
+ * for a clone, a FILE for a worktree or submodule) and its parent's
+ * `.gitmodules` does not name it — and so is not an instance of the
+ * repository being scanned (bean `g43f`).
+ *
+ * ## The escape this closes
+ *
+ * {@link repoRootFor} is `dirname`, so for the ROOT instance it climbs out of
+ * the checkout. In a Claude Code worktree that lands on `.claude/worktrees/`,
+ * whose every child is a sibling worktree declaring `folio-assistant` at its
+ * root. Measured 2026-10-03 from `agent-aefc4dcac619f2e1f`:
+ * `instanceRootsIn(repoRootFor(root))` returned **ten sibling worktrees** as
+ * instances of this one. A caller asking for its siblings that way reads other
+ * sessions' uncommitted work as its own corpus.
+ *
+ * The rule is the same one git applies: a nested checkout is not part of the
+ * enclosing tree unless it is a declared submodule. `bootstrap/` and
+ * `bootstrap-tools/` have a `.git` file and ARE instances, which is why the
+ * `.gitmodules` half exists; an instance directory with no `.git` is
+ * untouched, so non-git fixtures read exactly as before.
+ */
+export function isForeignCheckout(dir: string, submodules: ReadonlySet<string> = submodulePathsOf(resolve(dir, ".."))): boolean {
+  if (!existsSync(join(dir, ".git"))) return false;
+  return !submodules.has(basename(dir));
+}
+

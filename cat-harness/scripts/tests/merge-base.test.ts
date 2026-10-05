@@ -12,7 +12,7 @@ import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, 
 import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 
-import { plan, resolutionFailure, resolveGitlink, stageGitlink, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
+import { lostOnBothSides, plan, resolutionFailure, resolveGitlink, stageGitlink, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
 import { parseLog } from "../merge-main-comment.js";
 import { plan as qaPlan } from "../qa-resolve-conflicts.ts";
 import { classify, PATTERNS, resolveGeneratedRegions } from "../merge-conflict-patterns.js";
@@ -268,6 +268,16 @@ describe("classify", () => {
     expect(classify("cat-harness/docs/_includes/head_custom.html").strategy).toBe("refuse");
   });
 
+  test("the standalone baseline is taken from the base; its sibling baseline and its writer are not", () => {
+    // Fail-closed: the base's list, nothing regenerated (#1977). The neighbour
+    // with the same shape, declared-path-baseline.json, is a different ratchet
+    // nobody has measured a pattern for, so it stays refused.
+    expect(classify("cat-harness-tools/scripts/standalone-baseline.json").pattern?.id).toBe("standalone-baseline");
+    expect(classify("cat-harness-tools/scripts/standalone-baseline.json").strategy).toBe("take-base");
+    expect(classify("cat-harness/scripts/declared-path-baseline.json").strategy).toBe("refuse");
+    expect(classify("cat-harness-tools/scripts/check-standalone.ts").strategy).toBe("refuse");
+  });
+
   test("a path no pattern names is REFUSED, with no pattern attached", () => {
     const c = classify("cat-harness/scripts/merge-base.ts");
     expect(c.strategy).toBe("refuse");
@@ -396,6 +406,18 @@ describe("take-base when one side deleted the file", () => {
     expect(execFileSync("git", ["diff", "--name-only", "--diff-filter=U"], { cwd: d, encoding: "utf-8" })).toBe("");
   });
 
+  test("an already-resolved path (no stages) is left alone, never deleted — bean vsv7", () => {
+    expect(takeBaseAction(new Set())).toBe("resolved");
+    // Both sides changed the file; an earlier step resolved and staged it, as
+    // `qa:resolve-conflicts` does before the take-base loop runs.
+    const d = mk("theirs");
+    writeFileSync(join(d, "gen.html"), "resolved earlier\n");
+    execFileSync("git", ["add", "--", "gen.html"], { cwd: d });
+    expect(unmergedStages(d, "gen.html").size).toBe(0);
+    takeBase(d, "gen.html");
+    expect(readFileSync(join(d, "gen.html"), "utf-8")).toBe("resolved earlier\n");
+  });
+
   test("cleanup", () => { for (const d of dirs) rmSync(d, { recursive: true, force: true }); });
 });
 
@@ -456,6 +478,21 @@ describe("qa sidecars of a NESTED instance are in scope", () => {
     const [o] = qaPlan("/nonexistent", dirs, ["unrelated/x.json"]);
     expect(o!.action).toBe("skip");
     expect(o!.reason).toContain("who-iris/test/results/");
+  });
+});
+
+describe("a merge never drops a file both sides hold — bean vsv7, done-when 2", () => {
+  test("a path on both parents and absent from the result is reported", () => {
+    expect(lostOnBothSides(["a", "b", "c"], ["a", "b"], ["a"])).toEqual(["b"]);
+  });
+
+  test("a path only one side holds may go: that is a deletion the merge took", () => {
+    expect(lostOnBothSides(["a", "only-ours"], ["a", "only-theirs"], ["a"])).toEqual([]);
+  });
+
+  test("nothing lost is an empty list, and the order is stable", () => {
+    expect(lostOnBothSides(["z", "a"], ["a", "z"], ["a", "z"])).toEqual([]);
+    expect(lostOnBothSides(["z", "a", "m"], ["m", "a", "z"], [])).toEqual(["a", "m", "z"]);
   });
 });
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: subscribe-kg\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.799Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.338Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -184,11 +184,6 @@ msgstr ""
 msgid "Only after every held part has been through the refresh. Moving the ref first would make the records of parts not yet refreshed describe a commit the entry no longer names. The cached declaration is replaced so the review that follows shows what the NEW pin offers, including subgraphs that did not exist at the old one."
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:27
-#. Diagram element documentation
-msgid "Owner, 2026-09-30 (issue #1719): \"a way for a folio instance (or cat-harness in general) to \"subscribe\" to external KGs … they can choose to materialize some or all subgraphs … an asset reference … they can choose to materialize locally … instantiate one or more harnesses … so then harness appears in their navbar.\" Design: cat-harness/docs/proposals/kg-subscriptions.md, epic bean fnx4, slice 8. A SUBSCRIPTION IS NOT A NEW MECHANISM, and this diagram is where that claim is kept honest. Every byte that arrives does so through Process_MaterializeRemote, called once per chosen subgraph or asset; every held copy is refreshed through Process_RefreshMaterialized. Neither is re-described here. What this process adds is only the walk: pin, validate, choose, and then carry each chosen part from referenced to materialised one at a time. A SUBSTRATE is a repository whose root declaration meets bootstrap's schema requirements and declares at least one harness (the owner's definition). Both are answerable from the declaration file alone, so validating one never needs the whole repository. WHERE IT LIVES: cat-harness/processes/, beside Process_MaterializeRemote and Process_RefreshMaterialized, which it calls, and naming the kg-subscription and materialize-remote skills in cat-harness/skills/library/large-datasets/. It was written in large-datasets (proposal decision #3), because those subprocesses and skills lived there and a diagram in cat-harness would have run every edge against the dependency arrow (bean cjvs). The owner's 2026-10-01 ruling dissolved large-datasets into cat-harness's concern groups (bean j7ql), so the callees came with it: the calls are siblings again and every ref stays inside the harness. STRICT. The pin and the five gates are the reason: an unpinned subscription is how two subscribers see two graphs under one name, and a copy that skipped the gates is the xom7 shape — a check nobody fails because it only ever warned."
-msgstr ""
-
 #: processes/library/subscribe-kg.bpmn:231
 #. Diagram label
 msgid "Record how the walk ended, part by part"
@@ -207,6 +202,11 @@ msgstr ""
 #: processes/library/subscribe-kg.bpmn:165
 #. Diagram label
 msgid "Review what the substrate offers"
+msgstr ""
+
+#: processes/library/subscribe-kg.bpmn:27
+#. Diagram element documentation
+msgid "Subscribe a folio or harness to an external knowledge graph pinned to a full commit SHA, then take each chosen part from referenced to materialized through `materialize-remote` and instantiate each chosen harness once its needs are held. Owner, 2026-09-30 (issue #1719): \"a way for a folio instance (or cat-harness in general) to \"subscribe\" to external KGs … they can choose to materialize some or all subgraphs … an asset reference … they can choose to materialize locally … instantiate one or more harnesses … so then harness appears in their navbar.\" Design: cat-harness/docs/proposals/kg-subscriptions.md, epic bean fnx4, slice 8. A SUBSCRIPTION IS NOT A NEW MECHANISM, and this diagram is where that claim is kept honest. Every byte that arrives does so through Process_MaterializeRemote, called once per chosen subgraph or asset; every held copy is refreshed through Process_RefreshMaterialized. Neither is re-described here. What this process adds is only the walk: pin, validate, choose, and then carry each chosen part from referenced to materialised one at a time. A SUBSTRATE is a repository whose root declaration meets bootstrap's schema requirements and declares at least one harness (the owner's definition). Both are answerable from the declaration file alone, so validating one never needs the whole repository. WHERE IT LIVES: cat-harness/processes/, beside Process_MaterializeRemote and Process_RefreshMaterialized, which it calls, and naming the kg-subscription and materialize-remote skills in cat-harness/skills/library/large-datasets/. It was written in large-datasets (proposal decision #3), because those subprocesses and skills lived there and a diagram in cat-harness would have run every edge against the dependency arrow (bean cjvs). The owner's 2026-10-01 ruling dissolved large-datasets into cat-harness's concern groups (bean j7ql), so the callees came with it: the calls are siblings again and every ref stays inside the harness. STRICT. The pin and the five gates are the reason: an unpinned subscription is how two subscribers see two graphs under one name, and a copy that skipped the gates is the xom7 shape — a check nobody fails because it only ever warned."
 msgstr ""
 
 #: processes/library/subscribe-kg.bpmn:24

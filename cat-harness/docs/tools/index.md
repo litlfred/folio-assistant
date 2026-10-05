@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>121</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>70</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>99</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>124</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>71</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>102</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,19 +48,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 99 |
+| <span class="tg-tag tg-shell">shell</span> | 102 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 25 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 7 |
 
 | installation | tools |
 |---|---|
-| `none` | 112 |
+| `none` | 115 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **70** skills named across **121** tools resolve to a
+Yes — all **71** skills named across **124** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -130,6 +130,8 @@ tool advertising a capability the graph cannot locate.
 | `paper-preferences`<br>Rendering preferences | Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`build-docs`](../reference/skill-instructions/build-docs.html)<br>[`build-pdf`](../reference/skill-instructions/build-pdf.html) | 10 in / 1 out |
 | `paper-preview`<br>Open a render | Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`rendering-auditor`](../reference/skill-instructions/rendering-auditor.html)<br>[`staging-review`](../reference/skill-instructions/staging-review.html) | 3 in / 1 out |
 | `pdf-cover`<br>PDF page raster | Render one page of a PDF to a PNG — the thumbnail a repository listing shows — and print the provenance a catalogue needs to record it as DERIVED: source, digest, page, geometry, renderer. | <span class="tg-tag tg-shell">shell</span> | [`asset-extraction`](../reference/skill-instructions/asset-extraction.html) | 5 in / 1 out |
+| `pdf-viewer-embed`<br>Embed a PDF inline in a page | Print the HTML fragment that shows a PDF in the installed viewer: a lazily loaded frame whose address is derived from the page's own location (so one page works at the site root, under a project base and under a staging preview), plus plain open and download links that work without it. | <span class="tg-tag tg-shell">shell</span> | [`pdf-inline-viewer`](../reference/skill-instructions/pdf-inline-viewer.html) | 1 in / 1 out |
+| `pdf-viewer-install`<br>Install the inline PDF viewer into a built site | Download the pinned pdf.js release (legacy build), verify its SHA-256, copy the parts a site needs into `<site>/assets/vendor/pdfjs/`, and add the shim that opens `?src=` only for the allowlisted URL prefixes or the site's own origin. Nothing is committed: the viewer exists only in the built site. | <span class="tg-tag tg-shell">shell</span> | [`pdf-inline-viewer`](../reference/skill-instructions/pdf-inline-viewer.html) | 3 in / 1 out |
 | `pin-spdx-license-list`<br>Snapshot the SPDX License List at its pinned version | Read `json/licenses.json` and `json/exceptions.json` from a copy of github.com/spdx/license-list-data at the pinned tag and write `cat-harness/external-schemas/spdx-license-list.terminology.json` (`folio-pinned-terminology/v1`): every licence and exception id with its name and deprecated flag — the offline, version-fixed list `check:source-licence` validates a `licence.json` id against. | <span class="tg-tag tg-shell">shell</span> | [`vocabulary-authority`](../reference/skill-instructions/vocabulary-authority.html) | 1 in / 1 out |
 | `processes-viewer`<br>Processes viewer | Render the declared BPMN processes as an index page and one page per diagram. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `proof-dependency-graph`<br>Proof dependency graph | Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html)<br>[`proof-status-tracking`](../reference/skill-instructions/proof-status-tracking.html) | 4 in / 1 out |
@@ -150,6 +152,7 @@ tool advertising a capability the graph cannot locate.
 | `skill-docs`<br>Skill instruction reference | Render the skill instruction bodies — the prose an agent actually loads — as browsable pages with an index, so a reader can see what an agent is told without cloning the repository. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 1 in / 1 out |
 | `skill-fetch`<br>Fetch a skill | Load one skill's instruction body for the agent to follow, from the local packages or an external bundle. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`skills-and-tools`](../reference/skill-instructions/skills-and-tools.html) | 2 in / 1 out |
 | `skill-list`<br>List skills | Every skill this instance can resolve, with its one-line summary. The entry point AGENTS.md sends an agent to first. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`skills-and-tools`](../reference/skill-instructions/skills-and-tools.html) | 0 in / 1 out |
+| `slice-sqlite`<br>Per-slice SQLite builder | Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. `--check` builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source. | <span class="tg-tag tg-shell">shell</span> | [`kg-export`](../reference/skill-instructions/kg-export.html) | 4 in / 2 out |
 | `stakeholder-map`<br>Stakeholder map | Given the paths a proposed change touches, report which skills change, which roles declare them, and who therefore has a stake in the review. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`coordinate`](../reference/skill-instructions/coordinate.html)<br>[`role-model`](../reference/skill-instructions/role-model.html) | 1 in / 1 out |
 | `state-viewer`<br>State graph viewer | Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `subgraph-readmes`<br>Directory READMEs from the Knowledge Graph | Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html)<br>[`upload-routes`](../reference/skill-instructions/upload-routes.html) | 1 in / 1 out |

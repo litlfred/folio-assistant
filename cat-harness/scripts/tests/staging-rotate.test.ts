@@ -241,7 +241,7 @@ describe("the stage job runs the rotation where a lost race re-applies it", () =
   const body = step.slice(0, step.indexOf("\n      - name:", 10));
 
   test("inside the attempt loop, after the re-read and before the push", () => {
-    const loop = body.indexOf("for attempt in 1 2 3; do");
+    const loop = body.indexOf('while [ "$attempt" -le 3 ]; do');
     const reset = body.indexOf("git -C pages reset --hard FETCH_HEAD");
     const rot = body.indexOf("staging-rotate.ts --dir pages");
     const push = body.indexOf("git -C pages push origin gh-pages");

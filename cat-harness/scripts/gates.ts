@@ -190,6 +190,32 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "each repository over the network; best effort (continue-on-error), its output only feeds the preview",
   },
   {
+    // Bean `q8ar`. The deploy-time BUILD of each SQLite slice (beans, todos,
+    // library, kg; one line per slice) and its payloads, written straight into
+    // `./_site`. None is committed, because their sources move on most merges.
+    // The fast set runs their verdict as `slice:sqlite:check` (determinism,
+    // the row digest against the source, FTS5, the payload audit, for every
+    // slice), so these lines only write.
+    match: "gen-slice-sqlite.ts --out ./_site",
+    kind: "covered-by",
+    reason:
+      "a DEPLOY build into ./_site, which only the deploy and staging jobs produce; its verdict is " +
+      "`slice:sqlite:check` in the fast set, and gen-slice-sqlite.test.ts plus slice-sqlite.e2e.ts pin it",
+  },
+  {
+    // Bean `4ak5` item 3. The root index is BUILT at publish time over the
+    // exports the deploy has just written into `./_site`, and never committed
+    // (owner, 2026-10-04), so there is no committed artefact for a `--check`
+    // to compare. It refuses to write when any declared instance has no
+    // export, which is its verdict, and root-index.test.ts pins that over a
+    // real site layout.
+    match: "scripts/root-index.ts --site ./_site",
+    kind: "covered-by",
+    reason:
+      "a DEPLOY build into ./_site over the exports only the deploy writes, with no committed copy to check; " +
+      "it exits 1 rather than publish a shorter map, and root-index.test.ts pins both the map and that refusal",
+  },
+  {
     // Bean `bamf`: each IG's own just-the-docs site, staged from the source
     // repository its menu.json records. A BUILD step: it clones and copies,
     // and has no verdict a contributor could run without the network and a
@@ -317,6 +343,20 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "a DEPLOY step, not a check: it copies rendered output into ./_site, which only exists " +
       "inside the site-build job. Its path-collision refusal is covered by " +
       "mount-instance-docs.test.ts in `bun test`",
+  },
+  {
+    // The inline PDF viewer (bean `folio-assistant-5ea6`). A DEPLOY step like
+    // the mount above it: it downloads the pinned pdf.js release and writes it
+    // into `./_site`, which only the deploy and staging jobs produce, and it
+    // needs the network the fast set must not. The allowlist shim, the root
+    // derivation and the install helpers are run as shipped bytes by
+    // `pdf-viewer.test.ts` in `bun test`.
+    match: "pdf-viewer.ts --site",
+    kind: "ci-only",
+    reason:
+      "a DEPLOY step, not a check: it installs the pinned, hash-checked pdf.js viewer into ./_site, " +
+      "which only exists inside the site-build job, and it fetches the release over the network. " +
+      "Its shim, embed and install helpers are covered by pdf-viewer.test.ts in `bun test`",
   },
   {
     // Its sibling, and exempt for the same reason. `compose-docs.ts` lays the
@@ -737,6 +777,16 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "removing previews from a `gh-pages` checkout at deploy time; that checkout exists only in CI. Its " +
       "rules — the budget counts the current preview, the oldest go, `_retired/` and non-previews are untouched, the age " +
       "fallbacks — are covered by `staging-rotate.test.ts` in `bun test`",
+  },
+  {
+    match: "staging-push-gate.ts",
+    kind: "ci-only",
+    reason:
+      "rate-limits the staging push (owner ruling 2026-10-03, issues #1868 and #1956) by reading the tip " +
+      "of a `gh-pages` checkout and SLEEPING until its Pages build has had time to finish; that checkout " +
+      "and the wait exist only in CI. Its rules — the two windows, clock skew never opening early, the " +
+      "deadline failing rather than pushing, an unreadable tip never open, the PR comment's wording — are " +
+      "covered by `staging-push-gate.test.ts` in `bun test`",
   },
   {
     match: "restore-staging.ts",

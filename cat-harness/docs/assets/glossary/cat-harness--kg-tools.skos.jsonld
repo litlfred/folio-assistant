@@ -1254,6 +1254,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/pdf-viewer-embed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Embed a PDF inline in a page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Print the HTML fragment that shows a PDF in the installed viewer: a lazily loaded frame whose address is derived from the page's own location (so one page works at the site root, under a project base and under a staging preview), plus plain open and download links that work without it."
+        }
+      ],
+      "skos:notation": "pdf-viewer-embed",
+      "dcterms:source": "cat-harness/tools/index.ts#pdf-viewer-embed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/pdf-viewer-install",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Install the inline PDF viewer into a built site"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Download the pinned pdf.js release (legacy build), verify its SHA-256, copy the parts a site needs into `<site>/assets/vendor/pdfjs/`, and add the shim that opens `?src=` only for the allowlisted URL prefixes or the site's own origin. Nothing is committed: the viewer exists only in the built site."
+        }
+      ],
+      "skos:notation": "pdf-viewer-install",
+      "dcterms:source": "cat-harness/tools/index.ts#pdf-viewer-install",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/pin-spdx-license-list",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1651,6 +1691,26 @@
       ],
       "skos:notation": "skill-list",
       "dcterms:source": "cat-harness/tools/mcp.ts#skill-list",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/slice-sqlite",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Per-slice SQLite builder"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. `--check` builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source."
+        }
+      ],
+      "skos:notation": "slice-sqlite",
+      "dcterms:source": "cat-harness/tools/index.ts#slice-sqlite",
       "skos:note": "candidate"
     },
     {

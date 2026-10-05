@@ -2,9 +2,10 @@
 # folio-assistant-xqdi
 title: 'MERGE GATE (b): content-type compile gates - Lean builds, SUSHI/IG AST compiles, JSON-LD + schema validate; site renders advisory'
 status: todo
-type: feature
+type: task
+priority: normal
 created_at: 2026-10-02T16:29:16Z
-updated_at: 2026-10-02T16:29:16Z
+updated_at: 2026-10-03T08:11:59Z
 parent: folio-assistant-nok9
 ---
 

@@ -413,6 +413,66 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
     }),
 
+    // ── The inline PDF viewer (bean `folio-assistant-5ea6`, issue #2119).
+    //
+    // Owner, 2026-10-04: "is there a lightweight inline viewer that could be
+    // used for viewing PDF on CDN … basic functionality (search, scroll, jump
+    // to page, print, d/l)", then "add as skill and tool". Two Tools for one
+    // script, because installing the viewer into a built site and embedding it
+    // in a page are different acts with different callers: a workflow does the
+    // first once per build, a page generator does the second once per page.
+    defineTool({
+      id: "pdf-viewer-install",
+      title: "Install the inline PDF viewer into a built site",
+      description:
+        "Download the pinned pdf.js release (legacy build), verify its SHA-256, copy the parts a site needs into `<site>/assets/vendor/pdfjs/`, and add the shim that opens `?src=` only for the allowlisted URL prefixes or the site's own origin. Nothing is committed: the viewer exists only in the built site.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/pdf-viewer.ts" },
+      requires: { runtime: ["bun", "unzip"], network: true },
+      io: {
+        inputs: [
+          { name: "site", schema: t("RepoPath"), required: true, arg: { flag: "--site" }, description: "The built site directory, `_site` in both site workflows." },
+          { name: "allow", schema: t("Url"), required: true, arg: { flag: "--allow" }, description: "An https URL prefix the viewer may open, ending in `/`. Repeat the flag for more than one. `same-origin-only` is the explicit way to allow none — an omitted flag is a usage error, because a viewer that refuses every CDN document would otherwise ship green." },
+          { name: "zip", schema: t("RepoPath"), required: false, arg: { flag: "--zip" }, description: "A local copy of the release zip, for offline runs and tests. Its hash is checked exactly as a download's would be." },
+        ],
+        outputs: [
+          { name: "summary", schema: t("Text"), description: "One line on stdout: version, destination, file count, and the prefixes it will open. Exit 2 on a usage error; a hash mismatch or a release missing a kept path throws, refusing the install." },
+        ],
+      },
+      satisfies: ["pdf-inline-viewer"],
+      selection: {
+        when: "A site build that publishes pages carrying `pdf-viewer-embed` fragments. Run it after the site is assembled and before any pass that walks every page.",
+        limits:
+          "It installs one pinned version and nothing else: moving the pin is `upstream-version-adoption`, with the hash re-measured. It does not decide which PDFs may be shown — the allowlist bounds where the viewer will FETCH from, and a page's publication gates decide whether a page embeds a document at all.",
+        cost: "One ~7 MB download per build and ~12 MB (404 files) added to the built site. Not committed, so no clone cost.",
+      },
+    }),
+
+    defineTool({
+      id: "pdf-viewer-embed",
+      title: "Embed a PDF inline in a page",
+      description:
+        "Print the HTML fragment that shows a PDF in the installed viewer: a lazily loaded frame whose address is derived from the page's own location (so one page works at the site root, under a project base and under a staging preview), plus plain open and download links that work without it.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/pdf-viewer.ts --embed" },
+      requires: { runtime: ["bun"], network: false },
+      io: {
+        inputs: [
+          { name: "spec", schema: t("Text"), required: true, arg: { stdin: true }, description: "One JSON object: `src` (the PDF's URL, which must fall under a prefix `pdf-viewer-install` was given, or the viewer refuses it on screen), `title` (what the document is; the frame's accessible name), `route` (a regular expression over the page's pathname whose group 1 is the site root — the `folio-mount.ts` convention) and optionally `page` (open at this 1-based page). On stdin because a title and a regular expression are free text." },
+        ],
+        outputs: [
+          { name: "fragment", schema: t("Text"), description: "The HTML fragment on stdout. TypeScript callers import `embed` from `cat-harness/scripts/pdf-viewer.ts` instead, as `who-iris/scripts/gen-iris-pages.ts` does." },
+        ],
+      },
+      satisfies: ["pdf-inline-viewer"],
+      selection: {
+        when: "A generated page should let a reader search, page through, print or download a PDF without leaving it. Only for a document whose publication gates permit linking it: an embed is a link that also renders.",
+        limits:
+          "It renders PDFs only. It cannot tell whether the site it lands on had the viewer installed; when it did not, or the page is off the route, the frame says so and the plain links still work.",
+        cost: "Nothing until the reader scrolls to it; then the viewer and worker (~3 MB, cached after the first) and the PDF itself.",
+      },
+    }),
+
     // ── The step BEFORE ingestion, and it had no Tool until 2026-09-30.
     //
     // Owner, 2026-09-29: "generate documentation from Tool documentation of
@@ -1862,6 +1922,44 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // They satisfy `kg-export`, the skill that covers rendering the instance's
     // own graph and schemas. `invoke.shell` is the command that regenerates
     // them, so the node says how to exercise it rather than only what it is.
+    // ── Per-slice SQLite: a named slice as one file a browser mounts ──────
+    //
+    // Bean `q8ar`. ONE Tool for every slice, as `kg-validate` is one tool for
+    // every kind: the slice is the parameter, and the builder's own table of
+    // slice definitions is the lookup. Its procedure — measure BEFORE wiring,
+    // gate, build at deploy, look at it — is the `slice-sqlite-publish`
+    // diagram, named here as its subprocess (ruling 6, 2026-09-30) so the
+    // general `kg-export` skill does not carry it.
+    defineTool({
+      id: "slice-sqlite",
+      title: "Per-slice SQLite builder",
+      description:
+        "Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. `--check` builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source.",
+      install: { none: true },
+      invoke: { shell: "bun run slice:sqlite" },
+      io: {
+        inputs: [
+          { name: "slice", schema: t("Slug"), required: false, arg: { flag: "--slice" }, description: "A slice to build; repeatable. Absent: every slice in the builder's table." },
+          { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where the files and `index.json` go; defaults to the gitignored `docs/assets/slices/`. The deploy passes `./_site/assets/slices`." },
+          { name: "payloadOut", schema: t("RepoPath"), required: false, arg: { flag: "--payload-out" }, description: "Where the deploy payloads are written (`<hex>` plus its `<hex>.json` sidecar). Never the committed `docs/payload/`." },
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Build twice and verify instead of writing: one sha256, the row digest against the source, an FTS5 phrase query, the payload audit." },
+        ],
+        outputs: [
+          { name: "slices", schema: t("RepoPath"), description: "`<slice>.<sha256>.sqlite3` (content-addressed) and its fixed-name `<slice>.sqlite3.json` manifest per slice, and `index.json` listing them." },
+          { name: "report", schema: t("Text"), description: "One line per slice: bytes, row counts, payloads, and any source findings; with `--check`, one verdict line per slice. Exit 1 on a red slice or an unreadable source." },
+        ],
+      },
+      satisfies: ["kg-export"],
+      subprocesses: ["slice-sqlite-publish"],
+      selection: {
+        when: "A corpus is too large to ship as JSON for a reader's search, or a reader needs to search it with no server: the work plan, the todos, the library, the knowledge graph.",
+        limits:
+          "Built at deploy and never committed, so a slice describes the tree the deploy published and nothing later. A slice over the ~5 MB budget is reported (`overBudget` in the manifest), not refused. The file's sha256 is stable for one SQLite version; `contentDigest` is the cross-version identity.",
+        cost: "Seconds: the kg slice re-runs `kg-export` in-process (about 5 s); the other three take a quarter of a second each. Nothing to install, no network.",
+      },
+      requires: { runtime: ["bun"], network: false },
+    }),
+
     defineTool({
       id: "kg-validate",
       title: "Validate a node in the graph",

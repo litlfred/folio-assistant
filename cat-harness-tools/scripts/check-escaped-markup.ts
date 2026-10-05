@@ -312,7 +312,7 @@ export const MARKDOWN_HTML_NAMES: ReadonlySet<string> = new Set([
   "caption", "code", "col", "colgroup", "dd", "details", "div", "dl", "dt", "em",
   "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6",
   "header", "hr", "i", "iframe", "img", "input", "kbd", "label", "li", "main",
-  "nav", "ol", "p", "picture", "pre", "s", "script", "section", "small", "source",
+  "nav", "noscript", "ol", "p", "picture", "pre", "s", "script", "section", "small", "source",
   "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody",
   "td", "tfoot", "th", "thead", "tr", "u", "ul", "video",
 ]);

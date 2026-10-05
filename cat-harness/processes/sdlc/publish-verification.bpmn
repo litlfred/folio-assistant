@@ -11,7 +11,7 @@
     <bpmn:participant id="Participant_Process_PublishVerification" name="Verify the export before it is deployed" processRef="Process_PublishVerification"/>
   </bpmn:collaboration>
   <bpmn:process id="Process_PublishVerification" name="Verify the export before it is deployed" isExecutable="false">
-    <bpmn:documentation>Bean vigi, owner 2026-09-23: a set of post-processing tools that verify what the build produced, run BEFORE deployment and blocking — &quot;a failure triggers an alert to the publisher manager&quot;. This process only verifies and says how it went; the caller (docs-site-publish) blocks the deploy on anything but a pass and routes the failure through Process_PublishAlert, the one alert every step after the publish button shares.</bpmn:documentation>
+    <bpmn:documentation>Run the verifier set over the built tree between the export and the deploy, blocking it: pass, fail or could-not-tell, and the caller deploys only on a pass. Bean vigi, owner 2026-09-23: a set of post-processing tools that verify what the build produced, run BEFORE deployment and blocking — &quot;a failure triggers an alert to the publisher manager&quot;. This process only verifies and says how it went; the caller (docs-site-publish) blocks the deploy on anything but a pass and routes the failure through Process_PublishAlert, the one alert every step after the publish button shares.</bpmn:documentation>
     <bpmn:extensionElements><cat-harness.processes:policy enforcement="strict"/></bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_PublishVerification">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">

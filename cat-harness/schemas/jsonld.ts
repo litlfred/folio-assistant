@@ -578,6 +578,17 @@ export const CONTENT_CONTEXT = {
 
   meta: { "@id": "folio-assistant-core:meta", "@type": "@json" },
 
+  // A library item's licence, OUT of `meta` (finding D4, bean `gzkt`, owner
+  // ruling 2026-10-03). Both bindings are the rows of
+  // `vocab-mappings/licence-naming.json`, the table a glossary's
+  // `dcterms:license` comes from too; `gen-library-jsonld.test.ts` fails if
+  // either drifts from it. `license` is a literal (an SPDX expression), as the
+  // glossary writes it. `licenceRecord` is the authored record, `@json` for the
+  // reason given under "THE SPLIT" below: its `unknown` state and the places
+  // searched are a nested structure of ours.
+  license: { "@id": "dcterms:license" },
+  licenceRecord: { "@id": "folio-assistant-core:licenceRecord", "@type": "@json" },
+
   // ── Ingest-arm records, and the narrative they share — bean `yh6u` ──────
   //
   // `tabular.jsonld` (folio-tabular-records/v1) and `contents.jsonld`

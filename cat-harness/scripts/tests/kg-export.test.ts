@@ -31,7 +31,7 @@ import { spawnSync } from "node:child_process";
 
 import { buildExport, exportIdentity, publishedDocument, undeclaredRootTerms } from "../kg-export.js";
 import { buildDeclarationSchema, buildSkillIoContracts } from "../harness-schema-export.js";
-import { artefactStub, findDeclarationFile, instanceRootsIn, readDeclaration, repoRootFor } from "../../schemas/cat-harness.js";
+import { artefactStub, findDeclarationFile, instanceRootsIn, readDeclaration, repoRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../../schemas/namespaces.js";
 
 /**
@@ -680,6 +680,12 @@ describe("every self-URL the export publishes resolves to something published", 
       out.add(`${dir}/ns.json`);
     }
     for (const c of buildSkillIoContracts({ baseUrl: BASE })) out.add(c.published.split("\\").join("/"));
+    // A Process's `depiction` (bean `ax6r`): the SVGs `render:bpmn` commits
+    // into the site's `assets/`, which Jekyll serves as they sit. Read from the
+    // DIRECTORY, not from the nodes — a depiction naming a file that is not
+    // there must fail here, not confirm itself.
+    const svgDir = join(import.meta.dir, "../..", siteDirFor(join(import.meta.dir, "../..")), "assets", "img", "workflows");
+    for (const f of readdirSync(svgDir)) if (f.endsWith(".svg")) out.add(`assets/img/workflows/${f}`);
     return out;
   }
 
@@ -1216,6 +1222,32 @@ describe("DMN decisions are nodes, linked to their gateways and to DMN 1.3", () 
       const stem = file!.split("/").pop()!.replace(/\.dmn$/, "");
       expect(String(g.decidedBy).endsWith(`#decision/${stem}/${id}`)).toBe(true);
     }
+  });
+
+  // Bean `ax6r` (owner, 2026-10-03: "Move to JSON-LD"): the workflow page's
+  // rows are Process nodes, so the KG carries what the old plain-JSON index did.
+  test("a Process carries its own documentation — first sentence as summary, whole as description", () => {
+    const processes = byType("Process");
+    expect(processes.length).toBeGreaterThan(0);
+    for (const p of processes.filter((x) => x.description !== undefined)) {
+      expect(typeof p.summary).toBe("string");
+      expect(String(p.description).startsWith(String(p.summary).replace(/…$/, ""))).toBe(true);
+    }
+    const lifecycle = processes.find((p) => String(p.sourcePath).endsWith("content-lifecycle.bpmn"))!;
+    expect(lifecycle.description).toBeDefined();
+    expect(String(lifecycle.sourceUrl)).toMatch(/^https:\/\/github\.com\/.+\/blob\/main\/.+content-lifecycle\.bpmn$/);
+    expect(String(lifecycle.depiction)).toMatch(/\/assets\/img\/workflows\/content-lifecycle\.svg$/);
+  });
+
+  test("a call activity's calledElement links to a Process in this graph, never to one it lacks", () => {
+    const procIds = new Set(byType("Process").map((p) => p["@id"]));
+    const calls = byType("ProcessNode").filter((n) => n.calledElement !== undefined);
+    expect(calls.length).toBeGreaterThan(0);
+    for (const c of calls) expect(procIds.has(c.calledElement as string)).toBe(true);
+    // `content-lifecycle` calls `draft-to-publication` — the edge the page reads.
+    const lifecycle = byType("Process").find((p) => String(p.sourcePath).endsWith("content-lifecycle.bpmn"))!;
+    const publication = byType("Process").find((p) => String(p.sourcePath).endsWith("draft-to-publication.bpmn"))!;
+    expect(calls.some((c) => c.partOf === lifecycle["@id"] && c.calledElement === publication["@id"])).toBe(true);
   });
 });
 

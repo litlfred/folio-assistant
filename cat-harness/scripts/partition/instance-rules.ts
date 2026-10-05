@@ -245,6 +245,7 @@ export const RULES: Rule[] = [
       // once per declared instance for this repository's deploy, and reads
       // only the declarations (bean `4ak5`).
       "scripts/instance-exports.ts",
+      "scripts/root-index.ts",
       // The two halves this tool was split into, 2026-09-20. Both HARNESS,
       // and the target-before-importer test says why: `engine.ts` imports
       // nothing but `fs` and `path`, and this file imports one TYPE from
@@ -333,6 +334,11 @@ export const RULES: Rule[] = [
       "scripts/check-tools.ts",              // every Tool `satisfies` resolves to a skill
       "scripts/tool-coverage.ts",            // which uncovered skills warrant a Tool
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
+      "scripts/gen-subgraph-jsonld.ts",      // that graph framed per named subgraph (bean `c1m4`)
+      // Harness by subject: the slice is the platform's own work plan, and the
+      // per-slice SQLite contract is a kg-export one (bean `q8ar`).
+      "scripts/gen-slice-sqlite.ts",         // a named slice → one SQLite file a browser mounts
+      "scripts/vendor-sqlite-wasm.ts",       // ...and the SQLite WASM build that mounts it, vendored
       "scripts/glossary-export.ts",          // the instance's swimlane personas → SKOS
       "scripts/kg-locale-export.ts",         // that graph again, once per locale
       "scripts/publish-instance-files.ts",   // an instance's own files, .md also as .html (bean `iwtn`)
@@ -659,6 +665,7 @@ export const RULES: Rule[] = [
       // tool's scope. Nothing under `cat-harness/` imports them.
       "adapters/manifest-entries.ts",        // reads author-written manifests
       "scripts/gen-docs-pages.ts",           // webpage manifest → docs/<slug>.md
+      "scripts/lib/json-shape.ts",           // its verdict projections' SHAPE gate (bean `324x`): a committed copy lacking a top-level key the generator now writes is stale
       // CORE, not harness beside gen-uml-overview: it needs a folio to have
       // anything to do, and its input is the core content model
       // (`content/pipeline/content-graph.ts`). The shared PlantUML machinery it
@@ -818,6 +825,7 @@ export const RULES: Rule[] = [
       "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
+      "scripts/check-process-index.ts",      // the published subgraph JSON-LD covers every declared BPMN, for the workflow page (bean `ax6r`)
       "scripts/declared-dirs.ts",            // graph kind → declared directories; CORE because it registers the folio kind, which is the whole reason the harness layer spawns it rather than importing it (bean `9c34`)
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
       "scripts/section-story-audit.ts",      // section + chapter narrative
@@ -1056,6 +1064,8 @@ export const RULES: Rule[] = [
       // (`restore-staging`, `render-log`, `staging-record`,
       // `staging-cleanup-preflight`, `staging-preview`), all harness.
       "scripts/staging-rotate.ts",
+      // The staging rate limit (issue #1956) — same family, harness.
+      "scripts/staging-push-gate.ts",
       // The adapter for an instance that holds no content (bean `zmdo`): the
       // server's fallback when no content adapter is installed above the
       // harness. Harness by definition — it exists for the harness alone.
@@ -1419,6 +1429,7 @@ export const RULES: Rule[] = [
       "scripts/staging-banner.ts",          // ...and its banner (bean `g196`)
       "scripts/html-comments.ts",           // the one "is this inside a comment" scan the banner's body-finder and the folio mount's marker check share (bean `ur84`)
       "scripts/folio-mount.ts",             // the fragment that carries the reader's folio onto a library page — machinery, not a content model (bean `jpjt`)
+      "scripts/pdf-viewer.ts",              // the pinned pdf.js viewer installed into a built site, and the fragment that embeds it — machinery over the TREE and a URL, no content model (bean `folio-assistant-5ea6`)
       "scripts/backoff-sleep.ts",           // the one retry wait (bean `06kg`)
       "src/logging/log-writer.ts",
       "src/logging/log-sweep.ts",

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8j9e
 title: 'A merge silently drops a gitignored-but-tracked file: green locally, red in CI (#2000)'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-04T13:33:34Z
-updated_at: 2026-10-04T13:33:34Z
+updated_at: 2026-10-05T05:12:29Z
 parent: folio-assistant-nok9
 ---
 
@@ -32,3 +32,5 @@ A merge can silently delete a file that `main` tracks but `.gitignore` covers, a
 - [ ] `merge:main` refuses a merge that drops a path the merged-in parent tracks and the branch did not delete. There is a test with a gitignored-but-tracked fixture.
 - [ ] Decided, with the owner, whether a hand merge needs a CI-side check too, and recorded the decision here.
 - [ ] `merge-conflict-patterns` skill: one line on the failure signature ("green locally, red in CI, 'has none'") pointing here.
+
+_2026-10-05T05:12:29Z_ — Claimed by claude/zealous-gates-3o9ma2-mergemain-drop — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

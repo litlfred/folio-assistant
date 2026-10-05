@@ -503,6 +503,22 @@
       "status": "candidate"
     },
     {
+      "id": "pdf-viewer-embed",
+      "prefLabel": "Embed a PDF inline in a page",
+      "definition": "Print the HTML fragment that shows a PDF in the installed viewer: a lazily loaded frame whose address is derived from the page's own location (so one page works at the site root, under a project base and under a staging preview), plus plain open and download links that work without it.",
+      "notation": "pdf-viewer-embed",
+      "source": "cat-harness/tools/index.ts#pdf-viewer-embed",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-viewer-install",
+      "prefLabel": "Install the inline PDF viewer into a built site",
+      "definition": "Download the pinned pdf.js release (legacy build), verify its SHA-256, copy the parts a site needs into `<site>/assets/vendor/pdfjs/`, and add the shim that opens `?src=` only for the allowlisted URL prefixes or the site's own origin. Nothing is committed: the viewer exists only in the built site.",
+      "notation": "pdf-viewer-install",
+      "source": "cat-harness/tools/index.ts#pdf-viewer-install",
+      "status": "candidate"
+    },
+    {
       "id": "pin-spdx-license-list",
       "prefLabel": "Snapshot the SPDX License List at its pinned version",
       "definition": "Read `json/licenses.json` and `json/exceptions.json` from a copy of github.com/spdx/license-list-data at the pinned tag and write `cat-harness/external-schemas/spdx-license-list.terminology.json` (`folio-pinned-terminology/v1`): every licence and exception id with its name and deprecated flag — the offline, version-fixed list `check:source-licence` validates a `licence.json` id against.",
@@ -660,6 +676,14 @@
       "definition": "Every skill this instance can resolve, with its one-line summary. The entry point AGENTS.md sends an agent to first.",
       "notation": "skill-list",
       "source": "cat-harness/tools/mcp.ts#skill-list",
+      "status": "candidate"
+    },
+    {
+      "id": "slice-sqlite",
+      "prefLabel": "Per-slice SQLite builder",
+      "definition": "Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. `--check` builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source.",
+      "notation": "slice-sqlite",
+      "source": "cat-harness/tools/index.ts#slice-sqlite",
       "status": "candidate"
     },
     {
