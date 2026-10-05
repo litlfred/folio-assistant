@@ -61,8 +61,9 @@ import { publishedTodoFiles } from "./todo-source.js";
 import { declaredSubgraphNode } from "./kg-export.ts";
 import { TODO_GRAPH_SITE_PATH, serialiseJsonld, todoDocument, todoGraphDocument, todoPageSitePath, todoSitePath } from "./todo-graph.ts";
 import { isTodoPage, todoPageHtml } from "./todo-page.ts";
-import { beanDefsDir, beanFindings, blockedBy, readBeans } from "./beans.js";
+import { beanDefsDir, beanFindings, blockEdges, blockedBy, blocksOf, readBeans } from "./beans.js";
 import { milestoneRollup } from "./milestone-rollup.js";
+import { missingTopLevelKeys } from "./lib/json-shape.ts";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { THEMES, themeById } from "../schemas/themes.js";
@@ -958,6 +959,18 @@ function emit(path: string, content: string, kind: "page" | "data" | "verdict" |
       if (!present) {
         console.error(`  ✗ ${path} is missing`);
         stale++;
+        return;
+      }
+      // Content moving is news, but a SHAPE that moved is an omission: the
+      // generator now writes a top-level field the committed copy lacks.
+      // Measured on #1955, 2026-10-04 (bean `324x`): a main merge took main's
+      // `assets/beans/index.json` (no `edges`, bean `vhqq`) by the site-data
+      // pattern, `check:kind-validators` went red, and this check said
+      // current — so regen, the merge bot's included, never rewrote it.
+      const missing = missingTopLevelKeys(current, content);
+      if (missing.length) {
+        console.error(`  ✗ ${path} is stale: lacks ${missing.map((k) => `\`${k}\``).join(", ")}, which the generator now writes`);
+        stale++;
       } else {
         refreshed++;
       }
@@ -1547,7 +1560,12 @@ function processHierarchy(): Record<string, string[]> {
   if (beans === null) {
     console.log(`  · assets/beans/index.json — no bean store`);
   } else {
+    // ONE edge set over both declarations (bean `vhqq`): until then this read
+    // `blocking:` only and published 7 of the store's 83 edges, because 60
+    // beans declare the block from the blocked end with `blocked_by:`.
+    const { edges, dangling } = blockEdges(beans);
     const blockers = blockedBy(beans);
+    const blocks = blocksOf(beans);
     const items = beans.map((b) => ({
       id: b.id,
       title: b.title,
@@ -1557,8 +1575,9 @@ function processHierarchy(): Record<string, string[]> {
       parent: b.parent,
       // Both directions, resolved once. A client given only `blocking` would
       // have to invert the whole set to answer "what is holding THIS bean up",
-      // which is the question a board is actually asked.
-      blocking: b.blocking,
+      // which is the question a board is actually asked. Both from the edge
+      // set, so a block declared at EITHER end appears at both.
+      blocking: blocks.get(b.id) ?? [],
       blockedBy: blockers.get(b.id) ?? [],
       createdAt: b.createdAt,
       // Published as a FACT, with no age computed from it. See `beanFindings`.
@@ -1589,6 +1608,10 @@ function processHierarchy(): Record<string, string[]> {
         // reason `editHref` is composed here, one level further on.
         repoWeb: REPO_WEB,
         items,
+        // The edges themselves, `blocker → blocked`, with the key(s) that
+        // declared each. A dangling edge stays here AND is a
+        // `blocking-unknown` finding: reported, never dropped.
+        edges,
         findings: beanFindings(beans),
         // The milestone rollup, COMPUTED HERE so the board renders a number
         // it does not derive. The board already loads every bean's `parent`,
@@ -1631,7 +1654,14 @@ function processHierarchy(): Record<string, string[]> {
       // publishing so what a reader fetches is current regardless.
       "verdict",
     );
-    console.log(`  ${check ? "·" : "✓"} assets/beans/index.json (${items.length} bean(s))`);
+    const both = edges.filter((e) => e.declaredOn.length > 1).length;
+    console.log(
+      `  ${check ? "·" : "✓"} assets/beans/index.json (${items.length} bean(s), ${edges.length} block edge(s), ` +
+        `${both} declared both ways, ${dangling.length} dangling)`,
+    );
+    for (const d of dangling) {
+      console.log(`    · dangling: ${d.blocker} → ${d.blocked} (${d.missing.join(" and ")} not in the store)`);
+    }
   }
 }
 

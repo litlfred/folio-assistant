@@ -141,13 +141,77 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 199,
     reads: "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
   },
+  "smart-trust": {
+    // A shield with a keyhole — a trust framework, about who may open what.
+    // NOT the shield-with-check: that is `qa`'s, and the registry refuses two
+    // kinds sharing a glyph. WHO BLUE, like smart-base:
+    // an organisation's published colour on a neutral glyph is not its
+    // identity, which is the line the owner drew for who-iris on 2026-09-23.
+    // Added 2026-10-04 (bean `2vpn`) when the owner chose a glyph over the
+    // shared operations card it had borrowed through a sticky.
+    glyph: "M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6zM12 9.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM12 12.5v3",
+    tone: 199,
+    reads: "a shield with a keyhole — the trust framework, in WHO blue",
+  },
   "who-iris": {
     // An open book with a band across it — a repository of published
-    // documents, which is what IRIS is. Deliberately NOT the emblem: the
-    // owner asked for the colour without the logo.
+    // documents, which is what IRIS is. The FALLBACK mark since 2026-10-04:
+    // the owner restored the WHO emblem as who-iris's declared `icon`
+    // (bean `2vpn`), which `harness-tiles.ts` prefers; this glyph draws only
+    // where the emblem cannot. It was the mark itself from 2026-09-23, when
+    // the owner asked for the colour without the logo.
     glyph: "M4 6h6a2 2 0 012 2v10a2 2 0 00-2-2H4zM20 6h-6a2 2 0 00-2 2v10a2 2 0 012-2h6zM4 6v10M20 6v10",
     tone: 199,
     reads: "an open book — a repository of published documents, in WHO blue",
+  },
+  // ── The instances that had NO mark, 2026-10-04 (bean `2vpn`) ───────────
+  //
+  // Owner: *"all needs to be consistent and consolidated"*, then, offered a
+  // glyph per instance, chose *"Glyphs I propose"*. Until these, each drew its
+  // LETTER in the navbar — the floor for a harness with no mark. A `-tools`
+  // instance takes its parent's tone on purpose: `kind-register` reads a
+  // shared tone as a family colour, and that is what a tools layer is.
+  "smart-ig": {
+    // A page with a folded corner and lines — an implementation guide.
+    glyph: "M6 3h9l3 3v15H6zM15 3v3h3M9 11h6M9 15h6",
+    tone: 229,
+    reads: "a published guide page — the IG built on the SMART base",
+  },
+  "smart-immunizations": {
+    // A syringe: plunger, barrel, needle.
+    glyph: "M18 3l3 3M16 5l3 3M17.5 6.5L9 15l-3 1 1-3 8.5-8.5M10 10l4 4M6 18l-3 3",
+    tone: 352,
+    reads: "a syringe — the immunization guide",
+  },
+  "folio-assistant-sci": {
+    // A conical flask with a fill line — the scientific-paper profile.
+    glyph: "M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3M7 15h10",
+    tone: 56,
+    reads: "a laboratory flask — folios that are scientific papers",
+  },
+  "fhir-harness": {
+    // A flame, for FHIR's own pun on its name.
+    glyph: "M12 3c1 4 5 6 5 11a5 5 0 01-10 0c0-3 2-4 2-7 1 1 2 2 3 4 0-3 0-5 0-8z",
+    tone: 10,
+    reads: "a flame — the FHIR implementation-guide harness",
+  },
+  "cat-openapi": {
+    // A pair of braces — an interface described as data.
+    glyph: "M9 4c-2 0-3 1-3 3v2c0 1-1 2-2 3 1 1 2 2 2 3v2c0 2 1 3 3 3M15 4c2 0 3 1 3 3v2c0 1 1 2 2 3-1 1-2 2-2 3v2c0 2-1 3-3 3",
+    tone: 76,
+    reads: "braces — an API described as data",
+  },
+  "cat-harness-tools": {
+    // A wrench — what implements the harness's tool definitions.
+    glyph: "M14.5 5.5a4 4 0 005 5L11 19a2.1 2.1 0 01-3-3l8.5-8.5a4 4 0 01-2-2zM8.5 16.5h.01",
+    tone: 268,
+    reads: "a wrench, in cat-harness's colour — the code that implements its tools",
+  },
+  "bootstrap-tools": {
+    // A trowel — the tool that plants bootstrap's seed.
+    glyph: "M12 3v9M8 12h8l-1 5a3 3 0 01-6 0z",
+    tone: 96,
+    reads: "a trowel, in bootstrap's colour — the code that implements bootstrap's tools",
   },
   // ── The three kinds split out of `cat-harness`, 2026-09-21 ──────────────
   //
@@ -469,6 +533,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M8 4c-2 0-2 2-2 4s-1 3-2 4c1 1 2 2 2 4s0 4 2 4M16 4c2 0 2 2 2 4s1 3 2 4c-1 1-2 2-2 4s0 4-2 4M9 10h6l-2-2m2 6H9l2 2",
     tone: 136,
     reads: "braces around an arrow out and back — an API described as data: what you can call, and what answers",
+  },
+  "computation-witness": {
+    // A clipboard with a tick: the record a computation keeps of what it
+    // checked and that the checks held. Deliberately NOT `qa`'s verdict — a
+    // witness is a computation's own record, produced by running it, and
+    // judges nothing else. Bean `qou-qb6t`. `tone: 328` was unused and sits
+    // away from `code`'s so a producer and its record are told apart.
+    glyph: "M9 4h6v2H9zM7 5H5v15h14V5h-2M8.5 13l2.5 2.5 4.5-5",
+    tone: 328,
+    reads: "a clipboard with a tick — a computation's record of what it checked, and that it held",
   },
   "binary-release": {
     // A sealed carton with its strap. Deliberately NOT the `uploads` arrow —

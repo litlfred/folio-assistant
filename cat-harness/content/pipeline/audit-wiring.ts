@@ -1,11 +1,17 @@
 /**
  * Audit-wiring — content-block ↔ pipeline wiring checker.
  *
- * Walks every `.ts` block manifest under
- * `content/quantum-observable-universe/<chapter>/`, infers each block's
- * wiring bucket per the criteria in
- * `docs/audits/last-2-days-pipeline-wiring.md`, and emits both a
+ * Walks every `.ts` block manifest under `<folio>/<paper>/<chapter>/`,
+ * where `<folio>` is the content repository's declared `folio` directory
+ * (`folioDir`) and `<paper>` comes from `--paper` (`requirePaper`), infers
+ * each block's wiring bucket per the criteria below, and emits both a
  * console summary and a JSON dump.
+ *
+ * This docblock named one folio's paper path,
+ * `content/quantum-observable-universe/<chapter>/`, and a criteria note in
+ * that folio's `docs/audits/`, until 2026-10-04. The CODE had already been
+ * parameterised; the comment still told a reader the platform walks one
+ * folio's tree, at a path that folio no longer uses (bean `81qz`).
  *
  * Buckets:
  *   wired-end-to-end  — narrative .md present (>=20 lines), Lean .lean

@@ -8,7 +8,8 @@
  *
  * ## Three states, never two
  *
- * A library entry's `manifest.jsonld` may carry `meta.licence`. It is AUTHORED in
+ * A library entry's `manifest.jsonld` may carry `licenceRecord` (beside the
+ * `dcterms:license` it backs; `meta.licence` until finding D4). It is AUTHORED in
  * `licence.json` beside the entry and carried verbatim by `gen-library-jsonld`,
  * because the manifest is generated: a record written into it directly is
  * erased by the next regeneration (folio-assistant#1492).
@@ -76,7 +77,7 @@ import { readFileSync } from "node:fs";
 import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { repoRootFor } from "../schemas/cat-harness.ts";
-import { licenceProblem, type SourceLicence } from "../schemas/source-licence.ts";
+import { licenceProblem, manifestLicence, type SourceLicence } from "../schemas/source-licence.ts";
 import { checkLicenceExpression, loadSpdxLicenseList, type SpdxLicenseList } from "../schemas/spdx-license-expression.ts";
 import { gitScan } from "../schemas/git-corpus.ts";
 import {
@@ -138,7 +139,7 @@ export function checkSourceLicence(root: string = REPO_ROOT, list: SpdxLicenseLi
     r.entries += 1;
     let licence: Licence | undefined;
     try {
-      licence = (JSON.parse(readFileSync(resolve(root, rel), "utf-8")) as { meta?: { licence?: Licence } }).meta?.licence;
+      licence = manifestLicence(JSON.parse(readFileSync(resolve(root, rel), "utf-8")));
     } catch (e) {
       r.malformed.push({ entry, problem: `manifest does not parse: ${(e as Error).message}` });
       continue;

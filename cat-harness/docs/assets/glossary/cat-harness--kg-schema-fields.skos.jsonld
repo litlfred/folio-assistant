@@ -6151,6 +6151,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.seedswith",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.seedsWith"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Instances this one is seeded together with — see `seedsWith` on {@link CatHarnessDeclarationSchema}. Absent is \"seeds alone\"."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.seedsWith",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.separation",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6509,6 +6528,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteGraphs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.seedswith",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.seedsWith"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Instances this one is SEEDED TOGETHER with: the same seeding step creates both repositories, so neither ever stands alone in a checkout (bean `smbc` seeds `cat-harness` and `cat-harness-tools` at once)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.seedsWith",
       "skos:note": "candidate"
     },
     {
@@ -17202,7 +17240,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The licence the uploader established, as the SAME record a library manifest carries in `meta.licence` (`schemas/source-licence.ts`, bean `7bg9`). Read by the EARLY licence step of document ingestion, before any derivation. Absent means nobody recorded one — reported as undetermined, never as cleared."
+          "@value": "The licence the uploader established, as the SAME record a library manifest carries as `licenceRecord` (`schemas/source-licence.ts`, bean `7bg9`). Read by the EARLY licence step of document ingestion, before any derivation. Absent means nobody recorded one — reported as undetermined, never as cleared."
         }
       ],
       "dcterms:source": "cat-harness/schemas/intake.ts#IntakeSchema.licence",
@@ -19128,6 +19166,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/merge-queue.entryobjectschema.status",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "EntryObjectSchema.status"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The steward's triage verdict (see {@link QUEUE_STATUSES}). Absent on entries written before it existed."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.status",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/merge-queue.entryobjectschema.trainid",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -20968,6 +21025,139 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/reader-filter.ts#ReaderFilter.properties",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/ref-window.refwindowobjectschema.closedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefWindowObjectSchema.closedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When the steward actually performed the single write, if it has."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.closedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/ref-window.refwindowobjectschema.expires",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefWindowObjectSchema.expires"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The hard close. Set once, at open: there is no extend, because a window that extends on every arrival never closes."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.expires",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/ref-window.refwindowobjectschema.handoff",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefWindowObjectSchema.handoff"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who takes this window if the holder stops — the field that makes a handover safe. Without it the next steward cannot tell \"mine to close\" from \"someone else's, in flight\", and both wrong answers push twice."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.handoff",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/ref-window.refwindowobjectschema.heldby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefWindowObjectSchema.heldBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who holds the window — a session URL, `owner`, or an actor id."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.heldBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/ref-window.writerequestschema.authored",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WriteRequestSchema.authored"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether an AUTHOR wrote this route's content, as opposed to a generator regenerating it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ref-window.ts#WriteRequestSchema.authored",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/ref-window.writerequestschema.requestedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WriteRequestSchema.requestedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who asked — a workflow file, a session URL, or an actor id."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ref-window.ts#WriteRequestSchema.requestedBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/ref-window.writerequestschema.route",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WriteRequestSchema.route"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The route this write owns — `/` for the published site, `STAGING/<slug>/` for a preview. Composition is per route: two different routes compose by union, two of the same route take the newer."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ref-window.ts#WriteRequestSchema.route",
       "skos:note": "candidate"
     },
     {
@@ -23175,6 +23365,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.beanindexschema.edges",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BeanIndexSchema.edges"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The block graph as ONE edge set, `blocker → blocked`, over both front-matter declarations (`blocking:` on the blocker, `blocked_by:` on the blocked), deduplicated — `blockEdges` in `scripts/beans.ts`, bean `vhqq`. An end may name no bean in `items`: that edge is kept here and reported as a `blocking-unknown` finding, never dropped."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema.edges",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.beanindexschema.plan",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -24882,6 +25091,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema.scale",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/subgraph-manifest.subgraphnodebase.holdsgraph",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubgraphNodeBase.holdsGraph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Links to the GraphKind nodes this subgraph holds."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.holdsGraph",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/subgraph-manifest.subgraphnodebase.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubgraphNodeBase.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The subgraph's label: the harness name at the root, the instance-relative path below it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.name",
       "skos:note": "candidate"
     },
     {
@@ -29768,6 +30015,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/types.computationwitness.scriptfile",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ComputationWitness.scriptFile"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The producer, its content hash, and the commit that last changed it — written by ``WitnessBuilder`` on every witness and missing from this interface until 2026-10-04 (`scripts/witness-audit.ts` recorded the drift). ``scriptHash`` is what staleness keys on; ``scriptCommitSha`` is provenance only, because a rebase-merge rewrites it. The runtime schema is ``schemas/computation-witness.ts``."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/types.ts#ComputationWitness.scriptFile",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/types.conjectureblock.lean",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -30810,6 +31076,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/types.ts#Section.blocks",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/types.section.lead",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Section.lead"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A chapter's LEAD: the text between the chapter heading and its first section (an executive summary has nothing else). It keeps a title, for outlines and the review page, but renders without a heading of its own, because the chapter heading directly above already says it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/types.ts#Section.lead",
       "skos:note": "candidate"
     },
     {

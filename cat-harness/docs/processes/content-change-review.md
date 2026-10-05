@@ -21,7 +21,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
 ## How it connects
 
-- **Called by:** no call activity names this process
+- **Called by:** [Public comment on a review draft](public-comment.html)
 - **Calls:** [Adjudication](adjudication.html), [Options analysis](options-analysis.html), [Review task](review-task.html)
 - **Presented on:** no docs page section shows this diagram
 

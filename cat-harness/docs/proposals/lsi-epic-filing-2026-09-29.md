@@ -25,7 +25,7 @@ Thresholds (house, adjustable in the script): no-fit below cosine 0.3; ambiguous
 | `m4s1` TRANSLATION CATALOGUES: 36 (locale, page) .po files must be AUTHORED — the templates now e | `bzyu` TRANSLATION | 0.79 | 0.36 | now under `1xhc` CI RELIABILITY |
 | `tbdg` main is RED on translation-drift: #1374 published 27 translated pages with no .po catalogu | `bzyu` TRANSLATION | 0.66 | 0.20 | now under `1xhc` CI RELIABILITY |
 | `eief` CSVW skill + ingestion tools: tabular metadata as far as it can be determined | `0lmb` CONTENT MODEL | 0.57 | 0.20 | now under `slw1` INGEST |
-| `t3n8` The archive rung stages but can never promote, and no rung reads plain text at all | `slw1` INGEST | 0.80 | 0.19 | now under `ahvw` PROCESS |
+| `ke1w` (was `t3n8`) The archive rung stages but can never promote, and no rung reads plain text at all | `slw1` INGEST | 0.80 | 0.19 | now under `ahvw` PROCESS |
 | `4dbr` Forge portability: GitLab and sovereign-compute as additional Tool nodes, not a sixth repo | `5a3l` DEPLOYMENT | 0.71 | 0.16 | now under `vke6` SPLIT (#223) |
 | `qrnz` SECOND IG: ingest smart-immunizations, and find out whether the artefact-index pipeline ac | `uhkv` SMART STACK | 0.69 | 0.15 | now under `yj32` HARNESS AS INTERFACE |
 | `ngxj` TRANSLATION CATALOGUES: five pages shipped .md-only, so translation:drift holds every open | `bzyu` TRANSLATION | 0.57 | 0.14 | now under `1xhc` CI RELIABILITY |

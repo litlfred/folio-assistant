@@ -1654,6 +1654,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/slice-sqlite",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Per-slice SQLite builder"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. `--check` builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source."
+        }
+      ],
+      "skos:notation": "slice-sqlite",
+      "dcterms:source": "cat-harness/tools/index.ts#slice-sqlite",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/stakeholder-map",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2291,6 +2311,26 @@
       ],
       "skos:notation": "wireframe-check",
       "dcterms:source": "cat-harness/tools/index.ts#wireframe-check",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/witness-conformance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Witness conformance report"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Check every `*.witness.json` in the folio's declared `computation-witness` directories against the two schemas in `schemas/computation-witness.ts`: the envelope every witness should meet (a failure is a malformed file) and the producer contract (a failure is a finding against the producer, grouped by the fields at fault). Also lists files that are not strict JSON, which Python's reader accepts and every other consumer rejects. Report-only: it never edits a witness, which is generator output."
+        }
+      ],
+      "skos:notation": "witness-conformance",
+      "dcterms:source": "cat-harness/tools/index.ts#witness-conformance",
       "skos:note": "candidate"
     },
     {

@@ -10,10 +10,102 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 
 | file | what it is | used by |
 |---|---|---|
+| [`bean-notes.ts`](bean-notes.ts) | a file |  |
+| [`bean-rollover.ts`](bean-rollover.ts) | a file |  |
 | [`bench-id-lookup.ts`](bench-id-lookup.ts) | a file |  |
+| [`capture-mcp-tools.ts`](capture-mcp-tools.ts) | a file |  |
+| [`check-actor-reach.ts`](check-actor-reach.ts) | a file |  |
+| [`check-agents-xref.ts`](check-agents-xref.ts) | a file |  |
+| [`check-anchor-names.ts`](check-anchor-names.ts) | a file |  |
+| [`check-artefact-verification.ts`](check-artefact-verification.ts) | a file |  |
+| [`check-asset-roles.ts`](check-asset-roles.ts) | a file |  |
+| [`check-available-locales.ts`](check-available-locales.ts) | a file |  |
+| [`check-avatar-coverage.ts`](check-avatar-coverage.ts) | a file |  |
+| [`check-avatar-instances.ts`](check-avatar-instances.ts) | a file |  |
+| [`check-bean-archive.ts`](check-bean-archive.ts) | a file |  |
+| [`check-bean-blocks.ts`](check-bean-blocks.ts) | a file |  |
+| [`check-bean-bodies.ts`](check-bean-bodies.ts) | a file |  |
+| [`check-bean-front-matter.ts`](check-bean-front-matter.ts) | a file |  |
+| [`check-bean-issue-links.ts`](check-bean-issue-links.ts) | a file |  |
+| [`check-bean-parent-prose.ts`](check-bean-parent-prose.ts) | a file |  |
+| [`check-bean-restates-skill.ts`](check-bean-restates-skill.ts) | a file |  |
+| [`check-bun-runtime.ts`](check-bun-runtime.ts) | a file |  |
+| [`check-ci-health.ts`](check-ci-health.ts) | a file |  |
+| [`check-ci-invocations.ts`](check-ci-invocations.ts) | a file |  |
+| [`check-code-accounting.ts`](check-code-accounting.ts) | a file |  |
+| [`check-command-paths.ts`](check-command-paths.ts) | a file |  |
+| [`check-concern-groups.ts`](check-concern-groups.ts) | a file |  |
+| [`check-context-emission.ts`](check-context-emission.ts) | a file |  |
+| [`check-corpus-gate.ts`](check-corpus-gate.ts) | a file |  |
+| [`check-declaration-claims.ts`](check-declaration-claims.ts) | a file |  |
+| [`check-declaration-filename.ts`](check-declaration-filename.ts) | a file |  |
+| [`check-declared-assets.ts`](check-declared-assets.ts) | a file |  |
+| [`check-dependency-advisories.ts`](check-dependency-advisories.ts) | a file |  |
+| [`check-docs-populated.ts`](check-docs-populated.ts) | a file |  |
+| [`check-docs-templates.ts`](check-docs-templates.ts) | a file |  |
+| [`check-document-kind-sources.ts`](check-document-kind-sources.ts) | a file |  |
+| [`check-duplicate-decls.ts`](check-duplicate-decls.ts) | a file |  |
+| [`check-escaped-markup.ts`](check-escaped-markup.ts) | a file |  |
+| [`check-folio-mount.ts`](check-folio-mount.ts) | a file |  |
+| [`check-foreign-paths.ts`](check-foreign-paths.ts) | a file |  |
+| [`check-graph-kind-work.ts`](check-graph-kind-work.ts) | a file |  |
+| [`check-harness-dirs.ts`](check-harness-dirs.ts) | a file |  |
+| [`check-harness-state.ts`](check-harness-state.ts) | a file |  |
+| [`check-image-roles.ts`](check-image-roles.ts) | a file |  |
+| [`check-instance-config.ts`](check-instance-config.ts) | a file |  |
+| [`check-instance-graph.ts`](check-instance-graph.ts) | a file |  |
+| [`check-instance-render.ts`](check-instance-render.ts) | a file |  |
+| [`check-instance-themes.ts`](check-instance-themes.ts) | a file |  |
+| [`check-invocation-parity.ts`](check-invocation-parity.ts) | a file |  |
+| [`check-kind-validators.ts`](check-kind-validators.ts) | a file |  |
+| [`check-landing-instance.ts`](check-landing-instance.ts) | a file |  |
+| [`check-lane-documentation.ts`](check-lane-documentation.ts) | a file |  |
+| [`check-layout-norms.ts`](check-layout-norms.ts) | a file |  |
+| [`check-library-qa.ts`](check-library-qa.ts) | a file |  |
+| [`check-lockfile-pinning.ts`](check-lockfile-pinning.ts) | a file |  |
+| [`check-maintained-artefacts.ts`](check-maintained-artefacts.ts) | a file |  |
+| [`check-merged.ts`](check-merged.ts) | a file |  |
+| [`check-mirror-drift.ts`](check-mirror-drift.ts) | a file |  |
+| [`check-model-languages.ts`](check-model-languages.ts) | a file |  |
+| [`check-module-scope-resolution.ts`](check-module-scope-resolution.ts) | a file |  |
+| [`check-nav-names.ts`](check-nav-names.ts) | a file |  |
+| [`check-navbar-consistency.ts`](check-navbar-consistency.ts) | a file |  |
+| [`check-process-bindings.ts`](check-process-bindings.ts) | a file |  |
+| [`check-process-documentation.ts`](check-process-documentation.ts) | a file |  |
+| [`check-prs-have-runs.ts`](check-prs-have-runs.ts) | a file |  |
+| [`check-publishable.ts`](check-publishable.ts) | a file |  |
+| [`check-published-instance-exports.ts`](check-published-instance-exports.ts) | a file |  |
+| [`check-published-packages.ts`](check-published-packages.ts) | a file |  |
+| [`check-published-refs.ts`](check-published-refs.ts) | a file |  |
+| [`check-python-deps.ts`](check-python-deps.ts) | a file |  |
+| [`check-qa-corpus.ts`](check-qa-corpus.ts) | a file |  |
+| [`check-qa-reviewer-permission.ts`](check-qa-reviewer-permission.ts) | a file |  |
+| [`check-standalone.ts`](check-standalone.ts) | a file |  |
+| [`check-state-on-main.ts`](check-state-on-main.ts) | a file |  |
+| [`check-workflow-submodules.ts`](check-workflow-submodules.ts) | a file |  |
 | [`extract-assets.ts`](extract-assets.ts) | a file |  |
+| [`gen-auto-docs.ts`](gen-auto-docs.ts) | a file |  |
 | [`gen-id-lookup.ts`](gen-id-lookup.ts) | a file |  |
+| [`kind-register.ts`](kind-register.ts) | a file |  |
+| [`merge-leftover.ts`](merge-leftover.ts) | a file |  |
+| [`merge-overlap.ts`](merge-overlap.ts) | a file |  |
+| [`merge-train.ts`](merge-train.ts) | a file |  |
+| [`migrate-qa-attestations.ts`](migrate-qa-attestations.ts) | a file |  |
+| [`milestone-status.ts`](milestone-status.ts) | a file |  |
 | [`publish-id-lookup.ts`](publish-id-lookup.ts) | a file |  |
+| [`qa-refresh.ts`](qa-refresh.ts) | a file |  |
+| [`resolve-subgraph.ts`](resolve-subgraph.ts) | a file |  |
+| [`seed-ready.ts`](seed-ready.ts) | a file |  |
+| [`split-baseline.json`](split-baseline.json) | data |  |
+| [`split-baseline.ts`](split-baseline.ts) | a file |  |
+| [`standalone-baseline.json`](standalone-baseline.json) | data |  |
+| [`state-push.ts`](state-push.ts) | a file |  |
+| [`state-seed.ts`](state-seed.ts) | a file |  |
+| [`state-store.ts`](state-store.ts) | a file |  |
+| [`vocab-mappings.ts`](vocab-mappings.ts) | a file |  |
+| [`witness-conformance.ts`](witness-conformance.ts) | a file |  |
+| [`docker-latex-build/`](docker-latex-build/) | _nothing declares what this holds_ | |
 | [`lib/`](lib/) | _nothing declares what this holds_ | |
 | [`tests/`](tests/) | _nothing declares what this holds_ | |
+| [`translation/`](translation/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

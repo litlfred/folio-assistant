@@ -32,7 +32,7 @@
 
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
-import { directoriesForGraph, repoRootFor } from "../../schemas/cat-harness.js";
+import { checkoutRootFor, directoriesForGraph } from "../../schemas/cat-harness.js";
 import { actionGraph, readPolicies, type ActionGraph, type OdrlPolicy } from "../../schemas/odrl.js";
 import { actorsDir, readActors, readPermissions, type LoadedActor } from "../../schemas/role-graph.js";
 import { kgRoots } from "../../scripts/known-skills.js";
@@ -80,7 +80,7 @@ export function loadAccessContext(root: string): AccessContext {
   const actors = new Map<string, LoadedActor>();
   // The declared home inside `scenarios` (bean rqao), the same one kg-audit
   // and check-actor-reach read.
-  for (const base of [root, repoRootFor(instanceRoot)]) {
+  for (const base of [root, checkoutRootFor(instanceRoot)]) {
     const dir = actorsDir(base);
     if (dir === undefined || !existsSync(dir)) continue;
     for (const a of readActors(dir)) actors.set(a.id, a);

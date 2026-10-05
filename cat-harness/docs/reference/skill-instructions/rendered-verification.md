@@ -357,3 +357,10 @@ from the source, and this catches what is only true once a browser has laid
 it out. A change that skips either is unverified, and the one that got
 skipped is the one that shipped the defect.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Build and publish a per-slice SQLite file](../../processes/slice-sqlite-publish.html) | Search the published slice in a browser |
+

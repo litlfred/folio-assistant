@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: content-lifecycle\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.919Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.452Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -64,11 +64,6 @@ msgstr ""
 msgid "Folio retired"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-lifecycle.bpmn:29
-#. Diagram element documentation
-msgid "folio-assistant — the content lifecycle end to end, one cycle of a folio. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
-msgstr ""
-
 #: ../folio-assistant-core/processes/content/content-lifecycle.bpmn:130
 #. Diagram element documentation
 msgid "Implementer and reader feedback on the published folio, triaged by severity and scope."
@@ -92,6 +87,11 @@ msgstr ""
 #: ../folio-assistant-core/processes/content/content-lifecycle.bpmn:154
 #. Diagram element documentation
 msgid "No more content is planned: deprecate the folio. Post a deprecation notice and timeline, update its status metadata, archive it, point references at any successor, and remove it from active publication. The programme manager decides; retirement archives rather than deletes."
+msgstr ""
+
+#: ../folio-assistant-core/processes/content/content-lifecycle.bpmn:29
+#. Diagram element documentation
+msgid "One cycle of a folio from plan to retirement, calling editing and the draft-to-publication path as call activities. folio-assistant — the content lifecycle end to end, one cycle of a folio. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
 #: ../folio-assistant-core/processes/content/content-lifecycle.bpmn:46

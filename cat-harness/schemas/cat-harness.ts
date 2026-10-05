@@ -701,6 +701,11 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * not said". Bean `eayu`.
    */
   separation?: "content" | "tools";
+  /**
+   * Instances this one is seeded together with — see `seedsWith` on
+   * {@link CatHarnessDeclarationSchema}. Absent is "seeds alone".
+   */
+  seedsWith?: string[];
   stub?: string;
   /**
    * Where this instance's artefacts are published — the base every `@id` in
@@ -942,7 +947,7 @@ function acceptLegacyGraphsKey(v: unknown): unknown {
   return { ...rest, graphKinds: graphs };
 }
 
-const GraphNodeDirectoryShape = z.object({
+export const GraphNodeDirectoryShape = z.object({
   id: z.string().min(1),
   path: z.string().min(1),
   ...scopeShape,
@@ -1419,7 +1424,7 @@ export type Tile = z.infer<typeof TileSchema>;
  *   and `audit:coverage` reports the kind as `stored` rather than counting a
  *   working copy whose size depends on whether somebody ran `qa:fetch`.
  *
- * ## `keyedBy` — three keyings, and a fourth is a schema change
+ * ## `keyedBy` — four keyings, and a fifth is a schema change
  *
  * - `commit` — one entry per commit (`main/<sha>/`, `pr/<n>/<sha>/`), read
  *   against a baseline. The QA branch (`scripts/qa-store.ts`).
@@ -1450,14 +1455,23 @@ export type Tile = z.infer<typeof TileSchema>;
  *   `docs/proposals/state-branch-2026-10-02.md` draws is **regenerability**,
  *   and it is exactly what separates these two keyings.
  *
- * The field is an enum, not a string, so a fourth keying is a schema change
+ * - `route-family` — one entry per MEMBER of a family under the directory's
+ *   path, the member supplied at publish time rather than declared. Bean
+ *   `xp5j`. **Its reasoning lives with the enum**, in
+ *   `schemas/subgraph-source.ts`: a keying is documented where its one
+ *   definition is, which is the same rule that put the enum there (`1j3q`).
+ *   {@link RouteMemberSchema} there validates the untrusted member key.
+ *
+ * The field is an enum, not a string, so a FIFTH keying is a schema change
  * somebody has to make rather than a reinterpretation of an existing value. The
  * enum itself is `KeyedBySchema` in `schemas/subgraph-source.ts`, IMPORTED and
- * not restated: this field held its own `z.enum(["commit","tip","route"])` until
- * the two drifted — `route` was added here with bean `1j3q` and not there, so a
- * route-keyed declaration parsed and then threw a ZodError inside
- * `resolveSubgraphSource`. A schema change somebody has to make is only a guard
- * if there is ONE schema to change.
+ * not restated: this field held its own `z.enum([...])` until the two drifted —
+ * `route` was added here with bean `1j3q` and not there, so a route-keyed
+ * declaration parsed and then threw a ZodError inside `resolveSubgraphSource`.
+ * **A schema change somebody has to make is only a guard if there is ONE schema
+ * to change**, and `route-family` was added to `KeyedBySchema` for exactly that
+ * reason — this branch first restated the enum here and reproduced `1j3q` one
+ * keying later.
  * Not every named subgraph gets a branch — semi-static KG content (skills,
  * schemas, processes) stays on `main` (owner, 2026-10-02).
  *
@@ -1783,12 +1797,12 @@ export const ContentDirectorySchema = z.preprocess(
   ContentDirectoryShape.refine(
     (d) =>
       !(
-        (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route") &&
+        (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route" || d.storage?.keyedBy === "route-family") &&
         (d.graphKinds as readonly string[] | undefined)?.includes("qa")
       ),
     {
       message:
-        'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos) and `keyedBy: "route"` for regenerable rendered pages',
+        'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos), `keyedBy: "route"` for regenerable rendered pages, and `keyedBy: "route-family"` for a family of them named at publish time',
       path: ["storage", "keyedBy"],
     },
   ),
@@ -2853,6 +2867,22 @@ export const CatHarnessDeclarationSchema = z.object({
    * instance `supports` is content too, and is read as such without this.
    */
   separation: z.enum(["content", "tools"]).optional(),
+  /**
+   * Instances this one is SEEDED TOGETHER with: the same seeding step creates
+   * both repositories, so neither ever stands alone in a checkout (bean
+   * `smbc` seeds `cat-harness` and `cat-harness-tools` at once).
+   *
+   * Declared by the HIGHER instance, naming the lower one, because a lower
+   * instance naming one above it is the wrong direction
+   * (`check:reference-direction`). `seed:ready` reads it: a path declared in
+   * a lower instance that resolves only into an instance seeding with it is
+   * not "upward" — it cannot break on a seeding day that creates both.
+   * Owner, 2026-10-04: cat-harness's Tool nodes resolving into
+   * cat-harness-tools are a seeding pair, not a seeding risk.
+   *
+   * Absent means "seeds alone", which is the strict reading.
+   */
+  seedsWith: z.array(z.string().min(1)).optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   /**
@@ -3170,6 +3200,64 @@ export function repoRootFor(instanceRoot: string): string {
 }
 
 /**
+ * The CHECKOUT an instance's repository-level files live in — `.gitmodules`,
+ * `.github/`, `.claude/skills/`, the root declaration, a `scope: "repository"`
+ * path — answered for the root instance too (bean `g43f`).
+ *
+ * ## Why {@link repoRootFor} cannot be used for these reads
+ *
+ * `repoRootFor` is `dirname`, so for the instance declared AT the checkout root
+ * it climbs out. In the main checkout that is `/home/user`; in a Claude Code
+ * worktree it is `.claude/worktrees/`, whose every child is ANOTHER session's
+ * checkout. Measured 2026-10-03: twenty-odd readers composed
+ * `join(repoRootFor(root), …)` and were safe only because their callers passed
+ * a nested instance. Given the root instance they read a directory that is not
+ * there — `.claude/skills` read as empty, a root declaration read as absent —
+ * which is `dh4f`: a clean run over nothing.
+ *
+ * ## The rule is git's own marker, read from the filesystem
+ *
+ * - `instanceRoot` holds its own `.git` (a directory for a clone, a FILE for a
+ *   worktree) and its parent's `.gitmodules` does not name it — it IS a
+ *   checkout ({@link isForeignCheckout} from the parent's side): answer itself.
+ * - otherwise it is nested — a plain subdirectory, or a declared submodule such
+ *   as `bootstrap/` — and its repository is one level up, which is
+ *   `repoRootFor`'s contract and is unchanged.
+ *
+ * Read from the filesystem rather than by spawning `git rev-parse
+ * --show-toplevel` for two measured reasons: `rootForScope` is on the hot path
+ * of every declared-directory resolution, and a fixture built under a checkout
+ * would get the ENCLOSING repository's toplevel, which is the wrong answer
+ * delivered confidently. A non-git fixture has no `.git` anywhere and keeps the
+ * `dirname` answer every existing fixture was written against.
+ *
+ * ## It reports rather than guessing
+ *
+ * A nested checkout (a submodule) whose parent holds no `.git` is a tree whose
+ * repository cannot be determined: the `.gitmodules` says one thing and the
+ * parent's git state another. That throws, because returning `dirname` there
+ * is the silent escape this function exists to end.
+ */
+export function checkoutRootFor(instanceRoot: string): string {
+  const abs = resolve(instanceRoot);
+  if (isForeignCheckout(abs)) return abs;
+  // A git-less tree whose root AGGREGATES other instances (`init-folio` before
+  // `git init`, a cross-instance fixture) is its own checkout too — the
+  // container rule {@link siblingScopeFor} states, and the whole of what
+  // `harness-config`'s `checkoutRootFor` was before this (it now delegates
+  // here, so there is one answer rather than two that disagree on a leaf).
+  const up = siblingScopeFor(abs);
+  if (up === abs) return abs;
+  if (existsSync(join(abs, ".git")) && !existsSync(join(up, ".git"))) {
+    throw new Error(
+      `cannot determine the checkout of ${abs}: it is a declared submodule of ${up}, ` +
+        `which holds no \`.git\` — refusing to read repository-level files from outside a checkout`,
+    );
+  }
+  return up;
+}
+
+/**
  * The scope to resolve an instance's SIBLINGS in — `repoRootFor`, except when
  * the instance root IS the repository root.
  *
@@ -3281,7 +3369,9 @@ export function resolveCoveragePath(repoRoot: string, coveragePath: string): str
  * change to this function rather than a sweep over six declarations.
  */
 export function rootForScope(instanceRoot: string, scope?: DeclarationScope): string {
-  return scope === "repository" ? repoRootFor(instanceRoot) : instanceRoot;
+  // `checkoutRootFor`, not `repoRootFor`: a `scope: "repository"` entry on the
+  // ROOT declaration otherwise resolved against the checkout's parent (g43f).
+  return scope === "repository" ? checkoutRootFor(instanceRoot) : instanceRoot;
 }
 
 /**
@@ -3379,13 +3469,55 @@ export function instanceRootsIn(repoRoot: string): string[] {
     return out;
   }
 
+  const submodules = submodulePathsOf(root);
   const subs = entries
     .filter((e) => e.isDirectory() && !e.name.startsWith("."))
     .map((e) => join(root, e.name))
+    .filter((p) => !isForeignCheckout(p, submodules))
     .filter((p) => findDeclarationFile(p) !== undefined)
     .sort();
 
   return out.concat(subs);
+}
+
+/**
+ * The submodule paths `root/.gitmodules` declares, or an empty set when it
+ * declares none. Git's own declaration of which nested checkouts belong to
+ * this repository — read rather than re-derived, so the answer is git's.
+ */
+function submodulePathsOf(root: string): ReadonlySet<string> {
+  const file = join(root, ".gitmodules");
+  if (!existsSync(file)) return new Set();
+  const out = new Set<string>();
+  for (const m of readFileSync(file, "utf-8").matchAll(/^\s*path\s*=\s*(.+?)\s*$/gm)) out.add(m[1]!);
+  return out;
+}
+
+/**
+ * Whether `dir` is a SEPARATE checkout — it holds its own `.git` (a directory
+ * for a clone, a FILE for a worktree or submodule) and its parent's
+ * `.gitmodules` does not name it — and so is not an instance of the
+ * repository being scanned (bean `g43f`).
+ *
+ * ## The escape this closes
+ *
+ * {@link repoRootFor} is `dirname`, so for the ROOT instance it climbs out of
+ * the checkout. In a Claude Code worktree that lands on `.claude/worktrees/`,
+ * whose every child is a sibling worktree declaring `folio-assistant` at its
+ * root. Measured 2026-10-03 from `agent-aefc4dcac619f2e1f`:
+ * `instanceRootsIn(repoRootFor(root))` returned **ten sibling worktrees** as
+ * instances of this one. A caller asking for its siblings that way reads other
+ * sessions' uncommitted work as its own corpus.
+ *
+ * The rule is the same one git applies: a nested checkout is not part of the
+ * enclosing tree unless it is a declared submodule. `bootstrap/` and
+ * `bootstrap-tools/` have a `.git` file and ARE instances, which is why the
+ * `.gitmodules` half exists; an instance directory with no `.git` is
+ * untouched, so non-git fixtures read exactly as before.
+ */
+export function isForeignCheckout(dir: string, submodules: ReadonlySet<string> = submodulePathsOf(resolve(dir, ".."))): boolean {
+  if (!existsSync(join(dir, ".git"))) return false;
+  return !submodules.has(basename(dir));
 }
 
 /** {@link findInstanceRoot}, throwing rather than returning `undefined`. */
@@ -4470,7 +4602,27 @@ function declaredFromWithin(
       continue;
     }
     for (const nd of nested.directories ?? []) {
-      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.subgraph !== true) continue;
+      // `nd.subgraph !== true` was a third condition here until 2026-10-04.
+      // It withheld 29 directories from EVERY store-side consumer —
+      // `branch-store`, `graph-read`, `audit-coverage`, `state-mount` — while
+      // `nestedDirectories` (the other walk over the same declaration files,
+      // read by `check:declared-dirs` and `check:requirements`) ignored it. One
+      // fact, two readers, opposite answers: the shape of #2069's enum drift.
+      //
+      // It was never in the schema. No `subgraph: z.boolean()`, no `subgraph?:`
+      // field — it was read off an untyped object here and nowhere else, so
+      // nothing validated it and nothing required it. It appeared in 5 files,
+      // all `skills/skills.json`, and was absent from `beans/beans.json`,
+      // `docs/docs.json` and `auto-docs.json`. Removing it resolved 144 -> 173
+      // directories, including `auto-docs.json`'s ten sub-sub-graphs: the
+      // owner's 2026-10-03 ruling was implemented and unreachable.
+      //
+      // Measured consequences, all repaired in the same change because an
+      // exposed finding is still a finding: `check:layout-norms` saw
+      // `beans/defs contains beans/defs/archive` (siblings in one declaration
+      // file, now sanctioned there) and `check:subgraphs` saw one genuinely
+      // broken link in `docs/proposals/` that it could not previously reach.
+      if (typeof nd.id !== "string" || typeof nd.path !== "string") continue;
       const sub = nd.path.replace(/^\.\//, "").replace(/\/+$/, "");
       out.push({ sub, entry: nd as unknown as ContentDirectory });
     }
@@ -4542,7 +4694,7 @@ function promoteFromWithin(
       // (beans.json's `defs`, docs.json's `proposals`). It answered the retired
       // `dependents` question until 2026-09-30 (option A); the fact it carried
       // here was never about dependents, so it is now stated as what it is.
-      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.subgraph !== true) continue;
+      if (typeof nd.id !== "string" || typeof nd.path !== "string") continue;
       // An instance-level DECLARATION with this id wins; a built-in DEFAULT
       // (`declaredBy: "(default)"`, e.g. `skills/voices`) is a convention, and
       // a from-within declaration is stronger than a convention.
@@ -6161,8 +6313,7 @@ export function declaredKinds(
 
 /** Where a declared directory actually is, honouring `scope`. */
 function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string }): string {
-  const base = d.scope === "repository" ? repoRootFor(root) : root;
-  return resolve(base, d.path);
+  return resolve(rootForScope(root, d.scope as DeclarationScope | undefined), d.path);
 }
 
 /**

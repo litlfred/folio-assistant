@@ -23,6 +23,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`folio-mount.e2e.ts`](folio-mount.e2e.ts) | a file |  |
 | [`folio-three-states.e2e.ts`](folio-three-states.e2e.ts) | a file |  |
 | [`glass-card-metadata.e2e.ts`](glass-card-metadata.e2e.ts) | a file |  |
+| [`glass-card-open.e2e.ts`](glass-card-open.e2e.ts) | a file |  |
 | [`glass-devices.e2e.ts`](glass-devices.e2e.ts) | a file |  |
 | [`glass-filter.e2e.ts`](glass-filter.e2e.ts) | a file |  |
 | [`glass-interactions.e2e.ts`](glass-interactions.e2e.ts) | a file |  |
@@ -65,6 +66,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`sidebar-panels.e2e.ts`](sidebar-panels.e2e.ts) | a file |  |
 | [`sidebar-rail.e2e.ts`](sidebar-rail.e2e.ts) | a file |  |
 | [`site-index.e2e.ts`](site-index.e2e.ts) | a file |  |
+| [`slice-sqlite.e2e.ts`](slice-sqlite.e2e.ts) | a file |  |
 | [`staging-banner.e2e.ts`](staging-banner.e2e.ts) | a file |  |
 | [`state-dashboards.e2e.ts`](state-dashboards.e2e.ts) | a file |  |
 | [`sticky-home.e2e.ts`](sticky-home.e2e.ts) | a file |  |
