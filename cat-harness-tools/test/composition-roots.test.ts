@@ -68,9 +68,16 @@ describe("MCP tool groups", () => {
   });
 
   test("the served groups ARE the Tool nodes' modules — no list restates them", () => {
-    const served = servedToolGroups(REPO).sets.flatMap((s) => s.groups.map((g) => g.module)).sort();
-    const declared = toolGroupsFromNodes(harnessTools()).map((g) => g.module).sort();
-    expect(served).toEqual(declared);
+    const sets = servedToolGroups(REPO).sets;
+    // The harness's own, exactly — the set the harness server served before
+    // the walk existed.
+    const harness = sets.find((s) => s.root === HARNESS.replace(/\/$/, ""));
+    expect(harness?.groups.map((g) => g.module).sort()).toEqual(toolGroupsFromNodes(harnessTools()).map((g) => g.module).sort());
+    // And a layer ABOVE the harness, reached only through the tree: sci's
+    // `lean_formal_edges` was a `contributes` tool group until its Tool node
+    // replaced it (bean riit).
+    const sci = sets.find((s) => s.instance === "folio-assistant-sci");
+    expect(sci?.groups.map((g) => g.module)).toEqual(["content/pipeline/formal-edges-mcp.ts"]);
   });
 
   test("a folio that declares nothing still gets the harness's tools", () => {
