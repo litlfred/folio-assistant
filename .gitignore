@@ -225,9 +225,17 @@ cat-harness/docs/vendor/
 # it wants kept (`git add -f`), so opting in is a deliberate act at the point
 # of capture rather than a global switch somebody forgets is flipped.
 #
-# NOT `fsh-guts/` wholesale: the rest of the trashcan is committed on purpose
-# — that is what makes the never-delete rule a relocation rather than a
-# disappearance.
+# The rest of the trashcan is kept on purpose — that is what makes the
+# never-delete rule a relocation rather than a disappearance — but since bean
+# `9c7h` it is kept on its own branch, `cat/cat-harness/fsh-guts`, not on
+# main. `bun run state:mount` puts it at `fsh-guts/`, and `bun run state:push`
+# splices edits back. So the WHOLE directory is ignored here: a mounted copy
+# committed to main would be a second, diverging copy. branch-store reads
+# this root rule as "the mount itself" and still pushes the files under it,
+# while `fsh-guts/logs/` below stays local scratch that is never pushed.
+# `/**` and NOT `/fsh-guts/`: a directory rule stops git at the directory, so
+# it would be reported for the logs too and the logs rule would never be seen.
+/fsh-guts/**
 fsh-guts/logs/
 
 # Transient ingest staging — the arms write here, `check:l1-complete` gates it
@@ -280,3 +288,12 @@ who-style-guide/test/results/
 # read `beans/defs` off a disk. It is a READ SURFACE and never a commit on this
 # branch: writes go through `state-store.ts`'s splice-write.
 state/
+
+# Per-slice SQLite (bean `q8ar`). BUILT AT DEPLOY into `_site/assets/slices/`
+# by `bun run slice:sqlite`, never committed: every session writes `beans/`, so
+# a committed binary would be stale against every merge ref and would grow the
+# clone on every bean edit. A local `bun run slice:sqlite` lands here.
+cat-harness/docs/assets/slices/
+
+# paper_preferences (cat-harness-tools/src/tools/preferences.ts)
+.folio-prefs.json

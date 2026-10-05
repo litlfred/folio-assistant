@@ -23,18 +23,18 @@
  *   `generated/<instance>/<type>.glossary.json`, beside the authored files and
  *   never over them, and the page shows them apart from authored terms.
  *
- * ## Why this, and not a `docs-auto` type
+ * ## Why this, and not a `auto-docs` type
  *
- * The owner framed piece 1 as one `docs-auto` auto-doc-type
- * (`cat-harness/docs-auto/glossary/<path>`), and `gen-docs-auto.ts` has that
+ * The owner framed piece 1 as one `auto-docs` auto-doc-type
+ * (`cat-harness/auto-docs/glossary/<path>`), and `gen-auto-docs.ts` has that
  * mechanism. It does not fit what was asked on 2026-09-23 (*"everything
- * extracted to glosasay / skos?"*): a docs-auto type returns `AutoDocItem[]`,
+ * extracted to glosasay / skos?"*): a auto-docs type returns `AutoDocItem[]`,
  * one row per artefact FILE for one sub-graph page, and emits no SKOS. The
  * extracted terms are per ELEMENT (one diagram holds dozens of activities),
  * need IRIs in the owning instance's namespace, and must land in the SKOS
  * this page already publishes. `index/skills` and `index/processes` already
- * list the same artefacts per sub-graph, so a docs-auto glossary type over
- * them would be a third rendering. The existing docs-auto `glossary` type
+ * list the same artefacts per sub-graph, so a auto-docs glossary type over
+ * them would be a third rendering. The existing auto-docs `glossary` type
  * stays what it is: the swimlane ledger per sub-graph, linked from here.
  *
  * ## One index, one page per asset type
@@ -78,7 +78,7 @@ import { addressBook } from "../../cat-harness/schemas/prov-jsonld.ts";
 import { ASSET_TYPES, EXTRACTED_PREFIX, assetTypeTitle, assetTypeWhat, extract, type AssetType } from "./glossary-extract.ts";
 import { perScheme, run as runTermMapping, termState, type SchemeState, type TermStateAnswer } from "../../cat-harness/scripts/check-term-mapping.ts";
 import { MAPPING_TARGETS } from "../../cat-harness/schemas/term-mapping.ts";
-import { GLOSSARY_SUBDIR, potPath, sourceText, templateName, translationsDir } from "./glossary-pot.ts";
+import { GLOSSARY_SUBDIR, allTranslationDirs, potPath, sourceText, templateName } from "./glossary-pot.ts";
 import { parsePo } from "../../cat-harness/content/pipeline/po-inject.ts";
 
 const CORE = resolve(import.meta.dir, "..");
@@ -98,7 +98,7 @@ function generatedDir(): string {
   if (dir === undefined) throw new Error("folio-assistant-core declares no glossary directory to write extracted schemes into");
   return join(dir, "generated");
 }
-/** Where a reader follows a `source` to. The forge the repository is published on; the same base `gen-docs-auto.ts` links with. */
+/** Where a reader follows a `source` to. The forge the repository is published on; the same base `gen-auto-docs.ts` links with. */
 const FORGE = "https://github.com/litlfred/folio-assistant";
 /** A file's page on the forge — in its submodule's own repository when it sits in one. */
 const blobUrl = (path: string): string => {
@@ -1206,14 +1206,14 @@ export function renderIndex(c: ReturnType<typeof collect>, typePages: ReadonlyMa
       (s) =>
         `<li><strong>${esc(s.glossary.title)}</strong> (${s.instance}, ${s.glossary.terms.length} term${s.glossary.terms.length === 1 ? "" : "s"}${s.glossary.members?.length ? `, ${s.glossary.members.length} external members` : ""}) · <a href="{{ '/${skosAsset(s)}' | relative_url }}">SKOS JSON-LD</a> · <code>${esc(s.file)}</code></li>`,
     ),
-    // `swimlane-glossary`, not `glossary`. `docs-auto` names its sub-page
+    // `swimlane-glossary`, not `glossary`. `auto-docs` names its sub-page
     // after the DECLARED ID, and this href carried the wrong one — a third
     // instance of `bsay`'s class, found because repointing the declaration
     // made `check:wireframes` name it. A composed path is not resolved by
     // anything, so the link 404ed on the published glossary the whole time.
     ...c.ledgers.map(
       (l) =>
-        `<li><strong>Swimlane roles</strong> (${l.instance}, ${l.terms} terms) · <a href="{{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>${esc(l.path)}</code></li>`,
+        `<li><strong>Swimlane roles</strong> (${l.instance}, ${l.terms} terms) · <a href="{{ '/cat-harness/auto-docs/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>${esc(l.path)}</code></li>`,
     ),
     ...c.external.map((e) => `<li><strong>${esc(e.title ?? e.id)}</strong> (external SKOS, referenced by ${e.instance}) · ${link(e.url)}</li>`),
   ];
@@ -1304,21 +1304,25 @@ export type SchemeTranslations = ReadonlyMap<string, string>;
  * per template name. Reads the SAME paths `glossary-pot.ts` writes, through
  * its own `potPath`, so the reader cannot look somewhere the writer does not.
  */
-export function readGlossaryTranslations(dir: string = translationsDir()): Map<string, Map<string, SchemeTranslations>> {
+export function readGlossaryTranslations(dirs: readonly string[] = allTranslationDirs()): Map<string, Map<string, SchemeTranslations>> {
   const out = new Map<string, Map<string, SchemeTranslations>>();
-  if (!existsSync(dir)) return out;
-  for (const locale of readdirSync(dir).sort()) {
-    const sub = join(dir, locale, GLOSSARY_SUBDIR);
-    if (!existsSync(sub)) continue;
-    for (const f of readdirSync(sub).filter((x) => x.endsWith(".po")).sort()) {
-      const name = f.slice(0, -".po".length);
-      // Only a .po beside its template counts: an orphan .po translates
-      // nothing the page shows, and `glossary:pot:check` reports it.
-      if (!existsSync(potPath(dir, locale, name))) continue;
-      const m = parsePo(readFileSync(join(sub, f), "utf-8"));
-      const byScheme = out.get(locale) ?? new Map<string, SchemeTranslations>();
-      byScheme.set(name, m);
-      out.set(locale, byScheme);
+  // Every declared translation-sources directory (bean riit): a scheme's
+  // catalogues sit with the instance that owns it, not in one platform tree.
+  for (const dir of dirs) {
+    if (!existsSync(dir)) continue;
+    for (const locale of readdirSync(dir).sort()) {
+      const sub = join(dir, locale, GLOSSARY_SUBDIR);
+      if (!existsSync(sub)) continue;
+      for (const f of readdirSync(sub).filter((x) => x.endsWith(".po")).sort()) {
+        const name = f.slice(0, -".po".length);
+        // Only a .po beside its template counts: an orphan .po translates
+        // nothing the page shows, and `glossary:pot:check` reports it.
+        if (!existsSync(potPath(dir, locale, name))) continue;
+        const m = parsePo(readFileSync(join(sub, f), "utf-8"));
+        const byScheme = out.get(locale) ?? new Map<string, SchemeTranslations>();
+        byScheme.set(name, m);
+        out.set(locale, byScheme);
+      }
     }
   }
   return out;

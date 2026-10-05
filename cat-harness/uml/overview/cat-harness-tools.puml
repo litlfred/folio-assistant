@@ -23,9 +23,13 @@ package "cat-harness-tools/cat-harness-tools-id-lookup" as pkg_cat_harness_tools
 package "cat-harness-tools/cat-harness-tools-tests" as pkg_cat_harness_tools_cat_harness_tools_tests <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_tools_cat_harness_tools_tests_code
 }
+package "cat-harness-tools/cat-harness-tools-src" as pkg_cat_harness_tools_cat_harness_tools_src <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_tools_cat_harness_tools_src_code
+}
 
-' grid: portrait, 2 column(s) — pkg_cat_harness_tools_cat_harness_tools_adapters pkg_cat_harness_tools_cat_harness_tools_schemas pkg_cat_harness_tools_cat_harness_tools_scripts pkg_cat_harness_tools_cat_harness_tools_id_lookup pkg_cat_harness_tools_cat_harness_tools_tests
+' grid: portrait, 2 column(s) — pkg_cat_harness_tools_cat_harness_tools_adapters pkg_cat_harness_tools_cat_harness_tools_schemas pkg_cat_harness_tools_cat_harness_tools_scripts pkg_cat_harness_tools_cat_harness_tools_id_lookup pkg_cat_harness_tools_cat_harness_tools_tests pkg_cat_harness_tools_cat_harness_tools_src
 pkg_cat_harness_tools_cat_harness_tools_adapters -[hidden]down- pkg_cat_harness_tools_cat_harness_tools_scripts
 pkg_cat_harness_tools_cat_harness_tools_schemas -[hidden]down- pkg_cat_harness_tools_cat_harness_tools_id_lookup
 pkg_cat_harness_tools_cat_harness_tools_scripts -[hidden]down- pkg_cat_harness_tools_cat_harness_tools_tests
+pkg_cat_harness_tools_cat_harness_tools_id_lookup -[hidden]down- pkg_cat_harness_tools_cat_harness_tools_src
 @enduml

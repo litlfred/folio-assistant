@@ -49,7 +49,7 @@ import {
   findDeclarationFile,
   instanceRootsIn,
   readDeclaration,
-  repoRootFor,
+  rootForScope,
 } from "../../schemas/cat-harness.js";
 import { asScalar, formatScalar, resolvePath } from "./render-value";
 import { findContentRepoRoot } from "./repo-root";
@@ -121,7 +121,7 @@ export function buildValueScope(repoRoot: string): ValueScope {
     seen.set(prefix, decl.name);
     const directories = new Map<string, string>();
     for (const d of decl.directories ?? []) {
-      const base = d.scope === "repository" ? repoRootFor(root) : root;
+      const base = rootForScope(root, d.scope); // the checkout for the root instance too (g43f)
       directories.set(d.id, join(base, d.path));
     }
     const scalars = new Map<string, string | number | boolean>();

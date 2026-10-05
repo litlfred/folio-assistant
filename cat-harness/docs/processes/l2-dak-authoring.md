@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_L2Dak` · advisory · 10 step(s)
 
-folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.
+How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
 by `bun run render:bpmn` — never hand-edit the SVG.

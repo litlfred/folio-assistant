@@ -56,11 +56,13 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 
 import { gitCorpus } from "../schemas/git-corpus.ts";
-import { dirname, join, relative, resolve } from "node:path";
-import type { z } from "zod";
+import { dirname, join, relative, resolve, sep } from "node:path";
+import { z } from "zod";
 
 import { toJsonSchema } from "../schemas/to-json-schema.js";
 
+import { compareRoute } from "./route-authority.ts";
+import { isDirectoryReadme } from "../schemas/kg-node.ts";
 import { instanceDirectoryForGraph, instanceRootsIn, instanceDirectories, readDeclaration, siteDir } from "../schemas/cat-harness.js";
 import { BASE_GRAPH_KINDS, resolveGraphKind } from "../schemas/graph-kind-registry.js";
 import { readUmlPalette } from "./uml-palette.js";
@@ -237,7 +239,12 @@ function drawFamily(
 ): void {
   const title = f.tag;
   if (f.state === "resolved") {
-    const json = toJsonSchema(f.schema as z.ZodType) as Json;
+    // A validator written as a guard piped into a strict object (the merge
+    // queue's: `looseObject` refusing GitHub facts by name, then the entry)
+    // has an INPUT side with no properties. Draw the shape it produces, which
+    // is the class a reader means.
+    const schema = f.schema instanceof z.ZodPipe ? (f.schema.out as z.ZodType) : (f.schema as z.ZodType);
+    const json = toJsonSchema(schema) as Json;
     decompose(json, title, `json: ${f.ref.exportName}`, kind, `${prefix}_${safeId(f.tag)}`, acc);
   } else if (f.state === "shape") {
     acc.classes.push({
@@ -909,15 +916,44 @@ async function main(): Promise<void> {
   const orphans = umlOrphans(existing, files, svgs);
 
   if (check) {
-    const stale = [...files].filter(([p, text]) => !existsSync(p) || readFileSync(p, "utf8") !== text).map(([p]) => p);
+    // The PAGES are compared against whichever copy the declaration says is
+    // authoritative — the checkout today, the branch after `xsrv`'s cutover, and
+    // BOTH during the window where the same bytes live in two places on purpose.
+    // `compareRoute` resolves that; a branch it cannot reach is `unknown`, which
+    // is neither stale nor a pass (bean `xsrv` Done-when 3).
+    //
+    // Keyed by the DIRECTORY ID, so flipping the cutover is a declaration edit
+    // and not a change here. With no `storage` set anywhere in this repository
+    // today, this is the on-disk comparison it replaces, file for file —
+    // asserted in `route-authority.test.ts` rather than claimed.
+    const pages = new Map(
+      [...files].filter(([p]) => p.startsWith(`${DOCS_ROOT}/`)).map(([p, t]) => [relative(REPO, p).split(sep).join("/"), t]),
+    );
+    const verdict = compareRoute("uml-overview-pages", pages, REPO);
+    if (verdict.state === "unknown") {
+      // Said as its own sentence. "Could not determine" and "stale" send a reader
+      // to different places, and collapsing them is the `1xhc` shape.
+      console.error(`COULD NOT DETERMINE whether the UML overview pages are current: ${verdict.reason}`);
+      console.error(`  authority: ${verdict.authority} — nothing was compared, so this is not a pass.`);
+      process.exit(4);
+    }
+    for (const d of verdict.drift ?? []) console.error(`drift: ${d} differs between the checkout and the branch`);
+
+    // Everything OUTSIDE the pages — the .puml model and the SVGs — stays an
+    // on-disk comparison: neither is a published route, so neither is route-keyed.
+    const stale = [...files]
+      .filter(([p]) => !p.startsWith(`${DOCS_ROOT}/`))
+      .filter(([p, text]) => !existsSync(p) || readFileSync(p, "utf8") !== text)
+      .map(([p]) => p);
     for (const j of jobs) if (svgStamp(j.svg) !== sha256(j.text)) stale.push(j.svg);
-    if (stale.length || orphans.length) {
-      for (const p of stale) console.error(`stale: ${relative(REPO, p)}`);
+    const stalePages = verdict.stale.map((r) => join(REPO, r));
+    if (stale.length || stalePages.length || orphans.length || (verdict.drift?.length ?? 0) > 0) {
+      for (const p of [...stalePages, ...stale]) console.error(`stale: ${relative(REPO, p)}`);
       for (const p of orphans) console.error(`orphan: ${relative(REPO, p)}`);
       console.error(`run: bun run ${GENERATOR}`);
       process.exit(1);
     }
-    console.log(`UML overview is current — ${files.size} file(s)`);
+    console.log(`UML overview is current — ${files.size} file(s), pages read from the ${verdict.authority}`);
   } else {
     for (const p of orphans) rmSync(p);
     for (const [p, text] of files) {
@@ -940,9 +976,26 @@ async function main(): Promise<void> {
  * and diagrams of an instance or section that no longer exists (bean `ghgn`).
  * Only this generator's own kinds of output count, so a file a person put
  * there is never an orphan.
+ *
+ * ## A directory README is never this generator's output
+ *
+ * `docs/uml/overview/` and `docs/assets/img/uml/overview/` are DECLARED
+ * directories (`docs/docs.json`: `uml-overview-pages`, `uml-overview-svgs`),
+ * and every declared directory carries a README written by
+ * `readme:subgraphs` — the rule {@link isDirectoryReadme} states for every
+ * collector. This generator writes no `README.md`, so one under its roots is
+ * another writer's, by the docblock above. Before PR #2094 the nested
+ * declaration was not admitted, no README was written there, and `.md` caught
+ * nothing it should not; once it was, the two writers never converged — this
+ * one deleted the README as an orphan, `readme:subgraphs` wrote it back, and
+ * each `--check` reported the other's output as stale or orphaned. Skipping it
+ * here rather than in `readme:subgraphs` keeps the README rule in the one
+ * place it is declared, and survives `xsrv`'s move of the pages to a
+ * route-keyed branch: a stored directory is skipped by `readme:subgraphs`
+ * (`isStored`), so there is then simply no README to skip.
  */
 export function umlOrphans(existing: readonly string[], written: ReadonlyMap<string, string> | ReadonlySet<string>, svgs: ReadonlySet<string>): string[] {
-  return existing.filter((p) => !written.has(p) && !svgs.has(p) && /\.(puml|mmd|md|svg)$/.test(p));
+  return existing.filter((p) => !written.has(p) && !svgs.has(p) && !isDirectoryReadme(p) && /\.(puml|mmd|md|svg)$/.test(p));
 }
 
 if (import.meta.main) await main();

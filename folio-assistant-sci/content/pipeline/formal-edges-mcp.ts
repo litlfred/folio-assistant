@@ -1,11 +1,13 @@
 /**
  * The `lean_formal_edges` MCP tool — folio-assistant-sci's formal-edge
- * extractor, contributed to the server through `../../contributions.ts`.
+ * extractor, served because its Tool node (`lean-formal-edges` in this
+ * instance's `tools/index.ts`) names this module.
  *
- * It is CONTRIBUTED, not declared in core's tool-group list, so the server
- * never names this instance: it walks the folio's declared dependencies and
- * registers what they contribute (`ContributionRegistry.registerTools`). That
- * is the owner's cut, "f-a-core has high level processes only, no tooling".
+ * Neither server names this instance: both serve every Tool node in the
+ * folio's dependency tree (bean riit, 3c), so the tool reaches a folio exactly
+ * when the folio depends on this layer. That is the owner's cut, "f-a-core has
+ * high level processes only, no tooling". It reached the servers as a
+ * `contributes` tool group until then.
  *
  * The tool is a thin wrapper over `runFormalEdges`, which the CLI also uses,
  * so the two cannot drift. It reports `could-not-determine` as such, never as

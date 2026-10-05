@@ -186,3 +186,10 @@ file's `localPath`, which exists only once somebody asked for it.
   `folio-assistant-core/scripts/gen-covers.ts` the catalogue wiring (any instance; the catalogue decides which
   documents get one) that checks every claim it makes about them.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Basic ingestion — an upload to an asset catalogued in library/](../../processes/document-ingestion.html) | Extract its metadata into the KG |
+

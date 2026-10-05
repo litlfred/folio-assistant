@@ -69,6 +69,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/agent-handoff",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "agent-handoff"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Governs handing ONE task to an agent in another environment — a local agent with network the cloud session lacks, a sibling on a different machine, anything that cannot read the coordinator's context and that a person may relay to. States who writes which bean, where the receiver reports, what the person pastes (one sentence: bean, branch, repository) and the brief the bean opens with (second person, to the executor), what the receiver checks before acting, who closes, who may grant an exception, and how to recognise and answer the five ways an executor fails. Use when writing a bean for another agent to execute, and as the receiver before acting on one. Triggers on: hand off, handoff, local agent, agy, mac agent, needs network, executor failed, agent went silent, re-hand, \"give me a branch and bean for them\", relay, the other agent."
+        }
+      ],
+      "skos:notation": "agent-handoff",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/agent-handoff.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/agent-memory",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -89,43 +109,23 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/archiving-arxiv",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/artefact-reachability",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
       },
       "skos:prefLabel": [
         {
-          "@value": "archiving-arxiv"
+          "@value": "artefact-reachability"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Materializing a paper from arXiv — why the version suffix is part of the identity rather than a detail, what to keep beside the PDF, and which facts must be read from the published API rather than recalled."
+          "@value": "Which declared executable artefacts can be reached — decision tables, BPMN diagrams, self-declared entry points. Read before trusting that a .dmn works because it loads, before concluding a script has a caller, and before building any reachability report: load is not evaluability, a test is not a caller, and where a grep fails in both directions the subject has to be narrowed rather than the signals."
         }
       ],
-      "skos:notation": "archiving-arxiv",
-      "dcterms:source": "cat-harness/skills/library/library-core/archiving-arxiv.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/archiving-web-pages",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "archiving-web-pages"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Capturing a web page so it can be cited later — the two fidelities, what each one is evidence of, and why capturing only one of them loses something that cannot be recovered. A URL is not an archive."
-        }
-      ],
-      "skos:notation": "archiving-web-pages",
-      "dcterms:source": "cat-harness/skills/library/library-core/archiving-web-pages.md",
+      "skos:notation": "artefact-reachability",
+      "dcterms:source": "cat-harness/skills/kg/kg-core/artefact-reachability.md",
       "skos:note": "candidate"
     },
     {
@@ -189,6 +189,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/auto-docs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "auto-docs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it."
+        }
+      ],
+      "skos:notation": "auto-docs",
+      "dcterms:source": "cat-harness/skills/ui/ui-core/auto-docs.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/bean-blocking",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -246,66 +266,6 @@
       ],
       "skos:notation": "before-after-preview",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/before-after-preview.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/bib-human-review",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "bib-human-review"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Human-validated bibliography workflow. Flag references that have not been human-reviewed against their source; drive the acquisition ladder (source-in-repo → acquire-legally → physical-library); open one GitHub issue per reference needing physical review (full project context + bibliographic data + page-photo request, assigned to the repo owner); hand off uploaded photos to the bib-photo-ingestion watcher. Use when auditing bib human-review status, ingesting an uploaded paper's results, or preparing a physical-review issue."
-        }
-      ],
-      "skos:notation": "bib-human-review",
-      "dcterms:source": "cat-harness/skills/library/library-core/bib-human-review.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/bib-photo-ingestion-watcher",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "bib-photo-ingestion-watcher"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Integration-watcher for bib physical-review issues. When a page photo is uploaded to a `bib-physical-review` issue (or an in-repo source passage is agent-identified), OCR/read it, formalise the cited result (if the project has a formal-proof pipeline), confirm the project's usage matches the source, run machine + agent bib validation, then set the reference status to `validated` and refresh references.review.json. Use when processing a bib-physical-review issue that has an attached photo, or when ingesting an uploaded paper."
-        }
-      ],
-      "skos:notation": "bib-photo-ingestion-watcher",
-      "dcterms:source": "cat-harness/skills/library/library-core/bib-photo-ingestion-watcher.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/bib-qa",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "bib-qa"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Bibliography quality-assurance agent — validates every reference in content/schema/references.ts against several QA checks: URL availability, URL resolution, metadata completeness, citation coverage, and screenshot/image evidence. Generates bib-qa.json consumed by the standalone bib-qa.html dashboard."
-        }
-      ],
-      "skos:notation": "bib-qa",
-      "dcterms:source": "cat-harness/skills/library/library-core/bib-qa.md",
       "skos:note": "candidate"
     },
     {
@@ -401,6 +361,26 @@
       ],
       "skos:notation": "bpmn-processes",
       "dcterms:source": "cat-harness/skills/process/workflow/bpmn-processes.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/branch-archaeology",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "branch-archaeology"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Classify every remote branch against the default branch (merged, landed by squash or cherry-pick, partially landed, unlanded, undetermined) by commit ancestry, patch-id and merge-tree, not by subject line. Report only, never delete. A branch touching content or mathematics is a salvage-review item and never a delete candidate. Covers the treeless fetch that makes thousands of branches cheap, caching by tip sha, and the report's shape. Read before answering \"which branches can go?\" or \"what work never landed?\"."
+        }
+      ],
+      "skos:notation": "branch-archaeology",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/branch-archaeology.md",
       "skos:note": "candidate"
     },
     {
@@ -1324,26 +1304,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/docs-auto",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "docs-auto"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it."
-        }
-      ],
-      "skos:notation": "docs-auto",
-      "dcterms:source": "cat-harness/skills/ui/ui-core/docs-auto.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/docs-generation",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1494,26 +1454,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/filing-dublin-core",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "filing-dublin-core"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Cataloguing a source as it arrives — which facts are `dcterms`, which are this project's own, and why the line is drawn by the vocabulary rather than by convenience. The bibliographic layer only; the derived layer belongs to ingestion."
-        }
-      ],
-      "skos:notation": "filing-dublin-core",
-      "dcterms:source": "cat-harness/skills/library/library-core/filing-dublin-core.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/flushable-containers",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1611,21 +1551,6 @@
       ],
       "skos:notation": "github-state-inspection",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/github-state-inspection.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/glossary-build",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "glossary-build"
-        }
-      ],
-      "skos:notation": "glossary-build",
-      "dcterms:source": "cat-harness/skills/library/library-core/glossary-build.md",
       "skos:note": "candidate"
     },
     {
@@ -2156,7 +2081,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Taking a file from `uploads/` to `library/<bib-slug>/` — which rung to reach for and why, what a complete L1 entry holds, and why an inferred structure is refused rather than guessed. One entry point: `bun run ingest`."
+          "@value": "The BASIC ingestion flow every asset takes: an upload is accepted, its metadata goes into the knowledge graph, and the asset lands in `library/<slug>/` if it is materialized. The two entry points (a drop in `uploads/`, or materializing an asset a remote graph lists), what happens to the upload afterwards, and why content-type methods refine this flow from above rather than living in it. Command: `bun run ingest`."
         }
       ],
       "skos:notation": "library-ingestion",
@@ -2386,7 +2311,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Use for \"merge the ready PRs\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size."
+          "@value": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Every merge goes through `merge:guard`. Use for \"merge the ready PRs\", \"land this PR\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size."
         }
       ],
       "skos:notation": "merge-queue",
@@ -2509,26 +2434,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/ontologist",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ontologist"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Semantic Ontologist — scans narrative text for ambiguous terms, generates a formal glossary/registry, and produces a mapping linking narrative strings to formal identifiers. Acts as the \"Gatekeeper\" ensuring every term has a unique type/identity assignment before formalization proceeds."
-        }
-      ],
-      "skos:notation": "ontologist",
-      "dcterms:source": "cat-harness/skills/library/library-core/ontologist.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/opening-brief",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2586,6 +2491,26 @@
       ],
       "skos:notation": "path-containment",
       "dcterms:source": "cat-harness/skills/conduct/security/path-containment.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/pdf-inline-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "pdf-inline-viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Show a published PDF inside a generated page — search, scroll, jump to page, print and download — with the pinned pdf.js viewer the site build installs. Which two Tools do it, the publication-gate rule that decides whether a page may embed a document at all, why the viewer opens only allowlisted hosts, and the three pdf.js behaviours that were measured rather than assumed. Read before putting a PDF on a page, before bumping the pdf.js pin, and when an embedded viewer shows an empty frame."
+        }
+      ],
+      "skos:notation": "pdf-inline-viewer",
+      "dcterms:source": "cat-harness/skills/ui/ui-core/pdf-inline-viewer.md",
       "skos:note": "candidate"
     },
     {
@@ -2916,6 +2841,26 @@
       ],
       "skos:notation": "readme-sections",
       "dcterms:source": "cat-harness/skills/ui/ui-core/readme-sections.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/ref-stewardship",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ref-stewardship"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Steward a WATCHED REF — a long-lived branch many processes write and one consumer serialises. Covers what makes a ref need a steward at all, why a coalescing window is a different object from a hold, the four durable fields a window needs so a handover cannot double-push, and the rule that a steward stores decisions and reads facts live. Use for \"gh-pages is cancelling its own deployments\", \"two sessions pushed the same store branch\", \"who owns writes to this branch\", \"coalesce these pushes\", and before giving any ref a concurrency policy."
+        }
+      ],
+      "skos:notation": "ref-stewardship",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/ref-stewardship.md",
       "skos:note": "candidate"
     },
     {
@@ -3556,26 +3501,6 @@
       ],
       "skos:notation": "symbiotic-interaction",
       "dcterms:source": "cat-harness/skills/conduct/conduct-core/symbiotic-interaction.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/tabular-metadata",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "tabular-metadata"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Extract tabular metadata from a CSV or spreadsheet as CSVW — tables, rows, headers, columns, datatypes and location on sheet — recording every field as determined or explicitly undetermined. Read before touching a tabular ingest arm, adding a format, or deciding what a sheet is in the graph."
-        }
-      ],
-      "skos:notation": "tabular-metadata",
-      "dcterms:source": "cat-harness/skills/library/library-core/tabular-metadata.md",
       "skos:note": "candidate"
     },
     {
@@ -4286,6 +4211,26 @@
       ],
       "skos:notation": "wireframe-design-review",
       "dcterms:source": "cat-harness/skills/ui/ui-core/wireframe-design-review.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/work-plan-restructure",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "work-plan-restructure"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Reorganise a work plan that has outgrown one-bean-at-a-time repair — session logs typed as epics, duplicate families, generated template beans, stale claims, unparented work — through a reviewed PLAN rather than in bulk. The taxonomy is stated as data, a dry-run plan lists one row per bean (action, new parent, new status, evidence, note) with its before-state so the plan is its own inverse, the owner approves it by class or by row, and the apply is batched and reversible. Scrap, never delete. Read before changing the parent, type or status of more than a handful of beans at once."
+        }
+      ],
+      "skos:notation": "work-plan-restructure",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/work-plan-restructure.md",
       "skos:note": "candidate"
     },
     {

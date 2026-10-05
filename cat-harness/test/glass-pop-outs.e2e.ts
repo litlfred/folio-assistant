@@ -343,15 +343,15 @@ test.describe("a popped-out sticky is the sticky — \"themed square sticky avat
   test("its title and its controls stay, and still answer the keyboard", async ({ page }) => {
     await popOutSticky(page);
     await expect(page.locator(`${sticky} a.fa-glass-asset-name`)).toHaveText(SUMMARY);
-    const larger = page.locator(`${sticky} .fa-glass-asset-tool`, { hasText: "+" });
-    await larger.focus();
-    await page.keyboard.press("Enter");
-    const b = await box(page, sticky);
-    // Still square after a resize: the ratio is kept.
-    expect(Math.abs(b.width - b.height)).toBeLessThanOrEqual(1);
     await page.locator(`${sticky} [data-fa-control="move"]`).focus();
     await page.keyboard.press("Enter");
     await expect(page.locator(sticky)).toHaveAttribute("data-fa-moving", "true");
+    await page.keyboard.press("Escape");
+    // Size is the card's own + (owner, 2026-10-05: only the −/+).
+    await page.locator(`${sticky} [data-fa-size="larger"]`).click();
+    const b = await box(page, sticky);
+    // Still square after a resize: the ratio is kept.
+    expect(Math.abs(b.width - b.height)).toBeLessThanOrEqual(1);
   });
 
   test("a todo with no theme keeps the plain note — absent is a real state", async ({ page }) => {
@@ -391,6 +391,11 @@ test.describe("themed todos on the glass follow their shape, and stay faded on a
   test("the shelved-items note is a CARD on the glass, and its × dismisses it", async ({ page }) => {
     await popOutSticky(page);
     await page.locator(`${sticky} .fa-glass-asset-close`).click();
+    // The confirm, #1900. A todo goes back to the Todos board (a landing
+    // sticky goes back to its page instead: glass-card-open.e2e.ts).
+    const dlg = page.getByRole("dialog", { name: "Back to your Todos?" });
+    await expect(dlg.getByRole("link", { name: "your Todos" })).toHaveAttribute("href", /\/todos\/$/);
+    await dlg.getByRole("button", { name: "Put it back" }).click();
     const note = page.locator(".fa-glass-note-card");
     await expect(note).toBeVisible();
     await expect(note.locator(".fa-glass-shelved-note")).toContainText("Put your folio away");

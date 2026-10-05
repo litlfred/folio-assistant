@@ -80,11 +80,14 @@ export const PATTERNS: readonly ConflictPattern[] = [
       "**/test/results/tool-runs/**",
     ],
     strategy: "take-base",
-    why: "LSI indexes, detangle sidecars and tool-run records (56 + 71 + 15). Recomputed from the whole corpus, so any concurrent skill or schema change touches them.",
+    why:
+      "LSI indexes, detangle sidecars and tool-run records (56 + 71 + 15). Recomputed from the whole corpus, so any concurrent skill or schema change touches them. " +
+      "The LSI half is UNTRACKED on `main` since bean `tqjj` and these globs are kept for the branches still carrying it: a branch that edited the sidecar meets a base that deleted it, and `take-base` is the right answer to that too. " +
+      "It is also the measured limit of what a declaration buys. These paths carried this entry all along and still conflicted on seven open pull requests each, because the strategy settles HOW a conflict is resolved and never whether one arises — `.gitattributes` says the same thing in its own words: \"Removing these conflicts, rather than tidying them, needs the files off `main` altogether.\"",
   },
   {
-    id: "docs-auto",
-    globs: ["**/docs-auto/**"],
+    id: "auto-docs",
+    globs: ["**/auto-docs/**"],
     strategy: "take-base",
     why: "the generated docs index pages (352). Marked -merge in .gitattributes; one page per directory, so every new file anywhere changes one.",
   },
@@ -113,7 +116,9 @@ export const PATTERNS: readonly ConflictPattern[] = [
     id: "glossary",
     globs: ["cat-harness/docs/glossary/**", "cat-harness/docs/lsi/**"],
     strategy: "take-base",
-    why: "the generated glossary and LSI pages (173 + 34). Whole-corpus aggregates; concurrent term additions always collide.",
+    why:
+      "the generated glossary and LSI pages (173 + 34). Whole-corpus aggregates; concurrent term additions always collide. " +
+      "The LSI page still conflicts but much less often since bean `tqjj`: its per-index detail — the half a one-sentence skill edit moved — is added by the docs-site build rather than committed, and what is left is a function of the tree. The glossary page has no equivalent split: every number on it is a term count over the whole corpus, and there is no half that only the tree moves.",
   },
   {
     id: "translated-glossary",
@@ -134,13 +139,18 @@ export const PATTERNS: readonly ConflictPattern[] = [
       // scripts/state-visualizer.ts. Do not hand-edit". docs/uploads/index.html
       // is the VIEWER of uploads/, not an upload: it must match here, before
       // the `uploads` refusal below catches it. Found 2026-10-01 on #1764.
-      "cat-harness/docs/{beans,todos,health,issue-marks,swimlane-glossary,uploads}/index.html",
+      "cat-harness/docs/{beans,todos,health,issue-marks,swimlane-glossary,uploads,attestations}/index.html",
+      // document-kinds:viz writes these pages whole from the declared document
+      // kinds: the index and one page per instance. The index and attestations/
+      // above refused a merge of #2082 on 2026-10-04 with "no declared
+      // pattern"; the per-instance smart-base page refused the next one.
+      "cat-harness/docs/cat-harness/document-kinds/**/index.html",
       // fsh-guts:viz writes this page whole (writeFileSync) from fsh-guts/**;
       // refused on #1766 2026-10-03 when main archived new uploads into fsh-guts/.
       "cat-harness/docs/fsh-guts/index.md",
     ],
     strategy: "take-base",
-    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, tools:viz, processes:viz, state:visualizer, translation:status, fsh-guts:viz), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone; tools/index.md (rendered-by tools-viewer) added 2026-10-03 after #1987 refused on it twice.",
+    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, tools:viz, processes:viz, state:visualizer, translation:status, fsh-guts:viz, document-kinds:viz), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone; tools/index.md (rendered-by tools-viewer) added 2026-10-03 after #1987 refused on it twice.",
   },
   {
     id: "viewer-namespace",
@@ -231,6 +241,12 @@ export const PATTERNS: readonly ConflictPattern[] = [
     globs: ["**/README.md"],
     strategy: "generated-regions",
     why: "directory READMEs (209). Their generated regions carry file counts and listings that every concurrent addition changes; the prose around them is authored, so only a hunk INSIDE a region resolves.",
+  },
+  {
+    id: "standalone-baseline",
+    globs: ["**/scripts/standalone-baseline.json"],
+    strategy: "take-base",
+    why: "check:standalone's accepted failure list (bean `ho66`, #1977). It conflicts only when BOTH sides changed the list. Take the base's copy and regenerate NOTHING: it is a ratchet, and re-measuring after a merge would write any new standalone failure into the list unreviewed — the thing the gate exists to stop. Fail-closed instead: if this side's change was a new failure, its CI goes red until its author runs `bun run standalone:baseline` deliberately; if it was a fix, nothing is lost but a shorter list, which the check reports.",
   },
   {
     id: "beans",

@@ -163,7 +163,7 @@ import { gitFiles } from "../schemas/git-corpus.ts";
 import { contentIsOffCheckout, resolveSubgraphSource, type SubgraphSource } from "../schemas/subgraph-source.ts";
 // The same single reader `check:declared-dirs` uses, so the two gates cannot
 // disagree about whether a tip-keyed graph is readable here (bean `9ofm`).
-import { tipPresence } from "./check-declared-dirs.ts";
+import { routePresence, tipPresence } from "./check-declared-dirs.ts";
 import { loadGatesCiRuns } from "./gates.js";
 import {
   againstOrUsage,
@@ -394,6 +394,14 @@ export function census(dir: string, skip: ReadonlySet<string> = new Set([SELF_SI
  *   this means "could not read the files", and a caller that cannot tell those
  *   apart will read a lower bound as a measurement.
  *
+ * - **`route`**-keyed — there is no route store to census: `state-mount.ts` walks
+ *   tip-keyed entries only, so no mount of one ever exists locally and no amount
+ *   of fetching produces a path for `census` to walk. Cut over, that is `stored`
+ *   and the statement is true. **Not** cut over, it is `undetermined` like a
+ *   not-cut-over tip, because `stored` asserts the files are elsewhere by design
+ *   and during that window they are tracked right here — a true-sounding bucket
+ *   holding a false claim is worse than the honest "could not read".
+ *
  * `uncounted` is the third answer (bean `0dav`, C8): a directory that is NOT
  * stored, not tip-keyed, and not in the checkout either. Its zero is not a
  * measurement, so it is counted apart and a caller can tell "examined, empty"
@@ -406,7 +414,8 @@ export function census(dir: string, skip: ReadonlySet<string> = new Set([SELF_SI
  *   tip-keyed directories, so a caller with none needs no git repository.
  */
 export function censusDirectories(
-  dirs: ReadonlyArray<{ id?: string; absPath: string; storage?: { branch: string; keyedBy?: string }; source?: SubgraphSource }>,
+  // `storage` as the declaration holds it — read only through the resolver, which parses it.
+  dirs: ReadonlyArray<{ id?: string; absPath: string; storage?: unknown; source?: SubgraphSource }>,
   skip?: ReadonlySet<string>,
   repoRoot: string = process.cwd(),
 ): { files: number; sidecars: number; stored: number; undetermined: number; uncounted: number } {
@@ -425,6 +434,15 @@ export function censusDirectories(
         // The resolver's contradictions are `check:declared-dirs`'s finding to
         // report, with the remedy. Here the only honest number is "none".
         undetermined++;
+        continue;
+      }
+      if (src.kind === "branch" && src.keyedBy === "route") {
+        // `stored` means "not where the files are, BY DESIGN" — true once the
+        // cutover has happened, and false while it has not: the files are right
+        // there in the checkout. So the one state route shares with tip gets
+        // tip's answer, and only the state route does not share keeps `stored`.
+        if (routePresence(src, d.absPath, repoRoot).state === "not-cut-over") undetermined++;
+        else stored++;
         continue;
       }
       if (src.kind !== "branch" || src.keyedBy !== "tip") {

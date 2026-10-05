@@ -4,7 +4,7 @@
  * Owner, 2026-09-23, naming three pages and then the rule:
  *
  * > navbar should be on sub pages like `/cat-harness/catalogue/who-iris/` or
- * > `/cat-harness/docs-auto/index/docs/who-iris-docs/` or library
+ * > `/cat-harness/auto-docs/index/docs/who-iris-docs/` or library
  * > etc... **common fixture unless explicty removed in harness visualtion.**
  *
  * The last clause inverts the default. The rail is PRESENT unless a
@@ -64,7 +64,7 @@ import { dirname, relative, sep } from "node:path";
 import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js";
 import { VISUALISER_NAV_ATTR, visualiserNavDeclaration, type VisualiserNavEntry } from "./lib/navbar.js";
 import { kindTitle } from "./lib/nav-label.js";
-import { declaredGraphs, instanceMark, instantiatedHarnesses, publishedGraphs, railNames } from "./mount-instance-docs.js";
+import { declaredGraphs, instanceMark, instantiatedHarnesses, navbarRowData, publishedGraphs, railNames } from "./mount-instance-docs.js";
 
 /**
  * The opt-out a visualisation writes into its own page.
@@ -106,7 +106,7 @@ export interface ViewerNav {
    *
    * A generator that knows better PASSES it — `gen-library-viz` writes
    * `library/<instance>/` and has the instance in hand. What no caller does is
-   * INFER it from the path: `docs-auto/index/skills/who-iris-skills/` would
+   * INFER it from the path: `auto-docs/index/skills/who-iris-skills/` would
    * have to be un-suffixed to yield `who-iris`, and a rule that strips
    * `-skills` here is a second answer to a question the generator already
    * answered, free to disagree with it and silently wrong on the first
@@ -269,6 +269,7 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
     ...(visualiserLabel ? { visualiserLabel } : {}),
     links,
     ...(harnesses ? { harnesses } : {}),
+    navbarRow: navbarRowData(o.built),
   });
   return railed === undefined ? undefined : withNarrowViewport(withSavedScheme(railed));
 }

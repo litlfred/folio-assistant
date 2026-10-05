@@ -105,6 +105,7 @@ import {
   findDeclarationFile,
   instanceRootsIn,
   repoRootFor,
+  siblingScopeFor,
   rootForScope,
 } from "../schemas/cat-harness.js";
 import { RepoFullNameSchema } from "../schemas/repo-full-name.js";
@@ -522,7 +523,16 @@ export function checkSubscriptions(instanceRoot: string): string[] {
  * <snapshot dir>/<subscription>/subgraphs/<subgraph id>/tree/…      the upstream directory's contents
  * <snapshot dir>/<subscription>/assets/<upstream path>/materialization.json
  * <snapshot dir>/<subscription>/assets/<upstream path>/tree/<file>
+ * <snapshot dir>/<subscription>/nodes/<subgraph path>/nodes.json
+ * <snapshot dir>/<subscription>/nodes/<subgraph path>/index.hydrated.jsonld
  * ```
+ *
+ * `nodes/` is the METADATA mode (`kg:materialize --nodes`, bean `c1m4`): the
+ * subgraph's published `index.hydrated.jsonld` and a `nodes.json` record with
+ * its sha256 — graph metadata, no bytes of the subgraph itself. No `tree/`,
+ * because the part is one file and the record never hashes itself; and the
+ * directory nests (`nodes/skills/` may hold `nodes/skills/sdlc/`), because a
+ * subgraph path is a path, so a fetch of a parent never disturbs a child.
  *
  * The bytes sit under `tree/`, apart from the record, so a digest over the
  * tree never has to exclude the record that carries it, and so a scanner can
@@ -534,6 +544,15 @@ export const PART_RECORD_FILE = "materialization.json";
 export const PART_TREE = "tree";
 
 export type KgPart = { kind: "subgraph"; id: string; path: string } | { kind: "asset"; path: string };
+
+/** The metadata-mode record beside a fetched `index.hydrated.jsonld`. */
+export const NODES_RECORD_FILE = "nodes.json";
+export const NODES_DIR = "nodes";
+
+/** Where one subgraph's metadata-mode record and `index.hydrated.jsonld` live. */
+export function nodesDirOf(snapshotDir: string, subscription: string, subgraphPath: string): string {
+  return join(snapshotDir, subscription, NODES_DIR, ...subgraphPath.split("/").filter(Boolean));
+}
 
 /** Where a part's record and `tree/` live. */
 export function partDirOf(
@@ -673,11 +692,12 @@ function viewOf(dir: string, slot: PartView["slot"]): PartView {
  * file, or a part directory with no record — bytes nobody accounts for.
  * `strays` are relative to the snapshot directory.
  */
-export function partRecordsIn(snapshotDir: string, subscription: string): { parts: PartView[]; strays: string[] } {
+export function partRecordsIn(snapshotDir: string, subscription: string): { parts: PartView[]; strays: string[]; nodes: string[] } {
   const base = join(snapshotDir, subscription);
   const parts: PartView[] = [];
   const strays: string[] = [];
-  if (!existsSync(base)) return { parts, strays };
+  const nodes: string[] = [];
+  if (!existsSync(base)) return { parts, strays, nodes };
   const rel = (p: string): string => relative(snapshotDir, p).split("\\").join("/");
   for (const e of readdirSync(base, { withFileTypes: true })) {
     const p = join(base, e.name);
@@ -698,9 +718,23 @@ export function partRecordsIn(snapshotDir: string, subscription: string): { part
         }
       };
       walk(p);
+    } else if (e.name === NODES_DIR && e.isDirectory()) {
+      // Metadata mode: a directory holding `nodes.json` is one fetched
+      // subgraph, and it may also hold a child's directory. The only files a
+      // record accounts for are itself and the hydrated file beside it.
+      const walk = (d: string): void => {
+        const recorded = existsSync(join(d, NODES_RECORD_FILE));
+        if (recorded) nodes.push(d);
+        for (const a of readdirSync(d, { withFileTypes: true })) {
+          const ad = join(d, a.name);
+          if (a.isDirectory() && !lstatSync(ad).isSymbolicLink()) walk(ad);
+          else if (!(recorded && (a.name === NODES_RECORD_FILE || a.name === "index.hydrated.jsonld"))) strays.push(rel(ad));
+        }
+      };
+      walk(p);
     } else strays.push(rel(p));
   }
-  return { parts: parts.sort((a, b) => a.dir.localeCompare(b.dir)), strays: strays.sort() };
+  return { parts: parts.sort((a, b) => a.dir.localeCompare(b.dir)), strays: strays.sort(), nodes: nodes.sort() };
 }
 
 function flag(argv: string[], name: string): string | undefined {
@@ -711,7 +745,7 @@ function flag(argv: string[], name: string): string | undefined {
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   if (argv.includes("--check")) {
-    const roots = [...new Set([resolve(INSTANCE), ...instanceRootsIn(repoRootFor(INSTANCE)).map((r) => resolve(r))])];
+    const roots = [...new Set([resolve(INSTANCE), ...instanceRootsIn(siblingScopeFor(INSTANCE)).map((r) => resolve(r))])];
     let subs = 0;
     const problems: string[] = [];
     for (const r of roots) {

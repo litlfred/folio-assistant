@@ -36,7 +36,8 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { mountRoutes, railStandalonePages } from "./mount-instance-docs.js";
+import { DOCS_SITE_BASE } from "../schemas/jsonld.js";
+import { mountRoutes, railStandalonePages, type ForeignSiteRail } from "./mount-instance-docs.js";
 
 
 function main(): number {
@@ -48,9 +49,16 @@ function main(): number {
   const site = at("--site");
   const built = at("--built");
   if (!site || !built) {
-    console.error("usage: rail-standalone-pages.ts --site <dir> --built <instance-dir-name>");
+    console.error("usage: rail-standalone-pages.ts --site <dir> --built <instance-dir-name> [--foreign-site [--home-label <name>]]");
     return 2;
   }
+  // `--foreign-site`: the site is a FOLIO's, not the platform's (folio-staging.yml).
+  // The platform's links then point at the platform's published site, and none
+  // of the platform's mount routes exist here to be left alone.
+  const homeLabel = at("--home-label");
+  const foreign: ForeignSiteRail | undefined = argv.includes("--foreign-site")
+    ? { platformBase: DOCS_SITE_BASE.replace(/\/$/, ""), ...(homeLabel ? { homeLabel } : {}) }
+    : undefined;
   const siteAbs = resolve(site);
   if (!existsSync(siteAbs)) {
     // Could-not-determine, said out loud rather than reported as a clean run
@@ -62,8 +70,8 @@ function main(): number {
 
   // ASKED, not guessed — see `mountRoutes`. Guessing from directory names
   // called `bootstrap` a mount and skipped the ten pages this step exists for.
-  const routes = mountRoutes(built);
-  const r = railStandalonePages(siteAbs, built, built, routes);
+  const routes = foreign ? [] : mountRoutes(built);
+  const r = railStandalonePages(siteAbs, built, built, routes, foreign);
   console.log(
     `rail-standalone-pages: rail on ${r.injected} page(s), ` +
       `${r.alreadyNavigated} already navigated, ${r.redirects} redirect stub(s) left bare, ` +

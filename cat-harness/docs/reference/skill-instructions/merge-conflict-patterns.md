@@ -80,6 +80,165 @@ correct one are indistinguishable from their output, and the stale one here
 reads as *more* work rather than less, so nothing about the result looks
 wrong.
 
+## A merge round — run each check ONCE (owner ruling, 2026-10-05)
+
+**Owner, 2026-10-05, verbatim: *"trim duplicated steps"*.** A round of folding
+`main` into a PR was costing about 45 minutes, and most of it was the same
+question asked twice. Measured 2026-10-04 on PR #1898's merge rounds, bean
+`7xmc`:
+
+| step | cost | what it adds |
+|---|---|---|
+| `merge:main`, including its own regen | 5–10 min — regen 238–309 s with nothing stale, 601–639 s when a writer runs | THE regen; rule 2 above |
+| `skill:register` | 1–2 min | the derived artefacts the merge left owed |
+| a standalone `regen` after `merge:main` | 4–5 min | **nothing** — same tree, same gate set |
+| full local `bun run gates` | ~24 min (1429 s), nearly all `bun test` (~21.8k tests) on 3–4 local cores | what CI's sharded run says in ~5 min, 4 ways |
+| `regen` again in a fresh checkout, to prove a no-op | 4–5 min | what CI's own clean checkout already proves |
+
+Three of five rows repeat a measurement somebody else, or the same command,
+has already made. So:
+
+### When every conflict is generated — the trimmed round
+
+"Generated" means every conflicted path was resolved by a declared
+`take-base`, region or sidecar pattern below, and the merge brought in no
+authored change of yours to reconcile.
+
+1. **`bun run state:mount`, then `bun run merge:main`.** `merge:main`'s regen
+   IS the regen. Do not run another one after it.
+2. **`bun run skill:register` until `bun run skill:register:check` passes.**
+   The chain can need two passes: one writer's output is another's input.
+3. **Targeted checks, and only these:**
+   - `skill:register:check` and `kg:detangle:check` — the two reds a
+     generated-only merge actually hit in CI;
+   - `subgraph:jsonld:check` — a merge or edit that changes a skill also
+     changes its payload hash; `skill:register` does not run
+     `subgraph:jsonld`, so run the writer (`bun run subgraph:jsonld`) when the
+     check is red. Measured on #2139 itself: CI's `gen-slice-sqlite` test
+     failed on three edited skills whose payloads the published tree did not
+     hold;
+   - `check:declared-paths` (never with `--update` here) and
+     `check:process-index`;
+   - `bun run typecheck`, and `eslint .` at **0 errors**;
+   - **the deletion audit** —
+     `git diff --name-status --diff-filter=D HEAD^1 HEAD -- '*/test/results/*'`
+     must list only files `main` itself deleted. A gitignored-but-tracked file
+     is dropped by a merge silently, local checks stay green because the
+     writer recreated it on disk, and CI's fresh checkout fails (bean `8j9e`).
+     `merge:main` now refuses such a drop itself (§"When one side deleted
+     the file"); after a hand merge, restore each one main still tracks with
+     `git checkout HEAD^2 -- <path>`;
+   - **submodule pins equal to `main`'s** —
+     `git ls-tree HEAD bootstrap bootstrap-tools` against
+     `git ls-tree origin/main bootstrap bootstrap-tools`. Not
+     `git submodule status`: [`merge-queue`](merge-queue.md) §"`git add -A`
+     after a merge silently reverts the submodule gitlinks" says why it cannot
+     see this;
+   - the `fsh-guts` mount is **not committed** — `git diff --stat
+     origin/main HEAD -- fsh-guts` is empty;
+   - `git merge-tree --write-tree origin/main HEAD` reports **0 conflicts**,
+     with the exit status captured on the next line
+     ([`prepare-merge`](prepare-merge.md) step 4).
+4. **Push, never with force.** CI's sharded run is the full gate set. Skip the
+   local full `bun run gates` and the fresh-checkout regen for this kind of
+   merge: each repeats something CI does better.
+
+### When it is NOT generated-only — keep the full local run
+
+**An AUTHORED file conflicted, or the merge touched code** (yours or `main`'s
+reconciled against yours): run the full local `bun run gates` before pushing,
+and read [`prepare-merge`](prepare-merge.md) §"What a green LOCAL run entitles
+you to claim" before quoting it. The targeted list above is chosen for a merge
+that changed only artefacts with one right answer. A semantic conflict — #2043
+importing a module #2112 had moved, in
+[`merge-queue`](merge-queue.md) §"A train admits only members that STACK
+cleanly" — is exactly what that list cannot see.
+
+### Four things a round needs to know
+
+- **`merge:main` has no "continue after a manual fix" mode.** When one path
+  blocks it, it aborts and restores the tree (rule 1). Do its steps by hand:
+  `git merge origin/main`, fix the blocking path, take each declared path with
+  `git checkout --theirs <path>` and stage it with `git add -f <path>`, then
+  run the regen it would have run.
+- **Give the regen a long leash.** Cold, it needs ≥1200 s of wall time. Run it
+  in the background rather than under a default 2-minute tool timeout, which
+  kills it part-way and leaves a half-written tree.
+- **`merge:main` commits with git's default message.** Amend that commit to
+  add the session's trailers (`git commit --amend`) before pushing — it is
+  your unpushed commit, so this is not a rewrite of shared history.
+- **Do not fold `main` in while another big PR is minutes from landing.** Wait
+  for it. Merging now buys a second round the moment it lands — on train
+  `merge-train-2026-10-04a`, #2112 landing mid-round re-conflicted the train
+  and cost another 12-minute regen plus a semantic conflict
+  ([`merge-queue`](merge-queue.md)).
+
+## A pattern is not always the answer — ask what the file's record is
+
+**Read this before declaring a pattern for a path that already has one.** The
+registry answers *how* a conflict is resolved. It never answers *whether* one
+arises, and reaching for it a second time on the same path is the move to
+stop and check.
+
+Two nearby things are already written down and neither is this one:
+
+- **bean `in5a`** — a declared pattern settles a file whose content is a
+  function of the TREE, and settles nothing about one whose content is a
+  function of the machine that built it. There, take-base is a loop: take
+  either side, regenerate, and the value is whatever this container sees.
+- **this section** — the content *is* tree-determined, the pattern *does*
+  resolve it, and the path still conflicts on every merge.
+
+The worked example is bean `tqjj`, and the measurement is what makes it a rule
+rather than a preference. `**/test/results/lsi/**` and
+`**/test/results/tool-runs/**` have been declared under `derived-results` all
+along, and `cat-harness/docs/lsi/**` under `glossary`. On 2026-10-04 those three
+paths were still blocking **seven open pull requests each**, 317-319 of the last
+400 commits on `main` touching them. Regenerating `skills.lsi.json` on an
+unchanged tree gave a **byte-identical** file, so `in5a` did not apply; but
+appending one sentence to one of 229 skill files rewrote the `fingerprint`,
+**9 of 12** `dimensions` entries and **166 of 229** `neighbours` entries. An
+SVD rotation is globally sensitive, so the convergent resolution is a rewrite
+of 94 % of the file — and nothing on `main` judged those bytes: corrupting the
+sidecar's `fingerprint` left `lsi:skills:check` at exit 0 (`.gitattributes`,
+bean `eqxp`).
+
+So the question to ask is not *which strategy*, it is:
+
+> **What is this file's record, and is `main` it?**
+
+- **`main` is the record** — an authored file, or a generated one a reader
+  navigates to by name. Declare the pattern; that is what the registry is for.
+- **`main` is not the record** — the file's record is the `qa-reports` entry
+  for its commit, or a build output, and the copy on `main` is a duplicate kept
+  in step by a gate. Then **take it off `main`**, and keep the declaration for
+  the branches still carrying it, where the base has deleted the file and
+  take-base resolves that too (see the next section).
+- **Part of it is, and part is not** — the common case, and the one to look for
+  before concluding either of the above. Cut by **what each value is a function
+  of**: a value the TREE determines stays committed and is reviewable; a value
+  determined by some other artefact's CONTENT is produced where that artefact
+  lives. `docs/lsi/index.md` is the worked example — front matter, prose and
+  the verdict table stay, each index's size, poles and findings go — and the
+  front matter is *why* it could not be taken off whole: it declares the
+  harness tile, so an uncommitted page is a page with no way in.
+
+**The trap on the way out.** Taking a page off its store and leaving it
+committed can make it *worse*: once `lsi:viz` had no sidecar in the checkout it
+read `qa-reports` at `main`, which resolves to the **latest published entry**,
+so the committed page would have gone stale whenever anyone else pushed — a
+value depending on when the gate ran rather than on the tree. **`in5a`'s loop,
+arriving over the network.** Whatever stays committed must be computed from the
+tree, deliberately and not by luck.
+
+`.gitattributes` reached the same conclusion from the `-merge` side and states
+it plainly: *"Removing these conflicts, rather than tidying them, needs the
+files off `main` altogether."* Two things make that safe rather than merely
+tidy, and both are checks, not care: every reader must already cope with the
+file's absence (bean `oq1j` for the LSI readers), and something must still
+PRODUCE it where its record lives — `qa:refresh` decides that **per writer**,
+so a family can be removed on its own instead of all 1,186 at once.
+
 ## When one side deleted the file
 
 A modify/delete conflict has no stage for the side that deleted it, so
@@ -90,6 +249,29 @@ base kept the file, `git rm` when the base removed it — `takeBase` in
 delegated sidecars (#1854). Regeneration recreates the file if it is still
 produced. Classification is by path, so an authored path in a modify/delete
 conflict is refused exactly like any other conflict on it.
+
+**Taking a deletion is the ONLY way a merge may drop a path, and
+`merge-base.ts` checks this before every merge commit** (beans `vsv7`,
+`8j9e`). `droppedInMerge` compares the index with the merge base and both
+parents. A path either parent tracks that the result lacks is a drop, unless
+one side deleted it since the merge base. A path both parents hold, or one a
+side added, must survive. The check runs twice. Right after resolution, before
+anything else is staged, every drop is refused. After regen and `add -A`, only
+a drop the disk still holds is refused, because a writer may delete what it
+owns: `subgraph:jsonld` replaces a content-addressed payload when the merge
+changes its node, and its `:check` proves that. The check exists because of
+the gitignored-but-tracked files under `*/test/results/`. Once one of them
+leaves the index, regen rewrites it on disk and `git add -A` does not stage it
+again, since it is now untracked and ignored. The failure signature is
+**green locally, red in CI**, with the check reporting the file missing ("has
+none"). `git add -A` is not what removes such a file, though. It stages a
+rewrite of a file that is still tracked; it only fails to restore one that
+something has already removed from the index. On #1898 (`edf52fcf6`) that was
+a `git rm` from `takeBase`. `qa:resolve-conflicts` claims every conflicted
+path under a declared `qa` directory, detangle sidecars included, and had
+already resolved three of them. The pre-`vsv7` `takeBase` then read "no
+stages" as "the base deleted it". The refusal line says when the dropped file
+is still on disk, which is the case that local checks cannot see.
 
 ## The patterns
 
@@ -124,7 +306,12 @@ LSI indexes, detangle sidecars and tool-run records under `test/results/`.
 Recomputed from the whole corpus, so any concurrent skill or schema change
 touches them.
 
-### `docs-auto` — take the base, regenerate (352)
+The **LSI** half is untracked on `main` since bean `tqjj`, and the globs are
+kept for the branches still carrying it. See §"A pattern is not always the
+answer": this family is the measured case where the declaration was correct,
+did what it claimed, and removed no conflicts.
+
+### `auto-docs` — take the base, regenerate (352)
 
 The generated docs index pages, already `-merge` in `.gitattributes`. One page
 per directory, so a new file anywhere changes one.
@@ -158,6 +345,14 @@ would be a hand-kept list able to drift from the workflow.
 
 The generated glossary and LSI pages: whole-corpus aggregates where concurrent
 term additions always collide.
+
+The **LSI page** still conflicts, but much less often since bean `tqjj`: its
+per-index detail — the half a one-sentence skill edit moved — is added by the
+docs-site build rather than committed, and what is left is a function of the
+tree. The glossary page has no equivalent split: every number on it is a term
+count over the whole corpus, so there is no half that only the tree moves. That
+is the second branch of §"A pattern is not always the answer" — `main` is still
+the glossary page's record, and declaring the strategy is all there is to do.
 
 ### `translated-glossary` — take the base, regenerate
 
@@ -198,8 +393,8 @@ refused.
 pages `gen-library-viz`, `gen-folio-viz` and `gen-schema-viz` place through
 `viewerPlacement`, each rewritten whole from the corpus and checked by its
 `:viz --check`. Same false positive as above: its `uploads/` pages render
-uploads rather than being them (#1775). `docs-auto/` under the same prefix
-keeps its own `docs-auto` entry.
+uploads rather than being them (#1775). `auto-docs/` under the same prefix
+keeps its own `auto-docs` entry.
 
 ### `navbar-include` — take the base, regenerate
 
@@ -366,6 +561,19 @@ or one that moves a region boundary, **refuses**. The file-count churn
 (`beans/README.md`, 76 alone) is resolved here rather than by changing what
 the README shows — the owner kept the exact counts (#1707).
 
+### `standalone-baseline` — take the base, regenerate NOTHING
+
+`cat-harness-tools/scripts/standalone-baseline.json`, `check:standalone`'s list of
+accepted standalone failures (bean `ho66`, #1977). It is the one take-base
+pattern with **no** regeneration, because it is a ratchet. Re-measuring after a
+merge would write any new standalone failure into the list unreviewed, which
+is exactly what the gate exists to stop. Git conflicts on it only when BOTH sides
+changed the list, so taking the base is fail-closed: if this side's change was
+a new failure, its CI goes red until its author runs `bun run
+standalone:baseline` on purpose; if it was a fix, all that is lost is a shorter
+list, and the check reports it. Not measured by replay: the file was new when
+the pattern was added, so there was no merge history to count.
+
 ### `beans` — refused, by declaration (44)
 
 **Before you go looking for the other session, check whether there is one.**
@@ -498,8 +706,8 @@ drops it and the train goes on without it. `processes/sdlc/merge-refusal.bpmn`
 executes what happens to the dropped member. The author's side, the queue
 and the bounce-back are the merge-manager SOP in
 [#1802](https://github.com/litlfred/folio-assistant/pull/1802) (steps 10 and
-12). The hand-back format is the `agent-handoff` skill in
-[#1884](https://github.com/litlfred/folio-assistant/pull/1884).
+12). The hand-back format is the
+[`agent-handoff`](agent-handoff.md) skill.
 
 **Why this exists.** Owner, 2026-10-02: *"if a merge in queue cannot be merged
 for some reason, create a new bean (under appropriate epic/story…), hand it

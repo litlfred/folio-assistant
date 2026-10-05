@@ -104,12 +104,27 @@ export interface BeanNode {
   priority: string;
   /** The epic this belongs to, or `""`. */
   parent: string;
-  /** Bean ids THIS bean blocks. See the module note on direction. */
+  /**
+   * Bean ids THIS bean blocks, as ITS OWN `blocking:` declares them. See the
+   * module note on direction. A DECLARATION, not the edge set: a consumer
+   * wanting every edge reads {@link blockEdges}, never this field alone.
+   */
   blocking: string[];
   createdAt: string;
   updatedAt: string;
   /** The prose below the front matter. Where a block's expiry is written. */
   body: string;
+  /**
+   * Bean ids this bean is blocked BY, as its own front matter declares them
+   * (`blocked_by:`, which `beans update --blocked-by` writes). Optional so a
+   * hand-built fixture need not carry it. Measured 2026-10-03, 60 beans
+   * declare `blocked_by:` and 7 declare `blocking:`; both are normalised into
+   * ONE edge set by {@link blockEdges} (bean `vhqq`), which {@link blockedBy},
+   * {@link beanFindings}, the published index and the SQLite slice all read.
+   */
+  declaredBlockedBy?: string[];
+  /** Front-matter `tags:`, or `[]`. Optional for the same reason. */
+  tags?: string[];
 }
 
 /**
@@ -405,6 +420,8 @@ function beansIn(dir: string, root: string): BeanNode[] {
       createdAt: field(fm, "created_at"),
       updatedAt: field(fm, "updated_at"),
       body: m[2]!,
+      declaredBlockedBy: sequence(fm, "blocked_by"),
+      tags: sequence(fm, "tags"),
     });
   }
   return out.sort((a, b) => a.id.localeCompare(b.id));
@@ -415,21 +432,111 @@ export function isOpen(b: BeanNode): boolean {
   return OPEN_STATUSES.has(b.status);
 }
 
+/** Which front-matter key declared an edge: the blocker's or the blocked's. */
+export type BlockDeclaration = "blocking" | "blocked_by";
+
 /**
- * The inverse of `blocking:` — blocked bean id → the ids blocking it.
+ * Every block edge, ONE ROW PER DECLARATION, deduplicated and sorted.
+ *
+ * Two keys declare the same relation from opposite ends: `blocking:` sits on
+ * the BLOCKER and names the blocked; `blocked_by:` sits on the BLOCKED and
+ * names the blocker. Both normalise here to `blocker → blocked`. Measured
+ * 2026-10-03 over 720 beans: 7 edges from `blocking:`, 77 from `blocked_by:`,
+ * 1 declared both ways, so 83 distinct pairs — and until bean `vhqq` every
+ * consumer but the SQLite slice read the 7.
+ *
+ * Kept per declaration (not per pair) because the beans slice stores
+ * `declared_on` in `bean_block`'s primary key (bean `q8ar`). This is that
+ * slice's normalisation, moved here so the slice and the published index
+ * cannot disagree about what an edge is; {@link blockEdges} folds it to pairs.
+ */
+export function declaredBlockEdges(
+  beans: BeanNode[],
+): { blocker: string; blocked: string; declared_on: BlockDeclaration }[] {
+  const seen = new Map<string, { blocker: string; blocked: string; declared_on: BlockDeclaration }>();
+  const add = (blocker: string, blocked: string, declared_on: BlockDeclaration) =>
+    seen.set(`${blocker}\u0000${blocked}\u0000${declared_on}`, { blocker, blocked, declared_on });
+  for (const b of beans) {
+    for (const t of b.blocking) add(b.id, t, "blocking");
+    for (const f of b.declaredBlockedBy ?? []) add(f, b.id, "blocked_by");
+  }
+  return [...seen.keys()].sort().map((k) => seen.get(k)!);
+}
+
+/** One `blocker → blocked` pair, with every key that declared it. */
+export interface BlockEdge {
+  blocker: string;
+  blocked: string;
+  /** Sorted; two entries when the pair is declared from both ends — which is fine. */
+  declaredOn: BlockDeclaration[];
+}
+
+/** A {@link BlockEdge} with an end that is not a bean in the store read. */
+export interface DanglingBlockEdge extends BlockEdge {
+  missing: Array<"blocker" | "blocked">;
+}
+
+/**
+ * The block graph as ONE edge set: {@link declaredBlockEdges} folded to
+ * distinct pairs, plus the edges with an end that is not a bean in `beans`.
+ *
+ * A dangling edge is REPORTED, never dropped: it stays in `edges` (the
+ * declaration is a fact about the bean that wrote it) and is listed again in
+ * `dangling` with the end that did not resolve. Measured 2026-10-03, both
+ * dangling edges name a blocker that has moved to `beans/defs/archive/` — a
+ * terminal bean still named as a blocker, which dropping would have hidden.
+ */
+export function blockEdges(beans: BeanNode[]): { edges: BlockEdge[]; dangling: DanglingBlockEdge[] } {
+  const ids = new Set(beans.map((b) => b.id));
+  const pairs = new Map<string, BlockEdge>();
+  for (const e of declaredBlockEdges(beans)) {
+    const k = `${e.blocker}\u0000${e.blocked}`;
+    const at = pairs.get(k);
+    if (at) {
+      if (!at.declaredOn.includes(e.declared_on)) at.declaredOn.push(e.declared_on);
+    } else {
+      pairs.set(k, { blocker: e.blocker, blocked: e.blocked, declaredOn: [e.declared_on] });
+    }
+  }
+  const edges = [...pairs.keys()].sort().map((k) => {
+    const e = pairs.get(k)!;
+    e.declaredOn.sort();
+    return e;
+  });
+  const dangling = edges.flatMap((e): DanglingBlockEdge[] => {
+    const missing: Array<"blocker" | "blocked"> = [];
+    if (!ids.has(e.blocker)) missing.push("blocker");
+    if (!ids.has(e.blocked)) missing.push("blocked");
+    return missing.length ? [{ ...e, missing }] : [];
+  });
+  return { edges, dangling };
+}
+
+/**
+ * Blocked bean id → the ids blocking it, over BOTH declarations.
  *
  * Built once here rather than at each call site, because inverting it wrongly
  * is silent: every finding still computes, and every one of them names the
- * wrong bean.
+ * wrong bean. It inverted `blocking:` only until bean `vhqq`, and so missed 76
+ * of the 83 edges in the store.
  */
 export function blockedBy(beans: BeanNode[]): Map<string, string[]> {
   const out = new Map<string, string[]>();
-  for (const b of beans) {
-    for (const target of b.blocking) {
-      const at = out.get(target);
-      if (at) at.push(b.id);
-      else out.set(target, [b.id]);
-    }
+  for (const e of blockEdges(beans).edges) {
+    const at = out.get(e.blocked);
+    if (at) at.push(e.blocker);
+    else out.set(e.blocked, [e.blocker]);
+  }
+  return out;
+}
+
+/** Blocker bean id → the ids it blocks, over BOTH declarations. */
+export function blocksOf(beans: BeanNode[]): Map<string, string[]> {
+  const out = new Map<string, string[]>();
+  for (const e of blockEdges(beans).edges) {
+    const at = out.get(e.blocker);
+    if (at) at.push(e.blocked);
+    else out.set(e.blocker, [e.blocked]);
   }
   return out;
 }
@@ -489,6 +596,12 @@ export function hasExpiry(b: BeanNode): boolean {
  * The other two fire on 1 and 0 respectively, which is the shape
  * `check-bean-parents.ts` describes as locking in a property the corpus HAS
  * rather than demanding work to reach one.
+ *
+ * **That table measured `blocking:` only.** Since bean `vhqq` the findings run
+ * over {@link blockEdges} — both declarations — so they cover 83 edges where
+ * they covered 7, and `blocking-unknown` now fires on the 2 `blocked_by:`
+ * edges whose blocker is in the archive rather than the active store. The
+ * counts above are history; regenerate the index to read today's.
  */
 export function beanFindings(beans: BeanNode[]): Array<{
   kind: "blocked-without-expiry" | "blocker-closed" | "blocking-unknown";
@@ -498,18 +611,27 @@ export function beanFindings(beans: BeanNode[]): Array<{
 }> {
   const byId = new Map(beans.map((b) => [b.id, b]));
   const out: Array<{ kind: "blocked-without-expiry" | "blocker-closed" | "blocking-unknown"; bean: string; blocks: string; detail: string }> = [];
-  for (const b of beans) {
-    for (const target of b.blocking) {
-      const t = byId.get(target);
-      if (!t) {
-        out.push({
-          kind: "blocking-unknown",
-          bean: b.id,
-          blocks: target,
-          detail: `blocks \`${target}\`, which is not a bean in this store`,
-        });
-        continue;
-      }
+  // Over the ONE edge set, both declarations (bean `vhqq`). `bean` is always
+  // the blocker and `blocks` the blocked, whichever end wrote the edge.
+  for (const e of blockEdges(beans).edges) {
+    const b = byId.get(e.blocker);
+    const t = byId.get(e.blocked);
+    const target = e.blocked;
+    if (!b || !t) {
+      // Reported, never dropped. The sentence names the bean that DECLARED
+      // the edge, since that file is where the repair is made.
+      const where = e.declaredOn.map((d) => (d === "blocking" ? `\`${e.blocker}\`'s blocking:` : `\`${e.blocked}\`'s blocked_by:`));
+      out.push({
+        kind: "blocking-unknown",
+        bean: e.blocker,
+        blocks: target,
+        detail: !b
+          ? `is named as blocking \`${target}\` (in ${where.join(" and ")}) but is not a bean in this store`
+          : `blocks \`${target}\`, which is not a bean in this store`,
+      });
+      continue;
+    }
+    {
       // A CLOSED bean still holding a block on an OPEN one. The work finished
       // and nobody lifted the block, so the blocked bean reads as waiting on
       // something that already happened — indistinguishable, from the blocked
@@ -526,12 +648,20 @@ export function beanFindings(beans: BeanNode[]): Array<{
       // EXPIRY and a handoff — because a block with no expiry cannot be told
       // from abandoned work. Only live blocks are worth reporting; a closed
       // blocker is already the finding above.
-      if (isOpen(b) && !hasExpiry(b)) {
+      //
+      // The expiry is looked for on the bean(s) that DECLARED the edge — the
+      // blocker for `blocking:`, the blocked for `blocked_by:` — since that is
+      // the file whose author asserted the block. For a `blocking:`-only edge
+      // this is exactly the pre-`vhqq` check.
+      const declarers = e.declaredOn.map((d) => (d === "blocking" ? b : t));
+      if (isOpen(b) && !declarers.some(hasExpiry)) {
         out.push({
           kind: "blocked-without-expiry",
           bean: b.id,
           blocks: target,
-          detail: `blocks \`${target}\` and states no expiry, so the block cannot be told from abandoned work`,
+          detail: e.declaredOn.includes("blocking")
+            ? `blocks \`${target}\` and states no expiry, so the block cannot be told from abandoned work`
+            : `blocks \`${target}\` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work`,
         });
       }
     }

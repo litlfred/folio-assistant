@@ -62,7 +62,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Remove base64 `content.data` from published `Library` resources, so an IG embedding compiled CQL does not ship the bytes twice.",
       install: { none: true },
-      invoke: { shell: "python3 input/scripts/strip_library_binaries.py" },
+      invoke: { shell: "python3 fhir-harness/scripts/library-strip/strip_library_binaries.py <igOutput>" },
       io: {
         inputs: [
           { name: "igOutput", schema: t("RepoPath"), required: true, description: "The Publisher's `output/`. It runs AFTER the build — the resources it edits are published ones." },
@@ -88,7 +88,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Replace inline CQL/ELM in `Library` resources with a URL reference to the published copy.",
       install: { none: true },
-      invoke: { shell: "python3 input/scripts/strip_library_content.py" },
+      invoke: { shell: "python3 fhir-harness/scripts/library-strip/strip_library_content.py <igOutput>" },
       io: {
         inputs: [{ name: "igOutput", schema: t("RepoPath"), required: true }],
         outputs: [
@@ -165,7 +165,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "ig-pages",
       title: "Generate an IG instance's reader-facing pages from its artefact index",
       description:
-        "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved here from smart-trust because nothing in it was smart-trust's (#1767); smart-base reuses it for its `/smart-base/` landing page with `--summary`. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published.",
+        "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved down to this layer because nothing in it was one IG's own (#1767); with `--summary` it writes an instance's landing page, opening with that instance's harness section. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published.",
       install: { none: true },
       invoke: { shell: "bun run fhir-harness/scripts/gen-ig-pages.ts" },
       // The viewer for this kind: each instance's index page declares

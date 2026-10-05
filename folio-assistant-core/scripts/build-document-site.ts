@@ -24,6 +24,7 @@
  *
  *   <out>/index.html          every document in the folio, linked
  *   <out>/<slug>/index.html   one page per document, block anchors intact
+ *   <out>/<slug>/media/       the document's images, copied from folio/<slug>/media/
  *   <out>/review/index.html   what changed from main, read from the preview's
  *                             changeset.json when opened (bean txut)
  *   <out>/outline.json        every document's chapters, sections and blocks
@@ -50,7 +51,7 @@
  * the folio's own workflow, which is the same trust the build command already
  * has.
  */
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
@@ -74,7 +75,13 @@ function page(title: string, body: string): string {
 <style>
   :root { color-scheme: light dark; --fg: #1b1b1b; --bg: #fdfdfb; --muted: #5b5b5b; --link: #0b5cad; }
   @media (prefers-color-scheme: dark) { :root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; } }
-  body { margin: 0 auto; max-width: 46rem; padding: 2rem 1rem 4rem; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
+  body { margin: 0; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
+  /* The column and its gutters belong to main, not body: the harness rail sets
+     body padding-left to clear its strip, which replaced a body's own gutter and
+     put the text flush against the rail (owner, 2026-10-05). No tag names in
+     this comment: the rail injector finds the page's first body and main tags
+     by text. */
+  main { max-width: 46rem; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
   a { color: var(--link); }
   a:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
   h1, h2, h3 { line-height: 1.25; }
@@ -178,6 +185,11 @@ export async function buildDocumentSite(repoRoot: string, outDir: string): Promi
     const dir = join(outDir, d.slug);
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, "index.html"), page(d.slug, html));
+    // A document's images live in `folio/<slug>/media/` and its blocks link
+    // them as `media/<file>`, relative to the document's page. Copied, so a
+    // figure in the preview is the figure in the folio.
+    const media = join(dirname(d.path), "media");
+    if (existsSync(media)) cpSync(media, join(dir, "media"), { recursive: true });
     result.documents.push({ slug: d.slug, blocks: built.blockCount, page: `${d.slug}/index.html` });
   }
   const list = result.documents

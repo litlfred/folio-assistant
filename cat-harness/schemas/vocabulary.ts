@@ -301,9 +301,30 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "have no path of their own (a ProcessNode is part of a diagram, not a file). A node with no " +
       "value belongs to no declared directory — vocabulary nodes are minted from the namespace " +
       "rather than from any file — and that absence is reported as its own state rather than " +
-      "folded into a default.",
-    replacedBy: "dcterms:isPartOf",
+      "folded into a default. Its own term, NOT `dcterms:isPartOf`: membership of a subgraph is a " +
+      "view of the graph, while `partOf` is structural containment, and one predicate for both " +
+      "made the two indistinguishable once compacted (bean `3f5f`).",
   },
+  hasMember: {
+    gloss:
+      "A node a named subgraph DIRECTLY contains: the deepest subgraph directory holding the " +
+      "node's source path, or its `partOf` parent's subgraph when it has no path. Transitive " +
+      "membership is not a second property — it is this one, followed through `hasSubgraph` " +
+      "(bean `c1m4`).",
+  },
+  hasSubgraph: {
+    gloss:
+      "A child named subgraph: a directory directly inside this one. The index names it by " +
+      "IRI; the hydrated file nests it, members and all.",
+  },
+  payload: {
+    gloss:
+      "Where a node's heavy content is published: an immutable, content-addressed file at " +
+      "`<BASE_URL>/payload/sha256/<hex>`, the hex being the SHA-256 of its bytes. A subgraph file " +
+      "carries this link in place of the body (bean `f233`).",
+  },
+  sha256: { gloss: "The lower-case hex SHA-256 digest of a payload's bytes — also its IRI's last segment." },
+  bytes: { gloss: "The size of a payload, in bytes." },
   localId: { gloss: "The node's own identifier within its file, before any IRI is minted." },
   module: { gloss: "The source module a node was projected from." },
   path: { gloss: "A declared directory's path, relative to the instance root." },
@@ -353,11 +374,27 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "a later kind — as resolved after the instance config's override.",
     replacedBy: "dcterms:source",
   },
-  contentSourceKind: { gloss: "Which kind of content source: `directory` or `branch`.", replacedBy: "dcterms:type" },
+  contentSourceKind: {
+    gloss:
+      "Which kind of content source: `directory`, `branch`, or a branch `family`, as a plain value. Its own term, NOT " +
+      "`dcterms:type`: that property's range is a class, and the published subgraph files use it as a " +
+      "link (`holdsGraph`), so a literal under it failed publish-verify's object-link check " +
+      "(ld-object-property-is-a-link, 2026-10-03).",
+  },
   contentSourceBranch: { gloss: "The repository branch a subgraph's content is read from.", replacedBy: "dcterms:identifier" },
   keyedBy: {
     gloss:
       "How entries are keyed on a content branch: one entry per `commit`, or one live copy at the `tip`.",
+  },
+  keyFrom: {
+    gloss:
+      "What the key of a branch FAMILY is, in words (an IG's package id; a Lean package and toolchain): each member " +
+      "branch is the family's prefix followed by one key.",
+  },
+  familyRepository: {
+    gloss:
+      "The remote repository (`owner/repo`) a branch FAMILY is read from. Absent when the family is materialised " +
+      "on the declaring repository itself.",
   },
   sourceDeclaredIn: {
     gloss:
@@ -462,6 +499,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   instructionsPath: { gloss: "Where a skill's instruction body lives, relative to the instance root." },
   readmePath: { gloss: "Where a declared directory's README lives, relative to the instance root: the page a person reads about that directory." },
   instructionLines: { gloss: "How long a skill's instruction body is." },
+  fileCount: { gloss: "How many committed files a declared directory holds, at any depth: published here rather than in its README, where a count conflicted on every merge (bean ba9e)." },
   hasIOContract: { gloss: "Whether a skill declares input and output schemas." },
   inputSchema: { gloss: "The published schema a skill's input must satisfy." },
   outputSchema: { gloss: "The published schema a skill's output satisfies." },
@@ -497,6 +535,9 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   outgoing: { gloss: "A sequence flow leaving this node.", replacedBy: "bpmn:outgoing" },
   from: { gloss: "The node a sequence flow leaves.", replacedBy: "bpmn:sourceRef" },
   to: { gloss: "The node a sequence flow arrives at.", replacedBy: "bpmn:targetRef" },
+  calledElement: { gloss: "The process a call activity invokes.", replacedBy: "bpmn:calledElement" },
+  depiction: { gloss: "A rendered picture of this node, e.g. the SVG drawn from a process's diagram." },
+  sourceUrl: { gloss: "Where the file a node was read from can be viewed on its forge." },
   decisionRef: { gloss: "The DMN table that computes this gateway's branch." },
   decidedBy: { gloss: "The Decision node whose table computes this gateway's branch." },
   hitPolicy: { gloss: "How a DMN decision table picks among matching rules, e.g. FIRST or UNIQUE." },

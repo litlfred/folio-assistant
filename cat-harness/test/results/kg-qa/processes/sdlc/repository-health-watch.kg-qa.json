@@ -5,7 +5,7 @@
     "id": "Process_RepoHealth",
     "path": "processes/sdlc/repository-health-watch.bpmn"
   },
-  "source_hash": "sha256:05360f03e997a4b04423ee48a47fb2af6b749bfbc444f10f96fd2e5d28d990ad",
+  "source_hash": "sha256:6e80fd2b9670a397cb9a55c2fef8e8549195b58e41ef888a5658ca058b0f6d8c",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -110,13 +110,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/health-check.yml",
-          "detail": ".github/workflows/health-check.yml changed since cat-harness/processes/sdlc/repository-health-watch.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -124,8 +119,8 @@
     }
   },
   "totals": {
-    "pass": 14,
-    "fail": 3,
+    "pass": 15,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }

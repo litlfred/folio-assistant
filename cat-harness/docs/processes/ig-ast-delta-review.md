@@ -4,14 +4,14 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/content/ig-ast-delta-review.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `fhir-harness/processes/content/ig-ast-delta-review.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Is the incremental IG AST what a full build would have produced?
 
 `Process_IgAstDeltaReview` · advisory · 4 step(s)
 
-THE REVIEW STEP OF AN INCREMENTAL IG BUILD, drawn as its own subprocess (bean `a9tx`, owner 2026-09-30: "list and view differentials/deltas against AST ... as part of (sub-?)process/skills/tools, including pipeline rendering").
+The review step of an incremental FHIR IG build, as its own subprocess: list and inspect the differences between the incremental IG AST and what a full build would have produced, then accept them or raise a finding. THE REVIEW STEP OF AN INCREMENTAL IG BUILD, drawn as its own subprocess (bean `a9tx`, owner 2026-09-30: "list and view differentials/deltas against AST ... as part of (sub-?)process/skills/tools, including pipeline rendering").
 
 WHERE IT SITS. In `ig-incremental-build.bpmn` it belongs between Task_Merge and Task_Qa: after the restored and rebuilt records are merged, before the QC gates read the aggregate. That diagram predates the AST work and is not edited here; `ig-ast-delta` §"Where this sits in a process" states the placement until it is.
 

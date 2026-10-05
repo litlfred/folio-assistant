@@ -153,7 +153,7 @@ describe("an entry declared FROM WITHIN is checked too", () => {
     // `assets/img/uml/overview` sent the reader to `assets/img/uml/` — a
     // directory holding no declaration at all. The parent's kind names the
     // file, so it is asked rather than composed.
-    const root = withNested([{ id: "deep", path: "assets/img/uml/overview", graphKinds: ["docs-auto"] }]);
+    const root = withNested([{ id: "deep", path: "assets/img/uml/overview", graphKinds: ["auto-docs"] }]);
     const f = auditNested(root, REPO, decl);
     expect(f).toHaveLength(1);
     expect(f[0]!.nestedIn?.file).toBe("processes/processes.json");

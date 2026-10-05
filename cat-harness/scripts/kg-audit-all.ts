@@ -152,7 +152,12 @@ if (crashed.length > 0) {
 // a sweep blind on one instance has not cleared the others. The writer form
 // keeps its historical 1.
 if (check) {
-  const blind = crashed.length > 0 || failed.some((o) => o.code === 2);
+  // Any exit but 0 and 1 is BLIND, not only 2. An audit killed after printing
+  // its header (a signal, the OOM killer: 137) has a summary-less `failed`
+  // entry whose code is neither, and testing `=== 2` here let the sweep exit
+  // 0 over it (bean `8qyc`). `regen` derives `kg:audit:check`'s verdict from
+  // this one, so this must fail whenever any spawned audit does.
+  const blind = crashed.length > 0 || failed.some((o) => o.code !== 1);
   const found = failed.some((o) => o.code === 1);
   process.exit(blind ? 2 : found ? 1 : 0);
 }

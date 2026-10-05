@@ -43,6 +43,14 @@
   },
   "directories": [
     {
+      "id": "who-iris-translations",
+      "path": "translations/",
+      "description": "The gettext side of who-iris's own strings, one directory per target locale: the `glossary/who-iris--who-terms` catalogues that translate this instance's WHO terms. Moved here from cat-harness/translations/ on the owner's ruling of 2026-10-04, \"move things to semantically appropriate place\" (bean riit): a scheme's translations sit with the instance whose terms they translate.",
+      "graphKinds": [
+        "translation-sources"
+      ]
+    },
+    {
       "id": "library",
       "path": "library/",
       "description": "The three IRIS items this instance holds rather than merely names: `wpr-rdo-2020-003-eng` (the WPRO publication style guide, and the worked example whose full DSpace item record drives the `iris-dspace` skill), `who-pub-tps-931` and `9789241548960-eng`. They are the `materialized` end of the catalogue -- every other node under `catalogue/nodes/` is `referenced`, and the three here are what a materialization actually looks like. `milnorlink` is NOT here and never was an IRIS item; it went to folio-assistant-sci (bean r1lz). The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
@@ -216,5 +224,6 @@
       }
     }
   ],
-  "_icon_removed_comment": "NO `icon` ON PURPOSE. Owner, 2026-09-23: *\"no logo on who-iris icon (for now). just WHO blue\"* — reversing their 2026-09-22 choice of the WHO emblem, recorded above. The mark now comes from `schemas/avatars.ts`’s `who-iris` entry: hue 199, measured from the #0093D5 this file already names, drawn as an open book rather than the emblem. THE IMAGE STAYS DECLARED and is still this instance’s own asset; only the pointer is gone, so restoring the logo is one field. `for now` is the owner’s word and is why nothing was deleted."
+  "_icon_restored_comment": "RESTORED 2026-10-04 (bean `2vpn`). Owner, 2026-09-23: *\"no logo on who-iris icon (for now). just WHO blue\"* removed this pointer; on 2026-10-04, asked what who-iris's top navbar mark should be after it showed the letter \"W\" on every page, the owner chose BOTH the one-resolver fix and *\"restore WHO emblem\"*. So `icon` points at the emblem again, cropped by its declared `avatarRegion`, and the `who-iris` entry in `schemas/avatars.ts` (the open book in WHO blue, hue 199) stays as the mark's FALLBACK — `harness-tiles.ts` resolves a theme card avatar first (who-iris has none: IRIS imagery is somebody else's artefact), then this icon, then that glyph.",
+  "icon": "who-emblem"
 }

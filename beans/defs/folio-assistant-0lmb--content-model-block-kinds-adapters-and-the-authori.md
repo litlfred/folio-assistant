@@ -3,8 +3,10 @@
 title: 'CONTENT MODEL: block kinds, adapters and the authoring surface'
 status: in-progress
 type: epic
+priority: normal
 created_at: 2026-09-19T11:43:44Z
-updated_at: 2026-09-19T11:43:44Z
+updated_at: 2026-10-04T15:12:16Z
+parent: folio-assistant-npuo
 ---
 
 The block kinds and adapters an author actually writes against.

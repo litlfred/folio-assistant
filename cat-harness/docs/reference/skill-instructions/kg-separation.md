@@ -154,10 +154,28 @@ bun run seed:ready --layer cat-harness --rehearse --text   # exit 0 settled, 1 n
 | layer load | more than five open PRs touch the layer |
 | moves | an open PR deletes a file in the layer, or renames one into or out of it |
 | standalone | `bun test` is red with only the layer and what it `needs` beside it, as sibling directories |
-| sibling discovery | an instance that `needs` the layer directly cannot be found by discovery in a sibling layout with no aggregate root |
+| upward paths | a path DECLARED in the layer — a Tool module, a QA criterion source, a render target — resolves only in an instance above it, so it breaks the day the layer stands alone |
 
 These were the steward's hand-applied criteria (2026-10-02), generalised per
-layer. Four things to keep straight:
+layer.
+
+**`upward paths` replaced `sibling discovery` (owner, 2026-10-04).** The old
+criterion counted dependents that discovery could not find in a workspace of
+sibling clones. Discovery is checkout-local on purpose (`cmsl`), so that count
+could never reach zero, and it counted *instances* where the risk is *paths*.
+On cat-harness it read 3 while 0 of 134 declared paths resolved above the layer.
+Count what breaks, not what is out of sight.
+
+**A seeding pair is not upward (owner, 2026-10-04).** When the code moved to
+the tools layer, the harness's Tool nodes kept their `src/tools/*` paths and
+resolve into their implementer through `needs` ("Trap 1"), so the count read
+23 for the harness. The two are seeded in the same step, so none of those can
+break on seeding day. The HIGHER instance says so, `seedsWith: [<lower>]` in
+its declaration, because a lower instance naming one above it is the wrong
+direction. `seed:ready` states such paths in its note and does not count
+them; a path into any other instance above still counts.
+
+Four things to keep straight:
 
 - **The layer map is read off the declarations**: `livesAt.path` is the
   directory, the longest `needs` chain is the depth, and the next layer is

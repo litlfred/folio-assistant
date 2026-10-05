@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "48f7444c6e8b"
+    "script_hash": "085baa7c29a8"
   },
   "subject": {
     "kind": "graph",
@@ -16,7 +16,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 80,
+      "count": 92,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -27,11 +27,6 @@
           "instance": "folio-assistant",
           "directory": "root-tools",
           "path": "tools"
-        },
-        {
-          "instance": "folio-assistant",
-          "directory": "fsh-guts",
-          "path": "fsh-guts"
         },
         {
           "instance": "folio-assistant",
@@ -57,6 +52,21 @@
           "instance": "folio-assistant",
           "directory": "root-docs",
           "path": "docs"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "archive",
+          "path": "beans/defs/archive"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "queue",
+          "path": "beans/queue"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "boards",
+          "path": "todos/boards"
         },
         {
           "instance": "bootstrap",
@@ -160,6 +170,11 @@
         },
         {
           "instance": "cat-harness",
+          "directory": "cat-harness-src",
+          "path": "cat-harness/src"
+        },
+        {
+          "instance": "cat-harness",
           "directory": "cat-harness-tests",
           "path": "cat-harness/test"
         },
@@ -174,6 +189,21 @@
           "path": "cat-harness/skills/voices"
         },
         {
+          "instance": "cat-harness",
+          "directory": "auto-docs",
+          "path": "cat-harness/docs/cat-harness/auto-docs"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "uml-overview-pages",
+          "path": "cat-harness/docs/uml/overview"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "uml-overview-svgs",
+          "path": "cat-harness/docs/assets/img/uml/overview"
+        },
+        {
           "instance": "cat-harness-tools",
           "directory": "cat-harness-tools-schemas",
           "path": "cat-harness-tools/schemas"
@@ -182,6 +212,11 @@
           "instance": "cat-harness-tools",
           "directory": "cat-harness-tools-scripts",
           "path": "cat-harness-tools/scripts"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-src",
+          "path": "cat-harness-tools/src"
         },
         {
           "instance": "fhir-harness",
@@ -210,6 +245,11 @@
         },
         {
           "instance": "folio-assistant-core",
+          "directory": "folio-assistant-core-translations",
+          "path": "folio-assistant-core/translations"
+        },
+        {
+          "instance": "folio-assistant-core",
           "directory": "folios",
           "path": "folio-assistant-core/folios"
         },
@@ -222,6 +262,11 @@
           "instance": "folio-assistant-core",
           "directory": "core-adapters",
           "path": "folio-assistant-core/adapters"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-src",
+          "path": "folio-assistant-core/src"
         },
         {
           "instance": "folio-assistant-core",
@@ -250,6 +295,11 @@
         },
         {
           "instance": "folio-assistant-sci",
+          "directory": "folio-assistant-sci-translations",
+          "path": "folio-assistant-sci/translations"
+        },
+        {
+          "instance": "folio-assistant-sci",
           "directory": "library",
           "path": "folio-assistant-sci/library"
         },
@@ -257,6 +307,11 @@
           "instance": "folio-assistant-sci",
           "directory": "sci-methodologies",
           "path": "folio-assistant-sci/methodologies"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "skills",
+          "path": "folio-assistant-sci/skills"
         },
         {
           "instance": "folio-assistant-sci",
@@ -290,8 +345,8 @@
         },
         {
           "instance": "smart-base",
-          "directory": "smart-base-docs",
-          "path": "smart-base/docs"
+          "directory": "smart-base-block-kinds",
+          "path": "smart-base/block-kinds"
         },
         {
           "instance": "smart-base",
@@ -325,6 +380,11 @@
         },
         {
           "instance": "smart-base",
+          "directory": "smart-base-docs",
+          "path": "smart-base/docs"
+        },
+        {
+          "instance": "smart-base",
           "directory": "smart-base-findings",
           "path": "smart-base/findings"
         },
@@ -335,13 +395,13 @@
         },
         {
           "instance": "smart-immunizations",
-          "directory": "smart-immunizations-docs",
-          "path": "smart-immunizations/docs"
+          "directory": "smart-immunizations-artifact-index",
+          "path": "smart-immunizations/fhir-artifact-index"
         },
         {
           "instance": "smart-immunizations",
-          "directory": "smart-immunizations-artifact-index",
-          "path": "smart-immunizations/fhir-artifact-index"
+          "directory": "smart-immunizations-docs",
+          "path": "smart-immunizations/docs"
         },
         {
           "instance": "smart-trust",
@@ -438,7 +498,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 102,
+      "count": 153,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -449,11 +509,6 @@
           "instance": "folio-assistant",
           "directory": "root-tools",
           "path": "tools"
-        },
-        {
-          "instance": "folio-assistant",
-          "directory": "fsh-guts",
-          "path": "fsh-guts"
         },
         {
           "instance": "folio-assistant",
@@ -486,6 +541,51 @@
           "path": "docs"
         },
         {
+          "instance": "folio-assistant",
+          "directory": "defs",
+          "path": "beans/defs"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "archive",
+          "path": "beans/defs/archive"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "notes",
+          "path": "beans/notes"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "workflows",
+          "path": "beans/workflows"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "queue",
+          "path": "beans/queue"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "surveys",
+          "path": "beans/surveys"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "items",
+          "path": "todos/items"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "feedback",
+          "path": "todos/feedback"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "boards",
+          "path": "todos/boards"
+        },
+        {
           "instance": "bootstrap",
           "directory": "skills",
           "path": "bootstrap/skills"
@@ -509,6 +609,11 @@
           "instance": "bootstrap",
           "directory": "models",
           "path": "bootstrap/models"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "cat-harness-validators",
+          "path": "cat-harness/validators"
         },
         {
           "instance": "cat-harness",
@@ -641,6 +746,96 @@
           "path": "cat-harness/skills/voices"
         },
         {
+          "instance": "cat-harness",
+          "directory": "vendors",
+          "path": "cat-harness/skills/voices/vendors"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "agent-skill-authoring-claude",
+          "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-claude"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "agent-skill-authoring-gemini-cli",
+          "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-gemini-cli"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "agent-skill-authoring-openai",
+          "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-openai"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "proposals",
+          "path": "cat-harness/docs/proposals"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "requirements",
+          "path": "cat-harness/docs/requirements"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "auto-docs",
+          "path": "cat-harness/docs/cat-harness/auto-docs"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "glossary",
+          "path": "cat-harness/docs/cat-harness/auto-docs/glossary"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-dmn",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/dmn"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-docs",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/docs"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-processes",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/processes"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-roles",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/roles"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-schemas",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/schemas"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-skills",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/skills"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-tasks",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/tasks"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-tools",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/tools"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "uml-overview-pages",
+          "path": "cat-harness/docs/uml/overview"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "uml-overview-svgs",
+          "path": "cat-harness/docs/assets/img/uml/overview"
+        },
+        {
           "instance": "cat-harness-tools",
           "directory": "cat-harness-tools-adapters",
           "path": "cat-harness-tools/adapters"
@@ -666,6 +861,21 @@
           "path": "cat-harness-tools/test"
         },
         {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-src",
+          "path": "cat-harness-tools/src"
+        },
+        {
+          "instance": "cat-openapi",
+          "directory": "cat-openapi-validators",
+          "path": "cat-openapi/validators"
+        },
+        {
+          "instance": "cat-openapi",
+          "directory": "cat-openapi-kinds",
+          "path": "cat-openapi/kinds"
+        },
+        {
           "instance": "cat-openapi",
           "directory": "cat-openapi-schemas",
           "path": "cat-openapi/schemas"
@@ -674,6 +884,21 @@
           "instance": "cat-openapi",
           "directory": "cat-openapi-scripts",
           "path": "cat-openapi/scripts"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-harness-translations",
+          "path": "fhir-harness/translations"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-harness-validators",
+          "path": "fhir-harness/validators"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-harness-kinds",
+          "path": "fhir-harness/kinds"
         },
         {
           "instance": "fhir-harness",
@@ -702,6 +927,26 @@
         },
         {
           "instance": "folio-assistant-core",
+          "directory": "folio-assistant-core-translations",
+          "path": "folio-assistant-core/translations"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "folio-assistant-core-block-kinds",
+          "path": "folio-assistant-core/block-kinds"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "folio-assistant-core-validators",
+          "path": "folio-assistant-core/validators"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "folio-assistant-core-kinds",
+          "path": "folio-assistant-core/kinds"
+        },
+        {
+          "instance": "folio-assistant-core",
           "directory": "core-schemas",
           "path": "folio-assistant-core/schemas"
         },
@@ -724,6 +969,11 @@
           "instance": "folio-assistant-core",
           "directory": "core-adapters",
           "path": "folio-assistant-core/adapters"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-src",
+          "path": "folio-assistant-core/src"
         },
         {
           "instance": "folio-assistant-core",
@@ -757,6 +1007,36 @@
         },
         {
           "instance": "folio-assistant-sci",
+          "directory": "folio-assistant-sci-qa-checkers",
+          "path": "folio-assistant-sci/qa-checkers"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "folio-assistant-sci-pipeline-plugins",
+          "path": "folio-assistant-sci/pipeline-plugins"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "folio-assistant-sci-translations",
+          "path": "folio-assistant-sci/translations"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "folio-assistant-sci-block-kinds",
+          "path": "folio-assistant-sci/block-kinds"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "folio-assistant-sci-content-adapters",
+          "path": "folio-assistant-sci/content-adapters"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "folio-assistant-sci-kinds",
+          "path": "folio-assistant-sci/kinds"
+        },
+        {
+          "instance": "folio-assistant-sci",
           "directory": "library",
           "path": "folio-assistant-sci/library"
         },
@@ -767,8 +1047,18 @@
         },
         {
           "instance": "folio-assistant-sci",
+          "directory": "skills",
+          "path": "folio-assistant-sci/skills"
+        },
+        {
+          "instance": "folio-assistant-sci",
           "directory": "sci-adapters",
           "path": "folio-assistant-sci/adapters"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-tools",
+          "path": "folio-assistant-sci/tools"
         },
         {
           "instance": "folio-assistant-sci",
@@ -802,8 +1092,23 @@
         },
         {
           "instance": "smart-base",
-          "directory": "smart-base-docs",
-          "path": "smart-base/docs"
+          "directory": "smart-base-qa-checkers",
+          "path": "smart-base/qa-checkers"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-block-kinds",
+          "path": "smart-base/block-kinds"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-content-adapters",
+          "path": "smart-base/content-adapters"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-translations",
+          "path": "smart-base/translations"
         },
         {
           "instance": "smart-base",
@@ -842,6 +1147,11 @@
         },
         {
           "instance": "smart-base",
+          "directory": "smart-base-docs",
+          "path": "smart-base/docs"
+        },
+        {
+          "instance": "smart-base",
           "directory": "smart-base-document-kinds",
           "path": "smart-base/document-kinds"
         },
@@ -862,13 +1172,13 @@
         },
         {
           "instance": "smart-immunizations",
-          "directory": "smart-immunizations-docs",
-          "path": "smart-immunizations/docs"
+          "directory": "smart-immunizations-artifact-index",
+          "path": "smart-immunizations/fhir-artifact-index"
         },
         {
           "instance": "smart-immunizations",
-          "directory": "smart-immunizations-artifact-index",
-          "path": "smart-immunizations/fhir-artifact-index"
+          "directory": "smart-immunizations-docs",
+          "path": "smart-immunizations/docs"
         },
         {
           "instance": "smart-trust",
@@ -889,6 +1199,11 @@
           "instance": "smart-trust",
           "directory": "smart-trust-scripts",
           "path": "smart-trust/scripts"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-translations",
+          "path": "who-iris/translations"
         },
         {
           "instance": "who-iris",
@@ -954,8 +1269,23 @@
     },
     "unmarked-readme": {
       "summary": "READMEs that exist without the kg:subgraph markers, left untouched because somebody wrote them. Add the marker pair to adopt the generated section.",
-      "count": 2,
+      "count": 5,
       "entries": [
+        {
+          "instance": "folio-assistant",
+          "directory": "notes",
+          "path": "beans/notes/README.md"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "queue",
+          "path": "beans/queue/README.md"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "surveys",
+          "path": "beans/surveys/README.md"
+        },
         {
           "instance": "cat-harness",
           "directory": "schemas",
@@ -974,5 +1304,5 @@
       "entries": []
     }
   },
-  "total": 186
+  "total": 252
 }

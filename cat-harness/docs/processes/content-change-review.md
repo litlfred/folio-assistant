@@ -21,7 +21,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
 ## How it connects
 
-- **Called by:** no call activity names this process
+- **Called by:** [Public comment on a review draft](public-comment.html)
 - **Calls:** [Adjudication](adjudication.html), [Options analysis](options-analysis.html), [Review task](review-task.html)
 - **Presented on:** no docs page section shows this diagram
 
@@ -45,7 +45,7 @@ Every one of the 30 step(s) is documented.
 | **Review staged rendering**<br>`Task_ReviewStaging` | Content Author | [`staging-review`](../reference/skill-instructions/staging-review.html) | Author reviews the rendered feature branch at<br><pages-url>/STAGING/<branch-slug>/ and compares<br>against the main site. The staging banner shows the commit SHA.<br>The agent's before/after preview (skill before-after-preview) sits<br>beside the URLs, with its counts and status line. |
 | **Request further revisions**<br>`Task_RequestRevision` | Content Author | [`staging-review`](../reference/skill-instructions/staging-review.html) | Author provides feedback on what needs adjustment.<br>Agent iterates on the feature branch. |
 | **Submit to review committee**<br>`Task_SubmitForReview` | Content Author | [`staging-review`](../reference/skill-instructions/staging-review.html) | Author submits the PR for formal review by the guidance review committee.<br>The STAGING URL is the review surface. |
-| **Detect change scope & impact**<br>`Task_DetectScope` | Folio-Assistant Agent | [`semantic-review-scoping`](../reference/skill-instructions/semantic-review-scoping.html) | Agent analyses the requested change:<br>- Which content blocks are affected?<br>- Are there downstream implications (indicators, referral logic, visit schedules)?<br>- Will deterministic logic (CQL/DMN) need updating?<br>skill: content-graph, integration-watcher |
+| **Detect change scope & impact**<br>`Task_DetectScope` | Folio-Assistant Agent | — | Agent analyses the requested change:<br>- Which content blocks are affected?<br>- Are there downstream implications (indicators, referral logic, visit schedules)?<br>- Will deterministic logic (CQL/DMN) need updating?<br>skill: content-graph, integration-watcher |
 | **Create feature branch**<br>`Task_CreateBranch` | Folio-Assistant Agent | [`feature-staging`](../reference/skill-instructions/feature-staging.html) | Agent creates a feature branch from main.<br>Branch naming: feature/<short-description><br>Opens a PR immediately (AGENTS.md: "open the PR at the first commit"). |
 | **Edit narrative content blocks**<br>`Task_EditContent` | Folio-Assistant Agent | [`content-author`](../reference/skill-instructions/content-author.html) | Agent modifies the relevant content blocks (.md files, block manifests).<br>Validates each edit against the schema (content_validate).<br>skill: content editing, block builders |
 | **Edit deterministic logic (if needed)**<br>`Task_EditLogic` | Folio-Assistant Agent | [`content-author`](../reference/skill-instructions/content-author.html) | If the content change affects decision logic, indicators, or workflows:<br>- Update CQL expressions<br>- Update DMN decision tables<br>- Adjust indicator definitions<br>skill: dak-authoring, fhir-pipeline |

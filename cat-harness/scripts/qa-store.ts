@@ -271,7 +271,8 @@ export function resolveQaLocation(repoRoot: string = gitTopLevel()): QaLocation 
     }
   }
   directories.sort((a, b) => a.path.localeCompare(b.path));
-  const branches = [...new Set(directories.flatMap((d) => (d.storage ? [d.storage.branch] : [])))];
+  // A qa directory is keyed by commit, so its storage is one branch; the resolver refuses a family.
+  const branches = [...new Set(directories.flatMap((d) => (d.storage && "branch" in d.storage ? [d.storage.branch] : [])))];
   if (branches.length > 1) {
     throw new QaUsageError(`qa directories declare ${branches.length} storage branches (${branches.join(", ")}); one store per checkout`);
   }
@@ -1148,7 +1149,7 @@ export function main(argv: string[]): number {
       const loc = resolveQaLocation(opts.repoRoot);
       say(loc, [
         `qa store: branch ${loc.branch} (${loc.declared ? "declared" : "default — no qa directory declares storage yet"}), keyed by ${loc.keyedBy}`,
-        ...loc.directories.map((d) => `  ${d.present ? "present" : "absent "} ${d.path}${d.storage ? `  → ${d.storage.branch}` : ""}`),
+        ...loc.directories.map((d) => `  ${d.present ? "present" : "absent "} ${d.path}${d.storage && "branch" in d.storage ? `  → ${d.storage.branch}` : ""}`),
       ].join("\n"));
       return 0;
     }

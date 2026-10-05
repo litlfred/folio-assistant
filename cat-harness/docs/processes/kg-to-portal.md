@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_KgToPortal` · advisory · 10 step(s)
 
-folio-assistant — KG to public portal.
+How a knowledge graph reaches a public portal this repository does not run: select, serialize, package, sign, distribute, and verify on the portal's side. folio-assistant — KG to public portal.
 
 Six stages: select, serialize, package, sign, distribute, verify. Three
 decisions belong to the DEPLOYMENT and are drawn as gateways rather than

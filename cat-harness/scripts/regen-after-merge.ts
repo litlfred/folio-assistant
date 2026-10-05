@@ -111,6 +111,35 @@
  * which NO writer ran — so the final verdicts were all read from a tree no
  * writer was touching (bean `14ve`'s fixpoint does the work).
  *
+ * ## Asking only what a change can have affected — bean `94zs`
+ *
+ * Two more cuts, both selecting by the same FOOTPRINT (`changed-paths.ts`):
+ * a pair's declared input/output globs, its scripts' import closure, its
+ * `package.json` commands and `bun.lock` — what the input hash covers.
+ *
+ * - **`--changed <base>`** asks, in the first pass, only the pairs whose
+ *   footprint meets a path changed since `<base>` (`git diff <base>...HEAD`
+ *   plus the working tree and untracked files). A pair outside it reads what
+ *   it read at `<base>`, so its answer there is its answer here — an
+ *   ASSUMPTION about `<base>`, reported as `not asked` and never recorded in
+ *   the hash cache as a green run. `merge:main` passes the merge's fork point,
+ *   for the reason on `regenArgs` in `merge-base.ts`. Unlike the cache it
+ *   needs no earlier run on this machine, and it works under CI.
+ * - **The narrowed fixpoint.** Each pass after the first asks only the pairs
+ *   whose footprint meets a path the previous pass ACTUALLY changed —
+ *   measured by snapshotting `git` status before and after the pass, never
+ *   taken from a writer's declaration. A pair not re-asked keeps the answer it
+ *   gave from a tree identical on its footprint, so "settled" still means a
+ *   pass that ran no writer.
+ *
+ * Neither ever skips a pair with no input declaration, a `{tracked}` pair
+ * when anything changed, or a pair whose footprint or change set cannot be
+ * determined. **The limit, measured 2026-10-05:** the wall time is set by the
+ * `{tracked}` pairs (`kg:audit:all:check`, `skill:register:check`,
+ * `kg:audit:check`), which read the whole tree and so run after any merge and
+ * after any writer. Narrow declarations in `task-io.ts` are what let these
+ * two cuts skip anything; each must be read first.
+ *
  * Usage:
  *   bun run regen                # ask every gate; repair what is stale
  *   bun run regen --fast         # ...only the fast set (no browser-job pairs)
@@ -118,8 +147,15 @@
  *   bun run regen --jobs 3       # pool size (default: CPUs - 1)
  *   bun run regen --no-cache     # ask every pair; neither read nor update the hash cache
  *   bun run regen --explain      # say, per pair, why it ran or was skipped
+ *   bun run regen --changed <base>  # ask only pairs whose inputs changed since <base>
+ *   bun run regen --max-passes 8 # raise the fixpoint bound (default: DEFAULT_MAX_PASSES)
  *
  * `--all` is accepted and is the default.
+ *
+ * Exit (one decision, in {@link exitCodeFor}):
+ *   0  every pair is current or was regenerated, and the run SETTLED
+ *   1  at least one check is `unrepaired` or `no-writer` — not staleness
+ *   2  the run did not reach a fixed point: COULD NOT DETERMINE, never clean
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -131,13 +167,25 @@ import {
   decide,
   fingerprint,
   loadCache,
+  qaBaselineIdentity,
   saveCache,
   type HashCache,
   type PairIO,
   type SkipDecision,
 } from "./input-hash.ts";
+import {
+  affects,
+  changedBaseFromArgv,
+  changedSince,
+  diffSnapshots,
+  footprintOf,
+  scriptsChangedSince,
+  snapshotTree,
+  type Affected,
+} from "./changed-paths.ts";
 import { ReadWriteGate, jobsFromArgv, orderedEmitter, runCaptured, runPool } from "./task-pool.ts";
 import { pairIO } from "./task-io.ts";
+import { foldable, settleCovered } from "./pair-cover.ts";
 import { repoRootFor } from "../schemas/cat-harness.ts";
 
 const ROOT = join(import.meta.dir, "..");
@@ -277,12 +325,71 @@ export const NO_WRITER: Readonly<Record<string, string>> = {
   "check:raci": "raci-chart.ts only prints; it writes nothing",
   "check:subgraphs": "check-subgraphs.ts only reports",
   "check:harness-dirs": "compares two config files; harness:dirs makes directories, not what it compares",
-  // `viewer:nav:audit` does write, but what it writes is the BASELINE the gate
-  // compares against, and the gate fails only on a REGRESSION. Running it on a
-  // failure would re-baseline, so the regression would vanish and be reported
-  // as a repair. It is the one case where a writer exists and must not be run.
+  // THE BASELINE CASES: a writer exists and must NOT be run. What it writes is
+  // the baseline the gate compares against, and the gate fails only on a
+  // REGRESSION, so running it on a failure re-baselines — the regression
+  // vanishes and is reported as a repair. There are two, and the second is why
+  // this comment no longer says "the one case":
+  //
+  // - `viewer:nav:audit` writes the viewer-nav baseline.
+  // - `check:state-on-main --update` writes the state-on-main baseline, which
+  //   may only SHRINK. regen repairing it would be regen RAISING a ratchet,
+  //   which is the whole thing the ratchet exists to prevent. Its `--update`
+  //   refuses growth without `--allow-growth` as a second line of defence, but
+  //   the first is not asking it at all.
   "check:viewer-nav": "its writer re-baselines, which would hide the regression the gate exists to report",
+  "check:state-on-main": "its --update writes the ratchet the gate reads; repairing it would RAISE a baseline that may only shrink",
 };
+
+/**
+ * How many passes a fixpoint run may take before it gives up — bean `g5kt`.
+ *
+ * ## Why it is not 3, which is what it was
+ *
+ * A pass is reported settled only when it ran NO writer, so a cap of N admits
+ * at most **N − 1** writer-running passes. 3 therefore allowed two, and that
+ * is below the measured need: the merge sweep of 2026-10-04 found
+ * `skill:register` wanting a THIRD writer pass before its chain settled —
+ * `skill:register` writes artefacts that other writers read, and
+ * `skill-registration.md` records the chain being three deep. Under the old
+ * default that run could not converge, and (bean `g5kt` defect 1) said so
+ * while exiting 0.
+ *
+ * ## Why it is a bound at all, rather than "until it settles"
+ *
+ * Two writers can undo each other — `regen-after-merge.test.ts` has the case
+ * — and an unbounded loop over that pair never returns. The bound is what
+ * turns a hang into a reported refusal.
+ *
+ * ## Why this number
+ *
+ * It is a SANE BOUND, not a derived one, and saying so is the honest version.
+ * The derivable bound is the longest chain of writer-reads-writer among the
+ * pairs, which this tool cannot compute: `task-io.ts` declarations are
+ * partial by design (a pair with no declaration is always asked), so a
+ * computed depth would be an underestimate presented as a limit. 6 admits
+ * five writer passes — twice the deepest chain ever measured here — and
+ * `--max-passes` raises it for anyone who hits it. A run that needs more says
+ * so and fails, which is the state this is allowed to leave behind.
+ */
+export const DEFAULT_MAX_PASSES = 6;
+
+/** `--max-passes N` / `--max-passes=N`, defaulting to {@link DEFAULT_MAX_PASSES}. */
+export function maxPassesFromArgv(argv: readonly string[], fallback = DEFAULT_MAX_PASSES): number {
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i]!;
+    let v: string | undefined;
+    if (a === "--max-passes") v = argv[i + 1];
+    else if (a.startsWith("--max-passes=")) v = a.slice("--max-passes=".length);
+    else continue;
+    const n = Number(v);
+    if (!Number.isInteger(n) || n < 1) {
+      throw new Error(`--max-passes needs a positive integer, got ${JSON.stringify(v)}`);
+    }
+    return n;
+  }
+  return fallback;
+}
 
 export type Outcome = "current" | "regenerated" | "unrepaired" | "no-writer" | "writer-failed" | "no-browser";
 
@@ -292,6 +399,18 @@ export interface Result {
   outcome: Outcome;
   /** `current` because its inputs hash to its last green run, not because it was asked. */
   skipped?: boolean;
+  /**
+   * `current` because `--changed` touched nothing it reads, so its answer is
+   * its answer at the base — ASSUMED, never measured here. Such a pair records
+   * no hash in the input-hash cache.
+   */
+  assumed?: boolean;
+  /**
+   * The pair whose verdict this one's was DERIVED from (`pair-cover.ts`): the
+   * check was answered by its residual plus its coverers, and this names the
+   * coverer that decided a non-`current` outcome.
+   */
+  coveredBy?: string;
 }
 
 /** One verify/write pair, with what it declares about its files (`task-io.ts`). */
@@ -376,6 +495,10 @@ export async function regenPass(
     o.report?.(pairs[i]!, v.result, v.why, v.ms),
   );
 
+  // Checks other pairs in THIS pass already answer (bean `8qyc`): each is asked
+  // only for its residual, and its verdict is settled from the coverers' below.
+  const folds = foldable(pairs.map((p) => p.check));
+
   // Checks that only read share; writers (and the re-ask after one) run alone.
   const gate = new ReadWriteGate();
   const askOne = async (pair: Pair, index: number): Promise<{ result: Result; why: string | undefined; ms: number }> => {
@@ -385,9 +508,17 @@ export async function regenPass(
     if (decision?.skip === true) {
       return { result: { check, writer, outcome: "current", skipped: true }, why: decision.why, ms: 0 };
     }
-    const why = decision?.why;
+    const fold = folds.get(check);
+    const why =
+      fold === undefined
+        ? decision?.why
+        : `${decision?.why ?? "asked"}; verdict DERIVED from ${fold.residual ?? "no residual"} + ` +
+          `${fold.covers.length} covering pair(s) (pair-cover.ts)`;
     const done = (result: Result) => ({ result, why, ms: performance.now() - t0 });
-    if (await gate.read(async () => runner(check))) return done({ check, writer, outcome: "current" });
+    // A folded check runs its residual in its place, or nothing at all.
+    const ask = fold === undefined ? check : fold.residual;
+    if (ask === undefined) return done({ check, writer, outcome: "current" });
+    if (await gate.read(async () => runner(ask))) return done({ check, writer, outcome: "current" });
     if (writer === undefined) return done({ check, outcome: "no-writer" });
     if (o.dryRun) return done({ check, writer, outcome: "regenerated" });
     return gate.write(index, async () => {
@@ -397,7 +528,7 @@ export async function regenPass(
       // it as one would be the false-clean this whole command is about.
       // And a writer that EXITED NON-ZERO is named as such (bean `i1q7`): the
       // defect is in the declared writer, not in what it generates from.
-      const outcome: Outcome = (await runner(check)) ? "regenerated" : wrote ? "unrepaired" : "writer-failed";
+      const outcome: Outcome = (await runner(ask)) ? "regenerated" : wrote ? "unrepaired" : "writer-failed";
       return done({ check, writer, outcome });
     });
   };
@@ -417,7 +548,7 @@ export async function regenPass(
   // Writers in PAIR order, not completion order, so the record is deterministic.
   const order = new Map(pairs.map((p, i) => [p.writer, i]));
   writerRan.sort((a, b) => (order.get(a) ?? 0) - (order.get(b) ?? 0));
-  return { results: done.map((d) => d.result), writerRan };
+  return { results: settleCovered(done.map((d) => d.result), folds), writerRan };
 }
 
 /**
@@ -438,20 +569,49 @@ export async function regenPass(
  * The same argument is what makes the worker pool safe: the settling pass ran
  * no writer, so every verdict it reports was read from a tree nobody was
  * writing.
+ *
+ * The cap is {@link DEFAULT_MAX_PASSES}; `--max-passes` raises it. A run that
+ * reaches it returns `settled: false`, and that is a REFUSAL, not a pass —
+ * see {@link exitCodeFor}.
  */
 export async function regenToFixpoint(
   pairs: readonly Pair[],
   runner: Runner,
-  maxPasses = 3,
-  opts: Omit<PassOptions, "dryRun"> & { onPass?: (pass: number) => void } = {},
+  maxPasses = DEFAULT_MAX_PASSES,
+  opts: PassOptions & FixpointOptions = {},
 ): Promise<{ results: Result[]; passes: number; settled: boolean }> {
   const final = new Map<string, Result>();
   let passes = 0;
   let settled = false;
+  // What the previous pass changed: `null` before the first pass, `undefined`
+  // when it could not be measured (which asks every pair).
+  let lastChange: ReadonlySet<string> | undefined | null = null;
   while (passes < maxPasses) {
     passes++;
     opts.onPass?.(passes);
-    const { results, writerRan } = await regenPass(pairs, runner, opts);
+    const asked: Pair[] = [];
+    for (const pair of pairs) {
+      const sel =
+        lastChange === null
+          ? opts.firstPass?.(pair)
+          : opts.narrow === undefined
+            ? undefined
+            : opts.narrow.affects(pair, lastChange);
+      if (sel === undefined || sel.affected) {
+        asked.push(pair);
+        continue;
+      }
+      opts.onNotAsked?.(pair, sel.why, passes);
+      // Never asked at all: its answer is ASSUMED from the base, and the
+      // result says so (`hashesToRecord` will not record a hash for it).
+      // Asked in an earlier pass: that answer stands — nothing it reads moved.
+      if (!final.has(pair.check)) {
+        final.set(pair.check, { check: pair.check, writer: pair.writer, outcome: "current", skipped: true, assumed: true });
+      }
+    }
+    const measure = opts.narrow?.begin();
+    const { results, writerRan } = await regenPass(asked, runner, opts);
+    lastChange = measure === undefined ? undefined : measure();
     for (const r of results) {
       const prev = final.get(r.check);
       final.set(r.check, prev?.outcome === "regenerated" && r.outcome === "current" ? prev : r);
@@ -462,6 +622,239 @@ export async function regenToFixpoint(
     }
   }
   return { results: pairs.map((p) => final.get(p.check)!), passes, settled };
+}
+
+/**
+ * Which pairs a pass asks — bean `94zs`. Every hook is optional, and with none
+ * of them every pass asks every pair, exactly as before.
+ */
+export interface FixpointOptions {
+  onPass?: (pass: number) => void;
+  /**
+   * `--changed <base>`: whether the FIRST pass asks this pair. A pair it
+   * declines was not touched by the change since `<base>`.
+   */
+  firstPass?: (pair: Pair) => Affected;
+  /**
+   * The narrowed fixpoint. `begin()` is called before every pass and returns
+   * a function that, called after it, says which paths the pass ACTUALLY
+   * changed (`undefined`: could not be measured). The next pass asks only the
+   * pairs `affects` says that change touched.
+   *
+   * Why the settling guarantee survives: a pair not re-asked has the answer it
+   * gave in an earlier pass, and by induction nothing it reads has changed
+   * since it gave it — it was read from a tree identical, on its footprint, to
+   * this one. A pass that asks nobody runs no writer, and so settles.
+   */
+  narrow?: {
+    begin: () => () => ReadonlySet<string> | undefined;
+    affects: (pair: Pair, changed: ReadonlySet<string> | undefined) => Affected;
+  };
+  /** Called for each pair a pass does not ask, before the pass runs. */
+  onNotAsked?: (pair: Pair, why: string, pass: number) => void;
+}
+
+/** Why a run exited as it did — one of these, never a bare number. */
+export type ExitReason = "dry-run" | "clean" | "not-settled" | "not-staleness";
+
+/**
+ * The outcomes that are not staleness, so a run carrying one is not clean.
+ *
+ * Derived from {@link Outcome} by exclusion rather than listed independently:
+ * `current` and `regenerated` are the only two a clean run may hold, so a
+ * NEW outcome joins this set by default and has to be deliberately excluded.
+ * The merge that brought in `writer-failed` and `no-browser` (2026-10-04) is
+ * why — a hand-kept list of failures is a list that forgets the next one, and
+ * forgetting here means exiting 0.
+ */
+const CLEAN_OUTCOMES = new Set<Outcome>(["current", "regenerated"]);
+const NOT_STALENESS: ReadonlySet<Outcome> = new Set<Outcome>(
+  (["current", "regenerated", "unrepaired", "no-writer", "writer-failed", "no-browser"] as const).filter(
+    (o) => !CLEAN_OUTCOMES.has(o),
+  ),
+);
+
+/**
+ * The TAG that carries regen's verdict into a caller's own output.
+ *
+ * Declared once because two modules read the same token: `merge-base.ts`
+ * prints it when it aborts, and `merge-main-comment.ts` recovers the verdict
+ * from the captured log to decide whether the PR comment says "Error" or
+ * "Could not determine". Matching the abort's PROSE instead would make the
+ * bot's reporting depend on a sentence nobody thinks of as an interface.
+ */
+export const REGEN_VERDICT_TAG = "regen-verdict:";
+
+/** What a caller holding only regen's EXIT CODE may truthfully say about it. */
+export interface RegenExit {
+  verdict: ExitReason | "crashed";
+  /**
+   * Did regen establish a fact about the TREE?
+   *
+   * False for `not-settled` (every verdict was read from a tree a writer was
+   * still changing) and for `crashed` (nothing was measured at all). True for
+   * `not-staleness`, where regen did measure checks — though its OWN output is
+   * the only place the kinds are separated, which is why {@link RegenExit.why}
+   * sends the reader there rather than naming one.
+   */
+  determined: boolean;
+  why: string;
+}
+
+/**
+ * Read a non-zero `regen` exit HONESTLY — the inverse of {@link exitCodeFor}.
+ *
+ * ## The false reason this replaces
+ *
+ * `merge-base.ts` had one line for every non-zero exit:
+ *
+ * ```ts
+ * if (regen.status !== 0) abort("the gate set could not reproduce the resolution (regen reported unrepaired checks)");
+ * ```
+ *
+ * {@link exitCodeFor} returns three distinct verdicts and that message asserts
+ * one cause for all of them. It is FALSE in three of the four cases a caller
+ * can see:
+ *
+ * - **exit 2** — regen reported *no* unrepaired check. It reported that it
+ *   could not reach a fixed point, so it cannot stand behind the count it
+ *   printed. Its own words: *"this is NOT a clean regeneration"*.
+ * - **exit 1, every bad check `no-browser`** — regen labels that
+ *   could-not-determine in as many words: *"not a finding about the tree, and
+ *   it is not a pass either"*. Reporting it as an unrepaired check asserts a
+ *   defect in a tree nothing measured.
+ * - **exit 1, `no-writer`** — a check with no writer counterpart is a
+ *   different finding from one whose writer ran and did not fix it. Bean
+ *   `i1q7` split `writer-failed` out for exactly this reason: a verdict about
+ *   the TOOL is not a verdict about the tree.
+ * - **any other code, or a signal** — regen itself failed, and the message
+ *   described that as a measurement.
+ *
+ * **The abort was right in every case; only the recorded reason was wrong.**
+ * That is the same shape as commit `732c17f65`, whose resolution was correct
+ * and whose stated reason ("the pins diverged") was measured in a shallow
+ * submodule and false — and it is why this is a named function with tests
+ * rather than a longer string at the call site.
+ */
+export function regenExitMeaning(code: number | null): RegenExit {
+  if (code === 0) {
+    return { verdict: "clean", determined: true, why: "every pair is current or was regenerated, and the run settled" };
+  }
+  if (code === 1) {
+    return {
+      verdict: "not-staleness",
+      determined: true,
+      why:
+        "regen found at least one check that staleness does not explain, and its own output above " +
+        "says which — AND WHICH KIND. `unrepaired` is a defect (the writer ran and the check still " +
+        "fails); `no-writer` is a check with no writer counterpart; `writer-failed` is a verdict " +
+        "about the tool; `no-browser` is COULD NOT DETERMINE on a machine with no Chromium. Do not " +
+        "report them as one finding.",
+    };
+  }
+  if (code === 2) {
+    return {
+      verdict: "not-settled",
+      determined: false,
+      why:
+        "COULD NOT DETERMINE: regen did not reach a fixed point, so every verdict it printed was " +
+        "read from a tree a writer was still changing. It reported NO unrepaired check — it " +
+        "reported that it cannot stand behind the count.",
+    };
+  }
+  return {
+    verdict: "crashed",
+    determined: false,
+    why:
+      `regen exited ${code === null ? "on a signal" : code}, which is none of its three verdicts ` +
+      "(0 clean, 1 not-staleness, 2 not-settled). The tool itself failed and nothing was measured " +
+      "about the merged tree.",
+  };
+}
+
+/** {@link exitCodeFor}'s verdict: the code, which reason earned it, and the line to print. */
+export interface ExitVerdict {
+  code: number;
+  reason: ExitReason;
+  message?: string;
+}
+
+/**
+ * The run's exit code — bean `g5kt` defect 1.
+ *
+ * ## The false clean this replaces
+ *
+ * This was inline in the CLI and consulted `unrepaired` and `no-writer` only.
+ * `settled` was computed, printed as *"CAP REACHED: the last pass still ran a
+ * writer, so the tree may not be settled"*, and then **dropped** — so a run
+ * that could not reach a fixed point exited 0. Every reader of an exit code
+ * (a pre-push sweep, `prepare-merge`, a CI step, an agent) was told the tree
+ * was regenerated when the tool's own last line said it did not know.
+ *
+ * That is the standing could-not-determine rule — *"a sweep blind on one
+ * check has not cleared the others"* — broken by one of the tools that
+ * reports it, which is why it is a function with a name and a test rather
+ * than three lines at the bottom of a script.
+ *
+ * ## Why not-settled outranks a clean count
+ *
+ * An unsettled run's verdicts were read from a tree a writer was still
+ * changing, so `0 unrepaired` over it is not a finding of zero — it is a
+ * count nobody can stand behind. The order below is therefore deliberate:
+ * `not-staleness` first because it names specific checks a person must read,
+ * then `not-settled`, and `clean` only when neither holds.
+ *
+ * `--dry-run` ran no writer by construction, so it cannot settle anything and
+ * is not judged on it.
+ */
+export function exitCodeFor(run: {
+  results: readonly Result[];
+  settled: boolean;
+  dryRun?: boolean;
+  passes?: number;
+}): ExitVerdict {
+  if (run.dryRun === true) return { code: 0, reason: "dry-run" };
+  const bad = run.results.filter((r) => NOT_STALENESS.has(r.outcome));
+  if (bad.length > 0) {
+    // `no-browser` is in the set because bean `i1q7` put it there, and it stays
+    // exit 1 for the reason that set exists: it is not staleness, so it must
+    // not read as a clean regeneration. But it is a could-not-determine
+    // rather than a defect in the tree, and the one-size message called every
+    // one of them something "a generator cannot fix" — which misdescribes a
+    // machine that simply has no Chromium. So the count is main's and the
+    // wording is split.
+    const blind = bad.filter((r) => r.outcome === "no-browser");
+    const real = bad.length - blind.length;
+    const parts: string[] = [];
+    if (real > 0) {
+      parts.push(
+        `${real} check(s) are NOT explained by staleness. Read them: a generator ` +
+          "cannot fix a defect in what it is generating from.",
+      );
+    }
+    if (blind.length > 0) {
+      parts.push(
+        `${blind.length} check(s) COULD NOT BE DETERMINED here: they repair through a ` +
+          `browser and this machine has none (${blind.map((r) => r.check).join(", ")}). ` +
+          "That is not a finding about the tree, and it is not a pass either — " +
+          "run them where a browser exists.",
+      );
+    }
+    return { code: 1, reason: "not-staleness", message: parts.join("\n\n") };
+  }
+  if (!run.settled) {
+    return {
+      code: 2,
+      reason: "not-settled",
+      message:
+        `COULD NOT DETERMINE: the run did not reach a fixed point within ` +
+        `${run.passes ?? DEFAULT_MAX_PASSES} pass(es) — the last one still ran a writer. ` +
+        "Every verdict above was read from a tree a writer was still changing, so this " +
+        "is NOT a clean regeneration. Re-run with `--max-passes` raised; if it still will " +
+        "not settle, two writers are undoing each other and that is the defect to fix.",
+    };
+  }
+  return { code: 0, reason: "clean" };
 }
 
 /**
@@ -526,6 +919,10 @@ export function hashesToRecord(
   pairs.forEach((pair, i) => {
     const key = cacheKey(pair);
     const r = results[i];
+    // Assumed from the base rather than asked: a green hash recorded now
+    // would launder that premise into a measurement. Leave whatever a real
+    // run recorded (if it still matches, it still holds).
+    if (r?.assumed === true) return;
     const green = r !== undefined && (r.outcome === "current" || r.outcome === "regenerated");
     if (!settled || !green) {
       delete next.pairs[key];
@@ -544,7 +941,9 @@ if (import.meta.main) {
     scripts?: Record<string, string>;
   }).scripts ?? {};
   const jobs = jobsFromArgv(process.argv);
+  const maxPasses = maxPassesFromArgv(process.argv);
   const useCache = cacheEnabled(process.argv, process.env);
+  const changedBase = changedBaseFromArgv(process.argv);
   const t0 = performance.now();
 
   const gates = loadGates(repoRoot, { all });
@@ -575,7 +974,9 @@ if (import.meta.main) {
   // N+1 must hash again, and a reused table could serve a stale digest when an
   // mtime does not move within one clock tick.
   let digests = new FileDigests(repoRoot);
-  const fp = (pair: Pair) => fingerprint(repoRoot, scripts, scriptsOf(pair), pair.io, digests);
+  // Resolved once per run: a baseline that moves DURING a run is the next run's input.
+  const baseline = qaBaselineIdentity({ repoRoot });
+  const fp = (pair: Pair) => fingerprint(repoRoot, scripts, scriptsOf(pair), pair.io, digests, baseline);
   const skip = (pair: Pair): SkipDecision => decide(cache, cacheKey(pair), fp(pair));
 
   const checks = new Set(repairable.map((p) => p.check));
@@ -595,15 +996,60 @@ if (import.meta.main) {
       }
     : undefined;
 
+  // Bean `94zs`. A footprint is recomputed each pass: a writer can create a
+  // file a glob now matches. Memoised within the pass.
+  let footprints = new Map<string, ReturnType<typeof footprintOf>>();
+  const footprint = (pair: Pair) => {
+    let f = footprints.get(pair.check);
+    if (f === undefined) footprints.set(pair.check, (f = footprintOf(repoRoot, scripts, scriptsOf(pair), pair.io)));
+    return f;
+  };
+  let firstPass: ((pair: Pair) => Affected) | undefined;
+  if (changedBase !== undefined) {
+    const ch = changedSince(repoRoot, changedBase);
+    if ("undetermined" in ch) {
+      console.log(`  --changed ${changedBase}: COULD NOT DETERMINE the change (${ch.undetermined}) — asking every pair`);
+    } else {
+      const scriptsChanged = scriptsChangedSince(repoRoot, ch.baseSha, scripts);
+      firstPass = (pair) => affects(footprint(pair), ch.paths, { scriptsChanged });
+      const untouched = repairable.filter((p) => !firstPass!(p).affected).length;
+      console.log(
+        `  --changed ${changedBase} (${ch.baseSha.slice(0, 10)}): ${ch.paths.size} path(s) changed; ` +
+          `${untouched} of ${repairable.length} pair(s) read none of them and are not asked — ` +
+          "their answer is their answer at the base",
+      );
+    }
+  }
+  const narrow = {
+    begin: () => {
+      const before = snapshotTree(repoRoot);
+      return () => {
+        footprints = new Map();
+        const after = snapshotTree(repoRoot);
+        return before === undefined || after === undefined ? undefined : diffSnapshots(before, after);
+      };
+    },
+    affects: (pair: Pair, changed: ReadonlySet<string> | undefined) => affects(footprint(pair), changed),
+  };
+  const onNotAsked = explain
+    ? (pair: Pair, why: string, pass: number) =>
+        console.log(`    skip ${pair.check} — not asked${pass === 1 ? ` (--changed ${changedBase})` : " (unaffected by the last pass)"}: ${why}`)
+    : undefined;
+
   let results: Result[];
   let settled = false;
   if (dryRun) {
-    results = (await regenPass(repairable, asyncRun, { dryRun: true, jobs, skip, report })).results;
+    results = (
+      await regenToFixpoint(repairable, asyncRun, 1, { dryRun: true, jobs, skip, report, firstPass, onNotAsked })
+    ).results;
   } else {
-    const fx = await regenToFixpoint(repairable, asyncRun, 3, {
+    const fx = await regenToFixpoint(repairable, asyncRun, maxPasses, {
       jobs,
       skip,
       report,
+      firstPass,
+      narrow,
+      onNotAsked,
       onPass: (n) => {
         digests = new FileDigests(repoRoot);
         if (explain) console.log(`  pass ${n}:`);
@@ -616,7 +1062,9 @@ if (import.meta.main) {
     settled = fx.settled;
     console.log(
       `  ${fx.passes} pass(es)` +
-        (fx.settled ? "" : " — CAP REACHED: the last pass still ran a writer, so the tree may not be settled"),
+        (fx.settled
+          ? ""
+          : ` of ${maxPasses} — CAP REACHED: the last pass still ran a writer, so the tree is NOT settled`),
     );
   }
   if (cache !== undefined && !dryRun) {
@@ -624,6 +1072,12 @@ if (import.meta.main) {
     saveCache(repoRoot, hashesToRecord(repairable, results, settled, fp, cache));
   }
   for (const r of results) {
+    if (r.coveredBy !== undefined) {
+      // Derived (`pair-cover.ts`): the line that matters is the coverer's own,
+      // printed in its place; this one says where the verdict came from.
+      console.log(`  ${r.outcome === "regenerated" ? "·" : "✗"} ${r.check} is ${r.outcome} through ${r.coveredBy} (see its line)`);
+      continue;
+    }
     if (r.outcome === "regenerated") {
       console.log(
         dryRun
@@ -652,9 +1106,14 @@ if (import.meta.main) {
   }
 
   const by = (o: Outcome): Result[] => results.filter((r) => r.outcome === o);
-  const skippedCount = results.filter((r) => r.skipped).length;
+  const assumedCount = results.filter((r) => r.assumed).length;
+  const skippedCount = results.filter((r) => r.skipped && !r.assumed).length;
+  const skipNotes = [
+    ...(skippedCount > 0 ? [`${skippedCount} skipped: inputs unchanged since their last green run`] : []),
+    ...(assumedCount > 0 ? [`${assumedCount} not asked: --changed touched nothing they read`] : []),
+  ];
   console.log(
-    `\n${by("current").length} current${skippedCount > 0 ? ` (${skippedCount} skipped: inputs unchanged since their last green run)` : ""}, ` +
+    `\n${by("current").length} current${skipNotes.length > 0 ? ` (${skipNotes.join("; ")})` : ""}, ` +
       `${by("regenerated").length} ` +
       `${dryRun ? "stale" : "regenerated"}, ${by("unrepaired").length} unrepaired, ` +
       `${by("no-writer").length} without a writer, ${by("writer-failed").length} with a failing writer, ` +
@@ -674,20 +1133,15 @@ if (import.meta.main) {
       );
     }
   }
-  if (dryRun) {
-    console.log("--dry-run: nothing was changed.");
-    process.exit(0);
-  }
-  const bad =
-    by("unrepaired").length + by("no-writer").length + by("writer-failed").length + by("no-browser").length;
-  if (bad > 0) {
-    console.error(
-      `\n${bad} check(s) are NOT explained by staleness. Read them: a generator ` +
-        "cannot fix a defect in what it is generating from.",
-    );
-    process.exit(1);
-  }
-  if (by("regenerated").length > 0) {
+  if (dryRun) console.log("--dry-run: nothing was changed.");
+  // One decision, in one tested place — bean `g5kt`. `settled` used to be
+  // printed and then dropped, so a run that could not reach a fixed point
+  // exited 0.
+  const verdict = exitCodeFor({ results, settled, dryRun, passes: maxPasses });
+  if (verdict.message !== undefined) console.error(`\n${verdict.message}`);
+  if (verdict.code !== 0) process.exit(verdict.code);
+  // `--dry-run` changed nothing, so there is nothing to review or commit.
+  if (!dryRun && by("regenerated").length > 0) {
     console.log("\nReview `git diff`, then commit the regenerated artefacts with your merge.");
   }
 }

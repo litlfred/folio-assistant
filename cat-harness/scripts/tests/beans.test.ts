@@ -10,11 +10,12 @@
  * lands, each one naming the wrong bean.
  */
 import { describe, expect, test } from "bun:test";
-import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { beanFindings, blockedBy, hasExpiry, isOpen, readBeans } from "../beans.ts";
+import { repoRootFor } from "../../schemas/cat-harness.ts";
+import { beanDefsDir, beanFindings, blockEdges, blockedBy, blocksOf, hasExpiry, isOpen, readBeans } from "../beans.ts";
 
 /** A repository-shaped temp dir with a bean store in it. */
 function store(beans: Record<string, string>): string {
@@ -189,5 +190,90 @@ describe("isOpen", () => {
       d: bean("t-d", `title: d\nstatus: scrapped\ntype: task`),
     });
     expect(readBeans(root)!.filter(isOpen).map((x) => x.id)).toEqual(["t-a", "t-b"]);
+  });
+});
+
+describe("ONE edge set over `blocking:` and `blocked_by:` (bean vhqq)", () => {
+  const root = store({
+    a: bean("t-a", `title: a\nstatus: in-progress\ntype: task\nblocking:\n    - t-b`),
+    // Declared from the blocked end only.
+    b: bean("t-b", `title: b\nstatus: todo\ntype: task\nblocked_by:\n    - t-c`),
+    // Declared from BOTH ends — the pair must appear once, with both keys.
+    c: bean("t-c", `title: c\nstatus: todo\ntype: task\nblocking:\n    - t-d`),
+    d: bean("t-d", `title: d\nstatus: todo\ntype: task\nblocked_by:\n    - t-c\n    - t-gone`),
+  });
+  const beans = readBeans(root)!;
+  const { edges, dangling } = blockEdges(beans);
+
+  test("both declarations normalise to blocker → blocked, deduplicated", () => {
+    expect(edges.map((e) => `${e.blocker}>${e.blocked}`)).toEqual(["t-a>t-b", "t-c>t-b", "t-c>t-d", "t-gone>t-d"]);
+    expect(edges.find((e) => e.blocked === "t-d" && e.blocker === "t-c")!.declaredOn).toEqual(["blocked_by", "blocking"]);
+  });
+
+  test("blockedBy and blocksOf read the union, not `blocking:` alone", () => {
+    expect(blockedBy(beans).get("t-b")).toEqual(["t-a", "t-c"]);
+    expect(blocksOf(beans).get("t-c")).toEqual(["t-b", "t-d"]);
+  });
+
+  test("a dangling edge is reported, never dropped", () => {
+    expect(dangling).toEqual([{ blocker: "t-gone", blocked: "t-d", declaredOn: ["blocked_by"], missing: ["blocker"] }]);
+    const f = beanFindings(beans).filter((x) => x.kind === "blocking-unknown");
+    expect(f.map((x) => `${x.bean}>${x.blocks}`)).toEqual(["t-gone>t-d"]);
+  });
+
+  test("a blocked_by edge's expiry is looked for on the bean that declared it", () => {
+    const withExpiry = store({
+      b: bean("t-b", `title: b\nstatus: todo\ntype: task\nblocked_by:\n    - t-c`, "**expires**: 2026-11-01."),
+      c: bean("t-c", `title: c\nstatus: in-progress\ntype: task`),
+    });
+    expect(beanFindings(readBeans(withExpiry)!)).toEqual([]);
+  });
+});
+
+describe("the REAL corpus: the edge set is exactly the union of both declarations", () => {
+  // Computed WITHOUT readBeans: the front matter is parsed here by its own
+  // line walk, so a reader that drops one key cannot agree with itself.
+  const repo = repoRootFor(join(import.meta.dir, "../.."));
+  const dir = beanDefsDir(repo)!;
+  const union = new Set<string>();
+  let declaredBlocking = 0;
+  let declaredBlockedBy = 0;
+  for (const name of readdirSync(dir)) {
+    if (!name.endsWith(".md")) continue;
+    const text = readFileSync(join(dir, name), "utf-8");
+    const fm = /^---\n([\s\S]*?)\n---/.exec(text)?.[1];
+    if (fm === undefined) continue;
+    const id = /^#\s*(\S+)/m.exec(fm)?.[1] ?? name.replace(/\.md$/, "");
+    const lines = fm.split("\n");
+    const list = (key: string): string[] => {
+      const at = lines.findIndex((l) => l.startsWith(`${key}:`));
+      if (at < 0) return [];
+      const out: string[] = [];
+      for (const l of lines.slice(at + 1)) {
+        const m = /^\s+-\s*['"]?([^'"\s]+)['"]?\s*$/.exec(l);
+        if (!m) break;
+        out.push(m[1]!);
+      }
+      return out;
+    };
+    for (const t of list("blocking")) {
+      union.add(`${id}>${t}`);
+      declaredBlocking++;
+    }
+    for (const f of list("blocked_by")) {
+      union.add(`${f}>${id}`);
+      declaredBlockedBy++;
+    }
+  }
+
+  test("the corpus declares edges from both ends (else this test proves nothing)", () => {
+    expect(declaredBlocking).toBeGreaterThan(0);
+    expect(declaredBlockedBy).toBeGreaterThan(0);
+  });
+
+  test("blockEdges(readBeans) has exactly the union's edges", () => {
+    const { edges } = blockEdges(readBeans(repo)!);
+    expect(edges.length).toBe(union.size);
+    expect(new Set(edges.map((e) => `${e.blocker}>${e.blocked}`))).toEqual(union);
   });
 });

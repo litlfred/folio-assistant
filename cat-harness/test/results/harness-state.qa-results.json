@@ -1,8 +1,8 @@
 {
   "$schema": "qa-results/v1",
   "producer": {
-    "script": "cat-harness/scripts/check-harness-state.ts",
-    "script_hash": "86d72ea0be6c"
+    "script": "cat-harness-tools/scripts/check-harness-state.ts",
+    "script_hash": "2fdfa69b55f3"
   },
   "subject": {
     "kind": "harness-state",
@@ -11,8 +11,13 @@
   "families": {
     "health-result-is-from-the-current-producer": {
       "summary": "A committed health result was written by a version of its producer that no longer exists, so the remedies it states are the old code's remedies — which is how a reader is told to do something the repository has since established cannot work (bean `7umv`). Examined 1.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "where": "cat-harness/test/health/results/repository.health-report.json",
+          "detail": "written by `test/health/run.ts` at efcabbbd5371; the checker is now f67a0932086b. Re-run `bun run health` and commit, or the remedies in it are the old producer's."
+        }
+      ]
     },
     "interaction-profile-is-read": {
       "summary": "A profile declared in the interaction graph that nothing in the corpus names. The person has stated an accommodation and no skill or script will honour it — `dh4f` at the subject where it costs the most, because it fails silently and at one person. Examined 1.",
@@ -30,5 +35,5 @@
       "entries": []
     }
   },
-  "total": 0
+  "total": 1
 }

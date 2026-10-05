@@ -90,6 +90,21 @@ exclude:
   - folio-assistant-migration.md
   - qou-migration-checklist.md
   - sage-mcp.md
+  # Content-addressed payloads (bean `f233`) are copied into the site VERBATIM
+  # by docs-site.yml / feature-staging.yml after the build. A skill body
+  # carries front matter and `{{ }}`, so Jekyll would render it as a page and
+  # the bytes served would no longer hash to their name.
+  - payload
+  # Directory READMEs that `readme:subgraphs` writes into a declared directory
+  # with NO index page of its own (#2094). They are for someone browsing the
+  # repository, not site pages: under the github-pages gem set,
+  # `jekyll-readme-index` publishes such a README as the directory's
+  # `index.html` through a path with no GFM tables, and `check:escaped-markup`
+  # fails on the pipes. A directory that has an `index.md` is unaffected. Find
+  # new cases with: every tracked README.md under docs/ whose directory holds
+  # no index.md or index.html.
+  - assets/img/uml/overview/README.md
+  - cat-harness/auto-docs/lsi/README.md
 
 plugins:
   - jekyll-remote-theme

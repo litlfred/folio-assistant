@@ -8,8 +8,50 @@ skinparam shadowing false
 skinparam packageStyle rectangle
 hide empty methods
 
-package "smart-base/smart-base-docs" as pkg_smart_base_smart_base_docs <<docs>> {
-  note "docs: no node schema declared\n(no node here carries a $schema family docs names (11 named): could not determine)" as n_smart_base_smart_base_docs_docs
+package "smart-base/smart-base-qa-checkers" as pkg_smart_base_smart_base_qa_checkers <<qa-checkers>> {
+  class "folio-qa-checker/v1" as smart_base_smart_base_qa_checkers_folio_qa_checker_v1_folio_qa_checker_v1 <<json: QaCheckerNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-qa-checker/v1'
+    criterion [1] : string
+    check [1] : string
+    rationale [0..1] : string
+  }
+}
+package "smart-base/smart-base-block-kinds" as pkg_smart_base_smart_base_block_kinds <<block-kinds>> {
+  class "folio-block-kind/v1" as smart_base_smart_base_block_kinds_folio_block_kind_v1_folio_block_kind_v1 <<json: BlockKindNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-block-kind/v1'
+    kind [1] : string
+    adapter [1] : string
+    profile [0..1] : document | paper
+    builder [0..1] : string
+    labelPrefix [1] : string
+    prefixEnforced [0..1] : boolean
+    provable [0..1] : boolean
+    folioType [1] : string
+    docoType [0..1] : string
+    heading [0..1] : string
+    headingPlural [0..1] : string
+    indexRank [0..1] : integer
+    rationale [0..1] : string
+  }
+}
+package "smart-base/smart-base-content-adapters" as pkg_smart_base_smart_base_content_adapters <<content-adapters>> {
+  class "folio-content-adapter/v1" as smart_base_smart_base_content_adapters_folio_content_adapter_v1_folio_content_adapter_v1 <<json: ContentAdapterNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-content-adapter/v1'
+    adapter [1] : string
+    typed [1] : boolean
+    companionRoles [1..*] : enum(9)[]
+    vocabulary [0..1] : string
+    rationale [0..1] : string
+  }
+}
+package "smart-base/smart-base-translations" as pkg_smart_base_smart_base_translations <<translation-sources>> {
+  class "TranslationConfig" as smart_base_smart_base_translations_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {
+    defaultLocale [0..1] : string
+    supportedLocales [0..*] : string[]
+    translationDir [0..1] : string
+    potGranularity [0..1] : block | chapter | folio
+    officialRequired [0..1] : boolean
+  }
 }
 package "smart-base/library" as pkg_smart_base_library <<library>> {
   class "folio-document-images/v1" as smart_base_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> #f4f4f1 {
@@ -65,7 +107,6 @@ package "smart-base/processes" as pkg_smart_base_processes <<processes>> {
     bpmn:exclusiveGateway [0..*] : element
     bpmn:extensionElements [0..*] : element
     bpmn:flowNodeRef [0..*] : element
-    bpmn:import [0..*] : element
     bpmn:incoming [0..*] : element
     bpmn:lane [0..*] : element
     bpmn:laneSet [0..*] : element
@@ -91,7 +132,6 @@ package "smart-base/smart-base-house-processes" as pkg_smart_base_smart_base_hou
     bpmn:exclusiveGateway [0..*] : element
     bpmn:extensionElements [0..*] : element
     bpmn:flowNodeRef [0..*] : element
-    bpmn:import [0..*] : element
     bpmn:incoming [0..*] : element
     bpmn:lane [0..*] : element
     bpmn:laneSet [0..*] : element
@@ -600,6 +640,10 @@ package "smart-base/smart-base-themes" as pkg_smart_base_smart_base_themes <<the
     overrides [0..*] : Override[]
   }
 }
+package "smart-base/smart-base-docs" as pkg_smart_base_smart_base_docs <<docs, ig-pages>> {
+  note "docs: no node schema declared\n(no node here carries a $schema family docs names (12 named): could not determine)" as n_smart_base_smart_base_docs_docs
+  note "ig-pages: no node schema declared\n(no validator registered: could not determine)" as n_smart_base_smart_base_docs_ig_pages
+}
 package "smart-base/smart-base-document-kinds" as pkg_smart_base_smart_base_document_kinds <<document-kinds>> {
   class "Source" as smart_base_smart_base_document_kinds_folio_document_kind_v1_Source <<json: DocumentKindSchema>> #f4f4f1 {
     ref [1] : string
@@ -651,7 +695,7 @@ package "smart-base/smart-base-document-kinds" as pkg_smart_base_smart_base_docu
   }
 }
 package "smart-base/smart-base-findings" as pkg_smart_base_smart_base_findings <<docs>> {
-  note "docs: no node schema declared\n(no node here carries a $schema family docs names (11 named): could not determine)" as n_smart_base_smart_base_findings_docs
+  note "docs: no node schema declared\n(no node here carries a $schema family docs names (12 named): could not determine)" as n_smart_base_smart_base_findings_docs
 }
 package "smart-base/smart-base-external-schemas" as pkg_smart_base_smart_base_external_schemas <<external-schema>> {
   class "Term" as smart_base_smart_base_external_schemas_folio_external_schema_v1_Term <<json: ExternalSchemaSchema>> #e9edf3 {
@@ -753,15 +797,19 @@ smart_base_voices_VoiceProfile *-- "1..*" smart_base_voices_Source : sources
 smart_base_voices_Rule *-- "0..*" smart_base_voices_Pattern : patterns
 smart_base_voices_Rule *-- "0..*" smart_base_voices_Terminology : terminology
 smart_base_voices_VoiceProfile *-- "1..*" smart_base_voices_Rule : rules
-' grid: portrait, 3 column(s) — pkg_smart_base_smart_base_docs pkg_smart_base_library pkg_smart_base_methodologies pkg_smart_base_processes pkg_smart_base_smart_base_house_processes pkg_smart_base_smart_base_artifact_index pkg_smart_base_tools pkg_smart_base_qa pkg_smart_base_smart_base_themes pkg_smart_base_smart_base_document_kinds pkg_smart_base_smart_base_findings pkg_smart_base_smart_base_external_schemas pkg_smart_base_voices
-pkg_smart_base_smart_base_docs -[hidden]down- pkg_smart_base_processes
+' grid: portrait, 3 column(s) — pkg_smart_base_smart_base_qa_checkers pkg_smart_base_smart_base_block_kinds pkg_smart_base_smart_base_content_adapters pkg_smart_base_smart_base_translations pkg_smart_base_library pkg_smart_base_methodologies pkg_smart_base_processes pkg_smart_base_smart_base_house_processes pkg_smart_base_smart_base_artifact_index pkg_smart_base_tools pkg_smart_base_qa pkg_smart_base_smart_base_themes pkg_smart_base_smart_base_docs pkg_smart_base_smart_base_document_kinds pkg_smart_base_smart_base_findings pkg_smart_base_smart_base_external_schemas pkg_smart_base_voices
+pkg_smart_base_smart_base_qa_checkers -[hidden]down- pkg_smart_base_smart_base_translations
+pkg_smart_base_smart_base_block_kinds -[hidden]down- pkg_smart_base_library
+pkg_smart_base_smart_base_content_adapters -[hidden]down- pkg_smart_base_methodologies
+pkg_smart_base_smart_base_translations -[hidden]down- pkg_smart_base_processes
 pkg_smart_base_library -[hidden]down- pkg_smart_base_smart_base_house_processes
 pkg_smart_base_methodologies -[hidden]down- pkg_smart_base_smart_base_artifact_index
 pkg_smart_base_processes -[hidden]down- pkg_smart_base_tools
 pkg_smart_base_smart_base_house_processes -[hidden]down- pkg_smart_base_qa
 pkg_smart_base_smart_base_artifact_index -[hidden]down- pkg_smart_base_smart_base_themes
-pkg_smart_base_tools -[hidden]down- pkg_smart_base_smart_base_document_kinds
-pkg_smart_base_qa -[hidden]down- pkg_smart_base_smart_base_findings
-pkg_smart_base_smart_base_themes -[hidden]down- pkg_smart_base_smart_base_external_schemas
+pkg_smart_base_tools -[hidden]down- pkg_smart_base_smart_base_docs
+pkg_smart_base_qa -[hidden]down- pkg_smart_base_smart_base_document_kinds
+pkg_smart_base_smart_base_themes -[hidden]down- pkg_smart_base_smart_base_findings
+pkg_smart_base_smart_base_docs -[hidden]down- pkg_smart_base_smart_base_external_schemas
 pkg_smart_base_smart_base_document_kinds -[hidden]down- pkg_smart_base_voices
 @enduml

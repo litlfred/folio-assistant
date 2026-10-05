@@ -45,6 +45,7 @@ import {
   instanceRootsIn,
   readDeclaration,
   repoRootFor,
+  siblingScopeFor,
 } from "../schemas/cat-harness.ts";
 import {
   loadVoices,
@@ -266,7 +267,8 @@ export function readVoicesGraph(roots: string[], repoRootIn?: string): VoicesGra
   // the rule `resolveCoveragePath` states one level up: resolving against
   // whichever root happens to work is worse than picking wrong, because the
   // wrong pick is visible and the lucky one is not.
-  const repoRoot = repoRootIn ?? repoRootFor(roots[0] ?? ".");
+  // `siblingScopeFor`: given the ROOT instance, `dirname` lists no instance (g43f).
+  const repoRoot = repoRootIn ?? siblingScopeFor(roots[0] ?? ".");
   // Every instance in the repository, not only the roots passed in: a voice is
   // owned by whoever DERIVED it, and the platform derives none — so a reader
   // that asked only its own root would find nothing and report it as an

@@ -100,12 +100,14 @@
  *   bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site
  *   bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
  */
+import { VIEWER_DIR } from "./pdf-viewer.ts";
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
 import { dirname, isAbsolute, join, posix, relative, resolve, sep } from "path";
 
 import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
 import { instanceDirectories, declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
 import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js";
+import { navMarkFields, type HarnessMark } from "./lib/harness-mark.js";
 import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
 import { kindTitle } from "./lib/nav-label.js";
 import { viewersOf } from "./viewer-declarations.js";
@@ -573,7 +575,7 @@ export function instantiatedHarnesses(built: string, toRoot: string): NavItem[] 
   if (prefix === undefined) return undefined;
   const data = join(REPO, prefix, "_data", "harness.json");
   if (!existsSync(data)) return undefined;
-  let d: { harnesses?: { name?: string; label?: string; title?: string; href?: string | null; instantiated?: boolean; tone?: number; icon?: { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } } | null }[] };
+  let d: { harnesses?: { name?: string; label?: string; title?: string; href?: string | null; instantiated?: boolean; tone?: number; mark?: HarnessMark | null }[] };
   try {
     d = JSON.parse(readFileSync(data, "utf-8"));
   } catch {
@@ -587,23 +589,35 @@ export function instantiatedHarnesses(built: string, toRoot: string): NavItem[] 
       // A site-absolute href has to be re-based for a page that is not at the
       // root. `/who-iris/` from `/docs/who-iris/index.html` is `../../who-iris/`.
       const href = h.href ? `${toRoot}${h.href}` : undefined;
-      const avatar = h.icon?.src
-        ? {
-            src: `${toRoot}${h.icon.src}`,
-            ...(h.icon.title ? { title: h.icon.title } : {}),
-            // `603s`'s declared crop, when the icon image carries one.
-            // `harness-tiles.ts` puts it here; nothing in this file decides a
-            // box, which is the point of declaring it.
-            ...(h.icon.region ? { region: h.icon.region } : {}),
-          }
-        : undefined;
+      // The row's RESOLVED mark, never its `icon` (bean `2vpn`): reading
+      // `icon` here dropped every theme avatar and every glyph, so only an
+      // instance with a declared image ever drew one on a mounted page.
       return {
         label,
         ...(href ? { href } : {}),
-        ...(avatar ? { avatar } : {}),
-        ...(h.tone ? { tone: h.tone } : {}),
+        ...navMarkFields(h.mark, h.tone, (src) => `${toRoot}${src}`),
       };
     });
+}
+
+/**
+ * The harness's navbar ROW — the icon row — read off the same
+ * `_data/harness.json` every other rail input comes from, under `navbar`,
+ * which is exactly what the Jekyll sidebar's `#fa-navbar-row` carries (bean
+ * `wckf`, #2147). See `RailOptions.navbarRow` for the three states:
+ * `undefined` when the file cannot say, `null` when it says "none".
+ */
+export function navbarRowData(built: string): unknown {
+  const prefix = publishedDocsPrefix(REPO, built);
+  if (prefix === undefined) return undefined;
+  const data = join(REPO, prefix, "_data", "harness.json");
+  if (!existsSync(data)) return undefined;
+  try {
+    const d = JSON.parse(readFileSync(data, "utf-8")) as { navbar?: unknown };
+    return "navbar" in d ? (d.navbar ?? null) : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 /**
@@ -642,29 +656,32 @@ export function railNames(built: string, instance: string): { harness?: string; 
  * whether it belongs in the harnesses list. Absent, the header draws the
  * instance's initial — never a `☰` (#1757).
  */
-export function instanceMark(built: string, instance: string, toRoot: string): Pick<NavItem, "avatar" | "tone"> | undefined {
+export function instanceMark(
+  built: string,
+  instance: string,
+  toRoot: string,
+): Pick<NavItem, "avatar" | "glyphPath" | "tone"> | undefined {
   const prefix = publishedDocsPrefix(REPO, built);
   if (prefix === undefined) return undefined;
   const data = join(REPO, prefix, "_data", "harness.json");
   if (!existsSync(data)) return undefined;
-  type Icon = { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } };
-  let d: { name?: string; icon?: Icon | null; harnesses?: { name?: string; tone?: number; icon?: { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } } | null }[] };
+  let d: { name?: string; icon?: HarnessMark | null; harnesses?: { name?: string; tone?: number; mark?: HarnessMark | null }[] };
   try {
     d = JSON.parse(readFileSync(data, "utf-8"));
   } catch {
     return undefined;
   }
   const h = d.harnesses?.find((x) => x.name === instance);
-  const icon = h?.icon ?? (d.name === instance ? d.icon : undefined);
-  const avatar = icon?.src
-    ? {
-        src: `${toRoot}${icon.src}`,
-        ...(icon.title ? { title: icon.title } : {}),
-        ...(icon.region ? { region: icon.region } : {}),
-      }
-    : undefined;
-  if (!avatar && !h?.tone) return undefined;
-  return { ...(avatar ? { avatar } : {}), ...(h?.tone ? { tone: h.tone } : {}) };
+  // The same resolved mark the sidebar row draws (bean `2vpn`): theme
+  // avatar, then declared icon, then registry glyph — resolved ONCE, in
+  // `harness-tiles.ts`. Only an instance with NO row falls back to the site's
+  // own `icon`, and only when the site is that instance.
+  const fields = h
+    ? navMarkFields(h.mark, h.tone, (src) => `${toRoot}${src}`)
+    : d.name === instance
+      ? navMarkFields(d.icon, undefined, (src) => `${toRoot}${src}`)
+      : {};
+  return Object.keys(fields).length > 0 ? fields : undefined;
 }
 
 /**
@@ -780,6 +797,7 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
         ...(root[0] ? { root: root[0] } : {}),
         links,
         ...(harnesses ? { harnesses } : {}),
+        navbarRow: navbarRowData(built),
       });
       if (after === undefined) {
         skipped.push(file.slice(siteAbs.length + 1));
@@ -872,13 +890,33 @@ const REDIRECT = /<meta\s+http-equiv="refresh"/i;
  * makes the exclusion visible — which is what an empty array with this comment
  * provides and a removed one does not.
  */
-const NOT_THIS_PASS: readonly string[] = [];
+// The pinned pdf.js viewer is Mozilla's page, framed inside ours: a rail
+// injected into it draws the site's whole navigation inside the PDF frame —
+// measured on the first staging preview, 2026-10-04 (bean `folio-assistant-5ea6`).
+const NOT_THIS_PASS: readonly string[] = [VIEWER_DIR];
+
+/**
+ * Where a rail's platform links point when the site is NOT the platform's.
+ *
+ * A folio's own Pages site (`folio-staging.yml`, e.g. litlfred/smart-ra) is
+ * railed with the platform's graphs and harnesses, but those are published on
+ * the PLATFORM's site: re-based against the folio page's own root, every one
+ * of them 404s. `platformBase` re-bases them against the platform's published
+ * root instead, while the home row stays the folio's own root.
+ */
+export interface ForeignSiteRail {
+  /** The platform site's root, no trailing slash: `https://litlfred.github.io/folio-assistant`. */
+  platformBase: string;
+  /** What the home row is called — the folio's name, not the platform's. */
+  homeLabel?: string;
+}
 
 export function railStandalonePages(
   siteAbs: string,
   built: string,
   instanceName: string,
   mountRoutes: readonly string[],
+  foreign?: ForeignSiteRail,
 ): { injected: number; alreadyNavigated: number; redirects: number; declined: number; skipped: string[] } {
   const skipped: string[] = [];
   let injected = 0;
@@ -927,16 +965,20 @@ export function railStandalonePages(
       const depth = rel.split("/").length - 1;
       const toRoot = depth === 0 ? "." : new Array(depth).fill("..").join("/");
       const named = railNames(built, instanceName);
-      const links = declaredGraphs(instanceName, new Map(), publishedGraphs(built, instanceName, toRoot), named.harness);
-      const harnesses = instantiatedHarnesses(built, toRoot);
-      const mark = instanceMark(built, instanceName, toRoot);
+      // The platform's links resolve against the platform's site; only home is this site's.
+      const linkRoot = foreign?.platformBase ?? toRoot;
+      const links = declaredGraphs(instanceName, new Map(), publishedGraphs(built, instanceName, linkRoot), named.harness);
+      const harnesses = instantiatedHarnesses(built, linkRoot);
+      const mark = instanceMark(built, instanceName, linkRoot);
+      const homeLabel = foreign ? foreign.homeLabel : named.site;
       const after = injectRail(before, {
         instance: named.harness ?? instanceName,
-        ...(named.site ? { homeLabel: named.site } : {}),
+        ...(homeLabel ? { homeLabel } : {}),
         toRoot,
         ...(mark ? { mark } : {}),
         links,
         ...(harnesses ? { harnesses } : {}),
+        navbarRow: navbarRowData(built),
       });
       if (after === undefined) {
         skipped.push(rel);
