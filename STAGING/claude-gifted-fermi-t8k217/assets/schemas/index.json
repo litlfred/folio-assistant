@@ -7036,6 +7036,13 @@
           "doc": "Other spellings of the name, listed on the landing (`ob3m` 5)."
         },
         {
+          "name": "avatar",
+          "type": "KindAvatar",
+          "optional": true,
+          "array": false,
+          "doc": "The instance's own avatar (sod4 #4); the table in avatars.ts covers only the instances below the harness."
+        },
+        {
           "name": "images",
           "type": "KgImage[]",
           "optional": true,
@@ -7242,6 +7249,7 @@
         "cat-harness/schemas/cat-harness.ts#RenderExemption",
         "cat-harness/schemas/cat-harness.ts#Subscription",
         "cat-harness/schemas/cat-harness.ts#Topology",
+        "cat-harness/schemas/graph-kind-node.ts#KindAvatar",
         "cat-harness/schemas/kg-node.ts#KgAsset",
         "cat-harness/schemas/kg-node.ts#KgImage",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels",
@@ -18533,6 +18541,19 @@
         "GRAPH_KIND_NODE_TAG",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-kind-node.ts#KindAvatar",
+      "name": "KindAvatar",
+      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -55378,6 +55399,14 @@
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness/schemas/cat-harness.ts#Topology",
       "via": "topology",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/graph-kind-node.ts#KindAvatar",
+      "via": "avatar",
       "kind": "field",
       "optional": true,
       "array": false
