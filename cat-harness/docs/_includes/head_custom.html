@@ -539,15 +539,7 @@
   `[data-fa-process-index]` (the publication-workflow page), which walks it
   down to every `processes` subgraph's `index.hydrated.jsonld`.
 -->
-<!--
-  `prepend: site.site_root`, NOT `relative_url`, on this one and the two below:
-  since 2026-10-05 `relative_url` prefixes the DOCS tree's base
-  (`<base-url>/docs/cat-harness`, issue #2188), and these three are published
-  at the SITE root — the subgraph index because its `@id` names that address
-  (`hoist-addressed-documents.ts`), `build.json` and `fsh-guts.json` because the
-  deploy writes them there, beside the graph documents.
--->
-<meta name="fa-processes-src" content="{{ '/subgraph/index.jsonld' | prepend: site.site_root }}">
+<meta name="fa-processes-src" content="{{ '/subgraph/index.jsonld' | relative_url }}">
 <!--
   The deploy's stamp — when it was built and from which commit — which the
   work-plan dashboard turns into "generated … · N commits behind main".
@@ -555,7 +547,7 @@
   deploy, never committed, because a committed timestamp is a merge conflict
   on every pair of concurrent changes (bean `y7b3`).
 -->
-<meta name="fa-build-src" content="{{ '/build.json' | prepend: site.site_root }}">
+<meta name="fa-build-src" content="{{ '/build.json' | relative_url }}">
 
 <!--
   The discarded-items document — `fsh-guts.jsonld`, published at the base by
@@ -574,7 +566,7 @@
   fetch that fails is reported rather than shown as an empty trashcan —
   "nothing discarded" and "could not read the document" are opposite facts.
 -->
-<meta name="fa-fsh-guts-src" content="{{ '/fsh-guts.json' | prepend: site.site_root }}">
+<meta name="fa-fsh-guts-src" content="{{ '/fsh-guts.json' | relative_url }}">
 <!--
   ?v=<build time> ON EVERY FIRST-PARTY ASSET — and the reason is a REVIEW
   failure, not a performance one.

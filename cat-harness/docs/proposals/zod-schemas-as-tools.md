@@ -201,7 +201,7 @@ script that is not wired to anything. Either wire it — in which case the
 `[object Object]` bug is live and the `--check` gate that every other generator
 here has is missing — or retire it, and stop four beans and one skill from
 citing it as a consumer. Not a deletion to take unilaterally
-([`deletion-requires-confirmation`](https://litlfred.github.io/folio-assistant/docs/cat-harness/reference/skill-instructions/deletion-requires-confirmation.html)),
+([`deletion-requires-confirmation`](https://litlfred.github.io/folio-assistant/reference/skill-instructions/deletion-requires-confirmation.html)),
 which is why it is named here rather than done.
 
 ## What this does not claim

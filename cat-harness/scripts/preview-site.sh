@@ -122,13 +122,7 @@ default_layout >> "$cfg"
 src="$docs"
 composed="$(mktemp -d /tmp/preview-docs-XXXXXX)"
 trap 'rm -f "$cfg"; rm -rf "$composed"' EXIT
-# `PREVIEW_CHANGED_FILES=<file>` passes the same `--changed-files` a staging
-# build does, so composed instances the list does not touch are STUBBED — the
-# smart-* trees are most of a ~1.1 GB build, which a sandbox with little disk
-# cannot hold. Absent, every composed instance is carried, as before.
-compose_args=(--out "$composed")
-[ -n "${PREVIEW_CHANGED_FILES:-}" ] && compose_args+=(--changed-files "$PREVIEW_CHANGED_FILES")
-if bun run "$here/compose-docs.ts" "${compose_args[@]}" >/dev/null 2>&1 && [ -f "$composed/_config.yml" ]; then
+if bun run "$here/compose-docs.ts" --out "$composed" >/dev/null 2>&1 && [ -f "$composed/_config.yml" ]; then
   src="$composed"
   # The config is stripped from the COMPOSED copy for the same reason as
   # before — see (2) — so the committed one is still never touched.
@@ -145,35 +139,17 @@ else
   echo "  Composed directories (smart-trust's docs among them) will 404." >&2
 fi
 
-# THE DOCS LIVE AT `docs/<built>/`, not at the root (owner, 2026-10-05, bean
-# `kc7k`): Jekyll writes into that route, and `_config.yml`'s `baseurl` says
-# the same thing to every `relative_url`. The route is ASKED FOR, the same way
-# the stub is below, so this cannot disagree with `docs-site.yml`.
-route="$(bun run "$here/docs-route.ts" --built cat-harness 2>/dev/null | tr -d '[:space:]')"
-if [ -z "$route" ]; then
-  echo "preview-site: could not determine the docs route (docs-route.ts) — not guessing one." >&2
-  exit 1
-fi
-docsdest="$dest/$route"
-mkdir -p "$docsdest"
-
-echo "preview-site: building $src -> $docsdest"
-"$jekyll" build --config "$cfg" --source "$src" --destination "$docsdest" 2>&1 \
+echo "preview-site: building $src -> $dest"
+"$jekyll" build --config "$cfg" --source "$src" --destination "$dest" 2>&1 \
   | grep -vE "deprecation|DEPRECATION|^\s*╵|^\s*╷|^\s*[0-9]+ \||WARNING: [0-9]+ repetitive" \
   || true
 
-if [ ! -f "$docsdest/index.html" ]; then
+if [ ! -f "$dest/index.html" ]; then
   echo "preview-site: build produced no index.html — see the output above." >&2
   exit 1
 fi
 
 repo="$(cd "$here/../.." && pwd)"
-
-# `hoist-addressed-documents.ts --site ./_site --built cat-harness` in CI: the
-# JSON-LD documents whose `@id` names a SITE-ROOT address go back to it, so the
-# moved docs tree does not take every site-node and library IRI with it.
-echo "preview-site: hoisting root-addressed JSON-LD documents out of $route/"
-bun run "$here/hoist-addressed-documents.ts" --site "$dest" --built cat-harness 2>&1 | sed 's/^/  /' || true
 
 # ── The post-Jekyll steps, mirroring `docs-site.yml` ──────────────────────
 #
@@ -214,14 +190,14 @@ bun run "$here/set-html-lang.ts" --site "$dest" 2>&1 | sed 's/^/  /' || true
 qa_state="$(mktemp /tmp/preview-qa-state-XXXXXX.json)"
 (cd "$repo" && bun run "$here/qa-site-assets.ts" fetch --ref main \
   --results cat-harness/test/results --state "$qa_state") 2>&1 | sed 's/^/  /' || true
-mkdir -p "$docsdest/assets/qa"
+mkdir -p "$dest/assets/qa"
 if [ -d "$repo/cat-harness/test/results/witnesses" ]; then
-  cp -rT "$repo/cat-harness/test/results/witnesses" "$docsdest/assets/qa"
+  cp -rT "$repo/cat-harness/test/results/witnesses" "$dest/assets/qa"
 fi
 if [ -d "$repo/cat-harness/test/results" ]; then
-  find "$repo/cat-harness/test/results" -maxdepth 1 -name '*.qa-results.json' -exec cp {} "$docsdest/assets/qa/" \;
+  find "$repo/cat-harness/test/results" -maxdepth 1 -name '*.qa-results.json' -exec cp {} "$dest/assets/qa/" \;
 fi
-if ! (cd "$repo" && bun run "$here/qa-site-assets.ts" verify --site "$docsdest" \
+if ! (cd "$repo" && bun run "$here/qa-site-assets.ts" verify --site "$dest" \
       --results cat-harness/test/results --state "$qa_state") 2>&1 | sed 's/^/  /'; then
   echo "preview-site: the QA evidence check FAILED — see above; badges may render \`unknown\`." >&2
 fi
@@ -239,10 +215,6 @@ if [ -n "$stub" ]; then
   bun run "$here/glossary-export.ts" --out "$dest/$stub-glossary.jsonld" >/dev/null 2>&1 \
     && cp "$dest/$stub-glossary.jsonld" "$dest/$stub-glossary.json" || true
 fi
-
-# `root-landing.ts` in CI: the SITE root's own page, now that the docs are not
-# it. LAST, because it lists what the steps above put under `docs/`.
-bun run "$here/root-landing.ts" --site "$dest" --built cat-harness 2>&1 | sed 's/^/  /' || true
 
 echo
 echo "preview-site: STILL NOT DONE HERE, so a 404 on one of these is expected:"
@@ -273,10 +245,9 @@ echo "  convenience and can go stale, so check there before concluding."
 
 echo
 echo "preview-site: built. Some things worth opening:"
-for p in index.html "$route/index.html" "$route/platform.html" "$route/cat-harness/voices/index.html"; do
+for p in index.html platform.html cat-harness/index.html cat-harness/voices/index.html; do
   [ -f "$dest/$p" ] && printf '  %-34s %s bytes\n' "$p" "$(wc -c < "$dest/$p" | tr -d ' ')"
 done
 echo
-echo "  Serve it at the path the pages address (every href is under /folio-assistant/):"
-echo "    d=\$(mktemp -d) && ln -s $dest \"\$d/folio-assistant\" && python3 -m http.server -d \"\$d\" 8099"
-echo "    then open http://localhost:8099/folio-assistant/$route/"
+echo "  Serve it:  python3 -m http.server -d $dest 8099"
+echo "  Anchors:   grep -o 'href=\"#[^\"]*\"' $dest/cat-harness/index.html | sort -u | head"

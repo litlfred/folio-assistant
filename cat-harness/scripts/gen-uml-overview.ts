@@ -72,7 +72,6 @@ import { readQaManifest, readQaTree } from "./qa-store.ts";
 import { JUDGEMENT_EXIT } from "./qa-results.ts";
 import { spawnSync } from "node:child_process";
 import { glossaryLinksMd, schemasViewPuml } from "./gen-object-model-uml.js";
-import { docsRouteFor } from "./docs-route.js";
 import { resolveKindValidator, resolveNodeSchemas, type NodeSchemaResolution } from "../schemas/kind-validator.js";
 
 const HARNESS = resolve(import.meta.dir, "..");
@@ -98,12 +97,6 @@ const SCHEMAS_PUML = join(UML_ROOT, "..", "harness-schemas.puml");
 const OBJECT_MODEL_PUML = join(UML_ROOT, "..", "harness-object-model.puml");
 const REPO_URL = "https://github.com/litlfred/folio-assistant";
 const SITE_URL = OWN.canonicalUrl ?? "";
-/**
- * Where the rendered PAGES are: the owner's docs tree, under `docs/<name>/`
- * since 2026-10-05 (issue #2188, bean `kc7k`). `SITE_URL` stays the site root —
- * it is what identifiers are minted under — so the two are kept apart.
- */
-const PAGES_URL = SITE_URL ? `${SITE_URL}/${docsRouteFor(OWN.name)}` : "";
 const GENERATOR = relative(REPO, import.meta.path);
 /** The menu entry the harness pages sit under. */
 const NAV_PARENT = "UML overview";
@@ -793,7 +786,7 @@ async function build(): Promise<Map<string, string>> {
   const umlRel = relative(REPO, UML_ROOT).replace(/\\/g, "/");
   const svgSite = (base: string) => `/assets/img/uml/overview/${base}.svg`;
   for (const inst of instances) {
-    const pageUrl = `${PAGES_URL}/uml/overview/${inst.name}.html`;
+    const pageUrl = `${SITE_URL}/uml/overview/${inst.name}.html`;
     const overviewMmd = mmd(inst.sections, true);
     files.set(join(UML_ROOT, `${inst.name}.puml`), puml(inst.name, pageUrl, inst.sections, true));
     files.set(join(UML_ROOT, `${inst.name}.mmd`), overviewMmd);
@@ -821,7 +814,7 @@ async function build(): Promise<Map<string, string>> {
     for (const s of inst.sections) {
       const base = `${inst.name}/${s.id}`;
       const sectionMmd = mmd([s], true);
-      files.set(join(UML_ROOT, `${base}.puml`), puml(`${inst.name}_${s.id}`, `${PAGES_URL}/uml/overview/${base}.html`, [s], true));
+      files.set(join(UML_ROOT, `${base}.puml`), puml(`${inst.name}_${s.id}`, `${SITE_URL}/uml/overview/${base}.html`, [s], true));
       files.set(join(UML_ROOT, `${base}.mmd`), sectionMmd);
       files.set(
         join(DOCS_ROOT, `${base}.md`),

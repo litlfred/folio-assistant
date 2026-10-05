@@ -100,7 +100,7 @@ gate that implies.
 
 The naming rules, the prefix families, what a new graph typology must declare, and
 the test that usually says *"this is not a new kind"* are in the
-[`instance-kinds`](https://litlfred.github.io/folio-assistant/docs/cat-harness/reference/skill-instructions/instance-kinds.html) skill.
+[`instance-kinds`](https://litlfred.github.io/folio-assistant/reference/skill-instructions/instance-kinds.html) skill.
 
 ## If you cannot finish
 

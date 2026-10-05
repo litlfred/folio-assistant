@@ -44,9 +44,9 @@ of why they are shaped that way lives in that instance's `docs/` — not in the
 repository root's, and not in a folio's.
 
 The class, and why `fsh-guts` was the tempting wrong answer for it, is in
-[`kg-contribution-offer`](https://litlfred.github.io/folio-assistant/docs/cat-harness/reference/skill-instructions/kg-contribution-offer.html);
+[`kg-contribution-offer`](https://litlfred.github.io/folio-assistant/reference/skill-instructions/kg-contribution-offer.html);
 where inside `docs/` such a record files is in
-[`placement`](https://litlfred.github.io/folio-assistant/docs/cat-harness/reference/skill-instructions/placement.html).
+[`placement`](https://litlfred.github.io/folio-assistant/reference/skill-instructions/placement.html).
 
 ---
 
@@ -165,7 +165,7 @@ requirement had to move. It was not. Three facts settled it on 2026-10-02:
   says so in the owner's own ruling, and the rules an agent follows live in
   the `cat-harness` skills this set produced;
 - **the skill that does bind the docs site is**
-  [`ui-accessibility`](https://litlfred.github.io/folio-assistant/docs/cat-harness/reference/skill-instructions/ui-accessibility.html),
+  [`ui-accessibility`](https://litlfred.github.io/folio-assistant/reference/skill-instructions/ui-accessibility.html),
   which binds "the knowledge-graph viewer, the docs site, the action-icon
   tiles, anything future" to WCAG 2.2 A/AA, keyboard reachability, 24 px
   targets, computed contrast, visible focus and announced change — **and
@@ -188,7 +188,7 @@ that fails says so rather than rendering as empty. Both were stated by the
 owner the same day, and both were first written *here*, in a document that
 disclaims being instruction, where nothing enforces them and no agent looking
 for the rule would find them. They are in
-[`ui-accessibility`](https://litlfred.github.io/folio-assistant/docs/cat-harness/reference/skill-instructions/ui-accessibility.html)
+[`ui-accessibility`](https://litlfred.github.io/folio-assistant/reference/skill-instructions/ui-accessibility.html)
 §"A rendering built client-side owes two things the static one gave for free",
 with the measurements and the `console.warn` trap. This entry is the history of
 how they arrived, which is all this file is for.
@@ -464,7 +464,7 @@ both halves. The gap was that nobody had read them as an answer to this
 question.
 
 The rule lives in
-[`harness-tiles`](https://litlfred.github.io/folio-assistant/docs/cat-harness/reference/skill-instructions/harness-tiles.html),
+[`harness-tiles`](https://litlfred.github.io/folio-assistant/reference/skill-instructions/harness-tiles.html),
 with a pointer from `board-windows`. There is no check, and that is stated in
 the skill rather than left as an omission: nothing classifies a folio item
 yet, so a gate would be a declared property whose check cannot answer its own

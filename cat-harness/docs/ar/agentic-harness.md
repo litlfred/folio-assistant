@@ -150,20 +150,20 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 يتبع الوكيل سير عمل BPMN المقابل. وتصف صفحات التوثيق الحالية
 هذه المسارات بالتفصيل:
 
-- **[سير عمل النشر](https://litlfred.github.io/folio-assistant/docs/cat-harness/publication-workflow.html)** —
+- **[سير عمل النشر](https://litlfred.github.io/folio-assistant/publication-workflow.html)** —
   دورة حياة المحتوى من المسودة وحتى التحقق والتصيير والنشر.
   وتغطي الأدوار (المؤلف، المراجع، المحرر)، والعمليات الأساسية،
   والأنشطة والمهارات.
 
-- **[استيعاب المستندات](https://litlfred.github.io/folio-assistant/docs/cat-harness/document-ingestion.html)** —
+- **[استيعاب المستندات](https://litlfred.github.io/folio-assistant/document-ingestion.html)** —
   كيف يتحول الملف المُودَع إلى مصدر L1: استخراج الهيكل، واشتقاق المحتوى،
   وبناء الرسم البياني المعرفي لـ L1، وبوابة الاكتمال.
 
 - **أدلة الكتابة:**
-  - [كتابة ورقة بحثية](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html)
-  - [كتابة مستند](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html)
-  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-dak.html)
-  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-ig.html)
+  - [كتابة ورقة بحثية](https://litlfred.github.io/folio-assistant/guides-writing-a-paper.html)
+  - [كتابة مستند](https://litlfred.github.io/folio-assistant/guides-writing-a-document.html)
+  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/guides-who-smart-dak.html)
+  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/guides-who-smart-ig.html)
 
 لا يعيد إطار العمل تعريف مسارات العمل هذه. بل يوفر **نقطة الدخول** —
 عبر تصنيف الطلب وتوجيهه إلى المسار الصحيح — و**نقطة الخروج** —
@@ -262,7 +262,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 
 عندما يُصنف طلب على أنه طلب ميزة، يدخل الوكيل في
 **سير عمل متطلبات CRDM**
-([التوثيق الكامل](https://litlfred.github.io/folio-assistant/docs/cat-harness/crdm-methodology.html)،
+([التوثيق الكامل](https://litlfred.github.io/folio-assistant/crdm-methodology.html)،
 و[BPMN](../../processes/process/crdm-requirements.bpmn)).
 
 يعد سير عمل طلبات الميزات هو الموضع الذي تقدم فيه وثيقة إطار العمل هذه أكبر

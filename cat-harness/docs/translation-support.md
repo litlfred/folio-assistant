@@ -603,7 +603,7 @@ language the page can show, so it is not listed. Fill a `.po`, run
 `bun run kg:viewer`, and that language appears in the switcher.
 
 The language switcher is a UI control and carries the obligations in
-[`ui-accessibility`](https://litlfred.github.io/folio-assistant/docs/cat-harness/reference/skill-instructions/ui-accessibility.html):
+[`ui-accessibility`](https://litlfred.github.io/folio-assistant/reference/skill-instructions/ui-accessibility.html):
 each option named in its own language with `lang` set, accessible names
 translated alongside visible text, the change announced, and `dir` flipped for
 a right-to-left language. The reader's choice is the **same `fa-locale`

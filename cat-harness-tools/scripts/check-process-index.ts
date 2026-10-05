@@ -47,7 +47,7 @@
  */
 import { HARNESS_ROOT } from "./lib/roots.ts";
 import { existsSync, readFileSync } from "node:fs";
-import { basename, join, relative, resolve, sep } from "node:path";
+import { join, relative, resolve, sep } from "node:path";
 
 import { workflowFiles } from "../../cat-harness/scripts/known-skills.ts";
 import { SubgraphHydratedSchema, SubgraphIndexSchema, SUBGRAPH_HYDRATED_FILE, SUBGRAPH_INDEX_FILE } from "../../cat-harness/schemas/subgraph-manifest.ts";
@@ -55,7 +55,6 @@ import { instanceRootsIn, readDeclaration, repoRootFor, siteDirFor } from "../..
 import { framedInstances as framedRoots, subgraphOutDir } from "../../cat-harness/scripts/gen-subgraph-jsonld.ts";
 import { readKnowledgeGraphDeclaration } from "../../bootstrap-tools/schemas/declaration.ts";
 import { buildSubgraphs, publicationBase } from "../../bootstrap-tools/scripts/subgraph-jsonld.ts";
-import { builtDocsRoute } from "../../cat-harness/scripts/docs-route.ts";
 
 const ROOT = HARNESS_ROOT;
 const REPO = repoRootFor(ROOT);
@@ -228,12 +227,7 @@ if (import.meta.main) {
     if (!p.summary) problems.push(`a Process node carries no documentation: ${path} — give the diagram a <bpmn:documentation> of its own`);
     if (p.depiction) {
       const base = (repoIri ?? "").replace(/subgraph\/$/, "");
-      // The SVG is in the docs tree, published under its route (`docs/<built>`
-      // since 2026-10-05, issue #2188) — so the route is what separates the
-      // depiction's site path from the file in the docs source.
-      const route = `${builtDocsRoute(basename(ROOT), REPO)}/`;
-      const sitePath = p.depiction.startsWith(base) ? p.depiction.slice(base.length) : undefined;
-      const local = sitePath?.startsWith(route) ? join(SITE, sitePath.slice(route.length)) : undefined;
+      const local = p.depiction.startsWith(base) ? join(SITE, p.depiction.slice(base.length)) : undefined;
       if (!local || !existsSync(local)) problems.push(`a Process node depicts an SVG that is not there: ${p.depiction}`);
     }
   }

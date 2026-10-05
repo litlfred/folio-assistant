@@ -17,11 +17,7 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  *
  * Served from the repository root by `test-server.mjs`, like every e2e here;
  * the page's paths are relative, so they resolve under this prefix as they do
- * on the published site — with ONE exception since 2026-10-05 (issue #2188):
- * the todo's own document is published at the SITE root its `@id` names
- * (`hoist-addressed-documents.ts`), not beside the page in the docs tree, so
- * the page links it with a climb out of the docs route. The checkout has no
- * such hoist, so {@link serveHoisted} plays the deploy's part for it.
+ * on the published site.
  */
 const SITE = process.env.FA_SITE_URL ?? "http://127.0.0.1:8080";
 const DOCS = "/cat-harness/docs";
@@ -31,15 +27,6 @@ const ROOT = join(import.meta.dirname, "..");
 const index = JSON.parse(
   readFileSync(join(ROOT, siteDirFor(ROOT), "assets", "todos", "index.json"), "utf8"),
 ) as { items: Array<{ id: string; summary: string; target?: { page: string; node: string } }> };
-
-const DOCS_SOURCE = join(ROOT, siteDirFor(ROOT));
-
-/** Serve `<site>/todos/<id>.jsonld` from the docs source, as the deploy's hoist publishes it. */
-async function serveHoisted(page: import("@playwright/test").Page): Promise<void> {
-  await page.route(`${SITE}/todos/*.jsonld`, (r) =>
-    r.fulfill({ path: join(DOCS_SOURCE, "todos", new URL(r.request().url()).pathname.split("/").pop()!) }),
-  );
-}
 
 function listen(page: import("@playwright/test").Page): string[] {
   const errors: string[] = [];
@@ -51,7 +38,6 @@ function listen(page: import("@playwright/test").Page): string[] {
 for (const item of index.items) {
   test(`todo ${item.id}: its page renders it from its JSON-LD`, async ({ page }) => {
     const errors = listen(page);
-    await serveHoisted(page);
     const res = await page.goto(`${SITE}${DOCS}/todos/${item.id}/`, { waitUntil: "networkidle" });
     expect(res?.status(), "the todo's page must be a materialized file").toBe(200);
 
@@ -62,13 +48,9 @@ for (const item of index.items) {
 
     // The alternate is the asset, and its @id is its own address.
     const alt = await page.locator('link[rel="alternate"][type="application/ld+json"]').getAttribute("href");
-    // It lands at the SITE root, at the address its `@id` names.
-    const altUrl = new URL(alt!, page.url());
-    expect(altUrl.pathname).toBe(`/todos/${item.id}.jsonld`);
-    const asset = JSON.parse(readFileSync(join(DOCS_SOURCE, "todos", `${item.id}.jsonld`), "utf8")) as {
-      "@id": string;
-      target?: { "@id": string };
-    };
+    const ld = await page.request.get(new URL(alt!, page.url()).href);
+    expect(ld.status()).toBe(200);
+    const asset = (await ld.json()) as { "@id": string; target?: { "@id": string } };
     expect(asset["@id"]).toBe(`${SITE_BASE}todos/${item.id}.jsonld`);
 
     // The attachment: the rendering link goes to the block, and the node's IRI

@@ -151,20 +151,20 @@ Lorsqu'une requête est classée comme travail de contenu (rédaction, relecture
 l'agent suit le flux de travail BPMN correspondant. Les pages de documentation
 existantes décrivent ces flux en détail :
 
-- **[Flux de publication](https://litlfred.github.io/folio-assistant/docs/cat-harness/publication-workflow.html)** —
+- **[Flux de publication](https://litlfred.github.io/folio-assistant/publication-workflow.html)** —
   le cycle de vie du contenu, du brouillon à la validation, au rendu et à la
   publication. Couvre les rôles (auteur, relecteur, éditeur), les processus de base,
   les activités et les compétences.
 
-- **[Ingestion de documents](https://litlfred.github.io/folio-assistant/docs/cat-harness/document-ingestion.html)** —
+- **[Ingestion de documents](https://litlfred.github.io/folio-assistant/document-ingestion.html)** —
   comment un fichier déposé devient une source L1 : extraire la structure, dériver le contenu,
   construire le graphe de connaissances L1, passerelle d'exhaustivité (completeness gate).
 
 - **Guides de rédaction :**
-  - [Rédiger un article](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html)
-  - [Rédiger un document](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html)
-  - [DAK SMART de l'OMS](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-dak.html)
-  - [IG SMART de l'OMS](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-ig.html)
+  - [Rédiger un article](https://litlfred.github.io/folio-assistant/guides-writing-a-paper.html)
+  - [Rédiger un document](https://litlfred.github.io/folio-assistant/guides-writing-a-document.html)
+  - [DAK SMART de l'OMS](https://litlfred.github.io/folio-assistant/guides-who-smart-dak.html)
+  - [IG SMART de l'OMS](https://litlfred.github.io/folio-assistant/guides-who-smart-ig.html)
 
 Le harnais ne redéfinit pas ces flux de travail. Il fournit le **point d'entrée** —
 la classification de la requête et son acheminement vers le flux approprié — ainsi que le **point de sortie** —
@@ -263,7 +263,7 @@ proposition dispose d'un point de comparaison mesurable.
 
 Lorsqu'une requête est classée comme demande de fonctionnalité, l'agent intègre le
 **flux de travail des exigences CRDM**
-([documentation complète](https://litlfred.github.io/folio-assistant/docs/cat-harness/crdm-methodology.html),
+([documentation complète](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
 [BPMN](../../processes/process/crdm-requirements.bpmn)).
 
 Le flux de travail des demandes de fonctionnalités est le domaine où ce document sur le harnais apporte le plus

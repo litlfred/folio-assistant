@@ -6,7 +6,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GettingStarted",
       "@type": "bootstrap:Process",
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/getting-started.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/getting-started.svg",
       "description": "Somebody said \"create a folio\": work out which request they meant, with the branch computed by a decision table that may answer \"ask\", and what has to be true before anything is written. folio-assistant — getting started: from \"create a folio\" to a live site.\n\n\"Create a folio\" is five different requests. Gateway_Intent computes which one\nfrom decisions/folio-intent.dmn rather than letting the agent assume, and `ask`\nis one of the outcomes the table can return. Gateway_Live applies the same\nconstruction to publication, with `unknown` kept distinct from `not-yet`.\n\nSource of truth: this file. The SVG under docs/assets/img/workflows/ is\ngenerated from it by `bun run render:bpmn` — never hand-edit the SVG.",
       "enforcement": "strict",
       "flowCount": 21,

@@ -10,7 +10,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/review-code.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/review-code.svg",
       "description": "Judging changed CODE NODES — Tool definitions and schema definition nodes — on whether they are correct NODES, not merely correct code.\n\nYou are in this process when what changed is a node that happens to be TypeScript. The distinction is the whole reason it is separate from ordinary code review: a file can compile, pass its tests, and still declare the wrong thing, name a skill that does not exist, or advertise a mechanism the pipeline does not actually invoke.\n\nThe gateway picks by node KIND because the questions differ. A Tool is judged on whether its mechanism is the one that runs; a schema definition node on whether it says what it is and its references resolve.",
       "enforcement": "strict",
       "flowCount": 8,
@@ -237,7 +237,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/graph-detanglement.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/graph-detanglement.svg",
       "description": "Part of a repository wants to leave, for size or a semantic reason: four gated stages measure it out of the graph before anything moves, and an administrator authorises the extraction. THE FOUR STAGES ARE GATES, NOT ADVICE, AND THAT IS THE WHOLE REASON THIS IS A DIAGRAM. `graph-detanglement.md` says \"nothing moves until the stage before it measures zero\" in prose, and prose is what an agent under pressure talks itself past. Each gate here is a DECISION TABLE: `workflow_complete` refuses a hand-supplied outcome at a `cat-harness.processes:decision` gateway, so the branch is computed from the counts a tool already produced rather than asserted.\n\nTHE SHARPEST GATE IS `Detangled?`, AND IT IS SHARP BECAUSE OF ITS RULE ORDER. `unassignedEdges &gt; 0` returns `unknown` BEFORE the cross-edge rule is reached, so a zero cross-edge count over an unjudged corpus cannot be read as a pass. `repo-partition.ts` states it in its own voice — \"these are not cross-edges, they are edges this tool declined to judge. Do not read them as clean\" — and move 1 of the practice is exactly that sentence. A person can skip it. A table cannot.\n\nEVERY GATE HAS A THIRD STATE AND NONE OF THEM RENDERS IT AS CLEAN. `Declared in place?` answers `unknown` on a declaration that did not parse rather than \"not yet\", because one says the work has not started and the other says nobody can tell. `Detangled?` answers `unknown` on an incomplete measurement. Both route to `End_Unknown`, which is a REFUSAL to advance — the process stops rather than proceeding on a guess.\n\nDECLARING IS CHEAP AND EXTRACTING IS EXPENSIVE, WHICH IS THE POINT. Stage 1 moves nothing: the sub-graph is declared where it already sits, still inside the repository, still connected. `smart-base/methodologies/` is the worked example and it belongs to a repository that does not exist yet.\n\nSTAGE 2 IS A LOOP, AND THE LOOP IS LOAD-BEARING. `Prune, merge, factor, or reclassify` returns to `Measure` rather than to the gate, because an assignment is verified by RE-RUNNING and never by being locally reasonable — the obvious move, the one the tool's own message asks for, once took the count from 5 to 15. The four moves are the only four: the first three are the block-scale rule, and \"the classification is wrong\" is the fourth the repository scale adds because a module's layer is in doubt the way a block's chapter is not.\n\nISOLATION IS NOT ZERO EDGES. A sub-graph with no inbound edges can still carry no declaration, no namespace and no published artefact, and lifting that directory produces a repository that cannot say what it is. `bootstrap/` is the demonstrated case and the shape to match.\n\nTHE EXTRACTION IS A PERSON'S DECISION, AND THE LANE SAYS SO. `Authorise the extraction` sits in the Administrator lane because an extraction moves durable artefacts out of a repository, and `deletion-requires-confirmation` is not a courtesy the agent may waive: the agent reports what would move, and waits. The administrator lane is the one whose activities change the substrate every other diagram's lanes bind to, which is exactly what a repository cut does.",
       "enforcement": "strict",
       "flowCount": 18,
@@ -690,7 +690,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/kg-separation.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/kg-separation.svg",
       "description": "Move part of a knowledge graph into repositories of its own: the content and the tools that write and check it separate as a pair, into two repositories, not one. The content (files to read, no code) and its tools (the code that writes and checks it) separate as a pair. `kg-separation.md` is the practice; this is its order and its gates. Stages 1-3 are `graph-detanglement`, reused rather than restated.\n\nEVERY GATEWAY IS A COMMAND. `Tools closed?` is `check:tools-closure` with the content's no-code test and a byte-identity check on the generated files; `Every identifier its file's path?` is `check:node-iris`; `Green alone?` is the standalone rehearsal; `Ready to seed?` is `seed:ready --layer <name> --rehearse`, decided by decisions/seed-readiness-gate.dmn. A check that could not run stops the process rather than reading as clean.\n\nA PERSON DECIDES FOUR TIMES, AND THE ADMINISTRATOR LANE SAYS WHERE: whether to separate at all, whether to authorise the extraction, creating the repositories, and the cutover. Nothing is committed to the new repositories before they are created, and the parent keeps its own copy until it consumes the first release.\n\nVERSIONS: the pair starts at the content's version at the split, then each is versioned on its own; a tools release lists the content majors it supports. Worked example: bootstrap and bootstrap-tools (beans r3gy, xsqm). cat-harness and cat-harness-tools follow the same stages.",
       "enforcement": "strict",
       "flowCount": 31,
@@ -1494,7 +1494,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/kg-to-portal.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/kg-to-portal.svg",
       "description": "How a knowledge graph reaches a public portal this repository does not run: select, serialize, package, sign, distribute, and verify on the portal's side. folio-assistant — KG to public portal.\n\nSix stages: select, serialize, package, sign, distribute, verify. Three\ndecisions belong to the DEPLOYMENT and are drawn as gateways rather than\nas steps — the ingestion transport, the versioned store, and the signing\nscheme. A pipeline that picks one of those is asserting a decision nobody\nmade.\n\nA CDN is a LAYER, not a publication host. PUBLICATION_HOSTS answers \"what\nserves the rendering\"; a cache answers \"what stands between the server and\nthe reader\", and the canonical URL stays the origin's either way.",
       "enforcement": "advisory",
       "flowCount": 17,
@@ -1989,7 +1989,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/mount-subgraph.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/mount-subgraph.svg",
       "enforcement": "strict",
       "flowCount": 9,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
@@ -2236,7 +2236,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/slice-sqlite-publish.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/slice-sqlite-publish.svg",
       "description": "Build one named slice of a knowledge graph as a SQLite file a browser mounts without parsing, and publish it beside its manifest and its payloads. The contract is `kg-export` §\"Per-slice SQLite\"; the builder is the `slice-sqlite` Tool (`cat-harness/scripts/gen-slice-sqlite.ts`), one table-driven builder with one definition per slice; the search is one page, `slices/search.html?slice=<name>`. Bean `q8ar`.\n\nTHE SIZE IS MEASURED BEFORE THE SLICE IS WIRED, AND THAT IS WHY THIS IS A DIAGRAM. A slice that is wired first and measured afterwards ships whatever it weighs, because by then a manifest, a gate, two deploy steps and a page depend on it. The budget gateway sits between measuring and wiring so that an oversized slice stops with its measurement reported, rather than arriving on a reader's connection.\n\nNO BINARY IS COMMITTED. The file is built at deploy from the tree being published, so the gate cannot compare against a committed copy; it proves determinism (two builds, one sha256) and a row-content digest read back from the file against one computed from the source.",
       "enforcement": "strict",
       "flowCount": 12,

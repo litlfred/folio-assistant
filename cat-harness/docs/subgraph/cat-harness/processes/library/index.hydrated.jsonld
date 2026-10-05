@@ -10,7 +10,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/content-acquisition.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/content-acquisition.svg",
       "description": "How a resource gets into the graph in the first place. `document-ingestion.bpmn` begins at \"a file lands in uploads/\" and calls that its only entry point — true of ingestion, and silent on how the file got there. This is the step before it. The channels are plural and the set is open: uploads/ is one, the conversation is another.",
       "enforcement": "strict",
       "flowCount": 9,
@@ -265,7 +265,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/copy-out-materialized.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/copy-out-materialized.svg",
       "description": "Somebody wants to change content this repository holds a read-only materialized copy of: copy it into their own `folio/`, recording which original it came out of. Materialized content is read-only. The owner, 2026-09-21: \"if we have a materialized <stub>/<sub-graph>, the contents of it should be immutable ... you would need to copy/mateiralize it to your own folio/ in order to mess around with it.\" And 2026-09-22, choosing between advising and enforcing: enforce from the start.\n\nSTRICT, and the reason is narrow. Only one step here is a gate, and it is Gateway_Frozen: whether the target is read-only at all. Everything after it is mechanical. What makes the process strict is that skipping it does not fail loudly — an edit in place succeeds, and is only caught later by check:materialized-fixity hashing bytes against the digest their record carries. A process whose omission looks exactly like compliance is the vlhk shape, and advisory would not hold it.\n\nThe copy-out re-opens NONE of the five materialisation gates. Those were answered when this repository decided it may hold these bytes at all (materialize-remote.bpmn); copying something already held is not a second acquisition. What the copy does inherit is the restrictions and copyright verdicts — the copy is a new artefact in the copier's folio, and publishing it is that folio's decision.\n\nThe three states, the five gates and the provenance pair are folio-assistant-core/schemas/materialization.ts. Nothing here restates them.",
       "enforcement": "strict",
       "flowCount": 8,
@@ -523,7 +523,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/human-translation-workflow.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/human-translation-workflow.svg",
       "description": "The human half of translation: a coordinator assigns a locale to a qualified translator, the translator works in their own tool, a subject-matter expert judges accuracy, and only then is the result official.\n\nYou are in this process when a person is doing the translating. `translation-workflow` is the machine half — extraction, injection, staleness — and it hands off to this one at exactly the point a judgement is needed. The two are separate because completeness is mechanical and accuracy is not: the coordinator's gate asks whether enough strings are filled, the reviewer's asks whether they are right, and no amount of the first substitutes for the second.\n\nWhat makes a translation OFFICIAL is the reviewer's sign-off, never the file being complete.",
       "enforcement": "strict",
       "flowCount": 21,
@@ -1071,7 +1071,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/document-ingestion.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/document-ingestion.svg",
       "description": "Accepts an upload, records its extracted metadata in the knowledge graph, and catalogues the asset in `library/` — held if materialized, referenced if not. folio-assistant — Basic ingestion — an upload to an asset catalogued in library/.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\n\nREWRITTEN AS THE BASIC FLOW in placement PR6 (bean `apcg`; owner ruling 3, 2026-09-30): \"only basic doc ingestion high level workflow in cat-harness. very little process context assumed. just that the uploaded asset has extracted metadata inserted into KG and asset in library/ (if materialized).\" Accept, extract the metadata into the KG, ask whether the asset is materialized, place it in library/<slug>/. It calls NO subprocess and makes no content-type decision.\n\nTHE ID `Process_Ingestion` IS KEPT ON PURPOSE: `methodology-from-source.bpmn`'s Call_Ingest names it, and so does every higher-layer process that refines this flow. Refinement is by INVERSION — a refining process calls this one as its first step and continues with its own work; nothing here names a refinement, because the corpus has no BPMN extension point and a harness diagram naming a higher one would be an upward edge. The document pipeline that used to be this diagram's body (rungs, the four ingest phases, the L1 completeness gate, promotion, the summary queue) is such a refinement now, in the layer above.",
       "enforcement": "advisory",
       "flowCount": 7,
@@ -1278,7 +1278,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/materialize-remote.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/materialize-remote.svg",
       "description": "One process, called wherever remote content is landed locally. The owner, 2026-09-20: \"so if large remote collection, and no restrictions known in context, user can import/maertialize locally. size considerations apply. similar concept in bootstrapping harness... it is remtoe. content. bootstrape materelaiz cat-harness locally (or other harness)... similar, should share common subprocess.\"\n\nTwo callers today and they are genuinely the same shape: sample-import.bpmn landing three items out of an ~0.7 TB catalogue, and bootstrap fetching a harness. upstream-pins.json is half of the second one's refresh and names itself neither.\n\nSTRICT, and the five gates are why. Each is a decision a person makes and none is answerable from a file, so a gate that only warned would be a gate nobody fails — the xom7 shape, a workflow that failed all thirty times it ran with nothing in the repository saying so.\n\nThe three states (referenced / materialized / unknown) and the five gates are schemas/materialization.ts in folio-assist-core. Nothing here restates them.",
       "enforcement": "strict",
       "flowCount": 13,
@@ -1649,7 +1649,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/methodology-from-source.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/methodology-from-source.svg",
       "description": "Adopt the method of a shared paper, book or standard: origin and licence, ingestion, what is adopted and refused, placement by ownership, integration by calling existing processes, and the owner's review. The general process an agent follows when someone shares a paper, book or standard and asks for its method to be used: establish origin and licence, ingest it, render what the method says with what is adopted and refused, place it by ownership, integrate it into the processes that already exist by calling them rather than copying them, make every skill and tool it uses a declared Tool, relate it to existing beans and issues, and put the adoption to the owner. Written 2026-09-23 while adopting WireGen (arXiv:2312.07755) as the worked case. Operating skill: adopt-methodology-from-source; the adoption rules themselves are folio-assistant's methodology-adoption.",
       "enforcement": "strict",
       "flowCount": 12,
@@ -1974,7 +1974,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/refresh-materialized.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/refresh-materialized.svg",
       "description": "Keep a materialized copy of remote content current: what changed upstream, what changed locally, and what to do when both did — an archival copy is never re-fetched and gets a fixity check instead. Owner, 2026-09-20: \"also need to know about refreshing amterialed remote content. general process used everywhere.\"\n\nREFRESH IS NOT RE-IMPORT, and the difference is the whole diagram. It needs three answers, not one: what changed upstream, what changed locally since, and what to do when BOTH did. upstream-pins.json answers the first for one caller and nothing answers the other two anywhere.\n\nAn ARCHIVAL copy is not refreshed. Re-fetching it would defeat it: the copy exists to survive the source, so replacing it with whatever the source says today discards exactly the state it was keeping. What an archive gets instead is a FIXITY CHECK — has our copy rotted — which is a different question with a different remedy.",
       "enforcement": "strict",
       "flowCount": 17,
@@ -2404,7 +2404,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/sample-import.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/sample-import.svg",
       "enforcement": "strict",
       "flowCount": 15,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
@@ -2839,7 +2839,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/subscribe-kg.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/subscribe-kg.svg",
       "description": "Subscribe a folio or harness to an external knowledge graph pinned to a full commit SHA, then take each chosen part from referenced to materialized through `materialize-remote` and instantiate each chosen harness once its needs are held. Owner, 2026-09-30 (issue #1719): \"a way for a folio instance (or cat-harness in general) to \"subscribe\" to external KGs … they can choose to materialize some or all subgraphs … an asset reference … they can choose to materialize locally … instantiate one or more harnesses … so then harness appears in their navbar.\" Design: cat-harness/docs/proposals/kg-subscriptions.md, epic bean fnx4, slice 8.\n\nA SUBSCRIPTION IS NOT A NEW MECHANISM, and this diagram is where that claim is kept honest. Every byte that arrives does so through Process_MaterializeRemote, called once per chosen subgraph or asset; every held copy is refreshed through Process_RefreshMaterialized. Neither is re-described here. What this process adds is only the walk: pin, validate, choose, and then carry each chosen part from referenced to materialised one at a time.\n\nA SUBSTRATE is a repository whose root declaration meets bootstrap's schema requirements and declares at least one harness (the owner's definition). Both are answerable from the declaration file alone, so validating one never needs the whole repository.\n\nWHERE IT LIVES: cat-harness/processes/, beside Process_MaterializeRemote and Process_RefreshMaterialized, which it calls, and naming the kg-subscription and materialize-remote skills in cat-harness/skills/library/large-datasets/. It was written in large-datasets (proposal decision #3), because those subprocesses and skills lived there and a diagram in cat-harness would have run every edge against the dependency arrow (bean cjvs). The owner's 2026-10-01 ruling dissolved large-datasets into cat-harness's concern groups (bean j7ql), so the callees came with it: the calls are siblings again and every ref stays inside the harness.\n\nSTRICT. The pin and the five gates are the reason: an unpinned subscription is how two subscribers see two graphs under one name, and a copy that skipped the gates is the xom7 shape — a check nobody fails because it only ever warned.",
       "enforcement": "strict",
       "flowCount": 24,
@@ -3435,7 +3435,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/translation-workflow.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/translation-workflow.svg",
       "description": "The machine half of translation, end to end: extract the translatable strings, inject a catalogue back, check the result by back-translating it, and track whether the source has moved since.\n\nYou are in this process whenever translation happens without a person having to be present. Two of its steps are the exception and are drawn in their own lane: a flagged passage is ADJUDICATED by a human, and a translation becomes official only when a human signs it off. `human-translation-workflow` is what happens when a person is doing the translating rather than checking it.\n\nStaleness is an END state that re-enters at the beginning, not a failure. A source change does not invalidate a translation's accuracy; it invalidates its currency, which is a different fact and is why it is recorded rather than thrown away.",
       "enforcement": "strict",
       "flowCount": 18,

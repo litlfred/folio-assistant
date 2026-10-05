@@ -17,7 +17,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
-import { basename, join, posix, relative, resolve, sep } from "node:path";
+import { join, resolve } from "node:path";
 
 import { ADDRESS_JS } from "../lib/library-address.ts";
 import { entryPageHtml, entryView, instanceRootRoutes, isEntryShellFor, isSubjectShell, libraryConfigOf, VIEWER_JS, viewerHtml } from "../gen-library-viz.ts";
@@ -26,29 +26,11 @@ import { LibraryIndexSchema } from "../../schemas/site-indexes.ts";
 import { checkEntry } from "../check-l1-complete.ts";
 import { readDeclaration, siteDirFor } from "../../schemas/cat-harness.ts";
 import { DOCS_SITE, libraryAssetIri, libraryAssetSitePath } from "../../schemas/library-iri.ts";
-import { builtDocsRoute } from "../docs-route.ts";
 
 const HARNESS = resolve(import.meta.dir, "../..");
 const REPO = resolve(HARNESS, "..");
 const SITE = join(HARNESS, siteDirFor(HARNESS));
 const LIB = join(SITE, readDeclaration(HARNESS)!.name!, "library");
-/** Where the docs tree publishes under the site — `docs/cat-harness` (issue #2188). */
-const ROUTE = builtDocsRoute(basename(HARNESS), REPO);
-
-/**
- * Where `href`, written into a page that the deploy publishes under the docs
- * route, actually LANDS — as a site path, and as the source file that serves
- * it. Since 2026-10-05 the pages are under `/<route>/` while a document whose
- * `@id` names a root address is hoisted back to that address
- * (`hoist-addressed-documents.ts`), so a link is resolved on the SITE, never
- * against the checkout, which would find the file in the wrong place.
- */
-function deployed(pageDir: string, href: string): { at: string; atRoot: boolean; source: string } {
-  const page = posix.join("/", ROUTE, relative(SITE, pageDir).split(sep).join("/"), "/");
-  const at = posix.resolve(page, href);
-  const atRoot = !at.startsWith(`/${ROUTE}/`);
-  return { at, atRoot, source: join(SITE, atRoot ? at.slice(1) : at.slice(ROUTE.length + 2)) };
-}
 
 /** The shipped source, evaluated — what is tested is what the page runs. */
 const { entryFromPath, legacyKey } = new Function(`${ADDRESS_JS}\nreturn { entryFromPath, legacyKey };`)() as {
@@ -203,7 +185,7 @@ describe("the committed tree: one materialized shell per entry", () => {
       const f = join(LIB, e.instance, e.id, "index.html");
       const alt = /<link rel="alternate" type="application\/ld\+json" href="([^"]+)">/.exec(readFileSync(f, "utf-8"))?.[1];
       expect(alt, `${e.instance}/${e.id} names no JSON-LD`).toBeDefined();
-      expect(existsSync(deployed(join(LIB, e.instance, e.id), alt!).source), `${e.instance}/${e.id}: ${alt}`).toBe(true);
+      expect(existsSync(resolve(join(LIB, e.instance, e.id), alt!)), `${e.instance}/${e.id}: ${alt}`).toBe(true);
     }
   });
 });
@@ -216,12 +198,8 @@ describe("asset and rendering: two resources, two IRIs (owner, 2026-10-02)", () 
   test("the site root the IRIs are minted under is the one the site is served at", () => {
     const cfg = readFileSync(join(SITE, "_config.yml"), "utf-8");
     const url = /^url:\s*"?([^"\n]+)"?/m.exec(cfg)?.[1];
-    // `site_root`, not `baseurl`: since 2026-10-05 the docs PAGES are under
-    // `baseurl` = site_root + `/docs/cat-harness` (issue #2188), while every
-    // asset IRI stays at the site root, where `hoist-addressed-documents.ts`
-    // publishes the file it names.
-    const siteRoot = /^site_root:\s*"?([^"\n]*)"?/m.exec(cfg)?.[1];
-    expect(DOCS_SITE).toBe(`${url}${siteRoot}/`);
+    const baseurl = /^baseurl:\s*"?([^"\n]*)"?/m.exec(cfg)?.[1];
+    expect(DOCS_SITE).toBe(`${url}${baseurl}/`);
   });
   test("every entry's @id IS the address of its published JSON-LD, and that file is published", () => {
     for (const e of index.entries) {
@@ -238,11 +216,7 @@ describe("asset and rendering: two resources, two IRIs (owner, 2026-10-02)", () 
       const alt = /<link rel="alternate" type="application\/ld\+json" href="([^"]+)">/.exec(
         readFileSync(join(shellDir, "index.html"), "utf-8"),
       )?.[1];
-      // At the SITE ROOT, where the asset's IRI names it — not beside the shell.
-      const d = deployed(shellDir, alt!);
-      expect(d.atRoot, `${e.instance}/${e.id}: ${d.at}`).toBe(true);
-      expect(d.at).toBe(`/${libraryAssetSitePath(e.instance, e.id)}`);
-      expect(d.source).toBe(join(SITE, libraryAssetSitePath(e.instance, e.id)));
+      expect(resolve(shellDir, alt!)).toBe(join(SITE, libraryAssetSitePath(e.instance, e.id)));
     }
   });
   test("every entry's `view` is GENERATED into the projection: another instance's declared root, else its own page", () => {

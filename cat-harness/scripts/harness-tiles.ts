@@ -475,7 +475,6 @@ function siteDirMount(
   decl: CatHarnessDeclaration,
   instanceDir: string,
   ownsSite: boolean,
-  outside: (sitePath: string) => string,
 ): string | undefined {
   if (ownsSite) return "/";
   const site = siteDirFor(instanceDir);
@@ -538,13 +537,7 @@ export function ownStatePage(kind: string): string {
  * The site owner's root is the site root: `mount-instance-docs` leaves it to
  * the main docs pipeline, unchanged.
  */
-function folioRoot(
-  repoRoot: string,
-  name: string,
-  atSiteRoot: boolean,
-  outside: (sitePath: string) => string,
-  composed: boolean,
-): string | undefined {
+function folioRoot(repoRoot: string, name: string, atSiteRoot: boolean): string | undefined {
   if (atSiteRoot) return "/";
   const dir = join(repoRoot, name);
   // The instance's OWN site directory, read from its OWN declaration rather
@@ -553,11 +546,7 @@ function folioRoot(
   // this function would have quietly answered "no folio view" for one that
   // did.
   if (findDeclarationFile(dir) === undefined) return undefined;
-  if (!existsSync(join(dir, siteDirFor(dir)))) return undefined;
-  // COMPOSED into the docs tree (`compose-docs.ts`), so beside the owner's
-  // pages; MOUNTED at the site root otherwise (`mount-instance-docs.ts`),
-  // which is outside the docs tree — see `outsideDocs`.
-  return composed ? `/${name}/` : outside(`/${name}/`);
+  return existsSync(join(dir, siteDirFor(dir))) ? `/${name}/` : undefined;
 }
 
 /** Every `harness.json` in the tree: the repository root and one level down. Exported for `harness-panel.ts`. */
@@ -1006,18 +995,14 @@ function tileFor(
   // which the site-owning harness supplies, and the repository root instance IS
   // the checkout that pipeline publishes. Saying so beats giving one of them a
   // link that 404s — `docs/cat-harness/` has viewers beneath it and no index.
-  const outside = outsideDocs(handler);
-  const siteEntry = (decl.directories ?? []).find(
-    (d) => (d.path ?? "").replace(/\/$/, "") === siteDirFor(instanceDir),
-  ) as { composed?: boolean } | undefined;
-  const folio = folioRoot(repoRoot, decl.name, ownsSite || isRepoRoot, outside, siteEntry?.composed === true);
+  const folio = folioRoot(repoRoot, decl.name, ownsSite || isRepoRoot);
 
   // THE ICON, published rather than declared — see `publishedIcon`. Resolved
   // here rather than beside `icon` because it needs the mount, and the mount
   // is `folio`.
   // The SITE-DIR mount, not `folio` — see `publishedIcon`. `folio` is the
   // instance's front door, which for who-iris is its 1,378-file library.
-  const siteMount = siteDirMount(decl, instanceDir, ownsSite || isRepoRoot, outside);
+  const siteMount = siteDirMount(decl, instanceDir, ownsSite || isRepoRoot);
   const iconSrc = icon ? publishedIcon(instanceDir, icon.src, siteMount) : undefined;
   if (icon && iconSrc === undefined) {
     // Reported, never rendered as a placeholder. The instance ASKED for a

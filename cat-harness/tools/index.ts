@@ -56,18 +56,6 @@ function stub(): string {
   return d.stub ?? d.name ?? "instance";
 }
 
-/**
- * Where this instance's DOCS tree is published under the site — `docs/<name>`
- * since 2026-10-05 (issue #2188, bean `kc7k`): the `docs` kind and the
- * declared name, the same two facts `scripts/docs-route.ts` reads. A
- * `maintains.artefact` the docs build publishes is under it; one the deploy
- * writes at the site root (the vocabularies, the schemas) is not.
- */
-function docsRoute(): string {
-  const d = decl();
-  return `docs/${d.name ?? "instance"}`;
-}
-
 function decl(): { canonicalUrl?: string; stub?: string; name?: string } {
   const p = declarationPathIn(ROOT)!;
   if (!existsSync(p)) return {};
@@ -1365,7 +1353,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["site-presentation-assets"],
       maintains: [
-        { source: "schemas/themes.ts", artefact: `${docsRoute()}/assets/css/themes.css`, format: "css" },
+        { source: "schemas/themes.ts", artefact: "assets/css/themes.css", format: "css" },
       ],
       requires: { runtime: ["bun"], network: false },
     }),
@@ -1385,7 +1373,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["site-presentation-assets"],
       maintains: [
-        { source: "schemas/avatars.ts", artefact: `${docsRoute()}/assets/css/avatars.css`, format: "css" },
+        { source: "schemas/avatars.ts", artefact: "assets/css/avatars.css", format: "css" },
       ],
       requires: { runtime: ["bun"], network: false },
     }),

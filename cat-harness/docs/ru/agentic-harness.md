@@ -151,20 +151,20 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 агент следует соответствующему рабочему процессу BPMN. Существующие страницы
 документации описывают их подробно:
 
-- **[Процесс публикации](https://litlfred.github.io/folio-assistant/docs/cat-harness/publication-workflow.html)** —
+- **[Процесс публикации](https://litlfred.github.io/folio-assistant/publication-workflow.html)** —
   жизненный цикл контента от черновика через валидацию, рендеринг и
   публикацию. Охватывает роли (автор, рецензент, редактор), базовые процессы,
   действия и навыки.
 
-- **[Импорт документов](https://litlfred.github.io/folio-assistant/docs/cat-harness/document-ingestion.html)** —
+- **[Импорт документов](https://litlfred.github.io/folio-assistant/document-ingestion.html)** —
   как добавленный файл становится источником L1: извлечение структуры, извлечение контента,
   построение графа знаний L1, шлюз полноты.
 
 - **Руководства по написанию:**
-  - [Написание статьи](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html)
-  - [Написание документа](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html)
-  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-dak.html)
-  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-ig.html)
+  - [Написание статьи](https://litlfred.github.io/folio-assistant/guides-writing-a-paper.html)
+  - [Написание документа](https://litlfred.github.io/folio-assistant/guides-writing-a-document.html)
+  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/guides-who-smart-dak.html)
+  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/guides-who-smart-ig.html)
 
 Оснастка не переопределяет эти рабочие процессы. Она обеспечивает **точку входа** —
 классификацию запроса и маршрутизацию к нужному процессу — и **точку выхода** —
@@ -263,7 +263,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 
 Когда запрос классифицируется как запрос новой функциональности, агент входит в
 **рабочий процесс требований CRDM**
-([полная документация](https://litlfred.github.io/folio-assistant/docs/cat-harness/crdm-methodology.html),
+([полная документация](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
 [BPMN](../../processes/process/crdm-requirements.bpmn)).
 
 Рабочий процесс запросов функциональности — это область, где данный документ об оснастке приносит больше всего

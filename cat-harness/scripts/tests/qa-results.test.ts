@@ -170,11 +170,7 @@ describe("the witnesses are committed in one place and published in another", ()
       // pinning the whole string made it fail on a correct relocation, the
       // same way `site-links.test.ts` did an hour earlier.
       expect(text).toContain("cp -rT ");
-      // Into the DOCS tree, `./_site/<route>/assets/qa`, since 2026-10-05
-      // (issue #2188): every `data-qa-src` is composed by `relative_url`,
-      // which is the docs tree's base, so the copy lands under the route the
-      // workflow resolved — never at the bare site root, where nothing reads it.
-      expect(text).toContain('test/results/witnesses "./_site/${ROUTE}/assets/qa"');
+      expect(text).toContain("test/results/witnesses ./_site/assets/qa");
       // The RESULTS too, since bean `2634` took the findings out of the
       // published graph: this file is now the only place a consumer can see
       // what the QA pass found about the document it just fetched.

@@ -1,6 +1,6 @@
 When a request is classified as a feature request, the agent enters the
 **CRDM requirements workflow**
-([full documentation](https://litlfred.github.io/folio-assistant/docs/cat-harness/crdm-methodology.html),
+([full documentation](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
 [BPMN](../processes/crdm-requirements.bpmn)).
 
 The feature-request workflow is where this harness document adds the most

@@ -117,17 +117,17 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 当请求被归类为内容工作（撰写、评审、摄取）时，智能体将遵循相应的 BPMN 工作流。现有文档页面对此进行了详细阐述：
 
-- **[发布工作流](https://litlfred.github.io/folio-assistant/docs/cat-harness/publication-workflow.html)** —
+- **[发布工作流](https://litlfred.github.io/folio-assistant/publication-workflow.html)** —
   从草稿到验证、渲染和发布的内容生命周期。涵盖各个角色（作者、评审人、编辑）、基础流程、活动及技能。
 
-- **[文档摄取](https://litlfred.github.io/folio-assistant/docs/cat-harness/document-ingestion.html)** —
+- **[文档摄取](https://litlfred.github.io/folio-assistant/document-ingestion.html)** —
   放入的文件如何转化为 L1 源：提取结构、派生内容、构建 L1 知识图谱以及完整性关卡。
 
 - **撰写指南：**
-  - [撰写论文](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html)
-  - [撰写文档](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html)
-  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-dak.html)
-  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-ig.html)
+  - [撰写论文](https://litlfred.github.io/folio-assistant/guides-writing-a-paper.html)
+  - [撰写文档](https://litlfred.github.io/folio-assistant/guides-writing-a-document.html)
+  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/guides-who-smart-dak.html)
+  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/guides-who-smart-ig.html)
 
 本框架并未重新定义这些工作流。它提供了**入口点**——对请求进行分类并路由至正确的工作流——以及**出口点**——在工作流完成时返回空闲状态，或在用户切换上下文时予以挂起。
 
@@ -176,7 +176,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/feature-request-workflow.md){: .fa-node-edit title="Edit content/docs/agentic-harness/feature-request-workflow.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="feature-request-workflow.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/agentic-harness/feature-request-workflow.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/agentic-harness/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-当请求被归类为功能需求时，智能体进入 **CRDM 需求工作流**（[完整文档](https://litlfred.github.io/folio-assistant/docs/cat-harness/crdm-methodology.html)，[BPMN](../../processes/process/crdm-requirements.bpmn)）。
+当请求被归类为功能需求时，智能体进入 **CRDM 需求工作流**（[完整文档](https://litlfred.github.io/folio-assistant/crdm-methodology.html)，[BPMN](../../processes/process/crdm-requirements.bpmn)）。
 
 功能需求工作流是本框架文档价值最显著之处，因为它描述了一种此前一直处于隐性状态的行为。撰写和评审工作流数月前就已形成文档；而需求工作流此前仅存在于零散的对话中。
 

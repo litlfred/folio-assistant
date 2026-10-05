@@ -52,7 +52,7 @@ import { readDeclaration, repoRootFor, siteDirFor } from "../../cat-harness/sche
 import { fragment as folioMountFragment } from "../../cat-harness/scripts/folio-mount.ts";
 import { embed as pdfViewer } from "../../cat-harness/scripts/pdf-viewer.ts";
 import { subjectPage } from "../../cat-harness/scripts/harness-tiles.js";
-import { builtDocsRoute, withRoutes } from "../../cat-harness/scripts/mount-instance-docs.ts";
+import { withRoutes } from "../../cat-harness/scripts/mount-instance-docs.ts";
 import { libraryResolver } from "../../cat-harness/scripts/lib/library-links.ts";
 import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
 import { whoThemeById } from "../themes/themes.js";
@@ -1544,12 +1544,8 @@ const REPLICA_ROUTE = (() => {
 
 /* Relative from the catalogue page, built on the one route above, which the
    withheld list also uses (issue #1794) — two consumers, one route. */
-/* The catalogue page is a HANDLER page, so it is published inside the
-   handler's docs tree — under `docs/<handler>/` since 2026-10-05 (issue
-   #2188) — while the replica is mounted at the site root. The relative path
-   climbs out of the docs route as well as out of the subject page. */
 const REPLICA_FROM_CATALOGUE = posix.relative(
-  `${builtDocsRoute(basename(HARNESS_ROOT), repoRootFor(HARNESS_ROOT))}/${subjectPage(HANDLER, CATALOGUE_KIND, SUBJECT).replace(/^\/|\/$/g, "")}`,
+  subjectPage(HANDLER, CATALOGUE_KIND, SUBJECT).replace(/^\/|\/$/g, ""),
   REPLICA_ROUTE,
 );
 

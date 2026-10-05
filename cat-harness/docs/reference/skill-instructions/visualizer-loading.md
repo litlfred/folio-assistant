@@ -69,13 +69,6 @@ index page. Pages under the instance's composed docs then reach it with a
 relative path; the DAK view pages fetch
 `../fhir-artifact-index/dak/<file>`.
 
-**"Beside the composed pages" is the rule, and the place moved with them.**
-Composed pages are in the site owner's docs tree, which publishes under
-`<base>/docs/<owner>/` since 2026-10-05 (issue #2188), so a composed
-instance's served data lands at `<base>/docs/<owner>/<instance>/<path>` and
-the relative fetch above is unchanged. An instance that is MOUNTED rather than
-composed keeps its served data at the root, beside its mount.
-
 **Never copy the file into `docs/` beside the page instead.** That was the
 first version: 19 schema files duplicated under `smart-trust/docs/artifact/`,
 which a gate flagged as an unknown file family in a docs directory. The owner

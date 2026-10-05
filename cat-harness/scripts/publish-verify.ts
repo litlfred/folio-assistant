@@ -96,13 +96,6 @@ export interface VerifyContext {
    * are asked of it.
    */
   searchIndex?: "built" | "borrowed";
-  /**
-   * Where the Jekyll-built docs tree sits under `dir` — `docs/cat-harness`
-   * since 2026-10-05 (issue #2188). The theme's search index, its per-scope
-   * split and the identifier lookup are all written there, and an indexed
-   * `relUrl` is relative to it. Absent: the docs tree IS `dir`.
-   */
-  docs?: string;
 }
 
 export interface Verifier {
@@ -540,12 +533,10 @@ export const SEARCH_INDEX: Verifier = {
   asks:
     "Is the site's search index present, parseable and non-empty, does every page it indexes exist, and does it " +
     "cover the pages that offer a search box?",
-  async run(site, ctx) {
+  async run(dir, ctx) {
     const id = "search-index";
-    const boxPages = treeFiles(site, ".html").filter((f) => readFileSync(f, "utf-8").includes('id="search-input"'));
+    const boxPages = treeFiles(dir, ".html").filter((f) => readFileSync(f, "utf-8").includes('id="search-input"'));
     if (boxPages.length === 0) throw new Error("no page in the tree carries the theme's search box");
-    // The index and every page it names are in the DOCS tree.
-    const dir = join(site, ctx.docs ?? "");
     const file = join(dir, SEARCH_INDEX_PATH);
     const at = SEARCH_INDEX_PATH;
     if (!existsSync(file)) return { checked: 1, outOfScope: 0, findings: [{ verifier: id, file: at, detail: `missing — ${boxPages.length} page(s) offer a search box that would search nothing` }] };
@@ -646,9 +637,8 @@ export const SEARCH_SCOPES: Verifier = {
     "Does the per-scope search manifest match the site index in this tree, do its scope indices parse and " +
     "partition that index exactly, does each prebuilt index cover exactly its scope, and is every identifier " +
     "lookup it links to in the tree?",
-  async run(site, ctx) {
+  async run(dir) {
     const id = "search-scopes";
-    const dir = join(site, ctx.docs ?? "");
     const source = join(dir, SEARCH_INDEX_PATH);
     if (!existsSync(source)) return { checked: 0, outOfScope: 1, findings: [] };
     const manifestAt = `${SCOPES_DIR}/manifest.json`;
@@ -753,8 +743,7 @@ if (import.meta.main) {
   const declared = declaredBase(resolve(arg("--instance") ?? resolve(import.meta.dir, "..")));
   const bases = given.length > 0 ? given : declared ? [declared] : [];
   const searchIndex = arg("--search-index") === "borrowed" ? "borrowed" : "built";
-  const docs = arg("--docs");
-  const { results, exit } = await verify(dir, VERIFIERS, { bases, searchIndex, ...(docs ? { docs } : {}) });
+  const { results, exit } = await verify(dir, VERIFIERS, { bases, searchIndex });
   const md = reportMarkdown(relative(process.cwd(), dir) || ".", results, bases);
   console.log(md);
   const report = arg("--report");

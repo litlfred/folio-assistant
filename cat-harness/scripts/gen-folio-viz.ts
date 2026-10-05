@@ -77,16 +77,6 @@ import {
 } from "../schemas/cat-harness.js";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
 import { withRenders } from "./viewer-declarations.js";
-import { builtDocsRoute, docsRelativeSitePath } from "./docs-route.ts";
-import { mountRoutes } from "./mount-instance-docs.ts";
-
-/** Read once: the built docs route and the routes mounted at the site root. */
-let rebase: ((href: string) => string) | undefined;
-const siteHref = (href: string): string =>
-  (rebase ??= ((route, mounts) => (h: string) => docsRelativeSitePath(h, route, mounts))(
-    builtDocsRoute("cat-harness"),
-    mountRoutes("cat-harness"),
-  ))(href);
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "folio-viewer";
@@ -186,9 +176,7 @@ export function readFolioGraph(roots: string[], repo?: string): FolioGraph | nul
           links: Array.isArray(raw.links)
             ? (raw.links as Array<Record<string, unknown>>).map((l) => ({
                 label: String(l.label ?? ""),
-                // The page resolves a site path against the DOCS tree it reads
-                // its data from; one naming a root mount climbs out (#2188).
-                href: siteHref(String(l.href ?? "")),
+                href: String(l.href ?? ""),
               }))
             : [],
           chars: String(raw.comment ?? raw.text ?? "").length,

@@ -79,7 +79,7 @@ run in your first five minutes, how to find the right skill instead of
 improvising one, the content-object triple, the two dependency relations, beans,
 QA sidecars and axes, and where to look things up.
 Published at
-<https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/agent-onboarding.html>.
+<https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html>.
 
 Read that first. **The rest of this file is a reference** — commands and
 conventions to come back to, not a path through the project.
@@ -475,7 +475,7 @@ if your clones live under one predictable directory.
 
 ## Agentic harness — interaction model
 
-The [agentic harness](https://litlfred.github.io/folio-assistant/docs/cat-harness/agentic-harness.html)
+The [agentic harness](https://litlfred.github.io/folio-assistant/agentic-harness.html)
 page documents the agent–user interaction model: idle vs workflow states, request
 classification, session lifecycle, and how content workflows and the CRDM
 feature-request workflow fit together. Read it for the consolidated reference;
@@ -485,7 +485,7 @@ the individual skills listed below remain authoritative where they differ.
 
 When a user request is a **feature request** (platform capability change rather
 than content work), the agent enters the
-[CRDM requirements workflow](https://litlfred.github.io/folio-assistant/docs/cat-harness/crdm-methodology.html)
+[CRDM requirements workflow](https://litlfred.github.io/folio-assistant/crdm-methodology.html)
 rather than implementing directly. Detection signals and session-state handling
 are in [`skills/sdlc/crdm/crdm-detect.md`](cat-harness/skills/sdlc/crdm/crdm-detect.md);
 the full six-phase process is in
@@ -758,7 +758,7 @@ to spend the words: **do not start the topic.**
   comment activity and follows through until it's merged or closed:
   `.claude/commands/watch.md`.
 - User-facing docs site (README + install + guides + generated schema/API
-  reference): `docs/` → published to <https://litlfred.github.io/folio-assistant/docs/cat-harness/>
+  reference): `docs/` → published to <https://litlfred.github.io/folio-assistant/>
   by `.github/workflows/docs-site.yml`. Regenerate the generated references with
   `bun run cat-harness/scripts/gen-schema-docs.ts` (schema reference →
   `cat-harness/docs/reference/skills/*`) and

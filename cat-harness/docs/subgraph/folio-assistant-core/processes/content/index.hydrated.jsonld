@@ -6,7 +6,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ContentChangeReview",
       "@type": "bootstrap:Process",
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/content-change-review.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/content-change-review.svg",
       "description": "Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline deploys.\n\nYou are in this process when what is changing is a folio — a chapter, a block, a piece of deterministic logic — rather than the platform that renders it. `code-change-review` is the same shape for the other side of that line, and the distinction matters because a content change is accepted by a REVIEW COMMITTEE on editorial grounds while a platform change is accepted by a code reviewer on engineering ones.\n\nTwo things this is not. It is not the feedback workflow: `todo-review` triages what readers said about content that already exists. And the rendering the author reviews is a STAGED one, because a person cannot assess a rendered artefact from a description of it.",
       "enforcement": "strict",
       "flowCount": 49,
@@ -1233,7 +1233,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_DocumentAuthoring",
       "@type": "bootstrap:Process",
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/authoring-a-document.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/authoring-a-document.svg",
       "description": "How a document folio — structured prose and policy guidance, with no Lean and no required TeX — is authored, built and reviewed end to end. folio-assistant — authoring a document end to end (no Lean, no required TeX).\nSource of truth: this file. The SVG under docs/assets/img/workflows/ is generated\nfrom it by `bun run render:bpmn` — never hand-edit the SVG.\nThe shape is the paper process minus the Lean lane and plus one step, the profile\ncheck, which is what keeps a document folio publishable without either toolchain.",
       "enforcement": "advisory",
       "flowCount": 14,
@@ -1620,7 +1620,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Editing",
       "@type": "bootstrap:Process",
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/editing-hci-validation.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/editing-hci-validation.svg",
       "description": "What happens to one proposed change to one content block: drafted, validated mechanically and by review, shown to the editor, and committed to the corpus only if accepted. folio-assistant — editing a content block and its HCI validation gate.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
       "enforcement": "strict",
       "flowCount": 30,
@@ -2372,7 +2372,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_EvidenceRetrieval",
       "@type": "bootstrap:Process",
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/evidence-retrieval.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/evidence-retrieval.svg",
       "description": "Frame a question for a recommendation, retrieve and appraise evidence from trusted sources, and either attach it or record the gap. The author reviews the guidance already in their content, frames the question as PICO, retrieves candidate evidence across three classes (trusted L1 sources, trusted L2/L3 content, data repositories), verifies each candidate's authority against the publishing body's own API, grades the body of evidence, and either attaches it to the recommendation or records the gap. STRAWPERSON: registries, grading system and API bindings are not fixed here.",
       "enforcement": "strict",
       "flowCount": 19,
@@ -2855,7 +2855,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Lifecycle",
       "@type": "bootstrap:Process",
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/content-lifecycle.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/content-lifecycle.svg",
       "description": "One cycle of a folio from plan to retirement, calling editing and the draft-to-publication path as call activities. folio-assistant — the content lifecycle end to end, one cycle of a folio.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
       "enforcement": "strict",
       "flowCount": 11,
@@ -3199,7 +3199,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
       "@type": "bootstrap:Process",
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/public-comment.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/public-comment.svg",
       "description": "A frozen, line-numbered draft went out for public review. This is what\nhappens to ONE comment that comes back: placed on the block it cites,\ntriaged, weighed by the review committee, decided by the editor and, if\nthe decision changes the document, made on a feature branch whose\nstaging preview shows the text before and after. The change set is\nreviewed by the same process as any content change\n(Process_ContentChangeReview); only the intake is new. Skill:\npublic-comment.",
       "enforcement": "strict",
       "flowCount": 18,
@@ -3723,7 +3723,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication",
       "@type": "bootstrap:Process",
-      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/draft-to-publication.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/draft-to-publication.svg",
       "description": "How the corpus becomes an officially published folio: a draft publication, its review, and the release authority's decision. folio-assistant — corpus to draft publication to officially published.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
       "enforcement": "strict",
       "flowCount": 22,

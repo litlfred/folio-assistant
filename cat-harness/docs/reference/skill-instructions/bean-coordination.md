@@ -85,7 +85,7 @@ off limits is a bean a sibling is **mid-flight** on: a claim naming a branch, a
 recent note, an open PR. Closing that is how a session loses work it had not
 finished reporting.
 
-Full cycle, as a diagram: [Beans and todos](https://litlfred.github.io/folio-assistant/docs/cat-harness/beans-and-todos.html).
+Full cycle, as a diagram: [Beans and todos](https://litlfred.github.io/folio-assistant/beans-and-todos.html).
 
 **Operational spec (read these):**
 

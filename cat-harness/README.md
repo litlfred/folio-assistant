@@ -33,17 +33,17 @@ reader looks for them by name:
 | [`skills/`](skills/) | the instruction bodies — ask for one with `skill_list` / `skill_fetch` rather than opening a path |
 | [`processes/`](processes/) | the BPMN processes; the diagrams are executable, not illustrations |
 | [`schemas/`](schemas/) | the Zod declarations every checker reads, `cat-harness.ts` first |
-| [`docs/`](docs/) | the Jekyll site, published at <https://litlfred.github.io/folio-assistant/docs/cat-harness/> |
+| [`docs/`](docs/) | the Jekyll site, published at <https://litlfred.github.io/folio-assistant/> |
 
 ## Reading it as a person, or as an agent
 
 Both entries exist and they are different files on purpose:
 
 - **A person** starts here, then the
-  [documentation site](https://litlfred.github.io/folio-assistant/docs/cat-harness/) —
-  [installation](https://litlfred.github.io/folio-assistant/docs/cat-harness/installation.html),
-  [getting started](https://litlfred.github.io/folio-assistant/docs/cat-harness/getting-started.html),
-  [architecture](https://litlfred.github.io/folio-assistant/docs/cat-harness/architecture.html).
+  [documentation site](https://litlfred.github.io/folio-assistant/) —
+  [installation](https://litlfred.github.io/folio-assistant/installation.html),
+  [getting started](https://litlfred.github.io/folio-assistant/getting-started.html),
+  [architecture](https://litlfred.github.io/folio-assistant/architecture.html).
 - **An agent** starts at [`AGENTS.md`](AGENTS.md), which does not restate this
   file. It carries what a cold agent has to *do* — the order of operations,
   which store answers which question, and the rules that bind before the first

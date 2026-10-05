@@ -310,15 +310,6 @@ export const RULES: Rule[] = [
       // makes is about INSTANCES and where their directories resolve; it
       // opens the files only to copy bytes, and never asks what a page says.
       "scripts/compose-docs.ts",             // docs layers -> one composed tree
-      // The three that put that tree at `<base>/docs/<built>/` (issue #2188,
-      // bean `kc7k`). HARNESS by the same argument as the mount above: each
-      // answers a question about the SITE — where the built instance's docs
-      // route is, which built documents an identifier names at the root, what
-      // the root lists — from declarations and `@id`s, never from what a page
-      // says.
-      "scripts/docs-route.ts",               // the built docs tree's route under the site
-      "scripts/hoist-addressed-documents.ts",// root-addressed JSON-LD back to its @id's address
-      "scripts/root-landing.ts",             // the site root's own page
       // Whether a swimlane DEFINES itself — `name`, `<documentation>`, and
       // both reaching the translation templates. Harness by subject for the
       // same reason as its neighbour above: a lane is a ROLE boundary, which

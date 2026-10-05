@@ -13,7 +13,7 @@ per-content-type skill system.
 [![Code-quality gates](https://github.com/litlfred/folio-assistant/actions/workflows/code-quality-gates.yml/badge.svg?branch=main)](https://github.com/litlfred/folio-assistant/actions/workflows/code-quality-gates.yml?query=branch%3Amain)
 [![Docs site](https://github.com/litlfred/folio-assistant/actions/workflows/docs-site.yml/badge.svg?branch=main)](https://github.com/litlfred/folio-assistant/actions/workflows/docs-site.yml?query=branch%3Amain)
 [![CI health](https://github.com/litlfred/folio-assistant/actions/workflows/ci-health.yml/badge.svg?branch=main)](https://github.com/litlfred/folio-assistant/actions/workflows/ci-health.yml?query=branch%3Amain)
-[![Docs](https://img.shields.io/badge/docs-github.io-blue)](https://litlfred.github.io/folio-assistant/docs/cat-harness/)
+[![Docs](https://img.shields.io/badge/docs-github.io-blue)](https://litlfred.github.io/folio-assistant/)
 [![License: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-green)](./LICENSE)
 [![Docs licence: CC BY 3.0](https://img.shields.io/badge/docs-CC%20BY%203.0-green)](./LICENSE-CONTENT.md)
 
@@ -146,10 +146,10 @@ repository link rather than a site one.
 
 ---
 
-📖 **Full documentation:** **<https://litlfred.github.io/folio-assistant/docs/cat-harness/>**
+📖 **Full documentation:** **<https://litlfred.github.io/folio-assistant/>**
 
 🤖 **Are you an LLM agent?** Start with
-**[Agent onboarding](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/agent-onboarding.html)**
+**[Agent onboarding](https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html)**
 (source: [`folio-assistant/docs/guides/agent-onboarding.md`](cat-harness/docs/guides/agent-onboarding.md)) —
 which repo you are in, your first five minutes, how to find the right skill, the
 content-object model, and the QA sidecar system. `AGENTS.md` is the command and
@@ -169,15 +169,15 @@ flowchart LR
     C -->|WHO SMART IG| F[L3 FHIR / FSH]
     D & E & F & H --> G[Published PDF / site / IG]
 
-    click B "https://litlfred.github.io/folio-assistant/docs/cat-harness/" "Docs home" _blank
-    click H "https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html" "Writing a document" _blank
-    click D "https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html" "Writing a paper" _blank
-    click E "https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-dak.html" "WHO SMART DAK (L2)" _blank
-    click F "https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-ig.html" "WHO SMART IG (L3)" _blank
+    click B "https://litlfred.github.io/folio-assistant/" "Docs home" _blank
+    click H "https://litlfred.github.io/folio-assistant/guides/writing-a-document.html" "Writing a document" _blank
+    click D "https://litlfred.github.io/folio-assistant/guides/writing-a-paper.html" "Writing a paper" _blank
+    click E "https://litlfred.github.io/folio-assistant/guides/who-smart-dak.html" "WHO SMART DAK (L2)" _blank
+    click F "https://litlfred.github.io/folio-assistant/guides/who-smart-ig.html" "WHO SMART IG (L3)" _blank
 ```
 
 > The diagram nodes link to the docs (clickable on the
-> [docs site](https://litlfred.github.io/folio-assistant/docs/cat-harness/) and in Mermaid-aware
+> [docs site](https://litlfred.github.io/folio-assistant/) and in Mermaid-aware
 > viewers). On GitHub itself, use the clickable map below.
 
 | Content type | Artifacts | Skill package |
@@ -205,7 +205,7 @@ diagrams**. Sources live in [`processes/`](cat-harness/processes) — open them 
 generated from them by `bun run render:bpmn`.
 
 Full walk-through, with the roles and the skill each activity uses:
-**[Publication workflow](https://litlfred.github.io/folio-assistant/docs/cat-harness/publication-workflow.html)**.
+**[Publication workflow](https://litlfred.github.io/folio-assistant/publication-workflow.html)**.
 
 ### One proposed change to one content block — the HCI validation gate
 
@@ -335,8 +335,8 @@ Choose `document` unless the folio will actually carry formal mathematics —
 removing the math blocks, which `content_profile_check` lists for you.
 
 ➡️ Full walk-throughs:
-**[Writing a document](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html)**
-· **[Writing a paper](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html)**
+**[Writing a document](https://litlfred.github.io/folio-assistant/guides/writing-a-document.html)**
+· **[Writing a paper](https://litlfred.github.io/folio-assistant/guides/writing-a-paper.html)**
 
 ---
 
@@ -414,7 +414,7 @@ over HTTP. The `work_plan_prime` tool gives any connected agent identical
 work-plan priming.
 
 ➡️ Full per-harness instructions:
-[Connecting an LLM harness](https://litlfred.github.io/folio-assistant/docs/cat-harness/installation.html#connecting-an-llm-harness).
+[Connecting an LLM harness](https://litlfred.github.io/folio-assistant/installation.html#connecting-an-llm-harness).
 
 ---
 
@@ -439,15 +439,15 @@ work-plan priming.
 
 | Page | What |
 |------|------|
-| [Installation](https://litlfred.github.io/folio-assistant/docs/cat-harness/installation.html) | prerequisites, harness setup |
-| [Getting started](https://litlfred.github.io/folio-assistant/docs/cat-harness/getting-started.html) | first skill run |
-| [Tutorial: writing a document](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html) | prose folios — policy guidance, standards, reports |
-| [Tutorial: writing a paper](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html) | LLM-driven walk-through with a mock session |
-| [Content types](https://litlfred.github.io/folio-assistant/docs/cat-harness/content-types.html) | the authoring formalism per domain |
-| [Skills & roles](https://litlfred.github.io/folio-assistant/docs/cat-harness/skills.html) | all skills + roles, and how they work with the LLM |
+| [Installation](https://litlfred.github.io/folio-assistant/installation.html) | prerequisites, harness setup |
+| [Getting started](https://litlfred.github.io/folio-assistant/getting-started.html) | first skill run |
+| [Tutorial: writing a document](https://litlfred.github.io/folio-assistant/guides/writing-a-document.html) | prose folios — policy guidance, standards, reports |
+| [Tutorial: writing a paper](https://litlfred.github.io/folio-assistant/guides/writing-a-paper.html) | LLM-driven walk-through with a mock session |
+| [Content types](https://litlfred.github.io/folio-assistant/content-types.html) | the authoring formalism per domain |
+| [Skills & roles](https://litlfred.github.io/folio-assistant/skills.html) | all skills + roles, and how they work with the LLM |
 | [Skill schema reference](https://litlfred.github.io/folio-assistant/reference/skills/) | generated input/output contracts |
 | [TypeScript API reference](https://litlfred.github.io/folio-assistant/api/) | the content-object model |
-| [Architecture](https://litlfred.github.io/folio-assistant/docs/cat-harness/architecture.html) | adapters, MCP, RBAC, blocks |
+| [Architecture](https://litlfred.github.io/folio-assistant/architecture.html) | adapters, MCP, RBAC, blocks |
 
 ---
 
@@ -466,7 +466,7 @@ beans <id> --status in-progress
 
 ## Contributing
 
-See the [contributing guide](https://litlfred.github.io/folio-assistant/docs/cat-harness/contributing.html)
+See the [contributing guide](https://litlfred.github.io/folio-assistant/contributing.html)
 and [`AGENTS.md`](./AGENTS.md). Run `bun test` and `eslint .` before pushing.
 
 ## License

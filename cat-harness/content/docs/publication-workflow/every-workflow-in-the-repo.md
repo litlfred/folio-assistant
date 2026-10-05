@@ -4,7 +4,7 @@ SVGs are generated from those files by `bun run render:bpmn`; never hand-edit
 an SVG.
 
 **The table below is not written on this page.** It is read from the
-published knowledge graph — the [named-subgraph JSON-LD]({{ '/subgraph/index.jsonld' | prepend: site.site_root }})
+published knowledge graph — the [named-subgraph JSON-LD](subgraph/index.jsonld)
 that `bun run subgraph:jsonld` frames from `kg-export` — by walking each
 instance's `processes` subgraph. Each row's text is the first sentence of that
 diagram's own `bpmn:documentation`, carried on its `Process` node as
@@ -60,7 +60,7 @@ in, so that is the only thing said here:
 <div class="fa-process-index" data-fa-process-index>
 <noscript>
 <p>The process table is drawn by JavaScript from the published
-<a href="{{ '/subgraph/index.jsonld' | prepend: site.site_root }}">named-subgraph JSON-LD</a>, which can be read
+<a href="subgraph/index.jsonld">named-subgraph JSON-LD</a>, which can be read
 directly: each instance's <code>processes/index.hydrated.jsonld</code> holds
 every one of its processes. The same diagrams are listed, without scripts, in the
 <a href="cat-harness/auto-docs/index/processes/">derived process index</a>, apart from
