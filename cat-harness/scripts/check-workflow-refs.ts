@@ -31,9 +31,9 @@
  *
  * @covers processes, skills
  */
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { workflowFiles, corpusScopeFor } from "./known-skills.js";
-import { basename, join, relative, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 import { loadProcessModel, isActivity } from "../src/workflow/process-model.js";
 import { knownSkills } from "./known-skills.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
@@ -142,7 +142,6 @@ const adjudicationCalls = {
 
 let knownCount = 0;
 let fileCount = 0;
-let rootFiles: string[] = [];
 
 for (const root of INSTANCES) {
 const skills = knownSkills(root, corpusScopeFor(root));
@@ -152,9 +151,6 @@ knownCount += skills.size;
 // as clean, which is the exact failure this script exists to prevent.
 const files = workflowFiles(root, corpusScopeFor(root)).filter((f) => f.endsWith(".bpmn"));
 fileCount += files.length;
-// The sections after this loop are about the ROOT instance only — its
-// content-type translation declarations and its publication index.
-if (root === INSTANCE_ROOT) rootFiles = files;
 
 
 for (const file of files) {
@@ -311,45 +307,14 @@ if (missingDeclared.length) {
 }
 
 /*
- * Every diagram is reachable from the index page. Measured 2026-09-18: the
- * page opened "Nineteen BPMN 2.0 files" and then listed EIGHT — eleven
- * diagrams existed and were invisible to any reader who started there. A
- * diagram nobody can find is only marginally better than one that does not
- * exist, and the miscount proves the list was not maintained alongside the
- * directory.
+ * Every diagram is reachable from the index page — that half MOVED to
+ * `check:process-index` (bean `ax6r`). It used to scan this page's markdown
+ * for each diagram's basename, because the table was hand-written; the table
+ * is now drawn at runtime from the published named-subgraph JSON-LD, so the
+ * page names no diagram and the question is whether that graph covers every
+ * declared `.bpmn`. One gate per question: a second scan here would be a
+ * second answer to "which diagrams are listed".
  */
-const INDEX_DIR = join(INSTANCE_ROOT, "content/docs/publication-workflow");
-const unindexed: string[] = [];
-if (existsSync(INDEX_DIR)) {
-  const indexText = readdirSync(INDEX_DIR)
-    .filter((f) => f.endsWith(".md"))
-    .map((f) => readFileSync(join(INDEX_DIR, f), "utf-8"))
-    .join("\n");
-  // The page names diagrams by BASENAME (`crdm-close.bpmn`), so that is what
-  // is matched — but only where the basename is unambiguous. Under a topical
-  // layout `bootstrap/processes/review.bpmn` and `crdm/workflows/review.bpmn`
-  // share one, and a single mention of `review.bpmn` indexes NEITHER: a
-  // reader who follows it reaches one diagram and cannot tell which. Such a
-  // diagram must be named by its repo-relative path to count.
-  //
-  // `workflowFiles` returns ABSOLUTE paths, and comparing those against prose
-  // was a live defect for one commit — `ab62c9dfe` rewired this checker to the
-  // declaration and left the comparison alone, so all 32 diagrams read as
-  // unindexed. A wall of false findings is the failure mode `known-skills.ts`
-  // names: a check that cries wolf is a check somebody switches off.
-  const byBase = new Map<string, number>();
-  for (const f of rootFiles) byBase.set(basename(f), (byBase.get(basename(f)) ?? 0) + 1);
-  for (const f of rootFiles) {
-    const rel = relative(INSTANCE_ROOT, f);
-    const base = basename(f);
-    const named = indexText.includes(rel) || (byBase.get(base) === 1 && indexText.includes(base));
-    if (!named) unindexed.push(rel);
-  }
-}
-if (unindexed.length) {
-  console.log("\nNOT INDEXED — a diagram no reader of the workflow page can find:");
-  for (const f of unindexed) console.log(`  \u2717 ${f}`);
-}
 
 console.log(
   `\nDecision points — ${branches.computed.length} computed by a DMN table, ` +
@@ -374,5 +339,5 @@ if (branches.undeclared.length) {
 // survived from 2026-09-19 in the first place. An instance that exists and
 // holds no diagram is a different fact and stays a report.
 if (absentInstances.length) process.exit(1);
-if (dangling.length || missingDeclared.length || unindexed.length) process.exit(1);
+if (dangling.length || missingDeclared.length) process.exit(1);
 if (strict && totalUncovered) process.exit(1);

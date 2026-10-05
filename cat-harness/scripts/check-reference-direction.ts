@@ -519,7 +519,6 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "smart-base/AGENTS.md", names: 2 },
   { file: "smart-base/tools/index.ts", names: 2 },
   { file: "fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md", names: 2 },
-  { file: "cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md", names: 2 },
   { file: "fhir-harness/scripts/ingest-ig-chrome.ts", names: 2 },
   { file: "fhir-harness/scripts/gen-ig-pages.ts", names: 3 },
   { file: "cat-harness/docs/processes/index.md", names: 2 },

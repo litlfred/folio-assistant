@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_CRDM` · strict (defaulted) · 9 step(s)
 
-The CRDM requirements process, decomposed. Each phase is a real subprocess in its own file: `workflow_next` reports the step you are on and the phase it sits inside, and `workflow_complete` takes the step's own id. Detection stays here rather than in a child because its "not a feature" branch ends the whole process — inside a subprocess the parent would have to re-ask the same question to route on the answer.
+A feature request turned into agreed, signed-off requirements and delivered, with one call activity per CRDM phase from issue linking to close-out. The CRDM requirements process, decomposed. Each phase is a real subprocess in its own file: `workflow_next` reports the step you are on and the phase it sits inside, and `workflow_complete` takes the step's own id. Detection stays here rather than in a child because its "not a feature" branch ends the whole process — inside a subprocess the parent would have to re-ask the same question to route on the answer.
 
 <img src="../assets/img/workflows/crdm-requirements.svg" alt="BPMN diagram: CRDM requirements" style="max-width:100%">
 

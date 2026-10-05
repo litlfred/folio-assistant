@@ -90,6 +90,11 @@ exclude:
   - folio-assistant-migration.md
   - qou-migration-checklist.md
   - sage-mcp.md
+  # Content-addressed payloads (bean `f233`) are copied into the site VERBATIM
+  # by docs-site.yml / feature-staging.yml after the build. A skill body
+  # carries front matter and `{{ }}`, so Jekyll would render it as a page and
+  # the bytes served would no longer hash to their name.
+  - payload
   # Directory READMEs that `readme:subgraphs` writes into a declared directory
   # with NO index page of its own (#2094). They are for someone browsing the
   # repository, not site pages: under the github-pages gem set,

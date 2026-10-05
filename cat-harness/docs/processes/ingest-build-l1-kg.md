@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_BuildL1Kg` · advisory · 5 step(s)
 
-folio-assistant — Ingestion subprocess — build the L1 knowledge graph.
+Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links. folio-assistant — Ingestion subprocess — build the L1 knowledge graph.
 
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it

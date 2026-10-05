@@ -1,6 +1,6 @@
 ---
 # folio-assistant-yt7j
-title: ""
+title: 'SCHEMA: coverage.* is repo-root relative while a directory''s path is instance-relative, and nothing says so'
 status: completed
 type: task
 priority: normal
@@ -73,3 +73,7 @@ explains why it stayed latent.
 - [x] The two bases are stated on the schema, where a consumer reads them
 - [x] Decided and recorded: repository-root relative, via one exported resolver
       (owner, 2026-09-21)
+
+
+## 2026-10-03 — one file again (owner ruling, bean 4vg7 follow-up)
+This bean existed as two files: this archive copy (the 2026-09-21 ruling, completed, title lost) and a stale `defs/` copy (2026-09-20, todo, still waiting on the ruling recorded here). Owner, 2026-10-03, chose 'Keep archive, drop stale': the title is restored here and the `defs/` copy was removed with `git rm` (its text is in git history at the commit before removal).

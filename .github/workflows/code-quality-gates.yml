@@ -823,6 +823,16 @@ jobs:
       - name: workflow skill refs
         run: bun run check:workflow-refs
 
+      # The workflow page's process table is drawn at runtime from the
+      # published named-subgraph JSON-LD (bean `ax6r`; owner 2026-10-03: "Move
+      # to JSON-LD"), so "is every diagram on the page" became "does every
+      # declared .bpmn have a documented Process node in a published processes
+      # subgraph". Recomputed from each instance's declaration, so the files
+      # cannot vouch for themselves; bootstrap's diagrams, outside this graph
+      # by `pve3`, are listed as not covered. Staleness is subgraph:jsonld:check's.
+      - name: process index covers every declared diagram
+        run: bun run check:process-index
+
       # A task's containing swimlane must DEFINE itself -- bean `sqtq`, issue
       # #596. Measured 2026-09-21: 157 task-containing lanes, every one named
       # and NONE documented, so the defined-terms index #596 asks for would
@@ -1191,6 +1201,35 @@ jobs:
       # `kg-export.<stub>` sidecar that no instance owns as an orphan.
       - name: kg-export QA sidecars are current
         run: bun run kg:export:check
+
+      # Every named subgraph's `index.jsonld` + `index.hydrated.jsonld`, framed
+      # from kg-export's one in-memory graph (bean `c1m4`), is committed under
+      # `cat-harness/docs/subgraph/` so Pages serves it at
+      # `<BASE_URL>/subgraph/<HARNESS>/<PATH>/`. Fails on a stale or stray
+      # file, and on any node the generator could not place in a subgraph.
+      - name: named-subgraph JSON-LD is current
+        run: bun run subgraph:jsonld:check
+
+      # The per-slice SQLite files (bean `q8ar`): beans, todos, library and the
+      # whole-repo kg. No binary is committed: each is built at deploy from the
+      # tree being published, in the same way as `assets/beans/index.json` and
+      # for the same reason. So this gate does not compare against a committed
+      # copy. For EACH slice it builds twice and fails unless the two builds
+      # are byte-identical, unless the row digest read back from the file
+      # equals the one computed from the source, unless an FTS5 phrase query
+      # finds a known row, or unless the payloads pass gen-subgraph-jsonld's
+      # orphan audit (the kg slice's against the committed payload tree). One
+      # step for the four, each reported on its own line, because they are one
+      # builder over one table of definitions; `--check --slice <name>` runs one.
+      - name: SQLite slices build deterministically and match their sources
+        run: bun run slice:sqlite:check
+
+      # The vendored SQLite WASM build the slice client loads (jsDelivr is not
+      # reachable from every builder, and a reader's search should not depend
+      # on a third host). Fails when the vendored bytes differ from the pinned
+      # `@sqlite.org/sqlite-wasm` devDependency.
+      - name: vendored sqlite-wasm matches its pinned package
+        run: bun run slice:sqlite:vendor:check
 
       # WHICH audits reach which kind of node — the neighbour of the audit
       # above, not a second answer to it. `kg:audit:check` judges the nodes it

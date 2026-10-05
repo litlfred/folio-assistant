@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_CiHealth` · strict · 4 step(s)
 
-A WORKFLOW'S OUTCOME IS INVISIBLE FROM A CHECKOUT. Bean `xom7`: one workflow here fired on every push to `main` and FAILED ALL 30 TIMES OVER TWO MONTHS with nothing in the repository saying so. This is the backstop.
+Is CI actually working on the default branch: record each workflow's state on one tracking issue, and fail the job only when the state could not be determined. A WORKFLOW'S OUTCOME IS INVISIBLE FROM A CHECKOUT. Bean `xom7`: one workflow here fired on every push to `main` and FAILED ALL 30 TIMES OVER TWO MONTHS with nothing in the repository saying so. This is the backstop.
 
 WEEKLY, NOT DAILY, and the cadence is an argument rather than a default: the defect is "nobody noticed for two months", not "nobody noticed for a day", and the session-start sweep already covers every day somebody is working. A weekly run bounds the blind spot to seven days without turning the tracking issue into a feed.
 

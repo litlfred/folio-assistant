@@ -66,6 +66,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`sidebar-panels.e2e.ts`](sidebar-panels.e2e.ts) | a file |  |
 | [`sidebar-rail.e2e.ts`](sidebar-rail.e2e.ts) | a file |  |
 | [`site-index.e2e.ts`](site-index.e2e.ts) | a file |  |
+| [`slice-sqlite.e2e.ts`](slice-sqlite.e2e.ts) | a file |  |
 | [`staging-banner.e2e.ts`](staging-banner.e2e.ts) | a file |  |
 | [`state-dashboards.e2e.ts`](state-dashboards.e2e.ts) | a file |  |
 | [`sticky-home.e2e.ts`](sticky-home.e2e.ts) | a file |  |
