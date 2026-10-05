@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-reachability.ts",
-    "script_hash": "9393a66e9594"
+    "script_hash": "50c9013ef31c"
   },
   "subject": {
     "kind": "audit-reachability",
@@ -64,7 +64,7 @@
             "shebang": true,
             "mainGuard": true
           },
-          "importers": 28
+          "importers": 29
         },
         {
           "file": "cat-harness/schemas/merge-queue.ts",
@@ -72,7 +72,7 @@
             "shebang": true,
             "mainGuard": false
           },
-          "importers": 1
+          "importers": 3
         },
         {
           "file": "cat-harness/schemas/session-survey.ts",
@@ -96,7 +96,7 @@
             "shebang": true,
             "mainGuard": false
           },
-          "importers": 11
+          "importers": 12
         },
         {
           "file": "cat-harness/scripts/graph-read.ts",
@@ -104,15 +104,15 @@
             "shebang": true,
             "mainGuard": false
           },
-          "importers": 5
+          "importers": 7
         },
         {
-          "file": "cat-harness/scripts/kind-table.ts",
+          "file": "cat-harness/scripts/merge-queue-store.ts",
           "shape": {
             "shebang": true,
             "mainGuard": false
           },
-          "importers": 1
+          "importers": 2
         },
         {
           "file": "cat-harness/scripts/merge-queue.ts",
@@ -120,7 +120,7 @@
             "shebang": true,
             "mainGuard": false
           },
-          "importers": 1
+          "importers": 2
         },
         {
           "file": "cat-harness/scripts/partition/engine.ts",
@@ -152,7 +152,7 @@
             "shebang": true,
             "mainGuard": false
           },
-          "importers": 1
+          "importers": 2
         },
         {
           "file": "cat-harness/scripts/staging-stamp.ts",
@@ -171,27 +171,47 @@
           "importers": 1
         },
         {
+          "file": "folio-assistant-core/scripts/public-comment-changesets.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": true
+          },
+          "importers": 2
+        },
+        {
           "file": "folio-assistant-core/scripts/public-comment.ts",
           "shape": {
             "shebang": true,
             "mainGuard": true
           },
-          "importers": 1
-        },
-        {
-          "file": "folio-assistant-sci/content/pipeline/qa-checkers-cost.ts",
-          "shape": {
-            "shebang": true,
-            "mainGuard": false
-          },
-          "importers": 1
+          "importers": 2
         }
       ]
     },
     "entry-point-orphan": {
       "summary": "A module that DECLARES itself runnable — a `#!` shebang or an `import.meta.main` guard — that nothing runs and nothing but a test imports. Finding 1's shape exactly: `scripts/merge-queue.ts` said in its own docblock that the merge steward called it, and the only thing reaching it was the test proving it worked. Reported rather than failed — `--strict` fails on it and bean `folio-assistant-dxqm` holds the day that wires. It bites anyway: one more entry makes this sidecar stale, `--check` fails, and the regeneration puts the new module in the diff.",
-      "count": 11,
+      "count": 14,
       "entries": [
+        {
+          "file": "cat-harness-tools/scripts/check-mirror-drift.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": true
+          },
+          "testImporters": [
+            "cat-harness-tools/scripts/tests/check-mirror-drift.test.ts"
+          ]
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-self-discharging-instances.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": true
+          },
+          "testImporters": [
+            "cat-harness-tools/scripts/tests/check-self-discharging-instances.test.ts"
+          ]
+        },
         {
           "file": "cat-harness/content/pipeline/conjectural-propagation-audit.ts",
           "shape": {
@@ -267,7 +287,17 @@
             "mainGuard": false
           },
           "testImporters": [
-            "cat-harness/scripts/tests/qa-checkers-vacuity.test.ts"
+            "cat-harness-tools/scripts/tests/qa-checkers-vacuity.test.ts"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/ref-window.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": false
+          },
+          "testImporters": [
+            "cat-harness/schemas/ref-window.test.ts"
           ]
         },
         {
@@ -323,8 +353,8 @@
       "entries": []
     },
     "reachability-measured": {
-      "summary": "Every declared decision and diagram with its state, and the gateways pointing at each decision. Not findings: the relation itself, so a diff shows reachability moving. The reference counts are recorded and never graded — `kg-audit`'s `decision-outcomes-used` owns \"no gateway references this decision\", and a second reader of one relation is a second answer free to disagree with the first. Activity skill refs are owned by `check:workflow-refs` for the same reason and are not re-read here. 12 decision(s), 89 diagram(s), 14 declaring instance(s).",
-      "count": 101,
+      "summary": "Every declared decision and diagram with its state, and the gateways pointing at each decision. Not findings: the relation itself, so a diff shows reachability moving. The reference counts are recorded and never graded — `kg-audit`'s `decision-outcomes-used` owns \"no gateway references this decision\", and a second reader of one relation is a second answer free to disagree with the first. Activity skill refs are owned by `check:workflow-refs` for the same reason and are not re-read here. 8 decision(s), 74 diagram(s), 13 declaring instance(s).",
+      "count": 82,
       "entries": [
         {
           "kind": "decision",
@@ -387,42 +417,6 @@
           "state": "evaluable",
           "referencedBy": [
             "test-plan-execution.bpmn#GW_ExitCriteria"
-          ]
-        },
-        {
-          "kind": "decision",
-          "file": "folio-assistant-core/processes/conduct/decisions/folio-intent.dmn",
-          "id": "Decision_FolioIntent",
-          "state": "evaluable",
-          "referencedBy": [
-            "getting-started.bpmn#Gateway_Intent"
-          ]
-        },
-        {
-          "kind": "decision",
-          "file": "folio-assistant-core/processes/conduct/decisions/pages-live-gate.dmn",
-          "id": "Decision_PagesLive",
-          "state": "evaluable",
-          "referencedBy": [
-            "getting-started.bpmn#Gateway_Live"
-          ]
-        },
-        {
-          "kind": "decision",
-          "file": "folio-assistant-core/processes/content/decisions/draft-qa-gate.dmn",
-          "id": "Decision_DraftQaGate",
-          "state": "evaluable",
-          "referencedBy": [
-            "draft-to-publication.bpmn#Gateway_QaGreen"
-          ]
-        },
-        {
-          "kind": "decision",
-          "file": "folio-assistant-core/processes/content/decisions/review-coverage-gate.dmn",
-          "id": "Decision_ReviewCoverageGate",
-          "state": "evaluable",
-          "referencedBy": [
-            "content-change-review.bpmn#GW_Covered"
           ]
         },
         {
@@ -534,6 +528,13 @@
         },
         {
           "kind": "process",
+          "file": "cat-harness/processes/kg/slice-sqlite-publish.bpmn",
+          "id": "Process_SliceSqlitePublish",
+          "state": "reachable",
+          "referencedBy": []
+        },
+        {
+          "kind": "process",
           "file": "cat-harness/processes/library/content-acquisition.bpmn",
           "id": "Process_ContentAcquisition",
           "state": "reachable",
@@ -557,34 +558,6 @@
           "kind": "process",
           "file": "cat-harness/processes/library/human-translation-workflow.bpmn",
           "id": "Process_HumanTranslation",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "cat-harness/processes/library/ingest-build-l1-kg.bpmn",
-          "id": "Process_BuildL1Kg",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "cat-harness/processes/library/ingest-derive-content.bpmn",
-          "id": "Process_DeriveContent",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "cat-harness/processes/library/ingest-extract-structure.bpmn",
-          "id": "Process_ExtractStructure",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "cat-harness/processes/library/ingest-l1-completeness-gate.bpmn",
-          "id": "Process_L1Gate",
           "state": "reachable",
           "referencedBy": []
         },
@@ -947,90 +920,6 @@
         },
         {
           "kind": "process",
-          "file": "folio-assistant-core/processes/conduct/getting-started.bpmn",
-          "id": "Process_GettingStarted",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "folio-assistant-core/processes/content/authoring-a-document.bpmn",
-          "id": "Process_DocumentAuthoring",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "folio-assistant-core/processes/content/content-change-review.bpmn",
-          "id": "Process_ContentChangeReview",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "folio-assistant-core/processes/content/content-lifecycle.bpmn",
-          "id": "Process_Lifecycle",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "folio-assistant-core/processes/content/draft-to-publication.bpmn",
-          "id": "Process_Publication",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "folio-assistant-core/processes/content/editing-hci-validation.bpmn",
-          "id": "Process_Editing",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "folio-assistant-core/processes/content/evidence-retrieval.bpmn",
-          "id": "Process_EvidenceRetrieval",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "folio-assistant-core/processes/content/public-comment.bpmn",
-          "id": "Process_PublicComment",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "folio-assistant-core/processes/library/deep-document-research.bpmn",
-          "id": "Process_DeepDocumentResearch",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "folio-assistant-core/processes/ui/board-open-close.bpmn",
-          "id": "Process_BoardOpenClose",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "folio-assistant-core/processes/ui/board-place-note.bpmn",
-          "id": "Process_BoardPlaceNote",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
-          "file": "folio-assistant-core/processes/ui/board-relocate.bpmn",
-          "id": "Process_BoardRelocate",
-          "state": "reachable",
-          "referencedBy": []
-        },
-        {
-          "kind": "process",
           "file": "folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn",
           "id": "Process_AtomicMassDrift",
           "state": "reachable",
@@ -1060,5 +949,5 @@
       ]
     }
   },
-  "total": 133
+  "total": 117
 }

@@ -10,5 +10,5 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `folio-assistant
 
 | file | what it is | used by |
 |---|---|---|
-| [`index.md`](index.md) | "The content layer: what a folio is, its block kinds and adapters, and the folio graph kind itself." |  |
+| [`index.md`](index.md) | "The content layer: what a folio is, its block kinds and adapters, and the folio graph typology itself." |  |
 <!-- kg:subgraph:end -->

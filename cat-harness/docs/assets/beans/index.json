@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 910,
+      "count": 911,
       "unit": "beans"
     }
   },
@@ -4728,6 +4728,20 @@
       "updatedAt": "2026-09-30T11:56:26Z",
       "preview": "The one unchecked item of epic lqo9's Done when, split out 2026-09-30 so the epic's open work is a bean rather than a line: 'Labels and definitions are extracted to .pot like BPMN labels [done] ... and render per locale (next step: needs the glossary page to read the .po, which is a change to glossary-page.ts)'.\n\nSurfaced by check:bean-rollup once lqo9's last two children (ftu0, x5o1) closed: an e",
       "file": "beans/defs/folio-assistant-c592--glossary-per-locale-glossary-pagets-reads-the-tran.md"
+    },
+    {
+      "id": "folio-assistant-c5fm",
+      "title": "Instantiate folio-assistant-core: config at root so the navbar lists it; declare its docs/",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T14:53:55Z",
+      "updatedAt": "2026-10-05T16:21:39Z",
+      "preview": "Issue #2196. Owner 2026-10-05 asked whether folio-assistant-core/ is staged and why it is missing from the navbar Harnesses list between WHO IRIS and C@T Harness. Rule: gen-navbar-include.ts lists harnesses with instantiated===true; harness-tiles.ts sets instantiated from <name>.config.json at the root. Core has a declaration but no config.\n\n\n## 2026-10-05 progress (PR #2197)\n- Added folio-assista",
+      "file": "beans/defs/folio-assistant-c5fm--instantiate-folio-assistant-core-config-at-root-so.md"
     },
     {
       "id": "folio-assistant-c8uq",
@@ -14478,14 +14492,14 @@
         "file": "beans/defs/folio-assistant-npuo--goal-5-content-the-content-model-and-the-ingest-pi.md",
         "status": "todo",
         "epics": 2,
-        "total": 64,
+        "total": 65,
         "closed": 29,
-        "open": 35,
-        "inProgress": 13,
+        "open": 36,
+        "inProgress": 14,
         "todo": 22,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.453125
+        "share": 0.4461538461538462
       },
       {
         "id": "folio-assistant-p5wm",
@@ -14549,8 +14563,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 532,
-    "coveredOpen": 529,
+    "openTotal": 533,
+    "coveredOpen": 530,
     "duplicateIds": 0
   }
 }
