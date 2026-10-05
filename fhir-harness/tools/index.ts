@@ -174,6 +174,8 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "baseurl", schema: t("RepoPath"), required: true, description: "The site's base URL; each IG is served under it at `/<instance>/` or `/<instance>/ig/`." },
           { name: "plantuml-jar", schema: t("RepoPath"), required: false, description: "Render `input/images-source/*.plantuml` as the Publisher does." },
           { name: "changed-files", schema: t("RepoPath"), required: false, description: "Build only the IGs a changed file reaches (the staging cone, bean `4j86`)." },
+          { name: "only", schema: t("Slug"), required: false, description: "Build one IG instance." },
+          { name: "source", schema: t("RepoPath"), required: false, description: "With `--only`: a local checkout of the IG's source to build from instead of cloning the recorded commit — an IG repository building its own site in CI." },
         ],
         outputs: [
           { name: "sites", schema: t("Count"), description: "IGs staged, one stdout line each; an instance with no recorded source is skipped and reported, never silently." },

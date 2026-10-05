@@ -31,6 +31,12 @@
  * `--changed-files` (one path per line) builds only the IGs the staging cone
  * reaches (bean `4j86`); each decision is printed with its reason.
  *
+ * `--only <instance> --source <dir>` builds ONE IG from a local checkout of
+ * its source instead of cloning the recorded commit — what an IG's own
+ * repository runs in its CI, so the site is built from the commit being
+ * pushed (bean `mftp`, owner 2026-10-05: *"build on the fork"*). The menu,
+ * index and artefact pages still come from the instance's declaration here.
+ *
  * @covers none — a build step: it stages sites and judges no declared graph
  *
  * @module fhir-harness/scripts/stage-ig-sites
@@ -252,10 +258,22 @@ if (import.meta.main) {
   const work = opt("--work");
   const base = opt("--baseurl");
   if (!work || base === undefined) {
-    console.error("usage: stage-ig-sites.ts --work <dir> --baseurl <site baseurl> [--plantuml-jar <jar>] [--remote-theme <owner/repo@ref>] [--changed-files <file>]");
+    console.error("usage: stage-ig-sites.ts --work <dir> --baseurl <site baseurl> [--plantuml-jar <jar>] [--remote-theme <owner/repo@ref>] [--changed-files <file>] [--only <instance> [--source <dir>]]");
     process.exit(2);
   }
-  const { build, skipped } = igsToBuild(resolve("."));
+  const all = igsToBuild(resolve("."));
+  const only = opt("--only");
+  const localSource = opt("--source");
+  if (localSource && !only) {
+    console.error("--source needs --only: a local checkout is one IG's source");
+    process.exit(2);
+  }
+  const build = only ? all.build.filter((b) => b.instance === only) : all.build;
+  const skipped = all.skipped;
+  if (only && build.length === 0) {
+    console.error(`${only}: no instance here records a sushi-config source in fhir-artifact-index/menu.json`);
+    process.exit(2);
+  }
   for (const s of skipped) console.error(`skipped ${s}`);
   // The staging cone (bean `4j86`): with `--changed-files`, an IG no changed
   // file reaches is not built. Without it, every IG is, as before.
@@ -267,11 +285,17 @@ if (import.meta.main) {
     const src = resolve(work, ig.instance, "src");
     const site = resolve(work, ig.instance, "site");
     mkdirSync(src, { recursive: true });
-    // A pinned commit, fetched alone: the menu was read from exactly this tree.
-    const git = (...a: string[]) => execFileSync("git", ["-C", src, ...a], { stdio: ["ignore", "ignore", "inherit"] });
-    git("init", "-q");
-    git("fetch", "-q", "--depth", "1", ig.repo, ig.ref);
-    git("checkout", "-q", "FETCH_HEAD");
+    if (localSource) {
+      // The IG's own repository building itself: its checkout IS the source.
+      cpSync(resolve(localSource), src, { recursive: true, filter: (p) => !/\/(\.git|node_modules|folio-assistant)(\/|$)/.test(p.slice(resolve(localSource).length)) });
+      console.error(`${ig.instance}: built from the local checkout ${resolve(localSource)}, not the recorded ${ig.ref.slice(0, 7)}`);
+    } else {
+      // A pinned commit, fetched alone: the menu was read from exactly this tree.
+      const git = (...a: string[]) => execFileSync("git", ["-C", src, ...a], { stdio: ["ignore", "ignore", "inherit"] });
+      git("init", "-q");
+      git("fetch", "-q", "--depth", "1", ig.repo, ig.ref);
+      git("checkout", "-q", "FETCH_HEAD");
+    }
     const theme = webpagePalette(resolve("."), ig.declaredAs);
     console.error(theme.note);
     const docs = igSiteDocs(ig.root);
