@@ -44,6 +44,16 @@
  * Usage:
  *   bun run who-iris/scripts/gen-iris-pages.ts
  *   bun run who-iris/scripts/gen-iris-pages.ts --check
+ *   bun run who-iris/scripts/gen-iris-pages.ts --extract-pot
+ *
+ * ## Six languages (issue #2228)
+ *
+ * The replica pages are built in English at `site/` and in Arabic, Chinese,
+ * French, Russian and Spanish at `site/<locale>/`. The interface's words are
+ * the `SITE_STRINGS` table below; `--extract-pot` writes them to each
+ * locale's `translations/<locale>/site/iris-site.pot`, and the generator
+ * reads the `.po` beside it. A publication's own title, authors and abstract
+ * are never translated. `--check` covers the catalogues as well as the pages.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "fs";
 import { basename, dirname, join, posix, relative, resolve, sep } from "path";
@@ -260,6 +270,15 @@ const ARCH_SVG = join(REPO_ROOT, "cat-harness", "docs", "assets", "img", "kg-to-
  * explicit patterns, and only the fixed names — the class `catalogue` fell
  * through — are enumerated once here.
  */
+/**
+ * The languages the replica is BUILT in besides English — the five other UN
+ * languages (issue #2228). Each gets its own copy of every site-side page at
+ * `site/<locale>/<page>.html`, the layout the docs locale globe already links
+ * to. Declared up here because the ownership patterns below are built from it.
+ */
+export const SITE_LOCALES = ["ar", "es", "fr", "ru", "zh"] as const;
+type Locale = "en" | (typeof SITE_LOCALES)[number];
+
 const PAGES = {
   site: {
     /** The replica: the KG rendered. */
@@ -289,8 +308,15 @@ export const SIDES = Object.keys(PAGES) as Side[];
 const ownedPattern = (names: readonly string[]): RegExp =>
   new RegExp(`^(${names.join("|")})\\.html$`);
 
-/** What it owns in `site/`. */
-export const OWNED_SITE = ownedPattern([...PAGES.site.fixed, ...PAGES.site.families]);
+/**
+ * What it owns in `site/` — including each language's copy beneath
+ * `site/<locale>/`, which is the page's name with the locale in front. The
+ * sweeps below list one directory at a time, so a bare name never carries a
+ * slash and this pattern means exactly what it did for them.
+ */
+export const OWNED_SITE = new RegExp(
+  `^(?:(?:${SITE_LOCALES.join("|")})/)?(${[...PAGES.site.fixed, ...PAGES.site.families].join("|")})\\.html$`,
+);
 
 /** What it owns in `docs/`. */
 export const OWNED_DOCS = ownedPattern([...PAGES.docs.fixed, ...PAGES.docs.families]);
@@ -440,7 +466,7 @@ function esc(s: string): string {
  * discrepancy. `check-catalogue.ts` already prints GiB for the same reason.
  */
 function gb(bytes: number): string {
-  return `${(bytes / 2 ** 30).toFixed(2)} GiB`;
+  return `${num(bytes / 2 ** 30, 2)} GiB`;
 }
 
 /**
@@ -454,7 +480,7 @@ function gb(bytes: number): string {
  * catalogue hits it today; deleting the duplicate type is what surfaced it.
  */
 function mb(bytes: number | undefined): string {
-  return bytes === undefined ? "not recorded" : `${(bytes / 1048576).toFixed(2)} MB`;
+  return bytes === undefined ? t("not recorded") : t("{size} MB", { size: num(bytes / 1048576, 2) });
 }
 
 /**
@@ -557,12 +583,12 @@ export function withheldManifest(all: Node[]): string {
 /** The download links for a held item — or why it is held and not linked. */
 function linkOrWithheld(a: NonNullable<ReturnType<typeof assetHref>>, withSize: boolean): string {
   if (a.withheld.length > 0) {
-    return `<span class="none" title="${esc(a.withheld.join("; "))}">held here, not published — ${esc(
+    return `<span class="none" title="${esc(a.withheld.join("; "))}">${t("held here, not published — {gates}", { gates: esc(
       a.withheld.map((w) => w.split(" — ")[0]).join(", "),
-    )}</span>`;
+    ) })}</span>`;
   }
   return (
-    `<a href="${esc(a.href)}">${esc(a.name)}</a> &middot; <a class="cdn" href="${esc(a.cdn)}">via CDN</a>` +
+    `<a href="${esc(a.href)}">${esc(a.name)}</a> &middot; <a class="cdn" href="${esc(a.cdn)}">${t("via CDN")}</a>` +
     (withSize ? ` &middot; <code>${esc(mb(a.bytes))}</code>` : "")
   );
 }
@@ -641,7 +667,7 @@ function coverSrc(n: Node): { src: string; w: number; h: number; masked: boolean
   // A literal prefix is a second answer to "where is this page", and it goes
   // stale the moment the first answer moves. `relative()` asks the one answer.
   return {
-    src: encPath(relative(SITE, abs).split(sep).join("/")),
+    src: encPath(relative(siteDir(), abs).split(sep).join("/")),
     w: b.pixelWidth,
     h: b.pixelHeight,
     // Read off the bitstream rather than assumed for every cover: a future
@@ -649,6 +675,402 @@ function coverSrc(n: Node): { src: string; w: number; h: number; masked: boolean
     // one was removed would be describing a different image.
     masked: (b.maskedRegions ?? []).length > 0,
   };
+}
+
+// ── The replica's own words, and the languages it is shown in ─────────────
+//
+// Issue #2228, bean `lffo`. Owner, 2026-10-05: *"help make sure who-iris has
+// all translations"*, and after measurement, the replica's INTERFACE in the
+// five non-English UN languages.
+//
+// The model is `cat-harness/scripts/kg-viewer-strings.ts`, for the reason it
+// gives: **a generated artefact is not a translation source; its generator
+// is.** The pages are regenerated on every catalogue change, so a `.pot`
+// extracted from them would churn its references with every run. The words
+// are declared HERE, extracted by `--extract-pot` into
+// `translations/<locale>/site/iris-site.pot` (the instance's declared
+// `translation-sources` directory) and read back from each `.po`.
+//
+// **The msgid is the English text, not a key** — the gettext convention the
+// platform follows everywhere. And `t()` refuses a string that is not in this
+// table, so a page cannot say something no translator was asked about.
+//
+// ## Interface, not records
+//
+// Here: every word the REPLICA says — chrome, labels, headings, the banner,
+// its own explanatory notes. NOT here: a publication's title, authors,
+// abstract, citation, a collection's or community's name, a catalogue note, a
+// bundle name, a gate's verdict. Those are the catalogue's DATA, and WHO
+// publishes its own language versions of its works; a machine-translated
+// title would misrepresent the record. Every translated page says so.
+//
+// Markup inside a msgid is deliberate: a sentence with a `<strong>` in it is
+// one sentence, and splitting it at the tag would hand a translator three
+// fragments whose order their language may need to change. A `{placeholder}`
+// is substituted after translation and must survive it; `--check` enforces
+// both that and that every tag a msgid carries survives too.
+
+/** One string the replica says. */
+interface UiString {
+  /** The English text, which is also the gettext `msgid`. */
+  readonly en: string;
+  /** Where it appears and what each `{placeholder}` becomes — a `#.` comment in the POT. */
+  readonly comment: string;
+}
+
+export const SITE_STRINGS: readonly UiString[] = [
+  // ── Every page: head, banner, masthead, navbar, footer ──────────────────
+  { en: "{title} — ingested IRIS replica", comment: "The browser tab title of every replica page. {title} is the page's own title (a collection or item name from the catalogue, which is not translated)." },
+  { en: "A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.", comment: "The page's meta description, read by search engines and link previews." },
+  { en: "<strong>INGESTED COPY — not WHO, and not live.</strong> This page is rendered by {folioAssistant} from its own catalogue of {iris}, modelled <em>by reference</em>: {figures}. The WHO logo is deliberately omitted, and the rendered covers are withheld from display for the same reason — they carry the emblem printed on the publications.", comment: "The banner at the top of every page. {folioAssistant} and {iris} are links whose text is a name (folio-assistant, WHO IRIS) and is not translated. {figures} is the sentence about node counts below." },
+  { en: "{nodes} nodes of a {items}-item {size} repository, of which <strong>{held} items</strong> are held here", comment: "Inside the banner. {nodes} is how many catalogue nodes exist here, {items} how many items IRIS holds upstream, {size} a size such as '361.55 GiB', {held} how many items are held here (2 or more)." },
+  { en: "{nodes} nodes of a {items}-item {size} repository, of which <strong>1 item</strong> is held here", comment: "As above, when exactly one item is held here." },
+  { en: "{nodes} nodes of a repository of unmeasured size, of which <strong>{held} item(s)</strong> are held here", comment: "As above, when the upstream size was never measured." },
+  { en: "World Health<br>Organization", comment: "The wordmark in the masthead, set in type because the WHO logo is deliberately omitted. Use the Organization's official name in your language; the <br> breaks it over two lines and may move." },
+  { en: "Institutional Repository<br>for Information Sharing", comment: "What the letters IRIS stand for, under the 'iris.' wordmark. Use the name WHO uses for IRIS in your language if there is one; the <br> may move." },
+  { en: "Logo omitted, covers withheld — replica, not published under WHO", comment: "Small notice at the right of the masthead." },
+  { en: "Communities &amp; Collections", comment: "Navbar link to the community list. DSpace's own label; keep &amp; as written if you use an ampersand." },
+  { en: "Browse IRIS", comment: "Navbar item (shown, not a link, in the replica)." },
+  { en: "Statistics", comment: "Navbar item (shown, not a link, in the replica)." },
+  { en: "About", comment: "Navbar item (shown, not a link, in the replica)." },
+  { en: "Contact", comment: "Navbar item (shown, not a link, in the replica)." },
+  { en: "Help", comment: "Navbar item (shown, not a link, in the replica)." },
+  { en: "Home", comment: "First breadcrumb, and the home page's own breadcrumb." },
+  { en: "Community List", comment: "Breadcrumb on the community list page." },
+  { en: "<strong>Ingested replica.</strong> Rendered from {catalogue} by {generator}. Layout after {iris}; every figure on this page is read out of the catalogue, not copied from a screenshot.", comment: "Footer, first paragraph. {catalogue} and {generator} are file paths in code type; {iris} is a link to iris.who.int. None are translated." },
+  { en: "Source of record: {iris} — © WHO. This copy asserts no endorsement and carries no WHO mark.", comment: "Footer, second paragraph. {iris} is a link to iris.who.int." },
+  { en: "Interface language", comment: "Accessible name of the row of language links in the banner. The links themselves are each language's own name and are not translated." },
+  { en: "The interface is shown in {language}. Publication titles, authors, abstracts and other catalogue records are shown as WHO published them.", comment: "Shown on every translated page. {language} is the language's own name. It states where the translation stops: the records are WHO's data and are never machine-translated." },
+  { en: "This interface translation was produced by an agent and has not been reviewed by a person.", comment: "Shown with the note above until a person signs the catalogue off." },
+
+  // ── Materialisation states (a closed vocabulary the generator emits) ────
+  { en: "materialized", comment: "State badge: the bytes are held in this repository. Shown in capitals by the stylesheet where the script has case." },
+  { en: "referenced", comment: "State badge: known to the catalogue, held upstream at WHO only." },
+  { en: "unknown", comment: "State badge: the catalogue has not determined the state." },
+
+  // ── Table cells shared by several pages ─────────────────────────────────
+  { en: "Item", comment: "Table column heading; also the badge on an item in the search results." },
+  { en: "Collection", comment: "Table column heading; also the badge on a collection in the search results." },
+  { en: "Community", comment: "The badge on a community in the search results." },
+  { en: "State", comment: "Table column heading: the materialisation state." },
+  { en: "Upstream", comment: "Table column heading: where the item lives at WHO." },
+  { en: "Held copy", comment: "Table column heading: the copy held in this repository." },
+  { en: "Metadata record", comment: "Table column heading: the item's Dublin Core record." },
+  { en: "no collection recorded", comment: "In the Collection column when the catalogue names none." },
+  { en: "in {communities}", comment: "Under a collection's name: the communities it sits in. {communities} is a list of names from the catalogue." },
+  { en: "none captured", comment: "In the Metadata record column when no record was captured." },
+  { en: "declared, but missing on disk", comment: "In the Metadata record column when the record is declared but its file is absent." },
+  { en: "Download {file}", comment: "Link to download a metadata record. {file} is a file name." },
+  { en: "via CDN", comment: "Second link to the same file, served by a content delivery network." },
+  { en: "qualified Dublin Core · {size} KB", comment: "Under the download link: the record's format and size. {size} is a number." },
+  { en: "no record, so nothing to render", comment: "In the Dublin Core renderings row when the item has no record." },
+  { en: "this instance declares no published root", comment: "In the Dublin Core renderings row when there is nowhere to publish them." },
+  { en: "{label}: not rendered (run {command})", comment: "A rendering that has not been produced. {label} is the rendering's name, {command} a command in code type." },
+  { en: "Dublin Core XML", comment: "Link to the item's record as XML." },
+  { en: "JSON-LD (DCMI Terms)", comment: "Link to the item's record as JSON-LD." },
+  { en: "Local replica →", comment: "Link from a table row to this replica's page for the item. Flip the arrow if your language reads right to left." },
+  { en: "IRIS source →", comment: "Link from a table row to the item's page at WHO. Flip the arrow if your language reads right to left." },
+  { en: "no upstream URI recorded", comment: "In the Upstream column when the catalogue has no WHO address for the item." },
+  { en: "held here, not published — {gates}", comment: "In place of a download link when a file is held but may not be published. {gates} names the publication gates that refused it, which are not translated." },
+  { en: "not held here", comment: "In place of a download link when the file is not held in this repository." },
+  { en: "not recorded", comment: "A file size the catalogue does not record." },
+  { en: "{size} MB", comment: "A file size in megabytes. {size} is a number with two decimals." },
+
+  // ── The community list ──────────────────────────────────────────────────
+  { en: "List of Communities", comment: "Title and heading of the community list page, and a link to it from the home page." },
+  { en: "{files} files · {size} upstream", comment: "Under a community: how many files it holds at WHO and their total size. {files} is a number, {size} a size such as '12.3 GiB'." },
+  { en: "size upstream <strong>unknown</strong> — the storage report's second page was never read, and a number interpolated from the first would look measured", comment: "Under a community whose size at WHO was never measured." },
+  { en: "{modelled} item(s) modelled, {held} held here", comment: "Beside a collection: how many of its items the catalogue models, and how many are held here. Both are numbers; rephrase freely to avoid plural agreement." },
+  { en: "Every row below is <strong>live</strong>. A row is not greyed out when this repository does not hold it — it says {referenced} instead, which is the actual state and the whole point of a catalogue modelled by reference. {materialized} means the bytes are here.", comment: "Introduction to the community list. {referenced} and {materialized} are the state badges, already translated." },
+  { en: "Held here — {n} materialized item(s)", comment: "Heading of the table of held items. {n} is a number." },
+  { en: "Each row carries <strong>three routes to the same item</strong>: the <strong>IRIS source</strong> upstream at WHO, this repository's own <strong>local replica</strong> page, and the <strong>asset itself</strong> — downloadable from the repository and, separately, from a CDN edge.", comment: "Paragraph under that heading." },
+  { en: "<strong>Three routes to one item, which is the point.</strong> The catalogue knows this item once; the bytes are reachable <em>upstream at WHO</em>, <em>here as a replica page</em>, and <em>from a CDN edge</em> — jsDelivr serves any public repository, so the last one costs this project no hosting at all. The KG says what exists and where; the CDN says nothing and just serves it.", comment: "Note under the held-items table. KG is 'knowledge graph'; jsDelivr is a product name." },
+  { en: "<strong>Both link forms are confirmed working.</strong> The <code>raw.githubusercontent.com</code> links were fetched and returned 200 with byte counts matching the catalogue exactly. The <em>via CDN</em> links could not be checked from the environment that generated this page — <code>cdn.jsdelivr.net</code> is egress-blocked there — so they were composed from jsDelivr's documented URL form and the owner exercised one by hand on 2026-09-20. Both are kept: one costs this project nothing to serve, and a reader who finds either unavailable still has the other.", comment: "Note under the held-items table. Keep everything in <code> as written." },
+  { en: "<strong>Where the held copies actually live — bean <code>yl5w</code>.</strong> The catalogue records each of these at <code>uploads/&lt;name&gt;.pdf</code> relative to <code>who-iris/</code>, and <em>all three of those paths are missing</em>: #477 moved <code>library/</code> into this instance and left <code>uploads/</code> in <code>cat-harness/</code>.", comment: "Note under the held-items table. A 'bean' is a work item in this repository's tracker; #477 is a pull request number. Keep everything in <code> as written." },
+  { en: "The download links above point at where the bytes <em>are</em>, so they work. The claim in the catalogue is what is wrong, and <code>check:catalogue</code> does not check <code>localPath</code> at all — it verifies <code>metadataRef</code> and <code>libraryId</code>, and reports a clean run over three <code>materialized</code> claims that resolve to nothing.", comment: "Continues the note above. Keep everything in <code> as written: they are field and command names." },
+
+  // ── A collection ────────────────────────────────────────────────────────
+  { en: "Permanent URI for this collection", comment: "DSpace label before the collection's handle URL." },
+  { en: "none recorded", comment: "In place of a URL or link the catalogue does not record." },
+  { en: "<strong>How this node was established.</strong> {note}", comment: "Box above a collection's items. {note} is the catalogue's own note, which is not translated." },
+  { en: "Items in this Collection", comment: "DSpace heading over a collection's item list." },
+  { en: "Now showing 1 – {n} of {n} <em>modelled</em>. The upstream collection is larger; this catalogue holds what was materialised, and says so per row.", comment: "Under that heading. {n} is the number of items the catalogue models in this collection." },
+
+  // ── An item ─────────────────────────────────────────────────────────────
+  { en: "Permanent URI for this item", comment: "DSpace label before the item's handle URL." },
+  { en: "none recorded — ingested from a local copy, not resolved from IRIS", comment: "In place of the item's URL when it has none." },
+  { en: "In: {path}", comment: "Under the item's URL: the community and collection it sits in. {path} is names from the catalogue joined by ›." },
+  { en: "Files", comment: "DSpace heading over the item's files." },
+  { en: "Name", comment: "Table column heading: a file's name." },
+  { en: "Bundle", comment: "Table column heading: the DSpace bundle a file belongs to (ORIGINAL, THUMBNAIL — those values are not translated)." },
+  { en: "Size", comment: "Table column heading: a file's size." },
+  { en: "Read it here", comment: "Heading over the embedded PDF reader." },
+  { en: "Both links, as asked for", comment: "Heading over the table of the item's links: upstream at WHO and held here." },
+  { en: "Where", comment: "Table column heading." },
+  { en: "Link", comment: "Table column heading." },
+  { en: "Upstream, at WHO", comment: "Row label: the item's address at WHO." },
+  { en: "Held here, in folio-assistant", comment: "Row label: the copy held in this repository. folio-assistant is a name." },
+  { en: "not held", comment: "In the row above when nothing is held." },
+  { en: "In collection", comment: "Row label: the collection the item belongs to." },
+  { en: "Ingested text (L1)", comment: "Row label: the item's text as extracted into this repository's library. L1 is a level name; keep it." },
+  { en: "Dublin Core record", comment: "Row label: the item's metadata record." },
+  { en: "Dublin Core renderings", comment: "Row label: the record rendered as XML and JSON-LD." },
+  { en: "<strong>No Dublin Core record.</strong> The catalogue says so rather than synthesising metadata from the PDF — the <code>iris-dspace</code> skill's R8, <em>never infer metadata from the PDF when a record exists</em>, whose converse is that an absent record stays absent.", comment: "Shown on an item with no metadata record. iris-dspace is the name of a skill and R8 a rule number; keep both." },
+
+  // ── The home page ───────────────────────────────────────────────────────
+  { en: "The primary objective of the Institutional Repository for Information Sharing (IRIS) is to provide free digital access to the scientific and technical publications of the World Health Organization (WHO), including contributions from its Country Offices, Regional Offices, and Headquarters. Additionally, IRIS encompasses the mandates established by the Organization’s Governing Bodies in collaboration with its Member States.", comment: "The hero paragraph on the home page, as IRIS's own home page states it. Use the Organization's official names for its offices and Governing Bodies in your language." },
+  { en: "Replica. No WHO emblem, no photograph — colour only, from the {theme} theme measured off the site’s own stylesheet.", comment: "Small print under the hero paragraph. {theme} is a theme's name in code type." },
+  { en: "Search through the repository’s {n} items", comment: "Placeholder text inside the search box. {n} is a number, written without separators." },
+  { en: "Search through the repository items and referenced identifier lookup", comment: "Accessible name of the search box." },
+  { en: "Search", comment: "The search button." },
+  { en: "Search across <strong>{held}</strong> items held by value and referenced communities/collections. To look up any of the <strong>{referenced}</strong> referenced nodes by identifier, search here or open the {lookup}.", comment: "Note under the search box. {held} and {referenced} are numbers; {lookup} is a link whose text is the next string." },
+  { en: "identifier lookup", comment: "Link text: the page that looks a node up by its identifier." },
+  { en: "Upstream IRIS reports <strong>{items}</strong> items across <strong>{files}</strong> files.", comment: "Continues the note above. {items} and {files} are numbers." },
+  { en: "Recent Submissions", comment: "DSpace heading on the home page." },
+  { en: "Ordered by {key}, latest first — the key IRIS’s own list sorts on. Where a record carries several accessions the latest is used; the WPRO item has two, five days apart, the second being the regional-IRIS merge.", comment: "Under that heading. {key} is a metadata field name in code type. WPRO is the WHO Western Pacific Regional Office; keep the acronym." },
+  { en: "Browse", comment: "Heading on the home page." },
+  { en: "{link} — the replica of {url}, with every node’s materialisation state ({communities} communities, {collections} collections)", comment: "A list entry under Browse. {link} is the 'List of Communities' link, {url} an address in code type, {communities} and {collections} numbers." },
+  { en: "{link} — collection", comment: "A list entry under Browse. {link} is a collection's name from the catalogue, which is not translated." },
+  { en: "<strong>This is the front door, not the library visualiser.</strong> The full <code>library/</code> visualiser is bean <code>jbx2</code> and is being built separately. This page mocks the IRIS home page and links onward rather than becoming a second answer to the same question.", comment: "Note at the foot of the home page. A 'bean' is a work item; keep everything in <code> as written." },
+  { en: "Addressing follows the owner’s rule — <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> — so an instance that instantiates a directory gets a visualiser mounted under that directory’s kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.", comment: "Continues the note above. Keep everything in <code> as written." },
+  { en: "no author recorded", comment: "In a recent submission's byline when the record names no author." },
+  { en: "Publication Date: {date}", comment: "In a recent submission's byline, as IRIS labels it. {date} is a date such as 2020-05-14." },
+  { en: "A cover is rendered and held here. It is not published: {gates}.", comment: "Tooltip on a withheld cover. {gates} names the publication gates that refused it, which are not translated." },
+  { en: "cover<br>withheld", comment: "Placeholder in place of a withheld cover image, over two lines. The <br> may move." },
+  { en: "no cover rendered", comment: "Tooltip on the placeholder of an item with no cover." },
+  { en: "no cover", comment: "Placeholder in place of a cover that was never rendered." },
+  { en: "Cover of {title}, rendered here from page 1 of the held PDF", comment: "Alternative text of a cover image, read by a screen reader. {title} is the publication's title, which is not translated." },
+  { en: "Cover of {title}, rendered here from page 1 of the held PDF, with the WHO emblem masked out", comment: "As above, for a cover whose WHO emblem was masked." },
+  { en: "A cover is rendered and recorded for this item. It is not displayed: the publication's cover carries the WHO emblem, and this replica is not published under WHO.", comment: "Tooltip on a cover the replica chooses not to display." },
+  { en: "No <code>dc.description.abstract</code> in the captured record.", comment: "In place of an abstract the record does not carry. Keep the field name in <code> as written." },
+
+  // ── The search box's results, drawn in the browser ─────────────────────
+  { en: "Matching catalogue nodes ({n}):", comment: "Heading of the search results. {n} is a number." },
+  { en: "Also search identifier lookup:", comment: "Before a link that repeats the search in the identifier lookup." },
+  { en: "Look up “{q}” in referenced nodes →", comment: "That link. {q} is what the reader typed. Use your language's quotation marks; flip the arrow for right-to-left." },
+  { en: "No materialized items or collections matched “<strong>{q}</strong>”.", comment: "When nothing matches. {q} is what the reader typed." },
+  { en: "Search for “{q}” in the referenced identifier lookup ({n} nodes) →", comment: "Link shown when nothing matches. {q} is what the reader typed, {n} a number. Flip the arrow for right-to-left." },
+];
+
+const SITE_TABLE = new Map(SITE_STRINGS.map((s) => [s.en, s]));
+
+/**
+ * The six UN languages in the order the docs locale globe draws them
+ * (`UN_LOCALES` in `docs-ui.js`), so the `fa-translation-meta` block a page
+ * carries reads the same as every other page's.
+ */
+const SUPPORTED_LOCALES: readonly Locale[] = ["ar", "zh", "en", "fr", "ru", "es"];
+
+/** Each language's name in its own language: a reader looking for 中文 is not looking for "Chinese". */
+const LOCALE_NAMES: Record<Locale, string> = {
+  ar: "العربية",
+  en: "English",
+  es: "Español",
+  fr: "Français",
+  ru: "Русский",
+  zh: "中文",
+};
+
+/** The gettext catalogue's name, under `<translations>/<locale>/site/`. */
+const SITE_CATALOGUE = "iris-site";
+const SITE_CATALOGUE_DIR = "site";
+
+/** The declared `translation-sources` directory — never a spelled path. */
+function translationsDir(): string {
+  const entry = readDeclaration(INSTANCE)?.directories?.find((d) =>
+    (d.graphTypologies ?? []).includes("translation-sources"),
+  );
+  if (entry === undefined) {
+    throw new Error("gen-iris-pages: who-iris declares no `translation-sources` directory, so there is nowhere to read the replica's translations from.");
+  }
+  return join(INSTANCE, entry.path);
+}
+
+const catalogueFile = (locale: string, ext: "po" | "pot"): string =>
+  join(translationsDir(), locale, SITE_CATALOGUE_DIR, `${SITE_CATALOGUE}.${ext}`);
+
+const CATALOGUES = new Map<string, Map<string, string>>();
+function catalogueFor(locale: string): Map<string, string> {
+  let m = CATALOGUES.get(locale);
+  if (m === undefined) {
+    const f = catalogueFile(locale, "po");
+    m = existsSync(f) ? parsePo(readFileSync(f, "utf-8")) : new Map();
+    CATALOGUES.set(locale, m);
+  }
+  return m;
+}
+
+/** The language the page being rendered is in. Set per page set by `main`. */
+let LOCALE: Locale = "en";
+
+/**
+ * A string in the current page's language, with its placeholders filled.
+ *
+ * Falls back to the English per string, so a missing translation renders as
+ * English rather than as nothing — and `--check` reports the gap. `vars` are
+ * substituted AFTER translation and must already be escaped: the msgid is
+ * trusted markup from this table, a value is not.
+ */
+function t(en: string, vars: Record<string, string | number> = {}): string {
+  if (!SITE_TABLE.has(en)) {
+    throw new Error(`gen-iris-pages: "${en.slice(0, 60)}" is not in SITE_STRINGS, so no translator was ever asked about it. Add it there.`);
+  }
+  let s = LOCALE === "en" ? en : catalogueFor(LOCALE).get(en) || en;
+  for (const [k, v] of Object.entries(vars)) s = s.split(`{${k}}`).join(String(v));
+  return s;
+}
+
+/** A number in the current page's language, in Latin digits (as WHO's own Arabic pages print them). */
+function num(n: number, decimals?: number): string {
+  const fixed = decimals === undefined ? {} : { minimumFractionDigits: decimals, maximumFractionDigits: decimals };
+  return n.toLocaleString(LOCALE === "en" ? "en-US" : `${LOCALE}-u-nu-latn`, fixed);
+}
+
+/** The directory the current page set is written to. */
+const siteDir = (): string => (LOCALE === "en" ? SITE : join(SITE, LOCALE));
+/** What a current page prefixes to reach the replica's root. */
+const toSiteRoot = (): string => (LOCALE === "en" ? "" : "../");
+
+/** Every `{placeholder}` a string carries, sorted. */
+function placeholdersOf(s: string): string[] {
+  return [...s.matchAll(/\{([a-zA-Z]\w*)\}/g)].map((m) => m[1]!).sort();
+}
+
+/** Every element a string opens or closes, sorted — a translation must keep the same markup. */
+function tagsOf(s: string): string[] {
+  return [...s.matchAll(/<\/?([a-zA-Z]+)/g)].map((m) => m[0]!.toLowerCase()).sort();
+}
+
+/** The table as POT entries, each pointing at the line of this file that declares it. */
+export function sitePotEntries(): PotEntry[] {
+  const source = readFileSync(import.meta.path, "utf-8").split("\n");
+  return SITE_STRINGS.map((s) => {
+    const needle = `en: ${JSON.stringify(s.en)}`;
+    const i = source.findIndex((l) => l.includes(needle));
+    return {
+      source: "who-iris/scripts/gen-iris-pages.ts",
+      line: i + 1,
+      msgid: s.en,
+      kind: "ui-string",
+      comment: s.comment,
+    };
+  });
+}
+
+/**
+ * Drift between the table and the catalogues: a stale template, a translation
+ * of a string the replica no longer says, a dropped placeholder or tag, an
+ * empty or fuzzy entry. Coverage below 100 % is drift here, not a note: the
+ * owner asked for every page in every language, and a gap would render as
+ * English inside a page that says it is translated.
+ */
+export function catalogueProblems(): { problems: string[]; notes: string[] } {
+  const problems: string[] = [];
+  const notes: string[] = [];
+  for (const loc of SITE_LOCALES) {
+    const pot = catalogueFile(loc, "pot");
+    const po = catalogueFile(loc, "po");
+    if (!existsSync(pot)) problems.push(`${loc}: no ${SITE_CATALOGUE}.pot — run with --extract-pot`);
+    else {
+      const ids = new Set(parsePoEntries(readFileSync(pot, "utf-8")).map((e) => e.msgid));
+      const missing = SITE_STRINGS.filter((s) => !ids.has(s.en)).length;
+      const extra = [...ids].filter((id) => !SITE_TABLE.has(id)).length;
+      if (missing || extra) problems.push(`${loc}: ${SITE_CATALOGUE}.pot is stale — ${missing} string(s) missing, ${extra} no longer said. Run with --extract-pot.`);
+    }
+    if (!existsSync(po)) {
+      problems.push(`${loc}: no ${SITE_CATALOGUE}.po`);
+      continue;
+    }
+    const entries = parsePoEntries(readFileSync(po, "utf-8"));
+    const byId = new Map(entries.map((e) => [e.msgid, e]));
+    let done = 0;
+    for (const e of entries) {
+      if (!SITE_TABLE.has(e.msgid)) problems.push(`${loc}: translates a string the replica no longer says — "${e.msgid.slice(0, 48)}…"`);
+    }
+    for (const s of SITE_STRINGS) {
+      const e = byId.get(s.en);
+      if (e === undefined || e.msgstr === "") {
+        problems.push(`${loc}: untranslated — "${s.en.slice(0, 48)}…"`);
+        continue;
+      }
+      if (e.flags.includes("fuzzy")) problems.push(`${loc}: fuzzy — "${s.en.slice(0, 48)}…"`);
+      if (placeholdersOf(s.en).join() !== placeholdersOf(e.msgstr).join()) {
+        problems.push(`${loc}: placeholders differ — "${s.en.slice(0, 40)}…" has {${placeholdersOf(s.en).join(",")}}, the translation {${placeholdersOf(e.msgstr).join(",")}}`);
+      }
+      if (tagsOf(s.en).join() !== tagsOf(e.msgstr).join()) {
+        problems.push(`${loc}: markup differs — "${s.en.slice(0, 40)}…" has [${tagsOf(s.en).join(" ")}], the translation [${tagsOf(e.msgstr).join(" ")}]`);
+      }
+      done++;
+    }
+    notes.push(`${loc}: ${done}/${SITE_STRINGS.length} — ${LOCALE_NAMES[loc]}`);
+  }
+  return { problems, notes };
+}
+
+/** Write each locale's `.pot` from the table. The `.po` beside it is a translator's, and is never touched. */
+function extractPot(): void {
+  const entries = sitePotEntries();
+  for (const loc of SITE_LOCALES) {
+    const f = catalogueFile(loc, "pot");
+    mkdirSync(dirname(f), { recursive: true });
+    writeFileSync(f, formatPot(entries, { projectName: `who-iris ${SITE_CATALOGUE}`, locale: loc }));
+    console.log(`  ${relative(REPO_ROOT, f)}`);
+  }
+  console.log(`${entries.length} string(s) extracted for ${SITE_LOCALES.join(", ")}.`);
+}
+
+/** The same replica page in another language, relative to the current one. */
+function hrefIn(target: Locale, file: string): string {
+  return `${toSiteRoot()}${target === "en" ? "" : `${target}/`}${file}`;
+}
+
+/**
+ * What a replica page puts in its `<head>` to say which language it is in and
+ * where its other languages are.
+ *
+ * The `fa-translation-meta` block is the docs pages' own (`_includes/
+ * head_custom.html`), carried here because a mounted page is never laid out
+ * by Jekyll: `docs-ui.js` reads it to draw the locale globe, and
+ * `set-html-lang.ts` to stamp the served `<html lang>`. Every locale is
+ * AVAILABLE here — the globe greys out a locale with no page, and the
+ * replica has a page in all six (issue #2219 drew the globe with five of them
+ * greyed out, because until now there were none). The layout it links to,
+ * `<dir>/<locale>/<page>`, is `localePath` in `docs-ui.js`, so the globe and
+ * the links below agree without either knowing about the other.
+ */
+function localeHead(file: string): string {
+  const meta = {
+    lang: LOCALE,
+    translationStatus: LOCALE === "en" ? "" : "unverified",
+    translationSource: LOCALE === "en" ? "" : `who-iris/site/${file}`,
+    supportedLocales: SUPPORTED_LOCALES,
+    availableLocales: SUPPORTED_LOCALES,
+  };
+  const alternates = SUPPORTED_LOCALES.map(
+    (loc) => `\n<link rel="alternate" hreflang="${loc}" href="${esc(hrefIn(loc, file))}">`,
+  ).join("");
+  return `${alternates}\n<script type="application/json" id="fa-translation-meta">${JSON.stringify(meta)}</script>`;
+}
+
+/**
+ * The row of language links in the banner, and — on a translated page —
+ * where the translation stops.
+ *
+ * Each language is named in its own language and marked with its own `lang`,
+ * so a screen reader pronounces 中文 as Chinese inside an English page.
+ */
+function localeBar(file: string): string {
+  const links = SUPPORTED_LOCALES.map((loc) =>
+    loc === LOCALE
+      ? `<span lang="${loc}" aria-current="page">${LOCALE_NAMES[loc]}</span>`
+      : `<a href="${esc(hrefIn(loc, file))}" lang="${loc}" hreflang="${loc}">${LOCALE_NAMES[loc]}</a>`,
+  ).join("");
+  const note =
+    LOCALE === "en"
+      ? ""
+      : `\n  <p class="langnote">${t("The interface is shown in {language}. Publication titles, authors, abstracts and other catalogue records are shown as WHO published them.", { language: LOCALE_NAMES[LOCALE] })}
+  ${t("This interface translation was produced by an agent and has not been reviewed by a person.")}</p>`;
+  return `\n  <nav class="langs" aria-label="${esc(t("Interface language"))}">${links}</nav>${note}`;
 }
 
 const THEME = whoThemeById("iris-web")!;
@@ -673,21 +1095,21 @@ const THEME = whoThemeById("iris-web")!;
  * Memoised because it appears on all of them and the inputs cannot change
  * within a run.
  */
-let BANNER: string | undefined;
+const BANNER = new Map<Locale, string>();
 function banner(): string {
-  if (BANNER !== undefined) return BANNER;
+  const memo = BANNER.get(LOCALE);
+  if (memo !== undefined) return memo;
   const all = nodes();
   const held = all.filter((n) => n.flavour === "item" && assetHref(n) !== undefined).length;
   const c = catalogue();
-  const size = c.totalBytesUpstream !== undefined ? gb(c.totalBytesUpstream) : "an unmeasured";
-  const of =
-    c.totalItemsUpstream !== undefined
-      ? `${c.totalItemsUpstream.toLocaleString("en-US")}-item`
-      : "";
-  BANNER =
-    `${all.length} nodes of a ${of} ${size} repository, of which ` +
-    `<strong>${held} item${held === 1 ? "" : "s"}</strong> ${held === 1 ? "is" : "are"} held here`;
-  return BANNER;
+  const figures =
+    c.totalBytesUpstream === undefined || c.totalItemsUpstream === undefined
+      ? t("{nodes} nodes of a repository of unmeasured size, of which <strong>{held} item(s)</strong> are held here", { nodes: num(all.length), held: num(held) })
+      : held === 1
+        ? t("{nodes} nodes of a {items}-item {size} repository, of which <strong>1 item</strong> is held here", { nodes: num(all.length), items: num(c.totalItemsUpstream), size: gb(c.totalBytesUpstream) })
+        : t("{nodes} nodes of a {items}-item {size} repository, of which <strong>{held} items</strong> are held here", { nodes: num(all.length), items: num(c.totalItemsUpstream), size: gb(c.totalBytesUpstream), held: num(held) });
+  BANNER.set(LOCALE, figures);
+  return figures;
 }
 
 /**
@@ -780,6 +1202,13 @@ function page(
    * (#1168 B7c). Only the docs index carries one.
    */
   documents: readonly string[] = [],
+  /**
+   * The page's file name within the replica, for a page built in every
+   * language: it is what the language links, the `hreflang` alternates and the
+   * `fa-translation-meta` block are made from. Absent on the docs and harness
+   * sides, which are English only and carry none of the three.
+   */
+  file?: string,
 ): string {
   /* A CRUMB WITH NO HREF IS A LABEL, never `<a href="#">`.
    *
@@ -804,13 +1233,14 @@ function page(
     )
     .join('<span class="sep">•</span>');
 
+  const dir = LOCALE === "ar" ? ' dir="rtl"' : "";
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="${LOCALE}"${dir}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(title)} — ingested IRIS replica</title>${documents.length ? `\n<meta name="documents" content="${esc(documents.join(" "))}">` : ""}
-<meta name="description" content="A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.">
+<title>${esc(t("{title} — ingested IRIS replica", { title }))}</title>${documents.length ? `\n<meta name="documents" content="${esc(documents.join(" "))}">` : ""}
+<meta name="description" content="${esc(t("A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live."))}">${file === undefined ? "" : localeHead(file)}
 <style>
   :root {
     /* Measured in who-iris/themes/themes.ts from the captured client-theme.css. */
@@ -854,6 +1284,10 @@ function page(
   .ingested strong { letter-spacing: 0.02em; }
   .ingested .wrap { padding: 0; }
   .ingested a { color: #fff; text-decoration: underline; }
+  /* The language row and, on a translated page, where its translation stops. */
+  .ingested .langs { margin: 0.45rem 0 0; display: flex; flex-wrap: wrap; gap: 0.25rem 0.9rem; font-size: 0.9rem; }
+  .ingested .langs [aria-current] { font-weight: 700; }
+  .ingested .langnote { margin: 0.45rem 0 0; font-size: 0.88rem; }
 
   /* ── Masthead. NO WHO logo, by instruction — a wordmark in type. ────── */
   header.mast { background: #fff; border-bottom: 1px solid var(--iris-edge); }
@@ -872,8 +1306,8 @@ function page(
   /* The CDN link is secondary to the one that is known to work. */
   .cdn { font-size: 0.88em; color: var(--iris-ingested); }
   .nologo {
-    margin-left: auto; font-size: 0.78rem; color: var(--iris-muted);
-    text-align: right; max-width: 16rem;
+    margin-inline-start: auto; font-size: 0.78rem; color: var(--iris-muted);
+    text-align: end; max-width: 16rem;
   }
 
   /* ── Navbar. Solid accent, white links, as the source page. ─────────── */
@@ -897,8 +1331,8 @@ function page(
   .row { display: flex; align-items: baseline; gap: 0.7rem; }
   .chev { color: var(--iris-ink); font-size: 1.05rem; line-height: 1; }
   .row .title { font-size: 1.32rem; }
-  .note { color: var(--iris-muted); font-size: 0.95rem; margin: 0.2rem 0 0 1.9rem; }
-  .kids { margin: 0.35rem 0 0.5rem 1.9rem; padding: 0; list-style: none; }
+  .note { color: var(--iris-muted); font-size: 0.95rem; margin: 0.2rem 0 0; margin-inline-start: 1.9rem; }
+  .kids { margin: 0.35rem 0 0.5rem; margin-inline-start: 1.9rem; padding: 0; list-style: none; }
   .kids li { padding: 0.3rem 0; }
 
   /* ── Materialisation state. A WORD, never a colour alone (SC 1.4.1). ── */
@@ -915,13 +1349,13 @@ function page(
      this page is ABOUT the catalogue rather than a mock of IRIS, and dressing
      it as IRIS would invite a reader to take its counts for IRIS's. */
   .kg { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
-  .kg th, .kg td { text-align: left; padding: .4rem .55rem; border-bottom: 1px solid var(--iris-edge); vertical-align: top; }
+  .kg th, .kg td { text-align: start; padding: .4rem .55rem; border-bottom: 1px solid var(--iris-edge); vertical-align: top; }
   .kg th { font-weight: 600; white-space: nowrap; }
   .dim { opacity: .65; font-size: .85em; }
 
   table.items { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.97rem; }
   table.items th, table.items td {
-    text-align: left; padding: 0.7rem 0.6rem; border-bottom: 1px solid var(--iris-edge);
+    text-align: start; padding: 0.7rem 0.6rem; border-bottom: 1px solid var(--iris-edge);
     vertical-align: top;
   }
   table.items th { font-weight: 700; background: var(--iris-wash); }
@@ -972,12 +1406,14 @@ function page(
   .searchbar { display: flex; gap: 0; margin: 1.8rem 0 0.5rem; }
   .searchbar input {
     flex: 1; padding: 0.7rem 0.9rem; font-size: 1rem; font-family: inherit;
-    border: 1px solid var(--iris-edge); border-right: none; border-radius: 4px 0 0 4px;
+    border: 1px solid var(--iris-edge); border-inline-end: none;
+    border-radius: 0; border-start-start-radius: 4px; border-end-start-radius: 4px;
     background: #fff; color: var(--iris-ink);
   }
   .searchbar button {
     padding: 0.7rem 1.4rem; font-size: 1rem; font-family: inherit; font-weight: 600;
-    border: 1px solid var(--iris-accent); border-radius: 0 4px 4px 0;
+    border: 1px solid var(--iris-accent);
+    border-radius: 0; border-start-end-radius: 4px; border-end-end-radius: 4px;
     background: var(--iris-accent); color: #fff; cursor: pointer;
   }
   .searchbar button:hover, .searchbar button:focus {
@@ -1078,7 +1514,7 @@ function page(
 
   table.reqs { width: 100%; border-collapse: collapse; margin-top: 0.9rem; font-size: 0.95rem; }
   table.reqs th, table.reqs td {
-    text-align: left; padding: 0.65rem 0.7rem; border-bottom: 1px solid var(--iris-edge);
+    text-align: start; padding: 0.65rem 0.7rem; border-bottom: 1px solid var(--iris-edge);
     vertical-align: top;
   }
   table.reqs thead th { background: var(--iris-wash); font-weight: 700; }
@@ -1100,7 +1536,7 @@ function page(
   figure.arch figcaption { font-size: 0.88rem; color: var(--iris-muted); margin-top: 0.6rem; }
 
   .caveat {
-    border-left: 4px solid var(--iris-current); background: var(--iris-wash);
+    border-inline-start: 4px solid var(--iris-current); background: var(--iris-wash);
     padding: 0.9rem 1.1rem; margin: 1.6rem 0; font-size: 0.95rem;
   }
   .caveat p { margin: 0.4rem 0; }
@@ -1134,7 +1570,7 @@ function page(
     table.reqs tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
     .hero h1 { font-size: 2.6rem; }
     .searchbar { flex-direction: column; }
-    .searchbar input { border-right: 1px solid var(--iris-edge); border-radius: 4px 4px 0 0; }
+    .searchbar input { border-inline-end: 1px solid var(--iris-edge); border-radius: 4px 4px 0 0; }
     .searchbar button { border-radius: 0 0 4px 4px; }
     .sub { flex-direction: column; }
   }
@@ -1143,24 +1579,23 @@ function page(
 <body>
 
 <div class="ingested"><div class="wrap">
-  <strong>INGESTED COPY — not WHO, and not live.</strong>
-  This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a>
-  from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled
-  <em>by reference</em>: ${banner()}. The WHO logo is deliberately omitted, and the
-  rendered covers are withheld from display for the same reason — they carry the
-  emblem printed on the publications.
+  ${t("<strong>INGESTED COPY — not WHO, and not live.</strong> This page is rendered by {folioAssistant} from its own catalogue of {iris}, modelled <em>by reference</em>: {figures}. The WHO logo is deliberately omitted, and the rendered covers are withheld from display for the same reason — they carry the emblem printed on the publications.", {
+    folioAssistant: `<a href="https://github.com/litlfred/folio-assistant">folio-assistant</a>`,
+    iris: `<a href="https://iris.who.int/">WHO IRIS</a>`,
+    figures: banner(),
+  })}${file === undefined ? "" : localeBar(file)}
 </div></div>
 
 <header class="mast"><div class="wrap">
   <div class="wordmark">
-    <span class="org">World Health<br>Organization</span>
+    <span class="org">${t("World Health<br>Organization")}</span>
     <span class="bar"></span>
     <span class="stack">
       <span class="iris">iris<span class="dot">.</span></span>
-      <span class="sub">Institutional Repository<br>for Information Sharing</span>
+      <span class="sub">${t("Institutional Repository<br>for Information Sharing")}</span>
     </span>
   </div>
-  <div class="nologo">Logo omitted, covers withheld — replica, not published under WHO</div>
+  <div class="nologo">${t("Logo omitted, covers withheld — replica, not published under WHO")}</div>
 </div></header>
 
 <!--
@@ -1184,9 +1619,9 @@ function page(
 -->
 <nav class="main"><div class="wrap">
   ${side === "site"
-    ? `<a href="community-list.html">Communities &amp; Collections</a>`
-    : `<span>Communities &amp; Collections</span>`}
-  <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
+    ? `<a href="community-list.html">${t("Communities &amp; Collections")}</a>`
+    : `<span>${t("Communities &amp; Collections")}</span>`}
+  <span>${t("Browse IRIS")}</span><span>${t("Statistics")}</span><span>${t("About")}</span><span>${t("Contact")}</span><span>${t("Help")}</span>
 </div></nav>
 
 <div class="crumbs"><div class="wrap">${crumbHtml}</div></div>
@@ -1196,13 +1631,15 @@ ${body}
 </main>
 
 <footer class="mast"><div class="wrap">
-  <p><strong>Ingested replica.</strong> Rendered from
-  <code>who-iris/catalogue/</code> by <code>who-iris/scripts/gen-iris-pages.ts</code>.
-  Layout after <a href="https://iris.who.int/community-list">iris.who.int</a>; every
-  figure on this page is read out of the catalogue, not copied from a screenshot.</p>
+  <p>${t("<strong>Ingested replica.</strong> Rendered from {catalogue} by {generator}. Layout after {iris}; every figure on this page is read out of the catalogue, not copied from a screenshot.", {
+    catalogue: "<code>who-iris/catalogue/</code>",
+    generator: "<code>who-iris/scripts/gen-iris-pages.ts</code>",
+    iris: `<a href="https://iris.who.int/community-list">iris.who.int</a>`,
+  })}</p>
   <div class="rule"></div>
-  <p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO.
-  This copy asserts no endorsement and carries no WHO mark.</p>
+  <p>${t("Source of record: {iris} — © WHO. This copy asserts no endorsement and carries no WHO mark.", {
+    iris: `<a href="https://iris.who.int/">iris.who.int</a>`,
+  })}</p>
 </div></footer>
 ${side === "harness" ? "" : FOLIO_MOUNT}
 </body>
@@ -1211,7 +1648,12 @@ ${side === "harness" ? "" : FOLIO_MOUNT}
 }
 
 function stateBadge(state: string): string {
-  return `<span class="state ${esc(state)}">${esc(state)}</span>`;
+  // The three states are a closed vocabulary the generator itself emits, so
+  // their WORDS are interface and are translated; the class keeps the value,
+  // so the colour does not depend on the language. A state outside the three
+  // is the catalogue's data and is shown as written.
+  const word = state === "materialized" || state === "referenced" || state === "unknown" ? t(state) : esc(state);
+  return `<span class="state ${esc(state)}">${word}</span>`;
 }
 
 /**
@@ -1412,8 +1854,8 @@ function communityList(all: Node[]): string {
       );
       const known =
         c.childCountUpstream !== undefined && m?.collectionBytes !== undefined
-          ? `${c.childCountUpstream.toLocaleString("en")} files · ${gb(m.collectionBytes)} upstream`
-          : `size upstream <strong>unknown</strong> — the storage report's second page was never read, and a number interpolated from the first would look measured`;
+          ? t("{files} files · {size} upstream", { files: num(c.childCountUpstream), size: gb(m.collectionBytes) })
+          : t("size upstream <strong>unknown</strong> — the storage report's second page was never read, and a number interpolated from the first would look measured");
 
       const kids = kidCollections.length
         ? `<ul class="kids">${kidCollections
@@ -1422,7 +1864,7 @@ function communityList(all: Node[]): string {
               const held = inIt.filter((i) => assetHref(i)).length;
               return `<li><a href="collection-${esc(slug(k.id))}.html">${esc(k.title)}</a>
                 ${stateBadge(k.materialization?.state ?? "unknown")}
-                <span class="note" style="margin:0 0 0 .4rem;display:inline">${inIt.length} item(s) modelled, ${held} held here</span></li>`;
+                <span class="note" style="margin:0;margin-inline-start:.4rem;display:inline">${t("{modelled} item(s) modelled, {held} held here", { modelled: num(inIt.length), held: num(held) })}</span></li>`;
             })
             .join("\n")}</ul>`
         : "";
@@ -1453,55 +1895,32 @@ function communityList(all: Node[]): string {
     )
     .join("\n");
 
-  return `<h1>List of Communities</h1>
+  return `<h1>${t("List of Communities")}</h1>
 
-<p>Every row below is <strong>live</strong>. A row is not greyed out when this
-repository does not hold it — it says <span class="state referenced">referenced</span>
-instead, which is the actual state and the whole point of a catalogue modelled by
-reference. <span class="state materialized">materialized</span> means the bytes are here.</p>
+<p>${t("Every row below is <strong>live</strong>. A row is not greyed out when this repository does not hold it — it says {referenced} instead, which is the actual state and the whole point of a catalogue modelled by reference. {materialized} means the bytes are here.", {
+    referenced: stateBadge("referenced"),
+    materialized: stateBadge("materialized"),
+  })}</p>
 
 <ul class="communities">
 ${rows}
 </ul>
 
-<h2>Held here — ${held.length} materialized item(s)</h2>
-<p>Each row carries <strong>three routes to the same item</strong>: the
-<strong>IRIS source</strong> upstream at WHO, this repository's own
-<strong>local replica</strong> page, and the <strong>asset itself</strong> —
-downloadable from the repository and, separately, from a CDN edge.</p>
+<h2>${t("Held here — {n} materialized item(s)", { n: num(held.length) })}</h2>
+<p>${t("Each row carries <strong>three routes to the same item</strong>: the <strong>IRIS source</strong> upstream at WHO, this repository's own <strong>local replica</strong> page, and the <strong>asset itself</strong> — downloadable from the repository and, separately, from a CDN edge.")}</p>
 
 <table class="items">
-<thead><tr><th>Item</th><th>Collection</th><th>State</th><th>Upstream</th><th>Held copy</th><th>Metadata record</th></tr></thead>
+<thead><tr><th>${t("Item")}</th><th>${t("Collection")}</th><th>${t("State")}</th><th>${t("Upstream")}</th><th>${t("Held copy")}</th><th>${t("Metadata record")}</th></tr></thead>
 <tbody>
 ${table}
 </tbody>
 </table>
 
 <div class="caveat">
-  <p><strong>Three routes to one item, which is the point.</strong> The
-  catalogue knows this item once; the bytes are reachable <em>upstream at
-  WHO</em>, <em>here as a replica page</em>, and <em>from a CDN edge</em> —
-  jsDelivr serves any public repository, so the last one costs this project no
-  hosting at all. The KG says what exists and where; the CDN says nothing and
-  just serves it.</p>
-  <p><strong>Both link forms are confirmed working.</strong> The
-  <code>raw.githubusercontent.com</code> links were fetched and returned 200
-  with byte counts matching the catalogue exactly. The <em>via CDN</em> links
-  could not be checked from the environment that generated this page —
-  <code>cdn.jsdelivr.net</code> is egress-blocked there — so they were composed
-  from jsDelivr's documented URL form and the owner exercised one by hand on
-  2026-09-20. Both are kept: one costs this project nothing to serve, and a
-  reader who finds either unavailable still has the other.</p>
-  <p><strong>Where the held copies actually live — bean <code>yl5w</code>.</strong>
-  The catalogue records each of these at <code>uploads/&lt;name&gt;.pdf</code> relative to
-  <code>who-iris/</code>, and <em>all three of those paths are missing</em>: #477 moved
-  <code>library/</code> into this instance and left <code>uploads/</code> in
-  <code>cat-harness/</code>.</p>
-  <p>The download links above point at where the bytes <em>are</em>, so they work. The
-  claim in the catalogue is what is wrong, and <code>check:catalogue</code> does not
-  check <code>localPath</code> at all — it verifies <code>metadataRef</code> and
-  <code>libraryId</code>, and reports a clean run over three
-  <code>materialized</code> claims that resolve to nothing.</p>
+  <p>${t("<strong>Three routes to one item, which is the point.</strong> The catalogue knows this item once; the bytes are reachable <em>upstream at WHO</em>, <em>here as a replica page</em>, and <em>from a CDN edge</em> — jsDelivr serves any public repository, so the last one costs this project no hosting at all. The KG says what exists and where; the CDN says nothing and just serves it.")}</p>
+  <p>${t("<strong>Both link forms are confirmed working.</strong> The <code>raw.githubusercontent.com</code> links were fetched and returned 200 with byte counts matching the catalogue exactly. The <em>via CDN</em> links could not be checked from the environment that generated this page — <code>cdn.jsdelivr.net</code> is egress-blocked there — so they were composed from jsDelivr's documented URL form and the owner exercised one by hand on 2026-09-20. Both are kept: one costs this project nothing to serve, and a reader who finds either unavailable still has the other.")}</p>
+  <p>${t("<strong>Where the held copies actually live — bean <code>yl5w</code>.</strong> The catalogue records each of these at <code>uploads/&lt;name&gt;.pdf</code> relative to <code>who-iris/</code>, and <em>all three of those paths are missing</em>: #477 moved <code>library/</code> into this instance and left <code>uploads/</code> in <code>cat-harness/</code>.")}</p>
+  <p>${t("The download links above point at where the bytes <em>are</em>, so they work. The claim in the catalogue is what is wrong, and <code>check:catalogue</code> does not check <code>localPath</code> at all — it verifies <code>metadataRef</code> and <code>libraryId</code>, and reports a clean run over three <code>materialized</code> claims that resolve to nothing.")}</p>
 </div>
 `;
 }
@@ -1600,14 +2019,14 @@ function collectionCell(n: Node, all: Node[]): string {
     .filter((x): x is Node => x !== undefined);
   const collections = containers.filter((c) => c.flavour === "collection");
   if (collections.length === 0) {
-    return `<span class="none">no collection recorded</span>`;
+    return `<span class="none">${t("no collection recorded")}</span>`;
   }
   return collections
     .map(
       (c) =>
         `<a href="collection-${esc(slug(c.id))}.html">${esc(c.title)}</a>` +
         (containers.filter((x) => x.flavour === "community").length
-          ? `<br><code>in ${esc(containers.filter((x) => x.flavour === "community").map((x) => x.title).join(" / "))}</code>`
+          ? `<br><code>${t("in {communities}", { communities: esc(containers.filter((x) => x.flavour === "community").map((x) => x.title).join(" / ")) })}</code>`
           : ""),
     )
     .join("<br>");
@@ -1707,14 +2126,14 @@ function day(iso: string | undefined): string | undefined {
 }
 
 function metadataCell(n: Node): string {
-  if (!n.metadataRef) return `<span class="none">none captured</span>`;
+  if (!n.metadataRef) return `<span class="none">${t("none captured")}</span>`;
   const abs = join(INSTANCE, n.metadataRef);
-  if (!existsSync(abs)) return `<span class="none">declared, but missing on disk</span>`;
+  if (!existsSync(abs)) return `<span class="none">${t("declared, but missing on disk")}</span>`;
   const rel = encPath(`who-iris/${n.metadataRef}`);
   const bytes = readFileSync(abs, "utf-8").length;
-  return `<a href="${esc(`${RAW}/${rel}`)}">Download ${esc(n.metadataRef.split("/").pop()!)}</a>
-      <br><a class="cdn" href="${esc(`${CDN}/${rel}`)}">via CDN</a>
-      <br><code>qualified Dublin Core · ${(bytes / 1024).toFixed(1)} KB</code>`;
+  return `<a href="${esc(`${RAW}/${rel}`)}">${t("Download {file}", { file: esc(n.metadataRef.split("/").pop()!) })}</a>
+      <br><a class="cdn" href="${esc(`${CDN}/${rel}`)}">${t("via CDN")}</a>
+      <br><code>${t("qualified Dublin Core · {size} KB", { size: num(bytes / 1024, 1) })}</code>`;
 }
 
 /**
@@ -1728,15 +2147,15 @@ function metadataCell(n: Node): string {
  * like one that works. `dc:render:check` is what makes "not there" a failure.
  */
 function renderingsCell(n: Node): string {
-  if (!n.metadataRef) return `<span class="none">no record, so nothing to render</span>`;
+  if (!n.metadataRef) return `<span class="none">${t("no record, so nothing to render")}</span>`;
   const r = dcRenderingsFor(INSTANCE, n.metadataRef);
-  if (r === undefined) return `<span class="none">this instance declares no published root</span>`;
+  if (r === undefined) return `<span class="none">${t("this instance declares no published root")}</span>`;
   const link = (abs: string, label: string): string =>
     existsSync(abs)
-      ? `<a href="${esc(encPath(relative(SITE, abs).split(sep).join("/")))}">${label}</a>`
-      : `<span class="none">${label}: not rendered (run <code>bun run dc:render</code>)</span>`;
-  return `${link(r.xml, "Dublin Core XML")}
-      <br>${link(r.jsonld, "JSON-LD (DCMI Terms)")}`;
+      ? `<a href="${esc(encPath(relative(siteDir(), abs).split(sep).join("/")))}">${label}</a>`
+      : `<span class="none">${t("{label}: not rendered (run {command})", { label, command: "<code>bun run dc:render</code>" })}</span>`;
+  return `${link(r.xml, t("Dublin Core XML"))}
+      <br>${link(r.jsonld, t("JSON-LD (DCMI Terms)"))}`;
 }
 
 /**
@@ -1749,14 +2168,14 @@ function renderingsCell(n: Node): string {
  */
 function upstreamCell(n: Node): string {
   const u = sourceOf(n);
-  const replica = `<a href="item-${esc(slug(n.id))}.html">Local replica &rarr;</a>`;
-  if (u) return `<a href="${esc(u)}">IRIS source &rarr;</a><br>${replica}`;
+  const replica = `<a href="item-${esc(slug(n.id))}.html">${t("Local replica →")}</a>`;
+  if (u) return `<a href="${esc(u)}">${t("IRIS source →")}</a><br>${replica}`;
   // The LOCAL original, now asked for by name. This read `of` — the same field
   // `sourceOf` had just rejected — so it showed whatever was left over rather
   // than the local reference it claims to show.
   const local = n.bitstreams?.find((b) => b.materialization?.provenance?.local)?.materialization
     ?.provenance?.local;
-  return `<span class="none">no upstream URI recorded</span>${
+  return `<span class="none">${t("no upstream URI recorded")}</span>${
     local ? `<br><code>${esc(local)}</code>` : ""
   }<br>${replica}`;
 }
@@ -1771,25 +2190,24 @@ function collectionPage(c: Node, all: Node[]): string {
   <td><a href="item-${esc(slug(n.id))}.html">${esc(n.title)}</a><br><code>${esc(n.libraryId ?? n.id)}</code></td>
   <td>${stateBadge(a ? "materialized" : (n.materialization?.state ?? "unknown"))}</td>
   <td class="dl">${upstreamCell(n)}</td>
-  <td class="dl">${a ? linkOrWithheld(a, true) : "not held here"}</td>
+  <td class="dl">${a ? linkOrWithheld(a, true) : t("not held here")}</td>
   <td class="dl">${metadataCell(n)}</td>
 </tr>`;
     })
     .join("\n");
 
   return `<h1>${esc(c.title)}</h1>
-<p>Permanent URI for this collection
-  ${c.materialization?.provenance?.upstream ? `<a href="${esc(c.materialization.provenance.upstream)}">${esc(c.materialization.provenance.upstream)}</a>` : `<span class="none">none recorded</span>`}
+<p>${t("Permanent URI for this collection")}
+  ${c.materialization?.provenance?.upstream ? `<a href="${esc(c.materialization.provenance.upstream)}">${esc(c.materialization.provenance.upstream)}</a>` : `<span class="none">${t("none recorded")}</span>`}
   ${stateBadge(c.materialization?.state ?? "unknown")}</p>
 
-${c.materialization?.note ? `<div class="caveat"><p><strong>How this node was established.</strong> ${withInlineCode(c.materialization.note, esc)}</p></div>` : ""}
+${c.materialization?.note ? `<div class="caveat"><p>${t("<strong>How this node was established.</strong> {note}", { note: withInlineCode(c.materialization.note, esc) })}</p></div>` : ""}
 
-<h2>Items in this Collection</h2>
-<p>Now showing 1 – ${items.length} of ${items.length} <em>modelled</em>. The upstream
-collection is larger; this catalogue holds what was materialised, and says so per row.</p>
+<h2>${t("Items in this Collection")}</h2>
+<p>${t("Now showing 1 – {n} of {n} <em>modelled</em>. The upstream collection is larger; this catalogue holds what was materialised, and says so per row.", { n: num(items.length) })}</p>
 
 <table class="items">
-<thead><tr><th>Item</th><th>State</th><th>Upstream</th><th>Held copy</th><th>Metadata record</th></tr></thead>
+<thead><tr><th>${t("Item")}</th><th>${t("State")}</th><th>${t("Upstream")}</th><th>${t("Held copy")}</th><th>${t("Metadata record")}</th></tr></thead>
 <tbody>
 ${rows}
 </tbody>
@@ -1814,7 +2232,7 @@ ${rows}
  */
 function readHere(n: Node, a: ReturnType<typeof assetHref>): string {
   if (!a || a.withheld.length > 0 || !/\.pdf$/i.test(a.name)) return "";
-  return `<h2>Read it here</h2>
+  return `<h2>${t("Read it here")}</h2>
 ${pdfViewer({ src: a.cdn, title: n.title, route: FOLIO_ROUTE })}
 
 `;
@@ -1842,42 +2260,39 @@ function itemPage(n: Node, all: Node[]): string {
     .join("\n");
 
   return `<h1>${esc(n.title)}</h1>
-<p>Permanent URI for this item
-  ${sourceOf(n) ? `<a href="${esc(sourceOf(n)!)}">${esc(sourceOf(n)!)}</a>` : `<span class="none">none recorded — ingested from a local copy, not resolved from IRIS</span>`}
+<p>${t("Permanent URI for this item")}
+  ${sourceOf(n) ? `<a href="${esc(sourceOf(n)!)}">${esc(sourceOf(n)!)}</a>` : `<span class="none">${t("none recorded — ingested from a local copy, not resolved from IRIS")}</span>`}
   ${stateBadge(a ? "materialized" : (n.materialization?.state ?? "unknown"))}</p>
 
-${named.length ? `<p class="note" style="margin-left:0">In: ${named.map((p) => esc(p.title)).join(" &rsaquo; ")}</p>` : ""}
+${named.length ? `<p class="note" style="margin-inline-start:0">${t("In: {path}", { path: named.map((p) => esc(p.title)).join(" &rsaquo; ") })}</p>` : ""}
 
-<h2>Files</h2>
+<h2>${t("Files")}</h2>
 <table class="items">
-<thead><tr><th>Name</th><th>Bundle</th><th>Size</th><th>State</th></tr></thead>
+<thead><tr><th>${t("Name")}</th><th>${t("Bundle")}</th><th>${t("Size")}</th><th>${t("State")}</th></tr></thead>
 <tbody>
 ${bits}
 </tbody>
 </table>
 
-${readHere(n, a)}<h3>Both links, as asked for</h3>
+${readHere(n, a)}<h3>${t("Both links, as asked for")}</h3>
 <table class="items">
-<thead><tr><th>Where</th><th>Link</th></tr></thead>
+<thead><tr><th>${t("Where")}</th><th>${t("Link")}</th></tr></thead>
 <tbody>
-<tr><td>Upstream, at WHO</td><td>${sourceOf(n) ? `<a href="${esc(sourceOf(n)!)}">${esc(sourceOf(n)!)}</a>` : "none recorded"}</td></tr>
-<tr><td>Held here, in folio-assistant</td>
-    <td>${a ? linkOrWithheld(a, false) : "not held"}</td></tr>
-<tr><td>In collection</td><td>${collectionCell(n, all)}</td></tr>
-<tr><td>Ingested text (L1)</td>
+<tr><td>${t("Upstream, at WHO")}</td><td>${sourceOf(n) ? `<a href="${esc(sourceOf(n)!)}">${esc(sourceOf(n)!)}</a>` : t("none recorded")}</td></tr>
+<tr><td>${t("Held here, in folio-assistant")}</td>
+    <td>${a ? linkOrWithheld(a, false) : t("not held")}</td></tr>
+<tr><td>${t("In collection")}</td><td>${collectionCell(n, all)}</td></tr>
+<tr><td>${t("Ingested text (L1)")}</td>
     <td>${n.libraryId ? `<a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/${esc(n.libraryId)}/sections">who-iris/library/${esc(n.libraryId)}/sections/</a>` : "—"}</td></tr>
-<tr><td>Dublin Core record</td><td>${metadataCell(n)}</td></tr>
-<tr><td>Dublin Core renderings</td><td>${renderingsCell(n)}</td></tr>
+<tr><td>${t("Dublin Core record")}</td><td>${metadataCell(n)}</td></tr>
+<tr><td>${t("Dublin Core renderings")}</td><td>${renderingsCell(n)}</td></tr>
 </tbody>
 </table>
 
 ${
   hasDc
     ? ""
-    : `<div class="caveat"><p><strong>No Dublin Core record.</strong> The catalogue
-  says so rather than synthesising metadata from the PDF — the
-  <code>iris-dspace</code> skill's R8, <em>never infer metadata from the PDF when a
-  record exists</em>, whose converse is that an absent record stays absent.</p></div>`
+    : `<div class="caveat"><p>${t("<strong>No Dublin Core record.</strong> The catalogue says so rather than synthesising metadata from the PDF — the <code>iris-dspace</code> skill's R8, <em>never infer metadata from the PDF when a record exists</em>, whose converse is that an absent record stays absent.")}</p></div>`
 }
 `;
 }
@@ -1954,6 +2369,10 @@ function landingPage(all: Node[]): string {
   const collections = all.filter((n) => n.flavour === "collection");
   const held = items.filter((n) => assetHref(n) !== undefined);
   const cat = catalogue();
+  // The nodes held by REFERENCE: every node but the items held by value. This
+  // was the literal 10 until 2026-10-05, true when it was typed; counted now,
+  // so the sentence stays true when the catalogue grows.
+  const REFERENCED_NODES = all.length - held.length;
 
   const submissions = recentOrder(items).map((n) => submission(n)).join("\n");
 
@@ -1972,7 +2391,7 @@ function landingPage(all: Node[]): string {
         return {
           title: n.title,
           href: `item-${slug(n.id)}.html`,
-          badge: "Item",
+          badge: t("Item"),
           meta,
           abstract: abstract.slice(0, 240),
           text,
@@ -1982,7 +2401,7 @@ function landingPage(all: Node[]): string {
         return {
           title: n.title,
           href: `collection-${slug(n.id)}.html`,
-          badge: "Collection",
+          badge: t("Collection"),
           meta: n.id,
           abstract: n.materialization?.note ?? "",
           text: [n.title, n.id, n.materialization?.note ?? ""].join(" ").toLowerCase(),
@@ -1991,7 +2410,7 @@ function landingPage(all: Node[]): string {
       return {
         title: n.title,
         href: "community-list.html",
-        badge: "Community",
+        badge: t("Community"),
         meta: n.id,
         abstract: "",
         text: [n.title, n.id].join(" ").toLowerCase(),
@@ -2003,65 +2422,64 @@ function landingPage(all: Node[]): string {
 <section class="hero">
   <div class="hero-in">
     <h1>IRIS</h1>
-    <p>The primary objective of the Institutional Repository for Information Sharing
-    (IRIS) is to provide free digital access to the scientific and technical
-    publications of the World Health Organization (WHO), including contributions from
-    its Country Offices, Regional Offices, and Headquarters. Additionally, IRIS
-    encompasses the mandates established by the Organization&rsquo;s Governing Bodies in
-    collaboration with its Member States.</p>
+    <p>${t("The primary objective of the Institutional Repository for Information Sharing (IRIS) is to provide free digital access to the scientific and technical publications of the World Health Organization (WHO), including contributions from its Country Offices, Regional Offices, and Headquarters. Additionally, IRIS encompasses the mandates established by the Organization’s Governing Bodies in collaboration with its Member States.")}</p>
   </div>
-  <p class="hero-note">Replica. No WHO emblem, no photograph &mdash; colour only,
-  from the <code>iris-web</code> theme measured off the site&rsquo;s own stylesheet.</p>
+  <p class="hero-note">${t("Replica. No WHO emblem, no photograph — colour only, from the {theme} theme measured off the site’s own stylesheet.", { theme: "<code>iris-web</code>" })}</p>
 </section>
 
-<form class="searchbar" id="iris-search-form" action="../id-lookup/" method="get">
+<form class="searchbar" id="iris-search-form" action="${toSiteRoot()}../id-lookup/" method="get">
   <input type="hidden" name="index" value="who-iris/">
   <input type="text" id="iris-search-input" name="q"
-    placeholder="Search through the repository&rsquo;s ${itemsUpstream !== undefined ? itemsUpstream.toLocaleString("en-US").replace(/,/g, "") : "?"} items"
-    aria-label="Search through the repository items and referenced identifier lookup"
+    placeholder="${esc(t("Search through the repository’s {n} items", { n: itemsUpstream !== undefined ? String(itemsUpstream) : "?" }))}"
+    aria-label="${esc(t("Search through the repository items and referenced identifier lookup"))}"
     autocomplete="off" spellcheck="false">
-  <button type="submit" id="iris-search-btn">Search</button>
+  <button type="submit" id="iris-search-btn">${t("Search")}</button>
 </form>
 <div id="iris-search-results" class="search-results-panel" role="region" aria-live="polite" style="display:none"></div>
-<p class="searchnote" id="iris-search-note">Search across <strong>${held.length}</strong> items held by value and referenced communities/collections.
-To look up any of the <strong>10</strong> referenced nodes by identifier, search here or open the <a href="../id-lookup/?index=who-iris/">identifier lookup</a>.
-Upstream IRIS reports ${itemsUpstream !== undefined ? `<strong>${itemsUpstream.toLocaleString("en-US")}</strong> items` : "items"}${
-    filesUpstream !== undefined ? ` across <strong>${filesUpstream.toLocaleString("en-US")}</strong> files` : ""
-  }.</p>
+<p class="searchnote" id="iris-search-note">${t("Search across <strong>{held}</strong> items held by value and referenced communities/collections. To look up any of the <strong>{referenced}</strong> referenced nodes by identifier, search here or open the {lookup}.", {
+    held: num(held.length),
+    referenced: num(REFERENCED_NODES),
+    lookup: `<a href="${toSiteRoot()}../id-lookup/?index=who-iris/">${t("identifier lookup")}</a>`,
+  })}${itemsUpstream !== undefined && filesUpstream !== undefined
+    ? `\n${t("Upstream IRIS reports <strong>{items}</strong> items across <strong>{files}</strong> files.", { items: num(itemsUpstream), files: num(filesUpstream) })}`
+    : ""}</p>
 
-<h2>Recent Submissions</h2>
-<p class="ordering">Ordered by <code>dc.date.accessioned</code>, latest first &mdash; the key
-IRIS&rsquo;s own list sorts on. Where a record carries several accessions the latest is
-used; the WPRO item has two, five days apart, the second being the regional-IRIS merge.</p>
+<h2>${t("Recent Submissions")}</h2>
+<p class="ordering">${t("Ordered by {key}, latest first — the key IRIS’s own list sorts on. Where a record carries several accessions the latest is used; the WPRO item has two, five days apart, the second being the regional-IRIS merge.", { key: "<code>dc.date.accessioned</code>" })}</p>
 
 <div class="subs">
 ${submissions}
 </div>
 
-<h2>Browse</h2>
-<ul class="kids" style="margin-left:0">
-  <li><a href="community-list.html">List of Communities</a> &mdash; the replica of
-      <code>iris.who.int/community-list</code>, with every node&rsquo;s materialisation state
-      (${communities.length} communities, ${collections.length} collections)</li>
+<h2>${t("Browse")}</h2>
+<ul class="kids" style="margin-inline-start:0">
+  <li>${t("{link} — the replica of {url}, with every node’s materialisation state ({communities} communities, {collections} collections)", {
+    link: `<a href="community-list.html">${t("List of Communities")}</a>`,
+    url: "<code>iris.who.int/community-list</code>",
+    communities: num(communities.length),
+    collections: num(collections.length),
+  })}</li>
 ${collections
-  .map((c) => `  <li><a href="collection-${esc(slug(c.id))}.html">${esc(c.title)}</a> &mdash; collection</li>`)
+  .map((c) => `  <li>${t("{link} — collection", { link: `<a href="collection-${esc(slug(c.id))}.html">${esc(c.title)}</a>` })}</li>`)
   .join("\n")}
 </ul>
 
 <div class="caveat">
-  <p><strong>This is the front door, not the library visualiser.</strong> The
-  full <code>library/</code> visualiser is bean <code>jbx2</code> and is being
-  built separately. This page mocks the IRIS home page and links onward rather
-  than becoming a second answer to the same question.</p>
-  <p>Addressing follows the owner&rsquo;s rule &mdash;
-  <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> &mdash; so an instance that
-  instantiates a directory gets a visualiser mounted under that directory&rsquo;s
-  kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.</p>
+  <p>${t("<strong>This is the front door, not the library visualiser.</strong> The full <code>library/</code> visualiser is bean <code>jbx2</code> and is being built separately. This page mocks the IRIS home page and links onward rather than becoming a second answer to the same question.")}</p>
+  <p>${t("Addressing follows the owner’s rule — <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> — so an instance that instantiates a directory gets a visualiser mounted under that directory’s kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.")}</p>
 </div>
 
 <script>
 (function() {
   var index = ${JSON.stringify(searchEntries)};
+  var T = ${JSON.stringify({
+    matching: t("Matching catalogue nodes ({n}):"),
+    also: t("Also search identifier lookup:"),
+    lookUp: t("Look up “{q}” in referenced nodes →"),
+    none: t("No materialized items or collections matched “<strong>{q}</strong>”."),
+    searchFor: t("Search for “{q}” in the referenced identifier lookup ({n} nodes) →", { n: num(REFERENCED_NODES) }),
+  })};
+  function fill(s, q, n) { return s.split("{q}").join(q).split("{n}").join(n); }
   var form = document.getElementById("iris-search-form");
   var input = document.getElementById("iris-search-input");
   var results = document.getElementById("iris-search-results");
@@ -2104,11 +2522,11 @@ ${collections
       if (ok) matches.push(entry);
     }
 
-    var lookupUrl = "../id-lookup/?index=who-iris/&q=" + encodeURIComponent(raw);
+    var lookupUrl = "${toSiteRoot()}../id-lookup/?index=who-iris/&q=" + encodeURIComponent(raw);
     var html = "";
 
     if (matches.length > 0) {
-      html += "<h3 style=\\"margin:0 0 0.8rem;font-size:1.05rem;color:var(--iris-dark);\\">Matching catalogue nodes (" + matches.length + "):</h3>";
+      html += "<h3 style=\\"margin:0 0 0.8rem;font-size:1.05rem;color:var(--iris-dark);\\">" + fill(T.matching, "", String(matches.length)) + "</h3>";
       html += "<ul class=\\"search-results-list\\" style=\\"list-style:none;padding:0;margin:0 0 1rem;display:flex;flex-direction:column;gap:0.75rem;\\">";
       for (var m = 0; m < matches.length; m++) {
         var it = matches[m];
@@ -2126,12 +2544,12 @@ ${collections
       }
       html += "</ul>";
       html += "<div class=\\"search-remote-box\\" style=\\"border-top:1px solid var(--iris-edge);padding-top:0.75rem;margin-top:0.75rem;font-size:0.92rem;\\">";
-      html += "Also search identifier lookup: <a href=\\"" + lookupUrl + "\\" class=\\"search-remote-link\\">Look up &ldquo;" + escapeHtml(raw) + "&rdquo; in referenced nodes &rarr;</a>";
+      html += T.also + " <a href=\\"" + lookupUrl + "\\" class=\\"search-remote-link\\">" + fill(T.lookUp, escapeHtml(raw), "") + "</a>";
       html += "</div>";
     } else {
-      html += "<p style=\\"margin:0 0 0.5rem;\\">No materialized items or collections matched &ldquo;<strong>" + escapeHtml(raw) + "</strong>&rdquo;.</p>";
+      html += "<p style=\\"margin:0 0 0.5rem;\\">" + fill(T.none, escapeHtml(raw), "") + "</p>";
       html += "<div class=\\"search-remote-box\\" style=\\"border-top:1px solid var(--iris-edge);padding-top:0.75rem;margin-top:0.75rem;font-size:0.92rem;\\">";
-      html += "<a href=\\"" + lookupUrl + "\\" class=\\"search-remote-link\\" style=\\"font-weight:600;\\">Search for &ldquo;" + escapeHtml(raw) + "&rdquo; in the referenced identifier lookup (10 nodes) &rarr;</a>";
+      html += "<a href=\\"" + lookupUrl + "\\" class=\\"search-remote-link\\" style=\\"font-weight:600;\\">" + fill(T.searchFor, escapeHtml(raw), "") + "</a>";
       html += "</div>";
     }
 
@@ -2186,8 +2604,8 @@ function submission(n: Node): string {
   const cite = dc(n, "identifier", "citation")[0] ?? dc(n, "identifier", "govdoc")[0];
 
   const byline = [
-    authors.length ? esc(authors.join("; ")) : `<span class="none">no author recorded</span>`,
-    `(${[cite ? esc(cite) : undefined, issued ? `Publication Date: ${esc(issued)}` : undefined]
+    authors.length ? esc(authors.join("; ")) : `<span class="none">${t("no author recorded")}</span>`,
+    `(${[cite ? esc(cite) : undefined, issued ? t("Publication Date: {date}", { date: esc(issued) }) : undefined]
       .filter(Boolean)
       .join(", ")})`,
   ].join(" ");
@@ -2196,15 +2614,15 @@ function submission(n: Node): string {
   // in a layout and mean opposite things about the catalogue.
   const withheldBy = coverWithheld(n);
   const coverCell = withheldBy
-    ? `<span class="nocover" title="A cover is rendered and held here. It is not published: ${esc(withheldBy)}.">cover<br>withheld</span>`
+    ? `<span class="nocover" title="${esc(t("A cover is rendered and held here. It is not published: {gates}.", { gates: withheldBy }))}">${t("cover<br>withheld")}</span>`
     : !cov
-    ? `<span class="nocover" title="no cover rendered">no cover</span>`
+    ? `<span class="nocover" title="${esc(t("no cover rendered"))}">${t("no cover")}</span>`
     : COVERS_SHOWN
       ? `<a href="item-${esc(slug(n.id))}.html"><img src="${esc(cov.src)}" width="${cov.w}" height="${cov.h}"
-        alt="Cover of ${esc(n.title)}, rendered here from page 1 of the held PDF${
-          cov.masked ? ", with the WHO emblem masked out" : ""
-        }" loading="lazy"></a>`
-      : `<span class="nocover" title="A cover is rendered and recorded for this item. It is not displayed: the publication's cover carries the WHO emblem, and this replica is not published under WHO.">cover<br>withheld</span>`;
+        alt="${esc(cov.masked
+          ? t("Cover of {title}, rendered here from page 1 of the held PDF, with the WHO emblem masked out", { title: n.title })
+          : t("Cover of {title}, rendered here from page 1 of the held PDF", { title: n.title }))}" loading="lazy"></a>`
+      : `<span class="nocover" title="${esc(t("A cover is rendered and recorded for this item. It is not displayed: the publication's cover carries the WHO emblem, and this replica is not published under WHO."))}">${t("cover<br>withheld")}</span>`;
 
   return `<article class="sub">
   <div class="sub-cover">${coverCell}</div>
@@ -2214,12 +2632,12 @@ function submission(n: Node): string {
     ${
       abstract
         ? `<p class="sub-abs">${esc(abstract)}</p>`
-        : `<p class="sub-abs none">No <code>dc.description.abstract</code> in the captured record.</p>`
+        : `<p class="sub-abs none">${t("No <code>dc.description.abstract</code> in the captured record.")}</p>`
     }
     <p class="sub-links">${
       a
         ? linkOrWithheld(a, true)
-        : `<span class="none">not held here</span>`
+        : `<span class="none">${t("not held here")}</span>`
     }</p>
   </div>
 </article>`;
@@ -2719,6 +3137,10 @@ from it is this instance&rsquo;s own front page.</p>
 }
 
 function main(): number {
+  if (process.argv.includes("--extract-pot")) {
+    extractPot();
+    return 0;
+  }
   const all = nodes();
   const files = new Map<string, string>();
   /**
@@ -2735,10 +3157,6 @@ function main(): number {
   // needs one because it is a site, and the docs side needs one because
   // `mount-instance-docs.ts` will not mount a directory without it — so a map
   // keyed on the bare name can hold only one of them.
-  files.set(
-    "site/index.html",
-    page("who-iris", [{ label: "Home" }], landingPage(all), "site"),
-  );
 
   files.set(
     "docs/index.html",
@@ -2792,27 +3210,37 @@ function main(): number {
     ),
   );
 
-  files.set(
-    "site/community-list.html",
-    page("List of Communities", [{ label: "Home", href: "community-list.html" }, { label: "Community List" }], communityList(all), "site"),
-  );
-
-  for (const c of all.filter((n) => n.flavour === "collection")) {
+  // THE REPLICA, ONCE PER LANGUAGE (issue #2228). English first and at the
+  // top level, where it always was; then each translation beneath
+  // `site/<locale>/`. The docs and harness pages above are English only and
+  // were rendered before the first switch, which is the only reason the
+  // module-level LOCALE is safe here: nothing renders across the loop.
+  for (const locale of ["en", ...SITE_LOCALES] as Locale[]) {
+    LOCALE = locale;
+    const at = locale === "en" ? "site" : `site/${locale}`;
+    const home = { label: t("Home"), href: "community-list.html" };
+    files.set(`${at}/index.html`, page("who-iris", [{ label: t("Home") }], landingPage(all), "site", [], "index.html"));
     files.set(
-      `site/${replicaPageOf(c)!}`,
-      page(c.title, [{ label: "Home", href: "community-list.html" }, { label: c.title }], collectionPage(c, all), "site"),
+      `${at}/community-list.html`,
+      page(t("List of Communities"), [home, { label: t("Community List") }], communityList(all), "site", [], "community-list.html"),
     );
+    for (const c of all.filter((n) => n.flavour === "collection")) {
+      const f = replicaPageOf(c)!;
+      files.set(`${at}/${f}`, page(c.title, [home, { label: c.title }], collectionPage(c, all), "site", [], f));
+    }
+    for (const n of all.filter((x) => x.flavour === "item")) {
+      const f = replicaPageOf(n)!;
+      files.set(`${at}/${f}`, page(n.title, [home, { label: n.title }], itemPage(n, all), "site", [], f));
+    }
   }
-
-  for (const n of all.filter((x) => x.flavour === "item")) {
-    files.set(
-      `site/${replicaPageOf(n)!}`,
-      page(n.title, [{ label: "Home", href: "community-list.html" }, { label: n.title }], itemPage(n, all), "site"),
-    );
-  }
+  LOCALE = "en";
 
   const check = process.argv.includes("--check");
   let stale = 0;
+  // The catalogues are checked with the pages, because a page built from a
+  // stale or partial catalogue is a stale page: `iris:pages:check` is the one
+  // gate, as it was before there was anything to translate.
+  const drift = check ? catalogueProblems() : { problems: [], notes: [] };
   /* ONE LOOP OVER BOTH MAPS, reported repo-relative.
    *
    * `--check` has to cover the site-side page exactly as it covers the two
@@ -2944,14 +3372,26 @@ function main(): number {
     // in `library/` is what made the mount copy the whole corpus to two
     // published routes, so a stale one is pruned rather than tolerated.
     ...wrongSide(LIB, OWNED, /(?!)/).map((f) => ({ dir: LIB, name: f, rel: `who-iris/library/${f}` })),
+    // Each language's copy, swept the same way inside its own directory.
+    ...SITE_LOCALES.flatMap((loc) => {
+      const dir = join(SITE, loc);
+      return existsSync(dir)
+        ? readdirSync(dir)
+            .filter((f) => OWNED_SITE.test(f) && !files.has(`site/${loc}/${f}`))
+            .sort()
+            .map((f) => ({ dir, name: f, rel: `who-iris/site/${loc}/${f}` }))
+        : [];
+    }),
   ];
 
   if (check) {
     for (const o of orphans) console.error(`orphaned: ${o.rel}`);
-    if (stale || orphans.length) {
+    for (const d of drift.problems) console.error(`translation: ${d}`);
+    if (stale || orphans.length || drift.problems.length) {
       const bits = [
         stale ? `${stale} page(s) stale` : "",
         orphans.length ? `${orphans.length} orphaned` : "",
+        drift.problems.length ? `${drift.problems.length} translation problem(s)` : "",
       ].filter(Boolean).join(", ");
       console.error(`\n${bits}. Run: bun run who-iris/scripts/gen-iris-pages.ts`);
       return 1;
@@ -2961,12 +3401,14 @@ function main(): number {
     // summary that undercounts what it checked is the mirror of one that
     // overcounts: both leave a reader unable to tell coverage from omission.
     console.log(`gen-iris-pages --check: ${targets.length} page(s) up to date, no orphans.`);
+    console.log(`  translations (${SITE_STRINGS.length} strings): ${drift.notes.join("; ")}`);
     return 0;
   }
 
   for (const o of orphans) rmSync(join(o.dir, o.name));
 
   const site = [...files.keys()].filter((k) => k.startsWith("site/"));
+  // (Each language's pages are under site/<locale>/ and counted with site/.)
   const docs = [...files.keys()].filter((k) => k.startsWith("docs/"));
   console.log(`wrote ${site.length} page(s) to who-iris/site/ and ${docs.length} to who-iris/docs/`);
   for (const key of [...site, ...docs]) console.log(`  who-iris/${key}`);
