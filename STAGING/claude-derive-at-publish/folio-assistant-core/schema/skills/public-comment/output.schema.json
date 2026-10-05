@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Public Comment Output",
+  "description": "Output schema for the public-comment skill.",
+  "type": "object",
+  "properties": {
+    "changed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Comment refs written by the operation."
+    },
+    "unplaced": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "import: refs whose citation resolved to no block, kept for triage."
+    },
+    "refused": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "What was not done, and why: a tag from someone not in config.json, a transition the lifecycle does not allow."
+    },
+    "comments": {
+      "type": "array",
+      "description": "list: the matching folio-public-comment/v1 records."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-derive-at-publish/folio-assistant-core/schema/skills/public-comment/output.schema.json",
+  "staging": {
+    "branch": "claude/derive-at-publish",
+    "sha": "bddeb37be17c83b1d2ccbe7a85636a6e46de402e",
+    "pr": "2231/merge",
+    "run": "37361029086"
+  }
+}
