@@ -46,7 +46,7 @@ export {
 } from "./navbar.js";
 export type { NavGroup, NavItem, NavbarModel } from "./navbar.js";
 
-import { NAVBAR_CSS, documentIndexOf, injectNavbar, visualiserNavOf, type NavGroup, type NavItem, type NavbarModel } from "./navbar.js";
+import { NAVBAR_CSS, documentIndexOf, injectNavbar, navbarRegionsHtml, visualiserNavOf, type NavGroup, type NavItem, type NavbarModel } from "./navbar.js";
 
 /** What a mounted page needs in order to describe its own navbar. */
 export interface RailOptions {
@@ -80,6 +80,21 @@ export interface RailOptions {
    * narrow-viewport rules already are. Bean `lhvt`.
    */
   inlineRowAssets?: { js: string; css: string };
+  /**
+   * THE RAIL FROM SHARED DATA — owner, 2026-10-05: *"4. Option 3 everywhere"*
+   * (bean `lnoy`). Given this, the page carries only what is ITS OWN (where
+   * it is, its own section) and a placeholder `<nav>`; everything the rail
+   * shares with its siblings is written ONCE, through this callback, as
+   * `assets/navbar/rail-<hash>.js`, and `navbar.js` draws the rail from both.
+   * Absent, the rail is rendered into the page as before (no script needed).
+   */
+  emitRailData?: (file: string, body: string) => void;
+  /**
+   * The page's own published path (`/cat-harness/library/`) — its row in the
+   * rail is drawn as "you are here" rather than as a link to itself. Given
+   * with {@link emitRailData}; a caller rendering markup marks the row itself.
+   */
+  here?: string;
   /**
    * The open document's own index, for the fixed top.
    *
@@ -209,6 +224,10 @@ export function injectRail(html: string, o: RailOptions): string | undefined {
   const label = o.visualiserLabel ?? "Contents";
   const documentIndex = o.documentIndex ?? visualiserNavOf(html, label) ?? documentIndexOf(html, label);
   const root = o.assetRoot ?? o.toRoot;
+  if (o.emitRailData) {
+    const railed = withSharedRail(html, o, root, documentIndex);
+    return railed === undefined ? undefined : withNavbarRow(railed, o.navbarRow, { root });
+  }
   // A page that asked for LINKED assets gets them linked, whatever the caller
   // would otherwise inline: the page's declaration is the decision.
   const linked = wantsLinkedRail(html);
@@ -271,4 +290,163 @@ export function withNavbarRow(
   if (head) return out.slice(0, head.index) + tags + out.slice(head.index);
   const body = /<body\b[^>]*>/i.exec(out);
   return body ? out.slice(0, body.index + body[0].length) + tags + out.slice(body.index + body[0].length) : out;
+}
+
+/* ── THE RAIL FROM SHARED DATA — bean `lnoy` ───────────────────────────────
+ *
+ * Owner, 2026-10-05, choosing between a full rail in every page (+3.8 KB
+ * gzipped each) and one drawn from shared data (+0.1 KB): *"4. Option 3
+ * everywhere"*. Measured on a library entry: the rail's MARKUP was 20.8 KB of
+ * a 26 KB page — 25 links, each with its glyph, tone and description twice.
+ *
+ * Split by what varies. SHARED (one file per distinct content, named by its
+ * hash, so callers whose rails agree share it): the instance, its mark, root,
+ * graphs, harnesses and home label. THE PAGE'S OWN: its depth, its published
+ * path (for "you are here") and its own section. `navbar.js` — a bundle of
+ * THIS module and `navbar.ts`, so the browser runs the same drawing the build
+ * always ran — joins the two. One drawing, two places it runs.
+ */
+
+/** Stands for the site root inside shared data; each page puts back its own. */
+export const RAIL_ROOT = "@fa-rail-root@";
+/** Where shared rail data is published, relative to the site root. */
+export const RAIL_DATA_DIR = "assets/navbar";
+/** The bundle that draws a rail from shared data. */
+export const NAVBAR_JS = "assets/js/navbar.js";
+/** The page's own rail block. */
+export const RAIL_PAGE_ID = "fa-rail";
+
+/** What every page railed alike shares. Hrefs carry {@link RAIL_ROOT}. */
+export interface RailShared {
+  instance: string;
+  mark?: NavbarModel["mark"];
+  root?: NavItem;
+  links: readonly NavItem[];
+  harnesses?: readonly NavItem[];
+  homeLabel?: string;
+}
+
+/** What is the page's own, carried in its `#fa-rail` block. */
+export interface RailPage {
+  /** The shared data's name, `rail-<hash>`. */
+  data: string;
+  /** Back to the page's own site root — home is the page's site's. */
+  toRoot: string;
+  /** Back to the platform's site root, where the shared links point. */
+  root: string;
+  here?: string;
+  documentIndex?: NavGroup;
+}
+
+/** cyrb53 — a short, stable, dependency-free name for shared content. Not security. */
+function contentHash(s: string): string {
+  let h1 = 0xdeadbeef;
+  let h2 = 0x41c6ce57;
+  for (let i = 0; i < s.length; i++) {
+    const c = s.charCodeAt(i);
+    h1 = Math.imul(h1 ^ c, 2654435761);
+    h2 = Math.imul(h2 ^ c, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
+}
+
+/** The shared data as text, with the caller's root replaced by {@link RAIL_ROOT}. */
+export function railSharedJson(o: RailOptions, root: string): string {
+  const shared: RailShared = {
+    instance: o.instance,
+    ...(o.mark ? { mark: o.mark } : {}),
+    ...(o.root ? { root: o.root } : {}),
+    links: o.links,
+    ...(o.harnesses ? { harnesses: o.harnesses } : {}),
+    ...(o.homeLabel ? { homeLabel: o.homeLabel } : {}),
+  };
+  // Every root-relative value the caller composed starts `<root>/`; put the
+  // placeholder there so the SAME data serves a page at any depth.
+  return JSON.stringify(shared).split(`"${root}/`).join(`"${RAIL_ROOT}/`);
+}
+
+/** The shared data file's name and its script body. */
+export function railDataAsset(json: string): { name: string; file: string; body: string } {
+  const name = `rail-${contentHash(json)}`;
+  const body = `(self.FaRailData=self.FaRailData||{})[${JSON.stringify(name)}]=${JSON.stringify(json)};\n`;
+  return { name, file: `${RAIL_DATA_DIR}/${name}.js`, body };
+}
+
+/** The rail's regions for one page, from its shared data — what `navbar.js` runs. */
+export function renderRailRegions(sharedJson: string, page: RailPage): string {
+  const shared = JSON.parse(sharedJson.split(RAIL_ROOT).join(page.root)) as RailShared;
+  // "You are here": the page's own row loses its link (a link to here is a
+  // control that does nothing — `state-visualizer.test.ts`).
+  const links =
+    page.here === undefined
+      ? shared.links
+      : shared.links.map((item) => {
+          if (item.href !== `${page.root}${page.here}`) return item;
+          const { href: _here, ...rest } = item;
+          return { ...rest, current: true };
+        });
+  return navbarRegionsHtml(
+    railModel({
+      ...shared,
+      links,
+      toRoot: page.toRoot,
+      ...(page.documentIndex ? { documentIndex: page.documentIndex } : {}),
+    }),
+  );
+}
+
+const PENDING = 'data-fa-rail="pending"';
+
+/** Inject the page block, the placeholder `<nav>` and the three links; emit the shared data. */
+function withSharedRail(html: string, o: RailOptions, root: string, documentIndex: NavGroup | undefined): string | undefined {
+  if (html.includes('class="fa-nav"')) return undefined;
+  const body = /<body\b[^>]*>/i.exec(html);
+  if (!body) return undefined;
+  const asset = railDataAsset(railSharedJson(o, root));
+  o.emitRailData!(asset.file, asset.body);
+  const page = { data: asset.name, ...(o.here ? { here: o.here } : {}), ...(documentIndex ? { documentIndex } : {}) };
+  const esc = (v: string) => v.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+  const block =
+    `<script type="application/json" id="${RAIL_PAGE_ID}" data-fa-root="${esc(root)}" data-fa-to-root="${esc(o.toRoot)}">` +
+    JSON.stringify(page).replace(/</g, "\\u003c") +
+    `</script>`;
+  // Without script the reader still has a way home rather than a blank strip.
+  const nav =
+    `<nav class="fa-nav" aria-label="folio-assistant" ${PENDING}>` +
+    `<a href="${esc(o.toRoot)}/">${esc(o.homeLabel ?? "folio-assistant")}</a></nav>`;
+  const at = body.index + body[0].length;
+  let out = html.slice(0, at) + block + nav + html.slice(at);
+  const tags =
+    `<link rel="stylesheet" href="${root}/${NAVBAR_CSS}">` +
+    `<script src="${root}/${asset.file}" defer></script>` +
+    `<script src="${root}/${NAVBAR_JS}" defer></script>`;
+  const head = /<\/head\s*>/i.exec(out);
+  out = head ? out.slice(0, head.index) + tags + out.slice(head.index) : out.slice(0, at) + tags + out.slice(at);
+  return out;
+}
+
+/** Read a page's own rail block back, or `undefined` when it has none. */
+export function railPageOf(html: string): RailPage | undefined {
+  const m = new RegExp(`<script type="application/json" id="${RAIL_PAGE_ID}" data-fa-root="([^"]*)" data-fa-to-root="([^"]*)">([^<]*)</script>`).exec(html);
+  if (!m) return undefined;
+  const unesc = (v: string) => v.replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&amp;/g, "&");
+  return { ...(JSON.parse(m[3]!) as Omit<RailPage, "root" | "toRoot">), root: unesc(m[1]!), toRoot: unesc(m[2]!) };
+}
+
+/**
+ * The page as a browser shows it once `navbar.js` has run — for an AUDIT or a
+ * test that reads the rail's markup. `readData(name)` returns the shared JSON.
+ * A page with no pending rail is returned unchanged.
+ */
+export function expandRail(html: string, readData: (name: string) => string | undefined): string {
+  if (!html.includes(PENDING)) return html;
+  const page = railPageOf(html);
+  const json = page ? readData(page.data) : undefined;
+  if (!page || json === undefined) return html;
+  return html.replace(
+    new RegExp(`<nav class="fa-nav" aria-label="folio-assistant" ${PENDING}>[\\s\\S]*?</nav>`),
+    `<nav class="fa-nav" aria-label="folio-assistant">${renderRailRegions(json, page)}</nav>`,
+  );
 }
