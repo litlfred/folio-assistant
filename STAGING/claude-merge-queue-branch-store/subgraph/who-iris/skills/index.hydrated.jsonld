@@ -1,0 +1,87 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-skills",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill package: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assist-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool. Since 2026-10-01 it also holds the WHO STYLE GUIDE's three house voices under `voices/`, declared from within by `skills.json` (bean `cmsl`) -- they were the separate staged instance `who-style-guide` until the owner's 2026-09-30 ruling, 'who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.' (bean `qsx4`).",
+      "fileCount": 11,
+      "holdsGraph": [
+        "bootstrap:graphKind/skills"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-skills",
+      "name": "who-iris-skills",
+      "path": "skills/",
+      "readmePath": "skills/README.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#skill/iris-dspace",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path. What a later tool needs from a record, stated as requirements it can be checked against.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-skills",
+      "instructionLines": 257,
+      "instructionsPath": "skills/iris-dspace.md",
+      "name": "iris-dspace",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2e23cb5efc2593b79dc84e6c6401f329e5d178ba11d16a298eec62334c6a878e",
+        "bytes": 14781,
+        "sha256": "2e23cb5efc2593b79dc84e6c6401f329e5d178ba11d16a298eec62334c6a878e"
+      },
+      "title": "IRIS, DSpace and Dublin Core"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/voices/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/voices/who-editorial/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphKind/skills"
+          ],
+          "name": "skills/voices/who-editorial",
+          "path": "skills/voices/who-editorial/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/voices/who-guideline-development/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphKind/skills"
+          ],
+          "name": "skills/voices/who-guideline-development",
+          "path": "skills/voices/who-guideline-development/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/voices/who-publication-design/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphKind/skills"
+          ],
+          "name": "skills/voices/who-publication-design",
+          "path": "skills/voices/who-publication-design/"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphKind/skills"
+      ],
+      "name": "skills/voices",
+      "path": "skills/voices/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills",
+  "path": "skills/"
+}
