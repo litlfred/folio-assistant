@@ -175,18 +175,34 @@ export function katexMacros(paperMacros: Record<string, { tex: string }> | undef
 
 /** `\cite{a,b}` -> a muted `[a, b]`, outside fenced code. */
 export function citationsToHtml(markdown: string): string {
-  let fenced = false;
-  return markdown
-    .split("\n")
-    .map((line) => {
-      if (/^\s*(```|~~~)/.test(line)) fenced = !fenced;
-      if (fenced) return line;
-      return line.replace(/\\cite[pt]?\{([^}]+)\}/g, (_m, keys: string) => {
-        const list = keys.split(",").map((k) => k.trim()).filter(Boolean);
-        return `<span class="cite" data-keys="${esc(list.join(" "))}">[${esc(list.join(", "))}]</span>`;
-      });
-    })
+  // Per fenced/unfenced run rather than per line: a `\cite{a,\n b}` wrapped by
+  // the author's line breaks is one citation (qou notation-collisions, found
+  // by the rendered-content QA as visible raw TeX).
+  const runs: { lines: string[]; fenced: boolean }[] = [];
+  let run = { lines: [] as string[], fenced: false };
+  for (const line of markdown.split("\n")) {
+    const fence = /^\s*(```|~~~)/.test(line);
+    if (fence && !run.fenced) {
+      runs.push(run);
+      run = { lines: [line], fenced: true };
+    } else if (fence) {
+      run.lines.push(line);
+      runs.push(run);
+      run = { lines: [], fenced: false };
+    } else run.lines.push(line);
+  }
+  runs.push(run);
+  return runs
+    .filter((r) => r.lines.length > 0)
+    .map((r) => (r.fenced ? r.lines.join("\n") : cite(r.lines.join("\n"))))
     .join("\n");
+
+  function cite(text: string): string {
+    return text.replace(/\\cite[pt]?\{([^}]+)\}/g, (_m, keys: string) => {
+      const list = keys.split(",").map((k) => k.trim()).filter(Boolean);
+      return `<span class="cite" data-keys="${esc(list.join(" "))}">[${esc(list.join(", "))}]</span>`;
+    });
+  }
 }
 
 /** The slice of an mdast node this plugin reads; the directive fields come from `remark-directive`. */
@@ -251,6 +267,7 @@ export function displayMathLines(markdown: string): string {
  * - `$a$$b$` — two inline equations with nothing between them reads as `$$`.
  *   A space is put between them.
  * - `\ref{x}` / `\eqref{x}` in prose: a link to the label's anchor.
+ * - `psmallmatrix` (mathtools), which KaTeX lacks: `\left(` `smallmatrix` `\right)`.
  */
 export function texInMarkdown(markdown: string): string {
   let fenced = false;
@@ -266,6 +283,8 @@ export function texInMarkdown(markdown: string): string {
       });
       if (/^\s*\|/.test(out)) out = out.replace(/\$([^$\n]+)\$/g, (_m, tex: string) => `$${tex.replace(/(?<!\\)\|/g, "\\vert ")}$`);
       if (!/^\s*\$\$/.test(out)) out = out.replace(/([^$\s\\])\$\$([^$\s])/g, "$1$ $$$2");
+      // mathtools' `psmallmatrix` is not a KaTeX environment; `smallmatrix` in parentheses is the same matrix.
+      out = out.replace(/\\begin\{psmallmatrix\}/g, "\\left(\\begin{smallmatrix}").replace(/\\end\{psmallmatrix\}/g, "\\end{smallmatrix}\\right)");
       out = out.replace(/\\(?:eq)?ref\{([^}]+)\}/g, (_m, label: string) => `<a href="#${esc(label)}">${esc(label)}</a>`);
       return out;
     })

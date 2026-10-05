@@ -47,6 +47,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`library-viewer-scope.e2e.ts`](library-viewer-scope.e2e.ts) | a file |  |
 | [`library-withheld-viewer.e2e.ts`](library-withheld-viewer.e2e.ts) | a file |  |
 | [`linear-floor.e2e.ts`](linear-floor.e2e.ts) | a file |  |
+| [`mounted-locale.e2e.ts`](mounted-locale.e2e.ts) | a file |  |
 | [`nav-locale.e2e.ts`](nav-locale.e2e.ts) | a file |  |
 | [`navbar-row.e2e.ts`](navbar-row.e2e.ts) | a file |  |
 | [`note-badge.e2e.ts`](note-badge.e2e.ts) | a file |  |

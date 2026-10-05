@@ -936,6 +936,19 @@ export function subSections(n: number): string {
 /** The marker a visualiser puts its own navigation under. */
 export const VISUALISER_NAV_ATTR = "data-fa-visualiser-nav";
 
+/**
+ * What a page calls its own section, declared beside its section:
+ * `<meta name="fa-visualiser-label" content="…">`. A railed page's section is
+ * "Contents" unless it says otherwise; an IG site names it after the IG
+ * (owner, 2026-10-05, bean `mftp`: *"WHO SMART Trust"*). Undefined when the
+ * page declares none.
+ */
+export function visualiserLabelOf(html: string): string | undefined {
+  const m = /<meta\s+name="fa-visualiser-label"\s+content="([^"]*)"\s*\/?>/i.exec(html);
+  const v = m?.[1]?.replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").trim();
+  return v ? v : undefined;
+}
+
 /** One row of a declared visualiser section; `items` are its children. */
 export interface VisualiserNavEntry {
   label: string;

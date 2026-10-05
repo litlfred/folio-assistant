@@ -11,5 +11,6 @@ Part of [smart-immunizations](../README.md) 0.1.0, declared as `smart-immunizati
 | file | what it is | used by |
 |---|---|---|
 | [`index.json`](index.json) | smart.who.int.immunizations — artefact index |  |
+| [`menu.json`](menu.json) | data |  |
 | [`dak/`](dak/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

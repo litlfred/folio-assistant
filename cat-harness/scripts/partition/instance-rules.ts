@@ -281,6 +281,12 @@ export const RULES: Rule[] = [
       // HARNESS beside `navbar.ts` -- the switch is the platform's, and every
       // page carrying it, a folio's included, has to agree on what it means.
       "scripts/lib/scheme-css.ts",
+      // The locale half of that chrome (issue #2219): the docs pages'
+      // `fa-translation-meta` block, written onto a MOUNTED page so it draws
+      // the same band globe. HARNESS beside `scheme-css.ts` -- it is
+      // `head_custom.html`'s block, and a folio owning it would let one
+      // instance decide what every other mounted page declares.
+      "scripts/lib/translation-meta.ts",
       // The migration a renamed or major-bumped NODE KIND ships with (issue
       // #2195): rewrites `$schema` values only. HARNESS, beside the node-kind
       // machinery in `schemas/node-kind.ts` it serves.
@@ -371,6 +377,7 @@ export const RULES: Rule[] = [
       "scripts/qa-store.ts",                 // the qa-reports branch: readQa / publishQa / pruneQa
       "scripts/qa-verify-moved.ts",          // bean 5hox: hash-verify the moved QA files against a qa-reports entry
       "scripts/qa-site-assets.ts",           // a site build's QA evidence: fetch from qa-reports, verify the copy (tfqf)
+      "scripts/qa-result-link.ts",           // the ONE address of a QA result file: main or qa-reports entry, by declaration (bejf)
       // Its generalisation (bean `2h76`): the same branch-kept store for ANY
       // directory declaring `storage.keyedBy: "tip"`. Harness-level for the
       // same reason as `qa-store` — it reads the declaration and git, and no

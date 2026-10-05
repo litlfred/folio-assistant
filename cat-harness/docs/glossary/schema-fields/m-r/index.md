@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/m-r/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1851 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1842 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 164 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 533 terms and is 300 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 523 terms and is 295 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2135</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2135</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2134</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2134</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">533</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">523</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a></nav>
 
@@ -707,13 +707,6 @@ NodeDependency.version <span class="fa-gloss-status">candidate, extracted</span>
 <p>semver range (e.g., &quot;^1.0.0&quot;, &quot;&gt;=2.0.0&quot;).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/assistant-package.ts"><code>cat-harness/schemas/assistant-package.ts#NodeDependency.version</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--node-kind.nodekind.id" data-fa-state="extracted" data-fa-gloss="">
-NodeKind.id <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The kind's NAME — its identity and its URL segment (<code>changeset</code>). Never versioned.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind.ts"><code>cat-harness/schemas/node-kind.ts#NodeKind.id</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--node-kind.nodekind.order" data-fa-state="extracted" data-fa-gloss="">
 NodeKind.order <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -741,69 +734,6 @@ NodeKind.schema <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Every field, composed in &#123;@link order}.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind.ts"><code>cat-harness/schemas/node-kind.ts#NodeKind.schema</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--node-kind.nodekind.tag" data-fa-state="extracted" data-fa-gloss="">
-NodeKind.tag <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p><code>&lt;id&gt;/&lt;version&gt;</code>: what a writer stamps in <code>$schema</code>. Absent when unversioned.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind.ts"><code>cat-harness/schemas/node-kind.ts#NodeKind.tag</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--node-kind.nodekind.version" data-fa-state="extracted" data-fa-gloss="">
-NodeKind.version <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>SemVer, for a kind whose nodes are files (issue #2195). Absent for a mixin (<code>themed</code>), which has no <code>$schema</code> of its own.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind.ts"><code>cat-harness/schemas/node-kind.ts#NodeKind.version</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--node-kind-index.nodekindentry.declaredby" data-fa-state="extracted" data-fa-gloss="">
-NodeKindEntry.declaredBy <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The instance that declares it: the one whose code holds the <code>nodeKind()</code>. Absent for a kind reached only as an ANCESTOR (a mixin such as <code>themed</code>): no typology names it, so nothing here says where it lives, and guessing from a child would file it under whichever child was read first.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind-index.ts"><code>cat-harness/schemas/node-kind-index.ts#NodeKindEntry.declaredBy</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--node-kind-index.nodekindentry.holdings" data-fa-state="extracted" data-fa-gloss="">
-NodeKindEntry.holdings <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The graph typologies that hold nodes of this kind, and the families they file it under.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind-index.ts"><code>cat-harness/schemas/node-kind-index.ts#NodeKindEntry.holdings</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--node-kind-index.nodekindentry.id" data-fa-state="extracted" data-fa-gloss="">
-NodeKindEntry.id <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p><code>nodeKind()</code>'s id — a <code>$schema</code> tag for a tagged kind, a name for a mixin.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind-index.ts"><code>cat-harness/schemas/node-kind-index.ts#NodeKindEntry.id</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--node-kind-index.nodekindentry.module" data-fa-state="extracted" data-fa-gloss="">
-NodeKindEntry.module <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Where, repo-relative, and under which export. Absent for an ancestor reached only as a parent.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind-index.ts"><code>cat-harness/schemas/node-kind-index.ts#NodeKindEntry.module</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--node-kind-index.nodekindentry.parents" data-fa-state="extracted" data-fa-gloss="">
-NodeKindEntry.parents <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Direct parents, by id, in declared order.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind-index.ts"><code>cat-harness/schemas/node-kind-index.ts#NodeKindEntry.parents</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--node-kind-index.nodekindentry.subclasses" data-fa-state="extracted" data-fa-gloss="">
-NodeKindEntry.subclasses <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Direct subclasses, by id, sorted: the kinds that name this one as a parent.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind-index.ts"><code>cat-harness/schemas/node-kind-index.ts#NodeKindEntry.subclasses</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--node-kind-index.nodekindindex.collisions" data-fa-state="extracted" data-fa-gloss="">
-NodeKindIndex.collisions <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Two different kinds sharing one id — always a finding.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind-index.ts"><code>cat-harness/schemas/node-kind-index.ts#NodeKindIndex.collisions</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--document-structure.notebooksectionschema.cell_end" data-fa-state="extracted" data-fa-gloss="">
 NotebookSectionSchema.cell_end <span class="fa-gloss-status">candidate, extracted</span>

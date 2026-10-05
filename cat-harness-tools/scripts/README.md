@@ -81,6 +81,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`check-published-refs.ts`](check-published-refs.ts) | a file |  |
 | [`check-python-deps.ts`](check-python-deps.ts) | a file |  |
 | [`check-qa-corpus.ts`](check-qa-corpus.ts) | a file |  |
+| [`check-qa-result-links.ts`](check-qa-result-links.ts) | a file |  |
 | [`check-qa-reviewer-permission.ts`](check-qa-reviewer-permission.ts) | a file |  |
 | [`check-quiet-claim-liveness.ts`](check-quiet-claim-liveness.ts) | a file |  |
 | [`check-read-only-graphs.ts`](check-read-only-graphs.ts) | a file |  |
