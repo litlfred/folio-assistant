@@ -37,10 +37,10 @@ import {
   unknownFlags,
   type Judgement,
 } from "../../../cat-harness/scripts/qa-results.ts";
-import { checkWireframes, judgeWireframes, type WireframeReport } from "../../../cat-harness/scripts/check-wireframes.ts";
+import { checkWireframes, judgeWireframes, type WireframeReport } from "../check-wireframes.ts";
 import { checkLayoutNorms, judgeLayoutNorms } from "../check-layout-norms.ts";
-import { checkRenderedLabels, judgeRenderedLabels } from "../../../cat-harness/scripts/check-rendered-labels.ts";
-import { checkSourceLicence, judgeSourceLicence } from "../../../cat-harness/scripts/check-source-licence.ts";
+import { checkRenderedLabels, judgeRenderedLabels } from "../check-rendered-labels.ts";
+import { checkSourceLicence, judgeSourceLicence } from "../check-source-licence.ts";
 import { checkMethodologyEvidence, judgeMethodologyEvidence } from "../../../cat-harness/scripts/check-methodology-evidence.ts";
 import { checkLanes, judgeLaneDocumentation } from "../check-lane-documentation.ts";
 import { judgeKgExport } from "../../../cat-harness/scripts/kg-export.ts";

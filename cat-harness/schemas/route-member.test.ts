@@ -138,13 +138,25 @@ describe("the keying enum carries exactly four values", () => {
  */
 describe("the keying enum has exactly one definition", () => {
   const VALUES = ["commit", "tip", "route", "route-family"] as const;
-  const JUNK = ["", "routes", "family", "route_family", "dynamic", "ROUTE", "tip "] as const;
+  // `family` WAS junk here (a near-miss for `route-family`) until it became a
+  // keying of its own — bean `lehh`, folded into this one enum when the two
+  // branches met. `famly` keeps the near-miss guarded.
+  const JUNK = ["", "routes", "famly", "route_family", "dynamic", "ROUTE", "tip "] as const;
 
   test("every accepted value is accepted by BOTH", () => {
     for (const v of VALUES) {
       expect(KeyedBySchema.safeParse(v).success).toBe(true);
       expect(DirectoryStorageSchema.safeParse({ branch: "gh-pages", keyedBy: v }).success).toBe(true);
     }
+  });
+
+  test("`family` is in the one enum, and the declaration takes it in its OWN shape", () => {
+    expect(KeyedBySchema.safeParse("family").success).toBe(true);
+    expect(
+      DirectoryStorageSchema.safeParse({ branchPrefix: "cat/x/y/", keyedBy: "family", keyFrom: "the package id" }).success,
+    ).toBe(true);
+    // A family is not a single branch: one with `branch` and no prefix is refused.
+    expect(DirectoryStorageSchema.safeParse({ branch: "gh-pages", keyedBy: "family" }).success).toBe(false);
   });
 
   test("every rejected value is rejected by BOTH — the direction `1j3q` missed", () => {

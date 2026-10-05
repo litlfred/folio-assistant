@@ -2296,6 +2296,10 @@ jobs:
           # inherits (bean qvxh): "computable from these assets" is a claim,
           # and a claim nothing checks is prose.
           bun run check:document-kind-sources
+          # A derived directory's derivedFrom resolves across needs, forms no
+          # cycle, and names no source declared after it (bean nama); a
+          # layering gap is a ratchet with a reason, per the owner's ruling.
+          bun run check:derived-from
           # smart-kg L1 documents kept beside library entries (bean 8pzh):
           # stale the moment a section text or structure.json they read changes.
           bun run smart-base:smart-kg-l1:check

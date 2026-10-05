@@ -40,11 +40,21 @@
  *
  *     The rationale, in as many lines as needed.
  *
- * `decide:` instead of `recommend:` records the editor's decision, and is
- * honoured only from a login listed in `config.json` `editors`; a
- * `recommend:` only from `committee` or `editors`. Anyone else's tag is
- * reported and left alone: a public comment thread is open to everyone, and
- * the record is not.
+ * `decide:` instead of `recommend:` records the editor's decision; a
+ * `recommend:` is honoured from an editor or a committee member. Both roles
+ * are DYNAMIC by default, read from the repository itself (owner, 2026-10-05:
+ * *"committee list = dynamic list of collaborators in github repo. editor =
+ * owner"*). GitHub stamps every comment event with the commenter's
+ * `author_association`, so this needs no API call and no token:
+ *
+ * - **editor** = the repository's OWNER;
+ * - **committee** = its collaborators: OWNER, MEMBER or COLLABORATOR.
+ *
+ * Adding someone as a collaborator on GitHub is the whole committee
+ * on-boarding. An `editors` or `committee` list in `config.json` replaces that
+ * role's default with exactly those logins. Anyone else's tag is reported and
+ * left alone: a public comment thread is open to everyone, and the record is
+ * not.
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -80,10 +90,18 @@ type Cell = string | number | boolean | null;
 export interface StoreConfig {
   /** Document slug under folio/. */
   document: string;
-  /** GitHub logins whose `decide:` tags are honoured. */
-  editors: string[];
-  /** GitHub logins whose `recommend:` tags are honoured. */
-  committee: string[];
+  /**
+   * GitHub logins whose `decide:` tags are honoured. Absent (the default): the
+   * repository's owner, read from the comment event's `author_association`.
+   * Present: exactly these logins.
+   */
+  editors?: string[];
+  /**
+   * GitHub logins whose `recommend:` tags are honoured. Absent (the default):
+   * the repository's collaborators, read from the comment event's
+   * `author_association`. Present: exactly these logins.
+   */
+  committee?: string[];
   /** Base URL of the published site, for deep links (main and STAGING/<slug>/). */
   site?: string;
 }
@@ -98,7 +116,7 @@ export class Store {
   }
   config(): StoreConfig {
     const p = join(this.dir, "config.json");
-    if (!existsSync(p)) throw new Error(`no ${p}: create it with {"document", "editors", "committee"}`);
+    if (!existsSync(p)) throw new Error(`no ${p}: create it with {"document"}; "editors" and "committee" only to override the owner and collaborators defaults`);
     return JSON.parse(readFileSync(p, "utf-8"));
   }
   anchors(): ReviewAnchors {
@@ -489,17 +507,47 @@ export function parseGithubTag(body: string): GithubTag | { error: string } | nu
   return { refs, verb, code, text: lines.slice(i).join("\n").trim() };
 }
 
+/** The `author_association` values that make a commenter a collaborator on the repository. */
+export const COLLABORATOR_ASSOCIATIONS = ["OWNER", "MEMBER", "COLLABORATOR"] as const;
+
+/** The `author_association` value that makes a commenter the repository's owner. */
+export const OWNER_ASSOCIATIONS = ["OWNER"] as const;
+
+const hasAssociation = (set: readonly string[], association?: string) => set.includes((association ?? "").toUpperCase());
+
+/** Is this commenter an editor? See the module docblock. */
+export function isEditor(cfg: Pick<StoreConfig, "editors">, login: string, association?: string): boolean {
+  if (cfg.editors) return cfg.editors.includes(login);
+  return hasAssociation(OWNER_ASSOCIATIONS, association);
+}
+
+/** Is this commenter on the review committee? See the module docblock. */
+export function isCommittee(cfg: Pick<StoreConfig, "committee">, login: string, association?: string): boolean {
+  if (cfg.committee) return cfg.committee.includes(login);
+  return hasAssociation(COLLABORATOR_ASSOCIATIONS, association);
+}
+
 export function applyGithubComment(
   store: Store,
-  ev: { login: string; body: string; url: string; at: string },
+  ev: { login: string; body: string; url: string; at: string; association?: string },
 ): { applied: string[]; refused: string[] } {
   const tag = parseGithubTag(ev.body);
   if (tag === null) return { applied: [], refused: [] };
   if ("error" in tag) return { applied: [], refused: [tag.error] };
   const cfg = store.config();
-  const isEditor = cfg.editors.includes(ev.login);
-  const allowed = tag.verb === "decide" ? isEditor : isEditor || cfg.committee.includes(ev.login);
-  if (!allowed) return { applied: [], refused: [`${ev.login} is not listed as ${tag.verb === "decide" ? "an editor" : "committee or editor"} in config.json`] };
+  const editor = isEditor(cfg, ev.login, ev.association);
+  const allowed = tag.verb === "decide" ? editor : editor || isCommittee(cfg, ev.login, ev.association);
+  if (!allowed) {
+    const who =
+      tag.verb === "decide"
+        ? cfg.editors
+          ? "an editor in config.json"
+          : "the owner of this repository (the default editor)"
+        : cfg.committee
+          ? "on the committee list in config.json, or an editor"
+          : "a collaborator on this repository, or an editor";
+    return { applied: [], refused: [`${ev.login} is not ${who}`] };
+  }
   const applied: string[] = [];
   const refused: string[] = [];
   for (const ref of tag.refs) {
@@ -653,7 +701,13 @@ if (import.meta.main) {
           console.error("no comment body in the event; nothing to do");
           break;
         }
-        const r = applyGithubComment(store, { login: c.user.login, body: c.body, url: c.html_url, at: c.updated_at ?? c.created_at ?? now });
+        const r = applyGithubComment(store, {
+          login: c.user.login,
+          body: c.body,
+          url: c.html_url,
+          at: c.updated_at ?? c.created_at ?? now,
+          association: c.author_association,
+        });
         for (const x of r.applied) console.error(`✓ ${x}`);
         for (const x of r.refused) console.error(`✗ ${x}`);
         break;

@@ -78,3 +78,18 @@ for (const job of ["stage", "publish-main"]) {
     });
   });
 }
+
+describe("folio-staging passes render-log only paths it accepts", () => {
+  // publish-main passed `--path "."`, which render-log refuses (the root is
+  // `/`), so every folio's first publish of main built its site, wrote it, and
+  // then failed before committing it: litlfred/smart-ra, 2026-10-05. A literal
+  // path in the workflow is checked here by render-log's own rule; a `$VAR`
+  // path is checked at run time by the same function.
+  test("every literal --path is safe", async () => {
+    const { isSafeRenderPath } = await import("../../schemas/render-log.js");
+    const yml = readFileSync(resolve(import.meta.dir, "../../../.github/workflows/folio-staging.yml"), "utf-8");
+    const literals = [...yml.matchAll(/render-log\.ts"[^\n]*(?:\n[^\n]*?){0,3}--path "([^"$]*)"/g)].map((m) => m[1]);
+    expect(literals.length).toBeGreaterThan(0);
+    for (const p of literals) expect({ path: p, safe: isSafeRenderPath(p) }).toEqual({ path: p, safe: true });
+  });
+});

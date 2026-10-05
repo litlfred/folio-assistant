@@ -425,7 +425,7 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     // when the WHO style guide was folded into who-iris as a subgraph (bean
     // `qsx4`) — the voices declared from within `skills/skills.json`, the
     // glossary in who-iris.json. Same reason as both above.
-    expect(kinds()).toEqual(["catalogue", "code", "docs", "glossary", "library", "qa", "schemas", "skills", "themes", "uploads", "voices"].map(K));
+    expect(kinds()).toEqual(["catalogue", "code", "docs", "glossary", "library", "qa", "schemas", "skills", "themes", "translation-sources", "uploads", "voices"].map(K));
   });
 
   it("links exactly the kinds it was told are published", () => {
@@ -451,6 +451,9 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       "schemas",
       "skills",
       "themes",
+      // `translation-sources`: who-iris carries its own glossary catalogues
+      // since bean riit ("move things to semantically appropriate place").
+      "translation-sources",
       "uploads",
       "voices",
     ].map(K));

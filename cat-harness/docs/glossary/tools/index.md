@@ -12,14 +12,14 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 124 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 23 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 2 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 125 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 23 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 3 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 160 terms and is 112 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 162 terms and is 114 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>160</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>160</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>162</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>162</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">160</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">162</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -313,6 +313,13 @@ Folio viewer <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Render each declared folio directory as a browsable page over its published index.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#folio-viewer</code></a></p>
+</dd>
+<dt id="folio-assistant-sci--kg-tools--lean-formal-edges" data-fa-state="extracted" data-fa-gloss="">
+Formal edges from the Lean build <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Extract ELABORATED formal dependencies between a folio's lean.ref declarations (LeanArchitect's rule over the folio's own lean.ref set). Needs a Lean toolchain and a built Lake project. Tagged declarations missing from the build are reported, never recorded as dependency-free; with ingest the result is recorded in the formal cache as source &quot;elaborated&quot;.</p>
+<p class="fa-gloss-meta">Tools of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/tools/index.ts"><code>folio-assistant-sci/tools/index.ts#lean-formal-edges</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--fsh-cone" data-fa-state="extracted" data-fa-gloss="">
 FSH dependency cone <span class="fa-gloss-status">candidate, extracted</span>
@@ -870,7 +877,7 @@ Replace inline Library content with URL references <span class="fa-gloss-status"
 Resolve a declared subgraph's content source <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Say where a declared subgraph gets its content — the checkout's own directory, or a declared repository branch (with its keying and its <code>special-branches.json</code> row) — after the instance config's <code>subgraphSources</code> override by id, and which layer answered. The same <code>declaredSubgraph</code> resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.</p>
+<p>Say where a declared subgraph gets its content — the checkout's own directory, a declared repository branch (with its keying), or a branch family (with its prefix, key and repository) — after the instance config's <code>subgraphSources</code> override by id, and which layer answered. The same <code>declaredSubgraph</code> resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#subgraph-resolve</code></a></p>
 </dd>
 </dl>
@@ -1242,6 +1249,13 @@ Witness conformance report <span class="fa-gloss-status">candidate, extracted</s
 <dd>
 <p>Check every <code>*.witness.json</code> in the folio's declared <code>computation-witness</code> directories against the two schemas in <code>schemas/computation-witness.ts</code>: the envelope every witness should meet (a failure is a malformed file) and the producer contract (a failure is a finding against the producer, grouped by the fields at fault). Also lists files that are not strict JSON, which Python's reader accepts and every other consumer rejects. Report-only: it never edits a witness, which is generator output.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#witness-conformance</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--witness-parity" data-fa-state="extracted" data-fa-gloss="">
+Witness reproduction check <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Re-run a computation witness's producer and say whether it reproduces the committed witness. Reads the command from <code>invocation.reproduce</code> (else <code>python3 &lt;scriptFile&gt;</code>) and the recorded package versions from <code>environment</code>; on a version mismatch it stops at <code>unknown</code>, since a different environment is not a reproduction test. Otherwise it runs the COMMITTED producer in a scratch git worktree, so the folio's own checkout is never written, and compares the result with the committed witness with run-specific fields (commit, timing, environment) masked at every depth. <code>pass</code>, <code>fail</code> (with the differing JSON paths), or <code>unknown</code> (mismatch, non-zero exit, timeout, no witness written).</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#witness-parity</code></a></p>
 </dd>
 </dl>
 

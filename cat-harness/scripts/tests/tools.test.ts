@@ -305,7 +305,7 @@ describe("substitutable Tools are DERIVED, and say how to choose (#1168, B9a)", 
   test("check-tools reports a Tool with an alternative and no selection", () => {
     // The falsifier: the real set is clean, so the check is proved on it by
     // counting zero, and on a broken copy by counting one.
-    expect(checkTools().unselectableAlternatives).toEqual([]);
+    expect(CHECKED.unselectableAlternatives).toEqual([]);
     const base = byId.get("ingest-stdlib")!;
     const { selection: _drop, ...without } = base;
     const broken = [...all.filter((t) => t.id !== base.id), without as typeof base];

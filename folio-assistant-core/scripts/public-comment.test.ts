@@ -16,6 +16,8 @@ import {
   applyGithubComment,
   filterComments,
   importRows,
+  isCommittee,
+  isEditor,
   narrativeRows,
   parseGithubTag,
   resolveAnchor,
@@ -236,14 +238,38 @@ describe("GitHub tags", () => {
     expect(parseGithubTag("pc: PC-1\nrecommend: maybe")).toMatchObject({ error: expect.stringContaining("is not one of") });
   });
 
+  test("by default the editor is the repository's owner, and only the owner decides", () => {
+    const s = tempStore();
+    writeFileSync(join(s.dir, "config.json"), JSON.stringify({ document: "doc" }));
+    importRows(s, [{ row: 1, reviewer: {}, citation: { section: "3.4" }, text: "One." }], { channel: "comment-matrix", batch: "m", sha256: "e" }, "t0");
+    const ev = (login: string, association: string, body: string) => ({ login, association, body, url: "https://github.com/o/r/pull/1#issuecomment-1", at: "t1" });
+    expect(applyGithubComment(s, ev("member", "COLLABORATOR", "pc: PC-0001\ndecide: noted\n\nx")).refused[0]).toContain("the owner of this repository");
+    expect(applyGithubComment(s, ev("me", "OWNER", "pc: PC-0001\ndecide: noted\n\nAlready in 2.1.")).applied).toEqual(["PC-0001"]);
+    expect(isEditor({}, "x", "owner")).toBe(true);
+    expect(isEditor({ editors: ["ed"] }, "x", "OWNER")).toBe(false);
+  });
+
+  test("by default the committee is the repository's collaborators", () => {
+    const s = tempStore();
+    writeFileSync(join(s.dir, "config.json"), JSON.stringify({ document: "doc", editors: ["ed"] }));
+    importRows(s, [{ row: 1, reviewer: {}, citation: { section: "3.4" }, text: "One." }], { channel: "comment-matrix", batch: "m", sha256: "c" }, "t0");
+    const ev = (login: string, association: string) => ({ login, association, body: "pc: PC-0001\nrecommend: noted\n\nCovered.", url: "https://github.com/o/r/pull/1#issuecomment-1", at: "t1" });
+    expect(applyGithubComment(s, ev("outsider", "CONTRIBUTOR")).refused[0]).toContain("not a collaborator on this repository");
+    expect(applyGithubComment(s, ev("member", "COLLABORATOR")).applied).toEqual(["PC-0001"]);
+    // A collaborator still cannot decide: deciding is the editors' alone.
+    expect(applyGithubComment(s, { ...ev("member", "OWNER"), body: "pc: PC-0001\ndecide: noted\n\nx" }).refused[0]).toContain("an editor");
+    expect(isCommittee({}, "x", "member")).toBe(true);
+    expect(isCommittee({ committee: ["cm"] }, "x", "OWNER")).toBe(false);
+  });
+
   test("a committee member recommends; only an editor decides; strangers are refused", () => {
     const s = tempStore();
     importRows(s, [{ row: 1, reviewer: {}, citation: { section: "3.4" }, text: "One." }], { channel: "comment-matrix", batch: "m", sha256: "q" }, "t0");
     const ev = (login: string, body: string) => ({ login, body, url: "https://github.com/o/r/issues/1#issuecomment-1", at: "t1" });
     expect(applyGithubComment(s, ev("cm", "pc: PC-0001\nrecommend: noted\n\nCovered.")).applied).toEqual(["PC-0001"]);
     expect(s.get("PC-0001").status).toBe("recommended");
-    expect(applyGithubComment(s, ev("cm", "pc: PC-0001\ndecide: noted\n\nCovered.")).refused[0]).toContain("not listed as an editor");
-    expect(applyGithubComment(s, ev("someone", "pc: PC-0001\nrecommend: accepted")).refused[0]).toContain("not listed");
+    expect(applyGithubComment(s, ev("cm", "pc: PC-0001\ndecide: noted\n\nCovered.")).refused[0]).toContain("is not an editor in config.json");
+    expect(applyGithubComment(s, ev("someone", "pc: PC-0001\nrecommend: accepted")).refused[0]).toContain("not on the committee list");
     expect(applyGithubComment(s, ev("ed", "pc: PC-0001\ndecide: noted\n\nAlready in 2.1.")).applied).toEqual(["PC-0001"]);
     expect(s.get("PC-0001").public.decision).toMatchObject({ code: "noted", by: "ed", reason: "Already in 2.1." });
   });
