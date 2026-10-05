@@ -610,12 +610,12 @@ test.describe("the unverified-translation notice", () => {
     const h = (await page.locator(".fa-glass-handle").boundingBox())!;
     const overlapX = Math.max(0, Math.min(s.x + s.width, h.x + h.width) - Math.max(s.x, h.x));
     const overlapY = Math.max(0, Math.min(s.y + s.height, h.y + h.height) - Math.max(s.y, h.y));
-    // Vertically they DO overlap — that is the fact this test records rather
-    // than wishes away. Asserting they do not would make the test fail the
-    // day somebody fixed the layout, which is backwards.
-    expect(overlapY).toBeGreaterThan(0);
-    // A tenth of the line at most. The measured figure is 71 of 1238, or 5.7%.
-    expect(overlapX / s.width).toBeLessThan(0.1);
+    // They USED to overlap vertically: the notice was the panel's first
+    // line, level with the handle. Since #2201 the band's row (the locale
+    // selector and search) comes first, so the notice starts below the
+    // handle and there may be no overlap at all. The guard is unchanged: IF
+    // they meet, a tenth of the line at most (it was 71 of 1238, or 5.7%).
+    if (overlapY > 0) expect(overlapX / s.width).toBeLessThan(0.1);
   });
 
   test("opens from the keyboard, and closing is reachable — `l4zi`", async ({ page }) => {
