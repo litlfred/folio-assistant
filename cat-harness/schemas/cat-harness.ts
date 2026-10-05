@@ -1168,6 +1168,25 @@ export function visualisationsOf(
   return list.map((entry) => ({ ...entry, title: entry.title ?? directoryId }));
 }
 
+/**
+ * Does this visualisation RESOLVE — is there, or will there be, a page?
+ *
+ * Its page on disk, or — for a page BUILT AT PUBLISH (bean `0b8c`, #2230) —
+ * a declared `writer` whose every script exists. Such a page is derived from
+ * a graph kept on a branch, so it is never committed, and whether a checkout
+ * happens to hold a locally built copy must not change any answer: a reader
+ * that asked the disk alone would emit one `harness.json` locally and another
+ * in CI. `check:derived-from` is what holds the other half: that a page with
+ * a writer and no committed copy really is built at publish.
+ *
+ * The one place this rule lives, so the readers (subgraph coverage, harness
+ * tiles, viewer declarations) cannot disagree about it.
+ */
+export function visualisationResolves(v: Visualisation, exists: (repoRelative: string) => boolean): boolean {
+  if (exists(v.ref)) return true;
+  return v.writer !== undefined && v.writer.every((w) => exists(w));
+}
+
 /** Does this visualisation's tile appear on this surface? Absent means every surface. */
 export function showsOn(v: Visualisation, surface: TileSurface): boolean {
   return v.surfaces === undefined || v.surfaces.includes(surface);

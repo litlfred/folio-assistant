@@ -151,3 +151,57 @@ describe("writer", () => {
     for (const w of pages) expect(w).toContain("fhir-harness/scripts/gen-ig-pages.ts");
   });
 });
+
+// Bean 0b8c (#2230): a derived artefact cannot be current in a commit when an
+// input upstream of it is kept on a branch, because that input moves without one.
+describe("the storage clock", () => {
+  // `guts` is kept on a branch; `report` is a checkout directory derived from it.
+  const clock = (extra: Partial<Inst["dirs"][number]> = {}, reportExtra: Partial<Inst["dirs"][number]> = {}): Inst[] =>
+    world([
+      { ...dir("guts", 0, undefined, false), path: "guts/", onBranch: true, ...extra },
+      { ...dir("report", 1, ["guts"]), path: "report/", ...reportExtra },
+    ]);
+  const viewer = (writer?: string[]) => ({ visualisers: [{ ref: "docs/guts/index.md", ...(writer ? { writer } : {}) }] });
+
+  it("a COMMITTED viewer of a branch-kept graph is refused, naming the chain", () => {
+    const j = judge(clock(viewer(["gen/guts.ts"])), () => true, (p) => p === "docs/guts/index.md");
+    expect(j.findings).toEqual([
+      { kind: "committed-from-branch", instance: "top", directory: "guts", artefact: "docs/guts/index.md", via: ["top/guts"] },
+    ]);
+  });
+
+  it("an untracked viewer with a writer is built at publish, and is not a finding", () => {
+    const j = judge(clock(viewer(["gen/guts.ts"])), () => true, () => false);
+    expect(j.findings).toEqual([]);
+    expect(j.publish).toEqual([{ node: "top/guts", artefact: "docs/guts/index.md", writer: ["gen/guts.ts"], via: ["top/guts"] }]);
+  });
+
+  it("an untracked viewer with NO writer is refused: nothing would build it", () => {
+    const j = judge(clock(viewer()), () => true, () => false);
+    expect(j.findings.map((f) => f.kind)).toEqual(["publish-without-writer"]);
+  });
+
+  it("the clock is TRANSITIVE: a committed directory derived from a branch-kept one is refused", () => {
+    const j = judge(clock({}, { writer: ["gen/report.ts"] }), () => true, (p) => p === "report/");
+    expect(j.findings).toEqual([
+      { kind: "committed-from-branch", instance: "top", directory: "report", artefact: "report/", via: ["top/report", "top/guts"] },
+    ]);
+  });
+
+  it("and a viewer of THAT directory is publish-time too, through the edge", () => {
+    const j = judge(clock({}, { ...viewer(["gen/r.ts"]) }), () => true, () => false);
+    expect(j.publish.map((a) => [a.artefact, a.via])).toContainEqual(["docs/guts/index.md", ["top/report", "top/guts"]]);
+  });
+
+  it("nothing kept on a branch means nothing is publish-time, and a committed viewer is fine", () => {
+    const j = judge(clock({ onBranch: false, ...viewer(["gen/guts.ts"]) }), () => true, () => true);
+    expect(j.findings).toEqual([]);
+    expect(j.publish).toEqual([]);
+  });
+
+  it("this checkout: the fsh-guts viewer is built at publish and nothing committed derives from a branch", () => {
+    const j = analyse();
+    expect(j.findings.filter((f) => f.kind === "committed-from-branch" || f.kind === "publish-without-writer")).toEqual([]);
+    expect(j.publish.map((a) => a.artefact)).toContain("cat-harness/docs/fsh-guts/index.md");
+  });
+});

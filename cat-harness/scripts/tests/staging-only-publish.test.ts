@@ -29,7 +29,8 @@
  *
  * @module cat-harness/scripts/tests/staging-only-publish.test
  */
-import { describe, expect, it } from "bun:test";
+import { beforeAll, describe, expect, it } from "bun:test";
+import { spawnSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -38,6 +39,15 @@ import { compose, isWithheld, withheldFromCanonical, withheldPathFor } from "../
 import { gutsDir, gutsFiles, page, pageRelPath } from "../gen-fsh-guts-viz.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
+
+// The page is BUILT AT PUBLISH (bean 0b8c, #2230): derived from a graph kept on
+// a branch, so it is never committed. Build it the way the site build does —
+// `state:mount`, then `derive:publish`, then compose — so the compose below
+// sees what a real build sees. Fails loudly, like the build, when unmounted.
+beforeAll(() => {
+  const r = spawnSync("bun", ["run", "derive:publish"], { cwd: REPO, encoding: "utf8" });
+  if (r.status !== 0) throw new Error(`derive:publish failed (is fsh-guts mounted? \`bun run state:mount\`):\n${r.stdout}${r.stderr}`);
+});
 
 function composeTo(opts: { staging?: boolean }): { dir: string; report: ReturnType<typeof compose> } {
   const dir = mkdtempSync(join(tmpdir(), "compose-"));

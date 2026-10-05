@@ -2608,12 +2608,12 @@ jobs:
           # field added to the Zod without regenerating leaves downstream
           # consumers validating against a stale contract.
           bun run ig-ast:schema:check
-          # Every derived artefact with a branch-kept input (today the fsh-guts
-          # index) is built at publish and never committed, so there is no
-          # committed copy to hold current (bean 0b8c, #2230): a `:check` here
-          # went red on every PR when one state:push moved its input. Its
-          # writers still RUN here, so a broken generator fails CI.
-          bun run derive:publish
+          # The fsh-guts index is derived from a graph kept on a BRANCH, so it
+          # is built at publish (derive:publish) and never committed: a
+          # committed copy went stale on main and every PR when one state:push
+          # moved its input (bean 0b8c, #2230). For such a page this check
+          # judges that the mounted graph renders, not that a copy is current.
+          bun run fsh-guts:viz:check
           # The tools index is generated from the Tool nodes, so it goes stale
           # the moment one is added or its `satisfies` changes.
           bun run tools:viz:check

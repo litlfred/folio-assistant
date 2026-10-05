@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-05T18:49:32Z
-updated_at: 2026-10-05T18:49:44Z
+updated_at: 2026-10-05T19:00:06Z
 parent: folio-assistant-nama
 ---
 
@@ -27,3 +27,12 @@ A derived artefact may be committed on main only if every transitive `derivedFro
 
 ## Holder
 session_018LDBbYU4qjY7tNv4cuHt1e (https://claude.ai/code/session_018LDBbYU4qjY7tNv4cuHt1e), branch claude/derive-at-publish, 2026-10-05.
+
+
+
+## 2026-10-05 progress
+- check:derived-from: a visualisation is derived from its own directory; the walk up derivedFrom to a branch-kept input refuses `committed-from-branch` and `publish-without-writer`. On main@3f72f01 it flagged exactly one artefact, the fsh-guts page. Tests: 7 new cases in check-derived-from.test.ts.
+- derive:publish runs each publish-time writer in rendering order; docs-site and feature-staging run it after state:mount.
+- `fsh-guts:viz:check` stays in CI and keeps fsh-guts's audit coverage: for a publish-time page it judges that the mounted graph renders, without comparing to a committed copy.
+- visualisationResolves (schemas/cat-harness.ts) is the one rule the readers use (subgraph coverage, harness tiles, viewer-declarations test). docs:harness:check gives the same result with and without a local copy of the page.
+- Skills: directory-conventions §"The storage clock", fsh-guts, merge-conflict-patterns, merge-queue; the wireframe intent was updated too.
