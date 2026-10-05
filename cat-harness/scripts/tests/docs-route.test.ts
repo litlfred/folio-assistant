@@ -67,6 +67,21 @@ describe("the route", () => {
   });
 });
 
+describe("the scopes mean the same thing to Jekyll 3 and 4", () => {
+  // Jekyll 4 tests a bare `path` scope with `start_with?`, so `process` also
+  // covers `processes/`; Jekyll 3.10 (CI's github-pages gem) walks segments.
+  // A scope that is a string prefix of another top-level entry would publish
+  // different trees in the preview and in CI.
+  test("no permalink scope is a bare string prefix of a different top-level entry", () => {
+    const top = readdirSync(SITE);
+    for (const d of DEFAULTS) {
+      if (d.path.includes("*")) continue;
+      const clash = top.filter((e) => e !== d.path && e.startsWith(d.path));
+      expect(clash, `${d.path} also matches ${clash.join(", ")} under Jekyll 4`).toEqual([]);
+    }
+  });
+});
+
 describe("what moves and what stays — read off the real tree", () => {
   // The chapters the docs graph groups its pages into (bean `xka5`), and the
   // one top-level page beside the landing page. Each is authored in this

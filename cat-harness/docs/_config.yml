@@ -122,22 +122,18 @@ defaults:
       path: "start"
     values:
       parent: "Start here"
-      permalink: "/docs/cat-harness/:path/:basename:output_ext"
   - scope:
       path: "concepts"
     values:
       parent: "Concepts"
-      permalink: "/docs/cat-harness/:path/:basename:output_ext"
   - scope:
       path: "guides"
     values:
       parent: "Authoring guides"
-      permalink: "/docs/cat-harness/:path/:basename:output_ext"
   - scope:
       path: "process"
     values:
       parent: "Process & methodology"
-      permalink: "/docs/cat-harness/:path/:basename:output_ext"
   - scope:
       path: "methodologies"
     values:
@@ -146,7 +142,6 @@ defaults:
       path: "fhir"
     values:
       parent: "FHIR"
-      permalink: "/docs/cat-harness/:path/:basename:output_ext"
   - scope:
       path: "glossary"
     values:
@@ -203,31 +198,61 @@ defaults:
       path: "research-and-analysis"
     values:
       parent: "Research and analysis"
-      permalink: "/docs/cat-harness/:path/:basename:output_ext"
   # THE DOCS-FOLDER PAGES PUBLISH UNDER /docs/cat-harness/ — owner, 2026-10-05
   # (issue #2188, PR #2189, bean `kc7k`): "only cat-harness's own docs-folder
   # pages move", with no redirects at the old addresses. That is the pages
-  # authored in this folder: the chapters above (`start/`, `concepts/`,
-  # `guides/`, `process/`, `fhir/`, `research-and-analysis/`, each carrying a
-  # `permalink` beside its `parent`), with their locale copies inside them,
-  # plus `platform.md` and the `quality/` group page below. Everything else
-  # this tree builds keeps its URL: the landing page (`index.md`,
-  # `permalink: /`) and each locale's landing (`/fr/` …), the viewers under
-  # `/cat-harness/`, and the kind directories (`/processes/`, `/glossary/`,
-  # `/reference/`, `/proposals/`, `/requirements/`, `/methodologies/` …).
+  # authored in this folder — the chapters (`start/`, `concepts/`, `guides/`,
+  # `process/`, `fhir/`, `quality/`, `research-and-analysis/`), with their
+  # locale copies inside them, and `platform.md`. Everything else this tree
+  # builds keeps its URL: the landing page (`index.md`, `permalink: /`) and
+  # each locale's landing (`/fr/` …), the viewers under `/cat-harness/`, and
+  # the kind directories (`/processes/`, `/glossary/`, `/reference/`,
+  # `/proposals/`, `/requirements/`, `/methodologies/` …).
   #
   # A permalink rather than a second build or a post-build move: `baseurl`
   # stays the SITE's, so Jekyll's own `page.url` — which the nav, search and
-  # every `relative_url` read — is the one answer to where a page is. The
-  # route is the `docs` kind and this instance's declared name
+  # every `relative_url` read — is the one answer to where a page is.
+  #
+  # GLOB scopes (`process/*`), not bare ones (`process`), on purpose: Jekyll 4
+  # tests a bare scope with `start_with?`, so `process` also matches
+  # `processes/` — measured, the preview published every process page under
+  # the route — while Jekyll 3.10 (the github-pages gem CI builds with) walks
+  # path segments and does not. A glob names the directory's own entries and
+  # means the same thing to both.
+  #
+  # The route is the `docs` kind and this instance's declared name
   # (`scripts/docs-route.ts`); `docs-route.test.ts` holds every permalink here
   # to it and checks the coverage both ways. Generators ask
   # `scripts/lib/jekyll-permalink.ts` rather than swapping `.md` for `.html`.
   - scope:
-      path: "platform.md"
+      path: "start/*"
     values:
       permalink: "/docs/cat-harness/:path/:basename:output_ext"
   - scope:
-      path: "quality"
+      path: "concepts/*"
+    values:
+      permalink: "/docs/cat-harness/:path/:basename:output_ext"
+  - scope:
+      path: "guides/*"
+    values:
+      permalink: "/docs/cat-harness/:path/:basename:output_ext"
+  - scope:
+      path: "process/*"
+    values:
+      permalink: "/docs/cat-harness/:path/:basename:output_ext"
+  - scope:
+      path: "fhir/*"
+    values:
+      permalink: "/docs/cat-harness/:path/:basename:output_ext"
+  - scope:
+      path: "quality/*"
+    values:
+      permalink: "/docs/cat-harness/:path/:basename:output_ext"
+  - scope:
+      path: "research-and-analysis/*"
+    values:
+      permalink: "/docs/cat-harness/:path/:basename:output_ext"
+  - scope:
+      path: "platform.md"
     values:
       permalink: "/docs/cat-harness/:path/:basename:output_ext"
