@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 886,
+      "count": 889,
       "unit": "beans"
     }
   },
@@ -3531,6 +3531,20 @@
       "file": "beans/defs/folio-assistant-8zsb--bun-test-reads-the-checkout-path-2-tests-fail-in-a.md"
     },
     {
+      "id": "folio-assistant-94zs",
+      "title": "REGEN --changed: ask only the pairs a merge touched, and narrow the fixpoint's later passes",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-xpcu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T05:12:20Z",
+      "updatedAt": "2026-10-05T05:12:27Z",
+      "preview": "Owner, 2026-10-05: \"maximize efficiency, get regen time as minimal as possible\".\n\n## What\n1. `bun run regen --changed <base>`: changed paths = `git diff --name-only <base>...HEAD` plus the working tree. Ask only pairs whose declared inputs/outputs (globs) or script import closure intersect them. Undeclared and `{tracked}` pairs always run. `--explain` names each skip. Default stays the full run.\n2",
+      "file": "beans/defs/folio-assistant-94zs--regen-changed-ask-only-the-pairs-a-merge-touched-a.md"
+    },
+    {
       "id": "folio-assistant-95ir",
       "title": "Library scanners FILTER OUT a declared-but-absent directory, so a partial checkout reports a clean pass",
       "status": "completed",
@@ -6070,6 +6084,20 @@
       "updatedAt": "2026-09-30T19:10:33Z",
       "preview": "**A regression from `oqdr`'s fix**, which is `completed` and covered exactly\nthese three files from the opposite direction: *\"rendered by nothing since the\nsplit\"*. They are now rendered by **two** generators that disagree.\n\n## Measured\n\n`End-to-end + accessibility (hard)` failed on PR #1664, at `render:bpmn:check`:\n\n```\n✗ bootstrap/processes/discussion.svg is stale\n✗ bootstrap/processes/initializ",
       "file": "beans/defs/folio-assistant-gm9g--main-is-red-renderbpmncheck-judges-bootstrapproces.md"
+    },
+    {
+      "id": "folio-assistant-gnnj",
+      "title": "merge-guard check 5 stops waiting on Feature Staging (owner ruling 2026-10-05)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T07:36:45Z",
+      "updatedAt": "2026-10-05T07:36:49Z",
+      "preview": "Owner ruling 2026-10-05, option 1 of the staging-speed report (session_01VfkKocGaQW7Msro2t5S66U): merge-guard check 5 no longer WAITS on Feature Staging. Previews keep publishing on their own schedule; #1956's push limits stay as they are.\n\n## Measured (feature-staging.yml, 06:00-07:10Z 2026-10-05)\nBuild 225-407 s; runner queue 4-49 s; deploy step (the #1956 gate wait + push) up to 2483 s (41 min)",
+      "file": "beans/defs/folio-assistant-gnnj--merge-guard-check-5-stops-waiting-on-feature-stagi.md"
     },
     {
       "id": "folio-assistant-gnqa",
@@ -10983,6 +11011,20 @@
       "file": "beans/defs/folio-assistant-vigi--json-ld-is-a-convention-here-not-a-construction-28.md"
     },
     {
+      "id": "folio-assistant-vihx",
+      "title": "merge-guard has no mergeability check: a stale green head with a valid ready marker passes while it conflicts with main (#1898)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T07:39:03Z",
+      "updatedAt": "2026-10-05T07:39:03Z",
+      "preview": "Reported by the merge manager 2026-10-05 (session_01VfkKocGaQW7Msro2t5S66U).\n\n## The gap\nNone of merge-guard's seven checks (cat-harness/scripts/merge-guard.ts: base, ready-for-review, ready-marker, labels, ci, checklist, open-question) asks whether the head still merges cleanly into main. Check 5 judges the head's own `pull_request` runs, which tested the head merged with main AS IT WAS WHEN THE ",
+      "file": "beans/defs/folio-assistant-vihx--merge-guard-has-no-mergeability-check-a-stale-gree.md"
+    },
+    {
       "id": "folio-assistant-vj2p",
       "title": "Separation stage 1d: cat-harness is self-contained — each instance hosts its own outputs; prose cites code by repository",
       "status": "todo",
@@ -14172,14 +14214,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 531,
+        "total": 533,
         "closed": 192,
-        "open": 339,
-        "inProgress": 125,
-        "todo": 213,
+        "open": 341,
+        "inProgress": 126,
+        "todo": 214,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3615819209039548
+        "share": 0.3602251407129456
       },
       {
         "id": "folio-assistant-vuip",
@@ -14187,14 +14229,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 233,
+        "total": 234,
         "closed": 95,
-        "open": 138,
-        "inProgress": 75,
+        "open": 139,
+        "inProgress": 76,
         "todo": 62,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.40772532188841204
+        "share": 0.405982905982906
       },
       {
         "id": "folio-assistant-yg29",
@@ -14213,8 +14255,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 515,
-    "coveredOpen": 512,
+    "openTotal": 518,
+    "coveredOpen": 515,
     "duplicateIds": 0
   }
 }
