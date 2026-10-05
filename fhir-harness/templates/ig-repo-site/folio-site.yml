@@ -67,7 +67,7 @@ jobs:
       - name: Compose this IG at the site root
         working-directory: folio-assistant
         run: |
-          curl -sSfL -o "$RUNNER_TEMP/plantuml.jar" \
+          curl -sSfL --retry 5 --retry-delay 15 --retry-all-errors -o "$RUNNER_TEMP/plantuml.jar" \
             https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar
           # The work directory is OUTSIDE the checkout: the source copy is the
           # checkout, and a work directory inside it would copy itself.
