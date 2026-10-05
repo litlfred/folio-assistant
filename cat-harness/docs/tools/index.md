@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>122</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>70</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>100</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>124</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>71</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>102</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,19 +48,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 100 |
+| <span class="tg-tag tg-shell">shell</span> | 102 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 25 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 7 |
 
 | installation | tools |
 |---|---|
-| `none` | 113 |
+| `none` | 115 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **70** skills named across **122** tools resolve to a
+Yes — all **71** skills named across **124** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -130,6 +130,8 @@ tool advertising a capability the graph cannot locate.
 | `paper-preferences`<br>Rendering preferences | Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`build-docs`](../reference/skill-instructions/build-docs.html)<br>[`build-pdf`](../reference/skill-instructions/build-pdf.html) | 10 in / 1 out |
 | `paper-preview`<br>Open a render | Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`rendering-auditor`](../reference/skill-instructions/rendering-auditor.html)<br>[`staging-review`](../reference/skill-instructions/staging-review.html) | 3 in / 1 out |
 | `pdf-cover`<br>PDF page raster | Render one page of a PDF to a PNG — the thumbnail a repository listing shows — and print the provenance a catalogue needs to record it as DERIVED: source, digest, page, geometry, renderer. | <span class="tg-tag tg-shell">shell</span> | [`asset-extraction`](../reference/skill-instructions/asset-extraction.html) | 5 in / 1 out |
+| `pdf-viewer-embed`<br>Embed a PDF inline in a page | Print the HTML fragment that shows a PDF in the installed viewer: a lazily loaded frame whose address is derived from the page's own location (so one page works at the site root, under a project base and under a staging preview), plus plain open and download links that work without it. | <span class="tg-tag tg-shell">shell</span> | [`pdf-inline-viewer`](../reference/skill-instructions/pdf-inline-viewer.html) | 1 in / 1 out |
+| `pdf-viewer-install`<br>Install the inline PDF viewer into a built site | Download the pinned pdf.js release (legacy build), verify its SHA-256, copy the parts a site needs into `<site>/assets/vendor/pdfjs/`, and add the shim that opens `?src=` only for the allowlisted URL prefixes or the site's own origin. Nothing is committed: the viewer exists only in the built site. | <span class="tg-tag tg-shell">shell</span> | [`pdf-inline-viewer`](../reference/skill-instructions/pdf-inline-viewer.html) | 3 in / 1 out |
 | `pin-spdx-license-list`<br>Snapshot the SPDX License List at its pinned version | Read `json/licenses.json` and `json/exceptions.json` from a copy of github.com/spdx/license-list-data at the pinned tag and write `cat-harness/external-schemas/spdx-license-list.terminology.json` (`folio-pinned-terminology/v1`): every licence and exception id with its name and deprecated flag — the offline, version-fixed list `check:source-licence` validates a `licence.json` id against. | <span class="tg-tag tg-shell">shell</span> | [`vocabulary-authority`](../reference/skill-instructions/vocabulary-authority.html) | 1 in / 1 out |
 | `processes-viewer`<br>Processes viewer | Render the declared BPMN processes as an index page and one page per diagram. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `proof-dependency-graph`<br>Proof dependency graph | Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html)<br>[`proof-status-tracking`](../reference/skill-instructions/proof-status-tracking.html) | 4 in / 1 out |
