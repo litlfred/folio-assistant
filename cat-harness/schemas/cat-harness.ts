@@ -56,7 +56,7 @@
  * @graphNode schema
  */
 
-import { KindAvatarSchema } from "./graph-kind-node";
+import { KindAvatarSchema, type KindAvatar } from "./graph-kind-node";
 import {
   existsSync,
   mkdirSync,
@@ -512,6 +512,8 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   summary?: string;
   /** Other spellings of the name, listed on the landing (`ob3m` 5). */
   alsoWritten?: string[];
+  /** The instance's own avatar (sod4 #4); the table in avatars.ts covers only the instances below the harness. */
+  avatar?: KindAvatar;
   /**
    * Images this instance names — its marks, in the graph rather than beside it.
    *

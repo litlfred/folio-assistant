@@ -43,6 +43,7 @@ export const KindAvatarSchema = z
     reads: z.string().min(1),
   })
   .strict();
+export type KindAvatar = z.infer<typeof KindAvatarSchema>;
 
 export const GraphKindNodeSchema = z
   .object({

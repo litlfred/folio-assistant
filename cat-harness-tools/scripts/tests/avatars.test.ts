@@ -11,7 +11,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { allAvatars, AVATARS, GENERIC, avatarFor, avatarKinds, hasAvatar } from "../../../cat-harness/schemas/avatars.ts";
+import { allAvatars, GENERIC, avatarFor, avatarKinds, hasAvatar } from "../../../cat-harness/schemas/avatars.ts";
 import { BASE_GRAPH_KINDS, defaultGraphKinds, instanceRootsIn, readDeclaration } from "../../../cat-harness/schemas/cat-harness.ts";
 import { avatarsCssPath, renderAvatarsCss } from "../../../cat-harness/scripts/gen-avatars-css.ts";
 import { coverage, requiredKinds, trashDerivationPresent } from "../check-avatar-coverage.ts";
