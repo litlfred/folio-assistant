@@ -77,3 +77,19 @@ describe("build-document-site", () => {
     expect(existsSync(join(d, "_site", "index.html"))).toBe(false);
   });
 });
+
+describe("the harness rail lands in the page, not in its stylesheet (owner, 2026-10-05)", () => {
+  test("every page's first <body and <main are the real tags, after the style", async () => {
+    // The rail injector finds a page's first body and main tags BY TEXT. A
+    // CSS comment that named them put the whole navigation inside <style>,
+    // and the published page lost both its rail and its gutters.
+    const d = scaffold();
+    const out = join(d, "_site");
+    await buildDocumentSite(d, out);
+    for (const f of [join(out, "index.html"), join(out, "handbook", "index.html"), join(out, "review", "index.html")]) {
+      const html = readFileSync(f, "utf-8");
+      const styleEnd = html.indexOf("</style>");
+      expect({ f, body: html.indexOf("<body") > styleEnd, main: html.indexOf("<main") > styleEnd }).toEqual({ f, body: true, main: true });
+    }
+  });
+});

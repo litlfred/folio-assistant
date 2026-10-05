@@ -41,8 +41,8 @@
  */
 
 import { z } from "zod";
-import type { BlockBase } from "../../cat-harness/schemas/types";
-import { BlockBaseSchema } from "../../cat-harness/schemas/constraints";
+import type { BlockBase } from "../platform.js";
+import { BlockBaseSchema } from "../platform.js";
 import {
   DAK_BLOCK_KINDS,
   DAK_COMPONENTS,

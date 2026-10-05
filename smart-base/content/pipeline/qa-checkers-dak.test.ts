@@ -28,14 +28,14 @@ import {
   WORKBOOK_BACKED_KINDS,
   isGeneratedArtefact,
 } from "./qa-checkers-dak";
-import { QA_CRITERIA_REGISTRY } from "../../../cat-harness/content/pipeline/qa-criteria-registry";
+import { QA_CRITERIA_REGISTRY } from "../../platform.js";
 import {
   criterionAdapters,
   incompatibleCompanions,
   COMPANION_ROLES,
-} from "../../../cat-harness/schemas/block-qa";
-import { ContributionRegistry } from "../../../cat-harness/schemas/contributions";
-import { loadContributionsSync } from "../../../cat-harness/schemas/harness-config";
+} from "../../platform.js";
+import { ContributionRegistry } from "../../platform.js";
+import { loadContributionsSync } from "../../platform.js";
 
 /** smart-base's contribution, registered as `loadContributions` would. */
 // The registry a folio depending on smart-base gets (smart-ig's): since bean

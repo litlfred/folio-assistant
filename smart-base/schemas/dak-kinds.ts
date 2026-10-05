@@ -28,8 +28,8 @@ import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { BlockKindNodeSchema, builderOf, type BlockKindNode } from "../../cat-harness/schemas/block-kind-node";
-import { ownDeclaredDirectories } from "../../cat-harness/schemas/declared-nodes";
+import { BlockKindNodeSchema, builderOf, type BlockKindNode } from "../platform.js";
+import { ownDeclaredDirectories } from "../platform.js";
 import type { DakBlock } from "./dak-blocks";
 
 /** The content adapter these kinds belong to. Contributed, not built in. */

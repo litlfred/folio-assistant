@@ -25,7 +25,8 @@
  * So there are three stages and `uploads/` is the only temporary one: **queued**
  * in a declared `uploads/`, **derived** into `library/<slug>/`, **archived** in
  * `fsh-guts/uploads/` with a same-basename sidecar. The reasoning is in
- * `skills/library/library-core/library-ingestion.md`.
+ * `skills/library/library-core/library-ingestion.md` and, in full, its detail
+ * `library-ingestion/uploads-retirement.md` (split out in placement PR6).
  *
  * ## Why a check and not a sweep
  *
@@ -111,7 +112,7 @@ export const DEFAULT_ROOTS: readonly string[] = [ROOT, HARNESS_ROOT];
 // place, here, and the remedy lines this script prints are composed from it.
 // It is the owner's ruling of 2026-09-29 — *"archival … should be moved to
 // fsh-guts"* — with the sub-directory chosen on 2026-09-30 and recorded in
-// `library-ingestion` §"What happens to the upload after it is ingested".
+// `library-ingestion/uploads-retirement.md` §"What happens to the upload after it is ingested".
 /**
  * Where an archived upload lives: `uploads/` inside the DECLARED trashcan, one
  * place, named by the owner's ruling. Resolved through the `fsh-guts`
@@ -324,7 +325,7 @@ export function companionSource(rel: string): string | undefined {
 /**
  * Mark the companions whose source has already retired.
  *
- * `library-ingestion.md` §"Swept 2026-09-30" requires that an ingested
+ * `library-ingestion/uploads-retirement.md` §"Swept 2026-09-30" requires that an ingested
  * source's `*.pdf.extraction.json` companion move WITH it, being a derived
  * artefact of the same ingest rather than a queue item. Nothing enforced that:
  * every other judgement here is made on a file's own sha256 against the
@@ -468,7 +469,7 @@ if (import.meta.main) {
     console.error(`      remedy: ${remedy(f)}`);
   }
   console.error(`\n  ${String(queued)} file(s) are genuinely queued and are not findings.`);
-  console.error("  The rule is in skills/library/library-core/library-ingestion.md");
+  console.error("  The rule is in skills/library/library-core/library-ingestion/uploads-retirement.md");
   console.error('  §"What happens to the upload after it is ingested". Bean q7ey.');
   console.error("\n  Nothing is moved or removed here — deletion-requires-confirmation.");
   process.exit(1);

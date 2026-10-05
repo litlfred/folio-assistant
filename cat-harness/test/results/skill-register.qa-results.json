@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/skill-register.ts",
-    "script_hash": "ea79fddb51c6"
+    "script_hash": "10f4f1ee2013"
   },
   "subject": {
     "kind": "corpus",
@@ -16,7 +16,7 @@
     },
     "registration-chain": {
       "summary": "Each artefact that adding a skill stales, with the verdict of its own `--check` run INDIVIDUALLY rather than through `bun run gates`. The distinction is the point: `bun test` runs the kg-audit and detangle writers, so a gates run repairs two of these before their checks read them and reports as current what is not (bean `ymsu`). `ran: false` means the step was listed but not run — what `--dry-run` produces — and is not a pass. It is emitted on every entry so that absence never carries that fact.",
-      "count": 9,
+      "count": 10,
       "entries": [
         {
           "verify": "skill:commands:check",
@@ -71,9 +71,15 @@
           "because": "the UML overview renders the QA tree the two steps above just wrote",
           "ran": true,
           "current": true
+        },
+        {
+          "verify": "subgraph:jsonld:check",
+          "because": "a skill's BODY is a content-addressed payload its subgraph index points at, so editing it moves the hash (#2139 went red on exactly this); `slice:sqlite:check` reads the same payload tree and follows from this write",
+          "ran": true,
+          "current": true
         }
       ]
     }
   },
-  "total": 9
+  "total": 10
 }

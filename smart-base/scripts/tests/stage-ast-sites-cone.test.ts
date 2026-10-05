@@ -9,8 +9,8 @@
 import { describe, expect, it } from "bun:test";
 import { resolve } from "node:path";
 
-import { siteFilter } from "../../../cat-harness/scripts/staging-cone.ts";
-import { AST_SITE_WRITERS } from "../../../fhir-harness/scripts/stage-ast-sites.ts";
+import { siteFilter } from "../../platform.js";
+import { AST_SITE_WRITERS } from "../../platform.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 const ast = (changed: string[]) => siteFilter(REPO, changed, AST_SITE_WRITERS)("smart-trust").carry;

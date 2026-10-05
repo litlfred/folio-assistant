@@ -12,7 +12,7 @@
  * @graphNode schema
  */
 
-import { SMART_BASE_NS } from "../../cat-harness/schemas/jsonld";
+import { SMART_BASE_NS } from "../platform.js";
 import { DAK_BLOCK_KIND_NODES, DAK_BLOCK_KINDS, type DakBlockKind } from "./dak-kinds";
 
 /**

@@ -75,7 +75,13 @@ function page(title: string, body: string): string {
 <style>
   :root { color-scheme: light dark; --fg: #1b1b1b; --bg: #fdfdfb; --muted: #5b5b5b; --link: #0b5cad; }
   @media (prefers-color-scheme: dark) { :root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; } }
-  body { margin: 0 auto; max-width: 46rem; padding: 2rem 1rem 4rem; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
+  body { margin: 0; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
+  /* The column and its gutters belong to main, not body: the harness rail sets
+     body padding-left to clear its strip, which replaced a body's own gutter and
+     put the text flush against the rail (owner, 2026-10-05). No tag names in
+     this comment: the rail injector finds the page's first body and main tags
+     by text. */
+  main { max-width: 46rem; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
   a { color: var(--link); }
   a:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
   h1, h2, h3 { line-height: 1.25; }

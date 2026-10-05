@@ -450,7 +450,17 @@ The seven checks, each named in a refusal by number and id:
    it does not (Feature Staging, preview-only), and `unknown` if that line
    cannot be parsed. A green dispatch never rescues a `pull_request` run that
    executed and went red (#1937), and anywhere else it is reported and **not**
-   counted.
+   counted. **Feature Staging is judged, never waited for** (owner ruling
+   2026-10-05, bean `gnnj`): a staging run still in flight, or not started,
+   is not a refusal — its deploy is held by the #1956 `gh-pages` rate limit,
+   measured at up to 41 min with eight previews queued — and the verdict
+   says so as **not waited for**. Once it finishes, red still refuses, since
+   `stage` runs real checks before it deploys — **unless the only failed
+   step is the deploy itself** (`DEPLOY_ONLY_STEP`): a push window that
+   never opened, or three rejected pushes, is not a verdict on the tree
+   (owner ruling 2026-10-05). The guard reads the run's failed steps to
+   tell; if it cannot read them, red refuses as before. The list is
+   `NOT_WAITED_FOR_WORKFLOW_FILES` in `merge-guard.ts`.
 6. **`checklist`** — no unticked `- [ ]` in the body.
 7. **`open-question`** — no comment after the marker asks the owner or the
    Merge Manager a question (a heuristic; its limits are on `openQuestions`
@@ -525,7 +535,7 @@ them:**
 
 | rule | why |
 |---|---|
-| **at most ONE push per PR**, after `bun run gates` locally | each push runs full CI **and** deploys a staging preview into `gh-pages`, which has a size budget. Pushing speculatively spends both |
+| **at most ONE push per PR**, after `bun run gates` locally — or, when every conflict was generated, after the targeted checks of [`merge-conflict-patterns`](merge-conflict-patterns.md) §"A merge round — run each check ONCE" | each push runs full CI **and** deploys a staging preview into `gh-pages`, which has a size budget. Pushing speculatively spends both |
 | no `workflow_dispatch`, re-run, empty commit or close/reopen | the same budget, and a dispatched run is not an owed run (above) |
 | merge commits only: no rebase, amend or force-push | it is somebody else's branch |
 | authored conflict → resolve only dead code, or a pure addition carried over verbatim; otherwise quote both sides and stand down | choosing between two behaviours is the author's call |
@@ -543,12 +553,17 @@ one.** The causes to check, in order:
 
 The first one is not visible in the check list, so look at the YAML.
 
-**After any merge of `main`, check for silently dropped files.** Files that
-are gitignored but still tracked under `*/test/results/` (LSI indexes, QA
-sidecars) are dropped by a merge and by `git add -A`. Local checks still pass,
-because regen rewrites them on disk, but CI's fresh checkout fails. Run
-`git diff --diff-filter=D HEAD^1 HEAD -- '*/test/results/*'` and
-`git ls-files -m`, and re-add anything dropped with `git add -f` (bean `8j9e`).
+**After any merge of `main`, check for silently dropped files.** Some files
+under `*/test/results/` (LSI indexes, QA and detangle sidecars) are gitignored
+but still tracked. Once a resolution step removes one from the index, regen
+rewrites it on disk and `git add -A` does not stage it again. Local checks
+still pass, but CI's fresh checkout fails. `merge:main` and the merge-main bot
+now refuse such a merge and name the paths (`droppedInMerge` in
+`merge-base.ts`, see `merge-conflict-patterns` §"When one side deleted the
+file"). A hand `git merge` gets no such check. After one, run
+`git diff --diff-filter=D HEAD^1 HEAD -- '*/test/results/*'`, and restore
+anything that main still tracks with `git checkout HEAD^2 -- <path>` (bean
+`8j9e`).
 
 ### Stalled for days, with no handover report: write it, then hand it to a takeover agent
 
