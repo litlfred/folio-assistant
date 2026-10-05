@@ -7576,6 +7576,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.directorystorageschema.tool",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DirectoryStorageSchema.tool"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declared Tool that puts content on this store, or mounts it from there: `gh-pages` deploys a site, `ig-cache` restores an AST family (bean j9cs, owner 2026-10-04: *\"there should not be a central registry for declaring mount tools\"*). A Tool node's `id`, which `check:storage-tools` resolves against every declared `tools` graph."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.tool",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.graphnodedirectory.graphtypologies",
       "@type": "skos:Concept",
       "skos:inScheme": {

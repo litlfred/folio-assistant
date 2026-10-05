@@ -79,6 +79,7 @@
   },
   "declaredKinds": [
     "attestations",
+    "basic-cdn-site",
     "beans",
     "cat-harness",
     "code",
@@ -300,7 +301,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 227,
+      "count": 228,
       "unit": "modules"
     },
     {
@@ -2613,12 +2614,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 52
+          "value": 53
         },
         {
           "id": "kinds",
           "label": "declared graph typologies",
-          "value": 29
+          "value": 30
         },
         {
           "id": "views",
@@ -2637,6 +2638,11 @@
           "within": "docs",
           "note": "no viewer yet",
           "label": "Auto docs"
+        },
+        {
+          "kind": "basic-cdn-site",
+          "note": "no viewer yet",
+          "label": "Basic CDN site"
         },
         {
           "kind": "cat-harness",
@@ -2950,6 +2956,14 @@
           "path": "cat-harness/docs/"
         },
         {
+          "id": "site",
+          "kinds": [
+            "basic-cdn-site"
+          ],
+          "where": "local",
+          "path": "cat-harness/site/"
+        },
+        {
           "id": "swimlane-glossary",
           "kinds": [
             "swimlane-glossary"
@@ -3199,7 +3213,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 10 graph(s) with no published viewer — auto-docs, code, code-list, policies, scenarios, substrate-snapshot, uml, validators, vocab-mapping, voice-vendors. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 11 graph(s) with no published viewer — auto-docs, basic-cdn-site, code, code-list, policies, scenarios, substrate-snapshot, uml, validators, vocab-mapping, voice-vendors. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -3498,6 +3512,11 @@
         "kind": "auto-docs",
         "label": "Auto docs",
         "within": "docs",
+        "note": "no viewer yet"
+      },
+      {
+        "kind": "basic-cdn-site",
+        "label": "Basic CDN site",
         "note": "no viewer yet"
       },
       {
@@ -4941,7 +4960,7 @@
           },
           {
             "key": "directories",
-            "summary": "28: cat-harness-validators, tools, external-schemas, subscriptions, code-lists, vocab-mapping…"
+            "summary": "29: cat-harness-validators, tools, external-schemas, subscriptions, code-lists, vocab-mapping…"
           },
           {
             "key": "associatedHarnesses",
