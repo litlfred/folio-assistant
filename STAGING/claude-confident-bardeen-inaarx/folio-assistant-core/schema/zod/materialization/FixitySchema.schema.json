@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/Fixity",
+  "definitions": {
+    "Fixity": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "const": "sha256"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "verifiedAt": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "algorithm",
+        "digest"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-bardeen-inaarx/folio-assistant-core/schema/zod/materialization/FixitySchema.schema.json",
+  "title": "FixitySchema",
+  "description": "Generated from `FixitySchema` in schemas/materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/confident-bardeen-inaarx",
+    "sha": "b94d68f2ac21d63b8259f93b619b56d948b87dae",
+    "pr": "2242/merge",
+    "run": "37386374281"
+  }
+}

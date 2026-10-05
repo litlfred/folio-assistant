@@ -1,0 +1,50 @@
+{
+  "$schema": "folio-slice-sqlite/v1",
+  "slice": "beans",
+  "file": "beans.df223de12da8c1727bb40202e291699a1e685344a8880835f6c15be7fe16fbd8.sqlite3",
+  "schemaVersion": 2,
+  "sha256": "df223de12da8c1727bb40202e291699a1e685344a8880835f6c15be7fe16fbd8",
+  "bytes": 3375104,
+  "contentDigest": "220547a733190747694d08bd098f43b96da6c0f9b68840eab1a8bf920840e2a6",
+  "sqliteVersion": "3.53.0",
+  "pageSize": 4096,
+  "fts5": {
+    "table": "beans_fts",
+    "rowsOf": "beans",
+    "columns": [
+      "title",
+      "body"
+    ],
+    "contentless": true,
+    "detail": "full"
+  },
+  "payloadPath": "payload/sha256/",
+  "payloads": {
+    "mode": "deploy",
+    "count": 918,
+    "bytes": 5674267
+  },
+  "rows": {
+    "beans": 918,
+    "bean_block": 108,
+    "blocking": 108,
+    "blocked_by": 108,
+    "bean_tags": 113
+  },
+  "duplicateIds": [],
+  "findings": [],
+  "overBudget": false,
+  "search": {
+    "noun": "bean",
+    "title": "Beans — the work plan",
+    "placeholder": "e.g. \"named subgraph\" or opfs",
+    "select": "SELECT b.id AS key, b.title AS title, b.id || ' · ' || b.status || ' · ' || b.type AS meta, b.payload_sha256 AS payload FROM beans b",
+    "alias": "b",
+    "like": "b.title",
+    "body": "markdown"
+  },
+  "source": {
+    "graph": "bean-defs",
+    "path": "beans/defs/"
+  }
+}

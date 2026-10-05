@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/HistoryEntry",
+  "definitions": {
+    "HistoryEntry": {
+      "type": "object",
+      "properties": {
+        "at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "task": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "at",
+        "transition",
+        "by",
+        "task"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-bardeen-inaarx/folio-assistant-core/schema/zod/public-comment/HistoryEntrySchema.schema.json",
+  "title": "HistoryEntrySchema",
+  "description": "Generated from `HistoryEntrySchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/confident-bardeen-inaarx",
+    "sha": "b94d68f2ac21d63b8259f93b619b56d948b87dae",
+    "pr": "2242/merge",
+    "run": "37386374281"
+  }
+}
