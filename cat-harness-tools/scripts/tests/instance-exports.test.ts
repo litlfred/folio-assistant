@@ -4,12 +4,19 @@
  * The workflow literals below are fixture text on purpose (bean `jijc`): a
  * matcher fed a constant it was built from asserts nothing.
  */
-import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { afterAll, describe, expect, test } from "bun:test";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { DEPLOY_WORKFLOW, incompleteExports, publishedInstances, unpublishedInstanceSchemas } from "../check-published-instance-exports.js";
-import { publishedInstanceSchemas } from "../../../cat-harness/scripts/kg-export.js";
+import {
+  DEPLOY_WORKFLOW,
+  incompleteExports,
+  publishedInstances,
+  unpublishedInstanceSchemas,
+  unpublishedZodSchemas,
+} from "../check-published-instance-exports.js";
+import { publishedIdentity, publishedInstanceSchemas, scannedInstanceSchemas } from "../../../cat-harness/scripts/kg-export.js";
 import { inAggregate } from "../../../cat-harness/test/support/checkout.js";
 import {
   PUBLISHED_ELSEWHERE,
@@ -189,5 +196,53 @@ describe.skipIf(!inAggregate())("every contract a planned instance's skills name
     expect(publishesInstanceSchema(REPO, REPO)).toBe(false); // the checkout root, `folio-assistant`
     expect(publishesInstanceSchema(join(REPO, "cat-harness"), REPO)).toBe(false);
     expect(publishesInstanceSchema(join(REPO, "bootstrap"), REPO)).toBe(false);
+  });
+});
+
+// ── The Zod half — owner ruling 2026-10-05, option C ("every exported *Schema") ──
+//
+// A fixture instance, so the falsification does not depend on the corpus: the
+// gate reads what a module DECLARES from its text and confirms it Zod by
+// importing it; what is WRITTEN comes from the publisher it is handed.
+describe("an exported Zod *Schema the publisher would not write fails the gate", () => {
+  const root = mkdtempSync(join(tmpdir(), "zod-gate-"));
+  afterAll(() => rmSync(root, { recursive: true, force: true }));
+  mkdirSync(join(root, "schemas"), { recursive: true });
+  const zod = JSON.stringify(Bun.resolveSync("zod", import.meta.dir));
+  writeFileSync(
+    join(root, "schemas", "widgets.ts"),
+    `import { z } from ${zod};\nexport const FooSchema = z.object({ a: z.string() });\nexport const BarSchema = { type: "object" };\n`,
+  );
+  // The stub the publisher names the index by: this fixture declares nothing,
+  // so it is whatever the identity falls back to — read, not assumed.
+  const stub = publishedIdentity(root).stub;
+  const plan: PlannedExport[] = [{ path: root, stub, ownCanonical: false }];
+
+  test("the deploy's own publisher writes it: no finding, and the non-Zod BarSchema is not one", async () => {
+    expect(await unpublishedZodSchemas(plan, (r) => scannedInstanceSchemas(r), REPO)).toEqual([]);
+  });
+
+  test("FALSIFIED: a publisher that drops the rendering is named", async () => {
+    const dropping = async (r: string) => {
+      const built = await scannedInstanceSchemas(r);
+      return { ...built, zod: [], files: built.files.filter(([f]) => !f.startsWith("zod/")) };
+    };
+    const got = await unpublishedZodSchemas(plan, dropping, REPO);
+    expect(got).toEqual([
+      `${root}: schemas/widgets.ts#FooSchema is an exported Zod *Schema, which the publisher does not write to ${stub}/schema/zod/widgets/FooSchema.schema.json`,
+    ]);
+  });
+
+  test("FALSIFIED: a publisher that did not scan, or reports a failure, fails the gate", async () => {
+    const unscanned = async (r: string) => publishedInstanceSchemas(r);
+    expect((await unpublishedZodSchemas(plan, unscanned, REPO)).join("\n")).toContain("the publisher did not scan");
+    const failing = async (r: string) => ({ ...(await scannedInstanceSchemas(r)), zodProblems: ["schemas/x.ts: could not be imported: boom"] });
+    expect(await unpublishedZodSchemas(plan, failing, REPO)).toEqual([`${root}: schemas/x.ts: could not be imported: boom`]);
+  });
+});
+
+describe.skipIf(!inAggregate())("every planned instance's exported Zod *Schema reaches its schema/zod/", () => {
+  test("the deploy's own publisher leaves nothing out, and reports no failure", async () => {
+    expect(await unpublishedZodSchemas(instanceExportPlan(REPO))).toEqual([]);
   });
 });
