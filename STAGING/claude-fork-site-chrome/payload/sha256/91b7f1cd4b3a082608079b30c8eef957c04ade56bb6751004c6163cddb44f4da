@@ -1,0 +1,652 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "deerwester-1990-indexing-by-lsa",
+  "blocks": [
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 1",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/page-001.md",
+      "narrative": null,
+      "content": "Indexing by Latent Semantic Analysis\nScott Deerwester\nGraduate Library School\nUniversity of Chicago\nChicago, IL 60637\nSusan T. Dumais\nGeorge W. Furnas\nThomas K. Landauer\nBell Communications Research\n435 South St.\nMorristown, NJ 07960\nRichard Harshman\nUniversity of Western Ontario\nLondon, Ontario Canada\nABSTRACT\nA new method for automatic indexing and retrieval is described. The approach is to take\nadvantage of implicit higher-order structure in the association of terms with documents (\"semantic\nstructure\") in order to improve the detection of relevant documents on the basis of terms found in\nq",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 2",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/page-002.md",
+      "narrative": null,
+      "content": "Deerwester\n- 1 -\n1. Introduction\nWe describe here a new approach to automatic indexing and retrieval. It is designed to\novercome a fundamental problem that plagues existing retrieval techniques that try to match words\nof queries with words of documents. The problem is that users want to retrieve on the basis of\nconceptual content, and individual words provide unreliable evidence about the conceptual topic or\nmeaning of a document. There are usually many ways to express a given concept, so the literal\nterms in a user’s query may not match those of a relevant document. In addition, most words ha",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 3",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/page-003.md",
+      "narrative": null,
+      "content": "Deerwester\n- 2 -\n(homography). In different contexts or when used by different people the same term (e.g. \"chip\")\ntakes on varying referential signiﬁcance. Thus the use of a term in a search query does not\nnecessarily mean that a document containing or labeled by the same term is of interest. Polysemy is\none factor underlying poor \"precision\".\nThe failure of current automatic indexing to overcome these problems can be largely traced to\nthree factors. The ﬁrst factor is that the way index terms are identiﬁed is incomplete. The terms\nused to describe or index a document typically contain only a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 4",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/page-004.md",
+      "narrative": null,
+      "content": "Deerwester\n- 3 -\nSample Term by Document matrix\naccess\ndocument\nretrieval\ninformation\ntheory\ndatabase\nindexing\ncomputer\nREL\nMATCH\niiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii\nDoc 1\nx\nx\nx\nx\nx\nR\nDoc 2\nx*\nx\nx*\nM\nDoc 3\nx\nx*\nx*\nR\nM\ncc\nc\nc\nc\nc\nc\ncc\nc\nc\nc\nc\nc\ncc\nc\nc\nc\nc\nc\ncc\nc\nc\nc\nc\nc\ncc\nc\nc\nc\nc\nc\ncc\nc\nc\nc\nc\nc\ncc\nc\nc\nc\nc\nc\ncc\nc\nc\nc\nc\nc\ncc\nc\nc\nc\nc\nc\nc\ncc\nc\nc\nc\nc\nc\nc\ncc\nc\nc\nc\nc\nc\nQuery: \"IDF in computer-based information look-up\"\nTable 1\nBelow the table we give a ﬁctional query that might have been passed against this database. An \"R\"\nin th",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 5",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/page-005.md",
+      "narrative": null,
+      "content": "Deerwester\n- 4 -\nlimited to simple pairwise correlation.\nIn document 2 we would like our analysis to tell us that the term \"information\" is in fact\nsomething of an imposter. Given the other terms in the query and in that document we would predict\nno occurrence of a term with the meaning here intended for \"information\", i.e. knowledge desired by\na searcher. A correlational structure analysis may allow us to down-weight polysemous terms by\ntaking advantage of such observations.\nOur overall research program has been to ﬁnd effective models for overcoming these problems.\nWe would like a representa",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 6",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/page-006.md",
+      "narrative": null,
+      "content": "Deerwester\n- 5 -\nanother. The factor analytic model has the potential of much greater richness than the clustering\nmodel (a k dimensional model for n points has nk parameters). However previous attempts along\nthese lines, too, had shortcomings. First, factor analysis is computationally expensive, and since\nmost previous attempts were made 15-20 years ago, they were limited by processing constraints [16] .\nSecond, most past attempts considered restricted versions of the factor analytic model, either by\nusing very low dimensionality, or by converting the factor analysis results to a simple binar",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 7",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/page-007.md",
+      "narrative": null,
+      "content": "Deerwester\n- 6 -\n2.\nExplicit representation of both terms and documents. The desire to represent both terms and\ndocuments simultaneously is more than esthetic. In our proximity-based latent structure\nparadigm, retrieval proceeds by appropriately placing a new object corresponding to the query\nin the semantic structure and ﬁnding those documents that are close by. One simple way to\nachieve appropriate placement is if terms, as well as documents, have positions in the\nstructure. Then a query can be placed at the centroid of its term points. Thus for both\nelegance and retrieval mechanisms, we nee",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 8",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/page-008.md",
+      "narrative": null,
+      "content": "Deerwester\n- 7 -\n4. SVD or two-mode factor analysis\n4.1 Overview\nThe latent semantic structure analysis starts with a matrix of terms by documents. This matrix is\nthen analyzed by singular value decomposition (SVD) to derive our particular latent semantic\nstructure model. Singular value decomposition is closely related to a number of mathematical and\nstatistical techniques in a wide variety of other ﬁelds, including eigenvector decomposition, spectral\nanalysis, and factor analysis. We will use the terminology of factor analysis, since that approach has\nsome precedence in the information retrie",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 9",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/page-009.md",
+      "narrative": null,
+      "content": "Deerwester\n- 8 -\nparticular term, query, or document can be expressed by k factor values, or equivalently, by the\nlocation of a vector in the k -space deﬁned by the factors. The meaning representation is economical,\nin the sense that N original index terms have been replaced by the k <N best surrogates by which\nthey can be approximated. We make no attempt to interpret the underlying factors, nor to \"rotate\"\nthem to some meaningful orientation. Our aim is not to be able to describe the factors verbally but\nmerely to be able to represent terms, documents and queries in a way that escapes the unr",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 10",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/page-010.md",
+      "narrative": null,
+      "content": "Deerwester\n- 9 -\nthe frequencies with which each term actually occurred in each document. Such a matrix could be\nused directly for keyword-based retrievals or, as here, for the initial input of the SVD analysis.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 11",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/page-011.md",
+      "narrative": null,
+      "content": "Deerwester\n- 10 -\nTechnical Memo Example\nTitles:\nc1: Human machine interface for Lab ABC computer applications\nc2: A survey of user opinion of computer system response time\nc3: The EPS user interface management system\nc4: System and human system engineering testing of EPS\nc5: Relation of user-perceived response time to error measurement\nm1: The generation of random, binary, unordered trees\nm2: The intersection graph of paths in trees\nm3: Graph minors IV: Widths of trees and well-quasi-ordering\nm4: Graph minors: A survey\nTerms\nDocuments\nc1\nc2\nc3\nc4\nc5\nm1\nm2\nm3\nm4\n__\n__\n__\n__\n__\n__\n__\n__\n__\nhuma",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 12",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../sections/page-012.md",
+      "narrative": null,
+      "content": "Deerwester\n- 11 -\n------------------------------------------------------\nInsert Figure here - 2d example of 9 tms\n------------------------------------------------------\nFigure 1\nTerms are shown as ﬁlled circles and labeled accordingly; document titles are represented by open\nsquares, with the numbers of the terms contained in them indicated parenthetically. Thus, each term\nand document can be described by its position in this two-dimensional factor space.\nOne test we set ourselves is to ﬁnd documents relevant to the query: \"human computer\ninteraction\". Simple term matching techniques would ret",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 13",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "target": "../sections/page-013.md",
+      "narrative": null,
+      "content": "Deerwester\n- 12 -\nrow, column and sign permutations5 and by convention the diagonal elements of S 0 are constructed\nto be all positive and ordered in decreasing magnitude.\nFigure 2 presents a schematic of the singular value decomposition for a t xd matrix of terms by\ndocuments.\nd o c ume n t s\n_ _ _ _ _ _ _ _ _ _ _\n_ _ _ _ _ _ _ _ _ _ _\n_ _ _ _ _ _ _ _ _ _ _\n_ _ _ _ _ _ _ _ _ _ _\nc\nc\nc\nc\nc *\nc\nc\nc\nc\nc\nc\nc\nc\n*\nc\nc\nc\nc\nc\nc\nc\nc\n*\nc\nc\nc\nc\nc\nc\nc\nc\n*\nc\nc\nc\nt e rms\nc\nX\nc\n=\nc\nT\nc\nc\nS\n*\nc\nc\nD\n’\nc\nc\nc\nc\n0\nc\nc\n0\n* c\nc\n0\nc\nc\nc\nc\nc\nc _ _ _ _ _ _ _ _ _ _ _ c\nc _ _ _ _ _ _ _ _ _ _ _ c\nc\nc\nc\nc\nm x m\nm x\nd\nc _",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 14",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "target": "../sections/page-014.md",
+      "narrative": null,
+      "content": "Deerwester\n- 13 -\ninto S 0, the representation can be simpliﬁed by deleting the zero rows and columns of S 0 to obtain a\nnew diagonal matrix S , and then deleting the corresponding columns of T 0 and D 0 to obtain T and\nS respectively. The result is a reduced model:\nX ∼∼Xhihat =TSD ′\nwhich is the rank-k model with the best possible least-squares-ﬁt to X . It is this reduced model,\npresented in Figure 3, that we use to approximate our data.\nd o c ume n t s\n_ _ _ _ _ _ _ _ _ _ _\n_ _ _ _ _\n_ _ _ _ _\n_ _ _ _ _ _ _ _ _ _ _\nc\nc\nc\nc\nc *\nc\nc\nc\nc\nˆ\nc\nc\nc\nc\n*\nc\nc\nc\nc\nX\nc\n=\nc\nT\nc\nc\nS\n* c\nc\nD\nc\nc\nc\nc\nc\nc",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 15",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "target": "../sections/page-015.md",
+      "narrative": null,
+      "content": "Deerwester\n- 14 -\nrepresent the important and reliable patterns underlying the data in X . Since Xhihat =TSD ′, the\nrelevant quantities can be computed just using the smaller matrices, T , D , and S .\n4.2.3.1 Comparing two terms. The dot product between two row vectors of Xhihat reﬂects the\nextent to which two terms have a similar pattern of occurrence across the set of documents. The\nmatrix XhihatXhihat ′ is the square symmetric matrix containing all these term-to-term dot products.\nSince S is diagonal and D is orthonormal It is easy to verify that:\nXhihatXhihat ′=TS 2T ′\nNote that this means",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 16",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "target": "../sections/page-016.md",
+      "narrative": null,
+      "content": "Deerwester\n- 15 -\nappear in the original analysis. The new objects in both these examples are very much like the\ndocuments of the matrices, X and Xhihat , in that they present themselves as vectors of terms. It is\nfor this reason that we call them pseudo −documents . In order to compare a query or pseudo-\ndocument, q , to other documents, we need to be able to start with its term vector Xq and derive a\nrepresentation Dq that we can use just like a row of D in the comparison formulas of the preceding\nsection. One criterion for such a derivation is that putting in a real document Xi should give",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 17",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "target": "../sections/page-017.md",
+      "narrative": null,
+      "content": "Deerwester\n- 16 -\ncompute (see Section 4.2 for details), and documents are ordered by their distance to the query. In\nmany senses, the current LSI method is impoverished and thus provides a conservative test of the\nutility of latent semantic structure in indexing and information retrieval. We have so far avoided\nadding reﬁnements such as stemming, phrases, term-weighting and Boolean combinations (all of\nwhich generally result in performance improvements) in order to better evaluate the utility of the\nbasic representation technique.\nWe compare the results of our latent structure indexing (LSI)",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 18",
+      "pageStart": 18,
+      "pageEnd": 18,
+      "target": "../sections/page-018.md",
+      "narrative": null,
+      "content": "Deerwester\n- 17 -\nThe number of unique terms, terms per document and terms per query vary somewhat because\ndifferent term-processing algorithms were used in the different systems. A 100-factor SVD of the\n5823 term by 1033 document matrix was obtained, and retrieval effectiveness evaluated against the\n30 queries available with the dataset. Figure 4 shows precision as a function of recall for a LSI\n100-factor solution (\"LSI-100\"), term matching (\"TERM\"), SMART (\"SMART\"), and the Voorhees\ndata (\"VO\"), all on the same set of documents and queries.\n--------------------------------------------------",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 19",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "target": "../sections/page-019.md",
+      "narrative": null,
+      "content": "Deerwester\n- 18 -\nnumbers of factors, and select the dimensionality which maximizes retrieval performance.9 The\nresults for the MED dataset are shown in Figure 5 which presents average precision as a function of\nnumber of factors.\n------------------------------------------------------\nInsert Figure here - MED avg precision as fcn of NFACT\n------------------------------------------------------\nFigure 5\nAs can be seen, mean precision more than doubles (from .25 to .52) as the number of factors\nincreases from 10 to 100, with a maximum at 100. We therefore use the 100-factor space for the\nresults",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 20",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "target": "../sections/page-020.md",
+      "narrative": null,
+      "content": "Deerwester\n- 19 -\n5.2 CISI\nOur second test case is the CISI set of 1460 information science abstracts. This set has been\nconsistently difﬁcult for automatic retrieval methods. It consists of 1460 documents and 35 queries.\nOur automatic indexing, which excluded words on SMART’s stop list of common words and words\noccurring in only one document, resulted in 5135 index terms. Some additional characteristics of\nthe dataset are given below:\nterm &\nLSI\nVoorhees\nSMART\niiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii\nnumber of unique terms\n5135\n4941\n5019\nmean number of terms per d",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 21",
+      "pageStart": 21,
+      "pageEnd": 21,
+      "target": "../sections/page-021.md",
+      "narrative": null,
+      "content": "Deerwester\n- 20 -\nas LSI-SMART). The resulting performance was indistinguishable from SMART’s; average\nprecision for both methods was .14 (t < 1). This suggests that much of the initial difference between\nLSI and SMART was due to term selection differences. Unfortunately, LSI was unable to improve\nupon term matching - either in the initial LSI vs. term matching comparison, or in the LSI-SMART\nvs. SMART comparison. Stemming, however, seems to capture some structure that LSI was unable\nto capture as evidenced by the superior performance of SMART relative to term matching. In\ntheory, latent seman",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 22",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "target": "../sections/page-022.md",
+      "narrative": null,
+      "content": "Deerwester\n- 21 -\npower. In Borko and Bernick [16] , for example, factor analysis was performed on a term-term\ncorrelation matrix (calculated from word usage over 260 abstracts), and 21 orthogonal factors were\nselected on the basis of their interpretability. Documents were classiﬁed into these 21 categories on\nthe basis of normalized factor loadings for each term in the abstract, and performance was\ncomparable to that of another automatic system. It should be noted, however, that the information\nused for classiﬁcation is much less than that which is available in the 21-dimensional factor space",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-023",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 23",
+      "pageStart": 23,
+      "pageEnd": 23,
+      "target": "../sections/page-023.md",
+      "narrative": null,
+      "content": "Deerwester\n- 22 -\nthat a particular term has several distinct meanings and to subcategorize it and place it in several\npoints in the space. We have not yet found a satisfactory way to do that (but see Amsler [36] ;\nChoueka & Lusignan [37] ; Lesk [38] ).\nThe latent semantic indexing methods that we have discussed, and in particular the singular-\nvalue decomposition technique that we have tested, are capable of improving the way in which we\ndeal with the problem of multiple terms referring to the same object. They replace individual terms\nas the descriptors of documents by independent \"artiﬁcial",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-024",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 24",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../sections/page-024.md",
+      "narrative": null,
+      "content": "Deerwester\n- 23 -\nFIGURE CAPTIONS\nFigure 1. A 2-dimensional plot of 12 Terms and 9 Documents from the sample TM set. Terms are\nrepresented by ﬁlled circles. Documents are shown as open squares, and component terms are\nindicated parenthetically. The query (\"human computer interaction\") is represented as a pseudo-\ndocument at point q . Axes are scaled for Document-Document or Term-Term comparisons (see\nsection 4.2.3 for details about scaling). The dotted cone represents the region whose points are\nwithin a cosine of .9 from the query q . All documents about human-computer (c1-c5) are \"near\" the",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-025",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 25",
+      "pageStart": 25,
+      "pageEnd": 25,
+      "target": "../sections/page-025.md",
+      "narrative": null,
+      "content": "Deerwester\n- 24 -\nACKNOWLEDGEMENTS\nWe would like to thank several colleagues who have been involved in various aspects of this project.\nLaura Beck has contributed extensively to programming, data collection, and analyses. Lynn\nStreeter, Karen Lochbaum, Bob Allen and Steve Hanson have all used our programs and provided\nuseful feedback. We thank Mike Lesk for advice and comments on previous drafts of the paper, and\nRam Gnanadesikan, John Kettenring and John Tukey for consultation on statistical questions.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-026",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 26",
+      "pageStart": 26,
+      "pageEnd": 26,
+      "target": "../sections/page-026.md",
+      "narrative": null,
+      "content": "Deerwester\n- 25 -\nAppendix - SVD Numerical Example\nIn section 4.2, we outlined the details of the Singular Value Decomposition (SVD) Model. This Appendix presents a\nnumerical example using the sample term by document matrix described in section 4.1 and shown in Table 2 and Figure\n1.\nThe example 12-term by 9-document matrix from Table 2 is presented below.\nX\n=\n1\n0\n0\n1\n0\n0\n0\n0\n0\n1\n0\n1\n0\n0\n0\n0\n0\n0\n1\n1\n0\n0\n0\n0\n0\n0\n0\n0\n1\n1\n0\n1\n0\n0\n0\n0\n0\n1\n1\n2\n0\n0\n0\n0\n0\n0\n1\n0\n0\n1\n0\n0\n0\n0\n0\n1\n0\n0\n1\n0\n0\n0\n0\n0\n0\n1\n1\n0\n0\n0\n0\n0\n0\n1\n0\n0\n0\n0\n0\n0\n1\n0\n0\n0\n0\n0\n1\n1\n1\n0\n0\n0\n0\n0\n0\n0\n1\n1\n1\n0\n0\n0\n0\n0\n0\n0\n1\n1\nRecall that any rectan",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-027",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 27",
+      "pageStart": 27,
+      "pageEnd": 27,
+      "target": "../sections/page-027.md",
+      "narrative": null,
+      "content": "De e r we s t e r\n-\n2 6\n-\nS 0\n=\n3 . 3 4\n2 . 5 4\n2 . 3 5\n1 . 6 4\n1 . 5 0\n1 . 3 1\n0 . 8 5\n0 . 5 6\n0 . 3 6\nD 0\n=\n0 . 2 0\n- 0 . 0 6\n0 . 1 1\n- 0 . 9 5\n0 . 0 5\n- 0 . 0 8\n0 . 1 8\n- 0 . 0 1\n- 0 . 0 6\n0 . 6 1\n0 . 1 7\n- 0 . 5 0\n- 0 . 0 3\n- 0 . 2 1\n- 0 . 2 6\n- 0 . 4 3\n0 . 0 5\n0 . 2 4\n0 . 4 6\n- 0 . 1 3\n0 . 2 1\n0 . 0 4\n0 . 3 8\n0 . 7 2\n- 0 . 2 4\n0 . 0 1\n0 . 0 2\n0 . 5 4\n- 0 . 2 3\n0 . 5 7\n0 . 2 7\n- 0 . 2 1\n- 0 . 3 7\n0 . 2 6\n- 0 . 0 2\n- 0 . 0 8\n0 . 2 8\n0 . 1 1\n- 0 . 5 1\n0 . 1 5\n0 . 3 3\n0 . 0 3\n0 . 6 7\n- 0 . 0 6\n- 0 . 2 6\n0 . 0 0\n0 . 1 9\n0 . 1 0\n0 . 0 2\n0 . 3 9\n- 0 . 3 0\n- 0 . 3 4\n0 . 4 5\n- 0 . 6 2\n0 . 0 1\n0 .",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-028",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 28",
+      "pageStart": 28,
+      "pageEnd": 28,
+      "target": "../sections/page-028.md",
+      "narrative": null,
+      "content": "De e r we s t e r\n-\n2 7\n-\nXhihat\n=\n0 . 1 6\n0 . 4 0\n0 . 3 8\n0 . 4 7\n0 . 1 8\n- 0 . 0 5\n- 0 . 1 2\n- 0 . 1 6\n- 0 . 0 9\n0 . 1 4\n0 . 3 7\n0 . 3 3\n0 . 4 0\n0 . 1 6\n- 0 . 0 3\n- 0 . 0 7\n- 0 . 1 0\n- 0 . 0 4\n0 . 1 5\n0 . 5 1\n0 . 3 6\n0 . 4 1\n0 . 2 4\n0 . 0 2\n0 . 0 6\n0 . 0 9\n0 . 1 2\n0 . 2 6\n0 . 8 4\n0 . 6 1\n0 . 7 0\n0 . 3 9\n0 . 0 3\n0 . 0 8\n0 . 1 2\n0 . 1 9\n0 . 4 5\n1 . 2 3\n1 . 0 5\n1 . 2 7\n0 . 5 6\n- 0 . 0 7\n- 0 . 1 5\n- 0 . 2 1\n- 0 . 0 5\n0 . 1 6\n0 . 5 8\n0 . 3 8\n0 . 4 2\n0 . 2 8\n0 . 0 6\n0 . 1 3\n0 . 1 9\n0 . 2 2\n0 . 1 6\n0 . 5 8\n0 . 3 8\n0 . 4 2\n0 . 2 8\n0 . 0 6\n0 . 1 3\n0 . 1 9\n0 . 2 2\n0 . 2 2\n0 . 5 5\n0 . 5 1\n0 . 6 3\n0 . 2",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-029",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 29",
+      "pageStart": 29,
+      "pageEnd": 29,
+      "target": "../sections/page-029.md",
+      "narrative": null,
+      "content": "Deerwester\n- 28 -\nREFERENCES\n1. Furnas, G.W., Landauer, T.K., Gomez, L.M., and Dumais, S.T. Statistical semantics:\nAnalysis of the potential performance of key-word information systems. Bell System\nTechnical Journal, 1983, 62(6), 1753-1806.\n2. Tarr, D. and Borko, H. Factors inﬂuencing inter-indexer consistency. In Proceedings of the\nASIS 37th Annual Meeting, Vol. 11, 1974, 50-55.\n3. Fidel, R. Individual variability in online searching behavior. In C.A. Parkhurst (Ed.).\nASIS’85: Proceedings of the ASIS 48th Annual Meeting, Vol. 22, October 20-24, 1985, 69-\n72.\n4. Liley, O. Evaluation of the sub",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-030",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 30",
+      "pageStart": 30,
+      "pageEnd": 30,
+      "target": "../sections/page-030.md",
+      "narrative": null,
+      "content": "Deerwester\n- 29 -\n18. Salton, G. and McGill, M.J. Introduction to Modern Information Retrieval. McGraw-Hill,\n1983.\n19. Voorhees, E. The cluster hypothesis revisited. SIGIR, 1985, 188-196.\n20. Koll, M. An approach to concept-based information retrieval. ACM SIGIR Forum, XIII32-\n50, 1979.\n21. Raghavan, V. and Wong, S. A critical analysis of vector space model for information\nretrieval. JASIS, 1986, 37(5), 279-288.\n22. Coombs, C.H. A Theory of Data. New York: Wiley, 1964.\n23. Heiser, W.J. Unfolding Analysis of Proximity Data. Leiden, The Netherlands: Reprodienst\nPsychologie RUL, 1981.\n24. Desarbo",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-031",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 31",
+      "pageStart": 31,
+      "pageEnd": 31,
+      "target": "../sections/page-031.md",
+      "narrative": null,
+      "content": "Deerwester\n- 30 -\n35. Lesk, M.E. and Salton, G. Relevance assessments and retrieval system evaluation.\nInformation Storage and Retrieval, 1969, 4(4), 343-359.\n36. Amsler, R. Machine-readable dictionaries. In Annual Review of Information Science and\nTechnology (ARIST), Vol. 19, 1984, 161-209.\n37. Choueka, Y. and Lusignan, S. Disambiguation by short contexts. Computers and the\nHumanities, 1985, 19, 147-157.\n38. Lesk, M.E. How to tell a pine cone from an ice cream cone. In Proceedings of ACM\nSIGDOC Conference, Toronto, Ont., June, 1986.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-032",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 32",
+      "pageStart": 32,
+      "pageEnd": 32,
+      "target": "../sections/page-032.md",
+      "narrative": null,
+      "content": "CONTENTS\n1. Introduction .\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n1\n2. Deﬁciencies of current automatic indexing and retrieval methods\n.\n.\n.\n.\n.\n.\n.\n1\n3. Rationale of the Latent Semantic Indexing (LSI) method\n.\n.\n.\n.\n.\n.\n.\n.\n.\n2\n3.1 Illustration of retrieval problems\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n2\n3.2 The choice of method for uncovering latent semantic structure\n.\n.\n.\n.\n.\n.\n4\n4. SVD or two-mode factor analysis\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n7\n4.1 Overview\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n7\n4.2 Technical details\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n11\n4.2.1 The Singular Val",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-033",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 33",
+      "pageStart": 33,
+      "pageEnd": 33,
+      "target": "../sections/page-033.md",
+      "narrative": null,
+      "content": "LIST OF FIGURES\nFigure 1\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n11\nFigure 2\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n12\nFigure 3\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n13\nFigure 4\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n17\nFigure 5\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n18\nFigure 6\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n19\n- ii -",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-034",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 34",
+      "pageStart": 34,
+      "pageEnd": 34,
+      "target": "../sections/page-034.md",
+      "narrative": null,
+      "content": "LIST OF TABLES\nTable 1\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n3\nTable 2\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n10\n- iii -",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}
