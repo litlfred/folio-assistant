@@ -163,9 +163,9 @@ def regen_from_index(staging_lake: Path, index_path: Path) -> int:
     return n
 
 
-# Family prefixes, declared in cat-harness/scripts/special-branches.json (id
+# Family prefixes: the BUILT-IN fallbacks (special-branches.json is gone; the folio's declaration, read below, comes first) (id
 # `lake-cache`) and checked against this copy by
-# tests/special-branches.test.ts. New name first, then each legacy one,
+# tests/cache-family-fallbacks.test.ts. New name first, then each legacy one,
 # newest first, until bean folio-assistant-oycs removes the fallback. A
 # candidate is always a WHOLE branch name (prefix + key), so `lake-cache/`
 # never matches inside `cat-lake-cache/` or `cat/folio-assistant-sci/lake-cache/`.

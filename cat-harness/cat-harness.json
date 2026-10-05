@@ -766,7 +766,7 @@
         "docs",
         "folio"
       ],
-      "description": "The PUBLISHED SITE, on a CDN that serves files by path only (GitHub Pages). Lives on the `gh-pages` branch, one entry per route (the release root and each `STAGING/<slug>/` preview); never in the checkout, and `site/` is only where a local build lands. Built by `site-build-local` on a machine and by `pages-publish` in CI (two Tools, one skill, `docs-generation`), and deployed by the Tool `storage.tool` names. `derivedFrom` names the renderable graphs THIS instance can reach; every other instance's docs are composed onto it by `mount-instance-docs.ts`, which an instance below cannot name without pointing upward. Declared here, on the harness that composes the site, rather than as a row in special-branches.json (owner, 2026-10-03 and 2026-10-05; beans rva2, lehh)."
+      "description": "The PUBLISHED SITE, on a CDN that serves files by path only (GitHub Pages). Lives on the `gh-pages` branch, one entry per route (the release root and each `STAGING/<slug>/` preview); never in the checkout, and `site/` is only where a local build lands. Built by `site-build-local` on a machine and by `pages-publish` in CI (two Tools, one skill, `docs-generation`), and deployed by the Tool `storage.tool` names. `derivedFrom` names the renderable graphs THIS instance can reach; every other instance's docs are composed onto it by `mount-instance-docs.ts`, which an instance below cannot name without pointing upward. Declared here, on the harness that composes the site, rather than as a row in a central table (owner, 2026-10-03 and 2026-10-05: special-branches.json is gone; beans rva2, lehh)."
     },
     {
       "id": "swimlane-glossary",

@@ -1412,8 +1412,8 @@ describe("special-branch-size", () => {
     expect(r.reason).toContain("ls-remote refused");
   });
 
-  it("the committed declaration budgets what the owner named, at the owner's numbers", () => {
-    const rows = readSpecialBranches(resolve(import.meta.dir, "..", "..", "scripts", "special-branches.json"));
+  it("the committed budgets file budgets what the owner named, at the owner's numbers", () => {
+    const rows = readSpecialBranches(resolve(import.meta.dir, "branch-budgets.json"));
     const b = Object.fromEntries(rows.filter((x) => x.budget).map((x) => [x.id, [x.budget!.bytes, x.budget!.scope]]));
     expect(b).toEqual({
       "qa-reports": [500 * MB, "branch"],

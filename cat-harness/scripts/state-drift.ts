@@ -51,13 +51,12 @@
  */
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { resolve } from "node:path";
 
 import { instanceRootsIn, nestedDirectories, readDeclaration } from "../schemas/cat-harness.ts";
 
 import { BranchStore, MANIFEST_FILE, MANIFEST_SCHEMA } from "./branch-store.ts";
 
-export const SPECIAL_BRANCHES = join(import.meta.dir, "special-branches.json");
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
 
 export interface SpecialBranch {
@@ -137,7 +136,7 @@ function treeOf(store: BranchStore, commit: string): string {
 
 /**
  * Candidate names for a special branch, canonical first — the resolution rule
- * `special-branches.json` states: the new name if it exists on the remote,
+ * retired `special-branches.json` stated: the new name if it exists on the remote,
  * else the first `legacy` that does. {@link BranchStore.open} implements
  * exactly that over an ordered candidate list, so the rule has one
  * implementation rather than a second one here.
@@ -202,8 +201,13 @@ export function declaredBranches(repoRoot: string = REPO_ROOT): { exact: Map<str
   return { exact, prefixes };
 }
 
-/** The table, read ONLY when a caller names it (the fixture tests). No default: infrastructure no longer reads it. */
-export function specialBranches(file: string = SPECIAL_BRANCHES): SpecialBranch[] {
+/**
+ * A table of special branches, read ONLY when a caller names one (the fixture
+ * tests). There is no default: `special-branches.json` is gone (owner,
+ * 2026-10-05: "dont use /get rid of"), and every branch's name is its
+ * declaring directory's `storage`.
+ */
+export function specialBranches(file: string): SpecialBranch[] {
   return (JSON.parse(readFileSync(file, "utf-8")) as { branches: SpecialBranch[] }).branches;
 }
 

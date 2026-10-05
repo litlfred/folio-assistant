@@ -65,9 +65,9 @@ PRIVATE_REF="refs/lake-cache-restore"
 
 # ── Branch family names ─────────────────────────────────────────────
 #
-# Declared in cat-harness/scripts/special-branches.json (id `lake-cache`);
+# The BUILT-IN fallback names (special-branches.json is gone, owner 2026-10-05);
 # copied here because a folio may restore a cache with no `bun` on the
-# path. tests/special-branches.test.ts fails if the copy disagrees.
+# path. tests/cache-family-fallbacks.test.ts fails if the scripts disagree.
 #
 # The family is `cat/folio-assistant-sci/lake-cache/` (owner, 2026-10-02:
 # special branches are `cat/<harness>/<name>`; bean folio-assistant-9io2).

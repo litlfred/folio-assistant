@@ -120,8 +120,8 @@ ABS_LAKE="$REPO/$LAKE_ROOT"
 TOOLCHAIN=$(cat "$ABS_LAKE/lean-toolchain" 2>/dev/null || cat "$REPO/lean-toolchain")
 TOOLCHAIN="$(printf '%s' "$TOOLCHAIN" | tr -d '[:space:]')"
 SLUG="$(printf '%s' "${TOOLCHAIN##*:}" | tr . -)"
-# Family names: declared in cat-harness/scripts/special-branches.json (id
-# `lake-cache`), checked against this copy by tests/special-branches.test.ts.
+# Family names: the BUILT-IN fallbacks (special-branches.json is gone) (id
+# `lake-cache`), kept in step with the other scripts by tests/cache-family-fallbacks.test.ts.
 # Resolve new-name-first, then each legacy name, newest first, for the WRITE
 # too: publishing a new-name branch beside a live legacy one would block the
 # owner's rename (beans folio-assistant-32f6, folio-assistant-9io2). Each

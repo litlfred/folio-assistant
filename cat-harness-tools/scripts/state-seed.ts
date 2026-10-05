@@ -33,7 +33,7 @@
  *
  * `branch-store mount --id` and `push --id` are keyed by DIRECTORY id (the
  * owner's 2026-10-03 ruling: one generic pair for beans, todos and fsh-guts
- * alike), and this is deliberately keyed by the `special-branches.json` ROW id
+ * alike), and this is deliberately keyed by the observed row id (the retired `special-branches.json` used the same ids)
  * instead — the same key `state:drift` uses. The reason is the state this
  * command exists for: before a cutover the directory's declaration still says
  * `source: { kind: "directory" }`, so `resolveTipLocation` refuses it, and a
@@ -133,7 +133,7 @@ export type SeedResult =
  * The branch named by `id`: a declared directory id, a branch name, or a
  * branch's last segment (`beans` for `cat/cat-harness/beans`, the id the
  * retired table used). Rows come from what the remote OBSERVABLY holds and what
- * the declarations name (bean rva2), never from `special-branches.json`.
+ * the declarations name (bean rva2); the old `special-branches.json` table is gone.
  */
 export function rowFor(id: string, rows: SpecialBranch[] = observedRows() ?? []): SpecialBranch | undefined {
   return rows.find((r) => r.id === id) ?? rows.find((r) => r.name === id) ?? rows.find((r) => r.name.endsWith(`/${id}`));

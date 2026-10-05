@@ -63,9 +63,9 @@ if [ -z "$BRANCH" ]; then
     exit 1
   fi
   slug=$(echo "$toolchain" | tr '.' '-')
-  # Family names are declared in cat-harness/scripts/special-branches.json
+  # Family names: the BUILT-IN fallbacks (special-branches.json is gone)
   # (id `lake-cache`) and checked against this copy by
-  # tests/special-branches.test.ts. New name first, then each legacy one,
+  # tests/cache-family-fallbacks.test.ts. New name first, then each legacy one,
   # newest first, until bean folio-assistant-oycs removes the fallback.
   CANDIDATES="cat/folio-assistant-sci/lake-cache/qou-${slug} cat-lake-cache/qou-${slug} lake-cache/qou-${slug}"
   # The folio's own declaration goes first (bean rva2): a directory with
