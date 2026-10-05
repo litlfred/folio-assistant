@@ -1,0 +1,537 @@
+{
+  "$ref": "#/definitions/ReviewCommentsFile",
+  "definitions": {
+    "ReviewCommentsFile": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-review-comments/v1"
+        },
+        "repo": {
+          "type": "string"
+        },
+        "pr": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "commit": {
+          "type": "string"
+        },
+        "generatedAt": {
+          "type": "string"
+        },
+        "comments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "comment": {
+                "default": "",
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "updatedAt": {
+                "type": "string"
+              },
+              "targetLabel": {
+                "type": "string",
+                "minLength": 1
+              },
+              "anchor": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "block"
+                      },
+                      "label": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "label"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "page"
+                      },
+                      "page": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "page"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "none"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "alsoAbout": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "const": "block"
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "label"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "tags": {
+                "default": {
+                  "roles": [],
+                  "processes": [],
+                  "tasks": [],
+                  "identities": [],
+                  "references": [],
+                  "artefacts": []
+                },
+                "type": "object",
+                "properties": {
+                  "roles": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "processes": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "tasks": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "process": {
+                          "type": "string",
+                          "minLength": 1,
+                          "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$",
+                          "description": "A BPMN process element id, e.g. Process_CRDM"
+                        },
+                        "task": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "process",
+                        "task"
+                      ]
+                    }
+                  },
+                  "identities": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "provider": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "displayName": {
+                          "type": "string"
+                        },
+                        "actor": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "provider",
+                        "id"
+                      ]
+                    }
+                  },
+                  "references": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "agent",
+                            "asset",
+                            "bean",
+                            "block",
+                            "capability",
+                            "decision",
+                            "directory",
+                            "package",
+                            "process",
+                            "requirement",
+                            "role",
+                            "schema",
+                            "skill",
+                            "todo",
+                            "tool",
+                            "user-story",
+                            "voice"
+                          ]
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "note": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "id"
+                      ]
+                    }
+                  },
+                  "artefacts": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "provider": {
+                          "type": "string"
+                        },
+                        "repo": {
+                          "type": "string"
+                        },
+                        "note": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "id"
+                      ]
+                    }
+                  }
+                }
+              },
+              "theme": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "layout": {
+                "type": "string",
+                "enum": [
+                  "laptop",
+                  "mobile",
+                  "card"
+                ]
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "addressed",
+                  "resolved",
+                  "adjudicated",
+                  "withdrawn"
+                ]
+              },
+              "priority": {
+                "type": "string",
+                "minLength": 1
+              },
+              "origin": {
+                "type": "string",
+                "minLength": 1
+              },
+              "$schema": {
+                "type": "string",
+                "const": "folio-review-comment/v1"
+              },
+              "review": {
+                "type": "object",
+                "properties": {
+                  "repo": {
+                    "type": "string",
+                    "pattern": "^[\\w.-]+\\/[\\w.-]+$"
+                  },
+                  "pr": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "commentId": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "commentUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "reviewer": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "role": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "question",
+                      "defect",
+                      "suggestion",
+                      "editorial"
+                    ]
+                  },
+                  "blockHash": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "commit": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "orphaned": {
+                    "default": false,
+                    "type": "boolean"
+                  },
+                  "anchoredFrom": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "decision": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "repo",
+                  "pr",
+                  "commentId",
+                  "commentUrl",
+                  "reviewer",
+                  "role",
+                  "kind",
+                  "blockHash",
+                  "commit"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "summary",
+              "createdAt",
+              "targetLabel",
+              "status",
+              "priority",
+              "origin",
+              "$schema",
+              "review"
+            ]
+          }
+        },
+        "malformed": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "commentId": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "url": {
+                "type": "string"
+              },
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "commentId",
+              "url",
+              "error"
+            ]
+          }
+        },
+        "untagged": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "verdicts": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "$schema": {
+                "type": "string",
+                "const": "folio-review-verdict/v1"
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "targetLabel": {
+                "type": "string",
+                "minLength": 1
+              },
+              "verdict": {
+                "type": "string",
+                "enum": [
+                  "ok",
+                  "changes",
+                  "waived"
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "blockHash": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reviewer": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "type": "string",
+                "minLength": 1
+              },
+              "repo": {
+                "type": "string",
+                "pattern": "^[\\w.-]+\\/[\\w.-]+$"
+              },
+              "pr": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "commentId": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "commentUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1
+              },
+              "at": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "$schema",
+              "id",
+              "targetLabel",
+              "verdict",
+              "blockHash",
+              "reviewer",
+              "role",
+              "repo",
+              "pr",
+              "commentId",
+              "commentUrl",
+              "commit",
+              "at"
+            ]
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "repo",
+        "pr",
+        "commit",
+        "generatedAt",
+        "comments",
+        "malformed",
+        "untagged"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-who-iris-site-i18n/folio-assistant-core/schema/zod/review-comment/ReviewCommentsFileSchema.schema.json",
+  "title": "ReviewCommentsFileSchema",
+  "description": "Generated from `ReviewCommentsFileSchema` in schemas/review-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/who-iris-site-i18n",
+    "sha": "b84a4d0a940bd5970193c204262d93730d4ff484",
+    "pr": "2229/merge",
+    "run": "37377716709"
+  }
+}
