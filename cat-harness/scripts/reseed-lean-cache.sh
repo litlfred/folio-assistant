@@ -127,14 +127,44 @@ SLUG="$(printf '%s' "${TOOLCHAIN##*:}" | tr . -)"
 # owner's rename (beans folio-assistant-32f6, folio-assistant-9io2). Each
 # probe names the FULL ref, so `lake-cache/` cannot match inside a newer
 # name. The fallback goes with bean folio-assistant-oycs.
-PROD_BRANCH="cat/folio-assistant-sci/lake-cache/$PACKAGE-$SLUG"
-for _cand in "cat/folio-assistant-sci/lake-cache" "cat-lake-cache" "lake-cache"; do
+#
+# The folio's own declaration goes first (bean rva2): a directory with
+# graphKind `lake-cache` and `storage.keyedBy: "family"` in $REPO's
+# <instance>.json names the default and the first probe. Same reader as
+# lake-cache.sh; no python3 or no declaration leaves the built-in order.
+_cands="cat/folio-assistant-sci/lake-cache cat-lake-cache lake-cache"
+_decl=$(python3 - "$REPO" <<'PY' 2>/dev/null
+import glob, json, os, sys
+for path in sorted(glob.glob(os.path.join(sys.argv[1], "*.json"))):
+    try:
+        d = json.load(open(path))
+    except Exception:
+        continue
+    dirs = d.get("directories") if isinstance(d, dict) else None
+    if not isinstance(dirs, list):
+        continue
+    for e in dirs:
+        if not isinstance(e, dict):
+            continue
+        st = e.get("storage") if isinstance(e.get("storage"), dict) else {}
+        kinds = e.get("graphKinds") if isinstance(e.get("graphKinds"), list) else []
+        if "lake-cache" in kinds and st.get("keyedBy") == "family" and isinstance(st.get("branchPrefix"), str) and st["branchPrefix"]:
+            print(st["branchPrefix"].rstrip("/"))
+            sys.exit(0)
+PY
+)
+case " $_cands " in
+  *" $_decl "*) ;;
+  *) [ -n "$_decl" ] && _cands="$_decl $_cands" ;;
+esac
+PROD_BRANCH="${_cands%% *}/$PACKAGE-$SLUG"
+for _cand in $_cands; do
   if git -C "$REPO" ls-remote --exit-code --heads origin "refs/heads/$_cand/$PACKAGE-$SLUG" >/dev/null 2>&1; then
     PROD_BRANCH="$_cand/$PACKAGE-$SLUG"
     break
   fi
 done
-unset _cand
+unset _cand _cands _decl
 TEST_BRANCH="$PROD_BRANCH-test"
 
 # elan's on-disk name for a pin: `/` -> `--`, `:` -> `---`, giving
