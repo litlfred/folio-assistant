@@ -100,8 +100,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/jsonld-gen-check.yml",
+          "detail": ".github/workflows/jsonld-gen-check.yml changed since cat-harness/processes/sdlc/jsonld-drift-check.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -109,8 +114,8 @@
     }
   },
   "totals": {
-    "pass": 16,
-    "fail": 0,
+    "pass": 15,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }

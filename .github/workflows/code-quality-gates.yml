@@ -96,6 +96,18 @@ on:
 permissions:
   contents: read
 
+# A newer push to a PULL REQUEST supersedes the run of the older one: that
+# run judges a head nobody will merge, and it still holds a runner. On
+# 2026-10-05, 16 of 53 queued runs in this repository were such runs, and
+# the queue they lengthened delayed a fix that main's publish was waiting
+# on (#2233). So a PR's runs share one group and the newer cancels the
+# older. Every other event (a push to main, a dispatch from merge-main) is
+# grouped by its own sha and never cancelled: main's history of verdicts is
+# not thinned.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   hygiene:
     # bpmn-node: Task_Hygiene
