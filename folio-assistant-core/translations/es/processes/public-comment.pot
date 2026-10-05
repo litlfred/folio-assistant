@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: public-comment\n"
-"POT-Creation-Date: 2026-10-05T12:51:35.474Z\n"
+"POT-Creation-Date: 2026-10-05T14:37:55.396Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -13,6 +13,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../folio-assistant-core/processes/content/public-comment.bpmn:122
+#. Diagram element documentation
+msgid "A change-set gets its primary GitHub issue the first time somebody engages with it (the Discuss form, a recommendation or decision on one of its comments, a mention, a PR), opened by the folio's public-comment workflow; any number of other issues may discuss it and are linked. People agree the requirements there, and the committee or editor changes the record with cs-add / cs-remove / cs-title / cs-requirements / cs-merge / cs-split / cs-close / cs-new. The issue's change-set section is rendered from the record and put back if hand-edited; the nightly reconcile keeps every issue in line. The issue is for requirements; the PR that closes it is for preview, review and approval."
+msgstr ""
 
 #: ../folio-assistant-core/processes/content/public-comment.bpmn:28
 #. Diagram element documentation
@@ -134,11 +139,6 @@ msgstr ""
 msgid "Owns triage: confirms or moves each anchor, sets type and priority, closes duplicates, routes plain editorial points straight to the editor, and assigns the rest to committee members."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/public-comment.bpmn:122
-#. Diagram element documentation
-msgid "People discuss the requirements in the issue thread, and regroup by editing the issue body's pc: line (committee and editor only; the record follows the body exactly). Merging, splitting or closing an agent's proposal is ordinary work here. The issue is for requirements; the PR that closes it is for preview, review and approval."
-msgstr ""
-
 #: ../folio-assistant-core/processes/content/public-comment.bpmn:196
 #. Diagram label
 msgid "plain editorial"
@@ -146,7 +146,7 @@ msgstr ""
 
 #: ../folio-assistant-core/processes/content/public-comment.bpmn:115
 #. Diagram label
-msgid "Propose change-sets, one GitHub issue each"
+msgid "Propose change-sets, as records with no issue yet"
 msgstr ""
 
 #: ../folio-assistant-core/processes/content/public-comment.bpmn:25
@@ -201,7 +201,7 @@ msgstr ""
 
 #: ../folio-assistant-core/processes/content/public-comment.bpmn:116
 #. Diagram element documentation
-msgid "public-comment-changesets seed / add / body / link: the agent groups the comments to be weighed into change-sets, one per change the document may need, and opens each as a GitHub issue whose body carries the requirements and a pc: line. A PROPOSAL: nothing is decided here, and a comment may sit in zero, one or several change-sets."
+msgid "public-comment-changesets seed / propose: the agent groups the comments to be weighed into change-sets, one per change the document may need, each a record under changesets/ with its requirements and members. A PROPOSAL: nothing is decided, no GitHub issue is opened, and a comment may sit in zero, one or several change-sets. The record is the only one; everything shown about a change-set is rendered from it."
 msgstr ""
 
 #: ../folio-assistant-core/processes/content/public-comment.bpmn:133

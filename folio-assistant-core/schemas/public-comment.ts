@@ -280,13 +280,6 @@ export const PublicFieldsSchema = z.object({
   duplicateOf: z.string().optional(),
   /** GitHub issue holding this comment's discussion, once one is opened. */
   discussion: z.string().url().optional(),
-  /**
-   * The CHANGE-SET issues this comment belongs to (issue #2183): zero or
-   * more. An issue groups related comments whose answer is one change; the PR
-   * that closes it carries them to editing, and to incorporated on merge. Set
-   * from the issue's own `pc:` list, never by hand-editing the record.
-   */
-  issues: z.array(z.number().int().positive()).default([]),
   history: z.array(HistoryEntrySchema).default([]),
 });
 export type PublicFields = z.infer<typeof PublicFieldsSchema>;
@@ -456,11 +449,36 @@ export const formatRef = (n: number) => `PC-${String(n).padStart(4, "0")}`;
 export const CHANGE_SET_SCHEMA = "folio-public-comment-changeset/v1" as const;
 
 /**
- * One proposed change to the document, answering a group of comments. The
- * record is the PROPOSAL; once it is opened, its GitHub issue is where people
- * agree the requirements, and the PR that closes the issue is where they
- * preview the change and approve the merge. An agent may propose change-sets;
- * people review them on the issue.
+ * Where a change-set is. `proposed`: drafted, nobody has engaged, so it has no
+ * issue. `discussing`: it has a primary issue. `editing`: a PR names it.
+ * `incorporated`: that PR merged. `merged`: folded into another change-set
+ * (`mergedInto`). `closed`: decided to need no change.
+ */
+export const CHANGE_SET_STATUSES = ["proposed", "discussing", "editing", "incorporated", "merged", "closed"] as const;
+export type ChangeSetStatus = (typeof CHANGE_SET_STATUSES)[number];
+
+export const ChangeSetHistorySchema = z.object({
+  at: z.string().min(1),
+  by: z.string().min(1),
+  what: z.string().min(1),
+  /** The GitHub comment, issue or PR it came from. */
+  url: z.string().url().optional(),
+});
+
+/**
+ * One change to the document, answering a group of comments (issue #2183).
+ *
+ * THIS FILE IS THE ONLY RECORD of a change-set: its title, requirements,
+ * members, status and issues. A comment's change-sets are DERIVED from these
+ * files, and an issue body's change-set section is RENDERED from one, so
+ * neither can disagree with it for longer than one workflow run. Only the
+ * folio's public-comment workflow writes it; people ask for changes with
+ * `cs-*` commands on its issue.
+ *
+ * Every change-set people have engaged with has exactly ONE primary `issue`,
+ * where the record is rendered and the requirements are agreed. Any number of
+ * other issues may discuss it (`issues`), because people are disorganised and
+ * that is fine: each is linked and pointed at the primary one.
  */
 export const ChangeSetSchema = z.object({
   $schema: z.literal(CHANGE_SET_SCHEMA),
@@ -470,12 +488,20 @@ export const ChangeSetSchema = z.object({
   /** What the change should do, in the editor's terms: the issue's requirements. */
   requirements: z.string().min(1),
   /** The comments it answers. A comment may be in more than one change-set. */
-  refs: z.array(z.string().regex(/^PC-\d{4,}$/)).min(1),
+  refs: z.array(z.string().regex(/^PC-\d{4,}$/)),
   /** The section or block the change is mainly about, for ordering. */
   anchor: z.string().optional(),
+  status: z.enum(CHANGE_SET_STATUSES).default("proposed"),
+  /** The primary issue: where the change-set is rendered and its requirements agreed. */
+  issue: z.number().int().positive().optional(),
+  /** Every issue that discusses it, the primary one included. */
+  issues: z.array(z.number().int().positive()).default([]),
+  /** The PR making the change. */
+  pr: z.object({ number: z.number().int().positive(), branch: z.string().min(1) }).optional(),
+  /** For `merged`: the change-set it was folded into. */
+  mergedInto: z.string().regex(/^CS-\d{3,}$/).optional(),
   proposedBy: z.string().min(1),
   proposedAt: z.string().min(1),
-  /** Set once the issue is opened. */
-  issue: z.number().int().positive().optional(),
+  history: z.array(ChangeSetHistorySchema).default([]),
 });
 export type ChangeSet = z.infer<typeof ChangeSetSchema>;

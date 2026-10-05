@@ -112,14 +112,14 @@
     <bpmn:endEvent id="EndEvent_Duplicate" name="Closed as a duplicate">
       <bpmn:incoming>Flow_Duplicate</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:task id="Task_ProposeChangeSets" name="Propose change-sets, one GitHub issue each">
-      <bpmn:documentation>public-comment-changesets seed / add / body / link: the agent groups the comments to be weighed into change-sets, one per change the document may need, and opens each as a GitHub issue whose body carries the requirements and a pc: line. A PROPOSAL: nothing is decided here, and a comment may sit in zero, one or several change-sets.</bpmn:documentation>
+    <bpmn:task id="Task_ProposeChangeSets" name="Propose change-sets, as records with no issue yet">
+      <bpmn:documentation>public-comment-changesets seed / propose: the agent groups the comments to be weighed into change-sets, one per change the document may need, each a record under changesets/ with its requirements and members. A PROPOSAL: nothing is decided, no GitHub issue is opened, and a comment may sit in zero, one or several change-sets. The record is the only one; everything shown about a change-set is rendered from it.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
       <bpmn:incoming>Flow_ToAssign</bpmn:incoming>
       <bpmn:outgoing>Flow_ToGroup</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_GroupChangeSets" name="Agree each change-set's requirements on its issue">
-      <bpmn:documentation>People discuss the requirements in the issue thread, and regroup by editing the issue body's pc: line (committee and editor only; the record follows the body exactly). Merging, splitting or closing an agent's proposal is ordinary work here. The issue is for requirements; the PR that closes it is for preview, review and approval.</bpmn:documentation>
+      <bpmn:documentation>A change-set gets its primary GitHub issue the first time somebody engages with it (the Discuss form, a recommendation or decision on one of its comments, a mention, a PR), opened by the folio's public-comment workflow; any number of other issues may discuss it and are linked. People agree the requirements there, and the committee or editor changes the record with cs-add / cs-remove / cs-title / cs-requirements / cs-merge / cs-split / cs-close / cs-new. The issue's change-set section is rendered from the record and put back if hand-edited; the nightly reconcile keeps every issue in line. The issue is for requirements; the PR that closes it is for preview, review and approval.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
       <bpmn:incoming>Flow_ToGroup</bpmn:incoming>
       <bpmn:outgoing>Flow_GroupedToAssign</bpmn:outgoing>

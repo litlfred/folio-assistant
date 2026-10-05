@@ -1933,6 +1933,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.changesethistoryschema.url",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ChangeSetHistorySchema.url"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The GitHub comment, issue or PR it came from."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetHistorySchema.url",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.changesetrefschema.before",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2021,10 +2040,67 @@
       ],
       "skos:definition": [
         {
-          "@value": "Set once the issue is opened."
+          "@value": "The primary issue: where the change-set is rendered and its requirements agreed."
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.issue",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.changesetschema.issues",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ChangeSetSchema.issues"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every issue that discusses it, the primary one included."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.issues",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.changesetschema.mergedinto",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ChangeSetSchema.mergedInto"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For `merged`: the change-set it was folded into."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.mergedInto",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.changesetschema.pr",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ChangeSetSchema.pr"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The PR making the change."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.pr",
       "skos:note": "candidate"
     },
     {
@@ -2139,25 +2215,6 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.discussion",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.publicfieldsschema.issues",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "PublicFieldsSchema.issues"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The CHANGE-SET issues this comment belongs to (issue #2183): zero or more. An issue groups related comments whose answer is one change; the PR that closes it carries them to editing, and to incorporated on merge. Set from the issue's own `pc:` list, never by hand-editing the record."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.issues",
       "skos:note": "candidate"
     },
     {

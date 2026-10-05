@@ -14,7 +14,7 @@ Candidate terms extracted from every BPMN task and call activity: `name` as the 
 
 From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 419 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 160 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 684 terms and is 555 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 684 terms and is 556 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -421,7 +421,7 @@ Agent review of the change [content-review] <span class="fa-gloss-status">candid
 Agree each change-set's requirements on its issue <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>People discuss the requirements in the issue thread, and regroup by editing the issue body's pc: line (committee and editor only; the record follows the body exactly). Merging, splitting or closing an agent's proposal is ordinary work here. The issue is for requirements; the PR that closes it is for preview, review and approval.</p>
+<p>A change-set gets its primary GitHub issue the first time somebody engages with it (the Discuss form, a recommendation or decision on one of its comments, a mention, a PR), opened by the folio's public-comment workflow; any number of other issues may discuss it and are linked. People agree the requirements there, and the committee or editor changes the record with cs-add / cs-remove / cs-title / cs-requirements / cs-merge / cs-split / cs-close / cs-new. The issue's change-set section is rendered from the record and put back if hand-edited; the nightly reconcile keeps every issue in line. The issue is for requirements; the PR that closes it is for preview, review and approval.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/public-comment.bpmn"><code>folio-assistant-core/processes/content/public-comment.bpmn#Task_GroupChangeSets</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_docssite.call_alert" data-fa-state="extracted" data-fa-gloss="">
@@ -3033,10 +3033,10 @@ Project a window onto the board <span class="fa-gloss-status">candidate, extract
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/ui/board-open-close.bpmn"><code>folio-assistant-core/processes/ui/board-open-close.bpmn#A_Open</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_publiccomment.task_proposechangesets" data-fa-state="extracted" data-fa-gloss="">
-Propose change-sets, one GitHub issue each <span class="fa-gloss-status">candidate, extracted</span>
+Propose change-sets, as records with no issue yet <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>public-comment-changesets seed / add / body / link: the agent groups the comments to be weighed into change-sets, one per change the document may need, and opens each as a GitHub issue whose body carries the requirements and a pc: line. A PROPOSAL: nothing is decided here, and a comment may sit in zero, one or several change-sets.</p>
+<p>public-comment-changesets seed / propose: the agent groups the comments to be weighed into change-sets, one per change the document may need, each a record under changesets/ with its requirements and members. A PROPOSAL: nothing is decided, no GitHub issue is opened, and a comment may sit in zero, one or several change-sets. The record is the only one; everything shown about a change-set is rendered from it.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/public-comment.bpmn"><code>folio-assistant-core/processes/content/public-comment.bpmn#Task_ProposeChangeSets</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_review.call_narrativecodereview" data-fa-state="extracted" data-fa-gloss="">

@@ -12,13 +12,31 @@ import {
   transition,
 } from "../schemas/public-comment.js";
 import type { ReviewAnchors } from "./docx-to-folio.js";
-import { addChangeSet, changeSets, issueBody, linkIssue, seed } from "./public-comment-changesets.js";
+import {
+  addChangeSet,
+  canonicalText,
+  changeSets,
+  checkChangeSets,
+  closedIssues,
+  executeActions,
+  formFields,
+  getChangeSet,
+  type GithubApi,
+  type GithubEvent,
+  handleGithubEvent,
+  installTemplates,
+  membership,
+  MENTION_OPEN_LIMIT,
+  parseCommands,
+  reconcilePlan,
+  renderSection,
+  saveChangeSet,
+  seed,
+  spliceBody,
+  splitBody,
+} from "./public-comment-changesets.js";
 import {
   applyGithubComment,
-  applyGithubIssue,
-  applyGithubPullRequest,
-  closedIssues,
-  issueRefs,
   channelOf,
   consentByName,
   filterComments,
@@ -241,12 +259,16 @@ describe("GitHub tags", () => {
   test("parse", () => {
     expect(parseGithubTag("pc: PC-0042, PC-43\nrecommend: accepted modified\n\nShorter is better.")).toEqual({
       refs: ["PC-0042", "PC-0043"],
+      changeSets: [],
       issues: [],
       verb: "recommend",
       code: "accepted-modified",
       text: "Shorter is better.",
     });
     expect(parseGithubTag("Just talking.")).toBeNull();
+    // In a change-set's issue a bare verb is a tag; the thread says which change-set.
+    expect(parseGithubTag("decide: accepted\n\nAgreed.")).toMatchObject({ refs: [], changeSets: [], verb: "decide" });
+    expect(parseGithubTag("cs: CS-12\nrecommend: noted")).toMatchObject({ changeSets: ["CS-012"] });
     expect(parseGithubTag("pc: #7\ndecide: noted\n\nCovered.")).toMatchObject({ refs: [], issues: [7], verb: "decide" });
     expect(parseGithubTag("pc: PC-1\nrecommend: maybe")).toMatchObject({ error: expect.stringContaining("is not one of") });
   });
@@ -365,57 +387,190 @@ describe("a consolidated review log (the DPI-H master log, 2026-10-05)", () => {
   });
 });
 
-describe("change-set issues (issue #2183)", () => {
+describe("change-sets and their issues (issue #2183)", () => {
   const at = "2026-10-05T12:00:00Z";
-  const three = () => {
+  const url = (n: number) => `https://github.com/o/r/issues/${n}`;
+  const store = (n = 8) => {
     const s = tempStore();
-    importRows(s, [1, 2, 3].map((i) => ({ row: i, reviewer: { name: "R" }, citation: { section: "1.1.2", page: "9", lines: "42" }, type: "technical", text: `Comment ${i}.` })), { channel: "comment-matrix", batch: "b", sha256: "s" }, at);
+    importRows(s, Array.from({ length: n }, (_, i) => ({ row: i + 1, reviewer: { name: "R" }, citation: { section: "1.1.2", page: "9", lines: "42" }, type: "technical", text: `Comment ${i + 1}.` })), { channel: "comment-matrix", batch: "b", sha256: "s" }, at);
+    addChangeSet(s, { title: "Clarify the DPI definition", requirements: "Say what DPI-H is in one sentence.", refs: ["PC-0001", "PC-0002"], by: "agent", at });
+    addChangeSet(s, { title: "Align actor terms", requirements: "Use one term.", refs: ["PC-0003"], by: "agent", at });
     return s;
   };
+  const comment = (n: number, login: string, body: string): GithubEvent => ({ action: "created", sender: { login }, issue: { number: n, html_url: url(n) }, comment: { body, user: { login }, html_url: `${url(n)}#c` } });
+  const opened = (n: number, login: string, body: string): GithubEvent => ({ action: "opened", sender: { login }, issue: { number: n, body, user: { login }, html_url: url(n) } });
+  const fake = () => {
+    const issues = new Map<number, { body: string; state: string }>();
+    const comments: Array<[number, string]> = [];
+    let next = 100;
+    const api: GithubApi = {
+      createIssue: async (_t, body) => (issues.set(next, { body, state: "open" }), next++),
+      getIssue: async (n) => issues.get(n) ?? { body: "", state: "open" },
+      updateIssue: async (n, p) => void issues.set(n, { body: p.body ?? issues.get(n)?.body ?? "", state: p.state ?? issues.get(n)?.state ?? "open" }),
+      comment: async (n, b) => void comments.push([n, b]),
+    };
+    return { issues, comments, api };
+  };
+  const run = async (s: Store, ev: GithubEvent, f = fake()) => {
+    const out = handleGithubEvent(s, ev, at);
+    out.log.push(...(await executeActions(s, out.actions, f.api, "bot", at)));
+    return { ...out, ...f };
+  };
 
-  test("an issue's pc: lines ARE its change-set: added, removed, and only from the committee", () => {
-    expect(issueRefs("Intro\n\npc: PC-0001, PC-0002\n- pc: PC-3")).toEqual(["PC-0001", "PC-0002", "PC-0003"]);
-    const s = three();
-    expect(applyGithubIssue(s, { number: 7, body: "pc: PC-0001, PC-0002", login: "stranger", association: "NONE", at }).refused).toHaveLength(1);
-    expect(s.all().every((c) => c.public.issues.length === 0)).toBe(true);
-    expect(applyGithubIssue(s, { number: 7, body: "pc: PC-0001, PC-0002", login: "cm", at }).added).toEqual(["PC-0001", "PC-0002"]);
-    // Editing the list moves the membership with it.
-    const r = applyGithubIssue(s, { number: 7, body: "pc: PC-0002, PC-0003", login: "cm", at });
-    expect(r).toMatchObject({ added: ["PC-0003"], removed: ["PC-0001"] });
-    expect(s.get("PC-0001").public.issues).toEqual([]);
-    expect(s.get("PC-0002").public.issues).toEqual([7]);
+  test("an agent's proposal has no issue; the comment's change-sets are derived, never stored on it", () => {
+    const s = store();
+    expect(getChangeSet(s, "CS-001")).toMatchObject({ status: "proposed", issues: [] });
+    expect(membership(s).get("PC-0001")!.map((c) => c.id)).toEqual(["CS-001"]);
+    expect("issues" in s.get("PC-0001").public).toBe(false);
+    expect(seed(s).flatMap((b) => b.comments as Array<{ ref: string }>).map((c) => c.ref)).toEqual(["PC-0004", "PC-0005", "PC-0006", "PC-0007", "PC-0008"]);
+    expect(checkChangeSets(s).errors).toEqual([]);
   });
 
-  test("`pc: #7` decides every comment in the issue; the PR that closes it carries them to editing, then incorporated", () => {
-    const s = three();
-    applyGithubIssue(s, { number: 7, body: "pc: PC-0001, PC-0002", login: "cm", at });
-    const d = applyGithubComment(s, { login: "ed", body: "pc: #7\ndecide: accepted\n\nAgreed on the issue.", url: "https://github.com/o/r/issues/7#c", at });
-    expect(d.applied.sort()).toEqual(["PC-0001", "PC-0002"]);
-    expect(closedIssues("Fixes the actors table.\n\nCloses #7, resolves #9")).toEqual([7, 9]);
-    const opened = applyGithubPullRequest(s, { number: 12, body: "Closes #7", branch: "cs-007", merged: false, closed: false, login: "au", at });
-    expect(opened.applied.sort()).toEqual(["PC-0001", "PC-0002"]);
-    expect(s.get("PC-0001")).toMatchObject({ status: "editing", public: { decision: { changeSet: { branch: "cs-007", pr: 12 } } } });
-    // A PR closed WITHOUT merging moves nothing.
-    expect(applyGithubPullRequest(s, { number: 12, body: "Closes #7", branch: "cs-007", merged: false, closed: true, login: "au", at }).applied).toEqual([]);
-    const merged = applyGithubPullRequest(s, { number: 12, body: "Closes #7", branch: "cs-007", merged: true, closed: true, login: "au", at });
-    expect(merged.applied.sort()).toEqual(["PC-0001", "PC-0002"]);
+  test("the Discuss form adopts its issue; a second issue on the same change-set is linked, not adopted", async () => {
+    const s = store();
+    const form = "### Change-set\n\nCS-001\n\n### Discussion\n\nShould this mention the G20?";
+    expect(formFields(form)).toEqual({ cs: "CS-001", text: "Should this mention the G20?" });
+    const f = fake();
+    f.issues.set(60, { body: form, state: "open" });
+    const r = await run(s, opened(60, "anyone", form), f);
+    expect(getChangeSet(s, "CS-001")).toMatchObject({ status: "discussing", issue: 60, issues: [60] });
+    // The section is rendered into the issue; the person's text stays below it.
+    expect(f.issues.get(60)!.body).toContain("<!-- public-comment-changeset CS-001 -->");
+    expect(f.issues.get(60)!.body).toContain("Should this mention the G20?");
+    expect(r.actions.some((a) => a.kind === "create")).toBe(false);
+    // Disorganised people: another Discuss issue for the same change-set.
+    f.issues.set(61, { body: form, state: "open" });
+    const again = await run(s, opened(61, "someone", form), f);
+    expect(getChangeSet(s, "CS-001")).toMatchObject({ issue: 60, issues: [60, 61] });
+    expect(again.log.join("\n")).toContain("discussed mainly in #60");
+    expect(f.issues.get(60)!.body).toContain("### Also discussed in\n\n#61");
+    expect(f.issues.get(61)!.body).not.toContain("public-comment-changeset");
+  });
+
+  test("a decision anywhere opens the change-set's issue, and says why there", async () => {
+    const s = store();
+    const r = await run(s, comment(50, "ed", "pc: PC-0001\ndecide: accepted\n\nAgreed."));
+    expect(s.get("PC-0001").status).toBe("decided");
+    const cs = getChangeSet(s, "CS-001");
+    expect(cs).toMatchObject({ status: "discussing", issue: 100 });
+    expect(cs.issues).toEqual([50, 100]);
+    expect(r.comments.find(([n]) => n === 100)![1]).toContain("@ed decided **accepted** on PC-0001");
+    expect(r.issues.get(100)!.body).toContain("decided: **accepted**");
+    // In that issue a bare verb means the whole change-set.
+    await run(s, comment(100, "ed", "decide: accepted\n\nBoth, then."), r);
+    expect(s.get("PC-0002").public.decision?.code).toBe("accepted");
+  });
+
+  test("a mention links an issue to a change-set, and opens at most a few issues at once", async () => {
+    const s = store(12);
+    const r = await run(s, comment(70, "anyone", "PC-0003 is wrong, I think."));
+    expect(getChangeSet(s, "CS-002")).toMatchObject({ issue: 100, issues: [70, 100] });
+    expect(r.log.join("\n")).toContain("#70 linked to CS-002");
+    for (let i = 4; i <= 4 + MENTION_OPEN_LIMIT; i++) addChangeSet(s, { title: `T${i}`, requirements: "r", refs: [`PC-${String(i).padStart(4, "0")}`], by: "agent", at });
+    const many = handleGithubEvent(s, comment(71, "anyone", "See PC-0004 PC-0005 PC-0006 PC-0007 PC-0008 PC-0009"), at);
+    expect(many.actions.filter((a) => a.kind === "create")).toHaveLength(0);
+    expect(many.log.join("\n")).toContain("too many to open from one mention");
+  });
+
+  test("commands change the record, from the committee only, and re-render it", async () => {
+    const s = store();
+    const f = fake();
+    f.issues.set(60, { body: "", state: "open" });
+    await run(s, opened(60, "x", "cs: CS-001"), f);
+    expect(parseCommands("cs-requirements: One.\nTwo.\ncs-title: New")).toEqual([{ cmd: "requirements", arg: "One.\nTwo." }, { cmd: "title", arg: "New" }]);
+    const no = await run(s, comment(60, "stranger", "cs-add: PC-0004"), f);
+    expect(no.log[0]).toContain("not on the committee");
+    await run(s, comment(60, "cm", "cs-add: PC-0004, PC-0005\ncs-remove: PC-0002\ncs-requirements: Define DPI-H once.\nIn 1.1.2."), f);
+    expect(getChangeSet(s, "CS-001")).toMatchObject({ refs: ["PC-0001", "PC-0004", "PC-0005"], requirements: "Define DPI-H once.\nIn 1.1.2." });
+    expect(f.issues.get(60)!.body).toContain("Define DPI-H once.");
+    await run(s, comment(60, "cm", "cs-merge: CS-002"), f);
+    expect(getChangeSet(s, "CS-002")).toMatchObject({ status: "merged", mergedInto: "CS-001" });
+    expect(getChangeSet(s, "CS-001").refs).toContain("PC-0003");
+    const split = await run(s, comment(60, "cm", "cs-split: PC-0004, PC-0005 as Say who stewards it"), f);
+    expect(getChangeSet(s, "CS-003")).toMatchObject({ title: "Say who stewards it", refs: ["PC-0004", "PC-0005"], status: "discussing" });
+    expect(split.log.join("\n")).toContain("split from CS-001");
+    expect(checkChangeSets(s).errors).toEqual([]);
+  });
+
+  test("a new change-set from the dashboard's picks: the form makes it and adopts its issue", async () => {
+    const s = store();
+    const form = "### Title\n\nCite the WHO guidance\n\n### Comments\n\nPC-0006, PC-0007\n\n### Requirements\n\nAdd the citation.";
+    expect(canonicalText(form)).toContain("cs-new: Cite the WHO guidance");
+    const f = fake();
+    f.issues.set(80, { body: form, state: "open" });
+    await run(s, opened(80, "cm", form), f);
+    expect(getChangeSet(s, "CS-003")).toMatchObject({ refs: ["PC-0006", "PC-0007"], requirements: "Add the citation.", issue: 80, status: "discussing" });
+  });
+
+  test("a hand edit of the rendered section is replaced; an edit below it is the person's own", async () => {
+    const s = store();
+    const f = fake();
+    f.issues.set(60, { body: "", state: "open" });
+    await run(s, opened(60, "x", "cs: CS-001"), f);
+    const body = f.issues.get(60)!.body;
+    const edited = body.replace("Say what DPI-H is", "Say whatever");
+    const ev = (to: string, from: string): GithubEvent => ({ action: "edited", sender: { login: "x" }, changes: { body: { from } }, issue: { number: 60, body: to, html_url: url(60) } });
+    f.issues.set(60, { body: edited, state: "open" });
+    const r = await run(s, ev(edited, body), f);
+    expect(r.log[0]).toContain("edit to it was replaced");
+    expect(f.issues.get(60)!.body).toContain("Say what DPI-H is");
+    const tail = spliceBody(f.issues.get(60)!.body, renderSection(getChangeSet(s, "CS-001"), s)) + "\n\nAlso, see the annex.";
+    expect(splitBody(tail).rest).toContain("see the annex");
+    expect((await run(s, ev(tail, f.issues.get(60)!.body), f)).log.filter((l) => l.includes("replaced"))).toEqual([]);
+  });
+
+  test("the PR that closes a linked issue: editing, then incorporated; closed unmerged goes back", async () => {
+    const s = store();
+    const f = fake();
+    await run(s, comment(50, "ed", "pc: PC-0001, PC-0002\ndecide: accepted\n\nYes."), f);
+    expect(closedIssues("Closes #50, fixes #9")).toEqual([50, 9]);
+    const pr = (merged: boolean, state: string): GithubEvent => ({ action: merged || state === "closed" ? "closed" : "opened", sender: { login: "au" }, pull_request: { number: 12, body: "Closes #50", head: { ref: "cs-001" }, merged, state, html_url: "https://github.com/o/r/pull/12" } });
+    await run(s, pr(false, "open"), f);
+    expect(getChangeSet(s, "CS-001")).toMatchObject({ status: "editing", pr: { number: 12, branch: "cs-001" } });
+    expect(s.get("PC-0001").status).toBe("editing");
+    await run(s, pr(false, "closed"), f);
+    expect(getChangeSet(s, "CS-001").status).toBe("discussing");
+    await run(s, pr(false, "open"), f);
+    const m = await run(s, pr(true, "closed"), f);
+    expect(getChangeSet(s, "CS-001").status).toBe("incorporated");
     expect(s.get("PC-0002").status).toBe("incorporated");
-    expect(s.get("PC-0003").status).toBe("received");
+    expect(m.actions).toContainEqual({ kind: "state", issue: 100, state: "closed", reason: "completed" });
   });
 
-  test("an agent proposes change-sets; the issue body carries the pc: list; link groups the comments", () => {
-    const s = three();
-    expect(seed(s)[0]!.comments).toHaveLength(3);
-    const cs = addChangeSet(s, { title: "Clarify the DPI definition", requirements: "Say what DPI-H is in one sentence.", refs: ["PC-0001", "PC-0003"], by: "agent", at });
-    expect(cs.id).toBe("CS-001");
-    expect(() => addChangeSet(s, { title: "x", requirements: "y", refs: ["PC-9999"], by: "agent", at })).toThrow(/not comments/);
-    const body = issueBody(cs, s);
-    expect(body).toContain("<!-- public-comment-changeset CS-001 -->");
-    expect(issueRefs(body)).toEqual(["PC-0001", "PC-0003"]);
-    expect(linkIssue(s, "CS-001", 21, "agent", at).added).toEqual(["PC-0001", "PC-0003"]);
-    expect(changeSets(s)[0]!.issue).toBe(21);
-    expect(s.get("PC-0001").public.issues).toEqual([21]);
-    // Seeded input leaves out what is already in a change-set.
-    expect(seed(s).flatMap((b) => b.comments as Array<{ ref: string }>).map((c) => c.ref)).toEqual(["PC-0002"]);
+  test("a primary issue closed by hand: reopened while comments still need a change; closed when none do", async () => {
+    const s = store();
+    const f = fake();
+    await run(s, opened(60, "x", "cs: CS-002"), f);
+    const closed: GithubEvent = { action: "closed", sender: { login: "x" }, issue: { number: 60, html_url: url(60) } };
+    const r = await run(s, closed, f);
+    expect(r.actions).toContainEqual({ kind: "state", issue: 60, state: "open" });
+    await run(s, comment(60, "ed", "decide: not-accepted\n\nOut of scope."), f);
+    await run(s, closed, f);
+    expect(getChangeSet(s, "CS-002").status).toBe("closed");
+  });
+
+  test("install writes the issue forms and workflows with the platform path filled, and keeps what is there", () => {
+    const repo = mkdtempSync(join(tmpdir(), "pc-install-"));
+    const r = installTemplates(repo, { assistant: "platform" });
+    expect(r.written.sort()).toEqual(["ISSUE_TEMPLATE/change-set-new.yml", "ISSUE_TEMPLATE/change-set.yml", "ISSUE_TEMPLATE/comment-decision.yml", "workflows/public-comment-check.yml", "workflows/public-comment.yml"]);
+    const wf = readFileSync(join(repo, ".github", "workflows", "public-comment.yml"), "utf-8");
+    expect(wf).toContain("bun run platform/folio-assistant-core/scripts/public-comment-changesets.ts github");
+    expect(wf).not.toContain("{{assistant}}");
+    // The forms' labels are the ones the parser reads.
+    const form = readFileSync(join(repo, ".github", "ISSUE_TEMPLATE", "comment-decision.yml"), "utf-8");
+    for (const label of ["Comments", "Recommend or decide", "Decision", "Reason"]) expect(form).toContain(`label: ${label}`);
+    expect(installTemplates(repo, { assistant: "platform" }).kept).toHaveLength(5);
+  });
+
+  test("check finds contradictions; the reconcile opens an issue for a change-set decided outside GitHub", () => {
+    const s = store();
+    const cs = getChangeSet(s, "CS-001");
+    saveChangeSet(s, { ...cs, issue: 5, issues: [5] });
+    expect(checkChangeSets(s).errors.join("\n")).toContain("proposed, yet has issue #5");
+    saveChangeSet(s, cs);
+    s.save(transition(s.get("PC-0003"), "decide", { by: "ed", at, decision: { code: "noted", reason: "Already there." } }));
+    expect(checkChangeSets(s).warnings.join("\n")).toContain("CS-002");
+    expect(reconcilePlan(s)).toEqual([{ kind: "create", cs: "CS-002", notes: [expect.stringContaining("PC-0003")] }]);
+    expect(changeSets(s)).toHaveLength(2);
   });
 });
