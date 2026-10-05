@@ -1,0 +1,57 @@
+{
+  "$ref": "#/definitions/JsonLdContext",
+  "definitions": {
+    "JsonLdContext": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "representation": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "minLength": 1
+            },
+            "localPath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "url"
+          ],
+          "additionalProperties": false
+        },
+        "binds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "id",
+        "representation"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-artifact-index/JsonLdContextSchema.schema.json",
+  "title": "JsonLdContextSchema",
+  "description": "Generated from `JsonLdContextSchema` in schemas/fhir-artifact-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/confident-bardeen-inaarx",
+    "sha": "dadafa9af1c4db9d362636d5cb09cba4577959d1",
+    "pr": "2221/merge",
+    "run": "37366278195"
+  }
+}
