@@ -157,7 +157,10 @@ base kept the file, `git rm` when the base removed it — `takeBase` in
 `merge-base.ts`, and `provisionalSide` in `qa-resolve-conflicts.ts` for the
 delegated sidecars (#1854). Regeneration recreates the file if it is still
 produced. Classification is by path, so an authored path in a modify/delete
-conflict is refused exactly like any other conflict on it.
+conflict is refused exactly like any other conflict on it. The `owned-tree`
+patterns are the exception. They read which **parent commits** hold the path
+rather than which stages exist, because in a rename/rename "no stage 3" does
+not mean the base deleted anything (see `subgraph-payload` below).
 
 **Taking a deletion is the ONLY way a merge may drop a path, and
 `merge-base.ts` checks this before every merge commit** (beans `vsv7`,
@@ -459,6 +462,58 @@ rewrites its template in every locale. The `.po` files beside them are
 ### `site-data` — take the base, regenerate (36)
 
 Generated site data indexes under `docs/assets/**/*.json` and `docs/_data/`.
+
+### `subgraph-index` and `subgraph-payload` — owned tree, regenerate
+
+`**/docs/subgraph/**` holds the subgraph JSON-LD indexes. `**/docs/payload/sha256/**`
+holds the content-addressed payloads (`<hex>` is the sha256 of its bytes, with
+a `<hex>.json` sidecar beside it). `bun run subgraph:jsonld` writes both
+directories **whole**, and it deletes every file in them that it did not write.
+Any skill edit rewrites an index and moves a payload, so until #2176
+(2026-10-05) every merge of `main` into a PR that edited a skill was refused,
+and a person finished it by hand: `checkout --theirs`, then `subgraph:jsonld`.
+
+**Why not `take-base`.** When both sides change one node's payload, git reads
+it as a **rename/rename**. The base's hex goes to the branch's hex on one side
+and to main's hex on the other. Git leaves the old name at stage 1 only, the
+branch's new name at stage 2 only, and main's at stage 3 only. Both new stages
+hold git's three-way merge of the two bodies, **with conflict markers**. So
+`take-base` fails in two ways:
+
+- It reads "stage 2 only" as "the base deleted it" and `git rm`s the branch's
+  new payload. That is a path the branch **added**, so `droppedInMerge` refuses
+  it at the `resolved` checkpoint.
+- `checkout --theirs` writes marked bytes under a name that is the hash of
+  other bytes.
+
+**The `owned-tree` strategy** (`takeOwnedTree` in `merge-base.ts`) reads the
+parents' **commits**, never the stages. For each path:
+
+- it takes the base's committed blob when the base has the path;
+- it takes the branch's committed blob when only the branch has it;
+- it removes the path only when neither parent has it, which is a deletion both
+  sides made.
+
+The resolution therefore drops nothing a parent holds, and every kept payload
+holds the bytes its name hashes. The orphan it keeps is the writer's to remove.
+The writer is named in the pattern as `prunedBy: "subgraph:jsonld"`, a writer
+and not a check: `regen` still derives the check from the CI workflow. When
+`regen` runs that writer, the writer deletes the orphan.
+
+**Both #2145 checkpoints still hold, and they are why this works.** The
+`resolved` checkpoint sees no drop. The `staged` checkpoint sees the writer's
+deletion of the superseded payload, a path the branch added, and allows it
+because the disk no longer holds it either. That is the legitimate replacement
+of a content-addressed payload, which a single post-regen check would have
+refused. The test fixture in `merge-base.test.ts` covers this, and so does its
+refusal sibling, which shows that `take-base` on the same merge is refused.
+
+**Adding another `owned-tree` pattern** needs a writer that deletes what it
+did not write. Without one, the kept orphan survives `regen`, and only the
+writer's `:check` can catch it. The test requires every `owned-tree` pattern
+to name a `prunedBy` script that has a `:check` twin. Under `--no-regen` (a
+merge train), the orphan stays in the member's merge commit until the train's
+final `regen`.
 
 ### `readme-generated-regions` — hunk by hunk (209)
 

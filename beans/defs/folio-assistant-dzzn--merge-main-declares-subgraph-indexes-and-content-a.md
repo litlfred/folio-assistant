@@ -12,10 +12,10 @@ parent: folio-assistant-hfag
 Issue #2176. `merge:main` refuses on `cat-harness/docs/subgraph/**` and `docs/payload/sha256/**` (no declared pattern). Payloads conflict as rename/rename with conflict-marked stage blobs, so plain take-base would `git rm` the branch's added payload (refused by `droppedInMerge`) and write marked bytes under a content-addressed name.
 
 ## Todo
-- [ ] owned-tree strategy: take MERGE_HEAD's blob, else HEAD's, else rm
-- [ ] patterns subgraph-index + subgraph-payload
-- [ ] fixture tests in merge-base.test.ts (rename/rename, both sides)
-- [ ] skill section + skill:register + subgraph:jsonld
+- [x] owned-tree strategy: take MERGE_HEAD's blob, else HEAD's, else rm
+- [x] patterns subgraph-index + subgraph-payload
+- [x] fixture tests in merge-base.test.ts (rename/rename, both sides)
+- [x] skill section + skill:register + subgraph:jsonld
 - [ ] validate, PR, ready-to-merge
 
 ## Done when
