@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Every initialization step, as the declarations name them</title><style>
+  :root { color-scheme: light dark; --fg: #1b1f23; --bg: #ffffff; --muted: #57606a; --line: #d0d7de; --link: #0b5cad; }
+  @media (prefers-color-scheme: dark) { :root { --fg: #e6edf3; --bg: #0d1117; --muted: #8d96a0; --line: #30363d; --link: #58a6ff; } }
+  body { font: 16px/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); max-width: 50rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  a { color: var(--link); }
+  code, pre { font-family: ui-monospace, monospace; font-size: 0.92em; }
+  pre { overflow-x: auto; padding: 0.75rem; border: 1px solid var(--line); border-radius: 6px; }
+  table { border-collapse: collapse; display: block; overflow-x: auto; }
+  th, td { border: 1px solid var(--line); padding: 0.35rem 0.6rem; text-align: left; vertical-align: top; }
+  blockquote { margin-left: 0; padding-left: 1rem; border-left: 3px solid var(--line); color: var(--muted); }
+  hr { border: 0; border-top: 1px solid var(--line); }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-1op5myvzqhx.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/css/navbar-row.css"><script src="../../assets/js/navbar-row.js" defer></script></head><body><script type="application/json" id="fa-navbar-row" data-fa-root="../..">{"icons":["close","todos","beans","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-1op5myvzqhx"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">C@T Harness</a></nav><h1>Every initialization step, as the declarations name them</h1><p><strong>You are making sure a harness's initialization is complete</strong>: right after
+installing it (<code>initialize-harness</code> calls
+<a href="../processes/complete-initialization.bpmn"><code>complete-initialization</code></a>), or
+because you were dispatched to do exactly this with nothing but the diagram
+and the repository. Either way the steps are the same, and they are <strong>not
+listed in this file</strong>. They are named by the declarations.</p><h2>Where the steps come from</h2><p>Read <code>&#x3C;name>.json</code> at the root, then each name in its <code>needs</code>, from a
+sibling checkout at <code>../&#x3C;name>/&#x3C;name>.json</code>. Each step below names the
+declaration that names it, so a reader can see why it is there.</p><table><thead><tr><th>step</th><th>named by</th><th>done when</th></tr></thead><tbody><tr><td><code>declaration</code></td><td>the file itself</td><td><code>&#x3C;name>.json</code> parses and its <code>name</code> is its file name</td></tr><tr><td><code>needs:&#x3C;name></code></td><td><code>needs</code></td><td>the dependency is beside it, and its declaration parses</td></tr><tr><td><code>instructions:&#x3C;name></code></td><td>FR-4</td><td><em>stated</em>: <code>&#x3C;name>/docs/bootstrap/initialization.md</code> was read and followed</td></tr><tr><td><strong><code>schemas:staged</code></strong></td><td>each <code>$id</code> / <code>@id</code> under <code>iriBase</code> (FR-11)</td><td>the site build stages every JSON Schema and JSON-LD document at its IRI</td></tr><tr><td><strong><code>schemas:published</code></strong></td><td>the same IRIs (FR-11)</td><td>every one of those IRIs answers</td></tr><tr><td><code>directory:&#x3C;id></code></td><td><code>directories[]</code></td><td>the declared path exists</td></tr><tr><td><code>asset:&#x3C;id></code></td><td><code>assets[]</code></td><td>the declared file exists</td></tr><tr><td><code>readme</code></td><td>FR-8</td><td>the root has a <code>README.md</code></td></tr><tr><td><code>readme-sections</code></td><td>the README's own markers</td><td>every section the README opts into is current</td></tr><tr><td><code>site:workflow</code></td><td><code>repository</code></td><td>a workflow commits the rendered site onto <code>gh-pages</code></td></tr><tr><td><code>site:branch</code></td><td><code>repository</code></td><td>a <code>gh-pages</code> branch exists — it must, before Pages can be switched on (2026-10-01)</td></tr><tr><td><code>site:enabled</code></td><td><code>repository</code></td><td>Pages is on, serving <code>gh-pages</code></td></tr><tr><td><code>site:live</code></td><td><code>iriBase</code>, else the Pages address</td><td>the address answers</td></tr></tbody></table><p><strong>The two <code>schemas:</code> steps are the primary ones</strong> (owner, 2026-09-30:
+<em>"json(ld) is primary step in initializing KG harness"</em>). They are checked
+first once the declarations are read, and the report leads with them:
+<a href="publish-documents.html"><code>publish-documents</code></a>. Everything after them is either
+how those documents are reached (the site) or how a person reads about them
+(the README).</p><p>A harness above bootstrap names more steps <strong>the same way</strong>. A work-plan
+store it declares as a directory is a <code>directory:</code> step, and a harness's own
+set-up instructions are its <code>instructions:</code> step. Bootstrap does not need to
+know which harness declares what.</p><p>The site steps are in <a href="publish-site.html"><code>publish-site</code></a>.</p><h2>Four states, not two</h2><ul><li><strong>done</strong>: checked, and it holds.</li><li><strong>not done</strong>: checked, and it does not. Say exactly what to do next.</li><li><strong>could not determine</strong>: the check could not run (no forge CLI, no
+network). <strong>Never reported as done.</strong> A check that could not look is not a
+pass.</li><li><strong>stated</strong>: the declarations name it but nothing can observe it (reading
+and following a harness's instructions). Follow it, say you did, and leave
+it <em>stated</em>, as a stated precondition in bootstrap's diagrams is never
+reported as satisfied.</li></ul><h2>Idempotent by construction</h2><p><strong>Check before doing, every time.</strong> A done step is left alone, so running
+the process twice changes nothing the second time, and an interrupted run is
+resumed by running it again. <strong>Performing is not the same as done</strong>: after
+you do a step, check it again, and only the check says <em>done</em>.</p><p><strong>Replace nothing.</strong> A step that would overwrite what somebody wrote (an
+existing README, a Pages site built from a branch, a declaration that
+disagrees with the directories on disk) is a step for the person. Ask
+through <a href="human-agent-discussion.html"><code>human-agent-discussion</code></a>, with the exact
+step written out.</p><p><strong>Do not create an empty declared directory to make its step pass.</strong> Git
+does not track an empty directory, so the check would pass on your machine
+and fail on every clone. Put its first file in it, or ask whether the entry
+should go.</p><h2>Where tools are available</h2><p>A toolset may perform the checks for you — for example <a href="https://github.com/litlfred/bootstrap-tools">https://github.com/litlfred/bootstrap-tools</a>, whose <code>init</code> command
+reads the same declarations, does what a tool can (regenerating README
+sections; switching Pages on when an authenticated <code>gh</code> is present), and
+prints each step in these four states with what to do next:</p><pre><code class="language-sh">bun run scripts/init.ts --root ../&#x3C;instance>        # from a toolset checkout beside it
+bun run scripts/init.ts --root ../&#x3C;instance> --dry-run   # check only
+</code></pre><p>Where no tools are available, do the same by reading files. The diagram is
+the same either way, and so is the report.</p><h2>The report</h2><p>One report through <a href="log-message.html"><code>log-message</code></a>, <strong>led by the primary
+step's state</strong> (the JSON Schemas and JSON-LD at their IRIs): then every step, the
+declaration that named it, its state, what was seen, and for anything not
+done, what to do and who does it. End with the counts (done, not done, could
+not determine, stated). An initialization that finished with steps open says
+which. It is not hidden behind "installed".</p></body></html>
