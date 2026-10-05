@@ -10,7 +10,7 @@ import { reviewPageHtml } from "../scripts/gen-review-page.ts";
 const ORIGIN = "http://nav.test";
 const at = (file: string, section: string, index: number) => ({ file, kind: "prose", section, index });
 const openComment = (id: number, targetLabel: string) => ({
-  $schema: "folio-review-comment/v1", id: `review-pr7-c${id}`, summary: "s", comment: "c", createdAt: "2026-09-23T07:00:00Z",
+  $schema: "review-comment/1.0.0", id: `review-pr7-c${id}`, summary: "s", comment: "c", createdAt: "2026-09-23T07:00:00Z",
   targetLabel, status: "open", priority: "medium", origin: "human",
   tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
   review: { repo: "o/r", pr: 7, commentId: id, commentUrl: `https://example.org/c/${id}`, reviewer: "r", role: "reviewer", kind: "question", blockHash: "h", commit: "c1", orphaned: false, anchoredFrom: [] },

@@ -92,6 +92,35 @@ classDiagram
       findings [0..*] Finding[]
       plan [0..1] object
     }
+    class cat_harness_docs_node_kind_index_1_0_0_Holding["Holding"] {
+      <<json: NodeKindIndexFileKind>>
+      typology [1] string
+      family [0..1] string
+    }
+    class cat_harness_docs_node_kind_index_1_0_0_Kind["Kind"] {
+      <<json: NodeKindIndexFileKind>>
+      id [1] string
+      parents [0..*] string[]
+      subclasses [0..*] string[]
+      declaredBy [0..1] string
+      module [0..1] string
+      exportName [0..1] string
+      holdings [0..*] Holding[]
+    }
+    class cat_harness_docs_node_kind_index_1_0_0_Unkinded["Unkinded"] {
+      <<json: NodeKindIndexFileKind>>
+      typology [1] string
+      family [0..1] string
+      reason [1] zod-schema | no-validator | unresolvable
+      ref [0..1] string
+    }
+    class cat_harness_docs_node_kind_index_1_0_0_node_kind_index_1_0_0["node-kind-index/1.0.0"] {
+      <<json: NodeKindIndexFileKind>>
+      kinds [0..*] Kind[]
+      unkinded [0..*] Unkinded[]
+      collisions [0..*] string[]
+      $schema [1] string
+    }
     class cat_harness_docs_folio_translation_status_v1_Locale["Locale"] {
       <<json: TranslationStatusSchema>>
       locale [1] string
@@ -367,6 +396,9 @@ classDiagram
   cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Item : items
   cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Edge : edges
   cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Finding : findings
+  cat_harness_docs_node_kind_index_1_0_0_Kind *-- "0..*" cat_harness_docs_node_kind_index_1_0_0_Holding : holdings
+  cat_harness_docs_node_kind_index_1_0_0_node_kind_index_1_0_0 *-- "0..*" cat_harness_docs_node_kind_index_1_0_0_Kind : kinds
+  cat_harness_docs_node_kind_index_1_0_0_node_kind_index_1_0_0 *-- "0..*" cat_harness_docs_node_kind_index_1_0_0_Unkinded : unkinded
   cat_harness_docs_folio_translation_status_v1_folio_translation_status_v1 *-- "0..*" cat_harness_docs_folio_translation_status_v1_Locale : locales
   cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Module : modules
   cat_harness_docs_folio_schema_graph_v1_Decl *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Field : fields
@@ -396,6 +428,10 @@ classDiagram
   cssClass "cat_harness_docs_folio_bean_index_v1_Edge" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_bean_index_v1_Finding" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1" fa_uml_kind_docs
+  cssClass "cat_harness_docs_node_kind_index_1_0_0_Holding" fa_uml_kind_docs
+  cssClass "cat_harness_docs_node_kind_index_1_0_0_Kind" fa_uml_kind_docs
+  cssClass "cat_harness_docs_node_kind_index_1_0_0_Unkinded" fa_uml_kind_docs
+  cssClass "cat_harness_docs_node_kind_index_1_0_0_node_kind_index_1_0_0" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_translation_status_v1_Locale" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_translation_status_v1_folio_translation_status_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_schema_graph_v1_Module" fa_uml_kind_docs

@@ -24,7 +24,7 @@
  * ## `folio-review-comments` — bean `423d`, epic `q4jm`
  *
  * A pull request's tagged conversation comments, ingested into
- * `folio-review-comment/v1` todos and written as `review-comments.json`. A
+ * `review-comment/1.0.0` todos and written as `review-comments.json`. A
  * Tool, and governed by the `review-comments` skill, on the owner's ruling
  * *"make sure it is a Skill/Tool so process can be modified later"*: the
  * staging workflow only calls it.
@@ -96,7 +96,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "folio-review-comments",
       title: "Folio review comments",
       description:
-        "Ingest a pull request's tagged conversation comments (`block: <label>` on the first line) into `folio-review-comment/v1` todos, and write them as `review-comments.json`. Idempotent over its previous output, whose statuses it keeps. Re-anchors every comment against the head's blocks, following `renamedFrom`, and orphans a comment whose block is gone rather than dropping it.",
+        "Ingest a pull request's tagged conversation comments (`block: <label>` on the first line) into `review-comment/1.0.0` todos, and write them as `review-comments.json`. Idempotent over its previous output, whose statuses it keeps. Re-anchors every comment against the head's blocks, following `renamedFrom`, and orphans a comment whose block is gone rather than dropping it.",
       install: { none: true },
       invoke: { shell: "bun run folio-assistant-core/scripts/review-comments.ts" },
       io: {
@@ -113,7 +113,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "comments", schema: t("RepoPath"), required: false, arg: { flag: "--comments" }, description: "Read comments from this JSON file instead of GitHub: offline runs and tests." },
         ],
         outputs: [
-          { name: "review-comments", schema: t("RepoPath"), description: "A `folio-review-comments/v1` file whose `comments` are `folio-review-comment/v1` todos. Its one-line summary goes to stderr." },
+          { name: "review-comments", schema: t("RepoPath"), description: "A `folio-review-comments/v1` file whose `comments` are `review-comment/1.0.0` todos. Its one-line summary goes to stderr." },
         ],
       },
       satisfies: ["review-comments"],
@@ -130,7 +130,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "folio-review-comment-move",
       title: "Move a review comment's status",
       description:
-        "A review-process task moves one `folio-review-comment/v1` todo's status (address, send back, resolve, adjudicate, withdraw) through `transition()`, which refuses any move the named BPMN task may not make. The comment is written to the folio's todos graph (its declared `todo-feedback` directory) and, with `--commit`, committed to the edit-set's FEATURE branch. Refused on the base branch and on a detached HEAD.",
+        "A review-process task moves one `review-comment/1.0.0` todo's status (address, send back, resolve, adjudicate, withdraw) through `transition()`, which refuses any move the named BPMN task may not make. The comment is written to the folio's todos graph (its declared `todo-feedback` directory) and, with `--commit`, committed to the edit-set's FEATURE branch. Refused on the base branch and on a detached HEAD.",
       install: { none: true },
       invoke: { shell: "bun run folio-assistant-core/scripts/review-comment-move.ts" },
       io: {

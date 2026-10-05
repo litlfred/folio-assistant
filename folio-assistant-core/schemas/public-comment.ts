@@ -77,7 +77,7 @@ import { z } from "zod";
 import { nodeKind } from "../../cat-harness/schemas/node-kind.js";
 import { TodoNodeKind } from "../../cat-harness/schemas/todo.js";
 
-export const PUBLIC_COMMENT_SCHEMA = "folio-public-comment/v1" as const;
+export const PUBLIC_COMMENT_SCHEMA = "public-comment/1.0.0" as const;
 
 export const PUBLIC_COMMENT_STATUSES = [
   "received",
@@ -288,13 +288,12 @@ export const PublicCommentKind = nodeKind(
   PUBLIC_COMMENT_SCHEMA,
   [TodoNodeKind],
   {
-    $schema: z.literal(PUBLIC_COMMENT_SCHEMA),
     /** The anchor's target, mirrored for todo readers; null when unplaced. */
     targetLabel: z.string().min(1).nullable(),
     status: z.enum(PUBLIC_COMMENT_STATUSES),
     public: PublicFieldsSchema,
   },
-  { overrides: ["$schema", "targetLabel", "status"] },
+  { overrides: ["targetLabel", "status"] },
 );
 
 export const PublicCommentSchema = PublicCommentKind.schema.superRefine((c, ctx) => {
@@ -446,7 +445,7 @@ export const formatRef = (n: number) => `PC-${String(n).padStart(4, "0")}`;
 
 // ── Change-sets (issue #2183) ────────────────────────────────────
 
-export const CHANGE_SET_SCHEMA = "folio-public-comment-changeset/v1" as const;
+export const CHANGE_SET_SCHEMA = "changeset/1.0.0" as const;
 
 /**
  * Where a change-set is. `proposed`: drafted, nobody has engaged, so it has no
@@ -480,8 +479,7 @@ export const ChangeSetHistorySchema = z.object({
  * other issues may discuss it (`issues`), because people are disorganised and
  * that is fine: each is linked and pointed at the primary one.
  */
-export const ChangeSetSchema = z.object({
-  $schema: z.literal(CHANGE_SET_SCHEMA),
+const ChangeSetFields = {
   /** "CS-001". */
   id: z.string().regex(/^CS-\d{3,}$/),
   title: z.string().min(1),
@@ -503,5 +501,14 @@ export const ChangeSetSchema = z.object({
   proposedBy: z.string().min(1),
   proposedAt: z.string().min(1),
   history: z.array(ChangeSetHistorySchema).default([]),
-});
+};
+
+/**
+ * The change-set as a NODE KIND (issue #2195), found through the
+ * `public-comments` typology's family of its tag. No parents — a change-set
+ * groups public comments; it is not itself a comment or a todo. Its `$schema`
+ * is generated from the versioned id, so the schema below has ONE source.
+ */
+export const ChangeSetKind = nodeKind(CHANGE_SET_SCHEMA, [], ChangeSetFields);
+export const ChangeSetSchema = ChangeSetKind.schema;
 export type ChangeSet = z.infer<typeof ChangeSetSchema>;

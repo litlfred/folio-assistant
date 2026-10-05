@@ -431,7 +431,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-comments",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `folio-review-comment/v1` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
+              "description": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `review-comment/1.0.0` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-core",
@@ -440,9 +440,9 @@
               "instructionsPath": "skills/authoring/authoring-core/review-comments.md",
               "name": "review-comments",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/51f54b251785529cae59666ccd9d3d0d38bd27b1f1444326d30c12763b579f25",
-                "bytes": 16833,
-                "sha256": "51f54b251785529cae59666ccd9d3d0d38bd27b1f1444326d30c12763b579f25"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/89265e127786de02d1da18735d5046d130c49f3aa4cb2fa8559762dfd0bddab0",
+                "bytes": 16821,
+                "sha256": "89265e127786de02d1da18735d5046d130c49f3aa4cb2fa8559762dfd0bddab0"
               },
               "title": "Review comments — from a PR comment to a structured todo"
             },
@@ -1673,13 +1673,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 1530,
+              "instructionLines": 1531,
               "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
               "name": "directory-conventions",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6c5bb604d80d49b6b958889414f0d78cbc242664454ed95180048af733783808",
-                "bytes": 118211,
-                "sha256": "6c5bb604d80d49b6b958889414f0d78cbc242664454ed95180048af733783808"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fd39760cdfe01894b26492246859c04eb6fefb69184aee5bb6f17f0fb826e48d",
+                "bytes": 118704,
+                "sha256": "fd39760cdfe01894b26492246859c04eb6fefb69184aee5bb6f17f0fb826e48d"
               },
               "title": "Directory conventions — what an instance declares it scans"
             },
@@ -3279,9 +3279,9 @@
               "instructionsPath": "skills/sdlc/sdlc-core/before-after-preview.md",
               "name": "before-after-preview",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/efe06423bd42060da4495f03e832fe367a006be14d9b125beb186b29f9cfe9cc",
-                "bytes": 20398,
-                "sha256": "efe06423bd42060da4495f03e832fe367a006be14d9b125beb186b29f9cfe9cc"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/86d4787caba578530c2dfc8caeea7e1c1725401a7265a06275a20d7c8c8705f5",
+                "bytes": 20395,
+                "sha256": "86d4787caba578530c2dfc8caeea7e1c1725401a7265a06275a20d7c8c8705f5"
               },
               "title": "/before-after-preview — show the reviewer the change, not a description of it"
             },
@@ -4413,9 +4413,9 @@
               "instructionsPath": "skills/ui/theming/create-sticky-note.md",
               "name": "create-sticky-note",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b1d6567bd10904c5c87eb74f49787c52ebff2e398273f2ce05531dedd94f84fa",
-                "bytes": 7588,
-                "sha256": "b1d6567bd10904c5c87eb74f49787c52ebff2e398273f2ce05531dedd94f84fa"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b9fbfcbf0fec960f76677fa6061af30d9e9dd8fee24758a2fba57f6879b77d9d",
+                "bytes": 7585,
+                "sha256": "b9fbfcbf0fec960f76677fa6061af30d9e9dd8fee24758a2fba57f6879b77d9d"
               },
               "title": "Create a sticky note"
             },

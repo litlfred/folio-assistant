@@ -1,7 +1,9 @@
 /**
  * Folio Assistant — source-relevance API routes.
  *
- * Presents the source ledger (`content/bib-qa-verifications.json`) to the
+ * Presents the source ledger (`schemas/bib-attestations.ts`: the attestation
+ * store's `bib-verification` family, or `<folio>/bib-qa-verifications.json`
+ * before migration) to the
  * author: what has been uploaded, whether it bears on the folio, which of
  * its results are usable, whether it is already cited, and what to do next.
  *
@@ -30,7 +32,9 @@
  */
 
 import { folioDir } from "../../../cat-harness/schemas/cat-harness.js";
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
+
+import { readSourceLedger, writeSourceLedger } from "../../../cat-harness/schemas/bib-attestations.js";
 import { join } from "path";
 
 import { allows, forbidden, principalOf } from "../../../cat-harness-tools/src/core/rbac.js";
@@ -57,14 +61,11 @@ interface RefFacts {
   url: string | null;
 }
 
-function ledgerPath(repoRoot: string): string {
-  return join(folioDir(repoRoot),  "bib-qa-verifications.json");
-}
-
+/** The ONE reader of the source ledger: the attestation store, or the legacy file before migration. */
 function readLedger(repoRoot: string): SourceLedger {
-  const p = ledgerPath(repoRoot);
-  if (!existsSync(p)) return { _schema: "source-ledger/v1", entries: [] };
-  return JSON.parse(readFileSync(p, "utf-8"));
+  const read = readSourceLedger(repoRoot);
+  log("relevance", read.note);
+  return read.ledger;
 }
 
 /**
@@ -267,7 +268,8 @@ export async function handleRelevancePost(
     ...(payload.note ? { note: payload.note } : {}),
   };
 
-  writeFileSync(ledgerPath(config.repoRoot), `${JSON.stringify(ledger, null, 2)}\n`);
+  // Written back to where it was read from; the store write is verified by reading back.
+  writeSourceLedger(config.repoRoot, ledger);
   log("relevance", `adjudicated ${payload.key} by ${principalOf(req).actor}`);
 
   return Response.json({ ok: true, entry }, { headers: CORS });
