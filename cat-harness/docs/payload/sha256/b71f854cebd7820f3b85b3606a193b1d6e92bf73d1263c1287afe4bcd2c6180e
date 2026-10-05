@@ -161,10 +161,14 @@ conflict is refused exactly like any other conflict on it.
 
 **Taking a deletion is the ONLY way a merge may drop a path, and
 `merge-base.ts` checks this before every merge commit** (beans `vsv7`,
-`8j9e`). `droppedInMerge` compares the staged index with the merge base and
-both parents. A path either parent tracks that the result lacks is refused,
-and named, unless one side deleted it since the merge base. A path both
-parents hold, or one a side added, must survive. The check exists because of
+`8j9e`). `droppedInMerge` compares the index with the merge base and both
+parents. A path either parent tracks that the result lacks is a drop, unless
+one side deleted it since the merge base. A path both parents hold, or one a
+side added, must survive. The check runs twice. Right after resolution, before
+anything else is staged, every drop is refused. After regen and `add -A`, only
+a drop the disk still holds is refused, because a writer may delete what it
+owns: `subgraph:jsonld` replaces a content-addressed payload when the merge
+changes its node, and its `:check` proves that. The check exists because of
 the gitignored-but-tracked files under `*/test/results/`. Once one of them
 leaves the index, regen rewrites it on disk and `git add -A` does not stage it
 again, since it is now untracked and ignored. The failure signature is
