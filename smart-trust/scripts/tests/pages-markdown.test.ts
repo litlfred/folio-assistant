@@ -400,7 +400,6 @@ describe("materialization state is stated, never implied by styling", () => {
  */
 describe("left-hand nav — three roles, one per page kind", () => {
   const fm = (page: string): string => page.slice(0, page.indexOf("\n---", 4) + 4);
-  const readDoc = (rel: string): string => readFileSync(join(DOCS, rel), "utf-8");
 
   it("an artefact page stays EXCLUDED — 674 leaves would bury the sidebar", () => {
     const f = fm(readFileSync(join(ARTIFACTS, "CodeSystem-Actors.md"), "utf-8"));
