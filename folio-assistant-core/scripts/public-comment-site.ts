@@ -34,6 +34,7 @@ import type { ReviewAnchors } from "./docx-to-folio.js";
 import { type ChangeSet, DECISION_LABELS, IN_EDIT_STATUSES, OPEN_STATUSES, type PublicComment } from "../schemas/public-comment.js";
 import { changeSets, discussUrl } from "./public-comment-changesets.js";
 import { Store } from "./public-comment.js";
+import { darkRules } from "../../cat-harness/scripts/lib/scheme-css.ts";
 
 /** `folio-staging.yml`'s slug rule, step `slug`. */
 export const stagingSlug = (branch: string) =>
@@ -122,8 +123,8 @@ export function siteComments(
 const STYLE = `
   :root { color-scheme: light dark; --fg:#1b1b1b; --bg:#fdfdfb; --muted:#5b5b5b; --line:#d6d6d0; --link:#0b5cad; --chip:#eef2f7;
     --open:#9a5b00; --editing:#0b5cad; --decided:#2e6b2e; --closed:#5b5b5b; }
-  @media (prefers-color-scheme: dark) { :root { --fg:#e8e8e6; --bg:#161616; --muted:#a8a8a4; --line:#3a3a38; --link:#7db4ff; --chip:#23272e;
-    --open:#f0b35a; --editing:#7db4ff; --decided:#8fd18f; --closed:#a8a8a4; } }
+  ${darkRules(`:root { --fg:#e8e8e6; --bg:#161616; --muted:#a8a8a4; --line:#3a3a38; --link:#7db4ff; --chip:#23272e;
+    --open:#f0b35a; --editing:#7db4ff; --decided:#8fd18f; --closed:#a8a8a4; }`)}
   body { margin:0; font:1rem/1.5 system-ui,sans-serif; color:var(--fg); background:var(--bg); }
   /* Column and gutters belong to main: the harness rail owns body padding-left. */
   main { max-width:90rem; margin:0 auto; padding:1.5rem 1.5rem 4rem; }

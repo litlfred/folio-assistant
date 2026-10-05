@@ -21,6 +21,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`first-paint-scheme.e2e.ts`](first-paint-scheme.e2e.ts) | a file |  |
 | [`fishbone-relocate.e2e.ts`](fishbone-relocate.e2e.ts) | a file |  |
 | [`folio-mount.e2e.ts`](folio-mount.e2e.ts) | a file |  |
+| [`folio-scheme.e2e.ts`](folio-scheme.e2e.ts) | a file |  |
 | [`folio-three-states.e2e.ts`](folio-three-states.e2e.ts) | a file |  |
 | [`glass-card-metadata.e2e.ts`](glass-card-metadata.e2e.ts) | a file |  |
 | [`glass-card-open.e2e.ts`](glass-card-open.e2e.ts) | a file |  |
