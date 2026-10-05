@@ -26,3 +26,12 @@ A pair whose declared input changed is skipped. Tests must show it never is.
 - [ ] regen docblock + skill regen-mode description updated
 
 Claimed by session https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U on branch claude/zealous-gates-3o9ma2 (2026-10-05).
+
+## Progress, 2026-10-05 (PR #2141)
+
+- [x] `--changed <base>` and the narrowed fixpoint, with tests in `cat-harness/scripts/tests/changed-paths.test.ts`
+- [x] merge:main passes `--changed <fork point>` (reasons on `regenArgs` in `merge-base.ts`); `--full-regen` opts out
+- [x] measured: a replay of merge:main (older main 27b16bcac8 + this code, merging 98ab8cd784 = #1977, 18 changed paths). Full regen took 1601 s and the `--changed` run took 1406 s, both at load 17-19 on 4 CPUs. `--changed` skipped **0 of 114** pairs, so the gap is noise, not this change.
+- [x] regen docblock + prepare-merge regen-mode block
+
+**What is still open:** every pair is either undeclared (always asked) or `{tracked}` (asked on any change), so neither cut can skip anything until `task-io.ts` gains narrow, read-first glob declarations. Stream D owns that. The falsifier test covers each new declaration automatically. Wall time is bounded by `kg:audit:all:check` (198 s), `skill:register:check` (107 s, a barrier) and `kg:audit:check` (81 s), measured serially on e49c086207. A next lever for those is a recorded read-set (files opened and directories listed at the last green run), not a hand declaration.

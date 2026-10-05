@@ -154,7 +154,7 @@ describe("FALSIFIER over the real declaration table: no declared input can chang
     test(`${check}: each declared file, changed alone, asks it`, () => {
       const io = pairIO(check)!;
       const fp = footprintOf(ROOT, scripts, [check], io);
-      if ("always" in fp) return; // always asked: nothing can be skipped
+      if (!("files" in fp)) return; // always asked, or {tracked}: nothing narrow to falsify
       const files = expandGlobs(ROOT, [...(io.inputs ?? []), ...(io.outputs ?? [])]);
       expect("files" in files).toBe(true);
       if (!("files" in files)) return;
