@@ -22,7 +22,7 @@ folio-assistant. Esta página es su orientación: qué está observando,
 qué hacer primero y dónde buscar información.
 
 Para la *arquitectura* de habilidades, roles y capacidades, consulte
-[Habilidades y roles](../../skills.html). Esta página es la versión práctica.
+[Habilidades y roles](../../concepts/skills.html). Esta página es la versión práctica.
 
 1. TOC
 {:toc}
@@ -74,7 +74,7 @@ a mano, compruebe si ya existe uno.
 | `smart-base/skills/content/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
 | [Referencia de esquemas de habilidades](../../reference/skills/) | contrato de entrada/salida generado por habilidad |
 | [Instrucciones de habilidades](../../reference/skill-instructions/) | cuerpos de instrucciones completos generados |
-| [Habilidades y roles](../../skills.html) | cómo se componen las habilidades, los roles y las capacidades |
+| [Habilidades y roles](../../concepts/skills.html) | cómo se componen las habilidades, los roles y las capacidades |
 
 Ambos directorios `reference/` son **generados** — nunca los edite a mano.
 Regenere con `bun run scripts/gen-schema-docs.ts` y

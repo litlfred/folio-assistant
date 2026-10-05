@@ -307,7 +307,7 @@ hides.
 The processes are executable diagrams, not prose: `board-open-close.bpmn`,
 `board-relocate.bpmn` and `board-place-note.bpmn` under `folio-assistant-core/processes/ui/`,
 indexed with the rest on the [publication-workflow
-page](cat-harness/docs/publication-workflow.md). **Count the directory rather
+page](cat-harness/docs/process/publication-workflow.md). **Count the directory rather
 than quoting a number from this paragraph** — `bpmn-processes` says why.
 
 ## CI health — a red workflow looks exactly like a green one from in here
@@ -657,7 +657,7 @@ to spend the words: **do not start the topic.**
   [issue #198](https://github.com/litlfred/folio-assistant/issues/198).
 - **Every process here is BPMN, and the diagrams are executable.** The `.bpmn`
   files under `processes/` are the source of truth, indexed by
-  [`folio-assistant/docs/publication-workflow.md`](cat-harness/docs/publication-workflow.md) — the normative
+  [`folio-assistant/docs/process/publication-workflow.md`](cat-harness/docs/process/publication-workflow.md) — the normative
   picture of the HCI validation gate, the draft-review-publish path and the
   work-plan lane. `folio-assistant/docs/assets/img/workflows/*.svg` is
   generated: `bun run render:bpmn`, and `render:bpmn:check` fails if stale.
@@ -687,7 +687,7 @@ to spend the words: **do not start the topic.**
   A swarm is **asked for every time**, per swarm, with agent count, model level
   and rough cost —
   [`skills/sdlc/sdlc-core/swarm-management.md`](cat-harness/skills/sdlc/sdlc-core/swarm-management.md)
-  and the [reader-facing page](cat-harness/docs/swarm-management.md).
+  and the [reader-facing page](cat-harness/docs/guides/swarm-management.md).
 - **An instance declares the directories it scans — `<instance>.json` at that
   instance's own root.** Each entry names a directory and the **kind of graph**
   it holds: `folio` (authored content, rendered to a website by just-the-docs),

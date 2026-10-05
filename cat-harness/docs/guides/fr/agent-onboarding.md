@@ -23,7 +23,7 @@ folio-assistant. Cette page est votre orientation : ce que vous regardez,
 ce qu'il faut faire en premier, et où chercher les informations.
 
 Pour l'architecture des compétences, des rôles et des capacités, lisez
-[Compétences & rôles](../../skills.html). Cette page est la version pratique.
+[Compétences & rôles](../../concepts/skills.html). Cette page est la version pratique.
 
 1. TOC
 {:toc}
@@ -75,7 +75,7 @@ Les compétences sont l'unité de travail ici. Avant de créer une procédure
 | `smart-base/skills/content/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
 | [Référence du schéma de compétences](../../reference/skills/) | contrat d'entrée/sortie typé par compétence |
 | [Instructions de compétences](../../reference/skill-instructions/) | corps d'instructions complets générés |
-| [Compétences & rôles](../../skills.html) | comment les compétences, rôles et capacités se composent |
+| [Compétences & rôles](../../concepts/skills.html) | comment les compétences, rôles et capacités se composent |
 
 Les deux répertoires `reference/` sont **générés** — ne les modifiez jamais
 à la main. Régénérez avec `bun run scripts/gen-schema-docs.ts` et
