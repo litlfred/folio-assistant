@@ -80,12 +80,20 @@ function landing(): string {
 </body></html>`;
 }
 
+const ROW_JS = readFileSync(join(SITE, "assets/js/navbar-row.js"), "utf8");
+const ROW_CSS = readFileSync(join(SITE, "assets/css/navbar-row.css"), "utf8");
+
 async function open(p: Page, which: "landing" | "viewer"): Promise<string[]> {
   const errors: string[] = [];
   p.on("pageerror", (e) => errors.push(String(e)));
-  await p.route("http://rail.fixture/**", (r) =>
-    r.fulfill({ contentType: "text/html", body: which === "landing" ? landing() : VIEWER }),
-  );
+  await p.route("http://rail.fixture/**", (r) => {
+    // A committed viewer links the row's own files (`injectRail`, bean
+    // `lhvt`); serve the real ones there rather than the page's HTML.
+    const path = new URL(r.request().url()).pathname;
+    if (path.endsWith("/assets/js/navbar-row.js")) return r.fulfill({ contentType: "text/javascript", body: ROW_JS });
+    if (path.endsWith("/assets/css/navbar-row.css")) return r.fulfill({ contentType: "text/css", body: ROW_CSS });
+    return r.fulfill({ contentType: "text/html", body: which === "landing" ? landing() : VIEWER });
+  });
   await p.goto("http://rail.fixture/" + which + "/", { waitUntil: "load" });
   // At rest means the pointer is NOT on the strip — see navbar-row.e2e.ts.
   await p.mouse.move(1200, 700);
