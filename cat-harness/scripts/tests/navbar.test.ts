@@ -27,8 +27,9 @@ import {
   type NavGroup,
   type NavbarModel,
 } from "../lib/navbar.js";
-import { NAVBAR_ROW_CSS, NAVBAR_ROW_INLINE, NAVBAR_ROW_JS, injectRail, railModel, withNavbarRow } from "../lib/harness-rail.js";
-import { documentIndexOf } from "../lib/navbar.js";
+import { NAVBAR_LINKED, NAVBAR_ROW_CSS, NAVBAR_ROW_INLINE, NAVBAR_ROW_JS, declinesNavbar, injectRail, wantsLinkedRail, railModel, withNavbarRow } from "../lib/harness-rail.js";
+import { NAVBAR_CSS, documentIndexOf } from "../lib/navbar.js";
+import { thinPageHtml } from "../thin-page.js";
 import {
   BEGIN,
   END,
@@ -41,6 +42,7 @@ import { publishedUrlOf, solveCrop } from "../harness-tiles.js";
 import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { declaredGraphs, toRootFor, visualiserHref } from "../mount-instance-docs.js";
 import { kindTitle } from "../lib/nav-label.js";
+import { graphKindRowDecor } from "../lib/graph-kind-nav.js";
 
 // Typed WITH its middle region, because this fixture is a mounted page's
 // navbar and a mounted page always has one. `graphs` became optional for the
@@ -1084,6 +1086,72 @@ describe("adjacent graph rows cannot be confused (bean yag0)", () => {
   });
 });
 
+describe("the rail's Graphs group starts closed (#2150)", () => {
+  // Owner, 2026-10-05: "also have the "Graphs" section start closed on LHS navbar".
+  const graphsSummary = /<details class="fa-nav-group"( open)?><summary><span class="fa-nav-glyph" aria-hidden="true">▤<\/span>/;
+
+  it("is folded on arrival on a page with no section of its own", () => {
+    const html = navbarRegionsHtml(railModel({ instance: "x", toRoot: "..", links: [{ href: "../a/", label: "a" }] }));
+    expect(graphsSummary.exec(html)?.[1]).toBeUndefined();
+    expect(graphsSummary.test(html)).toBe(true);
+  });
+
+  it("opens when one of its rows is the page being read", () => {
+    const html = navbarRegionsHtml(
+      railModel({ instance: "x", toRoot: "..", links: [{ href: "../a/", label: "a" }, { label: "b", current: true }] }),
+    );
+    expect(graphsSummary.exec(html)?.[1]).toBe(" open");
+  });
+
+  it("stays folded beside the page's own section, which is the one open group", () => {
+    const html = navbarRegionsHtml(
+      railModel({
+        instance: "x",
+        toRoot: "..",
+        links: [{ label: "b", current: true }],
+        documentIndex: { label: "Contents", items: [{ href: "#a", label: "A" }], collapsible: true, open: true },
+      }),
+    );
+    expect(graphsSummary.exec(html)?.[1]).toBeUndefined();
+  });
+});
+
+describe("a harness row is not a graph-kind row, whatever its mark (#2151)", () => {
+  // Owner, 2026-10-05: "alignment of harnesses is off". `fa-nav-kind` (the
+  // strip-column indent) was inferred from "has an SVG glyph"; #2122 gave
+  // harnesses glyph marks, and smart-trust / SMART Base took the kind indent.
+  //
+  // Rows built from `graphKindRowDecor` itself, the one function that sets
+  // `NavItem.kind`, so this holds in a standalone cat-harness layer. That the
+  // rows `declaredGraphs` builds for a REAL instance carry it is asserted in
+  // `cat-harness-tools/scripts/tests/navbar-kind-rows.test.ts`, because it
+  // reads who-iris's declaration, which only the monorepo has.
+  const kinds = ["docs", "library", "skills"].map((k) => ({ href: `../${k}/`, label: k, ...graphKindRowDecor(k, "x") }));
+
+  it("graphKindRowDecor DECLARES the row a kind, whatever mark it draws", () => {
+    expect(kinds.every((r) => r.kind === true)).toBe(true);
+  });
+
+  it("a glyph-marked harness row gets no kind class, and nor does an avatar one", () => {
+    const html = navbarRegionsHtml(
+      railModel({
+        instance: "cat-harness",
+        toRoot: "..",
+        links: kinds,
+        harnesses: [
+          { href: "../smart-trust/", label: "smart-trust", glyphPath: "M12 3l7 3v6", tone: 199 },
+          { href: "../", label: "C@T Harness", avatar: { src: "../a.webp" }, tone: 268 },
+        ],
+      }),
+    );
+    const at = html.indexOf('<div class="fa-nav-bottom">');
+    expect(html.slice(at)).toContain('<a href="../smart-trust/"><span class="fa-nav-glyph');
+    expect(html.slice(at)).not.toContain("fa-nav-kind");
+    // ...while the kind rows above keep it.
+    expect(html.slice(0, at)).toContain('class="fa-nav-kind"');
+  });
+});
+
 describe("the harness row's data reaches a railed page (bean wckf, #2147)", () => {
   // `injectRail` writes the same `#fa-navbar-row` block `head_custom.html`
   // writes for the theme, so `docs-ui.js`'s ONE `mountNavIconRow` draws the
@@ -1141,6 +1209,40 @@ describe("the harness row's data reaches a railed page (bean wckf, #2147)", () =
   it("no row data, no row script — and a declined row still gets one, to say so", () => {
     expect(injectRail(SHELL, { ...opts })).not.toContain(NAVBAR_ROW_JS);
     expect(injectRail(SHELL, { ...opts, navbarRow: null })).toContain(NAVBAR_ROW_JS);
+  });
+});
+
+describe("a thin page asks for the rail with its style LINKED (bean lnoy)", () => {
+  // Owner, 2026-10-05: "1. Shared rail style first". Inlined, the rail was
+  // 7.9 KB (4.3 KB of CSS) on pages of 1.4-3 KB, which is why they declined it.
+  const opts = { instance: "C@T Harness", toRoot: "../..", links: [{ label: "Library", href: "../../library/" }], navbarRow: { icons: ["todos"] } };
+  const thin = `<!doctype html><html><head>${NAVBAR_LINKED}<title>x</title></head><body><main>x</main></body></html>`;
+
+  it("links navbar.css and the row's files, and inlines neither", () => {
+    const out = injectRail(thin, { ...opts, inlineRowAssets: { js: "/*JS*/", css: "/*CSS*/" } })!;
+    expect(out).toContain(`<link rel="stylesheet" href="../../${NAVBAR_CSS}">`);
+    expect(out).toContain(`<script src="../../${NAVBAR_ROW_JS}" defer></script>`);
+    expect(out).not.toContain("<style>");
+    expect(out).not.toContain("/*JS*/");
+    expect(out).toContain('<nav class="fa-nav"');
+  });
+
+  it("is a fraction of the inlined rail's weight", () => {
+    const plain = thin.replace(NAVBAR_LINKED, "");
+    const inlined = injectRail(plain, opts)!.length - plain.length;
+    const linked = injectRail(thin, opts)!.length - thin.length;
+    expect(linked).toBeLessThan(inlined / 2);
+  });
+
+  it("the meta is read in either attribute order, and `none` is still `none`", () => {
+    expect(wantsLinkedRail('<meta content="linked" name="folio-navbar">')).toBe(true);
+    expect(wantsLinkedRail('<meta name="folio-navbar" content="none">')).toBe(false);
+  });
+
+  it("thinPageHtml writes `linked`, not `none`", () => {
+    const html = thinPageHtml({ title: "x", configId: "x-config", config: {}, body: "<main></main>", script: "x.js", jsonld: "x.jsonld" });
+    expect(wantsLinkedRail(html)).toBe(true);
+    expect(declinesNavbar(html)).toBe(false);
   });
 });
 

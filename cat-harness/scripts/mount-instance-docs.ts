@@ -262,6 +262,20 @@ export function toRootFor(route: string, fileUnder: string): string {
 }
 
 /**
+ * Write a rail's shared data into the built site, once per content — bean
+ * `lnoy`. The file is named by its content's hash, so a second page with the
+ * same rail finds it already there.
+ */
+export function railDataWriter(siteAbs: string): (file: string, body: string) => void {
+  return (file, body) => {
+    const abs = join(siteAbs, file);
+    if (existsSync(abs)) return;
+    mkdirSync(dirname(abs), { recursive: true });
+    writeFileSync(abs, body);
+  };
+}
+
+/**
  * Where the Jekyll-built pages come from, repo-relative — e.g. `cat-harness/docs`.
  *
  * Read off the built instance's own declaration (its non-repository-scoped
@@ -838,6 +852,7 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
         links,
         ...(harnesses ? { harnesses } : {}),
         navbarRow: navbarRowData(built),
+        emitRailData: railDataWriter(siteAbs),
       });
       if (after === undefined) {
         skipped.push(file.slice(siteAbs.length + 1));
@@ -1021,6 +1036,7 @@ export function railStandalonePages(
         links,
         ...(harnesses ? { harnesses } : {}),
         navbarRow: foreign ? rebaseNavbarRow(navbarRowData(built), foreign.platformBase) : navbarRowData(built),
+        emitRailData: railDataWriter(siteAbs),
       });
       if (after === undefined) {
         skipped.push(rel);

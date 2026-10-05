@@ -135,7 +135,7 @@ describe("the thin page", () => {
     const html = todoPageHtml(ITEM, { targetHref: "../../p.html#n" });
     expect(html).toContain(`<link rel="canonical" href="./">`);
     expect(html).toContain(`<link rel="alternate" type="application/ld+json" href="../a-todo.jsonld">`);
-    expect(html).toContain(`<meta name="folio-navbar" content="none">`);
+    expect(html).toContain(`<meta name="folio-navbar" content="linked">`);
     expect(html).not.toContain(ITEM.summary);
     expect(isTodoPage(html)).toBe(true);
     expect(thinPageConfigOf(html, TODO_PAGE_CONFIG_ID)).toMatchObject({ id: "a-todo", targetHref: "../../p.html#n" });
