@@ -247,7 +247,7 @@ describe("gen-slice-sqlite — todos", () => {
   };
   const root = mkdtempSync(join(tmpdir(), "slice-todos-"));
   mkdirSync(join(root, "todos/items"), { recursive: true });
-  writeFileSync(join(root, "todos/items/t-aaaa.md"), "---\n$schema: folio-todo/v1\n---\nThe contentless index keeps word positions.\n");
+  writeFileSync(join(root, "todos/items/t-aaaa.md"), "---\n$schema: todo/1.0.0\n---\nThe contentless index keeps word positions.\n");
   afterAll(() => rmSync(root, { recursive: true, force: true }));
   const data = () => todosData(index, new Map([["t-aaaa", "todos/items/t-aaaa.md"]]), root, BASE);
   const relations = new Set(item.relations.map((r: { axis: string; label: string }) => `${r.axis} ${r.label}`)).size;

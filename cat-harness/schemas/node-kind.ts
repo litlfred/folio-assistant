@@ -45,7 +45,7 @@
  * A kind names its parents by reference, so the graph is the import graph and
  * there is no global registry to be loaded in the wrong order — a failure this
  * repository has paid for (`bunfig.toml`, 2026-09-20). A parent may be a
- * tagged kind (`folio-todo/v1`) or a named mixin (`themed`), which has no
+ * tagged kind (`todo/1.0.0`) or a named mixin (`themed`), which has no
  * `$schema` of its own. Both are kinds here, because both are layers.
  */
 import { z } from "zod";
@@ -54,7 +54,15 @@ import { findConflicts, flattenDependencies } from "./dependency-order";
 
 /** A node kind: its declared parents, its own fields, and the composed schema. */
 export interface NodeKind<S extends z.ZodRawShape = z.ZodRawShape> {
+  /** The kind's NAME — its identity and its URL segment (`changeset`). Never versioned. */
   id: string;
+  /**
+   * SemVer, for a kind whose nodes are files (issue #2195). Absent for a mixin
+   * (`themed`), which has no `$schema` of its own.
+   */
+  version?: string;
+  /** `<id>/<version>`: what a writer stamps in `$schema`. Absent when unversioned. */
+  tag?: string;
   parents: readonly NodeKind[];
   /** The fields this layer itself declares. */
   own: z.ZodRawShape;
@@ -64,6 +72,33 @@ export interface NodeKind<S extends z.ZodRawShape = z.ZodRawShape> {
   order: readonly string[];
   /** Every field, composed in {@link order}. */
   schema: z.ZodObject<S>;
+}
+
+/**
+ * A kind id carrying its version: `public-comment/1.0.0`. The owner,
+ * 2026-10-05: schema tags are short names, and versions are *"SEMVER"*, one
+ * live version per kind — a minor or patch bump only adds or fixes, so an older
+ * file stays valid; a major bump migrates every file in the same change.
+ */
+const VERSIONED = /^([a-z][a-z0-9-]*)\/(\d+)\.(\d+)\.(\d+)$/;
+
+/** Split `name/x.y.z`; undefined when `id` is not versioned. */
+export function parseSchemaTag(tag: string): { name: string; major: number; minor: number; patch: number } | undefined {
+  const m = VERSIONED.exec(tag);
+  return m ? { name: m[1]!, major: +m[2]!, minor: +m[3]!, patch: +m[4]! } : undefined;
+}
+
+/**
+ * Does a file stamped `tag` belong to `kind` at its current version? Same name,
+ * same MAJOR, and a minor.patch no newer than the kind's — a file cannot have
+ * been written against fields the kind does not have yet.
+ */
+export function acceptsSchemaTag(kind: Pick<NodeKind, "id" | "version">, tag: unknown): boolean {
+  if (typeof tag !== "string" || kind.version === undefined) return false;
+  const t = parseSchemaTag(tag);
+  const k = parseSchemaTag(`${kind.id}/${kind.version}`);
+  if (!t || !k || t.name !== k.name || t.major !== k.major) return false;
+  return t.minor < k.minor || (t.minor === k.minor && t.patch <= k.patch);
 }
 
 type UnionToIntersection<U> = (U extends unknown ? (x: U) => void : never) extends (x: infer I) => void ? I : never;
@@ -76,13 +111,41 @@ export type Composed<P extends readonly NodeKind<z.ZodRawShape>[], O extends z.Z
 // rather than widened with an index signature (which `Omit` would then erase).
 type AsShape<T> = T extends z.ZodRawShape ? T : never;
 
-/** Define a node kind from its parents and its own fields. Throws on any refusal above. */
-export function nodeKind<const P extends readonly NodeKind<z.ZodRawShape>[], O extends z.ZodRawShape>(
-  id: string,
+/** The `$schema` a versioned kind generates: a string, checked by {@link acceptsSchemaTag}. */
+type SchemaField = { $schema: z.ZodType<string> };
+type IsVersioned<I extends string> = I extends `${string}/${number}.${number}.${number}` ? true : false;
+type OwnOf<I extends string, O extends z.ZodRawShape> = IsVersioned<I> extends true ? AsShape<Flat<Omit<O, "$schema"> & SchemaField>> : O;
+
+/**
+ * Define a node kind from its parents and its own fields. Throws on any refusal above.
+ *
+ * An id of the form `name/x.y.z` makes a VERSIONED kind: its id is `name`, and
+ * it generates its own `$schema` field — accepting this name at this major, no
+ * newer than this minor.patch — so no kind spells its tag twice, and a
+ * subclass's `$schema` replaces its parent's without being listed as an
+ * override (every subclass has one; saying so each time says nothing).
+ */
+export function nodeKind<const I extends string, const P extends readonly NodeKind<z.ZodRawShape>[], O extends z.ZodRawShape>(
+  versionedId: I,
   parents: P,
-  own: O,
+  ownFields: O,
   opts: { overrides?: readonly (keyof O & string)[] } = {},
-): NodeKind<Composed<P, O>> {
+): NodeKind<Composed<P, OwnOf<I, O>>> {
+  const parsed = parseSchemaTag(versionedId);
+  const id = parsed ? parsed.name : versionedId;
+  const version = parsed ? `${parsed.major}.${parsed.minor}.${parsed.patch}` : undefined;
+  if (parsed && "$schema" in ownFields) {
+    throw new Error(`node kind \`${versionedId}\`: a versioned kind generates its \`$schema\`; do not declare one`);
+  }
+  const self = { id, version };
+  const own: z.ZodRawShape = parsed
+    ? {
+        ...ownFields,
+        $schema: z.string().refine((t) => acceptsSchemaTag(self, t), {
+          message: `expected \`${versionedId}\`, or an earlier minor/patch of major ${parsed.major}`,
+        }),
+      }
+    : ownFields;
   // Resolve every ancestor once. Post-order, so declaration order is the tie-break.
   const byId = new Map<string, NodeKind>();
   const declared: NodeKind[] = [];
@@ -116,7 +179,8 @@ export function nodeKind<const P extends readonly NodeKind<z.ZodRawShape>[], O e
     (k) => Object.keys(ownOf(k)),
   );
   const inherited = new Set(declared.flatMap((k) => Object.keys(k.own)));
-  const redefines = Object.keys(own).filter((f) => inherited.has(f));
+  // A versioned kind's generated `$schema` is not a redefinition anybody chose.
+  const redefines = Object.keys(own).filter((f) => inherited.has(f) && !(parsed && f === "$schema"));
   const declaredOverrides = new Set<string>(opts.overrides ?? []);
 
   const refusals: string[] = [];
@@ -137,11 +201,12 @@ export function nodeKind<const P extends readonly NodeKind<z.ZodRawShape>[], O e
   for (const s of order) Object.assign(shape, ownOf(s.id));
   return {
     id,
+    ...(version ? { version, tag: `${id}/${version}` } : {}),
     parents,
     own,
     overrides: [...declaredOverrides],
     order: order.map((s) => s.id),
-    schema: z.object(shape) as unknown as z.ZodObject<Composed<P, O>>,
+    schema: z.object(shape) as unknown as z.ZodObject<Composed<P, OwnOf<I, O>>>,
   };
 }
 

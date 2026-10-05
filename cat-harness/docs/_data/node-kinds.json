@@ -1,30 +1,16 @@
 {
-  "$schema": "folio-node-kind-index/v1",
+  "$schema": "node-kind-index/1.0.0",
   "kinds": [
     {
       "id": "carried-note",
       "parents": [],
       "subclasses": [
-        "folio-todo/v1"
+        "todo"
       ],
       "holdings": []
     },
     {
-      "id": "folio-node-kind-index/v1",
-      "parents": [],
-      "subclasses": [],
-      "declaredBy": "cat-harness",
-      "module": "cat-harness/schemas/node-kind-index.ts",
-      "exportName": "NodeKindIndexFileKind",
-      "holdings": [
-        {
-          "typology": "docs",
-          "family": "folio-node-kind-index/v1"
-        }
-      ]
-    },
-    {
-      "id": "folio-public-comment-changeset/v1",
+      "id": "changeset",
       "parents": [],
       "subclasses": [],
       "declaredBy": "folio-assistant-core",
@@ -33,14 +19,28 @@
       "holdings": [
         {
           "typology": "public-comments",
-          "family": "folio-public-comment-changeset/v1"
+          "family": "changeset/1.0.0"
         }
       ]
     },
     {
-      "id": "folio-public-comment/v1",
+      "id": "node-kind-index",
+      "parents": [],
+      "subclasses": [],
+      "declaredBy": "cat-harness",
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "exportName": "NodeKindIndexFileKind",
+      "holdings": [
+        {
+          "typology": "docs",
+          "family": "node-kind-index/1.0.0"
+        }
+      ]
+    },
+    {
+      "id": "public-comment",
       "parents": [
-        "folio-todo/v1"
+        "todo"
       ],
       "subclasses": [],
       "declaredBy": "folio-assistant-core",
@@ -49,18 +49,26 @@
       "holdings": [
         {
           "typology": "public-comments",
-          "family": "folio-public-comment/v1"
+          "family": "public-comment/1.0.0"
         }
       ]
     },
     {
-      "id": "folio-todo/v1",
+      "id": "themed",
+      "parents": [],
+      "subclasses": [
+        "todo"
+      ],
+      "holdings": []
+    },
+    {
+      "id": "todo",
       "parents": [
         "carried-note",
         "themed"
       ],
       "subclasses": [
-        "folio-public-comment/v1"
+        "public-comment"
       ],
       "holdings": [
         {
@@ -70,14 +78,6 @@
       "declaredBy": "cat-harness",
       "module": "cat-harness/schemas/todo.ts",
       "exportName": "TodoNodeKind"
-    },
-    {
-      "id": "themed",
-      "parents": [],
-      "subclasses": [
-        "folio-todo/v1"
-      ],
-      "holdings": []
     }
   ],
   "unkinded": [

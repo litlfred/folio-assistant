@@ -70,6 +70,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`check-module-scope-resolution.ts`](check-module-scope-resolution.ts) | a file |  |
 | [`check-nav-names.ts`](check-nav-names.ts) | a file |  |
 | [`check-navbar-consistency.ts`](check-navbar-consistency.ts) | a file |  |
+| [`check-node-kinds.ts`](check-node-kinds.ts) | a file |  |
 | [`check-process-bindings.ts`](check-process-bindings.ts) | a file |  |
 | [`check-process-documentation.ts`](check-process-documentation.ts) | a file |  |
 | [`check-process-index.ts`](check-process-index.ts) | a file |  |

@@ -36,11 +36,11 @@ export const INDEX_PATH = join(HARNESS_ROOT, "docs", "_data", "node-kinds.json")
 
 /** What is committed: the index, under a schema tag a reader can check. */
 export interface NodeKindIndexFile extends NodeKindIndex {
-  $schema: "folio-node-kind-index/v1";
+  $schema: "node-kind-index/1.0.0";
 }
 
 export function render(index: NodeKindIndex): string {
-  const file: NodeKindIndexFile = { $schema: "folio-node-kind-index/v1", ...index };
+  const file: NodeKindIndexFile = { $schema: "node-kind-index/1.0.0", ...index };
   return JSON.stringify(file, null, 2) + "\n";
 }
 

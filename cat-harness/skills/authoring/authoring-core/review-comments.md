@@ -3,7 +3,7 @@ name: review-comments
 description: >-
   Reviewer comments on a folio's edit-set, from a tagged pull-request comment
   to a structured todo on the review page. Covers the tag a reviewer types, how
-  the comments are ingested into `folio-review-comment/v1` todos, where the
+  the comments are ingested into `review-comment/1.0.0` todos, where the
   published `review-comments.json` comes from and when it refreshes, how a
   comment follows a renamed block and survives a removed one, who may change a
   comment's status, and how to change this process. Use when a reviewer asks
@@ -21,7 +21,7 @@ allowed-tools: Bash(bun run folio-assistant-core/scripts/review-comments.ts*) Re
 A reviewer comments on **one block** of a folio by writing an ordinary comment
 on the edit-set's pull request, starting with a tag that names the block. The
 review process turns each tagged comment into a **todo of a special kind**,
-`folio-review-comment/v1`. The review page lists those todos beside the
+`review-comment/1.0.0`. The review page lists those todos beside the
 blocks they are about.
 
 ## The rulings this rests on
@@ -74,7 +74,7 @@ comment box, so copying the line is the one manual step.
 
 ## What a review comment IS
 
-`folio-review-comment/v1`, in
+`review-comment/1.0.0`, in
 `folio-assistant-core/schemas/review-comment.ts`. It is declared with
 `nodeKind` (bean `a1lq`) and its one parent is the harness todo, which itself
 is `carried-note` + `themed`. So it IS a todo:
@@ -180,7 +180,7 @@ bun run folio-assistant-core/scripts/review-comment-move.ts \
   carrying the submitter's identity"), read from `todos/todos.json`. A graph
   that declares none gets an error naming the remedy.
 - **The file IS the node**: `<feedback dir>/<id>.json`, one
-  `folio-review-comment/v1`, the same object the published file carries. It
+  `review-comment/1.0.0`, the same object the published file carries. It
   is JSON, not Markdown, because the todo reader's front matter is flat and a
   review comment has a nested `review` field.
 - **`--commit` refuses the base branch** (default `main`, change it with

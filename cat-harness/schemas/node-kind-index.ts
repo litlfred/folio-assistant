@@ -88,8 +88,7 @@ export interface NodeKindIndex {
  * node kind — so the file that records node kinds is itself one, and the gate
  * that refuses a new unkinded family does not start by refusing its own.
  */
-export const NodeKindIndexFileKind = nodeKind("folio-node-kind-index/v1", [], {
-  $schema: z.literal("folio-node-kind-index/v1"),
+export const NodeKindIndexFileKind = nodeKind("node-kind-index/1.0.0", [], {
   kinds: z.array(z.object({
     id: z.string().min(1),
     parents: z.array(z.string()),

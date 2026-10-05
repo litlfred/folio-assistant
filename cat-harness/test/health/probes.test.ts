@@ -279,7 +279,7 @@ describe("probeTodos", () => {
         name: "fixture",
         directories: [{ id: "elsewhere", path: "elsewhere", graphTypologies: ["todo-items"] }],
       }),
-      "todos/elsewhere/one.md": "---\n$schema: folio-todo/v1\nid: one\nstatus: open\ncreatedAt: 2026-01-01\n---\nbody\n",
+      "todos/elsewhere/one.md": "---\n$schema: todo/1.0.0\nid: one\nstatus: open\ncreatedAt: 2026-01-01\n---\nbody\n",
       "todos/items/decoy.md": "---\nid: decoy\nstatus: open\n---\n",
     });
     const p = probeTodos(dir);
