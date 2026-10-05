@@ -89,9 +89,9 @@ conventions to come back to, not a path through the project.
 A **document** folio is structured prose; a **paper** is that plus the block
 kinds whose assertion is a formal mathematical claim, backed by `.lean` siblings
 and typeset through LaTeX. `PaperContentAdapter` extends
-`DocumentContentAdapter`, and `DOCUMENT_BLOCK_KINDS` in
-`schemas/block-kinds.ts` is the **derived** complement of `MATH_BLOCK_KINDS`, so
-a kind added to `BLOCK_KINDS` cannot go unclassified.
+`DocumentContentAdapter`. Block kinds are **discovered**, not listed: each is a
+`folio-block-kind/v1` node in the `block-kinds/` graph of the harness that owns
+it, with a required `profile`, so a kind cannot go unclassified.
 
 **The discipline is in the skill, not here** —
 [`skills/authoring/authoring-core/content-profiles.md`](cat-harness/skills/authoring/authoring-core/content-profiles.md)

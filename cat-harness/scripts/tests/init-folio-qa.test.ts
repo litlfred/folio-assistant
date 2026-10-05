@@ -54,7 +54,9 @@ describe("a new folio is QA'd from its first commit", () => {
     // Pointed at a directory this test owns, so the real write still happens
     // and lands where the test can assert on it.
     const sidecars = join(repo, "sidecar-root");
-    const sweep = spawnSync("bun", ["run", join(REPO_ROOT, "cat-harness/content/pipeline/qa-sweep.ts"), "handbook/folio", "--script-sidecar-root", sidecars], { cwd: repo, encoding: "utf-8" });
+    // `env` explicitly: Bun does not pass runtime-set variables to a child, and
+    // standalone the preload sets FOLIO_FIXTURE_CHECKOUT (the vocabulary).
+    const sweep = spawnSync("bun", ["run", join(REPO_ROOT, "cat-harness/content/pipeline/qa-sweep.ts"), "handbook/folio", "--script-sidecar-root", sidecars], { cwd: repo, encoding: "utf-8", env: { ...process.env } });
     expect(sweep.status).toBe(0);
     // ANTI-VACUITY. Without this, "the platform checkout was not written to"
     // would also be satisfied by a flag that silently disabled the write, or
@@ -69,7 +71,7 @@ describe("a new folio is QA'd from its first commit", () => {
     expect(existsSync(join(folio, "folio/test"))).toBe(false);
 
     const out = join(repo, "block-qa.json");
-    const pub = spawnSync("bun", ["run", join(REPO_ROOT, "cat-harness/scripts/publish-block-qa.ts"), "--folio", "handbook/folio", "--out", out], { cwd: repo, encoding: "utf-8" });
+    const pub = spawnSync("bun", ["run", join(REPO_ROOT, "cat-harness/scripts/publish-block-qa.ts"), "--folio", "handbook/folio", "--out", out], { cwd: repo, encoding: "utf-8", env: { ...process.env } });
     expect(pub.status).toBe(0);
     const summary = JSON.parse(readFileSync(out, "utf-8")) as { counts: Record<string, number> };
     // The regression: with the repository root as the anchor, every block read unaudited.

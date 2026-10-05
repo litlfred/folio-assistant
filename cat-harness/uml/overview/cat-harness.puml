@@ -8,6 +8,15 @@ skinparam shadowing false
 skinparam packageStyle rectangle
 hide empty methods
 
+package "cat-harness/cat-harness-validators" as pkg_cat_harness_cat_harness_validators <<validators>> {
+  class "folio-validator/v1" as cat_harness_cat_harness_validators_folio_validator_v1_folio_validator_v1 <<json: ValidatorNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-validator/v1'
+    id [1] : string
+    validates [1] : object
+    schema [1] : string
+    rationale [0..1] : string
+  }
+}
 package "cat-harness/tools" as pkg_cat_harness_tools <<tools>> {
   class "Maintain" as cat_harness_tools_Maintain <<json: ToolDefinitionSchema>> #eee9f5 {
     source [1] : string
@@ -574,6 +583,31 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     proseMentions [1] : number
     wrongDirection [1] : number
     undeterminedDirection [1] : number
+  }
+  class "folio-lsi-index/v1" as cat_harness_qa_folio_lsi_index_v1 <<ts: LsiSidecar>> #f4e6e6 {
+    $schema [1] : 'folio-lsi-index/v1'
+    method [1] : string
+    instance [1] : string
+    graph [1] : string
+    path [1] : string
+    docs [1] : string[] | null
+    fingerprint [1] : string
+    options [1] : LsiOptions
+    units [1] : number
+    terms [1] : number
+    k [1] : number
+    retained [1] : number
+    dimensions [1] : Array<{ dim: number; sigma: number; positive: string[]; negative: string[] }>
+    findings [1] : { nearDuplicates: Array<{ a: string; b: string; cosine: number }>; narrowDimensions: Array<{ dim: number; units: string[] }>; }
+    neighbours [1] : Record<string, Array<[string, number]>>
+  }
+  class "folio-tool-run/v1" as cat_harness_qa_folio_tool_run_v1_folio_tool_run_v1 <<json: ToolRunRecordSchema>> #f4e6e6 {
+    $schema [1] : 'folio-tool-run/v1'
+    tool [1] : string
+    target [1] : string
+    outcome [1] : succeeded | failed
+    inputFingerprint [1] : string
+    detail [0..1] : string
   }
   class "Page" as cat_harness_qa_viewer_nav_qa_v1_Page <<json: ViewerNavQaSchema>> #f4e6e6 {
     path [1] : string
@@ -1418,7 +1452,8 @@ cat_harness_agent_skill_authoring_openai_VoiceProfile *-- "1..*" cat_harness_age
 cat_harness_agent_skill_authoring_openai_Rule *-- "0..*" cat_harness_agent_skill_authoring_openai_Pattern : patterns
 cat_harness_agent_skill_authoring_openai_Rule *-- "0..*" cat_harness_agent_skill_authoring_openai_Terminology : terminology
 cat_harness_agent_skill_authoring_openai_VoiceProfile *-- "1..*" cat_harness_agent_skill_authoring_openai_Rule : rules
-' grid: portrait, 5 column(s) — pkg_cat_harness_tools pkg_cat_harness_external_schemas pkg_cat_harness_subscriptions pkg_cat_harness_code_lists pkg_cat_harness_vocab_mappings pkg_cat_harness_schemas pkg_cat_harness_uml pkg_cat_harness_skills pkg_cat_harness_scenarios pkg_cat_harness_policies pkg_cat_harness_processes pkg_cat_harness_methodologies pkg_cat_harness_qa pkg_cat_harness_attestations pkg_cat_harness_health pkg_cat_harness_uploads pkg_cat_harness_library pkg_cat_harness_translation_sources pkg_cat_harness_folio pkg_cat_harness_docs pkg_cat_harness_swimlane_glossary pkg_cat_harness_cat_harness_scripts pkg_cat_harness_cat_harness_src pkg_cat_harness_cat_harness_adapters pkg_cat_harness_cat_harness_tests pkg_cat_harness_folio_templates pkg_cat_harness_cat_harness_deploy pkg_cat_harness_voices pkg_cat_harness_vendors pkg_cat_harness_agent_skill_authoring_claude pkg_cat_harness_agent_skill_authoring_gemini_cli pkg_cat_harness_agent_skill_authoring_openai pkg_cat_harness_proposals pkg_cat_harness_requirements pkg_cat_harness_auto_docs pkg_cat_harness_glossary pkg_cat_harness_index_dmn pkg_cat_harness_index_docs pkg_cat_harness_index_processes pkg_cat_harness_index_roles pkg_cat_harness_index_schemas pkg_cat_harness_index_skills pkg_cat_harness_index_tasks pkg_cat_harness_index_tools pkg_cat_harness_uml_overview_pages pkg_cat_harness_uml_overview_svgs
+' grid: portrait, 5 column(s) — pkg_cat_harness_cat_harness_validators pkg_cat_harness_tools pkg_cat_harness_external_schemas pkg_cat_harness_subscriptions pkg_cat_harness_code_lists pkg_cat_harness_vocab_mappings pkg_cat_harness_schemas pkg_cat_harness_uml pkg_cat_harness_skills pkg_cat_harness_scenarios pkg_cat_harness_policies pkg_cat_harness_processes pkg_cat_harness_methodologies pkg_cat_harness_qa pkg_cat_harness_attestations pkg_cat_harness_health pkg_cat_harness_uploads pkg_cat_harness_library pkg_cat_harness_translation_sources pkg_cat_harness_folio pkg_cat_harness_docs pkg_cat_harness_swimlane_glossary pkg_cat_harness_cat_harness_scripts pkg_cat_harness_cat_harness_src pkg_cat_harness_cat_harness_adapters pkg_cat_harness_cat_harness_tests pkg_cat_harness_folio_templates pkg_cat_harness_cat_harness_deploy pkg_cat_harness_voices pkg_cat_harness_vendors pkg_cat_harness_agent_skill_authoring_claude pkg_cat_harness_agent_skill_authoring_gemini_cli pkg_cat_harness_agent_skill_authoring_openai pkg_cat_harness_proposals pkg_cat_harness_requirements pkg_cat_harness_auto_docs pkg_cat_harness_glossary pkg_cat_harness_index_dmn pkg_cat_harness_index_docs pkg_cat_harness_index_processes pkg_cat_harness_index_roles pkg_cat_harness_index_schemas pkg_cat_harness_index_skills pkg_cat_harness_index_tasks pkg_cat_harness_index_tools pkg_cat_harness_uml_overview_pages pkg_cat_harness_uml_overview_svgs
+pkg_cat_harness_cat_harness_validators -[hidden]down- pkg_cat_harness_vocab_mappings
 pkg_cat_harness_tools -[hidden]down- pkg_cat_harness_schemas
 pkg_cat_harness_external_schemas -[hidden]down- pkg_cat_harness_uml
 pkg_cat_harness_subscriptions -[hidden]down- pkg_cat_harness_skills

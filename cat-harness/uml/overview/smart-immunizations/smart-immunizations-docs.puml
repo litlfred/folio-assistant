@@ -8,8 +8,9 @@ skinparam shadowing false
 skinparam packageStyle rectangle
 hide empty methods
 
-package "smart-immunizations/smart-immunizations-docs" as pkg_smart_immunizations_smart_immunizations_docs <<docs>> {
+package "smart-immunizations/smart-immunizations-docs" as pkg_smart_immunizations_smart_immunizations_docs <<docs, ig-pages>> {
   note "docs: no node schema declared\n(no node here carries a $schema family docs names (12 named): could not determine)" as n_smart_immunizations_smart_immunizations_docs_docs
+  note "ig-pages: no node schema declared\n(no validator registered: could not determine)" as n_smart_immunizations_smart_immunizations_docs_ig_pages
 }
 
 @enduml

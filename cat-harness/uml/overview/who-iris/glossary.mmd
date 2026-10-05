@@ -1,9 +1,42 @@
 classDiagram
   direction TB
   namespace who_iris__glossary {
-    class n_who_iris_glossary_glossary["glossary: no node schema"] {
-      <<could not determine>>
+    class who_iris_glossary_folio_glossary_v1_Term["Term"] {
+      <<json: GlossarySchema>>
+      id [1] string
+      prefLabel [1] string | map~string~
+      altLabel [0..*] string[]
+      definition [0..1] string | map~string~
+      notation [0..1] string
+      scopeNote [0..1] string
+      broader [0..*] string[]
+      related [0..*] string[]
+      exactMatch [0..*] string[]
+      closeMatch [0..*] string[]
+      broadMatch [0..*] string[]
+      narrowMatch [0..*] string[]
+      requires [0..*] string[]
+      isDefinedBy [0..1] string
+      iri [0..1] string
+      source [0..1] string
+      status [1] authored | candidate | could-not-extract
+      reason [0..1] string
+    }
+    class who_iris_glossary_folio_glossary_v1_folio_glossary_v1["folio-glossary/v1"] {
+      <<json: GlossarySchema>>
+      $schema [1] 'folio-glossary/v1'
+      id [1] string
+      title [1] string
+      description [0..1] string
+      hasVersion [0..1] string
+      modified [0..1] string
+      source [0..1] string
+      license [0..1] string
+      terms [0..*] Term[]
+      ordered [0..1] boolean
+      members [0..*] string[]
     }
   }
-  cssClass "n_who_iris_glossary_glossary" fa_uml_kind_glossary
-  cssClass "n_who_iris_glossary_glossary" fa_uml_undetermined
+  who_iris_glossary_folio_glossary_v1_folio_glossary_v1 *-- "0..*" who_iris_glossary_folio_glossary_v1_Term : terms
+  cssClass "who_iris_glossary_folio_glossary_v1_Term" fa_uml_kind_glossary
+  cssClass "who_iris_glossary_folio_glossary_v1_folio_glossary_v1" fa_uml_kind_glossary

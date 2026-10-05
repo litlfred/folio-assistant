@@ -14,7 +14,6 @@ export { isCrossPaperRef, KNOWN_LABEL_PREFIXES } from "./constraints.js";
  * @graphNode schema
  */
 
-import type { BlockKind } from "./block-kinds.js";
 import type { Narrative } from "./narrative.ts";
 
 // The skill-framework vocabulary moved to `skill-package.ts` — see that
@@ -1069,15 +1068,6 @@ export { BLOCK_KINDS, BLOCK_KIND_ALT } from "./block-kinds.js";
 export type { BlockKind } from "./block-kinds.js";
 
 
-/**
- * Compile-time proof that `BLOCK_KINDS` and `Block["kind"]` cover each other.
- * Add a member to the union without adding it here (or vice versa) and this
- * stops type-checking — which is the whole point, since the drift it replaces
- * produced no error anywhere.
- */
-type _MutuallyExhaustive<A, B> = [A] extends [B] ? ([B] extends [A] ? true : never) : never;
-const _blockKindsAreExhaustive: _MutuallyExhaustive<Block["kind"], BlockKind> = true;
-void _blockKindsAreExhaustive;
 
 /** Blocks that represent theorem-like environments. */
 export type EnvironmentBlock =

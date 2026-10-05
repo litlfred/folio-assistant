@@ -1,0 +1,10 @@
+# Bun configuration for cat-harness run ON ITS OWN — from this directory, as
+# `check:cat-harness-standalone` runs it and as it will run once it is its own
+# repository. The monorepo's `bunfig.toml` at the checkout root is not read
+# from here, so without this file neither preload ran standalone.
+#
+# Same two preloads, in the same order, for the reasons given there:
+# `test-fixture-preload.ts` first, because it must set FOLIO_FIXTURE_CHECKOUT
+# before the registry `test-preload.ts` imports scans at load.
+[test]
+preload = ["./schemas/test-fixture-preload.ts", "./schemas/test-preload.ts"]

@@ -162,6 +162,9 @@ describe("the writer is a fixpoint over the real data", () => {
     const r = Bun.spawnSync({
       cmd: ["bun", "run", join(ROOT, "cat-harness", "scripts", "gen-navbar-include.ts"), "--check"],
       cwd: ROOT,
+      // `env` explicitly: a child does not inherit variables set at runtime,
+      // and standalone the test preload sets FOLIO_FIXTURE_CHECKOUT.
+      env: { ...process.env },
       stdout: "pipe",
       stderr: "pipe",
     });

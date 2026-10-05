@@ -14,7 +14,10 @@
 # with no preload, so a production module that forgets to register core still
 # fails its own gate rather than being covered up here.
 [test]
-preload = ["./cat-harness/schemas/test-preload.ts"]
+# `test-fixture-preload.ts` runs FIRST: when the checkout holds no vocabulary
+# (cat-harness standalone) it points node discovery at the standalone fixture,
+# and the registry `test-preload.ts` imports scans at load (owner, 2026-10-05).
+preload = ["./cat-harness/schemas/test-fixture-preload.ts", "./cat-harness/schemas/test-preload.ts"]
 # fsh-guts is the kept trashcan: its retired copies (e.g. the staged
 # bootstrap-tools, whose tests import from paths that moved) are addressable,
 # never run (bean `xsqm`, 2026-09-30).

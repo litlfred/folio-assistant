@@ -501,3 +501,26 @@ describe("the cut, on the REAL tree", () => {
     rmSync(join(dest, ".."), { recursive: true, force: true });
   });
 });
+
+describe("carriedInstances with the staging cone (bean 4j86)", () => {
+  const smartTrust = {
+    instance: "smart-trust",
+    dir: "/repo/smart-trust/docs",
+    under: "smart-trust",
+    root: "smart-trust",
+  };
+  const reached = [{ node: "smart-trust/smart-trust-docs", path: "smart-trust/docs/", carry: true, why: "x" }];
+  test("the cone carries what the prefix match drops: a generator change", () => {
+    const d = carriedInstances([smartTrust], ["fhir-harness/scripts/gen-ig-pages.ts"], reached, "/repo");
+    expect(d[0]!.carry).toBe(true);
+    expect(d[0]!.why).toContain("staging cone");
+  });
+  test("a cone that does not reach it leaves the stub", () => {
+    const d = carriedInstances([smartTrust], ["cat-harness/skills/x.md"], [{ ...reached[0]!, carry: false }], "/repo");
+    expect(d[0]!.carry).toBe(false);
+  });
+  test("the prefix match stays a floor: the cone can only add", () => {
+    const d = carriedInstances([smartTrust], ["smart-trust/scripts/gen.ts"], [{ ...reached[0]!, carry: false }], "/repo");
+    expect(d[0]!.carry).toBe(true);
+  });
+});
