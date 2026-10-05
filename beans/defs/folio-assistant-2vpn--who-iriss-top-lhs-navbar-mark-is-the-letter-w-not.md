@@ -1,11 +1,11 @@
 ---
 # folio-assistant-2vpn
 title: who-iris's top LHS navbar mark is the letter 'W', not an icon — and every harness's top mark must come from one mechanism
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-04T18:34:12Z
-updated_at: 2026-10-04T19:10:22Z
+updated_at: 2026-10-05T04:57:30Z
 parent: folio-assistant-yg29
 ---
 
@@ -19,7 +19,7 @@ Owner, 2026-10-04, in session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWD
 
 - [x] the cause for who-iris is stated with file:line evidence — no declaration, a declaration that does not resolve across the mount, or a caller that never passes the mark — **a caller that never passed it, twice**: `harness-tiles.ts` resolved no glyph mark, and `mount-instance-docs.ts` read `icon` not `mark` (#2121)
 - [x] every harness instance's top mark is measured (avatar, glyph, or letter fallback), and the measurement is recorded here — see "Measured 2026-10-04" below
-- [ ] one mechanism supplies the top mark for every harness; who-iris's top navbar shows a real mark on the published page
+- [x] one mechanism supplies the top mark for every harness; who-iris's top navbar shows a real mark on the published page — confirmed live by the owner, 2026-10-05
 - [x] a gate fails when a harness's top mark falls back to its letter, so this cannot recur silently — `check-viewer-nav`'s `declared-mark` flag (#2121)
 
 
@@ -32,3 +32,8 @@ After #2121 (one resolver in `harness-tiles.ts`: theme avatar, then declared ico
 Open: box 3's "on the published page" is verified only from the committed pages and gates — github.io cannot be fetched from the measuring container, so the owner's own look at the deployed who-iris page is the last check. Also open, and the owner's: whether smart-trust should keep the generic operations card its theme gives it.
 
 Session: https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi
+
+
+## Closed, 2026-10-05 — the last box confirmed by the owner
+
+Box 3's remaining half, *who-iris shows a real mark on the published page*, could not be checked from the measuring container (github.io egress is blocked). The owner checked it: asked to look at https://litlfred.github.io/folio-assistant/who-iris/, they confirmed **"GOAL 3: emblem is live"** (session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi). Every box is now met: one resolver and one reader (#2121), every harness with a mark (#2122, #2127), and the `declared-mark` gate.

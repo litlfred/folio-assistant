@@ -100,6 +100,7 @@
  *   bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site
  *   bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
  */
+import { VIEWER_DIR } from "./pdf-viewer.ts";
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
 import { dirname, isAbsolute, join, posix, relative, resolve, sep } from "path";
 
@@ -868,7 +869,10 @@ const REDIRECT = /<meta\s+http-equiv="refresh"/i;
  * makes the exclusion visible — which is what an empty array with this comment
  * provides and a removed one does not.
  */
-const NOT_THIS_PASS: readonly string[] = [];
+// The pinned pdf.js viewer is Mozilla's page, framed inside ours: a rail
+// injected into it draws the site's whole navigation inside the PDF frame —
+// measured on the first staging preview, 2026-10-04 (bean `folio-assistant-5ea6`).
+const NOT_THIS_PASS: readonly string[] = [VIEWER_DIR];
 
 export function railStandalonePages(
   siteAbs: string,

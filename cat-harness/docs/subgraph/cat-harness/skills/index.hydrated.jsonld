@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "fileCount": 288,
+      "fileCount": 289,
       "holdsGraph": [
         "bootstrap:graphKind/skills"
       ],
@@ -3872,13 +3872,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 726,
+              "instructionLines": 739,
               "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
               "name": "merge-conflict-patterns",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/09388ffa1ff80656a75f8f521be204ce89e54c20400193edc051a2df06c81ff5",
-                "bytes": 38750,
-                "sha256": "09388ffa1ff80656a75f8f521be204ce89e54c20400193edc051a2df06c81ff5"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/13e18ec9691b55c29e046e29ceef85b161f9545a03d6949deea87146260192dc",
+                "bytes": 39575,
+                "sha256": "13e18ec9691b55c29e046e29ceef85b161f9545a03d6949deea87146260192dc"
               },
               "title": "Merge-conflict patterns — what a merge may resolve on its own"
             },
@@ -4776,6 +4776,7 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-viewer",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/liquid-templates",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/markdown-render-check",
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pdf-inline-viewer",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/readme-sections",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/render-logging",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/render-order",
@@ -4979,6 +4980,25 @@
                 "sha256": "65d45b8448f535c7a1a34fe6cd41b7bf919c19dfab0af78c35edc9a6ab63fa20"
               },
               "title": "Markdown Render Check"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pdf-inline-viewer",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Show a published PDF inside a generated page — search, scroll, jump to page, print and download — with the pinned pdf.js viewer the site build installs. Which two Tools do it, the publication-gate rule that decides whether a page may embed a document at all, why the viewer opens only allowlisted hosts, and the three pdf.js behaviours that were measured rather than assumed. Read before putting a PDF on a page, before bumping the pdf.js pin, and when an embedded viewer shows an empty frame.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 156,
+              "instructionsPath": "skills/ui/ui-core/pdf-inline-viewer.md",
+              "name": "pdf-inline-viewer",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a13f822aa43c8e91e00d14aab43c008bce9a13976540fb61c2c6d5ea11798172",
+                "bytes": 8303,
+                "sha256": "a13f822aa43c8e91e00d14aab43c008bce9a13976540fb61c2c6d5ea11798172"
+              },
+              "title": "Inline PDF viewer — a pinned pdf.js, installed at build time"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/readme-sections",

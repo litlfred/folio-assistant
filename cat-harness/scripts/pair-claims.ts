@@ -176,9 +176,18 @@ export function claimsEntry(claims: PairClaim[]): { result: "pass" | "fail" | "n
   return { result: "pass", findings: [] };
 }
 
-/** Script names in the root package.json. */
+/**
+ * Script names in the root package.json — EMPTY when the checkout has none.
+ *
+ * A layer standing alone (bean `ho66`) is its own checkout and carries no
+ * package.json of the aggregate's. Throwing there took the whole `kg:audit` run
+ * down with it; an empty set makes every script claim `undetermined` instead
+ * (see {@link judgePair}), which is what the checkout can honestly say.
+ */
 export function rootScripts(repo: string): Set<string> {
-  const pkg = JSON.parse(readFileSync(join(repo, "package.json"), "utf-8")) as { scripts?: Record<string, string> };
+  const file = join(repo, "package.json");
+  if (!existsSync(file)) return new Set();
+  const pkg = JSON.parse(readFileSync(file, "utf-8")) as { scripts?: Record<string, string> };
   return new Set(Object.keys(pkg.scripts ?? {}));
 }
 
