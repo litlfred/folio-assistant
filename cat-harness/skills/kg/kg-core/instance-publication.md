@@ -361,7 +361,8 @@ its `.json` copy only). That is the open half of item 1's
   subgraphs" and §"Payloads".
 - **The root index** (item 3): `<site>/index.jsonld` and `index.json`, built
   at publish time by `root-index.ts` and never committed (owner,
-  2026-10-04). It names every declared instance at depth 1, with no node of
+  2026-10-04): a committed copy conflicts whenever two PRs change the set of
+  harnesses. It names every declared instance at depth 1, with no node of
   any graph inlined. It exits 1, having written nothing, when an instance's
   export is not where its identity says, rather than publish a shorter map.
 
