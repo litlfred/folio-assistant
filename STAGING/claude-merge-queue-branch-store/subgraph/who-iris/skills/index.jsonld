@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-skills",
+      "@type": "bootstrap:Subgraph",
+      "name": "who-iris-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#skill/iris-dspace",
+      "@type": "bootstrap:Skill",
+      "name": "iris-dspace",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2e23cb5efc2593b79dc84e6c6401f329e5d178ba11d16a298eec62334c6a878e",
+        "bytes": 14781,
+        "sha256": "2e23cb5efc2593b79dc84e6c6401f329e5d178ba11d16a298eec62334c6a878e"
+      },
+      "title": "IRIS, DSpace and Dublin Core"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/voices/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills",
+  "path": "skills/"
+}

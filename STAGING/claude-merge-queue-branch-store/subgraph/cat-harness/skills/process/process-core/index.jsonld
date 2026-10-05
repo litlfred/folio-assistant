@@ -1,0 +1,94 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/process/process-core/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/process-core",
+      "@type": "cat-harness:SkillPackage",
+      "name": "process-core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/compiled-artefact-cache",
+      "@type": "bootstrap:Skill",
+      "name": "compiled-artefact-cache",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fa5c390589744fa0747835025ebb9f72db92881ca04401d87c8da251e783e67d",
+        "bytes": 6251,
+        "sha256": "fa5c390589744fa0747835025ebb9f72db92881ca04401d87c8da251e783e67d"
+      },
+      "title": "Compiled Artefact Cache"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-methodology-selector",
+      "@type": "bootstrap:Skill",
+      "name": "decision-methodology-selector",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fa6af2c8d83b0f0d3815dd6c86e9db4d6b4262ac123a3dce446bceb39d3f7040",
+        "bytes": 13381,
+        "sha256": "fa6af2c8d83b0f0d3815dd6c86e9db4d6b4262ac123a3dce446bceb39d3f7040"
+      },
+      "title": "Decision methodology selector"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/methodology-adoption",
+      "@type": "bootstrap:Skill",
+      "name": "methodology-adoption",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5910044561fbb63dc62558adc716675a75e5376576dd557bfc2d32df85b0ebf3",
+        "bytes": 12533,
+        "sha256": "5910044561fbb63dc62558adc716675a75e5376576dd557bfc2d32df85b0ebf3"
+      },
+      "title": "Adopting a methodology, and choosing between them"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/role-model",
+      "@type": "bootstrap:Skill",
+      "name": "role-model",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f050f94c026c566610e864961854ad0fa155ecdb1773e0f02984345d3131ed5f",
+        "bytes": 39853,
+        "sha256": "f050f94c026c566610e864961854ad0fa155ecdb1773e0f02984345d3131ed5f"
+      },
+      "title": "Roles are swimlanes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swimlane-glossary",
+      "@type": "bootstrap:Skill",
+      "name": "swimlane-glossary",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/69b803cc9267d2d9d7246b26c0b7c6bab8efbeb7cc0c4e653374d3d11bfd5e40",
+        "bytes": 8317,
+        "sha256": "69b803cc9267d2d9d7246b26c0b7c6bab8efbeb7cc0c4e653374d3d11bfd5e40"
+      },
+      "title": "Swimlane Glossary Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swot-analysis",
+      "@type": "bootstrap:Skill",
+      "name": "swot-analysis",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f7e988028e68d4078b1115a226f7b274d74ec1e7892ca4cd3345de018dfa00da",
+        "bytes": 4232,
+        "sha256": "f7e988028e68d4078b1115a226f7b274d74ec1e7892ca4cd3345de018dfa00da"
+      },
+      "title": "Running a SWOT scan"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/task-authorization",
+      "@type": "bootstrap:Skill",
+      "name": "task-authorization",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ae55dbd2ff1ae286109b68c057cf7d29c2e9554f704b5fd4feea3e8c99af93d6",
+        "bytes": 18306,
+        "sha256": "ae55dbd2ff1ae286109b68c057cf7d29c2e9554f704b5fd4feea3e8c99af93d6"
+      },
+      "title": "Task authorization — four questions before every task"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/process/process-core",
+  "path": "skills/process/process-core/"
+}
