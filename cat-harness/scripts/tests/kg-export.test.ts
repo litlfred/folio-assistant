@@ -1384,13 +1384,13 @@ describe("the published graph is this instance's own (bean 4ak5 item 2)", () => 
     // instance's document (the package collector is instance-bound), so it
     // forwards to the document itself.
     const published = new Set([...instanceExportPlan().map((p) => p.stub), ...Object.keys(PUBLISHED_ELSEWHERE)]);
+    const stubOf = new Map(instanceRootsIn(REPO).map((r) => [publishedIdentity(r, BASE).docIri, artefactStub(readDeclaration(r)!)]));
     const lost: string[] = [];
     for (const t of tombstones) {
       const to = String(t.isReplacedBy);
       const doc = to.split("#")[0]!;
       const held = OWNER_EXPORTS.get(doc);
-      const owner = instanceRootsIn(REPO).find((r) => publishedIdentity(r, BASE).docIri === doc);
-      const stub = owner === undefined ? undefined : artefactStub(readDeclaration(owner)!);
+      const stub = stubOf.get(doc);
       const ok = held !== undefined && stub !== undefined && published.has(stub) && (to === doc || held.has(to));
       if (!ok) lost.push(`${String(t["@id"])} → ${to}`);
     }
