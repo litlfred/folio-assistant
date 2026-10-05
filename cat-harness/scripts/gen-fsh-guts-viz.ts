@@ -57,6 +57,7 @@ import { declarationPathIn } from "../schemas/cat-harness.js";
 import { fshGutsDirectory } from "../schemas/fsh-guts.js";
 import { exitUnlessMounted } from "./branch-store.js";
 import { baseDocsDir } from "./compose-docs.js";
+import { publishPlan } from "./derive-at-publish.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const TAG = "folio-fsh-guts/v1";
@@ -339,7 +340,15 @@ if (import.meta.main) {
   }
   const out = join(baseDocsDir(REPO), PAGE);
 
-  if (check) {
+  if (check && publishPlan(REPO).some((a) => join(REPO, a.artefact) === out)) {
+    // Built at publish (bean 0b8c, #2230): the page is derived from a graph
+    // kept on a branch, so there is no committed copy to compare against —
+    // a comparison would go red on main and every PR the moment somebody
+    // writes to the branch, which is exactly what happened on 2026-10-05.
+    // What is left to judge is that the graph renders: mounted, declared,
+    // non-empty, and the page built without error (all checked above).
+    console.log(`✓ fsh-guts viewer renders — ${files.length} file(s); built at publish by \`derive:publish\`, never committed`);
+  } else if (check) {
     const current = existsSync(out) ? readFileSync(out, "utf-8") : "";
     if (current !== rendered) {
       console.error(`::error::gen-fsh-guts-viz: ${PAGE} is stale — run \`bun run fsh-guts:viz\``);

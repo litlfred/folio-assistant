@@ -615,7 +615,7 @@ them:**
 | no `workflow_dispatch`, re-run, empty commit or close/reopen | the same budget, and a dispatched run is not an owed run (above) |
 | merge commits only: no rebase, amend or force-push | it is somebody else's branch |
 | authored conflict → resolve only dead code, or a pure addition carried over verbatim; otherwise quote both sides and stand down | choosing between two behaviours is the author's call |
-| `git submodule update --init` and `bun run state:mount` before `regen` | without the submodules `merge:steward` cannot load. Without the mount, `fsh-guts:viz` exits non-zero and `audit:coverage:strict` goes red |
+| `git submodule update --init` and `bun run state:mount` before `regen` | without the submodules `merge:steward` cannot load. Without the mount, `fsh-guts:viz:check` exits non-zero (it judges that the mounted graph renders; the page itself is built at publish, bean `0b8c`) and `audit:coverage:strict` goes red |
 | delete the worktree's `node_modules` at the end | four parallel installs run out of the container's disk |
 | one comment per PR: root cause, the commit it pushed or the reason it stood down | the author comes back to an explanation, not a mystery commit |
 
