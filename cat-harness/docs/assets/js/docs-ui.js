@@ -11344,14 +11344,6 @@
         else console.warn("docs-ui: the actions panel launcher is not mounted; " +
                           "the navbar's More button has nothing to open.");
       },
-      // The globe CLICKS the existing language mini (hidden once the row is
-      // up), so there is one language panel and one copy of its state.
-      language: function () {
-        var real = document.querySelector(".fa-lang-mini");
-        if (real) real.click();
-        else console.warn("docs-ui: the language control is not mounted; " +
-                          "the navbar's globe has nothing to open.");
-      },
       after: function (host) {
         /* LIGHT / DARK IN THE ROW — owner, 2026-09-27: *"i want light dark
          * mode on main icon tab at top of LHS"*. The same switch as the

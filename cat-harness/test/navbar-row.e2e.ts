@@ -255,38 +255,15 @@ test.describe("the icon row — line 2 of the fixed top", () => {
     // accessible name carries the live count after a dash, so only its stem is
     // pinned here; the count states are `fshGutsCount`'s to test.
     expect(labels.map((l) => (l ?? "").split(" — ")[0])).toEqual([
-      // Language joined, Processes and Knowledge graph left (owner, 2026-10-05,
-      // bean `82qs`): "language globe with rest of icons".
-      "Todos", "Beans", "Language", "fsh-guts, discarded items", "More actions",
+      // Processes and Knowledge graph left the row (owner, 2026-10-05, bean
+      // `82qs`); language is the glass band's globe (#2211), not a row slot.
+      "Todos", "Beans", "fsh-guts, discarded items", "More actions",
     ]);
     // ...then the switch, last. No [x] after it (ob3m finding 8).
     const tail = await page.locator(".fa-nav-icons > *").evaluateAll((ns) =>
       ns.slice(-1).map((n) => (n.classList.contains("fa-nav-scheme") ? "scheme" : n.className)),
     );
     expect(tail).toEqual(["scheme"]);
-  });
-
-  test("the language globe is IN the row, beside Todos and Beans, and opens the language view — bean 82qs", async ({ page }) => {
-    // Owner, 2026-10-05: "we lost locale selector in top navbar LHS again",
-    // then "language globe with rest of icons". The line-1 mini stays hidden
-    // once the row is up; the row's globe clicks it.
-    await page.setViewportSize({ width: 1280, height: 800 });
-    const { errors } = await load(page, LIVE);
-    expect(errors).toEqual([]);
-    await page.hover(".side-bar");
-    const globe = page.locator(".side-bar .fa-nav-icons .fa-nav-lang");
-    await expect(globe).toBeVisible();
-    await expect(globe).toHaveAttribute("aria-label", "Language");
-    await expect(page.locator(".side-bar .fa-lang-mini")).toBeHidden();
-    // The opened row fits the sidebar: no control past its edge.
-    const fits = await page.evaluate(() => {
-      const sb = document.querySelector(".side-bar")!.getBoundingClientRect();
-      return [...document.querySelectorAll(".side-bar .fa-nav-icons > *")]
-        .every((n) => n.getBoundingClientRect().right <= sb.right);
-    });
-    expect(fits).toBe(true);
-    await globe.click();
-    await expect(page.locator(".fa-tiles .fa-tiles-title")).toHaveText("Language");
   });
 
   test("FIVE DISTINCT drawings — a row where slots look alike says nothing", async ({ page }) => {

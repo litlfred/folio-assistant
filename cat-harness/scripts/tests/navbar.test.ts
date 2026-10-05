@@ -1271,14 +1271,14 @@ describe("a thin page asks for the rail with its style LINKED (bean lnoy)", () =
 });
 
 describe("the row's glyphs are docs-ui.js's glyphs (bean lhvt)", () => {
-  // `navbar-row.js` carries copies of the seven drawings (the globe since bean `82qs`); `docs-ui.js` still
+  // `navbar-row.js` carries copies of the six drawings; `docs-ui.js` still
   // draws them on its tiles. Evaluated, not grepped: the constants are string
   // concatenations, so the comparison is of the SVG each produces.
   const js = join(import.meta.dir, "../../docs/assets/js");
   const glyphs = (file: string): Record<string, string> => {
     const src = readFileSync(join(js, file), "utf-8");
     const out: Record<string, string> = {};
-    for (const name of ["STICKY_GLYPH", "BEANS_GLYPH", "PROCESS_GLYPH", "NET_GLYPH", "TILES_GLYPH", "FISH_GLYPH", "GLOBE_GLYPH"]) {
+    for (const name of ["STICKY_GLYPH", "BEANS_GLYPH", "PROCESS_GLYPH", "NET_GLYPH", "TILES_GLYPH", "FISH_GLYPH"]) {
       const m = new RegExp(`var ${name} =([\\s\\S]*?);\\n`).exec(src);
       if (!m) throw new Error(`${file}: ${name} not found`);
       const expr = m[1]!.replace(/^\s*\/\/.*$/gm, "");
@@ -1287,10 +1287,10 @@ describe("the row's glyphs are docs-ui.js's glyphs (bean lhvt)", () => {
     return out;
   };
 
-  it("all seven are identical in both files", () => {
+  it("all six are identical in both files", () => {
     const row = glyphs("navbar-row.js");
     const ui = glyphs("docs-ui.js");
-    expect(Object.keys(row).length).toBe(7);
+    expect(Object.keys(row).length).toBe(6);
     expect(row).toEqual(ui);
   });
 });

@@ -144,11 +144,10 @@ describe("the schema holds the owner's cap", () => {
     // Truncating drops whichever the instance listed last, silently. An
     // instance that declared seven made a decision, and overruling it without
     // saying so is the failure the `.max(7)` message names.
-    // The VOCABULARY is eight since `language` joined (bean `82qs`); the ROW
-    // is still capped at seven, so an instance picks from it.
-    expect(NAVBAR_ICONS.length).toBe(8);
-    expect(NavbarIconsSchema.safeParse(NAVBAR_ICONS.slice(0, 7)).success).toBe(true);
-    expect(NavbarIconsSchema.safeParse([...NAVBAR_ICONS]).success).toBe(false);
+    expect(NavbarIconsSchema.safeParse([...NAVBAR_ICONS]).success).toBe(true);
+    expect(NAVBAR_ICONS.length).toBe(7);
+    const eight = [...NAVBAR_ICONS, "todos"];
+    expect(NavbarIconsSchema.safeParse(eight).success).toBe(false);
   });
 
   test("an icon listed twice is two slots doing one job", () => {
@@ -175,11 +174,9 @@ describe("the live declarations", () => {
     // test cannot catch a wrong one.
     const decl = readDeclaration(ROOT);
     expect(decl?.name).toBe("cat-harness");
-    // A SUBSET of the vocabulary since 2026-10-05, the owner's ruling (bean
-    // `82qs`): *"language globe with rest of icons"*, and processes and the
-    // knowledge graph dropped from the row.
+    // A SUBSET of the vocabulary since 2026-10-05: the owner dropped
+    // processes and the knowledge graph from the row (bean `82qs`).
     expect(NavbarIconsSchema.safeParse(decl?.navbarIcons).success).toBe(true);
-    expect(decl?.navbarIcons).toContain("language");
     expect(decl?.navbarIcons).not.toContain("processes");
     expect(decl?.navbarIcons).not.toContain("kg");
   });

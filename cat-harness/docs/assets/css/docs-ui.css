@@ -5781,10 +5781,8 @@ a.fa-nav-folders__link:focus-visible {
  * selector does not match and the three controls stay exactly where they are.
  * A reader never loses a control to a row that failed to arrive.
  *
- * LANGUAGE MOVED INTO THE ROW too — owner, 2026-10-05: *"language globe with
- * rest of icons"* (bean `82qs`), after *"we lost locale selector in top navbar
- * LHS again"*: it had been hidden here with nothing in the row to replace it.
- * The row's `language` slot clicks this same mini, so hiding it loses nothing.
+ * LANGUAGE is the glass band's globe (#2211); the owner kept that one globe
+ * rather than a second in the row (2026-10-05, bean `82qs`).
  */
 @media (min-width: 50rem) {
   .side-bar:has(.fa-nav-icons) .fa-scheme-mini,
