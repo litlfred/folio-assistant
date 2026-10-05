@@ -4,6 +4,11 @@
   "@type": "bootstrap:Subgraph",
   "hasMember": [
     {
+      "@id": "cat-harness:graphKind/kinds",
+      "@type": "bootstrap:GraphKind",
+      "name": "kinds"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#asset/agent-instructions",
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
@@ -24,6 +29,21 @@
         "sha256": "49e89965629c8d06cd548dde44f46ec59c8a939fcebf2deb8dd6904560f49013"
       },
       "title": "fhir-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-kinds",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-kinds"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-translations",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-translations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-validators",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-harness-validators"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-scripts",

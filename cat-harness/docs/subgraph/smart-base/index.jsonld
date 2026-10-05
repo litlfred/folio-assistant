@@ -46,6 +46,16 @@
       "name": "smart-base-artifact-index"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-block-kinds",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-block-kinds"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-content-adapters",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-content-adapters"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-docs",
       "@type": "bootstrap:Subgraph",
       "name": "smart-base-docs"
@@ -66,9 +76,19 @@
       "name": "smart-base-findings"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-qa-checkers",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-qa-checkers"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-themes",
       "@type": "bootstrap:Subgraph",
       "name": "smart-base-themes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-translations",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-translations"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/tools",
@@ -84,6 +104,11 @@
       "@id": "cat-harness:graphKind/fhir-artifact-index",
       "@type": "bootstrap:GraphKind",
       "name": "fhir-artifact-index"
+    },
+    {
+      "@id": "cat-harness:graphKind/ig-pages",
+      "@type": "bootstrap:GraphKind",
+      "name": "ig-pages"
     },
     {
       "@id": "cat-harness:graphKind/themes",
