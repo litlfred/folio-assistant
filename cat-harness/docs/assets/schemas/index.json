@@ -52453,6 +52453,13 @@
           "array": false
         },
         {
+          "name": "labels",
+          "type": "z.record(z.string(), z.string()).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Categorisations the intake log carried, keyed by its column header and"
+        },
+        {
           "name": "assignees",
           "type": "z.array(z.string()).default([])",
           "optional": true,
@@ -52654,6 +52661,20 @@
           "type": "z.number().int().positive().optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "entry",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The log's OWN number for the row (\"No.\"), within its sheet. A review log"
+        },
+        {
+          "name": "series",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The log this row belongs to, across the copies of it that are re-sent."
         },
         {
           "name": "segment",

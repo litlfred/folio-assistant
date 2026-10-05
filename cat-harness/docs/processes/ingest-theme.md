@@ -28,7 +28,7 @@ node kinds: the palette vocabulary is shared and only the GEOMETRY varies.
 
 ## How it connects
 
-- **Called by:** [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html)
+- **Called by:** [L1 document ingestion — a document to the L1 source knowledge graph](l1-document-ingestion.html)
 - **Calls:** [Theme and UI review — at ingestion](theme-ui-review.html)
 - **Presented on:** [Document ingestion — Ingest the theme](../document-ingestion.html#ingest-the-theme)
 

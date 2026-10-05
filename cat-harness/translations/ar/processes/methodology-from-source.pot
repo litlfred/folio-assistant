@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: methodology-from-source\n"
-"POT-Creation-Date: 2026-10-03T09:58:08.328Z\n"
+"POT-Creation-Date: 2026-10-05T08:07:22.018Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -79,11 +79,6 @@ msgstr ""
 msgid "Every skill and tool used becomes a Tool"
 msgstr ""
 
-#: processes/library/methodology-from-source.bpmn:43
-#. Diagram element documentation
-msgid "folio-assistant's document ingestion, choosing the rung mechanically (embedded outline, pages, OCR). Section text is written only when the licence allows it."
-msgstr ""
-
 #: processes/library/methodology-from-source.bpmn:42
 #. Diagram label
 msgid "Ingest into library/"
@@ -137,6 +132,11 @@ msgstr ""
 #: processes/library/methodology-from-source.bpmn:37
 #. Diagram label
 msgid "Source shared, with an intent"
+msgstr ""
+
+#: processes/library/methodology-from-source.bpmn:43
+#. Diagram element documentation
+msgid "The harness's basic ingestion flow (`document-ingestion.bpmn`, `Process_Ingestion`): the source is accepted, its metadata goes into the KG, and it is catalogued in library/ — held if materialized, recorded as referenced if not. Since placement PR6 (bean `apcg`) the flow makes no content-type decision: reading a document into sections and blocks — choosing the rung mechanically (embedded outline, pages, OCR), and writing section text only when the licence allows it — is a refinement in the layer above, which calls this same flow first."
 msgstr ""
 
 #: processes/library/methodology-from-source.bpmn:57

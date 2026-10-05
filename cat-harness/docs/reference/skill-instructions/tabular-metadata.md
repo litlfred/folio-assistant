@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/library/library-core/tabular-metadata.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/tabular-metadata.md) — do not edit here.
+> Generated from [`folio-assistant-core/skills/library/ingestion/tabular-metadata.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/ingestion/tabular-metadata.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/tabular-metadata.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/ingestion/tabular-metadata.md){: .fa-edit-source }
 
 {% raw %}
 # Tabular metadata — CSVW, annotated, and honest about what it could not read
