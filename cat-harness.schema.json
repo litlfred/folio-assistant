@@ -28,6 +28,30 @@
             "minLength": 1
           }
         },
+        "avatar": {
+          "type": "object",
+          "properties": {
+            "glyph": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tone": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 359
+            },
+            "reads": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "glyph",
+            "tone",
+            "reads"
+          ],
+          "additionalProperties": false
+        },
         "images": {
           "type": "array",
           "items": {
@@ -1202,8 +1226,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "d21ef899555afbc4d86ff0100b4b820477647410",
+    "sha": "1f22e849648f0208bac1664b3d2fa387b7e2d4cd",
     "pr": "main",
-    "run": "37308145095"
+    "run": "37321679775"
   }
 }
