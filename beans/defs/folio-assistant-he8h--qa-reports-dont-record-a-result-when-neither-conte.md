@@ -3,8 +3,10 @@
 title: 'QA-REPORTS: don''t record a result when neither content nor result changed'
 status: todo
 type: task
+priority: normal
 created_at: 2026-10-05T18:45:22Z
-updated_at: 2026-10-05T18:45:22Z
+updated_at: 2026-10-05T19:16:49Z
+parent: folio-assistant-3fva
 ---
 
 ## Why
