@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/OpenApiSource",
+  "definitions": {
+    "OpenApiSource": {
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "pattern": "^[\\w.-]+\\/[\\w.-]+$"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ref": {
+          "default": "main",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "repository",
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-openapi/schema/zod/openapi/OpenApiSourceSchema.schema.json",
+  "title": "OpenApiSourceSchema",
+  "description": "Generated from `OpenApiSourceSchema` in schemas/openapi.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/zealous-gates-3o9ma2-mounted-globe",
+    "sha": "fe7e459d770a69057e6ff355752022edcbc356e3",
+    "pr": "2220/merge",
+    "run": "37353920157"
+  }
+}

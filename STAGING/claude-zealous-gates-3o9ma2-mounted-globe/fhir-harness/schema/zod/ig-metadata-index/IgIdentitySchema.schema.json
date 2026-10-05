@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/IgIdentity",
+  "definitions": {
+    "IgIdentity": {
+      "type": "object",
+      "properties": {
+        "packageId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonical": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "packageId",
+        "version"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-metadata-index/IgIdentitySchema.schema.json",
+  "title": "IgIdentitySchema",
+  "description": "Generated from `IgIdentitySchema` in schemas/ig-metadata-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/zealous-gates-3o9ma2-mounted-globe",
+    "sha": "fe7e459d770a69057e6ff355752022edcbc356e3",
+    "pr": "2220/merge",
+    "run": "37353920157"
+  }
+}

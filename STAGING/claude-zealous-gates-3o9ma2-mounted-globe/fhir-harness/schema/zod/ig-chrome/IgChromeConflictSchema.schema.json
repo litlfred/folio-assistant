@@ -1,0 +1,61 @@
+{
+  "$ref": "#/definitions/IgChromeConflict",
+  "definitions": {
+    "IgChromeConflict": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "shape",
+            "malformed"
+          ]
+        },
+        "detail": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sites": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "package": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "package",
+              "value"
+            ]
+          }
+        }
+      },
+      "required": [
+        "token",
+        "kind",
+        "detail",
+        "sites"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-chrome/IgChromeConflictSchema.schema.json",
+  "title": "IgChromeConflictSchema",
+  "description": "Generated from `IgChromeConflictSchema` in schemas/ig-chrome.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/zealous-gates-3o9ma2-mounted-globe",
+    "sha": "fe7e459d770a69057e6ff355752022edcbc356e3",
+    "pr": "2220/merge",
+    "run": "37353920157"
+  }
+}
