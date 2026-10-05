@@ -2334,6 +2334,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/witness-parity",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Witness reproduction check"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Re-run a computation witness's producer and say whether it reproduces the committed witness. Reads the command from `invocation.reproduce` (else `python3 <scriptFile>`) and the recorded package versions from `environment`; on a version mismatch it stops at `unknown`, since a different environment is not a reproduction test. Otherwise it runs the COMMITTED producer in a scratch git worktree, so the folio's own checkout is never written, and compares the result with the committed witness with run-specific fields (commit, timing, environment) masked at every depth. `pass`, `fail` (with the differing JSON paths), or `unknown` (mismatch, non-zero exit, timeout, no witness written)."
+        }
+      ],
+      "skos:notation": "witness-parity",
+      "dcterms:source": "cat-harness/tools/index.ts#witness-parity",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/work-plan-prime",
       "@type": "skos:Concept",
       "skos:inScheme": {
