@@ -15,9 +15,24 @@ import { join, resolve } from "node:path";
 
 import { findDeclarationFile, instanceRootsIn } from "./instance-roots";
 
+/**
+ * A TEST FIXTURE checkout scanned beside the real one: `FOLIO_FIXTURE_CHECKOUT`.
+ *
+ * Set by `test-preload.ts` only when the checkout under test holds no
+ * vocabulary — cat-harness standing alone, as `check:cat-harness-standalone`
+ * runs it — and never in the monorepo, where the real instances are present.
+ * It points at `test/fixtures/standalone-checkout/`, copies of the node graphs
+ * cat-harness's tests read from core and sci, held equal to them by
+ * `standalone-fixture.test.ts`. Owner, 2026-10-05: fixture the tests rather
+ * than grow the standalone baseline.
+ */
+const FIXTURE_ENV = "FOLIO_FIXTURE_CHECKOUT";
+
 /** Every directory declared with `graphKind`, across the instances of a checkout (absolute paths, declaration order). */
 export function declaredDirectories(repoRoot: string, graphKind: string): string[] {
-  return instanceRootsIn(repoRoot).flatMap((root) => ownDeclaredDirectories(root, graphKind, repoRoot));
+  const fixture = process.env[FIXTURE_ENV];
+  const roots = [...instanceRootsIn(repoRoot), ...(fixture ? instanceRootsIn(fixture) : [])];
+  return roots.flatMap((root) => ownDeclaredDirectories(root, graphKind, repoRoot));
 }
 
 /** The directories ONE instance declares with `graphKind` (absolute paths). `repository`-scoped paths resolve against `repoRoot`. */
