@@ -1,0 +1,179 @@
+{
+  "$ref": "#/definitions/BlockChange",
+  "definitions": {
+    "BlockChange": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "change": {
+              "type": "string",
+              "const": "added"
+            },
+            "label": {
+              "type": "string"
+            },
+            "head": {
+              "type": "object",
+              "properties": {
+                "file": {
+                  "type": "string"
+                },
+                "kind": {
+                  "type": "string"
+                },
+                "section": {
+                  "type": "string"
+                },
+                "index": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "file",
+                "kind"
+              ]
+            }
+          },
+          "required": [
+            "change",
+            "label",
+            "head"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "change": {
+              "type": "string",
+              "const": "removed"
+            },
+            "label": {
+              "type": "string"
+            },
+            "base": {
+              "type": "object",
+              "properties": {
+                "file": {
+                  "type": "string"
+                },
+                "kind": {
+                  "type": "string"
+                },
+                "section": {
+                  "type": "string"
+                },
+                "index": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "file",
+                "kind"
+              ]
+            }
+          },
+          "required": [
+            "change",
+            "label",
+            "base"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "change": {
+              "type": "string",
+              "const": "changed"
+            },
+            "label": {
+              "type": "string"
+            },
+            "from": {
+              "type": "string"
+            },
+            "aspects": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "renamed",
+                  "prose",
+                  "manifest",
+                  "moved"
+                ]
+              }
+            },
+            "base": {
+              "type": "object",
+              "properties": {
+                "file": {
+                  "type": "string"
+                },
+                "kind": {
+                  "type": "string"
+                },
+                "section": {
+                  "type": "string"
+                },
+                "index": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "file",
+                "kind"
+              ]
+            },
+            "head": {
+              "type": "object",
+              "properties": {
+                "file": {
+                  "type": "string"
+                },
+                "kind": {
+                  "type": "string"
+                },
+                "section": {
+                  "type": "string"
+                },
+                "index": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "file",
+                "kind"
+              ]
+            }
+          },
+          "required": [
+            "change",
+            "label",
+            "aspects",
+            "base",
+            "head"
+          ]
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-core-harness-listed/folio-assistant-core/schema/zod/changeset/BlockChangeSchema.schema.json",
+  "title": "BlockChangeSchema",
+  "description": "Generated from `BlockChangeSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/core-harness-listed",
+    "sha": "7ad5fca14abb80ef253f74bb3838c86cf0142941",
+    "pr": "2197/merge",
+    "run": "37377298682"
+  }
+}
