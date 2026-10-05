@@ -328,10 +328,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-05T07:07:08.065Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/919bf4b0752b0b15e8f8f261a788dd58f9a69272",
-  "sourceCommitSha": "919bf4b0752b0b15e8f8f261a788dd58f9a69272",
-  "sourceCommitAt": "2026-10-05T07:03:05Z",
+  "generatedAt": "2026-10-05T08:07:10.525Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bf18ab8de9b1da038cfffb850b71d245e9c8d68a",
+  "sourceCommitSha": "bf18ab8de9b1da038cfffb850b71d245e9c8d68a",
+  "sourceCommitAt": "2026-10-05T07:20:30Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -344,7 +344,7 @@
     "SequenceFlow": 1133,
     "Lane": 228,
     "ProcessNode": 1077,
-    "Tool": 124,
+    "Tool": 125,
     "Schema": 170,
     "ExternalSchema": 22,
     "GraphKind": 28,
@@ -45385,6 +45385,75 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/witness-conformance"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-io-decls/cat-harness.jsonld#tool/witness-parity",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "witness-parity",
+      "title": "Witness reproduction check",
+      "description": "Re-run a computation witness's producer and say whether it reproduces the committed witness. Reads the command from `invocation.reproduce` (else `python3 <scriptFile>`) and the recorded package versions from `environment`; on a version mismatch it stops at `unknown`, since a different environment is not a reproduction test. Otherwise it runs the COMMITTED producer in a scratch git worktree, so the folio's own checkout is never written, and compares the result with the committed witness with run-specific fields (commit, timing, environment) masked at every depth. `pass`, `fail` (with the differing JSON paths), or `unknown` (mismatch, non-zero exit, timeout, no witness written).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run witness:parity"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "witness",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-io-decls/tool-types.schema.json#/$defs/RepoPath",
+            "description": "One or more `*.witness.json` paths, committed at HEAD.",
+            "required": true
+          },
+          {
+            "name": "timeout",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-io-decls/tool-types.schema.json#/$defs/Count",
+            "description": "Seconds before a run counts as `unknown`. Default 300.",
+            "required": false,
+            "arg": {
+              "flag": "--timeout"
+            }
+          },
+          {
+            "name": "force",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-io-decls/tool-types.schema.json#/$defs/Flag",
+            "description": "Run despite an environment mismatch; the verdict is then marked advisory.",
+            "required": false,
+            "arg": {
+              "flag": "--force"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-io-decls/tool-types.schema.json#/$defs/Flag",
+            "description": "Machine-readable output.",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "verdicts",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-io-decls/tool-types.schema.json#/$defs/Text",
+            "description": "One line per witness: pass, fail or unknown, with the reason, any environment mismatch and the differing paths. Exit 1 when any witness fails; `unknown` alone exits 0."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "git",
+          "bash"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-io-decls/cat-harness.jsonld#skill/directory-conventions"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/witness-parity"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-io-decls/cat-harness.jsonld#tool/subgraph-readmes",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "subgraph-readmes",
@@ -55383,7 +55452,7 @@
       ],
       "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
       "readmePath": "schemas/README.md",
-      "fileCount": 251,
+      "fileCount": 249,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-io-decls/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
@@ -55674,7 +55743,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 982,
+      "fileCount": 906,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-io-decls/cat-harness.jsonld#directory/cat-harness-scripts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
@@ -55802,8 +55871,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-gates-3o9ma2-io-decls",
-    "sha": "e499f19e0df34081d0ae80cafb47d111bff865e7",
+    "sha": "4f30532a591ea4d16b4c89038550a551122eacd2",
     "pr": "2144/merge",
-    "run": "37275583524"
+    "run": "37281078405"
   }
 }
