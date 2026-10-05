@@ -516,9 +516,9 @@ describe("the four default links point at pages that EXIST", () => {
   test("there are four of them, in the order a reader meets them", () => {
     expect(DEFAULT_ONBOARDING_LINKS).toHaveLength(4);
     expect(DEFAULT_ONBOARDING_LINKS.map((l) => l.href)).toEqual([
-      "/beans-and-todos.html",
-      "/getting-started.html",
-      "/content-types.html",
+      "/guides/beans-and-todos.html",
+      "/start/getting-started.html",
+      "/concepts/content-types.html",
       "/guides/index.html",
     ]);
   });
@@ -566,7 +566,7 @@ describe("`onboardingLinks` asks for the SET rather than copying it", () => {
   test("no declaration copies the onboarding SET, which would be the BLOCK_KINDS shape", () => {
     // Relaxed from "no declaration reuses an onboarding href", which was too
     // strict and fired on something legitimate: the sub-graphs card links to
-    // `/content-types.html` under the label "Content", and two cards pointing
+    // `/concepts/content-types.html` under the label "Content", and two cards pointing
     // at one page is normal. The failure this guards is a layer hand-COPYING
     // the set instead of asking for it with the flag — one enumeration in
     // several places, one of which goes short.

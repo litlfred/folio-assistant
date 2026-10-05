@@ -969,6 +969,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       "folio-qa-graph/v1": { shape: "content/pipeline/qa-graph-index.ts#QaGraphIndex" },
       "folio-translation-index/v1": { shape: "content/pipeline/translation-index.ts#TranslationIndex" },
       "folio-bean-index/v1": { generated: true },
+      "node-kind-index/1.0.0": { generated: true },
       "folio-translation-status/v1": { generated: true },
       "folio-schema-graph/v1": { generated: true },
       "folio-library-index/v1": { generated: true },
@@ -1044,6 +1045,28 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       "What the harness promises, one document per shipped feature, each carrying " +
       "a `Requirement` in its front matter. A sub-graph of `docs`. Test runs point " +
       "at these statements by `req:<slug>#<key>`.",
+  },
+  // THE DOCS GRAPH'S NAMED GROUPS — owner, 2026-10-05 (bean `xka5`): *"group
+  // cat-harness docs semantically and make named doc subgraphs"*. ONE kind for
+  // every group, on the argument `docs/docs.json` already makes for its two
+  // `auto-docs` entries: a sub-graph's identity is its DIRECTORY id, and a
+  // kind per group would be a registry entry restating one sentence. Which
+  // pages a group holds is its folder, so nobody keeps a list.
+  "doc-group": {
+    description:
+      "a named group of the docs graph's own pages — Start here, Concepts, Authoring guides, Process & methodology, FHIR — one folder each, declared from within by `docs/docs.json`. A **sub-graph of `docs`** (`within: \"docs\"`): its pages are `docs` pages, grouped by where they live. The Pages list nests a group's pages under it through `_config.yml` `defaults` (one `parent` per folder). Bean `xka5`.",
+    renderableNote: "its pages are built by `docs`",
+    title: "Doc group",
+    // NOT a site of its own: its pages are built by `docs`, which it is
+    // `within` — the same reason `proposals` and `requirements` are false.
+    renderable: false,
+    within: "docs",
+    // `content`: authored or generated pages of the docs site, grouped.
+    holds: "content",
+    validatorNotApplicable:
+      "its nodes are the docs site's markdown pages, judged as `docs` pages are; a group adds a folder, not a shape.",
+    summary:
+      "A named group of the documentation's own pages — one folder, one heading in the Pages list. A sub-graph of `docs`.",
   },
   "auto-docs": {
     description:
@@ -1881,7 +1904,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   },
   "todo-items": {
     description:
-      "todo nodes — one file each, `\"$schema\": \"folio-todo/v1\"`. Authored by people, and by agents on their behalf.",
+      "todo nodes — one file each, `\"$schema\": \"todo/1.0.0\"`. Authored by people, and by agents on their behalf.",
     title: "Todo items",
     layer: "core",
     renderable: false,
@@ -1891,7 +1914,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
     recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:
-      "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. " +
+      "Todo nodes — one file each, carrying `\"$schema\": \"todo/1.0.0\"`. " +
       "Authored by people and by agents on their behalf.",
   },
 
@@ -1906,7 +1929,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   // checklist searches `library/` and not `uploads/`, so a source still in
   // `uploads/` makes a clean grep read as "nobody has done this" while the
   // file sits on disk. Collapsing them into one kind would erase exactly
-  // the distinction `content/docs/document-ingestion/uploads-and-library-
+  // the distinction `content/docs/guides-document-ingestion/uploads-and-library-
   // are-two-stages-of-one-pipeline.md` exists to state. A QUEUE, and a
   // queue is a position in a pipeline. The declaration already says these
   // files are NOT L1 and read as absent to every corpus consumer: the file

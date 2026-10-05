@@ -467,7 +467,7 @@ const EXEMPTIONS: readonly ReferenceExemption[] = [
  * FIXED one — a PENDING that only grows stops meaning anything.
  *
  * That half fired on bean `ws99`, which is the first evidence it works.
- * `cat-harness/docs/ig-publisher.md` and `cat-harness/docs/publication-workflow.md`
+ * `cat-harness/docs/fhir/ig-publisher.md` and `cat-harness/docs/process/publication-workflow.md`
  * were held here as prose naming two or three instances with no single
  * destination. They are not prose: `gen-docs-pages.ts` writes both, and once it
  * began saying so in their front matter they stopped being read at all. Their
@@ -508,7 +508,7 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "cat-harness/tools/discover.ts", names: 2 },
   { file: "cat-harness/skills/ui/ui-core/harness-tiles.md", names: 2 },
   { file: "cat-harness/schemas/harness-config.ts", names: 3 },
-  { file: "cat-harness/content/docs/ig-publisher/what-it-cannot-be-asked-for.md", names: 2 },
+  { file: "cat-harness/content/docs/fhir-ig-publisher/what-it-cannot-be-asked-for.md", names: 2 },
   { file: "cat-harness-tools/scripts/check-context-emission.ts", names: 3 },
   { file: "cat-harness/scripts/harness-schema-export.ts", names: 2 },
   { file: "cat-harness/docs/wireframes/voices/intent.md", names: 2 },

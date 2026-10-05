@@ -870,14 +870,14 @@ function todosGraph(slug: string): string {
           id: "items",
           path: "items",
           graphTypologies: ["todo-items"],
-          description: "One Markdown file per todo, carrying `$schema: folio-todo/v1` in its front matter: a person's outstanding item.",
+          description: "One Markdown file per todo, carrying `$schema: todo/1.0.0` in its front matter: a person's outstanding item.",
         },
         {
           id: "feedback",
           path: "feedback",
           graphTypologies: ["todo-feedback"],
           description:
-            "Todos raised against a specific block. Review comments land here as `folio-review-comment/v1` JSON, committed on the edit-set's feature branch by the review-process task that decided them (the `review-comments` skill).",
+            "Todos raised against a specific block. Review comments land here as `review-comment/1.0.0` JSON, committed on the edit-set's feature branch by the review-process task that decided them (the `review-comments` skill).",
         },
         {
           id: "verdicts",

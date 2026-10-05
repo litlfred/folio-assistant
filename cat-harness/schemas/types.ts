@@ -651,7 +651,7 @@ export interface BlockBase {
    * This is the *source* language, not a translation. Translations of this
    * block live in `translations/<locale>/` as `.po` files alongside their
    * `.ts` manifests (TranslationNode). See `schemas/translation.ts` for
-   * the schema and `docs/translation-support.md` for the architecture.
+   * the schema and `docs/guides/translation-support.md` for the architecture.
    */
   lang?: string;
   /**

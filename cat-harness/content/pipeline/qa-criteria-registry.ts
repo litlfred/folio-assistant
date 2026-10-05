@@ -1636,7 +1636,7 @@ const DETANGLER: QaCriterionDefinition[] = [
 // `profiles: ["paper"]` does not fence them: any paper folio has a `.lean`
 // to read, so every other paper folio was being audited against chapters it
 // does not have. Measured here — this platform repo's own sidecars under
-// `test/results/block-qa/content/docs/publication-workflow/` carry
+// `test/results/block-qa/content/docs/process-publication-workflow/` carry
 // `detangler-archimedean-wall` verdicts on workflow documentation.
 //
 // So it is registered only when the folio opts in:
