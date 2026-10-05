@@ -79,6 +79,7 @@ import {
   type ViewerNavQa,
 } from "../../cat-harness/schemas/viewer-nav-qa.ts";
 import { declinesNavbar, isStandalonePage, sitePathForPage } from "../../cat-harness/scripts/viewer-page.ts";
+import { wantsLinkedRail } from "../../cat-harness/scripts/lib/harness-rail.ts";
 import { againstOrUsage, qaResultsFile, readBaseline } from "../../cat-harness/scripts/qa-results.ts";
 
 const ROOT = HARNESS_ROOT;
@@ -112,6 +113,7 @@ function pagesUnder(dir: string): string[] {
 /** Why a page has no rail, in the words the next reader needs. */
 const WHY_MISSING = "standalone page with no rail and no declared opt-out";
 const WHY_DECLINED = "declares <meta name=\"folio-navbar\" content=\"none\">";
+const WHY_LINKED = "declares <meta name=\"folio-navbar\" content=\"linked\">: railed at build, style linked (bean lnoy)";
 
 /**
  * The layout flags a railed page FAILS (#1757). Read off the rail's own
@@ -351,6 +353,8 @@ export function audit(docs: string, repo: string): ViewerNavQa {
       pages.push({ path, source, verdict: "railed", ...(flags.length ? { flags } : {}) });
     } else if (declinesNavbar(html)) {
       pages.push({ path, source, verdict: "declined", reason: WHY_DECLINED });
+    } else if (wantsLinkedRail(html)) {
+      pages.push({ path, source, verdict: "linked", reason: WHY_LINKED });
     } else {
       pages.push({ path, source, verdict: "missing", reason: WHY_MISSING });
     }
@@ -364,6 +368,7 @@ export function audit(docs: string, repo: string): ViewerNavQa {
       pages: pages.length,
       railed: count("railed"),
       declined: count("declined"),
+      linked: count("linked"),
       missing: count("missing"),
       flagged: pages.filter((p) => p.flags?.length).length,
     },
@@ -518,7 +523,7 @@ if (import.meta.main) {
   }
 
   console.log(
-    `  ${now.totals.railed} railed, ${now.totals.declined} declined, ` +
+    `  ${now.totals.railed} railed, ${now.totals.declined} declined, ${now.totals.linked ?? 0} linked, ` +
       `${now.totals.missing} missing, of ${now.totals.pages} generated viewer page(s); ` +
       `${now.totals.flagged} railed page(s) fail a layout flag`,
   );

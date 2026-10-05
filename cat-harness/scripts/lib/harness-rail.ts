@@ -46,7 +46,7 @@ export {
 } from "./navbar.js";
 export type { NavGroup, NavItem, NavbarModel } from "./navbar.js";
 
-import { documentIndexOf, injectNavbar, visualiserNavOf, type NavGroup, type NavItem, type NavbarModel } from "./navbar.js";
+import { NAVBAR_CSS, documentIndexOf, injectNavbar, visualiserNavOf, type NavGroup, type NavItem, type NavbarModel } from "./navbar.js";
 
 /** What a mounted page needs in order to describe its own navbar. */
 export interface RailOptions {
@@ -177,6 +177,23 @@ export function declinesNavbar(html: string): boolean {
 }
 
 /**
+ * The declaration a THIN page makes — rail me, but LINK the rail's style and
+ * the row's script rather than inlining them. Owner, 2026-10-05: *"1. Shared
+ * rail style first"*, for the library entries, OpenAPI operations and todo
+ * pages that declined the rail because inlined it outweighed the page (bean
+ * `lnoy`). Any pass that rails a page honours it, so the decision lives on the
+ * page, as `none` does.
+ */
+export const NAVBAR_LINKED = `<meta name="folio-navbar" content="linked">`;
+const LINKED_RE = /<meta\s+[^>]*name=["']folio-navbar["'][^>]*content=["']linked["'][^>]*>/i;
+const LINKED_RE_SWAPPED = /<meta\s+[^>]*content=["']linked["'][^>]*name=["']folio-navbar["'][^>]*>/i;
+
+/** Does this page ask for the rail with its style LINKED ({@link NAVBAR_LINKED})? */
+export function wantsLinkedRail(html: string): boolean {
+  return LINKED_RE.test(html) || LINKED_RE_SWAPPED.test(html);
+}
+
+/**
  * Put the rail into a finished document. Refuses a page with no `<body>`.
  *
  * THE DOCUMENT INDEX IS READ OFF `html` HERE, not passed in, and that is the
@@ -191,10 +208,18 @@ export function declinesNavbar(html: string): boolean {
 export function injectRail(html: string, o: RailOptions): string | undefined {
   const label = o.visualiserLabel ?? "Contents";
   const documentIndex = o.documentIndex ?? visualiserNavOf(html, label) ?? documentIndexOf(html, label);
-  const railed = injectNavbar(html, railModel({ ...o, ...(documentIndex ? { documentIndex } : {}) }));
+  const root = o.assetRoot ?? o.toRoot;
+  // A page that asked for LINKED assets gets them linked, whatever the caller
+  // would otherwise inline: the page's declaration is the decision.
+  const linked = wantsLinkedRail(html);
+  const railed = injectNavbar(
+    html,
+    railModel({ ...o, ...(documentIndex ? { documentIndex } : {}) }),
+    linked ? { cssHref: `${root}/${NAVBAR_CSS}` } : {},
+  );
   return railed === undefined
     ? undefined
-    : withNavbarRow(railed, o.navbarRow, { root: o.assetRoot ?? o.toRoot, ...(o.inlineRowAssets ? { inline: o.inlineRowAssets } : {}) });
+    : withNavbarRow(railed, o.navbarRow, { root, ...(o.inlineRowAssets && !linked ? { inline: o.inlineRowAssets } : {}) });
 }
 
 /** The id `docs-ui.js`'s `readNavbarRow` looks for — the same one `head_custom.html` writes. */
