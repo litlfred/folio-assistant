@@ -241,3 +241,30 @@ test.describe("the Todos and Beans icons carry a live count badge (bean gkv6)", 
     await expect(beans.locator(".fa-nav-count")).toHaveAttribute("data-fa-count-state", "error");
   });
 });
+
+/* THE FLAKE THIS PR CAUSED, AND ITS FIX (bean `gkv6`). `library-entry-iri:69`
+ * hung for 180 s on some loads: the library page `replaceState`s a legacy
+ * `#instance/id` one segment DEEPER, the row resolved its relative
+ * `data-fa-root` against the moved address, fetched a 404 — and left that
+ * 404's body unread, so the request never finished and `networkidle` never
+ * came. Measured 6 of 12 loads before the fix, 0 of 16 after. The unread
+ * body is not tested here: a mocked route always completes, so only the real
+ * server in `library-entry-iri.e2e.ts` can see it. */
+test.describe("the count fetch survives a page that moves its own address (bean gkv6)", () => {
+  const count = (id: string, n: number) => JSON.stringify({ tile: { [id]: { count: n, unit: id } } });
+
+  test("a replaceState one level deeper still fetches the right count.json", async ({ page }) => {
+    // At the END of <body>: the deferred scripts are already requested (their
+    // URLs resolved) and have not run yet — the order the library page has.
+    const deeper = railedBare(LIVE).replace("</body>", '<script>history.replaceState(null, "", "deeper/than/before/")</script></body>');
+    const asked: string[] = [];
+    page.on("request", (r) => { if (r.url().includes("count.json")) asked.push(new URL(r.url()).pathname); });
+    await serve(page, deeper, {
+      "/folio-assistant/assets/todos/count.json": count("todos", 3),
+      "/folio-assistant/assets/beans/count.json": count("beans", 528),
+    });
+    const beans = page.locator('nav.fa-nav .fa-nav-icons a[aria-label^="Beans"]');
+    await expect(beans.locator(".fa-nav-count")).toHaveText("528");
+    expect(asked.sort()).toEqual(["/folio-assistant/assets/beans/count.json", "/folio-assistant/assets/todos/count.json"]);
+  });
+});

@@ -232,6 +232,22 @@ button.fa-nav-icon {
    * platform's own site, the platform's absolute address on a folio's site,
    * and the ONLY answer for an inlined copy of this script, which has no
    * address of its own; then this script's own address. */
+  /* THE ADDRESS THIS DOCUMENT WAS LOADED FROM, not where the address bar is
+   * now. `data-fa-root` is RELATIVE to the document, and a page may
+   * `history.replaceState` before this runs: the library page turns a legacy
+   * `#instance/id` into `<lib>/<instance>/<id>/`, one segment deeper, so a
+   * root resolved against `location.href` afterwards came out one level too
+   * deep and the count fetches 404'd — on some loads only, by which ran
+   * first (measured: 6 of 12 loads of `library/smart-base/#smart-base%2F…`).
+   * The navigation entry keeps the URL the document was fetched from. */
+  function loadedFrom() {
+    try {
+      var nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+      if (nav && nav.name) return nav.name;
+    } catch (_e) { /* older engines: the address bar is the best there is */ }
+    return location.href;
+  }
+
   function siteBaseurl() {
     var meta = document.querySelector('meta[name="fa-baseurl"]');
     var v = (meta && meta.getAttribute("content")) || "";
@@ -240,7 +256,7 @@ button.fa-nav-icon {
     var root = data && data.getAttribute("data-fa-root");
     if (root) {
       try {
-        var u = new URL(root.replace(/\/*$/, "/"), location.href);
+        var u = new URL(root.replace(/\/*$/, "/"), loadedFrom());
         var path = u.pathname.replace(/\/+$/, "");
         return u.origin === location.origin ? path : u.origin + path;
       } catch (_e) { /* fall through to the script's own address */ }
@@ -390,8 +406,10 @@ button.fa-nav-icon {
     var url = withBase("/assets/" + id + "/count.json");
     countCache[id] = (typeof fetch === "function" ? fetch(url) : Promise.reject(new Error("no fetch")))
       .then(function (r) {
-        if (r.status === 404) return { absent: true };
-        if (!r.ok) throw new Error("HTTP " + r.status);
+        // The body is CONSUMED on every path: an unread 404 body leaves the
+        // request open, which held a test's `networkidle` for its full 180 s.
+        if (r.status === 404) return r.text().then(function () { return { absent: true }; }, function () { return { absent: true }; });
+        if (!r.ok) return r.text().then(function () { throw new Error("HTTP " + r.status); });
         return r.json().then(function (doc) {
           var n = doc && doc.tile && doc.tile[id] && doc.tile[id].count;
           if (typeof n !== "number") throw new Error("no tile." + id + ".count");
