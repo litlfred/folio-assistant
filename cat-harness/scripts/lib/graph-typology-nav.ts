@@ -45,6 +45,8 @@ export function kindSummaryHead(kind: string): string | undefined {
 
 /** What a graph-typology navbar row carries besides its href: mark, hue and description. */
 export interface GraphTypologyRowDecor {
+  /** Always `true`: the row IS a kind row — `NavItem.kind`, declared rather than read off the mark (#2151). */
+  kind: true;
   icon?: string;
   glyphPath?: string;
   tone?: number;
@@ -61,8 +63,8 @@ export interface GraphTypologyRowDecor {
 export function graphTypologyRowDecor(kind: string, instance?: string): GraphTypologyRowDecor {
   const head = kindSummaryHead(kind);
   const description = [head, instance].filter((x): x is string => Boolean(x)).join(", ");
-  const mark: GraphTypologyRowDecor = hasAvatar(kind)
+  const mark: Omit<GraphTypologyRowDecor, "kind"> = hasAvatar(kind)
     ? { glyphPath: avatarFor(kind).glyph, tone: avatarFor(kind).tone }
     : { icon: kind.slice(0, 1).toUpperCase() };
-  return { ...mark, ...(description ? { description } : {}) };
+  return { kind: true, ...mark, ...(description ? { description } : {}) };
 }
