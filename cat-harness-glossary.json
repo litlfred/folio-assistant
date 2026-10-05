@@ -1396,6 +1396,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MountSubgraph/Lane_MountPipeline",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Audit",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RenderKgToCdn/Lane_Ci",
@@ -1443,6 +1444,15 @@
       "label": "Build pipeline",
       "scopeNote": "Mechanical: every decision on this lane is read off the resolved source, so the same declaration mounts the same way in every container, and an override in the instance config is the only thing that changes it.",
       "source": "cat-harness/processes/kg/mount-subgraph.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "The gate and the deploy. `code-quality-gates.yml` runs `slice:sqlite:check` on every pull request; `docs-site.yml` and `feature-staging.yml` build each slice into `_site/` from the tree they publish, one line per slice.",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Pipeline",
@@ -1928,7 +1938,8 @@
       "definition": "The authoring agent working on how this instance PUBLISHES itself — the MCP projection, its contract, and the rendering endpoints.",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
       "usage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Platform"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Platform",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Author"
       ]
     },
     {
@@ -1939,6 +1950,15 @@
       "label": "Platform authoring agent",
       "scopeNote": "The platform-side stages: the graph's identity (version, iriBase, nodeSchemas), moving harness output about it into the host, splitting the content from its tools, and making the parent consume the pair additively.",
       "source": "cat-harness/processes/kg/kg-separation.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Author",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/platform-authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish",
+      "label": "Platform authoring agent",
+      "scopeNote": "Whoever adds or changes a slice: writes its definition in the builder's slice table, measures the built file against the budget, wires it when it fits, and looks at the published search once it has deployed. The judgement in this process is theirs, at the budget gateway.",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/session-coordinator",

@@ -8757,3 +8757,91 @@ table[data-fa-filtered] tr[hidden] { display: none !important; }
 }
 .fa-render-failed code,
 .fa-workplan-failed code { word-break: break-all; }
+
+/* The publication-workflow page's process index (bean `ax6r`), drawn at runtime
+   by assets/js/process-index.js. The two grouping buttons toggle with
+   `aria-pressed`, so the pressed one is drawn like `.fa-figure-tools`'. */
+.fa-process-index-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.fa-process-index-controls button {
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1.4;
+}
+
+.fa-process-index-controls button:hover,
+.fa-process-index-controls button:focus-visible {
+  border-color: var(--link-color, #7253ed);
+}
+
+.fa-process-index-controls button[aria-pressed="true"] {
+  border-color: var(--link-color, #7253ed);
+  box-shadow: inset 0 0 0 1px var(--link-color, #7253ed);
+  font-weight: 600;
+}
+
+.fa-process-index-table caption {
+  text-align: left;
+  font-weight: 600;
+  padding: 0.75rem 0 0.25rem;
+}
+
+/* Narrow viewports: four columns at 390 px leave a few words per line and push
+   the diagram links past the edge. Each row becomes a card whose cells say
+   which column they were (`data-label`, set by the script). Scoped deeper than
+   narrow-viewport.css's generic `table:not(...)` rule so this one wins. */
+@media (max-width: 799.98px) {
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table,
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table tbody,
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table tr,
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table td {
+    display: block;
+    width: auto;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table caption {
+    display: block;
+  }
+
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table tr {
+    border: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
+    border-radius: 4px;
+    margin: 0 0 0.75rem;
+  }
+
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table td {
+    border: 0;
+    padding: 0.35rem 0.75rem;
+  }
+
+  .fa-process-index .fa-process-index-tables table.fa-process-index-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.75em;
+    font-weight: 600;
+    opacity: 0.75;
+  }
+}

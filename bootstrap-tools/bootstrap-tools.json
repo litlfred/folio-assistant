@@ -48,7 +48,7 @@
       "@type": "@id"
     },
     "inSubgraph": {
-      "@id": "http://purl.org/dc/terms/isPartOf",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
       "@type": "@id"
     },
     "implementedBy": {
@@ -201,6 +201,18 @@
       "@type": "@id"
     },
     "hitPolicy": "https://litlfred.github.io/cat-harness/0.1.0/ns#hitPolicy",
+    "calledElement": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#calledElement",
+      "@type": "@id"
+    },
+    "depiction": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#depiction",
+      "@type": "@id"
+    },
+    "sourceUrl": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceUrl",
+      "@type": "@id"
+    },
     "sourcePath": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourcePath",
     "sourceKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceKind",
     "instructionsPath": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionsPath",
@@ -208,7 +220,7 @@
     "contentSource": {
       "@id": "http://purl.org/dc/terms/source",
       "@context": {
-        "kind": "http://purl.org/dc/terms/type",
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
         "branch": "http://purl.org/dc/terms/identifier",
         "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
         "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
@@ -318,10 +330,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T02:12:10.655Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/98ab8cd7840521845ad5e96c74d034eeee43f246",
-  "sourceCommitSha": "98ab8cd7840521845ad5e96c74d034eeee43f246",
-  "sourceCommitAt": "2026-10-05T04:04:18+02:00",
+  "generatedAt": "2026-10-05T04:57:47.522Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e49c086207bbb144efe37b32eedb249973a2953f",
+  "sourceCommitSha": "e49c086207bbb144efe37b32eedb249973a2953f",
+  "sourceCommitAt": "2026-10-05T06:51:09+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -366,8 +378,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
       "name": "Render a Knowledge Graph to GitHub Pages",
+      "summary": "Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — to GitHub Pages at a publication root URL, and report the push: a STATUS (pushed, not pushed, could not determine) and one MESSAGE carrying the deployed commit and the QA result.",
+      "description": "Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — to GitHub Pages at a publication root URL, and report the push: a STATUS (pushed, not pushed, could not determine) and one MESSAGE carrying the deployed commit and the QA result. Owner, 2026-09-30: \"render content of a KG (or list of subgraphs within) for publication to a CDN at a given publication root URL … independent of staging vs publication … just rendering … output is status of push to CDN + message\", and \"the rendering bpmn is ok in bootstrap-tools … so 'render KG to githubpages' works and self described\".\n\nSTAGING AND RELEASE ARE THE SAME PROCESS. A preview is this with a root under the release root; a release is this with the release root. What differs between them — who may start it, what must be reviewed first, what else lives on the same host — belongs to whatever calls this, never in here.\n\nEVERY STEP IS ONE OF THESE TOOLS: site.ts stages, site.ts --check and readme-book.ts --check check the staging, the instance's Pages workflow deploys, pages-status.ts checks what is served and writes the message. The skill render-kg-to-github-pages has each command.\n\nTHREE STATES, NOT TWO. A check that could not look (a 403 from a proxy, no network) is could-not-determine, and never reported as pushed.\n\nNO work-plan element on any activity, and isExecutable is false: this is bootstrap-tools' own diagram, in bootstrap's diagram vocabulary, and bootstrap's diagrams carry no work plan.",
       "enforcement": "strict",
       "sourcePath": "processes/render-kg-to-github-pages.bpmn",
+      "sourceUrl": "https://github.com/litlfred/bootstrap-tools/blob/main/processes/render-kg-to-github-pages.bpmn",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages/node/Start_Render"
       ],
@@ -822,7 +837,7 @@
       "title": "Bootstrap's shapes, in Zod",
       "description": "The Zod source of every schema bootstrap publishes, bootstrap's defined terms and graph kinds, and the small readers the tools share: a declaration reader over bootstrap's own shape, release addresses, and the declared-order check.",
       "readmePath": "schemas/README.md",
-      "fileCount": 12,
+      "fileCount": 13,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#directory/bootstrap-tools-schemas"
     },
     {
@@ -840,7 +855,7 @@
       "title": "The tools",
       "description": "The schema generator and drawn schema page, the README writers (each directory's README, and the `kg:processes` and `kg:files` sections) with their Liquid templates, the Process renderer, the release-IRI sync, the term linker, and the checks: import closure, node identifiers, bootstrap's concepts, bootstrap's documents parsed against their Zod (`bootstrap:validate`), and the semver bump the published schemas require, computed from a diff (`bootstrap:semver`).",
       "readmePath": "scripts/README.md",
-      "fileCount": 47,
+      "fileCount": 51,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld#directory/bootstrap-tools-scripts"
     },
     {
@@ -918,8 +933,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "98ab8cd7840521845ad5e96c74d034eeee43f246",
+    "sha": "e49c086207bbb144efe37b32eedb249973a2953f",
     "pr": "main",
-    "run": "37253911137"
+    "run": "37265284907"
   }
 }

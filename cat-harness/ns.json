@@ -965,15 +965,88 @@
         "skos:Concept"
       ],
       "label": "inSubgraph",
-      "comment": "The DECLARED DIRECTORY a node was projected from — the named subgraph it belongs to, as a link to that directory's own node rather than a bare id. Derived from the instance's declaration, longest path prefix winning, and INHERITED through `partOf` for nodes that have no path of their own (a ProcessNode is part of a diagram, not a file). A node with no value belongs to no declared directory — vocabulary nodes are minted from the namespace rather than from any file — and that absence is reported as its own state rather than folded into a default.",
+      "comment": "The DECLARED DIRECTORY a node was projected from — the named subgraph it belongs to, as a link to that directory's own node rather than a bare id. Derived from the instance's declaration, longest path prefix winning, and INHERITED through `partOf` for nodes that have no path of their own (a ProcessNode is part of a diagram, not a file). A node with no value belongs to no declared directory — vocabulary nodes are minted from the namespace rather than from any file — and that absence is reported as its own state rather than folded into a default. Its own term, NOT `dcterms:isPartOf`: membership of a subgraph is a view of the graph, while `partOf` is structural containment, and one predicate for both made the two indistinguishable once compacted (bean `3f5f`).",
       "prefLabel": "inSubgraph",
-      "definition": "The DECLARED DIRECTORY a node was projected from — the named subgraph it belongs to, as a link to that directory's own node rather than a bare id. Derived from the instance's declaration, longest path prefix winning, and INHERITED through `partOf` for nodes that have no path of their own (a ProcessNode is part of a diagram, not a file). A node with no value belongs to no declared directory — vocabulary nodes are minted from the namespace rather than from any file — and that absence is reported as its own state rather than folded into a default.",
+      "definition": "The DECLARED DIRECTORY a node was projected from — the named subgraph it belongs to, as a link to that directory's own node rather than a bare id. Derived from the instance's declaration, longest path prefix winning, and INHERITED through `partOf` for nodes that have no path of their own (a ProcessNode is part of a diagram, not a file). A node with no value belongs to no declared directory — vocabulary nodes are minted from the namespace rather than from any file — and that absence is reported as its own state rather than folded into a default. Its own term, NOT `dcterms:isPartOf`: membership of a subgraph is a view of the graph, while `partOf` is structural containment, and one predicate for both made the two indistinguishable once compacted (bean `3f5f`).",
       "notation": "cat-harness:inSubgraph",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
-      "layer": "harness",
-      "deprecated": true,
-      "isReplacedBy": "http://purl.org/dc/terms/isPartOf"
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:hasMember",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "hasMember",
+      "comment": "A node a named subgraph DIRECTLY contains: the deepest subgraph directory holding the node's source path, or its `partOf` parent's subgraph when it has no path. Transitive membership is not a second property — it is this one, followed through `hasSubgraph` (bean `c1m4`).",
+      "prefLabel": "hasMember",
+      "definition": "A node a named subgraph DIRECTLY contains: the deepest subgraph directory holding the node's source path, or its `partOf` parent's subgraph when it has no path. Transitive membership is not a second property — it is this one, followed through `hasSubgraph` (bean `c1m4`).",
+      "notation": "cat-harness:hasMember",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:hasSubgraph",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "hasSubgraph",
+      "comment": "A child named subgraph: a directory directly inside this one. The index names it by IRI; the hydrated file nests it, members and all.",
+      "prefLabel": "hasSubgraph",
+      "definition": "A child named subgraph: a directory directly inside this one. The index names it by IRI; the hydrated file nests it, members and all.",
+      "notation": "cat-harness:hasSubgraph",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:payload",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "payload",
+      "comment": "Where a node's heavy content is published: an immutable, content-addressed file at `<BASE_URL>/payload/sha256/<hex>`, the hex being the SHA-256 of its bytes. A subgraph file carries this link in place of the body (bean `f233`).",
+      "prefLabel": "payload",
+      "definition": "Where a node's heavy content is published: an immutable, content-addressed file at `<BASE_URL>/payload/sha256/<hex>`, the hex being the SHA-256 of its bytes. A subgraph file carries this link in place of the body (bean `f233`).",
+      "notation": "cat-harness:payload",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:sha256",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "sha256",
+      "comment": "The lower-case hex SHA-256 digest of a payload's bytes — also its IRI's last segment.",
+      "prefLabel": "sha256",
+      "definition": "The lower-case hex SHA-256 digest of a payload's bytes — also its IRI's last segment.",
+      "notation": "cat-harness:sha256",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:bytes",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "bytes",
+      "comment": "The size of a payload, in bytes.",
+      "prefLabel": "bytes",
+      "definition": "The size of a payload, in bytes.",
+      "notation": "cat-harness:bytes",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
     },
     {
       "@id": "cat-harness:localId",
@@ -1211,15 +1284,13 @@
         "skos:Concept"
       ],
       "label": "contentSourceKind",
-      "comment": "Which kind of content source: `directory` or `branch`.",
+      "comment": "Which kind of content source: `directory` or `branch`, as a plain value. Its own term, NOT `dcterms:type`: that property's range is a class, and the published subgraph files use it as a link (`holdsGraph`), so a literal under it failed publish-verify's object-link check (ld-object-property-is-a-link, 2026-10-03).",
       "prefLabel": "contentSourceKind",
-      "definition": "Which kind of content source: `directory` or `branch`.",
+      "definition": "Which kind of content source: `directory` or `branch`, as a plain value. Its own term, NOT `dcterms:type`: that property's range is a class, and the published subgraph files use it as a link (`holdsGraph`), so a literal under it failed publish-verify's object-link check (ld-object-property-is-a-link, 2026-10-03).",
       "notation": "cat-harness:contentSourceKind",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
-      "layer": "harness",
-      "deprecated": true,
-      "isReplacedBy": "http://purl.org/dc/terms/type"
+      "layer": "harness"
     },
     {
       "@id": "cat-harness:contentSourceBranch",
@@ -2331,6 +2402,53 @@
       "layer": "harness",
       "deprecated": true,
       "isReplacedBy": "http://www.omg.org/spec/BPMN/20100524/MODEL#targetRef"
+    },
+    {
+      "@id": "cat-harness:calledElement",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "calledElement",
+      "comment": "The process a call activity invokes.",
+      "prefLabel": "calledElement",
+      "definition": "The process a call activity invokes.",
+      "notation": "cat-harness:calledElement",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness",
+      "deprecated": true,
+      "isReplacedBy": "http://www.omg.org/spec/BPMN/20100524/MODEL#calledElement"
+    },
+    {
+      "@id": "cat-harness:depiction",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "depiction",
+      "comment": "A rendered picture of this node, e.g. the SVG drawn from a process's diagram.",
+      "prefLabel": "depiction",
+      "definition": "A rendered picture of this node, e.g. the SVG drawn from a process's diagram.",
+      "notation": "cat-harness:depiction",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:sourceUrl",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "sourceUrl",
+      "comment": "Where the file a node was read from can be viewed on its forge.",
+      "prefLabel": "sourceUrl",
+      "definition": "Where the file a node was read from can be viewed on its forge.",
+      "notation": "cat-harness:sourceUrl",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
     },
     {
       "@id": "cat-harness:decisionRef",

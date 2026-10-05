@@ -48,7 +48,7 @@
       "@type": "@id"
     },
     "inSubgraph": {
-      "@id": "http://purl.org/dc/terms/isPartOf",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
       "@type": "@id"
     },
     "implementedBy": {
@@ -201,6 +201,18 @@
       "@type": "@id"
     },
     "hitPolicy": "https://litlfred.github.io/cat-harness/0.1.0/ns#hitPolicy",
+    "calledElement": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#calledElement",
+      "@type": "@id"
+    },
+    "depiction": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#depiction",
+      "@type": "@id"
+    },
+    "sourceUrl": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceUrl",
+      "@type": "@id"
+    },
     "sourcePath": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourcePath",
     "sourceKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceKind",
     "instructionsPath": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionsPath",
@@ -208,7 +220,7 @@
     "contentSource": {
       "@id": "http://purl.org/dc/terms/source",
       "@context": {
-        "kind": "http://purl.org/dc/terms/type",
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
         "branch": "http://purl.org/dc/terms/identifier",
         "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
         "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
@@ -318,10 +330,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T02:12:24.667Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/98ab8cd7840521845ad5e96c74d034eeee43f246",
-  "sourceCommitSha": "98ab8cd7840521845ad5e96c74d034eeee43f246",
-  "sourceCommitAt": "2026-10-05T04:04:18+02:00",
+  "generatedAt": "2026-10-05T04:57:59.780Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e49c086207bbb144efe37b32eedb249973a2953f",
+  "sourceCommitSha": "e49c086207bbb144efe37b32eedb249973a2953f",
+  "sourceCommitAt": "2026-10-05T06:51:09+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -432,8 +444,11 @@
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
       "name": "DIIG — from a health system bottleneck to a costed implementation plan",
+      "summary": "The nine-chapter sequence of the WHO/ITU Digital Implementation Investment Guide, as the Guide numbers it.",
+      "description": "The nine-chapter sequence of the WHO/ITU Digital Implementation Investment Guide, as the Guide numbers it. Each chapter's output is the next chapter's input, and the two exclusive gateways are the Guide's OWN progress checks (4.5 and 8.5) rather than gates added here.\n\nAdopted whole per `methodology-adoption`, and rendered from the ingested sections at `smart-base/library/9789240010567-eng/`. Chapter 1 is the Guide's introduction — scope, key terms and when the Guide applies — so it is the start event's documentation rather than an activity: nothing is performed there.\n\nADVISORY, not strict. This is a per-methodology process and DIIG is somebody else's method: the engine can report where a programme has got to, but what counts as an adequate answer to \"have we identified the bottlenecks\" belongs to the programme and its stakeholders, not to this repository. The four unrelaxable steps of the base editorial gate are untouched by it.\n\nWHAT THIS DIAGRAM DOES NOT DO. DIIG Table 3.3.1 scores bottlenecks on three 1-3 criteria and sums them into a ranking. The three criteria are adopted; the arithmetic is refused, per `methodology-adoption` — three ordinal judgements on incommensurable scales, summed with equal weight, produce a number whose precision is invented. So A_PrioritizeBottlenecks records each criterion's answer and its reason and orders by argument. There is no computed score anywhere in this process, and a DMN-backed gateway would be the wrong shape for exactly that reason.",
       "enforcement": "advisory",
       "sourcePath": "methodologies/processes/diig-investment-path.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn",
       "startNode": [
         "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/Start_Process_DIIG"
       ],
@@ -864,8 +879,11 @@
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
       "name": "L2 DAK authoring",
+      "summary": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager.",
+      "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
       "enforcement": "advisory",
       "sourcePath": "processes/content/l2-dak-authoring.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn",
       "startNode": [
         "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline"
       ],
@@ -1730,8 +1748,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "98ab8cd7840521845ad5e96c74d034eeee43f246",
+    "sha": "e49c086207bbb144efe37b32eedb249973a2953f",
     "pr": "main",
-    "run": "37253911137"
+    "run": "37265284907"
   }
 }

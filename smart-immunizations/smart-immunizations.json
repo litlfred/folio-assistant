@@ -48,7 +48,7 @@
       "@type": "@id"
     },
     "inSubgraph": {
-      "@id": "http://purl.org/dc/terms/isPartOf",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
       "@type": "@id"
     },
     "implementedBy": {
@@ -201,6 +201,18 @@
       "@type": "@id"
     },
     "hitPolicy": "https://litlfred.github.io/cat-harness/0.1.0/ns#hitPolicy",
+    "calledElement": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#calledElement",
+      "@type": "@id"
+    },
+    "depiction": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#depiction",
+      "@type": "@id"
+    },
+    "sourceUrl": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceUrl",
+      "@type": "@id"
+    },
     "sourcePath": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourcePath",
     "sourceKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceKind",
     "instructionsPath": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionsPath",
@@ -208,7 +220,7 @@
     "contentSource": {
       "@id": "http://purl.org/dc/terms/source",
       "@context": {
-        "kind": "http://purl.org/dc/terms/type",
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
         "branch": "http://purl.org/dc/terms/identifier",
         "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
         "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
@@ -318,10 +330,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T02:12:28.500Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/98ab8cd7840521845ad5e96c74d034eeee43f246",
-  "sourceCommitSha": "98ab8cd7840521845ad5e96c74d034eeee43f246",
-  "sourceCommitAt": "2026-10-05T04:04:18+02:00",
+  "generatedAt": "2026-10-05T04:58:03.082Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e49c086207bbb144efe37b32eedb249973a2953f",
+  "sourceCommitSha": "e49c086207bbb144efe37b32eedb249973a2953f",
+  "sourceCommitAt": "2026-10-05T06:51:09+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -426,8 +438,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "98ab8cd7840521845ad5e96c74d034eeee43f246",
+    "sha": "e49c086207bbb144efe37b32eedb249973a2953f",
     "pr": "main",
-    "run": "37253911137"
+    "run": "37265284907"
   }
 }

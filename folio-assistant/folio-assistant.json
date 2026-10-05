@@ -48,7 +48,7 @@
       "@type": "@id"
     },
     "inSubgraph": {
-      "@id": "http://purl.org/dc/terms/isPartOf",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
       "@type": "@id"
     },
     "implementedBy": {
@@ -201,6 +201,18 @@
       "@type": "@id"
     },
     "hitPolicy": "https://litlfred.github.io/cat-harness/0.1.0/ns#hitPolicy",
+    "calledElement": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#calledElement",
+      "@type": "@id"
+    },
+    "depiction": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#depiction",
+      "@type": "@id"
+    },
+    "sourceUrl": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceUrl",
+      "@type": "@id"
+    },
     "sourcePath": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourcePath",
     "sourceKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceKind",
     "instructionsPath": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionsPath",
@@ -208,7 +220,7 @@
     "contentSource": {
       "@id": "http://purl.org/dc/terms/source",
       "@context": {
-        "kind": "http://purl.org/dc/terms/type",
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
         "branch": "http://purl.org/dc/terms/identifier",
         "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
         "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
@@ -318,18 +330,53 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T02:12:08.402Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/98ab8cd7840521845ad5e96c74d034eeee43f246",
-  "sourceCommitSha": "98ab8cd7840521845ad5e96c74d034eeee43f246",
-  "sourceCommitAt": "2026-10-05T04:04:18+02:00",
+  "generatedAt": "2026-10-05T04:57:45.668Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e49c086207bbb144efe37b32eedb249973a2953f",
+  "sourceCommitSha": "e49c086207bbb144efe37b32eedb249973a2953f",
+  "sourceCommitAt": "2026-10-05T06:51:09+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
+    "Skill": 3,
     "GraphKind": 18,
     "Subgraph": 8,
     "Asset": 2
   },
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#skill/bean-coordination",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "bean-coordination",
+      "title": "bean-coordination — see `skills/sdlc/sdlc-core/`",
+      "instructionsPath": ".claude/skills/local/bean-coordination.md",
+      "instructionLines": 22,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#skill/language-trap-agent-audit",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "language-trap-agent-audit",
+      "title": "/language-trap-agent-audit — per-block agentic trap audit",
+      "description": "Thorough per-block agentic audit of the ten language-trap categories (owner spec 2026-08-15) — full-context judgement over every prose-bearing content block, agent reviewer entries in the QA sidecar, small fixes applied inline, structural fixes flagged.",
+      "instructionsPath": ".claude/skills/local/language-trap-agent-audit.md",
+      "instructionLines": 118,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#skill/todo-manager",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "todo-manager",
+      "title": "todo-manager — see `skills/sdlc/sdlc-core/`",
+      "instructionsPath": ".claude/skills/local/todo-manager.md",
+      "instructionLines": 30,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
@@ -504,7 +551,7 @@
       ],
       "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state). REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "readmePath": "beans/README.md",
-      "fileCount": 1619,
+      "fileCount": 1629,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/beans"
     },
     {
@@ -614,8 +661,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "98ab8cd7840521845ad5e96c74d034eeee43f246",
+    "sha": "e49c086207bbb144efe37b32eedb249973a2953f",
     "pr": "main",
-    "run": "37253911137"
+    "run": "37265284907"
   }
 }
