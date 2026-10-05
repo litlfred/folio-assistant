@@ -246,4 +246,4 @@ du plan de travail en direct identique, quel que soit le harnais.
 > standard pour agents de la Linux Foundation lu nativement par Claude Code, Gemini CLI,
 > Antigravity, Cursor, Copilot et d'autres) ; l'état en direct est exposé à la fois sous la forme d'un
 > hook `SessionStart` propre à chaque harnais via un script partagé et sous la forme de l'outil MCP
-> `work_plan_prime`. Consultez la page [architecture](../concepts/architecture.html).
+> `work_plan_prime`. Consultez la page [architecture](../../concepts/fr/architecture.html).

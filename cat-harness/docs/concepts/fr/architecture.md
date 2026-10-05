@@ -60,19 +60,19 @@ en cinq instances composables de folio-assistant. Les pages filles le détaillen
 
 | page | ce à quoi elle répond |
 |---|---|
-| [Taxonomie des dépôts](../../architecture/repo-taxonomy.html) | Quels types de dépôts existent — Outils, Tests, Contenu, Consommateur — et ce que chacun peut contenir |
-| [État actuel](../../architecture/current-state.html) | Ce qui se trouve réellement dans ce dépôt aujourd'hui, mesures à l'appui, et où se situe le mélange |
-| [État futur](../../architecture/future-state.html) | Les cinq dépôts cibles et dans lequel chaque répertoire atterrit |
-| [Plan de migration](../../architecture/migration-plan.html) | Phases 0/I/II/III, les étapes clés (gates) et ce qui reste à trancher |
-| [`cat-harness` minimal](../../architecture/cat-harness-minimum.html) | Ce qui subsiste dans le harnais une fois que le critère « non auto-documenté » est appliqué comme test |
-| [Instances de harnais](../../architecture/harness-instances.html) | Ce qu'EST une instance — schémas, visualisations, outils ; les quatre répertoires ; le rendu par défaut |
+| [Taxonomie des dépôts](../architecture/repo-taxonomy.html) | Quels types de dépôts existent — Outils, Tests, Contenu, Consommateur — et ce que chacun peut contenir |
+| [État actuel](../architecture/current-state.html) | Ce qui se trouve réellement dans ce dépôt aujourd'hui, mesures à l'appui, et où se situe le mélange |
+| [État futur](../architecture/future-state.html) | Les cinq dépôts cibles et dans lequel chaque répertoire atterrit |
+| [Plan de migration](../architecture/migration-plan.html) | Phases 0/I/II/III, les étapes clés (gates) et ce qui reste à trancher |
+| [`cat-harness` minimal](../architecture/cat-harness-minimum.html) | Ce qui subsiste dans le harnais une fois que le critère « non auto-documenté » est appliqué comme test |
+| [Instances de harnais](../architecture/harness-instances.html) | Ce qu'EST une instance — schémas, visualisations, outils ; les quatre répertoires ; le rendu par défaut |
 
 Les deux dernières semblent se contredire — le minimum indique qu'un harnais ne produit
 rien qu'un humain regarde, et la page des instances indique qu'une instance effectue un rendu
 par défaut. Ce n'est pas le cas : l'exigence est un **plancher qui s'élève**,
 `bootstrap` étant exempté du visualiseur et devant fournir ses propres `.json`/`.jsonld`
 à la place, et `cat-harness` étant la couche où le reste commence à s'appliquer. Voir
-[Où commence l'exigence](../../architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
+[Où commence l'exigence](../architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
 
 Le reste de cette page décrit l'architecture **telle qu'elle est actuellement**.
 
@@ -117,7 +117,7 @@ compétences avec `skill_list` et charge les instructions avec `skill_fetch`. La
 des compétences et des rôles — ainsi que la manière dont ils se composent avec le LLM (RBAC, capacités,
 exigences) — se trouve sur la page [Compétences et rôles](skills.html) ; le contrat
 d'entrée/sortie de chaque compétence est publié dans la
-[Référence des schémas de compétences](../reference/skills/).
+[Référence des schémas de compétences](../../reference/skills/).
 
 ## Le modèle d'objets de contenu
 
@@ -127,7 +127,7 @@ Pour les articles, le contenu est un arbre de **blocs** typés validés à l'ex�
 - `schemas/constraints.ts` — schémas Zod et règles de contraintes
 - `schemas/builders.ts` — constructeurs validés (`definition()`, `theorem()`, …)
 
-Ceux-ci sont documentés dans la [Référence de l'API TypeScript](api/) générée.
+Ceux-ci sont documentés dans la [Référence de l'API TypeScript](../../fr/api/) générée.
 
 ## Contrôle d'accès — ODRL, vérifié avant chaque tâche
 

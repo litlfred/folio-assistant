@@ -88,7 +88,7 @@ nothing to render on.
 
 ## Where the requirement starts — bootstrap is the exception
 
-[The minimum `cat-harness`](../../architecture/cat-harness-minimum.html) carries a one-line
+[The minimum `cat-harness`](cat-harness-minimum.html) carries a one-line
 admission test from the owner's own #223 revision:
 
 > **If it produces something a human looks at, it is not the harness.**
@@ -207,7 +207,7 @@ decorating.
 - Its children: `603s` (the LHS navigation), `6lb8` (the board), `pb04` (edit
   and view affordances on content), `7po1` (`workflows/state` owning the beans
   and todos skills)
-- [Minimum `cat-harness`](../../architecture/cat-harness-minimum.html) — the layering this page
+- [Minimum `cat-harness`](cat-harness-minimum.html) — the layering this page
   is in tension with
 - [Directory conventions](../../../skills/kg/kg-core/directory-conventions.md) —
   the declaration schema and every graph typology

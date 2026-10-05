@@ -13,7 +13,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 هذه الصفحة هي القائمة الرئيسية لكل **مهارة** و**دور** في folio-assistant،
 وتوضح كيفية تناسقها وعملها مع النموذج اللغوي الكبير (LLM). للاطلاع على عقد المدخلات/المخرجات
-محدد الأنواع لكل مهارة، راجع [مرجع مخططات المهارات](../reference/skills/).
+محدد الأنواع لكل مهارة، راجع [مرجع مخططات المهارات](../../reference/skills/).
 
 1. TOC
 {:toc}
@@ -39,7 +39,7 @@ flowchart TD
 1. **المهارة (Skill)** — وحدة عمل موثقة ومحددة بالمخطط (مثل
    `lean-formalization`). يكتشف الوكيل المهارات عبر أداة MCP المسماة `skill_list`
    ويحمّل تعليمات المهارة عبر `skill_fetch`. ولكل مهارة
-   [عقد مدخلات/مخرجات](../reference/skills/) محدد الأنواع.
+   [عقد مدخلات/مخرجات](../../reference/skills/) محدد الأنواع.
 2. **حزمة المهارات (Skill package)** — مجموعة من المهارات المترابطة التي تصرّح أيضًا
    عن تبعات Docker/بيئة التشغيل الخاصة بها (`package-manifest.json`).
 3. **الدور (الفاعل / Role (actor))** — *من* يتصرف الوكيل بصفته. يتخذ **الفاعل** (actor)
@@ -69,8 +69,8 @@ flowchart TD
 | الطبقة | الموقع | الحالة |
 |-------|----------|--------|
 | **التعريف** (الأدوار، القدرات المطلوبة، المتطلبات، أنماط التوجيه، مراحل دورة الحياة، مرجع المخطط) | `.claude/skills/local/<skill>.json` | ✅ جميع مهارات التأليف الـ 22 — تم التحقق منها في التكامل المستمر (CI) عبر `scripts/validate-skills.ts` |
-| **العقد محدد الأنواع** (JSON Schema للمدخلات/المخرجات) | `schemas/skills/<skill>/` | ✅ جميع الـ 22 — راجع [المرجع](../reference/skills/) |
-| **متن التعليمات** (الدليل النثري الإرشادي الذي يحمّله النموذج اللغوي) — تصفحها في مرجع [تعليمات المهارات](../reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`، و`skills/folio-*-adapter/*.md`، و`src/skills/*.md` | ✅ مهارات دورة الحياة، والوكيل، وحزمة المنصة، و**folio-document-adapter**؛ ⏳ **نصوص authoring-math / authoring-who-smart-guidelines قيد التحديد (TBD)** (توفر تلك الحزم البيان الرسمي + تعريفات JSON) |
+| **العقد محدد الأنواع** (JSON Schema للمدخلات/المخرجات) | `schemas/skills/<skill>/` | ✅ جميع الـ 22 — راجع [المرجع](../../reference/skills/) |
+| **متن التعليمات** (الدليل النثري الإرشادي الذي يحمّله النموذج اللغوي) — تصفحها في مرجع [تعليمات المهارات](../../reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`، و`skills/folio-*-adapter/*.md`، و`src/skills/*.md` | ✅ مهارات دورة الحياة، والوكيل، وحزمة المنصة، و**folio-document-adapter**؛ ⏳ **نصوص authoring-math / authoring-who-smart-guidelines قيد التحديد (TBD)** (توفر تلك الحزم البيان الرسمي + تعريفات JSON) |
 | **الحزمة** (تبعات Docker/بيئة التشغيل) | `skills/<package>/package-manifest.json` | ✅ جميع الحزم الأربع |
 
 إذن، *نعم، المهارات موجودة بالفعل* — كتعريفات مهيكلة + مخططات محددة الأنواع، مع توفير
@@ -155,7 +155,7 @@ flowchart TD
 ### حزم مهارات المنصة (`skills/folio-core`، و`folio-assistant-core/skills/content/folio-document-adapter`، و`folio-assistant-sci/skills/content/folio-paper-adapter`)
 
 **حزم المنصة** الأكبر، اثنتان منها تم ترحيلهما من مستودع محتوى qou (راجع
-[سجل الترحيل](../migrations/2026-06-29-platform-skills-migration.html)
+[سجل الترحيل](../../ar/migrations/2026-06-29-platform-skills-migration.html)
 والمسألة [#27](https://github.com/litlfred/folio-assistant/issues/27)). وتتميز بأنها
 مستقلة عن المحتوى ومصممة لتتم مزامنتها مع أي folio:
 
@@ -168,7 +168,7 @@ flowchart TD
 تم تجاوز مهارات فيزياء QOU غير القابلة للاختزال؛ وتم تعميم الأمثلة الخاصة بـ QOU في البقية. وتشحن كل حزمة ملف `package-manifest.json`.
 
 > يتم توليد **مخططات** المهارات (المدخلات/المخرجات محددة الأنواع لمهارات التأليف)
-> في [مرجع مخططات المهارات](../reference/skills/) — ولا تحيد أبدًا عما
+> في [مرجع مخططات المهارات](../../reference/skills/) — ولا تحيد أبدًا عما
 > يتحقق منه إطار العمل.
 
 ---
@@ -181,7 +181,7 @@ flowchart TD
 
 > لمعرفة هذه الأدوار *كمسارات* — من يحرر، ومن يراجع، ومن يعتمد،
 > والخطوات التي يمكن للوكيل اتخاذها بمفرده — اقرأ
-> [مسار عمل النشر ← من هو من](../process/publication-workflow.html#who-is-who).
+> [مسار عمل النشر ← من هو من](../../process/ar/publication-workflow.html#who-is-who).
 
 ```mermaid
 flowchart LR
@@ -218,7 +218,7 @@ flowchart LR
 
 يتم نمذجة موقع كل طرف من هؤلاء في العملية — وما يجوز للوكيل وما لا يجوز له
 اتخاذ قرار بشأنه — في مخططات BPMN الخاصة بـ
-[مسار عمل النشر](../process/publication-workflow.html).
+[مسار عمل النشر](../../process/ar/publication-workflow.html).
 
 ### تعيين الأدوار
 
@@ -251,9 +251,9 @@ flowchart LR
 
 ## انظر أيضًا
 
-- [مسار عمل النشر](../process/publication-workflow.html) — مسارات BPMN: أي مهارة تعمل في أي خطوة، ومن يقرر
-- [تعليمات المهارات](../reference/skill-instructions/) — النصوص النثرية الإرشادية التي يحمّلها النموذج اللغوي (LLM)
-- [مرجع مخططات المهارات](../reference/skills/) — المدخلات/المخرجات محددة الأنواع لكل مهارة
+- [مسار عمل النشر](../../process/ar/publication-workflow.html) — مسارات BPMN: أي مهارة تعمل في أي خطوة، ومن يقرر
+- [تعليمات المهارات](../../reference/skill-instructions/) — النصوص النثرية الإرشادية التي يحمّلها النموذج اللغوي (LLM)
+- [مرجع مخططات المهارات](../../reference/skills/) — المدخلات/المخرجات محددة الأنواع لكل مهارة
 - [أنواع المحتوى](content-types.html) — المهارات التي يستخدمها كل نوع محتوى
 - [البنية الهندسية](architecture.html) — التحكم في الوصول القائم على الأدوار (RBAC)، والمحولات، وخادم MCP
-- [البدء](../start/getting-started.html) — تشغيل أول مهارة لك
+- [البدء](../../start/ar/getting-started.html) — تشغيل أول مهارة لك

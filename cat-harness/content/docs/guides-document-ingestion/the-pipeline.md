@@ -20,5 +20,5 @@ declared with `bpmn:import`. Open any of them on its own in bpmn.io; the parent
 stays readable because it does not inline them.
 
 **The end is where authoring begins.** "Available to cite as an L1 source" is
-the hand-off into [the publication workflow](publication-workflow.html) — the
+the hand-off into [the publication workflow](../process/publication-workflow.html) — the
 same corpus an author edits and a reviewer reviews.

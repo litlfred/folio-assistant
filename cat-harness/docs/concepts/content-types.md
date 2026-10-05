@@ -47,11 +47,11 @@ Every content type moves through the same lifecycle, provided by the
 cross-cutting **`content-lifecycle`** skill package:
 
 <div class="bpmn-figure" id="figure-the-content-lifecycle">
-  <img src="assets/img/workflows/content-lifecycle.svg"
+  <img src="../assets/img/workflows/content-lifecycle.svg"
        alt="BPMN swimlane diagram of one folio cycle: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs per proposed change, an integration test and QA sweep follows, then draft-review-publish; feedback is triaged and filed as beans, and the cycle either repeats or the folio is retired.">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [full-size SVG](assets/img/workflows/content-lifecycle.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [full-size SVG](../assets/img/workflows/content-lifecycle.svg)
 {: .bpmn-source }
 
 | Stage | Skill | What happens |
@@ -74,7 +74,7 @@ Two things the eight stage names hide, and the diagram does not: `author` and
 the HCI validation gate, and the editor sees the findings before anything is
 committed — and `review` happens twice, once per change and once over the
 assembled draft. Both expand into their own diagrams on the
-**[publication workflow](publication-workflow.html)** page.
+**[publication workflow](../process/publication-workflow.html)** page.
 
 ---
 
@@ -85,7 +85,7 @@ assembled draft. Both expand into their own diagrams on the
 
 **Skill package:** `folio-document-adapter` ·
 **Adapter:** `document` ·
-**Guide:** [Writing a document](guides/writing-a-document.html)
+**Guide:** [Writing a document](../guides/writing-a-document.html)
 
 Structured prose: health-policy guidance (an L1 guideline, say), a standard, a
 report, a handbook, a book chapter. Everything a paper is, minus the formal
@@ -104,17 +104,17 @@ layer — and therefore minus the two toolchains that serve it.
   field or a `.lean` sibling, and runs on every `content_validate`.
 
 Relevant skill schemas:
-[`document-authoring`](reference/skills/document-authoring.html),
-[`document-structure`](reference/skills/document-structure.html),
-[`normative-statements`](reference/skills/normative-statements.html),
-[`document-publishing`](reference/skills/document-publishing.html).
+[`document-authoring`](../reference/skills/document-authoring.html),
+[`document-structure`](../reference/skills/document-structure.html),
+[`normative-statements`](../reference/skills/normative-statements.html),
+[`document-publishing`](../reference/skills/document-publishing.html).
 
 <div class="bpmn-figure" id="figure-documents-policy-guidance">
-  <img src="assets/img/workflows/authoring-a-document.svg"
+  <img src="../assets/img/workflows/authoring-a-document.svg"
        alt="BPMN swimlane diagram of document authoring: the author plans, the plan is seeded as beans, an agent scaffolds the folio and authors blocks, the build pipeline checks the declared profile before validating and rendering to Markdown, HTML and PDF, and a reviewer gates publication.">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [full-size SVG](assets/img/workflows/authoring-a-document.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [full-size SVG](../assets/img/workflows/authoring-a-document.svg)
 {: .bpmn-source }
 
 ### Carrying a normative statement
@@ -129,7 +129,7 @@ theorem, because nothing proves it.
 
 There is **no first-class `recommendation` block kind**. Today the carrier is a
 `prose` block with a label and a title; the
-[`normative-statements`](reference/skill-instructions/normative-statements.html)
+[`normative-statements`](../reference/skill-instructions/normative-statements.html)
 skill states the convention and its limits. Earlier guidance in
 `document-intake` mapped guideline recommendations onto `definition` — that
 predates this content type and is wrong for a document folio, where
@@ -144,7 +144,7 @@ predates this content type and is wrong for a document folio, where
 
 **Skill package:** `authoring-math` ·
 **Adapter:** `paper` ·
-**Guide:** [Writing a paper](guides/writing-a-paper.html)
+**Guide:** [Writing a paper](../guides/writing-a-paper.html)
 
 Rigorous scientific papers and books where prose and mathematics are backed by a
 machine-checked **Lean 4** formalization and rendered through **LaTeX**.
@@ -159,7 +159,7 @@ machine-checked **Lean 4** formalization and rendered through **LaTeX**.
 
 - **Source model** — content is a tree of typed *blocks* (`definition`,
   `theorem`, `lemma`, `proof`, `equation`, `prose`, …). See the
-  [TypeScript API reference](api/) for `Block`, `Chapter`, and `Paper`.
+  [TypeScript API reference](../api/) for `Block`, `Chapter`, and `Paper`.
 - **Formalization** — `lean-formalization` and `proof-verification` skills drive
   Lean; each theorem-like block can be tracked against its Lean counterpart, and
   every `sorry` is auditable.
@@ -191,9 +191,9 @@ permits what the profile forbids, which is why `content_profile_check` has a
 second rule beyond "is this kind allowed".
 
 Relevant skill schemas:
-[`latex-authoring`](reference/skills/latex-authoring.html),
-[`lean-formalization`](reference/skills/lean-formalization.html),
-[`proof-verification`](reference/skills/proof-verification.html).
+[`latex-authoring`](../reference/skills/latex-authoring.html),
+[`lean-formalization`](../reference/skills/lean-formalization.html),
+[`proof-verification`](../reference/skills/proof-verification.html).
 
 ---
 
@@ -203,7 +203,7 @@ Relevant skill schemas:
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/../smart-base/processes/content/l2-dak-authoring.bpmn){: .fa-node-edit title="Edit ../smart-base/processes/content/l2-dak-authoring.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="who-smart-guidelines-daks-l2.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/concepts-content-types/who-smart-guidelines-daks-l2.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/concepts-content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" data-qa-family="translation" data-qa-key="who-smart-guidelines-daks-l2.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/concepts-content-types/who-smart-guidelines-daks-l2.translation.json' | relative_url }}" data-qa-index="{{ '/assets/qa/concepts-content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="who-smart-guidelines-daks-l2.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/concepts-content-types/who-smart-guidelines-daks-l2.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/concepts-content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 **Skill package:** `authoring-who-smart-guidelines` ·
-**Guide:** [Authoring a WHO SMART DAK](guides/who-smart-dak.html)
+**Guide:** [Authoring a WHO SMART DAK](../guides/who-smart-dak.html)
 
 A **Digital Adaptation Kit (DAK)** is the *L2* (machine-readable, but
 implementation-neutral) representation of a WHO guideline. folio-assistant
@@ -216,17 +216,17 @@ authors the L2 artifacts:
 - **Personas, scenarios, indicators, requirements**
 
 Relevant skill schemas:
-[`l2-dak-authoring`](reference/skills/l2-dak-authoring.html),
-[`bpmn-authoring`](reference/skills/bpmn-authoring.html),
-[`dmn-authoring`](reference/skills/dmn-authoring.html),
-[`terminology-management`](reference/skills/terminology-management.html).
+[`l2-dak-authoring`](../reference/skills/l2-dak-authoring.html),
+[`bpmn-authoring`](../reference/skills/bpmn-authoring.html),
+[`dmn-authoring`](../reference/skills/dmn-authoring.html),
+[`terminology-management`](../reference/skills/terminology-management.html).
 
 <div class="bpmn-figure" id="figure-who-smart-guidelines-daks-l2">
-  <img src="assets/img/workflows/l2-dak-authoring.svg"
+  <img src="../assets/img/workflows/l2-dak-authoring.svg"
        alt="BPMN swimlane diagram of L2 DAK authoring: a parallel gateway fans out personas, BPMN processes, DMN decision logic, the data dictionary and indicators across the business-analyst lane alongside the terminologist's bindings, then clinical SME validation gates assembly of the DAK.">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn) · [full-size SVG](assets/img/workflows/l2-dak-authoring.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn) · [full-size SVG](../assets/img/workflows/l2-dak-authoring.svg)
 {: .bpmn-source }
 
 ---
@@ -237,7 +237,7 @@ Relevant skill schemas:
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/../fhir-harness/processes/content/l3-fhir-pipeline.bpmn){: .fa-node-edit title="Edit ../fhir-harness/processes/content/l3-fhir-pipeline.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="who-smart-implementation-guides-l3.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/concepts-content-types/who-smart-implementation-guides-l3.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/concepts-content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" data-qa-family="translation" data-qa-key="who-smart-implementation-guides-l3.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/concepts-content-types/who-smart-implementation-guides-l3.translation.json' | relative_url }}" data-qa-index="{{ '/assets/qa/concepts-content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="who-smart-implementation-guides-l3.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/concepts-content-types/who-smart-implementation-guides-l3.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/concepts-content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 **Skill package:** `authoring-who-smart-guidelines` ·
-**Guide:** [Authoring a WHO SMART IG](guides/who-smart-ig.html)
+**Guide:** [Authoring a WHO SMART IG](../guides/who-smart-ig.html)
 
 The *L3* layer turns an L2 DAK into a computable **FHIR Implementation Guide**:
 
@@ -248,17 +248,17 @@ The *L3* layer turns an L2 DAK into a computable **FHIR Implementation Guide**:
 - **Quality control** gates (`quality-control`)
 
 Relevant skill schemas:
-[`l3-fhir-authoring`](reference/skills/l3-fhir-authoring.html),
-[`fhir-validation`](reference/skills/fhir-validation.html),
-[`ig-publication`](reference/skills/ig-publication.html),
-[`quality-control`](reference/skills/quality-control.html).
+[`l3-fhir-authoring`](../reference/skills/l3-fhir-authoring.html),
+[`fhir-validation`](../reference/skills/fhir-validation.html),
+[`ig-publication`](../reference/skills/ig-publication.html),
+[`quality-control`](../reference/skills/quality-control.html).
 
 <div class="bpmn-figure" id="figure-who-smart-implementation-guides-l3">
-  <img src="assets/img/workflows/l3-fhir-pipeline.svg"
+  <img src="../assets/img/workflows/l3-fhir-pipeline.svg"
        alt="BPMN swimlane diagram of the L3 pipeline: map L2 to L3, author FSH, SUSHI compile, validate against profiles with a loop back to FSH on failure, QC gates that file findings as beans, IG Publisher build, and publication of the IG site.">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [full-size SVG](assets/img/workflows/l3-fhir-pipeline.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [full-size SVG](../assets/img/workflows/l3-fhir-pipeline.svg)
 {: .bpmn-source }
 
 ---
@@ -270,4 +270,4 @@ Relevant skill schemas:
 
 New content types are first-class: add a content **adapter** and a skill
 **package**, and the lifecycle, RBAC, and MCP plumbing come for free. See
-[Adding a content type](guides/new-content-type.html).
+[Adding a content type](../guides/new-content-type.html).

@@ -9,7 +9,7 @@ how to describe a declaration, a directory and a kind; everything else is
 contributed by the layer that introduces it. A harness that adds a content kind
 adds its Schema in the same change, or the kind is unvalidated and its documents
 are told apart by shape — which is the failure
-[`directory-conventions`](reference/skill-instructions/directory-conventions.html)
+[`directory-conventions`](../reference/skill-instructions/directory-conventions.html)
 names when it says **the files declare what they are**.
 
 *Used for*: validation at read time, the generated schema reference, and the
@@ -94,7 +94,7 @@ same Workflow be run twice and the difference attributed to the context rather
 than to chance.
 
 *Used for*: repeatable testing across conditions. Covered in full by
-[Managing agent context](managing-agent-context.html).
+[Managing agent context](../guides/managing-agent-context.html).
 
 ### Harness
 

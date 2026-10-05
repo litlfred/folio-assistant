@@ -16,7 +16,7 @@ the slide as Cloudflare R2 storage and the Cloudflare edge network.
 
 <a href="{{ '/assets/img/kg-deck/img-p002-1.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p002-1.webp' | relative_url }}" alt="Infographic titled &quot;WHO Decoupled Architecture Workflow — secure, automated, trusted, globally accessible&quot;, in three columns joined by arrows. Left, &quot;Internal secure origin — trusted WHO data sources&quot;: Internal IRIS (DSpace), the WHO institutional repository, and the World Health Data Hub, global health datasets and resources. Middle, &quot;Automated compile engine — build, sign, snapshot, publish&quot;: folio-assistant (auto-sign and snapshot), feeding &quot;Cryptographic asset signing&quot; via the WHO Trust Network Gateway and Swiss Observatory schemas. Right, &quot;Zero-egress public CDN&quot;: Cloudflare R2 storage (10 TB) of signed static assets, then the Cloudflare CDN edge network for global low-latency delivery, reaching global researchers. The product names are the slide&#x27;s proposal, not a decision recorded in this repository." loading="lazy"></a>
 
-**Sources:** [`kg-to-portal`](reference/skill-instructions/kg-to-portal.html)
+**Sources:** [`kg-to-portal`](../reference/skill-instructions/kg-to-portal.html)
 (package and per-asset signatures; "a CDN is a LAYER");
 `large-datasets` (the WHO IRIS source descriptor); `who-iris` (the DSpace skill).
 

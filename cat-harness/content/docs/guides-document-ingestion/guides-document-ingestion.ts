@@ -35,7 +35,7 @@ export default webpage({
       asset: {
         kind: "bpmn",
         source: "processes/library/document-ingestion.bpmn",
-        rendered: "assets/img/workflows/document-ingestion.svg",
+        rendered: "../assets/img/workflows/document-ingestion.svg",
         alt: "BPMN swimlane diagram with two lanes: a contributor who has a file for the folio places it in uploads/ by a declared route; the Ingestion Engine then extracts its metadata into the knowledge graph and an exclusive gateway asks whether the asset is materialized - if it is, the asset is placed in library/<slug>/, and if it is only referenced it is recorded in library/ as referenced - and either path ends with the asset catalogued. The diagram makes no content-type decision and calls no subprocess.",
         sourceLinks: [
           { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn" },
@@ -55,7 +55,7 @@ export default webpage({
       asset: {
         kind: "bpmn",
         source: "../folio-assistant-core/processes/library/l1-document-ingestion.bpmn",
-        rendered: "assets/img/workflows/l1-document-ingestion.svg",
+        rendered: "../assets/img/workflows/l1-document-ingestion.svg",
         alt: "BPMN swimlane diagram: the basic ingestion flow is called first — the upload is accepted, its metadata goes into the knowledge graph and the asset is catalogued in library; the Ingestion Engine then detects its media type and mints a doc id, then calls four subprocesses in turn — extract structure, derive content, build the L1 knowledge graph, and the L1 completeness gate; an incomplete result opens a bean on the shared work plan and returns to the derive step, while a complete one is moved into library under its bibliography slug and becomes citeable as an L1 source.",
         sourceLinks: [
           { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn" },
@@ -71,7 +71,7 @@ export default webpage({
       asset: {
         kind: "bpmn",
         source: "../folio-assistant-core/processes/library/ingest-extract-structure.bpmn",
-        rendered: "assets/img/workflows/ingest-extract-structure.svg",
+        rendered: "../assets/img/workflows/ingest-extract-structure.svg",
         alt: "BPMN diagram: from a binary, an exclusive gateway asks whether there is an embedded text layer; if yes the text layer is extracted, if no the document is OCR'd to per-page text files; both paths split the result into section markdown files carrying a document brief, then write structure.json and extract claim candidates.",
         sourceLinks: [
           { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-extract-structure.bpmn" },
@@ -87,7 +87,7 @@ export default webpage({
       asset: {
         kind: "bpmn",
         source: "../folio-assistant-core/processes/library/ingest-derive-content.bpmn",
-        rendered: "assets/img/workflows/ingest-derive-content.svg",
+        rendered: "../assets/img/workflows/ingest-derive-content.svg",
         alt: "BPMN diagram: a parallel gateway fans out per asset kind — archive contents manifest, technical file metadata, localized image descriptions, audio transcription and translation, and tabular metadata — then joins, and every generated narrative is stamped with the human or agent that authored it.",
         sourceLinks: [
           { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-derive-content.bpmn" },
@@ -103,7 +103,7 @@ export default webpage({
       asset: {
         kind: "bpmn",
         source: "processes/ui/ingest-theme.bpmn",
-        rendered: "assets/img/workflows/ingest-theme.svg",
+        rendered: "../assets/img/workflows/ingest-theme.svg",
         alt: "BPMN diagram: from a theme source in hand, an exclusive gateway asks whether the theme is served by a deployment or stated by a style guide; the served stylesheet's declarations or the guide's own rules are read, values are mapped onto the shared palette roles, contradictions in the source are recorded, and a gateway asks whether every layout is present — if not the subprocess ends refused as incomplete, if so a theme and UI review produces the Theme node.",
         sourceLinks: [
           { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/processes/ingest-theme.bpmn" },
@@ -119,7 +119,7 @@ export default webpage({
       asset: {
         kind: "bpmn",
         source: "../folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn",
-        rendered: "assets/img/workflows/ingest-build-l1-kg.svg",
+        rendered: "../assets/img/workflows/ingest-build-l1-kg.svg",
         alt: "BPMN diagram: the engine writes a Dublin Core record, then a manifest referencing it, then the assets array with local paths or remote URLs, then binds the folder name to the bibliography slug; the corpus lane links the resulting L1 nodes into the knowledge graph.",
         sourceLinks: [
           { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn" },
@@ -135,7 +135,7 @@ export default webpage({
       asset: {
         kind: "bpmn",
         source: "../folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn",
-        rendered: "assets/img/workflows/ingest-l1-completeness-gate.svg",
+        rendered: "../assets/img/workflows/ingest-l1-completeness-gate.svg",
         alt: "BPMN swimlane diagram: the engine checks that every derived artefact is present, runs round-trip translation QA, and an exclusive gateway routes drift or bad terminology to a reviewer for adjudication before the L1 completeness verdict is recorded.",
         sourceLinks: [
           { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn" },

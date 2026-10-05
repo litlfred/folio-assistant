@@ -219,5 +219,5 @@ Quatre façons de procéder, par ordre d'ambition croissante. Seule la première
 
 - [Premiers pas](getting-started.html) — la table de décision d'intention en pratique
 - [Compétence `interaction-modality`](../../reference/skill-instructions/interaction-modality.html)
-- [Flux de publication](../process/publication-workflow.html) — chaque processus au sein du dépôt
+- [Flux de publication](../../process/fr/publication-workflow.html) — chaque processus au sein du dépôt
 - [Options pour l'état du flux de travail dans beans](../../proposals/workflow-state-in-beans.html)

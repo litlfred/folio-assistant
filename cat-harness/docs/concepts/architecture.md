@@ -60,19 +60,19 @@ into five composable folio-assistant instances. Child pages carry it:
 
 | page | what it answers |
 |---|---|
-| [Repo taxonomy](../architecture/repo-taxonomy.html) | What kinds of repository exist — Tool, Test, Content, Consumer — and what each may contain |
-| [Current state](../architecture/current-state.html) | What is actually in this repo today, measured, and where the mixture is |
-| [Future state](../architecture/future-state.html) | The five target repos and which directory lands in which |
-| [Migration plan](../architecture/migration-plan.html) | Phase 0/I/II/III, the gates, and what is still undecided |
-| [Minimum `cat-harness`](../architecture/cat-harness-minimum.html) | What survives in the harness once "not self-documenting" is applied as a test |
-| [Harness instances](../architecture/harness-instances.html) | What an instance IS — schematics, visualisations, tools; the four directories; the default rendering |
+| [Repo taxonomy](architecture/repo-taxonomy.html) | What kinds of repository exist — Tool, Test, Content, Consumer — and what each may contain |
+| [Current state](architecture/current-state.html) | What is actually in this repo today, measured, and where the mixture is |
+| [Future state](architecture/future-state.html) | The five target repos and which directory lands in which |
+| [Migration plan](architecture/migration-plan.html) | Phase 0/I/II/III, the gates, and what is still undecided |
+| [Minimum `cat-harness`](architecture/cat-harness-minimum.html) | What survives in the harness once "not self-documenting" is applied as a test |
+| [Harness instances](architecture/harness-instances.html) | What an instance IS — schematics, visualisations, tools; the four directories; the default rendering |
 
 The last two look like they disagree — the minimum says a harness produces
 nothing a human looks at, and the instance page says an instance renders by
 default. They do not: the requirement is a **floor that rises**, with
 `bootstrap` exempt from the visualiser and owing its own `.json`/`.jsonld`
 instead, and `cat-harness` the layer where the rest begins to apply. See
-[Where the requirement starts](../architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
+[Where the requirement starts](architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
 
 The rest of this page describes the architecture **as it is now**.
 
@@ -117,7 +117,7 @@ skills with `skill_list` and loads instructions with `skill_fetch`. The full
 list of skills and roles — and how they compose with the LLM (RBAC, capabilities,
 requirements) — is on the [Skills & roles](skills.html) page; each skill's
 input/output contract is published in the
-[Skill schema reference](reference/skills/).
+[Skill schema reference](../reference/skills/).
 
 ## The content-object model
 
@@ -127,7 +127,7 @@ For papers, content is a tree of typed **blocks** validated at runtime with Zod:
 - `schemas/constraints.ts` — Zod schemas and constraint rules
 - `schemas/builders.ts` — validated constructors (`definition()`, `theorem()`, …)
 
-These are documented in the generated [TypeScript API reference](api/).
+These are documented in the generated [TypeScript API reference](../api/).
 
 ## Access control — ODRL, checked before every task
 

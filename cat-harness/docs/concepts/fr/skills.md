@@ -13,7 +13,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 Cette page constitue la liste de référence de chaque **compétence** et **rôle** dans folio-assistant,
 et explique comment ils s'articulent avec le LLM. Pour le contrat d'entrée/sortie typé
-de chaque compétence, consultez la [référence des schémas de compétences](../reference/skills/).
+de chaque compétence, consultez la [référence des schémas de compétences](../../reference/skills/).
 
 1. TOC
 {:toc}
@@ -39,7 +39,7 @@ flowchart TD
 1. **Compétence** — une unité de travail documentée et délimitée par un schéma (par ex.
    `lean-formalization`). L'agent découvre les compétences grâce à l'outil MCP `skill_list`
    et charge les instructions d'une compétence avec `skill_fetch`. Chaque compétence possède un
-   [contrat d'entrée/sortie](../reference/skills/) typé.
+   [contrat d'entrée/sortie](../../reference/skills/) typé.
 2. **Paquet de compétences** — un groupe de compétences associées qui déclare également
    ses dépendances Docker/d'exécution (`package-manifest.json`).
 3. **Rôle (acteur)** — *qui* l'agent incarne. Un **acteur** assume un
@@ -70,8 +70,8 @@ Une compétence est définie à travers plusieurs couches — et non dans un seu
 | Couche | Emplacement | État |
 |--------|-------------|------|
 | **Définition** (rôles, capacités requises, exigences, modèles de routage, étapes du cycle de vie, réf. de schéma) | `.claude/skills/local/<skill>.json` | ✅ les 22 compétences de rédaction — validées en CI par `scripts/validate-skills.ts` |
-| **Contrat typé** (JSON Schema d'entrée/sortie) | `schemas/skills/<skill>/` | ✅ les 22 — voir la [référence](../reference/skills/) |
-| **Corps d'instructions** (guide textuel que le LLM charge) — parcourez-les dans la référence des [instructions de compétences](../reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ compétences de cycle de vie, d'agent, du lot de plateforme et de **folio-document-adapter** ; ⏳ **les corps pour authoring-math / authoring-who-smart-guidelines sont à venir** (ces paquets fournissent le manifeste + les définitions JSON) |
+| **Contrat typé** (JSON Schema d'entrée/sortie) | `schemas/skills/<skill>/` | ✅ les 22 — voir la [référence](../../reference/skills/) |
+| **Corps d'instructions** (guide textuel que le LLM charge) — parcourez-les dans la référence des [instructions de compétences](../../reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ compétences de cycle de vie, d'agent, du lot de plateforme et de **folio-document-adapter** ; ⏳ **les corps pour authoring-math / authoring-who-smart-guidelines sont à venir** (ces paquets fournissent le manifeste + les définitions JSON) |
 | **Paquet** (dépendances Docker / exécution) | `skills/<package>/package-manifest.json` | ✅ les quatre paquets |
 
 Ainsi, *oui, les compétences existent* — sous forme de définitions structurées et de schémas typés, avec des corps
@@ -157,7 +157,7 @@ de contenu, et non des alternatives entre lesquelles choisir.
 ### Lots de compétences de plateforme (`skills/folio-core`, `folio-assistant-core/skills/content/folio-document-adapter`, `folio-assistant-sci/skills/content/folio-paper-adapter`)
 
 Des **lots de plateforme** plus importants, dont deux ont été migrés depuis le dépôt de contenu qou (voir le
-[registre de migration](../migrations/2026-06-29-platform-skills-migration.html) et
+[registre de migration](../../fr/migrations/2026-06-29-platform-skills-migration.html) et
 le ticket [#27](https://github.com/litlfred/folio-assistant/issues/27)). Ils sont
 indépendants du contenu et conçus pour être synchronisés dans n'importe quel folio :
 
@@ -171,7 +171,7 @@ Les compétences physiques irréductibles de QOU ont été ignorées ; les exemp
 ont été généralisés. Chaque lot inclut un fichier `package-manifest.json`.
 
 > Les **schémas** de compétences (entrée/sortie typée pour les compétences de rédaction) sont générés
-> dans la [référence des schémas de compétences](../reference/skills/) — ne déviez jamais de ce que
+> dans la [référence des schémas de compétences](../../reference/skills/) — ne déviez jamais de ce que
 > le cadre valide.
 
 ---
@@ -184,7 +184,7 @@ faire (RBAC). Les rôles **héritent** les uns des autres (par ex. `author` hér
 
 > Pour visualiser ces rôles *sous forme de couloirs* — qui édite, qui relit, qui valide, et
 > quelles étapes un agent peut entreprendre de son propre chef — consultez
-> [Flux de publication → Qui est qui](../process/publication-workflow.html#who-is-who).
+> [Flux de publication → Qui est qui](../../process/fr/publication-workflow.html#who-is-who).
 
 ```mermaid
 flowchart LR
@@ -221,7 +221,7 @@ flowchart LR
 
 La place de chacun d'eux dans le processus — et ce qu'un agent peut ou ne peut pas
 décider — est modélisée dans les diagrammes BPMN du
-[flux de publication](../process/publication-workflow.html).
+[flux de publication](../../process/fr/publication-workflow.html).
 
 ### Attribution des rôles
 
@@ -254,9 +254,9 @@ Les **exigences** (requirements) sont des points de contrôle (gates) qui doiven
 
 ## Voir aussi
 
-- [Flux de publication](../process/publication-workflow.html) — Couloirs BPMN : quelle compétence s'exécute à quelle étape, et qui décide
-- [Instructions des compétences](../reference/skill-instructions/) — les corps textuels explicatifs que le LLM charge
-- [Référence des schémas de compétences](../reference/skills/) — entrée/sortie typée pour chaque compétence
+- [Flux de publication](../../process/fr/publication-workflow.html) — Couloirs BPMN : quelle compétence s'exécute à quelle étape, et qui décide
+- [Instructions des compétences](../../reference/skill-instructions/) — les corps textuels explicatifs que le LLM charge
+- [Référence des schémas de compétences](../../reference/skills/) — entrée/sortie typée pour chaque compétence
 - [Types de contenu](content-types.html) — les compétences utilisées par chaque type de contenu
 - [Architecture](architecture.html) — RBAC, adaptateurs et serveur MCP
-- [Premiers pas](../start/getting-started.html) — exécuter votre première compétence
+- [Premiers pas](../../start/fr/getting-started.html) — exécuter votre première compétence

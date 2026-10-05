@@ -4,8 +4,8 @@ is why the Term on this page is **Context Overlay** and not the bare word.
 | where | what it means |
 |---|---|
 | this page | a set of context material applied to a run |
-| [`getting-started`](getting-started.html) §6 | a BRANCH of the folio-intent gateway — converting a repository you already have |
-| [`getting-started`](getting-started.html) §art | positioning text ON cat artwork, where an undeclared region means "do not overlay" |
+| [`getting-started`](../start/getting-started.html) §6 | a BRANCH of the folio-intent gateway — converting a repository you already have |
+| [`getting-started`](../start/getting-started.html) §art | positioning text ON cat artwork, where an undeclared region means "do not overlay" |
 
 None is wrong. They are simply different, and a reader who meets the bare word
 in one section and carries its meaning into another will be misled in a way

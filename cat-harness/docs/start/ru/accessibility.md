@@ -151,5 +151,5 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 - [Начало работы](getting-started.html) — таблица решений о намерениях в действии
 - [Навык `interaction-modality`](../../reference/skill-instructions/interaction-modality.html)
-- [Процесс публикации](../process/publication-workflow.html) — каждый процесс в репозитории
+- [Процесс публикации](../../process/ru/publication-workflow.html) — каждый процесс в репозитории
 - [Варианты состояния рабочего процесса в beans](../../proposals/workflow-state-in-beans.html)

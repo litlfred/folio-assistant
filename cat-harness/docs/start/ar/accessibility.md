@@ -219,5 +219,5 @@ W3C الخاصة بـ **COGA** ومعيار **WCAG 3.1** — وهو أيضاً �
 
 - [البدء](getting-started.html) — جدول قرارات النية قيد الاستخدام
 - [مهارة `interaction-modality`](../../reference/skill-instructions/interaction-modality.html)
-- [سير عمل النشر](../process/publication-workflow.html) — كل عملية في المستودع
+- [سير عمل النشر](../../process/ar/publication-workflow.html) — كل عملية في المستودع
 - [خيارات حالة سير العمل في beans](../../proposals/workflow-state-in-beans.html)

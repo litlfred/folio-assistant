@@ -4,11 +4,11 @@ this page disagree, **the Skill wins and this page is wrong**.
 | question | where it is answered |
 |---|---|
 | What the Knowledge Graph is, and which way its references run | [The Knowledge Graph](knowledge-graph.html) |
-| How an instance declares its directories, and every graph typology | [`directory-conventions`](reference/skill-instructions/directory-conventions.html) |
+| How an instance declares its directories, and every graph typology | [`directory-conventions`](../reference/skill-instructions/directory-conventions.html) |
 | What a visualiser owes a declared directory | [Subgraph viewers](subgraph-viewers.html) |
-| What a Skill states and what a Tool supplies | [`skills-and-tools`](reference/skill-instructions/skills-and-tools.html) |
-| Why a tile belongs to the Harness rather than to a node | [`harness-tiles`](reference/skill-instructions/harness-tiles.html) |
-| Context Overlays, and how an Agent's conditions are set | [Managing agent context](managing-agent-context.html) |
+| What a Skill states and what a Tool supplies | [`skills-and-tools`](../reference/skill-instructions/skills-and-tools.html) |
+| Why a tile belongs to the Harness rather than to a node | [`harness-tiles`](../reference/skill-instructions/harness-tiles.html) |
+| Context Overlays, and how an Agent's conditions are set | [Managing agent context](../guides/managing-agent-context.html) |
 
 The declaration schema, including `needs`, `remoteGraphs`, `renderExemption`
 and `coverage`, is

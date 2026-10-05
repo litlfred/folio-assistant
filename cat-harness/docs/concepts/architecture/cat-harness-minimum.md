@@ -23,7 +23,7 @@ nav_order: 5
 ## The revised repo set
 
 The 16:28 revision changes the shape from the
-[five-repo future state](../../architecture/future-state.html). Rendering moves out of the
+[five-repo future state](future-state.html). Rendering moves out of the
 harness, and each layer gains a Tools sibling:
 
 ```mermaid
@@ -613,4 +613,4 @@ id points at `skills/`, flat. The layout above is the target for
 - **Swarm management** (14:48 — model levels, swarm size, CPU) is named as a
   separate skill set and is not designed here.
 - **The L1/L2 boundary** still needs WHO domain context, unchanged from the
-  [migration plan](../../architecture/migration-plan.html).
+  [migration plan](migration-plan.html).

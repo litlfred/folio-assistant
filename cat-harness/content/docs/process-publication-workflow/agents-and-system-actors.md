@@ -11,6 +11,6 @@ finding arrive at the same place in the pipeline — but neither of them decides
 the editor does, and the release is authorised by the programme manager.
 
 For the full role list, their capabilities, and how a user is mapped to a role,
-see [Skills & roles](skills.html#roles-actors).
+see [Skills & roles](../concepts/skills.html#roles-actors).
 
 ---

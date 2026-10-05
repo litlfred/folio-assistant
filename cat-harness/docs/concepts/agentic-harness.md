@@ -64,13 +64,13 @@ Active workflows in this platform:
 
 | Workflow | BPMN source | Entered when |
 |---|---|---|
-| **Authoring (paper)** | [`authoring-a-paper.bpmn`](../processes/authoring-a-paper.bpmn) | User requests content authoring in a paper folio |
-| **Authoring (document)** | [`authoring-a-document.bpmn`](../processes/authoring-a-document.bpmn) | User requests content authoring in a document folio |
-| **Content lifecycle** | [`content-lifecycle.bpmn`](../processes/content-lifecycle.bpmn) | Content moves through validate → render → publish |
-| **Document ingestion** | [`document-ingestion.bpmn`](../processes/document-ingestion.bpmn) | User drops a file in `uploads/` |
-| **Draft to publication** | [`draft-to-publication.bpmn`](../processes/draft-to-publication.bpmn) | Content moves from draft to published |
-| **CRDM requirements** | [`crdm-requirements.bpmn`](../processes/crdm-requirements.bpmn) | Agent detects a feature request |
-| **Evidence retrieval** | [`evidence-retrieval.bpmn`](../processes/evidence-retrieval.bpmn) | Agent searches for evidence to support a claim |
+| **Authoring (paper)** | [`authoring-a-paper.bpmn`](../../processes/authoring-a-paper.bpmn) | User requests content authoring in a paper folio |
+| **Authoring (document)** | [`authoring-a-document.bpmn`](../../processes/authoring-a-document.bpmn) | User requests content authoring in a document folio |
+| **Content lifecycle** | [`content-lifecycle.bpmn`](../../processes/content-lifecycle.bpmn) | Content moves through validate → render → publish |
+| **Document ingestion** | [`document-ingestion.bpmn`](../../processes/document-ingestion.bpmn) | User drops a file in `uploads/` |
+| **Draft to publication** | [`draft-to-publication.bpmn`](../../processes/draft-to-publication.bpmn) | Content moves from draft to published |
+| **CRDM requirements** | [`crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn) | Agent detects a feature request |
+| **Evidence retrieval** | [`evidence-retrieval.bpmn`](../../processes/evidence-retrieval.bpmn) | Agent searches for evidence to support a claim |
 
 **State transitions:** a workflow can be **suspended** when the user asks to
 switch context. The agent records where it was (the current BPMN activity) and
@@ -122,7 +122,7 @@ classification determines which workflow the agent enters.
 | **Content authoring** | Write, edit, extend folio content (chapters, blocks, sections) | Authoring workflow (paper or document) |
 | **Content review** | Review, validate, provide feedback on existing content | Content lifecycle / editing-HCI workflow |
 | **Content ingestion** | Ingest a source document into the folio | Document ingestion workflow |
-| **Feature request** | Request new platform capability (see [crdm-detect](../skills/sdlc/crdm/crdm-detect.md)) | CRDM requirements workflow |
+| **Feature request** | Request new platform capability (see [crdm-detect](../../skills/sdlc/crdm/crdm-detect.md)) | CRDM requirements workflow |
 | **Information request** | Ask about the platform, content, or process | No workflow — answer directly |
 | **Tool invocation** | Run a specific tool (`content_validate`, `qa_sweep`, etc.) | No workflow — execute and report |
 | **Work-plan management** | Create, update, or query beans | No workflow — execute and report |
@@ -132,7 +132,7 @@ classification determines which workflow the agent enters.
 
 The critical classification boundary is between **content authoring** and
 **feature request**. The `crdm-detect` skill
-([`skills/sdlc/crdm/crdm-detect.md`](../skills/sdlc/crdm/crdm-detect.md))
+([`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md))
 provides the detailed detection signals. The summary rule:
 
 > If implementing the request would require changes to **folio-assistant**
@@ -205,7 +205,7 @@ are safety risks, how much must be deterministic, and how models compare across
 sub-workflows under a controlled overlay of context and memories are three
 questions this repository can now ask and has not answered. The agenda, with
 each claim marked as measured, decided or hypothesis, is
-[`deterministic-and-agentic`](reference/skill-instructions/deterministic-and-agentic.html).
+[`deterministic-and-agentic`](../reference/skill-instructions/deterministic-and-agentic.html).
 Read it as an agenda: there is more hypothesis in it than measurement, and it
 says so.
 
@@ -219,7 +219,7 @@ The owner, 2026-09-23, naming the skill this spectrum is about:
 > **BPMN Execution Skill:** given a Process, Context, State and Role, utilize
 > one or more Skills in order to execute a Task.
 
-![BPMN execution, from deterministic to agentic. A colour bar runs from "deterministic" (blue, left: managed agent execution of a single task) to "agentic" (green, right: agents across most or all tasks). Left, under a gear-and-engine icon: "BPMN Execution Tool: one of any open-source BPMN engines, state and swimlanes strictly enforced", over a flat swimlane diagram of the folio lifecycle with one sticky note, one bean cluster, a person and a cat-robot beside the lanes. Right, under a cat-robot icon: "BPMN Execution Tool: agentic swarm with ungoverned state. Agents 'relax' swimlanes, mitigated by mechanical + agentic QA/QC reports", over the same diagram tilted in perspective, beans scattered across every lane and many cat-robots beneath it.](assets/img/bpmn-execution-spectrum.webp)
+![BPMN execution, from deterministic to agentic. A colour bar runs from "deterministic" (blue, left: managed agent execution of a single task) to "agentic" (green, right: agents across most or all tasks). Left, under a gear-and-engine icon: "BPMN Execution Tool: one of any open-source BPMN engines, state and swimlanes strictly enforced", over a flat swimlane diagram of the folio lifecycle with one sticky note, one bean cluster, a person and a cat-robot beside the lanes. Right, under a cat-robot icon: "BPMN Execution Tool: agentic swarm with ungoverned state. Agents 'relax' swimlanes, mitigated by mechanical + agentic QA/QC reports", over the same diagram tilted in perspective, beans scattered across every lane and many cat-robots beneath it.](../assets/img/bpmn-execution-spectrum.webp)
 
 **One skill, two kinds of Tool.** The skill is the same at both ends: take the
 process, the context, the current state and the role, pick the skills, and do
@@ -242,7 +242,7 @@ if the rules and the record are data a report can read, which is the case for
 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) as the permission language
 and [W3C PROV-O](https://www.w3.org/TR/prov-o/) as the execution log (owner,
 2026-09-23; the schema this implies is the
-[actors, ODRL and PROV-O proposal](proposals/odrl-prov-actor-model.html)).
+[actors, ODRL and PROV-O proposal](../proposals/odrl-prov-actor-model.html)).
 
 **Most real runs sit between the ends**, and per task rather than per process:
 the [previous section](#deterministic-and-agentic) already counts which
@@ -265,7 +265,7 @@ proposal has something to be measured against.
 When a request is classified as a feature request, the agent enters the
 **CRDM requirements workflow**
 ([full documentation](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
-[BPMN](../processes/crdm-requirements.bpmn)).
+[BPMN](../../processes/crdm-requirements.bpmn)).
 
 The feature-request workflow is where this harness document adds the most
 value, because it describes a behaviour that was previously implicit. The
@@ -274,7 +274,7 @@ requirements workflow existed only as ad-hoc conversation.
 
 ### How the agent enters CRDM
 
-The detection logic is in [`skills/sdlc/crdm/crdm-detect.md`](../skills/sdlc/crdm/crdm-detect.md).
+The detection logic is in [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md).
 Three scenarios:
 
 **New session, first request is a feature:**
@@ -397,18 +397,18 @@ back to its authoritative sources.
 
 | Behaviour | Source skill / document | Location |
 |---|---|---|
-| Session start sweep | `todo-manager.md § What the session-start sweep emits` | [`skills/sdlc/sdlc-core/todo-manager.md`](../skills/sdlc/sdlc-core/todo-manager.md) |
-| Bean protocol | `todo-manager.md`, `bean-coordination.md` | [`skills/sdlc/sdlc-core/`](../skills/sdlc/sdlc-core/) |
-| Commit and PR discipline | `continual-progress.md` | [`skills/sdlc/sdlc-core/continual-progress.md`](../skills/sdlc/sdlc-core/continual-progress.md) |
-| Feature-request detection | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../skills/sdlc/crdm/crdm-detect.md) |
-| CRDM requirements workflow | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../skills/sdlc/crdm/crdm-requirements-workflow.md) |
+| Session start sweep | `todo-manager.md § What the session-start sweep emits` | [`skills/sdlc/sdlc-core/todo-manager.md`](../../skills/sdlc/sdlc-core/todo-manager.md) |
+| Bean protocol | `todo-manager.md`, `bean-coordination.md` | [`skills/sdlc/sdlc-core/`](../../skills/sdlc/sdlc-core/) |
+| Commit and PR discipline | `continual-progress.md` | [`skills/sdlc/sdlc-core/continual-progress.md`](../../skills/sdlc/sdlc-core/continual-progress.md) |
+| Feature-request detection | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
+| CRDM requirements workflow | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
 | Content authoring (paper) | authoring-math skills | shipped by the layer that registers the `paper` content type, not by this one — ask `skill_list` |
 | Content authoring (document) | folio-document-adapter skills | shipped by the layer that registers the `document` content type, not by this one — ask `skill_list` |
-| Content lifecycle | content-lifecycle skills | [`skills/authoring/content-lifecycle/`](../skills/authoring/content-lifecycle/) |
-| Document ingestion | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../skills/ui/ui-core/docs-generation.md) |
-| Dispatch and coordination | `dispatch-agent.md`, `coordinate.md` | [`skills/sdlc/sdlc-core/`](../skills/sdlc/sdlc-core/) |
-| Content types and adapters | `content-profiles.md` | [`skills/authoring/authoring-core/content-profiles.md`](../skills/authoring/authoring-core/content-profiles.md) |
-| BPMN diagram authoring | `bpmn-authoring` skill | [`skills/process/workflow/`](../skills/process/workflow/) |
+| Content lifecycle | content-lifecycle skills | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |
+| Document ingestion | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
+| Dispatch and coordination | `dispatch-agent.md`, `coordinate.md` | [`skills/sdlc/sdlc-core/`](../../skills/sdlc/sdlc-core/) |
+| Content types and adapters | `content-profiles.md` | [`skills/authoring/authoring-core/content-profiles.md`](../../skills/authoring/authoring-core/content-profiles.md) |
+| BPMN diagram authoring | `bpmn-authoring` skill | [`skills/process/workflow/`](../../skills/process/workflow/) |
 
 **When a skill and this page disagree, the skill wins.** This page is a
 consolidation, not a new authority. If you find a discrepancy, fix this page.

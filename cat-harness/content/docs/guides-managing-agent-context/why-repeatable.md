@@ -13,5 +13,5 @@ measurement unreliable.
 
 This is what lets the repository ask how models compare across sub-workflows
 **under a controlled overlay of context and memories** — a question named as
-open research in [`agentic-harness`](agentic-harness.html), not as something
+open research in [`agentic-harness`](../concepts/agentic-harness.html), not as something
 settled here.

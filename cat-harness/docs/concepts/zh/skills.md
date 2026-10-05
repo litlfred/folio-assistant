@@ -11,7 +11,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 # 技能与角色
 {: .no_toc }
 
-本页面是 folio-assistant 中所有**技能**（skill）与**角色**（role）的总览清单，并阐述了它们如何与大语言模型（LLM）协同工作。关于各个技能的类型化输入/输出契约，请参阅[技能模式参考](../reference/skills/)。
+本页面是 folio-assistant 中所有**技能**（skill）与**角色**（role）的总览清单，并阐述了它们如何与大语言模型（LLM）协同工作。关于各个技能的类型化输入/输出契约，请参阅[技能模式参考](../../reference/skills/)。
 
 1. TOC
 {:toc}
@@ -33,7 +33,7 @@ flowchart TD
     Cap --> Req[要求<br/>必须满足的门禁条件]
 ```
 
-1. **技能（Skill）** — 具备文档记录且受模式（schema）约束的工作单元（例如 `lean-formalization`）。智能体使用 `skill_list` MCP 工具发现技能，并使用 `skill_fetch` 加载技能的操作指南。每项技能都有类型化的[输入/输出契约](../reference/skills/)。
+1. **技能（Skill）** — 具备文档记录且受模式（schema）约束的工作单元（例如 `lean-formalization`）。智能体使用 `skill_list` MCP 工具发现技能，并使用 `skill_fetch` 加载技能的操作指南。每项技能都有类型化的[输入/输出契约](../../reference/skills/)。
 2. **技能包（Skill package）** — 一组相关技能的集合，同时声明了其 Docker/运行时依赖项（`package-manifest.json`）。
 3. **角色（参与者）／Role (actor)** — 智能体*代表谁*行动。**参与者**（actor）由于其所在的 BPMN 泳道而承担某种**角色**（role）。参与者可以**做什么**由 `policies/` 中的 W3C ODRL 策略定义，而非角色本身的固有属性。在每个任务开始前，执行器都会检查身份验证、角色分配、策略及内容访问权限（[`task-authorization`](../../reference/skill-instructions/task-authorization.html)）；HTTP 路由也通过 `src/core/rbac.ts` 查询相同的策略。
 4. **能力（Capability）** — 具体的运行环境能力（例如 `latex-compiler`、`lean-toolchain`）。技能需要特定能力支持；`check_dependencies` 会对这些能力进行探测检测。
@@ -52,8 +52,8 @@ flowchart TD
 | 层次 | 位置 | 状态 |
 |-------|----------|--------|
 | **定义**（角色、所需能力、门禁要求、路由模式、生命周期阶段、模式引用） | `.claude/skills/local/<skill>.json` | ✅ 全部 22 项创作技能 — 由 `scripts/validate-skills.ts` 在 CI 中验证 |
-| **类型化契约**（输入/输出 JSON Schema） | `schemas/skills/<skill>/` | ✅ 全部 22 项 — 参见[参考](../reference/skills/) |
-| **指令正文**（LLM 加载的文字操作指南） — 可在[技能指令](../reference/skill-instructions/)参考中查阅 | `skills/authoring/content-lifecycle/*.md`、`skills/folio-*-adapter/*.md`、`src/skills/*.md` | ✅ lifecycle、agent、platform-bundle 以及 **folio-document-adapter** 技能；⏳ **authoring-math / authoring-who-smart-guidelines 正文待补充**（这些技能包已提供清单 + JSON 定义） |
+| **类型化契约**（输入/输出 JSON Schema） | `schemas/skills/<skill>/` | ✅ 全部 22 项 — 参见[参考](../../reference/skills/) |
+| **指令正文**（LLM 加载的文字操作指南） — 可在[技能指令](../../reference/skill-instructions/)参考中查阅 | `skills/authoring/content-lifecycle/*.md`、`skills/folio-*-adapter/*.md`、`src/skills/*.md` | ✅ lifecycle、agent、platform-bundle 以及 **folio-document-adapter** 技能；⏳ **authoring-math / authoring-who-smart-guidelines 正文待补充**（这些技能包已提供清单 + JSON 定义） |
 | **技能包**（Docker/运行时依赖项） | `skills/<package>/package-manifest.json` | ✅ 全部四个技能包 |
 
 所以，*是的，这些技能确实存在* — 表现为结构化定义与类型化模式，且生命周期和智能体技能已随附详细的文本指南。`skill_fetch` MCP 工具当前提供 `src/skills/*.md` 指令正文；创作技能的文本正文是后续待补充的内容（它们所属的定义和契约均已就绪）。
@@ -128,7 +128,7 @@ LLM 在仓库中高效工作所使用的技能（通过 `skill_fetch` 加载，�
 
 ### 平台技能包（`skills/folio-core`、`folio-assistant-core/skills/content/folio-document-adapter`、`folio-assistant-sci/skills/content/folio-paper-adapter`）
 
-更大型的**平台技能包**（platform bundles），其中两个从 qou 内容仓库迁移而来（参见[迁移记录](../migrations/2026-06-29-platform-skills-migration.html)以及 issue [#27](https://github.com/litlfred/folio-assistant/issues/27)）。它们与具体内容无关，旨在同步到任何 folio 中：
+更大型的**平台技能包**（platform bundles），其中两个从 qou 内容仓库迁移而来（参见[迁移记录](../../zh/migrations/2026-06-29-platform-skills-migration.html)以及 issue [#27](https://github.com/litlfred/folio-assistant/issues/27)）。它们与具体内容无关，旨在同步到任何 folio 中：
 
 | 技能包 | 技能数 | 范围 |
 |--------|-------:|-------|
@@ -138,7 +138,7 @@ LLM 在仓库中高效工作所使用的技能（通过 `skill_fetch` 加载，�
 
 不可削减的 QOU 物理专用技能已被跳过；其余技能中特定于 QOU 的示例均已完成通用化。每个技能包都附带一份 `package-manifest.json`。
 
-> 技能**模式（schema）**（创作技能的类型化输入/输出）自动生成到[技能模式参考](../reference/skills/)中 — 绝不会与框架验证的规则脱节。
+> 技能**模式（schema）**（创作技能的类型化输入/输出）自动生成到[技能模式参考](../../reference/skills/)中 — 绝不会与框架验证的规则脱节。
 
 ---
 
@@ -146,7 +146,7 @@ LLM 在仓库中高效工作所使用的技能（通过 `skill_fetch` 加载，�
 
 角色回答的是*智能体代表谁在行动*。当前用户通过 `role-assignments.json` 映射到特定角色，而该角色的能力界定了智能体可以执行的操作（基于角色的访问控制 RBAC）。角色支持**继承**（例如 `author` 继承 `reviewer`）。
 
-> 如需以*泳道*的形式了解这些角色 — 谁负责编辑、谁负责审阅、谁负责签批，以及智能体可自主执行哪些步骤 — 请阅读[发布工作流 → 角色分工（Who is who）](../process/publication-workflow.html#who-is-who)。
+> 如需以*泳道*的形式了解这些角色 — 谁负责编辑、谁负责审阅、谁负责签批，以及智能体可自主执行哪些步骤 — 请阅读[发布工作流 → 角色分工（Who is who）](../../process/zh/publication-workflow.html#who-is-who)。
 
 ```mermaid
 flowchart LR
@@ -181,7 +181,7 @@ flowchart LR
 | `lean-mcp` | 通过 MCP 提供 Lean 4 证明检查与诊断 | — |
 | `ig-publisher-service` | FHIR IG Publisher 构建与 QA 报告 | — |
 
-它们各自在流程中所处的位置 — 以及智能体可以与不可决定的事项 — 均在[发布工作流](../process/publication-workflow.html)的 BPMN 图中进行了建模。
+它们各自在流程中所处的位置 — 以及智能体可以与不可决定的事项 — 均在[发布工作流](../../process/zh/publication-workflow.html)的 BPMN 图中进行了建模。
 
 ### 角色分配
 
@@ -212,9 +212,9 @@ flowchart LR
 
 ## 另请参阅
 
-- [发布工作流](../process/publication-workflow.html) — BPMN 泳道：哪个步骤运行哪项技能，以及由谁做出决策
-- [技能指令](../reference/skill-instructions/) — LLM 加载的文本指南正文
-- [技能模式参考](../reference/skills/) — 每项技能的类型化输入/输出
+- [发布工作流](../../process/zh/publication-workflow.html) — BPMN 泳道：哪个步骤运行哪项技能，以及由谁做出决策
+- [技能指令](../../reference/skill-instructions/) — LLM 加载的文本指南正文
+- [技能模式参考](../../reference/skills/) — 每项技能的类型化输入/输出
 - [内容类型](content-types.html) — 每种内容类型使用的技能
 - [架构](architecture.html) — RBAC、适配器与 MCP 服务器
-- [入门指南](../start/getting-started.html) — 运行您的第一项技能
+- [入门指南](../../start/zh/getting-started.html) — 运行您的第一项技能

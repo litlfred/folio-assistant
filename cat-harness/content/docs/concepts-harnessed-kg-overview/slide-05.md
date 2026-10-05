@@ -10,4 +10,4 @@ larger graph.
 <a href="{{ '/assets/img/kg-deck/img-p005-1.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p005-1.webp' | relative_url }}" alt="Screenshot of the SMART Base 1.0.0 release page for the logical model Decision Support Logic Source (http://smart.who.int/base/StructureDefinition/DecisionSupportLogicSource, active as of 2026-08-27): the source reference must be exactly one of url, canonical or instance, it is used by the Digital Adaptation Kit (DAK) model, and its key-elements table lists url (0..1), canonical (0..1) and instance (0..1)." loading="lazy"></a>
 
 **Sources:** <https://smart.who.int/base/StructureDefinition-DAK.html>;
-[FHIR content — the DAK API surface](fhir-content.html#the-dak-surface).
+[FHIR content — the DAK API surface](../fhir/fhir-content.html#the-dak-surface).

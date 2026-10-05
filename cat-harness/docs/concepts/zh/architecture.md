@@ -54,16 +54,16 @@ flowchart TD
 
 | 页面 | 说明的内容 |
 |---|---|
-| [仓库分类体系](../../architecture/repo-taxonomy.html) | 存在哪些类型的仓库 —— 工具（Tool）、测试（Test）、内容（Content）、消费者（Consumer） —— 以及各仓库可包含的内容 |
-| [当前状态](../../architecture/current-state.html) | 本仓库当前的实际内容、度量数据以及混杂之处 |
-| [未来规划](../../architecture/future-state.html) | 五个目标仓库以及各目录分别落入哪个仓库 |
-| [迁移计划](../../architecture/migration-plan.html) | Phase 0/I/II/III、各项关卡以及尚未决定的事项 |
-| [最小化 `cat-harness`](../../architecture/cat-harness-minimum.html) | 将“非自说明性”作为检验标准时，harness 中保留下来的内容 |
-| [Harness 实例](../../architecture/harness-instances.html) | 实例的本质是什么 —— 原理图、可视化、工具；四个目录；默认渲染 |
+| [仓库分类体系](../architecture/repo-taxonomy.html) | 存在哪些类型的仓库 —— 工具（Tool）、测试（Test）、内容（Content）、消费者（Consumer） —— 以及各仓库可包含的内容 |
+| [当前状态](../architecture/current-state.html) | 本仓库当前的实际内容、度量数据以及混杂之处 |
+| [未来规划](../architecture/future-state.html) | 五个目标仓库以及各目录分别落入哪个仓库 |
+| [迁移计划](../architecture/migration-plan.html) | Phase 0/I/II/III、各项关卡以及尚未决定的事项 |
+| [最小化 `cat-harness`](../architecture/cat-harness-minimum.html) | 将“非自说明性”作为检验标准时，harness 中保留下来的内容 |
+| [Harness 实例](../architecture/harness-instances.html) | 实例的本质是什么 —— 原理图、可视化、工具；四个目录；默认渲染 |
 
 最后两项看似相互矛盾 —— 最小化页面指出 harness 不产出供人类查看的任何内容，而实例页面指出实例默认会进行渲染。但它们并无矛盾：这项要求是一个**不断上升的基线**，其中
 `bootstrap` 免于可视化器约束，并改由其自身提供 `.json`/`.jsonld`，而 `cat-harness` 则是其余要求开始适用的层级。参见
-[要求从何处开始](../../architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception)。
+[要求从何处开始](../architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception)。
 
 本页的其余部分描述**当前现状**下的架构。
 
@@ -92,7 +92,7 @@ flowchart TD
 
 ## 技能与技能包
 
-**技能**（skill）是一个经过文档记录、受模式（schema）约束的工作单元（例如 `lean-formalization`）。多项技能组合为**技能包**（packages），技能包通过 `package-manifest.json` 声明其 Docker/运行时依赖。LLM 通过 `skill_list` 发现技能，并通过 `skill_fetch` 加载指令。完整的技能与角色列表 —— 以及它们如何与 LLM 组合协同（RBAC、能力、需求） —— 详见[技能与角色](skills.html)页面；每项技能的输入/输出契约发布在[技能模式参考](../reference/skills/)中。
+**技能**（skill）是一个经过文档记录、受模式（schema）约束的工作单元（例如 `lean-formalization`）。多项技能组合为**技能包**（packages），技能包通过 `package-manifest.json` 声明其 Docker/运行时依赖。LLM 通过 `skill_list` 发现技能，并通过 `skill_fetch` 加载指令。完整的技能与角色列表 —— 以及它们如何与 LLM 组合协同（RBAC、能力、需求） —— 详见[技能与角色](skills.html)页面；每项技能的输入/输出契约发布在[技能模式参考](../../reference/skills/)中。
 
 ## 内容对象模型
 
@@ -102,7 +102,7 @@ flowchart TD
 - `schemas/constraints.ts` —— Zod 模式与约束规则
 - `schemas/builders.ts` —— 经过验证的构造函数（`definition()`、`theorem()` 等）
 
-这些内容记录在自动生成的 [TypeScript API 参考](api/)中。
+这些内容记录在自动生成的 [TypeScript API 参考](../../zh/api/)中。
 
 ## 访问控制 —— ODRL，在每项任务前执行检查
 

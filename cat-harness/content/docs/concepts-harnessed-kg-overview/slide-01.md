@@ -38,7 +38,7 @@ actor (the cat at the laptop). **How am I verifiable?** is drawn on the right,
 over L5, beside the agentic actor (the robot cat). The slide pairs each question
 with an actor by position only; it states no pairing in words.
 
-**Sources:** [FHIR content — the five layers](fhir-content.html#the-three-layers);
+**Sources:** [FHIR content — the five layers](../fhir/fhir-content.html#the-three-layers);
 `smart-base/library/mehl-2021-who-smart-guidelines` (the primary source, Lancet
 Digital Health 2021); `smart-base/library/9789240093362-eng` §1.2 (WHO's handbook
 restating them).

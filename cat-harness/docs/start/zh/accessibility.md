@@ -151,5 +151,5 @@ ATAG Part B 值得重点关注，因为这是内容平台能够唯独提供的�
 
 - [入门指南](getting-started.html) — 使用中的意图决策表
 - [`interaction-modality` 技能](../../reference/skill-instructions/interaction-modality.html)
-- [发布工作流](../process/publication-workflow.html) — 仓库中的各项流程
+- [发布工作流](../../process/zh/publication-workflow.html) — 仓库中的各项流程
 - [在 beans 中管理工作流状态的选项](../../proposals/workflow-state-in-beans.html)

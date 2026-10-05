@@ -8,7 +8,7 @@ keeping them apart is the point of the parallel gateway:
 > `pdf-structure.py` has only a stub in `sections/`, so a sections-only search
 > misses it entirely. Measured: **26** `library/*/ocr/` trees against **11**
 > `structure.json` recording `"text_source": "ocr"`. See [Document
-> ingestion](document-ingestion.html).
+> ingestion](../guides/document-ingestion.html).
 
 **Trusted content — L2 DAKs, L3 IGs.** Already-adjudicated guidance: WHO SMART
 Digital Adaptation Kits at L2, FHIR Implementation Guides at L3. A recommendation

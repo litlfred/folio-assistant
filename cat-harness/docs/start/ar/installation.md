@@ -247,4 +247,4 @@ claude mcp add folio-assistant -- bun run /path/to/folio-assistant/cat-harness-t
 > معيار لوكلاء Linux Foundation يُقرأ بشكل أصيل بواسطة Claude Code وGemini CLI
 > وAntigravity وCursor وCopilot وغيرها)؛ ويتم إظهار الحالة المباشرة كخطاف
 > `SessionStart` لكل إطار عبر برنامج نصي مشترك، وكأداة MCP المسماة
-> `work_plan_prime`. راجع صفحة [البنية الهندسية](../concepts/architecture.html).
+> `work_plan_prime`. راجع صفحة [البنية الهندسية](../../concepts/ar/architecture.html).

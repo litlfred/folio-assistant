@@ -151,5 +151,5 @@ Cuatro formas de hacer esto, en orden creciente de ambición. Solo la primera es
 
 - [Primeros pasos](getting-started.html) — la tabla de decisiones de intención en uso
 - [Habilidad `interaction-modality`](../../reference/skill-instructions/interaction-modality.html)
-- [Flujo de publicación](../process/publication-workflow.html) — cada proceso en el repositorio
+- [Flujo de publicación](../../process/es/publication-workflow.html) — cada proceso en el repositorio
 - [Opciones para el estado del flujo de trabajo en beans](../../proposals/workflow-state-in-beans.html)

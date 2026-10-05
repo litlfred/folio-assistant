@@ -8,7 +8,7 @@
 | **Role** | *as whom* | a swimlane; an actor acts as a reviewer only for the length of a lane |
 | **Skill** | *knowing how* | the instruction body for the task; lives in the knowledge graph and is inherited across instances |
 
-**Sources:** [platform](platform.html); the `role-model` skill.
+**Sources:** [platform](../platform.html); the `role-model` skill.
 
 > **Aligned:** the Actor schema spells the three kinds `person`, `agent` and
 > `system` (human, agentic and mechanical), and adds a fourth, `external`: a

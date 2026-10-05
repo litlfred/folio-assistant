@@ -18,6 +18,6 @@ Two things the eight stage names hide, and the diagram does not: `author` and
 the HCI validation gate, and the editor sees the findings before anything is
 committed — and `review` happens twice, once per change and once over the
 assembled draft. Both expand into their own diagrams on the
-**[publication workflow](publication-workflow.html)** page.
+**[publication workflow](../process/publication-workflow.html)** page.
 
 ---

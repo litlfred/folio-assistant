@@ -1,4 +1,4 @@
-![The grumpy cat in a C@T-branded sleigh, pulled through the rain by four robotic cats, under an empty thought bubble with the C@T logo.](assets/img/harness/landing-grumpy-cyborg-agents-laptop.webp)
+![The grumpy cat in a C@T-branded sleigh, pulled through the rain by four robotic cats, under an empty thought bubble with the C@T logo.](../assets/img/harness/landing-grumpy-cyborg-agents-laptop.webp)
 
 Site: <https://litlfred.github.io/folio-assistant/> ·
 repository: <https://github.com/litlfred/folio-assistant>

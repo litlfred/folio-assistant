@@ -27,7 +27,7 @@ after.
 
 Bean `dh4f` is the measured cost of that defect at the *last* split: 30 scripts
 triaged, 23 broken, and three of them —
-[including a CI gate](../../architecture/current-state.html#the-failure-mode-this-repo-has-already-paid-for)
+[including a CI gate](current-state.html#the-failure-mode-this-repo-has-already-paid-for)
 — silently passing over a corpus they could no longer read. **A green check is
 the symptom, not the reassurance.**
 
@@ -115,7 +115,7 @@ boundary in the wrong direction. Gate met: 341 modules, 670 edges, **46
 wrong-direction edges** named, **0 modules unassigned** (the 27 platform
 meta-scripts were triaged by hand, and are reported with their own provenance so
 a judgement stays visible as a judgement). Full results in
-[current state](../../architecture/current-state.html#the-wrong-direction-edges--phase-is-worklist).
+[current state](current-state.html#the-wrong-direction-edges--phase-is-worklist).
 
 **Scope, which this paragraph did not state until 2026-09-30 (bean `p11x`).**
 That scan's root is **one instance**, so its edge count is over modules under
@@ -275,7 +275,7 @@ New construction, not migration. L4/L5 Content, Tool and Test repos built off
 (immunizations is the issue's example).
 
 The Test repos are the substantive new thing, because
-[no Test repo exists today](../../architecture/current-state.html#what-this-repo-is-authoritative-for-today):
+[no Test repo exists today](current-state.html#what-this-repo-is-authoritative-for-today):
 test data, generation templates, FHIR Test Plans, Gherkin dialects, ITB
 configuration. Their defining requirement is the taxonomy's — **test data assets
 are themselves folio content types in the KG** — so that SME review of test data
@@ -305,7 +305,7 @@ Stated plainly so the gaps are not mistaken for omissions:
   largest open question; `folio-assistant-sci` is unbuildable until it is answered.
 - **Where the L1/L2 boundary falls** between `smart-kg` and `smart-base`.
 - **Whether the viewer splits by content type** or exposes a registration point
-  ([future state](../../architecture/future-state.html#folio-assistant-core)).
+  ([future state](future-state.html#folio-assistant-core)).
 - **Repo ownership, naming and hosting** — org, visibility, release cadence.
 - **Whether `folio-assistant-sci` depends on core only**, as the issue states, or
   also needs harness surface that core does not re-export.

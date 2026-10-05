@@ -95,7 +95,7 @@ actor (the cat at the laptop). **How am I verifiable?** is drawn on the right,
 over L5, beside the agentic actor (the robot cat). The slide pairs each question
 with an actor by position only; it states no pairing in words.
 
-**Sources:** [FHIR content — the five layers](fhir-content.html#the-three-layers);
+**Sources:** [FHIR content — the five layers](../fhir/fhir-content.html#the-three-layers);
 `smart-base/library/mehl-2021-who-smart-guidelines` (the primary source, Lancet
 Digital Health 2021); `smart-base/library/9789240093362-eng` §1.2 (WHO's handbook
 restating them).
@@ -133,7 +133,7 @@ the slide as Cloudflare R2 storage and the Cloudflare edge network.
 
 <a href="{{ '/assets/img/kg-deck/img-p002-1.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p002-1.webp' | relative_url }}" alt="Infographic titled &quot;WHO Decoupled Architecture Workflow — secure, automated, trusted, globally accessible&quot;, in three columns joined by arrows. Left, &quot;Internal secure origin — trusted WHO data sources&quot;: Internal IRIS (DSpace), the WHO institutional repository, and the World Health Data Hub, global health datasets and resources. Middle, &quot;Automated compile engine — build, sign, snapshot, publish&quot;: folio-assistant (auto-sign and snapshot), feeding &quot;Cryptographic asset signing&quot; via the WHO Trust Network Gateway and Swiss Observatory schemas. Right, &quot;Zero-egress public CDN&quot;: Cloudflare R2 storage (10 TB) of signed static assets, then the Cloudflare CDN edge network for global low-latency delivery, reaching global researchers. The product names are the slide&#x27;s proposal, not a decision recorded in this repository." loading="lazy"></a>
 
-**Sources:** [`kg-to-portal`](reference/skill-instructions/kg-to-portal.html)
+**Sources:** [`kg-to-portal`](../reference/skill-instructions/kg-to-portal.html)
 (package and per-asset signatures; "a CDN is a LAYER");
 `large-datasets` (the WHO IRIS source descriptor); `who-iris` (the DSpace skill).
 
@@ -167,7 +167,7 @@ the slide as Cloudflare R2 storage and the Cloudflare edge network.
 
 The slide drew nine cards and put the tenth, **testing: test data and test harness**, beside them. The squares below give all ten a card, and are generated from `DAK_COMPONENTS` (`smart-base/scripts/gen-dak-components-figure.ts`), so a component added there cannot go without one.
 
-![The ten components of a WHO Digital Adaptation Kit as numbered coloured squares: 1 Health Interventions and Recommendations, 2 Generic Personas, 3 User Scenarios, 4 Business Processes and Workflows, 5 Core Data Elements, 6 Decision Support Logic, 7 Scheduling Logic (not yet its own DAK model field), 8 Indicators and Monitoring, 9 Functional and Non-functional Requirements, 10 Test Scenarios.](assets/img/dak-components.svg)
+![The ten components of a WHO Digital Adaptation Kit as numbered coloured squares: 1 Health Interventions and Recommendations, 2 Generic Personas, 3 User Scenarios, 4 Business Processes and Workflows, 5 Core Data Elements, 6 Decision Support Logic, 7 Scheduling Logic (not yet its own DAK model field), 8 Indicators and Monitoring, 9 Functional and Non-functional Requirements, 10 Test Scenarios.](../assets/img/dak-components.svg)
 
 <details markdown="1"><summary>The figure as it appeared on the slide (2026-09-30): nine cards</summary>
 
@@ -177,7 +177,7 @@ The slide drew nine cards and put the tenth, **testing: test data and test harne
 
 **Sources:** the owner, 2026-09-30 (ten: the original eight plus scheduling
 logic and test scenarios); the SMART Base 1.0.0 `DAK` logical model;
-[the L2 artefacts and their skills](guides/who-smart-dak.html).
+[the L2 artefacts and their skills](../guides/who-smart-dak.html).
 
 > **Misaligned, in three directions:** the speaker notes said 8. The figure
 > shows 9 cards, with testing beside them. The SMART Base `DAK` logical model
@@ -238,7 +238,7 @@ larger graph.
 <a href="{{ '/assets/img/kg-deck/img-p005-1.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p005-1.webp' | relative_url }}" alt="Screenshot of the SMART Base 1.0.0 release page for the logical model Decision Support Logic Source (http://smart.who.int/base/StructureDefinition/DecisionSupportLogicSource, active as of 2026-08-27): the source reference must be exactly one of url, canonical or instance, it is used by the Digital Adaptation Kit (DAK) model, and its key-elements table lists url (0..1), canonical (0..1) and instance (0..1)." loading="lazy"></a>
 
 **Sources:** <https://smart.who.int/base/StructureDefinition-DAK.html>;
-[FHIR content — the DAK API surface](fhir-content.html#the-dak-surface).
+[FHIR content — the DAK API surface](../fhir/fhir-content.html#the-dak-surface).
 
 ## 6 — Roles, tasks, skills and tests in the publication lifecycle
 {: #slide-06 data-fa-label="sec:harnessed-kg-overview-slide-06" }
@@ -260,7 +260,7 @@ execution anywhere on the deterministic-to-agentic spectrum.
 - <img src="{{ '/assets/img/kg-deck/img-p006-3.webp' | relative_url }}" alt="" height="24" style="height:24px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> **Human state:** *todos*, attached to process steps or knowledge assets
   ("please review this change in medication").
 
-![Folio lifecycle — one cycle, plan to retire. A BPMN collaboration of six lanes: programme manager, work plan (beans shared by humans and agents), editors and authoring agents, validation and QA, review team and SMEs, publication manager. Tasks in order: plan scope, team and artefacts; seed the work plan; editing and HCI validation; integration test and QA sweep; draft, review and publish; triage published feedback; file feedback as beans; then a gateway, more content, which loops back to editing or ends in retire or archive.](assets/img/workflows/content-lifecycle.svg)
+![Folio lifecycle — one cycle, plan to retire. A BPMN collaboration of six lanes: programme manager, work plan (beans shared by humans and agents), editors and authoring agents, validation and QA, review team and SMEs, publication manager. Tasks in order: plan scope, team and artefacts; seed the work plan; editing and HCI validation; integration test and QA sweep; draft, review and publish; triage published feedback; file feedback as beans; then a gateway, more content, which loops back to editing or ends in retire or archive.](../assets/img/workflows/content-lifecycle.svg)
 
 <details markdown="1"><summary>The diagram as it appeared on the slide (2026-09-30)</summary>
 
@@ -284,7 +284,7 @@ So the slide says a user story names a role, a role is a lane, a task is a node
 in it, a skill belongs to a task, and a test belongs to a skill.
 
 **Sources:** `folio-assistant-core/processes/content/content-lifecycle.bpmn` (the picture above is generated
-from it); [beans and todos](beans-and-todos.html).
+from it); [beans and todos](../guides/beans-and-todos.html).
 
 > **Aligned:** the snapshot's diagram and today's process have the same six
 > lanes and the same eight tasks.
@@ -303,7 +303,7 @@ more skills to execute a task.
   swarm with ungoverned state. Agents "relax" swimlanes, and mechanical plus
   agentic QA/QC reports mitigate it.
 
-![BPMN execution, from deterministic to agentic: a blue-to-green bar; on the left the folio lifecycle flat, with one task at a time; on the right the same lanes in perspective with beans scattered across every lane and cat-robots beneath.](assets/img/bpmn-execution-spectrum.webp)
+![BPMN execution, from deterministic to agentic: a blue-to-green bar; on the left the folio lifecycle flat, with one task at a time; on the right the same lanes in perspective with beans scattered across every lane and cat-robots beneath.](../assets/img/bpmn-execution-spectrum.webp)
 
 **What the two halves place where.** On the deterministic side the human and
 the agentic actor stand *beside* the flat diagram's lanes, with one sticky note
@@ -312,7 +312,7 @@ state marker where its task is. On the agentic side the human rides *above* the
 board, a row of agents hangs *beneath* it, and beans lie in every lane.
 
 **Sources:** [BPMN execution](agentic-harness.html);
-[`specification-compiled-agents`](methodologies/index.html) (which now cites this deck).
+[`specification-compiled-agents`](../methodologies/index.html) (which now cites this deck).
 
 > **Partly built:** no BPMN engine is wired in, and the agentic QA/QC report
 > does not exist yet. The mechanical one does: `bun run prov:qaqc`.
@@ -329,7 +329,7 @@ user story, voice and skill. **schema** holds JSON Schema and external schema. A
 takes on roles, a role carries skills, a task sits in a lane of a role and uses
 a skill, a test run tests a skill, and a QA report audits any kind of subject.
 
-![Harness schemas — UML class diagram generated from the JSON Schemas: packages test, process, scenario and schema, with the classes and relations described in the text above.](assets/img/uml/harness-schemas.svg)
+![Harness schemas — UML class diagram generated from the JSON Schemas: packages test, process, scenario and schema, with the classes and relations described in the text above.](../assets/img/uml/harness-schemas.svg)
 
 <details markdown="1"><summary>The diagram as it appeared on the slide (2026-09-30), without Voice Profile</summary>
 
@@ -415,7 +415,7 @@ content to its own tools and tests, and **utilizes** runs from a tool, a test or
 an app to what it uses.
 
 **Sources:** [Repo taxonomy](architecture/repo-taxonomy.html);
-[KGraph repositories](kgraph.html).
+[KGraph repositories](../kgraph.html).
 
 > **Aligned:** slide 10's `who/smart-kg` is a real, separate repository, which
 > is the repo taxonomy's worked example of splitting content from tools. Its
@@ -431,7 +431,7 @@ an app to what it uses.
 *caaaaatt → caa∞aat → ca&at → c@t → **cat-harness***. The name compresses one
 letter at a time. The harness is the platform layer every folio builds on.
 
-![A grumpy cat in a green C@T hoodie sits in the rain beneath an empty thought bubble carrying the C@T logo.](assets/img/harness/landing-laptop.webp)
+![A grumpy cat in a green C@T hoodie sits in the rain beneath an empty thought bubble carrying the C@T logo.](../assets/img/harness/landing-laptop.webp)
 
 **Sources:** [the harness](harness.html); `cat-harness/cat-harness.json`.
 
@@ -444,7 +444,7 @@ letter at a time. The harness is the platform layer every folio builds on.
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/concepts-harnessed-kg-overview/slide-12.md){: .fa-node-edit title="Edit content/docs/concepts-harnessed-kg-overview/slide-12.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="slide-12.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/concepts-harnessed-kg-overview/slide-12.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/concepts-harnessed-kg-overview/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" data-qa-family="translation" data-qa-key="slide-12.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/concepts-harnessed-kg-overview/slide-12.translation.json' | relative_url }}" data-qa-index="{{ '/assets/qa/concepts-harnessed-kg-overview/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
-![The grumpy cat in a C@T-branded sleigh, pulled through the rain by four robotic cats, under an empty thought bubble with the C@T logo.](assets/img/harness/landing-grumpy-cyborg-agents-laptop.webp)
+![The grumpy cat in a C@T-branded sleigh, pulled through the rain by four robotic cats, under an empty thought bubble with the C@T logo.](../assets/img/harness/landing-grumpy-cyborg-agents-laptop.webp)
 
 Site: <https://litlfred.github.io/folio-assistant/> ·
 repository: <https://github.com/litlfred/folio-assistant>
@@ -468,7 +468,7 @@ repository: <https://github.com/litlfred/folio-assistant>
 | **Role** | *as whom* | a swimlane; an actor acts as a reviewer only for the length of a lane |
 | **Skill** | *knowing how* | the instruction body for the task; lives in the knowledge graph and is inherited across instances |
 
-**Sources:** [platform](platform.html); the `role-model` skill.
+**Sources:** [platform](../platform.html); the `role-model` skill.
 
 > **Aligned:** the Actor schema spells the three kinds `person`, `agent` and
 > `system` (human, agentic and mechanical), and adds a fourth, `external`: a

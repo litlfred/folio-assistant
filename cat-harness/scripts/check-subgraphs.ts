@@ -71,6 +71,7 @@ import { Glob } from "bun";
 import { gitCorpus } from "../schemas/git-corpus.ts";
 
 import {
+  defaultGraphTypologies,
   isDerivedGraph,
   isPublishedGraphTypology,
   isRenderable,
@@ -284,6 +285,12 @@ function linkTargets(raw: string): string[] {
  * measuring something other than what the scan measured.
  */
 /** A link destination as a path: percent-decoded, or unchanged if the escapes are malformed. */
+/** A typology whose pages a renderable PARENT publishes — `within` a renderable one. */
+function publishedByParent(g: string): boolean {
+  const parent = defaultGraphTypologies.get(g)?.within;
+  return parent !== undefined && isRenderable(parent);
+}
+
 export function decodeLinkTarget(target: string): string {
   try {
     return decodeURIComponent(target);
@@ -437,7 +444,11 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
         }
         if (resolved === undefined) {
           // A renderable graph addresses the PUBLISHED tree, not this one.
-          const renderable = owner.graphTypologies.some((g) => isRenderable(g));
+          // A typology `within` a renderable one is published BY it — the
+          // docs graph's named groups (bean `xka5`), `proposals` and
+          // `requirements` are not sites of their own, but their pages are docs
+          // pages on the docs site, so their links address the same tree.
+          const renderable = owner.graphTypologies.some((g) => isRenderable(g) || publishedByParent(g));
           // A DERIVED graph's links came from the SOURCE document rather than
           // from an author here — see `derivedLinks`. Tested after
           // `renderable` only because no kind is currently both; if one ever

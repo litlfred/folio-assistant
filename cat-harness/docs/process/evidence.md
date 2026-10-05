@@ -75,11 +75,11 @@ can assert about itself**; it is a fact resolved at the publisher. Drawing that
 lane inside the system boundary would make "authoritative" a self-assessment.
 
 <div class="bpmn-figure" id="figure-the-subprocess">
-  <img src="assets/img/workflows/evidence-retrieval.svg"
+  <img src="../assets/img/workflows/evidence-retrieval.svg"
        alt="BPMN swimlane diagram across four lanes. The author reviews the guidance already in their content, then frames the question as PICO. A parallel gateway fans out to three retrieval tasks run by the evidence agent: trusted L1 sources under library/, trusted L2 DAK and L3 IG content, and data repositories and statistical datasets. The candidates join, and the trusted-registries lane verifies each one's authority against the publishing body's API; an exclusive gateway routes an unconfirmed citation to a bean on the work plan before rejoining. The author then appraises and grades the body of evidence, and a second exclusive gateway asks whether it is sufficient for a recommendation: if not, the gap is recorded as a bean and the process ends without one; if so, the evidence is attached to the recommendation.">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/evidence-retrieval.bpmn) · [full-size SVG](assets/img/workflows/evidence-retrieval.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/evidence-retrieval.bpmn) · [full-size SVG](../assets/img/workflows/evidence-retrieval.svg)
 {: .bpmn-source }
 
 ## Step one looks inward
@@ -128,7 +128,7 @@ keeping them apart is the point of the parallel gateway:
 > `pdf-structure.py` has only a stub in `sections/`, so a sections-only search
 > misses it entirely. Measured: **26** `library/*/ocr/` trees against **11**
 > `structure.json` recording `"text_source": "ocr"`. See [Document
-> ingestion](document-ingestion.html).
+> ingestion](../guides/document-ingestion.html).
 
 **Trusted content — L2 DAKs, L3 IGs.** Already-adjudicated guidance: WHO SMART
 Digital Adaptation Kits at L2, FHIR Implementation Guides at L3. A recommendation

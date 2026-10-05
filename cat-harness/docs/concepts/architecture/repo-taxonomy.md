@@ -22,8 +22,8 @@ first folio needed, and nothing forced the question *which kind of repo is this
 change for?*
 
 The taxonomy below exists to make that question askable on every change. It is
-the vocabulary the [future state](../../architecture/future-state.html) and the
-[migration plan](../../architecture/migration-plan.html) are written in.
+the vocabulary the [future state](future-state.html) and the
+[migration plan](migration-plan.html) are written in.
 
 A repository is classified by **what it is authoritative for**, not by what
 files happen to sit in it. A repo can be more than one kind — this repo is — but
@@ -149,4 +149,4 @@ the case it describes.
 
 ---
 
-Next: [Current state](../../architecture/current-state.html) — what this repo is today, measured.
+Next: [Current state](current-state.html) — what this repo is today, measured.

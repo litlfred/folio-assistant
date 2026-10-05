@@ -22,7 +22,7 @@ nav_order: 3
 
 Five folio-assistant instances, composed through the
 `dependencies.folioAssistant` mechanism that
-[already exists](../../architecture/current-state.html#the-mechanism-the-split-already-has):
+[already exists](current-state.html#the-mechanism-the-split-already-has):
 
 ```mermaid
 flowchart TD
@@ -131,9 +131,9 @@ scientific-authoring skills. Per the issue, it depends **only** on
 **This repo is the acid test for the dependency model**, because it needs to
 contribute all three of: a **block kind** (a schema), an **adapter** (code), and
 **MCP tools** (`lean_build`). Until 2026-09-18 the dependency model resolved
-[none of the three](../../architecture/current-state.html#what-the-model-used-to-rule-out--resolved-2026-09-18),
+[none of the three](current-state.html#what-the-model-used-to-rule-out--resolved-2026-09-18),
 which made `folio-assistant-sci` unbuildable outright.
-[Phase 0.1](../../architecture/migration-plan.html#01--make-the-dependency-model-able-to-carry-the-split--decided-and-built)
+[Phase 0.1](migration-plan.html#01--make-the-dependency-model-able-to-carry-the-split--decided-and-built)
 has since been decided and built — load-time registration, with collisions
 refused rather than resolved by order — so the blocker is cleared. The acid
 test still stands: if a future change makes any of the three unreachable from a
@@ -184,7 +184,7 @@ tooling needs L1's schema to resolve them.
 > *"some of these may need be split into their respective Tool, Test, etc repos
 > to avoid mixing of concerns. e.g. `smart-kg-tools`"*
 
-Applying the [taxonomy's splitting rule](../../architecture/repo-taxonomy.html#splitting-a-mixed-repo)
+Applying the [taxonomy's splitting rule](repo-taxonomy.html#splitting-a-mixed-repo)
 — split when consumers or cadences differ — gives:
 
 | candidate | split? | why |
@@ -196,7 +196,7 @@ Applying the [taxonomy's splitting rule](../../architecture/repo-taxonomy.html#s
 | `folio-assistant-sci` | **defer** | plausible later (`-sci-tools` for the Lean/LaTeX toolchain) but not before the extraction itself is proven |
 
 **Test repos are additive, not extractions.** No Test repo exists today
-([current state](../../architecture/current-state.html#what-this-repo-is-authoritative-for-today)),
+([current state](current-state.html#what-this-repo-is-authoritative-for-today)),
 so `smart-base-test`, `folio-core-test` and the rest are Phase III work that
 builds something new, not Phase II work that moves something existing. Their
 defining requirement is the one from the taxonomy: **test data assets must
@@ -217,4 +217,4 @@ achieved anything.
 
 ---
 
-Next: [Migration plan](../../architecture/migration-plan.html) — how to get from one to five.
+Next: [Migration plan](migration-plan.html) — how to get from one to five.

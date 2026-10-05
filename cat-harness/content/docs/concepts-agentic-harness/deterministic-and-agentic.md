@@ -26,6 +26,6 @@ are safety risks, how much must be deterministic, and how models compare across
 sub-workflows under a controlled overlay of context and memories are three
 questions this repository can now ask and has not answered. The agenda, with
 each claim marked as measured, decided or hypothesis, is
-[`deterministic-and-agentic`](reference/skill-instructions/deterministic-and-agentic.html).
+[`deterministic-and-agentic`](../reference/skill-instructions/deterministic-and-agentic.html).
 Read it as an agenda: there is more hypothesis in it than measurement, and it
 says so.

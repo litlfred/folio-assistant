@@ -33,7 +33,7 @@ content to its own tools and tests, and **utilizes** runs from a tool, a test or
 an app to what it uses.
 
 **Sources:** [Repo taxonomy](architecture/repo-taxonomy.html);
-[KGraph repositories](kgraph.html).
+[KGraph repositories](../kgraph.html).
 
 > **Aligned:** slide 10's `who/smart-kg` is a real, separate repository, which
 > is the repo taxonomy's worked example of splitting content from tools. Its

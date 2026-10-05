@@ -248,4 +248,4 @@ una preparación idéntica del plan de trabajo en tiempo real, independientement
 > estándar de agentes de la Linux Foundation leído de forma nativa por Claude Code, Gemini CLI,
 > Antigravity, Cursor, Copilot y otros); el estado en tiempo real se expone tanto como un
 > hook `SessionStart` específico de cada arnés a través de un script compartido, como mediante la
-> herramienta MCP `work_plan_prime`. Consulta la página de [arquitectura](../concepts/architecture.html).
+> herramienta MCP `work_plan_prime`. Consulta la página de [arquitectura](../../concepts/es/architecture.html).

@@ -148,7 +148,7 @@ quiconque souhaite réellement :
 | **WHO SMART DAK** | un kit d'adaptation numérique (L2) — personas, processus, éléments de données, tables de décision | — |
 | **WHO SMART IG** | un guide d'implémentation FHIR (L3), élaboré à partir d'un DAK L2 | Java, SUSHI, IG Publisher |
 
-Voir [Types de contenu](../concepts/content-types.html) pour découvrir ce que chaque formalisme vous apporte.
+Voir [Types de contenu](../../concepts/fr/content-types.html) pour découvrir ce que chaque formalisme vous apporte.
 
 ## 4. Installer et vérifier
 {: #4-install-and-verify }
@@ -179,7 +179,7 @@ Les outils les plus pertinents pour cette page :
 | `check_dependencies` | Détecter les chaînes d'outils installées |
 | `skill_list` / `skill_fetch` | Découvrir et charger les instructions d'une compétence |
 
-La liste complète des outils se trouve sur la page [Compétences & rôles](../concepts/skills.html) ; les outils spécifiques à
+La liste complète des outils se trouve sur la page [Compétences & rôles](../../concepts/fr/skills.html) ; les outils spécifiques à
 un type de contenu n'apparaissent que lorsque l'adaptateur correspondant est actif.
 
 ## 6. Convertir un dépôt existant
@@ -349,6 +349,6 @@ Le hook `SessionStart` présente le plan au début de chaque session, et l'outil
   des paramètres sur ce site
 - **[Tutoriel — rédiger un article](../../guides/writing-a-paper.html)**
 - **[Rédiger un document](../../guides/writing-a-document.html)**
-- **[Types de contenu](../concepts/content-types.html)** — le formalisme propre à chaque domaine
-- **[Flux de publication](../process/publication-workflow.html)** — chaque processus au sein du dépôt
-- **[Architecture](../concepts/architecture.html)** — adaptateurs, compétences, et le modèle de blocs
+- **[Types de contenu](../../concepts/fr/content-types.html)** — le formalisme propre à chaque domaine
+- **[Flux de publication](../../process/fr/publication-workflow.html)** — chaque processus au sein du dépôt
+- **[Architecture](../../concepts/fr/architecture.html)** — adaptateurs, compétences, et le modèle de blocs

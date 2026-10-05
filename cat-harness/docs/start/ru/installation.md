@@ -247,4 +247,4 @@ Gemini CLI нативно считывает `AGENTS.md` / `GEMINI.md`. Заре
 > (стандарт для агентов от Linux Foundation, нативно считываемый Claude Code, Gemini CLI,
 > Antigravity, Cursor, Copilot и другими); актуальное состояние предоставляется как через
 > отдельный для каждого харнесса хук `SessionStart` поверх единого общего скрипта, так и через
-> MCP-инструмент `work_plan_prime`. См. страницу [архитектуры](../concepts/architecture.html).
+> MCP-инструмент `work_plan_prime`. См. страницу [архитектуры](../../concepts/ru/architecture.html).

@@ -46,8 +46,8 @@ is why the Term on this page is **Context Overlay** and not the bare word.
 | where | what it means |
 |---|---|
 | this page | a set of context material applied to a run |
-| [`getting-started`](getting-started.html) §6 | a BRANCH of the folio-intent gateway — converting a repository you already have |
-| [`getting-started`](getting-started.html) §art | positioning text ON cat artwork, where an undeclared region means "do not overlay" |
+| [`getting-started`](../start/getting-started.html) §6 | a BRANCH of the folio-intent gateway — converting a repository you already have |
+| [`getting-started`](../start/getting-started.html) §art | positioning text ON cat artwork, where an undeclared region means "do not overlay" |
 
 None is wrong. They are simply different, and a reader who meets the bare word
 in one section and carries its meaning into another will be misled in a way
@@ -126,7 +126,7 @@ measurement unreliable.
 
 This is what lets the repository ask how models compare across sub-workflows
 **under a controlled overlay of context and memories** — a question named as
-open research in [`agentic-harness`](agentic-harness.html), not as something
+open research in [`agentic-harness`](../concepts/agentic-harness.html), not as something
 settled here.
 
 ## Where the rules live
@@ -137,15 +137,15 @@ settled here.
 This page explains the concept. The discipline is in the skills, and where the
 two disagree the skill wins:
 
-- [`agent-memory`](reference/skill-instructions/agent-memory.html) — the three
+- [`agent-memory`](../reference/skill-instructions/agent-memory.html) — the three
   entry labels, why entries are authored as nodes rather than in the generated
   file, and the injection budget.
-- [`content-context-and-state-graphs`](reference/skill-instructions/content-context-and-state-graphs.html)
+- [`content-context-and-state-graphs`](../reference/skill-instructions/content-context-and-state-graphs.html)
   — the one question that settles a layer, and why a step writing to a Context
   graph is a defect.
-- [`confirmation-waiver`](reference/skill-instructions/confirmation-waiver.html)
+- [`confirmation-waiver`](../reference/skill-instructions/confirmation-waiver.html)
   — a confirmation granted in advance, scoped to a session or a process run.
-- [`interaction-modality`](reference/skill-instructions/interaction-modality.html)
+- [`interaction-modality`](../reference/skill-instructions/interaction-modality.html)
   — how a person wants to be asked.
 
 Setting an agent's context deterministically from the knowledge graph at each

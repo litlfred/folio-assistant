@@ -44,12 +44,12 @@ SVGs are generated from those files by `bun run render:bpmn`; never hand-edit
 an SVG.
 
 **The table below is not written on this page.** It is read from the
-published knowledge graph — the [named-subgraph JSON-LD](subgraph/index.jsonld)
+published knowledge graph — the [named-subgraph JSON-LD](../subgraph/index.jsonld)
 that `bun run subgraph:jsonld` frames from `kg-export` — by walking each
 instance's `processes` subgraph. Each row's text is the first sentence of that
 diagram's own `bpmn:documentation`, carried on its `Process` node as
 `summary`. To change what a row says, change the diagram. The
-[derived process index](cat-harness/auto-docs/index/processes/) lists this
+[derived process index](../cat-harness/auto-docs/index/processes/) lists this
 instance's corpus of diagrams with their lanes and skills.
 
 **Bootstrap's diagrams are in the table, read from bootstrap's own graph.**
@@ -100,10 +100,10 @@ in, so that is the only thing said here:
 <div class="fa-process-index" data-fa-process-index>
 <noscript>
 <p>The process table is drawn by JavaScript from the published
-<a href="subgraph/index.jsonld">named-subgraph JSON-LD</a>, which can be read
+<a href="../subgraph/index.jsonld">named-subgraph JSON-LD</a>, which can be read
 directly: each instance's <code>processes/index.hydrated.jsonld</code> holds
 every one of its processes. The same diagrams are listed, without scripts, in the
-<a href="cat-harness/auto-docs/index/processes/">derived process index</a>, apart from
+<a href="../cat-harness/auto-docs/index/processes/">derived process index</a>, apart from
 bootstrap's, which are in its own <code>processes/</code> directory.</p>
 </noscript>
 </div>
@@ -123,7 +123,7 @@ decision is recorded, because there is no token on it until then.
 That is ordering, not enforcement: nothing yet stops an agent calling a
 capability tool directly. The case for making it binding — and the argument
 that the commit boundary is the right place — is in
-[Proposal: workflow orchestration](proposals/workflow-orchestration.html).
+[Proposal: workflow orchestration](../proposals/workflow-orchestration.html).
 
 ### Some decisions are computed, not judged
 {: #some-decisions-are-computed-not-judged data-fa-label="sec:publication-workflow-some-decisions-are-computed-not-judged" }
@@ -213,7 +213,7 @@ This is the diagram that matters most day to day: **one proposed change to one
 content block**.
 
 <div class="bpmn-figure" id="figure-editing-and-the-hci-validation-gate">
-  <img src="assets/img/workflows/editing-hci-validation.svg"
+  <img src="../assets/img/workflows/editing-hci-validation.svg"
        alt="BPMN swimlane diagram: an editor describes a change, an authoring agent drafts it, the proposed change fans out through mechanical and non-mechanical validation, the findings are shown to the editor, and only an accepted change is committed to the corpus.">
 </div>
 
@@ -261,27 +261,27 @@ excuse a missing review, and a clean review does not excuse a red build.
 | Activity | Lane | Skill |
 |----------|------|-------|
 | Describe the intended change | Editor / author | — (human) |
-| Claim or open the bean | Work plan | [`todo-manager`](reference/skill-instructions/todo-manager.html) |
-| Draft the block edit | Authoring agent | [`content-author`](reference/skills/content-author.html) |
-| Schema and constraint checks | Mechanical validation | [`content-validate`](reference/skills/content-validate.html) |
-| Syntax, spelling and links | Mechanical validation | [`content-validate`](reference/skills/content-validate.html) |
-| Build and QA gates | Mechanical validation | [`content-test`](reference/skills/content-test.html) |
-| Agent review of the change | Non-mechanical validation | [`content-review`](reference/skills/content-review.html) |
-| Human / SME review | Non-mechanical validation | [`content-review`](reference/skills/content-review.html) |
+| Claim or open the bean | Work plan | [`todo-manager`](../reference/skill-instructions/todo-manager.html) |
+| Draft the block edit | Authoring agent | [`content-author`](../reference/skills/content-author.html) |
+| Schema and constraint checks | Mechanical validation | [`content-validate`](../reference/skills/content-validate.html) |
+| Syntax, spelling and links | Mechanical validation | [`content-validate`](../reference/skills/content-validate.html) |
+| Build and QA gates | Mechanical validation | [`content-test`](../reference/skills/content-test.html) |
+| Agent review of the change | Non-mechanical validation | [`content-review`](../reference/skills/content-review.html) |
+| Human / SME review | Non-mechanical validation | [`content-review`](../reference/skills/content-review.html) |
 | Collate findings into a report | HCI validation pipeline | — (pipeline) |
-| Log findings on the bean | Work plan | [`todo-manager`](reference/skill-instructions/todo-manager.html) |
+| Log findings on the bean | Work plan | [`todo-manager`](../reference/skill-instructions/todo-manager.html) |
 | Review the findings | Editor / author | — (human — this is the gate) |
-| Revise the proposed change | Authoring agent | [`content-author`](reference/skills/content-author.html) |
+| Revise the proposed change | Authoring agent | [`content-author`](../reference/skills/content-author.html) |
 | Commit into the corpus | Corpus | — (subject to the `commit-hygiene` requirement) |
-| Resolve or re-open the bean | Work plan | [`todo-manager`](reference/skill-instructions/todo-manager.html) |
+| Resolve or re-open the bean | Work plan | [`todo-manager`](../reference/skill-instructions/todo-manager.html) |
 
 The domain-specific checks hang off `content-validate` / `content-test` by
 content type:
-[`lean-formalization`](reference/skills/lean-formalization.html) and
-[`proof-verification`](reference/skills/proof-verification.html) for papers,
-[`fhir-validation`](reference/skills/fhir-validation.html) and
-[`quality-control`](reference/skills/quality-control.html) for IGs,
-[`latex-authoring`](reference/skills/latex-authoring.html) for rendering.
+[`lean-formalization`](../reference/skills/lean-formalization.html) and
+[`proof-verification`](../reference/skills/proof-verification.html) for papers,
+[`fhir-validation`](../reference/skills/fhir-validation.html) and
+[`quality-control`](../reference/skills/quality-control.html) for IGs,
+[`latex-authoring`](../reference/skills/latex-authoring.html) for rendering.
 
 ---
 
@@ -294,7 +294,7 @@ The corpus is not the publication. A **draft** is built from it, reviewed as a
 whole by the review team, and only then released.
 
 <div class="bpmn-figure" id="figure-from-corpus-to-published-folio">
-  <img src="assets/img/workflows/draft-to-publication.svg"
+  <img src="../assets/img/workflows/draft-to-publication.svg"
        alt="BPMN swimlane diagram: the corpus is built into a draft publication, QA gates run, the publication manager circulates it, the review team and SMEs review in parallel, change requests become beans that re-enter editing, and an approved draft is authorised by the programme manager and published.">
 </div>
 
@@ -317,17 +317,17 @@ Three things to note:
 
 | Activity | Lane | Skill |
 |----------|------|-------|
-| Open or claim the release bean | Work plan | [`todo-manager`](reference/skill-instructions/todo-manager.html) |
-| Build the draft publication | Corpus + build pipeline | [`content-publish`](reference/skills/content-publish.html) |
-| Run publication QA gates | Corpus + build pipeline | [`content-test`](reference/skills/content-test.html) · [`quality-control`](reference/skills/quality-control.html) |
+| Open or claim the release bean | Work plan | [`todo-manager`](../reference/skill-instructions/todo-manager.html) |
+| Build the draft publication | Corpus + build pipeline | [`content-publish`](../reference/skills/content-publish.html) |
+| Run publication QA gates | Corpus + build pipeline | [`content-test`](../reference/skills/content-test.html) · [`quality-control`](../reference/skills/quality-control.html) |
 | Editing and HCI validation | Editors + authoring agents | call activity → [diagram 3](#editing-and-the-hci-validation-gate) |
-| Circulate the draft | Publication manager | [`content-review`](reference/skills/content-review.html) |
-| Review the draft publication | Review team | [`content-review`](reference/skills/content-review.html) |
-| Clinical / scientific sign-off | SMEs | [`content-review`](reference/skills/content-review.html) |
-| Open beans for the change requests | Work plan | [`todo-manager`](reference/skill-instructions/todo-manager.html) · [`content-feedback`](reference/skills/content-feedback.html) |
-| Authorise the release | Programme manager | [`content-publish`](reference/skills/content-publish.html) |
-| Version, tag and publish | Publication manager | [`content-publish`](reference/skills/content-publish.html) · [`ig-publication`](reference/skills/ig-publication.html) |
-| Close the release beans | Work plan | [`todo-manager`](reference/skill-instructions/todo-manager.html) |
+| Circulate the draft | Publication manager | [`content-review`](../reference/skills/content-review.html) |
+| Review the draft publication | Review team | [`content-review`](../reference/skills/content-review.html) |
+| Clinical / scientific sign-off | SMEs | [`content-review`](../reference/skills/content-review.html) |
+| Open beans for the change requests | Work plan | [`todo-manager`](../reference/skill-instructions/todo-manager.html) · [`content-feedback`](../reference/skills/content-feedback.html) |
+| Authorise the release | Programme manager | [`content-publish`](../reference/skills/content-publish.html) |
+| Version, tag and publish | Publication manager | [`content-publish`](../reference/skills/content-publish.html) · [`ig-publication`](../reference/skills/ig-publication.html) |
+| Close the release beans | Work plan | [`todo-manager`](../reference/skill-instructions/todo-manager.html) |
 
 This diagram implements the `req:content-lifecycle` phase gates —
 `validate-before-review`, `review-before-test`, `test-before-publish`,
@@ -345,14 +345,14 @@ One cycle of a folio, plan to retire. Both diagrams above appear here as call
 activities.
 
 <div class="bpmn-figure" id="figure-content-lifecycle-overview">
-  <img src="assets/img/workflows/content-lifecycle.svg"
+  <img src="../assets/img/workflows/content-lifecycle.svg"
        alt="BPMN swimlane diagram: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs, integration test and QA sweep, draft-review-publish, feedback is triaged and filed as beans, then either another cycle or retirement.">
 </div>
 
 [Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn){: .btn .btn-outline }
 
 This is the same lifecycle as the linear
-[plan → author → validate → review → test → publish → feedback → retire](content-types.html#the-content-lifecycle)
+[plan → author → validate → review → test → publish → feedback → retire](../concepts/content-types.html#the-content-lifecycle)
 strip, with the actors and the loops made explicit. Note that
 `Editing and HCI validation` runs **once per proposed change**, not once per
 cycle — the linear strip flattens that.
@@ -388,7 +388,7 @@ Why it is modelled as a lane rather than a note:
 - **`beans create` is not idempotent.** Check for an existing bean by exact
   title before creating one — the guard, and the incident that motivates it,
   are in
-  [`todo-manager`](reference/skill-instructions/todo-manager.html).
+  [`todo-manager`](../reference/skill-instructions/todo-manager.html).
 - **Beans are not sidecars.** Machine-generated queues (QA `*.qa.json`, witness
   files, watcher queues) stay bulk JSON; they never become beans.
 
@@ -404,7 +404,7 @@ The roles in the lanes, and the actor definition each one maps to. Roles
 **do** is not a property of its role: it is an ODRL rule in `policies/`, and
 before every task the BPMN executor checks that the actor is authenticated,
 eligible for the lane's role, permitted by policy and allowed to touch the
-content ([`task-authorization`](../skills/process/process-core/task-authorization.md),
+content ([`task-authorization`](../../skills/process/process-core/task-authorization.md),
 issue #1207).
 
 ### People
@@ -446,7 +446,7 @@ finding arrive at the same place in the pipeline — but neither of them decides
 the editor does, and the release is authorised by the programme manager.
 
 For the full role list, their capabilities, and how a user is mapped to a role,
-see [Skills & roles](skills.html#roles-actors).
+see [Skills & roles](../concepts/skills.html#roles-actors).
 
 ---
 
@@ -486,13 +486,13 @@ implies actors performing activities over time, which none of these have:
 
 | Diagram | Notation | Why |
 |---------|----------|-----|
-| `README.md`, [home](index.html) — "What it does" | Mermaid | Component / data-flow map of the platform, not a sequence of activities |
-| [Architecture](architecture.html) — server and adapters | Mermaid | Deployment and module structure |
-| [Skills & roles](skills.html) — how the five concepts compose | Mermaid | Conceptual composition, no time axis |
-| [Skills & roles](skills.html) — `viewer → reviewer → author → admin` | Mermaid | An inheritance lattice, not a flow |
-| [Home](index.html) — documentation map | Mermaid | Navigation graph |
-| [Adding a content type](guides/new-content-type.html) — "What you provide" | Mermaid | What you hand over, not what you do |
-| [Writing a paper](guides/writing-a-paper.html) — the Lean session | Mermaid `sequenceDiagram` | An interaction transcript between you, the assistant and the MCP server. BPMN's equivalent — a collaboration with message flows — would add ceremony without adding meaning |
+| `README.md`, [home](../index.html) — "What it does" | Mermaid | Component / data-flow map of the platform, not a sequence of activities |
+| [Architecture](../concepts/architecture.html) — server and adapters | Mermaid | Deployment and module structure |
+| [Skills & roles](../concepts/skills.html) — how the five concepts compose | Mermaid | Conceptual composition, no time axis |
+| [Skills & roles](../concepts/skills.html) — `viewer → reviewer → author → admin` | Mermaid | An inheritance lattice, not a flow |
+| [Home](../index.html) — documentation map | Mermaid | Navigation graph |
+| [Adding a content type](../guides/new-content-type.html) — "What you provide" | Mermaid | What you hand over, not what you do |
+| [Writing a paper](../guides/writing-a-paper.html) — the Lean session | Mermaid `sequenceDiagram` | An interaction transcript between you, the assistant and the MCP server. BPMN's equivalent — a collaboration with message flows — would add ceremony without adding meaning |
 
 If you add a diagram that *does* have actors, activities and a control flow,
 it belongs in `processes/` as BPMN, not in a Mermaid fence.
@@ -504,7 +504,7 @@ it belongs in `processes/` as BPMN, not in a Mermaid fence.
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/process-publication-workflow/see-also.md){: .fa-node-edit title="Edit content/docs/process-publication-workflow/see-also.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="see-also.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/process-publication-workflow/see-also.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/process-publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" data-qa-family="translation" data-qa-key="see-also.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/process-publication-workflow/see-also.translation.json' | relative_url }}" data-qa-index="{{ '/assets/qa/process-publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
-- [Content types](content-types.html) — the linear lifecycle and what each type produces
-- [Skills & roles](skills.html) — every skill and role, and how they compose with the LLM
-- [Skill schema reference](reference/skills/) — typed input/output per skill
-- [Agent onboarding](guides/agent-onboarding.html) — orientation for an agent dropped into a folio
+- [Content types](../concepts/content-types.html) — the linear lifecycle and what each type produces
+- [Skills & roles](../concepts/skills.html) — every skill and role, and how they compose with the LLM
+- [Skill schema reference](../reference/skills/) — typed input/output per skill
+- [Agent onboarding](../guides/agent-onboarding.html) — orientation for an agent dropped into a folio

@@ -147,7 +147,7 @@ realmente quiera por sí solo:
 | **WHO SMART DAK** | un Kit de Adaptación Digital (L2) — perfiles, procesos, elementos de datos, tablas de decisión | — |
 | **WHO SMART IG** | una Guía de Implementación FHIR (L3), construida a partir de un DAK L2 | Java, SUSHI, IG Publisher |
 
-Consulta [Tipos de contenido](../concepts/content-types.html) para ver las ventajas que ofrece cada formalismo.
+Consulta [Tipos de contenido](../../concepts/es/content-types.html) para ver las ventajas que ofrece cada formalismo.
 
 ## 4. Instalar y verificar
 {: #4-install-and-verify }
@@ -178,7 +178,7 @@ Las herramientas más relevantes para esta página:
 | `check_dependencies` | Verifica cuáles cadenas de herramientas están instaladas |
 | `skill_list` / `skill_fetch` | Descubre y carga las instrucciones de una habilidad |
 
-La lista completa de herramientas se encuentra en la página de [Habilidades y roles](../concepts/skills.html); las herramientas
+La lista completa de herramientas se encuentra en la página de [Habilidades y roles](../../concepts/es/skills.html); las herramientas
 de tipos de contenido aparecen únicamente cuando el adaptador correspondiente está activo.
 
 ## 6. Convertir un repositorio que ya tienes
@@ -348,6 +348,6 @@ MCP `work_plan_prime` expone la misma interfaz a cualquier agente conectado.
   de configuración en este sitio
 - **[Tutorial — redactar un artículo](../../guides/writing-a-paper.html)**
 - **[Redactar un documento](../../guides/writing-a-document.html)**
-- **[Tipos de contenido](../concepts/content-types.html)** — el formalismo para cada dominio
-- **[Flujo de publicación](../process/publication-workflow.html)** — cada proceso en el repositorio
-- **[Arquitectura](../concepts/architecture.html)** — adaptadores, habilidades y el modelo de bloques
+- **[Tipos de contenido](../../concepts/es/content-types.html)** — el formalismo para cada dominio
+- **[Flujo de publicación](../../process/es/publication-workflow.html)** — cada proceso en el repositorio
+- **[Arquitectura](../../concepts/es/architecture.html)** — adaptadores, habilidades y el modelo de bloques

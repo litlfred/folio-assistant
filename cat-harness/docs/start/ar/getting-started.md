@@ -148,7 +148,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 | **WHO SMART DAK** | حزمة تكيّف رقمي (L2) — شخصيات، عمليات، عناصر بيانات، جداول قرارات | — |
 | **WHO SMART IG** | دليل تطبيق FHIR (L3)، مبني من L2 DAK | Java، وSUSHI، وIG Publisher |
 
-راجع [أنواع المحتوى](../concepts/content-types.html) لمعرفة ما توفره لك كل صياغة شكلية.
+راجع [أنواع المحتوى](../../concepts/ar/content-types.html) لمعرفة ما توفره لك كل صياغة شكلية.
 
 ## 4. التثبيت والتحقق
 {: #4-install-and-verify }
@@ -179,7 +179,7 @@ Claude Code وAntigravity وGemini CLI وعملاء MCP العامين.
 | `check_dependencies` | فحص مجموعات الأدوات المثبتة |
 | `skill_list` / `skill_fetch` | اكتشاف تعليمات المهارة وتحميلها |
 
-قائمة الأدوات الكاملة موجودة في صفحة [المهارات والأدوار](../concepts/skills.html)؛ ولا تظهر أدوات
+قائمة الأدوات الكاملة موجودة في صفحة [المهارات والأدوار](../../concepts/ar/skills.html)؛ ولا تظهر أدوات
 أنواع المحتوى إلا عندما يكون المحوّل المطابق نشطًا.
 
 ## 6. تحويل مستودع موجود لديك بالفعل
@@ -348,6 +348,6 @@ beans <id> --status in-progress   # claim an item
 - **[إمكانية الوصول](accessibility.html)** — كيف يسأل الوكيل، وأداة التحكم في الإعدادات على هذا الموقع
 - **[درس تعليمي — كتابة ورقة علمية](../../guides/writing-a-paper.html)**
 - **[كتابة مستند](../../guides/writing-a-document.html)**
-- **[أنواع المحتوى](../concepts/content-types.html)** — الصياغة الشكلية لكل مجال
-- **[مسار عمل النشر](../process/publication-workflow.html)** — كل عملية في المستودع
-- **[البنية الهندسية](../concepts/architecture.html)** — المحولات، والمهارات، ونموذج الكتل البرمجية
+- **[أنواع المحتوى](../../concepts/ar/content-types.html)** — الصياغة الشكلية لكل مجال
+- **[مسار عمل النشر](../../process/ar/publication-workflow.html)** — كل عملية في المستودع
+- **[البنية الهندسية](../../concepts/ar/architecture.html)** — المحولات، والمهارات، ونموذج الكتل البرمجية

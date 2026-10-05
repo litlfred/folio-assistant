@@ -13,7 +13,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 Esta página es la lista maestra de cada **habilidad** (*skill*) y **rol** (*role*) en folio-assistant,
 y explica cómo encajan entre sí con el LLM. Para conocer el contrato de entrada/salida
-tipado de cada habilidad, consulta la [Referencia de esquemas de habilidades](../reference/skills/).
+tipado de cada habilidad, consulta la [Referencia de esquemas de habilidades](../../reference/skills/).
 
 1. TOC
 {:toc}
@@ -39,7 +39,7 @@ flowchart TD
 1. **Habilidad (*skill*)** — una unidad de trabajo documentada y delimitada por un esquema (por ejemplo,
    `lean-formalization`). El agente descubre habilidades con la herramienta MCP
    `skill_list` y carga las instrucciones de una habilidad con `skill_fetch`. Cada habilidad cuenta con un
-   [contrato de entrada/salida](../reference/skills/) tipado.
+   [contrato de entrada/salida](../../reference/skills/) tipado.
 2. **Paquete de habilidades (*skill package*)** — un grupo de habilidades relacionadas que también declara sus
    dependencias de Docker/tiempo de ejecución (`package-manifest.json`).
 3. **Rol (actor)** — *a quién* representa el agente. Un **actor** asume un
@@ -70,8 +70,8 @@ Una habilidad se define a lo largo de varias capas — no en un único archivo. 
 | Capa | Ubicación | Estado |
 |------|-----------|--------|
 | **Definición** (roles, capacidades requeridas, requisitos, patrones de enrutamiento, etapas del ciclo de vida, referencia de esquema) | `.claude/skills/local/<skill>.json` | ✅ las 22 habilidades de autoría — validadas en CI mediante `scripts/validate-skills.ts` |
-| **Contrato tipado** (JSON Schema de entrada/salida) | `schemas/skills/<skill>/` | ✅ las 22 — consulta la [referencia](../reference/skills/) |
-| **Cuerpo de instrucciones** (guía práctica en prosa que carga el LLM) — consúltalas en la referencia de [Instrucciones de habilidades](../reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ habilidades de ciclo de vida, agente, paquete de plataforma y **folio-document-adapter**; ⏳ **los cuerpos de authoring-math / authoring-who-smart-guidelines están pendientes (TBD)** (esos paquetes incluyen el manifiesto y las definiciones JSON) |
+| **Contrato tipado** (JSON Schema de entrada/salida) | `schemas/skills/<skill>/` | ✅ las 22 — consulta la [referencia](../../reference/skills/) |
+| **Cuerpo de instrucciones** (guía práctica en prosa que carga el LLM) — consúltalas en la referencia de [Instrucciones de habilidades](../../reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ habilidades de ciclo de vida, agente, paquete de plataforma y **folio-document-adapter**; ⏳ **los cuerpos de authoring-math / authoring-who-smart-guidelines están pendientes (TBD)** (esos paquetes incluyen el manifiesto y las definiciones JSON) |
 | **Paquete** (dependencias Docker/tiempo de ejecución) | `skills/<package>/package-manifest.json` | ✅ los cuatro paquetes |
 
 Así que *sí, las habilidades existen* — como definiciones estructuradas + esquemas tipados, con cuerpos
@@ -157,7 +157,7 @@ de contenido, no alternativas entre las que elegir.
 ### Paquetes de habilidades de plataforma (`skills/folio-core`, `folio-assistant-core/skills/content/folio-document-adapter`, `folio-assistant-sci/skills/content/folio-paper-adapter`)
 
 **Paquetes de plataforma** más amplios, dos de ellos migrados desde el repositorio de contenido qou (consulta el
-[registro de migración](../migrations/2026-06-29-platform-skills-migration.html) y el
+[registro de migración](../../es/migrations/2026-06-29-platform-skills-migration.html) y el
 *issue* [#27](https://github.com/litlfred/folio-assistant/issues/27)). Son
 independientes del contenido y están diseñados para sincronizarse en cualquier folio:
 
@@ -171,7 +171,7 @@ Se omitieron las habilidades de física irreductibles de QOU; los ejemplos espec
 se generalizaron. Cada paquete incluye un `package-manifest.json`.
 
 > Los **esquemas** de habilidades (entrada/salida tipada para las habilidades de autoría) se generan
-> en la [Referencia de esquemas de habilidades](../reference/skills/) — nunca se desvíen de lo que
+> en la [Referencia de esquemas de habilidades](../../reference/skills/) — nunca se desvíen de lo que
 > valida el marco de trabajo.
 
 ---
@@ -184,7 +184,7 @@ hacer (RBAC). Los roles **heredan** (por ejemplo, `author` hereda de `reviewer`)
 
 > Para ver estos roles *como carriles* — quién edita, quién revisa, quién da el visto bueno y
 > qué pasos puede dar un agente por su cuenta —, consulta
-> [Flujo de publicación → Quién es quién](../process/publication-workflow.html#who-is-who).
+> [Flujo de publicación → Quién es quién](../../process/es/publication-workflow.html#who-is-who).
 
 ```mermaid
 flowchart LR
@@ -221,7 +221,7 @@ flowchart LR
 
 El lugar que ocupa cada uno de estos en el proceso — y lo que un agente puede y no puede
 decidir — está modelado en los diagramas BPMN del
-[flujo de publicación](../process/publication-workflow.html).
+[flujo de publicación](../../process/es/publication-workflow.html).
 
 ### Asignación de roles
 
@@ -254,9 +254,9 @@ Los **requisitos** (*requirements*) son condiciones (*gates*) que deben cumplirs
 
 ## Véase también
 
-- [Flujo de publicación](../process/publication-workflow.html) — carriles BPMN (*swimlanes*): qué habilidad se ejecuta en cada paso y quién decide
-- [Instrucciones de habilidades](../reference/skill-instructions/) — los cuerpos prácticos en prosa que carga el LLM
-- [Referencia de esquemas de habilidades](../reference/skills/) — entrada/salida tipada para cada habilidad
+- [Flujo de publicación](../../process/es/publication-workflow.html) — carriles BPMN (*swimlanes*): qué habilidad se ejecuta en cada paso y quién decide
+- [Instrucciones de habilidades](../../reference/skill-instructions/) — los cuerpos prácticos en prosa que carga el LLM
+- [Referencia de esquemas de habilidades](../../reference/skills/) — entrada/salida tipada para cada habilidad
 - [Tipos de contenido](content-types.html) — qué habilidades utiliza cada tipo de contenido
 - [Arquitectura](architecture.html) — RBAC, adaptadores y el servidor MCP
-- [Primeros pasos](../start/getting-started.html) — ejecutar tu primera habilidad
+- [Primeros pasos](../../start/es/getting-started.html) — ejecutar tu primera habilidad

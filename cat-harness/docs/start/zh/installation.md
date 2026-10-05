@@ -198,4 +198,4 @@ Gemini CLI 原生读取 `AGENTS.md` / `GEMINI.md`。在其设置中注册该 MCP
 
 将你的客户端指向上述 stdio 命令，或者运行 HTTP 传输（`bun run start:http`）并通过 HTTP 连接。MCP 服务器暴露了一个 `work_plan_prime` 工具，任何已连接 MCP 的智能体都可以调用它以获取相同的实时工作计划引导，无论使用何种 harness。
 
-> **为什么这能在不同 harness 之间通用。** 规程存在于 `AGENTS.md` 中（这是一个由 Linux 基金会制定的智能体标准，可被 Claude Code、Gemini CLI、Antigravity、Cursor、Copilot 等原生读取）；实时状态既通过单个共享脚本作为针对不同 harness 的 `SessionStart` 钩子暴露，也作为 `work_plan_prime` MCP 工具暴露。参见[架构](../concepts/architecture.html)页面。
+> **为什么这能在不同 harness 之间通用。** 规程存在于 `AGENTS.md` 中（这是一个由 Linux 基金会制定的智能体标准，可被 Claude Code、Gemini CLI、Antigravity、Cursor、Copilot 等原生读取）；实时状态既通过单个共享脚本作为针对不同 harness 的 `SessionStart` 钩子暴露，也作为 `work_plan_prime` MCP 工具暴露。参见[架构](../../concepts/zh/architecture.html)页面。

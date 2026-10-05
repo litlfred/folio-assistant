@@ -12,7 +12,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 This page is the master list of every **skill** and **role** in folio-assistant,
 and explains how they fit together with the LLM. For the typed input/output
-contract of each skill, see the [Skill schema reference](reference/skills/).
+contract of each skill, see the [Skill schema reference](../reference/skills/).
 
 1. TOC
 {:toc}
@@ -38,7 +38,7 @@ flowchart TD
 1. **Skill** — a documented, schema-bounded unit of work (e.g.
    `lean-formalization`). The agent discovers skills with the `skill_list` MCP
    tool and loads a skill's instructions with `skill_fetch`. Each skill has a
-   typed [input/output contract](reference/skills/).
+   typed [input/output contract](../reference/skills/).
 2. **Skill package** — a group of related skills that also declares its
    Docker/runtime dependencies (`package-manifest.json`).
 3. **Role (actor)** — *who* the agent is acting as. An **actor** takes on a
@@ -70,8 +70,8 @@ A skill is defined across a few layers — not a single file. For any skill:
 | Layer | Location | Status |
 |-------|----------|--------|
 | **Definition** (roles, required capabilities, requirements, routing patterns, lifecycle stages, schema ref) | `.claude/skills/local/<skill>.json` | ✅ all 22 authoring skills — validated in CI by `scripts/validate-skills.ts` |
-| **Typed contract** (input/output JSON Schema) | `schemas/skills/<skill>/` | ✅ all 22 — see [reference](reference/skills/) |
-| **Instruction body** (prose how-to the LLM loads) — browse them in the [Skill instructions](reference/skill-instructions/) reference | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ lifecycle, agent, platform-bundle and **folio-document-adapter** skills; ⏳ **authoring-math / authoring-who-smart-guidelines bodies are TBD** (those packages ship the manifest + JSON definitions) |
+| **Typed contract** (input/output JSON Schema) | `schemas/skills/<skill>/` | ✅ all 22 — see [reference](../reference/skills/) |
+| **Instruction body** (prose how-to the LLM loads) — browse them in the [Skill instructions](../reference/skill-instructions/) reference | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ lifecycle, agent, platform-bundle and **folio-document-adapter** skills; ⏳ **authoring-math / authoring-who-smart-guidelines bodies are TBD** (those packages ship the manifest + JSON definitions) |
 | **Package** (Docker/runtime deps) | `skills/<package>/package-manifest.json` | ✅ all four packages |
 
 So *yes, the skills exist* — as structured definitions + typed schemas, with prose
@@ -171,7 +171,7 @@ Irreducible QOU physics skills were skipped; QOU-specific examples in the rest
 were generalized. Each bundle ships a `package-manifest.json`.
 
 > Skill **schemas** (typed input/output for the authoring skills) are generated
-> into the [Skill schema reference](reference/skills/) — never drift from what
+> into the [Skill schema reference](../reference/skills/) — never drift from what
 > the framework validates.
 
 ---
@@ -255,8 +255,8 @@ by priority. The shipped defaults:
 ## See also
 
 - [Publication workflow](../process/publication-workflow.html) — BPMN swimlanes: which skill runs at which step, and who decides
-- [Skill instructions](reference/skill-instructions/) — the prose how-to bodies the LLM loads
-- [Skill schema reference](reference/skills/) — typed input/output for each skill
+- [Skill instructions](../reference/skill-instructions/) — the prose how-to bodies the LLM loads
+- [Skill schema reference](../reference/skills/) — typed input/output for each skill
 - [Content types](content-types.html) — which skills each content type uses
 - [Architecture](architecture.html) — RBAC, adapters, and the MCP server
 - [Getting started](../start/getting-started.html) — running your first skill

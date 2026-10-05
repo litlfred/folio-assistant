@@ -103,7 +103,7 @@ Two things in that table are worth reading carefully.
 
 **`smart-kg` is zero.** Not small — zero. Nothing in this repo is WHO L1
 material today, which confirms from the code what
-[the future state](../../architecture/future-state.html#smart-kg) says from the prose: the L1/L2
+[the future state](future-state.html#smart-kg) says from the prose: the L1/L2
 line has to be drawn by someone with the domain context, because there is no
 existing code to infer it from. It makes `smart-kg` **new construction, like the
 Test repos** — not an extraction.
@@ -148,7 +148,7 @@ It is the expected shape of the problem, and the most mechanical to fix.
 **harness → core (21)** is the more serious one. `src/core/feedback.ts`,
 `src/routes/feedback.ts`, `src/types.ts` and `schemas/assistant-types.ts` all
 import `schemas/types.ts` — the content-object model. That is the harness's
-defining constraint, [that it does not "do" anything](../../architecture/future-state.html#cat-harness),
+defining constraint, [that it does not "do" anything](future-state.html#cat-harness),
 failing in practice: **a harness that imports the content model cannot be
 extracted from underneath core.** It makes `cat-harness` harder to extract
 than `folio-assistant-sci`, not easier, which is the opposite of the intuition that
@@ -234,7 +234,7 @@ simplification. For the proposed split it was a blocker: `folio-assistant-sci` e
 to own the math block kinds, the paper adapter and `lean_build`, and a
 dependency able to contribute none of them can only ship prose.
 
-That is now [Phase 0.1](../../architecture/migration-plan.html#01--make-the-dependency-model-able-to-carry-the-split--decided-and-built),
+That is now [Phase 0.1](migration-plan.html#01--make-the-dependency-model-able-to-carry-the-split--decided-and-built),
 decided and built: `schemas/contributions.ts` plus `loadContributions()`. A
 dependency declares `"contributes": "./contributions.ts"` and adds block kinds,
 an adapter and MCP tools at load time. Collisions throw rather than resolving by
@@ -292,4 +292,4 @@ and needs sorting, whereas the Test repo needs building.
 
 ---
 
-Next: [Future state](../../architecture/future-state.html) — the five target repositories.
+Next: [Future state](future-state.html) — the five target repositories.

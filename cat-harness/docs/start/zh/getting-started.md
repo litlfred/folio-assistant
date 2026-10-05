@@ -112,7 +112,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 | **WHO SMART DAK** | 数字适应套件（L2）——人物画像、业务流程、数据字典、决策表 | — |
 | **WHO SMART IG** | FHIR 实施指南（L3），由 L2 DAK 构建而成 | Java、SUSHI、IG Publisher |
 
-参见[内容类型](../concepts/content-types.html)，了解每种形式化能为你带来什么。
+参见[内容类型](../../concepts/zh/content-types.html)，了解每种形式化能为你带来什么。
 
 ## 4. 安装与验证
 {: #4-install-and-verify }
@@ -139,7 +139,7 @@ bun run check-deps
 | `check_dependencies` | 探测已安装的工具链 |
 | `skill_list` / `skill_fetch` | 发现并加载某项技能的指令 |
 
-完整的工具列表请参阅[技能与角色](../concepts/skills.html)页面；特定内容类型的工具仅在匹配的适配器处于激活状态时才会出现。
+完整的工具列表请参阅[技能与角色](../../concepts/zh/skills.html)页面；特定内容类型的工具仅在匹配的适配器处于激活状态时才会出现。
 
 ## 6. 转换你已有的仓库
 
@@ -263,6 +263,6 @@ beans <id> --status in-progress   # 认领一个事项
 - **[无障碍](accessibility.html)** — 智能体如何提问，以及本站点的设置控件
 - **[教程 — 撰写论文](../../guides/writing-a-paper.html)**
 - **[撰写文档](../../guides/writing-a-document.html)**
-- **[内容类型](../concepts/content-types.html)** — 各领域的规范形式
-- **[发布工作流](../process/publication-workflow.html)** — 仓库中的各项流程
-- **[架构](../concepts/architecture.html)** — 适配器、技能与块模型
+- **[内容类型](../../concepts/zh/content-types.html)** — 各领域的规范形式
+- **[发布工作流](../../process/zh/publication-workflow.html)** — 仓库中的各项流程
+- **[架构](../../concepts/zh/architecture.html)** — 适配器、技能与块模型

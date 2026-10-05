@@ -13,7 +13,7 @@ execution anywhere on the deterministic-to-agentic spectrum.
 - <img src="{{ '/assets/img/kg-deck/img-p006-3.webp' | relative_url }}" alt="" height="24" style="height:24px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> **Human state:** *todos*, attached to process steps or knowledge assets
   ("please review this change in medication").
 
-![Folio lifecycle — one cycle, plan to retire. A BPMN collaboration of six lanes: programme manager, work plan (beans shared by humans and agents), editors and authoring agents, validation and QA, review team and SMEs, publication manager. Tasks in order: plan scope, team and artefacts; seed the work plan; editing and HCI validation; integration test and QA sweep; draft, review and publish; triage published feedback; file feedback as beans; then a gateway, more content, which loops back to editing or ends in retire or archive.](assets/img/workflows/content-lifecycle.svg)
+![Folio lifecycle — one cycle, plan to retire. A BPMN collaboration of six lanes: programme manager, work plan (beans shared by humans and agents), editors and authoring agents, validation and QA, review team and SMEs, publication manager. Tasks in order: plan scope, team and artefacts; seed the work plan; editing and HCI validation; integration test and QA sweep; draft, review and publish; triage published feedback; file feedback as beans; then a gateway, more content, which loops back to editing or ends in retire or archive.](../assets/img/workflows/content-lifecycle.svg)
 
 <details markdown="1"><summary>The diagram as it appeared on the slide (2026-09-30)</summary>
 
@@ -37,7 +37,7 @@ So the slide says a user story names a role, a role is a lane, a task is a node
 in it, a skill belongs to a task, and a test belongs to a skill.
 
 **Sources:** `folio-assistant-core/processes/content/content-lifecycle.bpmn` (the picture above is generated
-from it); [beans and todos](beans-and-todos.html).
+from it); [beans and todos](../guides/beans-and-todos.html).
 
 > **Aligned:** the snapshot's diagram and today's process have the same six
 > lanes and the same eight tasks.

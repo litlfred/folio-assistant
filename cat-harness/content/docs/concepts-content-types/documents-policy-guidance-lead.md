@@ -1,6 +1,6 @@
 **Skill package:** `folio-document-adapter` ·
 **Adapter:** `document` ·
-**Guide:** [Writing a document](guides/writing-a-document.html)
+**Guide:** [Writing a document](../guides/writing-a-document.html)
 
 Structured prose: health-policy guidance (an L1 guideline, say), a standard, a
 report, a handbook, a book chapter. Everything a paper is, minus the formal
@@ -19,7 +19,7 @@ layer — and therefore minus the two toolchains that serve it.
   field or a `.lean` sibling, and runs on every `content_validate`.
 
 Relevant skill schemas:
-[`document-authoring`](reference/skills/document-authoring.html),
-[`document-structure`](reference/skills/document-structure.html),
-[`normative-statements`](reference/skills/normative-statements.html),
-[`document-publishing`](reference/skills/document-publishing.html).
+[`document-authoring`](../reference/skills/document-authoring.html),
+[`document-structure`](../reference/skills/document-structure.html),
+[`normative-statements`](../reference/skills/normative-statements.html),
+[`document-publishing`](../reference/skills/document-publishing.html).
