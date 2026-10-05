@@ -10,7 +10,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ingest-theme.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/ingest-theme.svg",
       "description": "Decide whether an ingested artefact is a theme source and, when it is, extract its palette roles and layouts and send them to theme and UI review. folio-assistant — Ingestion subprocess — ingest a theme.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\n\nBean j66n. One Theme node with kind sticky | webpage | publication, not three\nnode kinds: the palette vocabulary is shared and only the GEOMETRY varies.",
       "enforcement": "advisory",
       "flowCount": 10,
@@ -283,7 +283,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/staging-render-log.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/staging-render-log.svg",
       "description": "Every change to the publish branch appends an entry to `_render-log/<day>.jsonl`. A removal is a NEW entry, never the erasure of the `rendered` one before it — the pair is the history. The lane is the build pipeline because every writer is a workflow job; no agent decides what goes in this log. A system lane runs a fixed program and exercises no judgement, which is exactly what an append-only log wants.\n\nThe question it exists to answer: what happened to STAGING/<slug>, and why. Bean `plj1` is why it is needed — a full-replace deploy silently deleted every open PR's preview, for months, and the publish branch kept no record of its own changes. The publish branch has several publishers and one of them replaces the whole branch, which is why a removed preview needs a record of its own.",
       "enforcement": "strict",
       "flowCount": 12,
@@ -577,7 +577,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/theme-ui-review.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/theme-ui-review.svg",
       "description": "Reviewing GRAPHICAL ASSETS AS THEY ARE INGESTED — accessibility, branding, languages — in the context of the website or app design they are for, to determine what the graphical assets and the UI are going to be.\n\nAT INGESTION ONLY, by the owner's ruling (bean `9fdi`). 2026-09-23: \"theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI\". 2026-09-24, asked directly whether that meant ONLY at ingestion: \"Yes only at ingestion\".\n\nThis process was post-MVP until then — started by \"MVP accepted\" and called from `crdm-deliver.bpmn` on the edge out of stakeholder acceptance, reviewing what had already shipped. That call is gone. It is now called from `ingest-theme.bpmn`.\n\nWHY THE MOMENT MATTERS. Reviewed after a build, a finding is a defect in something shipped. Reviewed at ingestion, the same finding is a decision about what the assets WILL be, taken while it is still cheap. The question the review asks is unchanged; the object it asks it of moved upstream, and so did the cost of the answer.\n\nWHAT DID NOT MOVE. There is still no role-to-theme mapping — theme choice remains an authoring judgement, per note — so nothing here checks a binding. What gets reviewed is the ingested art in its design context.",
       "enforcement": "strict",
       "flowCount": 9,
@@ -830,7 +830,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/wireframe-design-review.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/wireframe-design-review.svg",
       "description": "WireGen (methodologies/wiregen) made executable: a written design intent, at least two mid-fidelity candidates each with a web AND a mobile layout, mechanical checks, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. A wireframe is part of the design process for adjudication (owner, 2026-09-23). Operating skill: wireframe-design-review. Issue #1023. The same mechanical checks back the as-is wireframe every declared visualiser owes, which `check:wireframes` runs.",
       "enforcement": "strict",
       "flowCount": 13,

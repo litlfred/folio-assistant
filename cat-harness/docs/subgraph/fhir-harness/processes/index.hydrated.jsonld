@@ -29,7 +29,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgAstDeltaReview",
           "@type": "bootstrap:Process",
-          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-ast-delta-review.svg",
+          "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/ig-ast-delta-review.svg",
           "description": "The review step of an incremental FHIR IG build, as its own subprocess: list and inspect the differences between the incremental IG AST and what a full build would have produced, then accept them or raise a finding. THE REVIEW STEP OF AN INCREMENTAL IG BUILD, drawn as its own subprocess (bean `a9tx`, owner 2026-09-30: \"list and view differentials/deltas against AST ... as part of (sub-?)process/skills/tools, including pipeline rendering\").\n\nWHERE IT SITS. In `ig-incremental-build.bpmn` it belongs between Task_Merge and Task_Qa: after the restored and rebuilt records are merged, before the QC gates read the aggregate. That diagram predates the AST work and is not edited here; `ig-ast-delta` §\"Where this sits in a process\" states the placement until it is.\n\nWHAT IT GUARDS. An incremental build rebuilds only the cone of a change, computed on the BASE edges. If the cone rules miss a coupling, a resource that should have changed does not, and nothing downstream can tell: the merged AST looks exactly like a correct one. So a person reads the delta, and a difference nobody can explain is treated as a missed coupling rather than as a curiosity.\n\nWHAT IT DOES NOT CLAIM. A clean review says the delta is explained, not that the IG is correct. The AST stays a cache: every rendered page carries the provisional mark, and a release is still cut from a full build (`ig-publisher-reduction` P4).",
           "enforcement": "advisory",
           "flowCount": 9,
@@ -301,7 +301,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_IgIncremental",
           "@type": "bootstrap:Process",
-          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-incremental-build.svg",
+          "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/ig-incremental-build.svg",
           "description": "A proposed incremental build for a WHO SMART Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy. One change — a PR push or a push to main — through the incremental IG build\nproposed in issue #199: restore the derived state, compute\nthe change's dependency cone, compile and validate only the cone against the\nwarm validator, re-render the cone's records, rebuild the meta-index, assemble\nthe site, gate on QA, then deploy — and, on main or a release only, seed the\ncache from the green build. A cache miss or a moved toolchain falls back to\ntoday's full build; an environment error stops the run and logs why. Advisory, like the other content-type pipelines: the\npackage that owns the content owns what adequate means.",
           "enforcement": "advisory",
           "flowCount": 29,
@@ -1075,7 +1075,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#process/Process_L3Fhir",
           "@type": "bootstrap:Process",
-          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l3-fhir-pipeline.svg",
+          "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/l3-fhir-pipeline.svg",
           "description": "How a WHO SMART Guidelines L3 FHIR Implementation Guide is modelled, built with SUSHI, the validator and the IG Publisher, reviewed and published. folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
           "enforcement": "advisory",
           "flowCount": 13,

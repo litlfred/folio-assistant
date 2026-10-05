@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 68 of 68 declared kind(s), 237 gate(s), 77 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 68 of 68 declared kind(s), 238 gate(s), 77 criteria.",
       "count": 68,
       "entries": [
         {
@@ -319,6 +319,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run audit:reachability:check",
             "bun run bootstrap:vocabulary:check",
             "bun run check:agents-claims",
             "bun run check:bootstrap-standalone",
@@ -507,7 +508,7 @@
         },
         {
           "kind": "fsh-guts",
-          "state": "empty",
+          "state": "undetermined",
           "directories": [
             "fsh-guts"
           ],
@@ -833,6 +834,7 @@
             "process"
           ],
           "gates": [
+            "bun run audit:reachability:check",
             "bun run check:lane-documentation:check",
             "bun run check:process-bindings",
             "bun run check:process-documentation",
@@ -1417,15 +1419,8 @@
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
-      "count": 1,
-      "entries": [
-        {
-          "kind": "fsh-guts",
-          "directories": [
-            "fsh-guts"
-          ]
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
@@ -1484,7 +1479,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 237 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 238 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     },
@@ -1494,5 +1489,5 @@
       "entries": []
     }
   },
-  "total": 78
+  "total": 77
 }

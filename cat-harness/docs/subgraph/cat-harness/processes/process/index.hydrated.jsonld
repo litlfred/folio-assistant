@@ -10,7 +10,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/actor-role-administration.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/actor-role-administration.svg",
       "description": "Changing who can do what: adding an actor, opening or closing a role to one, granting or revoking a permission — and auditing the graph afterwards, because the declaration and the graph are two things that can disagree.\n\nYou are in this process when the substrate every other diagram's lanes bind to is what is changing. That is why it is drawn rather than left as a filesystem edit: a role added without an audit is a lane binding that resolves today and may not tomorrow, and nothing else in the corpus would notice.\n\nRetirement, never deletion. An actor id is referenced from commits, sidecars and other declarations, so removing one makes an old record unreadable while retiring one leaves it legible and says the actor has stopped.",
       "enforcement": "strict",
       "flowCount": 14,
@@ -355,7 +355,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/crdm-requirements.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/crdm-requirements.svg",
       "description": "A feature request turned into agreed, signed-off requirements and delivered, with one call activity per CRDM phase from issue linking to close-out. The CRDM requirements process, decomposed. Each phase is a real subprocess in its own file: `workflow_next` reports the step you are on and the phase it sits inside, and `workflow_complete` takes the step's own id. Detection stays here rather than in a child because its \"not a feature\" branch ends the whole process — inside a subprocess the parent would have to re-ask the same question to route on the answer.",
       "enforcement": "strict",
       "flowCount": 12,
@@ -699,7 +699,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/crdm-close.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/crdm-close.svg",
       "description": "The stakeholders sign off, the BA confirms every criterion is met, and only then does the agent close the issue. Never the other way round: an agent must never assume completion.",
       "enforcement": "strict",
       "flowCount": 4,
@@ -850,7 +850,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/crdm-data-model.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/crdm-data-model.svg",
       "description": "Draft the data model from the BPA and the requirements, have the BA confirm the entities and the stakeholders confirm the cardinalities, and loop until both. A requirement the model cannot express is a finding, not a modelling failure: it means the requirement is about something nobody has named.",
       "enforcement": "strict",
       "flowCount": 8,
@@ -1088,7 +1088,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/crdm-deliver.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/crdm-deliver.svg",
       "description": "One phase and not three, because the loops say so: an increment the BA rejects, an MVP that is not ready, and stakeholder findings all route back into implementation. A subprocess has one exit and cannot be re-entered once finished, so splitting this region would have changed what the diagram says.",
       "enforcement": "strict",
       "flowCount": 16,
@@ -1496,7 +1496,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/crdm-issue-linking.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/crdm-issue-linking.svg",
       "description": "Scan for a GitHub issue matching the feature work, then link it or ask — an issue is never created without the BA's permission. Feature work must be linked to a GitHub issue. First find the related work (beans, issues, open PRs) and ask whether to coordinate; then scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad.",
       "enforcement": "strict",
       "flowCount": 7,
@@ -1694,7 +1694,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/crdm-needs.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/crdm-needs.svg",
       "description": "Identify the stakeholders, synthesise a needs statement from the sources, and loop until the BA and the stakeholders both recognise it. The loop is the phase: a needs statement nobody confirmed is an agent's summary, not a requirement.",
       "enforcement": "strict",
       "flowCount": 7,
@@ -1907,7 +1907,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/crdm-requirements-definition.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/crdm-requirements-definition.svg",
       "description": "Map the current workflow, then define the requirements and the impact they carry, and loop until approved. Same shape as Phase 1 and for the same reason: an unapproved requirement is a proposal.",
       "enforcement": "strict",
       "flowCount": 8,
@@ -2147,7 +2147,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/crdm-signoff.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/crdm-signoff.svg",
       "description": "The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue. The announcement is on the single edge into delivery, so the three loops back into implementation do not re-announce.",
       "enforcement": "strict",
       "flowCount": 9,
@@ -2407,7 +2407,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/render-kg-to-cdn.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/render-kg-to-cdn.svg",
       "description": "Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — for publication to a CDN at a publication root URL, and report a STATUS and a MESSAGE. Owner, 2026-09-30: \"render content of a KG (or list of subgraphs within) for publication to a CDN at a given publication root URL … independent of staging vs publication … just rendering … output is status of push to CDN + message\".\n\nSTAGING AND RELEASE ARE THE SAME PROCESS. A preview is this with a root under the release root; a release is this with the release root. What differs — who may start it, what is verified first, what else on the host must survive the push — belongs to the CALLER: `feature-staging` and `docs-site-publish` call this and keep their own steps around the call.\n\nTOOL-AGNOSTIC ON PURPOSE. Owner, 2026-09-30: \"tools can describe their own specific subprocesses if needed to not bog down general skills\". The one call activity names the skill; the Tool for the chosen target satisfies it and lists its own `subprocesses`, which is what the call descends into. For GitHub Pages that is the `gh-pages` Tool and bootstrap-tools' render-kg-to-github-pages. No step here is GitHub's.",
       "enforcement": "strict",
       "flowCount": 8,
@@ -2631,7 +2631,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/session-state-machine.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/session-state-machine.svg",
       "description": "The shape of a session from the outside: establish who is acting, open a record for them, take each turn in, and write down only what actually changed.\n\nYou are in this process for the whole of a session, underneath whatever else you are doing — it is the frame the other processes run inside. The first gateway is the one that matters: an agent that cannot say who is acting ASKS, because every later decision about permissions, preferences and language depends on an answer nobody guessed.\n\nThe distinction between refreshing a timestamp and writing what changed is the diagram's whole content. A session record that logs every turn as a change cannot be read for what happened, and one that logs none cannot be read at all.",
       "enforcement": "advisory",
       "flowCount": 13,
@@ -2966,7 +2966,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/swot-analysis.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/swot-analysis.svg",
       "description": "Situation analysis over two axes — internal/external and helpful/harmful — producing the raw material a decision is made from, and NEVER the decision.\n\nTHE ONE STRUCTURAL CLAIM THIS DIAGRAM MAKES: there is no path through it that decides anything. Every completed run ends either at a recorded situation or at a handoff into `options-analysis`, which selects a decision methodology. That is not a modelling preference; it is the `swot` methodology's stated refusal drawn so it cannot be skipped. Gürel and Tat's conclusion is that SWOT gives \"the raw material needed to perform more in-depth strategic analysis\" but \"cannot show them how to achieve a competitive advantage\", and that it must not become \"an end in itself\". A diagram with a decide-here activity would contradict the methodology it implements.\n\nWHY EXTERNAL IS SCANNED FIRST: Weihrich (1982), reported in the source, holds that the only logical starting point is opportunities and threats — they are outside the organisation and largely beyond its control, and must be managed using its strengths and weaknesses. The order is his argument, rendered; it is not a house preference.\n\nWHAT IT DOES NOT DO: it does not rank the factors it finds. The source is explicit that SWOT has no way to prioritise — \"quantity does not mean quality\" — and the long list of quantitative extensions it surveys (AHP, ANP, their fuzzy variants, SMART, SMAA-O, MADM, TRIZ) is NOT adopted here. An activity that scored or weighted factors would be inventing the part of the method that does not exist.",
       "enforcement": "strict",
       "flowCount": 10,

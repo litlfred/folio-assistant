@@ -10,7 +10,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/review-narrative.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/review-narrative.svg",
       "description": "Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translation still says what the source does.\n\nYou are in this process when prose changed. `review-code` is its sibling for code nodes and `review-task` is what dispatches to either, so arriving here means somebody has already decided the change is narrative.\n\nEverything this lane produces is ADVICE. The reviewer records findings; accepting or refusing the change belongs to the editor's lane in `review-task`. The separation is why a review can be thorough without being a veto.",
       "enforcement": "strict",
       "flowCount": 9,
@@ -260,7 +260,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/review-task.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/review-task.svg",
       "description": "The generic review position: classify what changed, descend into the review that fits it, consolidate what comes back, and accept or send back.\n\nYou are in this process for any change under review. It is a DISPATCHER — the actor takes on the inner lane's role for the call path only — which is why prose and code can both be reviewed without either reviewer having to know the other's criteria. A change that is both — prose and the code it describes — takes a branch of its own, which reviews the two against each other; the gateway is exclusive and takes exactly one branch, so the earlier wording, that such a change goes through both, described a route the diagram could not take (issue #1042).\n\nThe accept-or-send-back decision lives here and nowhere beneath it. The subprocesses produce findings; this is the only lane entitled to turn findings into an outcome, and keeping that single makes \"who decided\" answerable.",
       "enforcement": "strict",
       "flowCount": 11,
@@ -548,7 +548,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/voice-review.svg",
+      "depiction": "https://litlfred.github.io/folio-assistant/docs/cat-harness/assets/img/workflows/voice-review.svg",
       "description": "The voice axis: load whichever editorial voices are active, run each rule's mechanical half, and decide — for each finding — whether the prose is wrong, the rule does not apply to this content, or this block is a stated exception.\n\nYou are in this process after the base voice has been adjudicated, and only if a voice is active at all: the first gateway ends the process honestly when none is, rather than reporting a clean review of nothing.\n\nThree outcomes, all legitimate, and the third is the one that needs recording: an exception without a reviewer entry is indistinguishable from a rule nobody ran. There is also a fourth path the diagram draws deliberately — if the rule's own citation does not support it, the RULE is the defect, and that becomes a bean rather than a finding against the prose.",
       "enforcement": "strict",
       "flowCount": 13,
