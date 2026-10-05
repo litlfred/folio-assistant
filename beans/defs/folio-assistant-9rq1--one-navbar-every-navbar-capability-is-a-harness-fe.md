@@ -3,9 +3,10 @@
 title: 'ONE NAVBAR: every navbar capability is a harness feature, drawn by one mechanism on every layout (.side-bar, .fa-nav rail, viewer pages)'
 status: todo
 type: feature
+priority: normal
 created_at: 2026-10-05T05:37:13Z
-updated_at: 2026-10-05T05:37:13Z
-parent: folio-assistant-p5wm
+updated_at: 2026-10-05T08:39:49Z
+parent: folio-assistant-rwmf
 ---
 
 Owner, 2026-10-05, choosing how to fix the missing harness icon row on who-iris pages (#2147): '1... this should be a common navbar funcationliatyt in harness. should be a bean about this'.
@@ -21,3 +22,8 @@ A navbar capability is declared once for the harness (cat-harness.json navbarIco
 - [ ] each capability drawn by one mechanism on every layout (first: harness icon row, bean wckf / #2147)
 - [ ] a gate fails when a harness navbar on any layout lacks a capability its harness declares
 - [ ] the navbar skill states the rule
+
+
+## Re-parented to GOAL 4 (rwmf), 2026-10-05
+
+Created under p5wm (GOAL 2) at 05:37Z. GOAL 2 was signed off and closed on main at 04:57Z (e6ac11b), and its open UI work was moved to rwmf on the owner's "Move to GOAL 4 PLATFORM". This bean follows that ruling. check:bean-rollup flagged it as the one open child of a completed GOAL 2.
