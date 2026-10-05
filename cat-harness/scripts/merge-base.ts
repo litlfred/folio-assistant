@@ -23,10 +23,13 @@
  * After resolving, `bun run regen` asks every check the CI workflow runs and
  * runs each stale one's writer until the tree settles. A non-zero exit
  * (`unrepaired`, or a check with no writer) aborts the merge too: a resolution
- * the gates cannot reproduce is not a resolution.
+ * the gates cannot reproduce is not a resolution. It runs as `regen --changed
+ * <fork point>`, asking only the pairs either side touched; see
+ * {@link regenArgs} for why that is sound, and `--full-regen` for the old way.
  *
  * Usage:
  *   bun run merge:main                 # merge origin/main, resolve, regenerate, commit
+ *   bun run merge:main -- --full-regen # ...asking every pair, not only those the merge touched
  *   bun run merge:main -- --dry-run    # classify the conflicts, change nothing
  *   bun run cat-harness/scripts/merge-base.ts --base origin/<branch>
  *   bun run cat-harness/scripts/merge-base.ts --root <worktree> --base <sha> --dry-run
@@ -47,6 +50,38 @@ import { REGEN_VERDICT_TAG, regenExitMeaning } from "./regen-after-merge.js";
 export interface Plan {
   resolvable: Classified[];
   refused: Classified[];
+}
+
+/**
+ * The arguments `merge:main` gives `regen` — bean `94zs`.
+ *
+ * `--changed <fork point>`, where the fork point is `git merge-base HEAD
+ * <base>` taken before the merge. regen runs before the merge is committed,
+ * so `HEAD` is still the branch tip, and the change it sees is the union of
+ * what the branch did since the fork point (`<fork>...HEAD`) and what the
+ * merge brought in (the working tree against `HEAD`).
+ *
+ * **Why this base.** A pair that union does not touch has identical inputs
+ * in the merged tree, at the branch tip, at the fork point and at `<base>`'s
+ * tip, because a three-way merge of a path neither side changed is that
+ * path. Its answer here is its answer at every one of them, so it is
+ * current if ANY of them was. The other two candidates need more:
+ *
+ * - the branch tip alone (`--changed HEAD`) skips a pair that only `<base>`
+ *   left alone — sound only if the BRANCH was regen-clean;
+ * - `<base>` alone skips a pair only the branch left alone — sound only if
+ *   `<base>` was green, which CI on `main` does not guarantee.
+ *
+ * And it still sees the case regen exists for (bean `lxpq`): when both sides
+ * touch one generated file, that file is in the union.
+ *
+ * What it does not do: repair a pair that was ALREADY stale at all three and
+ * that the merge did not touch. That staleness is not the merge's, and the
+ * branch's own CI reports it. `--full-regen`, or no fork point (a shallow
+ * clone), runs the full set as before.
+ */
+export function regenArgs(forkPoint: string | undefined): string[] {
+  return forkPoint === undefined ? [] : ["--changed", forkPoint];
 }
 
 /** Split conflicted paths into what a pattern resolves and what it refuses. */
@@ -321,6 +356,8 @@ if (import.meta.main) {
   // generated files are rewritten by the final regen anyway. Each member's
   // merge commit is NOT proved on its own; the train is proved at its end.
   const noRegen = args.includes("--no-regen");
+  // `--full-regen` asks every pair, as regen did before bean `94zs`.
+  const fullRegen = args.includes("--full-regen");
   const base = opt("--base") ?? "origin/main";
   // `--root` lets the command run against another checkout (a worktree at an
   // old commit, for a replay of a historical merge) without copying itself in.
@@ -340,6 +377,13 @@ if (import.meta.main) {
     console.error(`merge-base: no such base ${base}`);
     process.exit(2);
   }
+
+  // The fork point, taken BEFORE merging (bean `94zs`): regen is told to ask
+  // only the pairs whose inputs changed on EITHER side since it. See
+  // `regenArgs` for why this base and not the branch tip or `base`.
+  const forkPoint = fullRegen
+    ? undefined
+    : spawnSync("git", ["-C", root, "merge-base", "HEAD", base], { encoding: "utf-8" }).stdout?.trim() || undefined;
 
   const merged = spawnSync("git", ["-C", root, "merge", "--no-ff", "--no-commit", base], { encoding: "utf-8" });
   const conflicted = git(root, "diff", "--name-only", "--diff-filter=U").split("\n").filter(Boolean);
@@ -489,7 +533,7 @@ if (import.meta.main) {
   const mount = spawnSync("bun", ["run", "state:mount"], { cwd: root, stdio: "inherit" });
   if (mount.status !== 0) abort("state:mount against the merged declarations failed");
   console.log("\nmerge-base: regenerating, and asking every gate the CI workflow runs …");
-  const regen = spawnSync("bun", ["run", "regen"], { cwd: root, stdio: "inherit" });
+  const regen = spawnSync("bun", ["run", "regen", ...regenArgs(forkPoint)], { cwd: root, stdio: "inherit" });
   // NOT one message for every non-zero exit. `regen`'s `exitCodeFor` returns
   // three distinct verdicts and this line used to assert "regen reported
   // unrepaired checks" for all of them — false for exit 2 (which reports no
