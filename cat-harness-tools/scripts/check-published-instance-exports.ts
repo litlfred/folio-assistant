@@ -58,7 +58,7 @@
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { basename, dirname, join, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 
 // `declarationPathIn` only, deliberately: it answers "is there a declaration
 // here" from the FILENAME convention and parses nothing, so this gate needs
@@ -68,8 +68,14 @@ import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
 import { againstRef, qaResultPath, qaResultState, readQaResult, type QaResultState } from "../../cat-harness/scripts/qa-results.js";
 import { readQaTree } from "../../cat-harness/scripts/qa-store.js";
 import { PUBLISHED_ELSEWHERE, declaredInstanceStubs, instanceExportPlan, type PlannedExport } from "../../cat-harness/scripts/instance-exports.js";
-import { publishedInstanceSchemas } from "../../cat-harness/scripts/kg-export.js";
-import type { InstanceSchemaExport } from "../../cat-harness/scripts/harness-schema-export.js";
+import { publishedInstanceSchemas, scannedInstanceSchemas } from "../../cat-harness/scripts/kg-export.js";
+import {
+  PUBLIC_SCHEMA_EXPORT,
+  instanceZodSchemaDirs,
+  zodSchemaPath,
+  type InstanceSchemaExport,
+} from "../../cat-harness/scripts/harness-schema-export.js";
+import { isZodSchema } from "../../cat-harness/schemas/kind-validator.js";
 import { isExternalContract, skillContracts } from "../../cat-harness/scripts/skill-contracts.js";
 import { termIri } from "../../cat-harness/schemas/namespaces.js";
 
@@ -471,9 +477,10 @@ function runExport(inv: Invocation, outDir: string, against?: string): ExportRes
     // it, and must list no public `Schema` node the publisher would leave
     // out. The second is a standing tripwire, not a present failure: the
     // schema-node collector is instance-bound (`COLLECTOR_SCOPE`), so no
-    // foreign export lists one today, and `buildInstanceSchemas` renders none.
-    // The day an instance's export does, its index would omit them while its
-    // graph advertised them — so this fails then, rather than nobody noticing.
+    // foreign export lists one today. The index renders Zod schemas per
+    // EXPORT under `zod/` (owner ruling 2026-10-05), but a Schema node names a
+    // MODULE, and nothing maps one to the other yet — so the day an export
+    // lists nodes, they would point at nothing. This fails then.
     if (inv.planned === true) {
       const gap = schemaLinkGap(inv, join(outDir, `${stub}.jsonld`));
       if (gap !== undefined) return { ...inv, nodes, ok: false, qaSidecar, detail: gap };
@@ -559,7 +566,8 @@ function schemaLinkGap(inv: Invocation, docPath: string): string | undefined {
   if (listed.length > 0) {
     return (
       `its graph lists ${listed.length} public Schema node(s) (${listed.map((n) => String(n.name ?? n["@id"])).join(", ")}), ` +
-      "and the publisher writes no rendering of any — `buildInstanceSchemas` lists contracts only. Render them before publishing the nodes"
+      "and the index maps no Schema NODE (a module) to its renderings — `zod/` is keyed by export, not by node. " +
+      "Link the nodes to their renderings before publishing them"
     );
   }
   return undefined;
@@ -600,6 +608,94 @@ export function unpublishedInstanceSchemas(
         if (!written.has(norm(ref))) {
           out.push(`${p.path}: skill \`${c.skill}\` names contract ${ref}, which the publisher does not write into ${p.stub}/schema/`);
         }
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * A top-level `export const <Name>Schema` in a module's TEXT — the gate's own
+ * reading of what a module exports, independent of the publisher's import walk.
+ * The suffix is {@link PUBLIC_SCHEMA_EXPORT}'s; the declaration form is not
+ * shared with anything, on purpose.
+ */
+const EXPORTED_CONST = /^export\s+const\s+([A-Za-z_$][\w$]*)\s*[:=]/gm;
+
+/**
+ * Bean `4ak5` item 1, part 2 — does every public Zod schema a planned
+ * instance HAS reach its published `<stub>/schema/zod/`?
+ *
+ * The rule is the owner's (2026-10-05, option C, "every exported *Schema"):
+ * every exported const named `*Schema` whose value is a Zod schema, in the
+ * top-level `.ts` modules (not `*.test.ts`) of the instance's schemas
+ * directory. What the instance HAS is read here from the modules' text — each
+ * `export const …Schema` — and then confirmed a Zod value by importing the
+ * module (`isZodSchema`, the repository's one answer to "is this Zod"). What
+ * the publisher WRITES is {@link scannedInstanceSchemas}, the function the
+ * deploy calls. The two halves enumerate independently: a scan that lost a
+ * module, or a renderer that dropped an export, disagrees with the text.
+ *
+ * A non-Zod `*Schema` export is not public by the rule and is not a finding.
+ * A module the gate cannot import, a publisher that did not scan, and every
+ * failure the publisher reports (`zodProblems`) ARE findings: the deploy
+ * exits 1 on the same, so the gate that passes it must too.
+ *
+ * Re-exports (`export { X } from`) are not seen by the text half, so this
+ * guards against UNDER-publishing what a module declares, not against
+ * publishing more. `publish` is injectable so a test can stand in a publisher
+ * that drops one and watch this fail.
+ */
+export async function unpublishedZodSchemas(
+  plan: readonly PlannedExport[] = instanceExportPlan(REPO_ROOT),
+  publish: (instanceRoot: string) => Promise<InstanceSchemaExport> = (r) => scannedInstanceSchemas(r),
+  repo: string = REPO_ROOT,
+): Promise<string[]> {
+  const out: string[] = [];
+  for (const p of plan) {
+    const root = resolve(repo, p.path);
+    const has: Array<{ module: string; path: string }> = [];
+    let dirs: string[];
+    try {
+      dirs = instanceZodSchemaDirs(root);
+    } catch (e) {
+      out.push(`${p.path}: its schemas directory could not be resolved, so its public Zod schemas are unknown: ${e instanceof Error ? e.message : String(e)}`);
+      continue;
+    }
+    for (const dir of dirs) {
+      if (!existsSync(dir)) continue;
+      for (const f of readdirSync(dir).map(String).sort()) {
+        if (!f.endsWith(".ts") || f.endsWith(".test.ts") || f.endsWith(".d.ts")) continue;
+        const module = relative(root, join(dir, f)).split("\\").join("/");
+        const names = [...readFileSync(join(dir, f), "utf-8").matchAll(EXPORTED_CONST)]
+          .map((m) => m[1]!)
+          .filter((n) => PUBLIC_SCHEMA_EXPORT.test(n));
+        if (names.length === 0) continue;
+        let mod: Record<string, unknown>;
+        try {
+          mod = (await import(join(dir, f))) as Record<string, unknown>;
+        } catch (e) {
+          out.push(`${p.path}: ${module} declares ${names.join(", ")} but could not be imported: ${e instanceof Error ? e.message : String(e)}`);
+          continue;
+        }
+        for (const n of names) {
+          if (isZodSchema(mod[n])) has.push({ module: `${module}#${n}`, path: zodSchemaPath(basename(f, ".ts"), n) });
+        }
+      }
+    }
+    const built = await publish(root);
+    if (!built.zodScanned) {
+      out.push(`${p.path}: the publisher did not scan its public Zod schemas, so its index still says \`omitted: ["schemas"]\``);
+    }
+    for (const line of built.zodProblems) out.push(`${p.path}: ${line}`);
+    const written = new Set(built.files.map(([f]) => f.split("\\").join("/")));
+    const index = built.files.find(([f]) => f === `${p.stub}.schema.json`)?.[1];
+    const listed = new Set(Object.keys((index?.$defs as Record<string, unknown> | undefined) ?? {}));
+    for (const h of has) {
+      if (!written.has(h.path)) {
+        out.push(`${p.path}: ${h.module} is an exported Zod *Schema, which the publisher does not write to ${p.stub}/schema/${h.path}`);
+      } else if (!listed.has(h.path.replace(/\.schema\.json$/, ""))) {
+        out.push(`${p.path}: ${h.module} is written to ${p.stub}/schema/${h.path} but the index does not list it in \`$defs\``);
       }
     }
   }
@@ -652,7 +748,7 @@ export function incompleteExports(
   return out;
 }
 
-export function checkPublishedInstanceExports(opts: { against?: string } = {}): PublishedExportReport {
+export async function checkPublishedInstanceExports(opts: { against?: string } = {}): Promise<PublishedExportReport> {
   let files: string[];
   try {
     files = readdirSync(WORKFLOW_DIR)
@@ -690,7 +786,11 @@ export function checkPublishedInstanceExports(opts: { against?: string } = {}): 
   const incomplete = incompleteExports(texts, declaredStubs);
   // Only when a workflow runs the plan: with no plan line nothing writes a
   // schema directory, and `incomplete` already says the deploy is short.
-  const unpublishedSchemas = invocations.some((i) => i.planned === true) ? unpublishedInstanceSchemas() : [];
+  // The public Zod schemas (part 2, owner ruling 2026-10-05) share the line:
+  // either half missing is the same failure — the deploy's `schema/` is short.
+  const unpublishedSchemas = invocations.some((i) => i.planned === true)
+    ? [...unpublishedInstanceSchemas(), ...(await unpublishedZodSchemas())]
+    : [];
 
   const base: PublishedExportReport = {
     invocations,
@@ -792,7 +892,9 @@ export function formatReport(r: PublishedExportReport): string {
   }
   if (failed.length === 0 && r.unreadable === undefined && (r.incomplete ?? []).length === 0 && (r.unpublishedSchemas ?? []).length === 0) {
     out.push("    every declared instance is published, and every graph a workflow publishes builds, with dereferenceable `@id`s");
-    out.push("    every planned instance's contracts reach its `<stub>/schema/`, and its document links that index");
+    out.push(
+      "    every planned instance's contracts and exported Zod `*Schema` consts reach its `<stub>/schema/`, and its document links that index",
+    );
     return out.join("\n");
   }
   if (failed.length === 0) return out.join("\n");
@@ -816,7 +918,7 @@ if (import.meta.main) {
     console.error(`check:published-instance-exports: ${(e as Error).message}`);
     process.exit(2);
   }
-  const report = checkPublishedInstanceExports({ against });
+  const report = await checkPublishedInstanceExports({ against });
   const clean =
     report.unreadable === undefined &&
     report.invocations.length > 0 &&
