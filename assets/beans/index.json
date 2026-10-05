@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 872,
+      "count": 882,
       "unit": "beans"
     }
   },
@@ -1729,6 +1729,22 @@
       "file": "beans/defs/folio-assistant-4iey--per-plan-exit-criteria-dmn-test-plan-execution-loo.md"
     },
     {
+      "id": "folio-assistant-4j86",
+      "title": "STAGING CONE (file level): a preview rebuilds only what a PR's changed files can reach — general rule, in the skills",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [
+        "folio-assistant-nama"
+      ],
+      "createdAt": "2026-10-04T13:49:44Z",
+      "updatedAt": "2026-10-04T16:20:43Z",
+      "preview": "Owner, 2026-10-04: *\"staging rebuild only what is dependency cone of changes (general rule. update skills)\"*. Asked how fine-grained, the owner chose FILE LEVEL (option 1 of 3).\n\n## Today (measured 2026-10-04, read-only map)\nfeature-staging.yml's cut is a PREFIX MATCH, not a cone:\n- compose-docs.ts `carriedInstances()` (bean ga8a) carries a composed instance only if a changed path starts with its ",
+      "file": "beans/defs/folio-assistant-4j86--staging-cone-file-level-a-preview-rebuilds-only-wh.md"
+    },
+    {
       "id": "folio-assistant-4kj4",
       "title": "AVATARS: per-kind avatar, in and out of trash, both schemes, with a QA axis for coverage",
       "status": "todo",
@@ -2677,7 +2693,7 @@
     {
       "id": "folio-assistant-70zt",
       "title": "SVG rendering of DIIG Fig. 1.1.1 (seven phases of planning and implementing a digital health enterprise)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-qvxh",
@@ -2686,7 +2702,7 @@
         "folio-assistant-5ki9"
       ],
       "createdAt": "2026-10-03T10:55:02Z",
-      "updatedAt": "2026-10-04T08:36:08Z",
+      "updatedAt": "2026-10-04T12:41:46Z",
       "preview": "Owner, 2026-10-03 (issue #1984, relayed from session_015Q15h1fg2Hh9MJXfAqr4h7): \"use one DIIG seven phase figure as source. need SVG rendering maybe as bean\".\n\nThe figure is DIIG §1.1 Fig. 1.1.1, smart-base/library/9789240010567-eng, PDF p.17 (the phase list is on p.16). vector-labels.json records 82 drawings on that spread, and no raster figure. It is vector-drawn, so its home is the vector-figur",
       "file": "beans/defs/folio-assistant-70zt--svg-rendering-of-diig-fig-111-seven-phases-of-plan.md"
     },
@@ -2845,6 +2861,20 @@
       "updatedAt": "2026-10-04T14:30:41Z",
       "preview": "PR #2055, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict declared, own CI missing-required.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2055.json`, status `waiting-on-author`): Covered ",
       "file": "beans/defs/folio-assistant-7jdm--merge-refused-2055-owed-ci-not-green-on-its-head.md"
+    },
+    {
+      "id": "folio-assistant-7jkp",
+      "title": "cat-openapi: two ingest tools — OpenAPI into the KG from SOURCE (a repo) or from RENDERED (a published spec/site); smart-trust's example comes from WHO smart-trust-network-gateway",
+      "status": "todo",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T18:50:39Z",
+      "updatedAt": "2026-10-04T18:50:43Z",
+      "preview": "Owner, 2026-10-04, verbatim: *\"note for openapi bean: source code for openapi in example for smart-trust is from here. should be bale to ingest either https://github.com/WorldHealthOrganization/smart-trust-network-gateway\"* and *\"(two different tools for openapi... ingest into KG from source or from rendered)\"*.\n\n## What this asks\n- smart-trust's OpenAPI example has its source in WorldHealthOrgani",
+      "file": "beans/defs/folio-assistant-7jkp--cat-openapi-two-ingest-tools-openapi-into-the-kg-f.md"
     },
     {
       "id": "folio-assistant-7mog",
@@ -5031,6 +5061,20 @@
       "file": "beans/defs/folio-assistant-dm4j--todosindexhtml-serves-zero-notes-without-javascrip.md"
     },
     {
+      "id": "folio-assistant-dmx1",
+      "title": "DISTRIBUTED GRAPH KINDS: each harness declares the subgraph types it owns; no central registry (owner ruling 2026-10-04)",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T17:04:22Z",
+      "updatedAt": "2026-10-04T17:49:34Z",
+      "preview": "Owner, 2026-10-04, verbatim: *\"there should not be a central registry for declaring mount tools and subgraph types\"*.\n\n## What exists, measured 2026-10-04\n- `cat-harness/schemas/graph-kind-registry.ts` declares **57** graph kinds centrally. They include harness-specific ones: the FHIR kinds (`fhir-artifact-index`, `ig-metadata-index`, and, added today on #2082, `ig-pages` and `ig-ast`) and cat-ope",
+      "file": "beans/defs/folio-assistant-dmx1--distributed-graph-kinds-each-harness-declares-the.md"
+    },
+    {
       "id": "folio-assistant-do70",
       "title": "SIBLINGS: seven generated artefacts go stale when a catalogue or a BEAN changes, and no gate names its remedy — reuse skills:register's converging chain",
       "status": "todo",
@@ -6680,14 +6724,14 @@
     {
       "id": "folio-assistant-izx8",
       "title": "FHIR IG API: rename the DAK-named IG API parts in fhir-harness (dak-views, dak-api hub, templates) once #1766 lands",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-wm63",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:59:33Z",
-      "updatedAt": "2026-10-04T07:09:29Z",
+      "updatedAt": "2026-10-04T12:41:46Z",
       "preview": "Owner, 2026-10-03, on #1766: \"2 but should be FHIR-IG-API, no DAK label/names\". So #1766 merges first and its DAK-named hits in fhir-harness are baselined in check:fhir-harness-exclusions (an explicit owner exception to the never-widen rule). The API SURFACE (per-artefact .schema.json / .displays.json / .openapi.json and a hub) is the generic FHIR IG API and stays in fhir-harness. Only the DAK nam",
       "file": "beans/defs/folio-assistant-izx8--fhir-ig-api-rename-the-dak-named-ig-api-parts-in-f.md"
     },
@@ -6818,6 +6862,20 @@
       "updatedAt": "2026-09-24T13:46:41Z",
       "preview": "Found 2026-09-23 while ingesting arXiv:2510.21603v1 (bean `ctp3`). Split out\nrather than worked around, because routing around it would have meant writing 383\nimage descriptions from nothing.\n\n## CORRECTED 2026-09-24 — the original diagnosis in this bean was WRONG\n\nEverything below the next heading was written on 2026-09-23 from counts and\nfile sizes. **Two file reads falsified it**, and the corre",
       "file": "beans/defs/folio-assistant-j820--pdf-extractor-fragments-a-composite-figure-383-pla.md"
+    },
+    {
+      "id": "folio-assistant-j9cs",
+      "title": "MOUNT TOOLS DECLARED ON STORAGE: a subgraph names the tool that mounts it; no central mounter (owner ruling 2026-10-04)",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T17:04:23Z",
+      "updatedAt": "2026-10-04T17:04:23Z",
+      "preview": "Owner, 2026-10-04, verbatim: *\"there should not be a central registry for declaring mount tools and subgraph types\"*.\n\n## What exists, measured 2026-10-04\n- `state:mount` (`branch-store.ts`) mounts every tip-keyed directory. It switches on `keyedBy` centrally: tip mounts, route is read by its generator's `--check`, and commit belongs to qa-store.\n- Family-keyed graphs are mounted by tools nobody d",
+      "file": "beans/defs/folio-assistant-j9cs--mount-tools-declared-on-storage-a-subgraph-names-t.md"
     },
     {
       "id": "folio-assistant-jcet",
@@ -7375,6 +7433,36 @@
       "updatedAt": "2026-10-04T19:44:20Z",
       "preview": "PR #2066, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_Refused: conflict refused, own CI missing-required.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2066.json`, status `waiting-on-author`): STATUS UNKNOWN",
       "file": "beans/defs/folio-assistant-lb8h--merge-refused-2066-authored-conflict-with-main.md"
+    },
+    {
+      "id": "folio-assistant-lbz8",
+      "title": "AUTO-DOCS FAMILY: generated FHIR IG pages (gen-ig-pages) move off main to cat/fhir-harness/ig-docs",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [
+        "folio-assistant-xsrv"
+      ],
+      "createdAt": "2026-10-04T12:55:24Z",
+      "updatedAt": "2026-10-04T13:49:53Z",
+      "preview": "Owner, 2026-10-04: *\"auto-docs (e.g. fhir) should be in cat/cat-harness/auto-docs so not pollute main. or maybe cat/fhir-harness/ig-docs\"*. Asked with options, the owner chose **cat/fhir-harness/ig-docs** (option 1 of 3).\n\n## Why this name\n- The pages have ONE writer: fhir-harness's `gen-ig-pages`. So the branch is named for the harness that produces them (`cat/<harness>/<subgraph>`), and route-ke",
+      "file": "beans/defs/folio-assistant-lbz8--auto-docs-family-generated-fhir-ig-pages-gen-ig-pa.md"
+    },
+    {
+      "id": "folio-assistant-lehh",
+      "title": "DERIVED NODE SCHEMAS: declare ig-ast (pick up fhir-harness/schemas/ig-ast.ts), lake-cache and gh-pages as graphs with schemas",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-nama",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T13:52:13Z",
+      "updatedAt": "2026-10-04T17:21:55Z",
+      "preview": "Owner, 2026-10-04: *\"bean - was an AST schema somewhere. pickup. add schemas for lean-cache (cat/folio-assistant-sci/lean-cache branch?) and gh-pages too\"*\n\n## Found (2026-10-04)\n- **ig-ast**: the schema exists. `fhir-harness/schemas/ig-ast.ts` (Zod) has generated JSON Schemas `ig-ast.schema.json`, `ig-ast-plan.schema.json` and `ig-ast-dependencies.schema.json` (bean l0lq), gated by `ig-ast:schema",
+      "file": "beans/defs/folio-assistant-lehh--derived-node-schemas-declare-ig-ast-pick-up-fhir-h.md"
     },
     {
       "id": "folio-assistant-lfxa",
@@ -7950,7 +8038,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:10:21Z",
-      "updatedAt": "2026-10-04T08:24:28Z",
+      "updatedAt": "2026-10-04T12:46:42Z",
       "preview": "Issue #1767. Owner 2026-10-01: landing page for /smart-base/; push generic stuff into fhir-harness first; staged smart-base, smart-trust (and smart-immunizations) belong in litlfred forks.\n\n## Done when\nStaged per cat-harness/docs/proposals/smart-separation-2026-10-01.md (owner decided Q1-a, Q2-a, Q3-b, Q5 reframed as qvxh).\n- [x] A1 gen-smart-trust-pages -> fhir-harness/scripts/gen-ig-pages.ts; s",
       "file": "beans/defs/folio-assistant-n3ni--smart-separation-smart-base-landing-page-generic-i.md"
     },
@@ -7981,6 +8069,22 @@
       "updatedAt": "2026-09-30T00:33:58Z",
       "preview": "Found 2026-09-23 while ingesting the `doc-researcher` methodology (bean `ctp3`).\nA **reporting** inconsistency, not a wrong answer: both generators are internally\nright and they disagree about what \"this corpus\" means.\n\n## Measured\n\n`folio-assistant-core/processes/deep-document-research.bpmn` declares a lane\n`Deep researcher`, bound to the `deep-researcher` role.\n\n| generator | reaches that diagra",
       "file": "beans/defs/folio-assistant-nafz--glossary-export-walks-one-instances-diagrams-while.md"
+    },
+    {
+      "id": "folio-assistant-nama",
+      "title": "DERIVED-GRAPH DEPENDENCIES: declare which derived/rendered subgraph is computed from which (fhir-ast -> ig-docs -> gh-pages; lean-cache), and walk them",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [
+        "folio-assistant-4j86"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T13:49:44Z",
+      "updatedAt": "2026-10-04T13:54:32Z",
+      "preview": "Owner, 2026-10-04: *\"bean up missing dependency logic on derived graphs (e.g. ig-docs, gh-pages, lean-cache, fhir-ast). may need to walk dependencies between derived content (e.g. fhir-ast is dependency of ig-docs). not sure graph schema has that yet... these are rendered sub-graphs. so we can use order that subgraphs declared as rendering order for now maybe\"*\n\n## What exists (measured 2026-10-04",
+      "file": "beans/defs/folio-assistant-nama--derived-graph-dependencies-declare-which-derivedre.md"
     },
     {
       "id": "folio-assistant-nba0",
@@ -9017,6 +9121,20 @@
       "file": "beans/defs/folio-assistant-qj9a--staging-size-the-measurement-is-right-and-the-seve.md"
     },
     {
+      "id": "folio-assistant-qm9d",
+      "title": "Make the 11 monorepo-only cat-harness tests standalone-safe; baseline 427 -> 416",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-iirv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T06:42:50Z",
+      "updatedAt": "2026-10-05T06:42:50Z",
+      "preview": "Follow-up of `folio-assistant-ho66` (the standalone check).\n\nOwner ruling, 2026-10-05, relayed by the merge manager: \"1 + dispatch 3\".\n- (1): #2148 baselined 11 monorepo-only standalone failures, so main could go green.\n- (3): the ho66 owner makes those tests standalone-safe and shrinks the baseline back.\n\nClaimed by session_01BccmnVFbtRpKxM39kyVw9q, on branch claude/friendly-bell-xm9l1q.\n\n## Appr",
+      "file": "beans/defs/folio-assistant-qm9d--make-the-11-monorepo-only-cat-harness-tests-standa.md"
+    },
+    {
       "id": "folio-assistant-qml5",
       "title": "The stale-claim sweep's 7-day threshold is unreachable — and three things it structurally cannot see",
       "status": "todo",
@@ -9124,7 +9242,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:37:53Z",
-      "updatedAt": "2026-10-04T10:14:02Z",
+      "updatedAt": "2026-10-04T13:06:48Z",
       "preview": "Issue #1767; proposal cat-harness/docs/proposals/smart-separation-2026-10-01.md §Decided Q5.\n\nOwner, 2026-10-01: \"what they really need to be are sub-document types/kinds/visualizer for them. smart-L1 is like a L1 document that was fully computable from smart-base assets (and maybe some other things like PICO, cochrane, etc), semi fixed structure ... similarly DAK is a publication type w/ the 10 c",
       "file": "beans/defs/folio-assistant-qvxh--smart-l1-and-dak-as-document-kinds-with-visualizer.md"
     },
@@ -9375,6 +9493,20 @@
       "file": "beans/defs/folio-assistant-rfuq--s4-direction-and-placement-zero-wrong-direction-ed.md"
     },
     {
+      "id": "folio-assistant-riit",
+      "title": "CONTRIBUTIONS AND VALIDATORS AS KG NODES (owner 2026-10-04)",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T17:42:33Z",
+      "updatedAt": "2026-10-05T05:29:21Z",
+      "preview": "Owner, 2026-10-04, on the audit's open question (should `*/contributions.ts` become declared nodes?): **option 2, all of it as nodes, \"+ validators need to be in KG too\"**.\n\n## What exists, measured 2026-10-04\n- `schemas/contributions.ts` defines the contribution shapes in TypeScript: BlockKindContribution, AdapterContribution, ToolContribution, QaCheckerContribution, RendererContribution and Pipe",
+      "file": "beans/defs/folio-assistant-riit--contributions-and-validators-as-kg-nodes-owner-202.md"
+    },
+    {
       "id": "folio-assistant-rj0n",
       "title": "KIND VALIDATORS: --require-all can never pass — 7 of 7 'gaps' are category errors or empty",
       "status": "completed",
@@ -9568,7 +9700,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T10:58:10Z",
-      "updatedAt": "2026-10-04T17:01:12Z",
+      "updatedAt": "2026-10-04T17:33:45Z",
       "preview": "The general practice: every graph not on main is a declared sub-graph with a back-link {ref, sha} to the content commit it describes. build.json (bean r6es) is the first back-link.\n\n## Done when\n- [ ] gh-pages declared\n- [ ] lake-cache/* declared\n- [ ] audit:coverage sees all special branches\n\nProposal: cat-harness/docs/proposals/state-branch-2026-10-02.md\n\n\n## Owner's ruling, 2026-10-03: per-harn",
       "file": "beans/defs/folio-assistant-rva2--state-branch-p7-declare-every-special-branch-with.md"
     },
@@ -9829,6 +9961,20 @@
       "updatedAt": "2026-10-04T15:52:14Z",
       "preview": "Recorded from the qou orphaned-content census, 2026-10-04 (ORPH report; session https://claude.ai/code/session_01NdDGeP1SyShmoUssLuRZ91, issue #2106). qou: 12 absent computation.script files behind 12 blocks (including chi closed-form proofs), 30 dangling lean.refs, and macros used in prose but defined only in main.tex. Proposed: a resolution check over block links, computation.script and {{ }} te",
       "file": "beans/defs/folio-assistant-smhv--no-check-that-relative-links-computationscript-pat.md"
+    },
+    {
+      "id": "folio-assistant-sod4",
+      "title": "AUDIT: TypeScript tables that are really KG facts owned by one harness — ranked, with where each belongs (owner asked 2026-10-04)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-dmx1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T17:33:33Z",
+      "updatedAt": "2026-10-04T17:41:44Z",
+      "preview": "Owner, 2026-10-04: *\"dispatch agent: other stuff in typescript that should be in KG?\"* This is the read-only audit that answered it. The principle comes from the same day's ruling, *\"there should not be a central registry for declaring mount tools and subgraph types\"*: a fact OWNED by one harness is declared there as a KG node, not hardcoded in a cat-harness table.\n\n**How it was measured.** `grep`",
+      "file": "beans/defs/folio-assistant-sod4--audit-typescript-tables-that-are-really-kg-facts-o.md"
     },
     {
       "id": "folio-assistant-sop8",
@@ -11330,7 +11476,7 @@
         "folio-assistant-mfhc"
       ],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-10-04T09:01:45Z",
+      "updatedAt": "2026-10-04T12:41:46Z",
       "preview": "`fhir-harness` — the layer bean `nsbb` called \"the bare FHIR IG pipeline\", now\nnamed by the owner's stack ruling of 2026-09-22.\n\n## What it is\n\nSUSHI → IG Publisher → Jekyll → a pages branch. **No pre-processing and no\npost-processing.** This is how SMART Guidelines were built before the DAK\nphases were added, so it is a shape that demonstrably worked rather than one\nbeing invented.\n\n## The defini",
       "file": "beans/defs/folio-assistant-wm63--fhir-harness-the-bare-fhir-ig-pipeline-as-its-own.md"
     },
@@ -11771,7 +11917,9 @@
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-fs43",
-      "blocking": [],
+      "blocking": [
+        "folio-assistant-lbz8"
+      ],
       "blockedBy": [
         "folio-assistant-1j3q"
       ],
@@ -13125,6 +13273,13 @@
       ]
     },
     {
+      "blocker": "folio-assistant-nama",
+      "blocked": "folio-assistant-4j86",
+      "declaredOn": [
+        "blocked_by"
+      ]
+    },
+    {
       "blocker": "folio-assistant-ns96",
       "blocked": "folio-assistant-uoob",
       "declaredOn": [
@@ -13267,6 +13422,13 @@
     {
       "blocker": "folio-assistant-xffc",
       "blocked": "folio-assistant-d3yq",
+      "declaredOn": [
+        "blocked_by"
+      ]
+    },
+    {
+      "blocker": "folio-assistant-xsrv",
+      "blocked": "folio-assistant-lbz8",
       "declaredOn": [
         "blocked_by"
       ]
@@ -13653,6 +13815,12 @@
     },
     {
       "kind": "blocked-without-expiry",
+      "bean": "folio-assistant-nama",
+      "blocks": "folio-assistant-4j86",
+      "detail": "blocks `folio-assistant-4j86` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
+    },
+    {
+      "kind": "blocked-without-expiry",
       "bean": "folio-assistant-ns96",
       "blocks": "folio-assistant-uoob",
       "detail": "blocks `folio-assistant-uoob` and states no expiry, so the block cannot be told from abandoned work"
@@ -13740,6 +13908,12 @@
       "bean": "folio-assistant-w1gy",
       "blocks": "folio-assistant-syzb",
       "detail": "blocks `folio-assistant-syzb` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
+    },
+    {
+      "kind": "blocked-without-expiry",
+      "bean": "folio-assistant-xsrv",
+      "blocks": "folio-assistant-lbz8",
+      "detail": "blocks `folio-assistant-lbz8` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
     },
     {
       "kind": "blocked-without-expiry",
@@ -13942,14 +14116,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 520,
+        "total": 528,
         "closed": 191,
-        "open": 329,
-        "inProgress": 118,
-        "todo": 210,
+        "open": 337,
+        "inProgress": 124,
+        "todo": 212,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.36730769230769234
+        "share": 0.36174242424242425
       },
       {
         "id": "folio-assistant-vuip",
@@ -13957,14 +14131,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 230,
-        "closed": 93,
+        "total": 232,
+        "closed": 95,
         "open": 137,
-        "inProgress": 75,
-        "todo": 61,
+        "inProgress": 74,
+        "todo": 62,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4043478260869565
+        "share": 0.40948275862068967
       },
       {
         "id": "folio-assistant-yg29",
@@ -13983,8 +14157,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 504,
-    "coveredOpen": 501,
+    "openTotal": 512,
+    "coveredOpen": 509,
     "duplicateIds": 0
   }
 }

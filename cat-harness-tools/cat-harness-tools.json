@@ -223,6 +223,8 @@
         "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
         "branch": "http://purl.org/dc/terms/identifier",
         "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
+        "keyFrom": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyFrom",
+        "familyRepository": "https://litlfred.github.io/cat-harness/0.1.0/ns#familyRepository",
         "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
       }
     },
@@ -330,10 +332,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T08:08:08.624Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c300be0ccdc3bb626009aa2d2725ce309aa71d67",
-  "sourceCommitSha": "c300be0ccdc3bb626009aa2d2725ce309aa71d67",
-  "sourceCommitAt": "2026-10-05T10:00:21+02:00",
+  "generatedAt": "2026-10-05T08:40:34.356Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fb1caf55aa8aaf3ec7c84d50f2e30d6f35f86e54",
+  "sourceCommitSha": "fb1caf55aa8aaf3ec7c84d50f2e30d6f35f86e54",
+  "sourceCommitAt": "2026-10-05T10:32:32+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -363,7 +365,7 @@
       ],
       "description": "The standalone MCP server (`adapters/mcp-server/`): its tool registrars, the declared tool groups that load them, and the Dockerfile that packages it. Moved from `cat-harness/adapters/mcp-server/` (bean `w2gr`, step 3a) because it is a server, and the owner ruled that tool implementations live here while their definitions stay in cat-harness.",
       "readmePath": "adapters/README.md",
-      "fileCount": 17,
+      "fileCount": 10,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-adapters"
     },
     {
@@ -448,7 +450,7 @@
       ],
       "description": "The MCP and HTTP server — what `bun run start` and `.mcp.json` start, from `src/index.ts`: the composition roots (`server.ts`, `route-groups.ts`, `tool-groups.ts`), the plug-in contract `types.ts`, the MCP tool registrars (`tools/`), the harness's own routes (`routes/branches.ts`, `routes/chat.ts`), authentication (`auth/`, `core/github-auth.ts`), access control (`core/rbac.ts`), the MCP projection (`mcp/`) and the no-content adapter. Moved from `cat-harness/src/` in stage 1a's first batch (bean `70lx`, B1). The Tool nodes it serves stay DECLARED in `cat-harness/tools/` with their original `src/tools/*` paths, and the loader finds each module here through `needs` (owner ruling \"Trap 1\"); the content routes (feedback, glossary, relevance) went UP to the content layer that owns their content instead, and the route loader finds them the same way (owner, 2026-10-04).",
       "readmePath": "src/README.md",
-      "fileCount": 35,
+      "fileCount": 36,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-src"
     },
     {
@@ -472,8 +474,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "c300be0ccdc3bb626009aa2d2725ce309aa71d67",
+    "sha": "fb1caf55aa8aaf3ec7c84d50f2e30d6f35f86e54",
     "pr": "main",
-    "run": "37280962383"
+    "run": "37284285474"
   }
 }
