@@ -52097,6 +52097,60 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/public-comment.ts#ChangeSet",
+      "name": "ChangeSet",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#ChangeSetHistorySchema",
+      "name": "ChangeSetHistorySchema",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "at",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "what",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "url",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The GitHub comment, issue or PR it came from."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema",
       "name": "ChangeSetRefSchema",
       "module": "folio-assistant-core/schemas/public-comment.ts",
@@ -52142,6 +52196,132 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema",
+      "name": "ChangeSetSchema",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "doc": "One change to the document, answering a group of comments (issue #2183).",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(CHANGE_SET_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().regex(/^CS-\\d{3,}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "\"CS-001\"."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "requirements",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the change should do, in the editor's terms: the issue's requirements."
+        },
+        {
+          "name": "refs",
+          "type": "z.array(z.string().regex(/^PC-\\d{4,}$/))",
+          "optional": false,
+          "array": true,
+          "doc": "The comments it answers. A comment may be in more than one change-set."
+        },
+        {
+          "name": "anchor",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The section or block the change is mainly about, for ordering."
+        },
+        {
+          "name": "status",
+          "type": "z.enum(CHANGE_SET_STATUSES).default(\"proposed\")",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "issue",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The primary issue: where the change-set is rendered and its requirements agreed."
+        },
+        {
+          "name": "issues",
+          "type": "z.array(z.number().int().positive()).default([])",
+          "optional": true,
+          "array": true,
+          "doc": "Every issue that discusses it, the primary one included."
+        },
+        {
+          "name": "pr",
+          "type": "z.object({ number: z.number().int().positive(), branch: z.string().min(1) }).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The PR making the change."
+        },
+        {
+          "name": "mergedInto",
+          "type": "z.string().regex(/^CS-\\d{3,}$/).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "For `merged`: the change-set it was folded into."
+        },
+        {
+          "name": "proposedBy",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "proposedAt",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "history",
+          "type": "z.array(ChangeSetHistorySchema).default([])",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/public-comment.ts#ChangeSetHistorySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "CHANGE_SET_SCHEMA",
+        "CHANGE_SET_STATUSES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#ChangeSetStatus",
+      "name": "ChangeSetStatus",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -62411,6 +62591,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema",
+      "to": "folio-assistant-core/schemas/public-comment.ts#ChangeSetHistorySchema",
+      "via": "history",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "folio-assistant-core/schemas/public-comment.ts#DecisionSchema",

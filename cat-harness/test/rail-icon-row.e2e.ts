@@ -143,7 +143,12 @@ test("a railed page WITHOUT docs-ui.js draws the row — the link slots, at full
   // Links, prefixed with the site base the SCRIPT was served under: this page
   // carries no `fa-baseurl` meta, which is the case the derivation is for.
   const hrefs = await row.locator("a.fa-nav-icon").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
-  expect(hrefs.length).toBeGreaterThanOrEqual(4);
+  // Every declared slot except the ones that need `docs-ui.js` (the launcher
+  // and the globe, both LEFT OUT here) and the retired close. Derived, not a
+  // number: the row's membership is the owner's to change (bean `82qs`).
+  const linked = LIVE.icons.filter((i: string) => !["close", "launcher", "language"].includes(i));
+  expect(hrefs.length).toBe(linked.length);
+  await expect(row.locator(".fa-nav-lang")).toHaveCount(0);
   for (const h of hrefs) expect(h).toMatch(/^\/folio-assistant\//);
   const widths = await row.locator("svg").evaluateAll((s) => s.map((e) => Math.round(e.getBoundingClientRect().width)));
   expect(new Set(widths)).toEqual(new Set([18]));

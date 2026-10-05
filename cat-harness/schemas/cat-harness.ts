@@ -2572,11 +2572,16 @@ export function renderExemptionProblems(
  * rather than in place of anything: *"i wanted fsh guts icon here with the
  * others"* (#1925). The cap moved with the ruling; it is still a cap.
  *
+ * `language` joined 2026-10-05 — owner: *"language globe with rest of icons"*
+ * (bean `82qs`) — and, like `launcher`, is drawn only where `docs-ui.js`
+ * supplies the panel it opens. The cap did not move: the same ruling dropped
+ * `processes` and `kg` from cat-harness's own row.
+ *
  * Refused rather than truncated. Truncating drops whichever the instance
  * listed last, silently, and an instance that declared seven has made a
  * decision the navbar would then be overruling without saying so.
  */
-export const NAVBAR_ICONS = ["close", "todos", "beans", "processes", "kg", "fsh-guts", "launcher"] as const;
+export const NAVBAR_ICONS = ["close", "todos", "beans", "processes", "kg", "language", "fsh-guts", "launcher"] as const;
 
 export type NavbarIcon = (typeof NAVBAR_ICONS)[number];
 

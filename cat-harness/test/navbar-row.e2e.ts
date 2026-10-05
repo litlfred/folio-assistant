@@ -255,7 +255,9 @@ test.describe("the icon row — line 2 of the fixed top", () => {
     // accessible name carries the live count after a dash, so only its stem is
     // pinned here; the count states are `fshGutsCount`'s to test.
     expect(labels.map((l) => (l ?? "").split(" — ")[0])).toEqual([
-      "Todos", "Beans", "Processes", "Knowledge graph", "fsh-guts, discarded items", "More actions",
+      // Language joined, Processes and Knowledge graph left (owner, 2026-10-05,
+      // bean `82qs`): "language globe with rest of icons".
+      "Todos", "Beans", "Language", "fsh-guts, discarded items", "More actions",
     ]);
     // ...then the switch, last. No [x] after it (ob3m finding 8).
     const tail = await page.locator(".fa-nav-icons > *").evaluateAll((ns) =>
@@ -264,27 +266,26 @@ test.describe("the icon row — line 2 of the fixed top", () => {
     expect(tail).toEqual(["scheme"]);
   });
 
-  test("a VISIBLE language control on line 1 when the row is present — bean 82qs", async ({ page }) => {
-    // Owner, 2026-10-05: "we lost locale selector in top navbar LHS again".
-    // The row hid `.fa-lang-mini` and gave Language nowhere visible to go.
-    // It stays on line 1 beside the name (the row has no room for an eighth
-    // control: measured 280px in the 264px sidebar).
+  test("the language globe is IN the row, beside Todos and Beans, and opens the language view — bean 82qs", async ({ page }) => {
+    // Owner, 2026-10-05: "we lost locale selector in top navbar LHS again",
+    // then "language globe with rest of icons". The line-1 mini stays hidden
+    // once the row is up; the row's globe clicks it.
     await page.setViewportSize({ width: 1280, height: 800 });
     const { errors } = await load(page, LIVE);
     expect(errors).toEqual([]);
-    await expect(page.locator(".side-bar .fa-nav-icons")).toHaveCount(1);
     await page.hover(".side-bar");
-    const lang = page.locator(".side-bar .fa-lang-mini");
-    await expect(lang).toBeVisible();
-    await expect(lang).toHaveAttribute("aria-label", "Language");
-    // Inside the sidebar, not clipped past its edge.
+    const globe = page.locator(".side-bar .fa-nav-icons .fa-nav-lang");
+    await expect(globe).toBeVisible();
+    await expect(globe).toHaveAttribute("aria-label", "Language");
+    await expect(page.locator(".side-bar .fa-lang-mini")).toBeHidden();
+    // The opened row fits the sidebar: no control past its edge.
     const fits = await page.evaluate(() => {
-      const b = document.querySelector(".side-bar .fa-lang-mini")!.getBoundingClientRect();
       const sb = document.querySelector(".side-bar")!.getBoundingClientRect();
-      return b.right <= sb.right && b.left >= sb.left;
+      return [...document.querySelectorAll(".side-bar .fa-nav-icons > *")]
+        .every((n) => n.getBoundingClientRect().right <= sb.right);
     });
     expect(fits).toBe(true);
-    await lang.click();
+    await globe.click();
     await expect(page.locator(".fa-tiles .fa-tiles-title")).toHaveText("Language");
   });
 
@@ -554,6 +555,28 @@ test.describe("the document index — the fixed top, about the page rather than 
     expect(rows.join(" ")).not.toContain("Unlinkable");
     expect(rows.join(" ")).not.toContain("Too deep");
     await expect(page.locator(".fa-doc-index__item--sub")).toHaveCount(1);
+  });
+
+  test("sub-sections FOLD under their section, closed, below its link — owner, 2026-10-05", async ({ page }) => {
+    // "on this page should have sub-sections collapsible" (bean `r2ld`).
+    const { errors } = await load(page, CUSTOM);
+    expect(errors).toEqual([]);
+    await page.hover(".side-bar");
+    await page.locator(".fa-doc-index__heading").click();
+    const one = page.locator(".fa-doc-index__list:not(.fa-doc-index__list--sub) > .fa-doc-index__item").first();
+    const fold = one.locator(":scope > details.fa-doc-index__fold");
+    await expect(fold).toHaveCount(1);
+    await expect(fold).not.toHaveAttribute("open", "");
+    // The section's own link stays a link, OUTSIDE the summary.
+    await expect(one.locator(":scope > a.fa-doc-index__link")).toHaveText("One");
+    await expect(fold.locator("summary a")).toHaveCount(0);
+    await expect(fold.locator("summary")).toHaveText("1 sub-section");
+    await expect(page.locator(".fa-doc-index__item--sub .fa-doc-index__link")).toBeHidden();
+    await fold.locator("summary").click();
+    await expect(fold).toHaveAttribute("open", "");
+    await expect(page.locator(".fa-doc-index__item--sub .fa-doc-index__link")).toBeVisible();
+    // A section with no sub-sections has no fold.
+    await expect(page.locator(".fa-doc-index__fold")).toHaveCount(1);
   });
 
   test("is ABSENT below two rows, not an empty or one-row menu", async ({ page }) => {

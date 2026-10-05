@@ -15,10 +15,11 @@
  *
  * - FULL — `docs-ui.js` calls `FaNavbarRow.mount(hooks)`. The fsh-guts slot is
  *   the button whose dialog and live count `docs-ui.js` wires, the launcher
- *   proxies its actions panel, and `hooks.after` appends the light/dark switch.
+ *   proxies its actions panel, the globe opens its language view, and
+ *   `hooks.after` appends the light/dark switch.
  * - LITE — no `docs-ui.js` on the page. The row draws what works without it:
- *   the link slots, and fsh-guts as a link to its own page. The launcher is
- *   LEFT OUT, not greyed — owner, 2026-10-05: *"1. Leave it out"* — because
+ *   the link slots, and fsh-guts as a link to its own page. The launcher and
+ *   the globe are LEFT OUT, not greyed — owner, 2026-10-05: *"1. Leave it out"* — because
  *   the panel it opens is built by `docs-ui.js`, and these pages never had it.
  *
  * FULL REPLACES LITE, never the other way. `folio-mount.ts` appends
@@ -147,11 +148,19 @@
     '<path d="M7.2 10.2l2 2m0-2l-2 2" fill="none" stroke="currentColor" ' +
     'stroke-width="1.6" stroke-linecap="round"/></svg>';
 
+  var GLOBE_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
+    '<ellipse cx="12" cy="12" rx="4" ry="10" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
+    '<line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="1.5"/>' +
+    '<path d="M4.5 7h15M4.5 17h15" fill="none" stroke="currentColor" stroke-width="1"/>' +
+    "</svg>";
+
   /* FIVE DISTINCT DRAWINGS: a fallback to NET_GLYPH alone would give four of
    * the five slots the same picture. */
   var ROW_GLYPHS = {
     todos: STICKY_GLYPH, beans: BEANS_GLYPH, processes: PROCESS_GLYPH,
-    kg: NET_GLYPH, launcher: TILES_GLYPH, "fsh-guts": FISH_GLYPH
+    kg: NET_GLYPH, launcher: TILES_GLYPH, "fsh-guts": FISH_GLYPH, language: GLOBE_GLYPH
   };
   function rowGlyph(id) {
     return Object.prototype.hasOwnProperty.call(ROW_GLYPHS, id) ? ROW_GLYPHS[id] : NET_GLYPH;
@@ -159,7 +168,8 @@
 
   var LABELS = {
     todos: "Todos", beans: "Beans", processes: "Processes",
-    kg: "Knowledge graph", launcher: "More actions", "fsh-guts": "fsh-guts, discarded items"
+    kg: "Knowledge graph", launcher: "More actions", "fsh-guts": "fsh-guts, discarded items",
+    language: "Language"
   };
 
   /** The row's data: `undefined` when the page carries none or it is unreadable, `null` when the instance declares no row. */
@@ -314,6 +324,18 @@
           // No dialog on this page, so the fish goes to the fsh-guts page.
           host.appendChild(linkSlot(id, label, hrefs[id], notes));
         }
+        continue;
+      }
+
+      if (id === "language") {
+        // THE GLOBE, "with rest of icons" (owner, 2026-10-05, bean `82qs`).
+        // It opens `docs-ui.js`'s language view, so like the launcher it is
+        // LEFT OUT where that script is not on the page.
+        if (typeof hooks.language !== "function") continue;
+        var globe = el("button", { type: "button", class: "fa-nav-icon fa-nav-lang", "aria-label": LABELS.language, "data-fa-tip": LABELS.language });
+        globe.innerHTML = GLOBE_GLYPH;
+        globe.addEventListener("click", hooks.language);
+        host.appendChild(globe);
         continue;
       }
 
