@@ -71,6 +71,23 @@ package "folio-assistant-core/core-schemas" as pkg_folio_assistant_core_core_sch
     anchor [0..1] : string
     citedBy [0..*] : string[]
   }
+  class "Public Comment Input" as folio_assistant_core_core_schemas_skills_public_comment_input_schema_json_Public_Comment_Input <<schema: skills/public-comment/input.schema.json>> #e9edf3 {
+    operation [1] : enum(13)
+    file [0..1] : string
+    ref [0..1] : string
+    to [0..1] : string
+    code [0..1] : accepted | accepted-modified | not-accepted | noted | deferred
+    reason [0..1] : string
+    branch [0..1] : string
+    pr [0..1] : integer
+    filter [0..1] : object
+  }
+  class "Public Comment Output" as folio_assistant_core_core_schemas_skills_public_comment_output_schema_json_Public_Comment_Output <<schema: skills/public-comment/output.schema.json>> #e9edf3 {
+    changed [0..*] : string[]
+    unplaced [0..*] : string[]
+    refused [0..*] : string[]
+    comments [0..*] : any[]
+  }
   class "Quality Control Input" as folio_assistant_core_core_schemas_skills_quality_control_input_schema_json_Quality_Control_Input <<schema: skills/quality-control/input.schema.json>> #e9edf3 {
     checkType [1] : qa-report | publication-checklist | conformance-validation | functionality-test | cross-component-consistency
     targetPath [1] : string

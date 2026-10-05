@@ -2,11 +2,11 @@
 # folio-assistant-nok9
 title: 'MERGE GATE: agentic adversarial review + content-type compile gates, and per-content-block QA backfill'
 status: todo
-type: epic
+type: feature
 priority: normal
 created_at: 2026-10-02T16:29:09Z
 updated_at: 2026-10-04T15:12:15Z
-parent: folio-assistant-rwmf
+parent: folio-assistant-hfag
 ---
 
 Owner, 2026-10-02 (bean for later): update the Merge Manager skills, process and tools so that a merge is GATED on:
@@ -140,3 +140,6 @@ found-nothing is the defect this repo keeps paying for (beans `0qjq`, `zjm1`,
 
 Design amended to match: `cat-harness/docs/proposals/merge-gate-2026-10-02.md`
 §1.1, §4.2, §5.1. Tracking bean: `5ge1`.
+
+## Retyped 2026-10-03 (owner ruling)
+Owner, 2026-10-03, session_01AxhsSvodhTgaioG1nUBWkh, selected option "Retype to feature": `nok9` is now a `feature` parented under the merge-pipeline epic `hfag`. That settles the question `hfag` §"Related epic: nok9" left open, where beans refused an epic-under-epic parent. Its children (w8jq, xqdi, abmq, u7be, 9v5a) stay under nok9.

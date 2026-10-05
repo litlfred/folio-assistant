@@ -512,10 +512,14 @@ commit instead, stop: that is the unilateral removal
 [`deletion-requires-confirmation`](deletion-requires-confirmation.md) exists to
 stop, and option 2 exists so you do not have to.
 
-### The cap — at most ten previews, the oldest rotated off
+### The cap — 3 GB of previews in total, the oldest rotated off
 
 **Owner ruling, 2026-10-02 (issue #1868):** *"for going forward, we should cap
-the maximum number of previews (<= 10) and rotate old ones off."*
+the maximum number of previews (<= 10) and rotate old ones off."* **Amended
+2026-10-04: "Cap by size, not count", budget "3gb".** Previews had grown to
+200–780 MB each, so ten of them came to 3–5 GB and any one lasted an hour or
+two; a count bounds the total only while preview size holds still, and it did
+not.
 
 Why a cap rather than a better threshold: GitHub Pages deploys `gh-pages`
 as-is, every preview is a full copy of the site (~200–500 MB by then, not the
@@ -526,10 +530,13 @@ event-driven; none bounds the total, which is the quantity the limit is about.
 
 What the `stage` job now does, on every deploy, before its one push:
 
-- **Counts the previews under `STAGING/`, including the one it is staging,
-  and keeps at most ten.** The number lives once, as `MAX_PREVIEWS` in
-  `cat-harness/scripts/staging-rotate.ts`.
-- **Removes the least recently updated beyond that.** "Last updated" is the
+- **Sums the size of the previews under `STAGING/`, including the one it is
+  staging, and keeps them within 3 GB.** The number lives once, as
+  `MAX_PREVIEW_BYTES` in `cat-harness/scripts/staging-rotate.ts`.
+- **Keeps the newest that fit and removes the rest, oldest first — strictly by
+  recency.** An older small preview never outlives a newer one that did not
+  fit, so a preview's age alone says whether it is still there. One 780 MB
+  preview displaces several small ones; that is what a size budget means. "Last updated" is the
   `STAGING/<slug>/.staged-at` stamp the job writes on every stage, falling back
   to the latest `rendered` render-log entry, then the record's `builtAt`, then
   git. The preview being staged is never removed.
@@ -604,9 +611,13 @@ only the `name` and `size` fields while you are at it.
 A person handed a URL with no timing either refreshes a 404 or walks away.
 Give them the number and the follow-up, in the same breath as the link:
 
-- **The `stage` job takes ~2 minutes.** Measured 2026-09-20 over three
-  consecutive runs: 1m44s, 1m58s, 2m17s. That is the push to `gh-pages`, and
-  it is the part the check run tells you about.
+- **The `stage` job takes ~2 minutes, plus its wait at the rate limit.**
+  Measured 2026-09-20 over three consecutive runs: 1m44s, 1m58s, 2m17s. Since
+  #1956 the job then waits until `gh-pages` has gone 5 minutes without a
+  staging push and 10 without a main-site one
+  ([`feature-staging`](feature-staging.md) §7), and its PR comment says
+  **queued** with an earliest push time and a live-by time while it waits.
+  Quote those times; they are the job's own estimate.
 - **Pages propagation is on top of that**, and GitHub documents it as up to
   ten minutes. Since it is unobservable from here, quote the bound rather than
   a guess: *"give it ~5 minutes; up to 10 if Pages is slow."*
@@ -657,4 +668,5 @@ Full rule and the measured failure:
 | [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Comment the preview URL on the PR; Post the retention notice on the PR |
 | [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Review the MVP against what we bind to |
 | [Content Change and Review](../../processes/content-change-review.html) | Review staged rendering; Request further revisions; Submit to review committee; Compare main vs staging; Slice the change and assign reviewers |
+| [Public comment on a review draft](../../processes/public-comment.html) | Review the change set on its staging preview (calls a sub-process) |
 

@@ -27,6 +27,7 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-schemas`, 
 | [`masked-region.test.ts`](masked-region.test.ts) | a file |  |
 | [`materialization-compiled.test.ts`](materialization-compiled.test.ts) | a file |  |
 | [`materialization.ts`](materialization.ts) | a file |  |
+| [`public-comment.ts`](public-comment.ts) | a file |  |
 | [`remote-content.test.ts`](remote-content.test.ts) | a file |  |
 | [`review-comment.test.ts`](review-comment.test.ts) | a file |  |
 | [`review-comment.ts`](review-comment.ts) | a file |  |

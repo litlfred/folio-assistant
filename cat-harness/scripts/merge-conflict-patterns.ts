@@ -238,6 +238,12 @@ export const PATTERNS: readonly ConflictPattern[] = [
     why: "directory READMEs (209). Their generated regions carry file counts and listings that every concurrent addition changes; the prose around them is authored, so only a hunk INSIDE a region resolves.",
   },
   {
+    id: "standalone-baseline",
+    globs: ["**/scripts/standalone-baseline.json"],
+    strategy: "take-base",
+    why: "check:standalone's accepted failure list (bean `ho66`, #1977). It conflicts only when BOTH sides changed the list. Take the base's copy and regenerate NOTHING: it is a ratchet, and re-measuring after a merge would write any new standalone failure into the list unreviewed — the thing the gate exists to stop. Fail-closed instead: if this side's change was a new failure, its CI goes red until its author runs `bun run standalone:baseline` deliberately; if it was a fix, nothing is lost but a shorter list, which the check reports.",
+  },
+  {
     id: "beans",
     globs: ["beans/defs/**"],
     strategy: "refuse",

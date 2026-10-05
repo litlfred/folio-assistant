@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: getting-started\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.900Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.435Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -87,11 +87,6 @@ msgstr ""
 #: ../folio-assistant-core/processes/conduct/getting-started.bpmn:74
 #. Diagram element documentation
 msgid "Every write in this diagram belongs to this lane, and each sits behind the non-relaxable read-first gate: nothing is created or scaffolded until Gateway_Intent has classified what was actually asked for, which is what stands between this lane and writing over somebody's existing project."
-msgstr ""
-
-#: ../folio-assistant-core/processes/conduct/getting-started.bpmn:53
-#. Diagram element documentation
-msgid "folio-assistant — getting started: from \"create a folio\" to a live site. \"Create a folio\" is five different requests. Gateway_Intent computes which one from decisions/folio-intent.dmn rather than letting the agent assume, and `ask` is one of the outcomes the table can return. Gateway_Live applies the same construction to publication, with `unknown` kept distinct from `not-yet`. Source of truth: this file. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG."
 msgstr ""
 
 #: ../folio-assistant-core/processes/conduct/getting-started.bpmn:52
@@ -222,6 +217,11 @@ msgstr ""
 #: ../folio-assistant-core/processes/conduct/getting-started.bpmn:85
 #. Diagram element documentation
 msgid "Seeds one bean per top-level content object the author named, positioned after scaffolding but before the Pages probe — a work plan exists for a folio whose publication status is not yet known, rather than waiting on that answer."
+msgstr ""
+
+#: ../folio-assistant-core/processes/conduct/getting-started.bpmn:53
+#. Diagram element documentation
+msgid "Somebody said \"create a folio\": work out which request they meant, with the branch computed by a decision table that may answer \"ask\", and what has to be true before anything is written. folio-assistant — getting started: from \"create a folio\" to a live site. \"Create a folio\" is five different requests. Gateway_Intent computes which one from decisions/folio-intent.dmn rather than letting the agent assume, and `ask` is one of the outcomes the table can return. Gateway_Live applies the same construction to publication, with `unknown` kept distinct from `not-yet`. Source of truth: this file. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG."
 msgstr ""
 
 #: ../folio-assistant-core/processes/conduct/getting-started.bpmn:214

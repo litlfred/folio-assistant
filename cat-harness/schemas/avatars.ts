@@ -141,6 +141,18 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 199,
     reads: "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
   },
+  "smart-trust": {
+    // A shield with a keyhole — a trust framework, about who may open what.
+    // NOT the shield-with-check: that is `qa`'s, and the registry refuses two
+    // kinds sharing a glyph. WHO BLUE, like smart-base:
+    // an organisation's published colour on a neutral glyph is not its
+    // identity, which is the line the owner drew for who-iris on 2026-09-23.
+    // Added 2026-10-04 (bean `2vpn`) when the owner chose a glyph over the
+    // shared operations card it had borrowed through a sticky.
+    glyph: "M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6zM12 9.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM12 12.5v3",
+    tone: 199,
+    reads: "a shield with a keyhole — the trust framework, in WHO blue",
+  },
   "who-iris": {
     // An open book with a band across it — a repository of published
     // documents, which is what IRIS is. The FALLBACK mark since 2026-10-04:
@@ -521,6 +533,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M8 4c-2 0-2 2-2 4s-1 3-2 4c1 1 2 2 2 4s0 4 2 4M16 4c2 0 2 2 2 4s1 3 2 4c-1 1-2 2-2 4s0 4-2 4M9 10h6l-2-2m2 6H9l2 2",
     tone: 136,
     reads: "braces around an arrow out and back — an API described as data: what you can call, and what answers",
+  },
+  "computation-witness": {
+    // A clipboard with a tick: the record a computation keeps of what it
+    // checked and that the checks held. Deliberately NOT `qa`'s verdict — a
+    // witness is a computation's own record, produced by running it, and
+    // judges nothing else. Bean `qou-qb6t`. `tone: 328` was unused and sits
+    // away from `code`'s so a producer and its record are told apart.
+    glyph: "M9 4h6v2H9zM7 5H5v15h14V5h-2M8.5 13l2.5 2.5 4.5-5",
+    tone: 328,
+    reads: "a clipboard with a tick — a computation's record of what it checked, and that it held",
   },
   "binary-release": {
     // A sealed carton with its strap. Deliberately NOT the `uploads` arrow —

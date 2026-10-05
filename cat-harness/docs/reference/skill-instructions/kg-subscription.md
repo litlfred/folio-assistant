@@ -138,6 +138,34 @@ next part** — one part refused is not the subscription refused. The bytes that
 do arrive carry a `materialization.json` with fixity, and
 `check:materialized-fixity` covers them.
 
+## A subgraph's nodes without its bytes: metadata mode
+
+To know *what is in* a subgraph — every node of `skills/sdlc`, typed, labelled
+and linked — you do not need its files. Ask for its published
+`index.hydrated.jsonld` instead
+([`kg-export`](kg-export.md) §"Named subgraphs"):
+
+```sh
+bun run kg:materialize --nodes <subscription> <subgraph-path>   # e.g. --nodes cat skills/sdlc
+```
+
+- It fetches **one file** at the pin,
+  `<docs>/subgraph/<HARNESS>/<path>/index.hydrated.jsonld`. Here `<docs>` and
+  `<HARNESS>` come from the cached declaration. The file is validated against
+  `SubgraphHydratedSchema`, and its root `@id` must be the subgraph you asked
+  for.
+- It is held under `<snapshot dir>/<subscription>/nodes/<path>/`, beside a
+  `nodes.json` record with its sha256. `kg:materialize:check` re-hashes it.
+- **The root is refused.** A harness root publishes `index.jsonld` only, so
+  read that for the child subgraph IRIs, then ask for a child.
+- **Only `size` applies**, as a measured cap (`--max-bytes`). The four person
+  gates guard copies of somebody else's *content*. This is published graph
+  metadata, with every body left as a pointer, and it can be fetched again
+  from the pin at any time. The reasoning is in the header of
+  `folio-assistant-core/scripts/kg-materialize.ts`.
+- **It is not a substitute for the byte copy.** When you need the files
+  themselves, choose the subgraph and run it through the five gates above.
+
 ## Instantiating a harness
 
 Write `<harness>.config.json` at the repository root, plus the state
@@ -163,6 +191,9 @@ the old one did not.
 - **Materialise without the gates.** No copying a subgraph by hand, no
   `git archive` into the tree, no "it's only a few files". Every byte arrives
   through `Process_MaterializeRemote`, or it is an unrecorded fork of upstream.
+  Metadata mode (`--nodes`) is not an exception to this, because it copies
+  none of the subgraph's bytes: only the graph description that the
+  substrate publishes.
 - **Subscribe unpinned.** No branch, no short SHA, no follow-latest.
 - **Record state on the entry.** State lives on the materialisation record.
 - **Treat a refused part as failure** and retry it with the gate relaxed. The

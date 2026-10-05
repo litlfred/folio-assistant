@@ -18,7 +18,7 @@
  * @module scripts/tests/adapter-layering
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { analyse, classify } from "../../../cat-harness/scripts/repo-partition.ts";
@@ -67,7 +67,13 @@ describe("the harness contract does not import the content model", () => {
   });
 
   test("the two layers it belongs to disagree, which is why this matters", () => {
-    expect(classify("src/types.ts").repo).toBe("harness");
+    // `src/types.ts` LEFT the harness partition's scope in 70lx B1: it is the
+    // tools layer's now, so the disagreement is answered by where the file
+    // lives, not by a rule naming a path the partition no longer scans (its
+    // dead entry was removed with the other moved files'). `schemas/types.ts`
+    // is still classified, and still core.
+    expect(existsSync(join(TOOLS_ROOT, "src/types.ts"))).toBe(true);
+    expect(existsSync(join(INSTANCE, "src/types.ts"))).toBe(false);
     expect(classify("schemas/types.ts").repo).toBe("core");
   });
 });

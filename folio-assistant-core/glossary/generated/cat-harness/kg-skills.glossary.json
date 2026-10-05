@@ -1232,6 +1232,14 @@
       "status": "candidate"
     },
     {
+      "id": "ref-stewardship",
+      "prefLabel": "ref-stewardship",
+      "definition": "Steward a WATCHED REF — a long-lived branch many processes write and one consumer serialises. Covers what makes a ref need a steward at all, why a coalescing window is a different object from a hold, the four durable fields a window needs so a handover cannot double-push, and the rule that a steward stores decisions and reads facts live. Use for \"gh-pages is cancelling its own deployments\", \"two sessions pushed the same store branch\", \"who owns writes to this branch\", \"coalesce these pushes\", and before giving any ref a concurrency policy.",
+      "notation": "ref-stewardship",
+      "source": "cat-harness/skills/sdlc/sdlc-core/ref-stewardship.md",
+      "status": "candidate"
+    },
+    {
       "id": "related-work-coordination",
       "prefLabel": "related-work-coordination",
       "definition": "Before new work takes shape, find the work it touches. Search beans, issues and open PRs for relevance; categorize and summarize every hit; then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation, and the user decides the coordination. Called by CRDM when a requirement is initiated or updated in chat, and by methodology adoption. Process: processes/sdlc/related-work.bpmn.",

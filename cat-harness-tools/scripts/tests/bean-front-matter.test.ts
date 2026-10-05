@@ -22,6 +22,7 @@ import {
   MECHANICAL_KEYS,
   checkBeanFrontMatter,
   classifyDuplicate,
+  duplicateBeanIds,
   duplicatedKeys,
   mechanicalWinner,
   reconcile,
@@ -165,6 +166,10 @@ describe("check-bean-front-matter", () => {
       // collapsed to the later write and left the baseline. This expectation
       // mirrors `DUPLICATE_KEY_BASELINE`, so shrinking that set is meant to
       // fail here — and did, in the same change.
+      //
+      // `yt7j` joined 2026-10-03 from `DUPLICATE_ID_BASELINE` (bean `4vg7`) and
+      // left the same day: the owner kept the archive copy and the stale defs/
+      // copy was removed, so that set is empty again.
       expect(checkBeanFrontMatter(root).staleBaseline).toEqual(["folio-assistant-1hvo"]);
     } finally {
       rmSync(root, { recursive: true, force: true });
@@ -470,5 +475,95 @@ describe("who can settle a duplicated front-matter key (bean `kfkh`)", () => {
 
   test("a block with no duplicate yields none — the scan is not vacuous", () => {
     expect(duplicatedKeys("title: one\nstatus: todo")).toEqual([]);
+  });
+});
+
+/**
+ * Bean `4vg7`: two files declaring one id. Both are individually valid — that
+ * is the whole point, and why every per-file check passed over `t3n8` for
+ * eleven days. The fixture reproduces that shape: one id, two titles, two
+ * dates, two parents, both files clean.
+ */
+const ID_COLLISION_DISPLAY = [
+  "---",
+  "# folio-assistant-cccc",
+  "title: 'HARNESS DISPLAY NAMES'",
+  "status: completed",
+  "type: bug",
+  "created_at: 2026-09-21T17:28:40Z",
+  "parent: folio-assistant-yj32",
+  "---",
+  "",
+  "A body.",
+  "",
+].join("\n");
+const ID_COLLISION_ARCHIVE_RUNG = [
+  "---",
+  "# folio-assistant-cccc",
+  "title: The archive rung stages but can never promote",
+  "status: todo",
+  "type: bug",
+  "created_at: 2026-09-22T22:17:51Z",
+  "parent: folio-assistant-ahvw",
+  "---",
+  "",
+  "A different body.",
+  "",
+].join("\n");
+
+describe("check-bean-front-matter — duplicate ids across files (4vg7)", () => {
+  test("two valid files declaring one id are BOTH reported, each naming the other", () => {
+    const root = storeWith({
+      "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER,
+      "folio-assistant-cccc--harness-display-names.md": ID_COLLISION_DISPLAY,
+      "folio-assistant-cccc--the-archive-rung.md": ID_COLLISION_ARCHIVE_RUNG,
+    });
+    try {
+      const r = checkBeanFrontMatter(root);
+      const dup = r.defects.filter((d) => d.kind === "duplicate-id");
+      expect(dup.map((d) => d.file).sort()).toEqual([
+        "folio-assistant-cccc--harness-display-names.md",
+        "folio-assistant-cccc--the-archive-rung.md",
+      ]);
+      expect(dup.every((d) => d.id === "folio-assistant-cccc" && !d.baselined)).toBe(true);
+      expect(dup[0]!.message).toContain(dup[1]!.file);
+      // No per-file defect: each file on its own is fine.
+      expect(r.defects.filter((d) => d.kind !== "duplicate-id")).toEqual([]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a collision between defs/ and archive/ counts — archiving does not free an id", () => {
+    const root = storeWith({ "folio-assistant-cccc--live.md": ID_COLLISION_DISPLAY });
+    mkdirSync(join(root, "beans", "defs", "archive"));
+    writeFileSync(
+      join(root, "beans", "defs", "archive", "folio-assistant-cccc--old.md"),
+      ID_COLLISION_ARCHIVE_RUNG,
+    );
+    try {
+      const files = checkBeanFrontMatter(root)
+        .defects.filter((d) => d.kind === "duplicate-id")
+        .map((d) => d.file)
+        .sort();
+      expect(files).toEqual([join("archive", "folio-assistant-cccc--old.md"), "folio-assistant-cccc--live.md"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("distinct ids yield nothing, and a collision keeps both paths", () => {
+    expect(
+      duplicateBeanIds([
+        { id: "a", file: "a.md", archived: false },
+        { id: "b", file: "b.md", archived: false },
+      ]).size,
+    ).toBe(0);
+    expect([
+      ...duplicateBeanIds([
+        { id: "a", file: "a1.md", archived: false },
+        { id: "a", file: "a2.md", archived: true },
+      ]),
+    ]).toEqual([["a", ["a1.md", join("archive", "a2.md")]]]);
   });
 });

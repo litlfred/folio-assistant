@@ -7,7 +7,7 @@ priority: normal
 tags:
     - mvp
 created_at: 2026-10-01T06:58:02Z
-updated_at: 2026-10-04T09:56:45Z
+updated_at: 2026-10-04T12:17:52Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-vj2p
@@ -35,3 +35,10 @@ Started by the Parcel B session (https://claude.ai/code/session_01SmeBn6QZsDFaNQ
 
 ## 2026-10-03 — the check, as a ratchet (#1977)
 Owner's question on sequencing went unanswered; the stated default (option 3) was taken: build only the CI check now, leave the relocation for later. **#1977** (stacked on #1896): `check:cat-harness-standalone` judges `probeStandalone` against `cat-harness/scripts/standalone-baseline.json` — a new standalone failure is red, a fixed one is red until `bun run standalone:baseline` lowers the list. Probe now `git init`s each layer; failures keyed `<file> > <test>`. Both falsifiers are tests through the real probe. Baseline 459, identical across two runs. Boxes 1–2 tick when #1977 merges; box 3 (green on main) is the relocation program.
+
+
+## 2026-10-04 — submitted to the merge queue (PR #1977)
+
+- Merged `main` at `2366227` (#2057, fsh-guts moved to its own branch). Five generated files conflicted; each was confirmed generated, main's copy taken, and the tree regenerated.
+- Standalone baseline re-measured: 472 → 482. Ten new entries are tests `main` gained that read the aggregate's own `bootstrap/` sidecar, workflows or declarations; one entry dropped because the test now passes standalone.
+- Intake follows `merge-queue.md` § "Handing a PR to the queue": ready for review, `ready-to-merge`, a signed `ready: <sha>` comment once owed CI is green. The conversation with the steward is kept on the PR.

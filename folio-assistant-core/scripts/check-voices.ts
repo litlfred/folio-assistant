@@ -15,15 +15,42 @@
  *     bun run check:voices
  *
  * @module scripts/check-voices
- * @covers voices
+ * @covers voices, voice-vendors
+ *
+ * ## A vendor voice must SPECIALISE a voice that resolves
+ *
+ * `voice-vendors` (bean `rkqp`) holds a base voice specialised for one agent
+ * vendor: `folio-voice/v1` with `extends` naming the base. The citation checks
+ * below read those files like any other voice, and say nothing about the one
+ * property that makes them vendor voices — so a vendor voice with no `extends`
+ * (a base voice filed in the wrong place) or one whose `extends` names a voice
+ * no instance ships, or that cycles, passed. `resolveVoice` reports both
+ * failures and had no caller in a gate: `skill-voice-review.ts` skips an
+ * unresolvable chain on the stated ground that *"`check:voices` owns"* it,
+ * which this file did not do until PR #2094. See {@link vendorVoiceFindings}.
  */
 
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { explainFailure, resolveLibraryRef } from "../schemas/library-ref.js";
 import { join, relative, resolve } from "node:path";
 
-import { loadVoices, unionRules, voicesPresent } from "../../cat-harness/schemas/voices";
-import { declaresInstance, instanceRootsIn, readDeclaration, repoRootFor, resolveDirectories } from "../../cat-harness/schemas/cat-harness.ts";
+import {
+  explainVoiceFailure,
+  loadVoices,
+  resolveVoice,
+  unionRules,
+  voicesPresent,
+  type VoiceProfile,
+} from "../../cat-harness/schemas/voices";
+import {
+  declaresInstance,
+  defaultGraphKinds,
+  directoriesForGraph,
+  instanceRootsIn,
+  readDeclaration,
+  repoRootFor,
+  resolveDirectories,
+} from "../../cat-harness/schemas/cat-harness.ts";
 import { readRoleGraph, type RoleGraph } from "../../cat-harness/schemas/role-graph";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -136,6 +163,59 @@ function roleGraphOf(instanceRoot: string): RoleGraph | undefined {
     roleGraphs.set(instanceRoot, dir === undefined ? undefined : readRoleGraph(dir));
   }
   return roleGraphs.get(instanceRoot);
+}
+
+/**
+ * The vendor-voice criterion: each voice found in a declared `voice-vendors`
+ * directory declares `extends`, and its chain resolves against the voices
+ * every instance ships — no missing base, no cycle.
+ *
+ * Pure over its inputs so a test can hand it a fixture: `vendors` are the
+ * vendor voice files (path, for the message, and the parsed profile), and
+ * `shipped` is every loaded voice by id. Lookup is by id because `main`
+ * refuses a duplicate id before this runs, so an id names one voice.
+ */
+export function vendorVoiceFindings(
+  vendors: ReadonlyArray<{ where: string; voice: VoiceProfile }>,
+  shipped: ReadonlyMap<string, VoiceProfile>,
+): string[] {
+  const out: string[] = [];
+  for (const { where, voice } of vendors) {
+    if (!voice.extends) {
+      out.push(
+        `${where}: vendor voice \`${voice.id}\` declares no \`extends\`, so it specialises nothing — ` +
+          `a base voice filed under a vendors directory`,
+      );
+      continue;
+    }
+    const r = resolveVoice({ instance: "(local)", voice }, (ref) => {
+      const v = shipped.get(ref.voiceId);
+      return v === undefined ? undefined : { instance: "(local)", voice: v };
+    });
+    if (!r.ok) out.push(`${where}: ${explainVoiceFailure(r.failure)}`);
+  }
+  return out;
+}
+
+/**
+ * The vendor voice files, read from every declared `voice-vendors` directory —
+ * resolved through the declaration rather than a `vendors/` literal. A
+ * directory's own declaration file (`vendors.json`) is not a voice. Returns the
+ * directories walked too, so the run can print its denominator.
+ */
+function vendorVoices(repoRoot: string): { dirs: string[]; vendors: Array<{ where: string; voice: VoiceProfile }> } {
+  const declFile = defaultGraphKinds.get("voice-vendors")?.declarationFile;
+  const dirs = new Set<string>();
+  for (const root of instanceRootsIn(repoRoot)) for (const d of directoriesForGraph(root, "voice-vendors")) if (existsSync(d)) dirs.add(resolve(d));
+  const vendors: Array<{ where: string; voice: VoiceProfile }> = [];
+  for (const d of [...dirs].sort()) {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      if (!e.isFile() || !e.name.endsWith(".json") || e.name === declFile) continue;
+      const p = join(d, e.name);
+      vendors.push({ where: relative(repoRoot, p), voice: JSON.parse(readFileSync(p, "utf-8")) as VoiceProfile });
+    }
+  }
+  return { dirs: [...dirs].sort(), vendors };
 }
 
 function main(): number {
@@ -320,7 +400,19 @@ function main(): number {
     }
   }
 
+  // ── A vendor voice specialises a base that resolves ─────────────────────
+  const shipped = new Map(voices.map((v) => [v.id, v]));
+  const { dirs: vendorDirs, vendors } = vendorVoices(REPO_ROOT);
+  problems.push(...vendorVoiceFindings(vendors, shipped));
+
   console.log(`Voice graph  (${voices.length} voices, ${rules.length} rules)\n`);
+  // The denominator: which vendor directories were walked, and how many voices
+  // they held — a run over no declared vendors directory says so.
+  console.log(
+    vendorDirs.length === 0
+      ? "  vendor voices: no instance declares a `voice-vendors` directory — nothing to resolve\n"
+      : `  vendor voices: ${vendors.length} examined across ${vendorDirs.length} declared director(ies); each must extend a voice that resolves\n`,
+  );
   for (const v of voices) {
     const mech = v.rules.filter((r) => r.patterns || r.terminology).length;
     const judged = v.rules.filter((r) => r.judgementOnly).length;
@@ -354,8 +446,8 @@ function main(): number {
     for (const p of problems) console.error(`  ✗ ${p}`);
     return 1;
   }
-  console.log("✓ every rule cites a source that resolves, with a quote long enough to check");
+  console.log("✓ every rule cites a source that resolves, with a quote long enough to check, and every vendor voice extends a voice that resolves");
   return 0;
 }
 
-process.exit(main());
+if (import.meta.main) process.exit(main());

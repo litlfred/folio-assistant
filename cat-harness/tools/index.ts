@@ -194,6 +194,29 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       satisfies: ["directory-conventions"],
       requires: { runtime: ["bun"], network: false },
     }),
+    // Bean `qou-qb6t`, owner 2026-10-04: "all witnesses tools will need to go
+    // into the KG". The reader of the `computation-witness` kind: which
+    // witnesses meet the producer contract, and which are malformed.
+    defineTool({
+      id: "witness-conformance",
+      title: "Witness conformance report",
+      description:
+        "Check every `*.witness.json` in the folio's declared `computation-witness` directories against the two schemas in `schemas/computation-witness.ts`: the envelope every witness should meet (a failure is a malformed file) and the producer contract (a failure is a finding against the producer, grouped by the fields at fault). Also lists files that are not strict JSON, which Python's reader accepts and every other consumer rejects. Report-only: it never edits a witness, which is generator output.",
+      install: { none: true },
+      invoke: { shell: "bun run witness:conformance" },
+      io: {
+        inputs: [
+          { name: "dir", schema: t("RepoPath"), required: false, arg: { flag: "--dir" }, description: "Check this directory instead of the declared ones, e.g. before a folio declares the kind." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" }, description: "Machine-readable output, every finding group listed." },
+          { name: "strict", schema: t("Flag"), required: false, arg: { flag: "--strict" }, description: "Exit 1 when any witness is malformed or not strict JSON. Contract findings never fail the run." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "Counts of witnesses, malformed files, non-strict-JSON files and contract conformance, then the contract findings by field. Exit 2 when no directory declares the kind and no `--dir` was given: a clean report over nothing is not a pass." },
+        ],
+      },
+      satisfies: ["directory-conventions"],
+      requires: { runtime: ["bun"], network: false },
+    }),
     defineTool({
       id: "subgraph-readmes",
       title: "Directory READMEs from the Knowledge Graph",
@@ -1899,6 +1922,44 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // They satisfy `kg-export`, the skill that covers rendering the instance's
     // own graph and schemas. `invoke.shell` is the command that regenerates
     // them, so the node says how to exercise it rather than only what it is.
+    // ── Per-slice SQLite: a named slice as one file a browser mounts ──────
+    //
+    // Bean `q8ar`. ONE Tool for every slice, as `kg-validate` is one tool for
+    // every kind: the slice is the parameter, and the builder's own table of
+    // slice definitions is the lookup. Its procedure — measure BEFORE wiring,
+    // gate, build at deploy, look at it — is the `slice-sqlite-publish`
+    // diagram, named here as its subprocess (ruling 6, 2026-09-30) so the
+    // general `kg-export` skill does not carry it.
+    defineTool({
+      id: "slice-sqlite",
+      title: "Per-slice SQLite builder",
+      description:
+        "Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. `--check` builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source.",
+      install: { none: true },
+      invoke: { shell: "bun run slice:sqlite" },
+      io: {
+        inputs: [
+          { name: "slice", schema: t("Slug"), required: false, arg: { flag: "--slice" }, description: "A slice to build; repeatable. Absent: every slice in the builder's table." },
+          { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where the files and `index.json` go; defaults to the gitignored `docs/assets/slices/`. The deploy passes `./_site/assets/slices`." },
+          { name: "payloadOut", schema: t("RepoPath"), required: false, arg: { flag: "--payload-out" }, description: "Where the deploy payloads are written (`<hex>` plus its `<hex>.json` sidecar). Never the committed `docs/payload/`." },
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Build twice and verify instead of writing: one sha256, the row digest against the source, an FTS5 phrase query, the payload audit." },
+        ],
+        outputs: [
+          { name: "slices", schema: t("RepoPath"), description: "`<slice>.<sha256>.sqlite3` (content-addressed) and its fixed-name `<slice>.sqlite3.json` manifest per slice, and `index.json` listing them." },
+          { name: "report", schema: t("Text"), description: "One line per slice: bytes, row counts, payloads, and any source findings; with `--check`, one verdict line per slice. Exit 1 on a red slice or an unreadable source." },
+        ],
+      },
+      satisfies: ["kg-export"],
+      subprocesses: ["slice-sqlite-publish"],
+      selection: {
+        when: "A corpus is too large to ship as JSON for a reader's search, or a reader needs to search it with no server: the work plan, the todos, the library, the knowledge graph.",
+        limits:
+          "Built at deploy and never committed, so a slice describes the tree the deploy published and nothing later. A slice over the ~5 MB budget is reported (`overBudget` in the manifest), not refused. The file's sha256 is stable for one SQLite version; `contentDigest` is the cross-version identity.",
+        cost: "Seconds: the kg slice re-runs `kg-export` in-process (about 5 s); the other three take a quarter of a second each. Nothing to install, no network.",
+      },
+      requires: { runtime: ["bun"], network: false },
+    }),
+
     defineTool({
       id: "kg-validate",
       title: "Validate a node in the graph",

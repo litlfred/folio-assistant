@@ -679,6 +679,14 @@
       "status": "candidate"
     },
     {
+      "id": "slice-sqlite",
+      "prefLabel": "Per-slice SQLite builder",
+      "definition": "Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. `--check` builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source.",
+      "notation": "slice-sqlite",
+      "source": "cat-harness/tools/index.ts#slice-sqlite",
+      "status": "candidate"
+    },
+    {
       "id": "stakeholder-map",
       "prefLabel": "Stakeholder map",
       "definition": "Given the paths a proposed change touches, report which skills change, which roles declare them, and who therefore has a stake in the review.",
@@ -932,6 +940,14 @@
       "definition": "Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail.",
       "notation": "wireframe-check",
       "source": "cat-harness/tools/index.ts#wireframe-check",
+      "status": "candidate"
+    },
+    {
+      "id": "witness-conformance",
+      "prefLabel": "Witness conformance report",
+      "definition": "Check every `*.witness.json` in the folio's declared `computation-witness` directories against the two schemas in `schemas/computation-witness.ts`: the envelope every witness should meet (a failure is a malformed file) and the producer contract (a failure is a finding against the producer, grouped by the fields at fault). Also lists files that are not strict JSON, which Python's reader accepts and every other consumer rejects. Report-only: it never edits a witness, which is generator output.",
+      "notation": "witness-conformance",
+      "source": "cat-harness/tools/index.ts#witness-conformance",
       "status": "candidate"
     },
     {
