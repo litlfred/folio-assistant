@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T17:42:33Z
-updated_at: 2026-10-04T20:05:48Z
+updated_at: 2026-10-05T05:02:17Z
 parent: folio-assistant-fs43
 ---
 
@@ -123,3 +123,13 @@ Owner, the same turn: *"uploads and library live in cat-harness as part of doc i
 - **smart-base:** five checker nodes naming `DAK_AUTOMATED_CHECKERS`.
 - Both contributions.ts modules no longer return `qaCheckers` or `pipelinePlugins`. sci's still returns `tools`, which is step 3c.
 - `check:kind-validators` now `@covers qa-checkers, pipeline-plugins`: it loads the platform root's contributions, and every node must resolve (4 plugins, 7 checkers). audit:coverage reports both graphs as covered.
+
+
+
+## 3c — owner rulings 2026-10-05
+
+1. Tool registration comes from Tool nodes; the MCP adapter's static TOOL_GROUPS list is deleted.
+2. The code moves to its owners now (option B). validate → core; render and lean → sci. A core node cannot point at cat-harness-tools code, because resolveImplementingPath only looks in the declarer and in the instances that need it.
+3. The MCP adapter serves every Tool node in the folio's dependency tree, the same rule as the harness server. The three adapter copies duplicating src/tools (preferences, preview, check-deps) are deleted, after the adapter's preview spawn+unref fix is ported into src/tools/preview.ts. Preferences standardise on .folio-prefs.json (default, stated to the owner).
+
+Work is on the local branch riit-3c-local, to be pushed after #2082 merges so its ready state is not reset.

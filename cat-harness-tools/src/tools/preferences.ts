@@ -13,10 +13,12 @@ import { z } from "zod";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { resolve } from "path";
+import { findContentRepoRoot } from "../../../cat-harness/content/pipeline/repo-root";
 
-// Resolve prefs file from repo root (folio-assistant/src/tools/ → ../../..)
-const REPO_ROOT = resolve(import.meta.dir, "../../..");
-const PREFS_FILE = resolve(REPO_ROOT, ".folio-prefs.json");
+// The FOLIO's root, as in `preview.ts`. `.folio-prefs.json` is the name the
+// document adapter also reads; the MCP adapter's copy used
+// `.folio-assistant-prefs.json` until the two were merged (bean riit, 3c).
+const PREFS_FILE = resolve(findContentRepoRoot(), ".folio-prefs.json");
 
 /** Default preferences. */
 const DEFAULTS = {
