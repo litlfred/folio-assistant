@@ -14,7 +14,7 @@
 import { HARNESS_ROOT } from "../lib/roots.ts";
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 
 import { declaredDiagrams, diagramPath, framedInstances, publishedProcesses, unframedProcesses } from "../check-process-index.ts";
 import { firstSentence } from "../../../cat-harness/scripts/kg-export.ts";
