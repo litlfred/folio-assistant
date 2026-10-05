@@ -7,7 +7,19 @@
  *
  * @module scripts/lib/translation-meta
  */
-import { sourceLocale, supportedLocales } from "../../content/pipeline/translation-index.ts";
+import { readHarnessConfig, TranslationConfigSchema } from "../../schemas/harness-config.ts";
+
+/**
+ * The instance's declared translation config, with the SCHEMA's defaults (the
+ * six UN languages, source `en`). Read through `schemas/` rather than
+ * `content/pipeline/translation-index.ts`: this is harness chrome, and the
+ * harness may not import the content pipeline (`adapter-layering.test.ts`).
+ */
+function declared(instanceDir: string): { defaultLocale: string; supportedLocales: string[] } {
+  const raw = (readHarnessConfig(instanceDir) as { translation?: unknown } | null)?.translation ?? {};
+  const parsed = TranslationConfigSchema.safeParse(raw);
+  return parsed.success ? parsed.data : TranslationConfigSchema.parse({});
+}
 
 /** The id `_includes/head_custom.html` writes and `docs-ui.js` reads. */
 export const TRANSLATION_META_ID = "fa-translation-meta";
@@ -28,11 +40,12 @@ export const TRANSLATION_META_ID = "fa-translation-meta";
  * locale would link to a page that does not exist.
  */
 export function translationMetaBlock(instanceDir: string): string {
+  const t = declared(instanceDir);
   const meta = {
-    lang: sourceLocale(instanceDir),
+    lang: t.defaultLocale,
     translationStatus: "",
     translationSource: "",
-    supportedLocales: supportedLocales(instanceDir),
+    supportedLocales: t.supportedLocales,
     availableLocales: [] as string[],
   };
   return `<script type="application/json" id="${TRANSLATION_META_ID}">${JSON.stringify(meta)}</script>`;

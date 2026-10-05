@@ -5,7 +5,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-05T18:07:13Z
-updated_at: 2026-10-05T18:07:28Z
+updated_at: 2026-10-05T18:24:51Z
+parent: folio-assistant-bzyu
 ---
 
 Issue #2219. Owner chose B: same chrome as folio-assistant on mounted pages (fa-translation-meta + docs-ui band globe), every declared locale shown, untranslated ones greyed. No new UI.

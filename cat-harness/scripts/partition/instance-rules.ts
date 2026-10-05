@@ -281,6 +281,12 @@ export const RULES: Rule[] = [
       // HARNESS beside `navbar.ts` -- the switch is the platform's, and every
       // page carrying it, a folio's included, has to agree on what it means.
       "scripts/lib/scheme-css.ts",
+      // The locale half of that chrome (issue #2219): the docs pages'
+      // `fa-translation-meta` block, written onto a MOUNTED page so it draws
+      // the same band globe. HARNESS beside `scheme-css.ts` -- it is
+      // `head_custom.html`'s block, and a folio owning it would let one
+      // instance decide what every other mounted page declares.
+      "scripts/lib/translation-meta.ts",
       // The geometry that navbar became a reader of, and the generator that
       // renders it to CSS (bean `sjic`). HARNESS for the same reason as
       // `navbar.ts` and one step more plainly: the numbers are the width of
