@@ -28,7 +28,8 @@
 # refuses a `workflow_run` on such a workflow (#1725). Check 5 judges its
 # run once it FINISHES but never waits for it (owner ruling 2026-10-05, bean
 # `gnnj`: its deploy waits out the #1956 rate limit, measured at up to 41
-# min); a finished-red run found later is caught by the next label, comment
+# min), and a run red ONLY in its deploy step is not a refusal either
+# (`DEPLOY_ONLY_STEP`); a finished-red run found later is caught by the next label, comment
 # or gating-workflow completion, or by a dispatch.
 #
 # THE SCRIPT COMES FROM MAIN, NOT FROM THE PR, as in `merge-main.yml`: a PR

@@ -147,6 +147,16 @@ export const SELF_WORKFLOW_FILE = ".github/workflows/merge-guard.yml";
  * yet" stop being reasons to refuse. #1956's limits are untouched.
  */
 export const NOT_WAITED_FOR_WORKFLOW_FILES: ReadonlySet<string> = new Set([".github/workflows/feature-staging.yml"]);
+
+/**
+ * The one step of a {@link NOT_WAITED_FOR_WORKFLOW_FILES} run whose failure is
+ * not a verdict on the tree: the `gh-pages` deploy, which fails when the #1956
+ * push window never opened (`staging-push-gate` gave up) or three pushes were
+ * rejected. Nothing in it judges the head, so a run whose ONLY failed step is
+ * this one does not refuse check 5 (owner ruling 2026-10-05, bean `gnnj`). Any
+ * other failed step — a build or page check — still refuses.
+ */
+export const DEPLOY_ONLY_STEP = "Deploy the preview and log the render, in one commit";
 /** The workflow that merges main into PR heads, and dispatches the gating workflows after a bot push. */
 export const MERGE_MAIN_WORKFLOW = ".github/workflows/merge-main.yml";
 /** The commit-status context the workflow posts and a ruleset would require. */
@@ -230,6 +240,12 @@ export interface GuardSnapshot {
    * {@link parseMergeMainDispatches}; `unknown` when that could not be read.
    */
   mergeMainDispatches: string[] | { unknown: string };
+  /**
+   * For each FAILED run of a not-waited-for workflow, by run id: the names of
+   * its failed steps, or `unknown` when the jobs could not be read. Absent
+   * means not fetched, which refuses as before.
+   */
+  failedSteps?: Record<number, string[] | { unknown: string }>;
 }
 
 export interface GuardOptions {
@@ -667,7 +683,12 @@ function checkCi(s: GuardSnapshot): CheckResult {
         return R(5, "ci", "unknown", `\`${name}\` was held for approval and has no dispatch, and \`.github/workflows/merge-main.yml\` could not be read for the workflows it dispatches: ${o.unknown}`);
       }
       if (!o.ok) problem(name, o.problem, o.kind);
-    } else if (!PASSING.has(r.conclusion ?? "")) problem(name, `${name}: ${r.conclusion}`, "defect");
+    } else if (!PASSING.has(r.conclusion ?? "")) {
+      const steps = notWaitedNames.has(name) && r.id !== undefined ? s.failedSteps?.[r.id] : undefined;
+      if (Array.isArray(steps) && steps.length > 0 && steps.every((x) => x === DEPLOY_ONLY_STEP)) {
+        notWaited.push(`${name} (${r.conclusion} in the deploy step only)`);
+      } else problem(name, `${name}: ${r.conclusion}`, "defect");
+    }
   }
 
   // Coverage applies the same substitution: a required workflow whose only
@@ -876,7 +897,27 @@ export async function fetchSnapshot(repo: string, n: number, root: string): Prom
   } catch (e) {
     mergeMainDispatches = { unknown: e instanceof Error ? e.message : String(e) };
   }
-  return { pr, comments, timeline, commits, baseMergedAsHeadOf, runs, scan, mergeMainDispatches };
+  const failedSteps: NonNullable<GuardSnapshot["failedSteps"]> = {};
+  if (runs.state === "has-run") {
+    const notWaitedNames = new Set(
+      scan.triggers.filter((t) => NOT_WAITED_FOR_WORKFLOW_FILES.has(t.file)).map((t) => t.name),
+    );
+    for (const r of runs.runs as GuardRun[]) {
+      if (!notWaitedNames.has(r.name) || r.id === undefined || r.status !== "completed") continue;
+      if (PASSING.has(r.conclusion ?? "") || NOT_EXECUTED.has(r.conclusion ?? "")) continue;
+      try {
+        const jobs = await getJson<{ jobs: { steps?: { name: string; conclusion: string | null }[] }[] }>(
+          `repos/${repo}/actions/runs/${r.id}/jobs?per_page=100`,
+        );
+        failedSteps[r.id] = jobs.jobs.flatMap((j) =>
+          (j.steps ?? []).filter((x) => x.conclusion === "failure").map((x) => x.name),
+        );
+      } catch (e) {
+        failedSteps[r.id] = { unknown: e instanceof Error ? e.message : String(e) };
+      }
+    }
+  }
+  return { pr, comments, timeline, commits, baseMergedAsHeadOf, runs, scan, mergeMainDispatches, failedSteps };
 }
 
 export type MergeOutcome = { merged: true; sha: string } | { merged: false; refused: boolean; reason: string };
