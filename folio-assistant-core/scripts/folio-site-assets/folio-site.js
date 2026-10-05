@@ -48,6 +48,13 @@
       const a = link(href(p), it.number ? `${it.number}\u2002${it.title}` : it.title);
       if (p === path) a.setAttribute("aria-current", "page");
       li.append(a);
+      // Lean status, from the outline: sorry-free and sorry-carrying Lean siblings under this entry.
+      const lean = it.lean || (it.sections ? it.sections.reduce((t, s) => ({ proved: t.proved + s.lean.proved, sorry: t.sorry + s.lean.sorry }), { proved: 0, sorry: 0 }) : null);
+      if (lean && (lean.proved || lean.sorry)) {
+        const b = el("span", { class: "lean-badge", title: `Lean: ${lean.proved} with no sorry, ${lean.sorry} with sorry` });
+        b.textContent = `${lean.proved ? "\u2713" + lean.proved : ""}${lean.sorry ? " \u25D0" + lean.sorry : ""}`.trim();
+        a.append(" ", b); // inside the link: the harness navbar lays its links out as blocks
+      }
       if (it.sections && it.sections.length && (path === p || path.startsWith(p + "/"))) li.append(tocList(it.sections, p));
       ul.append(li);
     }
@@ -83,9 +90,10 @@
   // ── Math, rendered lazily ──
   let katexReady = null;
   const loadKatex = () => katexReady ??= new Promise((ok) => {
-    const css = el("link", { rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" });
+    // The stylesheet is in the shell, BEFORE ours; appending it here again put it after ours and
+    // restored KaTeX's 1.21em, so math stood taller than the text around it.
     const js = el("script", { src: "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" });
-    js.onload = ok; document.head.append(css, js);
+    js.onload = ok; document.head.append(js);
   });
   const mathIO = new IntersectionObserver((entries) => {
     for (const e of entries) {
@@ -186,7 +194,7 @@
         const issue = `${gh}/issues/new?title=${encodeURIComponent(`Feedback: ${name}${n.title ? " — " + n.title : ""}`)}&body=${encodeURIComponent(body)}`;
         row.append(el("a", { href: `${gh}/edit/${outline.source.ref}/${n.source}`, title: "Edit the source on GitHub", "aria-label": "Edit the source" }, "\u270E edit"));
         row.append(el("a", { href: issue, title: "Give feedback: open an issue on this block", "aria-label": "Give feedback" }, "\u{1F4E3} feedback"));
-        if (n.leanSource) row.append(el("a", { href: `${gh}/blob/${outline.source.ref}/${n.leanSource}`, title: "The Lean formalisation", "aria-label": "Lean source" }, "Lean"));
+        if (n.leanSource) row.append(el("a", { href: `${gh}/blob/${outline.source.ref}/${n.leanSource}`, title: n.leanStatus === "sorry" ? "Lean formalisation — still has a sorry" : "Lean formalisation — no sorry in this file", "aria-label": "Lean source", class: `lean-${n.leanStatus || "proved"}` }, n.leanStatus === "sorry" ? "Lean \u25D0" : "Lean \u2713"));
         d.prepend(row);
       }
       // A \ref link names its label; show the number the label has.
@@ -195,7 +203,11 @@
         if (a.textContent === l && outline.numbers && outline.numbers[l]) a.textContent = outline.numbers[l];
       }
       // Pre-rendered figures name a path below the paper; resolve it here, since this block may sit at any depth.
-      for (const img of d.querySelectorAll("img[data-src]")) img.src = pbase + img.getAttribute("data-src");
+      for (const img of d.querySelectorAll("img[data-src]")) {
+        // dvisvgm draws at 1pt = 1px, smaller than the text around it; scale to the body's size.
+        img.addEventListener("load", () => { if (img.naturalWidth) img.style.width = `${Math.round(img.naturalWidth * 1.6)}px`; }, { once: true });
+        img.src = pbase + img.getAttribute("data-src");
+      }
       box.append(d);
     }
     await watchMath(box);

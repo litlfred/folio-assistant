@@ -4,8 +4,8 @@ description: "The JSON-LD sidecar of ValueSet/WHORegionalOffices, from the IG's 
 nav_exclude: true
 ig_api: {"label":"JSON-LD","file":"ValueSet-WHORegionalOffices.jsonld","src":"../fhir-artifact-index/dak/ValueSet-WHORegionalOffices.jsonld","artifact":{"title":"WHO Regional Offices","page":"ValueSet-WHORegionalOffices.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-WHORegionalOffices.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.xml","active":false},{"label":"JSON","href":"ValueSet-WHORegionalOffices.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-WHORegionalOffices.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-WHORegionalOffices.jsonld.html","active":true}],"script":"../assets/ig-api-view.js"}
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -36,4 +36,4 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <script src="{{ page.ig_api.script }}" defer></script>
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>
