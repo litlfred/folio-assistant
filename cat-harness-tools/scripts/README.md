@@ -132,6 +132,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`merge-leftover.ts`](merge-leftover.ts) | a file |  |
 | [`merge-overlap.ts`](merge-overlap.ts) | a file |  |
 | [`merge-train.ts`](merge-train.ts) | a file |  |
+| [`migrate-bib-attestations.ts`](migrate-bib-attestations.ts) | a file |  |
 | [`migrate-qa-attestations.ts`](migrate-qa-attestations.ts) | a file |  |
 | [`milestone-status.ts`](milestone-status.ts) | a file |  |
 | [`publish-id-lookup.ts`](publish-id-lookup.ts) | a file |  |

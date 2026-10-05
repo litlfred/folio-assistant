@@ -973,6 +973,48 @@
       "status": "candidate"
     },
     {
+      "id": "bib-attestations.ledgerread.files",
+      "prefLabel": "LedgerRead.files",
+      "definition": "Store reads only: how many store files were read.",
+      "source": "cat-harness/schemas/bib-attestations.ts#LedgerRead.files",
+      "status": "candidate"
+    },
+    {
+      "id": "bib-attestations.ledgerread.legacypresent",
+      "prefLabel": "LedgerRead.legacyPresent",
+      "definition": "Store reads only: a legacy file is still there beside the store.",
+      "source": "cat-harness/schemas/bib-attestations.ts#LedgerRead.legacyPresent",
+      "status": "candidate"
+    },
+    {
+      "id": "bib-attestations.ledgerread.note",
+      "prefLabel": "LedgerRead.note",
+      "definition": "One line for the caller to print: which home answered.",
+      "source": "cat-harness/schemas/bib-attestations.ts#LedgerRead.note",
+      "status": "candidate"
+    },
+    {
+      "id": "bib-attestations.reviewread.meta",
+      "prefLabel": "ReviewRead.meta",
+      "definition": "The legacy file's `_meta`, when that is where the read came from.",
+      "source": "cat-harness/schemas/bib-attestations.ts#ReviewRead.meta",
+      "status": "candidate"
+    },
+    {
+      "id": "bib-attestations.reviewread.reviews",
+      "prefLabel": "ReviewRead.reviews",
+      "definition": "Reference id → review, in recorded order.",
+      "source": "cat-harness/schemas/bib-attestations.ts#ReviewRead.reviews",
+      "status": "candidate"
+    },
+    {
+      "id": "bib-attestations.writeresult.written",
+      "prefLabel": "WriteResult.written",
+      "definition": "Paths written (store) or the legacy path.",
+      "source": "cat-harness/schemas/bib-attestations.ts#WriteResult.written",
+      "status": "candidate"
+    },
+    {
       "id": "bib-verification.keyresult.locator",
       "prefLabel": "KeyResult.locator",
       "definition": "Locator *within the source*: \"Thm 3.2\", \"§4.1\", \"eq. (12)\", \"p. 87\".",
