@@ -52,7 +52,7 @@ The open question is answered: **every contribution is a node, and validators ar
 - [ ] #1 paper block kinds as nodes: DISCOVERED from core (9 document kinds) and sci (7 math kinds), owner 2026-10-04 "2. Owners now"; the data tables are gone (riit step 2a). Left: non-English headings into the translation graph (2b)
 - [ ] #2 folio-specific and DAK QA criteria to their owners as criterion nodes
 - [ ] #3 qou's 39-entry chapter profiles to the qou folio as data (math repo: ask before any PR)
-- [ ] #4 avatars on the owning nodes: kind avatars done for moved kinds (dmx1); instance avatars into each `<instance>.json`
+- [x] #4 avatars on the owning nodes. Kind avatars are done for the moved kinds (dmx1). Instance avatars are on each `<instance>.json` as `avatar` (#2180); the table keeps bootstrap, bootstrap-tools and cat-harness, which declare none of their own.
 - [x] #5 the per-kind side tables become fields on folio-graph-kind/v1 (dmx1). MEASURED 2026-10-04: of the six, only `KIND_TILE_ICONS` keyed a kind another harness owns (`uploads`, now folio-assistant-core's); it became `tileIcon` on the node. The other five (UNPUBLISHED, SKILL_BEARING, KG_CONTENT, HARNESS_GRAPH_KINDS, REGISTRY_GROUPS) key only cat-harness's own kinds and classes, so they are local facts and stay
 - [ ] #6 partition ALLOWED derived from declared `needs`; path claims per instance
 - [ ] #7 check-reference-direction PENDING becomes a per-instance baseline (backlog)
@@ -62,3 +62,6 @@ The open question is answered: **every contribution is a node, and validators ar
 - [ ] #11 core's AUDITS tool table: check for duplicates of tools/ nodes, and convert
 - [ ] #12 special-branches.json retired (rva2; the TypeScript readers are done)
 - [ ] merge-train.ts's hard-coded smart-base L1 check becomes a hook smart-base declares
+
+## 2026-10-05: #5 revisited (#2180)
+The five local side tables that were left in place are now derived from fields on the kind definitions rather than written by hand, so a new kind cannot be missing from one of them. REGISTRY_GROUPS stays: it is keyed by scenarios directories, not by kinds.

@@ -11,7 +11,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { AVATARS, GENERIC, avatarFor, avatarKinds, hasAvatar } from "../../../cat-harness/schemas/avatars.ts";
+import { allAvatars, AVATARS, GENERIC, avatarFor, avatarKinds, hasAvatar } from "../../../cat-harness/schemas/avatars.ts";
 import { BASE_GRAPH_KINDS, defaultGraphKinds, instanceRootsIn, readDeclaration } from "../../../cat-harness/schemas/cat-harness.ts";
 import { avatarsCssPath, renderAvatarsCss } from "../../../cat-harness/scripts/gen-avatars-css.ts";
 import { coverage, requiredKinds, trashDerivationPresent } from "../check-avatar-coverage.ts";
@@ -43,7 +43,7 @@ describe("the registry", () => {
   test("every avatar says what it reads as", () => {
     // The field exists so the next person deciding whether to redraw one has
     // the intent rather than only the path data.
-    for (const [kind, a] of Object.entries(AVATARS)) {
+    for (const [kind, a] of allAvatars()) {
       expect(a.reads.length, `${kind} has no \`reads\``).toBeGreaterThan(8);
       expect(a.glyph.length, `${kind} has no glyph`).toBeGreaterThan(8);
     }
@@ -54,7 +54,7 @@ describe("the registry", () => {
     // fixed per scheme by the generator, so legibility is not a per-kind
     // decision anybody can get wrong. `y8cm` and `rptk` are what that
     // prevents.
-    for (const [kind, a] of Object.entries(AVATARS)) {
+    for (const [kind, a] of allAvatars()) {
       expect(a.tone, `${kind}`).toBeGreaterThanOrEqual(0);
       expect(a.tone, `${kind}`).toBeLessThan(360);
       expect(Number.isInteger(a.tone), `${kind}`).toBe(true);
@@ -65,7 +65,7 @@ describe("the registry", () => {
     // Two kinds that look identical convey nothing, and the fan would show
     // the same mark twice with no way to tell which was which.
     const byGlyph = new Map<string, string[]>();
-    for (const [kind, a] of Object.entries(AVATARS)) {
+    for (const [kind, a] of allAvatars()) {
       byGlyph.set(a.glyph, [...(byGlyph.get(a.glyph) ?? []), kind]);
     }
     const shared = [...byGlyph.values()].filter((ks) => ks.length > 1);
@@ -81,7 +81,7 @@ describe("the generated stylesheet", () => {
   test("every kind is styled in BOTH schemes", () => {
     // The pair, not one of them. A kind coloured only for light is invisible
     // in dark and nothing else would say so.
-    for (const kind of Object.keys(AVATARS)) {
+    for (const [kind] of allAvatars()) {
       const light = CSS.match(new RegExp(`data-fa-scheme="light"[\\s\\S]*?${kind}"\\]`));
       const dark = CSS.match(new RegExp(`data-fa-scheme="dark"[\\s\\S]*?${kind}"\\]`));
       expect(light, `${kind} has no light rule`).not.toBeNull();
@@ -177,9 +177,15 @@ describe("coverage is a QA axis, not a promise", () => {
     // core")` returned GENERIC — the question mark meaning "none declared" —
     // while the art sat under a name nothing carries. This assertion is what
     // now fails if the key drifts off the declared name again.
+    //
+    // Since sod4 #4 an instance's avatar lives on its own declaration, so
+    // `folio-assistant-core` is no longer a table key and no longer reported.
+    // `bootstrap` stays in the table (it is below the harness and declares no
+    // avatar field of its own), so it still is.
     const orphaned = coverage(ROOT).orphaned;
     expect(orphaned).toContain("bootstrap");
-    expect(orphaned).toContain("folio-assistant-core");
+    expect(orphaned).not.toContain("folio-assistant-core");
+    expect(avatarFor("folio-assistant-core")).not.toBe(GENERIC);
   });
 
   test("every instance-keyed avatar resolves for the name an instance declares", () => {

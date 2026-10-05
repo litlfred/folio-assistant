@@ -1,11 +1,11 @@
 ---
 # folio-assistant-dmx1
 title: 'DISTRIBUTED GRAPH KINDS: each harness declares the subgraph types it owns; no central registry (owner ruling 2026-10-04)'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-04T17:04:22Z
-updated_at: 2026-10-04T17:49:34Z
+updated_at: 2026-10-05T11:39:15Z
 parent: folio-assistant-fs43
 ---
 
@@ -24,7 +24,7 @@ A harness or instance declares the graph kinds it owns. The registry a reader se
 - [x] the registry is computed from declarations across `needs`, and a kind claimed twice is refused
 - [x] fhir-harness owns its kinds (fhir-artifact-index, ig-metadata-index, ig-pages, ig-ast), and cat-openapi owns `openapi`
 - [x] the generated artefacts (kind table, avatars, UML, glossary) follow the declarations
-- [ ] `graph-kind-registry.ts` holds only cat-harness's own kinds
+- [x] `graph-kind-registry.ts` holds only cat-harness's own kinds. Measured 2026-10-05: every BASE kind's validator is in cat-harness, and `uploads` stays by the owner's ruling.
 
 ## Not this bean
 Mount tools are a sibling bean, and the special-branches table is rva2.
@@ -67,3 +67,8 @@ Their code comments are kept verbatim as `rationale`.
 **Measured against the hand-kept table.** All 62 rows' contents and renderable cells are identical. 12 'declared by' cells changed, and each is the REGISTRY's answer replacing a stale hand-written one: skills, processes, scenarios and schemas are bootstrap's; todos, todo-items, library, voices, voice-vendors and todo-feedback are `layer: core`.
 
 Also: of the six per-kind side tables, only KIND_TILE_ICONS keyed a moved kind (`uploads`); it is `tileIcon` on the node now (sod4 #5).
+
+## 2026-10-05: sod4 #4 and #5 finished (#2180)
+- **Side tables.** UNPUBLISHED, SKILL_BEARING, KG_CONTENT, HARNESS_GRAPH_KINDS and KIND_TILE_ICONS are now DERIVED from fields on each kind's definition (`published: false`, `skillBearing`, `kgContent`, `tileIcon`). They are no longer written as separate lists. All of them still hold the same kinds. The order changed, but only an `includes` check and one message string read it.
+- **Instance avatars.** These now live on each `<instance>.json` as `avatar` (eleven instances). avatars.ts keeps only bootstrap, bootstrap-tools and cat-harness. `allAvatars()` joins the two sources.
+- **avatars.css.** The diff is a reordering plus avatars for nine node-declared kinds that rendered as the question mark before.
