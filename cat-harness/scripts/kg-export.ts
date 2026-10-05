@@ -124,8 +124,8 @@ import { auditSchemaNodes } from "./schema-nodes.js";
 import { loadSpecs } from "./external-schemas.js";
 import { declaredNamespaces } from "../schemas/external-schema.js";
 import { toolsOf } from "../tools/discover.js";
-import { declaresOwnCanonical } from "./instance-exports.js";
-import { skillIoIri } from "./harness-schema-export.js";
+import { declaresOwnCanonical, publishesInstanceSchema } from "./instance-exports.js";
+import { buildInstanceSchemas, instanceSchemaIndexIri, skillIoIri, type InstanceSchemaExport } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
 import {
   QA_RESULTS_DIR,
@@ -881,6 +881,13 @@ interface Export {
   "@type": string | string[];
   /** On a preview: the canonical document this one is an alternate of. */
   canonicalDocument?: string;
+  /**
+   * The instance's schema index — `<stub>/schema/<stub>.schema.json` at its
+   * published identity — for an instance `instance-exports.ts` publishes one
+   * for (bean `4ak5` item 1). `dcterms:conformsTo`. Absent for the host, whose
+   * `<stub>.schema.json` is the shared declaration schema itself.
+   */
+  conformsTo?: string;
   /**
    * Instance-bound collectors that were NOT run, for a foreign instance.
    *
@@ -2922,6 +2929,21 @@ export function publishedIdentity(instanceRoot: string, baseUrl?: string): Retur
   return exportIdentity({ instanceRoot, ...(baseUrl !== undefined && !own ? { baseUrl } : {}) });
 }
 
+/**
+ * The schema directory an instance publishes beside its document — bean
+ * `4ak5` item 1, owner ruling 2026-10-05 (option B).
+ *
+ * Here rather than in `harness-schema-export.ts` for one reason: the `$id`s
+ * are minted at the instance's PUBLISHED identity, and that is
+ * {@link publishedIdentity}'s answer, which lives in this module. The builder
+ * takes the identity as an argument; this is the one place the two meet, so
+ * the deploy (`instance-exports.ts`) and the gate that checks it
+ * (`check:published-instance-exports`) cannot compose them differently.
+ */
+export function publishedInstanceSchemas(instanceRoot: string, baseUrl?: string): InstanceSchemaExport {
+  return buildInstanceSchemas(instanceRoot, publishedIdentity(instanceRoot, baseUrl), { baseUrl });
+}
+
 // ── TOMBSTONES — ONE RELEASE ONLY; REMOVE IN THE NEXT (bean `4ak5` item 2) ──
 //
 // Owner ruling 2026-10-05 (option B): `cat-harness.jsonld` is built in
@@ -3072,6 +3094,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     stub,
     docIri,
     base,
+    docPath,
     canonicalIri,
     isPreview,
     instanceDir: exportedInstance,
@@ -3231,10 +3254,24 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     counts[t] = (counts[t] ?? 0) + 1;
   }
 
+  // The instance's schema index (bean `4ak5` item 1), linked from the document
+  // ONLY when the deploy writes it: `instance-exports.ts` publishes a
+  // `schema/` directory for exactly the instances in its plan, so the test is
+  // that plan's own answer rather than a second list. `dcterms:conformsTo`,
+  // the term this export already uses for "the specification a node is
+  // written against" — here, of the instance's declaration and contracts.
+  // Minted from THIS export's identity, which is the published one whenever
+  // the deploy runs it (`publishedIdentity`).
+  const schemaIndex =
+    foreign && publishesInstanceSchema(exportedInstance)
+      ? instanceSchemaIndexIri({ stub, base, docPath })
+      : undefined;
+
   return {
     "@context": buildContext(),
     danglingLinks: findDanglingLinks(graph, docIri),
     "@id": docIri,
+    ...(schemaIndex !== undefined ? { conformsTo: schemaIndex } : {}),
     // A preview says so in its TYPE, not only in a side-car field: "is this
     // the canonical graph?" must be answerable from the document's own type
     // without reading a convention. This is where the `#STAGING` marker idea
