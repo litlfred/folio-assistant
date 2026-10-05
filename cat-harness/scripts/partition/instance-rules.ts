@@ -403,6 +403,15 @@ export const RULES: Rule[] = [
       "scripts/merge-queue.ts",              // the merge train's order: live facts in, merge-priority.dmn's placement out (bean hfag)
       "scripts/merge-guard.ts",              // the single way a steward lands a PR: eight checks, then the pinned PUT (beans uoob, vihx)
       "scripts/merge-steward.ts",            // the command that CALLS merge-queue.ts — the entry point it was written for and never had
+      // The queue's STORE and its command (bean `najo`), harness-level for the
+      // same reason as the two above: they read and write the `merge-queue`
+      // graph of THIS repository's declaration, through the generic branch
+      // store, and a folio could not make either answer differently — only
+      // record more decisions. The store is the reader (four states, and a
+      // throw rather than an empty queue for the one that cannot be reached);
+      // the CLI is `merge:queue:read` and `merge:queue:record`.
+      "scripts/merge-queue-store.ts",        // the queue's four read states, and the splice that records a decision
+      "scripts/merge-queue-cli.ts",          // merge:queue:read / merge:queue:record
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
       // INSTANCE's declaration and the published viewer tree, and asks which

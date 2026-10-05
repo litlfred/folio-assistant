@@ -172,7 +172,16 @@ describe("an entry declared FROM WITHIN is checked too", () => {
     // A `tip`-keyed entry is the one the keyings differ on, so it is the one
     // worth pinning. `walkNested` carries `storage` through, which is what
     // makes the nested side able to answer at all.
-    const stored = { id: "nested", path: "proposals", graphKinds: ["proposals"], storage: { branch: "cat/x", keyedBy: "tip" } };
+    //
+    // **The two sides agree once the nested entry can actually BE mounted**,
+    // and that is the amendment bean `najo` measured. A mount is keyed on a
+    // directory id, and only a `"subgraph": true` entry has one at instance
+    // level (bean `cmsl`): `resolveDirectories` lists it, so `tipLocations`
+    // sees it and `state:mount` reaches it. Without the marker, `unmounted`
+    // would print `bun run state:mount` for an entry that command cannot
+    // touch — a remedy that does nothing — so that case is its own finding.
+    // Neither side is ever silent, which is what this test is for.
+    const stored = { id: "nested", path: "proposals", graphKinds: ["proposals"], subgraph: true, storage: { branch: "cat/x", keyedBy: "tip" } };
     const nestedF = auditNested(withNested([stored]), REPO, decl);
     const topF = auditInstance(instance([{ id: "nested", path: "proposals", graphKinds: ["proposals"], storage: { branch: "cat/x", keyedBy: "tip" } }]), REPO);
     // Same KINDS, whichever side declared it. Not the same ids or paths — those
@@ -180,6 +189,16 @@ describe("an entry declared FROM WITHIN is checked too", () => {
     // neither side silently returns nothing while the other reports.
     expect(nestedF.map((f) => f.kind)).toEqual(topF.map((f) => f.kind));
     expect(nestedF.length).toBeGreaterThan(0);
+  });
+
+  test("a nested branch entry that no mount can reach says SO, rather than naming the mount", () => {
+    // The same entry without `"subgraph": true`. It is not listed at instance
+    // level, so `state:mount` has no id to mount it under and `unmounted`'s
+    // remedy would be false. Bean `najo`.
+    const stored = { id: "nested", path: "proposals", graphKinds: ["proposals"], storage: { branch: "cat/x", keyedBy: "tip" } };
+    const f = auditNested(withNested([stored]), REPO, decl);
+    expect(f.map((x) => x.kind)).toEqual(["unmountable"]);
+    expect(f[0]!.detail).toContain('"subgraph": true');
   });
 
   test("auditInstance now reaches nested entries, so the sweep cannot miss them", () => {
@@ -251,6 +270,20 @@ describe("the real corpus", () => {
       const entry = decl?.directories?.find((d) => d.id === f.id);
       return entry !== undefined && mayLeaveMain(entry);
     };
-    expect(all.filter((f) => !offMain(f))).toEqual([]);
+    // And `unmounted` is not this test's question either, for the same reason
+    // one state over. Bean `najo`: `beans/queue/` is kept at a branch tip, so
+    // whether it is on disk depends on whether this RUNNER ran
+    // `bun run state:mount` — a session has, a `bun test` shard has not. A unit
+    // test whose verdict flips with the environment is worse than no test: it
+    // reads as a defect in the tree when the tree is fine, which is how a suite
+    // teaches people to re-run it until it passes.
+    //
+    // The question itself is kept, where it belongs: `check:declared-dirs` runs
+    // as a GATE in a job that mounts first, and fails there. Only `unmounted`
+    // is set aside — `not-cut-over` (two copies, nothing authoritative) and
+    // `unmountable` (a declaration no mount can reach) are defects in the
+    // declaration itself and stay failing here, whatever the environment.
+    const unmounted = (f: (typeof all)[number]): boolean => f.kind === "unmounted";
+    expect(all.filter((f) => !offMain(f) && !unmounted(f))).toEqual([]);
   });
 });
