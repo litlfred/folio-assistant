@@ -1,0 +1,60 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "translation-manager",
+    "path": "skills/library/library-core/translation-manager.md"
+  },
+  "source_hash": "a79f9a978d44",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/library/library-core/translation-manager.md",
+          "detail": "713 lines; p75 of the skill corpus is 279."
+        }
+      ]
+    },
+    "skill-not-a-document": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/library/library-core/translation-manager.md",
+          "detail": "713 lines; p90 is 391. At this length it is a document."
+        }
+      ]
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-voice-review-current": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "agent-skill-authoring",
+          "detail": "never reviewed against the agent-skill-authoring voice (12 skill rule(s)) — `bun run voice:review`"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 2,
+    "fail": 3,
+    "n/a": 2,
+    "unknown": 0
+  }
+}
