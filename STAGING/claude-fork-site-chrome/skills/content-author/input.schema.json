@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fork-site-chrome/skills/content-author/input.schema.json",
+  "title": "Content Author Input",
+  "description": "Input schema for general content authoring.",
+  "type": "object",
+  "required": [
+    "contentType"
+  ],
+  "properties": {
+    "contentType": {
+      "type": "string",
+      "enum": [
+        "document",
+        "fhir-ig",
+        "lean-proof",
+        "bpmn",
+        "data-dictionary"
+      ],
+      "description": "Type of content to author."
+    },
+    "sourceRef": {
+      "type": "string",
+      "description": "Reference to source material."
+    },
+    "outputDir": {
+      "type": "string",
+      "description": "Output directory for authored content."
+    }
+  },
+  "staging": {
+    "branch": "claude/fork-site-chrome",
+    "sha": "5f44cb4e99d78d4d4c7859c6a2bd41f184583986",
+    "pr": "2237/merge",
+    "run": "37386526529"
+  }
+}

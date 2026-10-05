@@ -1,0 +1,149 @@
+{
+  "$ref": "#/definitions/Requirement",
+  "definitions": {
+    "Requirement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^req:[a-z0-9][a-z0-9-]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "proposed",
+            "in-force",
+            "superseded",
+            "retired"
+          ]
+        },
+        "derivedFrom": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "actors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "statements": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "conformance": {
+                "type": "string",
+                "enum": [
+                  "SHALL",
+                  "SHOULD",
+                  "MAY",
+                  "SHALL NOT"
+                ]
+              },
+              "requirement": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "functional",
+                  "non-functional"
+                ]
+              },
+              "activity": {
+                "type": "string",
+                "minLength": 1
+              },
+              "capability": {
+                "type": "string",
+                "minLength": 1
+              },
+              "benefit": {
+                "type": "string",
+                "minLength": 1
+              },
+              "category": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actors": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "dependsOn": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "key",
+              "label",
+              "conformance",
+              "requirement"
+            ]
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "proposedIn": {
+          "type": "string",
+          "minLength": 1
+        },
+        "supersededBy": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "description",
+        "actors",
+        "statements"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fork-site-chrome/bootstrap-tools/schema/zod/requirement/RequirementSchema.schema.json",
+  "title": "RequirementSchema",
+  "description": "Generated from `RequirementSchema` in schemas/requirement.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/fork-site-chrome",
+    "sha": "5f44cb4e99d78d4d4c7859c6a2bd41f184583986",
+    "pr": "2237/merge",
+    "run": "37386526529"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/Participant",
+  "definitions": {
+    "Participant": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "person",
+            "agent"
+          ]
+        },
+        "id": {
+          "description": "Session id, handle or name, where one is known. Absent is normal for a person.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fork-site-chrome/bootstrap-tools/schema/zod/discussion/ParticipantSchema.schema.json",
+  "title": "ParticipantSchema",
+  "description": "Generated from `ParticipantSchema` in schemas/discussion.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/fork-site-chrome",
+    "sha": "5f44cb4e99d78d4d4c7859c6a2bd41f184583986",
+    "pr": "2237/merge",
+    "run": "37386526529"
+  }
+}
