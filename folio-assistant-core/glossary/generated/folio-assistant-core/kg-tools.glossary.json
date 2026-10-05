@@ -25,7 +25,7 @@
     {
       "id": "folio-review-comment-move",
       "prefLabel": "Move a review comment's status",
-      "definition": "A review-process task moves one `folio-review-comment/v1` todo's status (address, send back, resolve, adjudicate, withdraw) through `transition()`, which refuses any move the named BPMN task may not make. The comment is written to the folio's todos graph (its declared `todo-feedback` directory) and, with `--commit`, committed to the edit-set's FEATURE branch. Refused on the base branch and on a detached HEAD.",
+      "definition": "A review-process task moves one `review-comment/1.0.0` todo's status (address, send back, resolve, adjudicate, withdraw) through `transition()`, which refuses any move the named BPMN task may not make. The comment is written to the folio's todos graph (its declared `todo-feedback` directory) and, with `--commit`, committed to the edit-set's FEATURE branch. Refused on the base branch and on a detached HEAD.",
       "notation": "folio-review-comment-move",
       "source": "folio-assistant-core/tools/index.ts#folio-review-comment-move",
       "status": "candidate"
@@ -33,7 +33,7 @@
     {
       "id": "folio-review-comments",
       "prefLabel": "Folio review comments",
-      "definition": "Ingest a pull request's tagged conversation comments (`block: <label>` on the first line) into `folio-review-comment/v1` todos, and write them as `review-comments.json`. Idempotent over its previous output, whose statuses it keeps. Re-anchors every comment against the head's blocks, following `renamedFrom`, and orphans a comment whose block is gone rather than dropping it.",
+      "definition": "Ingest a pull request's tagged conversation comments (`block: <label>` on the first line) into `review-comment/1.0.0` todos, and write them as `review-comments.json`. Idempotent over its previous output, whose statuses it keeps. Re-anchors every comment against the head's blocks, following `renamedFrom`, and orphans a comment whose block is gone rather than dropping it.",
       "notation": "folio-review-comments",
       "source": "folio-assistant-core/tools/index.ts#folio-review-comments",
       "status": "candidate"

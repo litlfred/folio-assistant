@@ -257,7 +257,7 @@ describe("a todo's theme — declared, defaulted, and never guessed", () => {
       priority: "medium",
       origin: "agent",
       tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
-      $schema: "folio-todo/v1",
+      $schema: "todo/1.0.0",
     });
     expect(parsed.success && parsed.data.theme).toBeUndefined();
   });
@@ -273,7 +273,7 @@ describe("a todo's theme — declared, defaulted, and never guessed", () => {
       origin: "agent",
       theme: "Grumpy Cat",
       tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
-      $schema: "folio-todo/v1",
+      $schema: "todo/1.0.0",
     });
     expect(bad.success).toBe(false);
   });

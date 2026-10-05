@@ -164,7 +164,7 @@ const SHA_B = "b".repeat(40);
 const survey = (from: string, to: string, commits: number) =>
   JSON.stringify({ $schema: "folio-session-survey/v1", from, to, commits });
 const todo = (beanId: string) =>
-  `---\n$schema: folio-todo/v1\nid: t\nreferences:\n  - kind: bean\n    id: ${beanId}\n---\nbody\n`;
+  `---\n$schema: todo/1.0.0\nid: t\nreferences:\n  - kind: bean\n    id: ${beanId}\n---\nbody\n`;
 const board = (id: string) => JSON.stringify({ $schema: "folio-board/v1", id, title: id });
 const positions = (boards: Record<string, Record<string, { x: number; y: number }>>) =>
   JSON.stringify({ $schema: "folio-board-positions/v1", boards }, null, 2) + "\n";

@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1842 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 164 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1853 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 604 terms and is 345 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 596 terms and is 341 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2134</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2134</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2137</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2137</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">604</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">596</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a></nav>
 
@@ -1943,13 +1943,6 @@ ChangeSetRefSchema.stagingUrl <span class="fa-gloss-status">candidate, extracted
 <p>The staging preview of the change set.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema.stagingUrl</code></a></p>
 </dd>
-<dt id="folio-assistant-core--kg-schema-fields--public-comment.changesetschema.anchor" data-fa-state="extracted" data-fa-gloss="">
-ChangeSetSchema.anchor <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The section or block the change is mainly about, for ordering.</p>
-<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.anchor</code></a></p>
-</dd>
 <dt id="folio-assistant-core--kg-schema-fields--changeset.changesetschema.changes" data-fa-state="extracted" data-fa-gloss="">
 ChangeSetSchema.changes <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1963,55 +1956,6 @@ ChangeSetSchema.folio <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Folio root, relative to the repository root.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/changeset.ts"><code>folio-assistant-core/schemas/changeset.ts#ChangeSetSchema.folio</code></a></p>
-</dd>
-<dt id="folio-assistant-core--kg-schema-fields--public-comment.changesetschema.id" data-fa-state="extracted" data-fa-gloss="">
-ChangeSetSchema.id <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>&quot;CS-001&quot;.</p>
-<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.id</code></a></p>
-</dd>
-<dt id="folio-assistant-core--kg-schema-fields--public-comment.changesetschema.issue" data-fa-state="extracted" data-fa-gloss="">
-ChangeSetSchema.issue <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The primary issue: where the change-set is rendered and its requirements agreed.</p>
-<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.issue</code></a></p>
-</dd>
-<dt id="folio-assistant-core--kg-schema-fields--public-comment.changesetschema.issues" data-fa-state="extracted" data-fa-gloss="">
-ChangeSetSchema.issues <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Every issue that discusses it, the primary one included.</p>
-<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.issues</code></a></p>
-</dd>
-<dt id="folio-assistant-core--kg-schema-fields--public-comment.changesetschema.mergedinto" data-fa-state="extracted" data-fa-gloss="">
-ChangeSetSchema.mergedInto <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>For <code>merged</code>: the change-set it was folded into.</p>
-<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.mergedInto</code></a></p>
-</dd>
-<dt id="folio-assistant-core--kg-schema-fields--public-comment.changesetschema.pr" data-fa-state="extracted" data-fa-gloss="">
-ChangeSetSchema.pr <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The PR making the change.</p>
-<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.pr</code></a></p>
-</dd>
-<dt id="folio-assistant-core--kg-schema-fields--public-comment.changesetschema.refs" data-fa-state="extracted" data-fa-gloss="">
-ChangeSetSchema.refs <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The comments it answers. A comment may be in more than one change-set.</p>
-<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.refs</code></a></p>
-</dd>
-<dt id="folio-assistant-core--kg-schema-fields--public-comment.changesetschema.requirements" data-fa-state="extracted" data-fa-gloss="">
-ChangeSetSchema.requirements <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>What the change should do, in the editor's terms: the issue's requirements.</p>
-<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.requirements</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--types.chapter.number" data-fa-state="extracted" data-fa-gloss="">
 Chapter.number <span class="fa-gloss-status">candidate, extracted</span>

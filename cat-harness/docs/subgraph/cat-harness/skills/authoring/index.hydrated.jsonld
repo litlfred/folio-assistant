@@ -408,7 +408,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-comments",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
-          "description": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `folio-review-comment/v1` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
+          "description": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `review-comment/1.0.0` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-core",
@@ -417,9 +417,9 @@
           "instructionsPath": "skills/authoring/authoring-core/review-comments.md",
           "name": "review-comments",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/51f54b251785529cae59666ccd9d3d0d38bd27b1f1444326d30c12763b579f25",
-            "bytes": 16833,
-            "sha256": "51f54b251785529cae59666ccd9d3d0d38bd27b1f1444326d30c12763b579f25"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/89265e127786de02d1da18735d5046d130c49f3aa4cb2fa8559762dfd0bddab0",
+            "bytes": 16821,
+            "sha256": "89265e127786de02d1da18735d5046d130c49f3aa4cb2fa8559762dfd0bddab0"
           },
           "title": "Review comments — from a PR comment to a structured todo"
         },

@@ -521,6 +521,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="public-comments"] {
+  /* a speech bubble with lines — comments received and grouped */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 5h16v10H9l-5 4zM8 9h8M8 12h5' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="review-verdicts"] {
   /* a page with a tick — somebody read this version and judged it */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 4h14v16H5zM8 12l3 3 5-6' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -690,6 +697,7 @@
   .fa-avatar[data-fa-kind="ig-metadata-index"] { background-color: hsl(190 46% 34%); }
   .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 46% 34%); }
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
+  .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 46% 34%); }
   .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 46% 34%); }
   .fa-avatar[data-fa-kind="lake-cache"] { background-color: hsl(40 46% 34%); }
   .fa-avatar[data-fa-kind="folio-assistant"] { background-color: hsl(236 46% 34%); }
@@ -777,6 +785,7 @@
     .fa-avatar[data-fa-kind="ig-metadata-index"] { background-color: hsl(190 46% 34%); }
     .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 46% 34%); }
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 46% 34%); }
+    .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 46% 34%); }
     .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 46% 34%); }
     .fa-avatar[data-fa-kind="lake-cache"] { background-color: hsl(40 46% 34%); }
     .fa-avatar[data-fa-kind="folio-assistant"] { background-color: hsl(236 46% 34%); }
@@ -865,6 +874,7 @@
   .fa-avatar[data-fa-kind="ig-metadata-index"] { background-color: hsl(190 42% 72%); }
   .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 42% 72%); }
   .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
+  .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 42% 72%); }
   .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 42% 72%); }
   .fa-avatar[data-fa-kind="lake-cache"] { background-color: hsl(40 42% 72%); }
   .fa-avatar[data-fa-kind="folio-assistant"] { background-color: hsl(236 42% 72%); }
@@ -952,6 +962,7 @@
     .fa-avatar[data-fa-kind="ig-metadata-index"] { background-color: hsl(190 42% 72%); }
     .fa-avatar[data-fa-kind="ig-pages"] { background-color: hsl(178 42% 72%); }
     .fa-avatar[data-fa-kind="catalogue"] { background-color: hsl(258 42% 72%); }
+    .fa-avatar[data-fa-kind="public-comments"] { background-color: hsl(30 42% 72%); }
     .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 42% 72%); }
     .fa-avatar[data-fa-kind="lake-cache"] { background-color: hsl(40 42% 72%); }
     .fa-avatar[data-fa-kind="folio-assistant"] { background-color: hsl(236 42% 72%); }
@@ -1042,6 +1053,7 @@
   .fa-avatar[data-fa-kind="ig-metadata-index"][data-fa-trash="true"] { background-color: hsl(190 16% 52%); }
   .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 16% 52%); }
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
+  .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 16% 52%); }
   .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
   .fa-avatar[data-fa-kind="lake-cache"][data-fa-trash="true"] { background-color: hsl(40 16% 52%); }
   .fa-avatar[data-fa-kind="folio-assistant"][data-fa-trash="true"] { background-color: hsl(236 16% 52%); }
@@ -1128,6 +1140,7 @@
     .fa-avatar[data-fa-kind="ig-metadata-index"][data-fa-trash="true"] { background-color: hsl(190 16% 52%); }
     .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 16% 52%); }
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 16% 52%); }
+    .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 16% 52%); }
     .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
     .fa-avatar[data-fa-kind="lake-cache"][data-fa-trash="true"] { background-color: hsl(40 16% 52%); }
     .fa-avatar[data-fa-kind="folio-assistant"][data-fa-trash="true"] { background-color: hsl(236 16% 52%); }
@@ -1214,6 +1227,7 @@
   .fa-avatar[data-fa-kind="ig-metadata-index"][data-fa-trash="true"] { background-color: hsl(190 14% 56%); }
   .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 14% 56%); }
   .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
+  .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 14% 56%); }
   .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
   .fa-avatar[data-fa-kind="lake-cache"][data-fa-trash="true"] { background-color: hsl(40 14% 56%); }
   .fa-avatar[data-fa-kind="folio-assistant"][data-fa-trash="true"] { background-color: hsl(236 14% 56%); }
@@ -1300,6 +1314,7 @@
     .fa-avatar[data-fa-kind="ig-metadata-index"][data-fa-trash="true"] { background-color: hsl(190 14% 56%); }
     .fa-avatar[data-fa-kind="ig-pages"][data-fa-trash="true"] { background-color: hsl(178 14% 56%); }
     .fa-avatar[data-fa-kind="catalogue"][data-fa-trash="true"] { background-color: hsl(258 14% 56%); }
+    .fa-avatar[data-fa-kind="public-comments"][data-fa-trash="true"] { background-color: hsl(30 14% 56%); }
     .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
     .fa-avatar[data-fa-kind="lake-cache"][data-fa-trash="true"] { background-color: hsl(40 14% 56%); }
     .fa-avatar[data-fa-kind="folio-assistant"][data-fa-trash="true"] { background-color: hsl(236 14% 56%); }
