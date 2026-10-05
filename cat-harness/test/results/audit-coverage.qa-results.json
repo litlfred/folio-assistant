@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 69 of 69 declared kind(s), 238 gate(s), 77 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 69 of 69 declared kind(s), 239 gate(s), 77 criteria.",
       "count": 69,
       "entries": [
         {
@@ -382,7 +382,7 @@
         },
         {
           "kind": "doc-group",
-          "state": "unaudited",
+          "state": "covered",
           "directories": [
             "cat-harness/docs/concepts",
             "cat-harness/docs/fhir",
@@ -392,7 +392,9 @@
           ],
           "criteria": [],
           "subjectKinds": [],
-          "gates": [],
+          "gates": [
+            "bun run check:docs-populated"
+          ],
           "typed": false,
           "hasFiles": true
         },
@@ -524,7 +526,7 @@
         },
         {
           "kind": "fsh-guts",
-          "state": "empty",
+          "state": "undetermined",
           "directories": [
             "fsh-guts"
           ],
@@ -889,6 +891,7 @@
           "gates": [
             "bun run check:artefact-verification",
             "bun run check:orphan-verdicts",
+            "bun run check:qa-result-links",
             "bun run check:tabular-stubs",
             "bun run kg:export:check",
             "bun run kg:export:judge",
@@ -1435,15 +1438,8 @@
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
-      "count": 1,
-      "entries": [
-        {
-          "kind": "fsh-guts",
-          "directories": [
-            "fsh-guts"
-          ]
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
@@ -1502,20 +1498,9 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 238 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
-      "count": 1,
-      "entries": [
-        {
-          "kind": "doc-group",
-          "directories": [
-            "cat-harness/docs/concepts",
-            "cat-harness/docs/fhir",
-            "cat-harness/docs/guides",
-            "cat-harness/docs/process",
-            "cat-harness/docs/start"
-          ]
-        }
-      ]
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 239 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "count": 0,
+      "entries": []
     },
     "kinds-unknown": {
       "summary": "A declared directory of this kind is not in the checkout and declares no `storage`, and nothing else of the kind was counted — the census was not taken (bean `0dav`, readers-audit C8). Never `empty`: that would print an absent answer as a determined zero. Not gated: proposal §2.3.",
@@ -1523,5 +1508,5 @@
       "entries": []
     }
   },
-  "total": 80
+  "total": 78
 }
