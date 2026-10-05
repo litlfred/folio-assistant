@@ -281,6 +281,10 @@ export const RULES: Rule[] = [
       // HARNESS beside `navbar.ts` -- the switch is the platform's, and every
       // page carrying it, a folio's included, has to agree on what it means.
       "scripts/lib/scheme-css.ts",
+      // The migration a renamed or major-bumped NODE KIND ships with (issue
+      // #2195): rewrites `$schema` values only. HARNESS, beside the node-kind
+      // machinery in `schemas/node-kind.ts` it serves.
+      "scripts/retag-schemas.ts",
       // The geometry that navbar became a reader of, and the generator that
       // renders it to CSS (bean `sjic`). HARNESS for the same reason as
       // `navbar.ts` and one step more plainly: the numbers are the width of

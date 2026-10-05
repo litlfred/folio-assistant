@@ -25,7 +25,7 @@ generally: a scrapped item stops the next agent re-entering a dead end, while
 a deleted one cannot be told from an accident. Delete here means relocate, and
 relocate is reversible.
 
-**147 file(s)** across 5 group(s). Each links to the file itself —
+**151 file(s)** across 5 group(s). Each links to the file itself —
 this page indexes what is kept, it does not republish it.
 
 ## Does each file declare itself?
@@ -38,8 +38,8 @@ would make the format's limit and somebody's omission look the same.
 
 | state | files | what it means |
 |---|---|---|
-| <span class="fg-tag fg-ok">declared</span> | 81 | carries the tag itself |
-| <span class="fg-tag fg-side">via sidecar</span> | 58 | a script, described by a tagged `.md` sibling |
+| <span class="fg-tag fg-ok">declared</span> | 83 | carries the tag itself |
+| <span class="fg-tag fg-side">via sidecar</span> | 60 | a script, described by a tagged `.md` sibling |
 | <span class="fg-tag fg-gap">undeclared</span> | 8 | **neither** — a gap, not a format limit |
 
 The 8 undeclared are listed below with the rest rather than in a
@@ -94,7 +94,7 @@ summary count is the failure this table exists to avoid.
 
 ## scripts
 
-16 file(s).
+20 file(s).
 
 | file | what it is | declares itself |
 |---|---|---|
@@ -111,6 +111,10 @@ summary count is the failure this table exists to avoid.
 | [migrate-cluster-phase.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/scripts/migrate-cluster-phase.md) | `migrate-cluster-phase.py` | <span class="fg-tag fg-ok">declared</span> |
 | [migrate-cluster-phase.py](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/scripts/migrate-cluster-phase.py) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [migrate-probes-phase1.py](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/scripts/migrate-probes-phase1.py) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [special-branches.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/scripts/special-branches.json) | — | <span class="fg-tag fg-side">via sidecar</span> |
+| [special-branches.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/scripts/special-branches.md) | `special-branches.json` | <span class="fg-tag fg-ok">declared</span> |
+| [special-branches.test.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/scripts/special-branches.test.md) | `special-branches.test.ts` | <span class="fg-tag fg-ok">declared</span> |
+| [special-branches.test.ts](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/scripts/special-branches.test.ts) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [split-docs-page.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/scripts/split-docs-page.md) | `split-docs-page.py` | <span class="fg-tag fg-ok">declared</span> |
 | [split-docs-page.py](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/scripts/split-docs-page.py) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [wire_stale_claims.py](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/scripts/wire_stale_claims.py) | — | <span class="fg-tag fg-gap">undeclared</span> |

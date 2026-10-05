@@ -27,12 +27,12 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 
-import { defaultGraphTypologies } from "../../cat-harness/schemas/cat-harness.js";
+import { defaultGraphTypologies, siteDirFor } from "../../cat-harness/schemas/cat-harness.js";
 import { newUnkinded, nodeKindIndex, unkindedKey, type NodeKindIndex } from "../../cat-harness/schemas/node-kind-index.js";
 import { HARNESS_ROOT, REPO_ROOT } from "./lib/roots.ts";
 
 const repoRoot = REPO_ROOT ?? join(HARNESS_ROOT, "..");
-export const INDEX_PATH = join(HARNESS_ROOT, "docs", "_data", "node-kinds.json");
+export const INDEX_PATH = join(HARNESS_ROOT, siteDirFor(HARNESS_ROOT), "_data", "node-kinds.json");
 
 /** What is committed: the index, under a schema tag a reader can check. */
 export interface NodeKindIndexFile extends NodeKindIndex {
