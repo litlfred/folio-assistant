@@ -1,10 +1,10 @@
 ---
 # folio-assistant-j9cs
 title: 'MOUNT TOOLS DECLARED ON STORAGE: a subgraph names the tool that mounts it; no central mounter (owner ruling 2026-10-04)'
-status: todo
+status: in-progress
 type: feature
 created_at: 2026-10-04T17:04:23Z
-updated_at: 2026-10-04T17:04:23Z
+updated_at: 2026-10-05T14:33:45Z
 parent: folio-assistant-fs43
 ---
 
@@ -22,3 +22,5 @@ A directory's `storage` names the Tool that mounts it, as a declared Tool node (
 - [ ] ig-cache.sh and lake-cache.sh are declared Tool nodes in the harnesses that own them, named by the fhir-ast and lake-cache declarations
 - [ ] `state:mount` dispatches through the declaration for every keying it does not implement itself
 - [ ] the shell and Python mirrors read the prefix from the declaration (rva2), not from a central table
+
+_2026-10-05T14:33:45Z_ — Claimed by claude/gifted-fermi-t8k217 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
