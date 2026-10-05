@@ -365,6 +365,6 @@ the copy that drifted — it says so itself.
 - [`todo-manager`](../../sdlc/sdlc-core/todo-manager.md), [`bean-coordination`](../../sdlc/sdlc-core/bean-coordination.md)
   — the work plan, and why a bean is never deleted. A state record that
   vanishes leaves a sibling unable to tell abandonment from accident.
-- [`instance-publication`](instance-publication.md#what-each-instance-publishes--graph-address-schema-a)
+- [`instance-publication`](instance-publication.md#what-each-instance-publishes--graph-address-schema-and-what-is-stripped)
   — a `state` graph's nodes are never published. That rule, and every other
   rule about what reaches the site, lives there (bean `4ak5` item 4).
