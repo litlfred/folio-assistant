@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://smart.who.int/base/schema/smart-base.schema.json",
+  "title": "smart-base schemas",
+  "description": "The schemas instance `smart-base` publishes: its declaration, which is a CatHarness declaration and is validated by the shared schema this `$ref`s, and its skills' I/O contracts and its public Zod schemas — every exported Zod `*Schema` const (owner ruling 2026-10-05) — listed in `$defs` by `$id`.",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-who-iris-site-i18n/cat-harness.schema.json"
+    }
+  ],
+  "$defs": {
+    "skills/l2-dak-authoring/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/l2-dak-authoring/input.schema.json"
+    },
+    "skills/l2-dak-authoring/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/l2-dak-authoring/output.schema.json"
+    },
+    "zod/dak/DakDeclarationSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dak/DakDeclarationSchema.schema.json"
+    }
+  },
+  "$comment": "Instance graph: http://smart.who.int/base/smart-base.jsonld",
+  "staging": {
+    "branch": "claude/who-iris-site-i18n",
+    "sha": "0b374cb09f7da562fad93303b7063a767a160a1b",
+    "pr": "2229/merge",
+    "run": "37370473862"
+  }
+}
