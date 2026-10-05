@@ -110,10 +110,9 @@ export function renderBlockMarkdown(
   const lines: string[] = [];
   const label = blockLabel(block);
   const locale = opts.locale ?? "en";
-  // kindHeading returns title-cased kind name as fallback; prose is not in
-  // KIND_HEADINGS, so it falls through to "Prose" — but we suppress it here
-  // for the same reason the old map omitted it: stamping "**Prose.**" over
-  // every paragraph is noise.
+  // prose's node declares an empty heading, so kindHeading returns "" for it;
+  // suppressed here as well, because stamping "**Prose.**" over every
+  // paragraph is noise and a contributed node could say otherwise.
   const rawHeading = kindHeading(block.kind, locale);
   const heading = block.kind === "prose" ? undefined : rawHeading;
 

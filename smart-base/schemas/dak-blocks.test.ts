@@ -56,11 +56,15 @@ import { DAK_KIND_TO_WHO_MODEL, DAK_KIND_TO_FOLIO_TYPE } from "./dak-jsonld";
 import { assertPrefixesInSync, typesForKind } from "../../cat-harness/schemas/jsonld";
 import { readBlockManifest } from "../../cat-harness/content/pipeline/qa-utils";
 import { ContributionRegistry, composedKindOwner } from "../../cat-harness/schemas/contributions";
-import contribute from "../contributions";
+import { loadContributionsSync } from "../../cat-harness/schemas/harness-config";
 
-/** smart-base's contribution, registered as `loadContributions` would. */
-const registry = new ContributionRegistry();
-registry.register({ ...contribute(), root: resolve(import.meta.dir, "..") });
+/**
+ * The registry a folio depending on smart-base gets: `smart-ig`'s, loaded as
+ * `loadContributions` does. Since bean riit, step 3, the DAK kinds reach it as
+ * smart-base's declared `block-kinds/` nodes through the dependency walk, not
+ * from an array `contributions.ts` returns.
+ */
+const registry = loadContributionsSync(resolve(import.meta.dir, "..", "..", "smart-ig"), new ContributionRegistry());
 const builders = registry.contributedBuilders();
 
 const DIR = mkdtempSync(join(tmpdir(), "dak-blocks-"));
@@ -498,5 +502,18 @@ describe("profiles do not reach a DAK kind", () => {
     for (const k of DAK_BLOCK_KINDS) {
       for (const p of CONTENT_PROFILES) expect(profileAcceptsKind(p, k)).toBe(false);
     }
+  });
+});
+
+describe("DAK kinds reach a folio only through its dependency tree (bean riit, step 3)", () => {
+  // Owner, 2026-10-04: a folio sees the nodes of the instances it depends on
+  // (option 1 of 3). folio-assistant-core's tree does not include smart-base.
+  test("a folio whose tree includes smart-base registers every DAK kind", () => {
+    expect(registry.contributedKinds().filter((k) => k.adapter === "dak").length).toBe(DAK_BLOCK_KINDS.length);
+  });
+
+  test("a folio whose tree does not include smart-base registers none", () => {
+    const other = loadContributionsSync(resolve(import.meta.dir, "..", "..", "folio-assistant-core"), new ContributionRegistry());
+    expect(other.contributedKinds().filter((k) => k.adapter === "dak")).toEqual([]);
   });
 });

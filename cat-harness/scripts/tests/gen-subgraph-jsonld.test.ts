@@ -21,6 +21,7 @@ import {
   type SubgraphPlan,
 } from "../gen-subgraph-jsonld.js";
 import { termIri } from "../../schemas/namespaces.js";
+import { inAggregate } from "../../test/support/checkout.js";
 import {
   PAYLOAD_PATH,
   PAYLOAD_SIDECAR_SUFFIX,
@@ -176,7 +177,9 @@ describe("gen-subgraph-jsonld", () => {
     expect(SubgraphIndexSchema.safeParse({ ...doc, "@context": { x: "http://x/" } }).success).toBe(false);
   });
 
-  test("an overlaid instance heads its own tree, and the repository index lists every root (bean ax6r)", () => {
+  // Its witness is folio-assistant-core, an instance only the aggregate holds;
+  // cat-harness run as its own clone has no overlay to head (bean `ho66`).
+  test.skipIf(!inAggregate())("an overlaid instance heads its own tree, and the repository index lists every root (bean ax6r)", () => {
     const repo = JSON.parse(files.get(join(outDir, SUBGRAPH_INDEX_FILE))!) as Record<string, unknown>;
     expect(repo["@id"]).toBe(plan.repoIri);
     expect(SubgraphIndexSchema.safeParse(repo).success).toBe(true);
@@ -256,7 +259,13 @@ describe("payloads", () => {
         expect(hex(b)).toBe(name);
       }
     }
-    // …and the committed tree is that set, with no orphan either way.
+  });
+
+  // The committed tree is generated in the AGGREGATE, where kg-export's graph
+  // also carries the higher instances' nodes; cat-harness run as its own clone
+  // exports fewer, so their payloads read as orphans there. Skipped, not
+  // passed, until the outputs are self-contained (bean `vj2p`; `ho66`).
+  test.skipIf(!inAggregate())("the committed payload tree is that set, with no orphan either way", () => {
     expect(auditPayloadTree(join(ROOT, payloadDir), payloadPlan.links)).toEqual([]);
   });
 
