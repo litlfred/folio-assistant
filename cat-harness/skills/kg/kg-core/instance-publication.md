@@ -362,10 +362,48 @@ That is the JSON Schema of the declaration itself, which every
 `<instance>.json` is validated against. It also writes `tool.schema.json`,
 `tool-types.schema.json` and each skill's I/O contract, each at the URL its
 `$id` names. `bootstrap`'s schemas are published as they sit, by
-`publish-instance-files.ts`. **No other instance has a schema of its own on
-the site** (measured 2026-10-05: `instance-exports.ts` writes the document and
-its `.json` copy only). That is the open half of item 1's
-*"json(ld)+schema"*.
+`publish-instance-files.ts`.
+
+**Every instance `instance-exports.ts` publishes also publishes
+`<site>/<stub>/schema/`** (owner ruling 2026-10-05, option B; bean `4ak5`
+item 1). It holds:
+
+- **the instance's own skill I/O contracts**, at
+  `schema/skills/<skill>/<io>.schema.json`. They are read from
+  `<instance>/schemas/skills/`, the directory its skills' `input:` and
+  `output:` refs name. The declared `schemas` graph is not the answer:
+  `folio-assistant-sci` declares `sources/` as its `schemas` graph and keeps
+  its contracts under `schemas/skills/`.
+- **an index, `schema/<stub>.schema.json`.** It `$ref`s the shared declaration
+  schema (the host's `<stub>.schema.json`, by the `$id` the same build gives
+  it) and lists every contract in `$defs` by `$id`.
+
+**Every `$id` is the instance's publication identity, not this site's
+address.** The schema base is `schema/` beside the document `publishedIdentity`
+mints: `<site>/<stub>/schema/` for an instance with no `canonicalUrl`, and
+`<canonicalUrl>/schema/` for one that declares its own. So `smart-base`'s
+contracts are `http://smart.who.int/base/schema/skills/…`, and this site stages
+the bytes at `<site>/smart-base/schema/` (§"Three questions that must not be
+merged"). `publishedInstanceSchemas` in `kg-export.ts` is the one place
+identity and builder meet, and the deploy and the gate both call it. A stored
+`$id` in a source contract is never published: with a base the computed one
+replaces it, and with no base the contract has none.
+
+**The document links its index** with `conformsTo` (`dcterms:conformsTo`).
+It does so exactly when `instance-exports.ts` writes one, which is when
+`publishesInstanceSchema` finds the instance in the plan. The host and the
+other two exemptions carry no such link.
+
+**Public Zod schemas are not published yet.** "Public" was ruled to mean
+exactly the `Schema` nodes the instance's own JSON-LD export lists. A foreign
+export lists none: the schema-node collector is instance-bound
+(`COLLECTOR_SCOPE` in `kg-export.ts`), so its document says
+`"omitted": [..., "schemas"]`. Where that collector does run, it yields modules
+(`schemaModules` in `schema-nodes.ts`), not the exported Zod values a JSON
+Schema is rendered from. No rule says which exports of a module are public,
+and none is invented here. The index carries the same `omitted` entry, so
+"not looked for" never reads as "there are none". The gate fails the day an
+instance's export lists a `Schema` node the publisher does not render.
 
 ### Named subgraphs, and the root index above them
 
@@ -419,7 +457,7 @@ its `.json` copy only). That is the open half of item 1's
 
 | gate | fails when |
 |---|---|
-| `check:published-instance-exports` | the deploy does not run `instance-exports.ts`, a workflow running it drops an exempt instance's own publisher, an exemption names no declared instance, or a published export fails or mints a relative `@id` |
+| `check:published-instance-exports` | the deploy does not run `instance-exports.ts`, a workflow running it drops an exempt instance's own publisher, an exemption names no declared instance, or a published export fails or mints a relative `@id`; or, for a planned instance, a contract its skills name is not written to `<stub>/schema/`, the index is missing, the document's `conformsTo` is not the index's `$id`, or the document lists a `Schema` node the publisher does not render |
 | `root-index.ts` at deploy | an instance's export is missing; the deploy fails rather than publish a shorter map |
 | `subgraph:jsonld:check` | the committed subgraph tree or its payloads are stale |
 | `check:process-index` | a declared BPMN has no `Process` node in the published subgraphs |

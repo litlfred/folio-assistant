@@ -1091,7 +1091,9 @@ function collectSkills(
   // contract under its own instance's `schemas/skills/` (placement PR1, bean
   // `ybwt`), which this instance's schema export does not publish — so minting
   // an IRI under this base would name a path nothing serves, the defect the
-  // published-paths test exists for. Left unset until that instance publishes.
+  // published-paths test exists for. That instance DOES publish it now, under
+  // its own `<stub>/schema/` (bean `4ak5` item 1, `publishedInstanceSchemas`);
+  // pointing this edge there is not yet done, so it is still left unset.
   const own = resolve(ROOT);
   const contractIri = (instanceRoot: string, ref: string): string | undefined => {
     if (isExternalContract(ref)) return ref;
