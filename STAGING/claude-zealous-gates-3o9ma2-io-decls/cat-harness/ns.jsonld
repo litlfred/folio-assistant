@@ -387,6 +387,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphKind/block-kinds",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "block-kinds",
+      "comment": "The block kinds a harness's adapter owns, one node per kind carrying its label prefix, RDF types, profile and builder. Discovered across the instances; no module lists them.",
+      "prefLabel": "block-kinds",
+      "definition": "The block kinds a harness's adapter owns, one node per kind carrying its label prefix, RDF types, profile and builder. Discovered across the instances; no module lists them.",
+      "notation": "cat-harness:graphKind/block-kinds",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphKind/board-positions",
       "@type": [
         "bootstrap:GraphKind",
@@ -477,6 +492,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphKind/content-adapters",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "content-adapters",
+      "comment": "The block vocabularies a harness owns, one node per vocabulary carrying its companion roles and whether the platform's code types it. Discovered across the instances; no module lists them.",
+      "prefLabel": "content-adapters",
+      "definition": "The block vocabularies a harness owns, one node per vocabulary carrying its companion roles and whether the platform's code types it. Discovered across the instances; no module lists them.",
+      "notation": "cat-harness:graphKind/content-adapters",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphKind/docs",
       "@type": [
         "bootstrap:GraphKind",
@@ -552,6 +582,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphKind/ig-ast",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "ig-ast",
+      "comment": "The IG Publisher's abstract syntax tree of a FHIR Implementation Guide (its resources, their dependency edges and the build plan), ingested into the folio that uses the IG. One branch per IG package id; the IG's own source need not be materialised.",
+      "prefLabel": "ig-ast",
+      "definition": "The IG Publisher's abstract syntax tree of a FHIR Implementation Guide (its resources, their dependency edges and the build plan), ingested into the folio that uses the IG. One branch per IG package id; the IG's own source need not be materialised.",
+      "notation": "cat-harness:graphKind/ig-ast",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphKind/ig-metadata-index",
       "@type": [
         "bootstrap:GraphKind",
@@ -562,6 +607,21 @@
       "prefLabel": "ig-metadata-index",
       "definition": "The IG Publisher's own metadata exports for one published IG, harvested verbatim — ValueSet→CodeSystem edges, CodeSystem `uses`, and extension/profile usage paths. Each export declares whether it was present, absent or never looked for, and a `uses` field that upstream declared and left empty is recorded as exactly that.",
       "notation": "cat-harness:graphKind/ig-metadata-index",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/ig-pages",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "ig-pages",
+      "comment": "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived.",
+      "prefLabel": "ig-pages",
+      "definition": "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived.",
+      "notation": "cat-harness:graphKind/ig-pages",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
@@ -592,6 +652,36 @@
       "prefLabel": "issue-marks",
       "definition": "How far an agent has read an issue — the comment id and the edit time it accounted for.",
       "notation": "cat-harness:graphKind/issue-marks",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/kinds",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "kinds",
+      "comment": "The graph kinds a harness declares it owns, one node per kind, so no central registry names another harness's subgraph types. Loaded across the instances on first use.",
+      "prefLabel": "kinds",
+      "definition": "The graph kinds a harness declares it owns, one node per kind, so no central registry names another harness's subgraph types. Loaded across the instances on first use.",
+      "notation": "cat-harness:graphKind/kinds",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/lake-cache",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "lake-cache",
+      "comment": "Prebuilt Lake artefacts for a Lean package, one branch per package and toolchain on the Lean folio's own repository, restored so a build starts warm. Declared by the folio that builds the Lean package; this harness owns the kind and the tool.",
+      "prefLabel": "lake-cache",
+      "definition": "Prebuilt Lake artefacts for a Lean package, one branch per package and toolchain on the Lean folio's own repository, restored so a build starts warm. Declared by the folio that builds the Lean package; this harness owns the kind and the tool.",
+      "notation": "cat-harness:graphKind/lake-cache",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
@@ -657,6 +747,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphKind/pipeline-plugins",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "pipeline-plugins",
+      "comment": "The generic pipeline slots a harness fills, one node per slot naming the table of implementations; registered for a folio through its dependency tree.",
+      "prefLabel": "pipeline-plugins",
+      "definition": "The generic pipeline slots a harness fills, one node per slot naming the table of implementations; registered for a folio through its dependency tree.",
+      "notation": "cat-harness:graphKind/pipeline-plugins",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphKind/policies",
       "@type": [
         "bootstrap:GraphKind",
@@ -697,6 +802,21 @@
       "prefLabel": "qa",
       "definition": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited.",
       "notation": "cat-harness:graphKind/qa",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/qa-checkers",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "qa-checkers",
+      "comment": "The QA checkers a harness provides, one node per criterion naming the table that holds the code; registered for a folio through its dependency tree.",
+      "prefLabel": "qa-checkers",
+      "definition": "The QA checkers a harness provides, one node per criterion naming the table that holds the code; registered for a folio through its dependency tree.",
+      "notation": "cat-harness:graphKind/qa-checkers",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
@@ -877,6 +997,21 @@
       "prefLabel": "uml",
       "definition": "UML class diagrams of each named sub-graph a harness declares, derived from the node schemas its graph kinds register — PlantUML and Mermaid from one model.",
       "notation": "cat-harness:graphKind/uml",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/validators",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "validators",
+      "comment": "The validators a harness's code provides, one node each naming the graph kind and $schema family it checks and the Zod export that checks it, joined onto the kinds on first use.",
+      "prefLabel": "validators",
+      "definition": "The validators a harness's code provides, one node each naming the graph kind and $schema family it checks and the Zod export that checks it, joined onto the kinds on first use.",
+      "notation": "cat-harness:graphKind/validators",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
@@ -1284,9 +1419,9 @@
         "skos:Concept"
       ],
       "label": "contentSourceKind",
-      "comment": "Which kind of content source: `directory` or `branch`, as a plain value. Its own term, NOT `dcterms:type`: that property's range is a class, and the published subgraph files use it as a link (`holdsGraph`), so a literal under it failed publish-verify's object-link check (ld-object-property-is-a-link, 2026-10-03).",
+      "comment": "Which kind of content source: `directory`, `branch`, or a branch `family`, as a plain value. Its own term, NOT `dcterms:type`: that property's range is a class, and the published subgraph files use it as a link (`holdsGraph`), so a literal under it failed publish-verify's object-link check (ld-object-property-is-a-link, 2026-10-03).",
       "prefLabel": "contentSourceKind",
-      "definition": "Which kind of content source: `directory` or `branch`, as a plain value. Its own term, NOT `dcterms:type`: that property's range is a class, and the published subgraph files use it as a link (`holdsGraph`), so a literal under it failed publish-verify's object-link check (ld-object-property-is-a-link, 2026-10-03).",
+      "definition": "Which kind of content source: `directory`, `branch`, or a branch `family`, as a plain value. Its own term, NOT `dcterms:type`: that property's range is a class, and the published subgraph files use it as a link (`holdsGraph`), so a literal under it failed publish-verify's object-link check (ld-object-property-is-a-link, 2026-10-03).",
       "notation": "cat-harness:contentSourceKind",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
@@ -1320,6 +1455,36 @@
       "prefLabel": "keyedBy",
       "definition": "How entries are keyed on a content branch: one entry per `commit`, or one live copy at the `tip`.",
       "notation": "cat-harness:keyedBy",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:keyFrom",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "keyFrom",
+      "comment": "What the key of a branch FAMILY is, in words (an IG's package id; a Lean package and toolchain): each member branch is the family's prefix followed by one key.",
+      "prefLabel": "keyFrom",
+      "definition": "What the key of a branch FAMILY is, in words (an IG's package id; a Lean package and toolchain): each member branch is the family's prefix followed by one key.",
+      "notation": "cat-harness:keyFrom",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:familyRepository",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "familyRepository",
+      "comment": "The remote repository (`owner/repo`) a branch FAMILY is read from. Absent when the family is materialised on the declaring repository itself.",
+      "prefLabel": "familyRepository",
+      "definition": "The remote repository (`owner/repo`) a branch FAMILY is read from. Absent when the family is materialised on the declaring repository itself.",
+      "notation": "cat-harness:familyRepository",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"

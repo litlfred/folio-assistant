@@ -223,6 +223,8 @@
         "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
         "branch": "http://purl.org/dc/terms/identifier",
         "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
+        "keyFrom": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyFrom",
+        "familyRepository": "https://litlfred.github.io/cat-harness/0.1.0/ns#familyRepository",
         "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
       }
     },
@@ -334,15 +336,15 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T08:07:33.715Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bf18ab8de9b1da038cfffb850b71d245e9c8d68a",
-  "sourceCommitSha": "bf18ab8de9b1da038cfffb850b71d245e9c8d68a",
-  "sourceCommitAt": "2026-10-05T07:20:30Z",
+  "generatedAt": "2026-10-05T09:24:51.364Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/914955299a80d566594b8d8d9c77b47c0b57f65b",
+  "sourceCommitSha": "914955299a80d566594b8d8d9c77b47c0b57f65b",
+  "sourceCommitAt": "2026-10-05T09:21:01Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphKind": 5,
-    "Subgraph": 5,
+    "GraphKind": 7,
+    "Subgraph": 6,
     "Asset": 2
   },
   "@graph": [
@@ -368,6 +370,13 @@
       "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/openapi",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "openapi",
+      "renderable": false,
+      "summary": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (the cat-openapi harness). Every operation in a document is a node of its own: a page and an IRI under the instance's docs."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/fhir-artifact-index",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "fhir-artifact-index",
@@ -375,11 +384,37 @@
       "summary": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/openapi",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/ig-ast",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "openapi",
+      "name": "ig-ast",
       "renderable": false,
-      "summary": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (the cat-openapi harness). Every operation in a document is a node of its own: a page and an IRI under the instance's docs."
+      "summary": "The IG Publisher's abstract syntax tree of a FHIR Implementation Guide (its resources, their dependency edges and the build plan), ingested into the folio that uses the IG. One branch per IG package id; the IG's own source need not be materialised."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/ig-pages",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "ig-pages",
+      "renderable": false,
+      "summary": "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-io-decls/smart-trust/smart-trust.jsonld#directory/smart-trust-ast",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "smart-trust-ast",
+      "path": "fhir-ast/",
+      "contentSource": {
+        "kind": "family",
+        "branch": "cat/fhir-harness/fhir-ast/",
+        "keyFrom": "the IG's package id",
+        "familyRepository": "litlfred/smart-trust",
+        "declaredIn": "storage"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/ig-ast"
+      ],
+      "description": "WHO SMART Trust's IG Publisher AST, INGESTED here although the IG's source is not (owner, 2026-10-04: an IG's semi-static KG may stay remote, and its AST is still ingested into the folio). Read from the branch family cat/fhir-harness/fhir-ast/ on the IG's own repository (litlfred/smart-trust; it could instead be materialised onto a local branch here, by dropping `repository`), one branch per IG package id; this IG's member is cat/fhir-harness/fhir-ast/smart.who.int.trust. Restored by fhir-harness/scripts/ig-cache.sh; absent from the checkout by design. Bean lehh.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-io-decls/smart-trust/smart-trust.jsonld#directory/smart-trust-ast",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#directory/smart-trust-ast"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-io-decls/smart-trust/smart-trust.jsonld#directory/smart-trust-artifact-index",
@@ -427,7 +462,8 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs"
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs",
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/ig-pages"
       ],
       "description": "The reader-facing pages, generated from `fhir-artifact-index/index.json` by `smart-trust:pages` (`fhir-harness/scripts/gen-ig-pages.ts`). THE REASON THIS EXISTS: `fhir-artifact-index` is registered `renderable: false`, and until 2026-09-21 this instance declared only that kind — so 674 ingested artefacts were reachable at no URL, which is how the owner found it, by asking where `/smart-trust` was. Only `docs` and `folio` are renderable, and `mount-instance-docs.ts` copies any declared `docs` directory as FINISHED HTML (Jekyll's source is hardcoded to `cat-harness/docs`, so an instance's own pages are built by nothing). `instanceRoot: true` is what makes THIS kind answer at `/smart-trust/` rather than the choice falling to sort order — the defect `withRoutes` documents. It is the only renderable kind here today, so nothing is ambiguous yet; declaring it now means adding a second one later cannot silently move the root. Generated, never authored: `smart-trust:pages:check` is the gate. The viewer for this instance's docs, BUILT BY cat-harness — the owner's rule that a harness which instantiates a directory makes a visualiser for it. Declared HERE, in this instance's own file, rather than in the root's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a COMPOSITION LAYER, so declaring this directory there would overlay this instance's `index.md` onto the site's own. Measured — `compose-docs.test.ts` failed exactly that way when tried. The ref resolves because `injectRails` measures against the BUILT instance's docs prefix (cat-harness's), not the declaring instance's, which is the same reason `who-iris-library`'s cat-harness-built ref resolves today. This directory is NOT mounted: `mount-instance-docs` skips a docs directory with no `index.html`, and this one has none. The viewer is real regardless — `auto-docs` indexes the 20 pages it holds and publishes that page. \"No verbatim mount\" and \"no viewer\" are different facts, and declaring this is what stops the second being inferred from the first.",
       "readmePath": "docs/README.md",
@@ -497,8 +533,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-gates-3o9ma2-io-decls",
-    "sha": "4f30532a591ea4d16b4c89038550a551122eacd2",
+    "sha": "a4399a5aac66fc1349fcd460614e783f0a984aee",
     "pr": "2144/merge",
-    "run": "37281078405"
+    "run": "37289458581"
   }
 }
