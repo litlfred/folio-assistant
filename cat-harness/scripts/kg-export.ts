@@ -125,7 +125,14 @@ import { loadSpecs } from "./external-schemas.js";
 import { declaredNamespaces } from "../schemas/external-schema.js";
 import { toolsOf } from "../tools/discover.js";
 import { declaresOwnCanonical, publishesInstanceSchema } from "./instance-exports.js";
-import { buildInstanceSchemas, instanceSchemaIndexIri, skillIoIri, type InstanceSchemaExport } from "./harness-schema-export.js";
+import {
+  buildInstanceSchemas,
+  instanceSchemaIndexIri,
+  scanInstanceZodSchemas,
+  skillIoIri,
+  type InstanceSchemaExport,
+  type ZodSchemaScan,
+} from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
 import {
   QA_RESULTS_DIR,
@@ -2942,8 +2949,22 @@ export function publishedIdentity(instanceRoot: string, baseUrl?: string): Retur
  * the deploy (`instance-exports.ts`) and the gate that checks it
  * (`check:published-instance-exports`) cannot compose them differently.
  */
-export function publishedInstanceSchemas(instanceRoot: string, baseUrl?: string): InstanceSchemaExport {
-  return buildInstanceSchemas(instanceRoot, publishedIdentity(instanceRoot, baseUrl), { baseUrl });
+export function publishedInstanceSchemas(instanceRoot: string, baseUrl?: string, zod?: ZodSchemaScan): InstanceSchemaExport {
+  return buildInstanceSchemas(instanceRoot, publishedIdentity(instanceRoot, baseUrl), { baseUrl, ...(zod ? { zod } : {}) });
+}
+
+/**
+ * {@link publishedInstanceSchemas} WITH the instance's public Zod schemas —
+ * what the deploy writes (part 2, owner ruling 2026-10-05, option C: "every
+ * exported *Schema").
+ *
+ * Async because the scan imports modules. The synchronous form stays for the
+ * callers whose question does not depend on the scan (the index `$id`, the
+ * contracts); the deploy and the gate's Zod check both call THIS, so they
+ * cannot compose the scan and the build differently.
+ */
+export async function scannedInstanceSchemas(instanceRoot: string, baseUrl?: string): Promise<InstanceSchemaExport> {
+  return publishedInstanceSchemas(instanceRoot, baseUrl, await scanInstanceZodSchemas(instanceRoot));
 }
 
 // ── TOMBSTONES — ONE RELEASE ONLY; REMOVE IN THE NEXT (bean `4ak5` item 2) ──

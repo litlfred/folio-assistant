@@ -34,11 +34,20 @@
  * @covers schemas, cat-harness
  */
 import { writeFileSync, mkdirSync, readFileSync, readdirSync, existsSync } from "node:fs";
-import { dirname, join, posix, relative } from "node:path";
+import { basename, dirname, join, posix, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import type { z } from "zod";
 import { namedJsonSchema, toJsonSchema } from "../schemas/to-json-schema.ts";
 
-import { CatHarnessDeclarationSchema, artefactStub, readDeclaration, renderingPath, repoRootFor } from "../schemas/cat-harness.js";
+import {
+  CatHarnessDeclarationSchema,
+  artefactStub,
+  instanceDirectoriesForGraph,
+  readDeclaration,
+  renderingPath,
+  repoRootFor,
+} from "../schemas/cat-harness.js";
+import { isZodSchema } from "../schemas/kind-validator.js";
 import { tools } from "../tools/discover.js";
 import { ToolDefinitionSchema } from "../schemas/tool.js";
 import { TOOL_TYPES } from "../schemas/tool-types.js";
@@ -476,6 +485,200 @@ export function instanceSchemaIndexIri(id: InstanceIdentity): string | undefined
   return b ? renderingPath(b, `${id.stub}.schema.json`) : undefined;
 }
 
+// ── PUBLIC ZOD SCHEMAS — `<stub>/schema/zod/` (bean `4ak5` item 1, part 2) ──
+//
+// OWNER RULING 2026-10-05, option C, in the owner's words: "every exported
+// *Schema" — "Render all exported Zod *Schema consts per instance now; may
+// expose internal schemas." So the rule is mechanical and deliberately broad:
+//
+//   An instance's PUBLIC schemas are every EXPORTED const whose name ends in
+//   `Schema` and whose value is a Zod schema, in the `.ts` modules (not
+//   `*.test.ts`) directly inside that instance's schemas directory.
+//
+// "Publishing" one is therefore NOT a stability promise; the owner accepted
+// that internal schemas are exposed. What the rule buys is that "which of this
+// instance's types can I fetch" has an answer nobody has to curate.
+
+/** The subdirectory of an instance's `schema/` that holds its rendered Zod schemas. */
+export const ZOD_SCHEMA_DIR = "zod";
+
+/** The name half of the rule. One pattern, so the scan and the gate cannot spell it twice. */
+export const PUBLIC_SCHEMA_EXPORT = /Schema$/;
+
+/**
+ * The directories an instance's public Zod schemas are read from.
+ *
+ * Its DECLARED `schemas` graph when it declares one, else `<root>/schemas/` by
+ * convention — the fallback `schemasRoot` in `gen-schema-docs.ts` already uses.
+ * Unlike {@link contractsDir}, nothing NAMES these modules by path, so the
+ * declaration is the authority here. Measured 2026-10-05: `folio-assistant-sci`
+ * and `who-iris` declare `sources/` (source descriptors, JSON only), so they
+ * are scanned there and hold none; `fhir-harness`, `smart-base` and the other
+ * undeclared instances fall back to `schemas/`.
+ *
+ * The PLURAL accessor, because the singular throws when an instance declares
+ * two `schemas` directories (`large-datasets` does), and taking either one
+ * alone is the `dh4f` shape — a declared directory nobody scans.
+ */
+export function instanceZodSchemaDirs(root: string): string[] {
+  const declared = instanceDirectoriesForGraph(root, "schemas");
+  return declared.length > 0 ? declared : [join(root, "schemas")];
+}
+
+/** One exported Zod `*Schema`, as found by {@link scanInstanceZodSchemas}. */
+export interface ZodSchemaExport {
+  /** Module path relative to the instance root, `/`-separated. */
+  module: string;
+  /** The module's basename without `.ts` — the published directory name. */
+  name: string;
+  exportName: string;
+  schema: unknown;
+}
+
+/** What {@link scanInstanceZodSchemas} saw in one instance. */
+export interface ZodSchemaScan {
+  /**
+   * False when the directories could not even be resolved (an unreadable
+   * declaration). The index then keeps `omitted: ["schemas"]`: "could not
+   * look" must never read as "there are none".
+   */
+  determined: boolean;
+  /** The directories scanned, relative to the instance root. */
+  dirs: string[];
+  found: ZodSchemaExport[];
+  /**
+   * Exports named `*Schema` whose value is NOT a Zod schema. Not public by the
+   * rule, so not rendered and not a failure — listed so the exclusion is
+   * visible rather than silent.
+   */
+  notZod: Array<{ module: string; exportName: string; type: string }>;
+  /** Modules that failed to import, or directories that could not be resolved. Each is a failure. */
+  problems: string[];
+}
+
+/**
+ * Import every module in the instance's schemas directories and collect its
+ * public Zod schemas ({@link PUBLIC_SCHEMA_EXPORT} + {@link isZodSchema}).
+ *
+ * A dynamic import of another instance's file is a RUNTIME read: it adds no
+ * static import edge, so `check:import-direction` does not see it, and it
+ * should not — this module does not depend on what it renders.
+ *
+ * Top-level `.ts` only, matching `schemaModules` in `schema-nodes.ts`, which is
+ * this graph's other reader. A module that fails to import is a PROBLEM, never
+ * a skip: a silently missing module is "there are none" said falsely.
+ */
+export async function scanInstanceZodSchemas(root: string): Promise<ZodSchemaScan> {
+  let dirs: string[];
+  try {
+    dirs = instanceZodSchemaDirs(root);
+  } catch (e) {
+    return {
+      determined: false,
+      dirs: [],
+      found: [],
+      notZod: [],
+      problems: [`the schemas directory could not be resolved: ${e instanceof Error ? e.message : String(e)}`],
+    };
+  }
+  const rel = (p: string): string => relative(root, p).split("\\").join("/");
+  const scan: ZodSchemaScan = { determined: true, dirs: dirs.map(rel), found: [], notZod: [], problems: [] };
+  for (const dir of dirs) {
+    // Absent is a determined empty, not a failure: most instances keep no
+    // schema modules, and the declaration-or-convention rule was still applied.
+    if (!existsSync(dir)) continue;
+    for (const f of readdirSync(dir).sort()) {
+      if (!f.endsWith(".ts") || f.endsWith(".test.ts") || f.endsWith(".d.ts")) continue;
+      const module = rel(join(dir, f));
+      let mod: Record<string, unknown>;
+      try {
+        mod = (await import(join(dir, f))) as Record<string, unknown>;
+      } catch (e) {
+        scan.problems.push(`${module}: could not be imported: ${e instanceof Error ? e.message : String(e)}`);
+        continue;
+      }
+      for (const exportName of Object.keys(mod).sort()) {
+        if (!PUBLIC_SCHEMA_EXPORT.test(exportName)) continue;
+        const value = mod[exportName];
+        if (isZodSchema(value)) scan.found.push({ module, name: basename(f, ".ts"), exportName, schema: value });
+        else scan.notZod.push({ module, exportName, type: value === null ? "null" : typeof value });
+      }
+    }
+  }
+  return scan;
+}
+
+/** Where one rendered Zod schema is published, relative to the instance's `schema/`. */
+export function zodSchemaPath(moduleName: string, exportName: string): string {
+  return posix.join(ZOD_SCHEMA_DIR, moduleName, `${exportName}.schema.json`);
+}
+
+/** One public Zod schema rendered as a JSON Schema document. */
+export interface RenderedZodSchema {
+  module: string;
+  exportName: string;
+  /** Published path under `<stub>/schema/`. */
+  published: string;
+  schema: Record<string, unknown>;
+}
+
+/**
+ * Render each scanned schema with `namedJsonSchema`, the wrapper every host
+ * schema document already uses, and mint its `$id` under the instance's
+ * schema base — the same publication-identity rule as its contracts.
+ *
+ * Every failure is returned, none swallowed: a value that is not a zod-4
+ * schema (it has no `_zod`; `to-json-schema.ts` records that the converter
+ * would publish a zod-3 one EMPTY while reporting success), a converter throw
+ * (`z.custom`, `z.date` and the like are not representable), and two modules of
+ * one basename in different declared directories colliding on a path.
+ */
+export function renderZodSchemas(
+  found: readonly ZodSchemaExport[],
+  schemaBase: string,
+): { rendered: RenderedZodSchema[]; problems: string[] } {
+  const rendered: RenderedZodSchema[] = [];
+  const problems: string[] = [];
+  const claimed = new Map<string, string>();
+  for (const f of found) {
+    const at = `${f.module}#${f.exportName}`;
+    const published = zodSchemaPath(f.name, f.exportName);
+    const prior = claimed.get(published);
+    if (prior !== undefined) {
+      problems.push(`${at}: publishes to ${published}, which ${prior} already does — two modules share the basename \`${f.name}\``);
+      continue;
+    }
+    if (typeof f.schema !== "object" || f.schema === null || !("_zod" in f.schema)) {
+      problems.push(`${at}: has \`safeParse\` but is not a zod-4 schema, so the converter would publish it empty`);
+      continue;
+    }
+    let body: Record<string, unknown>;
+    try {
+      // `Foo` for `FooSchema`, as the host names `ToolDefinitionSchema`'s.
+      body = namedJsonSchema(f.schema as z.ZodType, f.exportName.replace(PUBLIC_SCHEMA_EXPORT, "") || f.exportName);
+    } catch (e) {
+      problems.push(`${at}: could not be rendered: ${e instanceof Error ? e.message : String(e)}`);
+      continue;
+    }
+    claimed.set(published, at);
+    rendered.push({
+      module: f.module,
+      exportName: f.exportName,
+      published,
+      schema: {
+        ...body,
+        // Absolute or absent — the module note's rule, as for every contract.
+        ...(schemaBase ? { $id: renderingPath(schemaBase, published) } : {}),
+        title: f.exportName,
+        description:
+          `Generated from \`${f.exportName}\` in ${f.module}, which is authoritative. Published because it is an ` +
+          "exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+      },
+    });
+  }
+  return { rendered, problems };
+}
+
 /** What one instance's `schema/` directory holds, by path relative to it. */
 export interface InstanceSchemaExport {
   /** `[path under <stub>/schema/, document]`, index first. */
@@ -484,6 +687,20 @@ export interface InstanceSchemaExport {
   contracts: SkillIoContract[];
   /** The index's `$id`, when the instance has a base. */
   indexIri?: string;
+  /**
+   * The instance's public Zod schemas, rendered (part 2, owner ruling
+   * 2026-10-05, option C). Empty when no scan was passed in — see
+   * {@link buildInstanceSchemas}.
+   */
+  zod: RenderedZodSchema[];
+  /** Whether a determined scan was passed in. False keeps `omitted: ["schemas"]` in the index. */
+  zodScanned: boolean;
+  /**
+   * Every module that failed to import and every export that failed to
+   * render. Non-empty fails the deploy and the gate; the index lists them too,
+   * as `unrendered`, so a consumer can tell "not rendered" from "not there".
+   */
+  zodProblems: string[];
 }
 
 /**
@@ -498,26 +715,33 @@ export interface InstanceSchemaExport {
  * by `$id`. A consumer holding an instance's `<stub>.json` reaches both from
  * one fetch.
  *
- * ## Public Zod schemas are NOT listed, and the index says so
+ * ## Public Zod schemas — listed when a scan is passed in
  *
- * Bean `4ak5` item 1 asked for the instance's public Zod schemas too, with
- * "public" meaning exactly the `Schema` nodes the instance's own JSON-LD export
- * lists. For every instance this module serves, that export lists NONE and
- * says why: the schema-node collector is instance-bound (`COLLECTOR_SCOPE` in
- * `kg-export.ts`), so a foreign export records `"omitted": [..., "schemas"]`.
- * And where the collector does run (the host) it yields MODULES
- * (`schemaModules` in `schema-nodes.ts`), not the Zod values a JSON Schema
- * would be rendered from. Choosing which exports of a module are "public"
- * would be a rule nobody has made, so none is invented: the index carries the
- * same `omitted` entry, so "not looked for" cannot read as "there are none".
+ * Until 2026-10-05 none were, because no rule said which exports are public:
+ * the JSON-LD's schema-node collector is instance-bound (`COLLECTOR_SCOPE` in
+ * `kg-export.ts`) and yields MODULES, not Zod values. The owner then made the
+ * rule (option C, "every exported *Schema" — see the section above): every
+ * exported `*Schema` const that is a Zod schema, rendered under `zod/` and
+ * listed in `$defs` by `$id` beside the contracts.
+ *
+ * The scan is ASYNC (it imports modules) and this builder is not, so the scan
+ * is an argument: {@link scanInstanceZodSchemas} first, then this. Without one
+ * the index keeps `omitted: ["schemas"]`, exactly as before, so "not looked
+ * for" still cannot read as "there are none"; with an undetermined one it
+ * keeps it too. A determined scan drops it — the absence of `zod/` entries is
+ * then a measured zero. Failures go to `zodProblems` and to the index's
+ * `unrendered`, never nowhere.
  */
 export function buildInstanceSchemas(
   root: string,
   id: InstanceIdentity,
-  opts: { baseUrl?: string } = {},
+  opts: { baseUrl?: string; zod?: ZodSchemaScan } = {},
 ): InstanceSchemaExport {
   const schemaBase = instanceSchemaBase(id);
   const contracts = buildSkillIoContracts({ root, schemaBase });
+  const scanned = opts.zod?.determined === true;
+  const renders = scanned ? renderZodSchemas(opts.zod!.found, schemaBase) : { rendered: [], problems: [] };
+  const zodProblems = [...(opts.zod?.problems ?? []), ...renders.problems];
   const indexIri = instanceSchemaIndexIri(id);
   // The SHARED declaration schema, at the `$id` the host's own export gives
   // it in this same build — `schemaFiles` publishes that document.
@@ -528,6 +752,9 @@ export function buildInstanceSchemas(
     // directory, so the published path resolves the same for every fetcher.
     defs[`skills/${c.skill}/${c.io}`] = { $ref: (c.schema.$id as string | undefined) ?? c.published.split("\\").join("/") };
   }
+  for (const r of renders.rendered) {
+    defs[r.published.replace(/\.schema\.json$/, "")] = { $ref: (r.schema.$id as string | undefined) ?? r.published };
+  }
   const index: Record<string, unknown> = {
     $schema: "http://json-schema.org/draft-07/schema#",
     ...(indexIri ? { $id: indexIri } : {}),
@@ -535,16 +762,27 @@ export function buildInstanceSchemas(
     description:
       `The schemas instance \`${id.stub}\` publishes: its declaration, which is a ` +
       "CatHarness declaration and is validated by the shared schema this `$ref`s, and its skills' I/O " +
-      "contracts, listed in `$defs` by `$id`. Public Zod schemas are not listed — see `omitted`.",
+      (scanned
+        ? "contracts and its public Zod schemas — every exported Zod `*Schema` const (owner ruling 2026-10-05) — " +
+          "listed in `$defs` by `$id`."
+        : "contracts, listed in `$defs` by `$id`. Public Zod schemas are not listed — see `omitted`."),
     ...(declarationIri ? { allOf: [{ $ref: declarationIri }] } : {}),
     $defs: defs,
     // The JSON-LD export's own word for a collector it did not run. See above.
-    omitted: ["schemas"],
+    ...(scanned ? {} : { omitted: ["schemas"] }),
+    ...(zodProblems.length > 0 ? { unrendered: zodProblems } : {}),
     ...(id.docIri ? { $comment: `Instance graph: ${id.docIri}` } : {}),
   };
   return {
-    files: [[`${id.stub}.schema.json`, index], ...contracts.map((c): [string, Record<string, unknown>] => [c.published, c.schema])],
+    files: [
+      [`${id.stub}.schema.json`, index],
+      ...contracts.map((c): [string, Record<string, unknown>] => [c.published, c.schema]),
+      ...renders.rendered.map((r): [string, Record<string, unknown>] => [r.published, r.schema]),
+    ],
     contracts,
+    zod: renders.rendered,
+    zodScanned: scanned,
+    zodProblems,
     ...(indexIri ? { indexIri } : {}),
   };
 }
