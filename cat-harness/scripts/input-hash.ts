@@ -19,7 +19,20 @@
  *   scripts import by a relative path, transitively;
  * - `bun.lock`, so a dependency bump invalidates everything;
  * - when the declaration names {@link TRACKED}, the whole working tree as
- *   version control sees it — for the scripts that walk every instance.
+ *   version control sees it — for the scripts that walk every instance;
+ * - for every `--against <ref>` a command passes, the IDENTITY of the baseline
+ *   that ref resolves to on the `qa-reports` branch (see {@link againstRefsOf}).
+ *
+ * ## A baseline is an input that is not in the tree
+ *
+ * Eight gates run `--check --against main`: they judge the fresh run against
+ * the latest `main` entry on the `qa-reports` branch and fail only on what is
+ * NEW against it. That entry moves every time `main` publishes, while nothing
+ * in the working tree changes — so a fingerprint over files alone would skip a
+ * pair whose verdict the moved baseline could change. The baseline's identity
+ * (the resolved entry key and its verified payload tree) is therefore hashed
+ * like any other input, and a baseline that cannot be resolved — offline, no
+ * branch, a corrupt entry — is undetermined, so the pair runs.
  *
  * What it does NOT see, and why that is acceptable only because every entry in
  * `task-io.ts` was read first: files outside the declaration that the script
@@ -53,14 +66,54 @@
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
+import { readQaManifest, type QaStoreOptions } from "./qa-store.ts";
 
 /** Where the cache lives, relative to the repository root. `build/` is git-ignored. */
 export const CACHE_FILE = join("build", "regen-cache", "input-hashes.json");
 
 /** Bump to invalidate every recorded hash when the fingerprint's recipe changes. */
-export const RECIPE_VERSION = 1;
+export const RECIPE_VERSION = 2;
 
 export type Fingerprint = { hash: string; files: number; wholeTree?: boolean } | { undetermined: string };
+
+/**
+ * Resolve an `--against` ref to the identity of the baseline it names, or say
+ * why it could not. Injected so tests need no `qa-reports` branch; the real
+ * one is {@link qaBaselineIdentity}.
+ */
+export type BaselineResolver = (ref: string) => { id: string } | { undetermined: string };
+
+/**
+ * The real {@link BaselineResolver}: the `qa-reports` entry `ref` resolves to,
+ * as `<key> <payloadTree>` — the same identity `qa-store` verifies an entry
+ * by, so two reads that hash alike read byte-identical baselines. Not the
+ * branch TIP: a tip moves on every PR publish, which would invalidate every
+ * `--against main` pair for entries it never reads.
+ *
+ * Memoised per resolver, `unknown` included: one regen run asks the same ref
+ * for several pairs, and an unreachable remote should cost one timeout, not
+ * eight. Any state but a hit — `miss`, `corrupt`, `unknown` — is undetermined.
+ */
+export function qaBaselineIdentity(opts: QaStoreOptions = {}): BaselineResolver {
+  const memo = new Map<string, { id: string } | { undetermined: string }>();
+  return (ref) => {
+    const hit = memo.get(ref);
+    if (hit !== undefined) return hit;
+    let out: { id: string } | { undetermined: string };
+    if (ref === "") {
+      out = { undetermined: "no ref given" };
+    } else {
+      try {
+        const m = readQaManifest(ref, opts);
+        out = m.state === "hit" ? { id: `${m.key} ${m.manifest.payloadTree}` } : { undetermined: `${m.state}: ${m.reason}` };
+      } catch (e) {
+        out = { undetermined: (e as Error).message };
+      }
+    }
+    memo.set(ref, out);
+    return out;
+  };
+}
 
 /** What a pair declares about itself, in `task-io.ts`. */
 export interface PairIO {
@@ -108,6 +161,38 @@ export function entryFiles(
     if (!found) return undefined;
   }
   return out;
+}
+
+/**
+ * Every `--against <ref>` (or `--against=<ref>`) the command of `script` passes,
+ * following `bun run <script>` the way {@link entryFiles} does. Sorted and
+ * de-duplicated. A bare `--against` with no ref is returned as `""`, which the
+ * resolver cannot resolve — the script itself would refuse it, so running it
+ * is the right answer.
+ */
+export function againstRefsOf(
+  scripts: Readonly<Record<string, string>>,
+  script: string,
+  seen: Set<string> = new Set(),
+): string[] {
+  if (seen.has(script)) return [];
+  seen.add(script);
+  const command = scripts[script];
+  if (command === undefined) return [];
+  const refs = new Set<string>();
+  const tokens = command.split(/\s+/).filter(Boolean).map((t) => t.replace(/^["']|["']$/g, ""));
+  for (let i = 0; i < tokens.length; i++) {
+    const t = tokens[i]!;
+    if (t === "--against") {
+      const next = tokens[i + 1];
+      refs.add(next === undefined || next.startsWith("--") || /^(&&|\|\||;)$/.test(next) ? "" : next);
+    } else if (t.startsWith("--against=")) {
+      refs.add(t.slice("--against=".length));
+    } else if (t === "run" && tokens[i - 1] === "bun" && scripts[tokens[i + 1] ?? ""] !== undefined) {
+      for (const r of againstRefsOf(scripts, tokens[i + 1]!, seen)) refs.add(r);
+    }
+  }
+  return [...refs].sort();
 }
 
 const IMPORT_RE =
@@ -297,8 +382,18 @@ export function fingerprint(
   scriptNames: readonly string[],
   io: PairIO | undefined,
   digests: FileDigests = new FileDigests(root),
+  baseline?: BaselineResolver,
 ): Fingerprint {
   if (io?.inputs === undefined) return { undetermined: "no input declaration in task-io.ts" };
+  const seenScripts = new Set<string>();
+  const refs = [...new Set(scriptNames.flatMap((s) => againstRefsOf(scripts, s, seenScripts)))].sort();
+  const baselines: string[] = [];
+  for (const ref of refs) {
+    if (baseline === undefined) return { undetermined: `\`--against ${ref}\` names a baseline and no resolver was given` };
+    const b = baseline(ref);
+    if ("undetermined" in b) return { undetermined: `baseline --against ${ref || "(no ref)"}: ${b.undetermined}` };
+    baselines.push(`against ${ref} = ${b.id}\n`);
+  }
   const wholeTree = io.inputs.includes(TRACKED);
   let tree: { hash: string } | undefined;
   if (wholeTree) {
@@ -328,6 +423,7 @@ export function fingerprint(
   for (const s of scriptNames) h.update(`script ${s} = ${scripts[s]}\n`);
   h.update(`io ${JSON.stringify(io)}\n`);
   if (tree !== undefined) h.update(`tree ${tree.hash}\n`);
+  for (const b of baselines) h.update(b);
   const all = new Set([...declared.files, ...closure.files]);
   if (existsSync(join(root, "bun.lock"))) all.add("bun.lock");
   const sorted = [...all].sort();
