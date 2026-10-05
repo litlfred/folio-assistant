@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-23T21:29:44Z
-updated_at: 2026-09-29T21:43:13Z
+updated_at: 2026-10-05T13:39:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -61,3 +61,9 @@ One mechanical rule covers all 17: reverse the host, append the path. It is the 
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+
+
+## 2026-10-05 — the publication rules now have one home (bean `4ak5` item 4)
+
+Which graph each instance publishes, where, under which IRI and schema, and what is stripped (fsh-guts, `published: false` skills, state-graph nodes) now live in `cat-harness/skills/kg/kg-core/instance-publication.md` §"What each instance publishes — graph, address, schema, and what is stripped". This bean's body is left as written; where it and that section disagree, the section is current.

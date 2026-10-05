@@ -973,8 +973,11 @@ function tileFor(
     }
   }
 
-  const own = hasAvatar(decl.name);
-  const avatar = own ? avatarFor(decl.name) : GENERIC;
+  // The declaration's own `avatar` first (sod4 #4), so a tile is drawn from
+  // the instance it describes; the table by name covers the instances below
+  // the harness that carry none.
+  const own = decl.avatar !== undefined || hasAvatar(decl.name);
+  const avatar = decl.avatar ?? (own ? avatarFor(decl.name) : GENERIC);
   if (!own) {
     findings.push(`${decl.name}: no avatar declared for this instance — showing the generic mark.`);
   }

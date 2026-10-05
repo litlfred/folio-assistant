@@ -21,7 +21,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { AVATARS } from "../../../cat-harness/schemas/avatars.ts";
+import { avatarFor } from "../../../cat-harness/schemas/avatars.ts";
 import { KIND_TABLE_DOC, KIND_TABLE_HEADER } from "../../../cat-harness/scripts/kind-table.ts";
 import { STEPS, authoredGaps, hueReport } from "../kind-register.ts";
 
@@ -94,9 +94,10 @@ describe("hue is reported and never graded", () => {
     // count in a test is the claim `audit-coverage` says not to make.
     expect(collisions.length).toBeGreaterThan(0);
     // The evidence that it is a convention is IN the data, not inferred.
-    expect(AVATARS["who-iris"]!.reads).toContain("WHO blue");
-    expect(AVATARS["smart-base"]!.reads).toContain("WHO blue");
-    expect(AVATARS["who-iris"]!.tone).toBe(AVATARS["smart-base"]!.tone);
+    expect(avatarFor("who-iris").reads).toContain("WHO blue");
+    expect(avatarFor("smart-base").reads).toContain("WHO blue");
+    // Declared by each instance now (bean sod4 #4), so read through avatarFor.
+    expect(avatarFor("who-iris").tone).toBe(avatarFor("smart-base").tone);
   });
 
   test("nearest-neighbour clearance is symmetric and circular", () => {

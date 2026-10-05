@@ -59,6 +59,8 @@ export interface StructureItem {
   ordered?: boolean;
   rows?: string[][];
   media?: string;
+  /** Clockwise degrees Word rotates the picture; `media` is already the rotated copy. */
+  rot?: number;
   target?: string;
   number?: string;
 }
@@ -67,6 +69,9 @@ export interface Structure {
   items: StructureItem[];
   footnotes: Record<string, string>;
   media: string[];
+  /** Rotated copies `docx-structure.py --media-dir` writes: path → source and angle. */
+  rotations?: Record<string, { source: string; rot: number }>;
+  warnings?: string[];
 }
 export interface Alignment {
   seq: number;
@@ -449,6 +454,9 @@ export function convert(structure: Structure, map: LineMap, opts: ConvertOptions
     }
     if (it.type === "table") {
       const rows = it.rows ?? [];
+      // Pictures inside cells (icon legends) stay in the cell; copy their files.
+      for (const cell of rows.flat())
+        for (const m of cell.matchAll(/!\[[^\]]*\]\((media\/[^)\s]+)\)/g)) if (!media.includes(m[1])) media.push(m[1]);
       if (isBox(rows) && !cap) {
         addBlock("prose", it, quote(rows[0].find((c) => c.trim()) ?? ""), it.text ?? "", {});
       } else {

@@ -154,7 +154,9 @@ shipped and then corrected the same day.
 A consumer may fetch `fsh-guts.jsonld` deliberately. It must never **arrive**
 there by following an edge. Mechanism and the three emitters that had to be
 filtered: [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published
-graph".
+graph". Where this sits among everything else the site publishes, and what
+else is never published: [`instance-publication`](instance-publication.md)
+§"What each instance publishes".
 
 Reaching it as a human is the dead-fish icon under settings, with a node
 counter and a select dialog. Bean `folio-assistant-7vhe`; until that exists,

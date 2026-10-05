@@ -7036,6 +7036,13 @@
           "doc": "Other spellings of the name, listed on the landing (`ob3m` 5)."
         },
         {
+          "name": "avatar",
+          "type": "KindAvatar",
+          "optional": true,
+          "array": false,
+          "doc": "The instance's own avatar (sod4 #4); the table in avatars.ts covers only the instances below the harness."
+        },
+        {
           "name": "images",
           "type": "KgImage[]",
           "optional": true,
@@ -7242,6 +7249,7 @@
         "cat-harness/schemas/cat-harness.ts#RenderExemption",
         "cat-harness/schemas/cat-harness.ts#Subscription",
         "cat-harness/schemas/cat-harness.ts#Topology",
+        "cat-harness/schemas/graph-kind-node.ts#KindAvatar",
         "cat-harness/schemas/kg-node.ts#KgAsset",
         "cat-harness/schemas/kg-node.ts#KgImage",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels",
@@ -7277,6 +7285,13 @@
           "optional": true,
           "array": true,
           "doc": "Other ways the instance's name is written, shown on the landing as a small"
+        },
+        {
+          "name": "avatar",
+          "type": "KindAvatarSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The instance's mark — the same shape a kind node carries (bean sod4 #4)."
         },
         {
           "name": "images",
@@ -7479,6 +7494,7 @@
         "cat-harness/schemas/cat-harness.ts#RenderExemptionSchema",
         "cat-harness/schemas/cat-harness.ts#SubscriptionSchema",
         "cat-harness/schemas/cat-harness.ts#TopologySchema",
+        "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
         "cat-harness/schemas/kg-node.ts#KgAssetSchema",
         "cat-harness/schemas/kg-node.ts#KgImageSchema",
         "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
@@ -18467,6 +18483,27 @@
           "doc": "The navbar tile icon (an icon name, as `graph-tiles.ts` spells it)."
         },
         {
+          "name": "published",
+          "type": "z.literal(false).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`false`: never part of a published graph (sod4 #5)."
+        },
+        {
+          "name": "skillBearing",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The directory may be scanned for skill bodies (sod4 #5)."
+        },
+        {
+          "name": "kgContent",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The kind is harness knowledge-graph content (sod4 #5)."
+        },
+        {
           "name": "description",
           "type": "z.string().min(1).optional()",
           "optional": true,
@@ -18504,6 +18541,19 @@
         "GRAPH_KIND_NODE_TAG",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-kind-node.ts#KindAvatar",
+      "name": "KindAvatar",
+      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -18684,7 +18734,28 @@
           "type": "string",
           "optional": true,
           "array": false,
-          "doc": "The navbar tile icon for a DECLARED kind (bean dmx1); cat-harness's own kinds keep theirs in graph-tiles.ts."
+          "doc": "The navbar tile icon (a name in `TILE_GLYPHS`); on cat-harness's own kinds too since sod4 #5, so `graph-tiles.ts` keeps no table."
+        },
+        {
+          "name": "published",
+          "type": "false",
+          "optional": true,
+          "array": false,
+          "doc": "`false` keeps the kind out of every PUBLISHED graph: not one edge of a"
+        },
+        {
+          "name": "skillBearing",
+          "type": "true",
+          "optional": true,
+          "array": false,
+          "doc": "The kind's directory may be scanned for SKILL BODIES (`*.md` with a"
+        },
+        {
+          "name": "kgContent",
+          "type": "true",
+          "optional": true,
+          "array": false,
+          "doc": "The kind IS harness knowledge-graph content — the `cat-harness` umbrella"
         },
         {
           "name": "description",
@@ -55335,6 +55406,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/graph-kind-node.ts#KindAvatar",
+      "via": "avatar",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness/schemas/kg-node.ts#KgAsset",
       "via": "assets",
       "kind": "field",
@@ -55473,6 +55552,14 @@
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
       "to": "cat-harness/schemas/cat-harness.ts#TopologySchema",
       "via": "topology",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
+      "via": "avatar",
       "kind": "field",
       "optional": true,
       "array": false
