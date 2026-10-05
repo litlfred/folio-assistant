@@ -788,6 +788,11 @@ jobs:
           bun run cat-harness/scripts/qa-site-assets.ts verify \
             --site ./_site --results cat-harness/test/results \
             --state "$RUNNER_TEMP/qa-site-assets.state.json"
+          # The panels' links to each result file, judged on what was BUILT
+          # (bean `bejf`, #2217): every projection carries `sidecarLinks`, and
+          # none addresses a stored result on `main`. Mirrored in
+          # `feature-staging.yml`.
+          bun run check:qa-result-links --site ./_site
 
       # THE NAVBAR TILES POINT AT FILES THIS BUILD PUBLISHES -- checked, not
       # composed.
