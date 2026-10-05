@@ -28,8 +28,8 @@ depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
 <div class="xs-stat"><b>22</b><span>specifications</span></div>
-<div class="xs-stat"><b>106</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>228</b><span>declared uses</span></div>
+<div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
+<div class="xs-stat"><b>230</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -230,7 +230,7 @@ graph. That is a determined zero, not an unfilled field.
 |---|---|
 | `cat-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
 | `cat-harness/processes/kg/*.bpmn (6)` | `xmlns` binding |
-| `cat-harness/processes/library/*.bpmn (14)` | `xmlns` binding |
+| `cat-harness/processes/library/*.bpmn (10)` | `xmlns` binding |
 | `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
 | `cat-harness/processes/sdlc/*.bpmn (26)` | `xmlns` binding |
 | `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
@@ -240,13 +240,13 @@ graph. That is a determined zero, not an unfilled field.
 | `fhir-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/*.bpmn (7)` | `xmlns` binding |
-| `folio-assistant-core/processes/library/*.bpmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/library/*.bpmn (6)` | `xmlns` binding |
 | `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
 | `smart-base/processes/content/*.bpmn (1)` | `xmlns` binding |
 
-**Operative terms (22).** The terms this repository acts on —
+**Operative terms (21).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
 a subset of the edition rather than a transcription of it.
 
@@ -260,7 +260,6 @@ a subset of the edition rather than a transcription of it.
 | `bpmn:exclusiveGateway` | derived from the corpus; what this repository does with it is not yet described |
 | `bpmn:extensionElements` | derived from the corpus; what this repository does with it is not yet described |
 | `bpmn:flowNodeRef` | derived from the corpus; what this repository does with it is not yet described |
-| `bpmn:import` | derived from the corpus; what this repository does with it is not yet described |
 | `bpmn:incoming` | derived from the corpus; what this repository does with it is not yet described |
 | `bpmn:lane` | derived from the corpus; what this repository does with it is not yet described |
 | `bpmn:laneSet` | derived from the corpus; what this repository does with it is not yet described |
@@ -292,7 +291,7 @@ a subset of the edition rather than a transcription of it.
 |---|---|
 | `cat-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
 | `cat-harness/processes/kg/*.bpmn (6)` | `xmlns` binding |
-| `cat-harness/processes/library/*.bpmn (14)` | `xmlns` binding |
+| `cat-harness/processes/library/*.bpmn (10)` | `xmlns` binding |
 | `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
 | `cat-harness/processes/sdlc/*.bpmn (26)` | `xmlns` binding |
 | `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
@@ -300,7 +299,7 @@ a subset of the edition rather than a transcription of it.
 | `fhir-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/*.bpmn (7)` | `xmlns` binding |
-| `folio-assistant-core/processes/library/*.bpmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/library/*.bpmn (6)` | `xmlns` binding |
 | `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
