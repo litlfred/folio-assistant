@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T17:42:33Z
-updated_at: 2026-10-05T05:02:17Z
+updated_at: 2026-10-05T05:29:21Z
 parent: folio-assistant-fs43
 ---
 
@@ -133,3 +133,10 @@ Owner, the same turn: *"uploads and library live in cat-harness as part of doc i
 3. The MCP adapter serves every Tool node in the folio's dependency tree, the same rule as the harness server. The three adapter copies duplicating src/tools (preferences, preview, check-deps) are deleted, after the adapter's preview spawn+unref fix is ported into src/tools/preview.ts. Preferences standardise on .folio-prefs.json (default, stated to the owner).
 
 Work is on the local branch riit-3c-local, to be pushed after #2082 merges so its ready state is not reset.
+
+
+## Step 5: owner ruling 2026-10-05 (option 1 of 3)
+
+Content adapters become vocabulary nodes: a `content-adapters/` graph with one `folio-content-adapter/v1` node per block vocabulary, `paper` in folio-assistant-sci and `dak` in smart-base. Each node carries the name, the companion roles, and whether cat-harness's code types its blocks. CONTENT_ADAPTERS and ADAPTER_COMPANION_ROLES are derived from the nodes, and smart-base/contributions.ts drops its `adapter`. The server adapter classes stay as `contentAdapters` data in each `<instance>.json`. The two notions are kept separate because they do not line up: `document` has a class but no vocabulary, and `dak` has a vocabulary but no class.
+
+Done in 317054c: paper.json (sci) and dak.json (smart-base); CONTENT_ADAPTERS and ADAPTER_COMPANION_ROLES are derived; the loader registers dak through the dependency tree; smart-base/contributions.ts is deleted. With this, the only contributes module left is sci's, which registers the lean_formal_edges tool group.
