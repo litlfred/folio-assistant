@@ -434,6 +434,8 @@
     "kind:table:check": "bun run cat-harness/scripts/kind-table.ts --check",
     "kind:register": "bun run cat-harness-tools/scripts/kind-register.ts",
     "kind:register:check": "bun run cat-harness-tools/scripts/kind-register.ts --check",
+    "node-kinds": "bun run cat-harness-tools/scripts/check-node-kinds.ts",
+    "node-kinds:check": "bun run cat-harness-tools/scripts/check-node-kinds.ts --check",
     "skills:docs": "bun run cat-harness/scripts/gen-skill-docs.ts",
     "skills:docs:check": "bun run cat-harness/scripts/gen-skill-docs.ts --check",
     "smart-trust:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Trust\" --chrome-owner smart-base",

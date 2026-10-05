@@ -144,3 +144,15 @@ export function nodeKind<const P extends readonly NodeKind<z.ZodRawShape>[], O e
     schema: z.object(shape) as unknown as z.ZodObject<Composed<P, O>>,
   };
 }
+
+/**
+ * Is `v` a node kind? A typology's validator ref may name one (issue #2195):
+ * the kind IS the family's schema, and its parents are what make it a class
+ * with subclasses rather than a bare shape.
+ */
+export function isNodeKind(v: unknown): v is NodeKind {
+  if (typeof v !== "object" || v === null) return false;
+  const k = v as Partial<NodeKind>;
+  return typeof k.id === "string" && Array.isArray(k.parents) && Array.isArray(k.order) &&
+    typeof (k.schema as { safeParse?: unknown } | undefined)?.safeParse === "function";
+}

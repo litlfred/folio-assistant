@@ -969,6 +969,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       "folio-qa-graph/v1": { shape: "content/pipeline/qa-graph-index.ts#QaGraphIndex" },
       "folio-translation-index/v1": { shape: "content/pipeline/translation-index.ts#TranslationIndex" },
       "folio-bean-index/v1": { generated: true },
+      "folio-node-kind-index/v1": { generated: true },
       "folio-translation-status/v1": { generated: true },
       "folio-schema-graph/v1": { generated: true },
       "folio-library-index/v1": { generated: true },

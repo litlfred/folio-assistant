@@ -1,0 +1,674 @@
+{
+  "$schema": "folio-node-kind-index/v1",
+  "kinds": [
+    {
+      "id": "carried-note",
+      "parents": [],
+      "subclasses": [
+        "folio-todo/v1"
+      ],
+      "holdings": []
+    },
+    {
+      "id": "folio-node-kind-index/v1",
+      "parents": [],
+      "subclasses": [],
+      "declaredBy": "cat-harness",
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "exportName": "NodeKindIndexFileKind",
+      "holdings": [
+        {
+          "typology": "docs",
+          "family": "folio-node-kind-index/v1"
+        }
+      ]
+    },
+    {
+      "id": "folio-public-comment-changeset/v1",
+      "parents": [],
+      "subclasses": [],
+      "declaredBy": "folio-assistant-core",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "exportName": "ChangeSetKind",
+      "holdings": [
+        {
+          "typology": "public-comments",
+          "family": "folio-public-comment-changeset/v1"
+        }
+      ]
+    },
+    {
+      "id": "folio-public-comment/v1",
+      "parents": [
+        "folio-todo/v1"
+      ],
+      "subclasses": [],
+      "declaredBy": "folio-assistant-core",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "exportName": "PublicCommentKind",
+      "holdings": [
+        {
+          "typology": "public-comments",
+          "family": "folio-public-comment/v1"
+        }
+      ]
+    },
+    {
+      "id": "folio-todo/v1",
+      "parents": [
+        "carried-note",
+        "themed"
+      ],
+      "subclasses": [
+        "folio-public-comment/v1"
+      ],
+      "holdings": [
+        {
+          "typology": "todo-items"
+        }
+      ],
+      "declaredBy": "cat-harness",
+      "module": "cat-harness/schemas/todo.ts",
+      "exportName": "TodoNodeKind"
+    },
+    {
+      "id": "themed",
+      "parents": [],
+      "subclasses": [
+        "folio-todo/v1"
+      ],
+      "holdings": []
+    }
+  ],
+  "unkinded": [
+    {
+      "typology": "attestations",
+      "reason": "zod-schema",
+      "ref": "schemas/qa-attestations.ts#QaAttestationsSchema"
+    },
+    {
+      "typology": "beans",
+      "family": "folio-merge-queue-entry/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/merge-queue.ts#MergeQueueEntrySchema"
+    },
+    {
+      "typology": "beans",
+      "family": "folio-session-survey/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/session-survey.ts#SessionSurveySchema"
+    },
+    {
+      "typology": "beans",
+      "family": "folio-workflow-instance/v1",
+      "reason": "no-validator"
+    },
+    {
+      "typology": "binary-release",
+      "reason": "zod-schema",
+      "ref": "schemas/binary-release.ts#BinaryReleaseSchema"
+    },
+    {
+      "typology": "block-kinds",
+      "family": "folio-block-kind/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/block-kind-node.ts#BlockKindNodeSchema"
+    },
+    {
+      "typology": "board-positions",
+      "reason": "zod-schema",
+      "ref": "schemas/board-positions.ts#BoardPositionsSchema"
+    },
+    {
+      "typology": "boards",
+      "reason": "zod-schema",
+      "ref": "schemas/board.ts#BoardSchema"
+    },
+    {
+      "typology": "catalogue",
+      "family": "folio-catalogue-node/v1",
+      "reason": "zod-schema",
+      "ref": "folio-assistant-core:schemas/catalogue.ts#CatalogueNodeSchema"
+    },
+    {
+      "typology": "catalogue",
+      "family": "folio-catalogue/v1",
+      "reason": "zod-schema",
+      "ref": "folio-assistant-core:schemas/catalogue.ts#CatalogueSchema"
+    },
+    {
+      "typology": "catalogue",
+      "family": "folio-dublin-core/v1",
+      "reason": "zod-schema",
+      "ref": "folio-assistant-core:schemas/dublin-core.ts#DublinCoreRecordSchema"
+    },
+    {
+      "typology": "code-list",
+      "reason": "zod-schema",
+      "ref": "schemas/code-list.ts#CodeListSchema"
+    },
+    {
+      "typology": "computation-witness",
+      "reason": "zod-schema",
+      "ref": "schemas/computation-witness.ts#ComputationWitnessSchema"
+    },
+    {
+      "typology": "content-adapters",
+      "family": "folio-content-adapter/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/content-adapter-node.ts#ContentAdapterNodeSchema"
+    },
+    {
+      "typology": "docs",
+      "family": "cat-harness-payload/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/subgraph-manifest.ts#PayloadSidecarSchema"
+    },
+    {
+      "typology": "docs",
+      "family": "folio-bean-index/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/site-indexes.ts#BeanIndexSchema"
+    },
+    {
+      "typology": "docs",
+      "family": "folio-graph-projection/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/site-indexes.ts#FolioGraphProjectionSchema"
+    },
+    {
+      "typology": "docs",
+      "family": "folio-library-entry/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/site-indexes.ts#LibraryEntrySchema"
+    },
+    {
+      "typology": "docs",
+      "family": "folio-library-index/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/site-indexes.ts#LibraryIndexSchema"
+    },
+    {
+      "typology": "docs",
+      "family": "folio-qa-graph/v1",
+      "reason": "no-validator"
+    },
+    {
+      "typology": "docs",
+      "family": "folio-schema-graph/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/site-indexes.ts#SchemaGraphIndexSchema"
+    },
+    {
+      "typology": "docs",
+      "family": "folio-semantic-zoom/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/semantic-zoom.ts#SemanticZoomSchema"
+    },
+    {
+      "typology": "docs",
+      "family": "folio-todo-index/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/todo-index.ts#TodoIndexSchema"
+    },
+    {
+      "typology": "docs",
+      "family": "folio-translation-index/v1",
+      "reason": "no-validator"
+    },
+    {
+      "typology": "docs",
+      "family": "folio-translation-status/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/site-indexes.ts#TranslationStatusSchema"
+    },
+    {
+      "typology": "docs",
+      "family": "folio-voices-index/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/site-indexes.ts#VoicesIndexSchema"
+    },
+    {
+      "typology": "document-kinds",
+      "family": "folio-document-kind-coverage/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/document-kind.ts#DocumentKindCoverageSchema"
+    },
+    {
+      "typology": "document-kinds",
+      "family": "folio-document-kind/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/document-kind.ts#DocumentKindSchema"
+    },
+    {
+      "typology": "external-schema",
+      "family": "folio-external-schema/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/external-schema.ts#ExternalSchemaSchema"
+    },
+    {
+      "typology": "external-schema",
+      "family": "folio-pinned-terminology/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/pinned-terminology.ts#PinnedTerminologySchema"
+    },
+    {
+      "typology": "fhir-artifact-index",
+      "family": "folio-fhir-artifact-index/v2",
+      "reason": "zod-schema",
+      "ref": "fhir-harness:schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema"
+    },
+    {
+      "typology": "fhir-artifact-index",
+      "family": "folio-ig-chrome/v2",
+      "reason": "zod-schema",
+      "ref": "fhir-harness:schemas/ig-chrome.ts#IgChromeSchema"
+    },
+    {
+      "typology": "fhir-artifact-index",
+      "family": "folio-ig-identity/v1",
+      "reason": "zod-schema",
+      "ref": "fhir-harness:schemas/ig-identity.ts#IgIdentitySchema"
+    },
+    {
+      "typology": "fhir-artifact-index",
+      "family": "folio-ig-menu/v1",
+      "reason": "zod-schema",
+      "ref": "fhir-harness:schemas/ig-menu.ts#IgMenuSchema"
+    },
+    {
+      "typology": "fhir-artifact-index",
+      "family": "ig-releases/v1",
+      "reason": "zod-schema",
+      "ref": "fhir-harness:schemas/ig-releases.ts#IgReleasesSchema"
+    },
+    {
+      "typology": "fsh-guts",
+      "reason": "zod-schema",
+      "ref": "schemas/fsh-guts.ts#FshGutsNodeSchema"
+    },
+    {
+      "typology": "glossary",
+      "family": "folio-glossary/v1",
+      "reason": "zod-schema",
+      "ref": "folio-assistant-core:schemas/glossary.ts#GlossarySchema"
+    },
+    {
+      "typology": "health",
+      "reason": "zod-schema",
+      "ref": "schemas/health-report.ts#HealthReportSchema"
+    },
+    {
+      "typology": "ig-ast",
+      "family": "ig-ast-dependencies/v1",
+      "reason": "zod-schema",
+      "ref": "fhir-harness:schemas/ig-ast.ts#AstDependenciesSchema"
+    },
+    {
+      "typology": "ig-ast",
+      "family": "ig-ast-plan/v1",
+      "reason": "zod-schema",
+      "ref": "fhir-harness:schemas/ig-ast.ts#AstPlanSchema"
+    },
+    {
+      "typology": "ig-ast",
+      "family": "ig-ast/v1",
+      "reason": "zod-schema",
+      "ref": "fhir-harness:schemas/ig-ast.ts#AstManifestSchema"
+    },
+    {
+      "typology": "ig-metadata-index",
+      "reason": "zod-schema",
+      "ref": "fhir-harness:schemas/ig-metadata-index.ts#IgMetadataIndexSchema"
+    },
+    {
+      "typology": "interaction",
+      "family": "folio-interaction/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/interaction.ts#InteractionNodeSchema"
+    },
+    {
+      "typology": "issue-marks",
+      "family": "folio-issue-mark/v1",
+      "reason": "zod-schema",
+      "ref": "src/issue-watch/seen-comments.ts#IssueMarkSchema"
+    },
+    {
+      "typology": "library",
+      "family": "concern-groups/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/concern-groups.ts#ConcernGroupsSchema"
+    },
+    {
+      "typology": "library",
+      "family": "folio-block-summaries/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/block-summary.ts#BlockSummariesSidecarSchema"
+    },
+    {
+      "typology": "library",
+      "family": "folio-document-images/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/document-image.ts#ImagesSidecarSchema"
+    },
+    {
+      "typology": "library",
+      "family": "folio-figure-descriptions/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/figure-description.ts#FigureDescriptionsFileSchema"
+    },
+    {
+      "typology": "library",
+      "family": "folio-image-verdicts/v1",
+      "reason": "no-validator"
+    },
+    {
+      "typology": "library",
+      "family": "folio-referenced-source/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/referenced-source.ts#ReferencedSourceSchema"
+    },
+    {
+      "typology": "library",
+      "family": "folio-section-verdicts/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/section-verdicts.ts#SectionVerdictFileSchema"
+    },
+    {
+      "typology": "library",
+      "family": "folio-slides-accessibility/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/slides-accessibility.ts#SlidesAccessibilitySchema"
+    },
+    {
+      "typology": "library",
+      "family": "folio-vector-figures/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/vector-figure.ts#VectorFiguresSidecarSchema"
+    },
+    {
+      "typology": "library",
+      "family": "folio-vector-labels/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/vector-labels.ts#VectorLabelsSidecarSchema"
+    },
+    {
+      "typology": "library",
+      "family": "folio-withheld/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/withheld.ts#WithheldSchema"
+    },
+    {
+      "typology": "memory",
+      "reason": "zod-schema",
+      "ref": "schemas/memory.ts#MemoryNodeSchema"
+    },
+    {
+      "typology": "merge-queue",
+      "family": "folio-merge-queue-entry/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/merge-queue.ts#MergeQueueEntrySchema"
+    },
+    {
+      "typology": "models",
+      "reason": "zod-schema",
+      "ref": "bootstrap-tools:schemas/model-registry.ts#ModelRegistrySchema"
+    },
+    {
+      "typology": "openapi",
+      "family": "folio-openapi-source/v1",
+      "reason": "zod-schema",
+      "ref": "cat-openapi:schemas/openapi.ts#OpenApiProvenanceSchema"
+    },
+    {
+      "typology": "pipeline-plugins",
+      "family": "folio-pipeline-plugin/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/contribution-nodes.ts#PipelinePluginNodeSchema"
+    },
+    {
+      "typology": "policies",
+      "reason": "zod-schema",
+      "ref": "schemas/odrl.ts#OdrlPolicySchema"
+    },
+    {
+      "typology": "qa-checkers",
+      "family": "folio-qa-checker/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/contribution-nodes.ts#QaCheckerNodeSchema"
+    },
+    {
+      "typology": "qa-report",
+      "reason": "zod-schema",
+      "ref": "schemas/qa-report.ts#QaReportSchema"
+    },
+    {
+      "typology": "qa",
+      "family": "block-qa/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/block-qa-schema/js/index.ts#BlockQaReport"
+    },
+    {
+      "typology": "qa",
+      "family": "folio-detangle-sidecar/v1",
+      "reason": "no-validator"
+    },
+    {
+      "typology": "qa",
+      "family": "folio-lsi-index/v1",
+      "reason": "no-validator"
+    },
+    {
+      "typology": "qa",
+      "family": "folio-qa-index/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/site-indexes.ts#QaIndexSchema"
+    },
+    {
+      "typology": "qa",
+      "family": "folio-qa-translation-pages/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/site-indexes.ts#QaTranslationPagesSchema"
+    },
+    {
+      "typology": "qa",
+      "family": "folio-test-run/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/test-run.ts#TestRunSchema"
+    },
+    {
+      "typology": "qa",
+      "family": "folio-tool-run/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/tool-run.ts#ToolRunRecordSchema"
+    },
+    {
+      "typology": "qa",
+      "family": "kg-qa-manifest/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/kg-qa.ts#KgQaManifestSchema"
+    },
+    {
+      "typology": "qa",
+      "family": "kg-qa/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/kg-qa.ts#KgQaReportSchema"
+    },
+    {
+      "typology": "qa",
+      "family": "qa-results/v1",
+      "reason": "no-validator"
+    },
+    {
+      "typology": "qa",
+      "family": "qa-witness/v1",
+      "reason": "no-validator"
+    },
+    {
+      "typology": "qa",
+      "family": "translation-qa/v1",
+      "reason": "no-validator"
+    },
+    {
+      "typology": "qa",
+      "family": "viewer-nav-qa/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/viewer-nav-qa.ts#ViewerNavQaSchema"
+    },
+    {
+      "typology": "review-verdicts",
+      "reason": "zod-schema",
+      "ref": "folio-assistant-core:schemas/review-verdict.ts#ReviewVerdictSchema"
+    },
+    {
+      "typology": "scenarios",
+      "reason": "zod-schema",
+      "ref": "schemas/role-graph.ts#RoleGraphSchema"
+    },
+    {
+      "typology": "schemas",
+      "family": "concern-groups/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/concern-groups.ts#ConcernGroupsSchema"
+    },
+    {
+      "typology": "schemas",
+      "family": "folio-source-descriptor/v1",
+      "reason": "zod-schema",
+      "ref": "cat-harness:schemas/source-descriptor.ts#SourceDescriptorSchema"
+    },
+    {
+      "typology": "session-survey",
+      "family": "folio-session-survey/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/session-survey.ts#SessionSurveySchema"
+    },
+    {
+      "typology": "skills",
+      "family": "folio-remote-skill/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/skill-package.ts#RemoteSkillRecordSchema"
+    },
+    {
+      "typology": "skills",
+      "family": "folio-voice-skill/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/voice-skill.ts#VoiceSkillSchema"
+    },
+    {
+      "typology": "skills",
+      "family": "folio-voice/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/voices.ts#VoiceProfileSchema"
+    },
+    {
+      "typology": "skills",
+      "family": "skill-topics/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/skill-topics.ts#SkillTopicsSchema"
+    },
+    {
+      "typology": "substrate-snapshot",
+      "reason": "zod-schema",
+      "ref": "schemas/substrate-snapshot.ts#SubstrateSnapshotSchema"
+    },
+    {
+      "typology": "swimlane-glossary",
+      "family": "glossary-ledger/1.0.0",
+      "reason": "zod-schema",
+      "ref": "schemas/glossary-ledger.ts#LedgerSchema"
+    },
+    {
+      "typology": "test-plan",
+      "reason": "zod-schema",
+      "ref": "schemas/test-plan.ts#TestPlanSchema"
+    },
+    {
+      "typology": "test-report",
+      "reason": "zod-schema",
+      "ref": "schemas/test-report.ts#TestReportSchema"
+    },
+    {
+      "typology": "themes",
+      "reason": "zod-schema",
+      "ref": "schemas/theme.ts#ThemeSchema"
+    },
+    {
+      "typology": "todo-feedback",
+      "reason": "zod-schema",
+      "ref": "schemas/constraints.ts#FeedbackItemSchema"
+    },
+    {
+      "typology": "todos",
+      "family": "folio-board/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/board.ts#BoardSchema"
+    },
+    {
+      "typology": "tools",
+      "reason": "zod-schema",
+      "ref": "schemas/tool.ts#ToolDefinitionSchema"
+    },
+    {
+      "typology": "translation-sources",
+      "reason": "zod-schema",
+      "ref": "schemas/translation.ts#TranslationConfigSchema"
+    },
+    {
+      "typology": "typologies",
+      "family": "folio-graph-typology/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/graph-typology-node.ts#GraphTypologyNodeSchema"
+    },
+    {
+      "typology": "uploads",
+      "family": "folio-dublin-core/v1",
+      "reason": "zod-schema",
+      "ref": "folio-assistant-core:schemas/dublin-core.ts#DublinCoreRecordSchema"
+    },
+    {
+      "typology": "uploads",
+      "family": "folio-extraction/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/extraction.ts#ExtractionSchema"
+    },
+    {
+      "typology": "uploads",
+      "family": "folio-intake/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/intake.ts#IntakeSchema"
+    },
+    {
+      "typology": "validators",
+      "family": "folio-validator/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/validator-node.ts#ValidatorNodeSchema"
+    },
+    {
+      "typology": "vocab-mapping",
+      "reason": "zod-schema",
+      "ref": "schemas/vocab-mapping.ts#VocabMappingSchema"
+    },
+    {
+      "typology": "voice-vendors",
+      "reason": "zod-schema",
+      "ref": "schemas/voices.ts#VoiceProfileSchema"
+    },
+    {
+      "typology": "voices",
+      "reason": "zod-schema",
+      "ref": "schemas/voices.ts#VoiceProfileSchema"
+    },
+    {
+      "typology": "waiver",
+      "reason": "zod-schema",
+      "ref": "schemas/waiver.ts#WaiverNodeSchema"
+    },
+    {
+      "typology": "workflow-state",
+      "family": "folio-workflow-instance/v1",
+      "reason": "no-validator"
+    }
+  ],
+  "collisions": []
+}

@@ -505,3 +505,10 @@ export const ChangeSetSchema = z.object({
   history: z.array(ChangeSetHistorySchema).default([]),
 });
 export type ChangeSet = z.infer<typeof ChangeSetSchema>;
+
+/**
+ * The change-set as a NODE KIND (issue #2195): the kind its `$schema` names,
+ * found through the `todo-items` typology's family of that tag. No parents —
+ * a change-set groups public comments; it is not itself a comment or a todo.
+ */
+export const ChangeSetKind = nodeKind(CHANGE_SET_SCHEMA, [], ChangeSetSchema.shape);
