@@ -1101,6 +1101,36 @@ export const VisualisationSchema = z.object({
    * that declined to mention it.
    */
   publish: z.enum(["staging-only"]).optional(),
+  /**
+   * The GENERATOR that writes this page: repo-relative script files, run with
+   * `bun run <file>` — the same field, with the same meaning, as a directory's
+   * `writer`. Bean `0b8c` (#2230).
+   *
+   * ## Why a page names its writer
+   *
+   * A visualisation is a DERIVED artefact: it is computed from the directory
+   * it visualises, and through that directory's `derivedFrom`, from every
+   * graph upstream of it. Where it may be kept follows from where those
+   * inputs are kept:
+   *
+   * - every input versioned with the checkout → the page may be committed,
+   *   and a `:check` gate holds it current at every commit;
+   * - any input kept on a BRANCH (a `source` or `storage` that is not the
+   *   checkout) → the page cannot be current in a commit, because its input
+   *   moves without one. It is BUILT AT PUBLISH by `derive:publish`, never
+   *   committed, and this field is what that step runs.
+   *
+   * The measured failure: the fsh-guts viewer was committed on main while
+   * `fsh-guts/` lives on `cat/cat-harness/fsh-guts`. One `state:push`
+   * (2026-10-05, bean `rva2`) made `fsh-guts:viz:check` red on main and on
+   * every open PR at once. `check:derived-from` now refuses that shape, and
+   * refuses a publish-time page with no writer, since nothing would build it.
+   */
+  writer: z
+    .array(z.string().min(1))
+    .min(1)
+    .refine((ps) => new Set(ps).size === ps.length, { message: "writer names a path twice" })
+    .optional(),
 });
 export type Visualisation = z.infer<typeof VisualisationSchema>;
 
@@ -1138,6 +1168,25 @@ export function visualisationsOf(
   if (v === undefined) return [];
   const list: Visualisation[] = typeof v === "string" ? [{ ref: v }] : v;
   return list.map((entry) => ({ ...entry, title: entry.title ?? directoryId }));
+}
+
+/**
+ * Does this visualisation RESOLVE — is there, or will there be, a page?
+ *
+ * Its page on disk, or — for a page BUILT AT PUBLISH (bean `0b8c`, #2230) —
+ * a declared `writer` whose every script exists. Such a page is derived from
+ * a graph kept on a branch, so it is never committed, and whether a checkout
+ * happens to hold a locally built copy must not change any answer: a reader
+ * that asked the disk alone would emit one `docs/_data/harness.json` locally and another
+ * in CI. `check:derived-from` is what holds the other half: that a page with
+ * a writer and no committed copy really is built at publish.
+ *
+ * The one place this rule lives, so the readers (subgraph coverage, harness
+ * tiles, viewer declarations) cannot disagree about it.
+ */
+export function visualisationResolves(v: Visualisation, exists: (repoRelative: string) => boolean): boolean {
+  if (exists(v.ref)) return true;
+  return v.writer !== undefined && v.writer.every((w) => exists(w));
 }
 
 /** Does this visualisation's tile appear on this surface? Absent means every surface. */
