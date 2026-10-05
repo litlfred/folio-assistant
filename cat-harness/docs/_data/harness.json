@@ -2100,19 +2100,19 @@
       "toneFrom": "avatar",
       "reads": "a leaf of paper with lines — the folio itself",
       "genericAvatar": false,
-      "instantiated": false,
-      "href": "/cat-harness/schemas/folio-assistant-core/",
-      "hrefKind": "viewer",
+      "instantiated": true,
+      "href": "/folio-assistant-core/",
+      "hrefKind": "folio",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 17
+          "value": 18
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 16
+          "value": 17
         },
         {
           "id": "views",
@@ -2136,6 +2136,11 @@
           "kind": "code",
           "note": "no viewer yet",
           "label": "Code"
+        },
+        {
+          "kind": "docs",
+          "note": "no viewer yet",
+          "label": "Docs"
         },
         {
           "kind": "folio",
@@ -2204,6 +2209,14 @@
         }
       ],
       "subgraphs": [
+        {
+          "id": "folio-assistant-core-docs",
+          "kinds": [
+            "docs"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/docs/"
+        },
         {
           "id": "folio-assistant-core-translations",
           "kinds": [
@@ -2343,8 +2356,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 8 graph(s) with no published viewer — block-kinds, code, folio, kinds, qa, tools, translation-sources, validators. Declared and not rendered is a gap, not a dead link.",
-        "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
+        "folio-assistant-core: declares 9 graph(s) with no published viewer — block-kinds, code, docs, folio, kinds, qa, tools, translation-sources, validators. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -3669,6 +3681,93 @@
   },
   "railScopes": [
     {
+      "name": "folio-assistant-core",
+      "title": "folio-assistant-core",
+      "href": "/folio-assistant-core/",
+      "folders": [
+        {
+          "kind": "block-kinds",
+          "label": "Block kinds",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "code",
+          "label": "Code",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "docs",
+          "label": "Docs",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "folio",
+          "label": "Folio",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "glossary",
+          "label": "Glossary",
+          "path": "/glossary/"
+        },
+        {
+          "kind": "kinds",
+          "label": "Graph kinds",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "library",
+          "label": "Library",
+          "path": "/cat-harness/library/folio-assistant-core/"
+        },
+        {
+          "kind": "methodology",
+          "label": "Methodologies",
+          "path": "/methodologies/"
+        },
+        {
+          "kind": "processes",
+          "label": "Processes",
+          "path": "/processes/"
+        },
+        {
+          "kind": "qa",
+          "label": "QA",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "schemas",
+          "label": "Schemas",
+          "path": "/cat-harness/schemas/folio-assistant-core/"
+        },
+        {
+          "kind": "skills",
+          "label": "Skills",
+          "path": "/cat-harness/auto-docs/index/skills/core-skills/"
+        },
+        {
+          "kind": "tools",
+          "label": "Tools",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "translation-sources",
+          "label": "Translation sources",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "validators",
+          "label": "Validators",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "voices",
+          "label": "Voices",
+          "path": "/cat-harness/voices/folio-assistant-core/"
+        }
+      ]
+    },
+    {
       "name": "smart-immunizations",
       "title": "smart-immunizations",
       "href": "/smart-immunizations/",
@@ -4728,7 +4827,7 @@
       {
         "name": "folio-assistant-core",
         "title": "folio-assistant-core",
-        "group": "checkout",
+        "group": "instantiated",
         "declaredIn": "folio-assistant-core/folio-assistant-core.json",
         "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/folio-assistant-core.json",
         "editHref": "https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/folio-assistant-core.json",
@@ -4763,7 +4862,7 @@
           },
           {
             "key": "directories",
-            "summary": "16: folio-assistant-core-translations, folio-assistant-core-block-kinds, folio-assistant-core…"
+            "summary": "17: folio-assistant-core-docs, folio-assistant-core-translations, folio-assistant-core-block-…"
           },
           {
             "key": "stickies",
