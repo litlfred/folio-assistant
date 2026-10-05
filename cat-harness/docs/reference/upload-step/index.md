@@ -39,7 +39,7 @@ The skill is the prose an actor reads; each Tool below is one concrete way to ex
 
 `subgraph-readmes` · satisfies `docs-generation`, `upload-routes`
 
-Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.
+Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Typologies, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.
 
 | | |
 |---|---|

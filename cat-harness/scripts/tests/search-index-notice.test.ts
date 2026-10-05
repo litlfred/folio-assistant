@@ -99,8 +99,14 @@ describe("the wiring the pure function cannot cover", () => {
     // It is about the INDEX, while the staging banner is about the PREVIEW —
     // different claims — and somebody who types into the box has not
     // necessarily read the banner.
+    //
+    // Since #2201 it goes into `.fa-search-drop`, the container under the
+    // field, which is itself inside the holder — so it can never be drawn
+    // over the field's text.
     expect(JS).toContain("fa-search-notice");
-    expect(/searchHolder\.appendChild\(noticeEl\)/.test(JS)).toBe(true);
+    expect(/searchDrop\.appendChild\(noticeEl\)/.test(JS)).toBe(true);
+    expect(/adopted\.appendChild\(searchDrop\)/.test(JS)).toBe(true);
+    expect(/searchHolder\.appendChild\(adopted\)/.test(JS)).toBe(true);
   });
 
   test('it carries role="status", for the declared low-dexterity profile', () => {

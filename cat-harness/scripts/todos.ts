@@ -21,7 +21,7 @@
  * ## Why this reader exists at all
  *
  * `schemas/todo.ts`, `schemas/todo-graph.ts` and the `todos` / `todo-items`
- * graph kinds were all in place before any todo existed on disk, and
+ * graph typologies were all in place before any todo existed on disk, and
  * `harness.json` did not declare `todos/`. A schema ahead of its graph is
  * harmless; a **declared directory nothing reads** is not — that is the bean
  * `dh4f` defect, where a consumer scans nothing and reports a clean run over

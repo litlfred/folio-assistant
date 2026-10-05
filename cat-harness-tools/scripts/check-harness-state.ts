@@ -215,7 +215,7 @@ export function healthProducerCurrent(opts: { against?: string } = {}): Family {
     for (const inst of instanceRootsIn(REPO)) for (const dir of directoriesForGraph(inst, "health")) declared.add(resolve(dir));
     // `health` is a kind the arc moves off `main` (`OFF_MAIN_KINDS`), so a
     // declared directory that is not here is a stored record, not a blind spot.
-    const leaves = mayLeaveMain({ graphKinds: ["health"] });
+    const leaves = mayLeaveMain({ graphTypologies: ["health"] });
     const movable = leaves ? [...declared].filter((d) => !existsSync(d)) : [];
     if (declared.size === 0 || movable.length === 0) {
       f.unreadable = "no instance declares a `health` directory holding a result — could not determine";

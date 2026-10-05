@@ -47,8 +47,8 @@ function repo(): string {
     JSON.stringify({
       name: "t",
       directories: [
-        { id: "defs", path: "defs", graphKinds: ["bean-defs"] },
-        { id: "notes", path: "notes", graphKinds: ["bean-notes"] },
+        { id: "defs", path: "defs", graphTypologies: ["bean-defs"] },
+        { id: "notes", path: "notes", graphTypologies: ["bean-notes"] },
       ],
     }),
   );

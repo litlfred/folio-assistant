@@ -224,7 +224,7 @@ The AI profile describes models as **supplied components**: autonomy type,
 training data, energy consumption, limitations. The platform *uses* models
 through agents and ships none. Recording `agent_model` as an `ai_AIPackage`
 would assert that we distribute a model. Revisit this only if a folio ever
-packages a fine-tuned or local model (the `models` graph kind exists, holding
+packages a fine-tuned or local model (the `models` graph typology exists, holding
 nothing of that sort today).
 
 ## 5. The rule that decides placement
@@ -269,7 +269,7 @@ otherwise surface as a malformed SPDX document.
 | M4 | **Licence-id validation.** Pin the SPDX License List (`upstream-pins.json` entry: repo `spdx/license-list-data`, `pinnedIn` a vendored JSON), and make `check:source-licence` refuse an id that is neither on the list nor `LicenseRef-`. | a task inside the existing ingest processes, plus a pin watched by `upstream-pin-watch.bpmn` | `check:source-licence` three-state discipline |
 | M5 | **Notices generation.** `gen:notices` writes NOTICE and THIRD-PARTY-NOTICES from `licence.json` plus remote-package licences plus the release SBOM; `gen:notices:check` gates staleness. Plus `REUSE.toml` for row 5. | a generator and a gate | `readme:sync` / `readme:sync:check` |
 | M6 | **VEX triage** (later, after M2). A human or agent lane decides each advisory, `affected` or `not_affected` with a justification, recorded as VEX. | a decision task with a DMN for the justification codes | `decision-audit` |
-| M7 | **Graph kind `sbom`**: only if D3 chooses committing. `holds: "derived"`, `renderable: false`, with schema and validator. | `graph-kind-registry.ts` | `binary-release` (but that is `state`, because re-running yields new bytes. A regenerable SBOM is `derived`, which is why D3 recommends not committing it). |
+| M7 | **Graph typology `sbom`**: only if D3 chooses committing. `holds: "derived"`, `renderable: false`, with schema and validator. | `graph-typology-registry.ts` | `binary-release` (but that is `state`, because re-running yields new bytes. A regenerable SBOM is `derived`, which is why D3 recommends not committing it). |
 
 ## 8. Impact on existing processes and tasks
 

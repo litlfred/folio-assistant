@@ -54,7 +54,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-import { findDeclarationFile, repoRootFor, KG_CONTENT_GRAPH_KINDS } from "../../cat-harness/schemas/cat-harness.js";
+import { findDeclarationFile, repoRootFor, KG_CONTENT_GRAPH_TYPOLOGIES } from "../../cat-harness/schemas/cat-harness.js";
 import { corpusDirectoriesForGraph } from "../../cat-harness/schemas/harness-config.js";
 
 import { findEntryFiles } from "../../cat-harness/scripts/check-agent-entry-links.ts";
@@ -654,7 +654,7 @@ export function corpus(repo: string): { file: string; corpus: Corpus }[] {
   for (const f of existsSync(join(repo, ".claude/skills")) ? walkMarkdown(join(repo, ".claude/skills")) : []) {
     out.push({ file: f.slice(repo.length + 1), corpus: "skill" });
   }
-  for (const graph of [...KG_CONTENT_GRAPH_KINDS, "methodology"]) {
+  for (const graph of [...KG_CONTENT_GRAPH_TYPOLOGIES, "methodology"]) {
     for (const dir of corpusDirectoriesForGraph(INSTANCE_ROOT, graph)) {
       if (!existsSync(dir)) continue;
       for (const f of walkMarkdown(dir)) out.push({ file: f.slice(repo.length + 1), corpus: "skill" });

@@ -10,13 +10,13 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 3350 terms: **38 authored** in 4 glossaries, on this page, and **3312 extracted** from knowledge-graph assets in 29 generated schemes, one page per asset type, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 3355 terms: **38 authored** in 4 glossaries, on this page, and **3317 extracted** from knowledge-graph assets in 29 generated schemes, one page per asset type, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
 <tr><td>authored</td><td>A person wrote or approved the definition.</td><td>38</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>3312</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>3317</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table>
@@ -28,7 +28,7 @@ Extracted candidates are minted from this repository's own assets and are not, b
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>3312</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>3312</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>3317</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>3317</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -47,7 +47,7 @@ Each term is on exactly one page. Extracted candidates are split by asset type, 
 <tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>162</td><td>114 KB</td></tr>
 <tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>684</td><td>556 KB</td></tr>
 <tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>12</td><td>10 KB</td></tr>
-<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>2127</td><td>1.2 MB</td></tr>
+<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>2132</td><td>1.2 MB</td></tr>
 </tbody></table></div>
 
 **Size:** this page holds 38 terms and is 52 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
@@ -106,13 +106,13 @@ The terms Bootstrap defines, in order: each is defined only by terms above it, a
 <p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node">Node</a>, <a href="#bootstrap--terms--node-kind">Node Kind</a>, <a href="#bootstrap--terms--node-schema">Node Schema</a></p>
 <p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#NodeInstance</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/NodeInstance">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/NodeInstance</a> · source <a href="https://github.com/litlfred/bootstrap/blob/main/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/NodeInstance</code></a></p>
 </dd>
-<dt id="bootstrap--terms--graph-kind" data-fa-state="authored" data-fa-gloss="">
-<span class="fa-gloss-n">7.</span> Graph Kind
+<dt id="bootstrap--terms--graph-typology" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">7.</span> Graph Typology
 </dt>
 <dd>
 <p>A named set of Node Kinds.</p>
 <p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node-kind">Node Kind</a></p>
-<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/GraphKind">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/GraphKind</a> · source <a href="https://github.com/litlfred/bootstrap/blob/main/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/GraphKind</code></a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/GraphTypology">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/GraphTypology</a> · source <a href="https://github.com/litlfred/bootstrap/blob/main/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/GraphTypology</code></a></p>
 </dd>
 <dt id="bootstrap--terms--declaration" data-fa-state="authored" data-fa-gloss="">
 <span class="fa-gloss-n">8.</span> Declaration
@@ -133,8 +133,8 @@ The terms Bootstrap defines, in order: each is defined only by terms above it, a
 <span class="fa-gloss-n">10.</span> Subgraph
 </dt>
 <dd>
-<p>A directory entry of a Declaration: an id, a directory, and the Graph Kinds its Node Instances' kinds belong to.</p>
-<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--declaration">Declaration</a>, <a href="#bootstrap--terms--graph-kind">Graph Kind</a>, <a href="#bootstrap--terms--node-instance">Node Instance</a></p>
+<p>A directory entry of a Declaration: an id, a directory, and the Graph Typologies its Node Instances' kinds belong to.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--declaration">Declaration</a>, <a href="#bootstrap--terms--graph-typology">Graph Typology</a>, <a href="#bootstrap--terms--node-instance">Node Instance</a></p>
 <p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Subgraph">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Subgraph</a> · source <a href="https://github.com/litlfred/bootstrap/blob/main/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Subgraph</code></a></p>
 </dd>
 <dt id="bootstrap--terms--asset" data-fa-state="authored" data-fa-gloss="">
@@ -431,14 +431,14 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
 <tbody>
 <tr><td>bootstrap</td><td>11 · <a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>38 · <a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>bootstrap-tools</td><td>2 · <a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>7 · <a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>31 · <a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
-<tr><td>cat-harness</td><td>219 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>125 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>419 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>7 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1835 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>cat-harness</td><td>219 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>125 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>419 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>7 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1840 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>cat-openapi</td><td>—</td><td>—</td><td>—</td><td>—</td><td>13 · <a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>fhir-harness</td><td>13 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>23 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>31 · <a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>75 · <a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>folio-assistant-core</td><td>19 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>5 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>160 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>164 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>folio-assistant-sci</td><td>54 · <a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>3 · <a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>10 · <a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-sci--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td></tr>
 <tr><td>smart-base</td><td>8 · <a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>6 · <a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>19 · <a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>who-iris</td><td>1 · <a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td><strong>total</strong></td><td><strong>327</strong></td><td><strong>162</strong></td><td><strong>684</strong></td><td><strong>12</strong></td><td><strong>2127</strong></td></tr>
+<tr><td><strong>total</strong></td><td><strong>327</strong></td><td><strong>162</strong></td><td><strong>684</strong></td><td><strong>12</strong></td><td><strong>2132</strong></td></tr>
 </tbody></table></div>
 
 <script type="application/ld+json">
@@ -515,8 +515,8 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-   "name": "Graph Kind",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+   "name": "Graph Typology",
    "description": "A named set of Node Kinds."
   },
   {
@@ -631,7 +631,7 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
    "@type": "DefinedTerm",
    "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
    "name": "Subgraph",
-   "description": "A directory entry of a Declaration: an id, a directory, and the Graph Kinds its Node Instances' kinds belong to."
+   "description": "A directory entry of a Declaration: an id, a directory, and the Graph Typologies its Node Instances' kinds belong to."
   },
   {
    "@type": "DefinedTerm",

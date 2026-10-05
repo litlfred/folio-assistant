@@ -91,12 +91,12 @@ function instance(f: Fixture): string {
     JSON.stringify({
       name: basename(root),
       directories: [
-        { id: "library", path: "library/", graphKinds: ["library"], dependents: "reproduce" },
-        { id: "uploads", path: "uploads/", graphKinds: ["uploads"], dependents: "reproduce" },
+        { id: "library", path: "library/", graphTypologies: ["library"], dependents: "reproduce" },
+        { id: "uploads", path: "uploads/", graphTypologies: ["uploads"], dependents: "reproduce" },
         // The archive is found through this declaration, never by spelling
         // `fsh-guts/uploads` (bean `gz47`); a fixture that only MADE the
         // directory passed because the reader hardcoded the same spelling.
-        { id: "fsh-guts", path: "fsh-guts/", graphKinds: ["fsh-guts"] },
+        { id: "fsh-guts", path: "fsh-guts/", graphTypologies: ["fsh-guts"] },
       ],
     }),
   );

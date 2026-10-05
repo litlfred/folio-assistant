@@ -84,12 +84,12 @@ export function feedbackDir(todosRoot: string): string {
   if (!existsSync(decl)) {
     throw new Error(
       `${decl} does not exist, so this folio declares no todos graph to commit a review comment to. ` +
-        `Declare one with a directory of graph kind "todo-feedback".`,
+        `Declare one with a directory of graph typology "todo-feedback".`,
     );
   }
   const node = nodeOfKind(parseTodoGraph(JSON.parse(readFileSync(decl, "utf-8"))), "todo-feedback");
   if (!node) {
-    throw new Error(`${decl} declares no directory of graph kind "todo-feedback", which is where review comments are committed.`);
+    throw new Error(`${decl} declares no directory of graph typology "todo-feedback", which is where review comments are committed.`);
   }
   return join(todosRoot, node.path);
 }

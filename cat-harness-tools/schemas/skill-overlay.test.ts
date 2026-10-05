@@ -28,7 +28,7 @@ function instance(name: string, kgPath: string): string {
   mkdirSync(join(root, kgPath), { recursive: true });
   writeDeclaration(root, JSON.stringify({
       name,
-      directories: [{ id: "cat-harness", path: kgPath, graphKinds: ["cat-harness"] }],
+      directories: [{ id: "cat-harness", path: kgPath, graphTypologies: ["cat-harness"] }],
     }));
   return root;
 }
@@ -99,7 +99,7 @@ describe("the overlay is read from declarations, not from a literal", () => {
     roots.push(root);
     writeDeclaration(root, JSON.stringify({
         name: "absent",
-        directories: [{ id: "cat-harness", path: "nope", graphKinds: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "nope", graphTypologies: ["cat-harness"] }],
       }));
     expect(resolveSkillDirs(root)).toEqual([]);
   });
@@ -136,7 +136,7 @@ describe("the overlay is read from declarations, not from a literal", () => {
     mkdirSync(join(root, "schemas"), { recursive: true });
     writeDeclaration(root, JSON.stringify({
         name: "mixed",
-        directories: [{ id: "schemas", path: "schemas", graphKinds: ["schemas", "cat-harness"] }],
+        directories: [{ id: "schemas", path: "schemas", graphTypologies: ["schemas", "cat-harness"] }],
       }));
     expect(resolveSkillDirs(root)).toEqual([]);
   });
@@ -158,7 +158,7 @@ describe("a REPOSITORY-scoped directory resolves against the repository", () => 
     mkdirSync(inst, { recursive: true });
     writeDeclaration(inst, JSON.stringify({
         name: "inst",
-        directories: [{ id: "cat-harness", path: kgPath, graphKinds: ["cat-harness"], ...(scope ? { scope } : {}) }],
+        directories: [{ id: "cat-harness", path: kgPath, graphTypologies: ["cat-harness"], ...(scope ? { scope } : {}) }],
       }));
     return { repo, inst };
   }

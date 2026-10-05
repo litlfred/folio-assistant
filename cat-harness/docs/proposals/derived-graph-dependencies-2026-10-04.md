@@ -28,7 +28,7 @@ Owner, 2026-10-04:
 **No edge between directories says one is computed from another.**
 
 - **Not on the directory.** `ContentDirectorySchema` (`schemas/cat-harness.ts`)
-  carries `id`, `path`, `scope`, `graphKinds`, `coverage`, `readOnly`,
+  carries `id`, `path`, `scope`, `graphTypologies`, `coverage`, `readOnly`,
   `summaries`, `theme`, `source`, `storage`, `prefix` and `passThrough`.
   `source` and `storage` say where a directory's content is *stored* (a
   directory, or a branch keyed by commit, tip or route). Neither says what the
@@ -48,7 +48,7 @@ smart-trust's `openapi/`. Missing from it:
 
 | what | where it is today | why it is derived |
 |---|---|---|
-| the IG pages (`<ig>/docs/`) | graph kind `docs` (layer `content`) | written wholly by `gen-ig-pages` from the artefact index; seeded to `cat/fhir-harness/ig-docs` (bean `lbz8`) |
+| the IG pages (`<ig>/docs/`) | graph typology `docs` (layer `content`) | written wholly by `gen-ig-pages` from the artefact index; seeded to `cat/fhir-harness/ig-docs` (bean `lbz8`) |
 | the artefact index (`<ig>/fhir-artifact-index/`) | kind `fhir-artifact-index` (layer `content`) | ingested from the IG's *published* output (`ingest:ig`, re-derived by `ingest:ig:check`) |
 | the IG AST cache ("fhir-ast") | **not declared as a graph**. Its SCHEMA exists (`fhir-harness/schemas/ig-ast.ts` plus generated JSON Schemas, bean `l0lq`), and its branch family `cat/fhir-harness/fhir-ast/` is registered in `special-branches.json` | computed by the Publisher fork from the IG source |
 | the Lean build cache ("lean-cache") | **not declared as a graph**. An orphan-branch family `cat/folio-assistant-sci/lake-cache/<package>-<toolchain>`, refreshed by `lake-cache-refresh.yml`, registered in `special-branches.json`; no schema for its contents | computed by `lake build` from the Lean sources |
@@ -73,7 +73,7 @@ convention or by hand:
 
 ```jsonc
 // smart-trust/smart-trust.json
-{ "id": "smart-trust-docs", "path": "docs/", "graphKinds": ["docs"],
+{ "id": "smart-trust-docs", "path": "docs/", "graphTypologies": ["docs"],
   "derivedFrom": ["smart-trust-artifact-index", "fhir-ig-chrome"] }
 ```
 

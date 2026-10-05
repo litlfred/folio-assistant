@@ -15,7 +15,7 @@
  * Moving the intake record up into core was the obvious-looking alternative and
  * measurement ruled it out: `cat-harness` itself consumes it.
  * `cat-harness/adapters/document/intake-records.ts` imports
- * `../../schemas/intake.js`, and `cat-harness/schemas/graph-kind-registry.ts`
+ * `../../schemas/intake.js`, and `cat-harness/schemas/graph-typology-registry.ts`
  * registers `"folio-intake/v1"` against `schemas/intake.ts#IntakeSchema`. Move
  * the file up and those become harness→core imports — one wrong-direction edge
  * traded for another, plus a validator path pointing out of the instance.

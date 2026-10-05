@@ -63,7 +63,7 @@ dependency ref, or a page path.
 
 ### 2.2 The state graphs on `main`
 
-Kinds whose `holds` is `state` (`graph-kind-registry.ts`), and where the
+Kinds whose `holds` is `state` (`graph-typology-registry.ts`), and where the
 directories declaring them live:
 
 | graph | path | declared in |
@@ -135,15 +135,15 @@ So the intended declarations (bean `2h76`) are:
 
 ```jsonc
 // folio-assistant.json (the root instance declares both) — beans, one live copy at the tip of its own branch
-{ "id": "beans", "path": "beans/", "graphKinds": ["beans"],
+{ "id": "beans", "path": "beans/", "graphTypologies": ["beans"],
   "storage": { "branch": "cat/cat-harness/beans", "keyedBy": "tip" } }
 
 // todos — likewise
-{ "id": "todos", "path": "todos/", "graphKinds": ["todos"],
+{ "id": "todos", "path": "todos/", "graphTypologies": ["todos"],
   "storage": { "branch": "cat/cat-harness/todos", "keyedBy": "tip" } }
 
 // test/results — 3fva, unchanged
-{ "id": "qa", "path": "test/results", "graphKinds": ["qa"],
+{ "id": "qa", "path": "test/results", "graphTypologies": ["qa"],
   "storage": { "branch": "cat/cat-harness/qa-reports", "keyedBy": "commit" } }
 ```
 
@@ -167,7 +167,7 @@ then a one-line change per directory: add the `storage` member shown above.
   is a sub-graph linking to the primary content graph", made a field. The
   deploy's `build.json` (bean `r6es`, this PR) is the first instance: the docs
   site now says which `main` commit it is a rendering of, and how far behind.
-- `within` (already on `GraphKindDef`) names the primary graph a sub-graph
+- `within` (already on `GraphTypologyDef`) names the primary graph a sub-graph
   belongs to. `gh-pages` gets a declaration for the first time, `within` the
   `folio` graph it renders.
 - `folio_init` writes the same declarations, so a folio inherits the layout.
@@ -250,7 +250,7 @@ Inventory, every reader and writer found (Explore sweep, 2026-10-02).
 | area | file | change | status |
 |---|---|---|---|
 | schema | `schemas/cat-harness.ts` (`DirectoryStorageSchema`, from #1764), `schemas/bean-graph.ts` | widen `keyedBy` to `commit \| tip` — **shared with 3fva**; no new field | **done** #1937; `source: { kind: "branch" }` superseded `storage` in #1987 |
-| schema | `graph-kind-registry.ts` | `holds: state` ⇒ default `storage.keyedBy: tip`; a check that a declared `state` dir on `main` is a finding once migrated | **done** as `tipPresence` + `check:declared-dirs` (row B) |
+| schema | `graph-typology-registry.ts` | `holds: state` ⇒ default `storage.keyedBy: tip`; a check that a declared `state` dir on `main` is a finding once migrated | **done** as `tipPresence` + `check:declared-dirs` (row B) |
 | beans CLI | `.beans.yml` | `path: state/beans/defs` | ~~as written~~ — **no change needed**, measured: under D4 (b) a mount lands at the DECLARED path, so `beans/defs` still resolves, and the CLI read and wrote a store in a directory under no version control at all |
 | engine | `cat-harness/src/workflow/store.ts` `WORKFLOW_DIR` | resolve from the declaration, not a constant | **done** #2052 — and the constant stays as the checked default |
 | claim | `cat-harness/scripts/claim-bean.ts` | push to `state`, not `main` | #2042 — a **hard prerequisite** of the cutover |

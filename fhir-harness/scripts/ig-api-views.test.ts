@@ -79,7 +79,7 @@ describe("igApiServed finds the declaration by its own name, not the directory's
       const decl = (name: string) => ({
         name,
         directories: [
-          { path: "fhir-artifact-index/", graphKinds: ["fhir-artifact-index"], served: true },
+          { path: "fhir-artifact-index/", graphTypologies: ["fhir-artifact-index"], served: true },
           { path: "docs/", instanceRoot: true, composed: true },
         ],
       });

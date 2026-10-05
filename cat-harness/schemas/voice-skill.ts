@@ -79,7 +79,7 @@ import {
  * `cat-harness` runs the checks and declares no voices, which is the boundary
  * bean `btuv` exists to keep.
  */
-// declared-path-literal: the convention for a layout that has no graph kind
+// declared-path-literal: the convention for a layout that has no graph typology
 // yet. `voices` is declared today as its own graph pointing at `voices/`; this
 // proposal moves it under `skills/` and that declaration has to move with it,
 // at which point this constant is replaced by `directoryForGraph`. Stated once,

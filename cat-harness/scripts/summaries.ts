@@ -178,7 +178,7 @@ export function heldLibraries(root = ROOT): string[] {
     for (let owner = dirname(abs); owner !== dirname(owner); owner = dirname(owner)) {
       if (declarationPathIn(owner) === undefined) continue;
       const entry = readDeclaration(owner)?.directories.find(
-        (d) => (d.graphKinds ?? []).includes("library") && resolve(owner, d.path) === abs,
+        (d) => (d.graphTypologies ?? []).includes("library") && resolve(owner, d.path) === abs,
       );
       if (entry?.summaries === "held") held.push(abs);
       // Per-entry holds (bean `j7ql`): the same answer for one document as

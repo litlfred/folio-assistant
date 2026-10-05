@@ -421,7 +421,7 @@ classDiagram
       id [1] string
       path [1] string
       subgraph [1] true
-      graphKinds [1..*] string[]
+      graphTypologies [1..*] string[]
     }
     class cat_harness_skills_skill_topics_v1_skill_topics_v1["skill-topics/v1"] {
       <<json: SkillTopicsSchema>>
@@ -681,7 +681,7 @@ classDiagram
       <<json: ViewerNavQaSchema>>
       path [1] string
       source [1] string
-      verdict [1] railed | declined | missing
+      verdict [1] railed | declined | linked | missing
       reason [0..1] string
       flags [0..*] enum(8)[]
     }

@@ -147,8 +147,8 @@ function fixtureDeclaringSchemasTwice(): string {
     name: "schemas-twice",
     version: "0.0.0",
     directories: [
-      { id: "twice-schemas", path: "schemas/", graphKinds: ["schemas"] },
-      { id: "twice-sources", path: "sources/", graphKinds: ["schemas"] },
+      { id: "twice-schemas", path: "schemas/", graphTypologies: ["schemas"] },
+      { id: "twice-sources", path: "sources/", graphTypologies: ["schemas"] },
     ],
   });
   return root;

@@ -11,7 +11,7 @@
  * `artefactStub(readDeclaration(...))` composition inside a YAML string.
  *
  * All three broke the moment this repository first declared a folio graph
- * (issue #464), with `unknown graph kind "folio"`. The kind is registered by
+ * (issue #464), with `unknown graph typology "folio"`. The kind is registered by
  * CORE as a load-time side effect, and an inline eval imports exactly the one
  * module it names — so there is nowhere for the registration to happen and no
  * obvious place to add it. A YAML string is also the one place a missing import

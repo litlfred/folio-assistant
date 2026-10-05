@@ -26,9 +26,9 @@ package "fhir-harness/fhir-harness-validators" as pkg_fhir_harness_fhir_harness_
     rationale [0..1] : string
   }
 }
-package "fhir-harness/fhir-harness-kinds" as pkg_fhir_harness_fhir_harness_kinds <<kinds>> {
-  class "folio-graph-kind/v1" as fhir_harness_fhir_harness_kinds_folio_graph_kind_v1_folio_graph_kind_v1 <<json: GraphKindNodeSchema>> #f4f4f1 {
-    $schema [1] : 'folio-graph-kind/v1'
+package "fhir-harness/fhir-harness-typologies" as pkg_fhir_harness_fhir_harness_typologies <<typologies>> {
+  class "folio-graph-typology/v1" as fhir_harness_fhir_harness_typologies_folio_graph_typology_v1_folio_graph_typology_v1 <<json: GraphTypologyNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-graph-typology/v1'
     kind [1] : string
     title [0..1] : string
     layer [0..1] : 'core'
@@ -133,10 +133,10 @@ package "fhir-harness/qa" as pkg_fhir_harness_qa <<qa>> {
 }
 
 fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Maintain : maintains
-' grid: portrait, 3 column(s) — pkg_fhir_harness_fhir_harness_translations pkg_fhir_harness_fhir_harness_validators pkg_fhir_harness_fhir_harness_kinds pkg_fhir_harness_library pkg_fhir_harness_fhir_ig_skills pkg_fhir_harness_fhir_ig_tools pkg_fhir_harness_fhir_ig_scripts pkg_fhir_harness_fhir_harness_processes pkg_fhir_harness_qa
+' grid: portrait, 3 column(s) — pkg_fhir_harness_fhir_harness_translations pkg_fhir_harness_fhir_harness_validators pkg_fhir_harness_fhir_harness_typologies pkg_fhir_harness_library pkg_fhir_harness_fhir_ig_skills pkg_fhir_harness_fhir_ig_tools pkg_fhir_harness_fhir_ig_scripts pkg_fhir_harness_fhir_harness_processes pkg_fhir_harness_qa
 pkg_fhir_harness_fhir_harness_translations -[hidden]down- pkg_fhir_harness_library
 pkg_fhir_harness_fhir_harness_validators -[hidden]down- pkg_fhir_harness_fhir_ig_skills
-pkg_fhir_harness_fhir_harness_kinds -[hidden]down- pkg_fhir_harness_fhir_ig_tools
+pkg_fhir_harness_fhir_harness_typologies -[hidden]down- pkg_fhir_harness_fhir_ig_tools
 pkg_fhir_harness_library -[hidden]down- pkg_fhir_harness_fhir_ig_scripts
 pkg_fhir_harness_fhir_ig_skills -[hidden]down- pkg_fhir_harness_fhir_harness_processes
 pkg_fhir_harness_fhir_ig_tools -[hidden]down- pkg_fhir_harness_qa

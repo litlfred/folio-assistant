@@ -19,15 +19,15 @@ adds the wrong one:
 | | what it is | where it is declared |
 |---|---|---|
 | **instance kind** | what a repository *is* — `cat-harness`, `bootstrap`, `who-iris`. It has a name, a prefix family, a `<name>.json`, and files it inherits from whatever it was bootstrapped off | a `<name>.json` at the instance root |
-| **graph kind** | what a declared DIRECTORY holds — `tools`, `docs`, `beans`, `library`. A value in the graph-kind registry, with `renderable`, `holds` and a summary | `defaultGraphKinds` in `schemas/cat-harness.ts`, or a registration from a layer that owns it |
+| **graph typology** | what a declared DIRECTORY holds — `tools`, `docs`, `beans`, `library`. A value in the graph-typology registry, with `renderable`, `holds` and a summary | `defaultGraphTypologies` in `schemas/cat-harness.ts`, or a registration from a layer that owns it |
 
-An instance kind gets a **name**. A graph kind gets a **declaration**. This
-skill covers both, and §"Most new things are not a new graph kind" first,
+An instance kind gets a **name**. A graph typology gets a **declaration**. This
+skill covers both, and §"Most new things are not a new graph typology" first,
 because that is the question people get wrong.
 
 ---
 
-## Most new things are not a new graph kind
+## Most new things are not a new graph typology
 
 **Before adding a value to the registry, answer this:**
 
@@ -40,7 +40,7 @@ A new verb is not a new kind. Only a new noun is.
 
 Three beans (`jbx2`, `v1hw`, and whatever `docs/` and `folio/` get) ask for
 **visualisers**, and the bean that commissioned this skill assumed a
-`visualiser` graph kind would be needed — that it would be *"the first kind
+`visualiser` graph typology would be needed — that it would be *"the first kind
 where the answer is not obvious: it RENDERS, and what it renders is another
 graph's content rather than its own."*
 
@@ -60,7 +60,7 @@ composed. Nothing to register.
 
 **Why this is worth a section rather than a sentence.** A registry value is
 cheap to add and expensive to remove: every consumer that switches on a kind
-gains a case, `check:graph-kind-work` gains a row, and the JSON-LD vocabulary
+gains a case, `check:graph-typology-work` gains a row, and the JSON-LD vocabulary
 gains a term that downstream instances inherit whether or not they ever hold
 one. The failure is silent — nothing breaks, the vocabulary just stops meaning
 anything, because a kind that describes an activity rather than a shape cannot
@@ -128,9 +128,9 @@ difference is the whole content of this section.
 
 ---
 
-## What a new graph kind must declare
+## What a new graph typology must declare
 
-The shape is `GraphKindDef` in `schemas/cat-harness.ts`. Read it there for the
+The shape is `GraphTypologyDef` in `schemas/cat-harness.ts`. Read it there for the
 authoritative field list; what follows is what an author has to *decide*.
 
 | field | required | the question |
@@ -176,7 +176,7 @@ assumed: reading it as "declares any state graph" made the repository root and
 nobody is partway through. An agent told *"this KG is active"* on that basis
 arrives looking for something to prioritise and finds unprocessed files.
 
-`check:graph-kind-work` requires it for every `state` kind, so a new state kind
+`check:graph-typology-work` requires it for every `state` kind, so a new state kind
 cannot ship undecided.
 
 ---
@@ -188,8 +188,8 @@ for a reason worth copying.
 
 | kind | declared where | why |
 |---|---|---|
-| `folio` | **registered by core**, on import (`schemas/folio-graph-kind.ts`) | the harness cannot serve it — block viewers, LaTeX, QA badges, translation overlays |
-| `docs` | **in the harness's own table** (`defaultGraphKinds`) | the harness ships a plain just-the-docs renderer and can serve it |
+| `folio` | **registered by core**, on import (`schemas/folio-graph-typology.ts`) | the harness cannot serve it — block viewers, LaTeX, QA badges, translation overlays |
+| `docs` | **in the harness's own table** (`defaultGraphTypologies`) | the harness ships a plain just-the-docs renderer and can serve it |
 
 The rule in its true form is **a layer owns the kinds it can render** — not
 "the harness owns no renderable kind", which was the earlier phrasing and
@@ -258,7 +258,7 @@ only where the terms resolve.
 
 | what you changed | run |
 |---|---|
-| added a graph kind | `bun run check:graph-kind-work`, `bun run check:harness-dirs` |
+| added a graph typology | `bun run check:graph-typology-work`, `bun run check:harness-dirs` |
 | added or renamed an instance | `bun run check:instance-config`, `bun run check:subgraph-coverage` |
 | edited this or any skill | `bun run check:skills` |
 | anything | `bun run gates` |

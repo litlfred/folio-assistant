@@ -13,6 +13,8 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`backfill-materialized-fixity.ts`](backfill-materialized-fixity.ts) | a file |  |
 | [`build-document-site.test.ts`](build-document-site.test.ts) | a file |  |
 | [`build-document-site.ts`](build-document-site.ts) | a file |  |
+| [`build-folio-site.test.ts`](build-folio-site.test.ts) | a file |  |
+| [`build-folio-site.ts`](build-folio-site.ts) | a file |  |
 | [`build-glossary-skos.test.ts`](build-glossary-skos.test.ts) | a file |  |
 | [`build-glossary-usage.test.ts`](build-glossary-usage.test.ts) | a file |  |
 | [`build-glossary.ts`](build-glossary.ts) | a file |  |
@@ -60,6 +62,7 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`sample-import-run.ts`](sample-import-run.ts) | a file |  |
 | [`source-liveness.test.ts`](source-liveness.test.ts) | a file |  |
 | [`source-liveness.ts`](source-liveness.ts) | a file |  |
+| [`folio-site-assets/`](folio-site-assets/) | _nothing declares what this holds_ | |
 | [`lib/`](lib/) | _nothing declares what this holds_ | |
 | [`tests/`](tests/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

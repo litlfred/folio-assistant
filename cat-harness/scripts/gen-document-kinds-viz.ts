@@ -73,7 +73,7 @@ export function readDocumentKinds(repoRoot: string): { kinds: KindEntry[]; dirs:
       for (const f of readdirSync(dir).filter((n) => n.endsWith(".json")).sort()) {
         const path = join(dir, f);
         const raw = JSON.parse(readFileSync(path, "utf-8")) as { $schema?: string };
-        // Two families share the directory (graph-kind-registry `nodeSchemas`):
+        // Two families share the directory (graph-typology-registry `nodeSchemas`):
         // the file's own tag says which, never its name.
         const isCoverage = raw.$schema === DOCUMENT_KIND_COVERAGE_SCHEMA_TAG;
         const parsed = (isCoverage ? DocumentKindCoverageSchema : DocumentKindSchema).safeParse(raw);
