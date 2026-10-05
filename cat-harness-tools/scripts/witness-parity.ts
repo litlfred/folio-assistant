@@ -22,14 +22,19 @@
  *    directories the run needs, and runs the producer there. Whatever the
  *    producer writes lands in the scratch tree, so the folio's own checkout is
  *    untouched by construction rather than by cleaning up afterwards;
- * 4. compares the rewritten witness with the committed one, both with
+ * 4. stops at **unknown** if the re-run's OWN `environment` differs from the
+ *    committed one. A build fingerprint or an interpreter patch level is
+ *    recorded by the producer, not discoverable beforehand, and calibration
+ *    found a run under the same package versions but another native build
+ *    whose values moved at the 60th digit;
+ * 5. compares the rewritten witness with the committed one, both with
  *    {@link WITNESS_EPHEMERAL_FIELDS} masked at every depth.
  *
  * | verdict | means |
  * |---|---|
  * | `pass` | the producer ran cleanly and wrote the same witness |
  * | `fail` | it ran cleanly and wrote a DIFFERENT witness; the differing paths are listed |
- * | `unknown` | it could not be decided: environment mismatch, no reproduce command, a non-zero exit, a timeout, or no witness written |
+ * | `unknown` | it could not be decided: environment mismatch before or after the run, no reproduce command, a non-zero exit, a timeout, or no witness written |
  *
  * A non-zero exit is `unknown`, never `fail`, because folio producers refuse
  * by design (a precision floor not met, a guard raised) and explain it on
@@ -194,8 +199,23 @@ export function checkParity(
     } catch {
       return { witness: rel, verdict: "unknown", reason: "rewritten witness is not strict JSON" };
     }
+    // The run's OWN record of its environment is the authority, not the
+    // pre-run check: that check can only ask Python for package versions,
+    // and a build fingerprint (`pyhecke_native_build`) or an interpreter
+    // patch level is recorded by the producer itself. Calibration on
+    // litlfred/qou found exactly this: same package versions, a different
+    // native build, and values differing at the 60th digit. Different
+    // environment, so not a reproduction test: unknown, with the keys.
+    const envAfter = diffPaths(w.environment ?? {}, (fresh as Record<string, unknown>).environment ?? {}, "environment");
+    if (envAfter.length && !opts.force) {
+      return {
+        witness: rel,
+        verdict: "unknown",
+        reason: `the re-run recorded a different environment (${envAfter.join(", ")}); re-run with --force for an advisory comparison`,
+      };
+    }
     const d = diffPaths(stripEphemeral(w, opts.ignore), stripEphemeral(fresh, opts.ignore));
-    const forced = mismatch.length ? ({ forced: true } as const) : {};
+    const forced = mismatch.length || envAfter.length ? ({ forced: true } as const) : {};
     if (git(wt, "diff", "--quiet", "--", rel).status === 0 || d.length === 0) {
       return { witness: rel, verdict: "pass", reason: "reproduced (run-specific fields masked)", ...forced };
     }

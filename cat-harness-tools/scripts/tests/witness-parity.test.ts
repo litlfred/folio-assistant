@@ -107,6 +107,18 @@ describe("checkParity", () => {
     }
   });
 
+  it("is unknown when the re-run records a different environment, e.g. another native build", () => {
+    const w = { ...run("cp computations/out.json computations/w.witness.json"), environment: { ext_build: "aaa" } };
+    const t = repo(w, JSON.stringify({ ...w, environment: { ext_build: "bbb" }, data: { x: 1.0000001 } }));
+    try {
+      const r = checkParity(t.root, "computations/w.witness.json");
+      expect(r.verdict).toBe("unknown");
+      expect(r.reason).toContain("environment.ext_build");
+    } finally {
+      t.cleanup();
+    }
+  });
+
   it("leaves the folio's own checkout untouched", () => {
     const w = run("echo changed > computations/w.witness.json");
     const t = repo(w, "{}");
