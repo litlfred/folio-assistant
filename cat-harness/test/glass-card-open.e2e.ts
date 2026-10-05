@@ -142,57 +142,44 @@ test.describe("open — a library card opens its visualizer, or its entry page",
   });
 });
 
-test.describe("resize — the corner and the keys, no −/+ on the card", () => {
-  test("the card carries no −/+ buttons any more", async ({ page }) => {
+test.describe("resize — only the card's − and + (owner, 2026-10-05)", () => {
+  test("the card carries − and +, and no corner grip", async ({ page }) => {
     await serveGlass(page);
-    await expect(page.locator(`${style} button[aria-label^="Make "]`)).toHaveCount(0);
+    await expect(page.locator(`${style} button[aria-label$=" smaller"]`)).toHaveCount(1);
+    await expect(page.locator(`${style} button[aria-label$=" larger"]`)).toHaveCount(1);
+    await expect(page.locator(`${style} .fa-glass-asset-resize`)).toHaveCount(0);
   });
 
-  test("dragging the corner resizes it, and the size is kept", async ({ page }) => {
+  test("+ grows it and − shrinks it, says so, and the size is kept", async ({ page }) => {
     await serveGlass(page);
+    const card = page.locator(style);
     const w0 = await width(page, style);
-    const grip = (await page.locator(`${style} .fa-glass-asset-resize`).boundingBox())!;
-    await page.mouse.move(grip.x + grip.width / 2, grip.y + grip.height / 2);
-    await page.mouse.down();
-    await page.mouse.move(grip.x + grip.width / 2 - 60, grip.y + grip.height / 2 - 40, { steps: 5 });
-    await page.mouse.up();
-    expect(await width(page, style)).toBe(w0 - 60);
+    await card.locator('[data-fa-size="larger"]').click();
+    expect(await width(page, style)).toBe(w0 + 48);
+    await expect(card.locator('.fa-sr-only[aria-live="polite"]')).toContainText("Size " + (w0 + 48));
+    await card.locator('[data-fa-size="smaller"]').click();
+    await card.locator('[data-fa-size="smaller"]').click();
+    expect(await width(page, style)).toBe(w0 - 48);
     const stored = await page.evaluate((k) =>
       JSON.parse(localStorage.getItem("fa-folio-assets") || "{}")[k].geom.width, STYLE_KEY);
-    expect(stored).toBe(w0 - 60);
+    expect(stored).toBe(w0 - 48);
   });
 
-  test("dragging the corner at 50% zoom follows the pointer in the card's own pixels", async ({ page }) => {
-    await serveGlass(page);
-    for (let i = 0; i < 5; i++) await page.click('[data-fa-zoom-control="out"]');
-    await expect(page.locator(".fa-glass-shelf")).toHaveAttribute("data-fa-scale", "0.5");
-    const w0 = await width(page, style);
-    const grip = (await page.locator(`${style} .fa-glass-asset-resize`).boundingBox())!;
-    await page.mouse.move(grip.x + grip.width / 2, grip.y + grip.height / 2);
-    await page.mouse.down();
-    await page.mouse.move(grip.x + grip.width / 2 + 30, grip.y + grip.height / 2, { steps: 3 });
-    await page.mouse.up();
-    expect(await width(page, style)).toBe(w0 + 60);
-  });
-
-  test("in move mode, + and − resize and say so; arrows still move", async ({ page }) => {
+  test("in move mode the keys only move: + / − and Shift+arrows do not resize", async ({ page }) => {
     await serveGlass(page);
     const card = page.locator(style);
     const w0 = await width(page, style);
     await card.locator('[data-fa-control="move"]').click();
     await expect(card).toHaveAttribute("data-fa-moving", "true");
     await page.keyboard.press("+");
-    expect(await width(page, style)).toBe(w0 + 48);
-    await expect(card.locator('.fa-sr-only[aria-live="polite"]')).toContainText("Size " + (w0 + 48));
     await page.keyboard.press("-");
-    await page.keyboard.press("-");
-    expect(await width(page, style)).toBe(w0 - 48);
+    await page.keyboard.press("Shift+ArrowRight");
+    expect(await width(page, style)).toBe(w0);
     const left0 = await card.evaluate((n) => parseFloat((n as HTMLElement).style.left));
     await page.keyboard.press("ArrowRight");
     expect(await card.evaluate((n) => parseFloat((n as HTMLElement).style.left))).toBe(left0 + 16);
-    // The move bar offers the same size steps as buttons.
-    await page.locator('.fa-glass-move-bar [data-fa-size="larger"]').click();
-    expect(await width(page, style)).toBe(w0);
+    // The move bar offers moves, not sizes.
+    await expect(page.locator(".fa-glass-move-bar [data-fa-size]")).toHaveCount(0);
     await page.keyboard.press("Escape");
     await expect(card).toHaveAttribute("data-fa-moving", "false");
   });
