@@ -24,6 +24,7 @@ import { describe, expect, test } from "bun:test";
 import { readRoleGraph } from "../../schemas/role-graph.ts";
 import { EXTERNAL_SCHEMA_TAG } from "../../schemas/external-schema.ts";
 import { basename, isAbsolute, join, relative, resolve } from "node:path";
+import { builtDocsRoute } from "../docs-route.ts";
 import { workflowFiles } from "../known-skills.ts";
 import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -714,7 +715,8 @@ describe("every self-URL the export publishes resolves to something published", 
     // there must fail here, not confirm itself.
     const svgDir = join(import.meta.dir, "../..", siteDirFor(join(import.meta.dir, "../..")), "assets", "img", "workflows");
     // Under the docs route, where the docs tree is published (issue #2188).
-    for (const f of readdirSync(svgDir)) if (f.endsWith(".svg")) out.add(`docs/cat-harness/assets/img/workflows/${f}`);
+    const docsRoute = builtDocsRoute(basename(join(import.meta.dir, "../..")), join(import.meta.dir, "../../.."));
+    for (const f of readdirSync(svgDir)) if (f.endsWith(".svg")) out.add(`${docsRoute}/assets/img/workflows/${f}`);
     return out;
   }
 

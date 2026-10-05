@@ -298,7 +298,9 @@ describe("the tile opens the INSTANCE, not a kind handler's view of it", () => {
     );
     giveOwnSite(f.repo, "who");
     const who = tilesOf(f).find((t) => t.name === "who")!;
-    expect({ href: who.href, kind: who.hrefKind }).toEqual({ href: "/who/", kind: "folio" });
+    // A MOUNTED instance is at the site root, outside the docs tree the tile is
+    // rendered in (`docs/<owner>/`, issue #2188), so its path climbs out of it.
+    expect({ href: who.href, kind: who.hrefKind }).toEqual({ href: "/../../who/", kind: "folio" });
   });
 
   test("an instance WITHOUT its own docs/ falls back to a viewer, and says so", () => {
@@ -329,7 +331,7 @@ describe("the tile opens the INSTANCE, not a kind handler's view of it", () => {
     );
     giveOwnSite(f.repo, "who");
     const who = tilesOf(f).find((t) => t.name === "who")!;
-    expect(who.href).toBe("/who/");
+    expect(who.href).toBe("/../../who/");
     // ...and the viewer is still reachable, listed rather than dropped.
     expect(who.visualisations.filter((v) => v.path).map((v) => v.path)).toEqual(["/host/schemas/who/"]);
   });
@@ -388,7 +390,7 @@ describe("an icon is PUBLISHED, never declared — owner: \"broken image on LHS 
     });
     giveOwnSite(f.repo, "sibling");
     const [tile] = tilesOf(f).filter((t) => t.name === "sibling");
-    expect(tile.icon?.src).toBe("/docs/sibling/assets/img/mark.svg");
+    expect(tile.icon?.src).toBe("/../../docs/sibling/assets/img/mark.svg");
   });
 
   test("no mount means NO icon and a finding — `pb04` one layer down", () => {
@@ -756,7 +758,7 @@ describe("an icon's URL is the SITE DIRECTORY's mount, not the instance's front 
     const f = fixture({ host: host({ needs: [] }), guest: withIcon("guest", "docs") });
     giveOwnSite(f.repo, "guest");
     const guest = tilesOf(f).find((t) => t.name === "guest")!;
-    expect(guest.icon?.src).toBe("/docs/guest/assets/m.svg");
+    expect(guest.icon?.src).toBe("/../../docs/guest/assets/m.svg");
   });
 
   test("...and the kind is the DECLARATION's, not the string `docs`", () => {
@@ -765,7 +767,7 @@ describe("an icon's URL is the SITE DIRECTORY's mount, not the instance's front 
     const f = fixture({ host: host({ needs: [] }), guest: withIcon("guest", "catalogue") });
     giveOwnSite(f.repo, "guest");
     const guest = tilesOf(f).find((t) => t.name === "guest")!;
-    expect(guest.icon?.src).toBe("/catalogue/guest/assets/m.svg");
+    expect(guest.icon?.src).toBe("/../../catalogue/guest/assets/m.svg");
   });
 
   test("the site OWNER keeps the root — its docs are built in place, not mounted", () => {

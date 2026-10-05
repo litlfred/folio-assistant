@@ -220,18 +220,7 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
   },
   {
     // Issue #2188, bean `kc7k` (owner, 2026-10-05): cat-harness's docs publish
-    // under `/docs/cat-harness/`. A SETUP step: it prints the route, read from
-    // the declaration, into `$GITHUB_OUTPUT` for the steps below it, and has
-    // no verdict. That the route agrees with `_config.yml`'s `baseurl` is
-    // asserted by docs-route.test.ts in `bun test`.
-    match: "scripts/docs-route.ts --built",
-    kind: "ci-only",
-    reason:
-      "a SETUP step writing the docs route into $GITHUB_OUTPUT for later steps; the route and its agreement " +
-      "with _config.yml's baseurl are pinned by docs-route.test.ts in `bun test`",
-  },
-  {
-    // Its deploy-time partner: moves every JSON-LD document whose `@id` names a
+    // under `/docs/cat-harness/`. This deploy step moves every JSON-LD document whose `@id` names a
     // site-root address back out of the built docs tree, so moving the pages
     // moves no identifier. Writes into a BUILT `./_site`, which only the deploy
     // and staging jobs produce; the rule and the refusal on collision are

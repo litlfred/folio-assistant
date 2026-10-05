@@ -18,7 +18,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.js";
-import { builtDocsRoute, docsRouteFor, upFromDocs } from "../docs-route.ts";
+import { builtDocsRoute, DOCS_KIND, docsRouteFor, upFromDocs } from "../docs-route.ts";
 import { hoist, isSelfAddressed, rootAddressOf, SITE_ROOT_IRI } from "../hoist-addressed-documents.ts";
 import { documentationRoutes, landingHtml } from "../root-landing.ts";
 
@@ -79,7 +79,7 @@ describe("the hoist", () => {
   const R = "https://example.org/site/";
   function site(): string {
     const s = mkdtempSync(join(tmpdir(), "hoist-"));
-    const d = join(s, "docs", "x");
+    const d = join(s, DOCS_KIND, "x");
     mkdirSync(join(d, "site", "p", "nodes"), { recursive: true });
     mkdirSync(join(d, "todos", "a"), { recursive: true });
     writeFileSync(join(d, "site", "p.jsonld"), JSON.stringify({ "@context": [{ "@base": R }], "@id": "site/p.jsonld" }));
@@ -97,10 +97,10 @@ describe("the hoist", () => {
     expect(r.collisions).toEqual([]);
     expect(r.hoisted.sort()).toEqual(["site/p.jsonld", "site/p/nodes/n.jsonld", "todos/a.json", "todos/a.jsonld"]);
     expect(existsSync(join(s, "site", "p", "nodes", "n.jsonld"))).toBe(true);
-    expect(existsSync(join(s, "docs", "x", "todos", "a", "index.html"))).toBe(true);
-    expect(existsSync(join(s, "docs", "x", "todos.jsonld"))).toBe(true);
+    expect(existsSync(join(s, DOCS_KIND, "x", "todos", "a", "index.html"))).toBe(true);
+    expect(existsSync(join(s, DOCS_KIND, "x", "todos.jsonld"))).toBe(true);
     // The emptied directories are pruned, the page's is not.
-    expect(existsSync(join(s, "docs", "x", "site"))).toBe(false);
+    expect(existsSync(join(s, DOCS_KIND, "x", "site"))).toBe(false);
   });
 
   test("refuses a root address something else already holds — never overwrites", () => {
@@ -116,9 +116,9 @@ describe("the hoist", () => {
 describe("the root landing", () => {
   test("lists every built docs route with a front door, the built one first, and is not a redirect", () => {
     const s = mkdtempSync(join(tmpdir(), "landing-"));
-    for (const n of ["who-iris", "cat-harness", "empty"]) mkdirSync(join(s, "docs", n), { recursive: true });
-    writeFileSync(join(s, "docs", "who-iris", "index.html"), "");
-    writeFileSync(join(s, "docs", "cat-harness", "index.html"), "");
+    for (const n of ["who-iris", "cat-harness", "empty"]) mkdirSync(join(s, DOCS_KIND, n), { recursive: true });
+    writeFileSync(join(s, DOCS_KIND, "who-iris", "index.html"), "");
+    writeFileSync(join(s, DOCS_KIND, "cat-harness", "index.html"), "");
     const routes = documentationRoutes(s, "docs/cat-harness");
     expect(routes).toEqual(["docs/cat-harness", "docs/who-iris"]);
     const html = landingHtml("t", routes, true);
