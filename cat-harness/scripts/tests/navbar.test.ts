@@ -41,6 +41,7 @@ import { publishedUrlOf, solveCrop } from "../harness-tiles.js";
 import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { declaredGraphs, toRootFor, visualiserHref } from "../mount-instance-docs.js";
 import { kindTitle } from "../lib/nav-label.js";
+import { graphKindRowDecor } from "../lib/graph-kind-nav.js";
 
 // Typed WITH its middle region, because this fixture is a mounted page's
 // navbar and a mounted page always has one. `graphs` became optional for the
@@ -1118,10 +1119,15 @@ describe("a harness row is not a graph-kind row, whatever its mark (#2151)", () 
   // Owner, 2026-10-05: "alignment of harnesses is off". `fa-nav-kind` (the
   // strip-column indent) was inferred from "has an SVG glyph"; #2122 gave
   // harnesses glyph marks, and smart-trust / SMART Base took the kind indent.
-  const kinds = declaredGraphs("who-iris", new Map([["docs", "../docs/who-iris/"]]));
+  //
+  // Rows built from `graphKindRowDecor` itself, the one function that sets
+  // `NavItem.kind`, so this holds in a standalone cat-harness layer. That the
+  // rows `declaredGraphs` builds for a REAL instance carry it is asserted in
+  // `cat-harness-tools/scripts/tests/navbar-kind-rows.test.ts`, because it
+  // reads who-iris's declaration, which only the monorepo has.
+  const kinds = ["docs", "library", "skills"].map((k) => ({ href: `../${k}/`, label: k, ...graphKindRowDecor(k, "x") }));
 
-  it("every graph-kind row DECLARES itself a kind", () => {
-    expect(kinds.length).toBeGreaterThan(0);
+  it("graphKindRowDecor DECLARES the row a kind, whatever mark it draws", () => {
     expect(kinds.every((r) => r.kind === true)).toBe(true);
   });
 
