@@ -17,7 +17,7 @@ From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-sche
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 408 terms and is 231 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 408 terms and is 232 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -749,6 +749,55 @@ GraphExportSchema.omitted <span class="fa-gloss-status">candidate, extracted</sp
 <p>Subgraphs declared but whose contents were not read — never an unexplained empty.</p>
 <p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/graph-export.ts"><code>bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.omitted</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectory.graphtypologies" data-fa-state="extracted" data-fa-gloss="">
+GraphNodeDirectory.graphTypologies <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which parts of the knowledge graph this directory holds — an ARRAY, because a directory is a PLACE TO LOOK and may hold more than one.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#GraphNodeDirectory.graphTypologies</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectory.id" data-fa-state="extracted" data-fa-gloss="">
+GraphNodeDirectory.id <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Stable identifier, unique within an instance. Inheritance overrides match on THIS, never on <code>path</code> — see the module note on relocation.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#GraphNodeDirectory.id</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectory.path" data-fa-state="extracted" data-fa-gloss="">
+GraphNodeDirectory.path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The directory, relative to the root &#123;@link scope} names, with or without a trailing slash.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#GraphNodeDirectory.path</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectory.scope" data-fa-state="extracted" data-fa-gloss="">
+GraphNodeDirectory.scope <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which root <code>path</code> is relative to. Absent means this instance's.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#GraphNodeDirectory.scope</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectoryshape.absent" data-fa-state="extracted" data-fa-gloss="">
+GraphNodeDirectoryShape.absent <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>This directory is DECLARED and deliberately not on disk, with the reason.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.absent</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectoryshape.source" data-fa-state="extracted" data-fa-gloss="">
+GraphNodeDirectoryShape.source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where this entry's content comes from, when it is not the checkout.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.source</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectoryshape.subgraph" data-fa-state="extracted" data-fa-gloss="">
+GraphNodeDirectoryShape.subgraph <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>This entry is an instance SUBGRAPH, not a part of its parent's graph.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.subgraph</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--graph-typology-registry.graphtypologydef.anylayer" data-fa-state="extracted" data-fa-gloss="">
 GraphTypologyDef.anyLayer <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -914,7 +963,7 @@ GraphTypologyNodeSchema.kgContent <span class="fa-gloss-status">candidate, extra
 GraphTypologyNodeSchema.kind <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The kind's word, as a directory's <code>graphTypologies</code> names it. <code>kind</code>, NOT <code>name</code>: a JSON file whose <code>name</code> equals its filename stem is how <code>findDeclarationFile</code> recognises an INSTANCE declaration, so a node spelled with <code>name</code> made <code>kinds/</code> read as a directory of four instances (measured on the first move, 2026-10-04).</p>
+<p>The kind's word, as a directory's <code>graphTypologies</code> names it. <code>kind</code>, NOT <code>name</code>: a JSON file whose <code>name</code> equals its filename stem is how <code>findDeclarationFile</code> recognises an INSTANCE declaration, so a node spelled with <code>name</code> made <code>typologies/</code> read as a directory of four instances (measured on the first move, 2026-10-04).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-typology-node.ts"><code>cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.kind</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--graph-typology-node.graphtypologynodeschema.published" data-fa-state="extracted" data-fa-gloss="">
@@ -944,55 +993,6 @@ GraphTypologyNodeSchema.tileIcon <span class="fa-gloss-status">candidate, extrac
 <dd>
 <p>The navbar tile icon (an icon name, as <code>graph-tiles.ts</code> spells it).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-typology-node.ts"><code>cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.tileIcon</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectory.graphtypologies" data-fa-state="extracted" data-fa-gloss="">
-GraphNodeDirectory.graphTypologies <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Which parts of the knowledge graph this directory holds — an ARRAY, because a directory is a PLACE TO LOOK and may hold more than one.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#GraphNodeDirectory.graphTypologies</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectory.id" data-fa-state="extracted" data-fa-gloss="">
-GraphNodeDirectory.id <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Stable identifier, unique within an instance. Inheritance overrides match on THIS, never on <code>path</code> — see the module note on relocation.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#GraphNodeDirectory.id</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectory.path" data-fa-state="extracted" data-fa-gloss="">
-GraphNodeDirectory.path <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The directory, relative to the root &#123;@link scope} names, with or without a trailing slash.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#GraphNodeDirectory.path</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectory.scope" data-fa-state="extracted" data-fa-gloss="">
-GraphNodeDirectory.scope <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Which root <code>path</code> is relative to. Absent means this instance's.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#GraphNodeDirectory.scope</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectoryshape.absent" data-fa-state="extracted" data-fa-gloss="">
-GraphNodeDirectoryShape.absent <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>This directory is DECLARED and deliberately not on disk, with the reason.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.absent</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectoryshape.source" data-fa-state="extracted" data-fa-gloss="">
-GraphNodeDirectoryShape.source <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Where this entry's content comes from, when it is not the checkout.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.source</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectoryshape.subgraph" data-fa-state="extracted" data-fa-gloss="">
-GraphNodeDirectoryShape.subgraph <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>This entry is an instance SUBGRAPH, not a part of its parent's graph.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.subgraph</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--vocab-mapping.groupschema.source" data-fa-state="extracted" data-fa-gloss="">
 GroupSchema.source <span class="fa-gloss-status">candidate, extracted</span>
