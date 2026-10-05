@@ -206,6 +206,9 @@ export const RULES: Rule[] = [
       // `derivedFrom` edges with the same reach, and reads no folio content.
       "scripts/check-derived-from.ts",
       "scripts/derived-from.baseline.ts",
+      // HARNESS, beside it (bean `0b8c`): runs the writers of the artefacts
+      // check:derived-from names as built at publish; reads declarations only.
+      "scripts/derive-at-publish.ts",
       // HARNESS: the staging cone (bean `4j86`) computes over declarations and
       // module specifiers, and reads no folio content.
       "scripts/staging-cone.ts",

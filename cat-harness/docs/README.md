@@ -58,7 +58,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`es/`](es/) | _nothing declares what this holds_ | |
 | [`external-schemas/`](external-schemas/) | _nothing declares what this holds_ | |
 | [`fr/`](fr/) | _nothing declares what this holds_ | |
-| [`fsh-guts/`](fsh-guts/) | _nothing declares what this holds_ | |
 | [`glossary/`](glossary/) | _nothing declares what this holds_ | |
 | [`guides/`](guides/) | _nothing declares what this holds_ | |
 | [`health/`](health/) | _nothing declares what this holds_ | |
