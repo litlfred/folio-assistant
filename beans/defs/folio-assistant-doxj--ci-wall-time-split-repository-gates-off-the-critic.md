@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-05T05:46:34Z
-updated_at: 2026-10-05T05:47:08Z
+updated_at: 2026-10-05T06:02:20Z
 parent: folio-assistant-hfag
 ---
 
@@ -25,3 +25,7 @@ PR CI is green apart from main's known reds, every step that ran before still ru
 
 
 Issue: #2153
+
+
+## Measured after (PR #2154, run 37269610652, attempt 1)
+Wall 4m52s (05:51:13 to 05:56:05) against 9m24s on main run 37253911158. Parts: gates-standalone 234s, gates-docs 176s, gates-kg 160s, roll-up 3s, qa-publish 39s (starts after gates-docs instead of after all 85 steps). Reds: the standalone ratchet, the same 17 new failures main's tip run 37268420795 shows (tools/voices/viewer tests, not this change). On main those also SKIP the 22 steps after it; here those steps run in gates-docs and pass. Shard 4/4 had one 5.46 s timeout in check-tools and passed on rerun (attempt 2).
