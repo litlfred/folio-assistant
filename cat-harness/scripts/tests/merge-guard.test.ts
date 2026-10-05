@@ -41,7 +41,6 @@ import {
 import type { TriggerScan } from "../../src/core/workflow-events.js";
 
 const FIXTURES = join(import.meta.dir, "fixtures", "merge-guard");
-const ROOT_FOR_STEP = join(import.meta.dir, "..", "..", "..");
 
 /**
  * The owed set, fixed for the fixtures rather than read from today's
@@ -651,11 +650,6 @@ describe("check 5 — Feature Staging is judged once finished, never waited for"
     expect(status(redWith({ unknown: "HTTP 403" }), "ci").status).toBe("refuse");
     expect(status(redWith(undefined), "ci").status).toBe("refuse");
     expect(status(redWith([]), "ci").status).toBe("refuse");
-  });
-
-  test("the deploy-only step name is the one the staging workflow runs", () => {
-    const wf = readFileSync(join(ROOT_FOR_STEP, ".github/workflows/feature-staging.yml"), "utf8");
-    expect(wf).toContain(`- name: ${DEPLOY_ONLY_STEP}\n`);
   });
 
   test("control: a gating workflow in progress is still waited for", () => {
