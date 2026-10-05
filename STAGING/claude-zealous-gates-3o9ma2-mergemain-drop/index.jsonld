@@ -87,7 +87,7 @@
       "subgraph": "https://litlfred.github.io/bootstrap/subgraph/",
       "nodes": 166,
       "bytes": 143073,
-      "sha256": "f08cf1d28f82b50f6b3567c76598ed98072d21037c95a86eb74f93f86500861b"
+      "sha256": "289f87715fa004200cea60d491f900c2245058fd3e74167fa5a2c246f8351826"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/bootstrap-tools/bootstrap-tools.jsonld",
@@ -140,8 +140,8 @@
       ],
       "subgraph": "https://litlfred.github.io/bootstrap-tools/subgraph/",
       "nodes": 43,
-      "bytes": 72210,
-      "sha256": "dbc9731057eb2a845d26249413f525ccc16a014511e602d2a6ff207923d9b22a"
+      "bytes": 72384,
+      "sha256": "986a5e8c6b22ca7e1bceb6ca150daa4925a5636858831ded9c150f93aad63440"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld",
@@ -157,6 +157,13 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/bootstrap-tools/bootstrap-tools.jsonld"
       ],
       "directory": [
+        {
+          "name": "cat-harness-validators",
+          "path": "validators/",
+          "graphKinds": [
+            "validators"
+          ]
+        },
         {
           "name": "tools",
           "path": "tools/",
@@ -349,9 +356,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/",
-      "nodes": 3373,
-      "bytes": 4602397,
-      "sha256": "89f1fb03205b6190e12ea6ce5bc6d0e516c9346fb1bd6061585ea28e68ded8e4"
+      "nodes": 3380,
+      "bytes": 4607943,
+      "sha256": "73a3655eab2768796435e87fe5547cf48f1e7173a4c7aa9520afff64640ee364"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness-tools.jsonld",
@@ -411,8 +418,8 @@
         }
       ],
       "nodes": 9,
-      "bytes": 22942,
-      "sha256": "c315d67ae1b6eb9d3344ccc0f76f05c3589382c7067095b0f375f3f27ef69b52"
+      "bytes": 23116,
+      "sha256": "55f4964909d2bd86504199aa14499e364cb8e4c6ea61188975c9adddaee5d6ea"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-openapi.jsonld",
@@ -428,6 +435,20 @@
       ],
       "directory": [
         {
+          "name": "cat-openapi-validators",
+          "path": "validators/",
+          "graphKinds": [
+            "validators"
+          ]
+        },
+        {
+          "name": "cat-openapi-kinds",
+          "path": "kinds/",
+          "graphKinds": [
+            "kinds"
+          ]
+        },
+        {
           "name": "cat-openapi-schemas",
           "path": "schemas/",
           "graphKinds": [
@@ -442,9 +463,9 @@
           ]
         }
       ],
-      "nodes": 6,
-      "bytes": 17304,
-      "sha256": "abd9a19bbab4fd8796fd41bc49ceb5af2fd6dc6cdd6edc7bbcdffc0d49b28b1d"
+      "nodes": 10,
+      "bytes": 20206,
+      "sha256": "d89849b5ddd2fc52c5cfea47eca4687979bb3a318d7d9206349df0f92f6007ea"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/fhir-harness.jsonld",
@@ -459,6 +480,27 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-core/folio-assistant-core.jsonld"
       ],
       "directory": [
+        {
+          "name": "fhir-harness-translations",
+          "path": "translations/",
+          "graphKinds": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "fhir-harness-validators",
+          "path": "validators/",
+          "graphKinds": [
+            "validators"
+          ]
+        },
+        {
+          "name": "fhir-harness-kinds",
+          "path": "kinds/",
+          "graphKinds": [
+            "kinds"
+          ]
+        },
         {
           "name": "library",
           "path": "library/",
@@ -503,9 +545,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/",
-      "nodes": 146,
-      "bytes": 160686,
-      "sha256": "118bc772f2daf1292468c0688eb284ba1e336ca5b7258945c031d2ce4e33d902"
+      "nodes": 152,
+      "bytes": 165174,
+      "sha256": "73e0d7a32c92e709475b05a720161b444f443841409efa1de9b5fc691e9ebcce"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant/folio-assistant.jsonld",
@@ -597,8 +639,8 @@
         }
       ],
       "nodes": 31,
-      "bytes": 40283,
-      "sha256": "9a6070635982cb6f3f3c23ffaec831bdf4ceecbe0877dc6214e8cd3dffd64ef2"
+      "bytes": 40457,
+      "sha256": "26061e4e9a188b3b42a586141cb695511a56f652e34355f4f9208f2e336e99c4"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-core/folio-assistant-core.jsonld",
@@ -613,6 +655,34 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness-tools.jsonld"
       ],
       "directory": [
+        {
+          "name": "folio-assistant-core-translations",
+          "path": "translations/",
+          "graphKinds": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-block-kinds",
+          "path": "block-kinds/",
+          "graphKinds": [
+            "block-kinds"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-validators",
+          "path": "validators/",
+          "graphKinds": [
+            "validators"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-kinds",
+          "path": "kinds/",
+          "graphKinds": [
+            "kinds"
+          ]
+        },
         {
           "name": "core-schemas",
           "path": "schemas/",
@@ -700,9 +770,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/",
-      "nodes": 521,
-      "bytes": 827701,
-      "sha256": "7f6175ce7ec004f17f240bd8cea86b3f762bd9199255bbec52c112f82a3a8874"
+      "nodes": 529,
+      "bytes": 835039,
+      "sha256": "5f96a0d5aeabe0c6a6d2e2701d5b6758bb5a2b99a0edfa5102659b6bfa33953a"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-sci/folio-assistant-sci.jsonld",
@@ -716,6 +786,48 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-core/folio-assistant-core.jsonld"
       ],
       "directory": [
+        {
+          "name": "folio-assistant-sci-qa-checkers",
+          "path": "qa-checkers/",
+          "graphKinds": [
+            "qa-checkers"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-pipeline-plugins",
+          "path": "pipeline-plugins/",
+          "graphKinds": [
+            "pipeline-plugins"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-translations",
+          "path": "translations/",
+          "graphKinds": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-block-kinds",
+          "path": "block-kinds/",
+          "graphKinds": [
+            "block-kinds"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-content-adapters",
+          "path": "content-adapters/",
+          "graphKinds": [
+            "content-adapters"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-kinds",
+          "path": "kinds/",
+          "graphKinds": [
+            "kinds"
+          ]
+        },
         {
           "name": "library",
           "path": "library/",
@@ -781,9 +893,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/",
-      "nodes": 121,
-      "bytes": 170215,
-      "sha256": "bd8e3e9eafb3873684ebaa5e8638fada6e00602b2590ce8873c784cf74151b76"
+      "nodes": 133,
+      "bytes": 181297,
+      "sha256": "0c6fac08452420ca03a633f08204fa8e55f4f88919d04b3629b2079e3a7ed08b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/smart-base.jsonld",
@@ -799,10 +911,31 @@
       ],
       "directory": [
         {
-          "name": "smart-base-docs",
-          "path": "docs/",
+          "name": "smart-base-qa-checkers",
+          "path": "qa-checkers/",
           "graphKinds": [
-            "docs"
+            "qa-checkers"
+          ]
+        },
+        {
+          "name": "smart-base-block-kinds",
+          "path": "block-kinds/",
+          "graphKinds": [
+            "block-kinds"
+          ]
+        },
+        {
+          "name": "smart-base-content-adapters",
+          "path": "content-adapters/",
+          "graphKinds": [
+            "content-adapters"
+          ]
+        },
+        {
+          "name": "smart-base-translations",
+          "path": "translations/",
+          "graphKinds": [
+            "translation-sources"
           ]
         },
         {
@@ -862,6 +995,14 @@
           ]
         },
         {
+          "name": "smart-base-docs",
+          "path": "docs/",
+          "graphKinds": [
+            "docs",
+            "ig-pages"
+          ]
+        },
+        {
           "name": "smart-base-document-kinds",
           "path": "document-kinds/",
           "graphKinds": [
@@ -884,9 +1025,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/",
-      "nodes": 105,
-      "bytes": 101657,
-      "sha256": "97ae6b672ec37bf31ffe93935d430c9b654481d614e45f2b3aaee44a3e04243c"
+      "nodes": 114,
+      "bytes": 108221,
+      "sha256": "dbbac450dedee489b1ee141e934772b1ec0c56a43818cb05df51c8b550e3abee"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/smart-ig/smart-ig.jsonld",
@@ -910,8 +1051,8 @@
         }
       ],
       "nodes": 4,
-      "bytes": 18025,
-      "sha256": "3519346583b3f5d0bbcbdb7ebdbf73d72b868fee5581522a7c15b361d364a2b4"
+      "bytes": 18199,
+      "sha256": "d2673ceca0b313661015db12ed78ee7c0bebdec6d991d7aedd3f6484246f1e30"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/smart-immunizations/smart-immunizations.jsonld",
@@ -926,17 +1067,18 @@
       ],
       "directory": [
         {
-          "name": "smart-immunizations-docs",
-          "path": "docs/",
-          "graphKinds": [
-            "docs"
-          ]
-        },
-        {
           "name": "smart-immunizations-artifact-index",
           "path": "fhir-artifact-index/",
           "graphKinds": [
             "fhir-artifact-index"
+          ]
+        },
+        {
+          "name": "smart-immunizations-docs",
+          "path": "docs/",
+          "graphKinds": [
+            "docs",
+            "ig-pages"
           ]
         },
         {
@@ -947,9 +1089,9 @@
           ]
         }
       ],
-      "nodes": 8,
-      "bytes": 22704,
-      "sha256": "f2e6fd52b444354e90c4c4a2e6278ba1351d5dce17b21b19a038a4b218782c02"
+      "nodes": 9,
+      "bytes": 23445,
+      "sha256": "3c390880b1e9244c8dcfef51b6be6a8f65c76fa85c165d51fed476e89e703498"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/smart-trust/smart-trust.jsonld",
@@ -964,6 +1106,13 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-openapi.jsonld"
       ],
       "directory": [
+        {
+          "name": "smart-trust-ast",
+          "path": "fhir-ast/",
+          "graphKinds": [
+            "ig-ast"
+          ]
+        },
         {
           "name": "smart-trust-artifact-index",
           "path": "fhir-artifact-index/",
@@ -982,7 +1131,8 @@
           "name": "smart-trust-docs",
           "path": "docs/",
           "graphKinds": [
-            "docs"
+            "docs",
+            "ig-pages"
           ]
         },
         {
@@ -1000,9 +1150,9 @@
           ]
         }
       ],
-      "nodes": 12,
-      "bytes": 28007,
-      "sha256": "58d4005dff200cd21cf3f798dba2fff582fc4703a59484f7455ba7d8d481dbe0"
+      "nodes": 15,
+      "bytes": 30779,
+      "sha256": "8942190a1ecab7a7f3e27a5db5c82f203be25eb2f12ebc6fc3bbf956ad0afd3b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/who-iris/who-iris.jsonld",
@@ -1017,6 +1167,13 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-core/folio-assistant-core.jsonld"
       ],
       "directory": [
+        {
+          "name": "who-iris-translations",
+          "path": "translations/",
+          "graphKinds": [
+            "translation-sources"
+          ]
+        },
         {
           "name": "library",
           "path": "library/",
@@ -1103,9 +1260,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/",
-      "nodes": 26,
-      "bytes": 39969,
-      "sha256": "9bcf85355ff76f7ab609eff87e10f140277b2644afc56ad1676efb9341e69c5d"
+      "nodes": 28,
+      "bytes": 41910,
+      "sha256": "4ea2af0fd9cdc80aff596a533afc27dff9713dd40487dd16c7195b563b223e94"
     }
   ]
 }

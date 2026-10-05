@@ -618,15 +618,43 @@
                       "commit",
                       "tip",
                       "route",
-                      "route-family"
+                      "route-family",
+                      "family"
                     ]
+                  },
+                  "branchPrefix": {
+                    "type": "string",
+                    "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+\\/$"
+                  },
+                  "keyFrom": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "repository": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
                   }
                 },
                 "required": [
-                  "branch",
                   "keyedBy"
                 ],
                 "additionalProperties": false
+              },
+              "derivedFrom": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "writer": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
               },
               "composed": {
                 "type": "boolean"
@@ -684,7 +712,8 @@
                           "commit",
                           "tip",
                           "route",
-                          "route-family"
+                          "route-family",
+                          "family"
                         ]
                       }
                     },
@@ -692,6 +721,33 @@
                       "kind",
                       "branch",
                       "keyedBy"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "family"
+                      },
+                      "branchPrefix": {
+                        "type": "string",
+                        "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+\\/$"
+                      },
+                      "keyFrom": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "repository": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "branchPrefix",
+                      "keyFrom"
                     ],
                     "additionalProperties": false
                   }
@@ -1146,8 +1202,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld",
   "staging": {
     "branch": "claude/zealous-gates-3o9ma2-mergemain-drop",
-    "sha": "f73997f85766cc9b2c16b511b29742e205ece27a",
+    "sha": "a19050088dfda9ba1a77d1cefb5ba2832b68aba1",
     "pr": "2145/merge",
-    "run": "37284419558"
+    "run": "37288628358"
   }
 }

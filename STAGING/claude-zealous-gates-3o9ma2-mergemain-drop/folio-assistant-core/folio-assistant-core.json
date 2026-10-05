@@ -223,6 +223,8 @@
         "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
         "branch": "http://purl.org/dc/terms/identifier",
         "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
+        "keyFrom": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyFrom",
+        "familyRepository": "https://litlfred.github.io/cat-harness/0.1.0/ns#familyRepository",
         "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
       }
     },
@@ -334,10 +336,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T08:37:50.258Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1d95b5a5ce72f709e2b1c9b84fd9d0dd0ed2d96c",
-  "sourceCommitSha": "1d95b5a5ce72f709e2b1c9b84fd9d0dd0ed2d96c",
-  "sourceCommitAt": "2026-10-05T08:33:47Z",
+  "generatedAt": "2026-10-05T09:19:05.951Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b08e082c4cad15a8126152675e2a6d798fadef5d",
+  "sourceCommitSha": "b08e082c4cad15a8126152675e2a6d798fadef5d",
+  "sourceCommitAt": "2026-10-05T09:13:28Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -347,8 +349,8 @@
     "SequenceFlow": 219,
     "Lane": 53,
     "ProcessNode": 199,
-    "GraphKind": 12,
-    "Subgraph": 12,
+    "GraphKind": 16,
+    "Subgraph": 16,
     "Asset": 2
   },
   "@graph": [
@@ -7688,6 +7690,27 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ContentChangeReview/node/End_NotMerged"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/kinds",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "kinds",
+      "renderable": false,
+      "summary": "The graph kinds a harness declares it owns, one node per kind, so no central registry names another harness's subgraph types. Loaded across the instances on first use."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/validators",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "validators",
+      "renderable": false,
+      "summary": "The validators a harness's code provides, one node each naming the graph kind and $schema family it checks and the Zod export that checks it, joined onto the kinds on first use."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/block-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "block-kinds",
+      "renderable": false,
+      "summary": "The block kinds a harness's adapter owns, one node per kind carrying its label prefix, RDF types, profile and builder. Discovered across the instances; no module lists them."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/tools",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "tools",
@@ -7758,6 +7781,13 @@
       "summary": "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. Every rule cites the ingested source or KG node it was derived from. Opt-in per folio."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/translation-sources",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "translation-sources",
+      "renderable": false,
+      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/folio",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "folio",
@@ -7770,6 +7800,78 @@
       "name": "glossary",
       "renderable": false,
       "summary": "SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS schemes by exactMatch rather than copied. Rendered on the glossary/ page."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-translations",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "folio-assistant-core-translations",
+      "path": "translations/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/translation-sources"
+      ],
+      "description": "The gettext side of folio-assistant-core's own strings, one directory per target locale. Today: `block-kinds.pot`/`.po`, the headings of the block kinds this instance declares in block-kinds/, keyed `msgctxt \"block-kind:<kind>\"` with the node's English `heading` as msgid (bean riit, step 2b). Owner, 2026-10-04: locale headings live in the translation graph (option 1 of 2), and kinds are not centrally managed, so the catalogue sits with the kinds rather than in cat-harness/translations/.",
+      "readmePath": "translations/README.md",
+      "fileCount": 91,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-translations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-translations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-block-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "folio-assistant-core-block-kinds",
+      "path": "block-kinds/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/block-kinds"
+      ],
+      "description": "The document profile's block kinds (prose, example, remark, algorithm, simulator, equation, diagram, table, figure), one folio-block-kind/v1 node per file (bean riit, step 2). Owner, 2026-10-04: kinds are discoverable and not centrally managed; cat-harness/schemas/block-kinds.ts finds these by scanning every instance's declared block-kinds graph, and the seven parallel tables they replace are gone.",
+      "readmePath": "block-kinds/README.md",
+      "fileCount": 10,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-block-kinds",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-block-kinds"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-validators",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "folio-assistant-core-validators",
+      "path": "validators/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/validators"
+      ],
+      "description": "The validators folio-assistant-core's code provides, one folio-validator/v1 node each naming the graph kind and $schema family it checks (bean riit).",
+      "readmePath": "validators/README.md",
+      "fileCount": 9,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-validators",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-validators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "folio-assistant-core-kinds",
+      "path": "kinds/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/kinds"
+      ],
+      "description": "The graph kinds folio-assistant-core owns, one folio-graph-kind/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph. Moved here from cat-harness/schemas/graph-kind-registry.ts, with each entry's code comments kept as its rationale.",
+      "readmePath": "kinds/README.md",
+      "fileCount": 3,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-kinds",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-kinds"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-core/folio-assistant-core.jsonld#directory/core-schemas",
@@ -7987,7 +8089,7 @@
       ],
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 7 files across processes (1), scenarios (1), skills (1), tools (4). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "readmePath": "test/results/README.md",
-      "fileCount": 30,
+      "fileCount": 32,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/folio-assistant-core/folio-assistant-core.jsonld#directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/qa"
     },
@@ -8014,8 +8116,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-gates-3o9ma2-mergemain-drop",
-    "sha": "f73997f85766cc9b2c16b511b29742e205ece27a",
+    "sha": "a19050088dfda9ba1a77d1cefb5ba2832b68aba1",
     "pr": "2145/merge",
-    "run": "37284419558"
+    "run": "37288628358"
   }
 }

@@ -223,6 +223,8 @@
         "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
         "branch": "http://purl.org/dc/terms/identifier",
         "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
+        "keyFrom": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyFrom",
+        "familyRepository": "https://litlfred.github.io/cat-harness/0.1.0/ns#familyRepository",
         "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
       }
     },
@@ -334,16 +336,16 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T08:38:00.255Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1d95b5a5ce72f709e2b1c9b84fd9d0dd0ed2d96c",
-  "sourceCommitSha": "1d95b5a5ce72f709e2b1c9b84fd9d0dd0ed2d96c",
-  "sourceCommitAt": "2026-10-05T08:33:47Z",
+  "generatedAt": "2026-10-05T09:19:21.611Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b08e082c4cad15a8126152675e2a6d798fadef5d",
+  "sourceCommitSha": "b08e082c4cad15a8126152675e2a6d798fadef5d",
+  "sourceCommitAt": "2026-10-05T09:13:28Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
     "Skill": 1,
-    "GraphKind": 11,
-    "Subgraph": 12,
+    "GraphKind": 12,
+    "Subgraph": 13,
     "Asset": 2
   },
   "@graph": [
@@ -411,13 +413,6 @@
       "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/catalogue",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "catalogue",
-      "renderable": false,
-      "summary": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here."
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/voices",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "voices",
@@ -432,11 +427,43 @@
       "summary": "Themes derived from an instance's own sources — one Theme node each, carrying `kind: sticky | webpage | publication`. The palette vocabulary is shared across every kind and only the geometry varies; every value cites where it was measured."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/translation-sources",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "translation-sources",
+      "renderable": false,
+      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/glossary",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "glossary",
       "renderable": false,
       "summary": "SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS schemes by exactMatch rather than copied. Rendered on the glossary/ page."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/catalogue",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "catalogue",
+      "renderable": false,
+      "summary": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/who-iris/who-iris.jsonld#directory/who-iris-translations",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "who-iris-translations",
+      "path": "translations/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/translation-sources"
+      ],
+      "description": "The gettext side of who-iris's own strings, one directory per target locale: the `glossary/who-iris--who-terms` catalogues that translate this instance's WHO terms. Moved here from cat-harness/translations/ on the owner's ruling of 2026-10-04, \"move things to semantically appropriate place\" (bean riit): a scheme's translations sit with the instance whose terms they translate.",
+      "readmePath": "translations/README.md",
+      "fileCount": 11,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/who-iris/who-iris.jsonld#directory/who-iris-translations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-translations"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/who-iris/who-iris.jsonld#directory/library",
@@ -679,8 +706,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-gates-3o9ma2-mergemain-drop",
-    "sha": "f73997f85766cc9b2c16b511b29742e205ece27a",
+    "sha": "a19050088dfda9ba1a77d1cefb5ba2832b68aba1",
     "pr": "2145/merge",
-    "run": "37284419558"
+    "run": "37288628358"
   }
 }

@@ -223,6 +223,8 @@
         "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
         "branch": "http://purl.org/dc/terms/identifier",
         "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
+        "keyFrom": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyFrom",
+        "familyRepository": "https://litlfred.github.io/cat-harness/0.1.0/ns#familyRepository",
         "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
       }
     },
@@ -330,10 +332,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-05T08:37:47.075Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1d95b5a5ce72f709e2b1c9b84fd9d0dd0ed2d96c",
-  "sourceCommitSha": "1d95b5a5ce72f709e2b1c9b84fd9d0dd0ed2d96c",
-  "sourceCommitAt": "2026-10-05T08:33:47Z",
+  "generatedAt": "2026-10-05T09:19:01.043Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b08e082c4cad15a8126152675e2a6d798fadef5d",
+  "sourceCommitSha": "b08e082c4cad15a8126152675e2a6d798fadef5d",
+  "sourceCommitAt": "2026-10-05T09:13:28Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -342,8 +344,8 @@
     "SequenceFlow": 51,
     "Lane": 14,
     "ProcessNode": 51,
-    "GraphKind": 6,
-    "Subgraph": 6,
+    "GraphKind": 9,
+    "Subgraph": 9,
     "Asset": 2
   },
   "@graph": [
@@ -2190,6 +2192,20 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-processes"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/kinds",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "kinds",
+      "renderable": false,
+      "summary": "The graph kinds a harness declares it owns, one node per kind, so no central registry names another harness's subgraph types. Loaded across the instances on first use."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/validators",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "validators",
+      "renderable": false,
+      "summary": "The validators a harness's code provides, one node each naming the graph kind and $schema family it checks and the Zod export that checks it, joined onto the kinds on first use."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/tools",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "tools",
@@ -2230,6 +2246,64 @@
       "name": "library",
       "renderable": false,
       "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/translation-sources",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "translation-sources",
+      "renderable": false,
+      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-translations",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "fhir-harness-translations",
+      "path": "translations/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/translation-sources"
+      ],
+      "description": "The gettext side of fhir-harness's own strings, one directory per target locale: today the `processes/` templates of the BPMN diagrams this instance draws. Moved here from cat-harness/translations/ on the owner's ruling of 2026-10-04, \"move things to semantically appropriate place\" (bean riit): a diagram's templates sit with the instance that draws it.",
+      "readmePath": "translations/README.md",
+      "fileCount": 16,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-translations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-validators",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "fhir-harness-validators",
+      "path": "validators/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/validators"
+      ],
+      "description": "The validators fhir-harness's code provides, one folio-validator/v1 node each naming the graph kind and $schema family it checks (bean riit). Owner, 2026-10-04: validators are KG nodes, and the validator names the family. The registry joins each onto its kind.",
+      "readmePath": "validators/README.md",
+      "fileCount": 10,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-validators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "fhir-harness-kinds",
+      "path": "kinds/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/kinds"
+      ],
+      "description": "The graph kinds fhir-harness owns, one folio-graph-kind/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph. The registry loads these on first use, across every instance, and refuses a kind two files declare.",
+      "readmePath": "kinds/README.md",
+      "fileCount": 5,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-harness-kinds"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/library",
@@ -2357,8 +2431,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-gates-3o9ma2-mergemain-drop",
-    "sha": "f73997f85766cc9b2c16b511b29742e205ece27a",
+    "sha": "a19050088dfda9ba1a77d1cefb5ba2832b68aba1",
     "pr": "2145/merge",
-    "run": "37284419558"
+    "run": "37288628358"
   }
 }

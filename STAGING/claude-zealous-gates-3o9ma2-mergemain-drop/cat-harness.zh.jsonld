@@ -223,6 +223,8 @@
         "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
         "branch": "http://purl.org/dc/terms/identifier",
         "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
+        "keyFrom": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyFrom",
+        "familyRepository": "https://litlfred.github.io/cat-harness/0.1.0/ns#familyRepository",
         "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
       }
     },
@@ -328,10 +330,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-05T08:38:14.520Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1d95b5a5ce72f709e2b1c9b84fd9d0dd0ed2d96c",
-  "sourceCommitSha": "1d95b5a5ce72f709e2b1c9b84fd9d0dd0ed2d96c",
-  "sourceCommitAt": "2026-10-05T08:33:47Z",
+  "generatedAt": "2026-10-05T09:19:43.990Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b08e082c4cad15a8126152675e2a6d798fadef5d",
+  "sourceCommitSha": "b08e082c4cad15a8126152675e2a6d798fadef5d",
+  "sourceCommitAt": "2026-10-05T09:13:28Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -345,11 +347,11 @@
     "Lane": 228,
     "ProcessNode": 1077,
     "Tool": 125,
-    "Schema": 170,
+    "Schema": 175,
     "ExternalSchema": 22,
-    "GraphKind": 28,
+    "GraphKind": 29,
     "Role": 53,
-    "Subgraph": 27,
+    "Subgraph": 28,
     "Asset": 3
   },
   "@graph": [
@@ -564,7 +566,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#package/authoring-core"
       ],
       "instructionsPath": "skills/authoring/authoring-core/content-profiles.md",
-      "instructionLines": 109,
+      "instructionLines": 118,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1756,7 +1758,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1473,
+      "instructionLines": 1523,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2828,7 +2830,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/before-after-preview.md",
-      "instructionLines": 394,
+      "instructionLines": 401,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2929,7 +2931,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
-      "instructionLines": 663,
+      "instructionLines": 673,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3335,7 +3337,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/feature-staging.md",
-      "instructionLines": 312,
+      "instructionLines": 364,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -45288,7 +45290,7 @@
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "subgraph-resolve",
       "title": "Resolve a declared subgraph's content source",
-      "description": "Say where a declared subgraph gets its content — the checkout's own directory, or a declared repository branch (with its keying and its `special-branches.json` row) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
+      "description": "Say where a declared subgraph gets its content — the checkout's own directory, a declared repository branch (with its keying), or a branch family (with its prefix, key and repository) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
       "install": {
         "none": true
       },
@@ -52132,6 +52134,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/binary-release"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#schema/block-kind-node",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "block-kind-node",
+      "title": "block-kind-node",
+      "summary": "A block kind as a KG node: `folio-block-kind/v1`, one JSON file per kind in",
+      "module": "schemas/block-kind-node.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/block-kind-node"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#schema/block-kinds",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "block-kinds",
@@ -52235,6 +52247,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/constraints"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#schema/content-adapter-node",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "content-adapter-node",
+      "title": "content-adapter-node",
+      "summary": "A content adapter's block VOCABULARY as a KG node: `folio-content-adapter/v1`,",
+      "module": "schemas/content-adapter-node.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/content-adapter-node"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#schema/content-type",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "content-type",
@@ -52253,6 +52275,16 @@
       "module": "schemas/content-types-base.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/content-types-base"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#schema/contribution-nodes",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "contribution-nodes",
+      "title": "contribution-nodes",
+      "summary": "Contributions as KG nodes: a harness's QA checkers and pipeline-plugin",
+      "module": "schemas/contribution-nodes.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/contribution-nodes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#schema/contributions",
@@ -52453,6 +52485,16 @@
       "module": "schemas/glossary-ledger.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/glossary-ledger"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#schema/graph-kind-node",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "graph-kind-node",
+      "title": "graph-kind-node",
+      "summary": "A GRAPH KIND as a node of the knowledge graph, declared by the harness that",
+      "module": "schemas/graph-kind-node.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/graph-kind-node"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#schema/graph-kind-registry",
@@ -53347,6 +53389,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/user-story"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#schema/validator-node",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "validator-node",
+      "title": "validator-node",
+      "summary": "A VALIDATOR as a node of the knowledge graph (bean riit). Owner, 2026-10-04:",
+      "module": "schemas/validator-node.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/validator-node"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#schema/vector-figure",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "vector-figure",
@@ -54022,6 +54074,13 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/who-smart-base"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/validators",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "validators",
+      "renderable": false,
+      "summary": "The validators a harness's code provides, one node each naming the graph kind and $schema family it checks and the Zod export that checks it, joined onto the kinds on first use."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/tools",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "tools",
@@ -54244,7 +54303,8 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "folio",
       "renderable": true,
-      "summary": "Authored content, rendered to a website by the just-the-docs pipeline."
+      "summary": "Authored content, rendered to a website by the just-the-docs pipeline.",
+      "validatorNotApplicable": "its nodes are `.ts` block manifests and `.md` prose, TypeScript that the content pipeline loads and `content_validate` checks against the Block union, not JSON a runtime Zod schema could parse."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#role/user",
@@ -55365,6 +55425,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/certifier"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/cat-harness-validators",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "cat-harness-validators",
+      "path": "validators/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/validators"
+      ],
+      "description": "The validators cat-harness's code provides, one folio-validator/v1 node each naming the graph kind and $schema family it checks (bean riit). Owner, 2026-10-04: validators are KG nodes, and the validator names the family.",
+      "readmePath": "validators/README.md",
+      "fileCount": 78,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/cat-harness-validators",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-validators"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/tools",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "tools",
@@ -55470,7 +55548,7 @@
       ],
       "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
       "readmePath": "schemas/README.md",
-      "fileCount": 249,
+      "fileCount": 262,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
@@ -55488,7 +55566,7 @@
       ],
       "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph kind's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which show the PlantUML rendering (docs/assets/img/uml/overview/, stamped with its source's hash) with the Mermaid beneath it, and link both sources. Owner, 2026-09-23.",
       "readmePath": "uml/README.md",
-      "fileCount": 329,
+      "fileCount": 373,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/uml",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml"
     },
@@ -55599,7 +55677,7 @@
       ],
       "description": "Everything a QA process produced, in one declared tree. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs under `test/results/` as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. Four kinds live here and the FILES say which they are, per the `$schema` contract: `qa-results/v1` (`<producer>.qa-results.json`, a whole-artefact review — findings about a document the build just produced), `qa-witness/v1` (`witnesses/**`, one per audited subject in the families `block`, `kg` and `translation`, the published projection) `kg-qa/v1` (`kg-qa/**`, the KG verdicts themselves — what `kg-audit` wrote) and `kg-qa-manifest/v1` (`kg-qa.manifest.json`, the auditor's identity for all of them, ONE per instance rather than one per sidecar). The manifest moved here from `skills/` on 2026-09-27: `kg-audit.ts` writes it unconditionally, so auditing every declared instance made its old home CREATE a `skills/` directory holding no skills in each of the six instances that have none. Its registration in `graph-kind-registry.ts` moved from the `skills` kind to `qa` with it — a kind claiming a `$schema` whose files live in another kind's directory is a validator aimed at nothing. The `kg-qa/` tree MIRRORS each subject's path rather than being flat, and that is not tidiness: measured 2026-09-19, four sidecar basenames already occur twice across packages (`editor`, `getting-started`, `idle-backlog`, `l2-dak-authoring`), so a flat directory would silently overwrite four verdicts. `kgQaSidecarPath` in `schemas/kg-qa.ts` is the one answer for writer and reader alike. A directory is a PLACE TO LOOK and may hold more than one part of a graph; extension is a coincidence, a declaration inside the file is the contract. ONE entry rather than a nested set, deliberately: #263's own comment names the defect a declaration inside another declaration creates. STILL OUTSIDE: the 122 block verdicts `*.qa.json`, which sit beside their blocks and move next. The witnesses are PUBLISHED at `/assets/qa/`, which is where every badge points; the publishing workflows copy them into `_site/assets/qa/` after Jekyll, since Jekyll builds only `docs/`. Where a file lives and where it is served from are different questions.",
       "readmePath": "test/results/README.md",
-      "fileCount": 1025,
+      "fileCount": 1034,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/qa"
     },
@@ -55689,7 +55767,7 @@
       ],
       "description": "The gettext side of translation — one directory per target locale holding `.pot` templates, `.po` catalogues and the `TranslationNode` `.ts` manifests that make each pair addressable in the graph. The INPUT to injection. There is deliberately NO matching declaration for the rendered OUTPUT: a translated page is the same kind of thing as the page it translates — renderable content, differing by a field — and it declares its own `lang` and `translation_source` in front matter, so the locale subtrees under `docs/` are DISCOVERED from the files rather than enumerated here. A first draft of PR #351 enumerated them, ten entries for five locales across two subtrees, and that restated what all ten files already said. Undeclared until 2026-09-19: the `dh4f` defect in reverse, five committed directories that no declaration mentioned.",
       "readmePath": "translations/README.md",
-      "fileCount": 645,
+      "fileCount": 520,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/translation-sources",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/translation-sources"
     },
@@ -55725,7 +55803,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 3027,
+      "fileCount": 3095,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/docs",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
@@ -55761,7 +55839,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 904,
+      "fileCount": 910,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/cat-harness-scripts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
@@ -55815,7 +55893,7 @@
       ],
       "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
       "readmePath": "test/README.md",
-      "fileCount": 1143,
+      "fileCount": 1202,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-mergemain-drop/cat-harness.jsonld#directory/cat-harness-tests",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
