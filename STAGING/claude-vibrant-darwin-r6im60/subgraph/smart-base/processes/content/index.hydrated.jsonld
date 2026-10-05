@@ -1,0 +1,467 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/processes/content/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "@type": "bootstrap:Process",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l2-dak-authoring.svg",
+      "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "enforcement": "advisory",
+      "flowCount": 21,
+      "name": "L2 DAK authoring",
+      "nodeCount": 16,
+      "sourcePath": "../smart-base/processes/content/l2-dak-authoring.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
+      "summary": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B01",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_ScopeDak"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B02",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_SeedBeans"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B03",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B04",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B05",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Personas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B06",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B07",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Dmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B08",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_DataDict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B09",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Indicators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B10",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Terminology"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B11",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Personas",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B12",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Bpmn",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B13",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Dmn",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B14",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_DataDict",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B15",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Indicators",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B16",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Terminology",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B17",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_SmeValidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B18",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_Accurate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B19",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "name": "changes needed",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B20",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "name": "validated",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_AssembleDak"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B21",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/business-analyst",
+      "name": "Business analyst",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/programme-manager",
+      "name": "Programme manager / technical officer",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/clinical-sme",
+      "name": "Clinical SME",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/terminologist",
+      "name": "Terminologist",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/work-plan",
+      "name": "Work plan — beans (shared by humans and agents)",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B21",
+      "name": "L2 DAK ready for L3",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B18",
+      "name": "Clinically accurate?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B19",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B20"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/clinical-sme",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B04",
+      "name": "Gateway_AuthorFork",
+      "nodeKind": "parallel",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B05",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B06",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B08",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B09",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B10",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B07"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ParallelGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B11",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B12",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B14",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B15",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B16",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B13"
+      ],
+      "name": "Gateway_AuthorJoin",
+      "nodeKind": "parallel",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B17",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B03",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B19"
+      ],
+      "name": "Gateway_AuthorMerge",
+      "nodeKind": "exclusive",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B04",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "name": "WHO guideline / recommendations",
+      "nodeKind": "start",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B01",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-validate",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B20",
+      "name": "Assemble and validate the DAK",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B21",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Bpmn",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-authoring",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B06",
+      "name": "Business processes · BPMN 2.0",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B12",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_DataDict",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/l2-dak-authoring",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B08",
+      "name": "Data dictionary and core data elements",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B14",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Dmn",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dmn-authoring",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B07",
+      "name": "Decision logic · DMN tables",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B13",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Indicators",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/l2-dak-authoring",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B09",
+      "name": "Indicators and requirements",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B15",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Personas",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/l2-dak-authoring",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B05",
+      "name": "Personas and scenarios",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B11",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-plan",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B01",
+      "name": "Scope the DAK",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B02",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/programme-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/todo-manager",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B02",
+      "name": "Seed the work plan",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B03",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/work-plan",
+      "relaxable": true,
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-review",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B17",
+      "name": "Clinical validation",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B18",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/clinical-sme",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Terminology",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/terminology-management",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B10",
+      "name": "Terminology bindings",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B16",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/terminologist",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/processes"
+  ],
+  "name": "processes/content",
+  "path": "processes/content/"
+}
