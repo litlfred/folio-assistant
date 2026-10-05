@@ -21,6 +21,7 @@ import {
   type Footprint,
 } from "../changed-paths.ts";
 import { TRACKED, expandGlobs } from "../input-hash.ts";
+import { regenArgs } from "../merge-base.ts";
 import { regenToFixpoint, type Pair, type Runner } from "../regen-after-merge.ts";
 import { TASK_IO, pairIO } from "../task-io.ts";
 import { repoRootFor } from "../../schemas/cat-harness.ts";
@@ -212,6 +213,34 @@ describe("the change set is MEASURED from git", () => {
       const after = snapshotTree(r.dir)!;
       expect([...diffSnapshots(before, after)].sort()).toEqual(["data/a.json", "unrelated.md"]);
       expect(diffSnapshots(after, snapshotTree(r.dir)!).size).toBe(0);
+    } finally {
+      r.cleanup();
+    }
+  });
+});
+
+describe("merge:main hands regen the fork point, or nothing", () => {
+  test("a fork point becomes --changed; none (shallow, --full-regen) is the full run", () => {
+    expect(regenArgs("abc123")).toEqual(["--changed", "abc123"]);
+    expect(regenArgs(undefined)).toEqual([]);
+  });
+
+  test("the fork-point union sees a path EITHER side changed (bean lxpq's case)", () => {
+    const r = fixtureRepo();
+    const git = (...a: string[]) => sh(r.dir, "git", "-c", "user.email=t@t", "-c", "user.name=t", ...a);
+    try {
+      const fork = git("rev-parse", "HEAD").trim();
+      git("checkout", "-qb", "side");
+      writeFileSync(join(r.dir, "data", "a.json"), '{"main":1}\n');
+      git("commit", "-qam", "main side");
+      git("checkout", "-q", "main");
+      writeFileSync(join(r.dir, "src", "lib.ts"), "export const x = 9;\n");
+      git("commit", "-qam", "branch side");
+      git("merge", "--no-ff", "--no-commit", "side"); // uncommitted, as merge-base.ts leaves it
+      const ch = changedSince(r.dir, fork);
+      expect("paths" in ch).toBe(true);
+      if (!("paths" in ch)) return;
+      expect([...ch.paths].sort()).toEqual(["data/a.json", "src/lib.ts"]);
     } finally {
       r.cleanup();
     }
