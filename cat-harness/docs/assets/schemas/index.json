@@ -7605,6 +7605,13 @@
           "doc": "What makes this subgraph reachable — a renderer, a documentation entry,"
         },
         {
+          "name": "igSite",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "Built into the instance's own IG site at `/<instance>/` (bean `mftp`); see `igSite` on the shape below."
+        },
+        {
           "name": "readOnly",
           "type": "boolean",
           "optional": true,
@@ -7793,6 +7800,13 @@
           "optional": true,
           "array": false,
           "doc": "This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the"
+        },
+        {
+          "name": "igSite",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This directory is built INTO the instance's own IG site, which is served"
         },
         {
           "name": "served",
@@ -9317,6 +9331,13 @@
           "optional": true,
           "array": false,
           "doc": "WHERE this visualisation may be published. Absent means everywhere, which"
+        },
+        {
+          "name": "writer",
+          "type": "z .array(z.string().min(1)) .min(1) .refine((ps) => new Set(ps).size === ps.length, { message: \"writer names a path twi…",
+          "optional": true,
+          "array": true,
+          "doc": "The GENERATOR that writes this page: repo-relative script files, run with"
         }
       ],
       "extendsNames": [],
