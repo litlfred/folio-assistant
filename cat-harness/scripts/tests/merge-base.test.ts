@@ -268,6 +268,16 @@ describe("classify", () => {
     expect(classify("cat-harness/docs/_includes/head_custom.html").strategy).toBe("refuse");
   });
 
+  test("the standalone baseline is taken from the base; its sibling baseline and its writer are not", () => {
+    // Fail-closed: the base's list, nothing regenerated (#1977). The neighbour
+    // with the same shape, declared-path-baseline.json, is a different ratchet
+    // nobody has measured a pattern for, so it stays refused.
+    expect(classify("cat-harness-tools/scripts/standalone-baseline.json").pattern?.id).toBe("standalone-baseline");
+    expect(classify("cat-harness-tools/scripts/standalone-baseline.json").strategy).toBe("take-base");
+    expect(classify("cat-harness/scripts/declared-path-baseline.json").strategy).toBe("refuse");
+    expect(classify("cat-harness-tools/scripts/check-standalone.ts").strategy).toBe("refuse");
+  });
+
   test("a path no pattern names is REFUSED, with no pattern attached", () => {
     const c = classify("cat-harness/scripts/merge-base.ts");
     expect(c.strategy).toBe("refuse");

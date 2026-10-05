@@ -1439,6 +1439,17 @@ jobs:
       - name: bootstrap-tools passes standing alone beside bootstrap
         run: bun run check:bootstrap-standalone
 
+      # cat-harness rehearsed the same way (bean `ho66`): its tracked files and
+      # its declared closure, laid out as sibling git repositories, `bun test`
+      # run in cat-harness. 459 tests fail there today, most of them correct
+      # tests in the wrong layer, so this is a RATCHET over the committed
+      # baseline `cat-harness-tools/scripts/standalone-baseline.json`: a new
+      # standalone failure is red; a listed one that now passes is printed with
+      # `bun run standalone:baseline`, which lowers the list, and is not red
+      # (an unstable listed test must not flip CI either way).
+      - name: cat-harness fails standalone no more than its baseline
+        run: bun run check:cat-harness-standalone
+
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
       # source change. document-intake.md sat 35 lines behind its source and
