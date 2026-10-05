@@ -1,0 +1,49 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak",
+      "@type": "cat-harness:Schema",
+      "name": "dak",
+      "title": "dak"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-blocks",
+      "@type": "cat-harness:Schema",
+      "name": "dak-blocks",
+      "title": "dak-blocks"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-content-type",
+      "@type": "cat-harness:Schema",
+      "name": "dak-content-type",
+      "title": "dak-content-type"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-jsonld",
+      "@type": "cat-harness:Schema",
+      "name": "dak-jsonld",
+      "title": "dak-jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-kinds",
+      "@type": "cat-harness:Schema",
+      "name": "dak-kinds",
+      "title": "dak-kinds"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/methodologies/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/scenarios/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/processes"
+  ],
+  "name": "smart-base",
+  "path": "./",
+  "title": "SMART Base"
+}

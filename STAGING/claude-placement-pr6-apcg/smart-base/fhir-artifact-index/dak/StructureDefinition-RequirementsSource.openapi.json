@@ -1,0 +1,65 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Requirements Source API",
+    "description": "Source reference for Requirements - exactly one of the following must be provided:\n- url (url data type): URL to retrieve Requirements definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the Requirements definition\n- instance: Inline Requirements instance data",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-RequirementsSource.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-RequirementsSource",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-RequirementsSource.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-RequirementsSource",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-RequirementsSource.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-RequirementsSource": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-RequirementsSource.schema.json",
+        "title": "Requirements Source",
+        "description": "Source reference for Requirements - exactly one of the following must be provided:\n- url (url data type): URL to retrieve Requirements definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the Requirements definition\n- instance: Inline Requirements instance data",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "RequirementsSource",
+            "description": "Resource type identifier for RequirementsSource logical model"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to retrieve Requirements definition from input/ or external source"
+          },
+          "canonical": {
+            "type": "string",
+            "format": "uri",
+            "description": "Canonical URI pointing to the Requirements definition"
+          },
+          "instance": {
+            "$ref": "http://smart.who.int/base/StructureDefinition-Requirements.schema.json",
+            "description": "Inline Requirements instance data"
+          }
+        },
+        "required": [
+          "resourceType"
+        ],
+        "resourceDefinition": "http://smart.who.int/base/StructureDefinition/RequirementsSource",
+        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+      }
+    }
+  }
+}
