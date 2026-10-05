@@ -414,8 +414,8 @@ describe("storage.tool names a declared Tool (bean j9cs)", () => {
       JSON.stringify({
         name: "inst",
         directories: [
-          { id: "site", path: "site/", graphKinds: ["basic-cdn-site"], storage: { branch: "gh-pages", keyedBy: "route", tool: "no-such-tool" } },
-          { id: "ok", path: "ok/", graphKinds: ["basic-cdn-site"], storage: { branch: "gh-pages", keyedBy: "route", tool: "gh-pages" } },
+          { id: "site", path: "site/", graphTypologies: ["basic-cdn-site"], storage: { branch: "gh-pages", keyedBy: "route", tool: "no-such-tool" } },
+          { id: "ok", path: "ok/", graphTypologies: ["basic-cdn-site"], storage: { branch: "gh-pages", keyedBy: "route", tool: "gh-pages" } },
         ],
       }),
     );

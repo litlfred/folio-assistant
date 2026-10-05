@@ -17,11 +17,11 @@
  * ## The referrer kind is READ, never listed
  *
  * A reference is a `libraryId` field, and what KIND of thing carries it is the
- * **declared graph kind of the directory the file sits in** — `catalogue` for
+ * **declared graph typology of the directory the file sits in** — `catalogue` for
  * a catalogue node, `voices` for a voice. Nothing here enumerates those two.
- * A new graph kind that starts naming library slugs appears in this scan the
+ * A new graph typology that starts naming library slugs appears in this scan the
  * day it is declared, which is the same "derived, never listed" rule
- * `recordsWork` follows on the graph kind itself. A hardcoded pair would have
+ * `recordsWork` follows on the graph typology itself. A hardcoded pair would have
  * been wrong within the week: `voices` was not a referrer at all when this
  * corpus began.
  *
@@ -46,7 +46,7 @@ import { join, relative, sep } from "node:path";
 
 /** One directory to scan, and what kind of thing lives in it. */
 export interface RefSource {
-  /** The declared graph kind — used verbatim as the referrer's kind. */
+  /** The declared graph typology — used verbatim as the referrer's kind. */
   kind: string;
   /** The instance whose declaration named this directory. */
   instance: string;

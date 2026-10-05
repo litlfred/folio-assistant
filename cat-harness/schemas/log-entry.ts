@@ -7,7 +7,7 @@
  *
  * Entries live under `fsh-guts/logs/`. That placement is the whole reason
  * they are safe to write freely: `fsh-guts` is stripped from every published
- * graph (`UNPUBLISHED_GRAPH_KINDS`, bean `folio-assistant-uv09`), so a log
+ * graph (`UNPUBLISHED_GRAPH_TYPOLOGIES`, bean `folio-assistant-uv09`), so a log
  * cannot leak into the folio's linked data however verbose it gets.
  *
  * ## Persistence is OFF by default, and that is not the same as "no log"

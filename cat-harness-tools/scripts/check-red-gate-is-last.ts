@@ -58,14 +58,14 @@
  * that cannot express its own second member is worth noting for the next one:
  * check that the matcher can NAME a gate before concluding the gate is fine.
  *
- * `tools` is the graph kind this audits: the subject is the workflow's own step
+ * `tools` is the graph typology this audits: the subject is the workflow's own step
  * order, which is harness state rather than any folio's content. Declared rather
  * than inferred, per `3srh`.
  *
  * Usage:
  *   bun run check:red-gate-is-last
  *
- * @covers none — .github/workflows/ is not a declared graph kind
+ * @covers none — .github/workflows/ is not a declared graph typology
  * @graphNode tool
  */
 import { HARNESS_ROOT } from "./lib/roots.ts";

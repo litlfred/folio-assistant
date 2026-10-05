@@ -631,7 +631,7 @@ describe("lake-cache.sh — cat/folio-assistant-sci/lake-cache/ rename (beans 32
         JSON.stringify({
           name: "folio",
           directories: [
-            { id: "lake-cache", path: "lake-cache/", graphKinds: ["lake-cache"], storage: { branchPrefix: `${DECLARED}/`, keyedBy: "family" } },
+            { id: "lake-cache", path: "lake-cache/", graphTypologies: ["lake-cache"], storage: { branchPrefix: `${DECLARED}/`, keyedBy: "family" } },
           ],
         }),
       );

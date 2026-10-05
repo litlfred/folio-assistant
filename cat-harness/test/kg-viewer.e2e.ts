@@ -41,7 +41,7 @@ import { artefactStubFor } from "../schemas/cat-harness.js";
 //  1. `import.meta.dir` is a BUN extension and is `undefined` under Playwright.
 //     `a11y.e2e.ts` beside this already used the portable form.
 //  2. `readDeclaration` validates the whole declaration and throws when any
-//     directory names an unregistered graph kind — the hazard `siteDirFor`
+//     directory names an unregistered graph typology — the hazard `siteDirFor`
 //     documents. `artefactStubFor` is the raw read, added for this.
 const STUB = artefactStubFor(join(dirname(fileURLToPath(import.meta.url)), ".."));
 

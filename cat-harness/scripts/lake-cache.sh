@@ -94,7 +94,7 @@ REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null) \
 #
 # Owner, 2026-10-03: "each harness declares it, (and each instance can also
 # declare), why centralize?" A folio that declares its lake-cache family —
-# a directory entry with graphKind `lake-cache` and `storage.keyedBy:
+# a directory entry with graphTypology `lake-cache` and `storage.keyedBy:
 # "family"` in its `<instance>.json` — names the prefix here, and the
 # built-in name above becomes the newest legacy fallback, so branches under
 # the platform's name are still found. With no declaration, or no python3
@@ -116,7 +116,7 @@ for path in sorted(glob.glob(os.path.join(sys.argv[1], "*.json"))):
         if not isinstance(e, dict):
             continue
         st = e.get("storage") if isinstance(e.get("storage"), dict) else {}
-        kinds = e.get("graphKinds") if isinstance(e.get("graphKinds"), list) else []
+        kinds = e.get("graphTypologies") if isinstance(e.get("graphTypologies"), list) else []
         if "lake-cache" in kinds and st.get("keyedBy") == "family" and isinstance(st.get("branchPrefix"), str) and st["branchPrefix"]:
             print(st["branchPrefix"].rstrip("/"))
             sys.exit(0)

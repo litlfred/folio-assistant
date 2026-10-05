@@ -79,12 +79,27 @@ export interface NavItem {
   icon?: string;
   /**
    * SVG path data in a 24×24 box, drawn as the mark instead of {@link icon}
-   * — a graph kind's own avatar glyph (bean `yag0`). One letter per row made
+   * — a graph typology's own avatar glyph (bean `yag0`). One letter per row made
    * `docs` and `library` two adjacent single letters, and `catalogue` and
    * `code` the SAME letter; a shape the avatar registry already draws cannot
    * collide that way.
    */
   glyphPath?: string;
+  /**
+   * This row opens a GRAPH TYPOLOGY — a `docs`, `library`, `beans` row — rather
+   * than a harness, a page or an index entry. Set by `graphTypologyRowDecor`, the
+   * one place a kind row is decorated.
+   *
+   * DECLARED, never inferred from the mark. A kind row sits in the strip's
+   * column (bean `yag0`, the `a.fa-nav-kind` rule in {@link navbarCss}), and
+   * that class used to be read off `glyphPath`: "an SVG mark means a kind".
+   * True only until #2122 gave seven HARNESSES glyph marks — smart-trust and
+   * SMART Base then took the kind rows' indent and sat flush left of the
+   * avatar-marked harnesses beside them (#2151, owner: *"alignment of
+   * harnesses is off"*). What a row IS decides where it sits; what its mark
+   * is drawn with does not.
+   */
+  kind?: boolean;
   /**
    * The rest of the row's ACCESSIBLE NAME, after {@link label} — rendered as
    * visually-hidden text inside the link and as its `title`. The visible
@@ -160,6 +175,15 @@ export interface NavItem {
    * disclosure, which is a shape nobody asked for.
    */
   children?: readonly NavItem[];
+  /**
+   * FOLD the {@link children} under a disclosure with this summary, closed on
+   * arrival. Owner, 2026-10-05: *"on this page should have sub-sections
+   * collapsible"* (bean `r2ld`). The row itself stays a plain link and the
+   * disclosure sits BELOW it, never around it — the shape the sidebar's
+   * "Sub-graphs of …" fold already has — because a link inside a `<summary>`
+   * is two targets in one row. `<details>`, so it works with no script.
+   */
+  fold?: string;
   /**
    * A control rendered BESIDE the row — never inside it.
    *
@@ -473,7 +497,17 @@ export function navbarCss(): string {
     // column it never uses is a strip that is narrower than it looks.
     `.fa-nav-row{display:grid;grid-template-columns:1fr auto;align-items:center}`,
     `.fa-nav-row>a,.fa-nav-row>.fa-nav-dead{min-width:0}`,
-    `.fa-nav-kids{grid-column:1/-1}`,
+    `.fa-nav-kids,.fa-nav-fold{grid-column:1/-1}`,
+    // A FOLDED SET OF CHILDREN (bean `r2ld`): the summary is a small row under
+    // its parent, indented one step, with the caret every disclosure here
+    // wears. 24px floor: it is a target (SC 2.5.8).
+    `.fa-nav-fold>summary{display:flex;align-items:center;gap:6px;min-height:24px;`,
+    `padding:2px ${NAV_PAD_PX}px 2px ${NAV_PAD_PX + NAV_GLYPH_PX + 8}px;font-size:12px;opacity:.8;`,
+    `cursor:pointer;user-select:none;list-style:none}`,
+    `.fa-nav-fold>summary::-webkit-details-marker{display:none}`,
+    `.fa-nav-fold>summary::before{content:"\\25B8";display:inline-block;transition:transform .12s}`,
+    `.fa-nav-fold[open]>summary::before{transform:rotate(90deg)}`,
+    `.fa-nav-fold>summary:hover{background:#30363d;opacity:1}`,
     // The control is hidden with the labels rather than on its own timer: at
     // rest the strip shows marks only, and a ⚙ floating beside a mark with no
     // label names nothing. Same trigger as `.fa-nav-label`, so the two cannot
@@ -491,7 +525,7 @@ export function navbarCss(): string {
     `.fa-nav-group>summary:hover{background:#30363d}`,
     `.fa-nav-group[open]>summary{font-weight:600}`,
     `.fa-nav-group .fa-nav-sub a{padding-left:${NAV_PAD_PX + NAV_GLYPH_PX + 8}px}`,
-    // A graph-kind row carries its OWN mark (bean `yag0`), so it sits in the
+    // A graph-typology row carries its OWN mark (bean `yag0`), so it sits in the
     // strip's column like the inert rows beside it. Indented as above, a
     // LINKED row's mark was pushed past the 56px strip at rest while an inert
     // row's was not — measured on a built /who-iris/ page — so the strip showed
@@ -633,10 +667,10 @@ function itemHtml(i: NavItem, c: Ctx): string {
     // and a live one sit at the same indent (and a dead NON-kind row at the
     // same indent as its linked siblings — the schemas rail put `all` one
     // step left of the subjects beside it, owner 2026-10-01).
-    const deadKind = i.glyphPath && !i.icon ? " fa-nav-kind" : "";
+    const deadKind = i.kind ? " fa-nav-kind" : "";
     row = `<span class="fa-nav-dead${deadKind}"${d}${title}>${body}${note}</span>`;
   } else {
-    const kind = i.glyphPath && !i.icon ? ' class="fa-nav-kind"' : "";
+    const kind = i.kind ? ' class="fa-nav-kind"' : "";
     row = `<a href="${href(i.href, c)}"${kind}${d}${title}${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
   }
   if (!i.action && !i.children) return row;
@@ -647,14 +681,38 @@ function itemHtml(i: NavItem, c: Ctx): string {
     ? `<button type="button" class="fa-nav-action" ${esc(i.action.data)}="${esc(i.action.value)}"` +
       ` aria-label="${esc(i.action.label)}" data-fa-tip="${esc(i.action.label)}">${esc(i.action.glyph)}</button>`
     : "";
-  const kids = i.children?.length
-    ? `<div class="fa-nav-kids">${i.children.map((k) => itemHtml(k, c)).join("")}</div>`
-    : "";
+  const inner = i.children?.length ? i.children.map((k) => itemHtml(k, c)).join("") : "";
+  const kids = !inner
+    ? ""
+    : i.fold
+      ? `<details class="fa-nav-fold"><summary><span class="fa-nav-label">${esc(i.fold)}</span></summary>` +
+        `<div class="fa-nav-kids">${inner}</div></details>`
+      : `<div class="fa-nav-kids">${inner}</div>`;
   // `fa-nav-row` exists so the row and its action can sit on one line without
   // the children joining them. Without it the action would have to be absolutely
   // positioned against a row it is not inside, which is the kind of geometry
   // `navbar-geometry.ts` exists to stop being re-decided.
   return `<div class="fa-nav-row">${row}${action}${kids}</div>`;
+}
+
+/** Does this row, or any row beneath it, stand for the page being read? */
+function holdsCurrent(i: NavItem): boolean {
+  return i.current === true || (i.children ?? []).some(holdsCurrent);
+}
+
+/**
+ * The graphs group's state on arrival (#2150).
+ *
+ * FOLDED when the page has a section of its own: that section IS where the
+ * reader is, and it is the one disclosure open on arrival (#1757's
+ * *"only the current pages visualiers LHS navbar is open"*, graded by
+ * `check-viewer-nav.ts` `single-open`). Otherwise as declared — folded, from
+ * `railModel` — UNLESS one of its rows is the page being read: a folded
+ * default must not hide where the reader is.
+ */
+function graphsOnArrival(g: NavGroup, hasOwnSection: boolean): NavGroup {
+  if (hasOwnSection) return { ...g, open: false };
+  return g.items.some(holdsCurrent) ? { ...g, open: true } : g;
 }
 
 function groupHtml(g: NavGroup, c: Ctx): string {
@@ -758,7 +816,7 @@ export function navbarRegionsHtml(m: NavbarModel): string {
     (m.graphs || m.visualiser
       ? `<div class="fa-nav-graphs">` +
         (m.visualiser ? groupHtml({ ...m.visualiser, collapsible: true, open: true }, c) : "") +
-        (m.graphs ? groupHtml(m.visualiser ? { ...m.graphs, open: false } : m.graphs, c) : "") +
+        (m.graphs ? groupHtml(graphsOnArrival(m.graphs, m.visualiser !== undefined), c) : "") +
         `</div>`
       : "") +
     `<div class="fa-nav-bottom">` +
@@ -777,13 +835,23 @@ export function navbarRegionsHtml(m: NavbarModel): string {
  * HTML only by extension is not a page this belongs on, and a caller that
  * could not tell the difference would report a page injected that was not.
  */
-export function injectNavbar(html: string, m: NavbarModel): string | undefined {
+export function injectNavbar(html: string, m: NavbarModel, o: { cssHref?: string } = {}): string | undefined {
   if (html.includes('class="fa-nav"')) return undefined;
   const body = /<body\b[^>]*>/i.exec(html);
   if (!body) return undefined;
   const at = body.index + body[0].length;
-  return html.slice(0, at) + `<style>${navbarCss()}</style>` + navbarHtml(m) + html.slice(at);
+  // `cssHref`: the SAME rules, published once as {@link NAVBAR_CSS} and linked —
+  // for a thin page, where 4.3 KB of inlined style is most of the page (bean `lnoy`).
+  const style = o.cssHref ? `<link rel="stylesheet" href="${o.cssHref}">` : `<style>${navbarCss()}</style>`;
+  return html.slice(0, at) + style + navbarHtml(m) + html.slice(at);
 }
+
+/**
+ * Where {@link navbarCss} is published as a file, relative to the site root —
+ * generated by `bun run navbar:css`, held to `navbarCss()` by
+ * `navbar-css-file.test.ts`. Bean `lnoy`.
+ */
+export const NAVBAR_CSS = "assets/css/navbar.css";
 
 /**
  * The open document's own index, read off the page it is being injected into.
@@ -824,7 +892,7 @@ export function injectNavbar(html: string, m: NavbarModel): string | undefined {
  * here and would not be in a validator.
  */
 export function documentIndexOf(html: string, label = "Contents"): NavGroup | undefined {
-  const items: NavItem[] = [];
+  const flat: NavItem[] = [];
   const re = /<(h2|h3)\b[^>]*\bid="([^"]+)"[^>]*>([\s\S]*?)<\/\1>/gi;
   for (const m of html.matchAll(re)) {
     const text = m[3]
@@ -836,17 +904,33 @@ export function documentIndexOf(html: string, label = "Contents"): NavGroup | un
       .replace(/\s+/g, " ")
       .trim();
     if (!text) continue;
-    items.push({ href: `#${m[2]}`, label: text, ...(m[1].toLowerCase() === "h3" ? { depth: 1 } : {}) });
+    flat.push({ href: `#${m[2]}`, label: text, ...(m[1].toLowerCase() === "h3" ? { depth: 1 } : {}) });
+  }
+  // SUB-SECTIONS FOLD UNDER THEIR SECTION (bean `r2ld`): an h3 becomes a
+  // child of the h2 above it, behind a closed "N sub-sections" disclosure.
+  // An h3 before any h2 has no section to sit in and stays a row of its own.
+  const items: NavItem[] = [];
+  for (const it of flat) {
+    const parent = items[items.length - 1];
+    if (it.depth && parent && !parent.depth) {
+      const kids = [...(parent.children ?? []), it];
+      items[items.length - 1] = { ...parent, children: kids, fold: subSections(kids.length) };
+    } else items.push(it);
   }
   // ABSENT rather than empty, and rather than a one-item index. An empty
   // disclosure invites a click that does nothing -- the rule this module
   // already applies to the harnesses region -- and a "Contents" holding the
   // single section the reader is looking at is the same defect with a row in
   // it.
-  if (items.length < 2) return undefined;
+  if (flat.length < 2) return undefined;
   // `§`, not `≡`: at rest the rail shows only this glyph, directly under the
   // avatar, and `≡` there reads as the hamburger #1757 excised.
   return { label, icon: "§", items, collapsible: true };
+}
+
+/** The summary of a folded set of sub-sections — one wording, both surfaces. */
+export function subSections(n: number): string {
+  return n === 1 ? "1 sub-section" : `${n} sub-sections`;
 }
 
 /** The marker a visualiser puts its own navigation under. */

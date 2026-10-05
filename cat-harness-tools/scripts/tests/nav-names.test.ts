@@ -62,6 +62,8 @@ function siteCopy(railed = "cat-harness/schemas/cat-harness/index.html"): { root
     mkdirSync(join(site, rel, ".."), { recursive: true });
     cpSync(join(SITE, rel), join(site, rel));
   }
+  // The rail's shared data, which a railed page names (bean `lnoy`).
+  cpSync(join(SITE, "assets/navbar"), join(site, "assets/navbar"), { recursive: true });
   return { root, site, files: [`site/${railed}`] };
 }
 
@@ -110,11 +112,15 @@ describe("a planted second name fails", () => {
 
   test("on the RAIL: one row's label changed in a viewer page", () => {
     const c = siteCopy();
+    // The row's label lives in the rail's SHARED data now (bean `lnoy`):
+    // plant it in the data file this viewer page names.
     const page = join(c.site, "cat-harness/schemas/cat-harness/index.html");
-    const html = readFileSync(page, "utf-8");
-    const planted = html.replace('<span class="fa-nav-label">Methodologies', '<span class="fa-nav-label">methodology');
-    expect(planted).not.toBe(html);
-    writeFileSync(page, planted);
+    const name = /"data":"(rail-[a-z0-9]+)"/.exec(readFileSync(page, "utf-8"))![1]!;
+    const data = join(c.site, "assets/navbar", `${name}.js`);
+    const body = readFileSync(data, "utf-8");
+    const planted = body.replace('\\"label\\":\\"Methodologies\\"', '\\"label\\":\\"methodology\\"');
+    expect(planted).not.toBe(body);
+    writeFileSync(data, planted);
     const r = checkNavNames(c.root, c.site, c.files);
     const hit = r.conflicts.find((x) => x.href === "/methodologies/");
     expect(hit).toBeDefined();

@@ -69,7 +69,7 @@ if [ -z "$BRANCH" ]; then
   # newest first, until bean folio-assistant-oycs removes the fallback.
   CANDIDATES="cat/folio-assistant-sci/lake-cache/qou-${slug} cat-lake-cache/qou-${slug} lake-cache/qou-${slug}"
   # The folio's own declaration goes first (bean rva2): a directory with
-  # graphKind `lake-cache` and `storage.keyedBy: "family"` in its
+  # graphTypology `lake-cache` and `storage.keyedBy: "family"` in its
   # <instance>.json. Same reader as lake-cache.sh; no python3 or no
   # declaration leaves the list above unchanged.
   if command -v python3 >/dev/null 2>&1; then
@@ -87,7 +87,7 @@ for path in sorted(glob.glob(os.path.join(sys.argv[1], "*.json"))):
         if not isinstance(e, dict):
             continue
         st = e.get("storage") if isinstance(e.get("storage"), dict) else {}
-        kinds = e.get("graphKinds") if isinstance(e.get("graphKinds"), list) else []
+        kinds = e.get("graphTypologies") if isinstance(e.get("graphTypologies"), list) else []
         if "lake-cache" in kinds and st.get("keyedBy") == "family" and isinstance(st.get("branchPrefix"), str) and st["branchPrefix"]:
             print(st["branchPrefix"].rstrip("/"))
             sys.exit(0)

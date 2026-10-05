@@ -100,7 +100,7 @@ resolve_package() {
 
 # The family's prefixes, newest first, each ending in `/` (bean rva2; owner,
 # 2026-10-05: "make fhir and lean work same"). The IG checkout's own
-# declaration goes first — a directory with graphKind `ig-ast` and
+# declaration goes first — a directory with graphTypology `ig-ast` and
 # `storage.keyedBy: "family"` in its `<instance>.json` — exactly as
 # lake-cache.sh reads the Lean folio's. The built-in names stay as fallbacks;
 # no declaration, or no python3 to read one, leaves them as they were.
@@ -122,7 +122,7 @@ for path in sorted(glob.glob(os.path.join(sys.argv[1], "*.json"))):
         if not isinstance(e, dict):
             continue
         st = e.get("storage") if isinstance(e.get("storage"), dict) else {}
-        kinds = e.get("graphKinds") if isinstance(e.get("graphKinds"), list) else []
+        kinds = e.get("graphTypologies") if isinstance(e.get("graphTypologies"), list) else []
         if "ig-ast" in kinds and st.get("keyedBy") == "family" and isinstance(st.get("branchPrefix"), str) and st["branchPrefix"]:
             print(st["branchPrefix"].rstrip("/") + "/")
             sys.exit(0)

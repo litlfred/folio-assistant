@@ -76,7 +76,7 @@ export function collect(repo: string = repoRootFor(INSTANCE), instance: string =
   for (const kind of groupingKinds()) {
     // Rule 1, per directory, so one malformed file names itself and does not
     // hide every other directory's answer.
-    for (const d of checkoutDirectories(repo).filter((x) => x.graphKinds.includes(kind as never))) {
+    for (const d of checkoutDirectories(repo).filter((x) => x.graphTypologies.includes(kind as never))) {
       examined += 1;
       try {
         declaredGroupsIn(d.absPath, kind);

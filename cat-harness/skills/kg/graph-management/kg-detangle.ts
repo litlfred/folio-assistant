@@ -38,7 +38,7 @@ import { detangleResultsDir, sidecarFor, sidecarPathFor, staleFields } from "../
 import { gitCorpus } from "../../../schemas/git-corpus.ts";
 import { groupDepthFor } from "./group-depth.ts";
 import { TOPICS_FILE, topicsOf } from "../../../scripts/skill-topics.ts";
-import { defaultGraphKinds } from "../../../schemas/graph-kind-registry.ts";
+import { defaultGraphTypologies } from "../../../schemas/graph-typology-registry.ts";
 import {
   DEFAULT_THRESHOLDS,
   measure,
@@ -72,7 +72,7 @@ const ROOT = resolve(import.meta.dir, "../../../..");
  *   NOWHERE — this report is only as wide as this list, so a directory missing
  *   from it reads as "nothing to report" rather than as a gap.
  * - `cat-harness/skills` names its groups one level down and `bootstrap/skills`
- *   does not, despite being the same graph kind. That is a fact about where each
+ *   does not, despite being the same graph typology. That is a fact about where each
  *   instance keeps its nodes, which is why the depth is measured rather than
  *   inferred from the kind.
  *
@@ -110,7 +110,7 @@ function declaredSkillScan(literal: ReadonlyArray<{ path: string }>): Array<{ pa
   const out = [...literal];
   const covers = (outer: string, inner: string): boolean => inner === outer || inner.startsWith(`${outer}/`);
   const declared = checkoutDirectories(ROOT)
-    .filter((d) => d.graphKinds.includes("skills" as never))
+    .filter((d) => d.graphTypologies.includes("skills" as never))
     .map((d) => relative(ROOT, d.absPath).split("\\").join("/").replace(/\/+$/, ""))
     .filter((p) => p.length > 0 && !p.startsWith(".."))
     .sort((a, b) => a.length - b.length);
@@ -171,9 +171,9 @@ const EXT = /\.(md|bpmn|dmn|json|ts)$/;
 /** The files a grouping kind names its groups in (`skills.json`, `processes.json`, …) — labels, never nodes. */
 const DECLARATION_FILES = new Set<string>([
   TOPICS_FILE,
-  ...defaultGraphKinds
+  ...defaultGraphTypologies
     .names()
-    .map((k) => defaultGraphKinds.get(k)?.declarationFile)
+    .map((k) => defaultGraphTypologies.get(k)?.declarationFile)
     .filter((f): f is string => typeof f === "string"),
 ]);
 

@@ -129,7 +129,7 @@ SLUG="$(printf '%s' "${TOOLCHAIN##*:}" | tr . -)"
 # name. The fallback goes with bean folio-assistant-oycs.
 #
 # The folio's own declaration goes first (bean rva2): a directory with
-# graphKind `lake-cache` and `storage.keyedBy: "family"` in $REPO's
+# graphTypology `lake-cache` and `storage.keyedBy: "family"` in $REPO's
 # <instance>.json names the default and the first probe. Same reader as
 # lake-cache.sh; no python3 or no declaration leaves the built-in order.
 _cands="cat/folio-assistant-sci/lake-cache cat-lake-cache lake-cache"
@@ -147,7 +147,7 @@ for path in sorted(glob.glob(os.path.join(sys.argv[1], "*.json"))):
         if not isinstance(e, dict):
             continue
         st = e.get("storage") if isinstance(e.get("storage"), dict) else {}
-        kinds = e.get("graphKinds") if isinstance(e.get("graphKinds"), list) else []
+        kinds = e.get("graphTypologies") if isinstance(e.get("graphTypologies"), list) else []
         if "lake-cache" in kinds and st.get("keyedBy") == "family" and isinstance(st.get("branchPrefix"), str) and st["branchPrefix"]:
             print(st["branchPrefix"].rstrip("/"))
             sys.exit(0)

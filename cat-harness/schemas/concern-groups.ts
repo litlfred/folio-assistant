@@ -48,7 +48,7 @@ export const ConcernGroupsSchema = z
             id: z.string().min(1),
             path: z.string().min(1),
             subgraph: z.literal(true),
-            graphKinds: z.array(z.string().min(1)).min(1),
+            graphTypologies: z.array(z.string().min(1)).min(1),
           })
           .passthrough(),
       )

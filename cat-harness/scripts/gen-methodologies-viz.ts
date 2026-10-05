@@ -8,7 +8,7 @@
  *
  * ## The gap this closes
  *
- * `methodology` was one of seven graph kinds this instance declares with no
+ * `methodology` was one of seven graph typologies this instance declares with no
  * published viewer — the build says so itself, in `_data/harness.json`:
  * *"cat-harness: declares 7 graph(s) with no published viewer — code,
  * external-schema, interaction, memory, methodology, scenarios, waiver."* So
@@ -75,7 +75,7 @@ const VIEWER_TOOL = "methodologies-viewer";
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO = resolve(INSTANCE_ROOT, "..");
 
-/** The graph kind this renders. A KIND, never a path. */
+/** The graph typology this renders. A KIND, never a path. */
 const KIND = "methodology";
 
 /** One methodology, reduced to what the page shows. */
@@ -406,7 +406,7 @@ if (import.meta.main) {
 
   const PAGE = pageRelPath(REPO);
   if (PAGE === undefined) {
-    console.error(`::error::gen-methodologies-viz: no visualiser declared for graph kind '${KIND}'`);
+    console.error(`::error::gen-methodologies-viz: no visualiser declared for graph typology '${KIND}'`);
     process.exit(1);
   }
 

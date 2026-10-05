@@ -4,7 +4,7 @@
 
 # cat-harness-validators
 
-The validators cat-harness's code provides, one folio-validator/v1 node each naming the graph kind and $schema family it checks (bean riit). Owner, 2026-10-04: validators are KG nodes, and the validator names the family.
+The validators cat-harness's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit). Owner, 2026-10-04: validators are KG nodes, and the validator names the family.
 
 Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-validators`, holding `validators`.
 
@@ -32,7 +32,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-validators`,
 | [`figure-descriptions-file.json`](figure-descriptions-file.json) | data |  |
 | [`folio-graph-projection.json`](folio-graph-projection.json) | data |  |
 | [`fsh-guts-node.json`](fsh-guts-node.json) | data |  |
-| [`graph-kind-node.json`](graph-kind-node.json) | data |  |
+| [`graph-typology-node.json`](graph-typology-node.json) | data |  |
 | [`health-report.json`](health-report.json) | data |  |
 | [`images-sidecar.json`](images-sidecar.json) | data |  |
 | [`interaction-node.json`](interaction-node.json) | data |  |

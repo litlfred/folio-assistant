@@ -8,7 +8,7 @@
  * ## The node is the document; the operation is a node inside it
  *
  * Owner, 2026-10-03 (bean `s4ta`): *"kind is an OpenAPI node. need page + IRI
- * for each operation."* So a directory of graph kind `openapi` holds OpenAPI
+ * for each operation."* So a directory of graph typology `openapi` holds OpenAPI
  * documents, one node each, and every operation in a document is a node of
  * its own, addressable the way `harness-requirements` §"Serialisations"
  * requires of every node: `<…>/<doc>/<operation>.jsonld` and `.json`, with
@@ -75,7 +75,7 @@ export const OpenApiConfigDocumentSchema = z
 export const OpenApiConfigSchema = z
   .object({
     $schema: z.literal(OPENAPI_CONFIG_SCHEMA_TAG),
-    /** The `<instance>.json` directory id of graph kind `openapi` the documents are ingested into. */
+    /** The `<instance>.json` directory id of graph typology `openapi` the documents are ingested into. */
     directory: z.string().min(1),
     documents: z.array(OpenApiConfigDocumentSchema).min(1),
   })

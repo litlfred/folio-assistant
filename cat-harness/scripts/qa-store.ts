@@ -77,7 +77,7 @@ import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { instanceRootsIn, resolveDirectories } from "../schemas/cat-harness.js";
 // `readDeclaration` throws on the `folio` kind unless core has registered it —
 // the same side-effect import `check-declared-dirs.ts` carries, same reason.
-import "../schemas/folio-graph-kind.js";
+import "../schemas/folio-graph-typology.js";
 import { waitFor } from "../src/core/retry.js";
 import { PUSH_BASE_MS, PUSH_CAP_MS } from "./backoff-sleep.js";
 import { TreeStore } from "./branch-store.js";
@@ -257,7 +257,7 @@ export function resolveQaLocation(repoRoot: string = gitTopLevel()): QaLocation 
   const seen = new Set<string>();
   for (const inst of instanceRootsIn(repoRoot)) {
     for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {
-      if (!d.graphKinds.includes("qa" as never) || seen.has(d.absPath)) continue;
+      if (!d.graphTypologies.includes("qa" as never) || seen.has(d.absPath)) continue;
       seen.add(d.absPath);
       const storage = d.storage;
       directories.push({

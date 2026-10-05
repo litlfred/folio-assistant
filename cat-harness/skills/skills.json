@@ -51,7 +51,7 @@
       "path": "voices",
       "subgraph": true,
       "description": "`folio-voice/v1` profiles read out of this instance's `library/`: the shared base `agent-skill-authoring` plus one override per agent vendor, on the owner's ruling of 2026-09-20: 'for model specific sources, make those model specific voices.' Arrived from agent-skills on 2026-10-01 when that instance dissolved into cat-harness's concern groups (bean `j7ql`); the corpus they cite came with them, so citations stay INTERNAL (no `instance:` key). The rules are deliberately NOT formally constrained: owner, 2026-09-20, 'preference leave unstructured schema, agentic review b/c of best practice drift, not formal' — published best practice is revised without notice, so a schema gate would pin whichever vintage was current when it was written. VENDOR OVERRIDES live in the reserved `vendors/` sub-sub-graph inside this directory — `voices/vendors/<id>/voice.json` — declared from within by `voices/voices.json` and `voices/vendors/vendors.json` (owner, 2026-09-22 and bean `rkqp`). A vendor voice still declares what it overrides in its own `extends` field, so nothing infers the relation from a path.",
-      "graphKinds": [
+      "graphTypologies": [
         "voices"
       ]
     }

@@ -77,6 +77,7 @@ import {
 } from "../schemas/cat-harness.ts";
 import { isQaGraphUnknown, projectQaGraph } from "../content/pipeline/qa-graph-index.ts";
 import { tileCounts } from "../schemas/tile-count.js";
+import { OPEN_STATUSES as OPEN_BEAN_STATUSES } from "./bean-store-read.js";
 import { qaStorageOf } from "./qa-results.ts";
 
 const INSTANCE_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -376,6 +377,19 @@ const GENERATED_INCLUDE_BANNER =
  * put roughly a megabyte on the page to render a status column.
  */
 const BEANS_ASSET = join(OUT_DIR, "assets", "beans", "index.json");
+
+/**
+ * THE NAVBAR'S BADGES — owner, 2026-10-05: *"why no count on beans and todos
+ * on LHS top navbar as badges like fsh-guts has?"* (bean `gkv6`).
+ *
+ * A file of its own beside each index because the row is drawn on every page
+ * and the bean index is ~900 KB: fetching it for one number is the megabyte
+ * the note above refuses to put on a page. Same `tile` shape as the indexes.
+ * Beans count OPEN work — `todo`, `in-progress` and `draft`, the owner's
+ * choice ("Open beans: 525") — so the badge reads as what is waiting.
+ */
+const TODO_COUNT_ASSET = join(OUT_DIR, "assets", "todos", "count.json");
+const BEANS_COUNT_ASSET = join(OUT_DIR, "assets", "beans", "count.json");
 
 /**
  * How much of a bean's body the projection carries.
@@ -1521,6 +1535,8 @@ function processHierarchy(): Record<string, string[]> {
     );
   }
 
+  emit(TODO_COUNT_ASSET, JSON.stringify(tileCounts({ todos: [items.length, "todos"] }), null, 2) + "\n", "data");
+
   // THE THRESHOLDS, when this folio has declared any. `readSemanticZoom`
   // returns `undefined` for a folio that has not, and that absence is carried
   // through rather than filled in: nothing is written, and the board reports
@@ -1654,6 +1670,9 @@ function processHierarchy(): Record<string, string[]> {
       // publishing so what a reader fetches is current regardless.
       "verdict",
     );
+    // Existence-gated for the same reason as the index: every session moves it.
+    const open = beans.filter((b) => OPEN_BEAN_STATUSES.has(b.status)).length;
+    emit(BEANS_COUNT_ASSET, JSON.stringify(tileCounts({ beans: [open, "open beans"] }), null, 2) + "\n", "verdict");
     const both = edges.filter((e) => e.declaredOn.length > 1).length;
     console.log(
       `  ${check ? "·" : "✓"} assets/beans/index.json (${items.length} bean(s), ${edges.length} block edge(s), ` +

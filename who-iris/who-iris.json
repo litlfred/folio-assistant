@@ -52,7 +52,7 @@
       "id": "who-iris-translations",
       "path": "translations/",
       "description": "The gettext side of who-iris's own strings, one directory per target locale: the `glossary/who-iris--who-terms` catalogues that translate this instance's WHO terms. Moved here from cat-harness/translations/ on the owner's ruling of 2026-10-04, \"move things to semantically appropriate place\" (bean riit): a scheme's translations sit with the instance whose terms they translate.",
-      "graphKinds": [
+      "graphTypologies": [
         "translation-sources"
       ]
     },
@@ -60,7 +60,7 @@
       "id": "library",
       "path": "library/",
       "description": "The three IRIS items this instance holds rather than merely names: `wpr-rdo-2020-003-eng` (the WPRO publication style guide, and the worked example whose full DSpace item record drives the `iris-dspace` skill), `who-pub-tps-931` and `9789241548960-eng`. They are the `materialized` end of the catalogue -- every other node under `catalogue/nodes/` is `referenced`, and the three here are what a materialization actually looks like. `milnorlink` is NOT here and never was an IRIS item; it went to folio-assistant-sci (bean r1lz). The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
-      "graphKinds": [
+      "graphTypologies": [
         "library"
       ],
       "_comment_corpusOnly": "CORPUS ONLY since 2026-09-30 (bean 2b5s, the owner's 'site/ + publish covers'). This entry carried `instanceRoot: true` while the replica pages lived here, and a mount copies the whole directory whose index.html it finds -- so the 1,367 ingestion sidecars were published at /who-iris/ AND /library/who-iris/ as if they were pages. The replica moved to `site/`, which is now the instance root; this directory has no index.html and is mounted nowhere. The covers the replica shows stay here, where the catalogue's localPath names them (bean yl5w), and the mount publishes exactly the ones a page embeds.",
@@ -71,10 +71,10 @@
       "id": "who-iris-site",
       "path": "site/",
       "description": "The IRIS REPLICA: the home page, the community list, and one page per collection and per item, themed as IRIS and generated from `catalogue/` by `scripts/gen-iris-pages.ts` (gated by `bun run iris:pages:check`). It is what `/who-iris/` serves. Moved out of `library/` on 2026-09-30 (bean 2b5s) so that the corpus and its rendering are separate directories: before, the mount copied the corpus along with the pages. A page shows an item's cover by referencing `../library/<slug>-cover.png`; the build publishes exactly the files a page embeds, beside the replica, and not the directory they sit in.",
-      "graphKinds": [
+      "graphTypologies": [
         "docs"
       ],
-      "_graphKinds_comment": "`docs`, the one renderable kind the harness owns, because the mount publishes only renderable directories' pages and the replica is a finished HTML rendering of this instance's catalogue -- `folio` is authored block content with viewers, LaTeX and QA badges, which this is not. It shares the kind with `docs/`, and `withRoutes` settles which answers where: this directory is the instance root and serves /who-iris/, and the kind route /docs/who-iris/ stays with the sibling that is not the root, so the replica is published once rather than twice.",
+      "_graphTypologies_comment": "`docs`, the one renderable kind the harness owns, because the mount publishes only renderable directories' pages and the replica is a finished HTML rendering of this instance's catalogue -- `folio` is authored block content with viewers, LaTeX and QA badges, which this is not. It shares the kind with `docs/`, and `withRoutes` settles which answers where: this directory is the instance root and serves /who-iris/, and the kind route /docs/who-iris/ stays with the sibling that is not the root, so the replica is published once rather than twice.",
       "instanceRoot": true,
       "_comment_instanceRoot": "The themed replica is what /who-iris/ serves — the owner's ruling, 'who-iris themed at /who-iris/'. Moved here from the `library` entry with the pages (bean 2b5s)."
     },
@@ -94,7 +94,7 @@
       },
       "path": "catalogue/",
       "description": "The catalogue itself: `catalogue.json` declares the corpus and its measured size; `nodes/` holds one `folio-catalogue-node/v1` per community, collection or item; `records/` holds the `folio-dublin-core/v1` metadata an item node points at through `metadataRef`. TWELVE nodes today — 9 referenced, 3 materialized, 0 unknown — against 1,057,223 files upstream, and that gap IS the point. `bun run check:catalogue` verifies every node validates and every metadataRef, libraryId and parent path resolves; a Zod schema can require the reference and structurally cannot check the file is there.",
-      "graphKinds": [
+      "graphTypologies": [
         "catalogue"
       ]
     },
@@ -104,7 +104,7 @@
       "readOnlyBasis": "NOT frozen, and the exception is worth stating. This is the ingestion DROP ZONE -- `adapters/document/paths.ts` creates it on a first ingest precisely so somebody can put something in it. The bytes it holds are materialized; the directory is a write target, and those are different questions. Declaring it read-only because its contents are materialized would freeze the one place a person is supposed to write.",
       "path": "uploads/",
       "description": "The incoming queue — raw captures as dropped, before ingestion. NOT L1 and not greppable as corpus. Holds the IRIS capture for the worked example: the saved DSpace item page, its asset zip (which carries the IRIS web theme), the full item record in qualified Dublin Core, and the item page printed to PDF — the last recorded with role `none`, because 'we looked and it is not what it appears to be' is a different fact from 'nobody looked'.",
-      "graphKinds": [
+      "graphTypologies": [
         "uploads"
       ],
       "coverage": {
@@ -115,7 +115,7 @@
       "id": "who-iris-skills",
       "path": "skills/",
       "description": "Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill package: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assist-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool. Since 2026-10-01 it also holds the WHO STYLE GUIDE's three house voices under `voices/`, declared from within by `skills.json` (bean `cmsl`) -- they were the separate staged instance `who-style-guide` until the owner's 2026-09-30 ruling, 'who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.' (bean `qsx4`).",
-      "graphKinds": [
+      "graphTypologies": [
         "skills"
       ],
       "tile": {
@@ -128,7 +128,7 @@
       "path": "glossary/",
       "_comment": "MOVED HERE from who-style-guide/glossary/ with the rest of the style guide (bean qsx4, owner 2026-09-30: 'who voices style guide is derivative KG content from who-iris, merge content into subgraph'). The id stays the CONVENTIONAL `glossary`, so this entry overrides the inherited default rather than adding a second entry at the same path. Bean ftu0 had put the glossary with the voices because it is a HOUSE rule about wording; the voices are now here, so it followed them, and the reason ftu0 gave still holds.",
       "description": "The WHO glossary: folio-glossary/v1 schemes of terms the WHO publications use under more than one name -- a HOUSE rule about wording, like the style-guide voices under skills/voices/ (bean ftu0). An alternative label is recorded only where a publication STATES the equivalence, and each term cites that sentence in this instance's own library; a count or a latent-semantic cosine is never the evidence. The scheme's source is the who-guideline-development voice, so its terms are minted in this instance's namespace. Rendered on the glossary/ page and checked by check:glossary, both of which read every instance's declared glossary directory.",
-      "graphKinds": [
+      "graphTypologies": [
         "glossary"
       ]
     },
@@ -136,16 +136,16 @@
       "_comment": "Themes this instance DERIVED from sources it holds, bean j66n. `iris-web` is read off the compiled stylesheet DSpace served with the captured item page; `who-wpro-publication` is read off the style guide's own pages 6, 7, 12, 14 and 18. Declared rather than left implicit because an undeclared directory is the dh4f defect -- every declaration-driven consumer scans nothing and reports a clean run over it, which is exactly what `docs/` did with 241 files until 2026-09-20. These are NOT the platform's twelve themes: those are cat-harness's own furniture, and a palette read off a WHO style guide is subject matter, which the root AGENTS.md keeps out of the platform.",
       "id": "who-iris-themes",
       "path": "themes/",
-      "graphKinds": [
+      "graphTypologies": [
         "themes"
       ],
-      "_inheritance_comment": "Not reproduced in a dependent folio, and no field here says so: `themes` is not a `perInstance` graph kind (graph-kind-registry.ts), so a downstream folio gets a themes/ directory only where it already has one and never an empty one. That is right for this entry -- it says where THIS instance's themes live, not a workspace every downstream folio needs. `uploads/` and `library/` differ because their kinds ARE `perInstance`: a dependent folio ingests its OWN sources into its own copies. Before 2026-09-30 this was the per-entry `dependents: skip`, retired by the owner (option A) because the same kind was declared both ways in different declarations."
+      "_inheritance_comment": "Not reproduced in a dependent folio, and no field here says so: `themes` is not a `perInstance` graph typology (graph-typology-registry.ts), so a downstream folio gets a themes/ directory only where it already has one and never an empty one. That is right for this entry -- it says where THIS instance's themes live, not a workspace every downstream folio needs. `uploads/` and `library/` differ because their kinds ARE `perInstance`: a dependent folio ingests its OWN sources into its own copies. Before 2026-09-30 this was the per-entry `dependents: skip`, retired by the owner (option A) because the same kind was declared both ways in different declarations."
     },
     {
-      "_comment": "The RENDERABLE surface of this instance -- the ingested-IRIS replica pages, generated from catalogue/ by scripts/gen-iris-pages.ts and gated by `bun run iris:pages:check`. Declared because the owner's URL contract (2026-09-20) makes it addressable: `<baseURL>/<instantiated-harness>/<path_to_rendered_content>`, so these land at `<baseurl>/who-iris/community-list`. Undeclared, it would be the dh4f defect on the one directory a READER actually reaches -- exactly what cat-harness/docs/ was until 2026-09-20 with 241 files. These are pages THIS instance publishes about its own catalogue. `docs` is a `perInstance` graph kind (graph-kind-registry.ts), so a dependent folio has its OWN docs/ for its own pages; it never inherits these files, which stay this instance's.",
+      "_comment": "The RENDERABLE surface of this instance -- the ingested-IRIS replica pages, generated from catalogue/ by scripts/gen-iris-pages.ts and gated by `bun run iris:pages:check`. Declared because the owner's URL contract (2026-09-20) makes it addressable: `<baseURL>/<instantiated-harness>/<path_to_rendered_content>`, so these land at `<baseurl>/who-iris/community-list`. Undeclared, it would be the dh4f defect on the one directory a READER actually reaches -- exactly what cat-harness/docs/ was until 2026-09-20 with 241 files. These are pages THIS instance publishes about its own catalogue. `docs` is a `perInstance` graph typology (graph-typology-registry.ts), so a dependent folio has its OWN docs/ for its own pages; it never inherits these files, which stay this instance's.",
       "id": "who-iris-docs",
       "path": "docs/",
-      "graphKinds": [
+      "graphTypologies": [
         "docs"
       ],
       "description": "The viewer for this instance's docs, BUILT BY cat-harness — the owner's rule that a harness which instantiates a directory makes a visualiser for it. Declared HERE, in this instance's own file, rather than in the root's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a COMPOSITION LAYER, so declaring this directory there would overlay this instance's `index.md` onto the site's own. Measured — `compose-docs.test.ts` failed exactly that way when tried. The ref resolves because `injectRails` measures against the BUILT instance's docs prefix (cat-harness's), not the declaring instance's, which is the same reason `who-iris-library`'s cat-harness-built ref resolves today. This directory IS mounted verbatim at `/docs/who-iris/` as well, and the two are different things: the mount is a byte-for-byte copy of the directory, this is an index OF it. The rail links here, which is what `visualiserHref` exists to make happen.",
@@ -157,7 +157,7 @@
       "id": "who-iris-scripts",
       "path": "scripts/",
       "description": "The catalogue checker, the cover generator and `gen-iris-pages.ts` -- the instance-local generator `wjfu` cites as the precedent for every other one here (*\"instance-local generator, static HTML, committed, gated\"*). Cited as a model by another instance's bean while being undeclared itself, which is the sharpest form of the `ylj7` defect: a directory can be the corpus's own worked example and still be invisible to every consumer that walks declarations.",
-      "graphKinds": [
+      "graphTypologies": [
         "code"
       ]
     },
@@ -165,7 +165,7 @@
       "id": "who-iris-sources",
       "path": "sources/",
       "description": "Source descriptors (`folio-source-descriptor/v1`): how to ENUMERATE WHO IRIS and ask it for a SUBSET, so an agent asked for part of it is not told the API by a human every time. Moved here from large-datasets' `sources/` on 2026-10-01 (owner ruling: large-datasets dissolves into cat-harness; bean `j7ql`), because a descriptor is ABOUT one corpus and the instance that holds or catalogues that corpus owns it — the schema stays in cat-harness. Its far-apart sibling, Lean mathlib, is in folio-assistant-sci: IRIS items stand alone (`subsetIsSelfContained: true`), three identifier systems, paged REST.",
-      "graphKinds": [
+      "graphTypologies": [
         "schemas"
       ]
     },
@@ -173,7 +173,7 @@
       "id": "id-lookup",
       "path": "id-lookup/",
       "description": "The GENERATED prefix-sharded identifier lookup over this catalogue's REFERENCED nodes: `manifest.json` plus JSON shards keyed by id prefix, each under 64 KiB. Written by `cat-harness-tools/scripts/gen-id-lookup.ts` (`bun run id-lookup`, gated by `id-lookup:check`), which finds this directory by its id `id-lookup` and never by this instance's name; read by `cat-harness-tools/id-lookup/lookup.js`. Here rather than beside the generator because an instance hosts its own generated outputs (D3, bean `j7ql`, 2026-10-01). Edit the catalogue, never the shards: the generator replaces this directory whole.",
-      "graphKinds": [
+      "graphTypologies": [
         "code"
       ],
       "coverage": {
@@ -187,8 +187,8 @@
         "branch": "cat/cat-harness/qa-reports",
         "keyedBy": "commit"
       },
-      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 2 files across scenarios (1), skills (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. `qa` is a `perInstance` graph kind (graph-kind-registry.ts), because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
-      "graphKinds": [
+      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 2 files across scenarios (1), skills (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. `qa` is a `perInstance` graph typology (graph-typology-registry.ts), because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "graphTypologies": [
         "qa"
       ]
     }

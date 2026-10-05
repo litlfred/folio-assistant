@@ -106,7 +106,7 @@ describe("what was not looked for is not reported as clean", () => {
     writeFileSync(join(root, "skills", "a-skill.md"), "# A skill\n\nBody.\n");
     writeDeclaration(root, JSON.stringify({
         name: "noflows",
-        directories: [{ id: "cat-harness", path: "skills/", graphKinds: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills/", graphTypologies: ["cat-harness"] }],
       }));
     const problems: string[] = [];
     const { notes } = await collectInstanceNodes(root, DOC, BASE, problems);
@@ -135,7 +135,7 @@ describe("what was not looked for is not reported as clean", () => {
     const { nodes } = await collectInstanceNodes(root, DOC, BASE, problems);
     rmSync(root, { recursive: true, force: true });
     // Universal nodes still come back; nothing instance-specific does.
-    expect(typesOf(nodes).get("GraphKind")).toBeGreaterThan(0);
+    expect(typesOf(nodes).get("GraphTypology")).toBeGreaterThan(0);
     expect(typesOf(nodes).get("Skill") ?? 0).toBe(0);
   });
 
@@ -156,7 +156,7 @@ describe("what was not looked for is not reported as clean", () => {
     const root = mkdtempSync(join(tmpdir(), "kgx-absent-"));
     writeDeclaration(root, JSON.stringify({
         name: "absent",
-        directories: [{ id: "cat-harness", path: "skills/", graphKinds: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills/", graphTypologies: ["cat-harness"] }],
       }));
     const problems: string[] = [];
     await collectInstanceNodes(root, DOC, BASE, problems);

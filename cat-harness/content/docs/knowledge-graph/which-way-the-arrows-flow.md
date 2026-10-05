@@ -13,7 +13,7 @@ be followed mechanically rather than inferred:
 | Workflow activity | `<cat-harness.processes:bean op>` | a work-plan operation |
 | Tool | `satisfies` | Skill |
 | Skill, Capability | `satisfies` | Requirement statement |
-| Skill | `graph-kinds` | Graph kind |
+| Skill | `graph-typologies` | Graph typology |
 | Skill | `input`, `output` | Schema (its contract) |
 | Test run | `skill` | Skill |
 | any content node | `$schema` | Schema |

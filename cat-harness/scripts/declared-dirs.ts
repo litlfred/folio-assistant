@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * Print the repository-relative directories holding each named graph kind.
+ * Print the repository-relative directories holding each named graph typology.
  *
  * @module scripts/declared-dirs
  *
@@ -8,14 +8,14 @@
  *
  * `readDeclaration` validates EVERY kind in the declaration, not just the one
  * being asked for. This repository declares a `folio` directory whose kind is
- * registered by CORE, on importing `schemas/folio-graph-kind.ts` — and the
+ * registered by CORE, on importing `schemas/folio-graph-typology.ts` — and the
  * argument written on that module is that *a layer that cannot render must
  * not own the renderable kind*. So the harness layer cannot resolve ANY graph
  * kind here, because resolving one reads the whole declaration and the whole
  * declaration mentions `folio`.
  *
  * `render-pipeline.ts` is in the harness layer and needs exactly this answer
- * (bean `9c34`: a step declares the graph kinds it reads, so no step spells a
+ * (bean `9c34`: a step declares the graph typologies it reads, so no step spells a
  * declared path). Its options were: spell nine paths as literals, which
  * `check:declared-paths` rejects and which go stale the moment a directory
  * moves; import core, which `check:partition` rejects; or ask across the
@@ -38,7 +38,7 @@ import { directoriesForGraph, instanceRootFor, repoRootFor } from "../schemas/ca
 if (import.meta.main) {
   const kinds = process.argv.slice(2).filter((a) => !a.startsWith("-"));
   if (kinds.length === 0) {
-    console.error("usage: declared-dirs.ts <graph-kind>...");
+    console.error("usage: declared-dirs.ts <graph-typology>...");
     process.exit(2);
   }
   const instance = instanceRootFor(import.meta.dir);

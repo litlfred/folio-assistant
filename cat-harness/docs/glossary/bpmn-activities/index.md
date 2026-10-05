@@ -1781,7 +1781,7 @@ Execute every case, or skip it with a reason <span class="fa-gloss-status">candi
 Export the knowledge graph and its schema <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Export the knowledge graph and its schema into the published tree, then check every maintained artefact is present and no block-level markup escaped. The unpublished graph kinds are stripped on export.</p>
+<p>Export the knowledge graph and its schema into the published tree, then check every maintained artefact is present and no block-level markup escaped. The unpublished graph typologies are stripped on export.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/docs-site-publish.bpmn"><code>cat-harness/processes/sdlc/docs-site-publish.bpmn#Task_Export</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_extractstructure.task_candidates" data-fa-state="extracted" data-fa-gloss="">

@@ -245,7 +245,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "subgraph-readmes",
       title: "Directory READMEs from the Knowledge Graph",
       description:
-        "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
+        "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Typologies, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
       install: { none: true },
       invoke: { shell: "bun run readme:subgraphs" },
       io: {
@@ -1272,7 +1272,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "uml-overview",
       title: "UML overview per named sub-graph",
       description:
-        "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
+        "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph typology's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
       install: { none: true },
       invoke: { shell: "bun run uml:overview" },
       io: {
@@ -1995,12 +1995,12 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "kg-validate",
       title: "Validate a node in the graph",
       description:
-        "Check one file against the schema for its graph kind. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
+        "Check one file against the schema for its graph typology. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
       install: { none: true },
       invoke: { shell: "bun run kg:validate" },
       io: {
         inputs: [
-          { name: "path", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The node to check. Its graph kind is resolved from the declared directory that contains it." },
+          { name: "path", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The node to check. Its graph typology is resolved from the declared directory that contains it." },
           { name: "lenient", schema: t("Flag"), required: false, arg: { flag: "--lenient" }, description: "Accept partial coverage knowingly: downgrade could-not-determine from an error to a warning." },
         ],
         // `Text`, not a bespoke verdict type: the tool's answer is the exit
@@ -2103,7 +2103,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
       downstream: {
         output: "cat-harness/test/results/lsi/",
-        inputs: ["every declared prose graph (graph kinds library, skills, folio, docs, methodology, memory, policies, glossary)"],
+        inputs: ["every declared prose graph (graph typologies library, skills, folio, docs, methodology, memory, policies, glossary)"],
         judgedAt: "checkout",
       },
     }),
@@ -2740,7 +2740,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // served, so a sibling module for the same reason as `sessions.ts`.
     ...vocabMapTools(t),
 
-    // The viewer generators, each declaring the graph kinds it renders
+    // The viewer generators, each declaring the graph typologies it renders
     // (#1168 B7a). A sibling module for the same reason as `sessions.ts`.
     ...viewerTools(t),
 

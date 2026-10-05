@@ -1,5 +1,5 @@
 /**
- * Resolving a graph kind's validator — and above all, the three states.
+ * Resolving a graph typology's validator — and above all, the three states.
  *
  * Bean `folio-assistant-i31r`. The assertion that matters is that
  * **undeclared is not success**: 14 of 16 kinds are in that state, so a
@@ -18,18 +18,18 @@ import {
   parseValidatorRef,
   resolveKindValidator,
 } from "../../cat-harness/schemas/kind-validator";
-import { GraphKindRegistry, type GraphKindDef } from "../../cat-harness/schemas/cat-harness";
+import { GraphTypologyRegistry, type GraphTypologyDef } from "../../cat-harness/schemas/cat-harness";
 
 const INSTANCE = HARNESS_ROOT;
 
-function registryWith(def: Partial<GraphKindDef> & { validator?: string }): GraphKindRegistry {
-  const r = new GraphKindRegistry({});
+function registryWith(def: Partial<GraphTypologyDef> & { validator?: string }): GraphTypologyRegistry {
+  const r = new GraphTypologyRegistry({});
   r.register("test-kind", {
     type: "urn:x:TestGraph",
     renderable: false,
     summary: "a kind for tests",
     ...def,
-  } as GraphKindDef);
+  } as GraphTypologyDef);
   return r;
 }
 
@@ -149,8 +149,8 @@ describe("kindForPath", () => {
     mkdirSync(join(root, "beans", "defs"), { recursive: true });
     writeFileSync(join(root, "beans", "defs", "a.md"), "");
     const dirs = [
-      { path: "beans/", graphKinds: ["beans"] },
-      { path: "beans/defs/", graphKinds: ["bean-defs"] },
+      { path: "beans/", graphTypologies: ["beans"] },
+      { path: "beans/defs/", graphTypologies: ["bean-defs"] },
     ];
     expect(kindForPath(join(root, "beans", "defs", "a.md"), root, dirs)).toBe("bean-defs");
     rmSync(root, { recursive: true, force: true });
@@ -162,14 +162,14 @@ describe("kindForPath", () => {
     const { kindForPath } = await import("../../cat-harness/scripts/kg-validate");
     const root = mkdtempSync(join(tmpdir(), "kfp2-"));
     mkdirSync(join(root, "schemas"), { recursive: true });
-    const dirs = [{ path: "schemas/", graphKinds: ["schemas", "cat-harness"] }];
+    const dirs = [{ path: "schemas/", graphTypologies: ["schemas", "cat-harness"] }];
     expect(kindForPath(join(root, "schemas", "x.ts"), root, dirs)).toBeUndefined();
     rmSync(root, { recursive: true, force: true });
   });
 
   test("a path outside the root belongs to no kind", async () => {
     const { kindForPath } = await import("../../cat-harness/scripts/kg-validate");
-    expect(kindForPath("/etc/passwd", "/tmp/x", [{ path: "a/", graphKinds: ["beans"] }]))
+    expect(kindForPath("/etc/passwd", "/tmp/x", [{ path: "a/", graphTypologies: ["beans"] }]))
       .toBeUndefined();
   });
 });

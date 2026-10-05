@@ -143,7 +143,11 @@ test("a railed page WITHOUT docs-ui.js draws the row — the link slots, at full
   // Links, prefixed with the site base the SCRIPT was served under: this page
   // carries no `fa-baseurl` meta, which is the case the derivation is for.
   const hrefs = await row.locator("a.fa-nav-icon").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
-  expect(hrefs.length).toBeGreaterThanOrEqual(4);
+  // Every declared slot except the one that needs `docs-ui.js` (the launcher,
+  // LEFT OUT here) and the retired close. Derived, not a
+  // number: the row's membership is the owner's to change (bean `82qs`).
+  const linked = LIVE.icons.filter((i: string) => !["close", "launcher"].includes(i));
+  expect(hrefs.length).toBe(linked.length);
   for (const h of hrefs) expect(h).toMatch(/^\/folio-assistant\//);
   const widths = await row.locator("svg").evaluateAll((s) => s.map((e) => Math.round(e.getBoundingClientRect().width)));
   expect(new Set(widths)).toEqual(new Set([18]));
@@ -196,4 +200,70 @@ test("docs-ui.js running BEFORE the row script still ends with the full row", as
   const row = page.locator("nav.fa-nav .fa-nav-icons");
   await expect(row).toHaveAttribute("data-fa-row", "full");
   await expect(row).toHaveCount(1);
+});
+
+/* COUNT BADGES ON TODOS AND BEANS — bean `gkv6`. Owner, 2026-10-05: "why no
+ * count on beans and todos on LHS top navbar as badges like fsh-guts has?".
+ * Fetched from the `count.json` beside each index; drawn in the LITE row, so
+ * on every railed page, not only where `docs-ui.js` loads. */
+test.describe("the Todos and Beans icons carry a live count badge (bean gkv6)", () => {
+  const count = (id: string, n: number) => JSON.stringify({ tile: { [id]: { count: n, unit: id } } });
+
+  test("the published counts are drawn, and the name says them", async ({ page }) => {
+    await serve(page, railedBare(LIVE), {
+      "/folio-assistant/assets/todos/count.json": count("todos", 3),
+      "/folio-assistant/assets/beans/count.json": count("beans", 528),
+    });
+    const row = page.locator("nav.fa-nav .fa-nav-icons");
+    const beans = row.locator('a[aria-label^="Beans"]');
+    await expect(beans.locator(".fa-nav-count")).toHaveText("528");
+    await expect(beans.locator(".fa-nav-count")).toHaveAttribute("data-fa-count-state", "some");
+    await expect(beans).toHaveAttribute("aria-label", "Beans — 528 open");
+    await expect(beans).toHaveAttribute("data-fa-tip", "Beans — 528 open");
+    const todos = row.locator('a[aria-label^="Todos"]');
+    await expect(todos.locator(".fa-nav-count")).toHaveText("3");
+    await expect(todos).toHaveAttribute("aria-label", "Todos — 3 outstanding");
+    await expect(todos.locator(".fa-nav-count")).toBeVisible();
+  });
+
+  test("nothing published is NO badge, and an unreadable file says '?' — never a made-up number", async ({ page }) => {
+    await serve(page, railedBare(LIVE), {
+      "/folio-assistant/assets/beans/count.json": "not json",
+    });
+    const row = page.locator("nav.fa-nav .fa-nav-icons");
+    const todos = row.locator('a[aria-label^="Todos"]');
+    await expect(todos.locator(".fa-nav-count")).toHaveAttribute("data-fa-count-state", "absent");
+    await expect(todos.locator(".fa-nav-count")).toBeHidden();
+    await expect(todos).toHaveAttribute("aria-label", "Todos");
+    const beans = row.locator('a[aria-label^="Beans"]');
+    await expect(beans.locator(".fa-nav-count")).toHaveText("?");
+    await expect(beans.locator(".fa-nav-count")).toHaveAttribute("data-fa-count-state", "error");
+  });
+});
+
+/* THE FLAKE THIS PR CAUSED, AND ITS FIX (bean `gkv6`). `library-entry-iri:69`
+ * hung for 180 s on some loads: the library page `replaceState`s a legacy
+ * `#instance/id` one segment DEEPER, the row resolved its relative
+ * `data-fa-root` against the moved address, fetched a 404 — and left that
+ * 404's body unread, so the request never finished and `networkidle` never
+ * came. Measured 6 of 12 loads before the fix, 0 of 16 after. The unread
+ * body is not tested here: a mocked route always completes, so only the real
+ * server in `library-entry-iri.e2e.ts` can see it. */
+test.describe("the count fetch survives a page that moves its own address (bean gkv6)", () => {
+  const count = (id: string, n: number) => JSON.stringify({ tile: { [id]: { count: n, unit: id } } });
+
+  test("a replaceState one level deeper still fetches the right count.json", async ({ page }) => {
+    // At the END of <body>: the deferred scripts are already requested (their
+    // URLs resolved) and have not run yet — the order the library page has.
+    const deeper = railedBare(LIVE).replace("</body>", '<script>history.replaceState(null, "", "deeper/than/before/")</script></body>');
+    const asked: string[] = [];
+    page.on("request", (r) => { if (r.url().includes("count.json")) asked.push(new URL(r.url()).pathname); });
+    await serve(page, deeper, {
+      "/folio-assistant/assets/todos/count.json": count("todos", 3),
+      "/folio-assistant/assets/beans/count.json": count("beans", 528),
+    });
+    const beans = page.locator('nav.fa-nav .fa-nav-icons a[aria-label^="Beans"]');
+    await expect(beans.locator(".fa-nav-count")).toHaveText("528");
+    expect(asked.sort()).toEqual(["/folio-assistant/assets/beans/count.json", "/folio-assistant/assets/todos/count.json"]);
+  });
 });

@@ -1,6 +1,6 @@
 /**
- * `folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph kind
- * (`cat-harness/schemas/glossary-graph-kind.ts` registers the name).
+ * `folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph typology
+ * (`cat-harness/schemas/glossary-graph-typology.ts` registers the name).
  *
  * Owner, 2026-09-23: *"put glossary into folio-assistant-core"*, *"it should be
  * part of general pracice w/ glossary/ page"*, and *"can glossary be
@@ -10,7 +10,7 @@
  * |---|---|
  * | a local term linked to an external concept | `exactMatch` / `closeMatch` / `broadMatch` / `narrowMatch` on a {@link Term} |
  * | a glossary that lists external terms without copying them | `members`: external concept IRIs, emitted as a `skos:Collection` |
- * | a whole external scheme | the declaration's `remoteGraphs` entry with `graphKinds: ["glossary"]`: known about, not held |
+ * | a whole external scheme | the declaration's `remoteGraphs` entry with `graphTypologies: ["glossary"]`: known about, not held |
  *
  * Bean `lqo9` settled the rest before this was written, and it is followed,
  * not re-decided:

@@ -177,7 +177,7 @@ Dependency probe <span class="fa-gloss-status">candidate, extracted</span>
 Directory READMEs from the Knowledge Graph <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in <code>tools/templates/readme/</code>, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between <code>&lt;!-- kg:subgraph:begin --&gt;</code> and <code>:end</code>; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in <code>test/results/subgraph-readmes.qa-results.json</code>.</p>
+<p>Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Typologies, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in <code>tools/templates/readme/</code>, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between <code>&lt;!-- kg:subgraph:begin --&gt;</code> and <code>:end</code>; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in <code>test/results/subgraph-readmes.qa-results.json</code>.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#subgraph-readmes</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--discuss" data-fa-state="extracted" data-fa-gloss="">
@@ -1148,7 +1148,7 @@ Translation status viewer <span class="fa-gloss-status">candidate, extracted</sp
 UML overview per named sub-graph <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.</p>
+<p>Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph typology's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#uml-overview</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--uploads-viewer" data-fa-state="extracted" data-fa-gloss="">
@@ -1166,7 +1166,7 @@ Uploads viewer <span class="fa-gloss-status">candidate, extracted</span>
 Validate a node in the graph <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Check one file against the schema for its graph kind. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.</p>
+<p>Check one file against the schema for its graph typology. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#kg-validate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--translation-validate" data-fa-state="extracted" data-fa-gloss="">

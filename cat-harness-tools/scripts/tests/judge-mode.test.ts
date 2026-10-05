@@ -186,7 +186,7 @@ describe("check:layout-norms", () => {
       JSON.stringify({
         name: "thing",
         description: "fixture",
-        directories: dirs.map((d) => ({ ...d, graphKinds: ["cat-harness"], description: "fixture" })),
+        directories: dirs.map((d) => ({ ...d, graphTypologies: ["cat-harness"], description: "fixture" })),
       }),
     );
     return repo;
@@ -339,7 +339,7 @@ describe("check:methodology-evidence", () => {
       JSON.stringify({
         name: "thing",
         description: "fixture",
-        directories: [{ id: "m", path: "methodologies/", graphKinds: ["methodology"], description: "fixture" }],
+        directories: [{ id: "m", path: "methodologies/", graphTypologies: ["methodology"], description: "fixture" }],
       }),
     );
     writeFileSync(join(root, "methodologies", "a-method.md"), `---\n${front}---\n\nBody.\n`);
@@ -487,7 +487,7 @@ describe("check:avatar-coverage", () => {
         JSON.stringify({
           name: "thing",
           description: "fixture",
-          directories: [{ id: "d", path: "pages/", graphKinds: ["docs"], description: "fixture" }],
+          directories: [{ id: "d", path: "pages/", graphTypologies: ["docs"], description: "fixture" }],
         }),
       );
       const c = coverage(root);

@@ -33,7 +33,7 @@ function folio(declaredPrefix?: string): string {
   sh(["remote", "add", "origin", join(root, "o.git")], f);
   writeFileSync(join(f, "lean-toolchain"), "leanprover/lean4:v4.24.0\n");
   if (declaredPrefix) {
-    const entry = { id: "lake-cache", path: "lake-cache/", graphKinds: ["lake-cache"], storage: { branchPrefix: declaredPrefix, keyedBy: "family" } };
+    const entry = { id: "lake-cache", path: "lake-cache/", graphTypologies: ["lake-cache"], storage: { branchPrefix: declaredPrefix, keyedBy: "family" } };
     writeFileSync(join(f, "f.json"), JSON.stringify({ name: "f", directories: [entry] }));
   }
   return f;

@@ -141,7 +141,7 @@ export function loadCodeLists(dirs: readonly string[]): Map<string, CodeList> {
 /**
  * The code-list directories an instance can see, in overlay order.
  *
- * Resolved from DECLARATIONS — the `code-list` graph kind in each instance's
+ * Resolved from DECLARATIONS — the `code-list` graph typology in each instance's
  * `<instance>.json` — never from a literal, and including every dependency,
  * the way `resolveSkillDirs` reaches a dependency's skills.
  */
@@ -153,7 +153,7 @@ export async function codeListDirs(instanceRoot: string): Promise<string[]> {
   const dirs: string[] = [];
   const add = (name: string, root: string, own: boolean) => {
     for (const d of ownDirectories({ name, root, own })) {
-      if (d.graphKinds.includes("code-list")) dirs.push(d.absPath);
+      if (d.graphTypologies.includes("code-list")) dirs.push(d.absPath);
     }
   };
   for (const dep of orderedDependencies(instanceRoot)) add(dep.dependency.name, dep.rootPath, false);

@@ -80,7 +80,7 @@ CACHE_PREFIXES = ("cat/folio-assistant-sci/lake-cache/", "cat-lake-cache/", "lak
 def _declared_cache_prefix(root: Path) -> str | None:
     """The folio's own lake-cache family (bean rva2), or None.
 
-    A directory with graphKind `lake-cache` and `storage.keyedBy: "family"`
+    A directory with graphTypology `lake-cache` and `storage.keyedBy: "family"`
     in `<instance>.json` at the folio root names the prefix. Same reader as
     lake-cache.sh and lake-cache-fetch.sh; an unreadable file is skipped.
     """
@@ -96,7 +96,7 @@ def _declared_cache_prefix(root: Path) -> str | None:
             if not isinstance(e, dict):
                 continue
             st = e.get("storage") if isinstance(e.get("storage"), dict) else {}
-            kinds = e.get("graphKinds") if isinstance(e.get("graphKinds"), list) else []
+            kinds = e.get("graphTypologies") if isinstance(e.get("graphTypologies"), list) else []
             prefix = st.get("branchPrefix")
             if "lake-cache" in kinds and st.get("keyedBy") == "family" and isinstance(prefix, str) and prefix:
                 return prefix.rstrip("/") + "/"

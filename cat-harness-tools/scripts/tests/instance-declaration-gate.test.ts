@@ -32,7 +32,7 @@ function repo(instances: Array<{ name: string; needs?: string[] }>): string {
     mkdirSync(join(dir, "skills"), { recursive: true });
     writeDeclaration(dir, {
       name: i.name,
-      directories: [{ id: `${i.name}-skills`, path: "skills/", graphKinds: ["skills"] }],
+      directories: [{ id: `${i.name}-skills`, path: "skills/", graphTypologies: ["skills"] }],
       ...(i.needs === undefined ? {} : { needs: i.needs }),
     });
   }

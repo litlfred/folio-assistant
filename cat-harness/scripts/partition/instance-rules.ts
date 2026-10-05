@@ -218,7 +218,7 @@ export const RULES: Rule[] = [
       // HARNESS: the one orphan-page selector (bean `s8nu`), extracted as a
       // LEAF so `state-visualizer.ts` can be a call site without importing
       // `gen-schema-viz.ts` -- a 1200-line page generator whose body is one
-      // template literal. Same move #840 made for the graph-kind registry.
+      // template literal. Same move #840 made for the graph-typology registry.
       // It imports `node:fs` and `node:path` and nothing else, so it cannot
       // drag a layer in behind it; its subject is which pages a generator in
       // this repository wrote, not any folio's content.
@@ -270,12 +270,17 @@ export const RULES: Rule[] = [
       // surface that draws a harness's mark calls it, so a folio owning it
       // would let one instance decide how every other instance's mark is read.
       "scripts/lib/harness-mark.ts",
-      // How a GRAPH-KIND row in that navbar is marked and named (bean `yag0`):
+      // How a GRAPH-TYPOLOGY row in that navbar is marked and named (bean `yag0`):
       // the kind's avatar glyph and hue, and the head of its registered
       // summary as the accessible name. HARNESS beside `navbar.ts` for the
       // same reason — it is the platform's chrome, read from the platform's
       // kind and avatar registries, and both navbar callers share it.
-      "scripts/lib/graph-kind-nav.ts",
+      "scripts/lib/graph-typology-nav.ts",
+      // The light/dark half of that chrome (issue #2208): dark rules that
+      // follow the navbar's switch, and the saved-scheme first-paint snippet.
+      // HARNESS beside `navbar.ts` -- the switch is the platform's, and every
+      // page carrying it, a folio's included, has to agree on what it means.
+      "scripts/lib/scheme-css.ts",
       // The geometry that navbar became a reader of, and the generator that
       // renders it to CSS (bean `sjic`). HARNESS for the same reason as
       // `navbar.ts` and one step more plainly: the numbers are the width of
@@ -286,6 +291,13 @@ export const RULES: Rule[] = [
       // which instance it is writing for either.
       "scripts/lib/navbar-geometry.ts",
       "scripts/gen-navbar-geometry-css.ts",
+      // The rail's shared assets (bean `lnoy`): `navbar.css` from `navbarCss()`
+      // and `navbar.js` bundled from `navbar-client.ts`, the browser half of
+      // `renderRailRegions`. HARNESS for the same reason as `navbar.ts`: the
+      // platform's chrome on every instance's pages, written into the site's
+      // own asset directory through `siteDirFor`.
+      "scripts/gen-navbar-assets.ts",
+      "scripts/navbar-client.ts",
       // Its sibling: same question, same answer. `compose-docs.ts` reads the
       // `docs` declarations, works out which is the base and which the
       // overlay from `scope`, and lays them down in order. Every decision it
@@ -341,7 +353,7 @@ export const RULES: Rule[] = [
       // folio's subject matter. It imports nothing but `node:fs` — a folio could
       // not make it answer differently.
       "scripts/staging-stamp.ts",            // which BUILD wrote an artefact — CI identity, no folio
-      "scripts/qa-results.ts",               // a QA process's findings about a PRODUCED artefact; `qa` is a base graph kind
+      "scripts/qa-results.ts",               // a QA process's findings about a PRODUCED artefact; `qa` is a base graph typology
       // Its merge-time sibling, and harness-level for the same reason: it
       // resolves conflicts in the `qa` graph by re-running whichever writer
       // the sidecars name. It reads the DECLARATION, `package.json` and git's
@@ -396,6 +408,15 @@ export const RULES: Rule[] = [
       "scripts/merge-queue.ts",              // the merge train's order: live facts in, merge-priority.dmn's placement out (bean hfag)
       "scripts/merge-guard.ts",              // the single way a steward lands a PR: eight checks, then the pinned PUT (beans uoob, vihx)
       "scripts/merge-steward.ts",            // the command that CALLS merge-queue.ts — the entry point it was written for and never had
+      // The queue's STORE and its command (bean `najo`), harness-level for the
+      // same reason as the two above: they read and write the `merge-queue`
+      // graph of THIS repository's declaration, through the generic branch
+      // store, and a folio could not make either answer differently — only
+      // record more decisions. The store is the reader (four states, and a
+      // throw rather than an empty queue for the one that cannot be reached);
+      // the CLI is `merge:queue:read` and `merge:queue:record`.
+      "scripts/merge-queue-store.ts",        // the queue's four read states, and the splice that records a decision
+      "scripts/merge-queue-cli.ts",          // merge:queue:read / merge:queue:record
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
       // INSTANCE's declaration and the published viewer tree, and asks which
@@ -433,7 +454,7 @@ export const RULES: Rule[] = [
       // definitions it owns. Same defect as `lean-packages.ts`, at scale, and
       // the reason a `<graph>/<stub>/` layout would carry the answer in the
       // path instead of in this list.
-      "schemas/tool.ts",                     // what a Tool IS — `tools` is a harness graph kind
+      "schemas/tool.ts",                     // what a Tool IS — `tools` is a harness graph typology
       "schemas/tool-run.ts",                 // a downstream Tool's run record (bean `fq5u`)
       "schemas/withheld.ts",                 // what an instance must not publish — read by the harness mount (bean `mkao`)
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
@@ -512,7 +533,7 @@ export const RULES: Rule[] = [
       // prefix, which the tool reported as `unassigned` rather than guessing.
       "scripts/harness-dirs.ts",
       // The `@graphNode` declarations under `schemas/` and the gate over them.
-      // Harness because the `schemas` GRAPH KIND is the harness's vocabulary —
+      // Harness because the `schemas` GRAPH TYPOLOGY is the harness's vocabulary —
       // `harness.json` declares it — even though the directory holds
       // content-model schemas too. These read the declarations; they define no
       // part of the content model.
@@ -638,7 +659,7 @@ export const RULES: Rule[] = [
       // folio graph and writes content nodes into it — the landing stickies —
       // so it does not merely need a folio, it is where one comes from. It also
       // imports `schemas/landing-sticky.ts` (a content node) and
-      // `schemas/folio-graph-kind.ts`, which is core's by the argument written
+      // `schemas/folio-graph-typology.ts`, which is core's by the argument written
       // on that module: a layer that cannot render must not own the renderable
       // kind. Classifying it harness would put core's own kind registration
       // behind a harness module.
@@ -674,7 +695,7 @@ export const RULES: Rule[] = [
       //
       // CORE rather than harness for the reason every entry above shares: each
       // reads THIS INSTANCE'S declaration, and this instance declares a `folio`
-      // graph, so each must import `schemas/folio-graph-kind.ts` for the kind
+      // graph, so each must import `schemas/folio-graph-typology.ts` for the kind
       // to be registered — and that module is core's by the argument written on
       // it ("a layer that cannot render must not own the renderable kind").
       //
@@ -757,7 +778,7 @@ export const RULES: Rule[] = [
       "scripts/subscriptions-viz.ts",        // the KG subscriptions page: known substrates, what each instance subscribed to and chose, and each chosen part drawn from its materialisation record (issue #1719)
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
-      "scripts/declared-dirs.ts",            // graph kind → declared directories; CORE because it registers the folio kind, which is the whole reason the harness layer spawns it rather than importing it (bean `9c34`)
+      "scripts/declared-dirs.ts",            // graph typology → declared directories; CORE because it registers the folio kind, which is the whole reason the harness layer spawns it rather than importing it (bean `9c34`)
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
       "scripts/section-story-audit.ts",      // section + chapter narrative
       "scripts/pages-bootstrap.ts",          // where a folio publishes, and whether it is there
@@ -840,7 +861,7 @@ export const RULES: Rule[] = [
       // that happens to live there; the blanket `test/` rule is right for
       // everything else in that tree and wrong for these two.
       "schemas/theme.ts",
-      "schemas/document-kind.ts",            // the document-kind graph kind's schema, beside theme.ts (stage D5, #1767)
+      "schemas/document-kind.ts",            // the document-kind graph typology's schema, beside theme.ts (stage D5, #1767)
       "schemas/themes.ts",
       // Resolves a ThemeRef against its owner's declared themes (bean `v8n5`):
       // the same sticky-note theme layer as the two above, reached through a
@@ -991,22 +1012,22 @@ export const RULES: Rule[] = [
       // importing the content vocabulary, so classifying it here adds no
       // wrong-direction edge — see schemas/cat-harness.ts.
       "schemas/cat-harness.ts",
-      // The graph-kind registry, split out of the line above so core could
+      // The graph-typology registry, split out of the line above so core could
       // import it without a cycle (bean `q2wn`). HARNESS on the same terms:
-      // it holds `BASE_GRAPH_KINDS` — the harness's OWN three kinds — plus
+      // it holds `BASE_GRAPH_TYPOLOGIES` — the harness's OWN three kinds — plus
       // the registry mechanism, and imports only `namespaces.ts`. Core does
       // not own it; core CONTRIBUTES `folio` to it, which is the whole
-      // distinction `folio-graph-kind.ts` argues. Left to triage it landed
+      // distinction `folio-graph-typology.ts` argues. Left to triage it landed
       // in core on a keyword, which had the ownership exactly backwards.
-      "schemas/graph-kind-registry.ts",
+      "schemas/graph-typology-registry.ts",
       // declared-path-literal: a partition plan names modules by path, the
       // same base case as the TARGET layouts above. dmx1's and riit's leaves,
       // imported by the registry and the declaration schema: instance discovery
-      // (moved verbatim out of cat-harness.ts), the graph-kind, validator,
+      // (moved verbatim out of cat-harness.ts), the graph-typology, validator,
       // block-kind and contribution node schemas, and the declared-node scan.
       // Harness for the same reason as their importers.
       "schemas/instance-roots.ts",
-      "schemas/graph-kind-node.ts",
+      "schemas/graph-typology-node.ts",
       "schemas/declared-nodes.ts",
       "schemas/validator-node.ts",
       "schemas/block-kind-node.ts",
@@ -1055,7 +1076,7 @@ export const RULES: Rule[] = [
       // until somebody looked.
       "scripts/kg-audit-all.ts",
       // WHICH audits reach which kind of node (bean `xutg`). Harness machinery
-      // for the same reason `kg-audit.ts` is: its subject is the graph-kind
+      // for the same reason `kg-audit.ts` is: its subject is the graph-typology
       // registry and the gate set, not the content vocabulary. Beside the audit
       // it complements rather than duplicates — that one judges the nodes it
       // covers, this one measures what is covered at all.
@@ -1242,7 +1263,7 @@ export const RULES: Rule[] = [
       "schemas/python-deps.ts",     // the repository's own Python toolchain
       "schemas/avatars.ts",         // an avatar for every declared kind
       "schemas/substrate-snapshot.ts", // the node schema of `substrate-snapshot`, a kind the harness registers (issue #1719)
-      "schemas/kind-validator.ts",  // a graph kind's validator
+      "schemas/kind-validator.ts",  // a graph typology's validator
       "schemas/actor-reach.ts",     // which actors a declaration can reach
       // WHAT A REPOSITORY IS — the markers it carries. The word "content" in
       // the filename is what sends it to core by keyword, and it is a false
@@ -1265,7 +1286,7 @@ export const RULES: Rule[] = [
       //
       //    Sixteen of them are harness machinery by the owner's test — needed
       //    to RUN a process is tooling, DESCRIBES one is core. Each reads a
-      //    declaration, a role, a graph kind or the gate set; none reads a
+      //    declaration, a role, a graph typology or the gate set; none reads a
       //    folio's content model.
       "scripts/check-declared-dirs.ts",     // the same declaration, its DIRECTORIES
       "scripts/check-fallback-roles.ts",    // reads role-graph
@@ -1301,12 +1322,12 @@ export const RULES: Rule[] = [
       "scripts/input-hash.ts",              // ...and `regen`'s input-hash skip: a local cache over the declared inputs, harness for the same reason `regen` is
       "scripts/changed-paths.ts",           // ...and `regen --changed` / the narrowed fixpoint (bean `94zs`): which pairs a set of changed paths can reach, over the same declarations
       "scripts/decisions-named-not-asked.ts", // the `Stop` layer of `interaction-modality` §4.1 (bean `ahvw`). Harness: it reads a transcript and enforces how a QUESTION is put, which no content type varies
-      "scripts/kind-table.ts",              // the reader over the graph-kind TABLE in `directory-conventions.md`, which `kind-register` and `graph-kind-docs.test.ts` both ask. Harness: the table is the harness's own documentation of its own registry
+      "scripts/kind-table.ts",              // the reader over the graph-typology TABLE in `directory-conventions.md`, which `kind-register` and `graph-typology-docs.test.ts` both ask. Harness: the table is the harness's own documentation of its own registry
       "scripts/route-authority.ts",         // WHICH COPY a route-keyed generator's --check compares against — the checkout, the branch, or both. Harness: it reads a declaration and a branch manifest and knows nothing about any content type. Its `unknown` state is the point (bean `xsrv` Done-when 3: a branch it cannot fetch is never a pass)
       "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales AND gates the declarations (beans `v625`, `nfv3` — two commands one letter apart, consolidated here at the owner's decision 2026-09-26). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the six artefacts before their checks read them
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-python-deps.ts",         // writes requirements.txt
-      "scripts/kg-validate.ts",             // one Tool, parameterised by graph kind
+      "scripts/kg-validate.ts",             // one Tool, parameterised by graph typology
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
       "scripts/strip-preview-seo.ts",       // the preview site build
       "scripts/set-html-lang.ts",           // ...and the served language on its `<html>` (bean `zru7`). Beside the SEO strip for the same reason: a pass over the EMITTED tree, coupling to no content type and to no theme file
@@ -1713,10 +1734,10 @@ export const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", "bean
 /**
  * The one edge permitted despite the direction rule.
  *
- * `cat-harness.ts` imports core's `folio-graph-kind.ts` for its side effect,
+ * `cat-harness.ts` imports core's `folio-graph-typology.ts` for its side effect,
  * which is what makes the `folio` registration automatic instead of something
  * 110 commands had to remember. Bean `q2wn`, and the header of
- * `schemas/graph-kind-registry.ts` for why the alternatives were worse.
+ * `schemas/graph-typology-registry.ts` for why the alternatives were worse.
  *
  * ONE entry, naming BOTH endpoints. That is the difference between this and
  * the blanket rule first tried here — "a bare side-effect import is exempt"
@@ -1731,17 +1752,17 @@ export const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", "bean
 const PERMITTED_EDGES: readonly PermittedEdge[] = [
   {
     from: "schemas/cat-harness.ts",
-    to: "schemas/folio-graph-kind.ts",
+    to: "schemas/folio-graph-typology.ts",
     reason:
       "The registration trigger. Core owns `folio`; this import is what makes it registered " +
       "by the time any reader can be called, because a reader lives in `cat-harness.ts` and " +
       "loading that module is therefore a precondition of calling one. Without it the kind is " +
       "registered only if the process happened to import core first — an import-order property " +
-      "that threw `unknown graph kind \"folio\"` on a valid declaration, five times in PR #465.",
+      "that threw `unknown graph typology \"folio\"` on a valid declaration, five times in PR #465.",
   },
   {
     from: "schemas/cat-harness.ts",
-    to: "schemas/glossary-graph-kind.ts",
+    to: "schemas/glossary-graph-typology.ts",
     reason:
       "The same trigger for core's second kind, `glossary` (owner, 2026-09-23: \"put glossary " +
       "into folio-assistant-core\"). One entry per endpoint pair, as this list's rule requires; " +

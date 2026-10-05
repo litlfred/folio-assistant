@@ -1,7 +1,7 @@
 /**
  * cat-harness's READING of bootstrap: the tests that were in bootstrap's own
  * `graph.test.ts` but exercise harness code — the declaration reader, the
- * published vocabulary, the graph-kind registry. They moved out when
+ * published vocabulary, the graph-typology registry. They moved out when
  * bootstrap-tools was re-created (bean `xsqm`), because a test of the harness
  * belongs with the harness: bootstrap-tools may import nothing above bootstrap.
  */
@@ -11,8 +11,8 @@ import { join } from "node:path";
 
 import { findDeclarationFile, instanceRootsIn } from "./cat-harness.ts";
 import { CLASS_GLOSSES } from "./vocabulary.ts";
-import { BASE_GRAPH_KINDS, graphKindLayer } from "./graph-kind-registry.ts";
-import { BOOTSTRAP_GRAPH_KINDS, BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "../../bootstrap-tools/schemas/graph.ts";
+import { BASE_GRAPH_TYPOLOGIES, graphTypologyLayer } from "./graph-typology-registry.ts";
+import { BOOTSTRAP_GRAPH_TYPOLOGIES, BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "../../bootstrap-tools/schemas/graph.ts";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
 
@@ -29,7 +29,7 @@ describe("every declaration in this repository is a Knowledge Graph declaration"
 });
 
 describe("the harness reads bootstrap's terms and kinds as bootstrap states them", () => {
-  const own = Object.keys(BOOTSTRAP_GRAPH_KINDS);
+  const own = Object.keys(BOOTSTRAP_GRAPH_TYPOLOGIES);
   test("the published vocabulary uses bootstrap's definitions, and bootstrap's terms link nowhere above", () => {
     // EVERY term bootstrap defines is a bootstrap-layer class glossed with
     // bootstrap's sentence (owner, 2026-09-30, bean `xsqm`: the `bs:`
@@ -53,12 +53,12 @@ describe("the harness reads bootstrap's terms and kinds as bootstrap states them
   test("the harness's registry reads bootstrap's sentence; the class it types a directory with is its own", () => {
     expect(own.length).toBeGreaterThan(0);
     for (const k of own) {
-      const def = BASE_GRAPH_KINDS[k as keyof typeof BASE_GRAPH_KINDS];
+      const def = BASE_GRAPH_TYPOLOGIES[k as keyof typeof BASE_GRAPH_TYPOLOGIES];
       expect(def, k).toBeDefined();
-      expect(def.summary).toBe(BOOTSTRAP_GRAPH_KINDS[k as keyof typeof BOOTSTRAP_GRAPH_KINDS]);
+      expect(def.summary).toBe(BOOTSTRAP_GRAPH_TYPOLOGIES[k as keyof typeof BOOTSTRAP_GRAPH_TYPOLOGIES]);
       // There is no per-kind class (owner, 2026-09-30, bean `3r47`): the kind
-      // IS bootstrap's individual, `bootstrap:graphKind/<kind>`.
-      expect(graphKindLayer(k, def), k).toBe("bootstrap");
+      // IS bootstrap's individual, `bootstrap:graphTypology/<kind>`.
+      expect(graphTypologyLayer(k, def), k).toBe("bootstrap");
     }
   });
 });

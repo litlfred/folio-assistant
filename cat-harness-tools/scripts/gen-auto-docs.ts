@@ -18,7 +18,7 @@
  * handled by `state-visualizer.ts`, which had just landed. Reading the three
  * existing generators says no, and the reason is structural rather than a
  * matter of taste: **every one of them is one-axis.** `gen-schema-viz`,
- * `gen-library-viz` and `state-visualizer` each map ONE graph kind to ONE
+ * `gen-library-viz` and `state-visualizer` each map ONE graph typology to ONE
  * viewer at a fixed route, with optional subject pages beneath it. auto-docs
  * is **two-axis** — an auto-doc TYPE crossed with a SUB-GRAPH — and there is
  * nowhere in a one-axis generator to put the second axis without it becoming
@@ -99,7 +99,7 @@ import {
 } from "../../cat-harness/schemas/cat-harness.ts";
 import { checkoutDirectories } from "../../cat-harness/schemas/harness-config.ts";
 import { gitFiles } from "../../cat-harness/schemas/git-corpus.ts";
-import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
+import { makeEmit } from "../../cat-harness/scripts/viewer-page.ts";
 import { railNames } from "../../cat-harness/scripts/mount-instance-docs.ts";
 import { harnessTitle, kindTitle } from "../../cat-harness/scripts/lib/nav-label.ts";
 import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
@@ -180,7 +180,7 @@ export interface AutoDocType {
   id: string;
   title: string;
   /**
-   * The graph kind whose declared directories hold this type's artefacts.
+   * The graph typology whose declared directories hold this type's artefacts.
    *
    * **Not optional, and the first draft not having it was a real defect.**
    * Walking EVERY declared directory reported **1,522** skills where
@@ -272,7 +272,7 @@ function docsDirectoriesAcrossInstances(): Array<{ id: string; absPath: string; 
     const declName = findDeclarationFile(instance);
     if (declName === undefined) continue;
     const decl = join(instance, declName);
-    let parsed: { directories?: Array<{ id?: string; path?: string; scope?: string; graphKinds?: string[] }> };
+    let parsed: { directories?: Array<{ id?: string; path?: string; scope?: string; graphTypologies?: string[] }> };
     try {
       parsed = JSON.parse(readFileSync(decl, "utf-8"));
     } catch {
@@ -280,7 +280,7 @@ function docsDirectoriesAcrossInstances(): Array<{ id: string; absPath: string; 
     }
     for (const e of parsed.directories ?? []) {
       if (!e.id || !e.path || e.scope === "repository") continue;
-      if (!(e.graphKinds ?? []).includes("docs")) continue;
+      if (!(e.graphTypologies ?? []).includes("docs")) continue;
       const absPath = join(instance, e.path);
       if (!existsSync(absPath) || out.has(absPath)) continue;
       out.set(absPath, { id: e.id, absPath, path: relative(REPO, absPath).split("\\").join("/") });
@@ -342,7 +342,7 @@ function walk(dir: string, pred: (name: string) => boolean): string[] {
 }
 
 /**
- * The declared directories holding one graph kind, by id.
+ * The declared directories holding one graph typology, by id.
  *
  * Existence-filtered, because a declared-but-absent directory is the `dh4f`
  * defect — a consumer scans nothing and reports a clean run over it.
@@ -356,7 +356,7 @@ export function declaredDirectories(graph: string): Array<{ id: string; absPath:
   // the mirror id it had (`smart-base-processes`).
   const own = new Set(resolveDirectories([{ name: "(local)", root: ROOT, own: true }]).map((d) => d.absPath));
   const all = checkoutDirectories(ROOT, { stackedOn: ROOT })
-    .filter((d) => (d.graphKinds ?? []).includes(graph as never) && existsSync(d.absPath))
+    .filter((d) => (d.graphTypologies ?? []).includes(graph as never) && existsSync(d.absPath))
     .sort((a, b) => Number(!own.has(a.absPath)) - Number(!own.has(b.absPath)));
   const taken = new Set<string>();
   const out: Array<{ id: string; absPath: string; path: string }> = [];
@@ -1140,7 +1140,7 @@ export function autoDocPage(
         : [];
       // ONE NAME PER DESTINATION (bean `ob3m` finding 6): a sub-graph page is
       // the same destination the Graphs group and the landing call by its
-      // graph kind's name ("Docs", "Swimlane glossary"), so its row says that, with the harness that
+      // graph typology's name ("Docs", "Swimlane glossary"), so its row says that, with the harness that
       // declares the directory as the qualifier. The directory id stays in
       // the page's own list above, where it is a path rather than a name.
       return {
@@ -1343,7 +1343,7 @@ function emitRaw(path: string, content: string): void {
  * "what auto-doc types exist", free to disagree the moment either moves. This
  * repository has paid for that shape more than any other.
  *
- * Every entry declares `graphKinds: ["auto-docs"]`. Sibling directories
+ * Every entry declares `graphTypologies: ["auto-docs"]`. Sibling directories
  * sharing one kind is not a smell and has precedent: `beans.json`'s `defs` and
  * `archive` both declare `bean-defs`. A sub-sub-graph's identity is its
  * directory **id**, not a kind of its own — eleven kinds for eleven indexes
@@ -1353,7 +1353,7 @@ function autoDocsManifest(): string {
   const directories = TYPES.map((t) => ({
     id: t.id.split("/").join("-"),
     path: t.id,
-    graphKinds: ["auto-docs"],
+    graphTypologies: ["auto-docs"],
     // `extracts` is authored as a fragment and does not end in punctuation,
     // so one is supplied here rather than requiring eleven authors to remember
     // it — the alternative produced "…has been retired Indexes the graph."
@@ -1377,17 +1377,20 @@ function autoDocsManifest(): string {
   )}\n`;
 }
 
+// THROUGH `makeEmit`, like every viewer generator: the rail is drawn from
+// shared data (bean `lnoy`, owner: "4. Option 3 everywhere"), and the shared
+// file is checked or written under the same contract as the page.
+let emitRailed: ((path: string, content: string) => void) | undefined;
 function emit(path: string, content: string): void {
-  content = withViewerNav(content, path, { built: basename(ROOT), docsRoot: join(ROOT, siteDirFor(ROOT)) }) ?? content;
-  if (check) {
-    const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
-    if (current === content) return;
-    console.error(`  ✗ ${path} ${existsSync(path) ? "is stale" : "is missing"}`);
-    stale++;
-    return;
-  }
-  mkdirSync(dirname(path), { recursive: true });
-  writeFileSync(path, content);
+  emitRailed ??= makeEmit({
+    check,
+    quiet: true,
+    onStale: () => {
+      stale++;
+    },
+    nav: { built: basename(ROOT), docsRoot: join(ROOT, siteDirFor(ROOT)) },
+  });
+  emitRailed(path, content);
 }
 
 if (import.meta.main) {

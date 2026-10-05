@@ -66,7 +66,7 @@ A user declares the specification it depends on; the record names no user.
 That is data-modelling step 8 — the dependent holds the pointer — and it is
 why this list cannot drift from the code: a file that stops declaring stops
 being listed. Four forms are read: a `@conformsTo` tag, a `conformsTo:`
-front-matter list, an `xmlns` binding, and a graph kind whose typing module
+front-matter list, an `xmlns` binding, and a graph typology whose typing module
 declares the spec (bean `u63y`).
 
 Every declaration names a record on this page.

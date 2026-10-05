@@ -245,16 +245,6 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - [Folio Assistant]({{ '/issue-marks/' | relative_url }})
 
-### `kinds`
-
-0 of 4 published.
-{: .fa-hx-dim }
-
-- C@T OpenAPI — *declared, not published*
-- FHIR IG Harness — *declared, not published*
-- folio-assistant-core — *declared, not published*
-- folio-assistant-sci — *declared, not published*
-
 ### `library`
 
 6 of 6 published.
@@ -476,6 +466,16 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - folio-assistant-sci — *declared, not published*
 - SMART Base — *declared, not published*
 - WHO IRIS — *declared, not published*
+
+### `typologies`
+
+0 of 4 published.
+{: .fa-hx-dim }
+
+- C@T OpenAPI — *declared, not published*
+- FHIR IG Harness — *declared, not published*
+- folio-assistant-core — *declared, not published*
+- folio-assistant-sci — *declared, not published*
 
 ### `uml`
 

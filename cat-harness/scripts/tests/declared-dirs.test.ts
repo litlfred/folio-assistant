@@ -66,7 +66,7 @@ afterAll(() => {
 const dir = (over: Record<string, unknown> = {}) => ({
   id: "t",
   path: "somewhere/",
-  graphKinds: ["schemas"],
+  graphTypologies: ["schemas"],
   ...over,
 });
 
@@ -111,7 +111,7 @@ describe("an entry declared FROM WITHIN is checked too", () => {
    * since `siteDir()` is the single answer — and a docs-shaped fixture also
    * reads as if the nesting were a docs feature. It is not.
    */
-  const PARENT = { id: "processes", path: "processes/", graphKinds: ["processes"] };
+  const PARENT = { id: "processes", path: "processes/", graphTypologies: ["processes"] };
   const withNested = (nested: Array<Record<string, unknown>>, makeDirs: readonly string[] = []): string => {
     const root = instance([PARENT]);
     const under = join(root, PARENT.id);
@@ -127,7 +127,7 @@ describe("an entry declared FROM WITHIN is checked too", () => {
     // The measured gap: `auditInstance` read `decl.directories` — top-level
     // only — so this entry was neither checked nor counted, and a path into
     // thin air reported exit 0.
-    const root = withNested([{ id: "nested", path: "proposals", graphKinds: ["proposals"] }]);
+    const root = withNested([{ id: "nested", path: "proposals", graphTypologies: ["proposals"] }]);
     const f = auditNested(root, REPO, decl);
     expect(f).toHaveLength(1);
     expect(f[0]!.kind).toBe("absent");
@@ -135,12 +135,12 @@ describe("an entry declared FROM WITHIN is checked too", () => {
   });
 
   test("...and it is clean once the directory is there", () => {
-    const root = withNested([{ id: "nested", path: "proposals", graphKinds: ["proposals"] }], ["proposals"]);
+    const root = withNested([{ id: "nested", path: "proposals", graphTypologies: ["proposals"] }], ["proposals"]);
     expect(auditNested(root, REPO, decl)).toEqual([]);
   });
 
   test("`absent.reason` clears it, and an exemption that outlived its cause is caught", () => {
-    const excused = { id: "nested", path: "proposals", graphKinds: ["proposals"], absent: { reason: "why" } };
+    const excused = { id: "nested", path: "proposals", graphTypologies: ["proposals"], absent: { reason: "why" } };
     expect(auditNested(withNested([excused]), REPO, decl)).toEqual([]);
     const stale = auditNested(withNested([excused], ["proposals"]), REPO, decl);
     expect(stale).toHaveLength(1);
@@ -153,7 +153,7 @@ describe("an entry declared FROM WITHIN is checked too", () => {
     // `assets/img/uml/overview` sent the reader to `assets/img/uml/` — a
     // directory holding no declaration at all. The parent's kind names the
     // file, so it is asked rather than composed.
-    const root = withNested([{ id: "deep", path: "assets/img/uml/overview", graphKinds: ["auto-docs"] }]);
+    const root = withNested([{ id: "deep", path: "assets/img/uml/overview", graphTypologies: ["auto-docs"] }]);
     const f = auditNested(root, REPO, decl);
     expect(f).toHaveLength(1);
     expect(f[0]!.nestedIn?.file).toBe("processes/processes.json");
@@ -172,9 +172,18 @@ describe("an entry declared FROM WITHIN is checked too", () => {
     // A `tip`-keyed entry is the one the keyings differ on, so it is the one
     // worth pinning. `walkNested` carries `storage` through, which is what
     // makes the nested side able to answer at all.
-    const stored = { id: "nested", path: "proposals", graphKinds: ["proposals"], storage: { branch: "cat/x", keyedBy: "tip" } };
+    //
+    // **The two sides agree once the nested entry can actually BE mounted**,
+    // and that is the amendment bean `najo` measured. A mount is keyed on a
+    // directory id, and only a `"subgraph": true` entry has one at instance
+    // level (bean `cmsl`): `resolveDirectories` lists it, so `tipLocations`
+    // sees it and `state:mount` reaches it. Without the marker, `unmounted`
+    // would print `bun run state:mount` for an entry that command cannot
+    // touch — a remedy that does nothing — so that case is its own finding.
+    // Neither side is ever silent, which is what this test is for.
+    const stored = { id: "nested", path: "proposals", graphTypologies: ["proposals"], subgraph: true, storage: { branch: "cat/x", keyedBy: "tip" } };
     const nestedF = auditNested(withNested([stored]), REPO, decl);
-    const topF = auditInstance(instance([{ id: "nested", path: "proposals", graphKinds: ["proposals"], storage: { branch: "cat/x", keyedBy: "tip" } }]), REPO);
+    const topF = auditInstance(instance([{ id: "nested", path: "proposals", graphTypologies: ["proposals"], storage: { branch: "cat/x", keyedBy: "tip" } }]), REPO);
     // Same KINDS, whichever side declared it. Not the same ids or paths — those
     // differ by construction — and not necessarily empty: what matters is that
     // neither side silently returns nothing while the other reports.
@@ -182,10 +191,20 @@ describe("an entry declared FROM WITHIN is checked too", () => {
     expect(nestedF.length).toBeGreaterThan(0);
   });
 
+  test("a nested branch entry that no mount can reach says SO, rather than naming the mount", () => {
+    // The same entry without `"subgraph": true`. It is not listed at instance
+    // level, so `state:mount` has no id to mount it under and `unmounted`'s
+    // remedy would be false. Bean `najo`.
+    const stored = { id: "nested", path: "proposals", graphTypologies: ["proposals"], storage: { branch: "cat/x", keyedBy: "tip" } };
+    const f = auditNested(withNested([stored]), REPO, decl);
+    expect(f.map((x) => x.kind)).toEqual(["unmountable"]);
+    expect(f[0]!.detail).toContain('"subgraph": true');
+  });
+
   test("auditInstance now reaches nested entries, so the sweep cannot miss them", () => {
     // The wiring, separately from the logic: a caller that only ever calls
     // `auditInstance` must still see a nested finding.
-    const root = withNested([{ id: "nested", path: "proposals", graphKinds: ["proposals"] }]);
+    const root = withNested([{ id: "nested", path: "proposals", graphTypologies: ["proposals"] }]);
     expect(auditInstance(root, REPO).filter((f) => f.id === "processes/nested")).toHaveLength(1);
   });
 });
@@ -234,7 +253,7 @@ describe("a repository-scoped entry inside another instance is a mirror", () => 
 describe("the real corpus", () => {
   test("every declared directory in this repository resolves", async () => {
     const { instanceRootsIn } = await import("../../schemas/cat-harness.ts");
-    await import("../../schemas/folio-graph-kind.ts");
+    await import("../../schemas/folio-graph-typology.ts");
     const roots = instanceRootsIn(REPO);
     // Vacuity guard: an empty discovery would make the assertion below pass
     // over nothing, which is the shape this whole check exists to catch.
@@ -247,10 +266,24 @@ describe("the real corpus", () => {
     // so only that one finding is set aside here, and only for those kinds.
     const offMain = (f: (typeof all)[number]): boolean => {
       if (f.kind !== "absent") return false;
-      const decl = readDeclaration(f.instance) as { directories?: Array<{ id: string; graphKinds?: string[] }> } | undefined;
+      const decl = readDeclaration(f.instance) as { directories?: Array<{ id: string; graphTypologies?: string[] }> } | undefined;
       const entry = decl?.directories?.find((d) => d.id === f.id);
       return entry !== undefined && mayLeaveMain(entry);
     };
-    expect(all.filter((f) => !offMain(f))).toEqual([]);
+    // And `unmounted` is not this test's question either, for the same reason
+    // one state over. Bean `najo`: `beans/queue/` is kept at a branch tip, so
+    // whether it is on disk depends on whether this RUNNER ran
+    // `bun run state:mount` — a session has, a `bun test` shard has not. A unit
+    // test whose verdict flips with the environment is worse than no test: it
+    // reads as a defect in the tree when the tree is fine, which is how a suite
+    // teaches people to re-run it until it passes.
+    //
+    // The question itself is kept, where it belongs: `check:declared-dirs` runs
+    // as a GATE in a job that mounts first, and fails there. Only `unmounted`
+    // is set aside — `not-cut-over` (two copies, nothing authoritative) and
+    // `unmountable` (a declaration no mount can reach) are defects in the
+    // declaration itself and stay failing here, whatever the environment.
+    const unmounted = (f: (typeof all)[number]): boolean => f.kind === "unmounted";
+    expect(all.filter((f) => !offMain(f) && !unmounted(f))).toEqual([]);
   });
 });

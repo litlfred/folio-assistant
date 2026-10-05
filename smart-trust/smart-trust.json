@@ -19,7 +19,7 @@
       "id": "smart-trust-ast",
       "path": "fhir-ast/",
       "description": "WHO SMART Trust's IG Publisher AST, INGESTED here although the IG's source is not (owner, 2026-10-04: an IG's semi-static KG may stay remote, and its AST is still ingested into the folio). Read from the branch family cat/fhir-harness/fhir-ast/ on the IG's own repository (litlfred/smart-trust; it could instead be materialised onto a local branch here, by dropping `repository`), one branch per IG package id; this IG's member is cat/fhir-harness/fhir-ast/smart.who.int.trust. Restored by fhir-harness/scripts/ig-cache.sh; absent from the checkout by design. Bean lehh.",
-      "graphKinds": [
+      "graphTypologies": [
         "ig-ast"
       ],
       "storage": {
@@ -34,7 +34,7 @@
       "id": "smart-trust-artifact-index",
       "path": "fhir-artifact-index/",
       "description": "The reconstructed artefact index, and the DAK API surface it points at. ONE directory rather than two on purpose: `dak/` sits INSIDE the declared graph because a sibling would be an undeclared directory holding the very bytes the index claims to have — the `dh4f` shape, where a consumer scans nothing and reports a clean run over it. `index.json` carries a `provenance` block naming the published file every field came out of, because no IG publishes an artefact index and each row was therefore assembled rather than transcribed.",
-      "graphKinds": [
+      "graphTypologies": [
         "fhir-artifact-index"
       ],
       "readOnly": true,
@@ -45,7 +45,7 @@
       "id": "smart-trust-openapi",
       "path": "openapi/",
       "description": "The OpenAPI documents this instance holds, ingested by the cat-openapi harness from the sources `cat-openapi.config.json` names (bean `s4ta`). Today one: the trust network gateway's API, which the IG's published `openapi/` carries as a vendored Swagger UI and which `ingest-ig-artifacts.ts` deliberately does not treat as the IG's own API. Each document is held VERBATIM beside a `<id>.source.json` recording the repository, path and commit it was read from; every operation in it is a node of this graph, with a page and an IRI here (`gateway/<operationId>/`, `gateway/<operationId>.jsonld`), written by `cat-openapi/scripts/gen-openapi-pages.ts`; the pages fetch the document beside them, and are complete HTML, so `served` publishes all of it verbatim.",
-      "graphKinds": [
+      "graphTypologies": [
         "openapi"
       ],
       "readOnly": true,
@@ -57,7 +57,7 @@
       "path": "docs/",
       "instanceRoot": true,
       "description": "The reader-facing pages, generated from `fhir-artifact-index/index.json` by `smart-trust:pages` (`fhir-harness/scripts/gen-ig-pages.ts`). THE REASON THIS EXISTS: `fhir-artifact-index` is registered `renderable: false`, and until 2026-09-21 this instance declared only that kind — so 674 ingested artefacts were reachable at no URL, which is how the owner found it, by asking where `/smart-trust` was. Only `docs` and `folio` are renderable, and `mount-instance-docs.ts` copies any declared `docs` directory as FINISHED HTML (Jekyll's source is hardcoded to `cat-harness/docs`, so an instance's own pages are built by nothing). `instanceRoot: true` is what makes THIS kind answer at `/smart-trust/` rather than the choice falling to sort order — the defect `withRoutes` documents. It is the only renderable kind here today, so nothing is ambiguous yet; declaring it now means adding a second one later cannot silently move the root. Generated, never authored: `smart-trust:pages:check` is the gate. The viewer for this instance's docs, BUILT BY cat-harness — the owner's rule that a harness which instantiates a directory makes a visualiser for it. Declared HERE, in this instance's own file, rather than in the root's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a COMPOSITION LAYER, so declaring this directory there would overlay this instance's `index.md` onto the site's own. Measured — `compose-docs.test.ts` failed exactly that way when tried. The ref resolves because `injectRails` measures against the BUILT instance's docs prefix (cat-harness's), not the declaring instance's, which is the same reason `who-iris-library`'s cat-harness-built ref resolves today. This directory is NOT mounted: `mount-instance-docs` skips a docs directory with no `index.html`, and this one has none. The viewer is real regardless — `auto-docs` indexes the 20 pages it holds and publishes that page. \"No verbatim mount\" and \"no viewer\" are different facts, and declaring this is what stops the second being inferred from the first.",
-      "graphKinds": [
+      "graphTypologies": [
         "docs",
         "ig-pages"
       ],
@@ -79,7 +79,7 @@
       "id": "smart-trust-scripts",
       "path": "scripts/",
       "description": "The tests that pin smart-trust's GENERATED pages -- markdown rather than HTML wearing front matter, and every link resolving to a file. The generator itself moved to `fhir-harness/scripts/gen-ig-pages.ts` (#1767), because nothing in it was smart-trust's: it reads `fhir-artifact-index/`, which every ingested IG holds in the same shape, and smart-base now uses it too. `smart-trust:pages` still names this instance's label and chrome owner. The tests stay here because what they assert is a fact about THESE pages.",
-      "graphKinds": [
+      "graphTypologies": [
         "code"
       ]
     },
@@ -91,7 +91,7 @@
         "keyedBy": "commit"
       },
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 1 file across scenarios (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
-      "graphKinds": [
+      "graphTypologies": [
         "qa"
       ]
     }

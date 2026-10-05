@@ -176,18 +176,18 @@ export function classify(spec: PartitionSpec, relPath: string): Assignment {
  * that way**, because a module imported to run its side effect has nothing to
  * bind. So the one mechanism computing this repo's module edges was blind to
  * exactly the class that carries load-time registration — the class whose
- * absence produces `unknown graph kind`.
+ * absence produces `unknown graph typology`.
  *
  * Measured 2026-09-21, both numbers because they count different things: the
  * relative specifiers this extracts went **2140 → 2214** (76 gained, 2
  * dropped), and the partition's resolved internal edges went **1886 → 1961**.
- * The gained ones are `schemas/folio-graph-kind` almost without exception.
+ * The gained ones are `schemas/folio-graph-typology` almost without exception.
  *
  * **And the blindness was hiding a live rule violation**, which this bean had
  * left explicitly unestablished: wrong-direction edges went **0 → 25**. The
  * rule is `adapter-layering.test.ts`'s — *core may import the harness; the
  * harness may not import core* — and all 25 are harness modules
- * side-effect-importing core's `folio-graph-kind` to get the `folio` kind
+ * side-effect-importing core's `folio-graph-typology` to get the `folio` kind
  * registered before they read a declaration. So the check was reporting a
  * clean partition over 25 edges it could not see.
  *

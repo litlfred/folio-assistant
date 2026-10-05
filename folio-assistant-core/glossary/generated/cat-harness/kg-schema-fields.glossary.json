@@ -2494,7 +2494,7 @@
     {
       "id": "cat-harness.catharnessdeclarationschema.nodeschemas",
       "prefLabel": "CatHarnessDeclarationSchema.nodeSchemas",
-      "definition": "The instance's Node Kinds, declared: each `$schema` tag its files may carry → the JSON Schema that defines it (an IRI, or a path relative to the declaration). Bootstrap's field (`graph.ts`, owner 2026-09-29: the schema-reference table \"should be in bootstrap\"), inherited here because this declaration is a Subkind of bootstrap's. The graph-kind registry's `nodeSchemas` keeps the harness's TypeScript-backed forms (`validator`, `shape`); this one names only published schemas, which is all a reader with nothing installed can follow.",
+      "definition": "The instance's Node Kinds, declared: each `$schema` tag its files may carry → the JSON Schema that defines it (an IRI, or a path relative to the declaration). Bootstrap's field (`graph.ts`, owner 2026-09-29: the schema-reference table \"should be in bootstrap\"), inherited here because this declaration is a Subkind of bootstrap's. The graph-typology registry's `nodeSchemas` keeps the harness's TypeScript-backed forms (`validator`, `shape`); this one names only published schemas, which is all a reader with nothing installed can follow.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.nodeSchemas",
       "status": "candidate"
     },
@@ -2793,17 +2793,10 @@
       "status": "candidate"
     },
     {
-      "id": "cat-harness.directorystorageschema.tool",
-      "prefLabel": "DirectoryStorageSchema.tool",
-      "definition": "The declared Tool that puts content on this store, or mounts it from there: `gh-pages` deploys a site, `ig-cache` restores an AST family (bean j9cs, owner 2026-10-04: *\"there should not be a central registry for declaring mount tools\"*). A Tool node's `id`, which `check:storage-tools` resolves against every declared `tools` graph.",
-      "source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.tool",
-      "status": "candidate"
-    },
-    {
-      "id": "cat-harness.graphnodedirectory.graphkinds",
-      "prefLabel": "GraphNodeDirectory.graphKinds",
+      "id": "cat-harness.graphnodedirectory.graphtypologies",
+      "prefLabel": "GraphNodeDirectory.graphTypologies",
       "definition": "Which parts of the knowledge graph this directory holds — an ARRAY, because a directory is a PLACE TO LOOK and may hold more than one.",
-      "source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectory.graphKinds",
+      "source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectory.graphTypologies",
       "status": "candidate"
     },
     {
@@ -2832,6 +2825,20 @@
       "prefLabel": "GraphNodeDirectoryShape.absent",
       "definition": "This directory is DECLARED and deliberately not on disk, with the reason.",
       "source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.absent",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.graphnodedirectoryshape.source",
+      "prefLabel": "GraphNodeDirectoryShape.source",
+      "definition": "Where this entry's content comes from, when it is not the checkout.",
+      "source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.source",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.graphnodedirectoryshape.subgraph",
+      "prefLabel": "GraphNodeDirectoryShape.subgraph",
+      "definition": "This entry is an instance SUBGRAPH, not a part of its parent's graph.",
+      "source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.subgraph",
       "status": "candidate"
     },
     {
@@ -2947,6 +2954,27 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.nesteddirectory.id",
+      "prefLabel": "NestedDirectory.id",
+      "definition": "`<parent id>/<own id>` — unique across the instance, and says who declares it.",
+      "source": "cat-harness/schemas/cat-harness.ts#NestedDirectory.id",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.nesteddirectory.ownid",
+      "prefLabel": "NestedDirectory.ownId",
+      "definition": "The entry's OWN id, as `resolveDirectories` and a mount marker spell it.",
+      "source": "cat-harness/schemas/cat-harness.ts#NestedDirectory.ownId",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.nesteddirectory.subgraph",
+      "prefLabel": "NestedDirectory.subgraph",
+      "definition": "`true` when the entry declares itself an instance subgraph (bean `cmsl`).",
+      "source": "cat-harness/schemas/cat-harness.ts#NestedDirectory.subgraph",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.publication.host",
       "prefLabel": "Publication.host",
       "definition": "WHAT KIND of host serves the renderings. Optional: absent is a third state — the deployment has not said, NOT `github-pages`.",
@@ -2961,10 +2989,10 @@
       "status": "candidate"
     },
     {
-      "id": "cat-harness.remotegraph.graphkinds",
-      "prefLabel": "RemoteGraph.graphKinds",
+      "id": "cat-harness.remotegraph.graphtypologies",
+      "prefLabel": "RemoteGraph.graphTypologies",
       "definition": "Which parts of the knowledge graph live there.",
-      "source": "cat-harness/schemas/cat-harness.ts#RemoteGraph.graphKinds",
+      "source": "cat-harness/schemas/cat-harness.ts#RemoteGraph.graphTypologies",
       "status": "candidate"
     },
     {
@@ -3194,7 +3222,7 @@
     {
       "id": "cat-harness.visualisationschema.title",
       "prefLabel": "VisualisationSchema.title",
-      "definition": "What a tile calls it. Absent, the tile takes the display name of the directory's first graph kind (`kindTitle`, via `scripts/lib/nav-label.ts`), which is what every other surface calls that page. Declare one only when the page is not simply \"the kind's viewer\". Never add the harness as a suffix (\"Docs — cat-harness\"): the qualifier is appended by the surface (bean `ob3m` finding 6, \"One name everywhere\").",
+      "definition": "What a tile calls it. Absent, the tile takes the display name of the directory's first graph typology (`kindTitle`, via `scripts/lib/nav-label.ts`), which is what every other surface calls that page. Declare one only when the page is not simply \"the kind's viewer\". Never add the harness as a suffix (\"Docs — cat-harness\"): the qualifier is appended by the surface (bean `ob3m` finding 6, \"One name everywhere\").",
       "source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.title",
       "status": "candidate"
     },
@@ -5992,199 +6020,199 @@
       "status": "candidate"
     },
     {
-      "id": "graph-kind-node.graphkindnodeschema.description",
-      "prefLabel": "GraphKindNodeSchema.description",
+      "id": "graph-typology-node.graphtypologynodeschema.description",
+      "prefLabel": "GraphTypologyNodeSchema.description",
       "definition": "What a directory of this kind holds: the kind table's `contents`, generated from here.",
-      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.description",
+      "source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.description",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-node.graphkindnodeschema.kgcontent",
-      "prefLabel": "GraphKindNodeSchema.kgContent",
+      "id": "graph-typology-node.graphtypologynodeschema.kgcontent",
+      "prefLabel": "GraphTypologyNodeSchema.kgContent",
       "definition": "The kind is harness knowledge-graph content (sod4 #5).",
-      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.kgContent",
+      "source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.kgContent",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-node.graphkindnodeschema.kind",
-      "prefLabel": "GraphKindNodeSchema.kind",
-      "definition": "The kind's word, as a directory's `graphKinds` names it. `kind`, NOT `name`: a JSON file whose `name` equals its filename stem is how `findDeclarationFile` recognises an INSTANCE declaration, so a node spelled with `name` made `kinds/` read as a directory of four instances (measured on the first move, 2026-10-04).",
-      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.kind",
+      "id": "graph-typology-node.graphtypologynodeschema.kind",
+      "prefLabel": "GraphTypologyNodeSchema.kind",
+      "definition": "The kind's word, as a directory's `graphTypologies` names it. `kind`, NOT `name`: a JSON file whose `name` equals its filename stem is how `findDeclarationFile` recognises an INSTANCE declaration, so a node spelled with `name` made `typologies/` read as a directory of four instances (measured on the first move, 2026-10-04).",
+      "source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.kind",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-node.graphkindnodeschema.published",
-      "prefLabel": "GraphKindNodeSchema.published",
+      "id": "graph-typology-node.graphtypologynodeschema.published",
+      "prefLabel": "GraphTypologyNodeSchema.published",
       "definition": "`false`: never part of a published graph (sod4 #5).",
-      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.published",
+      "source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.published",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-node.graphkindnodeschema.rationale",
-      "prefLabel": "GraphKindNodeSchema.rationale",
+      "id": "graph-typology-node.graphtypologynodeschema.rationale",
+      "prefLabel": "GraphTypologyNodeSchema.rationale",
       "definition": "WHY the kind sits in its layer and renders as it does: what a code comment said on a listed kind. Not read by any reader.",
-      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.rationale",
+      "source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.rationale",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-node.graphkindnodeschema.skillbearing",
-      "prefLabel": "GraphKindNodeSchema.skillBearing",
+      "id": "graph-typology-node.graphtypologynodeschema.skillbearing",
+      "prefLabel": "GraphTypologyNodeSchema.skillBearing",
       "definition": "The directory may be scanned for skill bodies (sod4 #5).",
-      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.skillBearing",
+      "source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.skillBearing",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-node.graphkindnodeschema.tileicon",
-      "prefLabel": "GraphKindNodeSchema.tileIcon",
+      "id": "graph-typology-node.graphtypologynodeschema.tileicon",
+      "prefLabel": "GraphTypologyNodeSchema.tileIcon",
       "definition": "The navbar tile icon (an icon name, as `graph-tiles.ts` spells it).",
-      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.tileIcon",
+      "source": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema.tileIcon",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.anylayer",
-      "prefLabel": "GraphKindDef.anyLayer",
+      "id": "graph-typology-registry.graphtypologydef.anylayer",
+      "prefLabel": "GraphTypologyDef.anyLayer",
       "definition": "A directory of this kind may be declared by ANY layer, not only the kind's owner (the table's \"and any layer\").",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.anyLayer",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.anyLayer",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.avatar",
-      "prefLabel": "GraphKindDef.avatar",
+      "id": "graph-typology-registry.graphtypologydef.avatar",
+      "prefLabel": "GraphTypologyDef.avatar",
       "definition": "The kind's mark, when the kind is DECLARED as a node (bean dmx1) rather than listed here: it travels with the kind, so `schemas/avatars.ts` does not have to be a second central table. A kind listed here keeps its entry in `AVATARS`.",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.avatar",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.avatar",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.concerngroups",
-      "prefLabel": "GraphKindDef.concernGroups",
+      "id": "graph-typology-registry.graphtypologydef.concerngroups",
+      "prefLabel": "GraphTypologyDef.concernGroups",
       "definition": "Is a directory of this kind GROUPED BY CONCERN — `<dir>/<group>/`, with the groups named from within by {@link declarationFile} and drawn from the `concern-group` code list (bean `9umr`; placement PR0c, bean `ejye`)?",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.concernGroups",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.concernGroups",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.declarationfile",
-      "prefLabel": "GraphKindDef.declarationFile",
+      "id": "graph-typology-registry.graphtypologydef.declarationfile",
+      "prefLabel": "GraphTypologyDef.declarationFile",
       "definition": "The NESTED DECLARATION a directory of this kind carries, by filename.",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.declarationFile",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.declarationFile",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.description",
-      "prefLabel": "GraphKindDef.description",
+      "id": "graph-typology-registry.graphtypologydef.description",
+      "prefLabel": "GraphTypologyDef.description",
       "definition": "What a directory of this kind HOLDS, as the kind table states it: the editorial prose that used to be hand-written in that table's `contents` column (owner, 2026-10-04: the prose moves onto the kind, and the table is generated from it). Longer and more careful than `summary`, which stays the one line a tile or a tooltip shows.",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.description",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.description",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.holds",
-      "prefLabel": "GraphKindDef.holds",
+      "id": "graph-typology-registry.graphtypologydef.holds",
+      "prefLabel": "GraphTypologyDef.holds",
       "definition": "Does a graph of this kind say what the instance **IS**, or where something **GOT TO**?",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.holds",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.holds",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.kgcontent",
-      "prefLabel": "GraphKindDef.kgContent",
-      "definition": "The kind IS harness knowledge-graph content — the `cat-harness` umbrella and the kinds split out of it. Was `KG_CONTENT_GRAPH_KINDS` (sod4 #5).",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.kgContent",
+      "id": "graph-typology-registry.graphtypologydef.kgcontent",
+      "prefLabel": "GraphTypologyDef.kgContent",
+      "definition": "The kind IS harness knowledge-graph content — the `cat-harness` umbrella and the kinds split out of it. Was `KG_CONTENT_GRAPH_TYPOLOGIES` (sod4 #5).",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.kgContent",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.layer",
-      "prefLabel": "GraphKindDef.layer",
-      "definition": "Whose namespace the kind is named in, when it is not the harness's: `core` for the folio's own furniture (`voices`, `library`, `todos`, …). A kind bootstrap defines is bootstrap's whatever this says (`BOOTSTRAP_GRAPH_KINDS`). The kind IS its individual, `<ns>graphKind/<name>` ({@link graphKindIri}); there is no class per kind. Owner, 2026-09-30 (bean `3r47`): \"Drop per-kind classes\" — bootstrap names a kind as one `GraphKind` individual, and the harness now does the same.",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.layer",
+      "id": "graph-typology-registry.graphtypologydef.layer",
+      "prefLabel": "GraphTypologyDef.layer",
+      "definition": "Whose namespace the kind is named in, when it is not the harness's: `core` for the folio's own furniture (`voices`, `library`, `todos`, …). A kind bootstrap defines is bootstrap's whatever this says (`BOOTSTRAP_GRAPH_TYPOLOGIES`). The kind IS its individual, `<ns>graphTypology/<name>` ({@link graphTypologyIri}); there is no class per kind. Owner, 2026-09-30 (bean `3r47`): \"Drop per-kind classes\" — bootstrap names a kind as one `GraphTypology` individual, and the harness now does the same.",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.layer",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.nodeschemas",
-      "prefLabel": "GraphKindDef.nodeSchemas",
+      "id": "graph-typology-registry.graphtypologydef.nodeschemas",
+      "prefLabel": "GraphTypologyDef.nodeSchemas",
       "definition": "One entry per `$schema` family a node of this kind may carry, keyed by the tag. Bean `rdkm`.",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.nodeSchemas",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.nodeSchemas",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.perinstance",
-      "prefLabel": "GraphKindDef.perInstance",
+      "id": "graph-typology-registry.graphtypologydef.perinstance",
+      "prefLabel": "GraphTypologyDef.perInstance",
       "definition": "Does every instance have ITS OWN graph of this kind — so an instance that inherits a directory of this kind gets its own copy created?",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.perInstance",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.perInstance",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.published",
-      "prefLabel": "GraphKindDef.published",
-      "definition": "`false` keeps the kind out of every PUBLISHED graph: not one edge of a published artefact may lead to it (`isPublishedGraphKind`). Absent means published. Was `UNPUBLISHED_GRAPH_KINDS` in cat-harness.ts (sod4 #5).",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.published",
+      "id": "graph-typology-registry.graphtypologydef.published",
+      "prefLabel": "GraphTypologyDef.published",
+      "definition": "`false` keeps the kind out of every PUBLISHED graph: not one edge of a published artefact may lead to it (`isPublishedGraphTypology`). Absent means published. Was `UNPUBLISHED_GRAPH_TYPOLOGIES` in cat-harness.ts (sod4 #5).",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.published",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.recordswork",
-      "prefLabel": "GraphKindDef.recordsWork",
+      "id": "graph-typology-registry.graphtypologydef.recordswork",
+      "prefLabel": "GraphTypologyDef.recordsWork",
       "definition": "Does a graph of this kind record WORK — something somebody is partway through, that an arriving agent could pick up?",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.recordsWork",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.recordsWork",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.renderable",
-      "prefLabel": "GraphKindDef.renderable",
+      "id": "graph-typology-registry.graphtypologydef.renderable",
+      "prefLabel": "GraphTypologyDef.renderable",
       "definition": "Is a graph of this kind expected to render as a website?",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.renderable",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.renderable",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.renderablenote",
-      "prefLabel": "GraphKindDef.renderableNote",
+      "id": "graph-typology-registry.graphtypologydef.renderablenote",
+      "prefLabel": "GraphTypologyDef.renderableNote",
       "definition": "A remark the table's `renderable` column carries beside yes/no (\"the plain just-the-docs pipeline\").",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.renderableNote",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.renderableNote",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.schema",
-      "prefLabel": "GraphKindDef.schema",
+      "id": "graph-typology-registry.graphtypologydef.schema",
+      "prefLabel": "GraphTypologyDef.schema",
       "definition": "Where the shape of a node in this graph is defined — a repo-relative module path, or a `$schema` tag the files themselves carry.",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.schema",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.schema",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.skillbearing",
-      "prefLabel": "GraphKindDef.skillBearing",
-      "definition": "The kind's directory may be scanned for SKILL BODIES (`*.md` with a `name:` front matter). Was `SKILL_BEARING_GRAPH_KINDS` (sod4 #5).",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.skillBearing",
+      "id": "graph-typology-registry.graphtypologydef.skillbearing",
+      "prefLabel": "GraphTypologyDef.skillBearing",
+      "definition": "The kind's directory may be scanned for SKILL BODIES (`*.md` with a `name:` front matter). Was `SKILL_BEARING_GRAPH_TYPOLOGIES` (sod4 #5).",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.skillBearing",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.tileicon",
-      "prefLabel": "GraphKindDef.tileIcon",
+      "id": "graph-typology-registry.graphtypologydef.tileicon",
+      "prefLabel": "GraphTypologyDef.tileIcon",
       "definition": "The navbar tile icon (a name in `TILE_GLYPHS`); on cat-harness's own kinds too since sod4 #5, so `graph-tiles.ts` keeps no table.",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.tileIcon",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.tileIcon",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.title",
-      "prefLabel": "GraphKindDef.title",
+      "id": "graph-typology-registry.graphtypologydef.title",
+      "prefLabel": "GraphTypologyDef.title",
       "definition": "What every navigation surface CALLS a destination of this kind: the viewer rail, the Jekyll sidebar, FOLDERS, the landing's viewer list, the glass tiles and the Stickies row.",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.title",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.title",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.validator",
-      "prefLabel": "GraphKindDef.validator",
+      "id": "graph-typology-registry.graphtypologydef.validator",
+      "prefLabel": "GraphTypologyDef.validator",
       "definition": "What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a Zod schema.",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.validator",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.validator",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.validatornotapplicable",
-      "prefLabel": "GraphKindDef.validatorNotApplicable",
+      "id": "graph-typology-registry.graphtypologydef.validatornotapplicable",
+      "prefLabel": "GraphTypologyDef.validatorNotApplicable",
       "definition": "WHY a runtime validator does not apply to this kind — a reason, not a flag.",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.validatorNotApplicable",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.validatorNotApplicable",
       "status": "candidate"
     },
     {
-      "id": "graph-kind-registry.graphkinddef.within",
-      "prefLabel": "GraphKindDef.within",
+      "id": "graph-typology-registry.graphtypologydef.within",
+      "prefLabel": "GraphTypologyDef.within",
       "definition": "The kind this one is a SUB-GRAPH of, when it is one.",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.within",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.within",
       "status": "candidate"
     },
     {
@@ -9564,7 +9592,7 @@
     {
       "id": "subgraph-manifest.subgraphnodebase.holdsgraph",
       "prefLabel": "SubgraphNodeBase.holdsGraph",
-      "definition": "Links to the GraphKind nodes this subgraph holds.",
+      "definition": "Links to the GraphTypology nodes this subgraph holds.",
       "source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.holdsGraph",
       "status": "candidate"
     },
@@ -10579,7 +10607,7 @@
     {
       "id": "tool.tooldefinitionschema.renders",
       "prefLabel": "ToolDefinitionSchema.renders",
-      "definition": "The graph KINDS this Tool draws a viewer for — one page per declared directory of the kind, placed by the Tool itself.",
+      "definition": "The graph TYPOLOGIES this Tool draws a viewer for — one page per declared directory of the kind, placed by the Tool itself.",
       "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.renders",
       "status": "candidate"
     },
@@ -12021,7 +12049,7 @@
     {
       "id": "validator-node.validatornodeschema.validates",
       "prefLabel": "ValidatorNodeSchema.validates",
-      "definition": "What it validates: a graph kind, and the `$schema` family within it when the kind has several.",
+      "definition": "What it validates: a graph typology, and the `$schema` family within it when the kind has several.",
       "source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.validates",
       "status": "candidate"
     },
@@ -12728,7 +12756,7 @@
     {
       "id": "webpage.webpage.documents",
       "prefLabel": "WebPage.documents",
-      "definition": "What this page documents: graph kinds (`library`), or one directory as `<instance>/<id>` where the kind is too general. Emitted into the page's front matter, where the coverage check reads it — the page names the directory, and the directory names no page (#1168 B7c).",
+      "definition": "What this page documents: graph typologies (`library`), or one directory as `<instance>/<id>` where the kind is too general. Emitted into the page's front matter, where the coverage check reads it — the page names the directory, and the directory names no page (#1168 B7c).",
       "source": "cat-harness/schemas/webpage.ts#WebPage.documents",
       "status": "candidate"
     },

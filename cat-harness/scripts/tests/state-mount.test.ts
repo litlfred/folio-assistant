@@ -199,7 +199,7 @@ describe("a store state:mount does not mount names the Tool that does (bean j9cs
       const entry = {
         id: "cache",
         path: "cache/",
-        graphKinds: ["lake-cache"],
+        graphTypologies: ["lake-cache"],
         storage: { branchPrefix: "p/cache/", keyedBy: "family", keyFrom: "<member>", tool: "site-build-local" },
       };
       writeFileSync(join(root, "t.json"), JSON.stringify({ name: "t", directories: [entry] }, null, 2) + "\n");

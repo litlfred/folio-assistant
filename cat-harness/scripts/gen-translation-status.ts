@@ -182,7 +182,7 @@ function filesUnder(dir: string, exts: readonly string[]): string[] {
  */
 export function translationsDirOf(root: string): string | undefined {
   const decl = readDeclaration(root);
-  const entry = decl?.directories?.find((d) => (d.graphKinds ?? []).includes("translation-sources"));
+  const entry = decl?.directories?.find((d) => (d.graphTypologies ?? []).includes("translation-sources"));
   return entry === undefined ? undefined : join(root, entry.path);
 }
 

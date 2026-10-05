@@ -150,7 +150,7 @@ describe("what it contains, read against the disk", () => {
     expect(skillIds(build())).toEqual(skillFilesOnDisk());
   });
 
-  test("bootstrap publishes only the graph kinds it DECLARES", () => {
+  test("bootstrap publishes only the graph typologies it DECLARES", () => {
     // Bean `3jj9`: the universal registry once leaked into every instance, so
     // bootstrap advertised `folio`, `voices` and `beans`, none of which it can
     // reach. Derived from the declaration, read here independently of the
@@ -160,8 +160,8 @@ describe("what it contains, read against the disk", () => {
       .flatMap((n) => (n["type"] as string[]).map((k) => k.split("/").pop()!));
     const declared = new Set(
       (JSON.parse(readFileSync(declarationPathIn(CAT_BOOTSTRAP)!, "utf-8")) as {
-        directories?: Array<{ graphKinds?: string[] }>;
-      }).directories?.flatMap((d) => d.graphKinds ?? []) ?? [],
+        directories?: Array<{ graphTypologies?: string[] }>;
+      }).directories?.flatMap((d) => d.graphTypologies ?? []) ?? [],
     );
     expect(kinds.length).toBeGreaterThan(0); // not vacuous
     for (const k of kinds) expect([...declared]).toContain(k);

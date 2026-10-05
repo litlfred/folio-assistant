@@ -7,7 +7,7 @@ import { describe, expect, test } from "bun:test";
 
 import { ContentDirectorySchema } from "./cat-harness.ts";
 
-const dir = (extra: Record<string, unknown>) => ({ id: "ig-docs", path: "docs/", graphKinds: ["docs"], ...extra });
+const dir = (extra: Record<string, unknown>) => ({ id: "ig-docs", path: "docs/", graphTypologies: ["docs"], ...extra });
 
 describe("derivedFrom", () => {
   test("absent is valid: 'not declared', which check:derived-from reports separately", () => {

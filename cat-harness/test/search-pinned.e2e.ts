@@ -113,12 +113,15 @@ function probe(p: Page) {
       !!o && m.left < o.right && o.left < m.right && m.top < o.bottom && o.top < m.bottom;
     const hit = document.elementFromPoint(m.left + m.width / 2, m.top + m.height / 2);
     const overlaps = Object.entries({
+      // NOT the glass band: since #2201 the magnifier lives IN it, and the
+      // band is the row it is pinned by. `inBand` below says so.
       "Folio handle": box(".fa-glass-handle"),
-      "glass band": box(".fa-glass-band"),
       "staging banner": box("[data-fa-staging-banner]"),
       "menu button": box("#menu-button"),
     }).filter(([, o]) => meets(o)).map(([k]) => k);
+    const band = box(".fa-glass-band");
     return {
+      inBand: !!band && m.left >= band.left && m.right <= band.right && m.top >= band.top && m.bottom <= band.bottom,
       onScreen: m.top >= 0 && m.bottom <= innerHeight && m.left >= 0 && m.right <= innerWidth,
       pressable: !!hit && !!hit.closest(".fa-search-peek"),
       overlaps,
@@ -144,6 +147,7 @@ for (const dir of ["ltr", "rtl"] as const) {
             const s = await probe(p);
             if (!s.onScreen) findings.push(`scrollY ${y}: off screen`);
             else if (!s.pressable) findings.push(`scrollY ${y}: covered`);
+            if (!s.inBand) findings.push(`scrollY ${y}: not inside the glass band`);
             for (const o of s.overlaps) findings.push(`scrollY ${y}: overlaps the ${o}`);
           }
           expect(findings).toEqual([]);
@@ -169,9 +173,14 @@ for (const dir of ["ltr", "rtl"] as const) {
             const cs = getComputedStyle(w);
             return { left: r.left + parseFloat(cs.paddingLeft), right: r.right - parseFloat(cs.paddingRight) };
           });
+          // The band spans the panel; search runs to its inline end (#2201,
+          // the locale selector holds the inline-start).
+          const band = (await p.locator(".fa-glass-band").boundingBox())!;
+          expect(Math.abs(band.x - wrap.left)).toBeLessThanOrEqual(1);
+          expect(Math.abs(band.x + band.width - wrap.right)).toBeLessThanOrEqual(1);
           const row = (await p.locator(".fa-search-home").boundingBox())!;
-          expect(Math.abs(row.x - wrap.left)).toBeLessThanOrEqual(1);
-          expect(Math.abs(row.x + row.width - wrap.right)).toBeLessThanOrEqual(1);
+          if (dir === "ltr") expect(Math.abs(row.x + row.width - wrap.right)).toBeLessThanOrEqual(1);
+          else expect(Math.abs(row.x - wrap.left)).toBeLessThanOrEqual(1);
           expect(row.y).toBeGreaterThanOrEqual(0);
           const s = await probe(p);
           expect(s.overlaps).toEqual([]);
@@ -181,7 +190,8 @@ for (const dir of ["ltr", "rtl"] as const) {
               '<ul class="search-results-list"><li><a class="search-result" href="#">A hit</a></li></ul>';
           });
           const rb = (await p.locator("#search-results").boundingBox())!;
-          expect(Math.abs(rb.width - row.width)).toBeLessThanOrEqual(2);
+          const ib = (await p.locator("#search-input").boundingBox())!;
+          expect(Math.abs(rb.width - ib.width)).toBeLessThanOrEqual(2);
           await p.keyboard.press("Escape");
           await expect(peek).toBeFocused();
           await expect(peek).toHaveAttribute("aria-expanded", "false");

@@ -153,9 +153,9 @@ interface InstanceArt {
   /** Tile ids with no `icon`, so sharing the fallback drawing. */
   readonly tilesOnFallback: readonly string[];
   /**
-   * Directories this instance declares with graph kind `themes`.
+   * Directories this instance declares with graph typology `themes`.
    *
-   * The field is **`graphKinds`** and not `graphs`, which cost three wrong
+   * The field is **`graphTypologies`** and not `graphs`, which cost three wrong
    * measurements in the session that wrote this: a plausible key name read
    * `0 of 20` over a corpus where the answer is 1. Read the declaration, never
    * guess its spelling.
@@ -178,7 +178,7 @@ function artOf(repoRoot: string, root: string): InstanceArt | undefined {
     name?: string;
     icon?: string;
     images?: { id?: string }[];
-    directories?: { id?: string; path?: string; graphKinds?: string[]; tile?: { icon?: string } }[];
+    directories?: { id?: string; path?: string; graphTypologies?: string[]; tile?: { icon?: string } }[];
   };
 
   const tiles = (d.directories ?? []).filter((x) => typeof x.tile === "object" && x.tile !== null);
@@ -197,7 +197,7 @@ function artOf(repoRoot: string, root: string): InstanceArt | undefined {
       typeof x.tile?.icon === "string" ? [] : [x.id ?? "<no id>"],
     ),
     themeDirs: (d.directories ?? []).flatMap((x) =>
-      (x.graphKinds ?? []).includes("themes") ? [x.path ?? x.id ?? "?"] : [],
+      (x.graphTypologies ?? []).includes("themes") ? [x.path ?? x.id ?? "?"] : [],
     ),
   };
 }
@@ -336,7 +336,7 @@ function main(): number {
   }
 
   // Family 3, for the KIND fallback — `graph-tiles.ts` gives an undeclared
-  // tile its graph kind's icon, so a kind mapped to an undrawn name is the
+  // tile its graph typology's icon, so a kind mapped to an undrawn name is the
   // same miss, made for every derived tile of that kind at once.
   for (const [kind, name] of Object.entries(KIND_TILE_ICONS)) {
     if (!tiles.has(name)) {
