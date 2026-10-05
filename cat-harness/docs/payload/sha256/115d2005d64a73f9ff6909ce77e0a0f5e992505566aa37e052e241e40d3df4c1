@@ -474,22 +474,21 @@ Three consequences, all of which the implementation carries:
 
 ## Whose nodes — an instance publishes its own, and leaves a tombstone
 
-**The published document holds the instance's OWN declared directories**
-(owner ruling 2026-10-05, option B; bean `4ak5` item 2). `buildExport` takes
-`scope`, and the CLI `--scope <instance|checkout>`:
+**The policy is [`instance-publication`](instance-publication.md) §"What each
+instance publishes — graph, address, schema, and what is stripped"**: which
+instance publishes which document where, the owner's 2026-10-05 ruling
+(option B; bean `4ak5` item 2), and when the tombstones are removed. This
+section is the exporter's side of it.
+
+`buildExport` takes `scope`, and the CLI `--scope <instance|checkout>`:
 
 | scope | reads | for |
 |---|---|---|
 | `instance` (default) | this instance's declaration alone | the published document, its locale variants, its QA sidecar |
 | `checkout` | this instance plus every instance stacked on it | a corpus-wide consumer that says so — the `kg` search slice |
 
-Before the split one checkout-scope document carried five other instances'
-nodes under `cat-harness.jsonld#…` — 825 of 3369, measured the day it
-landed. Each stacked instance is in its own document now
-(`instance-exports.ts`).
-
-**An `@id` that moved keeps a tombstone for ONE release**, because GitHub
-Pages cannot redirect a fragment:
+A tombstone, one per `@id` the checkout-scope document mints and the
+instance-scope one does not:
 
 ```json
 { "@id": "<old>", "deprecated": true, "isReplacedBy": "<the same node in its owner's document>" }
@@ -501,9 +500,8 @@ retired term. A tombstone has no `@type` and is in neither `counts` nor
 `danglingLinks` — a link to a node that left still reads as dangling. A node
 no owner's document mints (a package, a schema module: those collectors are
 instance-bound) forwards to the owner's DOCUMENT. The owner's IRI is minted
-the way the deploy publishes it (`publishedIdentity`): no `--base-url` for an
-instance declaring its own `canonicalUrl`. The release after next deletes
-`tombstonesFor`, its call, and the two terms.
+the way the deploy publishes it (`publishedIdentity`). Removing them means
+deleting `tombstonesFor`, its call, and the two terms.
 
 ## Named subgraphs — one IRI, two files, framed from one graph
 

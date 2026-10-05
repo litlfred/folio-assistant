@@ -611,7 +611,7 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
   class "Page" as cat_harness_qa_viewer_nav_qa_v1_Page <<json: ViewerNavQaSchema>> #f4e6e6 {
     path [1] : string
     source [1] : string
-    verdict [1] : railed | declined | missing
+    verdict [1] : railed | declined | linked | missing
     reason [0..1] : string
     flags [0..*] : enum(8)[]
   }

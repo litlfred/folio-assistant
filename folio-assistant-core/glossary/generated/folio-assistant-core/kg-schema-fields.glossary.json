@@ -714,6 +714,13 @@
       "status": "candidate"
     },
     {
+      "id": "public-comment.changesethistoryschema.url",
+      "prefLabel": "ChangeSetHistorySchema.url",
+      "definition": "The GitHub comment, issue or PR it came from.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetHistorySchema.url",
+      "status": "candidate"
+    },
+    {
       "id": "public-comment.changesetrefschema.before",
       "prefLabel": "ChangeSetRefSchema.before",
       "definition": "Before/after deep links to the comment's anchor.",
@@ -725,6 +732,62 @@
       "prefLabel": "ChangeSetRefSchema.stagingUrl",
       "definition": "The staging preview of the change set.",
       "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema.stagingUrl",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.changesetschema.anchor",
+      "prefLabel": "ChangeSetSchema.anchor",
+      "definition": "The section or block the change is mainly about, for ordering.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.anchor",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.changesetschema.id",
+      "prefLabel": "ChangeSetSchema.id",
+      "definition": "\"CS-001\".",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.changesetschema.issue",
+      "prefLabel": "ChangeSetSchema.issue",
+      "definition": "The primary issue: where the change-set is rendered and its requirements agreed.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.issue",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.changesetschema.issues",
+      "prefLabel": "ChangeSetSchema.issues",
+      "definition": "Every issue that discusses it, the primary one included.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.issues",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.changesetschema.mergedinto",
+      "prefLabel": "ChangeSetSchema.mergedInto",
+      "definition": "For `merged`: the change-set it was folded into.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.mergedInto",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.changesetschema.pr",
+      "prefLabel": "ChangeSetSchema.pr",
+      "definition": "The PR making the change.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.pr",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.changesetschema.refs",
+      "prefLabel": "ChangeSetSchema.refs",
+      "definition": "The comments it answers. A comment may be in more than one change-set.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.refs",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.changesetschema.requirements",
+      "prefLabel": "ChangeSetSchema.requirements",
+      "definition": "What the change should do, in the editor's terms: the issue's requirements.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema.requirements",
       "status": "candidate"
     },
     {
