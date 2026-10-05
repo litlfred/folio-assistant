@@ -52,8 +52,7 @@ import { readDeclaration, repoRootFor, siteDirFor } from "../../cat-harness/sche
 import { fragment as folioMountFragment } from "../../cat-harness/scripts/folio-mount.ts";
 import { embed as pdfViewer } from "../../cat-harness/scripts/pdf-viewer.ts";
 import { subjectPage } from "../../cat-harness/scripts/harness-tiles.js";
-import { withRoutes } from "../../cat-harness/scripts/mount-instance-docs.ts";
-import { builtDocsRoute } from "../../cat-harness/scripts/docs-route.ts";
+import { builtDocsRoute, withRoutes } from "../../cat-harness/scripts/mount-instance-docs.ts";
 import { libraryResolver } from "../../cat-harness/scripts/lib/library-links.ts";
 import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
 import { whoThemeById } from "../themes/themes.js";

@@ -117,6 +117,11 @@ import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
 import { kindTitle } from "./lib/nav-label.js";
 import { viewersOf } from "./viewer-declarations.js";
 import { builtDocsRoute } from "./docs-route.js";
+// Re-exported for a mounted instance's own page generator (who-iris's
+// catalogue), which already reaches the platform through this module: it
+// needs the same docs route, and a second import would be a second climb
+// out of the instance (`instance-separation-imports.test.ts`).
+export { builtDocsRoute };
 import { composedInstances } from "./compose-docs.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
