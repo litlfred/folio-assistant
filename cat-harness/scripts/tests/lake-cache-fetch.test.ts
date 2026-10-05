@@ -60,3 +60,30 @@ describe("lake-cache-fetch.sh candidate order (bean rva2)", () => {
     expect(order.filter((b) => b === BUILT_IN)).toHaveLength(1);
   });
 });
+
+// The two Python mirrors, loaded as modules (their `main` is guarded) from a
+// copy in `<folio>/scripts/`, so REPO_ROOT is the folio exactly as in use.
+describe("the Python mirrors read the same declaration (bean rva2)", () => {
+  const BUILT_INS = ["cat/folio-assistant-sci/lake-cache/", "cat-lake-cache/", "lake-cache/"];
+  const prefixes = (f: string, script: string): string[] => {
+    copyFileSync(resolve(import.meta.dir, "..", script), join(f, "scripts", script));
+    const py =
+      "import importlib.util, json, sys\n" +
+      "s = importlib.util.spec_from_file_location('m', sys.argv[1])\n" +
+      "m = importlib.util.module_from_spec(s); s.loader.exec_module(m)\n" +
+      "print(json.dumps(list(m.CACHE_PREFIXES)))\n";
+    const r = spawnSync("python3", ["-c", py, join(f, "scripts", script)], { encoding: "utf-8" });
+    expect(r.status, r.stderr).toBe(0);
+    return JSON.parse(r.stdout) as string[];
+  };
+
+  for (const script of ["lake-cache-fetch-multi.py", "lake-cache-produce.py"]) {
+    test(`${script}: the declared family first, then the built-in names`, () => {
+      expect(prefixes(folio("my/lake-cache/"), script)).toEqual(["my/lake-cache/", ...BUILT_INS]);
+    });
+
+    test(`${script}: no declaration leaves the built-in names`, () => {
+      expect(prefixes(folio(), script)).toEqual(BUILT_INS);
+    });
+  }
+});

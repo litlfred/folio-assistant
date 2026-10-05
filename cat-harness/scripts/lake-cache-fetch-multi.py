@@ -172,6 +172,38 @@ def regen_from_index(staging_lake: Path, index_path: Path) -> int:
 CACHE_PREFIXES = ("cat/folio-assistant-sci/lake-cache/", "cat-lake-cache/", "lake-cache/")
 
 
+def _declared_cache_prefix(root: Path) -> str | None:
+    """The folio's own lake-cache family (bean rva2), or None.
+
+    A directory with graphKind `lake-cache` and `storage.keyedBy: "family"`
+    in `<instance>.json` at the folio root names the prefix. Same reader as
+    lake-cache.sh and lake-cache-fetch.sh; an unreadable file is skipped.
+    """
+    for path in sorted(root.glob("*.json")):
+        try:
+            d = json.loads(path.read_text())
+        except Exception:
+            continue
+        dirs = d.get("directories") if isinstance(d, dict) else None
+        if not isinstance(dirs, list):
+            continue
+        for e in dirs:
+            if not isinstance(e, dict):
+                continue
+            st = e.get("storage") if isinstance(e.get("storage"), dict) else {}
+            kinds = e.get("graphKinds") if isinstance(e.get("graphKinds"), list) else []
+            prefix = st.get("branchPrefix")
+            if "lake-cache" in kinds and st.get("keyedBy") == "family" and isinstance(prefix, str) and prefix:
+                return prefix.rstrip("/") + "/"
+    return None
+
+
+# The declared family goes first; the built-in names stay as fallbacks.
+_DECLARED = _declared_cache_prefix(REPO_ROOT)
+if _DECLARED:
+    CACHE_PREFIXES = (_DECLARED,) + tuple(p for p in CACHE_PREFIXES if p != _DECLARED)
+
+
 def restore_one(pkg: dict, slug: str, suffix: str, force: bool) -> dict:
     name = pkg["name"]
     key = f"{name}-{slug}{('-' + suffix) if suffix else ''}"
