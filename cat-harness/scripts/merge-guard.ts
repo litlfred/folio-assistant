@@ -38,7 +38,7 @@
  * one that marked the PR ready. `--status` also posts the verdict as the
  * `merge-guard` commit status on the head, which is what the workflow does.
  *
- * ## The seven checks
+ * ## The eight checks
  *
  * Every refusal names its check, by number and by id:
  *
@@ -66,6 +66,15 @@
  * 7. `open-question` — no comment newer than the ready marker asks the owner
  *    or the Merge Manager an open question. A heuristic; its limits are on
  *    {@link openQuestions}.
+ * 8. `mergeable` — GitHub says the head still merges cleanly into its base
+ *    (bean `vihx`). Check 5's runs tested the head merged with main AS MAIN
+ *    WAS when the head was pushed; once main moves, a stale green head with a
+ *    valid marker passed checks 1-7 while it conflicted (#1898, and two HTTP
+ *    405 "merge conflicts" refusals on 2026-10-05). `mergeable: false` (or
+ *    `mergeable_state: dirty`) refuses not-ready; `null` — GitHub has not
+ *    computed it yet — is `unknown`, after {@link fetchSnapshot} re-asks a few
+ *    times. `unstable` and `blocked` pass here: they are about checks, which
+ *    check 5 judges.
  *
  * ## Exit codes
  *
@@ -80,7 +89,7 @@
  * | verdict | status | when |
  * |---|---|---|
  * | pass | `success` | every check passes |
- * | refused, every refusal `not-ready` | `pending` | a draft, no marker, no label, an unticked box, CI still running, an open question |
+ * | refused, every refusal `not-ready` | `pending` | a draft, no marker, no label, an unticked box, CI still running, an open question, a conflict with main |
  * | refused, any refusal a `defect` | `failure` | a base that is not `main` or is dead, `needs-merge-human`, red CI, a marker or ready-flip by another session |
  * | unknown | `error` | a fact could not be read |
  *
@@ -176,6 +185,7 @@ export const CHECKS = [
   "ci",
   "checklist",
   "open-question",
+  "mergeable",
 ] as const;
 export type CheckId = (typeof CHECKS)[number];
 
@@ -212,6 +222,18 @@ export interface GhPull {
   labels: { name: string }[];
   head: { sha: string; ref: string };
   base: { ref: string; repo?: { owner?: GhUser } };
+  /**
+   * Whether GitHub can merge the head into the base (check 8). `null` means
+   * GitHub has not computed it yet: a GET of the PR starts the job, and a
+   * later GET reads the answer. Absent means the record did not carry it.
+   */
+  mergeable?: boolean | null;
+  /**
+   * Trusted only when it is `dirty` (a conflict). `unknown` is not computed yet
+   * (bean `h2s9`), and on a MERGED PR every value goes stale, serving the
+   * pre-merge view (bean `fx5r`), which is why check 1 refuses a merged PR first.
+   */
+  mergeable_state?: string;
 }
 
 /** A workflow run as the Actions API returns it; `id` orders re-runs. */
@@ -222,7 +244,7 @@ export interface GuardRun extends RunRow {
 }
 
 /**
- * Everything the seven checks read, fetched once. The tests build this from
+ * Everything the eight checks read, fetched once. The tests build this from
  * fixture JSON; {@link fetchSnapshot} builds it from GitHub.
  */
 export interface GuardSnapshot {
@@ -264,7 +286,7 @@ export type CheckStatus = "pass" | "refuse" | "unknown" | "skip";
  *
  * `not-ready` is the ordinary state of a PR nobody has finished yet: a draft,
  * no `ready:` marker, no label, an unticked box, CI still running, a question
- * still open. `defect` is something WRONG: a base that is not `main` or is a
+ * still open, a head that main has moved out from under. `defect` is something WRONG: a base that is not `main` or is a
  * dead branch, `needs-merge-human`, red CI on the head, a marker or a
  * ready-flip by a session that is not the PR's own, a marker naming a commit
  * the PR does not have.
@@ -462,7 +484,7 @@ export function parseMergeMainDispatches(text: string): string[] | undefined {
   return files.length > 0 && files.every((f) => /^[\w.-]+\.ya?ml$/.test(f)) ? files : undefined;
 }
 
-// ─── the seven checks ──────────────────────────────────────────────────────
+// ─── the eight checks ──────────────────────────────────────────────────────
 
 const R = (n: number, id: CheckId, status: CheckStatus, detail: string, kind?: RefusalKind): CheckResult =>
   status === "refuse" ? { n, id, status, detail, kind: kind ?? "not-ready" } : { n, id, status, detail };
@@ -760,7 +782,40 @@ function checkOpenQuestion(s: GuardSnapshot): CheckResult {
     : R(7, "open-question", "pass", "no question to the owner or the Merge Manager after the ready marker (heuristic)");
 }
 
-/** Run the seven checks. Pure: everything it reads is in `s`. */
+/**
+ * Check 8 (bean `vihx`): the head still merges cleanly into the base.
+ *
+ * GitHub's own answer, from the PR record. Only a conflict refuses:
+ * `unstable` (a non-required check failing) and `blocked` (a required check
+ * or review outstanding) are about CI and review, which check 5 and the
+ * owner judge, and refusing on them here would make one red run two
+ * refusals. `null` is "not computed yet", which is not "clean".
+ */
+function checkMergeable(s: GuardSnapshot): CheckResult {
+  const { mergeable, mergeable_state: state } = s.pr;
+  // Only `dirty` refuses; any other state is shown, never judged. On a merged
+  // PR the field is stale (bean `fx5r`), but check 1 has refused that PR already.
+  const st = state ? ` (\`mergeable_state: ${state}\`)` : "";
+  if (mergeable === false || state === "dirty") {
+    return R(
+      8,
+      "mergeable",
+      "refuse",
+      `the head \`${short(s.pr.head.sha)}\` conflicts with \`${s.pr.base.ref}\`${st}: green CI on it predates the move of \`${s.pr.base.ref}\`. Merge \`${s.pr.base.ref}\` into the head and re-sign \`ready:\``,
+    );
+  }
+  if (mergeable === true) return R(8, "mergeable", "pass", `merges cleanly into \`${s.pr.base.ref}\`${st}`);
+  return R(
+    8,
+    "mergeable",
+    "unknown",
+    mergeable === null
+      ? `GitHub has not computed whether the head merges into \`${s.pr.base.ref}\` yet${st}; re-run the guard`
+      : "the PR record carries no `mergeable` field",
+  );
+}
+
+/** Run the eight checks. Pure: everything it reads is in `s`. */
 export function evaluate(s: GuardSnapshot, o: GuardOptions = {}): GuardVerdict {
   const checks = [
     checkBase(s),
@@ -770,6 +825,7 @@ export function evaluate(s: GuardSnapshot, o: GuardOptions = {}): GuardVerdict {
     checkCi(s),
     checkChecklist(s),
     checkOpenQuestion(s),
+    checkMergeable(s),
   ];
   const unknown = checks.some((c) => c.status === "unknown");
   const refused = checks.some((c) => c.status === "refuse");
@@ -870,9 +926,38 @@ export async function getAll<T>(url: string, fetchImpl?: typeof fetch): Promise<
   return out;
 }
 
+/**
+ * How long {@link fetchPull} waits before each re-ask while `mergeable` is
+ * `null`. GitHub computes it in a background job that the first GET starts,
+ * typically within seconds; 2+4+8 s bounds the wait at 14 s, after which
+ * check 8 reports `unknown` rather than guess.
+ */
+export const MERGEABLE_RETRY_MS: readonly number[] = [2_000, 4_000, 8_000];
+
+/**
+ * The PR record, re-asked while GitHub has not yet computed `mergeable`
+ * (check 8). Still `null` after {@link MERGEABLE_RETRY_MS} is returned as is,
+ * and check 8 reads it as `unknown`. A closed or merged PR is not re-asked:
+ * GitHub does not compute mergeability for it, and check 1 refuses it anyway.
+ */
+export async function fetchPull(
+  repo: string,
+  n: number,
+  opts: { fetchImpl?: typeof fetch; sleep?: (ms: number) => Promise<void>; waitsMs?: readonly number[] } = {},
+): Promise<GhPull> {
+  const sleep = opts.sleep ?? ((ms: number) => new Promise<void>((r) => setTimeout(r, ms)));
+  let pr = await getJson<GhPull>(`repos/${repo}/pulls/${n}`, opts.fetchImpl);
+  for (const ms of opts.waitsMs ?? MERGEABLE_RETRY_MS) {
+    if (pr.mergeable !== null || pr.state !== "open") break;
+    await sleep(ms);
+    pr = await getJson<GhPull>(`repos/${repo}/pulls/${n}`, opts.fetchImpl);
+  }
+  return pr;
+}
+
 /** Read everything {@link evaluate} needs. Throws {@link CannotAsk} when a required fact is unreadable. */
 export async function fetchSnapshot(repo: string, n: number, root: string): Promise<GuardSnapshot> {
-  const pr = await getJson<GhPull>(`repos/${repo}/pulls/${n}`);
+  const pr = await fetchPull(repo, n);
   const [comments, timeline, commits] = await Promise.all([
     getAll<GhComment>(`repos/${repo}/issues/${n}/comments?per_page=100`),
     getAll<GhTimelineEvent>(`repos/${repo}/issues/${n}/timeline?per_page=100`),
@@ -942,7 +1027,7 @@ export async function postStatus(repo: string, v: GuardVerdict): Promise<void> {
   const failed = v.checks.filter((c) => c.status === "refuse" || c.status === "unknown");
   const label = v.state === "pending" ? "not ready" : v.verdict;
   const description = (
-    v.verdict === "pass" ? "all seven checks pass" : `${label}: ${failed.map((c) => `${c.n} ${c.id}`).join(", ")}`
+    v.verdict === "pass" ? `all ${CHECKS.length} checks pass` :`${label}: ${failed.map((c) => `${c.n} ${c.id}`).join(", ")}`
   ).slice(0, 140);
   const runUrl = process.env.GITHUB_RUN_ID
     ? `${process.env.GITHUB_SERVER_URL ?? "https://github.com"}/${repo}/actions/runs/${process.env.GITHUB_RUN_ID}`

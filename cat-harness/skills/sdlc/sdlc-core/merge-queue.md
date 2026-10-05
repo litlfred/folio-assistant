@@ -415,7 +415,7 @@ per-checkout `git config`.
 never the web button, never `merge_pull_request` from an MCP tool, and never
 by marking a PR ready or labelling it yourself first. The script
 (`cat-harness/scripts/merge-guard.ts`, bean `uoob`, child (f) of `nok9`) is
-the merge: it evaluates seven checks over GitHub's live facts, and performs
+the merge: it evaluates eight checks over GitHub's live facts, and performs
 the PUT, pinned to the head it evaluated, only when every one passes.
 
 Owner ruling 2026-10-03, after three PRs were landed unfinished by a steward
@@ -427,7 +427,7 @@ calling the PUT directly on the same day:
 | #1960 | no `ready-to-merge`, no `ready:` comment, `- [ ] CI green` in the body | 3, 4, 6 |
 | #1957 | the steward itself called `ready_for_review` and added `ready-to-merge` 75 s before merging; no `ready:` comment | 2, 3 |
 
-The seven checks, each named in a refusal by number and id:
+The eight checks, each named in a refusal by number and id:
 
 1. **`base`** — open, based on `main`, and the base is not the head branch of
    a merged PR. A stacked PR is retargeted by its owning session first.
@@ -465,6 +465,18 @@ The seven checks, each named in a refusal by number and id:
 7. **`open-question`** — no comment after the marker asks the owner or the
    Merge Manager a question (a heuristic; its limits are on `openQuestions`
    in the script — a fresh `ready:` after the answer moves the window).
+8. **`mergeable`** — GitHub says the head still merges cleanly into `main`
+   (bean `vihx`). Check 5's runs tested the head merged with `main` **as
+   `main` was when the head was pushed**; once `main` moves, a stale green
+   head with a valid marker passed checks 1-7 while it conflicted (#1898,
+   and two HTTP 405 "merge conflicts" refusals on 2026-10-05). The PR API's
+   `mergeable: false` (`mergeable_state: dirty`) refuses **not-ready** —
+   merge `main` into the head and re-sign `ready:`. `mergeable: null` means
+   GitHub has not computed it yet: the guard re-asks for up to 14 s, then
+   reports **unknown**, never a pass. `unstable` and `blocked` pass here,
+   because they are about checks and reviews, which check 5 and the owner
+   judge. The status workflow does not fire when `main` moves, so a posted
+   `success` can go stale on exactly this check; `--merge` re-evaluates live.
 
 Exit 0 is pass (or merged), 1 refused, **2 could not determine — never a
 pass.** A refusal is handed back to the owning session through
@@ -481,7 +493,7 @@ like #1937's, is refused.
 
 **The status has four states, and red means wrong, not unfinished.** A PR
 that is merely not ready yet (a draft, no marker, no label, an unticked box,
-CI still running, an open question) posts `pending`. Only a defect posts
+CI still running, an open question, a conflict with `main`) posts `pending`. Only a defect posts
 `failure`: a base that is not `main` or is dead, `needs-merge-human`, red CI
 on the head, or a marker or ready-flip by a session other than the PR's own.
 `success` is pass and `error` is could-not-determine. The status is posted on

@@ -22,6 +22,7 @@ import { join } from "node:path";
 import {
   CannotAsk,
   evaluate,
+  fetchPull,
   getAll,
   isBotMerge,
   openQuestions,
@@ -61,10 +62,21 @@ const SCAN: TriggerScan = {
 /** What today's `merge-main.yml` dispatches, fixed here for the reason {@link SCAN} is. */
 const DISPATCHED = ["code-quality-gates.yml", "jsonld-gen-check.yml"] as const;
 
-/** A fresh, mutable copy of a real PR's snapshot. */
+/**
+ * A fresh, mutable copy of a real PR's snapshot.
+ *
+ * `mergeable: true` is supplied here, not in the fixture: the fixtures were
+ * trimmed to what `evaluate` read before check 8 (bean `vihx`) existed, and
+ * they are captures, so a field is not written into them after the fact. The
+ * value is not invented either. All three PRs DID merge, and GitHub refuses
+ * the merge PUT of a conflicting head (HTTP 405), so each one was mergeable
+ * at the instant captured. Check 8's own tests set the field explicitly.
+ */
 function real(n: 1937 | 1957 | 1960): GuardSnapshot {
   const fx = JSON.parse(readFileSync(join(FIXTURES, `pr-${n}.json`), "utf8")) as { snapshot: Omit<GuardSnapshot, "scan"> };
-  return { ...structuredClone(fx.snapshot), scan: SCAN, mergeMainDispatches: [...DISPATCHED] };
+  const s: GuardSnapshot = { ...structuredClone(fx.snapshot), scan: SCAN, mergeMainDispatches: [...DISPATCHED] };
+  s.pr.mergeable ??= true;
+  return s;
 }
 
 const status = (s: GuardSnapshot, id: CheckId, o: GuardOptions = {}) => evaluate(s, o).checks.find((c) => c.id === id)!;
@@ -424,6 +436,7 @@ describe("every check passes only when every fact is in hand", () => {
       ["ci", "pass"],
       ["checklist", "pass"],
       ["open-question", "pass"],
+      ["mergeable", "pass"],
     ]);
     expect(v.exitCode).toBe(0);
   });
@@ -661,5 +674,135 @@ describe("check 5 — Feature Staging is judged once finished, never waited for"
     const c = status(s, "ci");
     expect(c.status).toBe("refuse");
     expect(c.detail).toContain("Code-quality gates: in_progress");
+  });
+});
+
+/**
+ * Check 8, bean `vihx`. Check 5 judges the head's `pull_request` runs, which
+ * tested the head merged with main AS MAIN WAS when it was pushed. #1898 was
+ * signed, green and labelled, passed checks 1-7, and conflicted with main by
+ * the time it was merged; twice on 2026-10-05 GitHub refused a guard-passed
+ * merge with HTTP 405 "merge conflicts". #1898 has merged since, and on a
+ * merged PR the PR API's mergeability is stale, serving the pre-merge view
+ * (bean `fx5r`); it now reads `null` / `unknown`. So its conflicting state is
+ * rebuilt here as the PR API reports any conflicting OPEN head, the one
+ * reading check 8 trusts — only `dirty`: `mergeable: false`, `mergeable_state: "dirty"`.
+ */
+describe("check 8 — the head still merges cleanly into main", () => {
+  /** #1957 as it should have been (checks 1-7 pass), with the PR API's mergeability set. */
+  const passingOtherwise = (mergeable: boolean | null | undefined, state?: string) => {
+    const s = real(1957);
+    const own = signingSession(s.pr.body)!;
+    const ev = s.timeline.find((e) => e.event === "ready_for_review")!;
+    s.comments.push(signed(12, shift(ev.created_at!, 4_000), own, `ready: ${s.pr.head.sha.slice(0, 11)}`));
+    if (mergeable === undefined) delete s.pr.mergeable;
+    else s.pr.mergeable = mergeable;
+    // An OPEN PR's state is set directly: the post-merge staleness (bean `fx5r`) is check 1's case.
+    if (state === undefined) delete s.pr.mergeable_state;
+    else s.pr.mergeable_state = state;
+    return s;
+  };
+
+  test("control: every check passes on the base case", () => {
+    const v = evaluate(passingOtherwise(true, "clean"));
+    expect(v.checks.filter((c) => c.status !== "pass")).toEqual([]);
+    expect([v.verdict, v.state, v.exitCode]).toEqual(["pass", "success", 0]);
+  });
+
+  test("#1898's state — signed, green, labelled, but conflicting (`dirty`) — is refused, not-ready, with the remedy", () => {
+    const s = passingOtherwise(false, "dirty");
+    const c = status(s, "mergeable");
+    expect(c.n).toBe(8);
+    expect(c.status).toBe("refuse");
+    expect(c.kind).toBe("not-ready");
+    expect(c.detail).toContain("conflicts with `main`");
+    expect(c.detail).toContain("Merge `main` into the head");
+    const v = evaluate(s);
+    expect([v.verdict, v.state, v.exitCode]).toEqual(["refused", "pending", 1]);
+  });
+
+  test("`mergeable: false` alone refuses; so does `dirty` alone", () => {
+    expect(status(passingOtherwise(false), "mergeable").status).toBe("refuse");
+    expect(status(passingOtherwise(true, "dirty"), "mergeable").status).toBe("refuse");
+  });
+
+  test("`mergeable: null` (not computed yet) is unknown, never a pass, and the verdict is `error`, exit 2", () => {
+    const s = passingOtherwise(null, "unknown");
+    const c = status(s, "mergeable");
+    expect(c.status).toBe("unknown");
+    expect(c.detail).toContain("has not computed");
+    const v = evaluate(s);
+    expect([v.verdict, v.state, v.exitCode]).toEqual(["unknown", "error", 2]);
+  });
+
+  test("a record with no `mergeable` field is unknown, not a pass", () => {
+    const c = status(passingOtherwise(undefined), "mergeable");
+    expect(c.status).toBe("unknown");
+    expect(c.detail).toContain("no `mergeable` field");
+  });
+
+  test("`mergeable: true` passes, including `unstable`, `blocked` and `behind`: CI and review are not this check's", () => {
+    for (const state of ["clean", "unstable", "blocked", "behind", undefined]) {
+      const s = passingOtherwise(true, state);
+      expect(status(s, "mergeable").status).toBe("pass");
+      expect(evaluate(s).exitCode).toBe(0);
+    }
+  });
+
+  test("a conflict beside a defect elsewhere still posts `failure`: the conflict adds, it does not mask", () => {
+    const s = passingOtherwise(false, "dirty");
+    s.pr.labels.push({ name: "needs-merge-human" });
+    expect(evaluate(s).state).toBe("failure");
+  });
+});
+
+describe("fetchPull — re-asks while GitHub has not computed `mergeable`", () => {
+  const PR_URL = "https://api.github.com/repos/litlfred/folio-assistant/pulls/1898";
+  // `unknown` is not computed yet (bean `h2s9`); a closed PR's view is stale (bean `fx5r`).
+  type Answer = { mergeable?: boolean | null; mergeable_state?: string; state?: string };
+  /** Serves `answers` in order (the last one repeats) for the PR URL, recording each wait. */
+  const serve = (answers: Answer[]) => {
+    let i = 0;
+    const waits: number[] = [];
+    const impl = (async (input: string | URL | Request) => {
+      expect(String(input)).toBe(PR_URL);
+      const body = { number: 1898, state: "open", ...answers[Math.min(i, answers.length - 1)] };
+      i += 1;
+      return new Response(JSON.stringify(body), { status: 200, headers: { "content-type": "application/json" } });
+    }) as unknown as typeof fetch;
+    return {
+      impl,
+      waits,
+      asked: () => i,
+      sleep: async (ms: number) => {
+        waits.push(ms);
+      },
+    };
+  };
+
+  test("null then false: the second answer is the one returned", async () => {
+    // `unknown` = not computed yet (bean `h2s9`); then a conflict, the reading trusted.
+    const f = serve([{ mergeable: null, mergeable_state: "unknown" }, { mergeable: false, mergeable_state: "dirty" }]);
+    const pr = await fetchPull("litlfred/folio-assistant", 1898, { fetchImpl: f.impl, sleep: f.sleep, waitsMs: [1, 2, 3] });
+    expect([pr.mergeable, pr.mergeable_state]).toEqual([false, "dirty"]);
+    expect(f.waits).toEqual([1]);
+  });
+
+  test("still null after every wait: returned as null, so check 8 says unknown", async () => {
+    const f = serve([{ mergeable: null }]);
+    const pr = await fetchPull("litlfred/folio-assistant", 1898, { fetchImpl: f.impl, sleep: f.sleep, waitsMs: [1, 2, 3] });
+    expect(pr.mergeable).toBeNull();
+    expect(f.waits).toEqual([1, 2, 3]);
+    expect(f.asked()).toBe(4);
+  });
+
+  test("an answer on the first ask is not re-asked; nor is a closed PR", async () => {
+    // `clean` on an open PR; on a merged one it would be stale (bean `fx5r`).
+    const a = serve([{ mergeable: true, mergeable_state: "clean" }]);
+    await fetchPull("litlfred/folio-assistant", 1898, { fetchImpl: a.impl, sleep: a.sleep, waitsMs: [1, 2] });
+    expect(a.asked()).toBe(1);
+    const b = serve([{ mergeable: null, state: "closed" }]);
+    await fetchPull("litlfred/folio-assistant", 1898, { fetchImpl: b.impl, sleep: b.sleep, waitsMs: [1, 2] });
+    expect(b.asked()).toBe(1);
   });
 });
