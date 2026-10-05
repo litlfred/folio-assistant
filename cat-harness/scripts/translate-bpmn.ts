@@ -77,7 +77,7 @@
  * @covers processes, translation-sources
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { localeDirIn, translationsHomeFor } from "../schemas/cat-harness.js";
+import { instanceRootsIn, localeDirIn, translationsHomeFor } from "../schemas/cat-harness.js";
 import { workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { extractBpmn, injectBpmn } from "../content/pipeline/bpmn-translate.js";
@@ -207,7 +207,36 @@ const DIAGRAM_SUBDIR = "processes";
  * close.
  */
 function potPathFor(file: string, loc: string): string {
-  return join(localeDirIn(HOME, loc), DIAGRAM_SUBDIR, `${basename(file, ".bpmn")}.pot`);
+  return join(localeDirIn(homeFor(file), loc), DIAGRAM_SUBDIR, `${basename(file, ".bpmn")}.pot`);
+}
+
+/**
+ * The instance that OWNS a diagram: the deepest instance root containing it.
+ * `--instance`'s corpus reaches other instances' `processes/` graphs (core's,
+ * sci's, fhir-harness's, smart-base's), and until 2026-10-04 every one of their
+ * templates was written into THIS instance's tree because it had no other
+ * home. Owner, that day: *"move things to semantically appropriate place"*
+ * (bean riit) — a diagram's templates sit with the instance that draws it.
+ */
+const INSTANCE_ROOTS = [root, ...instanceRootsIn(REPO_ROOT)]
+  .map((r) => resolve(r))
+  .sort((a, b) => b.length - a.length);
+function ownerRootOf(file: string): string {
+  const abs = resolve(file);
+  return INSTANCE_ROOTS.find((r) => abs.startsWith(`${r}/`)) ?? root;
+}
+
+const homes = new Map<string, ReturnType<typeof translationsHomeFor>>();
+/** A diagram's translation home: its OWNER's declared `translation-sources`, else hosted, else the convention. */
+function homeFor(file: string): ReturnType<typeof translationsHomeFor> {
+  const owner = ownerRootOf(file);
+  if (owner === resolve(root)) return HOME;
+  let h = homes.get(owner);
+  if (h === undefined) {
+    h = translationsHomeFor(owner, HARNESS_ROOT);
+    homes.set(owner, h);
+  }
+  return h;
 }
 
 /** The comparison form of a template, shared with core's `glossary-pot` (see `potWithoutTimestamp`). */
@@ -215,12 +244,12 @@ const withoutTimestamp = potWithoutTimestamp;
 
 /** Locales that already have a translations directory. */
 function knownLocales(): string[] {
-  const dir = TRANSLATIONS;
-  if (!existsSync(dir)) return [];
-  return readdirSync(dir, { withFileTypes: true })
-    .filter((e) => e.isDirectory())
-    .map((e) => e.name)
-    .sort();
+  const out = new Set<string>();
+  for (const dir of new Set([TRANSLATIONS, ...diagrams.map((f) => homeFor(f).root)])) {
+    if (!existsSync(dir)) continue;
+    for (const e of readdirSync(dir, { withFileTypes: true })) if (e.isDirectory()) out.add(e.name);
+  }
+  return [...out].sort();
 }
 
 if (wantCheck) {
@@ -235,7 +264,12 @@ if (wantCheck) {
   // that it is reported, not demanded. `--locale` is an explicit request, so
   // naming one opts it in.
   const gating = new Set(
-    targets.filter((loc) => locale === loc || existsSync(join(TRANSLATIONS, loc, DIAGRAM_SUBDIR))),
+    targets.filter(
+      (loc) =>
+        locale === loc ||
+        existsSync(join(TRANSLATIONS, loc, DIAGRAM_SUBDIR)) ||
+        diagrams.some((f) => existsSync(join(localeDirIn(homeFor(f), loc), DIAGRAM_SUBDIR))),
+    ),
   );
 
   // THE THIRD STATE. With no gating locale the loop below examines nothing and
@@ -298,31 +332,40 @@ if (wantCheck) {
   // Scoped to THIS instance's own templates. A nested instance's diagrams are
   // deliberately unscanned (`7u3g`), so its templates are not orphans here —
   // they are somebody else's to check, with their own `--instance` run.
-  const owned = new Set(diagrams.map((f) => basename(f, ".bpmn")));
+  // Per HOME (bean riit): a template is owned only in the home its diagram's
+  // owner declares, so one left in another instance's tree is an orphan there
+  // — which is how a template that did not move with its diagram is caught.
+  const ownedIn = new Map<string, Set<string>>();
+  const homeList = new Map<string, ReturnType<typeof translationsHomeFor>>();
+  for (const f of diagrams) {
+    const h = homeFor(f);
+    const key = `${h.root}\u0000${h.scope.join("/")}`;
+    homeList.set(key, h);
+    const set = ownedIn.get(key) ?? new Set<string>();
+    set.add(basename(f, ".bpmn"));
+    ownedIn.set(key, set);
+  }
+  if (!homeList.has(`${HOME.root}\u0000${HOME.scope.join("/")}`)) {
+    homeList.set(`${HOME.root}\u0000${HOME.scope.join("/")}`, HOME);
+    ownedIn.set(`${HOME.root}\u0000${HOME.scope.join("/")}`, new Set());
+  }
   const orphaned: string[] = [];
   for (const loc of [...gating].sort()) {
-    // `localeDirIn`, NOT a join on `TRANSLATIONS` — this scan is where the
-    // hosted case bites hardest. A hosted instance's `TRANSLATIONS` is its
-    // HOST's corpus, so composing `<root>/<locale>/processes` here reads every
-    // template the host owns and calls each one an orphan of the few diagrams
-    // `--instance` names. Measured 2026-09-27 while wiring it: 355 spurious
-    // orphans across five locales, against bootstrap's three diagrams.
-    //
-    // Worse than a wrong number, the advice attached to it told a reader the
-    // relics "should live under ITS translations" — of files already in exactly
-    // the right place. A check that fabricates findings about correct files is
-    // the `1xhc` failure pointed the other way, and it trains people to ignore
-    // the one real orphan when it comes.
-    const dir = join(localeDirIn(HOME, loc), DIAGRAM_SUBDIR);
-    let names: string[];
-    try {
-      names = readdirSync(dir).filter((n) => n.endsWith(".pot"));
-    } catch {
-      continue;
-    }
-    for (const n of names.sort()) {
-      if (!owned.has(basename(n, ".pot"))) {
-        orphaned.push(`${relative(REPO_ROOT, dir)}/${n}`);
+    for (const [key, h] of homeList) {
+      // `localeDirIn`, NOT a join on the home's root — a hosted instance's
+      // root is its HOST's corpus, and composing `<root>/<locale>/processes`
+      // reads every template the host owns and calls each an orphan (355
+      // spurious ones, measured 2026-09-27, against bootstrap's three).
+      const dir = join(localeDirIn(h, loc), DIAGRAM_SUBDIR);
+      let names: string[];
+      try {
+        names = readdirSync(dir).filter((n) => n.endsWith(".pot"));
+      } catch {
+        continue;
+      }
+      const owned = ownedIn.get(key)!;
+      for (const n of names.sort()) {
+        if (!owned.has(basename(n, ".pot"))) orphaned.push(`${relative(REPO_ROOT, dir)}/${n}`);
       }
     }
   }
@@ -406,15 +449,14 @@ if (wantExtract) {
 
 if (wantInject) {
   const loc = locale!;
-  const poDir = join(TRANSLATIONS, loc, DIAGRAM_SUBDIR);
-  const outDir = join(TRANSLATIONS, loc, DIAGRAM_SUBDIR);
+  const dirFor = (file: string) => join(localeDirIn(homeFor(file), loc), DIAGRAM_SUBDIR);
   let injected = 0;
   const skipped: string[] = [];
 
   console.log(`Injecting ${loc}\n`);
   for (const file of diagrams) {
     const stem = basename(file, ".bpmn");
-    const po = join(poDir, `${stem}.po`);
+    const po = join(dirFor(file), `${stem}.po`);
     if (!existsSync(po)) {
       // The ordinary state, not a failure. Say so per diagram rather than
       // reporting a clean run that produced nothing.
@@ -423,8 +465,8 @@ if (wantInject) {
     }
     const translations = parsePo(readFileSync(po, "utf-8"));
     const xml = readFileSync(file, "utf-8");
-    mkdirSync(outDir, { recursive: true });
-    writeFileSync(join(outDir, basename(file)), injectBpmn(xml, translations));
+    mkdirSync(dirFor(file), { recursive: true });
+    writeFileSync(join(dirFor(file), basename(file)), injectBpmn(xml, translations));
     injected++;
     console.log(`  ✓ ${stem.padEnd(38)} ${translations.size} translation(s)`);
   }

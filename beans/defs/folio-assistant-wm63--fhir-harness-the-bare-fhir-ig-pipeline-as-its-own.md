@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-04T09:01:45Z
+updated_at: 2026-10-04T12:41:46Z
 parent: folio-assistant-uhkv
 ---
 
@@ -44,6 +44,8 @@ which is the only kind of evidence that a split is doing work.
 - [x] `ig-build-pipeline` states the run and the refusal list
 - [x] `ig-render-jekyll` states the three render contracts
 - [x] the two Library strippers are actually placed here, not just described
+- [ ] the base is shown running for a non-WHO IG — `nsbb`'s open criterion
+- [x] gates green
 - [x] the base is shown running for a non-WHO IG — `nsbb`'s open criterion
 - [ ] gates green
 
@@ -69,3 +71,7 @@ The unexpected one: `fhir-harness/tools/index.ts` declares Tools for DAK post-pr
 - The Tools `strip-library-binaries` and `strip-library-content` now invoke the copies here instead of an IG repo's `input/scripts/`.
 - `library-strip.test.ts` runs both on a non-WHO IG's output (an example.org Library carrying inline CQL and ELM) and checks the copies against the recorded hashes.
 - Remaining: the non-WHO IG demo (blocked on network access to packages.fhir.org) and gates green.
+
+## 2026-10-04
+
+#2062 merged 2026-10-04 with every gating check green on 572f7c2 (17 success, 2 skipped). That includes the Library strippers placed in fhir-harness/scripts/library-strip/ and izx8's baseline entries cleared. One item remains: the non-WHO IG demo, which is directed to the owner's local agent because the cloud container cannot reach packages.fhir.org.

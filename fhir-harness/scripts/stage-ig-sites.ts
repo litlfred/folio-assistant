@@ -21,7 +21,10 @@
  *
  * Usage:
  *   bun run fhir-harness/scripts/stage-ig-sites.ts --work <dir> --baseurl <site baseurl> \
- *     [--plantuml-jar <jar>] [--remote-theme <owner/repo@ref>]
+ *     [--plantuml-jar <jar>] [--remote-theme <owner/repo@ref>] [--changed-files <file>]
+ *
+ * `--changed-files` (one path per line) builds only the IGs the staging cone
+ * reaches (bean `4j86`); each decision is printed with its reason.
  *
  * @covers none — a build step: it stages sites and judges no declared graph
  *
@@ -31,11 +34,12 @@
 import { igApiHubFill } from "./ig-api-views.ts";
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync } from "node:fs";
-import { basename, join, resolve } from "node:path";
+import { basename, join, relative, resolve, sep } from "node:path";
 import { instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
 import { instanceThemes } from "../../cat-harness/schemas/theme-by-ref.js";
 import { describeStage, stageIgSite, type IgMenu, type IndexedArtifact, type SitePalette, type StageOptions } from "./build-ig-site";
 import { IgReleasesSchema, type IgReleases } from "../schemas/ig-releases.ts";
+import { readChangedFiles, siteFilter } from "../../cat-harness/scripts/staging-cone.ts";
 
 interface MenuFile extends IgMenu {
   source?: { kind?: string; of?: string; ref?: string };
@@ -113,12 +117,18 @@ if (import.meta.main) {
   const work = opt("--work");
   const base = opt("--baseurl");
   if (!work || base === undefined) {
-    console.error("usage: stage-ig-sites.ts --work <dir> --baseurl <site baseurl> [--plantuml-jar <jar>] [--remote-theme <owner/repo@ref>]");
+    console.error("usage: stage-ig-sites.ts --work <dir> --baseurl <site baseurl> [--plantuml-jar <jar>] [--remote-theme <owner/repo@ref>] [--changed-files <file>]");
     process.exit(2);
   }
   const { build, skipped } = igsToBuild(resolve("."));
   for (const s of skipped) console.error(`skipped ${s}`);
+  // The staging cone (bean `4j86`): with `--changed-files`, an IG no changed
+  // file reaches is not built. Without it, every IG is, as before.
+  const inCone = siteFilter(resolve("."), readChangedFiles(opt("--changed-files")), ["fhir-harness/scripts/stage-ig-sites.ts"]);
   for (const ig of build) {
+    const d = inCone(relative(resolve("."), ig.root).split(sep).join("/"));
+    console.error(`${ig.instance}: ${d.carry ? "built" : "not built"} — ${d.why}`);
+    if (!d.carry) continue;
     const src = resolve(work, ig.instance, "src");
     const site = resolve(work, ig.instance, "site");
     mkdirSync(src, { recursive: true });

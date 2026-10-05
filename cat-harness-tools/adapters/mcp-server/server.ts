@@ -38,7 +38,9 @@ import { allows, forbidden, getUserEmail, getUserName, getUserRole } from "../..
 // `schemas/render-targets.ts`.
 import { resolveRenderTarget } from "../../../cat-harness/content/pipeline/render-discovery.js";
 import { readDeclaredFolioProfile } from "../../../cat-harness/content/pipeline/profile-check.js";
-import { registerMcpToolGroups } from "./tool-groups.js";
+import { registerServedToolGroups } from "../../src/tool-groups.js";
+import { createContentAdapter } from "../../src/content-adapter.js";
+import { GitHelper } from "../../../cat-harness/src/core/git.js";
 import { leanStatusBucket } from "../../../cat-harness/schemas/types";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
@@ -3554,17 +3556,36 @@ server.tool = function (...args: Parameters<typeof origTool>) {
   return origTool(...args);
 } as typeof origTool;
 
-// ── Register all tool groups ─────────────────────────────────────
+// ── Register the served tools ────────────────────────────────────
 
-// Declared in `tool-groups.ts`, not listed here: three of these groups need a
-// TeX installation or a Lean toolchain and belong to the science layer, so a
-// generic server naming them is a wrong-direction dependency that stops
-// resolving once the repositories are separated. An absent layer is SKIPPED
-// AND REPORTED — a server that quietly starts without `paper_render_pdf` looks
-// identical to one where rendering is broken.
-for (const o of await registerMcpToolGroups(server)) {
-  if (o.state === "absent") log("mcp", `− ${o.id}`, `${o.layer} layer: ${o.detail}`);
-  else if (o.state === "failed") log("mcp", `✗ ${o.id}`, o.detail);
+// The same two halves `src/server.ts` serves, by the same rule (owner,
+// 2026-10-05, bean riit 3c), so this server no longer keeps a list of its own:
+//
+//   1. every Tool node in the folio's dependency tree, the harness's always,
+//      each resolved from the instance that declares it;
+//   2. the content adapter's own tools (`content_validate`, `paper_render_pdf`,
+//      `lean_build`, …), from the adapter the folio's config names.
+//
+// Until then this server registered `TOOL_GROUPS`, six modules that were
+// forks of those — older copies of core's and sci's tools and of three Tool
+// nodes' modules, which had drifted apart in both directions.
+//
+// An absent or failed group is REPORTED and the server still starts: one
+// quietly starting without `paper_render_pdf` looks identical to one where
+// rendering is broken.
+{
+  const { outcomes, failures } = await registerServedToolGroups(server, contributionsRoot(), [contributionsRoot()]);
+  for (const f of failures) log("mcp", "✗ tools graph", f);
+  for (const o of outcomes) {
+    if (o.state === "absent") log("mcp", `− ${o.id}`, `${o.layer} layer: ${o.detail}`);
+    else if (o.state === "failed") log("mcp", `✗ ${o.id}`, o.detail);
+  }
+  try {
+    const adapter = await createContentAdapter(REPO_ROOT, new GitHelper(REPO_ROOT));
+    adapter.registerMcpTools?.(server);
+  } catch (e) {
+    log("mcp", "✗ content adapter tools", e instanceof Error ? e.message : String(e));
+  }
 }
 
 // Tools CONTRIBUTED by the folio's declared dependencies — the direction that

@@ -1,0 +1,14 @@
+classDiagram
+  direction TB
+  namespace folio_assistant_sci__folio_assistant_sci_content_adapters {
+    class folio_assistant_sci_folio_assistant_sci_content_adapters_folio_content_adapter_v1_folio_content_adapter_v1["folio-content-adapter/v1"] {
+      <<json: ContentAdapterNodeSchema>>
+      $schema [1] 'folio-content-adapter/v1'
+      adapter [1] string
+      typed [1] boolean
+      companionRoles [1..*] enum(9)[]
+      vocabulary [0..1] string
+      rationale [0..1] string
+    }
+  }
+  cssClass "folio_assistant_sci_folio_assistant_sci_content_adapters_folio_content_adapter_v1_folio_content_adapter_v1" fa_uml_kind_content_adapters

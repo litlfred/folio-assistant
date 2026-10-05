@@ -46,7 +46,7 @@ import { fileURLToPath } from "node:url";
 import { baseDocsDir } from "./compose-docs.js";
 import { loadSpecs, namespacesInUse } from "./external-schemas.js";
 import { specUsers, type SpecUse, type SpecUseForm, type SpecUsers } from "./spec-users.js";
-import { BASE_GRAPH_KINDS } from "../schemas/graph-kind-registry.js";
+import { BASE_GRAPH_KINDS, defaultGraphKinds } from "../schemas/graph-kind-registry.js";
 import {
   undeclaredNamespaces,
   unusedNamespaces,
@@ -69,7 +69,16 @@ const KIND = "external-schema";
 export function declaredUsers(specs: readonly ExternalSchema[], repoRoot = REPO): SpecUsers {
   const ls = Bun.spawnSync(["git", "ls-files"], { cwd: repoRoot });
   const files = new TextDecoder().decode(ls.stdout).split("\n").filter(Boolean);
-  return specUsers(repoRoot, files, specs, BASE_GRAPH_KINDS, "cat-harness");
+  // BASE's kinds, read THROUGH the registry: since bean riit (step 1c) a
+  // kind's validator refs are `validators/` nodes the registry joins on, so
+  // the code list alone carries none and the `kind` form would vanish.
+  const joined = Object.fromEntries(
+    Object.keys(BASE_GRAPH_KINDS).flatMap((k) => {
+      const def = defaultGraphKinds.get(k);
+      return def ? [[k, def]] : [];
+    }),
+  );
+  return specUsers(repoRoot, files, specs, joined, "cat-harness");
 }
 
 /**

@@ -107,11 +107,12 @@
  *   bun run cat-harness/scripts/compose-docs.ts --out <dir> --check
  */
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { join, relative, resolve, sep } from "node:path";
 import { declarationPathIn } from "../schemas/cat-harness.js";
 
 import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
 import { isDirectoryReadme } from "../schemas/kg-node.ts";
+import { coneForCheckout, type ConeDecision } from "./staging-cone.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -321,12 +322,24 @@ export interface CarryDecision {
  * request that genuinely changes nothing touches no instance, and saying so is
  * a determined answer rather than a doubt.
  *
+ * ## And the CONE on top (bean `4j86`)
+ *
+ * The prefix match under-carries: a change to `gen-ig-pages.ts` or to the
+ * shared chrome touches no IG's root, and dropped every IG from the preview
+ * that existed to review it. `cone` (`staging-cone.ts`) adds what a changed
+ * file can REACH: through a directory's declared `writer` and its import
+ * closure, and down `derivedFrom`. The prefix match is kept as a floor, so the
+ * union can only carry more than before, never less.
+ *
  * @param composed every composed instance, from `composedInstances`
  * @param files the pull request's changed paths, repo-relative; `undefined` when unknown
+ * @param cone the staging cone's decisions over the same files, when computed
  */
 export function carriedInstances(
   composed: readonly ComposedInstance[],
   files?: readonly string[],
+  cone?: readonly ConeDecision[],
+  repo: string = REPO,
 ): CarryDecision[] {
   if (!files) {
     return composed.map((instance) => ({
@@ -341,9 +354,12 @@ export function carriedInstances(
   return composed.map((instance) => {
     const prefix = `${instance.root}/`;
     const hit = changed.find((f) => f === instance.root || f.startsWith(prefix));
-    return hit
-      ? { instance, carry: true, why: `the branch touches ${hit}` }
-      : { instance, carry: false, why: `nothing under review touches ${instance.root}/` };
+    if (hit) return { instance, carry: true, why: `the branch touches ${hit}` };
+    const path = `${relative(repo, instance.dir).split(sep).join("/").replace(/\/$/, "")}/`;
+    const reached = cone?.find((c) => c.path === path && c.carry);
+    return reached
+      ? { instance, carry: true, why: `the staging cone reaches ${reached.node}: ${reached.why}` }
+      : { instance, carry: false, why: `nothing under review touches ${instance.root}/, and the staging cone does not reach it` };
   });
 }
 
@@ -678,7 +694,12 @@ export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): Co
   // instance cannot shadow a base page by accident: `who-iris/index.md` in a
   // composed tree is `<out>/who-iris/index.md`, never `<out>/index.md`.
   const composedInst = composedInstances(repo);
-  const carry = carriedInstances(composedInst, opts.changedFiles);
+  const carry = carriedInstances(
+    composedInst,
+    opts.changedFiles,
+    opts.changedFiles ? coneForCheckout(opts.changedFiles, repo) : undefined,
+    repo,
+  );
   for (const d of carry) {
     const c = d.instance;
     if (!d.carry) {
