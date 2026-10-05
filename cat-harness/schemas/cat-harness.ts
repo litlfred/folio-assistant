@@ -1175,7 +1175,7 @@ export function visualisationsOf(
  * a declared `writer` whose every script exists. Such a page is derived from
  * a graph kept on a branch, so it is never committed, and whether a checkout
  * happens to hold a locally built copy must not change any answer: a reader
- * that asked the disk alone would emit one `harness.json` locally and another
+ * that asked the disk alone would emit one `docs/_data/harness.json` locally and another
  * in CI. `check:derived-from` is what holds the other half: that a page with
  * a writer and no committed copy really is built at publish.
  *

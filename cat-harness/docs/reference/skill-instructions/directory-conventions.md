@@ -928,7 +928,7 @@ What is checked, by `check:derived-from`:
 What the readers do: a visualisation built at publish **resolves by its
 writer**, not by the disk (`visualisationResolves` in `schemas/cat-harness.ts`).
 Subgraph coverage, harness tiles and viewer declarations all ask that one
-function, so a generated `harness.json` is the same whether or not a checkout
+function, so the generated `docs/_data/harness.json` is the same whether or not a checkout
 happens to hold a locally built copy. Asking the disk would emit one answer
 locally and another in CI.
 
