@@ -154,12 +154,12 @@ export const PATTERNS: readonly ConflictPattern[] = [
       // above refused a merge of #2082 on 2026-10-04 with "no declared
       // pattern"; the per-instance smart-base page refused the next one.
       "cat-harness/docs/cat-harness/document-kinds/**/index.html",
-      // fsh-guts:viz writes this page whole (writeFileSync) from fsh-guts/**;
-      // refused on #1766 2026-10-03 when main archived new uploads into fsh-guts/.
-      "cat-harness/docs/fsh-guts/index.md",
+      // NOT cat-harness/docs/fsh-guts/index.md any more: it is derived from a
+      // graph kept on a branch, so it is built at publish and never committed
+      // (bean 0b8c, #2230), and a merge can no longer meet it.
     ],
     strategy: "take-base",
-    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, tools:viz, processes:viz, state:visualizer, translation:status, fsh-guts:viz, document-kinds:viz), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone; tools/index.md (rendered-by tools-viewer) added 2026-10-03 after #1987 refused on it twice.",
+    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, tools:viz, processes:viz, state:visualizer, translation:status, document-kinds:viz), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone; tools/index.md (rendered-by tools-viewer) added 2026-10-03 after #1987 refused on it twice.",
   },
   {
     id: "viewer-namespace",

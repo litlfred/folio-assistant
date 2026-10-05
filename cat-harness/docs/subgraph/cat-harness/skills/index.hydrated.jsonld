@@ -431,7 +431,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-comments",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `folio-review-comment/v1` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
+              "description": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `review-comment/1.0.0` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-core",
@@ -440,9 +440,9 @@
               "instructionsPath": "skills/authoring/authoring-core/review-comments.md",
               "name": "review-comments",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/51f54b251785529cae59666ccd9d3d0d38bd27b1f1444326d30c12763b579f25",
-                "bytes": 16833,
-                "sha256": "51f54b251785529cae59666ccd9d3d0d38bd27b1f1444326d30c12763b579f25"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/89265e127786de02d1da18735d5046d130c49f3aa4cb2fa8559762dfd0bddab0",
+                "bytes": 16821,
+                "sha256": "89265e127786de02d1da18735d5046d130c49f3aa4cb2fa8559762dfd0bddab0"
               },
               "title": "Review comments — from a PR comment to a structured todo"
             },
@@ -1673,13 +1673,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 1530,
+              "instructionLines": 1586,
               "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
               "name": "directory-conventions",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6c5bb604d80d49b6b958889414f0d78cbc242664454ed95180048af733783808",
-                "bytes": 118211,
-                "sha256": "6c5bb604d80d49b6b958889414f0d78cbc242664454ed95180048af733783808"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a86c14a7a0d71b1133cb483e245fd01837ac7c14b9972f4361c1070b7876d169",
+                "bytes": 121709,
+                "sha256": "a86c14a7a0d71b1133cb483e245fd01837ac7c14b9972f4361c1070b7876d169"
               },
               "title": "Directory conventions — what an instance declares it scans"
             },
@@ -3279,9 +3279,9 @@
               "instructionsPath": "skills/sdlc/sdlc-core/before-after-preview.md",
               "name": "before-after-preview",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/efe06423bd42060da4495f03e832fe367a006be14d9b125beb186b29f9cfe9cc",
-                "bytes": 20398,
-                "sha256": "efe06423bd42060da4495f03e832fe367a006be14d9b125beb186b29f9cfe9cc"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/86d4787caba578530c2dfc8caeea7e1c1725401a7265a06275a20d7c8c8705f5",
+                "bytes": 20395,
+                "sha256": "86d4787caba578530c2dfc8caeea7e1c1725401a7265a06275a20d7c8c8705f5"
               },
               "title": "/before-after-preview — show the reviewer the change, not a description of it"
             },
@@ -3673,13 +3673,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 910,
+              "instructionLines": 914,
               "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
               "name": "merge-conflict-patterns",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b2625dfe8ec823858f7e772cdc28b2a5595dc96a9ffd7fe8133ae6648018def3",
-                "bytes": 49857,
-                "sha256": "b2625dfe8ec823858f7e772cdc28b2a5595dc96a9ffd7fe8133ae6648018def3"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9597771272f894e8023c987a2cc6a48714e880bf77a3f803c19474c10fee6c74",
+                "bytes": 50136,
+                "sha256": "9597771272f894e8023c987a2cc6a48714e880bf77a3f803c19474c10fee6c74"
               },
               "title": "Merge-conflict patterns — what a merge may resolve on its own"
             },
@@ -3696,9 +3696,9 @@
               "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
               "name": "merge-queue",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6791e9fa204e24172a8354ac4d1e9975fc178ed5810ceb3d02521cb529a12f79",
-                "bytes": 53615,
-                "sha256": "6791e9fa204e24172a8354ac4d1e9975fc178ed5810ceb3d02521cb529a12f79"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8a717e9c2acbe96576c1dd6fbfe1c0998087197a52c8e652d1aa0aea1fe9b3fc",
+                "bytes": 53714,
+                "sha256": "8a717e9c2acbe96576c1dd6fbfe1c0998087197a52c8e652d1aa0aea1fe9b3fc"
               },
               "title": "Merge queue — what lands next, and as what"
             },
@@ -4413,9 +4413,9 @@
               "instructionsPath": "skills/ui/theming/create-sticky-note.md",
               "name": "create-sticky-note",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b1d6567bd10904c5c87eb74f49787c52ebff2e398273f2ce05531dedd94f84fa",
-                "bytes": 7588,
-                "sha256": "b1d6567bd10904c5c87eb74f49787c52ebff2e398273f2ce05531dedd94f84fa"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b9fbfcbf0fec960f76677fa6061af30d9e9dd8fee24758a2fba57f6879b77d9d",
+                "bytes": 7585,
+                "sha256": "b9fbfcbf0fec960f76677fa6061af30d9e9dd8fee24758a2fba57f6879b77d9d"
               },
               "title": "Create a sticky note"
             },
