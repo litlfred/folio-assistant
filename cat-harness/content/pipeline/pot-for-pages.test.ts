@@ -91,7 +91,10 @@ describe("the ownership boundary with translate-bpmn", () => {
     // The boundary is the traversal (top level only), not a name filter — and
     // it has to be, because `docs/processes/<name>.md` EXISTS, so "the source
     // exists" would have adopted every one of them.
-    for (const x of owned(INSTANCE)) expect(x.page).not.toContain("/");
+    // `not.toContain("/")` stood in for this while every page sat at the top
+    // level; since the docs graph's named groups (bean `xka5`) a page may be
+    // `concepts/architecture`, so the rule is stated as itself.
+    for (const x of owned(INSTANCE)) expect(x.page).not.toMatch(/^processes\//);
   });
 
   test("and the real corpus has such templates to be wrong about", () => {

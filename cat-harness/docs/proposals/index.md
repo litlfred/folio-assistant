@@ -5,6 +5,8 @@ movedOn: 2026-09-19
 movedFrom: "docs/folio-assistant/proposals/index.md"
 summary: >-
   Proposals for the harness's own features, argued before anything is agreed. A sub-graph of docs; when a feature ships, its proposal moves to Requirements.
+parent: ""
+has_children: true
 ---
 
 # Proposals

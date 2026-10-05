@@ -215,9 +215,9 @@ Stated so this does not stay an opinion:
 
 ## See also
 
-- [Publication workflow](../publication-workflow.html) — every process in the repo,
+- [Publication workflow](../process/publication-workflow.html) — every process in the repo,
   and how `workflow_start` / `workflow_next` / `workflow_complete` run them
-- [Getting started](../getting-started.html) — a computed gateway in use
-- [Accessibility](../accessibility.html) §3 — DMN-driven question sets, the same
+- [Getting started](../start/getting-started.html) — a computed gateway in use
+- [Accessibility](../start/accessibility.html) §3 — DMN-driven question sets, the same
   machinery pointed at an interview
 - [#203 — business requirements gathering (CRDM)](https://github.com/litlfred/folio-assistant/issues/203)

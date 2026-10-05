@@ -43,7 +43,7 @@ describe("leakingLinesIn — must NOT fire (all four are real corpus lines)", ()
   });
 
   it("a REAL html element is allowed to open a line", () => {
-    // cat-harness/docs/harnessed-kg-overview.md:78 opens with <caption>.
+    // cat-harness/docs/concepts/harnessed-kg-overview.md:78 opens with <caption>.
     expect(leakingLinesIn("x.md", "<caption>Bars under the SMART levels</caption>")).toEqual([]);
     // `7w1a` DELIBERATELY introduced this one to make tables parse inside details.
     expect(leakingLinesIn("x.md", '<details markdown="1">')).toEqual([]);

@@ -309,7 +309,7 @@ describe("the gate CLIs in judge mode", () => {
       const before = gitStatus();
       const r = spawnSync(
         "bun",
-        ["run", "cat-harness/content/pipeline/translation-block-qa.ts", "--check", "--root", "content/docs/crdm-methodology", "--against", "main"],
+        ["run", "cat-harness/content/pipeline/translation-block-qa.ts", "--check", "--root", "content/docs/process-crdm-methodology", "--against", "main"],
         { cwd: REPO, encoding: "utf-8", env: { ...process.env, QA_STORE_REMOTE: `file://${bare}`, QA_STORE_DIR: join(base, "store.git") } },
       );
       const out = r.stdout + r.stderr;

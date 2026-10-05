@@ -76,7 +76,7 @@ is not enabled**. That has consequences for how you author:
 
 Not a Mermaid fence. Mermaid stays for the things that are *not* processes —
 component maps, lattices, navigation graphs. The audit of which is which is in
-`docs/publication-workflow.md`.
+`docs/process/publication-workflow.md`.
 
 ## Why a DAK section sits in a platform package
 

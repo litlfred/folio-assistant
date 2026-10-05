@@ -142,6 +142,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - folio-assistant-sci — *declared, not published*
 - SMART Base — *declared, not published*
 
+### `doc-group`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
+
 ### `docs`
 
 6 of 6 published.
