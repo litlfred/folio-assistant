@@ -67,7 +67,7 @@
 import { spawnSync } from "node:child_process";
 
 import { defaultGraphKinds } from "../../cat-harness/schemas/cat-harness.js";
-import { AVATARS, hasAvatar } from "../../cat-harness/schemas/avatars.js";
+import { allAvatars, hasAvatar } from "../../cat-harness/schemas/avatars.js";
 import { documentedKinds, KIND_TABLE_DOC } from "../../cat-harness/scripts/kind-table.ts";
 // `folio` is registered by CORE as a load-time side effect, so the harness alone
 // does not know it exists. Same import, same reason, as `check-declared-dirs`.
@@ -190,7 +190,7 @@ export interface HueReport {
  */
 export function hueReport(): HueReport {
   const byTone = new Map<number, string[]>();
-  for (const [kind, a] of Object.entries(AVATARS)) {
+  for (const [kind, a] of allAvatars()) {
     byTone.set(a.tone, [...(byTone.get(a.tone) ?? []), kind]);
   }
   const collisions = [...byTone.entries()]
@@ -203,7 +203,7 @@ export function hueReport(): HueReport {
     const d = Math.abs(a - b) % 360;
     return Math.min(d, 360 - d);
   };
-  const entries = Object.entries(AVATARS);
+  const entries = allAvatars();
   const nearest = entries
     .map(([kind, a]) => {
       let neighbour = "";
