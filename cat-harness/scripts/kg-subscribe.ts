@@ -101,6 +101,8 @@ import { declarationFileIn } from "../../bootstrap-tools/schemas/declaration.ts"
 import { KnowledgeGraphDeclarationSchema } from "../../bootstrap-tools/schemas/graph.ts";
 import {
   CatHarnessDeclarationSchema,
+  KG_CONTENT_GRAPH_KINDS,
+  KG_GRAPH_KIND,
   type Subscription,
   findDeclarationFile,
   instanceRootsIn,
@@ -129,7 +131,9 @@ export { SNAPSHOT_GRAPH_KIND, SNAPSHOT_SUFFIX };
  * Harness: Skills, Roles (`scenarios`) and Processes. Read against
  * `BOOTSTRAP_GRAPH_KINDS`' own sentences; a test holds the two together.
  */
-export const HARNESS_GRAPH_KINDS: readonly string[] = ["skills", "scenarios", "processes"];
+// The kinds split out of the `cat-harness` umbrella: knowledge-graph content
+// (`kgContent`, sod4 #5) other than the umbrella itself.
+export const HARNESS_GRAPH_KINDS: readonly string[] = KG_CONTENT_GRAPH_KINDS.filter((k) => k !== KG_GRAPH_KIND);
 
 export type SubstrateVerdict =
   | {

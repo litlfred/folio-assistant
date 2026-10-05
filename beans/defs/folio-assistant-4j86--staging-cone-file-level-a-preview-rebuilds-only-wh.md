@@ -1,11 +1,11 @@
 ---
 # folio-assistant-4j86
 title: 'STAGING CONE (file level): a preview rebuilds only what a PR''s changed files can reach — general rule, in the skills'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T13:49:44Z
-updated_at: 2026-10-04T16:20:43Z
+updated_at: 2026-10-05T11:39:15Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-nama
@@ -37,3 +37,6 @@ When the cone cannot be computed (no changed-file list, an API failure, an unkno
 ## 2026-10-04: owner ruling — the generator is declared as `writer` on the directory
 
 Asked where the cone learns which generator writes a directory, the owner chose **`writer` on the directory declaration** (option 1 of 3; rejected: inferring it from regen's script pairs, reading it from route-branch manifests). An optional list of repo-relative script files, or directories ending in `/` for what a generator READS rather than imports (templates). A gate checks each path exists, and a route branch manifest's `writer` must agree with it. The edges half of the cone exists: nama step 3 declared `derivedFrom` on the three IG page sets, and `downstreamOf` is drafted.
+
+## 2026-10-05: closed
+Every Done-when box is ticked, and the work merged in #2082 (fb1caf5).

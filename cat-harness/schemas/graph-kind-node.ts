@@ -43,6 +43,7 @@ export const KindAvatarSchema = z
     reads: z.string().min(1),
   })
   .strict();
+export type KindAvatar = z.infer<typeof KindAvatarSchema>;
 
 export const GraphKindNodeSchema = z
   .object({
@@ -72,6 +73,12 @@ export const GraphKindNodeSchema = z
     avatar: KindAvatarSchema.optional(),
     /** The navbar tile icon (an icon name, as `graph-tiles.ts` spells it). */
     tileIcon: z.string().min(1).optional(),
+    /** `false`: never part of a published graph (sod4 #5). */
+    published: z.literal(false).optional(),
+    /** The directory may be scanned for skill bodies (sod4 #5). */
+    skillBearing: z.literal(true).optional(),
+    /** The kind is harness knowledge-graph content (sod4 #5). */
+    kgContent: z.literal(true).optional(),
     /** What a directory of this kind holds: the kind table's `contents`, generated from here. */
     description: z.string().min(1).optional(),
     renderableNote: z.string().min(1).optional(),
