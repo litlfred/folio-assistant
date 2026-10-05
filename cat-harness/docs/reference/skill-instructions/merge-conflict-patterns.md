@@ -111,6 +111,12 @@ authored change of yours to reconcile.
 3. **Targeted checks, and only these:**
    - `skill:register:check` and `kg:detangle:check` — the two reds a
      generated-only merge actually hit in CI;
+   - `subgraph:jsonld:check` — a merge or edit that changes a skill also
+     changes its payload hash; `skill:register` does not run
+     `subgraph:jsonld`, so run the writer (`bun run subgraph:jsonld`) when the
+     check is red. Measured on #2139 itself: CI's `gen-slice-sqlite` test
+     failed on three edited skills whose payloads the published tree did not
+     hold;
    - `check:declared-paths` (never with `--update` here) and
      `check:process-index`;
    - `bun run typecheck`, and `eslint .` at **0 errors**;
