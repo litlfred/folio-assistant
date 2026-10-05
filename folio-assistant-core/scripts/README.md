@@ -43,6 +43,7 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`local-path.test.ts`](local-path.test.ts) | a file |  |
 | [`materialized-fixity.test.ts`](materialized-fixity.test.ts) | a file |  |
 | [`pdf-line-map.py`](pdf-line-map.py) | a file |  |
+| [`public-comment-changesets.ts`](public-comment-changesets.ts) | a file |  |
 | [`public-comment-site.test.ts`](public-comment-site.test.ts) | a file |  |
 | [`public-comment-site.ts`](public-comment-site.ts) | a file |  |
 | [`public-comment.test.ts`](public-comment.test.ts) | a file |  |
