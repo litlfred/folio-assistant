@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/Asset",
+  "definitions": {
+    "Asset": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "src": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The file, relative to the declaration."
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The part the file plays, such as `instance-readme`."
+        }
+      },
+      "required": [
+        "id",
+        "src",
+        "role"
+      ],
+      "additionalProperties": {},
+      "description": "A file entry of a Declaration: one file about the repository itself, whose `role` field says what it is for."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4ak5-schema-followups/bootstrap-tools/schema/zod/graph/AssetSchema.schema.json",
+  "title": "AssetSchema",
+  "description": "Generated from `AssetSchema` in schemas/graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/4ak5-schema-followups",
+    "sha": "e6cf35e58a8eb3cd62607ebed8a551880e08f38f",
+    "pr": "2224/merge",
+    "run": "37360050119"
+  }
+}

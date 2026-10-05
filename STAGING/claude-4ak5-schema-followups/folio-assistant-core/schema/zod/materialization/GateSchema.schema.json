@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/Gate",
+  "definitions": {
+    "Gate": {
+      "type": "object",
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": [
+            "unknown",
+            "refused",
+            "permitted"
+          ]
+        },
+        "basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decidedAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decidedBy": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "verdict",
+        "basis"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4ak5-schema-followups/folio-assistant-core/schema/zod/materialization/GateSchema.schema.json",
+  "title": "GateSchema",
+  "description": "Generated from `GateSchema` in schemas/materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/4ak5-schema-followups",
+    "sha": "e6cf35e58a8eb3cd62607ebed8a551880e08f38f",
+    "pr": "2224/merge",
+    "run": "37360050119"
+  }
+}
