@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 227,
+      "count": 229,
       "unit": "modules"
     }
   },
@@ -839,6 +839,23 @@
       "graphNode": "undeclared",
       "summary": "The navbar icon row — WHICH icons, and whose answer it is.",
       "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/node-kind-index.test.ts",
+      "instance": "cat-harness",
+      "name": "node-kind-index.test",
+      "graphNode": "undeclared",
+      "summary": "Issue #2195: node kinds are found THROUGH the typologies. A module of kinds",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "instance": "cat-harness",
+      "name": "node-kind-index",
+      "graphNode": "none",
+      "reason": "a function library over the typology registry; it defines no schema",
+      "summary": "Every node kind a checkout declares, found THROUGH the graph typologies —",
+      "isTest": false
     },
     {
       "module": "cat-harness/schemas/node-kind.test.ts",
@@ -7605,6 +7622,13 @@
           "doc": "What makes this subgraph reachable — a renderer, a documentation entry,"
         },
         {
+          "name": "igSite",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "Built into the instance's own IG site at `/<instance>/` (bean `mftp`); see `igSite` on the shape below."
+        },
+        {
           "name": "readOnly",
           "type": "boolean",
           "optional": true,
@@ -7793,6 +7817,13 @@
           "optional": true,
           "array": false,
           "doc": "This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the"
+        },
+        {
+          "name": "igSite",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This directory is built INTO the instance's own IG site, which is served"
         },
         {
           "name": "served",
@@ -23410,6 +23441,163 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry",
+      "name": "NodeKindEntry",
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "kind": "interface",
+      "doc": "One node kind, as the index records it.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "`nodeKind()`'s id — a `$schema` tag for a tagged kind, a name for a mixin."
+        },
+        {
+          "name": "parents",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Direct parents, by id, in declared order."
+        },
+        {
+          "name": "subclasses",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Direct subclasses, by id, sorted: the kinds that name this one as a parent."
+        },
+        {
+          "name": "declaredBy",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The instance that declares it: the one whose code holds the `nodeKind()`."
+        },
+        {
+          "name": "module",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where, repo-relative, and under which export. Absent for an ancestor reached only as a parent."
+        },
+        {
+          "name": "exportName",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "holdings",
+          "type": "{ typology: string; family?: string }[]",
+          "optional": false,
+          "array": true,
+          "doc": "The graph typologies that hold nodes of this kind, and the families they file it under."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind-index.ts#NodeKindIndex",
+      "name": "NodeKindIndex",
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "kinds",
+          "type": "NodeKindEntry[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unkinded",
+          "type": "Unkinded[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "collisions",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Two different kinds sharing one id — always a finding."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/node-kind-index.ts#NodeKindEntry",
+        "cat-harness/schemas/node-kind-index.ts#Unkinded"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind-index.ts#NodeKindIndexFileKind",
+      "name": "NodeKindIndexFileKind",
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "kind": "zod-object",
+      "doc": "The committed index file, `cat-harness/docs/_data/node-kinds.json`, as a",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind-index.ts#Unkinded",
+      "name": "Unkinded",
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "kind": "interface",
+      "doc": "A family (or a typology's nodes as a whole) that no node kind validates yet.",
+      "fields": [
+        {
+          "name": "typology",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "family",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The `$schema` family; absent when it is the typology's kind-level validator."
+        },
+        {
+          "name": "reason",
+          "type": "\"zod-schema\" | \"no-validator\" | \"unresolvable\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/node-kind.test.ts#base",
       "name": "base",
       "module": "cat-harness/schemas/node-kind.test.ts",
@@ -23480,6 +23668,19 @@
       "exported": false
     },
     {
+      "id": "cat-harness/schemas/node-kind.ts#IsVersioned",
+      "name": "IsVersioned",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/node-kind.ts#NodeKind",
       "name": "NodeKind",
       "module": "cat-harness/schemas/node-kind.ts",
@@ -23490,7 +23691,22 @@
           "name": "id",
           "type": "string",
           "optional": false,
-          "array": false
+          "array": false,
+          "doc": "The kind's NAME — its identity and its URL segment (`changeset`). Never versioned."
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "SemVer, for a kind whose nodes are files (issue #2195). Absent for a mixin"
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`<id>/<version>`: what a writer stamps in `$schema`. Absent when unversioned."
         },
         {
           "name": "parents",
@@ -23535,6 +23751,42 @@
         "z"
       ],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#OwnOf",
+      "name": "OwnOf",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#SchemaField",
+      "name": "SchemaField",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "doc": "The `$schema` a versioned kind generates: a string, checked by {@link acceptsSchemaTag}.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.ZodType<string>",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/node-kind.ts#ShapeOf",
@@ -52211,6 +52463,21 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/public-comment.ts#ChangeSetFields",
+      "name": "ChangeSetFields",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "undetermined",
+      "note": "{ /** \"CS-001\". */ id: z.string().regex(/^CS-\\d{3,}$/), title: z.string().min(1), /** What the change should do, in the editor's terms: the issue's requirement…",
+      "doc": "One change to the document, answering a group of comments (issue #2183).",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "folio-assistant-core/schemas/public-comment.ts#ChangeSetHistorySchema",
       "name": "ChangeSetHistorySchema",
       "module": "folio-assistant-core/schemas/public-comment.ts",
@@ -52304,111 +52571,15 @@
       "name": "ChangeSetSchema",
       "module": "folio-assistant-core/schemas/public-comment.ts",
       "kind": "zod-object",
-      "doc": "One change to the document, answering a group of comments (issue #2183).",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(CHANGE_SET_SCHEMA)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "id",
-          "type": "z.string().regex(/^CS-\\d{3,}$/)",
-          "optional": false,
-          "array": false,
-          "doc": "\"CS-001\"."
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "requirements",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "What the change should do, in the editor's terms: the issue's requirements."
-        },
-        {
-          "name": "refs",
-          "type": "z.array(z.string().regex(/^PC-\\d{4,}$/))",
-          "optional": false,
-          "array": true,
-          "doc": "The comments it answers. A comment may be in more than one change-set."
-        },
-        {
-          "name": "anchor",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The section or block the change is mainly about, for ordering."
-        },
-        {
-          "name": "status",
-          "type": "z.enum(CHANGE_SET_STATUSES).default(\"proposed\")",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "issue",
-          "type": "z.number().int().positive().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The primary issue: where the change-set is rendered and its requirements agreed."
-        },
-        {
-          "name": "issues",
-          "type": "z.array(z.number().int().positive()).default([])",
-          "optional": true,
-          "array": true,
-          "doc": "Every issue that discusses it, the primary one included."
-        },
-        {
-          "name": "pr",
-          "type": "z.object({ number: z.number().int().positive(), branch: z.string().min(1) }).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The PR making the change."
-        },
-        {
-          "name": "mergedInto",
-          "type": "z.string().regex(/^CS-\\d{3,}$/).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "For `merged`: the change-set it was folded into."
-        },
-        {
-          "name": "proposedBy",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "proposedAt",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "history",
-          "type": "z.array(ChangeSetHistorySchema).default([])",
-          "optional": true,
-          "array": true
-        }
+      "fields": [],
+      "extendsNames": [
+        "ChangeSetKind"
       ],
-      "extendsNames": [],
       "values": [],
-      "refs": [
-        "folio-assistant-core/schemas/public-comment.ts#ChangeSetHistorySchema"
-      ],
+      "refs": [],
       "unresolved": [],
       "external": [
-        "CHANGE_SET_SCHEMA",
-        "CHANGE_SET_STATUSES",
-        "z"
+        "ChangeSetKind"
       ],
       "exported": true
     },
@@ -58350,6 +58521,22 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/node-kind-index.ts#NodeKindIndex",
+      "to": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry",
+      "via": "kinds",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/node-kind-index.ts#NodeKindIndex",
+      "to": "cat-harness/schemas/node-kind-index.ts#Unkinded",
+      "via": "unkinded",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/note-anchor.ts#Anchored",
       "to": "cat-harness/schemas/note-anchor.ts#NoteAnchor",
       "via": "anchor",
@@ -62708,14 +62895,6 @@
       "kind": "field",
       "optional": true,
       "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema",
-      "to": "folio-assistant-core/schemas/public-comment.ts#ChangeSetHistorySchema",
-      "via": "history",
-      "kind": "field",
-      "optional": true,
-      "array": true
     },
     {
       "from": "folio-assistant-core/schemas/public-comment.ts#DecisionSchema",
