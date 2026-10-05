@@ -236,6 +236,7 @@ export function buildSkillIoContracts(opts: SchemaExportOptions = {}): SkillIoCo
         skill: e.name,
         io,
         source,
+        // declared-path-literal: an OUTPUT path inside the published schema/ tree (`<stub>/schema/skills/...`), not a source directory a declaration answers.
         published: join("skills", e.name, f),
         // Absolute or absent, never relative and never composed by hand.
         // Same rule the three documents above follow.
@@ -522,6 +523,7 @@ export const PUBLIC_SCHEMA_EXPORT = /Schema$/;
  */
 export function instanceZodSchemaDirs(root: string): string[] {
   const declared = instanceDirectoriesForGraph(root, "schemas");
+  // declared-path-literal: the convention fallback for an instance that declares no `schemas` graph, the same fallback `schemasRoot` uses for the host.
   return declared.length > 0 ? declared : [join(root, "schemas")];
 }
 
