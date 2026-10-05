@@ -5,7 +5,8 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-05T05:11:59Z
-updated_at: 2026-10-05T05:25:07Z
+updated_at: 2026-10-05T05:26:37Z
+parent: folio-assistant-nok9
 ---
 
 Issue #2137. getAll in cat-harness/scripts/merge-guard.ts follows GitHub's Link rel=next, which names /repositories/<id>/...; the agent egress proxy refuses that form (403, 'Numeric-ID repository paths ... not supported'). Fix: normalise next to repos/{owner}/{repo}/.
