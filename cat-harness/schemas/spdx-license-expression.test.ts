@@ -9,7 +9,7 @@ import { describe, expect, it } from "bun:test";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { judgeSourceLicence, type LicenceReport } from "../scripts/check-source-licence.ts";
+import { judgeSourceLicence, type LicenceReport } from "../../cat-harness-tools/scripts/check-source-licence.ts";
 import { snapshotOf } from "../scripts/pin-spdx-license-list.ts";
 import { checkLicenceExpression, loadSpdxLicenseList, spdxLicenseListOf } from "./spdx-license-expression.ts";
 

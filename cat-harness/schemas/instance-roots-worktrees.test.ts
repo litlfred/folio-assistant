@@ -24,8 +24,8 @@ import { checkoutRootFor, isForeignCheckout, instanceRootsIn, repoRootFor, rootF
 import { declareInstance } from "../test/support/instance-fixture.js";
 import { skillMdDirs } from "../scripts/known-skills.js";
 import { findPublishWorkflows } from "../scripts/pages-bootstrap.js";
-import { scan as retiredScan } from "../scripts/check-retired-front-matter.js";
-import { auditInstance } from "../scripts/check-subgraph-coverage.js";
+import { scan as retiredScan } from "../../cat-harness-tools/scripts/check-retired-front-matter.js";
+import { auditInstance } from "../../cat-harness-tools/scripts/check-subgraph-coverage.js";
 import { readSchemaGraph } from "../scripts/schema-graph.js";
 
 /** Whether `p` lies inside `dir` (or is it). */
