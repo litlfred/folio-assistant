@@ -1,0 +1,106 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:fr/architecture",
+  "block": "Architecture",
+  "locale": "fr",
+  "paths": {
+    "md": "docs/architecture.md"
+  },
+  "po": "translations/fr/architecture.po",
+  "source_hashes": {
+    "md": "11ac1159f0c9",
+    "po": "07f178bcf936"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "11ac1159f0c9",
+          "po": "07f178bcf936"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "c6e987867d7f",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-05T13:43:02.320Z",
+        "reviewed_sha": "6fa34c5e41a19c8db63b0ae97b286ed8509c09d8",
+        "severity": "minor",
+        "metrics": {
+          "translated": 59,
+          "total": 60,
+          "pct": 98
+        },
+        "notes": "1 of 60 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "11ac1159f0c9",
+          "po": "07f178bcf936"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "c6e987867d7f",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-05T13:43:02.322Z",
+        "reviewed_sha": "6fa34c5e41a19c8db63b0ae97b286ed8509c09d8",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "IS — absent from: \"Ce qu'EST une instance — schémas, visualisations, outils ; les quatre répertoire\""
+          },
+          {
+            "text": "UI — absent from: \"Interface utilisateur Web, visualiseur interactif et site d'exemple Pages\""
+          }
+        ],
+        "metrics": {
+          "checked": 59,
+          "missing": 2,
+          "missing_strict": 0,
+          "missing_acronyms": 2,
+          "glossary_broken": 0,
+          "glossary_resolved": 0
+        },
+        "notes": "2 acronym(s) from the source do not appear verbatim in the translation and no glossary entry speaks for them. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart. Add them to translations/fr/glossary.po: a pinned msgstr says what the term must become, and a \"#, localised\" flag says it is rendered in the target language without pinning how."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "11ac1159f0c9",
+          "po": "07f178bcf936"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "c6e987867d7f",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-05T13:43:02.323Z",
+        "reviewed_sha": "6fa34c5e41a19c8db63b0ae97b286ed8509c09d8",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 2,
+          "translated": 59
+        },
+        "notes": "2 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-10-05T13:43:02.324Z"
+}
