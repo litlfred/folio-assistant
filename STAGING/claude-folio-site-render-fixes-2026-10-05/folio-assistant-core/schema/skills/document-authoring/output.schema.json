@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Document Authoring Output",
+  "type": "object",
+  "required": [
+    "label",
+    "filesWritten",
+    "listedInSection"
+  ],
+  "properties": {
+    "label": {
+      "type": "string"
+    },
+    "filesWritten": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Repo-relative paths written (.ts and .md)."
+    },
+    "listedInSection": {
+      "type": "boolean",
+      "description": "Whether the block root was added to a section's blocks[]. False means the block renders nowhere — the most common way authored work disappears."
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "integer"
+        },
+        "warnings": {
+          "type": "integer"
+        },
+        "profileViolations": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-folio-site-render-fixes-2026-10-05/folio-assistant-core/schema/skills/document-authoring/output.schema.json",
+  "staging": {
+    "branch": "claude/folio-site-render-fixes-2026-10-05",
+    "sha": "4821330ade3c7857520016f8505e592780cf60f9",
+    "pr": "2227/merge",
+    "run": "37359251486"
+  }
+}

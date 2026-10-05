@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-folio-site-render-fixes-2026-10-05/skills/content-feedback/input.schema.json",
+  "title": "Content Feedback Input",
+  "description": "Input schema for feedback collection and triage.",
+  "type": "object",
+  "required": [
+    "source"
+  ],
+  "properties": {
+    "source": {
+      "type": "string",
+      "enum": [
+        "github-issues",
+        "survey",
+        "implementation-report",
+        "clinical-review"
+      ],
+      "description": "Source of feedback."
+    },
+    "publishedVersion": {
+      "type": "string",
+      "description": "Version the feedback relates to."
+    },
+    "feedbackItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "description"
+        ],
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "major",
+              "minor",
+              "enhancement"
+            ]
+          },
+          "component": {
+            "type": "string"
+          },
+          "reporter": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/folio-site-render-fixes-2026-10-05",
+    "sha": "4821330ade3c7857520016f8505e592780cf60f9",
+    "pr": "2227/merge",
+    "run": "37359251486"
+  }
+}

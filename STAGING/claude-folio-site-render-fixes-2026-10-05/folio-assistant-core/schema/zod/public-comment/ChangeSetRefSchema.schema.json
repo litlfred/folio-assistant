@@ -1,0 +1,43 @@
+{
+  "$ref": "#/definitions/ChangeSetRef",
+  "definitions": {
+    "ChangeSetRef": {
+      "type": "object",
+      "properties": {
+        "branch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pr": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "stagingUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "before": {
+          "type": "string",
+          "format": "uri"
+        },
+        "after": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "branch"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-folio-site-render-fixes-2026-10-05/folio-assistant-core/schema/zod/public-comment/ChangeSetRefSchema.schema.json",
+  "title": "ChangeSetRefSchema",
+  "description": "Generated from `ChangeSetRefSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/folio-site-render-fixes-2026-10-05",
+    "sha": "4821330ade3c7857520016f8505e592780cf60f9",
+    "pr": "2227/merge",
+    "run": "37359251486"
+  }
+}
