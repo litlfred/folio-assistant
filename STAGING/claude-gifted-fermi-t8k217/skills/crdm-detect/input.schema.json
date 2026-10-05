@@ -1,0 +1,24 @@
+{
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/skills/crdm-detect/input.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CRDM Detect Input",
+  "description": "One user request to classify: is it a feature request (a platform capability change, which enters the CRDM requirements workflow) or a content request?",
+  "type": "object",
+  "required": [
+    "text"
+  ],
+  "properties": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The request as the user wrote it — an issue title and body, or a chat turn."
+    }
+  },
+  "additionalProperties": false,
+  "staging": {
+    "branch": "claude/gifted-fermi-t8k217",
+    "sha": "118162acd245ab8b398c3dc789025065ec7dc8e3",
+    "pr": "2082/merge",
+    "run": "37247703319"
+  }
+}
