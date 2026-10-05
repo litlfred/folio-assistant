@@ -37,19 +37,21 @@
 
 import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, relative, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 
 import {
   HEALTH_REPORT_SCHEMA,
   type HealthCheckResult,
   type HealthReport,
   healthReportPath,
+  HEALTH_REPORT_FILENAME,
   healthVerdict,
   parseHealthReport,
 } from "../../schemas/health-report.ts";
 import { HEALTH_CHECKS, formatBytes, runHealthChecks, type HealthContext } from "./checks.ts";
 import { gatherContext } from "./probes.ts";
 import { repoRootFor } from "../../schemas/cat-harness.ts";
+import { graphReadPath } from "../../scripts/graph-read.ts";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 
@@ -153,6 +155,28 @@ export function gates(report: HealthReport, strict: boolean): boolean {
   );
 }
 
+/**
+ * The health report's path, through the declaration rather than the layout.
+ *
+ * Bean `9ofm` row D. `health` is a declared directory (id `health`, path
+ * `test/health/results/` on the `cat-harness` instance) and one of the state
+ * graphs that moves, so once it is cut over the report belongs in the mount.
+ *
+ * Falls back to {@link healthReportPath} when nothing is declared — an
+ * unmigrated instance has no `health` entry, which is fine rather than wrong
+ * — and **throws** when the graph is declared on a branch this checkout
+ * cannot reach.
+ *
+ * `root` is a parameter with the module's own default so the three branches
+ * can be exercised against a fixture; production callers pass nothing.
+ */
+export function healthResultPath(root: string = ROOT): string {
+  const where = graphReadPath("health", root);
+  if (where.state === "refused") throw new Error(`cannot write the health report: ${where.reason}`);
+  if (where.state === "ok") return join(where.at, HEALTH_REPORT_FILENAME);
+  return healthReportPath(root);
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const has = (f: string): boolean => argv.includes(f);
@@ -197,7 +221,20 @@ if (import.meta.main) {
   });
 
   if (!has("--no-write")) {
-    const path = healthReportPath(ROOT);
+    // WHERE the results are, not just what the layout says (bean `9ofm` row D).
+    //
+    // `healthReportPath(ROOT)` composes the declared layout, which is right
+    // until `health` is cut over to a branch — then it names a directory that
+    // is not in the checkout, `mkdirSync` cheerfully creates it, and this
+    // writes a report nothing will ever read while printing `wrote …`. The
+    // declared ID is resolved first so the write lands in the mount; a graph
+    // this checkout cannot reach is a throw, because a health report written
+    // nowhere is worse than no health report.
+    //
+    // `healthReportPath` stays as it is: it lives in `schemas/`, which never
+    // imports `scripts/`, so the relocation belongs at the writer — the same
+    // division as `WORKFLOW_DIR` / `workflowDir`.
+    const path = healthResultPath();
     mkdirSync(dirname(path), { recursive: true });
     writeFileSync(path, `${JSON.stringify(report, null, 2)}\n`);
     if (!has("--markdown")) console.log(`wrote ${relative(ROOT, path)}`);

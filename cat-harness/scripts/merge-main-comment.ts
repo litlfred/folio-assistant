@@ -72,6 +72,8 @@ import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
+import { REGEN_VERDICT_TAG } from "./regen-after-merge.ts";
+
 export interface CommentInput {
   /** `job.status` of the running job: `success`, `failure` or `cancelled`. */
   jobStatus: string;
@@ -102,8 +104,19 @@ export type CommentPlan =
   | { action: "leave"; reason: string }
   | { action: "write"; body: string; signature: string };
 
-/** The three lists the comment reports, read from merge-base's own output. */
-export function parseLog(log: string): { resolved: string; refused: string; unrepaired: string } {
+/**
+ * The lists the comment reports, read from merge-base's own output — plus the
+ * REGEN VERDICT, which is a different kind of fact from the three lists.
+ *
+ * The lists are per-path findings. The verdict is the one thing that says
+ * whether regen established anything about the tree at all, and before it was
+ * read here every non-zero exit reached the comment as "**Error**" — including
+ * `not-settled`, which regen reports as COULD NOT DETERMINE in as many words.
+ * It is recovered from {@link REGEN_VERDICT_TAG} rather than from the abort's
+ * prose, so the comment does not depend on a sentence nobody maintains as an
+ * interface.
+ */
+export function parseLog(log: string): { resolved: string; refused: string; unrepaired: string; regenVerdict: string } {
   const lines = log.split("\n");
   const counts = new Map<string, number>();
   for (const l of lines) {
@@ -114,7 +127,8 @@ export function parseLog(log: string): { resolved: string; refused: string; unre
   const resolved = [...counts.keys()].sort().map((id) => `- \`${id}\`: ${counts.get(id)}`).join("\n");
   const refused = lines.filter((l) => /^ {2}✗ .* {2}\[/.test(l)).map((l) => l.replace(/^ {2}✗ /, "- ")).join("\n");
   const unrepaired = lines.filter((l) => l.includes("STILL fails")).map((l) => l.replace(/^ *✗ /, "- ")).join("\n");
-  return { resolved, refused, unrepaired };
+  const tag = new RegExp(`${REGEN_VERDICT_TAG}\\s*([a-z][a-z-]*)`).exec(log);
+  return { resolved, refused, unrepaired, regenVerdict: tag?.[1] ?? "" };
 }
 
 /** Decide what the bot's comment says this run, if anything. */
@@ -125,7 +139,7 @@ export function composeComment(i: CommentInput): CommentPlan {
   if (i.status.trim() === "") {
     return { action: "leave", reason: "the merge step reported no exit status (it did not run to completion); the existing comment is left as it was" };
   }
-  const { resolved, refused, unrepaired } = parseLog(i.log);
+  const { resolved, refused, unrepaired, regenVerdict } = parseLog(i.log);
   let head: string;
   if (i.merged === "true" && i.pushed === "success") {
     head = `**Merged \`main\` and pushed \`${i.sha.slice(0, 9)}\`.** Every conflict was resolved by a declared pattern and the gate set reproduced the result; CI now judges it.`;
@@ -142,8 +156,24 @@ export function composeComment(i: CommentInput): CommentPlan {
   } else if (unrepaired !== "") {
     const failing = i.mainFailing();
     head = `**Not proved — nothing pushed.** Every conflict matched a pattern, but regen could not reproduce these checks. If \`main\` is red on the same checks, it is main's red, not this PR's. Failing on main right now: ${failing || "none"}.`;
+  } else if (regenVerdict === "not-settled") {
+    // Was "**Error**". regen's own message for this exit is "COULD NOT
+    // DETERMINE … this is NOT a clean regeneration", and it reports no
+    // unrepaired check — so calling it an error asserted a defect nothing
+    // measured, in the one place the PR's author reads.
+    head =
+      "**Could not determine — nothing pushed.** Every conflict matched a declared pattern, but `regen` did not reach a fixed point: the last pass still ran a writer, so every verdict it printed was read from a tree that was still changing. It found **no** unrepaired check — it found that it cannot stand behind the count. This is not a finding about this PR and it is not a pass either. The next push to `main` retries; if it keeps recurring, two writers are undoing each other and that is the defect to fix.";
+  } else if (regenVerdict === "crashed") {
+    head = `**Could not determine — nothing pushed.** Every conflict matched a declared pattern, but \`regen\` exited ${i.status} — outside its own three verdicts (0 clean, 1 not-staleness, 2 not-settled). The bot's tool failed before it measured anything about the merged tree, so this says nothing about this PR. See the run log.`;
+  } else if (regenVerdict === "not-staleness") {
+    // Exit 1 with no "STILL fails" line: the failing checks are `no-writer`,
+    // `writer-failed` or `no-browser`. Those are three different findings —
+    // one about the tree, one about the tool, one a could-not-determine — and
+    // the generic Error text named none of them.
+    head =
+      "**Not proved — nothing pushed.** Every conflict matched a declared pattern, but `regen` found checks that staleness does not explain, and **none of them is an unrepaired check**. They are some of: a check with no writer counterpart, a check whose declared writer exited non-zero (a verdict about the tool, not the tree), and a check that needs Chromium where none is installed (could not determine, not a pass). The run log lists them by name and by kind — they do not have one remedy.";
   } else {
-    head = `**Error** (exit ${i.status}) — merge-base failed for a reason that is neither a refusal nor an unrepaired check; see the run log. Nothing pushed, and this run is marked failed.`;
+    head = `**Error** (exit ${i.status}) — merge-base failed for a reason that is neither a refusal nor an unrepaired check, and it recorded no regen verdict; see the run log. Nothing pushed, and this run is marked failed.`;
   }
   const body = [
     i.marker,

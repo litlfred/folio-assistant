@@ -28,9 +28,13 @@
  * @covers none — a steward's reader over GitHub and the bean store; it judges no declared graph
  */
 import { spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { GITHUB_WORKFLOW_DIR, triggerFor } from "../src/core/workflow-events.ts";
 
 import { readBeanStore } from "./bean-store-read.ts";
 import { classify } from "./merge-conflict-patterns.ts";
+import { readyMarkers, type GhComment } from "./merge-guard.ts";
 import {
   deriveFacts,
   loadPriorityTable,
@@ -115,6 +119,17 @@ function refusalFor(base: string, pr: number): "clean" | "declared" | "refused" 
   return conflicted.some((p) => classify(p).strategy === "refuse") ? "refused" : "declared";
 }
 
+/** Whether a gating workflow is behind a `paths`/`branches`/`types` filter for `pull_request`. */
+function conditional(wf: string): boolean {
+  const root = run("git", ["rev-parse", "--show-toplevel"]).out.trim();
+  const file = join(GITHUB_WORKFLOW_DIR, wf);
+  try {
+    return triggerFor(file, readFileSync(join(root, file), "utf-8"), "pull_request").requirement === "conditional";
+  } catch {
+    return false; // unreadable: keep it owed, never silently waive a gate
+  }
+}
+
 /**
  * The PR's own CI on its head, by the five values `LivePr.ownCi` names.
  *
@@ -137,10 +152,38 @@ function ciFor(headSha: string): { ownCi: NonNullable<LivePr["ownCi"]>; missing:
   for (const wf of GATING) {
     const mine = all.filter((r) => (r.path ?? "").endsWith(wf) && r.status === "completed");
     if (mine.some((r) => r.conclusion === "failure")) red = true;
-    else if (!mine.some((r) => r.conclusion === "success")) missing.push(wf);
+    else if (!mine.some((r) => r.conclusion === "success")) {
+      // A `paths`-filtered workflow is owed only when the PR touches its
+      // paths. With no run of it at all on this head, GitHub did not start
+      // one, which is the filter's answer, not a missing gate. Measured
+      // 2026-10-04: #2083 and #2084 (bean-only) read `missing-required` on
+      // `jsonld-gen-check` while `check-head-has-run`, which reads triggers,
+      // called them green. Same rule as its "conditional — not judged".
+      const anyRun = all.some((r) => (r.path ?? "").endsWith(wf));
+      if (!anyRun && conditional(wf)) continue;
+      missing.push(wf);
+    }
   }
   if (red) return { ownCi: "red", missing };
   return { ownCi: missing.length > 0 ? "missing-required" : "green", missing };
+}
+
+/**
+ * The open hand-back bean for a PR, by the title `merge-conflict-patterns`
+ * prescribes ("Merge refused: #<n> …"), or null when there is none.
+ *
+ * Owner, 2026-10-04, after a steward handed back a dozen PRs with a PR
+ * comment and a queue entry but no bean: *"why did you have a process failure
+ * here?"*, then "Backfill + enforce". A hand-back the work plan cannot see is
+ * one the submitting role never picks up, so the table now names the gap
+ * instead of trusting the steward to remember it.
+ */
+export function handBackBeanFor(store: ReturnType<typeof readBeanStore>, pr: number): string | null {
+  if (store.state !== "read") return null;
+  const hit = store.beans.find(
+    (b) => b.title.startsWith(`Merge refused: #${pr} `) && b.status !== "completed" && b.status !== "scrapped",
+  );
+  return hit ? hit.id : null;
 }
 
 /** Bean ids a PR body names, in this repo's `folio-assistant-xxxx` form. */
@@ -162,7 +205,7 @@ async function main(): Promise<void> {
   }
 
   const open = gh(`repos/${REPO}/pulls?state=open&per_page=100`) as
-    | { number: number; draft: boolean; title: string; body: string | null; head: { sha: string }; labels: { name: string }[] }[]
+    | { number: number; draft: boolean; title: string; body: string | null; head: { sha: string }; base: { ref: string }; labels: { name: string }[] }[]
     | null;
   if (open === null) {
     console.error("merge:steward — COULD NOT ASK: the pulls endpoint did not answer. This is not an empty queue.");
@@ -183,6 +226,8 @@ async function main(): Promise<void> {
     conflictState.set(p.number, r);
     if (r === "refused" || r === "unknown") refusedSet.add(p.number);
     const { ownCi, missing } = ciFor(p.head.sha);
+    const comments = gh(`repos/${REPO}/issues/${p.number}/comments?per_page=100`) as GhComment[] | null;
+    const marker = readyMarkers(comments ?? []).at(-1);
     missingByPr.set(p.number, missing);
     prs.push({
       pr: p.number,
@@ -193,6 +238,16 @@ async function main(): Promise<void> {
       labels: p.labels.map((l) => l.name),
       ownCi,
       headShaMatchesCi: ownCi === "green",
+      // Readiness inputs for `Rule_NotReady` (bean `uoob`): the latest
+      // `ready:` comment and who signed it. `headSha` is deliberately NOT
+      // passed: `readinessOf` would call every marker followed by a
+      // merge-main bot merge `stale-marker`, and the bot merges main into
+      // nearly every open PR. `merge:guard` asks the full question, bot
+      // merges allowed, at the moment of merging.
+      draft: p.draft,
+      baseRef: p.base.ref,
+      readySha: marker?.sha,
+      readyBy: marker?.session,
     });
   }
 
@@ -206,6 +261,8 @@ async function main(): Promise<void> {
     mvpLabels: ["mvp", "milestone:status", "ready-to-merge"],
   });
   const ordered = orderQueue(placeAll(await loadPriorityTable(), facts));
+  const handBack = new Map<number, string | null>();
+  for (const p of ordered) if (p.route === "hand back") handBack.set(p.pr, handBackBeanFor(store, p.pr));
 
   if (json) {
     console.log(
@@ -219,6 +276,7 @@ async function main(): Promise<void> {
             conflict: conflictState.get(p.pr),
             ownCi: prs.find((q) => q.pr === p.pr)?.ownCi,
             missingGating: missingByPr.get(p.pr) ?? [],
+            ...(handBack.has(p.pr) ? { handBackBean: handBack.get(p.pr) } : {}),
           })),
         },
         null,
@@ -241,6 +299,16 @@ async function main(): Promise<void> {
     console.log(
       `  ${String(p.pr).padEnd(6)}${String(p.route).padEnd(11)}${String(p.class).padEnd(13)}${String(p.rank).padEnd(6)}${String(p.train ?? "-").padEnd(7)}${String(conflictState.get(p.pr)).padEnd(11)}${ciText.padEnd(17)}${p.rule}`,
     );
+  }
+  console.log("");
+  const missingHandBack = [...handBack].filter(([, id]) => id === null).map(([pr]) => pr);
+  if (store.state !== "read") {
+    console.log(`  ? hand-back beans could not be checked: the bean store reads \`${store.state}\``);
+  } else if (missingHandBack.length > 0) {
+    console.log(`  ✗ handed back with NO open hand-back bean: ${missingHandBack.map((n) => `#${n}`).join(", ")}`);
+    console.log("    Each needs one: merge-conflict-patterns §\"When a merge-train member is refused\" (title \"Merge refused: #<n> …\").");
+  } else if (handBack.size > 0) {
+    console.log(`  ✓ every handed-back PR (${handBack.size}) has an open hand-back bean`);
   }
   console.log("");
   console.log("`conflict`: clean | declared (merge:main resolves it) | refused (authored) | unknown.");

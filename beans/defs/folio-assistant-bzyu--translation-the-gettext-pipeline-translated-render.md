@@ -3,8 +3,10 @@
 title: 'TRANSLATION: the gettext pipeline, translated renders, and their QA'
 status: in-progress
 type: epic
+priority: normal
 created_at: 2026-09-19T11:43:43Z
-updated_at: 2026-09-19T11:43:43Z
+updated_at: 2026-10-04T15:12:15Z
+parent: folio-assistant-rwmf
 ---
 
 Everything from a `.pot` template to a rendered page that declares its own

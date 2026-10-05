@@ -84,6 +84,7 @@ import {
 import { withViewers } from "./viewer-declarations.js";
 import { subscribedHarnesses, subscribedTile } from "./subscribed-harnesses.js";
 import { labelVisualisations, nameInstanceRoot } from "./lib/nav-label.js";
+import type { HarnessMark } from "./lib/harness-mark.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
@@ -241,12 +242,21 @@ export type HarnessTile = {
    */
   navbarIcons?: NavbarIcon[];
   /**
-   * The mark the navbar renders: the theme avatar if there is one, else the
-   * instance's own icon, with its crop solved. Absent when neither exists —
-   * and the navbar then draws an INITIAL, which is a different answer from a
-   * broken image and from a placeholder glyph.
+   * The mark the navbar renders — THE one answer every navbar surface reads
+   * (bean `2vpn`): the theme avatar if there is one, else the instance's own
+   * icon, else its glyph from the avatar registry. An image carries `src` (and
+   * its crop, both declared and solved); a glyph carries `glyph`, SVG path data
+   * in a 24×24 box. Absent only when an instance has none of the three — and
+   * the navbar then draws an INITIAL, which is a different answer from a broken
+   * image and from a placeholder glyph.
+   *
+   * Until 2026-10-04 the glyph was not a candidate, and the mounted and viewer
+   * pages read `icon` rather than this field, so who-iris — whose mark is a
+   * glyph since the owner removed its emblem — drew the letter "W" on every
+   * page while declaring a mark. Consumers turn this into a navbar item with
+   * `navMarkFields` (`lib/harness-mark.ts`) and nothing else.
    */
-  mark?: { src: string; title: string; crop?: { width: number; height: number; left: number; top: number } };
+  mark?: HarnessMark;
   /**
    * Hue angle — the tile's theme. From the instance's own theme accent when it
    * resolves one, else from the avatar registry; {@link toneFrom} says which.
@@ -1161,15 +1171,22 @@ function tileFor(
 
   // Resolved after both candidates exist. `icon` keeps its own field for
   // `mount-instance-docs.ts`, which builds a NavItem rather than reading this.
-  const iconMark =
+  const iconMark: HarnessMark | undefined =
     iconSrc === undefined
       ? undefined
       : {
           src: iconSrc,
           title: icon?.title ?? "",
-          ...(icon?.avatarRegion ? { crop: solveCrop(icon.avatarRegion) } : {}),
+          ...(icon?.avatarRegion ? { region: icon.avatarRegion, crop: solveCrop(icon.avatarRegion) } : {}),
         };
-  const navMark = themeAvatar ?? iconMark;
+  // The registry glyph is the THIRD candidate, not a separate mechanism: an
+  // instance with its own avatar entry (never the generic one, which is a
+  // fallback rather than a mark) still has a mark when it declares no image.
+  const glyphMark: HarnessMark | undefined = own ? { glyph: avatar.glyph, title: avatar.reads } : undefined;
+  // The order is the owner's (*"use theme avatar not the purply thing"*,
+  // 2026-09-22) and the Jekyll `.site-title` follows it too
+  // (`_includes/title.html`), so every surface draws the same mark.
+  const navMark = themeAvatar ?? iconMark ?? glyphMark;
 
   // A FOLIO AT THE SITE ROOT IS THE LANDING PAGE, which every harness row is
   // already beside: `ob3m` finding 2 measured Folio Assistant and C@T Harness
@@ -1253,7 +1270,8 @@ function tileFor(
      * THE MARK THE NAVBAR SHOWS, resolved once here rather than branched on in
      * a template.
      *
-     * Theme avatar first, the instance's own `icon` second. The precedence is
+     * Theme avatar first, the instance's own `icon` second, its registry
+     * glyph third (bean `2vpn`). The precedence is
      * the owner's — *"use theme avatar not the purply thing"* — and it is
      * decided HERE because the alternative is five branches of Liquid
      * (`avatar` with a crop, `avatar` without, `icon` with a crop, `icon`

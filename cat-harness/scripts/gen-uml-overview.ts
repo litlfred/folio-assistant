@@ -57,11 +57,12 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, wri
 
 import { gitCorpus } from "../schemas/git-corpus.ts";
 import { dirname, join, relative, resolve, sep } from "node:path";
-import type { z } from "zod";
+import { z } from "zod";
 
 import { toJsonSchema } from "../schemas/to-json-schema.js";
 
 import { compareRoute } from "./route-authority.ts";
+import { isDirectoryReadme } from "../schemas/kg-node.ts";
 import { instanceDirectoryForGraph, instanceRootsIn, instanceDirectories, readDeclaration, siteDir } from "../schemas/cat-harness.js";
 import { BASE_GRAPH_KINDS, resolveGraphKind } from "../schemas/graph-kind-registry.js";
 import { readUmlPalette } from "./uml-palette.js";
@@ -238,7 +239,12 @@ function drawFamily(
 ): void {
   const title = f.tag;
   if (f.state === "resolved") {
-    const json = toJsonSchema(f.schema as z.ZodType) as Json;
+    // A validator written as a guard piped into a strict object (the merge
+    // queue's: `looseObject` refusing GitHub facts by name, then the entry)
+    // has an INPUT side with no properties. Draw the shape it produces, which
+    // is the class a reader means.
+    const schema = f.schema instanceof z.ZodPipe ? (f.schema.out as z.ZodType) : (f.schema as z.ZodType);
+    const json = toJsonSchema(schema) as Json;
     decompose(json, title, `json: ${f.ref.exportName}`, kind, `${prefix}_${safeId(f.tag)}`, acc);
   } else if (f.state === "shape") {
     acc.classes.push({
@@ -970,9 +976,26 @@ async function main(): Promise<void> {
  * and diagrams of an instance or section that no longer exists (bean `ghgn`).
  * Only this generator's own kinds of output count, so a file a person put
  * there is never an orphan.
+ *
+ * ## A directory README is never this generator's output
+ *
+ * `docs/uml/overview/` and `docs/assets/img/uml/overview/` are DECLARED
+ * directories (`docs/docs.json`: `uml-overview-pages`, `uml-overview-svgs`),
+ * and every declared directory carries a README written by
+ * `readme:subgraphs` — the rule {@link isDirectoryReadme} states for every
+ * collector. This generator writes no `README.md`, so one under its roots is
+ * another writer's, by the docblock above. Before PR #2094 the nested
+ * declaration was not admitted, no README was written there, and `.md` caught
+ * nothing it should not; once it was, the two writers never converged — this
+ * one deleted the README as an orphan, `readme:subgraphs` wrote it back, and
+ * each `--check` reported the other's output as stale or orphaned. Skipping it
+ * here rather than in `readme:subgraphs` keeps the README rule in the one
+ * place it is declared, and survives `xsrv`'s move of the pages to a
+ * route-keyed branch: a stored directory is skipped by `readme:subgraphs`
+ * (`isStored`), so there is then simply no README to skip.
  */
 export function umlOrphans(existing: readonly string[], written: ReadonlyMap<string, string> | ReadonlySet<string>, svgs: ReadonlySet<string>): string[] {
-  return existing.filter((p) => !written.has(p) && !svgs.has(p) && /\.(puml|mmd|md|svg)$/.test(p));
+  return existing.filter((p) => !written.has(p) && !svgs.has(p) && !isDirectoryReadme(p) && /\.(puml|mmd|md|svg)$/.test(p));
 }
 
 if (import.meta.main) await main();

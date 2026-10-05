@@ -32,7 +32,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { DAK_COMPONENTS, DAK_UNFORMALIZED_COMPONENTS, type DakComponent } from "../schemas/dak-kinds.ts";
-import { siteDirFor } from "../../cat-harness/schemas/cat-harness.ts";
+import { siteDirFor } from "../platform.js";
 
 interface Card {
   title: string;

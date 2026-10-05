@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_GettingStarted` · strict · 12 step(s)
 
-folio-assistant — getting started: from "create a folio" to a live site.
+Somebody said "create a folio": work out which request they meant, with the branch computed by a decision table that may answer "ask", and what has to be true before anything is written. folio-assistant — getting started: from "create a folio" to a live site.
 
 "Create a folio" is five different requests. Gateway_Intent computes which one
 from decisions/folio-intent.dmn rather than letting the agent assume, and `ask`

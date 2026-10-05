@@ -26,7 +26,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -74,7 +74,7 @@ function fixture(): Fixture {
   // for the top level and then scans the instances beside it (`repoRootFor` is
   // the parent directory), so a fixture directly under the temp directory would
   // read every other test's fixture as a sibling instance.
-  const parent = mkdtempSync(join(tmpdir(), "qa-attest-writers-"));
+  const parent = realpathSync(mkdtempSync(join(tmpdir(), "qa-attest-writers-")));
   const root = join(parent, "repo");
   mkdirSync(root);
   if (spawnSync("git", ["init", "-q"], { cwd: root }).status !== 0) throw new Error("git init failed");
@@ -97,7 +97,10 @@ function fixture(): Fixture {
 }
 
 function run(cwd: string, args: string[]) {
-  return spawnSync("bun", args, { cwd, encoding: "utf-8" });
+  // `env` explicitly: Bun's child_process does not inherit variables set at
+  // runtime, and standalone the test preload sets FOLIO_FIXTURE_CHECKOUT —
+  // without it the sweep sees no vocabulary and recognises no block.
+  return spawnSync("bun", args, { cwd, encoding: "utf-8", env: { ...process.env } });
 }
 
 /** The two seeded attestations are in the derived report AND unchanged in the store. */

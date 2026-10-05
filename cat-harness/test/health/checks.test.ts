@@ -22,7 +22,7 @@ import { repoRootFor } from "../../schemas/cat-harness.js";
 import { describe, expect, it } from "bun:test";
 
 import { HealthReportSchema, healthVerdict } from "../../schemas/health-report.ts";
-import { hasRenderedDecision } from "./probes.ts";
+import { MAX_PREVIEW_BYTES } from "../../scripts/staging-rotate.ts";
 import {
   BEAN_OPEN_LIMIT,
   BEAN_RESOLVED_INLINE_LIMIT,
@@ -33,19 +33,24 @@ import {
   TRACKED_MAJOR_BYTES,
   TRACKED_WARN_BYTES,
   beanStoreCheck,
+  sessionLogRootBeans,
   formatBytes,
   repositorySizeCheck,
   runHealthChecks,
   previewLiveness,
   stagingOrphanCheck,
+  specialBranchSizeCheck,
   stagingSizeCheck,
   stagingSlug,
   todoStoreCheck,
   type BeanEvidence,
   type BranchEvidenceSet,
   type HealthContext,
+  type SpecialBranchBudget,
+  type SpecialBranchMeasure,
   type StagingPreview,
 } from "./checks.ts";
+import { hasRenderedDecision, membersFor, readSpecialBranches, type SpecialBranchDecl } from "./probes.ts";
 
 const MB = 1024 * 1024;
 
@@ -66,6 +71,7 @@ function healthyContext(over: Partial<HealthContext> = {}): HealthContext {
       value: [{ id: "b1", title: "one", status: "todo" }],
     },
     todos: { state: "ok", value: [{ id: "t1", status: "open", createdAt: "2026-09-18" }] },
+    specialBranches: { state: "ok", value: { rows: [], command: "fixture" } },
     ...over,
   };
 }
@@ -80,7 +86,25 @@ function metrics(r: { findings: { metric?: string }[] }): (string | undefined)[]
 }
 
 describe("staging-preview-size", () => {
-  it("fires at `major` on the owner's 500 MB threshold", () => {
+  it("fires at `major` over the owner's 3 GB budget — the rotation's own constant", () => {
+    // NINE previews at 350 MiB, the size they had reached by 2026-10-04: 3.08 GB.
+    // The budget was 500 MB until the owner replaced the #1868 count cap with a
+    // size budget ("Cap by size, not count", "3gb"); this check now reads the
+    // same constant the deploy rotation enforces.
+    const r = stagingSizeCheck(healthyContext({
+      staging: { state: "ok", value: { branch: "present", previews: previews(9, 350 * MB), command: "fixture" } },
+    }));
+    expect(r.state).toBe("finding");
+    expect(metrics(r)).toEqual(["staging-total-bytes"]);
+    expect(r.findings[0].severity).toBe("major");
+    expect(r.findings[0].summary).toContain("3.08 GB");
+    expect(r.findings[0].summary).toContain("3.00 GB");
+    expect(r.thresholds.find((t) => t.metric === "staging-total-bytes")?.value).toBe(MAX_PREVIEW_BYTES);
+    // The action never removes anything — it asks.
+    expect(r.findings[0].action).toContain("staging:cleanup");
+  });
+
+  it("history: 500 MB of ~37 MB previews is no longer a finding", () => {
     // FOURTEEN previews at the size measured on gh-pages (36.7–37.6 MB each).
     //
     // It was three, against a 100 MB threshold. The owner raised it to 500 MB
@@ -90,15 +114,20 @@ describe("staging-preview-size", () => {
     // once and stayed breached; now the store drains and what remains is
     // bounded by concurrent reviews. 500 MB is about thirteen of them, so
     // fourteen is the first breach.
+    // (The fourteen-preview case the 500 MB budget was calibrated on, kept to
+    // pin that the old number is gone rather than merely raised in prose.)
     const r = stagingSizeCheck(healthyContext({
       staging: { state: "ok", value: { branch: "present", previews: previews(14, 37 * MB), command: "fixture" } },
     }));
-    expect(r.state).toBe("finding");
-    expect(metrics(r)).toEqual(["staging-total-bytes"]);
-    expect(r.findings[0].severity).toBe("major");
-    expect(r.findings[0].summary).toContain("518.0 MB");
-    // The action never removes anything — it asks.
-    expect(r.findings[0].action).toContain("staging:cleanup");
+    expect(r.state).toBe("ok");
+  });
+
+  it("just under the budget is not a finding", () => {
+    // Eight at 350 MiB is 2.73 GB.
+    const r = stagingSizeCheck(healthyContext({
+      staging: { state: "ok", value: { branch: "present", previews: previews(8, 350 * MB), command: "fixture" } },
+    }));
+    expect(r.state).toBe("ok");
   });
 
   it("thirteen concurrent reviews is UNDER the threshold — the number means a concurrency", () => {
@@ -122,9 +151,9 @@ describe("staging-preview-size", () => {
     // ~777 MB, but 100 of them is 3.7 GB and still must not manufacture a
     // `critical`. A test at 777 MB alone would pass against a check that
     // escalated at some higher number nobody had noticed.
-    for (const n of [21, 100]) {
+    for (const n of [9, 100]) {
       const r = stagingSizeCheck(healthyContext({
-        staging: { state: "ok", value: { branch: "present", previews: previews(n, 37 * MB), command: "fixture" } },
+        staging: { state: "ok", value: { branch: "present", previews: previews(n, 350 * MB), command: "fixture" } },
       }));
       expect(r.state).toBe("finding");
       // ONE breach, not one per threshold: the count must track what is wrong,
@@ -156,7 +185,7 @@ describe("staging-preview-size", () => {
         state: "ok",
         value: {
           branch: "present",
-          previews: [{ slug: "a", bytes: 777 * 1024 * 1024, files: 1 }],
+          previews: [{ slug: "a", bytes: 3500 * 1024 * 1024, files: 1 }],
           command: "fixture",
         },
       },
@@ -185,7 +214,7 @@ describe("staging-preview-size", () => {
     // What it says now is the owner's budget, which is all this check owns after
     // the split — the serving language moved to `pages-publish-health`, and the
     // test for it lives with that check rather than here.
-    expect(f.summary).toContain("warning point");
+    expect(f.summary).toContain("budget the deploy rotation enforces");
     expect(f.action).toContain("staging:cleanup");
     expect(t?.basis).toBeDefined();
   });
@@ -635,6 +664,48 @@ describe("bean-store", () => {
     title: `title ${o.id}`,
     status: "todo",
     ...o,
+  });
+
+  // ── Bean `8unf`: a session is a LOG, not a roadmap root ──────────────
+  //
+  // qou, 2026-10-04: 292 of 353 epics were "Session:" logs, because two
+  // skills told every session to mint one. Report-only, OPEN beans only.
+  describe("bean-session-log-roots", () => {
+    const run = (value: BeanEvidence[]) => beanStoreCheck(healthyContext({ beans: { state: "ok", value } }));
+
+    it("flags an open Session/Handoff epic or milestone", () => {
+      const r = run([
+        bean({ id: "s1", title: "Session: claude/foo — fix bar", type: "milestone", status: "in-progress" }),
+        bean({ id: "s2", title: "SESSION 3 - lean sweep", type: "epic" }),
+        bean({ id: "h1", title: "Handoff: lean build arc", type: "epic" }),
+        bean({ id: "h2", title: "Handover — Q4", type: "milestone" }),
+      ]);
+      const f = r.findings.filter((x) => x.metric === "bean-session-log-roots");
+      expect(f.map((x) => x.summary.slice(1, 3)).sort()).toEqual(["h1", "h2", "s1", "s2"]);
+      expect(f.every((x) => x.severity === "minor")).toBe(true);
+      expect(f[0].action).toContain("never `beans delete`");
+      expect(r.measurements.find((m) => m.metric === "bean-session-log-roots")?.value).toBe(4);
+    });
+
+    it("does not flag a session-titled TASK, a closed log, a mid-title 'session', or an untyped bean", () => {
+      const r = run([
+        bean({ id: "t1", title: "Session: notes", type: "task" }),
+        bean({ id: "c1", title: "Session: old", type: "epic", status: "completed" }),
+        bean({ id: "c2", title: "Session: rejected", type: "milestone", status: "scrapped" }),
+        bean({ id: "m1", title: "PROCESS: the session-start sweep", type: "epic" }),
+        bean({ id: "u1", title: "Session: untyped" }),
+      ]);
+      expect(metrics(r)).not.toContain("bean-session-log-roots");
+      expect(r.measurements.find((m) => m.metric === "bean-session-log-roots")?.value).toBe(0);
+    });
+
+    it("sessionLogRootBeans is the same answer the check gives", () => {
+      const beans = [
+        bean({ id: "s1", title: "Session: x", type: "epic" }),
+        bean({ id: "e1", title: "QA: verdicts", type: "epic" }),
+      ];
+      expect(sessionLogRootBeans(beans).map((b) => b.id)).toEqual(["s1"]);
+    });
   });
 
   // ── Bean `thux`: a claim worked through its CHILDREN is not quiet ─────
@@ -1285,5 +1356,85 @@ describe("pages-publish-health — the split, bean `qj9a`", () => {
     // A check absent from the registry is a check that never fires — the
     // `1xhc` shape, and the reason this is asserted rather than assumed.
     expect(HEALTH_CHECKS.map((c) => c.id)).toContain("pages-publish-health");
+  });
+});
+
+describe("special-branch-size", () => {
+  const budget = (bytes: number, scope: "branch" | "family", stated: string): SpecialBranchBudget => ({ bytes, scope, stated, basis: "owner, fixture" });
+  const ctxWith = (rows: SpecialBranchMeasure[]) =>
+    healthyContext({ specialBranches: { state: "ok", value: { rows, command: "fixture" } } });
+
+  it("fires per branch over a `branch` budget, naming the branch and the owner's number", () => {
+    const r = specialBranchSizeCheck(ctxWith([
+      { id: "beans", name: "cat/cat-harness/beans", shape: "branch", budget: budget(100 * MB, "branch", "100mb"), state: "measured", resolved: "cat/cat-harness/beans", branches: [{ ref: "cat/cat-harness/beans", bytes: 120 * MB, files: 9 }] },
+      { id: "todos", name: "cat/cat-harness/todos", shape: "branch", budget: budget(100 * MB, "branch", "100mb"), state: "measured", resolved: "cat/cat-harness/todos", branches: [{ ref: "cat/cat-harness/todos", bytes: 1 * MB, files: 3 }] },
+    ]));
+    expect(r.state).toBe("finding");
+    expect(metrics(r)).toEqual(["special-branch-bytes:beans"]);
+    expect(r.findings[0].summary).toContain("120.0 MB");
+    expect(r.findings[0].summary).toContain("100mb");
+    expect(r.thresholds.map((t) => t.metric)).toEqual(["special-branch-bytes:beans", "special-branch-bytes:todos"]);
+  });
+
+  it("measures a `family` budget in TOTAL — no single cache branch is over, the family is", () => {
+    const each = 1.5 * 1024 * MB;
+    const r = specialBranchSizeCheck(ctxWith([
+      { id: "lake-cache", name: "cat/folio-assistant-sci/lake-cache/", shape: "family", budget: budget(4 * 1024 * MB, "family", "4gb"), state: "measured", resolved: "cat/folio-assistant-sci/lake-cache/", branches: [1, 2, 3].map((i) => ({ ref: `cat/folio-assistant-sci/lake-cache/p${i}`, bytes: each, files: 1 })) },
+    ]));
+    expect(r.state).toBe("finding");
+    expect(r.findings).toHaveLength(1);
+    expect(r.findings[0].summary).toContain("4.50 GB");
+  });
+
+  it("a family budgeted PER BRANCH fires on the branch that is over, not on the total", () => {
+    const r = specialBranchSizeCheck(ctxWith([
+      { id: "auto-docs", name: "cat/cat-harness/auto-docs/", shape: "family", budget: budget(1024 * MB, "branch", "1gb"), state: "measured", resolved: "cat/cat-harness/auto-docs/", branches: [{ ref: "cat/cat-harness/auto-docs/a", bytes: 900 * MB, files: 1 }, { ref: "cat/cat-harness/auto-docs/b", bytes: 1100 * MB, files: 1 }] },
+    ]));
+    expect(r.findings.map((f) => f.summary.split(" ")[0])).toEqual(["`cat/cat-harness/auto-docs/b`"]);
+  });
+
+  it("absent and unbudgeted are COUNTED and named, never read as within budget", () => {
+    const r = specialBranchSizeCheck(ctxWith([
+      { id: "auto-docs", name: "cat/cat-harness/auto-docs/", shape: "family", budget: budget(1024 * MB, "branch", "1gb"), state: "absent", branches: [] },
+      { id: "fsh-guts", name: "cat/cat-harness/fsh-guts", shape: "branch", state: "unbudgeted", resolved: "cat/cat-harness/fsh-guts", branches: [] },
+    ]));
+    expect(r.state).toBe("ok");
+    const m = Object.fromEntries(r.measurements.map((x) => [x.metric, x]));
+    expect(m["special-branches-absent"].value).toBe(1);
+    expect(m["special-branches-absent"].command).toContain("auto-docs");
+    expect(m["special-branches-unbudgeted"].value).toBe(1);
+    expect(m["special-branches-unbudgeted"].command).toContain("fsh-guts");
+  });
+
+  it("a probe that could not read the remote is `unknown`, never zero bytes", () => {
+    const r = specialBranchSizeCheck(healthyContext({ specialBranches: { state: "unknown", reason: "ls-remote refused" } }));
+    expect(r.state).toBe("unknown");
+    expect(r.reason).toContain("ls-remote refused");
+  });
+
+  it("the committed declaration budgets what the owner named, at the owner's numbers", () => {
+    const rows = readSpecialBranches(resolve(import.meta.dir, "..", "..", "scripts", "special-branches.json"));
+    const b = Object.fromEntries(rows.filter((x) => x.budget).map((x) => [x.id, [x.budget!.bytes, x.budget!.scope]]));
+    expect(b).toEqual({
+      "qa-reports": [500 * MB, "branch"],
+      "lake-cache": [4 * 1024 * MB, "family"],
+      beans: [100 * MB, "branch"],
+      todos: [100 * MB, "branch"],
+      "auto-docs": [1024 * MB, "branch"],
+    });
+  });
+});
+
+describe("membersFor — the table's resolution rule", () => {
+  const row = (shape: "branch" | "family", name: string, legacy: string[] = []): SpecialBranchDecl => ({ id: "x", shape, name, legacy });
+  it("prefers the new name, falls back to the first legacy name present", () => {
+    expect(membersFor(row("branch", "cat/cat-harness/qa-reports", ["qa-reports"]), ["qa-reports", "cat/cat-harness/qa-reports"])).toEqual({ resolved: "cat/cat-harness/qa-reports", refs: ["cat/cat-harness/qa-reports"] });
+    expect(membersFor(row("branch", "cat/cat-harness/qa-reports", ["qa-reports"]), ["qa-reports"])).toEqual({ resolved: "qa-reports", refs: ["qa-reports"] });
+  });
+  it("a family is every branch under its prefix, and the prefix itself is not a member", () => {
+    expect(membersFor(row("family", "cat/x/lake-cache/"), ["cat/x/lake-cache/b", "cat/x/lake-cache/a", "cat/x/lake-cachey", "main"])).toEqual({ resolved: "cat/x/lake-cache/", refs: ["cat/x/lake-cache/a", "cat/x/lake-cache/b"] });
+  });
+  it("nothing on the remote is a determined absence", () => {
+    expect(membersFor(row("family", "cat/x/auto-docs/"), ["main"])).toEqual({ refs: [] });
   });
 });

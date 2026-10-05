@@ -30,8 +30,8 @@ import {
   DocumentKindSchema,
   type DocumentKind,
   type DocumentKindCoverage,
-} from "../../cat-harness/schemas/document-kind.ts";
-import { directoriesForGraph, instanceRootsIn, readDeclaration, repoRootFor } from "../../cat-harness/schemas/cat-harness.ts";
+} from "../platform.js";
+import { directoriesForGraph, instanceRootsIn, readDeclaration, repoRootFor } from "../platform.js";
 import { DAK_CARDS } from "./gen-dak-components-figure.ts";
 import { pinnedTerms, snapshotProblem } from "./pin-smart-kg.ts";
 

@@ -4,7 +4,7 @@
 
 # cat-harness-src
 
-The MCP server and the harness runtime -- what `bun run cat-harness/src/index.ts` starts. `src/` is the name a new instance should use for its code by convention; it is a minority of the code HERE, which is the measurement that stopped `<stub>/src` from being adopted as a destination for everything.
+The harness runtime that is not the server: the content vocabulary (`content-types.ts`), blocks, the workflow engine, CRDM, logging, the git/cache/feedback/safe-path helpers under `core/`, and the built-in adapter table. The MCP and HTTP server itself moved to `cat-harness-tools/src/` (bean `70lx`, B1). `src/` is the name a new instance should use for its code by convention; it is a minority of the code HERE, which is the measurement that stopped `<stub>/src` from being adopted as a destination for everything.
 
 Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-src`, holding `code`.
 
@@ -13,15 +13,9 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-src`, holdin
 | [`builtin-adapters.ts`](builtin-adapters.ts) | a file |  |
 | [`content-types.ts`](content-types.ts) | a file |  |
 | [`google-drive-mcp.py`](google-drive-mcp.py) | a file |  |
-| [`index.ts`](index.ts) | a file |  |
 | [`qa-agent-write.test.ts`](qa-agent-write.test.ts) | a file |  |
 | [`qa-agent-write.ts`](qa-agent-write.ts) | a file |  |
-| [`route-groups.ts`](route-groups.ts) | a file |  |
 | [`sage-mcp-server.py`](sage-mcp-server.py) | a file |  |
-| [`server.ts`](server.ts) | a file |  |
-| [`tool-groups.ts`](tool-groups.ts) | a file |  |
-| [`types.ts`](types.ts) | a file |  |
-| [`auth/`](auth/) | _nothing declares what this holds_ | |
 | [`blocks/`](blocks/) | _nothing declares what this holds_ | |
 | [`core/`](core/) | _nothing declares what this holds_ | |
 | [`crdm/`](crdm/) | _nothing declares what this holds_ | |
@@ -29,10 +23,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-src`, holdin
 | [`impact/`](impact/) | _nothing declares what this holds_ | |
 | [`issue-watch/`](issue-watch/) | _nothing declares what this holds_ | |
 | [`logging/`](logging/) | _nothing declares what this holds_ | |
-| [`mcp/`](mcp/) | _nothing declares what this holds_ | |
-| [`routes/`](routes/) | _nothing declares what this holds_ | |
 | [`sessions/`](sessions/) | _nothing declares what this holds_ | |
-| [`tools/`](tools/) | _nothing declares what this holds_ | |
 | [`upstream/`](upstream/) | _nothing declares what this holds_ | |
 | [`workflow/`](workflow/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

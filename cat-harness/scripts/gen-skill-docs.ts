@@ -419,6 +419,9 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   ingestion: "Document ingestion methods (ingestion)",
   // Bean `7eak`: rendering catalogue records as standard Dublin Core.
   catalogue: "Catalogue records — Dublin Core renderings (catalogue)",
+  // Placement PR6 (bean `apcg`): the cataloguing methods that moved up out of
+  // the harness's `library-core`.
+  cataloguing: "Cataloguing methods (cataloguing)",
   // Declared directories that hold their skills DIRECTLY, so they are keyed by
   // the declaration's id, like `crdm` and `bootstrap` below. All three were
   // declared in `cat-harness.json` with no label here, which made

@@ -33,6 +33,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
+import { readChangedFiles, siteFilter } from "../../cat-harness/scripts/staging-cone.ts";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 
@@ -72,10 +73,28 @@ export function igInstances(root: string): { instance: string; repository: strin
   return out.sort((a, b) => a.instance.localeCompare(b.instance));
 }
 
+/** The code an AST site is drawn by: this lister, the shell driver, and the three scripts it runs. */
+export const AST_SITE_WRITERS = [
+  "fhir-harness/scripts/stage-ast-sites.ts",
+  "fhir-harness/scripts/ig-ast-site.sh",
+  "fhir-harness/scripts/ig-ast.ts",
+  "fhir-harness/scripts/ast-to-artifact-index.ts",
+  "fhir-harness/scripts/gen-ig-pages.ts",
+];
+
 if (import.meta.main) {
   const igs = igInstances(ROOT);
   const names = igs.map((i) => i.instance);
+  // The staging cone (bean `4j86`): `--changed-files <file>` stages only the
+  // IGs a changed file reaches. Without it, every IG is listed, as before.
+  const at = process.argv.indexOf("--changed-files");
+  const inCone = siteFilter(ROOT, readChangedFiles(at >= 0 ? process.argv[at + 1] : undefined), AST_SITE_WRITERS);
   for (const ig of igs) {
+    const d = inCone(ig.instance);
+    if (!d.carry) {
+      console.error(`skipped: ${ig.instance} — not in the staging cone: ${d.why}`);
+      continue;
+    }
     const url = `https://github.com/${ig.repository}`;
     const ls = spawnSync("git", ["ls-remote", "--heads", url, "refs/heads/cat/fhir-harness/fhir-ast/*", "refs/heads/cat-fhir-ast/*", "refs/heads/fhir-ast/*"], { encoding: "utf-8", timeout: 60_000 });
     if (ls.status !== 0) {

@@ -179,6 +179,21 @@ export function graphReadPath(id: string, repoRoot: string): GraphRead {
         `a clean run over nothing (bean \`dh4f\`), which is the one answer this module exists to refuse.`,
     };
   }
+  if (resolved.kind === "family") {
+    // A FAMILY (bean `lehh`) is one branch per key, and nothing here says which
+    // key the caller means. The declared path would be an empty directory read
+    // as a clean graph (bean `dh4f`) — the else-arm below is exactly that
+    // answer, which is why this arm comes first.
+    return {
+      state: "refused",
+      id,
+      path: declaredPath,
+      reason:
+        `"${id}" is a FAMILY of branches (\`${resolved.branchPrefix}<key>\`, one per ${resolved.keyFrom}), ` +
+        `not one branch, so there is no single graph at ${declaredPath} to read. Name the member you mean ` +
+        `and read that branch.`,
+    };
+  }
   if (resolved.kind !== "branch" || resolved.keyedBy !== "tip") {
     return { state: "ok", at: absPath, from: "checkout", id, path: declaredPath };
   }

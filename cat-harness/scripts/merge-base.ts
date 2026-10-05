@@ -23,10 +23,13 @@
  * After resolving, `bun run regen` asks every check the CI workflow runs and
  * runs each stale one's writer until the tree settles. A non-zero exit
  * (`unrepaired`, or a check with no writer) aborts the merge too: a resolution
- * the gates cannot reproduce is not a resolution.
+ * the gates cannot reproduce is not a resolution. It runs as `regen --changed
+ * <fork point>`, asking only the pairs either side touched; see
+ * {@link regenArgs} for why that is sound, and `--full-regen` for the old way.
  *
  * Usage:
  *   bun run merge:main                 # merge origin/main, resolve, regenerate, commit
+ *   bun run merge:main -- --full-regen # ...asking every pair, not only those the merge touched
  *   bun run merge:main -- --dry-run    # classify the conflicts, change nothing
  *   bun run cat-harness/scripts/merge-base.ts --base origin/<branch>
  *   bun run cat-harness/scripts/merge-base.ts --root <worktree> --base <sha> --dry-run
@@ -36,16 +39,49 @@
  * 2 could not start (dirty tree, no such base).
  */
 import { execFileSync, spawnSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { classify, resolveGeneratedRegions, type Classified } from "./merge-conflict-patterns.js";
 import { relate } from "./git-ancestry.js";
+import { REGEN_VERDICT_TAG, regenExitMeaning } from "./regen-after-merge.js";
 
 export interface Plan {
   resolvable: Classified[];
   refused: Classified[];
+}
+
+/**
+ * The arguments `merge:main` gives `regen` — bean `94zs`.
+ *
+ * `--changed <fork point>`, where the fork point is `git merge-base HEAD
+ * <base>` taken before the merge. regen runs before the merge is committed,
+ * so `HEAD` is still the branch tip, and the change it sees is the union of
+ * what the branch did since the fork point (`<fork>...HEAD`) and what the
+ * merge brought in (the working tree against `HEAD`).
+ *
+ * **Why this base.** A pair that union does not touch has identical inputs
+ * in the merged tree, at the branch tip, at the fork point and at `<base>`'s
+ * tip, because a three-way merge of a path neither side changed is that
+ * path. Its answer here is its answer at every one of them, so it is
+ * current if ANY of them was. The other two candidates need more:
+ *
+ * - the branch tip alone (`--changed HEAD`) skips a pair that only `<base>`
+ *   left alone — sound only if the BRANCH was regen-clean;
+ * - `<base>` alone skips a pair only the branch left alone — sound only if
+ *   `<base>` was green, which CI on `main` does not guarantee.
+ *
+ * And it still sees the case regen exists for (bean `lxpq`): when both sides
+ * touch one generated file, that file is in the union.
+ *
+ * What it does not do: repair a pair that was ALREADY stale at all three and
+ * that the merge did not touch. That staleness is not the merge's, and the
+ * branch's own CI reports it. `--full-regen`, or no fork point (a shallow
+ * clone), runs the full set as before.
+ */
+export function regenArgs(forkPoint: string | undefined): string[] {
+  return forkPoint === undefined ? [] : ["--changed", forkPoint];
 }
 
 /** Split conflicted paths into what a pattern resolves and what it refuses. */
@@ -57,8 +93,14 @@ export function plan(paths: string[]): Plan {
   };
 }
 
+// `maxBuffer` well above Node's 1 MB default: `ls-tree -r` / `ls-files` of this
+// repository are over 2 MB, and the lost-file guard (bean `vsv7`) reads both
+// parents' full lists. At the default it threw ENOBUFS on its first live run,
+// 2026-10-04, after regen had finished — the merge was left uncommitted.
+const GIT_MAX_BUFFER = 256 * 1024 * 1024;
+
 function git(root: string, ...args: string[]): string {
-  return execFileSync("git", ["-C", root, ...args], { encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+  return execFileSync("git", ["-C", root, ...args], { encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"], maxBuffer: GIT_MAX_BUFFER }).trim();
 }
 
 /** Check each submodule out at the commit the index pins. */
@@ -78,7 +120,13 @@ function syncSubmodules(root: string): void {
  * produced. The other direction (deleted on the branch, changed on the base)
  * has stage 3 and takes it, as before.
  */
-export function takeBaseAction(stages: ReadonlySet<number>): "theirs" | "delete" {
+export function takeBaseAction(stages: ReadonlySet<number>): "theirs" | "delete" | "resolved" {
+  // No stages at all is NOT a deletion: the path was already resolved by an
+  // earlier step (`qa:resolve-conflicts` runs first and stages what it
+  // resolves). Reading "no stage 3" there as "the base deleted it" `git rm`ed
+  // two generated kg-export sidecars on #1955, 2026-10-03, while the run still
+  // reported proved (bean `vsv7`).
+  if (stages.size === 0) return "resolved";
   return stages.has(3) ? "theirs" : "delete";
 }
 
@@ -107,7 +155,9 @@ export function stageConflicted(root: string, path: string): void {
 
 /** Take the base's side of `path`, deletion included; stages the result. */
 export function takeBase(root: string, path: string): void {
-  if (takeBaseAction(unmergedStages(root, path)) === "delete") {
+  const action = takeBaseAction(unmergedStages(root, path));
+  if (action === "resolved") return;
+  if (action === "delete") {
     git(root, "rm", "-q", "--", path);
   } else {
     git(root, "checkout", "--theirs", "--", path);
@@ -178,6 +228,108 @@ export function stageGitlink(root: string, path: string, pin: string): void {
   git(root, "update-index", "--cacheinfo", `160000,${pin},${path}`);
 }
 
+/** One path a merge would drop, and which parents track it. */
+export interface DroppedPath {
+  path: string;
+  heldBy: "both" | "ours" | "theirs";
+}
+
+/**
+ * Paths a parent tracks that the merged result does not, where NEITHER side
+ * deleted the path since the merge base (beans `vsv7` and `8j9e`).
+ *
+ * A merge may drop a path only by taking a DELETION: the path was in the merge
+ * base and one side removed it. A path both parents hold, or one a side ADDED
+ * since the base, must survive. The first version (`vsv7`, after #1955 lost
+ * two kg-export sidecars to a resolver mis-step) asked only whether both
+ * parents held the path, so a file one side added and the merge lost passed as
+ * "a deletion the merge took", although nobody deleted it.
+ *
+ * Why this has to be checked: once a path leaves the index, nothing puts it
+ * back if it is gitignored. `cat-harness/test/results/` is ignored while main
+ * tracks files under it. Regen rewrites such a file on disk, every local check
+ * reads the disk and passes, and `git add -A` does not stage the file because
+ * it is now untracked and ignored. Only a fresh checkout shows the loss.
+ * Measured on #2000 (`a16089d07`, two LSI sidecars) and on #1898
+ * (`edf52fcf6`, three detangle sidecars, red on `kg:detangle:check`).
+ * Pure over four path lists.
+ */
+export function droppedPaths(
+  base: readonly string[],
+  ours: readonly string[],
+  theirs: readonly string[],
+  result: readonly string[],
+): DroppedPath[] {
+  const kept = new Set(result);
+  const inBase = new Set(base);
+  const o = new Set(ours);
+  const t = new Set(theirs);
+  const out: DroppedPath[] = [];
+  for (const path of new Set([...ours, ...theirs])) {
+    if (kept.has(path)) continue;
+    const both = o.has(path) && t.has(path);
+    // One side lacks a path the base had, so that side deleted it. Taking the
+    // deletion is a legitimate merge outcome.
+    if (!both && inBase.has(path)) continue;
+    out.push({ path, heldBy: both ? "both" : o.has(path) ? "ours" : "theirs" });
+  }
+  return out.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+}
+
+/**
+ * The refusal line for one dropped path. It has the `  ✗ <path>  [...]` shape
+ * that merge-main.yml and merge-main-comment.ts read.
+ */
+export function droppedLine(d: DroppedPath, onDisk: boolean): string {
+  const held = d.heldBy === "both" ? "tracked by both parents" : `added on ${d.heldBy === "ours" ? "the branch" : "the base"} since the merge base`;
+  const disk = onDisk ? "; still on disk, so local checks pass while a fresh checkout lacks it" : "";
+  return `  ✗ ${d.path}  [dropped: ${held}, deleted by neither side${disk}]`;
+}
+
+/**
+ * `droppedPaths` for the merge in progress at `root`. It reads the INDEX
+ * (`ls-files`) and never the working tree, because the working tree is exactly
+ * where a dropped ignored file hides.
+ */
+export function droppedInMerge(root: string): DroppedPath[] {
+  const list = (ref: string) => git(root, "ls-tree", "-r", "--name-only", ref).split("\n").filter(Boolean);
+  // With no merge base (unrelated histories) `base` is empty. That only makes
+  // the guard stricter: every dropped path is then refused.
+  const mb = spawnSync("git", ["-C", root, "merge-base", "HEAD", "MERGE_HEAD"], { encoding: "utf-8" });
+  const base = mb.status === 0 ? list(mb.stdout.trim()) : [];
+  return droppedPaths(base, list("HEAD"), list("MERGE_HEAD"), git(root, "ls-files").split("\n").filter(Boolean));
+}
+
+/**
+ * Which dropped paths to refuse, at one of the two points the guard runs.
+ *
+ * - `resolved`: after the conflict resolution and before anything is staged
+ *   with `add -A`. Only the resolvers have touched the index at this point,
+ *   and a resolver never has a reason to drop a path neither side deleted, so
+ *   EVERY dropped path is refused. This is where #1898's `git rm` would have
+ *   been caught.
+ * - `staged`: after the writers have run and `add -A` has staged their
+ *   output. A writer may delete what it owns: a content-addressed payload is
+ *   superseded when the merge changes its node, and the writer's own `:check`
+ *   proves the result. That was measured on this guard's first merge of main,
+ *   where `subgraph:jsonld` replaced a payload main had added. So only drops
+ *   still ON DISK are refused here. That is the 8j9e signature: the index lost
+ *   the path while the disk keeps it, and an ignored path is never restaged.
+ */
+export function refusable(dropped: readonly DroppedPath[], when: "resolved" | "staged", onDisk: (path: string) => boolean): DroppedPath[] {
+  return when === "resolved" ? [...dropped] : dropped.filter((d) => onDisk(d.path));
+}
+
+/** Abort, restoring the tree, when the merge drops a path that neither side deleted (see `refusable`). */
+function refuseDroppedFiles(root: string, abort: (why: string) => never, when: "resolved" | "staged"): void {
+  const onDisk = (p: string) => existsSync(join(root, p));
+  const dropped = refusable(droppedInMerge(root), when, onDisk);
+  if (dropped.length) {
+    for (const d of dropped) console.log(droppedLine(d, onDisk(d.path)));
+    abort(`${dropped.length} tracked path(s) would be dropped by this merge, and neither side deleted them (beans vsv7, 8j9e)`);
+  }
+}
+
 /**
  * The refusal line for a path whose declared resolution FAILED. It has the
  * shape of a planned refusal (`  ✗ <path>  [<pattern>: …]`), which is what
@@ -204,6 +356,8 @@ if (import.meta.main) {
   // generated files are rewritten by the final regen anyway. Each member's
   // merge commit is NOT proved on its own; the train is proved at its end.
   const noRegen = args.includes("--no-regen");
+  // `--full-regen` asks every pair, as regen did before bean `94zs`.
+  const fullRegen = args.includes("--full-regen");
   const base = opt("--base") ?? "origin/main";
   // `--root` lets the command run against another checkout (a worktree at an
   // old commit, for a replay of a historical merge) without copying itself in.
@@ -223,6 +377,13 @@ if (import.meta.main) {
     console.error(`merge-base: no such base ${base}`);
     process.exit(2);
   }
+
+  // The fork point, taken BEFORE merging (bean `94zs`): regen is told to ask
+  // only the pairs whose inputs changed on EITHER side since it. See
+  // `regenArgs` for why this base and not the branch tip or `base`.
+  const forkPoint = fullRegen
+    ? undefined
+    : spawnSync("git", ["-C", root, "merge-base", "HEAD", base], { encoding: "utf-8" }).stdout?.trim() || undefined;
 
   const merged = spawnSync("git", ["-C", root, "merge", "--no-ff", "--no-commit", base], { encoding: "utf-8" });
   const conflicted = git(root, "diff", "--name-only", "--diff-filter=U").split("\n").filter(Boolean);
@@ -325,9 +486,20 @@ if (import.meta.main) {
       abort(`${c.path}: a hunk lies outside a generated region (authored text conflicts)`);
     }
   }
+  // Every resolver has now staged what it resolved, and nothing else has been
+  // staged yet: the index is the resolution alone. Beans vsv7, 8j9e.
+  refuseDroppedFiles(root, abort, "resolved");
 
   if (noRegen) {
+    // Sync the submodule checkouts to the merged gitlinks BEFORE staging.
+    // `add -A` stages a gitlink from the submodule's checked-out HEAD, so
+    // without this the merge commit silently reverts the base's
+    // `bootstrap`/`bootstrap-tools` pins — the trap `merge-queue` names, and
+    // what broke `readme:subgraphs` on an unblocker's merge of #2062
+    // (2026-10-04).
+    syncSubmodules(root);
     git(root, "add", "-A");
+    refuseDroppedFiles(root, abort, "staged");
     git(root, "commit", "-q", "--no-edit");
     console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern. NOT regenerated (--no-regen): run \`bun run regen\` once over the train.`);
     process.exit(0);
@@ -350,10 +522,38 @@ if (import.meta.main) {
     const inst = spawnSync("bun", ["install", "--frozen-lockfile"], { cwd: root, stdio: "inherit" });
     if (inst.status !== 0) abort("bun install against the merged lockfile failed");
   }
+  // And the branch-kept graphs (bean 9c7h). The merge can bring in a
+  // declaration the branch did not have — fsh-guts kept on
+  // `cat/cat-harness/fsh-guts` — so a mount made BEFORE the merge mounted
+  // nothing, and regen then reads the graph as unmounted: `fsh-guts:viz` exits
+  // 2 and `audit:coverage:strict` fails. Measured 2026-10-04 on merge-main run
+  // 37193546694: #2059, #2043 and #1829, every head predating 88da63c2d6, all
+  // refused the same way. Mount against the MERGED declarations. Idempotent,
+  // and the mounted paths are ignored, so the final `add -A` stays clean.
+  const mount = spawnSync("bun", ["run", "state:mount"], { cwd: root, stdio: "inherit" });
+  if (mount.status !== 0) abort("state:mount against the merged declarations failed");
   console.log("\nmerge-base: regenerating, and asking every gate the CI workflow runs …");
-  const regen = spawnSync("bun", ["run", "regen"], { cwd: root, stdio: "inherit" });
-  if (regen.status !== 0) abort("the gate set could not reproduce the resolution (regen reported unrepaired checks)");
+  const regen = spawnSync("bun", ["run", "regen", ...regenArgs(forkPoint)], { cwd: root, stdio: "inherit" });
+  // NOT one message for every non-zero exit. `regen`'s `exitCodeFor` returns
+  // three distinct verdicts and this line used to assert "regen reported
+  // unrepaired checks" for all of them — false for exit 2 (which reports no
+  // unrepaired check at all, only that it could not settle), false for a
+  // `no-browser`-only exit 1 (which regen itself calls could-not-determine),
+  // and false for a crash (where nothing was measured). The ABORT is right in
+  // every case: none of them may push. Only the recorded reason was wrong, and
+  // the abort line is the one place the reason is written down — it is what
+  // the PR comment's signature is built from and what a person reads in the
+  // log. `regenExitMeaning` is the inverse of `exitCodeFor` and carries the
+  // evidence.
+  if (regen.status !== 0) {
+    const m = regenExitMeaning(regen.status);
+    abort(
+      `the gate set did not prove the resolution — ${REGEN_VERDICT_TAG} ${m.verdict}\n` +
+        `  ${m.why}`,
+    );
+  }
   git(root, "add", "-A");
+  refuseDroppedFiles(root, abort, "staged");
   git(root, "commit", "-q", "--no-edit");
   console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern, regenerated and proved.`);
 }

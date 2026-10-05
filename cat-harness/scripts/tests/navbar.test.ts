@@ -27,7 +27,7 @@ import {
   type NavGroup,
   type NavbarModel,
 } from "../lib/navbar.js";
-import { injectRail, railModel } from "../lib/harness-rail.js";
+import { injectRail, railModel, withNavbarRow } from "../lib/harness-rail.js";
 import { documentIndexOf } from "../lib/navbar.js";
 import {
   BEGIN,
@@ -425,7 +425,7 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     // when the WHO style guide was folded into who-iris as a subgraph (bean
     // `qsx4`) — the voices declared from within `skills/skills.json`, the
     // glossary in who-iris.json. Same reason as both above.
-    expect(kinds()).toEqual(["catalogue", "code", "docs", "glossary", "library", "qa", "schemas", "skills", "themes", "uploads", "voices"].map(K));
+    expect(kinds()).toEqual(["catalogue", "code", "docs", "glossary", "library", "qa", "schemas", "skills", "themes", "translation-sources", "uploads", "voices"].map(K));
   });
 
   it("links exactly the kinds it was told are published", () => {
@@ -451,6 +451,9 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       "schemas",
       "skills",
       "themes",
+      // `translation-sources`: who-iris carries its own glossary catalogues
+      // since bean riit ("move things to semantically appropriate place").
+      "translation-sources",
       "uploads",
       "voices",
     ].map(K));
@@ -1078,5 +1081,60 @@ describe("adjacent graph rows cannot be confused (bean yag0)", () => {
   it("the glyph is an SVG hidden from assistive technology — the words are the name", () => {
     const html = navbarRegionsHtml(railModel({ instance: "who-iris", toRoot: "..", links: rows }));
     expect(html).toMatch(/<span class="fa-nav-glyph fa-nav-tone" style="[^"]*" aria-hidden="true"><svg viewBox="0 0 24 24"/);
+  });
+});
+
+describe("the harness row's data reaches a railed page (bean wckf, #2147)", () => {
+  // `injectRail` writes the same `#fa-navbar-row` block `head_custom.html`
+  // writes for the theme, so `docs-ui.js`'s ONE `mountNavIconRow` draws the
+  // same row on both surfaces. The browser half is `rail-icon-row.e2e.ts`.
+  const SHELL = "<!doctype html><html><head></head><body><h1>x</h1></body></html>";
+  const opts = { instance: "WHO IRIS", toRoot: "..", links: [] };
+
+  it("an object row is written once, right after <body>, and parses back to itself", () => {
+    const row = { icons: ["todos", "beans"], hrefs: { todos: "/todos/" } };
+    const out = injectRail(SHELL, { ...opts, navbarRow: row })!;
+    const m = /<body><script type="application\/json" id="fa-navbar-row">([^<]*)<\/script>/.exec(out);
+    expect(m).not.toBeNull();
+    expect(JSON.parse(m![1]!)).toEqual(row);
+    expect(withNavbarRow(out, row)).toBe(out); // never twice
+  });
+
+  it("a value cannot close the script element early", () => {
+    const out = injectRail(SHELL, { ...opts, navbarRow: { notes: { kg: "</script><img src=x onerror=alert(1)>" } } })!;
+    expect(out).not.toContain("</script><img");
+    expect(out).toContain("\\u003c/script>");
+  });
+
+  it("declared none is written as null; could-not-tell writes nothing", () => {
+    expect(injectRail(SHELL, { ...opts, navbarRow: null })).toContain('id="fa-navbar-row">null</script>');
+    expect(injectRail(SHELL, { ...opts })).not.toContain("fa-navbar-row");
+  });
+});
+
+describe("every committed railed page carries the harness row's data (bean wckf, #2147)", () => {
+  // THE GATE. A page with the rail and no `#fa-navbar-row` shows the harness's
+  // navbar without the harness's row — the defect the owner reported on
+  // who-iris. It reached 92 committed pages across nine generators before this
+  // existed, because each generator had to be regenerated to pick the block up
+  // and CI named them one at a time. Reads only `cat-harness/docs`, so it holds
+  // standing alone too.
+  const docs = join(import.meta.dir, "../../docs");
+  const pages = new Bun.Glob("**/*.html").scanSync({ cwd: docs });
+  const railed: string[] = [];
+  const missing: string[] = [];
+  for (const rel of pages) {
+    const html = readFileSync(join(docs, rel), "utf-8");
+    if (!html.includes('<nav class="fa-nav"')) continue;
+    railed.push(rel);
+    if (!html.includes('id="fa-navbar-row"')) missing.push(rel);
+  }
+
+  it("there are railed pages to check — an empty scan is not a clean one", () => {
+    expect(railed.length).toBeGreaterThan(20);
+  });
+
+  it("none of them is missing the row's data", () => {
+    expect(missing).toEqual([]);
   });
 });

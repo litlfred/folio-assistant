@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  folio-assistant — public comment on a frozen, line-numbered draft.
+
+  Source of truth: this file. The SVG under docs/assets/img/workflows/ is
+  generated from it by `bun run render:bpmn` — never hand-edit the SVG.
+
+  Every task here is a transition in PUBLIC_COMMENT_TRANSITIONS
+  (folio-assistant-core/schemas/public-comment.ts), and a test holds the two
+  to each other: a comment's status moves only through a task that exists in
+  this diagram. Bean v26p, issue #197.
+-->
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/0.1.0/processes/ns#"
+                  id="Definitions_PublicComment"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+
+  <bpmn:import namespace="https://litlfred.github.io/folio-assistant/workflows" location="content-change-review.bpmn" importType="http://www.omg.org/spec/BPMN/20100524/MODEL" />
+  <bpmn:collaboration id="Collaboration_PublicComment">
+    <bpmn:participant id="Participant_PublicComment" name="Public comment — one comment, from return to resolution" processRef="Process_PublicComment" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_PublicComment" name="Public comment on a review draft" isExecutable="false">
+    <bpmn:documentation>
+      A frozen, line-numbered draft went out for public review. This is what
+      happens to ONE comment that comes back: placed on the block it cites,
+      triaged, weighed by the review committee, decided by the editor and, if
+      the decision changes the document, made on a feature branch whose
+      staging preview shows the text before and after. The change set is
+      reviewed by the same process as any content change
+      (Process_ContentChangeReview); only the intake is new. Skill:
+      public-comment.
+    </bpmn:documentation>
+    <bpmn:extensionElements>
+      <cat-harness.processes:policy enforcement="strict" />
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="Process_PublicComment_LaneSet">
+      <bpmn:lane id="Lane_Commenter" name="Public commenter">
+        <bpmn:documentation>Outside the folio: returns comments on the review version through a matrix, a form or a letter, and may withdraw one at any time. Never moves a comment past received; everything after that is the review's.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="feedback-provider"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>StartEvent_CommentsReturned</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_WithdrawRequested</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Withdraw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_Withdrawn</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Intake" name="Intake agent">
+        <bpmn:documentation>Turns each returned row, form response or cited passage into one comment and resolves its anchor through the review version's page/line map. A citation that resolves to nothing is kept as unplaced, never dropped.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="ingestion-agent"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_Ingest</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Coordinator" name="Review coordinator">
+        <bpmn:documentation>Owns triage: confirms or moves each anchor, sets type and priority, closes duplicates, routes plain editorial points straight to the editor, and assigns the rest to committee members.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="review-coordinator"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_Triage</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Triage</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_Duplicate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Assign</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Committee" name="Review committee">
+        <bpmn:documentation>Recommends, does not decide: each member records one recommendation with a rationale, on GitHub or through the tool, and a later one replaces their earlier one. The editor weighs them.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_CommitteeRecommends</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Editor" name="Editor">
+        <bpmn:documentation>The one lane that decides. Every decision carries one of five codes and, for every code but accepted, a reason the commenter is owed. A decision that does not change the document ends here.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="editor"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_EditorDecides</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_ChangesDocument</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_Decided</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Author" name="Author (human or agentic)">
+        <bpmn:documentation>Once the editor has dispensed a comment with a decision that changes the document, an author makes the edit: a person, or an agent acting in the author role. The edit is made on a feature branch, which may carry the edits for several comments, and recorded on each comment it answers, so a comment shows where its change is being made while it is made.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="author"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_AuthorEdits</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Pipeline" name="Change set — feature branch and staging">
+        <bpmn:documentation>Where the author's edit is reviewed and lands: the feature branch's staging preview gives before/after deep links to each comment's anchor, the change set is reviewed as any content change, and each comment it answers is marked incorporated when it merges.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>CallActivity_ChangeSet</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Incorporate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_Incorporated</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="StartEvent_CommentsReturned" name="Comments returned on the review version">
+      <bpmn:outgoing>Flow_ToIngest</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Ingest" name="Ingest and place each comment">
+      <bpmn:documentation>public-comment import / import-narrative: one record per row or cited passage, anchored through review-anchors.json. Status: received.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_ToIngest</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToTriage</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Triage" name="Triage: confirm the anchor, type and priority">
+      <bpmn:documentation>public-comment triage / reassign / duplicate. An unplaced or low-confidence anchor is placed here, by a person.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_ToTriage</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToTriageGateway</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_Triage" name="Duplicate, plain editorial, or to be weighed?">
+      <bpmn:incoming>Flow_ToTriageGateway</bpmn:incoming>
+      <bpmn:outgoing>Flow_Duplicate</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ToAssign</bpmn:outgoing>
+      <bpmn:outgoing>Flow_EditorialDirect</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="EndEvent_Duplicate" name="Closed as a duplicate">
+      <bpmn:incoming>Flow_Duplicate</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Task_Assign" name="Assign to committee members">
+      <bpmn:documentation>public-comment assign: by GitHub login. A committee member who recommends on an unassigned comment is assigned it as they do.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_ToAssign</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToRecommend</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_CommitteeRecommends" name="Recommend a decision, with a rationale">
+      <bpmn:documentation>A GitHub comment tagged pc: PC-0042 / recommend: code, from a login in config.json committee, or public-comment recommend.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_ToRecommend</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToDecide</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_EditorDecides" name="Decide, weighing the recommendations">
+      <bpmn:documentation>public-comment decide, or decide: code on GitHub from a login in config.json editors. accepted, accepted-modified, not-accepted, noted, deferred; a reason for all but accepted. Also reopens a decided comment.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_ToDecide</bpmn:incoming>
+      <bpmn:incoming>Flow_EditorialDirect</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToChangesGateway</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_ChangesDocument" name="Does the decision change the document?">
+      <bpmn:incoming>Flow_ToChangesGateway</bpmn:incoming>
+      <bpmn:outgoing>Flow_NoChange</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ToAuthorEdits</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="EndEvent_Decided" name="Decided, answer recorded">
+      <bpmn:incoming>Flow_NoChange</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Task_AuthorEdits" name="Edit the document as decided, on a feature branch">
+      <bpmn:documentation>public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch that may answer several comments. Status: editing.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_ToAuthorEdits</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToChangeSet</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:callActivity id="CallActivity_ChangeSet" name="Review the change set on its staging preview" calledElement="Process_ContentChangeReview">
+      <bpmn:documentation>The existing content-change review, unchanged, of the author's branch: its PR lists the PC refs it answers, and its staging preview is the after side of every deep link. A change the reviewers send back returns to the author inside that process.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="staging-review"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_ToChangeSet</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToIncorporate</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:task id="Task_Incorporate" name="Mark incorporated when the change set merges">
+      <bpmn:documentation>public-comment incorporate, naming the branch, PR and staging URL.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_ToIncorporate</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToIncorporated</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndEvent_Incorporated" name="Incorporated in the document">
+      <bpmn:incoming>Flow_ToIncorporated</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:startEvent id="StartEvent_WithdrawRequested" name="Commenter withdraws a comment">
+      <bpmn:outgoing>Flow_ToWithdraw</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Withdraw" name="Record the withdrawal">
+      <bpmn:documentation>public-comment withdraw, from any open status.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_ToWithdraw</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToWithdrawn</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndEvent_Withdrawn" name="Withdrawn">
+      <bpmn:incoming>Flow_ToWithdrawn</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="Flow_ToIngest" sourceRef="StartEvent_CommentsReturned" targetRef="Task_Ingest" />
+    <bpmn:sequenceFlow id="Flow_ToTriage" sourceRef="Task_Ingest" targetRef="Task_Triage" />
+    <bpmn:sequenceFlow id="Flow_ToTriageGateway" sourceRef="Task_Triage" targetRef="Gateway_Triage" />
+    <bpmn:sequenceFlow id="Flow_Duplicate" name="duplicate" sourceRef="Gateway_Triage" targetRef="EndEvent_Duplicate" />
+    <bpmn:sequenceFlow id="Flow_ToAssign" name="to be weighed" sourceRef="Gateway_Triage" targetRef="Task_Assign" />
+    <bpmn:sequenceFlow id="Flow_EditorialDirect" name="plain editorial" sourceRef="Gateway_Triage" targetRef="Task_EditorDecides" />
+    <bpmn:sequenceFlow id="Flow_ToRecommend" sourceRef="Task_Assign" targetRef="Task_CommitteeRecommends" />
+    <bpmn:sequenceFlow id="Flow_ToDecide" sourceRef="Task_CommitteeRecommends" targetRef="Task_EditorDecides" />
+    <bpmn:sequenceFlow id="Flow_ToChangesGateway" sourceRef="Task_EditorDecides" targetRef="Gateway_ChangesDocument" />
+    <bpmn:sequenceFlow id="Flow_NoChange" name="no: not accepted, noted, deferred" sourceRef="Gateway_ChangesDocument" targetRef="EndEvent_Decided" />
+    <bpmn:sequenceFlow id="Flow_ToAuthorEdits" name="yes: accepted" sourceRef="Gateway_ChangesDocument" targetRef="Task_AuthorEdits" />
+    <bpmn:sequenceFlow id="Flow_ToChangeSet" sourceRef="Task_AuthorEdits" targetRef="CallActivity_ChangeSet" />
+    <bpmn:sequenceFlow id="Flow_ToIncorporate" sourceRef="CallActivity_ChangeSet" targetRef="Task_Incorporate" />
+    <bpmn:sequenceFlow id="Flow_ToIncorporated" sourceRef="Task_Incorporate" targetRef="EndEvent_Incorporated" />
+    <bpmn:sequenceFlow id="Flow_ToWithdraw" sourceRef="StartEvent_WithdrawRequested" targetRef="Task_Withdraw" />
+    <bpmn:sequenceFlow id="Flow_ToWithdrawn" sourceRef="Task_Withdraw" targetRef="EndEvent_Withdrawn" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_PublicComment">
+    <bpmndi:BPMNPlane id="BPMNPlane_PublicComment" bpmnElement="Collaboration_PublicComment">
+      <bpmndi:BPMNShape id="Participant_PublicComment_di" bpmnElement="Participant_PublicComment" isHorizontal="true">
+        <dc:Bounds x="100" y="60" width="2000" height="910" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Commenter_di" bpmnElement="Lane_Commenter" isHorizontal="true">
+        <dc:Bounds x="130" y="60" width="1970" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Intake_di" bpmnElement="Lane_Intake" isHorizontal="true">
+        <dc:Bounds x="130" y="190" width="1970" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Coordinator_di" bpmnElement="Lane_Coordinator" isHorizontal="true">
+        <dc:Bounds x="130" y="320" width="1970" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Committee_di" bpmnElement="Lane_Committee" isHorizontal="true">
+        <dc:Bounds x="130" y="450" width="1970" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Editor_di" bpmnElement="Lane_Editor" isHorizontal="true">
+        <dc:Bounds x="130" y="580" width="1970" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Author_di" bpmnElement="Lane_Author" isHorizontal="true">
+        <dc:Bounds x="130" y="710" width="1970" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Pipeline_di" bpmnElement="Lane_Pipeline" isHorizontal="true">
+        <dc:Bounds x="130" y="840" width="1970" height="130" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="StartEvent_CommentsReturned_di" bpmnElement="StartEvent_CommentsReturned">
+        <dc:Bounds x="200" y="107" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Ingest_di" bpmnElement="Task_Ingest">
+        <dc:Bounds x="280" y="215" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Triage_di" bpmnElement="Task_Triage">
+        <dc:Bounds x="460" y="345" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Triage_di" bpmnElement="Gateway_Triage" isMarkerVisible="true">
+        <dc:Bounds x="640" y="360" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="578" y="412" width="84" height="40" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Duplicate_di" bpmnElement="EndEvent_Duplicate">
+        <dc:Bounds x="704" y="326" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="744" y="328" width="72" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Assign_di" bpmnElement="Task_Assign">
+        <dc:Bounds x="820" y="345" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CommitteeRecommends_di" bpmnElement="Task_CommitteeRecommends">
+        <dc:Bounds x="1000" y="475" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_EditorDecides_di" bpmnElement="Task_EditorDecides">
+        <dc:Bounds x="1180" y="605" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ChangesDocument_di" bpmnElement="Gateway_ChangesDocument" isMarkerVisible="true">
+        <dc:Bounds x="1360" y="620" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1320" y="578" width="130" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Decided_di" bpmnElement="EndEvent_Decided">
+        <dc:Bounds x="1660" y="627" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AuthorEdits_di" bpmnElement="Task_AuthorEdits">
+        <dc:Bounds x="1460" y="735" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_ChangeSet_di" bpmnElement="CallActivity_ChangeSet">
+        <dc:Bounds x="1640" y="865" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Incorporate_di" bpmnElement="Task_Incorporate">
+        <dc:Bounds x="1820" y="865" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Incorporated_di" bpmnElement="EndEvent_Incorporated">
+        <dc:Bounds x="2010" y="887" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_WithdrawRequested_di" bpmnElement="StartEvent_WithdrawRequested">
+        <dc:Bounds x="1000" y="107" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Withdraw_di" bpmnElement="Task_Withdraw">
+        <dc:Bounds x="1080" y="85" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Withdrawn_di" bpmnElement="EndEvent_Withdrawn">
+        <dc:Bounds x="1260" y="107" width="36" height="36" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Flow_ToIngest_di" bpmnElement="Flow_ToIngest">
+        <di:waypoint x="236" y="125" />
+        <di:waypoint x="340" y="125" />
+        <di:waypoint x="340" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToTriage_di" bpmnElement="Flow_ToTriage">
+        <di:waypoint x="400" y="255" />
+        <di:waypoint x="430" y="255" />
+        <di:waypoint x="430" y="385" />
+        <di:waypoint x="460" y="385" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToTriageGateway_di" bpmnElement="Flow_ToTriageGateway">
+        <di:waypoint x="580" y="385" />
+        <di:waypoint x="640" y="385" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Duplicate_di" bpmnElement="Flow_Duplicate">
+        <di:waypoint x="665" y="360" />
+        <di:waypoint x="665" y="344" />
+        <di:waypoint x="704" y="344" />
+        <bpmndi:BPMNLabel><dc:Bounds x="612" y="326" width="48" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToAssign_di" bpmnElement="Flow_ToAssign">
+        <di:waypoint x="690" y="385" />
+        <di:waypoint x="820" y="385" />
+        <bpmndi:BPMNLabel><dc:Bounds x="712" y="392" width="70" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_EditorialDirect_di" bpmnElement="Flow_EditorialDirect">
+        <di:waypoint x="665" y="410" />
+        <di:waypoint x="665" y="697" />
+        <di:waypoint x="1240" y="697" />
+        <di:waypoint x="1240" y="685" />
+        <bpmndi:BPMNLabel><dc:Bounds x="820" y="680" width="70" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToRecommend_di" bpmnElement="Flow_ToRecommend">
+        <di:waypoint x="940" y="385" />
+        <di:waypoint x="970" y="385" />
+        <di:waypoint x="970" y="515" />
+        <di:waypoint x="1000" y="515" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToDecide_di" bpmnElement="Flow_ToDecide">
+        <di:waypoint x="1120" y="515" />
+        <di:waypoint x="1150" y="515" />
+        <di:waypoint x="1150" y="645" />
+        <di:waypoint x="1180" y="645" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToChangesGateway_di" bpmnElement="Flow_ToChangesGateway">
+        <di:waypoint x="1300" y="645" />
+        <di:waypoint x="1360" y="645" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_NoChange_di" bpmnElement="Flow_NoChange">
+        <di:waypoint x="1410" y="645" />
+        <di:waypoint x="1660" y="645" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1450" y="625" width="170" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToAuthorEdits_di" bpmnElement="Flow_ToAuthorEdits">
+        <di:waypoint x="1385" y="670" />
+        <di:waypoint x="1385" y="775" />
+        <di:waypoint x="1460" y="775" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1292" y="725" width="70" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToChangeSet_di" bpmnElement="Flow_ToChangeSet">
+        <di:waypoint x="1580" y="775" />
+        <di:waypoint x="1610" y="775" />
+        <di:waypoint x="1610" y="905" />
+        <di:waypoint x="1640" y="905" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToIncorporate_di" bpmnElement="Flow_ToIncorporate">
+        <di:waypoint x="1760" y="905" />
+        <di:waypoint x="1820" y="905" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToIncorporated_di" bpmnElement="Flow_ToIncorporated">
+        <di:waypoint x="1940" y="905" />
+        <di:waypoint x="2010" y="905" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToWithdraw_di" bpmnElement="Flow_ToWithdraw">
+        <di:waypoint x="1036" y="125" />
+        <di:waypoint x="1080" y="125" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToWithdrawn_di" bpmnElement="Flow_ToWithdrawn">
+        <di:waypoint x="1200" y="125" />
+        <di:waypoint x="1260" y="125" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

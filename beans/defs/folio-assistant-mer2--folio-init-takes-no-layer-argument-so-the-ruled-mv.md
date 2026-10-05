@@ -9,8 +9,6 @@ tags:
 created_at: 2026-09-30T21:47:07Z
 updated_at: 2026-10-04T09:56:44Z
 parent: folio-assistant-vke6
-blocking:
-    - folio-assistant-zmdo
 ---
 
 ## The finding, and how it was measured
@@ -174,3 +172,10 @@ _2026-10-04T09:52:31Z_ — Claimed by claude/dazzling-sagan-xifirf — pushed to
 Measured: `bun test cat-harness/scripts/tests/init-folio.test.ts` — **40 pass, 0 fail**.
 
 **Found, not fixed:** an instance cannot be upgraded to a folio in place. `init-folio` skips existing files, so the declaration and config would keep saying "no content". The instance's AGENTS.md says so rather than promising it.
+
+## 2026-10-04 — done-when 4, half met
+
+- ✅ **`zmdo`'s per-layer MVP runs through it**: `init-folio --instance` (cat-harness) and `init-folio --type document` (folio-assistant-core), in real empty repositories, both green (bean `zmdo` §"PROVEN 2026-10-04").
+- ⬜ **`x3bd`'s bootstrap-only test does not yet.** `x3bd` is still `in-progress`, so this bean stays open on that half alone — closing it would claim a test that does not exist.
+
+`blocking: zmdo` is removed: zmdo is proven and closed.

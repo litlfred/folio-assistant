@@ -314,7 +314,9 @@ function storedOn(absPath: string, repoRoot?: string): string | undefined {
   try {
     const loc = resolveQaLocation(repoRoot);
     const abs = resolve(absPath);
-    return loc.directories.find((x) => x.storage && (abs === x.absPath || abs.startsWith(x.absPath + sep)))?.storage?.branch;
+    const s = loc.directories.find((x) => x.storage && (abs === x.absPath || abs.startsWith(x.absPath + sep)))?.storage;
+    // A qa directory is keyed by commit, so its storage is a single branch; the resolver refuses a family.
+    return s && "branch" in s ? s.branch : undefined;
   } catch {
     // Not inside a checkout (a test's temp directory), or the declarations do
     // not resolve: nothing here is stored, which is the pre-move default.
@@ -708,10 +710,27 @@ export function judgeQaResult(args: {
   show?: number;
 }): QaVerdict {
   const failOn = [...(args.failOn ?? [])];
-  const failOnNew = (args.failOnNew ?? []).filter((f) => !failOn.includes(f));
+  let failOnNew = (args.failOnNew ?? []).filter((f) => !failOn.includes(f));
   const { root, stem, writer, against, store } = args.baseline;
   const read = readQaResultFrom(qaResultPath(root, stem), { against, store });
   const unknowns = [...(args.unknowns ?? [])];
+  // A `failOnNew` family the baseline does not carry AT ALL was never
+  // recorded there, so "new against it" has no subject: every entry would read
+  // as new, which is "every subject is new" — the reading this module refuses
+  // for a missing entry. It is UNKNOWN for that family and not gated, the same
+  // as a missing baseline. An EMPTY family is recorded and is graded. Measured
+  // when `check:reference-direction` gained its A.10 `wrong-direction` family
+  // (bean `1bvx`): the `main` entry predating it would have failed ~1,000 pairs.
+  if (read.state === "hit") {
+    const absent = failOnNew.filter((f) => read.result.families?.[f] === undefined && args.fresh.families[f] !== undefined);
+    for (const f of absent) {
+      unknowns.push(
+        `the baseline (${read.from}) carries no \`${f}\` family, so NEW cannot be told from inherited there. ` +
+          `Not "no new findings" — the comparison was not made for it. Not gated.`,
+      );
+    }
+    failOnNew = failOnNew.filter((f) => !absent.includes(f));
+  }
   const count = (fams: readonly string[]) => fams.reduce((n, f) => n + (args.fresh.families[f]?.count ?? 0), 0);
 
   let failing: number;

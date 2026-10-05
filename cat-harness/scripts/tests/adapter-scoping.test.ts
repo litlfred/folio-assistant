@@ -52,9 +52,11 @@ const registry = await loadContributions<FolioContribution, ContributionRegistry
 const contributed = registry.contributedKinds();
 
 describe("adapter partition", () => {
-  test("paper kinds are BLOCK_KINDS itself, not a copy", () => {
+  test("paper kinds are BLOCK_KINDS, both read off the same nodes", () => {
     // A second hand-maintained list is the drift this module exists to stop.
-    expect(PAPER_BLOCK_KINDS).toBe(BLOCK_KINDS);
+    // Since bean riit, both are DISCOVERED (the paper adapter's nodes), so
+    // they are equal by construction rather than by being one array.
+    expect([...PAPER_BLOCK_KINDS]).toEqual([...BLOCK_KINDS]);
   });
 
   test("paper is the one built-in adapter — dak is contributed (bean 1335)", () => {

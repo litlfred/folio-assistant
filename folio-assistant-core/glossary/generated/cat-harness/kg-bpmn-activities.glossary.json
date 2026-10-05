@@ -207,46 +207,6 @@
       "status": "candidate"
     },
     {
-      "id": "process_buildl1kg.task_assets",
-      "prefLabel": "Record assets[] — local path or remote URL",
-      "definition": "kind / role / url-or-path / checksum / retrieved. A SIBLING of library:, never inside it: LibraryRef is regenerated from the tree, so an authored URL placed there is dropped on the next sync.",
-      "notation": "Task_Assets",
-      "source": "cat-harness/processes/library/ingest-build-l1-kg.bpmn#Task_Assets",
-      "status": "candidate"
-    },
-    {
-      "id": "process_buildl1kg.task_bind",
-      "prefLabel": "Bind the folder name to the bibliography slug",
-      "definition": "Bind the folder name to the document's bibliography slug, so library/<bib-slug>/ and its citation key are the same string: a citation resolves to a directory without a lookup table between them.",
-      "notation": "Task_Bind",
-      "source": "cat-harness/processes/library/ingest-build-l1-kg.bpmn#Task_Bind",
-      "status": "candidate"
-    },
-    {
-      "id": "process_buildl1kg.task_dublin",
-      "prefLabel": "Write dublin-core.jsonld (the record of truth)",
-      "definition": "One standalone Dublin Core record per folder. dcterms is already this corpus's JSON-LD vocabulary, so this extends a live context rather than introducing one.",
-      "notation": "Task_Dublin",
-      "source": "cat-harness/processes/library/ingest-build-l1-kg.bpmn#Task_Dublin",
-      "status": "candidate"
-    },
-    {
-      "id": "process_buildl1kg.task_link",
-      "prefLabel": "Link L1 nodes into the corpus graph",
-      "definition": "Anything in library/ is L1 source content. A knowledge-graph reference from any artefact -- paper, L2, L3 -- resolves to it through library/.",
-      "notation": "Task_Link",
-      "source": "cat-harness/processes/library/ingest-build-l1-kg.bpmn#Task_Link",
-      "status": "candidate"
-    },
-    {
-      "id": "process_buildl1kg.task_manifest",
-      "prefLabel": "Write manifest.jsonld referencing it",
-      "definition": "Write manifest.jsonld for the folder: its @id, @type folio:SourceDocument, what it contains and its provenance, referencing the standalone dublin-core.jsonld as the record of truth rather than copying its fields.",
-      "notation": "Task_Manifest",
-      "source": "cat-harness/processes/library/ingest-build-l1-kg.bpmn#Task_Manifest",
-      "status": "candidate"
-    },
-    {
       "id": "process_cihealth.task_check",
       "prefLabel": "Run check:ci-health, WRITING the report file",
       "definition": "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check.",
@@ -935,54 +895,6 @@
       "status": "candidate"
     },
     {
-      "id": "process_derivecontent.task_archive",
-      "prefLabel": "Archive → greppable contents manifest",
-      "definition": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Tar/zip is opaque to every grep in the corpus until its contents are listed as data.",
-      "notation": "Task_Archive",
-      "source": "cat-harness/processes/library/ingest-derive-content.bpmn#Task_Archive",
-      "status": "candidate"
-    },
-    {
-      "id": "process_derivecontent.task_audio",
-      "prefLabel": "Transcribe and translate audio",
-      "definition": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md.",
-      "notation": "Task_Audio",
-      "source": "cat-harness/processes/library/ingest-derive-content.bpmn#Task_Audio",
-      "status": "candidate"
-    },
-    {
-      "id": "process_derivecontent.task_image",
-      "prefLabel": "Narrative description per image, localized",
-      "definition": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Applies equally to an image EXTRACTED FROM A PDF, not only to an uploaded one.",
-      "notation": "Task_Image",
-      "source": "cat-harness/processes/library/ingest-derive-content.bpmn#Task_Image",
-      "status": "candidate"
-    },
-    {
-      "id": "process_derivecontent.task_provenance",
-      "prefLabel": "Cite the author of every narrative",
-      "definition": "A generated description is a claim by someone. Record whether a human or an agent wrote it, and for an agent the model version. An uncited narrative is indistinguishable from a transcription of the source.",
-      "notation": "Task_Provenance",
-      "source": "cat-harness/processes/library/ingest-derive-content.bpmn#Task_Provenance",
-      "status": "candidate"
-    },
-    {
-      "id": "process_derivecontent.task_tabular",
-      "prefLabel": "Sheet names, headers, shape, narrative",
-      "definition": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. CSV and spreadsheet: tabs, column and row headers, sizes, and what the dataset is about.",
-      "notation": "Task_Tabular",
-      "source": "cat-harness/processes/library/ingest-derive-content.bpmn#Task_Tabular",
-      "status": "candidate"
-    },
-    {
-      "id": "process_derivecontent.task_techmeta",
-      "prefLabel": "File info, sizes, hashes, timestamps, mimetype",
-      "definition": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Mechanical and cheap; the checksum is what makes a remote asset verifiable.",
-      "notation": "Task_TechMeta",
-      "source": "cat-harness/processes/library/ingest-derive-content.bpmn#Task_TechMeta",
-      "status": "candidate"
-    },
-    {
       "id": "process_docssite.call_alert",
       "prefLabel": "Alert the publication manager [publish-verification]",
       "definition": "Process_PublishAlert — the ONE alert every failing step after the publish button goes through, whichever step it was.",
@@ -1047,46 +959,6 @@
       "status": "candidate"
     },
     {
-      "id": "process_extractstructure.task_candidates",
-      "prefLabel": "Extract claim candidates",
-      "definition": "candidates.json holds extracted theorems and definitions. Proposals only -- never adjudicated verdicts.",
-      "notation": "Task_Candidates",
-      "source": "cat-harness/processes/library/ingest-extract-structure.bpmn#Task_Candidates",
-      "status": "candidate"
-    },
-    {
-      "id": "process_extractstructure.task_extracttext",
-      "prefLabel": "Extract the text layer",
-      "definition": "The document has a text layer: extract it with pdf-extract (pdfminer.six, then a zero-dependency content-stream reader). Exit 2 means no text layer — a scan — and routes to OCR; it is not an empty document.",
-      "notation": "Task_ExtractText",
-      "source": "cat-harness/processes/library/ingest-extract-structure.bpmn#Task_ExtractText",
-      "status": "candidate"
-    },
-    {
-      "id": "process_extractstructure.task_ocr",
-      "prefLabel": "OCR to ocr/page-*.txt",
-      "definition": "A document ingested this way keeps its text in ocr/ and only a stub in sections/, which the documented sections/ grep cannot see. That asymmetry is why the corpus-grep checklist has a fourth tier.",
-      "notation": "Task_Ocr",
-      "source": "cat-harness/processes/library/ingest-extract-structure.bpmn#Task_Ocr",
-      "status": "candidate"
-    },
-    {
-      "id": "process_extractstructure.task_sections",
-      "prefLabel": "Split into sections/*.md with doc_brief front-matter",
-      "definition": "Contextual retrieval: a chunk in isolation loses what makes it mean anything, so each section carries the document brief.",
-      "notation": "Task_Sections",
-      "source": "cat-harness/processes/library/ingest-extract-structure.bpmn#Task_Sections",
-      "status": "candidate"
-    },
-    {
-      "id": "process_extractstructure.task_structure",
-      "prefLabel": "Write structure.json (TOC, page ranges, metadata)",
-      "definition": "Write structure.json (pdf-structure/v1): doc id, TOC from the PDF outline or inferred from headings, page ranges, metadata, and source{} with the sha256 and a mimetype sniffed from the bytes, never the extension. A structure that could not be determined says so in structure_note rather than being rendered as one.",
-      "notation": "Task_Structure",
-      "source": "cat-harness/processes/library/ingest-extract-structure.bpmn#Task_Structure",
-      "status": "candidate"
-    },
-    {
       "id": "process_featurestaging.h_confirm",
       "prefLabel": "Repeat the slug, exactly, to confirm",
       "definition": "The one step in this process that is a person's. Repeating the slug is not ceremony: it names the artefact being confirmed, so a confirmation cannot be inherited by a later run pointed at a different preview.",
@@ -1113,7 +985,7 @@
     {
       "id": "process_featurestaging.task_deploy",
       "prefLabel": "Push to the CDN at STAGING/&lt;slug&gt;/ [render-kg-to-cdn]",
-      "definition": "A PREVIEW IS THE GENERAL STEP WITH A DIFFERENT ROOT (owner, 2026-09-30: \"independent of staging vs publication … just rendering\"). Process_RenderKgToCdn, entered with the tree Task_Build rendered, `STAGING/<slug>/` under the site root as the publication root URL, and GitHub Pages as the target, so its `gh-pages` Tool pushes. For this target the push is `keep_files: true` with a `destination_dir`, so it adds one directory beside whatever else is on the branch; it is also RETRIED once: five other workflows push to `gh-pages` without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled. The call returns the push's status and message; the render log and the PR comment that follow are this process's own. THE PREVIEW CAP rides in the same commit (owner ruling 2026-10-02, issue #1868: \"cap the maximum number of previews (<= 10) and rotate old ones off\"): `staging-rotate.ts` keeps this preview plus the most recently updated others up to MAX_PREVIEWS = 10 and removes the rest, each with a `removed` render-log entry and its record retired into STAGING/_retired/. Every push attempt re-reads `gh-pages` and re-decides rather than rebasing, so a lost race never pushes a stale removal. A rotated-off preview is regenerated by the next push to its PR branch.",
+      "definition": "A PREVIEW IS THE GENERAL STEP WITH A DIFFERENT ROOT (owner, 2026-09-30: \"independent of staging vs publication … just rendering\"). Process_RenderKgToCdn, entered with the tree Task_Build rendered, `STAGING/<slug>/` under the site root as the publication root URL, and GitHub Pages as the target, so its `gh-pages` Tool pushes. For this target the push is `keep_files: true` with a `destination_dir`, so it adds one directory beside whatever else is on the branch; it is also RETRIED once: five other workflows push to `gh-pages` without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled. The call returns the push's status and message; the render log and the PR comment that follow are this process's own. THE PREVIEW CAP rides in the same commit (owner ruling 2026-10-02, issue #1868: \"cap the maximum number of previews (<= 10) and rotate old ones off\", amended 2026-10-04 to a SIZE budget: \"Cap by size, not count\", \"3gb\"): `staging-rotate.ts` keeps this preview plus the most recently updated others while their total fits MAX_PREVIEW_BYTES = 3 GB and removes the rest, oldest first, each with a `removed` render-log entry and its record retired into STAGING/_retired/. Every push attempt re-reads `gh-pages` and re-decides rather than rebasing, so a lost race never pushes a stale removal. A rotated-off preview is regenerated by the next push to its PR branch.",
       "notation": "Task_Deploy",
       "source": "cat-harness/processes/sdlc/feature-staging.bpmn#Task_Deploy",
       "status": "candidate"
@@ -1375,99 +1247,35 @@
       "status": "candidate"
     },
     {
-      "id": "process_ingestion.callactivity_buildkg",
-      "prefLabel": "Build the L1 knowledge graph [document-intake]",
-      "definition": "See ingest-build-l1-kg.bpmn.",
-      "notation": "CallActivity_BuildKg",
-      "source": "cat-harness/processes/library/document-ingestion.bpmn#CallActivity_BuildKg",
+      "id": "process_ingestion.task_cataloguereference",
+      "prefLabel": "Record it in library/ as referenced [library-ingestion]",
+      "definition": "The referenced branch. Nothing is fetched and no bytes are written: the catalogue record says where the asset is and that we hold none. A reference is not a fetch — it stays navigable without being held, and materializing it later is `materialize-remote.bpmn`'s decision, with its purpose and five gates, not this flow's.",
+      "notation": "Task_CatalogueReference",
+      "source": "cat-harness/processes/library/document-ingestion.bpmn#Task_CatalogueReference",
       "status": "candidate"
     },
     {
-      "id": "process_ingestion.callactivity_derive",
-      "prefLabel": "Derive content from the assets [document-intake]",
-      "definition": "See ingest-derive-content.bpmn. Most of this subprocess is not implemented yet.",
-      "notation": "CallActivity_Derive",
-      "source": "cat-harness/processes/library/document-ingestion.bpmn#CallActivity_Derive",
-      "status": "candidate"
-    },
-    {
-      "id": "process_ingestion.callactivity_extract",
-      "prefLabel": "Extract structure [document-intake]",
-      "definition": "See ingest-extract-structure.bpmn.",
-      "notation": "CallActivity_Extract",
-      "source": "cat-harness/processes/library/document-ingestion.bpmn#CallActivity_Extract",
-      "status": "candidate"
-    },
-    {
-      "id": "process_ingestion.callactivity_gate",
-      "prefLabel": "L1 completeness gate",
-      "definition": "See ingest-l1-completeness-gate.bpmn. Skill-backed by `library-ingestion` (2026-09-30, bean 7bg9): its section \"What a complete L1 entry holds\" names `check:l1-complete` as the gate and states its three results. Until then this step named `paper-relevance-triage`, which never existed, and was left uncovered rather than bound to a guess. The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead.",
-      "notation": "CallActivity_Gate",
-      "source": "cat-harness/processes/library/document-ingestion.bpmn#CallActivity_Gate",
-      "status": "candidate"
-    },
-    {
-      "id": "process_ingestion.callactivity_ingesttheme",
-      "prefLabel": "Ingest the theme [theme-art-intake]",
-      "definition": "See ingest-theme.bpmn. The subprocess derives one Theme node with kind sticky|webpage|publication, and refuses a source it cannot complete rather than emitting a partial theme.",
-      "notation": "CallActivity_IngestTheme",
-      "source": "cat-harness/processes/library/document-ingestion.bpmn#CallActivity_IngestTheme",
-      "status": "candidate"
-    },
-    {
-      "id": "process_ingestion.task_citeable",
-      "prefLabel": "Available to cite as an L1 source",
-      "definition": "Every knowledge-graph reference to this source now resolves through library/. Authoring and review consume it from here -- see authoring-a-document.bpmn.",
-      "notation": "Task_Citeable",
-      "source": "cat-harness/processes/library/document-ingestion.bpmn#Task_Citeable",
-      "status": "candidate"
-    },
-    {
-      "id": "process_ingestion.task_detect",
-      "prefLabel": "Detect media type and mint a doc id [document-intake]",
-      "definition": "Sniff the media type rather than trusting the extension, and mint the doc id from the page-1 arXiv stamp where there is one, else from the filename.",
-      "notation": "Task_Detect",
-      "source": "cat-harness/processes/library/document-ingestion.bpmn#Task_Detect",
-      "status": "candidate"
-    },
-    {
-      "id": "process_ingestion.task_licence",
-      "prefLabel": "Establish the licence from the upload alone [document-intake]",
-      "definition": "EARLY, by the owner's ruling on bean 7bg9 (2026-09-20): before any derivation, because library/ is holds: content and anything derived first is committed, so refusing it later is a deletion nobody may take unasked. This step sees only the upload itself — the licence recorded in its intake.json (the same stated / unknown record a library manifest carries) and whether a LICENSE file sits beside it. It never infers a licence from extracted text. The verdict is stated, unknown, or UNDETERMINED, and undetermined is never reported as cleared: the pipeline proceeds and says so, because a licence that only extraction can reveal is a later check's to find.",
-      "notation": "Task_Licence",
-      "source": "cat-harness/processes/library/document-ingestion.bpmn#Task_Licence",
-      "status": "candidate"
-    },
-    {
-      "id": "process_ingestion.task_openbean",
-      "prefLabel": "Record the gap as a bean",
-      "definition": "A missing derived artefact is a tracked gap, not a silent omission. The document stays in uploads/ until the gap closes.",
-      "notation": "Task_OpenBean",
-      "source": "cat-harness/processes/library/document-ingestion.bpmn#Task_OpenBean",
+      "id": "process_ingestion.task_extractmetadata",
+      "prefLabel": "Extract its metadata into the KG [asset-extraction]",
+      "definition": "THE METADATA STEP. What enters the knowledge graph is the asset's INDEX — what it is, how big, what type, when it says it was written — and, for a container, what is in it; its contents do not go in unless somebody asks, with a reason. Owner, 2026-09-20: \"make sure you have zip ingestion skills to extract metadata of assets into KG. don't extract contents unless explict ask by user.\" The tool is `cat-harness-tools/scripts/extract-assets.ts`, writing a `folio-extraction/v1` record (`schemas/extraction.ts`, moved down to this layer in placement PR5). The media type is sniffed from the leading bytes, never taken from the extension.",
+      "notation": "Task_ExtractMetadata",
+      "source": "cat-harness/processes/library/document-ingestion.bpmn#Task_ExtractMetadata",
       "status": "candidate"
     },
     {
       "id": "process_ingestion.task_place",
       "prefLabel": "Place it in uploads/ by a declared route [upload-routes]",
-      "definition": "THE FIRST LINK, and it did not exist until 2026-09-30. Everything downstream of here takes a file that is already in the queue: `document-intake` triggers on \"User drops a file into `uploads/`\", and both ingest Tools type their first input as \"The upload to ingest, under the declared `uploads` graph\". So the act of PUTTING it there was performed by three different mechanisms and governed by none of them. WHAT THIS STEP IS. Choosing an arrival route, writing the bytes into the declared queue of the instance that will own them, and discharging what that route does not discharge for you. The routes, what each writer owes, and the two that are mechanisms against the one that is a persona are in the `upload-routes` skill; `upload-url` composes the forge URL for the web route from the declaration rather than from a literal, because a hand-written one 404'd. WHY A PLAIN `bpmn:task` AND NOT A `userTask`. A `userTask` asserts a human performs it, and this lane is named \"Contributor (human or agent)\" precisely because both do — measured over this repository's own history, files have reached `uploads/` in commits authored by `Carl Leitner` and in commits authored by `Claude`. Asserting human-only here would be the `activity-fulfilment-kind` contradiction written deliberately: the diagram saying one thing and the lane's role graph another. A plain task asserts nothing about the performer, which is the truth. WHY THE BEAN OP IS `note` AND NOT `claim`. Placing a file claims nothing; it adds to a queue. What it owes the work plan is visibility — three batches of PDFs arrived through the forge's web UI (`c8349950fa5`, `f4ddfc65c8d`, `b8549160bb1`) with no bean, no PR and no note, and the first sibling to notice was a generator going stale. A note against the ingestion bean is what makes the queue's growth something another session can see.",
+      "definition": "THE FIRST LINK, and it did not exist until 2026-09-30. Everything downstream of here takes a file that is already in the queue, and both ingest Tools type their first input as \"The upload to ingest, under the declared `uploads` graph\". So the act of PUTTING it there was performed by three different mechanisms and governed by none of them. WHAT THIS STEP IS. The basic flow's ACCEPT step: choosing an arrival route, writing the bytes into the declared queue of the instance that will own them, and discharging what that route does not discharge for you. The routes, what each writer owes, and the two that are mechanisms against the one that is a persona are in the `upload-routes` skill; `upload-url` composes the forge URL for the web route from the declaration rather than from a literal, because a hand-written one 404'd. WHY A PLAIN `bpmn:task` AND NOT A `userTask`. A `userTask` asserts a human performs it, and this lane is named \"Contributor (human or agent)\" precisely because both do — measured over this repository's own history, files have reached `uploads/` in commits authored by `Carl Leitner` and in commits authored by `Claude`. Asserting human-only here would be the `activity-fulfilment-kind` contradiction written deliberately: the diagram saying one thing and the lane's role graph another. A plain task asserts nothing about the performer, which is the truth. WHY THE BEAN OP IS `note` AND NOT `claim`. Placing a file claims nothing; it adds to a queue. What it owes the work plan is visibility — three batches of PDFs arrived through the forge's web UI (`c8349950fa5`, `f4ddfc65c8d`, `b8549160bb1`) with no bean, no PR and no note, and the first sibling to notice was a generator going stale. A note against the ingestion bean is what makes the queue's growth something another session can see.",
       "notation": "Task_Place",
       "source": "cat-harness/processes/library/document-ingestion.bpmn#Task_Place",
       "status": "candidate"
     },
     {
-      "id": "process_ingestion.task_promote",
-      "prefLabel": "Move into library/<bib-slug>/",
-      "definition": "The folder name IS the bibliography citation key, so a citation and a directory are the same string.",
-      "notation": "Task_Promote",
-      "source": "cat-harness/processes/library/document-ingestion.bpmn#Task_Promote",
-      "status": "candidate"
-    },
-    {
-      "id": "process_ingestion.task_summaryqueue",
-      "prefLabel": "Prose blocks enter the summary queue [library-ingestion]",
-      "definition": "Owner, 2026-09-24: \"Make as QA sidecar as part of general doc ingestion to slowly drain.\" Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: `bun run summaries:next -- --n K` hands it the next K blocks with their text, it writes a short summary of each in its own words, and `bun run summaries:record` writes them into library/<bib-slug>/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run narratives`.",
-      "notation": "Task_SummaryQueue",
-      "source": "cat-harness/processes/library/document-ingestion.bpmn#Task_SummaryQueue",
+      "id": "process_ingestion.task_placeinlibrary",
+      "prefLabel": "Place the asset in library/<slug>/ [library-ingestion]",
+      "definition": "The materialized branch. The asset lands in library/<slug>/ with its metadata record, its provenance and its fixity. The folder name IS the citation key, so a citation and a directory are the same string. The upload is then RETIRED, not left and not deleted: it moves to fsh-guts/uploads/ beside a sidecar naming where it came from and when (owner, 2026-09-29), and `check:uploads-retired` finds one that was not. A refining process that derives content from the bytes does so before that retirement; `library-ingestion` carries the rule.",
+      "notation": "Task_PlaceInLibrary",
+      "source": "cat-harness/processes/library/document-ingestion.bpmn#Task_PlaceInLibrary",
       "status": "candidate"
     },
     {
@@ -1740,38 +1548,6 @@
       "definition": "THE TRUST ANCHOR IS GDHCN, SPECIFIED BY THE WHO SMART TRUST IG (owner, 2026-09-20: `propsal signing = GDHCN`, then `smart-trust`). READ OFF THAT IG rather than from general knowledge: a GDHCN trustlist distributes KEY MATERIAL as W3C DID documents, and says nothing about what you wrap your bytes in — the health-certificate envelope is a separate specification in the same IG, and a document package is not a health certificate. So what is settled is where a verifier GETS THE KEY, not what it verifies. A portal that can fetch the bytes but not reach the trustlist cannot verify, which is `unknown` and not a failure — air-gapped is a declared deployment value, so that case is answered rather than assumed away. Still OPEN and unread: the rotation and revocation model, and whether a document-package signature can be expressed for a GDHCN-aware verifier at all. Two schemes with different properties remain to choose between, and the trustlist does not choose between them. A PACKAGE signature over the manifest verifies the SET — nothing added, removed or altered — and must be reissued whenever any file changes. A PER-ASSET signature verifies one file independently, which is what an edge cache serving one asset can actually check, and it cannot detect a removal because there is nothing left to verify. They compose; composing them is the safer and more expensive default, and it is the deployment's choice rather than the pipeline's.",
       "notation": "S_Sign",
       "source": "cat-harness/processes/kg/kg-to-portal.bpmn#S_Sign",
-      "status": "candidate"
-    },
-    {
-      "id": "process_l1gate.task_checkderived",
-      "prefLabel": "Is every derived artefact present?",
-      "definition": "L1 source to L1 KG is NOT complete while a required derived artefact is missing. This is the gate that makes the derivation steps obligatory rather than aspirational.",
-      "notation": "Task_CheckDerived",
-      "source": "cat-harness/processes/library/ingest-l1-completeness-gate.bpmn#Task_CheckDerived",
-      "status": "candidate"
-    },
-    {
-      "id": "process_l1gate.task_flagdrift",
-      "prefLabel": "Adjudicate the flagged passage",
-      "definition": "A machine can detect that two readings differ. Which one is right is a human call.",
-      "notation": "Task_FlagDrift",
-      "source": "cat-harness/processes/library/ingest-l1-completeness-gate.bpmn#Task_FlagDrift",
-      "status": "candidate"
-    },
-    {
-      "id": "process_l1gate.task_roundtrip",
-      "prefLabel": "Round-trip translation QA",
-      "definition": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Back-translate each localized narrative into its source language and compare meaning, to catch semantic drift and bad terminology that a forward-only check cannot see.",
-      "notation": "Task_RoundTrip",
-      "source": "cat-harness/processes/library/ingest-l1-completeness-gate.bpmn#Task_RoundTrip",
-      "status": "candidate"
-    },
-    {
-      "id": "process_l1gate.task_verdict",
-      "prefLabel": "Record the L1 completeness verdict",
-      "definition": "Record the completeness verdict in three states — met, unmet, or not yet derivable — as bun run check:l1-complete reports it. Not-yet-derivable is never a pass. An unmet verdict opens a bean and returns to derivation; only a met one lets the entry into library/.",
-      "notation": "Task_Verdict",
-      "source": "cat-harness/processes/library/ingest-l1-completeness-gate.bpmn#Task_Verdict",
       "status": "candidate"
     },
     {
@@ -2165,7 +1941,7 @@
     {
       "id": "process_methodologyfromsource.call_ingest",
       "prefLabel": "Ingest into library/",
-      "definition": "folio-assistant's document ingestion, choosing the rung mechanically (embedded outline, pages, OCR). Section text is written only when the licence allows it.",
+      "definition": "The harness's basic ingestion flow (`document-ingestion.bpmn`, `Process_Ingestion`): the source is accepted, its metadata goes into the KG, and it is catalogued in library/ — held if materialized, recorded as referenced if not. Since placement PR6 (bean `apcg`) the flow makes no content-type decision: reading a document into sections and blocks — choosing the rung mechanically (embedded outline, pages, OCR), and writing section text only when the licence allows it — is a refinement in the layer above, which calls this same flow first.",
       "notation": "Call_Ingest",
       "source": "cat-harness/processes/library/methodology-from-source.bpmn#Call_Ingest",
       "status": "candidate"
@@ -2886,6 +2662,62 @@
       "definition": "An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them. NO `cat-harness.processes:bean` on this step. It records that a claim happened; it does not claim.",
       "notation": "A_UpdateSession",
       "source": "cat-harness/processes/process/session-state-machine.bpmn#A_UpdateSession",
+      "status": "candidate"
+    },
+    {
+      "id": "process_slicesqlitepublish.a_check",
+      "prefLabel": "Gate every slice: slice:sqlite:check",
+      "definition": "For every slice: build twice and require one sha256; read the row digest back from the file and require it to equal the digest computed from the source without SQLite; run an FTS5 phrase query for a known row; and audit the payloads with `auditPayloadTree` (deploy payloads as written, the kg slice's pointers against the committed payload tree). A slice whose rows do not match its source fails; it never passes as whole.",
+      "notation": "A_Check",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Check",
+      "status": "candidate"
+    },
+    {
+      "id": "process_slicesqlitepublish.a_define",
+      "prefLabel": "Write the slice definition",
+      "definition": "Add one `SliceDef` to the builder's slice table: the DDL (one table per node type, edge tables, one CONTENTLESS full-detail FTS5), the order each table's rows go in, the `load` that turns the source into rows, where the payloads live (written at deploy, or already published), and the `search` block the generic page reads. Choose the heavy fields by `kg-export` §\"What is heavy\": a heavy field is a `payload_sha256` pointer, never a stored column. Never copy the builder.",
+      "notation": "A_Define",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Define",
+      "status": "candidate"
+    },
+    {
+      "id": "process_slicesqlitepublish.a_deploy",
+      "prefLabel": "Build each slice into _site at deploy",
+      "definition": "`gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice <name>`, once per slice, from the tree being published: the file, its manifest, the slice index, and the deploy payloads beside the committed KG payloads. Never into the committed `docs/payload/`, whose orphan audit admits KG nodes only.",
+      "notation": "A_Deploy",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Deploy",
+      "status": "candidate"
+    },
+    {
+      "id": "process_slicesqlitepublish.a_measure",
+      "prefLabel": "Build it locally and measure the file",
+      "definition": "Run `bun run slice:sqlite -- --slice <name> --out <scratch>` and read the manifest: `bytes`, the row counts, the payload count and bytes, `overBudget`, `duplicateIds` and `findings`. Record the measurement on the bean with its provenance (the command and the date), beside the size of the source it replaces.",
+      "notation": "A_Measure",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Measure",
+      "status": "candidate"
+    },
+    {
+      "id": "process_slicesqlitepublish.a_report",
+      "prefLabel": "Report the measurement; ship nothing",
+      "definition": "Write the measurement and what was tried onto the bean, and ask the owner whether the slice should ship at that size, be cut further, or not exist. Nothing is wired: no manifest is published, no gate added, no deploy line written.",
+      "notation": "A_Report",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Report",
+      "status": "candidate"
+    },
+    {
+      "id": "process_slicesqlitepublish.a_verify",
+      "prefLabel": "Search the published slice in a browser",
+      "definition": "Open `slices/search.html?slice=<name>` on the deployed site, run a phrase search for a known row, open it so its payload is fetched, and look at the result; send the screenshot rather than a description of it. Report the mode the page says it used (OPFS or in memory), never an assumed one.",
+      "notation": "A_Verify",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Verify",
+      "status": "candidate"
+    },
+    {
+      "id": "process_slicesqlitepublish.a_wire",
+      "prefLabel": "Wire it: gate, deploy line, search, tests",
+      "definition": "Give the slice everything a slice owes: its manifest (written by the builder from the definition), its `--check` (covered by `slice:sqlite:check`), one deploy line in `docs-site.yml` and in `feature-staging.yml`, its search (the generic page needs no code, only the definition's `search` block), a unit test over a fixture and over the real source, and a search in `slice-sqlite.e2e.ts`.",
+      "notation": "A_Wire",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Wire",
       "status": "candidate"
     },
     {

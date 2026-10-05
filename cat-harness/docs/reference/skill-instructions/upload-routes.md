@@ -200,5 +200,5 @@ been asked.
 
 | process | step(s) that name it |
 |---|---|
-| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | Place it in uploads/ by a declared route |
+| [Basic ingestion — an upload to an asset catalogued in library/](../../processes/document-ingestion.html) | Place it in uploads/ by a declared route |
 

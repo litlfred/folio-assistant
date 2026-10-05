@@ -12,7 +12,7 @@ import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, 
 import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 
-import { plan, resolutionFailure, resolveGitlink, stageGitlink, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
+import { droppedInMerge, droppedLine, droppedPaths, plan, refusable, resolutionFailure, resolveGitlink, stageGitlink, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
 import { parseLog } from "../merge-main-comment.js";
 import { plan as qaPlan } from "../qa-resolve-conflicts.ts";
 import { classify, PATTERNS, resolveGeneratedRegions } from "../merge-conflict-patterns.js";
@@ -268,6 +268,16 @@ describe("classify", () => {
     expect(classify("cat-harness/docs/_includes/head_custom.html").strategy).toBe("refuse");
   });
 
+  test("the standalone baseline is taken from the base; its sibling baseline and its writer are not", () => {
+    // Fail-closed: the base's list, nothing regenerated (#1977). The neighbour
+    // with the same shape, declared-path-baseline.json, is a different ratchet
+    // nobody has measured a pattern for, so it stays refused.
+    expect(classify("cat-harness-tools/scripts/standalone-baseline.json").pattern?.id).toBe("standalone-baseline");
+    expect(classify("cat-harness-tools/scripts/standalone-baseline.json").strategy).toBe("take-base");
+    expect(classify("cat-harness/scripts/declared-path-baseline.json").strategy).toBe("refuse");
+    expect(classify("cat-harness-tools/scripts/check-standalone.ts").strategy).toBe("refuse");
+  });
+
   test("a path no pattern names is REFUSED, with no pattern attached", () => {
     const c = classify("cat-harness/scripts/merge-base.ts");
     expect(c.strategy).toBe("refuse");
@@ -396,6 +406,18 @@ describe("take-base when one side deleted the file", () => {
     expect(execFileSync("git", ["diff", "--name-only", "--diff-filter=U"], { cwd: d, encoding: "utf-8" })).toBe("");
   });
 
+  test("an already-resolved path (no stages) is left alone, never deleted — bean vsv7", () => {
+    expect(takeBaseAction(new Set())).toBe("resolved");
+    // Both sides changed the file; an earlier step resolved and staged it, as
+    // `qa:resolve-conflicts` does before the take-base loop runs.
+    const d = mk("theirs");
+    writeFileSync(join(d, "gen.html"), "resolved earlier\n");
+    execFileSync("git", ["add", "--", "gen.html"], { cwd: d });
+    expect(unmergedStages(d, "gen.html").size).toBe(0);
+    takeBase(d, "gen.html");
+    expect(readFileSync(join(d, "gen.html"), "utf-8")).toBe("resolved earlier\n");
+  });
+
   test("cleanup", () => { for (const d of dirs) rmSync(d, { recursive: true, force: true }); });
 });
 
@@ -456,6 +478,155 @@ describe("qa sidecars of a NESTED instance are in scope", () => {
     const [o] = qaPlan("/nonexistent", dirs, ["unrelated/x.json"]);
     expect(o!.action).toBe("skip");
     expect(o!.reason).toContain("who-iris/test/results/");
+  });
+});
+
+describe("a merge never drops a path neither side deleted (beans vsv7, 8j9e)", () => {
+  const paths = (ds: { path: string }[]) => ds.map((d) => d.path);
+
+  test("a path on both parents and absent from the result is reported", () => {
+    expect(droppedPaths(["a", "b", "c"], ["a", "b", "c"], ["a", "b"], ["a"])).toEqual([{ path: "b", heldBy: "both" }]);
+  });
+
+  test("a side's DELETION since the merge base may be taken, from either side", () => {
+    // base has both files; the branch deleted one and main deleted the other.
+    expect(droppedPaths(["a", "deleted-on-branch", "deleted-on-main"], ["a", "deleted-on-main"], ["a", "deleted-on-branch"], ["a"])).toEqual([]);
+  });
+
+  test("a path one side ADDED is not a deletion, and dropping it is refused (8j9e)", () => {
+    // The vsv7 version let these through: only one parent holds each.
+    expect(droppedPaths(["a"], ["a", "added-on-branch"], ["a", "added-on-main"], ["a"])).toEqual([
+      { path: "added-on-branch", heldBy: "ours" },
+      { path: "added-on-main", heldBy: "theirs" },
+    ]);
+  });
+
+  test("no merge base (empty) refuses every dropped path: stricter, never looser", () => {
+    expect(paths(droppedPaths([], ["a", "x"], ["a"], ["a"]))).toEqual(["x"]);
+  });
+
+  test("nothing dropped is an empty list, and the order is stable", () => {
+    expect(droppedPaths(["a", "z"], ["z", "a"], ["a", "z"], ["a", "z"])).toEqual([]);
+    expect(paths(droppedPaths(["a", "m", "z"], ["z", "a", "m"], ["m", "a", "z"], []))).toEqual(["a", "m", "z"]);
+  });
+
+  test("before staging every drop is refused; after the writers, only a drop the disk still holds", () => {
+    const dropped = [
+      { path: "payload/superseded", heldBy: "theirs" as const }, // a writer replaced it
+      { path: "results/x.json", heldBy: "both" as const }, // out of the index, still on disk
+    ];
+    const onDisk = (p: string) => p === "results/x.json";
+    expect(refusable(dropped, "resolved", onDisk)).toEqual(dropped);
+    expect(refusable(dropped, "staged", onDisk)).toEqual([dropped[1]!]);
+  });
+
+  test("the refusal line has the shape merge-main-comment reads, and says when the disk hides the loss", () => {
+    const line = droppedLine({ path: "r/x.json", heldBy: "both" }, true);
+    expect(line).toMatch(/^ {2}✗ .* {2}\[/);
+    expect(line).toContain("still on disk");
+    expect(droppedLine({ path: "r/x.json", heldBy: "theirs" }, false)).toContain("added on the base");
+  });
+});
+
+/**
+ * 8j9e: a GITIGNORED directory whose files are still tracked on both sides,
+ * as `cat-harness/test/results/` is on main. Both parents change
+ * `results/x.json` (a conflict) and main adds `results/new.json`.
+ */
+function ignoredTrackedMerge(): { dir: string; g: (...a: string[]) => string } {
+  const dir = mkdtempSync(join(tmpdir(), "merge-base-8j9e-"));
+  const g = (...a: string[]) => execFileSync("git", a, { cwd: dir, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+  g("init", "-q", "-b", "branch");
+  g("config", "user.email", "t@example.invalid");
+  g("config", "user.name", "t");
+  mkdirSync(join(dir, "results"));
+  writeFileSync(join(dir, ".gitignore"), "results/\n");
+  writeFileSync(join(dir, "results/x.json"), "{}\n");
+  writeFileSync(join(dir, "results/y.json"), "{}\n");
+  g("add", ".gitignore");
+  g("add", "-f", "results/x.json", "results/y.json");
+  g("commit", "-qm", "base: results/ ignored, two files tracked anyway");
+  g("checkout", "-q", "-b", "main");
+  writeFileSync(join(dir, "results/x.json"), "{\"main\":1}\n");
+  writeFileSync(join(dir, "results/new.json"), "{}\n");
+  g("add", "-f", "results/x.json", "results/new.json");
+  g("commit", "-qm", "main side");
+  g("checkout", "-q", "branch");
+  writeFileSync(join(dir, "results/x.json"), "{\"branch\":1}\n");
+  g("add", "-f", "results/x.json");
+  g("commit", "-qm", "branch side");
+  try { g("merge", "--no-ff", "--no-commit", "main"); } catch { /* the conflict is the point */ }
+  return { dir, g };
+}
+
+describe("a gitignored-but-tracked file through a merge and its regeneration (8j9e)", () => {
+  test("a writer rewriting a tracked-ignored file: `git add -A` keeps it staged, and the guard passes", () => {
+    const { dir, g } = ignoredTrackedMerge();
+    try {
+      takeBase(dir, "results/x.json");
+      // regen rewrites both tracked-but-ignored files on disk
+      writeFileSync(join(dir, "results/x.json"), "{\"regen\":1}\n");
+      writeFileSync(join(dir, "results/y.json"), "{\"regen\":1}\n");
+      g("add", "-A");
+      expect(g("diff", "--cached", "--name-only", "HEAD").split("\n").sort()).toEqual(["results/new.json", "results/x.json", "results/y.json"]);
+      expect(g("show", ":results/y.json")).toBe("{\"regen\":1}");
+      expect(droppedInMerge(dir)).toEqual([]);
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+
+  test("the #1898 shape: a path an earlier step resolved is `git rm`ed, regen rewrites it, and `add -A` never restages it", () => {
+    const { dir, g } = ignoredTrackedMerge();
+    try {
+      // `qa:resolve-conflicts` resolves and stages the path first...
+      g("checkout", "--ours", "--", "results/x.json");
+      g("add", "-f", "--", "results/x.json");
+      // ...then the pre-vsv7 take-base read "no stages" as "the base deleted it".
+      g("rm", "-q", "--", "results/x.json");
+      // regen writes it again; every local check reads this file and passes.
+      writeFileSync(join(dir, "results/x.json"), "{\"regen\":1}\n");
+      g("add", "-A");
+      expect(g("ls-files", "--", "results/x.json")).toBe("");
+      expect(existsSync(join(dir, "results/x.json"))).toBe(true);
+      const dropped = droppedInMerge(dir);
+      expect(dropped).toEqual([{ path: "results/x.json", heldBy: "both" }]);
+      expect(droppedLine(dropped[0]!, true)).toContain("still on disk");
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+
+  test("a file the base ADDED under the ignored directory and the merge lost is refused too", () => {
+    const { dir, g } = ignoredTrackedMerge();
+    try {
+      takeBase(dir, "results/x.json");
+      g("rm", "-q", "--cached", "--", "results/new.json");
+      g("add", "-A");
+      expect(droppedInMerge(dir)).toEqual([{ path: "results/new.json", heldBy: "theirs" }]);
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+
+  test("the base's own deletion of a tracked-ignored file is still taken", () => {
+    const dir = mkdtempSync(join(tmpdir(), "merge-base-8j9e-del-"));
+    const g = (...a: string[]) => execFileSync("git", a, { cwd: dir, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+    try {
+      g("init", "-q", "-b", "branch");
+      g("config", "user.email", "t@example.invalid");
+      g("config", "user.name", "t");
+      mkdirSync(join(dir, "results"));
+      writeFileSync(join(dir, ".gitignore"), "results/\n");
+      writeFileSync(join(dir, "results/gone.json"), "{}\n");
+      writeFileSync(join(dir, "a.txt"), "a\n");
+      g("add", ".gitignore", "a.txt");
+      g("add", "-f", "results/gone.json");
+      g("commit", "-qm", "base");
+      g("checkout", "-q", "-b", "main");
+      g("rm", "-q", "results/gone.json");
+      g("commit", "-qm", "main untracks it");
+      g("checkout", "-q", "branch");
+      writeFileSync(join(dir, "a.txt"), "b\n");
+      g("commit", "-qam", "branch side");
+      g("merge", "--no-ff", "--no-commit", "main");
+      expect(g("ls-files", "--", "results/gone.json")).toBe("");
+      expect(droppedInMerge(dir)).toEqual([]);
+    } finally { rmSync(dir, { recursive: true, force: true }); }
   });
 });
 

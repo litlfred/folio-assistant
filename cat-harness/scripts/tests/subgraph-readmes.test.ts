@@ -23,7 +23,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 
 import { BEGIN, END, plan, TEMPLATES } from "../../../bootstrap-tools/scripts/subgraph-readmes.ts";
-import { harnessInstances, harnessPlan, subdirDescriptions } from "../subgraph-readmes.ts";
+import { harnessInstances, harnessPlan, isStored, subdirDescriptions } from "../subgraph-readmes.ts";
 import { siteDir } from "../../schemas/cat-harness.ts";
 import { isDirectoryReadme } from "../../schemas/kg-node.ts";
 
@@ -341,5 +341,13 @@ describe("a stored directory: the plan is the same with and without its working 
     expect(withCopy.findings).toEqual(without.findings);
     expect(without.findings["absent-directory"]).toEqual([]);
     rmSync(r, { recursive: true, force: true });
+  });
+});
+
+describe("isStored (bean lehh)", () => {
+  test("a branch FAMILY is stored: no README is written into its empty mount path", () => {
+    expect(isStored({ storage: { branchPrefix: "cat/fhir-harness/fhir-ast/", keyedBy: "family", keyFrom: "k" } })).toBe(true);
+    expect(isStored({ storage: { branch: "cat/cat-harness/beans", keyedBy: "tip" } })).toBe(true);
+    expect(isStored({})).toBe(false);
   });
 });

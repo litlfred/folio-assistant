@@ -33,6 +33,7 @@ import {
 } from "../init-folio";
 import { instanceConfigFilename } from "../../schemas/harness-config.js";
 import { instanceDeclarationFilename, readDeclaration } from "../../schemas/cat-harness.js";
+import { declarationChain, resolveSkillDirs } from "../../schemas/harness-config.js";
 import { nodeOfKind, parseTodoGraph } from "../../schemas/todo-graph.js";
 
 /**
@@ -620,5 +621,53 @@ describe("a contentless instance (mer2)", () => {
     );
     expect(r.status).toBe(1);
     expect(r.stderr).toContain("--instance takes no --type");
+  });
+});
+
+/**
+ * Bean `zmdo`, measured 2026-10-04: a scaffolded instance's declaration chain
+ * was the instance ALONE — 0 skill directories reachable, for a contentless
+ * instance and a document folio alike — because neither scaffold said what it
+ * stands on. The config now names one layer and the layers' own `needs` carry
+ * the rest.
+ */
+describe("a scaffold says what it stands on (zmdo)", () => {
+  const chainNames = (d: string) => declarationChain(d).map((c) => c.name);
+  const skillRoots = (d: string) => resolveSkillDirs(d).map((x) => x.split("/").slice(-2).join("/"));
+
+  test("a contentless instance stands on cat-harness, and reaches its skills through the stack", () => {
+    const d = tmp();
+    initInstance({ targetDir: d, slug: SLUG, title: "Cold Chain Guidance", link: "submodule", skipVcs: true });
+    const config = JSON.parse(readFileSync(scaffoldConfigIn(d), "utf-8"));
+    expect(config.dependencies).toEqual({ folioAssistant: [{ name: "cat-harness", path: "folio-assistant/cat-harness" }] });
+    symlinkSync(REPO_ROOT, join(d, "folio-assistant"));
+    const chain = chainNames(d);
+    expect(chain).toContain("cat-harness");
+    expect(chain).toContain("bootstrap");
+    expect(chain).not.toContain("folio-assistant-core");
+    expect(skillRoots(d)).toContain("cat-harness/skills");
+  });
+
+  test("a document folio stands on its adapter's instance, folio-assistant-core", () => {
+    const d = tmp();
+    initFolio(opts(d));
+    const config = JSON.parse(readFileSync(scaffoldConfigIn(d), "utf-8"));
+    expect(config.dependencies).toEqual({
+      folioAssistant: [{ name: "folio-assistant-core", path: "folio-assistant/folio-assistant-core" }],
+    });
+    symlinkSync(REPO_ROOT, join(d, "folio-assistant"));
+    const chain = chainNames(d);
+    expect(chain).toContain("folio-assistant-core");
+    expect(chain).toContain("cat-harness");
+    expect(skillRoots(d)).toContain("folio-assistant-core/skills");
+  });
+
+  test("a paper folio stands on folio-assistant-sci; a sibling link path is honoured", () => {
+    const d = tmp();
+    initFolio(opts(d, { contentType: "paper", link: "sibling", assistantPath: "../platform" }));
+    const config = JSON.parse(readFileSync(scaffoldConfigIn(d), "utf-8"));
+    expect(config.dependencies).toEqual({
+      folioAssistant: [{ name: "folio-assistant-sci", path: "../platform/folio-assistant-sci" }],
+    });
   });
 });

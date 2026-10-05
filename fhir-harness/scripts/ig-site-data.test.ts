@@ -9,6 +9,7 @@ import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { igSiteData } from "./ig-site-data";
+import { IPA, IPS, IPS_IDENTITY, artifactIndex, scratchRepo } from "../test/support/ig-fixture";
 
 const made: string[] = [];
 afterAll(() => {
@@ -52,34 +53,44 @@ describe("from sushi-config.yaml (what the IG Publisher reads)", () => {
   });
 });
 
-describe("from a published IG's artifact index (the real smart-base one)", () => {
-  const r = igSiteData(join(import.meta.dir, "..", "..", "smart-base"));
+describe("from published IGs' artifact indexes", () => {
+  // Two IGs, one with its own ig-identity.json. The committed WHO instances
+  // are checked in `smart-base/scripts/ig-pages-committed.test.ts`.
+  const repo = scratchRepo({
+    ipa: { index: artifactIndex(IPA, "ipa") },
+    ips: { index: artifactIndex(IPS, "ips"), identity: IPS_IDENTITY },
+  });
+  made.push(repo);
 
-  test("writes what the index carries, from the index", () => {
-    expect(r.data.packageId).toBe("smart.who.int.base");
-    expect(r.data.canonical).toBe("http://smart.who.int/base");
-    expect(r.data.ig.version).toBe("0.3.0");
-    expect(r.data.ig.fhirVersion).toEqual(["4.0.1"]);
-    expect(r.provenance["ig.version"]).toBe("fhir-artifact-index/index.json");
+  describe("an index with no identity file", () => {
+    const r = igSiteData(join(repo, "ipa"));
+
+    test("writes what the index carries, from the index", () => {
+      expect(r.data.packageId).toBe(IPA.packageId);
+      expect(r.data.canonical).toBe(IPA.canonical);
+      expect(r.data.ig.version).toBe(IPA.version);
+      expect(r.data.ig.fhirVersion).toEqual(["4.0.1"]);
+      expect(r.provenance["ig.version"]).toBe("fhir-artifact-index/index.json");
+    });
+
+    test("lists what it could not source instead of writing empty strings", () => {
+      expect(r.undetermined).toEqual(expect.arrayContaining(["ig.id", "ig.name", "ig.publisher"]));
+      expect(JSON.stringify(r.data)).not.toContain('""');
+    });
+
+    test("states no status: there is no ig-identity.json, and a chrome states none", () => {
+      expect(r.data.ig.status).toBeUndefined();
+      expect(r.refused).toEqual([]);
+    });
   });
 
-  test("lists what it could not source instead of writing empty strings", () => {
-    expect(r.undetermined).toEqual(expect.arrayContaining(["ig.id", "ig.name", "ig.publisher"]));
-    expect(JSON.stringify(r.data)).not.toContain('""');
-  });
+  describe("an index beside its own ig-identity.json", () => {
+    const r = igSiteData(join(repo, "ips"));
 
-  test("states no status: smart-base has no ig-identity.json, and the template's chrome states none", () => {
-    expect(r.data.ig.status).toBeUndefined();
-    expect(r.refused).toEqual([]);
-  });
-});
-
-describe("from smart-trust's index, which carries its own ig-identity.json", () => {
-  const r = igSiteData(join(import.meta.dir, "..", "..", "smart-trust"));
-
-  test("status comes from the IG's own identity file", () => {
-    expect(r.data.ig.status).toBe("draft");
-    expect(r.provenance["ig.status"]).toBe("fhir-artifact-index/ig-identity.json");
+    test("status comes from the IG's own identity file", () => {
+      expect(r.data.ig.status).toBe("active");
+      expect(r.provenance["ig.status"]).toBe("fhir-artifact-index/ig-identity.json");
+    });
   });
 });
 

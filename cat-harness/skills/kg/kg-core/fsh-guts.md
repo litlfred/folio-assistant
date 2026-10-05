@@ -193,7 +193,8 @@ It arrives the way every other non-markdown node does: the bytes, plus a
 same-basename `.md` sidecar with `kind: source`, whose `movedFrom` is the
 `uploads/` path and whose `summary` names the library entry it was ingested
 into. The full lifecycle is in
-[`library-ingestion`](../../library/library-core/library-ingestion.md) §"What happens to the upload after
+[`library-ingestion`](../../library/library-core/library-ingestion.md), in its detail
+[`uploads-retirement`](../../library/library-core/library-ingestion/uploads-retirement.md) §"What happens to the upload after
 it is ingested", and that skill is the one to change if the rule moves.
 
 **`fsh-guts/uploads/` is the proposed sub-directory**, beside `retired/` and

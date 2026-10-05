@@ -53,19 +53,17 @@
  */
 import { previewLiveness, type BranchEvidenceSet, type Probe } from "../test/health/checks.ts";
 import { originSlug, probeBranches, probeOpenPrHeads } from "../test/health/probes.ts";
-import { RETIRED_DIR } from "./restore-staging.ts";
+import { RETIRED_DIR, SLUG_PATTERN } from "./restore-staging.ts";
 
 /**
- * What a slug may contain.
- *
- * Exactly the characters `feature-staging.yml`'s own `Determine staging slug`
- * step can produce — `sed 's|[^a-zA-Z0-9._-]|-|g'`. A dispatch input is
- * arbitrary text from a person, and this value reaches `rm -rf` in the
- * workflow, so the shape is checked rather than assumed. `.` and `..` are
- * refused by name: both are spelled entirely out of permitted characters and
- * neither names a preview.
+ * What a slug may contain — defined in `restore-staging.ts` beside the other
+ * staging names, and re-exported here for existing importers. It moved so that
+ * `staging-rotate.ts` can read it without importing this module, which imports
+ * `test/health/checks.ts`, which imports `MAX_PREVIEW_BYTES` from
+ * `staging-rotate.ts`: a cycle in which `checks.ts` read the cap before it was
+ * initialised whenever `staging-rotate.ts` was the entry point.
  */
-export const SLUG_PATTERN = /^[A-Za-z0-9._-]+$/;
+export { SLUG_PATTERN };
 
 export function slugProblem(slug: string): string | undefined {
   if (slug === "") return "the slug is empty.";

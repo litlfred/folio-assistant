@@ -543,6 +543,35 @@ Stopping because you are *blocked* is a different state with its own
 requirements — what it waits on, since when, an expiry and a handoff:
 [`bean-blocking.md`](bean-blocking.md).
 
+### Reconciling closes in bulk — and an owner's reopen outranks your evidence
+
+A sweep that closes many beans on evidence (patch-ids on main from
+[`branch-archaeology`](branch-archaeology.md), a gate that now passes, commits
+naming the bean) is these same three obligations applied per row. It adds one
+of its own, because a store can carry an **owner's reopen sweep**: the owner
+moved beans from `completed` back to `todo` or `in-progress` because the
+earlier close was not good enough. **Measured in `qou` 2026-10-04 (bean
+`yr93`).** The owner's 2026-09-08 sweep (`qou-7sin`, commit `a61496d`,
+*"reopen 18 beans whose own body says they are open"*) had reopened beans
+that still carried a `close(<id>)` commit on main. Four of those (`7vm4`,
+`8xb1`, `ftuv`, `s2gm`) would have been re-closed by any reconciler that
+matched closing commits to status, on the very evidence the owner had
+rejected. Five more carried a closing commit while their bodies said "stays
+open".
+
+> **Before closing, read the bean's own status history**
+> (`git log -p --follow -- beans/defs/<file>`, plus the archive). **If it was
+> closed and later reopened, it is not closable on any evidence that predates
+> the reopen.** Read the reopen note. Close it only with evidence that answers
+> that note's reason and is newer than it. If there is no such evidence, list
+> it as "reopened by the owner — evidence does not answer the reopen" and
+> leave it.
+
+The same holds in reverse: evidence that a `completed` bean did not land (its
+commits absent from main under every test in `branch-archaeology` §1) is a
+finding to report, not a licence to reopen it on the agent's own say-so,
+unless the owner has asked for that sweep.
+
 ### Re-derive from the REMOTE, never from your checkout (STRICT)
 
 Obligation 1 says re-derive the evidence. **Where you read it from is part of
@@ -778,6 +807,37 @@ may have an open PR the sweep cannot see. Read it as "check these", never as
   bean whose work has already landed", and staleness is not evidence. A quiet
   claim on unfinished work goes back to the pool; it does not get closed.
 
+### A stale claim is reset to `todo`, and the reset keeps the record
+
+The pool needs a door. **Measured in `qou` 2026-10-04: 567 of 584
+`in-progress` beans had not been touched in more than 14 days** (bean `yr93`,
+issue #2106). A claim that old is not one anybody is honouring, but every one
+of those beans still told a sibling "taken".
+
+> **A claim with no liveness signal (§"The signal is liveness") AND no commit
+> naming the bean or touching its branch in 14 days may be reset to `todo` by
+> a sweep, provided the sweep appends a note recording what it reset.**
+
+```bash
+beans update <id> --status todo --body-append - <<'NOTE'
+_<UTC timestamp>_ — claim reset by stale-claim sweep: was `in-progress` since <date>,
+held by <branch / session from the holder note, or "no holder recorded">; no open PR,
+no unmerged branch naming it, no commit in 14 d. Re-claim with `bun run beans:claim`.
+NOTE
+```
+
+This does not contradict "nothing re-statuses it automatically" above. That
+sentence is about a tool **destroying the record** of who was where; the note
+keeps it. The sweep is run by a session or the owner who has checked the
+network half (`bun run check:quiet-claims`), never by an unattended job.
+**14 days is the `bean-stale-in-progress` threshold in `bun run health`, and
+deliberately so:** two thresholds for one question drift apart, and bean
+`qml5` measured the cost of a third (7 days) that could never fire. The reset
+never moves a bean to `completed` or `scrapped`. It never touches an epic
+whose children are moving (`thux`). It runs as one batch with a summary, under
+[`work-plan-restructure`](work-plan-restructure.md) when it is more than a
+handful.
+
 ## The store on `main` is the one every sibling reads (STRICT)
 
 §"A claim is branch-local" states the fact. This says what to do about it.
@@ -827,6 +887,12 @@ downstream repo, update that repo's ownership note and close the tracking beans.
 - **sidecars** (`*.qa.json`, `*.witness.json`) = *content state tracking*.
   Beans ≠ sidecars. Do **not** convert QA / witness queue items into individual
   beans (see todo-manager.md disambiguation block).
+- **A sibling session** sharing this store (this skill) ≠ **an agent in another
+  environment** you hand ONE task to, which you cannot see and which a person
+  may relay to: [`agent-handoff`](agent-handoff.md). That covers who writes
+  which bean, where the receiver reports, the one line the person pastes, and
+  why the receiver's own measurement is evidence rather than the close (bean
+  `mac1`, 2026-10-02).
 {% endraw %}
 
 ## Processes that run this skill
