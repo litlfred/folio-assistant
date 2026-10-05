@@ -5,7 +5,7 @@
   "graph": "skills",
   "path": "cat-harness/skills",
   "docs": null,
-  "fingerprint": "243b9ca88dd3598418cc4a5fa211a0a074d71802184d934ee995c1044878a1e4",
+  "fingerprint": "985a2718b8d4d233d84db324b1a86fecb2d61a0615647dbca1e932f1776a846d",
   "options": {
     "k": 100,
     "weighting": "log-entropy",
@@ -15,17 +15,17 @@
     "seed": 1990
   },
   "units": 240,
-  "terms": 6250,
+  "terms": 6252,
   "k": 100,
-  "retained": 0.7749,
+  "retained": 0.7751,
   "dimensions": [
     {
       "dim": 1,
-      "sigma": 48.4272,
+      "sigma": 48.4867,
       "positive": [
         "instance",
-        "kind",
         "directory",
+        "kind",
         "session",
         "page",
         "graph",
@@ -36,7 +36,7 @@
     },
     {
       "dim": 2,
-      "sigma": 22.2835,
+      "sigma": 22.2941,
       "positive": [
         "prs",
         "queue",
@@ -60,7 +60,7 @@
     },
     {
       "dim": 3,
-      "sigma": 19.2976,
+      "sigma": 19.3519,
       "positive": [
         "block",
         "slot",
@@ -75,23 +75,23 @@
         "steward",
         "conflict",
         "head",
-        "session",
         "train",
+        "session",
         "green",
         "bot",
-        "push"
+        "conflicted"
       ]
     },
     {
       "dim": 4,
-      "sigma": 17.6884,
+      "sigma": 17.6932,
       "positive": [
         "page",
         "pdf",
         "tile",
         "text",
-        "manifest",
         "avatar",
+        "manifest",
         "card",
         "images"
       ],
@@ -108,7 +108,7 @@
     },
     {
       "dim": 5,
-      "sigma": 16.1542,
+      "sigma": 16.2269,
       "positive": [
         "glass",
         "tile",
@@ -123,25 +123,25 @@
         "steward",
         "slice",
         "manifest",
+        "payload",
         "payloads",
         "sha",
-        "payload",
         "red",
-        "export"
+        "merge"
       ]
     },
     {
       "dim": 6,
-      "sigma": 15.7237,
+      "sigma": 15.7345,
       "positive": [
-        "preview",
         "tile",
-        "head",
+        "preview",
         "glass",
-        "staging",
         "card",
         "board",
-        "avatar"
+        "head",
+        "avatar",
+        "staging"
       ],
       "negative": [
         "archive",
@@ -156,12 +156,12 @@
     },
     {
       "dim": 7,
-      "sigma": 15.3754,
+      "sigma": 15.4058,
       "positive": [
         "slice",
         "payloads",
-        "payload",
         "heavy",
+        "payload",
         "iri",
         "preview",
         "deploy",
@@ -180,7 +180,7 @@
     },
     {
       "dim": 8,
-      "sigma": 14.9304,
+      "sigma": 14.9396,
       "positive": [
         "actor",
         "lane",
@@ -189,13 +189,13 @@
         "edge",
         "edges",
         "ordering",
-        "logical"
+        "diagram"
       ],
       "negative": [
         "bytes",
         "queue",
-        "arm",
         "sha",
+        "arm",
         "withheld",
         "images",
         "fetch",
@@ -204,11 +204,11 @@
     },
     {
       "dim": 9,
-      "sigma": 14.7565,
+      "sigma": 14.7685,
       "positive": [
         "feature",
-        "phase",
         "staging",
+        "phase",
         "feedback",
         "preview",
         "language",
@@ -219,11 +219,11 @@
         "tile",
         "glass",
         "slot",
-        "slice",
         "card",
+        "slice",
         "avatar",
-        "edges",
-        "bound"
+        "bound",
+        "claim"
       ]
     },
     {
@@ -237,37 +237,37 @@
         "odrl",
         "backlog",
         "roles",
-        "process"
+        "lanes"
       ],
       "negative": [
         "edges",
         "forward",
         "backward",
         "edge",
-        "section",
         "cross-chapter",
-        "energy",
-        "logical"
+        "section",
+        "logical",
+        "energy"
       ]
     },
     {
       "dim": 11,
-      "sigma": 14.3004,
+      "sigma": 14.3096,
       "positive": [
         "locale",
         "translation",
         "translated",
         "french",
-        "back-translation",
         "translations",
         "language",
-        "badge"
+        "back-translation",
+        "english"
       ],
       "negative": [
         "feature",
         "preview",
-        "impact",
         "option",
+        "impact",
         "analysis",
         "phase",
         "ordering",
@@ -276,7 +276,7 @@
     },
     {
       "dim": 12,
-      "sigma": 13.7648,
+      "sigma": 13.7746,
       "positive": [
         "objection",
         "preview",
@@ -291,9 +291,9 @@
         "triage",
         "prs",
         "story",
-        "role",
         "sibling-pr",
         "harness",
+        "role",
         "coordination",
         "coordinate"
       ]
@@ -339,7 +339,7 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/one-voice-integration-watcher.md",
-        0.468
+        0.467
       ],
       [
         "cat-harness/skills/authoring/authoring-core/production-vs-exploratory-discipline.md",
@@ -349,11 +349,11 @@
     "cat-harness/skills/authoring/authoring-core/chapter-complexity-review.md": [
       [
         "cat-harness/skills/kg/graph-management/edge-kinds-and-blast-radius.md",
-        0.494
+        0.493
       ],
       [
         "cat-harness/skills/authoring/authoring-core/content-graph.md",
-        0.401
+        0.4
       ],
       [
         "cat-harness/skills/authoring/authoring-core/detangler-integration-watcher.md",
@@ -363,7 +363,7 @@
     "cat-harness/skills/authoring/authoring-core/compute-integration-watcher.md": [
       [
         "cat-harness/skills/kg/kg-core/corpus-grep.md",
-        0.356
+        0.355
       ],
       [
         "cat-harness/skills/authoring/authoring-core/canonical-watcher.md",
@@ -371,7 +371,7 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/dispatch-agent.md",
-        0.315
+        0.316
       ]
     ],
     "cat-harness/skills/authoring/authoring-core/content-graph.md": [
@@ -381,17 +381,17 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/chapter-complexity-review.md",
-        0.401
+        0.4
       ],
       [
         "cat-harness/skills/authoring/authoring-core/detangler-integration-watcher.md",
-        0.366
+        0.367
       ]
     ],
     "cat-harness/skills/authoring/authoring-core/content-profiles.md": [
       [
         "cat-harness/skills/kg/kg-core/placement.md",
-        0.544
+        0.545
       ],
       [
         "cat-harness/skills/kg/kg-core/code-node-review.md",
@@ -409,7 +409,7 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/content-graph.md",
-        0.366
+        0.367
       ],
       [
         "cat-harness/skills/authoring/authoring-core/chapter-complexity-review.md",
@@ -419,7 +419,7 @@
     "cat-harness/skills/authoring/authoring-core/devils-advocate-watcher.md": [
       [
         "cat-harness/skills/kg/kg-core/corpus-grep.md",
-        0.575
+        0.574
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/integration-watch.md",
@@ -427,7 +427,7 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/canonical-watcher.md",
-        0.351
+        0.35
       ]
     ],
     "cat-harness/skills/authoring/authoring-core/editor.md": [
@@ -437,7 +437,7 @@
       ],
       [
         "cat-harness/skills/library/library-core/bib-photo-ingestion-watcher.md",
-        0.459
+        0.458
       ],
       [
         "cat-harness/skills/authoring/content-lifecycle/content-feedback.md",
@@ -461,11 +461,11 @@
     "cat-harness/skills/authoring/authoring-core/exposition-swarm-drain.md": [
       [
         "cat-harness/skills/authoring/authoring-core/milnor-exposition-standard.md",
-        0.407
+        0.408
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/prepare-merge-auto.md",
-        0.379
+        0.38
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/swarm-management.md",
@@ -475,7 +475,7 @@
     "cat-harness/skills/authoring/authoring-core/integration-audit.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/integration-watch.md",
-        0.55
+        0.551
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/integration-backlog.md",
@@ -493,7 +493,7 @@
       ],
       [
         "cat-harness/skills/ui/ui-core/markdown-render-check.md",
-        0.745
+        0.744
       ],
       [
         "cat-harness/skills/authoring/authoring-core/readability-editing.md",
@@ -503,11 +503,11 @@
     "cat-harness/skills/authoring/authoring-core/milnor-exposition-standard.md": [
       [
         "cat-harness/skills/authoring/authoring-core/voice-overlay-review.md",
-        0.594
+        0.593
       ],
       [
         "cat-harness/skills/authoring/authoring-core/voice-authoring-guidance.md",
-        0.592
+        0.591
       ],
       [
         "cat-harness/skills/authoring/authoring-core/one-voice-style-guide.md",
@@ -521,7 +521,7 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/voice-editorial-review.md",
-        0.449
+        0.448
       ],
       [
         "cat-harness/skills/authoring/authoring-core/one-voice-style-guide.md",
@@ -539,13 +539,13 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/canonical-watcher.md",
-        0.468
+        0.467
       ]
     ],
     "cat-harness/skills/authoring/authoring-core/one-voice-style-guide.md": [
       [
         "cat-harness/skills/authoring/authoring-core/voice-authoring-guidance.md",
-        0.482
+        0.483
       ],
       [
         "cat-harness/skills/authoring/authoring-core/milnor-exposition-standard.md",
@@ -605,11 +605,11 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/visual-diff.md",
-        0.602
+        0.603
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-witness.md",
-        0.567
+        0.568
       ]
     ],
     "cat-harness/skills/authoring/authoring-core/scientific-accuracy.md": [
@@ -629,11 +629,11 @@
     "cat-harness/skills/authoring/authoring-core/technical-documentation.md": [
       [
         "cat-harness/skills/authoring/authoring-core/voice-authoring-guidance.md",
-        0.663
+        0.662
       ],
       [
         "cat-harness/skills/library/library-core/term-disagreement.md",
-        0.611
+        0.61
       ],
       [
         "cat-harness/skills/authoring/authoring-core/voice-overlay-review.md",
@@ -651,7 +651,7 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/issue-working.md",
-        0.478
+        0.477
       ]
     ],
     "cat-harness/skills/authoring/authoring-core/uses-editorial-review.md": [
@@ -675,11 +675,11 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/voice-editorial-review.md",
-        0.69
+        0.689
       ],
       [
         "cat-harness/skills/authoring/authoring-core/technical-documentation.md",
-        0.663
+        0.662
       ]
     ],
     "cat-harness/skills/authoring/authoring-core/voice-editorial-review.md": [
@@ -689,11 +689,11 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/voice-authoring-guidance.md",
-        0.69
+        0.689
       ],
       [
         "cat-harness/skills/kg/kg-core/skill-voice-review.md",
-        0.683
+        0.682
       ]
     ],
     "cat-harness/skills/authoring/authoring-core/voice-overlay-review.md": [
@@ -707,21 +707,21 @@
       ],
       [
         "cat-harness/skills/kg/kg-core/skill-voice-review.md",
-        0.76
+        0.759
       ]
     ],
     "cat-harness/skills/authoring/content-lifecycle/content-author.md": [
       [
         "cat-harness/skills/authoring/content-lifecycle/content-test.md",
-        0.772
+        0.773
       ],
       [
         "cat-harness/skills/authoring/content-lifecycle/content-validate.md",
-        0.694
+        0.695
       ],
       [
         "cat-harness/skills/authoring/content-lifecycle/content-review.md",
-        0.515
+        0.516
       ]
     ],
     "cat-harness/skills/authoring/content-lifecycle/content-feedback.md": [
@@ -759,11 +759,11 @@
       ],
       [
         "cat-harness/skills/process/workflow/release-lifecycle.md",
-        0.711
+        0.71
       ],
       [
         "cat-harness/skills/kg/kg-core/instance-publication.md",
-        0.619
+        0.618
       ]
     ],
     "cat-harness/skills/authoring/content-lifecycle/content-retire.md": [
@@ -787,7 +787,7 @@
       ],
       [
         "cat-harness/skills/process/workflow/release-lifecycle.md",
-        0.646
+        0.645
       ],
       [
         "cat-harness/skills/authoring/content-lifecycle/content-publish.md",
@@ -797,11 +797,11 @@
     "cat-harness/skills/authoring/content-lifecycle/content-test.md": [
       [
         "cat-harness/skills/authoring/content-lifecycle/content-author.md",
-        0.772
+        0.773
       ],
       [
         "cat-harness/skills/authoring/content-lifecycle/content-validate.md",
-        0.672
+        0.673
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/test-engineer.md",
@@ -811,11 +811,11 @@
     "cat-harness/skills/authoring/content-lifecycle/content-validate.md": [
       [
         "cat-harness/skills/authoring/content-lifecycle/content-author.md",
-        0.694
+        0.695
       ],
       [
         "cat-harness/skills/authoring/content-lifecycle/content-test.md",
-        0.672
+        0.673
       ],
       [
         "cat-harness/skills/process/process-core/compiled-artefact-cache.md",
@@ -839,21 +839,21 @@
     "cat-harness/skills/conduct/conduct-core/agent-memory.md": [
       [
         "cat-harness/skills/conduct/conduct-core/unverified-constraints.md",
-        0.469
-      ],
-      [
-        "cat-harness/skills/ui/ui-core/readme-sections.md",
-        0.381
+        0.47
       ],
       [
         "cat-harness/skills/ui/ui-core/auto-docs.md",
+        0.381
+      ],
+      [
+        "cat-harness/skills/ui/ui-core/readme-sections.md",
         0.38
       ]
     ],
     "cat-harness/skills/conduct/conduct-core/communication-language.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/where-a-proposal-goes.md",
-        0.543
+        0.542
       ],
       [
         "cat-harness/skills/ui/ui-core/kg-viewer.md",
@@ -861,13 +861,13 @@
       ],
       [
         "cat-harness/skills/process/workflow/session-context.md",
-        0.486
+        0.485
       ]
     ],
     "cat-harness/skills/conduct/conduct-core/confirmation-waiver.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/swarm-management.md",
-        0.719
+        0.718
       ],
       [
         "cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md",
@@ -885,7 +885,7 @@
       ],
       [
         "cat-harness/skills/conduct/conduct-core/where-does-this-go.md",
-        0.552
+        0.553
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/where-a-proposal-goes.md",
@@ -899,17 +899,17 @@
       ],
       [
         "cat-harness/skills/ui/ui-core/render-logging.md",
-        0.455
+        0.456
       ],
       [
         "cat-harness/skills/kg/kg-core/skill-registration.md",
-        0.455
+        0.454
       ]
     ],
     "cat-harness/skills/conduct/conduct-core/getting-started.md": [
       [
         "cat-harness/skills/process/workflow/dmn-authoring.md",
-        0.54
+        0.541
       ],
       [
         "cat-harness/skills/conduct/conduct-core/repo-conversion.md",
@@ -941,21 +941,21 @@
       ],
       [
         "cat-harness/skills/ui/ui-core/auto-docs.md",
-        0.489
+        0.49
       ],
       [
         "cat-harness/skills/process/workflow/workflow-state.md",
-        0.477
+        0.478
       ]
     ],
     "cat-harness/skills/conduct/conduct-core/retry-backoff.md": [
       [
         "cat-harness/skills/conduct/conduct-core/unverified-constraints.md",
-        0.496
+        0.495
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/feature-staging.md",
-        0.478
+        0.479
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/bean-coordination.md",
@@ -983,7 +983,7 @@
       ],
       [
         "cat-harness/skills/conduct/security/security.md",
-        0.809
+        0.81
       ],
       [
         "cat-harness/skills/conduct/security/path-containment.md",
@@ -993,11 +993,11 @@
     "cat-harness/skills/conduct/conduct-core/unverified-constraints.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/decision-audit.md",
-        0.542
+        0.541
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-report-signing.md",
-        0.526
+        0.525
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/publish-verification.md",
@@ -1053,7 +1053,7 @@
       ],
       [
         "cat-harness/skills/conduct/conduct-core/untrusted-input.md",
-        0.809
+        0.81
       ],
       [
         "cat-harness/skills/conduct/security/path-containment.md",
@@ -1077,7 +1077,7 @@
     "cat-harness/skills/folio-core/mcp-assembly.md": [
       [
         "cat-harness/skills/folio-core/mcp-projection.md",
-        0.745
+        0.746
       ],
       [
         "cat-harness/skills/folio-core/mcp-contract.md",
@@ -1105,7 +1105,7 @@
     "cat-harness/skills/folio-core/mcp-projection.md": [
       [
         "cat-harness/skills/folio-core/mcp-assembly.md",
-        0.745
+        0.746
       ],
       [
         "cat-harness/skills/folio-core/mcp-contract.md",
@@ -1113,13 +1113,13 @@
       ],
       [
         "cat-harness/skills/conduct/conduct-core/untrusted-input.md",
-        0.526
+        0.525
       ]
     ],
     "cat-harness/skills/folio-core/skills-and-tools.md": [
       [
         "cat-harness/skills/folio-core/mcp-contract.md",
-        0.613
+        0.614
       ],
       [
         "cat-harness/skills/kg/kg-core/code-node-review.md",
@@ -1137,7 +1137,7 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/evidence-review.md",
-        0.423
+        0.422
       ],
       [
         "cat-harness/skills/conduct/conduct-core/unverified-constraints.md",
@@ -1147,21 +1147,21 @@
     "cat-harness/skills/kg/graph-management/edge-kinds-and-blast-radius.md": [
       [
         "cat-harness/skills/authoring/authoring-core/chapter-complexity-review.md",
-        0.494
+        0.493
       ],
       [
         "cat-harness/skills/kg/kg-core/corpus-grep.md",
-        0.376
+        0.373
       ],
       [
-        "cat-harness/skills/ui/ui-core/render-order.md",
+        "cat-harness/skills/library/large-datasets/sample-import.md",
         0.321
       ]
     ],
     "cat-harness/skills/kg/graph-management/graph-detanglement.md": [
       [
         "cat-harness/skills/conduct/conduct-core/retry-backoff.md",
-        0.36
+        0.361
       ],
       [
         "cat-harness/skills/conduct/conduct-core/repo-conversion.md",
@@ -1197,17 +1197,17 @@
       ],
       [
         "cat-harness/skills/authoring/content-lifecycle/content-publish.md",
-        0.427
+        0.428
       ]
     ],
     "cat-harness/skills/kg/graph-management/lsi-indexing.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/work-plan-restructure.md",
-        0.399
+        0.398
       ],
       [
         "cat-harness/skills/kg/kg-core/skill-voice-review.md",
-        0.337
+        0.336
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-reports.md",
@@ -1221,7 +1221,7 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/decision-audit.md",
-        0.412
+        0.413
       ],
       [
         "cat-harness/skills/kg/kg-core/code-node-review.md",
@@ -1234,11 +1234,11 @@
         0.64
       ],
       [
-        "cat-harness/skills/ui/ui-core/auto-docs.md",
+        "cat-harness/skills/library/large-datasets/kg-subscription.md",
         0.596
       ],
       [
-        "cat-harness/skills/library/large-datasets/kg-subscription.md",
+        "cat-harness/skills/ui/ui-core/auto-docs.md",
         0.596
       ]
     ],
@@ -1253,7 +1253,7 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-witness.md",
-        0.569
+        0.57
       ]
     ],
     "cat-harness/skills/kg/kg-core/code-node-review.md": [
@@ -1281,13 +1281,13 @@
       ],
       [
         "cat-harness/skills/process/workflow/session-context.md",
-        0.463
+        0.464
       ]
     ],
     "cat-harness/skills/kg/kg-core/corpus-grep.md": [
       [
         "cat-harness/skills/authoring/authoring-core/devils-advocate-watcher.md",
-        0.575
+        0.574
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/dispatch-agent.md",
@@ -1329,7 +1329,7 @@
     "cat-harness/skills/kg/kg-core/flushable-containers.md": [
       [
         "cat-harness/skills/ui/ui-core/render-logging.md",
-        0.408
+        0.409
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/staging-review.md",
@@ -1350,14 +1350,14 @@
         0.498
       ],
       [
-        "cat-harness/skills/library/large-datasets/sample-import.md",
-        0.484
+        "cat-harness/skills/ui/ui-core/board-diagram-interchange.md",
+        0.482
       ]
     ],
     "cat-harness/skills/kg/kg-core/harness-requirements.md": [
       [
         "cat-harness/skills/ui/ui-core/render-order.md",
-        0.68
+        0.679
       ],
       [
         "cat-harness/skills/README.md",
@@ -1375,7 +1375,7 @@
       ],
       [
         "cat-harness/skills/conduct/conduct-core/where-does-this-go.md",
-        0.579
+        0.58
       ],
       [
         "cat-harness/skills/library/library-core/code-lists.md",
@@ -1389,7 +1389,7 @@
       ],
       [
         "cat-harness/skills/authoring/content-lifecycle/content-publish.md",
-        0.619
+        0.618
       ],
       [
         "cat-harness/skills/ui/ui-core/serving-renderings.md",
@@ -1413,15 +1413,15 @@
     "cat-harness/skills/kg/kg-core/kg-export.md": [
       [
         "cat-harness/skills/ui/ui-core/serving-renderings.md",
-        0.542
+        0.54
       ],
       [
         "cat-harness/skills/library/library-core/code-lists.md",
-        0.502
+        0.5
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/publish-verification.md",
-        0.478
+        0.476
       ]
     ],
     "cat-harness/skills/kg/kg-core/kg-to-portal.md": [
@@ -1431,7 +1431,7 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-report-signing.md",
-        0.516
+        0.515
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/publish-verification.md",
@@ -1459,7 +1459,7 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-witness.md",
-        0.429
+        0.43
       ],
       [
         "cat-harness/skills/library/library-core/code-lists.md",
@@ -1469,11 +1469,11 @@
     "cat-harness/skills/kg/kg-core/skill-registration.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-reports.md",
-        0.727
+        0.728
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/decision-audit.md",
-        0.651
+        0.652
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-witness.md",
@@ -1483,7 +1483,7 @@
     "cat-harness/skills/kg/kg-core/skill-voice-review.md": [
       [
         "cat-harness/skills/authoring/authoring-core/voice-overlay-review.md",
-        0.76
+        0.759
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/decision-audit.md",
@@ -1491,7 +1491,7 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/voice-editorial-review.md",
-        0.683
+        0.682
       ]
     ],
     "cat-harness/skills/kg/kg-core/surprise-to-corpus.md": [
@@ -1515,11 +1515,11 @@
       ],
       [
         "cat-harness/skills/voices/README.md",
-        0.425
+        0.424
       ],
       [
         "cat-harness/skills/voices/vendors/agent-skill-authoring-gemini-cli/README.md",
-        0.383
+        0.384
       ]
     ],
     "cat-harness/skills/kg/kg-core/vocabulary-authority.md": [
@@ -1543,7 +1543,7 @@
       ],
       [
         "cat-harness/skills/ui/ui-core/serving-renderings.md",
-        0.657
+        0.658
       ],
       [
         "cat-harness/skills/conduct/conduct-core/where-does-this-go.md",
@@ -1571,7 +1571,7 @@
       ],
       [
         "cat-harness/skills/library/large-datasets/materialize-on-demand.md",
-        0.756
+        0.757
       ],
       [
         "cat-harness/skills/library/large-datasets/copy-out-materialized.md",
@@ -1581,7 +1581,7 @@
     "cat-harness/skills/library/large-datasets/materialize-on-demand.md": [
       [
         "cat-harness/skills/library/large-datasets/materialize-remote.md",
-        0.821
+        0.822
       ],
       [
         "cat-harness/skills/library/large-datasets/sample-import.md",
@@ -1589,7 +1589,7 @@
       ],
       [
         "cat-harness/skills/library/large-datasets/kg-subscription.md",
-        0.756
+        0.757
       ]
     ],
     "cat-harness/skills/library/large-datasets/materialize-remote.md": [
@@ -1603,7 +1603,7 @@
       ],
       [
         "cat-harness/skills/library/large-datasets/materialize-on-demand.md",
-        0.821
+        0.822
       ]
     ],
     "cat-harness/skills/library/large-datasets/sample-import.md": [
@@ -1623,7 +1623,7 @@
     "cat-harness/skills/library/library-core/adopt-methodology-from-source.md": [
       [
         "cat-harness/skills/process/process-core/methodology-adoption.md",
-        0.835
+        0.836
       ],
       [
         "cat-harness/skills/process/process-core/swot-analysis.md",
@@ -1641,7 +1641,7 @@
       ],
       [
         "cat-harness/skills/library/library-core/filing-dublin-core.md",
-        0.776
+        0.777
       ],
       [
         "cat-harness/skills/library/library-core/adopt-methodology-from-source.md",
@@ -1673,7 +1673,7 @@
       ],
       [
         "cat-harness/skills/library/large-datasets/materialize-remote.md",
-        0.62
+        0.619
       ]
     ],
     "cat-harness/skills/library/library-core/bib-human-review.md": [
@@ -1697,7 +1697,7 @@
       ],
       [
         "cat-harness/skills/library/library-core/bib-qa.md",
-        0.636
+        0.637
       ],
       [
         "cat-harness/skills/library/library-core/bib-qa/qa-tags.md",
@@ -1711,17 +1711,17 @@
       ],
       [
         "cat-harness/skills/library/library-core/bib-qa/qa-tags.md",
-        0.715
+        0.716
       ],
       [
         "cat-harness/skills/library/library-core/bib-photo-ingestion-watcher.md",
-        0.636
+        0.637
       ]
     ],
     "cat-harness/skills/library/library-core/bib-qa/qa-tags.md": [
       [
         "cat-harness/skills/library/library-core/bib-qa.md",
-        0.715
+        0.716
       ],
       [
         "cat-harness/skills/library/library-core/bib-human-review.md",
@@ -1753,11 +1753,11 @@
       ],
       [
         "cat-harness/skills/library/library-core/uploads-watch.md",
-        0.751
+        0.75
       ],
       [
         "cat-harness/skills/ui/ui-core/auto-docs.md",
-        0.507
+        0.506
       ]
     ],
     "cat-harness/skills/library/library-core/document-intake.md": [
@@ -1767,7 +1767,7 @@
       ],
       [
         "cat-harness/skills/library/library-core/bib-photo-ingestion-watcher.md",
-        0.462
+        0.461
       ],
       [
         "cat-harness/skills/authoring/authoring-core/content-profiles.md",
@@ -1777,7 +1777,7 @@
     "cat-harness/skills/library/library-core/filing-dublin-core.md": [
       [
         "cat-harness/skills/library/library-core/archiving-arxiv.md",
-        0.776
+        0.777
       ],
       [
         "cat-harness/skills/library/library-core/archiving-web-pages.md",
@@ -1785,7 +1785,7 @@
       ],
       [
         "cat-harness/skills/library/library-core/term-disagreement.md",
-        0.547
+        0.546
       ]
     ],
     "cat-harness/skills/library/library-core/glossary-build.md": [
@@ -1819,7 +1819,7 @@
     "cat-harness/skills/library/library-core/library-ingestion.md": [
       [
         "cat-harness/skills/voices/vendors/agent-skill-authoring-openai/README.md",
-        0.658
+        0.659
       ],
       [
         "cat-harness/skills/voices/vendors/README.md",
@@ -1855,7 +1855,7 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/test-engineer.md",
-        0.385
+        0.384
       ]
     ],
     "cat-harness/skills/library/library-core/tabular-metadata.md": [
@@ -1865,7 +1865,7 @@
       ],
       [
         "cat-harness/skills/library/library-core/term-disagreement.md",
-        0.273
+        0.274
       ],
       [
         "cat-harness/skills/folio-core/mcp-assembly.md",
@@ -1935,7 +1935,7 @@
       ],
       [
         "cat-harness/skills/library/library-core/content-acquisition.md",
-        0.751
+        0.75
       ],
       [
         "cat-harness/skills/library/library-core/asset-extraction.md",
@@ -1949,10 +1949,10 @@
       ],
       [
         "cat-harness/skills/authoring/content-lifecycle/content-test.md",
-        0.586
+        0.587
       ],
       [
-        "cat-harness/skills/authoring/content-lifecycle/content-author.md",
+        "cat-harness/skills/sdlc/sdlc-core/test-engineer.md",
         0.473
       ]
     ],
@@ -1963,7 +1963,7 @@
       ],
       [
         "cat-harness/skills/library/library-core/adopt-methodology-from-source.md",
-        0.393
+        0.394
       ],
       [
         "cat-harness/skills/process/process-core/methodology-adoption.md",
@@ -1973,7 +1973,7 @@
     "cat-harness/skills/process/process-core/methodology-adoption.md": [
       [
         "cat-harness/skills/library/library-core/adopt-methodology-from-source.md",
-        0.835
+        0.836
       ],
       [
         "cat-harness/skills/process/process-core/swot-analysis.md",
@@ -1981,7 +1981,7 @@
       ],
       [
         "cat-harness/skills/sdlc/spec-kit/spec-kit.md",
-        0.667
+        0.668
       ]
     ],
     "cat-harness/skills/process/process-core/role-model.md": [
@@ -2029,7 +2029,7 @@
     "cat-harness/skills/process/process-core/task-authorization.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/deployment-auth.md",
-        0.461
+        0.46
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/publish-verification.md",
@@ -2037,7 +2037,7 @@
       ],
       [
         "cat-harness/skills/conduct/conduct-core/unverified-constraints.md",
-        0.405
+        0.406
       ]
     ],
     "cat-harness/skills/process/raci/raci.md": [
@@ -2047,11 +2047,11 @@
       ],
       [
         "cat-harness/skills/process/workflow/bpmn-authoring.md",
-        0.581
+        0.58
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/test-plan-execution.md",
-        0.569
+        0.568
       ]
     ],
     "cat-harness/skills/process/workflow/bpmn-authoring.md": [
@@ -2065,7 +2065,7 @@
       ],
       [
         "cat-harness/skills/process/workflow/session-state-machine.md",
-        0.653
+        0.652
       ]
     ],
     "cat-harness/skills/process/workflow/bpmn-processes.md": [
@@ -2089,7 +2089,7 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/prepare-merge-auto.md",
-        0.576
+        0.577
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/pending-show.md",
@@ -2117,7 +2117,7 @@
       ],
       [
         "cat-harness/skills/process/workflow/session-state-machine.md",
-        0.636
+        0.637
       ],
       [
         "cat-harness/skills/conduct/conduct-core/unverified-constraints.md",
@@ -2145,7 +2145,7 @@
       ],
       [
         "cat-harness/skills/process/workflow/session-state-machine.md",
-        0.648
+        0.649
       ],
       [
         "cat-harness/skills/process/workflow/workflow-state.md",
@@ -2187,7 +2187,7 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/package-release.md",
-        0.63
+        0.629
       ],
       [
         "cat-harness/skills/authoring/content-lifecycle/content-publish.md",
@@ -2219,7 +2219,7 @@
       ],
       [
         "cat-harness/skills/process/workflow/bpmn-authoring.md",
-        0.653
+        0.652
       ]
     ],
     "cat-harness/skills/process/workflow/specification-compiled-agents.md": [
@@ -2229,11 +2229,11 @@
       ],
       [
         "cat-harness/skills/process/workflow/session-state-machine.md",
-        0.579
+        0.578
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/test-plan-execution.md",
-        0.442
+        0.443
       ]
     ],
     "cat-harness/skills/process/workflow/workflow-state.md": [
@@ -2331,13 +2331,13 @@
       ],
       [
         "cat-harness/skills/sdlc/crdm/crdm-requirements-template.md",
-        0.642
+        0.641
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/activity-log.md": [
       [
         "cat-harness/skills/ui/ui-core/render-logging.md",
-        0.617
+        0.619
       ],
       [
         "cat-harness/skills/kg/kg-core/fsh-guts.md",
@@ -2359,17 +2359,17 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/voice-editorial-review.md",
-        0.468
+        0.467
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/agent-handoff.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md",
-        0.43
+        0.431
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/bean-blocking.md",
-        0.429
+        0.43
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/handover-report.md",
@@ -2383,7 +2383,7 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/issue-working.md",
-        0.597
+        0.596
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/handover-report.md",
@@ -2415,7 +2415,7 @@
       ],
       [
         "cat-harness/skills/library/library-core/archiving-web-pages.md",
-        0.362
+        0.361
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/branch-archaeology.md": [
@@ -2425,31 +2425,31 @@
       ],
       [
         "cat-harness/skills/conduct/conduct-core/where-does-this-go.md",
-        0.358
+        0.359
       ],
       [
         "cat-harness/skills/process/workflow/branch-freshness.md",
-        0.346
+        0.345
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/ci-health.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/github-state-inspection.md",
-        0.685
+        0.684
       ],
       [
         "cat-harness/skills/kg/kg-core/skill-registration.md",
-        0.441
+        0.44
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/decision-audit.md",
-        0.439
+        0.438
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/continual-progress.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/handover-report.md",
-        0.505
+        0.506
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md",
@@ -2467,7 +2467,7 @@
       ],
       [
         "cat-harness/skills/process/workflow/branch-freshness.md",
-        0.535
+        0.534
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/related-work-coordination.md",
@@ -2477,11 +2477,11 @@
     "cat-harness/skills/sdlc/sdlc-core/coordinate/protocol.md": [
       [
         "cat-harness/skills/process/workflow/branch-freshness.md",
-        0.519
+        0.52
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/dispatch-agent.md",
-        0.476
+        0.475
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/coordinate.md",
@@ -2495,21 +2495,21 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/voice-overlay-review.md",
-        0.672
+        0.673
       ],
       [
         "cat-harness/skills/kg/kg-core/skill-registration.md",
-        0.651
+        0.652
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/delivery-summary.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/diff.md",
-        0.929
+        0.928
       ],
       [
         "cat-harness/skills/ui/ui-core/markdown-render-check.md",
-        0.72
+        0.722
       ],
       [
         "cat-harness/skills/ui/ui-core/html-rendering-qc.md",
@@ -2523,21 +2523,21 @@
       ],
       [
         "cat-harness/skills/process/process-core/task-authorization.md",
-        0.461
+        0.46
       ],
       [
         "cat-harness/skills/authoring/content-lifecycle/content-feedback.md",
-        0.343
+        0.342
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/diff.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/delivery-summary.md",
-        0.929
+        0.928
       ],
       [
         "cat-harness/skills/ui/ui-core/markdown-render-check.md",
-        0.686
+        0.689
       ],
       [
         "cat-harness/skills/ui/ui-core/html-rendering-qc.md",
@@ -2561,7 +2561,7 @@
     "cat-harness/skills/sdlc/sdlc-core/feature-staging.md": [
       [
         "cat-harness/skills/conduct/conduct-core/retry-backoff.md",
-        0.478
+        0.479
       ],
       [
         "cat-harness/skills/process/workflow/render-kg-to-cdn.md",
@@ -2579,17 +2579,17 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-witness.md",
-        0.66
+        0.661
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-reports.md",
-        0.658
+        0.659
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/generalise-the-fix.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-witness.md",
-        0.33
+        0.331
       ],
       [
         "cat-harness/skills/conduct/conduct-core/where-does-this-go.md",
@@ -2597,21 +2597,21 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/test-engineer.md",
-        0.297
+        0.298
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/github-state-inspection.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/ci-health.md",
-        0.685
+        0.684
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md",
-        0.433
+        0.435
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/handover-report.md",
-        0.41
+        0.411
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/goal-review.md": [
@@ -2631,7 +2631,7 @@
     "cat-harness/skills/sdlc/sdlc-core/handover-report.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md",
-        0.856
+        0.857
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/stalled-agent-triage.md",
@@ -2639,13 +2639,13 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/issue-working.md",
-        0.585
+        0.583
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/idle-backlog.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/integration-watcher/idle-backlog.md",
-        0.7
+        0.702
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/dispatch-agent.md",
@@ -2659,7 +2659,7 @@
     "cat-harness/skills/sdlc/sdlc-core/integration-backlog.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/integration-watch.md",
-        0.54
+        0.539
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/prepare-merge-auto.md",
@@ -2677,11 +2677,11 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/integration-audit.md",
-        0.55
+        0.551
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/integration-backlog.md",
-        0.54
+        0.539
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/integration-watcher.md": [
@@ -2691,7 +2691,7 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/dispatch-agent.md",
-        0.409
+        0.408
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/integration-watcher/idle-backlog.md",
@@ -2701,7 +2701,7 @@
     "cat-harness/skills/sdlc/sdlc-core/integration-watcher/idle-backlog.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/idle-backlog.md",
-        0.7
+        0.702
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/dispatch-agent.md",
@@ -2715,11 +2715,11 @@
     "cat-harness/skills/sdlc/sdlc-core/integration-watcher/lifecycle.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/idle-backlog.md",
-        0.484
+        0.485
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/dispatch-agent.md",
-        0.482
+        0.481
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/integration-watcher/idle-backlog.md",
@@ -2729,43 +2729,43 @@
     "cat-harness/skills/sdlc/sdlc-core/issue-working.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/related-work-coordination.md",
-        0.649
+        0.648
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/stalled-agent-triage.md",
-        0.613
+        0.611
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/bean-blocking.md",
-        0.597
+        0.596
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md": [
       [
         "cat-harness/skills/kg/kg-core/skill-registration.md",
-        0.49
+        0.491
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md",
-        0.478
+        0.475
       ],
       [
-        "cat-harness/skills/kg/kg-core/skill-voice-review.md",
-        0.434
+        "cat-harness/skills/sdlc/sdlc-core/qa-reports.md",
+        0.45
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/merge-queue.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/stalled-agent-triage.md",
-        0.591
+        0.589
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/handover-report.md",
-        0.581
+        0.58
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md",
-        0.563
+        0.562
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/narrative-asserts-code.md": [
@@ -2775,21 +2775,21 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/voice-overlay-review.md",
-        0.685
+        0.686
       ],
       [
         "cat-harness/skills/authoring/authoring-core/voice-editorial-review.md",
-        0.644
+        0.645
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/opening-brief.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/decision-audit.md",
-        0.415
+        0.416
       ],
       [
         "cat-harness/skills/conduct/conduct-core/unverified-constraints.md",
-        0.366
+        0.365
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/pr-description.md",
@@ -2807,13 +2807,13 @@
       ],
       [
         "cat-harness/skills/process/workflow/release-lifecycle.md",
-        0.699
+        0.698
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/pending-show.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/session-intent.md",
-        0.77
+        0.771
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/coordinate.md",
@@ -2827,7 +2827,7 @@
     "cat-harness/skills/sdlc/sdlc-core/pickup.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/prepare-merge-auto.md",
-        0.489
+        0.488
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md",
@@ -2845,11 +2845,11 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-reports.md",
-        0.62
+        0.619
       ],
       [
         "cat-harness/skills/kg/kg-core/skill-registration.md",
-        0.586
+        0.587
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/pr-description.md": [
@@ -2863,17 +2863,17 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/issue-working.md",
-        0.496
+        0.494
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/handover-report.md",
-        0.856
+        0.857
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/stalled-agent-triage.md",
-        0.731
+        0.732
       ],
       [
         "cat-harness/skills/process/workflow/branch-freshness.md",
@@ -2883,7 +2883,7 @@
     "cat-harness/skills/sdlc/sdlc-core/prepare-merge-auto.md": [
       [
         "cat-harness/skills/process/workflow/branch-freshness.md",
-        0.576
+        0.577
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/integration-backlog.md",
@@ -2897,7 +2897,7 @@
     "cat-harness/skills/sdlc/sdlc-core/prepare-merge.md": [
       [
         "cat-harness/skills/authoring/content-lifecycle/content-test.md",
-        0.544
+        0.543
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-reports.md",
@@ -2915,7 +2915,7 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/package-release.md",
-        0.603
+        0.604
       ],
       [
         "cat-harness/skills/authoring/content-lifecycle/content-publish.md",
@@ -2929,38 +2929,38 @@
       ],
       [
         "cat-harness/skills/process/workflow/session-state-machine.md",
-        0.551
+        0.55
       ],
       [
         "cat-harness/skills/conduct/conduct-core/unverified-constraints.md",
-        0.526
+        0.525
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/qa-reports.md": [
       [
         "cat-harness/skills/kg/kg-core/skill-registration.md",
-        0.727
+        0.728
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-witness.md",
-        0.716
+        0.717
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/gate-tree-mutation.md",
-        0.658
+        0.659
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/qa-witness.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-reports.md",
-        0.716
+        0.717
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/gate-tree-mutation.md",
-        0.66
+        0.661
       ],
       [
-        "cat-harness/skills/kg/kg-core/skill-voice-review.md",
+        "cat-harness/skills/kg/kg-core/skill-registration.md",
         0.623
       ]
     ],
@@ -2985,7 +2985,7 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/issue-working.md",
-        0.649
+        0.648
       ],
       [
         "cat-harness/skills/sdlc/crdm/crdm-needs-assessment.md",
@@ -3009,7 +3009,7 @@
     "cat-harness/skills/sdlc/sdlc-core/session-intent.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/pending-show.md",
-        0.77
+        0.771
       ],
       [
         "cat-harness/skills/process/workflow/workflow-state.md",
@@ -3017,13 +3017,13 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/idle-backlog.md",
-        0.507
+        0.509
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/staging-review.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/visual-diff.md",
-        0.587
+        0.588
       ],
       [
         "cat-harness/skills/authoring/authoring-core/review-heatmap.md",
@@ -3041,17 +3041,17 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md",
-        0.731
+        0.732
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/issue-working.md",
-        0.613
+        0.611
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/swarm-management.md": [
       [
         "cat-harness/skills/conduct/conduct-core/confirmation-waiver.md",
-        0.719
+        0.718
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/bean-blocking.md",
@@ -3083,11 +3083,11 @@
       ],
       [
         "cat-harness/skills/authoring/content-lifecycle/content-test.md",
-        0.614
+        0.613
       ],
       [
         "cat-harness/skills/process/raci/raci.md",
-        0.569
+        0.568
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/todo-manager.md": [
@@ -3107,7 +3107,7 @@
     "cat-harness/skills/sdlc/sdlc-core/turn-reporting.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/where-a-proposal-goes.md",
-        0.473
+        0.472
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/issue-working.md",
@@ -3125,11 +3125,11 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/qa-witness.md",
-        0.542
+        0.543
       ],
       [
         "cat-harness/skills/kg/kg-core/skill-voice-review.md",
-        0.509
+        0.51
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/upstream-version-adoption.md": [
@@ -3153,17 +3153,17 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/review-heatmap.md",
-        0.602
+        0.603
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/staging-review.md",
-        0.587
+        0.588
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/watch.md": [
       [
         "cat-harness/skills/process/workflow/branch-freshness.md",
-        0.49
+        0.489
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/dispatch-agent.md",
@@ -3185,7 +3185,7 @@
       ],
       [
         "cat-harness/skills/conduct/conduct-core/where-does-this-go.md",
-        0.574
+        0.575
       ]
     ],
     "cat-harness/skills/sdlc/sdlc-core/work-plan-restructure.md": [
@@ -3205,7 +3205,7 @@
     "cat-harness/skills/sdlc/spec-kit/spec-kit.md": [
       [
         "cat-harness/skills/process/process-core/methodology-adoption.md",
-        0.667
+        0.668
       ],
       [
         "cat-harness/skills/library/library-core/adopt-methodology-from-source.md",
@@ -3219,7 +3219,7 @@
     "cat-harness/skills/ui/theming/create-sticky-note.md": [
       [
         "cat-harness/skills/ui/theming/theme-art-intake.md",
-        0.663
+        0.664
       ],
       [
         "cat-harness/skills/ui/theming/theme-generation.md",
@@ -3241,7 +3241,7 @@
       ],
       [
         "cat-harness/skills/ui/ui-core/auto-docs.md",
-        0.559
+        0.56
       ]
     ],
     "cat-harness/skills/ui/theming/theme-art-intake.md": [
@@ -3275,7 +3275,7 @@
     "cat-harness/skills/ui/theming/theme-contrast.md": [
       [
         "cat-harness/skills/ui/theming/theme-declaration.md",
-        0.829
+        0.828
       ],
       [
         "cat-harness/skills/ui/theming/theme-generation.md",
@@ -3289,7 +3289,7 @@
     "cat-harness/skills/ui/theming/theme-declaration.md": [
       [
         "cat-harness/skills/ui/theming/theme-contrast.md",
-        0.829
+        0.828
       ],
       [
         "cat-harness/skills/ui/theming/theme-generation.md",
@@ -3331,7 +3331,7 @@
     "cat-harness/skills/ui/ui-core/auto-docs.md": [
       [
         "cat-harness/skills/kg/kg-navigation/kg-navigation.md",
-        0.612
+        0.613
       ],
       [
         "cat-harness/skills/kg/kg-core/associate-harness.md",
@@ -3381,7 +3381,7 @@
       ],
       [
         "cat-harness/skills/authoring/content-lifecycle/content-validate.md",
-        0.42
+        0.421
       ]
     ],
     "cat-harness/skills/ui/ui-core/harness-tiles.md": [
@@ -3415,15 +3415,15 @@
     "cat-harness/skills/ui/ui-core/incremental-render.md": [
       [
         "cat-harness/skills/kg/kg-core/instance-kinds.md",
-        0.498
+        0.499
       ],
       [
         "cat-harness/skills/ui/ui-core/render-order.md",
-        0.44
+        0.441
       ],
       [
         "cat-harness/skills/ui/ui-core/auto-docs.md",
-        0.428
+        0.427
       ]
     ],
     "cat-harness/skills/ui/ui-core/kg-viewer.md": [
@@ -3437,7 +3437,7 @@
       ],
       [
         "cat-harness/skills/ui/ui-core/visualizer-loading.md",
-        0.494
+        0.493
       ]
     ],
     "cat-harness/skills/ui/ui-core/liquid-templates.md": [
@@ -3447,7 +3447,7 @@
       ],
       [
         "cat-harness/skills/voices/vendors/agent-skill-authoring-claude/README.md",
-        0.514
+        0.515
       ],
       [
         "cat-harness/skills/voices/README.md",
@@ -3461,17 +3461,17 @@
       ],
       [
         "cat-harness/skills/authoring/authoring-core/md-authoring.md",
-        0.745
+        0.744
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/delivery-summary.md",
-        0.72
+        0.722
       ]
     ],
     "cat-harness/skills/ui/ui-core/pdf-inline-viewer.md": [
       [
         "cat-harness/skills/ui/ui-core/visualizer-loading.md",
-        0.66
+        0.659
       ],
       [
         "cat-harness/skills/process/workflow/render-kg-to-cdn.md",
@@ -3489,7 +3489,7 @@
       ],
       [
         "cat-harness/skills/ui/ui-core/auto-docs.md",
-        0.51
+        0.509
       ],
       [
         "cat-harness/skills/conduct/conduct-core/repo-conversion.md",
@@ -3499,35 +3499,35 @@
     "cat-harness/skills/ui/ui-core/render-logging.md": [
       [
         "cat-harness/skills/sdlc/sdlc-core/activity-log.md",
-        0.617
+        0.619
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/publish-verification.md",
-        0.517
+        0.519
       ],
       [
         "cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md",
-        0.455
+        0.456
       ]
     ],
     "cat-harness/skills/ui/ui-core/render-order.md": [
       [
         "cat-harness/skills/kg/kg-core/harness-requirements.md",
-        0.68
+        0.679
       ],
       [
         "cat-harness/skills/conduct/conduct-core/where-does-this-go.md",
-        0.514
+        0.513
       ],
       [
         "cat-harness/skills/README.md",
-        0.507
+        0.505
       ]
     ],
     "cat-harness/skills/ui/ui-core/serving-renderings.md": [
       [
         "cat-harness/skills/kg/kg-navigation/kg-navigation.md",
-        0.657
+        0.658
       ],
       [
         "cat-harness/skills/kg/kg-core/instance-publication.md",
@@ -3569,7 +3569,7 @@
     "cat-harness/skills/ui/ui-core/visualizer-loading.md": [
       [
         "cat-harness/skills/ui/ui-core/pdf-inline-viewer.md",
-        0.66
+        0.659
       ],
       [
         "cat-harness/skills/ui/ui-core/html-rendering-qc.md",
@@ -3577,7 +3577,7 @@
       ],
       [
         "cat-harness/skills/ui/ui-core/kg-viewer.md",
-        0.494
+        0.493
       ]
     ],
     "cat-harness/skills/ui/ui-core/wireframe-design-review.md": [
@@ -3591,17 +3591,17 @@
       ],
       [
         "cat-harness/skills/sdlc/sdlc-core/narrative-asserts-code.md",
-        0.487
+        0.488
       ]
     ],
     "cat-harness/skills/voices/README.md": [
       [
         "cat-harness/skills/kg/kg-core/skill-voice-review.md",
-        0.679
+        0.678
       ],
       [
         "cat-harness/skills/voices/vendors/README.md",
-        0.669
+        0.67
       ],
       [
         "cat-harness/skills/voices/vendors/agent-skill-authoring-claude/README.md",
@@ -3611,7 +3611,7 @@
     "cat-harness/skills/voices/vendors/README.md": [
       [
         "cat-harness/skills/voices/vendors/agent-skill-authoring-openai/README.md",
-        0.824
+        0.823
       ],
       [
         "cat-harness/skills/voices/vendors/agent-skill-authoring-claude/README.md",
@@ -3619,17 +3619,17 @@
       ],
       [
         "cat-harness/skills/voices/vendors/agent-skill-authoring-gemini-cli/README.md",
-        0.71
+        0.709
       ]
     ],
     "cat-harness/skills/voices/vendors/agent-skill-authoring-claude/README.md": [
       [
         "cat-harness/skills/voices/vendors/agent-skill-authoring-gemini-cli/README.md",
-        0.782
+        0.781
       ],
       [
         "cat-harness/skills/voices/vendors/agent-skill-authoring-openai/README.md",
-        0.746
+        0.745
       ],
       [
         "cat-harness/skills/voices/vendors/README.md",
@@ -3639,29 +3639,29 @@
     "cat-harness/skills/voices/vendors/agent-skill-authoring-gemini-cli/README.md": [
       [
         "cat-harness/skills/voices/vendors/agent-skill-authoring-claude/README.md",
-        0.782
+        0.781
       ],
       [
         "cat-harness/skills/voices/vendors/README.md",
-        0.71
+        0.709
       ],
       [
         "cat-harness/skills/voices/vendors/agent-skill-authoring-openai/README.md",
-        0.685
+        0.684
       ]
     ],
     "cat-harness/skills/voices/vendors/agent-skill-authoring-openai/README.md": [
       [
         "cat-harness/skills/voices/vendors/README.md",
-        0.824
+        0.823
       ],
       [
         "cat-harness/skills/voices/vendors/agent-skill-authoring-claude/README.md",
-        0.746
+        0.745
       ],
       [
         "cat-harness/skills/voices/vendors/agent-skill-authoring-gemini-cli/README.md",
-        0.685
+        0.684
       ]
     ]
   }
