@@ -62,7 +62,13 @@ in [`kg-export`](../../kg/kg-core/kg-export.md) §"`fsh-guts` NEVER reaches a pu
 
    **And after EVERY base merge, conflicted or not, run `bun run regen`.**
    A clean merge is not evidence that the generated artefacts are right — see
-   §"A clean merge can produce a wrong artefact" below.
+   §"A clean merge can produce a wrong artefact" below. **If you merged with
+   `bun run merge:main`, its regen already was that run — do not run a second
+   one.** For a merge whose conflicts were all generated, the round is
+   [`merge-conflict-patterns`](merge-conflict-patterns.md) §"A merge round —
+   run each check ONCE": targeted checks and a push, with CI's sharded run as
+   the full gate set in place of a local `bun run gates` or `check:merged`.
+   An authored conflict, or a merge that touched code, still owes both.
 4. **Prove it merges cleanly** (no assumptions):
    - `git merge-base --is-ancestor origin/<base> HEAD` → success means a clean
      fast-forward: git fast-forwards without running a merge, so conflicts are
@@ -270,7 +276,9 @@ dependencies rather than borrowing them.
 ## A clean merge can produce a wrong artefact (STRICT)
 
 **`bun run regen` after every base merge.** Not only after a conflicted one —
-after every one.
+after every one. `bun run merge:main` runs it as part of the merge, so after
+`merge:main` it has already happened once and a second run re-asks the same
+tree (4–5 min, measured 2026-10-04).
 
 Measured on `main` at `3341108a`, 2026-09-22, bean `lxpq`. Two branches changed
 one committed generated file in NON-OVERLAPPING places:
