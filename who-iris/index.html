@@ -160,16 +160,75 @@
   .searchbar input {
     flex: 1; padding: 0.7rem 0.9rem; font-size: 1rem; font-family: inherit;
     border: 1px solid var(--iris-edge); border-right: none; border-radius: 4px 0 0 4px;
-    background: #fff; color: var(--iris-muted);
+    background: #fff; color: var(--iris-ink);
   }
   .searchbar button {
     padding: 0.7rem 1.4rem; font-size: 1rem; font-family: inherit; font-weight: 600;
     border: 1px solid var(--iris-accent); border-radius: 0 4px 4px 0;
-    background: var(--iris-accent); color: #fff;
+    background: var(--iris-accent); color: #fff; cursor: pointer;
   }
-  /* The disabled attribute already communicates this to a pointer; the cursor
-     says it to a reader who hovers before clicking. */
-  .searchbar input[disabled], .searchbar button[disabled] { cursor: not-allowed; opacity: 1; }
+  .searchbar button:hover, .searchbar button:focus {
+    background: var(--iris-dark);
+  }
+  .search-results-panel {
+    margin: 1rem 0 1.5rem;
+    border: 1px solid var(--iris-edge);
+    border-radius: 4px;
+    background: var(--iris-surface);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 1rem;
+  }
+  .search-results-panel h3 {
+    margin: 0 0 0.8rem;
+    font-size: 1.05rem;
+    color: var(--iris-dark);
+  }
+  .search-results-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .search-result-item {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--iris-edge);
+    border-radius: 4px;
+    background: var(--iris-wash);
+  }
+  .search-result-item a {
+    font-weight: 600;
+    font-size: 1.02rem;
+  }
+  .search-result-meta {
+    font-size: 0.88rem;
+    color: var(--iris-muted);
+    margin-top: 0.25rem;
+  }
+  .search-result-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    background: var(--iris-accent);
+    color: #fff;
+    margin-right: 0.5rem;
+  }
+  .search-remote-box {
+    border-top: 1px solid var(--iris-edge);
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+    font-size: 0.92rem;
+  }
+  mark.search-mark {
+    background: #ffeb3b;
+    color: inherit;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
   .searchnote { font-size: 0.88rem; color: var(--iris-muted); margin: 0.4rem 0 2rem; }
   .ordering { font-size: 0.88rem; color: var(--iris-muted); margin: 0.2rem 0 1.4rem; }
 
@@ -266,7 +325,7 @@
     .searchbar button { border-radius: 0 0 4px 4px; }
     .sub { flex-direction: column; }
   }
-</style><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-17eueljf9to.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/css/navbar-row.css"><script src="../assets/js/navbar-row.js" defer></script></head><body><script type="application/json" id="fa-navbar-row" data-fa-root="..">{"icons":["close","todos","beans","processes","kg","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","processes":"/processes/","kg":"/cat-harness/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-17eueljf9to"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">C@T Harness</a></nav><div class="ingested"><div class="wrap"><strong>INGESTED COPY — not WHO, and not live.</strong>
+</style><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-1v0s0gpp3ou.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/css/navbar-row.css"><script src="../assets/js/navbar-row.js" defer></script></head><body><script type="application/json" id="fa-navbar-row" data-fa-root="..">{"icons":["close","todos","beans","processes","kg","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","processes":"/processes/","kg":"/cat-harness/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-1v0s0gpp3ou"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">C@T Harness</a></nav><div class="ingested"><div class="wrap"><strong>INGESTED COPY — not WHO, and not live.</strong>
   This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a>
   from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled
   <em>by reference</em>: 13 nodes of a 273,559-item 361.55 GiB repository, of which <strong>3 items</strong> are held here. The WHO logo is deliberately omitted, and the
@@ -278,11 +337,12 @@
     its Country Offices, Regional Offices, and Headquarters. Additionally, IRIS
     encompasses the mandates established by the Organization&rsquo;s Governing Bodies in
     collaboration with its Member States.</p></div><p class="hero-note">Replica. No WHO emblem, no photograph &mdash; colour only,
-  from the <code>iris-web</code> theme measured off the site&rsquo;s own stylesheet.</p></section><div class="searchbar"><input type="text" disabled
+  from the <code>iris-web</code> theme measured off the site&rsquo;s own stylesheet.</p></section><form class="searchbar" id="iris-search-form" action="../id-lookup/" method="get"><input type="hidden" name="index" value="who-iris/"> <input type="text" id="iris-search-input" name="q"
     placeholder="Search through the repository&rsquo;s 273559 items"
-    aria-label="Search (disabled in this replica)"> <button type="button" disabled>Search</button></div><p class="searchnote">Disabled. <strong>273,559</strong> items across <strong>1,057,223</strong> files is what IRIS reports; this catalogue holds <strong>3</strong> of them by
-reference and <strong>3</strong> by value. There is no index behind the box,
-and a box that returned nothing quietly would be worse than one that says so.</p><h2>Recent Submissions</h2><p class="ordering">Ordered by <code>dc.date.accessioned</code>, latest first &mdash; the key
+    aria-label="Search through the repository items and referenced identifier lookup"
+    autocomplete="off" spellcheck="false"> <button type="submit" id="iris-search-btn">Search</button></form><div id="iris-search-results" class="search-results-panel" role="region" aria-live="polite" style="display:none"></div><p class="searchnote" id="iris-search-note">Search across <strong>3</strong> items held by value and referenced communities/collections.
+To look up any of the <strong>10</strong> referenced nodes by identifier, search here or open the <a href="../id-lookup/?index=who-iris/">identifier lookup</a>.
+Upstream IRIS reports <strong>273,559</strong> items across <strong>1,057,223</strong> files.</p><h2>Recent Submissions</h2><p class="ordering">Ordered by <code>dc.date.accessioned</code>, latest first &mdash; the key
 IRIS&rsquo;s own list sorts on. Where a record carries several accessions the latest is
 used; the WPRO item has two, five days apart, the second being the regional-IRIS merge.</p><div class="subs"><article class="sub"><div class="sub-cover"><a href="item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html"><img src="library/wpr-rdo-2020-003-eng-cover.png" width="300" height="212"
         alt="Cover of Publication and information products style guide, rendered here from page 1 of the held PDF, with the WHO emblem masked out" loading="lazy"></a></div><div class="sub-body"><a class="sub-title" href="item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html">Publication and information products style guide</a><p class="sub-by">World Health Organization. Regional Office for the Western Pacific (WPR/RDO/2020/003, Publication Date: 2020-05-12)</p><p class="sub-abs">This is the style guide for WPRO publications and information products. All designers working on WHO WPRO publication and information products should use this as reference for design and layout. Templates and further guidelines are also available. For more information on WPRO publications guidelines, please contact wpropuballstaff@who.int</p><p class="sub-links"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">via CDN</a> &middot; <code>2.68 MB</code></p></div></article><article class="sub"><div class="sub-cover"><span class="nocover" title="A cover is rendered and held here. It is not published: copyright: refused, restrictions: refused.">cover<br>withheld</span></div><div class="sub-body"><a class="sub-title" href="item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html">WHO handbook for guideline development</a><p class="sub-by">World Health Organization (Publication Date: 2014-12-18)</p><p class="sub-abs">This handbook provides comprehensive guidance on the planning, development, publication, implementation, adaptation and updating of WHO guidelines. Intended for WHO technical units, guideline developers, members of guideline development and external review groups, and other contributors, it describes the principles, methods and governance processes required to produce transparent, evidence-informed recommendations for clinical practice and public health policy that meet WHO standards.</p><p class="sub-links"><span class="none" title="copyright: refused — The publication's copyright page (library/9789241548960-eng/sections/sec-000-who-handbook-for-guideline-development.md l.31-36): &quot;© World Health Organization 2014. All rights reserved. … Requests for permission to reproduce or translate WHO publications –whether for sale or for non-commercial distribution– should be addressed to WHO Press&quot;. No such permission has been sought.; restrictions: refused — Reproduction, for sale or non-commercial distribution alike, requires WHO Press's permission (same page, l.35-36); none has been sought.">held here, not published — copyright: refused, restrictions: refused</span></p></div></article><article class="sub"><div class="sub-cover"><span class="nocover" title="A cover is rendered and held here. It is not published: copyright: refused, restrictions: refused.">cover<br>withheld</span></div><div class="sub-body"><a class="sub-title" href="item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html">WHO editorial style manual</a><p class="sub-by">World Health Organization. Technical Publications Unit (WHO/PUB/TPS/93.1, Publication Date: 1993-12-31)</p><p class="sub-abs none">No <code>dc.description.abstract</code> in the captured record.</p><p class="sub-links"><span class="none" title="copyright: refused — The publication's copyright page (library/who-pub-tps-931/sections/page-030.md l.31-32): &quot;… protection in accordance with the provisions of Protocol 2 of the Universal Copyright Convention. All rights reserved.&quot; No permission to reproduce has been sought.; restrictions: refused — All rights reserved (same page); no permission to reproduce has been sought.">held here, not published — copyright: refused, restrictions: refused</span></p></div></article></div><h2>Browse</h2><ul class="kids" style="margin-left:0"><li><a href="community-list.html">List of Communities</a> &mdash; the replica of
@@ -293,7 +353,106 @@ used; the WPRO item has two, five days apart, the second being the regional-IRIS
   than becoming a second answer to the same question.</p><p>Addressing follows the owner&rsquo;s rule &mdash;
   <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> &mdash; so an instance that
   instantiates a directory gets a visualiser mounted under that directory&rsquo;s
-  kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.</p></div></main><footer class="mast"><div class="wrap"><p><strong>Ingested replica.</strong> Rendered from
+  kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.</p></div><script>
+(function() {
+  var index = [{"title":"1. Headquarters","href":"community-list.html","badge":"Community","meta":"community/5bff2c18-6c2b-4658-9087-93811d2399c0","abstract":"","text":"1. headquarters community/5bff2c18-6c2b-4658-9087-93811d2399c0"},{"title":"2. Regional Office for Africa","href":"community-list.html","badge":"Community","meta":"community/e1b206b7-fd4c-4b93-972a-be07850a1cdd","abstract":"","text":"2. regional office for africa community/e1b206b7-fd4c-4b93-972a-be07850a1cdd"},{"title":"3. Regional Office for the Americas","href":"community-list.html","badge":"Community","meta":"community/270bee8e-d535-4512-86a2-b01850407a23","abstract":"","text":"3. regional office for the americas community/270bee8e-d535-4512-86a2-b01850407a23"},{"title":"4. Regional Office for the Eastern Mediterranean","href":"community-list.html","badge":"Community","meta":"community/f005d7fc-da21-4f55-9e06-9f65c49b2184","abstract":"","text":"4. regional office for the eastern mediterranean community/f005d7fc-da21-4f55-9e06-9f65c49b2184"},{"title":"5. Regional Office for Europe","href":"community-list.html","badge":"Community","meta":"community/fb66a624-a5dc-4576-8b6b-929639e552d8","abstract":"","text":"5. regional office for europe community/fb66a624-a5dc-4576-8b6b-929639e552d8"},{"title":"6. Regional Office for South-East Asia","href":"community-list.html","badge":"Community","meta":"community/8f327840-b0f3-4769-a1c2-270b2b5ce7da","abstract":"","text":"6. regional office for south-east asia community/8f327840-b0f3-4769-a1c2-270b2b5ce7da"},{"title":"7. Regional Office for the Western Pacific","href":"community-list.html","badge":"Community","meta":"community/ebd3b191-c322-4754-9415-469a1a0eb0c3","abstract":"","text":"7. regional office for the western pacific community/ebd3b191-c322-4754-9415-469a1a0eb0c3"},{"title":"8. WHO Framework Convention on Tobacco Control (FCTC)","href":"community-list.html","badge":"Community","meta":"community/28b22be0-5864-409c-9b83-0442e2a7ca0e","abstract":"","text":"8. who framework convention on tobacco control (fctc) community/28b22be0-5864-409c-9b83-0442e2a7ca0e"},{"title":"Information products","href":"collection-collection-wpro-information-products.html","badge":"Collection","meta":"collection/wpro-information-products","abstract":"Measured from the breadcrumb on the captured item page: 'Home > 7. Regional Office for the ... > Regional Office for the W... > Information products'. FOUR levels, of which the middle two are communities -- which is why `parents` is a list of PATHS rather than a single id. The collection's own UUID is NOT in anything captured and iris.who.int is egress-blocked from this environment (CONNECT tunnel failed, response 403 -- the same block bean r1lz recorded on 2026-09-19), so the node is keyed by its path rather than by an invented identifier.","text":"information products collection/wpro-information-products measured from the breadcrumb on the captured item page: 'home > 7. regional office for the ... > regional office for the w... > information products'. four levels, of which the middle two are communities -- which is why `parents` is a list of paths rather than a single id. the collection's own uuid is not in anything captured and iris.who.int is egress-blocked from this environment (connect tunnel failed, response 403 -- the same block bean r1lz recorded on 2026-09-19), so the node is keyed by its path rather than by an invented identifier."},{"title":"Publication and information products style guide","href":"item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html","badge":"Item","meta":"World Health Organization. Regional Office for the Western Pacific · WPR/RDO/2020/003 · 2020-05-12","abstract":"This is the style guide for WPRO publications and information products. All designers working on WHO WPRO publication and information products should use this as reference for design and layout. Templates and further guidelines are also ava","text":"publication and information products style guide item/18892cf3-5a4f-42a4-923c-a93f4a594dec wpr-rdo-2020-003-eng world health organization. regional office for the western pacific wpr/rdo/2020/003 2020-05-12 this is the style guide for wpro publications and information products. all designers working on who wpro publication and information products should use this as reference for design and layout. templates and further guidelines are also available. for more information on wpro publications guidelines, please contact wpropuballstaff@who.int"},{"title":"Publications","href":"collection-collection-hq-publications.html","badge":"Collection","meta":"collection/hq-publications","abstract":"Established by TWO independent statements in the source, 2026-09-20. The breadcrumb on both captured full item records reads 'Home > 1. Headquarters > Publications', and the handbook's record additionally carries an explicit 'Collections: Publications' block. One reading of one page would have been weaker evidence than this is. THE COLLECTION'S OWN UUID IS NOT IN EITHER CAPTURE -- only its name and its place in the hierarchy are -- and iris.who.int is egress-blocked from this environment, so the node is keyed by its PATH exactly as `collection/wpro-information-products` is, and for the same stated reason: inventing a UUID to fill the slot produces an identifier that resolves to nothing while looking authoritative. The collection's item count is likewise UNKNOWN; neither capture states one, and it is not interpolated.","text":"publications collection/hq-publications established by two independent statements in the source, 2026-09-20. the breadcrumb on both captured full item records reads 'home > 1. headquarters > publications', and the handbook's record additionally carries an explicit 'collections: publications' block. one reading of one page would have been weaker evidence than this is. the collection's own uuid is not in either capture -- only its name and its place in the hierarchy are -- and iris.who.int is egress-blocked from this environment, so the node is keyed by its path exactly as `collection/wpro-information-products` is, and for the same stated reason: inventing a uuid to fill the slot produces an identifier that resolves to nothing while looking authoritative. the collection's item count is likewise unknown; neither capture states one, and it is not interpolated."},{"title":"WHO editorial style manual","href":"item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html","badge":"Item","meta":"World Health Organization. Technical Publications Unit · WHO/PUB/TPS/93.1 · 1993-12-31","abstract":"","text":"who editorial style manual item/b08c6c19-315a-41a4-a9cb-8edabdbc6791 who-pub-tps-931 world health organization. technical publications unit who/pub/tps/93.1 1993-12-31 "},{"title":"WHO handbook for guideline development","href":"item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html","badge":"Item","meta":"World Health Organization · 2014-12-18","abstract":"This handbook provides comprehensive guidance on the planning, development, publication, implementation, adaptation and updating of WHO guidelines. Intended for WHO technical units, guideline developers, members of guideline development and","text":"who handbook for guideline development item/63e14c27-7448-41ec-be08-a96a25a47db6 9789241548960-eng world health organization  2014-12-18 this handbook provides comprehensive guidance on the planning, development, publication, implementation, adaptation and updating of who guidelines. intended for who technical units, guideline developers, members of guideline development and external review groups, and other contributors, it describes the principles, methods and governance processes required to produce transparent, evidence-informed recommendations for clinical practice and public health policy that meet who standards."}];
+  var form = document.getElementById("iris-search-form");
+  var input = document.getElementById("iris-search-input");
+  var results = document.getElementById("iris-search-results");
+  if (!form || !input || !results) return;
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+
+  function highlight(text, terms) {
+    if (!terms.length) return escapeHtml(text);
+    var escaped = escapeHtml(text);
+    for (var i = 0; i < terms.length; i++) {
+      var t = terms[i];
+      if (!t) continue;
+      var regex = new RegExp("(" + t.replace(/[.*+?^${}()|[\]\]/g, "\\$&") + ")", "gi");
+      escaped = escaped.replace(regex, "<mark class=\"search-mark\">$1</mark>");
+    }
+    return escaped;
+  }
+
+  function update() {
+    var raw = input.value.trim();
+    if (!raw) {
+      results.style.display = "none";
+      results.replaceChildren();
+      return;
+    }
+    var terms = raw.toLowerCase().split(/\s+/).filter(Boolean);
+    var matches = [];
+    for (var i = 0; i < index.length; i++) {
+      var entry = index[i];
+      var ok = true;
+      for (var t = 0; t < terms.length; t++) {
+        if (entry.text.indexOf(terms[t]) < 0) {
+          ok = false;
+          break;
+        }
+      }
+      if (ok) matches.push(entry);
+    }
+
+    var lookupUrl = "../id-lookup/?index=who-iris/&q=" + encodeURIComponent(raw);
+    var html = "";
+
+    if (matches.length > 0) {
+      html += "<h3 style=\"margin:0 0 0.8rem;font-size:1.05rem;color:var(--iris-dark);\">Matching catalogue nodes (" + matches.length + "):</h3>";
+      html += "<ul class=\"search-results-list\" style=\"list-style:none;padding:0;margin:0 0 1rem;display:flex;flex-direction:column;gap:0.75rem;\">";
+      for (var m = 0; m < matches.length; m++) {
+        var it = matches[m];
+        html += "<li class=\"search-result-item\" style=\"padding:0.6rem 0.8rem;border:1px solid var(--iris-edge);border-radius:4px;background:var(--iris-wash);\">";
+        html += "<div><span class=\"search-result-badge\" style=\"display:inline-block;font-size:0.75rem;font-weight:600;text-transform:uppercase;padding:0.15rem 0.45rem;border-radius:3px;background:var(--iris-accent);color:#fff;margin-right:0.5rem;\">" + escapeHtml(it.badge) + "</span>";
+        html += "<a href=\"" + it.href + "\" style=\"font-weight:600;font-size:1.02rem;\">" + highlight(it.title, terms) + "</a></div>";
+        if (it.meta) {
+          html += "<div class=\"search-result-meta\" style=\"font-size:0.88rem;color:var(--iris-muted);margin-top:0.25rem;\">" + highlight(it.meta, terms) + "</div>";
+        }
+        if (it.abstract) {
+          var snip = it.abstract.length > 180 ? it.abstract.slice(0, 180) + "…" : it.abstract;
+          html += "<div class=\"search-result-meta\" style=\"font-size:0.88rem;color:var(--iris-ink);margin-top:0.35rem;\">" + highlight(snip, terms) + "</div>";
+        }
+        html += "</li>";
+      }
+      html += "</ul>";
+      html += "<div class=\"search-remote-box\" style=\"border-top:1px solid var(--iris-edge);padding-top:0.75rem;margin-top:0.75rem;font-size:0.92rem;\">";
+      html += "Also search identifier lookup: <a href=\"" + lookupUrl + "\" class=\"search-remote-link\">Look up &ldquo;" + escapeHtml(raw) + "&rdquo; in referenced nodes &rarr;</a>";
+      html += "</div>";
+    } else {
+      html += "<p style=\"margin:0 0 0.5rem;\">No materialized items or collections matched &ldquo;<strong>" + escapeHtml(raw) + "</strong>&rdquo;.</p>";
+      html += "<div class=\"search-remote-box\" style=\"border-top:1px solid var(--iris-edge);padding-top:0.75rem;margin-top:0.75rem;font-size:0.92rem;\">";
+      html += "<a href=\"" + lookupUrl + "\" class=\"search-remote-link\" style=\"font-weight:600;\">Search for &ldquo;" + escapeHtml(raw) + "&rdquo; in the referenced identifier lookup (10 nodes) &rarr;</a>";
+      html += "</div>";
+    }
+
+    results.innerHTML = html;
+    results.style.display = "block";
+  }
+
+  input.addEventListener("input", update);
+  form.addEventListener("submit", function(e) {
+    var raw = input.value.trim();
+    if (!raw) { e.preventDefault(); return; }
+    var hasLocal = results.querySelector(".search-result-item");
+    var firstLink = results.querySelector(".search-result-item a");
+    if (hasLocal && firstLink) {
+      e.preventDefault();
+      firstLink.focus();
+    }
+  });
+
+  var urlParams = new URLSearchParams(window.location.search);
+  var initQ = urlParams.get("q");
+  if (initQ) {
+    input.value = initQ;
+    update();
+  }
+})();
+</script></main><footer class="mast"><div class="wrap"><p><strong>Ingested replica.</strong> Rendered from
   <code>who-iris/catalogue/</code> by <code>who-iris/scripts/gen-iris-pages.ts</code>.
   Layout after <a href="https://iris.who.int/community-list">iris.who.int</a>; every
   figure on this page is read out of the catalogue, not copied from a screenshot.</p><div class="rule"></div><p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO.

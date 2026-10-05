@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 906,
+      "count": 910,
       "unit": "beans"
     }
   },
@@ -4872,6 +4872,20 @@
       "file": "beans/defs/folio-assistant-cn8y--page-follows-the-remembered-locale-mark-source-lan.md"
     },
     {
+      "id": "folio-assistant-cnhh",
+      "title": "LHS navbar: glyph-marked harness rows lose child indent (#2151)",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T05:36:04Z",
+      "updatedAt": "2026-10-05T14:40:27Z",
+      "preview": "Owner 2026-10-05: 'alignment of harnesses is off'. Issue #2151. itemHtml infers fa-nav-kind from glyphPath, so #2122's glyph harness marks got the kind-row padding. Make kind a declared NavItem field.\n\n\n\n## Completed by PR #2152 (2026-10-05)\n\nLands with #2152 (owner: \"finish and merge\" #2152, 2026-10-05), rendered-verified with Playwright screenshots on the PR. Its parent p5wm was closed on main b",
+      "file": "beans/defs/folio-assistant-cnhh--lhs-navbar-glyph-marked-harness-rows-lose-child-in.md"
+    },
+    {
       "id": "folio-assistant-cpmo",
       "title": "SMART-BASE CROSSWALKS: the v1 to v2 ConceptMaps exist, are draft, and one is incomplete",
       "status": "completed",
@@ -6028,6 +6042,20 @@
       "file": "beans/defs/folio-assistant-g43f--worktree-contaminated-sweeps-two-more-root-walking.md"
     },
     {
+      "id": "folio-assistant-g4o0",
+      "title": "SEARCH BAND: search + locale selector in the fa-glass-band; no overlap, magnifier right, one-click toggle",
+      "status": "todo",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T15:09:32Z",
+      "updatedAt": "2026-10-05T15:10:06Z",
+      "preview": "Owner, 2026-10-05 (two screenshots): the open search draws its 'Search everywhere' status line on top of the input; the magnifier jumps left when open; opening search pushes the locale selector to the next line. Wanted: status line below the input, magnifier on the right in both states, one button toggles, text preserved, locale selector on the same line, both controls in the fa-glass-band, Folio ",
+      "file": "beans/defs/folio-assistant-g4o0--search-band-search-locale-selector-in-the-fa-glass.md"
+    },
+    {
       "id": "folio-assistant-g4oc",
       "title": "Upstream DAK post-processing defects: view-page tabs, stale schemas/ copies, dead hub links",
       "status": "todo",
@@ -6144,15 +6172,15 @@
     {
       "id": "folio-assistant-gkv6",
       "title": "NAVBAR ROW COUNTS: beans and todos icons carry count badges, as fsh-guts does",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-9rq1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T15:14:38Z",
-      "updatedAt": "2026-10-05T15:14:38Z",
-      "preview": "Owner, 2026-10-05: \"why no count on beans and todos on LHS top navbar as badges like fsh-guts has?\" Find how fsh-guts draws the count badges, then make the shared row (navbar-row.js) show the bean and todo counts. Must work in both FULL and LITE row modes.",
+      "updatedAt": "2026-10-05T15:53:58Z",
+      "preview": "Owner, 2026-10-05: \"why no count on beans and todos on LHS top navbar as badges like fsh-guts has?\" Find how fsh-guts draws the count badges, then make the shared row (navbar-row.js) show the bean and todo counts. Must work in both FULL and LITE row modes.\n\n_2026-10-05T15:53:58Z_ — Claimed by claude/vibrant-darwin-r6im60 — pushed to main so sibling sessions see it before this branch has a PR (bean",
       "file": "beans/defs/folio-assistant-gkv6--navbar-row-counts-beans-and-todos-icons-carry-coun.md"
     },
     {
@@ -7291,6 +7319,20 @@
       "updatedAt": "2026-09-24T18:37:44Z",
       "preview": "Owner 2026-09-24: \"i want sticky themes to by default use the square avatar layout but mostly faded, if not specified. themes/ pages should show sticky as square\".\n\n## Summary of Changes\n- ThemedTodoFieldsSchema gains an optional `layout` (laptop|mobile|card); absent means the square card crop. todos.ts reads it from front matter.\n- docs-ui.js buildBackdrop: the square crop on every screen, no lon",
       "file": "beans/defs/folio-assistant-k9yq--sticky-art-default-square-crop-faded-unless-the-to.md"
+    },
+    {
+      "id": "folio-assistant-kd85",
+      "title": "LHS navbar: Graphs section starts closed (#2150)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T05:36:04Z",
+      "updatedAt": "2026-10-05T14:40:26Z",
+      "preview": "Owner 2026-10-05: 'also have the \"Graphs\" section start closed on LHS navbar'. Issue #2150. railModel declares graphs open:false; a group holding the current page opens; Jekyll sidebar opens Graphs when a folder link is the current page.\n\n\n\n## Completed by PR #2152 (2026-10-05)\n\nLands with #2152 (owner: \"finish and merge\" #2152, 2026-10-05), rendered-verified with Playwright screenshots on the PR.",
+      "file": "beans/defs/folio-assistant-kd85--lhs-navbar-graphs-section-starts-closed-2150.md"
     },
     {
       "id": "folio-assistant-ke1w",
@@ -10345,6 +10387,20 @@
       "file": "beans/defs/folio-assistant-syzb--separation-stage-6-carry-cat-harness-and-cat-harne.md"
     },
     {
+      "id": "folio-assistant-t0jg",
+      "title": "WHO-IRIS: update .pot templates, 6 UN language translations and execute untainted roundtrip Q/A",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T14:24:39Z",
+      "updatedAt": "2026-10-05T14:25:04Z",
+      "preview": "Update who-iris .pot gettext templates, verify 6 UN official language translations (en source + ar, es, fr, ru, zh in who-iris/translations/), and perform untainted roundtrip QA (independent back-translation + adjudication) per untainted-verification discipline.\n\n\n## Tasks\n- [x] Ensure who-iris .pot templates are extracted and up-to-date (`bun run glossary:pot:check`)\n- [x] Verify 6 UN official la",
+      "file": "beans/defs/folio-assistant-t0jg--who-iris-update-pot-templates-6-un-language-transl.md"
+    },
+    {
       "id": "folio-assistant-t3n8",
       "title": "HARNESS DISPLAY NAMES: every instance declares a human title, and the schema should say so",
       "status": "completed",
@@ -12119,14 +12175,14 @@
     {
       "id": "folio-assistant-xka5",
       "title": "Pages grouped by harness, following the URL; each harness owns its sub-doc graphs",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-9rq1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T14:39:33Z",
-      "updatedAt": "2026-10-05T14:39:33Z",
+      "updatedAt": "2026-10-05T16:20:38Z",
       "preview": "Owner, 2026-10-05, asked how to group the 79 top-level pages: 'dont want additional categorization that will drift, needs maintain. do it by harnesses to follow urls <base>cat-harness/docs/<harness>. each harness is responsible for managing its own sub doc graphs (if any) which then make up the hierarchy'. Also: '(and alphabetization//locale dependent)' — order within a level alphabetical by the p",
       "file": "beans/defs/folio-assistant-xka5--pages-grouped-by-harness-following-the-url-each-ha.md"
     },
@@ -14437,8 +14493,8 @@
         "file": "beans/defs/folio-assistant-p5wm--goal-2-lhs-navbar-working-with-instantiated-harnes.md",
         "status": "completed",
         "epics": 0,
-        "total": 3,
-        "closed": 3,
+        "total": 5,
+        "closed": 5,
         "open": 0,
         "inProgress": 0,
         "todo": 0,
@@ -14452,14 +14508,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 547,
+        "total": 549,
         "closed": 196,
-        "open": 351,
-        "inProgress": 133,
-        "todo": 217,
+        "open": 353,
+        "inProgress": 136,
+        "todo": 216,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3583180987202925
+        "share": 0.3570127504553734
       },
       {
         "id": "folio-assistant-vuip",
@@ -14493,8 +14549,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 530,
-    "coveredOpen": 527,
+    "openTotal": 532,
+    "coveredOpen": 529,
     "duplicateIds": 0
   }
 }

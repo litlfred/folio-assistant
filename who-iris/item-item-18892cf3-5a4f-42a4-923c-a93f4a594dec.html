@@ -160,16 +160,75 @@
   .searchbar input {
     flex: 1; padding: 0.7rem 0.9rem; font-size: 1rem; font-family: inherit;
     border: 1px solid var(--iris-edge); border-right: none; border-radius: 4px 0 0 4px;
-    background: #fff; color: var(--iris-muted);
+    background: #fff; color: var(--iris-ink);
   }
   .searchbar button {
     padding: 0.7rem 1.4rem; font-size: 1rem; font-family: inherit; font-weight: 600;
     border: 1px solid var(--iris-accent); border-radius: 0 4px 4px 0;
-    background: var(--iris-accent); color: #fff;
+    background: var(--iris-accent); color: #fff; cursor: pointer;
   }
-  /* The disabled attribute already communicates this to a pointer; the cursor
-     says it to a reader who hovers before clicking. */
-  .searchbar input[disabled], .searchbar button[disabled] { cursor: not-allowed; opacity: 1; }
+  .searchbar button:hover, .searchbar button:focus {
+    background: var(--iris-dark);
+  }
+  .search-results-panel {
+    margin: 1rem 0 1.5rem;
+    border: 1px solid var(--iris-edge);
+    border-radius: 4px;
+    background: var(--iris-surface);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 1rem;
+  }
+  .search-results-panel h3 {
+    margin: 0 0 0.8rem;
+    font-size: 1.05rem;
+    color: var(--iris-dark);
+  }
+  .search-results-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .search-result-item {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--iris-edge);
+    border-radius: 4px;
+    background: var(--iris-wash);
+  }
+  .search-result-item a {
+    font-weight: 600;
+    font-size: 1.02rem;
+  }
+  .search-result-meta {
+    font-size: 0.88rem;
+    color: var(--iris-muted);
+    margin-top: 0.25rem;
+  }
+  .search-result-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    background: var(--iris-accent);
+    color: #fff;
+    margin-right: 0.5rem;
+  }
+  .search-remote-box {
+    border-top: 1px solid var(--iris-edge);
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+    font-size: 0.92rem;
+  }
+  mark.search-mark {
+    background: #ffeb3b;
+    color: inherit;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
   .searchnote { font-size: 0.88rem; color: var(--iris-muted); margin: 0.4rem 0 2rem; }
   .ordering { font-size: 0.88rem; color: var(--iris-muted); margin: 0.2rem 0 1.4rem; }
 
@@ -266,7 +325,7 @@
     .searchbar button { border-radius: 0 0 4px 4px; }
     .sub { flex-direction: column; }
   }
-</style><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-17eueljf9to.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/css/navbar-row.css"><script src="../assets/js/navbar-row.js" defer></script></head><body><script type="application/json" id="fa-navbar-row" data-fa-root="..">{"icons":["close","todos","beans","processes","kg","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","processes":"/processes/","kg":"/cat-harness/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-17eueljf9to"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">C@T Harness</a></nav><div class="ingested"><div class="wrap"><strong>INGESTED COPY — not WHO, and not live.</strong>
+</style><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-1v0s0gpp3ou.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/css/navbar-row.css"><script src="../assets/js/navbar-row.js" defer></script></head><body><script type="application/json" id="fa-navbar-row" data-fa-root="..">{"icons":["close","todos","beans","processes","kg","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","processes":"/processes/","kg":"/cat-harness/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-1v0s0gpp3ou"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">C@T Harness</a></nav><div class="ingested"><div class="wrap"><strong>INGESTED COPY — not WHO, and not live.</strong>
   This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a>
   from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled
   <em>by reference</em>: 13 nodes of a 273,559-item 361.55 GiB repository, of which <strong>3 items</strong> are held here. The WHO logo is deliberately omitted, and the
