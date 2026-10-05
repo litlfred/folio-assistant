@@ -24,9 +24,12 @@ import {
   decide,
   entryFiles,
   fingerprint,
+  againstRefsOf,
   loadCache,
+  RECIPE_VERSION,
   saveCache,
   sourceClosure,
+  type BaselineResolver,
   type HashCache,
 } from "../input-hash.ts";
 import { cacheKey, hashesToRecord, regenPass, regenToFixpoint, type Pair, type Runner } from "../regen-after-merge.ts";
@@ -128,8 +131,47 @@ describe("input-hash skipping", () => {
     });
   });
 
+  describe("an --against baseline is an input the tree does not hold", () => {
+    const against = { "b:check": "bun run scripts/x.ts --check --against main", b: "bun run scripts/x.ts" };
+    const resolverFor = (ids: Record<string, string>): BaselineResolver => (ref) =>
+      ids[ref] !== undefined ? { id: ids[ref]! } : { undetermined: `miss: no entry for ${ref}` };
+    const fpWith = (r?: BaselineResolver) => fingerprint(root, against, ["b:check", "b"], io, undefined, r);
+
+    test("the refs a command passes are found, through `bun run` nesting and `=`", () => {
+      expect(againstRefsOf(against, "b:check")).toEqual(["main"]);
+      expect(againstRefsOf(against, "b")).toEqual([]);
+      const nested = { outer: "bun run inner && bun run scripts/x.ts --against=pr/7", inner: "bun run scripts/x.ts --check --against main" };
+      expect(againstRefsOf(nested, "outer")).toEqual(["main", "pr/7"]);
+      expect(againstRefsOf({ bad: "bun run scripts/x.ts --against --check" }, "bad")).toEqual([""]);
+    });
+
+    test("a MOVED baseline changes the hash although no file did, so the pair runs", () => {
+      const before = fpWith(resolverFor({ main: "main/aaa tree1" }));
+      expect("hash" in before).toBe(true);
+      const cache: HashCache = { version: RECIPE_VERSION, pairs: { k: (before as { hash: string }).hash } };
+      expect(decide(cache, "k", fpWith(resolverFor({ main: "main/aaa tree1" }))).skip).toBe(true);
+      expect(decide(cache, "k", fpWith(resolverFor({ main: "main/bbb tree2" }))).skip).toBe(false);
+    });
+
+    test("a baseline that cannot be resolved is undetermined, never clean", () => {
+      const f = fpWith(resolverFor({}));
+      expect("undetermined" in f && f.undetermined).toContain("baseline --against main");
+      expect(decide({ version: RECIPE_VERSION, pairs: { k: "x" } }, "k", f).skip).toBe(false);
+    });
+
+    test("no resolver at all is undetermined too — the pair runs", () => {
+      const f = fpWith(undefined);
+      expect("undetermined" in f && f.undetermined).toContain("no resolver");
+    });
+
+    test("a pair that passes no --against is unaffected by the resolver", () => {
+      const a = fingerprint(root, scripts, ["x:check", "x"], io, undefined, resolverFor({}));
+      expect(a).toEqual(fp());
+    });
+  });
+
   test("the cache round-trips through build/ (ignored by version control)", () => {
-    saveCache(root, { version: 1, pairs: { k: "abc" } });
+    saveCache(root, { version: RECIPE_VERSION, pairs: { k: "abc" } });
     expect(loadCache(root).pairs).toEqual({ k: "abc" });
   });
 

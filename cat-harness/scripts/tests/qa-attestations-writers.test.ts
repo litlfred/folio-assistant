@@ -97,7 +97,10 @@ function fixture(): Fixture {
 }
 
 function run(cwd: string, args: string[]) {
-  return spawnSync("bun", args, { cwd, encoding: "utf-8" });
+  // `env` explicitly: Bun's child_process does not inherit variables set at
+  // runtime, and standalone the test preload sets FOLIO_FIXTURE_CHECKOUT —
+  // without it the sweep sees no vocabulary and recognises no block.
+  return spawnSync("bun", args, { cwd, encoding: "utf-8", env: { ...process.env } });
 }
 
 /** The two seeded attestations are in the derived report AND unchanged in the store. */

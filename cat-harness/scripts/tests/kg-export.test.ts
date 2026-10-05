@@ -23,16 +23,18 @@
 import { describe, expect, test } from "bun:test";
 import { readRoleGraph } from "../../schemas/role-graph.ts";
 import { EXTERNAL_SCHEMA_TAG } from "../../schemas/external-schema.ts";
-import { basename, join, resolve } from "node:path";
+import { basename, isAbsolute, join, relative, resolve } from "node:path";
 import { workflowFiles } from "../known-skills.ts";
 import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 
-import { buildExport, exportIdentity, publishedDocument, undeclaredRootTerms } from "../kg-export.js";
+import { buildExport, exportIdentity, publishedDocument, publishedIdentity, undeclaredRootTerms } from "../kg-export.js";
+import { PUBLISHED_ELSEWHERE, declaresOwnCanonical, instanceExportPlan } from "../instance-exports.js";
 import { buildDeclarationSchema, buildSkillIoContracts } from "../harness-schema-export.js";
 import { artefactStub, findDeclarationFile, instanceRootsIn, readDeclaration, repoRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../../schemas/namespaces.js";
+import { inAggregate } from "../../test/support/checkout.js";
 
 /**
  * Does this IRI sit in ANY of the three folio namespaces?
@@ -49,6 +51,7 @@ const inFolioNs = (iri: string): boolean => Object.values(NS_PREFIXES).some((ns)
 // array `@type` and 968 alternateOf links — caught by the self-identification
 // test below, which is the test doing its job.
 const BASE = readDeclaration(join(import.meta.dir, "../.."))!.canonicalUrl!;
+const REPO = repoRootFor(join(import.meta.dir, "../.."));
 const EXPORT = await buildExport();
 
 /**
@@ -103,6 +106,16 @@ const EXPORT_ALT_BOOT = await buildExport({ baseUrl: ALT_BASE, instanceRoot: BOO
  * would make it pass while testing nothing.
  */
 const EXPORT_PREVIEW = await buildExport({ baseUrl: "https://example.invalid/fa/STAGING/demo" });
+/**
+ * The CHECKOUT-scope graph — every instance stacked on this one, under this
+ * document's name. Not published since bean `4ak5` item 2 (owner ruling
+ * 2026-10-05, option B): it is what the tombstones are measured against, and
+ * the only graph still holding a package whose manifest name differs from its
+ * directory, which the package-id witness below needs.
+ */
+const EXPORT_CHECKOUT = await buildExport({ baseUrl: BASE, scope: "checkout" });
+/** A tombstone: no `@type`, `deprecated`, and where the node went (bean `4ak5`). */
+const isTombstone = (n: Record<string, unknown>): boolean => n.deprecated === true;
 // Minted through `termIri`, exactly as the exporter mints it. Rebuilding the
 // IRI from a namespace constant is what made this helper silently return zero
 // rows for every type once the namespaces split — a green-looking suite over
@@ -331,6 +344,9 @@ describe("kg export", () => {
     const ids = EXPORT["@graph"].map((n) => n["@id"]);
     for (const n of EXPORT["@graph"]) {
       expect(typeof n["@id"]).toBe("string");
+      // A tombstone has no type by the owner's ruling — it is no longer
+      // anything here; its own shape is asserted in the tombstone block.
+      if (isTombstone(n)) continue;
       expect(inFolioNs(String(n["@type"]))).toBe(true);
     }
     expect(ids.length).toBe(new Set(ids).size);
@@ -341,6 +357,7 @@ describe("kg export", () => {
     // can disagree with `@graph`, it is worse than absent.
     const recomputed: Record<string, number> = {};
     for (const n of EXPORT["@graph"]) {
+      if (isTombstone(n)) continue; // not a node of any type here — see `tombstonesFor`
       const t = String(n["@type"]).split("#")[1] ?? String(n["@type"]);
       recomputed[t] = (recomputed[t] ?? 0) + 1;
     }
@@ -679,6 +696,16 @@ describe("every self-URL the export publishes resolves to something published", 
       out.add(`${dir}/ns.jsonld`);
       out.add(`${dir}/ns.json`);
     }
+    // Each instance's OWN document (bean `4ak5` items 1 and 2): the root
+    // instance's line, then every instance in `instance-exports.ts`'s plan —
+    // the deploy's own list, read rather than restated, since a second list
+    // here would be the "what is declared" answer that went stale before.
+    // A tombstone and a re-homed skill link land in these.
+    const rootStub = artefactStub(readDeclaration(repoRootFor(join(import.meta.dir, "../..")))!);
+    for (const s of [rootStub, ...instanceExportPlan().map((p) => p.stub)]) {
+      out.add(`${s}/${s}.jsonld`);
+      out.add(`${s}/${s}.json`);
+    }
     for (const c of buildSkillIoContracts({ baseUrl: BASE })) out.add(c.published.split("\\").join("/"));
     // A Process's `depiction` (bean `ax6r`): the SVGs `render:bpmn` commits
     // into the site's `assets/`, which Jekyll serves as they sit. Read from the
@@ -689,7 +716,9 @@ describe("every self-URL the export publishes resolves to something published", 
     return out;
   }
 
-  test("no absolute self-URL names a path the deploy does not write", async () => {
+  // Reads other instances' exports, so it runs only where those instances
+  // exist; skipped visibly when cat-harness stands alone (bean `ho66`).
+  test.skipIf(!inAggregate())("no absolute self-URL names a path the deploy does not write", async () => {
     const doc = EXPORT_CANONICAL;
     const seen = new Set<string>();
     const walk = (o: unknown) => {
@@ -925,8 +954,9 @@ describe("a package's id is declared, not derived from its path", () => {
   const packages = (): Array<Record<string, unknown>> =>
     typed("SkillPackage") as Array<Record<string, unknown>>;
 
+  // Over the CHECKOUT graph, where the witness below lives (bean `4ak5`).
   const membersOf = (pkgIri: string): string[] =>
-    EXPORT["@graph"]
+    EXPORT_CHECKOUT["@graph"]
       .filter((n) => {
         const links = (n as { inPackage?: Array<string | { "@id": string }> }).inPackage ?? [];
         return links.some((l) => (typeof l === "string" ? l : l["@id"]) === pkgIri);
@@ -955,12 +985,28 @@ describe("a package's id is declared, not derived from its path", () => {
   // and a witness the root graph carries for its own reasons rather than by a
   // declaration made for one package. The members are READ from its manifest
   // rather than listed, so adding a skill there is not a test edit.
+  //
+  // Read from the CHECKOUT-scope graph since bean `4ak5` item 2: who-iris is
+  // its own instance, so the published graph holds a tombstone where its
+  // package was (asserted below), and no package of cat-harness's own has a
+  // manifest name that differs from its directory. The rule is
+  // `packageIdFor`'s, which runs the same in either scope.
   const WITNESS = "who-iris";
-  const witness = () => packages().find((x) => String(x["@id"]).endsWith(`#package/${WITNESS}`));
+  const checkoutPackages = (): Array<Record<string, unknown>> =>
+    (EXPORT_CHECKOUT["@graph"] as Array<Record<string, unknown>>).filter((n) => n["@type"] === termIri("SkillPackage"));
+  const witness = () => checkoutPackages().find((x) => String(x["@id"]).endsWith(`#package/${WITNESS}`));
+
+  // Reads other instances' exports, so it runs only where those instances
+  // exist; skipped visibly when cat-harness stands alone (bean `ho66`).
+  test.skipIf(!inAggregate())("in the PUBLISHED graph the witness is a tombstone forwarding to its own instance's document", () => {
+    const at = `${EXPORT["@id"]}#package/${WITNESS}`;
+    const t = (EXPORT["@graph"] as Array<Record<string, unknown>>).find((n) => n["@id"] === at);
+    expect(t).toEqual({ "@id": at, deprecated: true, isReplacedBy: publishedIdentity(join(REPO, WITNESS)).docIri });
+  });
 
   test("a package is named by its manifest, not by its directory", () => {
     const p = witness();
-    expect(p, `packages present: ${packages().map((x) => x["name"]).join(", ")}`).toBeDefined();
+    expect(p, `packages present: ${checkoutPackages().map((x) => x["name"]).join(", ")}`).toBeDefined();
     expect(p!["name"]).toBe(WITNESS);
     expect(String(p!["path"])).toContain("who-iris/skills");
     // And the basename is NOT what it is called — the assertion the rule is
@@ -1092,11 +1138,17 @@ describe("exporting ANOTHER instance's graph", () => {
     // check their documents appeared as link targets the deploy never writes.
     const e = EXPORT_ALT;
     const own = String(e["@id"]);
+    // Every legitimate foreign home is a document some instance PUBLISHES,
+    // minted as that instance's export mints it. bootstrap was the only one
+    // until the split (bean `4ak5` item 2); since then a skill held by an
+    // instance stacked on this one links into that instance's document.
+    const homes = instanceRootsIn(REPO)
+      .map((r) => publishedIdentity(r, ALT_BASE).docIri)
+      .filter((d) => d !== own);
     for (const n of e["@graph"] as Array<Record<string, unknown>>) {
       for (const s of (n.satisfies ?? []) as string[]) {
         if (s.startsWith(`${own}#`)) continue;
-        // The only legitimate foreign home in this corpus.
-        expect(s.startsWith(`${ALT_BASE}/bootstrap/bootstrap.jsonld#`)).toBe(true);
+        expect({ s, home: homes.some((h) => s.startsWith(`${h}#`)) }).toEqual({ s, home: true });
       }
     }
   });
@@ -1194,7 +1246,9 @@ describe("DMN decisions are nodes, linked to their gateways and to DMN 1.3", () 
   test("every decision in every .dmn file is a Decision node conforming to DMN 1.3", () => {
     // Every `.dmn` the harness's corpus declares, wherever it is grouped
     // (`processes/<group>/decisions/`, placement PR3, bean `63wl`).
-    const declared = workflowFiles(resolve(import.meta.dir, "..", ".."))
+    // THIS instance's — the published graph holds no other's since bean
+    // `4ak5` item 2; each stacked instance's decisions are in its own.
+    const declared = workflowFiles(resolve(import.meta.dir, "..", ".."), "instance")
       .filter((f) => f.endsWith(".dmn"))
       .flatMap((f) =>
         [...readFileSync(f, "utf-8").matchAll(/<decision\s[^>]*\bid="([^"]+)"/g)].map(
@@ -1233,10 +1287,13 @@ describe("DMN decisions are nodes, linked to their gateways and to DMN 1.3", () 
       expect(typeof p.summary).toBe("string");
       expect(String(p.description).startsWith(String(p.summary).replace(/…$/, ""))).toBe(true);
     }
-    const lifecycle = processes.find((p) => String(p.sourcePath).endsWith("content-lifecycle.bpmn"))!;
-    expect(lifecycle.description).toBeDefined();
-    expect(String(lifecycle.sourceUrl)).toMatch(/^https:\/\/github\.com\/.+\/blob\/main\/.+content-lifecycle\.bpmn$/);
-    expect(String(lifecycle.depiction)).toMatch(/\/assets\/img\/workflows\/content-lifecycle\.svg$/);
+    // The witness is one of cat-harness's OWN diagrams, so the case holds where
+    // cat-harness is its own clone with no higher instance beside it (bean
+    // `ho66`); `content-lifecycle` was folio-assistant-core's.
+    const review = processes.find((p) => String(p.sourcePath).endsWith("content/review-task.bpmn"))!;
+    expect(review.description).toBeDefined();
+    expect(String(review.sourceUrl)).toMatch(/^https:\/\/github\.com\/.+\/blob\/main\/.+review-task\.bpmn$/);
+    expect(String(review.depiction)).toMatch(/\/assets\/img\/workflows\/review-task\.svg$/);
   });
 
   test("a call activity's calledElement links to a Process in this graph, never to one it lacks", () => {
@@ -1244,10 +1301,11 @@ describe("DMN decisions are nodes, linked to their gateways and to DMN 1.3", () 
     const calls = byType("ProcessNode").filter((n) => n.calledElement !== undefined);
     expect(calls.length).toBeGreaterThan(0);
     for (const c of calls) expect(procIds.has(c.calledElement as string)).toBe(true);
-    // `content-lifecycle` calls `draft-to-publication` — the edge the page reads.
-    const lifecycle = byType("Process").find((p) => String(p.sourcePath).endsWith("content-lifecycle.bpmn"))!;
-    const publication = byType("Process").find((p) => String(p.sourcePath).endsWith("draft-to-publication.bpmn"))!;
-    expect(calls.some((c) => c.partOf === lifecycle["@id"] && c.calledElement === publication["@id"])).toBe(true);
+    // `review-task` calls `review-narrative` — an edge between two of
+    // cat-harness's own diagrams, so it is there standalone too (bean `ho66`).
+    const review = byType("Process").find((p) => String(p.sourcePath).endsWith("content/review-task.bpmn"))!;
+    const narrative = byType("Process").find((p) => String(p.sourcePath).endsWith("content/review-narrative.bpmn"))!;
+    expect(calls.some((c) => c.partOf === review["@id"] && c.calledElement === narrative["@id"])).toBe(true);
   });
 });
 
@@ -1266,5 +1324,95 @@ describe("an actor's roles are links to Role nodes (#1168 B8)", () => {
 
   test("every link lands on a node of this document", () => {
     expect(links.filter((l) => !ids.has(l.to)).map((l) => `${l.from} -> ${l.to}`)).toEqual([]);
+  });
+});
+
+/*
+ * THE SPLIT — bean `4ak5` item 2, owner ruling 2026-10-05 (option B).
+ *
+ * `cat-harness.jsonld` is built in instance scope: cat-harness's own declared
+ * directories only. Measured the day it landed, the checkout-scope document
+ * it replaced carried 825 nodes of five other instances under
+ * `cat-harness.jsonld#…` fragments. Each such `@id` keeps a tombstone for ONE
+ * release, forwarding to the same node in its owner's published document —
+ * GitHub Pages cannot redirect a fragment. Remove the tombstone tests with
+ * `tombstonesFor`.
+ */
+const OWNER_EXPORTS = new Map<string, Set<string>>();
+for (const r of instanceRootsIn(REPO)) {
+  if (resolve(r) === resolve(join(import.meta.dir, "../.."))) continue;
+  const own = declaresOwnCanonical(readDeclaration(r));
+  const e = await buildExport({ instanceRoot: r, ...(own ? {} : { baseUrl: BASE }) });
+  OWNER_EXPORTS.set(String(e["@id"]), new Set((e["@graph"] as Array<{ "@id": string }>).map((n) => n["@id"])));
+}
+
+describe("the published graph is this instance's own (bean 4ak5 item 2)", () => {
+  const HOST = resolve(join(import.meta.dir, "../.."));
+  const graph = EXPORT_CANONICAL["@graph"] as Array<Record<string, unknown>>;
+  const tombstones = graph.filter(isTombstone);
+
+  test("no node's source path is outside this instance", () => {
+    const outside: string[] = [];
+    for (const n of graph) {
+      for (const k of ["instructionsPath", "sourcePath", "path", "module"]) {
+        const v = n[k];
+        if (typeof v !== "string") continue;
+        const rel = relative(HOST, resolve(HOST, v));
+        if (rel.startsWith("..") || isAbsolute(rel)) outside.push(`${String(n["@id"])} ${k}=${v}`);
+      }
+    }
+    expect(outside).toEqual([]);
+  });
+
+  // Reads other instances' exports, so it runs only where those instances
+  // exist; skipped visibly when cat-harness stands alone (bean `ho66`).
+  test.skipIf(!inAggregate())("every @id the checkout-scope graph mints and this one lacks is a tombstone", () => {
+    // Two WHOLE builds, so a collector that becomes scope-dependent without
+    // `tombstonesFor` re-running it fails here rather than leaving an `@id`
+    // with no forwarding address.
+    const here = new Set(graph.filter((n) => !isTombstone(n)).map((n) => String(n["@id"])));
+    const moved = (EXPORT_CHECKOUT["@graph"] as Array<{ "@id": string }>).map((n) => n["@id"]).filter((id) => !here.has(id));
+    expect(moved.length).toBeGreaterThan(0);
+    const stones = new Set(tombstones.map((n) => String(n["@id"])));
+    expect(moved.filter((id) => !stones.has(id))).toEqual([]);
+    // And nothing is tombstoned that is still here, or that never was.
+    expect(tombstones.length).toBe(moved.length);
+  });
+
+  test("a tombstone is exactly the ruling's shape, and the context maps it to OWL and Dublin Core", () => {
+    for (const t of tombstones) expect(Object.keys(t).sort()).toEqual(["@id", "deprecated", "isReplacedBy"]);
+    const ctx = EXPORT_CANONICAL["@context"] as Record<string, Record<string, string>>;
+    expect(ctx.deprecated!["@id"]).toBe("http://www.w3.org/2002/07/owl#deprecated");
+    expect(ctx.isReplacedBy).toEqual({ "@id": "http://purl.org/dc/terms/isReplacedBy", "@type": "@id" });
+  });
+
+  test("every tombstone forwards to a node its owner's PUBLISHED document holds", () => {
+    // The owner's document is the one `instance-exports.ts` writes — built
+    // the way it builds it, with no `--base-url` for an instance that
+    // declares its own `canonicalUrl`. A package has no node in any other
+    // instance's document (the package collector is instance-bound), so it
+    // forwards to the document itself.
+    const published = new Set([...instanceExportPlan().map((p) => p.stub), ...Object.keys(PUBLISHED_ELSEWHERE)]);
+    const stubOf = new Map(instanceRootsIn(REPO).map((r) => [publishedIdentity(r, BASE).docIri, artefactStub(readDeclaration(r)!)]));
+    const lost: string[] = [];
+    for (const t of tombstones) {
+      const to = String(t.isReplacedBy);
+      const doc = to.split("#")[0]!;
+      const held = OWNER_EXPORTS.get(doc);
+      const stub = stubOf.get(doc);
+      const ok = held !== undefined && stub !== undefined && published.has(stub) && (to === doc || held.has(to));
+      if (!ok) lost.push(`${String(t["@id"])} → ${to}`);
+    }
+    expect(lost).toEqual([]);
+  });
+
+  // Reads other instances' exports, so it runs only where those instances
+  // exist; skipped visibly when cat-harness stands alone (bean `ho66`).
+  test.skipIf(!inAggregate())("nothing left behind links to a node that moved", () => {
+    // `danglingLinks` is computed before the tombstones are appended, so a
+    // link to a node that LEFT is reported rather than resolved by its own
+    // forwarding address — a role's skill held by a stacked instance is
+    // re-homed by `skillHome`, as a Tool's `satisfies` is.
+    expect(EXPORT_CANONICAL.danglingLinks).toEqual([]);
   });
 });

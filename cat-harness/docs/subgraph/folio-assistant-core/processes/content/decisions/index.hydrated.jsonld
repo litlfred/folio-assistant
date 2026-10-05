@@ -4,20 +4,20 @@
   "@type": "bootstrap:Subgraph",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#decision/draft-qa-gate/Decision_DraftQaGate",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#decision/draft-qa-gate/Decision_DraftQaGate",
       "@type": "cat-harness:Decision",
-      "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dmn-1.3",
       "hitPolicy": "FIRST",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes",
       "name": "Draft QA green?",
-      "sourcePath": "../folio-assistant-core/processes/content/decisions/draft-qa-gate.dmn"
+      "sourcePath": "processes/content/decisions/draft-qa-gate.dmn"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#decision/review-coverage-gate/Decision_ReviewCoverageGate",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#decision/review-coverage-gate/Decision_ReviewCoverageGate",
       "@type": "cat-harness:Decision",
-      "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dmn-1.3",
       "hitPolicy": "FIRST",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes",
       "name": "Every changed block reviewed?",
-      "sourcePath": "../folio-assistant-core/processes/content/decisions/review-coverage-gate.dmn"
+      "sourcePath": "processes/content/decisions/review-coverage-gate.dmn"
     }
   ],
   "holdsGraph": [

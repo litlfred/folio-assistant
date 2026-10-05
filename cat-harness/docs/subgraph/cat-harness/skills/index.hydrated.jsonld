@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "fileCount": 289,
+      "fileCount": 278,
       "holdsGraph": [
         "bootstrap:graphKind/skills"
       ],
@@ -174,13 +174,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 109,
+              "instructionLines": 118,
               "instructionsPath": "skills/authoring/authoring-core/content-profiles.md",
               "name": "content-profiles",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/89098012171ad32b40757c459dbb429165669b6ccc3059af43fb0a54dbd62284",
-                "bytes": 5291,
-                "sha256": "89098012171ad32b40757c459dbb429165669b6ccc3059af43fb0a54dbd62284"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e5a6844c0accbd022d16e85c44be6fe60beac09bc3006ff0db1553ffd05522f0",
+                "bytes": 5835,
+                "sha256": "e5a6844c0accbd022d16e85c44be6fe60beac09bc3006ff0db1553ffd05522f0"
               },
               "title": "Content types — `document` is the base, a paper extends it"
             },
@@ -496,9 +496,9 @@
               "instructionsPath": "skills/authoring/authoring-core/technical-documentation.md",
               "name": "technical-documentation",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3ee705d7ae25f183ccd7f52220abf6c9c6e494623ce7878373ed0604030fbe5d",
-                "bytes": 5483,
-                "sha256": "3ee705d7ae25f183ccd7f52220abf6c9c6e494623ce7878373ed0604030fbe5d"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d9ee449fc168c2ac09533c018ef341f2b00824066c0e56597936776b400c6863",
+                "bytes": 5435,
+                "sha256": "d9ee449fc168c2ac09533c018ef341f2b00824066c0e56597936776b400c6863"
               },
               "title": "Technical documentation"
             },
@@ -1541,13 +1541,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 307,
+              "instructionLines": 314,
               "instructionsPath": "skills/kg/kg-core/artefact-reachability.md",
               "name": "artefact-reachability",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c8421a188ef480025ddff065616ceeb4f50b4c56bc653bdd48862e85a0bdfa07",
-                "bytes": 15599,
-                "sha256": "c8421a188ef480025ddff065616ceeb4f50b4c56bc653bdd48862e85a0bdfa07"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/29228d7efe09740579d570fa07274cad885b6a26ea75816fa59b28121afb3252",
+                "bytes": 16057,
+                "sha256": "29228d7efe09740579d570fa07274cad885b6a26ea75816fa59b28121afb3252"
               },
               "title": "Artefact reachability — load is not evaluability, and a test is not a caller"
             },
@@ -1673,13 +1673,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 1473,
+              "instructionLines": 1523,
               "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
               "name": "directory-conventions",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/38ecb1cde3624bcf35ce180af0093fd3bd7dcd6cb7baf0811b0d74c63f85182c",
-                "bytes": 112860,
-                "sha256": "38ecb1cde3624bcf35ce180af0093fd3bd7dcd6cb7baf0811b0d74c63f85182c"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7b53f631eca4e0cd219909df2dd73971d3feb47a72f9a3a8b9e5d504200c06bf",
+                "bytes": 117232,
+                "sha256": "7b53f631eca4e0cd219909df2dd73971d3feb47a72f9a3a8b9e5d504200c06bf"
               },
               "title": "Directory conventions — what an instance declares it scans"
             },
@@ -1715,9 +1715,9 @@
               "instructionsPath": "skills/kg/kg-core/harness-requirements.md",
               "name": "harness-requirements",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2fd2f5754e725f97eb02cecf8089cb2ddd6ea329d21f8c34ff45da39ce9dcc19",
-                "bytes": 13028,
-                "sha256": "2fd2f5754e725f97eb02cecf8089cb2ddd6ea329d21f8c34ff45da39ce9dcc19"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a7d9cfa9452f402ca90a523666b9694ceedade9381e1a50d5d377d8ee62f4328",
+                "bytes": 13034,
+                "sha256": "a7d9cfa9452f402ca90a523666b9694ceedade9381e1a50d5d377d8ee62f4328"
               },
               "title": "Harness requirements — what an instance owes for what it declares"
             },
@@ -1787,13 +1787,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 986,
+              "instructionLines": 1023,
               "instructionsPath": "skills/kg/kg-core/kg-export.md",
               "name": "kg-export",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6d5ed328f6024b78e9f6c2cbaeb5261fab243a3eabe7557e79b07b6639b3c5f8",
-                "bytes": 53960,
-                "sha256": "6d5ed328f6024b78e9f6c2cbaeb5261fab243a3eabe7557e79b07b6639b3c5f8"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d9425c22acb584672ba4d639be6d968240d77b0864699a91c230ff49e5258911",
+                "bytes": 55820,
+                "sha256": "d9425c22acb584672ba4d639be6d968240d77b0864699a91c230ff49e5258911"
               },
               "title": "KG export — publishing the graph as linked data, not as a page"
             },
@@ -2140,29 +2140,19 @@
               "@type": "cat-harness:SkillPackage",
               "declaresSkill": [
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adopt-methodology-from-source",
-                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-arxiv",
-                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-web-pages",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/asset-extraction",
-                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-human-review",
-                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-photo-ingestion-watcher",
-                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-qa",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-lists",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-acquisition",
-                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake",
-                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/filing-dublin-core",
-                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-build",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-terms",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/library-ingestion",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/literature-search",
-                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ontologist",
-                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/tabular-metadata",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/term-disagreement",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/translation-manager",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-naming",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-routes",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uploads-watch"
               ],
-              "description": "Library and information management: acquisition, ingestion and archiving of sources (arXiv, web pages, photos, uploads), bibliography QA, Dublin Core filing, code lists, glossaries, tabular metadata and translation. Moved out of folio-core into the library topic (bean 9umr, owner ruling 2026-09-30).",
+              "description": "Library and information management in the harness: the basic ingestion flow (accept an upload, extract its metadata into the KG, place the asset in library/ if materialized), content acquisition, upload routes and naming, asset extraction, literature search, methodology adoption, code lists, glossary terms, term disagreement and translation. Moved out of folio-core into the library topic (bean 9umr, owner ruling 2026-09-30); the cataloguing methods and the detailed document-ingestion method moved up a layer in placement PR6 (bean apcg).",
               "hasManifest": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
               "name": "library-core",
@@ -2182,49 +2172,11 @@
               "instructionsPath": "skills/library/library-core/adopt-methodology-from-source.md",
               "name": "adopt-methodology-from-source",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/18af6a73d6c86dd7096fed4bba6435e007e1ca920794c6399730339f17e7fea5",
-                "bytes": 3327,
-                "sha256": "18af6a73d6c86dd7096fed4bba6435e007e1ca920794c6399730339f17e7fea5"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e60155c5e05004bfa4a91656bc0c65c9b1462943bbabc0c0d682cbc4a48160e8",
+                "bytes": 3574,
+                "sha256": "e60155c5e05004bfa4a91656bc0c65c9b1462943bbabc0c0d682cbc4a48160e8"
               },
               "title": "Adopt a methodology from a source document"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-arxiv",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Materializing a paper from arXiv — why the version suffix is part of the identity rather than a detail, what to keep beside the PDF, and which facts must be read from the published API rather than recalled.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 173,
-              "instructionsPath": "skills/library/library-core/archiving-arxiv.md",
-              "name": "archiving-arxiv",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/96eb71a90d227dc93bf9e499e8da5b8c770932b1af9db2961826e61c00f68cc0",
-                "bytes": 9305,
-                "sha256": "96eb71a90d227dc93bf9e499e8da5b8c770932b1af9db2961826e61c00f68cc0"
-              },
-              "title": "Materializing from arXiv"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-web-pages",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Capturing a web page so it can be cited later — the two fidelities, what each one is evidence of, and why capturing only one of them loses something that cannot be recovered. A URL is not an archive.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 87,
-              "instructionsPath": "skills/library/library-core/archiving-web-pages.md",
-              "name": "archiving-web-pages",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dfb1f6017a230711e10d0e2622ba341655513e49736e91cc1849e4c0b10dfd82",
-                "bytes": 4146,
-                "sha256": "dfb1f6017a230711e10d0e2622ba341655513e49736e91cc1849e4c0b10dfd82"
-              },
-              "title": "Archiving a web page"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/asset-extraction",
@@ -2244,63 +2196,6 @@
                 "sha256": "6ca7d262b77db27d5d30792328470d3b428ac02d6188e14be2c0bd0a716af6fb"
               },
               "title": "Asset extraction — the index goes in, the contents do not"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-human-review",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Human-validated bibliography workflow. Flag references that have not been human-reviewed against their source; drive the acquisition ladder (source-in-repo → acquire-legally → physical-library); open one GitHub issue per reference needing physical review (full project context + bibliographic data + page-photo request, assigned to the repo owner); hand off uploaded photos to the bib-photo-ingestion watcher. Use when auditing bib human-review status, ingesting an uploaded paper's results, or preparing a physical-review issue.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 76,
-              "instructionsPath": "skills/library/library-core/bib-human-review.md",
-              "name": "bib-human-review",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d66b435ba4679b81ad5d283ad1cbe8f7d79412477aade2e329dd9d290680009c",
-                "bytes": 3590,
-                "sha256": "d66b435ba4679b81ad5d283ad1cbe8f7d79412477aade2e329dd9d290680009c"
-              },
-              "title": "bib-human-review"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-photo-ingestion-watcher",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Integration-watcher for bib physical-review issues. When a page photo is uploaded to a `bib-physical-review` issue (or an in-repo source passage is agent-identified), OCR/read it, formalise the cited result (if the project has a formal-proof pipeline), confirm the project's usage matches the source, run machine + agent bib validation, then set the reference status to `validated` and refresh references.review.json. Use when processing a bib-physical-review issue that has an attached photo, or when ingesting an uploaded paper.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 53,
-              "instructionsPath": "skills/library/library-core/bib-photo-ingestion-watcher.md",
-              "name": "bib-photo-ingestion-watcher",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/129b2b280aebb60a869e8e421ff1a94aaa86c2df56de60fe5d81607ec8b4e0a6",
-                "bytes": 2669,
-                "sha256": "129b2b280aebb60a869e8e421ff1a94aaa86c2df56de60fe5d81607ec8b4e0a6"
-              },
-              "title": "bib-photo-ingestion-watcher"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-qa",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Bibliography quality-assurance agent — validates every reference in content/schema/references.ts against several QA checks: URL availability, URL resolution, metadata completeness, citation coverage, and screenshot/image evidence.  Generates bib-qa.json consumed by the standalone bib-qa.html dashboard.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 354,
-              "instructionsPath": "skills/library/library-core/bib-qa.md",
-              "name": "bib-qa",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e5beb30b41a3306ff9d2881359f1135927f3df764b1db7b5844e9fe6254bb054",
-                "bytes": 14701,
-                "sha256": "e5beb30b41a3306ff9d2881359f1135927f3df764b1db7b5844e9fe6254bb054"
-              },
-              "title": "Bibliography QA Skill"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-lists",
@@ -2341,62 +2236,6 @@
               "title": "Acquisition is the step before ingestion, and it had no home"
             },
             {
-              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 460,
-              "instructionsPath": "skills/library/library-core/document-intake.md",
-              "name": "document-intake",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3240df35df8a834cf66cbd875304db16ea5590dcf2d202036e577e09224759bb",
-                "bytes": 20853,
-                "sha256": "3240df35df8a834cf66cbd875304db16ea5590dcf2d202036e577e09224759bb"
-              },
-              "title": "Document Intake"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/filing-dublin-core",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Cataloguing a source as it arrives — which facts are `dcterms`, which are this project's own, and why the line is drawn by the vocabulary rather than by convenience. The bibliographic layer only; the derived layer belongs to ingestion.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 105,
-              "instructionsPath": "skills/library/library-core/filing-dublin-core.md",
-              "name": "filing-dublin-core",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1d1c4a6ed846e8875d2a662b6159e6045025cf3ae6cb883b3de1947affe12165",
-                "bytes": 5145,
-                "sha256": "1d1c4a6ed846e8875d2a662b6159e6045025cf3ae6cb883b3de1947affe12165"
-              },
-              "title": "Filing a source: what Dublin Core carries, and what it does not"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-build",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 147,
-              "instructionsPath": "skills/library/library-core/glossary-build.md",
-              "name": "glossary-build",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f2144e753ce0e5bc390bdb5af508d6f7b01ece48e60d3b68ba5e3d97905fdbac",
-                "bytes": 7091,
-                "sha256": "f2144e753ce0e5bc390bdb5af508d6f7b01ece48e60d3b68ba5e3d97905fdbac"
-              },
-              "title": "Glossary Build Skill"
-            },
-            {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-terms",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -2409,9 +2248,9 @@
               "instructionsPath": "skills/library/library-core/glossary-terms.md",
               "name": "glossary-terms",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dc1838b512c8ce65bc3fd745ae68a00f8b9be6025a8601a24e9194b61e46b7bd",
-                "bytes": 13821,
-                "sha256": "dc1838b512c8ce65bc3fd745ae68a00f8b9be6025a8601a24e9194b61e46b7bd"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/70d4536bab2258800a7f7f58f2cee35fc6e637730917a34ac223e6937ffd0a91",
+                "bytes": 13800,
+                "sha256": "70d4536bab2258800a7f7f58f2cee35fc6e637730917a34ac223e6937ffd0a91"
               },
               "title": "Glossary terms"
             },
@@ -2419,20 +2258,20 @@
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/library-ingestion",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Taking a file from `uploads/` to `library/<bib-slug>/` — which rung to reach for and why, what a complete L1 entry holds, and why an inferred structure is refused rather than guessed. One entry point: `bun run ingest`.",
+              "description": "The BASIC ingestion flow every asset takes: an upload is accepted, its metadata goes into the knowledge graph, and the asset lands in `library/<slug>/` if it is materialized. The two entry points (a drop in `uploads/`, or materializing an asset a remote graph lists), what happens to the upload afterwards, and why content-type methods refine this flow from above rather than living in it. Command: `bun run ingest`.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 953,
+              "instructionLines": 133,
               "instructionsPath": "skills/library/library-core/library-ingestion.md",
               "name": "library-ingestion",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6146a2f31e3a5c0969a926e3ea89e0d1ed41416afe7ad2101b6dc18f62a77fec",
-                "bytes": 52351,
-                "sha256": "6146a2f31e3a5c0969a926e3ea89e0d1ed41416afe7ad2101b6dc18f62a77fec"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/84b6a8e089337f24f52c4086d25247326ef5b2dbbb090ef9871be153736524bf",
+                "bytes": 7636,
+                "sha256": "84b6a8e089337f24f52c4086d25247326ef5b2dbbb090ef9871be153736524bf"
               },
-              "title": "Library ingestion"
+              "title": "Library ingestion — the basic flow"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/literature-search",
@@ -2452,44 +2291,6 @@
                 "sha256": "60105da32f942ac7da3398115ba0b7c27eafb2528dfa5d948bf926c47a9e8fc0"
               },
               "title": "Literature search — finding the source a citation points at"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ontologist",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Semantic Ontologist — scans narrative text for ambiguous terms, generates a formal glossary/registry, and produces a mapping linking narrative strings to formal identifiers. Acts as the \"Gatekeeper\" ensuring every term has a unique type/identity assignment before formalization proceeds.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 233,
-              "instructionsPath": "skills/library/library-core/ontologist.md",
-              "name": "ontologist",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/200455548038e27c8689df8f66cf48008cfc9d8e843b9aaa60da9094f959a1a9",
-                "bytes": 9492,
-                "sha256": "200455548038e27c8689df8f66cf48008cfc9d8e843b9aaa60da9094f959a1a9"
-              },
-              "title": "Semantic Ontologist (Ambiguity Detection & Glossary)"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/tabular-metadata",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Extract tabular metadata from a CSV or spreadsheet as CSVW — tables, rows, headers, columns, datatypes and location on sheet — recording every field as determined or explicitly undetermined. Read before touching a tabular ingest arm, adding a format, or deciding what a sheet is in the graph.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 203,
-              "instructionsPath": "skills/library/library-core/tabular-metadata.md",
-              "name": "tabular-metadata",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fd6b39dc4b2039797a17424d611cf764237400385294281c14e8b7759f50c2ad",
-                "bytes": 10670,
-                "sha256": "fd6b39dc4b2039797a17424d611cf764237400385294281c14e8b7759f50c2ad"
-              },
-              "title": "Tabular metadata — CSVW, annotated, and honest about what it could not read"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/term-disagreement",
@@ -2589,13 +2390,13 @@
           ],
           "hasSubgraph": [
             {
-              "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/library/library-core/bib-qa/",
+              "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/library/library-core/library-ingestion/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
                 "bootstrap:graphKind/skills"
               ],
-              "name": "skills/library/library-core/bib-qa",
-              "path": "skills/library/library-core/bib-qa/"
+              "name": "skills/library/library-core/library-ingestion",
+              "path": "skills/library/library-core/library-ingestion/"
             }
           ],
           "holdsGraph": [
@@ -2735,9 +2536,9 @@
               "instructionsPath": "skills/process/process-core/swimlane-glossary.md",
               "name": "swimlane-glossary",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ebda2cde130b8070cb8e4a8cc0038766f0ac6e6d1a0f4b890de4262d2129d6c4",
-                "bytes": 8413,
-                "sha256": "ebda2cde130b8070cb8e4a8cc0038766f0ac6e6d1a0f4b890de4262d2129d6c4"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/69b803cc9267d2d9d7246b26c0b7c6bab8efbeb7cc0c4e653374d3d11bfd5e40",
+                "bytes": 8317,
+                "sha256": "69b803cc9267d2d9d7246b26c0b7c6bab8efbeb7cc0c4e653374d3d11bfd5e40"
               },
               "title": "Swimlane Glossary Skill"
             },
@@ -3474,13 +3275,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 394,
+              "instructionLines": 401,
               "instructionsPath": "skills/sdlc/sdlc-core/before-after-preview.md",
               "name": "before-after-preview",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d86c3b4a9813c66a143831af28fd673a232b8014fedff33ef60bcf760ed15d95",
-                "bytes": 20008,
-                "sha256": "d86c3b4a9813c66a143831af28fd673a232b8014fedff33ef60bcf760ed15d95"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/efe06423bd42060da4495f03e832fe367a006be14d9b125beb186b29f9cfe9cc",
+                "bytes": 20398,
+                "sha256": "efe06423bd42060da4495f03e832fe367a006be14d9b125beb186b29f9cfe9cc"
               },
               "title": "/before-after-preview — show the reviewer the change, not a description of it"
             },
@@ -3663,13 +3464,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 312,
+              "instructionLines": 364,
               "instructionsPath": "skills/sdlc/sdlc-core/feature-staging.md",
               "name": "feature-staging",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c46edcaa46e35660082c611e5fff4531ad756e7a5d04e8b74852c128713b0cfb",
-                "bytes": 15994,
-                "sha256": "c46edcaa46e35660082c611e5fff4531ad756e7a5d04e8b74852c128713b0cfb"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2040b2af9b03fb4ee76d0a0231e2300d5df13ed828976f3281abb3f51eedcc25",
+                "bytes": 18861,
+                "sha256": "2040b2af9b03fb4ee76d0a0231e2300d5df13ed828976f3281abb3f51eedcc25"
               },
               "title": "Feature-branch staging"
             },
@@ -3872,13 +3673,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 739,
+              "instructionLines": 910,
               "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
               "name": "merge-conflict-patterns",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/13e18ec9691b55c29e046e29ceef85b161f9545a03d6949deea87146260192dc",
-                "bytes": 39575,
-                "sha256": "13e18ec9691b55c29e046e29ceef85b161f9545a03d6949deea87146260192dc"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/475477b134c11492e8da15079e67371e157157edc461f2df954a2d39b787e254",
+                "bytes": 49833,
+                "sha256": "475477b134c11492e8da15079e67371e157157edc461f2df954a2d39b787e254"
               },
               "title": "Merge-conflict patterns — what a merge may resolve on its own"
             },
@@ -3891,13 +3692,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 878,
+              "instructionLines": 905,
               "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
               "name": "merge-queue",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3ff70c1ce68076538edab504c06d7e1e8b2ee32b355e9327598f31ed876e428c",
-                "bytes": 47164,
-                "sha256": "3ff70c1ce68076538edab504c06d7e1e8b2ee32b355e9327598f31ed876e428c"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ec066f41e66c226801bd7891cdafb2883206c64adc793d81b7b1e246df273efb",
+                "bytes": 49342,
+                "sha256": "ec066f41e66c226801bd7891cdafb2883206c64adc793d81b7b1e246df273efb"
               },
               "title": "Merge queue — what lands next, and as what"
             },
@@ -4062,13 +3863,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 559,
+              "instructionLines": 582,
               "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
               "name": "prepare-merge",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3106f711b3f6cf8a9f43dae125c9b61d9e0c559dc8fecd673c28e75db6d8158c",
-                "bytes": 31970,
-                "sha256": "3106f711b3f6cf8a9f43dae125c9b61d9e0c559dc8fecd673c28e75db6d8158c"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f912696009edcd8b484785c0eb71cc833e749f63dbc940e5c92b3e51316568fa",
+                "bytes": 33704,
+                "sha256": "f912696009edcd8b484785c0eb71cc833e749f63dbc940e5c92b3e51316568fa"
               },
               "title": "Prepare-merge — get a feature branch ready to land"
             },
@@ -4251,13 +4052,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 663,
+              "instructionLines": 673,
               "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
               "name": "staging-review",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fcbba40f65ae181a51921066720da229e5255361a4d2aee28adc91ab2f39a6e5",
-                "bytes": 33125,
-                "sha256": "fcbba40f65ae181a51921066720da229e5255361a4d2aee28adc91ab2f39a6e5"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7d791e3038c42b4b3771f02d80cc6a5c172f867fb2b48bf2043f29340c44850b",
+                "bytes": 33698,
+                "sha256": "7d791e3038c42b4b3771f02d80cc6a5c172f867fb2b48bf2043f29340c44850b"
               },
               "title": "Staging review — before/after comparison"
             },

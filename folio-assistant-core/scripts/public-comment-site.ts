@@ -117,23 +117,28 @@ const STYLE = `
     --open:#9a5b00; --editing:#0b5cad; --decided:#2e6b2e; --closed:#5b5b5b; }
   @media (prefers-color-scheme: dark) { :root { --fg:#e8e8e6; --bg:#161616; --muted:#a8a8a4; --line:#3a3a38; --link:#7db4ff; --chip:#23272e;
     --open:#f0b35a; --editing:#7db4ff; --decided:#8fd18f; --closed:#a8a8a4; } }
-  body { margin:0; padding:1.5rem 1rem 4rem; font:1rem/1.5 system-ui,sans-serif; color:var(--fg); background:var(--bg); }
-  main { max-width:90rem; margin:0 auto; }
+  body { margin:0; font:1rem/1.5 system-ui,sans-serif; color:var(--fg); background:var(--bg); }
+  /* Column and gutters belong to main: the harness rail owns body padding-left. */
+  main { max-width:90rem; margin:0 auto; padding:1.5rem 1.5rem 4rem; }
   a { color:var(--link); } a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible { outline:3px solid var(--link); outline-offset:2px; }
   .tiles { display:flex; flex-wrap:wrap; gap:.75rem; margin:1rem 0; }
-  .tile { border:1px solid var(--line); border-radius:.5rem; padding:.5rem .9rem; min-width:7rem; }
+  .tile { border:1px solid var(--line); border-radius:.5rem; padding:.5rem .9rem; min-width:7rem; font:inherit; color:var(--fg); background:transparent; text-align:left; cursor:pointer; }
   .tile b { display:block; font-size:1.6rem; }
+  .tile:hover { border-color:var(--link); }
+  .tile[aria-pressed="true"] { border-color:var(--link); box-shadow:inset 0 0 0 1px var(--link); background:var(--chip); }
   form { display:flex; flex-wrap:wrap; gap:.75rem; align-items:end; margin:1rem 0; }
-  label { display:flex; flex-direction:column; font-size:.85rem; color:var(--muted); }
-  select, input { font:inherit; padding:.35rem .5rem; color:var(--fg); background:var(--bg); border:1px solid var(--line); border-radius:.35rem; min-height:2.4rem; }
+  /* Form, table and details rules are scoped to main: the harness rail's header
+     is a label too, and a bare label rule stacked it and hid its avatar. */
+  main label { display:flex; flex-direction:column; font-size:.85rem; color:var(--muted); }
+  main select, main input { font:inherit; padding:.35rem .5rem; color:var(--fg); background:var(--bg); border:1px solid var(--line); border-radius:.35rem; min-height:2.4rem; }
   .table-wrap { overflow-x:auto; }
-  table { border-collapse:collapse; width:100%; font-size:.92rem; }
-  th, td { border-bottom:1px solid var(--line); padding:.45rem .5rem; text-align:left; vertical-align:top; }
-  th { position:sticky; top:0; background:var(--bg); }
+  main table { border-collapse:collapse; width:100%; font-size:.92rem; }
+  main th, main td { border-bottom:1px solid var(--line); padding:.45rem .5rem; text-align:left; vertical-align:top; }
+  main th { position:sticky; top:0; background:var(--bg); }
   .phase { font-weight:600; white-space:nowrap; }
   .phase-open { color:var(--open); } .phase-editing { color:var(--editing); } .phase-decided { color:var(--decided); } .phase-closed { color:var(--closed); }
   .chip { display:inline-block; background:var(--chip); border-radius:.3rem; padding:0 .35rem; margin:0 .2rem .2rem 0; font-size:.82rem; }
-  details > summary { cursor:pointer; }
+  main details > summary { cursor:pointer; }
   .muted { color:var(--muted); }
   .links a { margin-right:.5rem; white-space:nowrap; }
 `;
@@ -141,7 +146,12 @@ const STYLE = `
 /** The dashboard. Filters run in the page; with scripts off the full table still renders. */
 export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: string; generated: string }): string {
   const count = (f: (r: SiteComment) => boolean) => rows.filter(f).length;
-  const tile = (n: number, label: string) => `<div class="tile"><b>${n}</b>${esc(label)}</div>`;
+  // A tile is a TOGGLE (owner, 2026-10-05: "some of these should be toggable"):
+  // pressing it filters the table to what it counts, pressing it again clears
+  // that filter. `key` names the filter; the script keeps the tiles and the
+  // Status select in step, so whichever filter is on shows as pressed.
+  const tile = (n: number, label: string, key: string) =>
+    `<button type="button" class="tile" data-tile="${key}" aria-pressed="false" title="Show ${esc(label)}"><b>${n}</b>${esc(label)}</button>`;
   const linkList = (r: SiteComment) =>
     [
       r.links.document && `<a href="${esc(r.links.document)}">in the document</a>`,
@@ -156,7 +166,7 @@ export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: 
       .join(" ");
   const body = rows
     .map(
-      (r) => `<tr id="${esc(r.ref)}" data-phase="${r.phase}" data-type="${esc(r.type)}" data-section="${esc(r.section)}" data-text="${esc(`${r.ref} ${r.text} ${r.suggestion} ${r.sectionTitle}`.toLowerCase())}">
+      (r) => `<tr id="${esc(r.ref)}" data-phase="${r.phase}" data-status="${esc(r.status)}" data-placed="${r.target ? "1" : "0"}" data-type="${esc(r.type)}" data-section="${esc(r.section)}" data-text="${esc(`${r.ref} ${r.text} ${r.suggestion} ${r.sectionTitle}`.toLowerCase())}">
 <td><a href="#${esc(r.ref)}">${esc(r.ref)}</a></td>
 <td class="phase phase-${r.phase}">${esc(r.status)}</td>
 <td>${esc(r.type)}</td>
@@ -183,17 +193,15 @@ export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: 
 <p><a href="../${esc(meta.slug)}/index.html">← ${esc(meta.title)}</a></p>
 <h1>Public comments</h1>
 <p class="muted">Generated ${esc(meta.generated)} from the comment store. Open = not yet decided. Editing = decided, and the change is being made on a feature branch.</p>
-<div class="tiles" role="list">
+<div class="tiles" role="group" aria-label="Filter by count">
 ${[
-  tile(rows.length, "comments"),
-  tile(count((r) => r.phase === "open"), "open"),
-  tile(count((r) => !r.target), "unplaced"),
-  tile(count((r) => r.phase === "editing"), "being edited"),
-  tile(count((r) => r.phase === "decided"), "decided"),
-  tile(count((r) => r.status === "incorporated"), "incorporated"),
-]
-  .map((t) => t.replace('<div class="tile">', '<div class="tile" role="listitem">'))
-  .join("\n")}
+  tile(rows.length, "comments", "all"),
+  tile(count((r) => r.phase === "open"), "open", "open"),
+  tile(count((r) => !r.target), "unplaced", "unplaced"),
+  tile(count((r) => r.phase === "editing"), "being edited", "editing"),
+  tile(count((r) => r.phase === "decided"), "decided", "decided"),
+  tile(count((r) => r.status === "incorporated"), "incorporated", "incorporated"),
+].join("\n")}
 </div>
 <form id="filters" aria-controls="comments">
 <label>Status<select id="f-phase"><option value="">all</option><option value="open" selected>open</option><option value="editing">being edited</option><option value="decided">decided</option><option value="closed">closed</option></select></label>
@@ -215,17 +223,35 @@ ${body}
 (() => {
   const $ = (id) => document.getElementById(id);
   const rows = [...document.querySelectorAll("#comments tbody tr")];
+  const tiles = [...document.querySelectorAll(".tile[data-tile]")];
+  // Tiles that ARE a Status value set the select; the other two are extra filters.
+  const PHASE_TILES = ["open", "editing", "decided"];
+  let extra = null; // "unplaced" | "incorporated" | null
+  const active = () => extra ?? ($("f-phase").value || "all");
   const apply = () => {
     const ph = $("f-phase").value, ty = $("f-type").value, se = $("f-section").value, tx = $("f-text").value.trim().toLowerCase();
     let n = 0;
     for (const r of rows) {
       const s = r.dataset.section;
       const ok = (!ph || r.dataset.phase === ph) && (!ty || r.dataset.type === ty)
-        && (!se || s === se || s.startsWith(se + ".")) && (!tx || r.dataset.text.includes(tx));
+        && (!se || s === se || s.startsWith(se + ".")) && (!tx || r.dataset.text.includes(tx))
+        && (extra !== "unplaced" || r.dataset.placed === "0")
+        && (extra !== "incorporated" || r.dataset.status === "incorporated");
       r.hidden = !ok; if (ok) n++;
     }
     $("f-count").textContent = n + " of " + rows.length + " shown";
+    const on = active();
+    for (const t of tiles) t.setAttribute("aria-pressed", String(t.dataset.tile === on));
   };
+  for (const t of tiles) t.addEventListener("click", () => {
+    const key = t.dataset.tile;
+    // Pressing the tile that is on clears it: back to every comment.
+    const clear = key === active() || key === "all";
+    extra = !clear && !PHASE_TILES.includes(key) ? key : null;
+    $("f-phase").value = !clear && PHASE_TILES.includes(key) ? key : "";
+    apply();
+  });
+  $("f-phase").addEventListener("input", () => { extra = null; });
   // A link to #PC-0042 shows that comment whatever the filters say.
   if (location.hash.startsWith("#PC-")) $("f-phase").value = "";
   for (const id of ["f-phase", "f-type", "f-section", "f-text"]) $(id).addEventListener("input", apply);

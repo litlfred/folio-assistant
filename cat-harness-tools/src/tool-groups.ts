@@ -3,13 +3,16 @@
  *
  * @module src/tool-groups
  *
- * ## Why the mechanism is here and the lists are not
+ * ## Why the mechanism is here and there is no list
  *
- * Two servers register tool groups — the MCP server in
- * `adapters/mcp-server/` and the HTTP server in `src/server.ts` — and each has
- * its OWN list, because each serves a different set. What they share is the
- * loading: resolve a declared module by variable path, call its registrar,
- * and report which of three things happened.
+ * Two servers register tool groups — the viewer server in
+ * `adapters/mcp-server/` and the HTTP/stdio server in `src/server.ts`. Each
+ * had its OWN list until 2026-10-05, and the viewer server's named six forked
+ * modules that had drifted from the ones the other served. Now neither has a
+ * list: both call {@link registerServedToolGroups}, which reads every Tool
+ * node in the folio's dependency tree (owner, bean riit 3c). What remains here
+ * is the loading: resolve a declared module by variable path, call its
+ * registrar, and report which of three things happened.
  *
  * That mechanism lived in `adapters/mcp-server/tool-groups.ts`, which is
  * core's. The harness is the BASE repository — core may import it, it may not
@@ -33,12 +36,21 @@
  */
 
 import { existsSync } from "node:fs";
-import { join } from "node:path";
-import { resolveImplementingPath } from "../../cat-harness/schemas/harness-config.js";
+import { dirname, join, resolve } from "node:path";
+import { declarationChain, resolveImplementingPath } from "../../cat-harness/schemas/harness-config.js";
 import type { ToolDefinition } from "../../cat-harness/schemas/tool.js";
+import { discoverTools } from "../../cat-harness/tools/discover.js";
 
-/** Which repository layer a group will live in after the split. */
-export type ToolGroupLayer = "core" | "sci" | "harness";
+/** The harness this layer implements: its Tool nodes are served for every folio. */
+const HARNESS_ROOT = resolve(import.meta.dir, "..", "..", "cat-harness");
+
+/**
+ * Which layer owns a group: the name of the instance whose Tool node declares
+ * it (`cat-harness`, `folio-assistant-sci`, …). A string rather than a closed
+ * list of three since the groups are discovered across the dependency tree
+ * (bean riit, 3c): a list here would have to name every instance above.
+ */
+export type ToolGroupLayer = string;
 
 export interface ToolGroupDeclaration {
   /** Stable id, used in the boot report. */
@@ -182,7 +194,7 @@ export async function registerDeclaredToolGroups(
  * nodes. A module that is absent or fails is still REPORTED by
  * {@link registerDeclaredToolGroups}, exactly as a hand-declared one was.
  */
-export function toolGroupsFromNodes(nodes: readonly ToolDefinition[]): ToolGroupDeclaration[] {
+export function toolGroupsFromNodes(nodes: readonly ToolDefinition[], layer: ToolGroupLayer = "cat-harness"): ToolGroupDeclaration[] {
   const groups = new Map<string, ToolGroupDeclaration>();
   for (const n of nodes) {
     const inProcess = n.invoke?.inProcess;
@@ -193,8 +205,71 @@ export function toolGroupsFromNodes(nodes: readonly ToolDefinition[]): ToolGroup
       id: inProcess.module.replace(/^.*\//, "").replace(/\.ts$/, ""),
       module: inProcess.module,
       ...(inProcess.register ? { registrar: inProcess.register } : {}),
-      layer: "harness",
+      layer,
     });
   }
   return [...groups.values()];
+}
+
+/** One instance's served groups: its Tool nodes' modules resolve from `root`. */
+export interface InstanceToolGroups {
+  instance: string;
+  root: string;
+  groups: ToolGroupDeclaration[];
+}
+
+/**
+ * The tool groups a server serves for a folio, from EVERY instance in its
+ * dependency tree: each instance's declared `tools` graph, read through
+ * `discoverTools`, grouped by {@link toolGroupsFromNodes}.
+ *
+ * Owner, 2026-10-05 (bean riit, 3c): both MCP servers serve every Tool node
+ * in the folio's dependency tree, so no server keeps a list of what it
+ * serves — the last such list was `TOOL_GROUPS` in the viewer server.
+ *
+ * Deepest dependency first, the folio last (`declarationChain`). A group is
+ * resolved against ITS instance's root, never the folio's, because a Tool
+ * node's `inProcess.module` is instance-relative. A tools graph that cannot be
+ * loaded is a `failures` entry, never an instance with no tools (`dh4f`).
+ */
+export function servedToolGroups(
+  folioRoot: string,
+  /**
+   * Instances served whatever the chain says, deepest first — the harness.
+   * A folio that declares nothing has an empty chain, and the generic tools
+   * (`folio_init` above all) must still be served there (bean `zmdo`).
+   */
+  always: ReadonlyArray<{ name: string; root: string }> = [],
+): { sets: InstanceToolGroups[]; failures: string[] } {
+  const sets: InstanceToolGroups[] = [];
+  const failures: string[] = [];
+  const seen = new Set<string>();
+  const chain = declarationChain(folioRoot).map((l) => ({ ...l, root: resolve(l.root) }));
+  for (const link of [...always.map((a) => ({ ...a, root: resolve(a.root) })), ...chain]) {
+    if (seen.has(link.root)) continue;
+    seen.add(link.root);
+    // The instance's PARENT is scanned, restricted to this instance: discovery
+    // walks one level of instance roots, and this one is a root beside its
+    // siblings there whether it is a platform layer or the folio itself.
+    const d = discoverTools(dirname(link.root), undefined, link.root);
+    for (const f of d.failures) failures.push(`${f.dir ?? f.instance}: ${f.reason}`);
+    const groups = toolGroupsFromNodes(d.tools, link.name);
+    if (groups.length > 0) sets.push({ instance: link.name, root: link.root, groups });
+  }
+  return { sets, failures };
+}
+
+/**
+ * Register {@link servedToolGroups} against `server`. The one rule both MCP
+ * servers use; each passes the registrars' extra arguments it already passed.
+ */
+export async function registerServedToolGroups(
+  server: unknown,
+  folioRoot: string,
+  extraArgs: readonly unknown[] = [],
+): Promise<{ outcomes: ToolGroupOutcome[]; failures: string[] }> {
+  const { sets, failures } = servedToolGroups(folioRoot, [{ name: "cat-harness", root: HARNESS_ROOT }]);
+  const outcomes: ToolGroupOutcome[] = [];
+  for (const set of sets) outcomes.push(...(await registerDeclaredToolGroups(server, set.groups, set.root, extraArgs)));
+  return { outcomes, failures };
 }

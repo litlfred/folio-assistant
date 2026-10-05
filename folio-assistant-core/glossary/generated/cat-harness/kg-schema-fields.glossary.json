@@ -1267,6 +1267,90 @@
       "status": "candidate"
     },
     {
+      "id": "block-kind-node.blockkindnodeschema.adapter",
+      "prefLabel": "BlockKindNodeSchema.adapter",
+      "definition": "The content adapter whose vocabulary the kind is from.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.adapter",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.builder",
+      "prefLabel": "BlockKindNodeSchema.builder",
+      "definition": "The builder function a block manifest calls. Defaults to `kind`.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.builder",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.docotype",
+      "prefLabel": "BlockKindNodeSchema.docoType",
+      "definition": "A DoCO co-type, only where one is unambiguously right.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.docoType",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.foliotype",
+      "prefLabel": "BlockKindNodeSchema.folioType",
+      "definition": "The kind's own RDF class.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.folioType",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.heading",
+      "prefLabel": "BlockKindNodeSchema.heading",
+      "definition": "The English heading, singular — the translation graph's source string. Empty for a kind shown without one (`prose`).",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.heading",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.headingplural",
+      "prefLabel": "BlockKindNodeSchema.headingPlural",
+      "definition": "The English heading, plural, for an index that groups by kind.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.headingPlural",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.indexrank",
+      "prefLabel": "BlockKindNodeSchema.indexRank",
+      "definition": "Where the definition index lists this kind's section, lowest first; absent for a kind the index omits. A reading order (definitions before the theorems that use them), so it is authored, not sorted.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.indexRank",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.kind",
+      "prefLabel": "BlockKindNodeSchema.kind",
+      "definition": "The kind string a block's `kind` field carries.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.kind",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.labelprefix",
+      "prefLabel": "BlockKindNodeSchema.labelPrefix",
+      "definition": "The label prefix, without its colon (`def`, not `def:`). Two kinds may share one (`fig`).",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.labelPrefix",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.prefixenforced",
+      "prefLabel": "BlockKindNodeSchema.prefixEnforced",
+      "definition": "Whether a block's label MUST start with the prefix. `false` only where the label rule never applied (`prose`), so moving the table onto nodes did not tighten validation of a corpus nobody re-checked.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.prefixEnforced",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.profile",
+      "prefLabel": "BlockKindNodeSchema.profile",
+      "definition": "The NARROWEST content profile that admits the kind (paper-adapter kinds only; a contributed adapter's kind is in no profile). Profiles nest (`document` ⊂ `paper`), so `document` means both and `paper` means the paper profile only — a formal mathematical claim.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.profile",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.provable",
+      "prefLabel": "BlockKindNodeSchema.provable",
+      "definition": "Whether a label of this kind names an upstream provable, which an `algorithm` must cite.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.provable",
+      "status": "candidate"
+    },
+    {
       "id": "block-qa.blockqareport.criteria",
       "prefLabel": "BlockQaReport.criteria",
       "definition": "Per-criterion reviewer entries. Multiple reviewers (script + agent + human) may co-exist; they are NOT deduplicated.",
@@ -2142,6 +2226,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.avatar",
+      "prefLabel": "CatHarnessDeclaration.avatar",
+      "definition": "The instance's own avatar (sod4 #4); the table in avatars.ts covers only the instances below the harness.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.avatar",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.canonicalurl",
       "prefLabel": "CatHarnessDeclaration.canonicalUrl",
       "definition": "Where this instance's artefacts are published — the base every `@id` in the exported graph is minted against.",
@@ -2338,6 +2429,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclarationschema.avatar",
+      "prefLabel": "CatHarnessDeclarationSchema.avatar",
+      "definition": "The instance's mark — the same shape a kind node carries (bean sod4 #4). It sat in `schemas/avatars.ts`'s AVATARS beside the kinds' until 2026-10-05, so a new instance needed an edit to cat-harness to get a face; declared here, it brings its own. `avatarFor(name)` reads it.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.avatar",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclarationschema.contentadapters",
       "prefLabel": "CatHarnessDeclarationSchema.contentAdapters",
       "definition": "The content adapters this instance ships — see {@link ContentAdapterDeclaration}.",
@@ -2478,6 +2576,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectory.derivedfrom",
+      "prefLabel": "ContentDirectory.derivedFrom",
+      "definition": "What this directory's content is COMPUTED FROM: the declared directory ids of the graphs whose change can invalidate it, resolved across `needs` exactly as a document kind's `computedFrom` is (bean `nama`; design note `docs/proposals/derived-graph-dependencies-2026-10-04.md`).",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.derivedFrom",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectory.heldentries",
       "prefLabel": "ContentDirectory.heldEntries",
       "definition": "Entry slugs of a `library` held back from the summary drain while the rest of it drains. See the schema field (bean `j7ql`).",
@@ -2527,10 +2632,24 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectory.writer",
+      "prefLabel": "ContentDirectory.writer",
+      "definition": "The GENERATOR that writes this directory: repo-relative script files, and directories ending in `/` for what a generator READS rather than imports (its templates). The other half of `derivedFrom`: that names the DATA a derived graph is computed from, this names the CODE (owner, 2026-10-04, bean `4j86`, option 1 of 3).",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.writer",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectoryshape.composed",
       "prefLabel": "ContentDirectoryShape.composed",
       "definition": "This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the Jekyll source instead of mounting its built output.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.composed",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentdirectoryshape.derivedfrom",
+      "prefLabel": "ContentDirectoryShape.derivedFrom",
+      "definition": "What this directory's content is COMPUTED FROM: the declared directory ids of the graphs whose change can invalidate it, resolved across `needs` exactly as a document kind's `computedFrom` is (bean `nama`; design note `docs/proposals/derived-graph-dependencies-2026-10-04.md`).",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.derivedFrom",
       "status": "candidate"
     },
     {
@@ -2618,6 +2737,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectoryshape.writer",
+      "prefLabel": "ContentDirectoryShape.writer",
+      "definition": "The generator that writes this directory: repo-relative script files, and directories ending in `/` for what it reads rather than imports. See the interface field. At least one path, none twice.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.writer",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.declaredgraph.abspath",
       "prefLabel": "DeclaredGraph.absPath",
       "definition": "Set iff the graph is HERE.",
@@ -2639,10 +2765,31 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.directorystorageschema.branchprefix",
+      "prefLabel": "DirectoryStorageSchema.branchPrefix",
+      "definition": "`keyedBy: \"family\"` only (bean `lehh`, owner 2026-10-04): a FAMILY of branches, one per key — the branch-only graphs fhir-ast (one branch per IG package) and lake-cache (one per Lean package and toolchain). `path` is where a mount of ONE member lands, as fsh-guts' is. Resolved to `kind: \"family\"`, never to a single branch.",
+      "source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.branchPrefix",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.directorystorageschema.keyedby",
       "prefLabel": "DirectoryStorageSchema.keyedBy",
       "definition": "How entries are keyed on the branch: one entry per `commit`, one live copy at the `tip`, or one entry per published `route`. See {@link DirectoryStorageSchema}'s docblock for why `route` is not a synonym for `tip`.",
       "source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.directorystorageschema.keyfrom",
+      "prefLabel": "DirectoryStorageSchema.keyFrom",
+      "definition": "`family` only: what the key is, in words — \"the IG's package id\".",
+      "source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyFrom",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.directorystorageschema.repository",
+      "prefLabel": "DirectoryStorageSchema.repository",
+      "definition": "`family` only: where the family is. Absent = this repository, a copy materialised here; `owner/repo` = read from that remote (owner, 2026-10-04: a remote AST may be read or materialised locally, \"similar for lean cache\").",
+      "source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.repository",
       "status": "candidate"
     },
     {
@@ -3220,6 +3367,34 @@
       "status": "candidate"
     },
     {
+      "id": "content-adapter-node.contentadapternodeschema.adapter",
+      "prefLabel": "ContentAdapterNodeSchema.adapter",
+      "definition": "The vocabulary's name — the same field, and the same value, as a block-kind node's `adapter`. Deliberately NOT `name`: a `<stem>.json` whose `name` equals its stem is an instance DECLARATION to `findDeclarationFile`, so `paper.json` with `name: \"paper\"` made `content-adapters/` an instance and collapsed sci's sibling scope.",
+      "source": "cat-harness/schemas/content-adapter-node.ts#ContentAdapterNodeSchema.adapter",
+      "status": "candidate"
+    },
+    {
+      "id": "content-adapter-node.contentadapternodeschema.companionroles",
+      "prefLabel": "ContentAdapterNodeSchema.companionRoles",
+      "definition": "Which companion roles this vocabulary's blocks can have.",
+      "source": "cat-harness/schemas/content-adapter-node.ts#ContentAdapterNodeSchema.companionRoles",
+      "status": "candidate"
+    },
+    {
+      "id": "content-adapter-node.contentadapternodeschema.typed",
+      "prefLabel": "ContentAdapterNodeSchema.typed",
+      "definition": "Whether cat-harness's CODE types this vocabulary's blocks (`BlockSchema` in `schemas/types.ts`). A typed vocabulary's kinds are the platform's own and may not be redefined by a contributor; an untyped one reaches a folio only through its dependency tree. `check:kind-validators` holds the typed set to the `ContentAdapter` type the code asserts.",
+      "source": "cat-harness/schemas/content-adapter-node.ts#ContentAdapterNodeSchema.typed",
+      "status": "candidate"
+    },
+    {
+      "id": "content-adapter-node.contentadapternodeschema.vocabulary",
+      "prefLabel": "ContentAdapterNodeSchema.vocabulary",
+      "definition": "The vocabulary's own module, `path.ts`, relative to the declaring instance — for an untyped vocabulary, the code that defines its blocks.",
+      "source": "cat-harness/schemas/content-adapter-node.ts#ContentAdapterNodeSchema.vocabulary",
+      "status": "candidate"
+    },
+    {
       "id": "content-type.contenttypedef.facts",
       "prefLabel": "ContentTypeDef.facts",
       "definition": "Facts this marker states about the repository, by name, for {@link describeRepository} to cross-check against other markers.",
@@ -3287,6 +3462,34 @@
       "prefLabel": "RepositoryDescription.types",
       "definition": "Every type whose marker is present, in registration order.",
       "source": "cat-harness/schemas/content-type.ts#RepositoryDescription.types",
+      "status": "candidate"
+    },
+    {
+      "id": "contribution-nodes.pipelinepluginnodeschema.implementation",
+      "prefLabel": "PipelinePluginNodeSchema.implementation",
+      "definition": "The table of slot implementations, typed against the slots' contract.",
+      "source": "cat-harness/schemas/contribution-nodes.ts#PipelinePluginNodeSchema.implementation",
+      "status": "candidate"
+    },
+    {
+      "id": "contribution-nodes.pipelinepluginnodeschema.slot",
+      "prefLabel": "PipelinePluginNodeSchema.slot",
+      "definition": "The generic pipeline slot this fills (`content/pipeline/pipeline-plugins.ts`); the key into the table.",
+      "source": "cat-harness/schemas/contribution-nodes.ts#PipelinePluginNodeSchema.slot",
+      "status": "candidate"
+    },
+    {
+      "id": "contribution-nodes.qacheckernodeschema.check",
+      "prefLabel": "QaCheckerNodeSchema.check",
+      "definition": "The dispatch table holding the checker. Its path is the `sourceFile` freshness is hashed over.",
+      "source": "cat-harness/schemas/contribution-nodes.ts#QaCheckerNodeSchema.check",
+      "status": "candidate"
+    },
+    {
+      "id": "contribution-nodes.qacheckernodeschema.criterion",
+      "prefLabel": "QaCheckerNodeSchema.criterion",
+      "definition": "The QA criterion this checker answers; the key into the table `check` names.",
+      "source": "cat-harness/schemas/contribution-nodes.ts#QaCheckerNodeSchema.criterion",
       "status": "candidate"
     },
     {
@@ -5782,6 +5985,69 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-node.graphkindnodeschema.description",
+      "prefLabel": "GraphKindNodeSchema.description",
+      "definition": "What a directory of this kind holds: the kind table's `contents`, generated from here.",
+      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.description",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-node.graphkindnodeschema.kgcontent",
+      "prefLabel": "GraphKindNodeSchema.kgContent",
+      "definition": "The kind is harness knowledge-graph content (sod4 #5).",
+      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.kgContent",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-node.graphkindnodeschema.kind",
+      "prefLabel": "GraphKindNodeSchema.kind",
+      "definition": "The kind's word, as a directory's `graphKinds` names it. `kind`, NOT `name`: a JSON file whose `name` equals its filename stem is how `findDeclarationFile` recognises an INSTANCE declaration, so a node spelled with `name` made `kinds/` read as a directory of four instances (measured on the first move, 2026-10-04).",
+      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.kind",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-node.graphkindnodeschema.published",
+      "prefLabel": "GraphKindNodeSchema.published",
+      "definition": "`false`: never part of a published graph (sod4 #5).",
+      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.published",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-node.graphkindnodeschema.rationale",
+      "prefLabel": "GraphKindNodeSchema.rationale",
+      "definition": "WHY the kind sits in its layer and renders as it does: what a code comment said on a listed kind. Not read by any reader.",
+      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.rationale",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-node.graphkindnodeschema.skillbearing",
+      "prefLabel": "GraphKindNodeSchema.skillBearing",
+      "definition": "The directory may be scanned for skill bodies (sod4 #5).",
+      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.skillBearing",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-node.graphkindnodeschema.tileicon",
+      "prefLabel": "GraphKindNodeSchema.tileIcon",
+      "definition": "The navbar tile icon (an icon name, as `graph-tiles.ts` spells it).",
+      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.tileIcon",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-registry.graphkinddef.anylayer",
+      "prefLabel": "GraphKindDef.anyLayer",
+      "definition": "A directory of this kind may be declared by ANY layer, not only the kind's owner (the table's \"and any layer\").",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.anyLayer",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-registry.graphkinddef.avatar",
+      "prefLabel": "GraphKindDef.avatar",
+      "definition": "The kind's mark, when the kind is DECLARED as a node (bean dmx1) rather than listed here: it travels with the kind, so `schemas/avatars.ts` does not have to be a second central table. A kind listed here keeps its entry in `AVATARS`.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.avatar",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.concerngroups",
       "prefLabel": "GraphKindDef.concernGroups",
       "definition": "Is a directory of this kind GROUPED BY CONCERN — `<dir>/<group>/`, with the groups named from within by {@link declarationFile} and drawn from the `concern-group` code list (bean `9umr`; placement PR0c, bean `ejye`)?",
@@ -5796,10 +6062,24 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.description",
+      "prefLabel": "GraphKindDef.description",
+      "definition": "What a directory of this kind HOLDS, as the kind table states it: the editorial prose that used to be hand-written in that table's `contents` column (owner, 2026-10-04: the prose moves onto the kind, and the table is generated from it). Longer and more careful than `summary`, which stays the one line a tile or a tooltip shows.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.description",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.holds",
       "prefLabel": "GraphKindDef.holds",
       "definition": "Does a graph of this kind say what the instance **IS**, or where something **GOT TO**?",
       "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.holds",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-registry.graphkinddef.kgcontent",
+      "prefLabel": "GraphKindDef.kgContent",
+      "definition": "The kind IS harness knowledge-graph content — the `cat-harness` umbrella and the kinds split out of it. Was `KG_CONTENT_GRAPH_KINDS` (sod4 #5).",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.kgContent",
       "status": "candidate"
     },
     {
@@ -5824,6 +6104,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.published",
+      "prefLabel": "GraphKindDef.published",
+      "definition": "`false` keeps the kind out of every PUBLISHED graph: not one edge of a published artefact may lead to it (`isPublishedGraphKind`). Absent means published. Was `UNPUBLISHED_GRAPH_KINDS` in cat-harness.ts (sod4 #5).",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.published",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.recordswork",
       "prefLabel": "GraphKindDef.recordsWork",
       "definition": "Does a graph of this kind record WORK — something somebody is partway through, that an arriving agent could pick up?",
@@ -5838,10 +6125,31 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.renderablenote",
+      "prefLabel": "GraphKindDef.renderableNote",
+      "definition": "A remark the table's `renderable` column carries beside yes/no (\"the plain just-the-docs pipeline\").",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.renderableNote",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.schema",
       "prefLabel": "GraphKindDef.schema",
       "definition": "Where the shape of a node in this graph is defined — a repo-relative module path, or a `$schema` tag the files themselves carry.",
       "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.schema",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-registry.graphkinddef.skillbearing",
+      "prefLabel": "GraphKindDef.skillBearing",
+      "definition": "The kind's directory may be scanned for SKILL BODIES (`*.md` with a `name:` front matter). Was `SKILL_BEARING_GRAPH_KINDS` (sod4 #5).",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.skillBearing",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-registry.graphkinddef.tileicon",
+      "prefLabel": "GraphKindDef.tileIcon",
+      "definition": "The navbar tile icon (a name in `TILE_GLYPHS`); on cat-harness's own kinds too since sod4 #5, so `graph-tiles.ts` keeps no table.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.tileIcon",
       "status": "candidate"
     },
     {
@@ -9261,6 +9569,13 @@
       "status": "candidate"
     },
     {
+      "id": "subgraph-source.familysourceschema.repository",
+      "prefLabel": "FamilySourceSchema.repository",
+      "definition": "Where the family is: absent = this repository (materialised locally); `owner/repo` = read from that remote.",
+      "source": "cat-harness/schemas/subgraph-source.ts#FamilySourceSchema.repository",
+      "status": "candidate"
+    },
+    {
       "id": "subgraph-source.sourcedentry.storage",
       "prefLabel": "SourcedEntry.storage",
       "definition": "#1764's field, if a declaration carries it. Read only to map it.",
@@ -11673,6 +11988,34 @@
       "prefLabel": "UserStorySchema.want",
       "definition": "What the reader wants to do, in their terms — \"I want to …\".",
       "source": "cat-harness/schemas/user-story.ts#UserStorySchema.want",
+      "status": "candidate"
+    },
+    {
+      "id": "validator-node.validatornodeschema.id",
+      "prefLabel": "ValidatorNodeSchema.id",
+      "definition": "This validator's own name, as its file is named.",
+      "source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "validator-node.validatornodeschema.rationale",
+      "prefLabel": "ValidatorNodeSchema.rationale",
+      "definition": "Why this validator is the one, when that is not obvious from the code.",
+      "source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.rationale",
+      "status": "candidate"
+    },
+    {
+      "id": "validator-node.validatornodeschema.schema",
+      "prefLabel": "ValidatorNodeSchema.schema",
+      "definition": "The Zod export, `<harness>:<path>#<Export>` (or instance-relative `<path>#<Export>`).",
+      "source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.schema",
+      "status": "candidate"
+    },
+    {
+      "id": "validator-node.validatornodeschema.validates",
+      "prefLabel": "ValidatorNodeSchema.validates",
+      "definition": "What it validates: a graph kind, and the `$schema` family within it when the kind has several.",
+      "source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.validates",
       "status": "candidate"
     },
     {

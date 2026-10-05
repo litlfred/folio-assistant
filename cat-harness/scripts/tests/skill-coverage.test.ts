@@ -121,7 +121,11 @@ describe("skill coverage", () => {
     // owner's rule is that no published graph references it. They are
     // resolvable skills that must NOT be nodes, so this invariant excludes
     // them rather than being weakened. Bean `folio-assistant-uv09`.
-    const known = new Set([...knownSkills(ROOT)].filter(isPublishedSkill));
+    //
+    // THIS INSTANCE's skills, not the corpus's: since bean `4ak5` item 2 the
+    // graph is built in instance scope, and a skill held by an instance
+    // stacked on this one is a node in THAT instance's document.
+    const known = new Set([...knownSkills(ROOT, "instance")].filter(isPublishedSkill));
 
     // The exclusion must be doing something, or a later change that stops
     // stripping would pass here unnoticed.

@@ -756,6 +756,13 @@
       "status": "candidate"
     },
     {
+      "id": "public-comment.publicfieldsschema.labels",
+      "prefLabel": "PublicFieldsSchema.labels",
+      "definition": "Categorisations the intake log carried, keyed by its column header and kept verbatim: a theme, a stakeholder type, a review question, a priority, a committee routing. Read, never re-coded, so a log can grow a column without a schema change.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.labels",
+      "status": "candidate"
+    },
+    {
       "id": "public-comment.publicfieldsschema.ref",
       "prefLabel": "PublicFieldsSchema.ref",
       "definition": "\"PC-0042\": the number a committee and a commenter refer to.",
@@ -805,10 +812,24 @@
       "status": "candidate"
     },
     {
+      "id": "public-comment.sourceschema.entry",
+      "prefLabel": "SourceSchema.entry",
+      "definition": "The log's OWN number for the row (\"No.\"), within its sheet. A review log is re-sent as it is worked, so a later copy is a different file with the same rows: this, with the sheet and the series, is what recognises them.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.entry",
+      "status": "candidate"
+    },
+    {
       "id": "public-comment.sourceschema.segment",
       "prefLabel": "SourceSchema.segment",
       "definition": "For a narrative: which passage of the letter this comment is.",
       "source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.segment",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.sourceschema.series",
+      "prefLabel": "SourceSchema.series",
+      "definition": "The log this row belongs to, across the copies of it that are re-sent.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.series",
       "status": "candidate"
     },
     {

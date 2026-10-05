@@ -422,3 +422,16 @@ describe("the real declarations (bean 5hox)", () => {
     expect(r.status).toBe(1);
   });
 });
+
+describe("storage's FAMILY form (bean lehh)", () => {
+  const FAMILY = { branchPrefix: "cat/fhir-harness/fhir-ast/", keyedBy: "family", keyFrom: "the IG's package id" };
+  test("parses, with a prefix ending in / and the key said in words", () => {
+    expect(DirectoryStorageSchema.safeParse(FAMILY).success).toBe(true);
+    expect(ContentDirectorySchema.safeParse({ id: "ig-ast", path: "ig-ast/", graphKinds: ["docs"], storage: FAMILY }).success).toBe(true);
+  });
+  test("refuses a prefix without /, a family with a single branch, and a family with no key", () => {
+    expect(DirectoryStorageSchema.safeParse({ ...FAMILY, branchPrefix: "cat/fhir-harness/fhir-ast" }).success).toBe(false);
+    expect(DirectoryStorageSchema.safeParse({ branch: "cat/x/y", keyedBy: "family", keyFrom: "k" }).success).toBe(false);
+    expect(DirectoryStorageSchema.safeParse({ branchPrefix: "cat/x/", keyedBy: "family" }).success).toBe(false);
+  });
+});

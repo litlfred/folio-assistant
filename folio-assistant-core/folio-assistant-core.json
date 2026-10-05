@@ -6,6 +6,12 @@
   "version": "0.1.0",
   "iriBase": "https://litlfred.github.io/folio-assistant-core/",
   "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph kind itself.",
+  "avatar": {
+    "glyph": "M6 3h9l4 4v14H6zM15 3v4h4M9 12h7M9 16h5",
+    "tone": 212,
+    "reads": "a leaf of paper with lines — the folio itself"
+  },
+  "_avatar_comment": "Keyed on the DECLARED NAME, which is `folio-assistant-core` — directory and name both spelled in full, per the owner's ruling of 2026-09-20 and as `folio-assistant-core/harness.json` records against itself. Moved here from cat-harness/schemas/avatars.ts, 2026-10-05 (bean sod4 #4): an instance declares its own mark.",
   "assets": [
     {
       "id": "agent-instructions",
@@ -77,6 +83,38 @@
     }
   ],
   "directories": [
+    {
+      "id": "folio-assistant-core-translations",
+      "path": "translations/",
+      "description": "The gettext side of folio-assistant-core's own strings, one directory per target locale. Today: `block-kinds.pot`/`.po`, the headings of the block kinds this instance declares in block-kinds/, keyed `msgctxt \"block-kind:<kind>\"` with the node's English `heading` as msgid (bean riit, step 2b). Owner, 2026-10-04: locale headings live in the translation graph (option 1 of 2), and kinds are not centrally managed, so the catalogue sits with the kinds rather than in cat-harness/translations/.",
+      "graphKinds": [
+        "translation-sources"
+      ]
+    },
+    {
+      "id": "folio-assistant-core-block-kinds",
+      "path": "block-kinds/",
+      "description": "The document profile's block kinds (prose, example, remark, algorithm, simulator, equation, diagram, table, figure), one folio-block-kind/v1 node per file (bean riit, step 2). Owner, 2026-10-04: kinds are discoverable and not centrally managed; cat-harness/schemas/block-kinds.ts finds these by scanning every instance's declared block-kinds graph, and the seven parallel tables they replace are gone.",
+      "graphKinds": [
+        "block-kinds"
+      ]
+    },
+    {
+      "id": "folio-assistant-core-validators",
+      "path": "validators/",
+      "description": "The validators folio-assistant-core's code provides, one folio-validator/v1 node each naming the graph kind and $schema family it checks (bean riit).",
+      "graphKinds": [
+        "validators"
+      ]
+    },
+    {
+      "id": "folio-assistant-core-kinds",
+      "path": "kinds/",
+      "description": "The graph kinds folio-assistant-core owns, one folio-graph-kind/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph. Moved here from cat-harness/schemas/graph-kind-registry.ts, with each entry's code comments kept as its rationale.",
+      "graphKinds": [
+        "kinds"
+      ]
+    },
     {
       "id": "core-schemas",
       "path": "schemas/",

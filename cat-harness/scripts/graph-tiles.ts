@@ -62,6 +62,7 @@ import {
   visualisationsOf,
 } from "../schemas/cat-harness.js";
 import { tileLabel } from "./lib/nav-label.js";
+import { BASE_GRAPH_KINDS, defaultGraphKinds } from "../schemas/graph-kind-registry.ts";
 
 /** Where a tile may appear. A visualisation that says nothing appears on every surface. */
 export type TileSurface = CatHarnessTileSurface;
@@ -216,19 +217,21 @@ export type TiledDirectory = {
  * Values are names in `TILE_GLYPHS` (`docs/assets/js/docs-ui.js`).
  * `check:navbar-consistency` fails a value that is not drawn there.
  */
-export const KIND_TILE_ICONS: Readonly<Record<string, string>> = {
-  beans: "beans",
-  library: "library",
-  processes: "processes",
-  schemas: "schemas",
-  skills: "skills",
-  tools: "tools",
-  uploads: "uploads",
-};
+export const KIND_TILE_ICONS: Readonly<Record<string, string>> = Object.fromEntries(
+  // A FIELD on each kind since sod4 #5 (`tileIcon`), cat-harness's own and a
+  // declared node's alike; this map is derived for the callers that read it.
+  Object.entries(BASE_GRAPH_KINDS).flatMap(([k, d]) => (d.tileIcon ? [[k, d.tileIcon]] : [])),
+);
 
 /** The first of `kinds` that has a tile icon, or `undefined`. */
 export function kindTileIcon(kinds: readonly string[] | undefined): string | undefined {
-  for (const k of kinds ?? []) if (Object.hasOwn(KIND_TILE_ICONS, k)) return KIND_TILE_ICONS[k];
+  for (const k of kinds ?? []) {
+    if (Object.hasOwn(KIND_TILE_ICONS, k)) return KIND_TILE_ICONS[k];
+    // A kind another harness DECLARES carries its own tile icon (bean dmx1), so
+    // this table lists only cat-harness's own kinds.
+    const declared = defaultGraphKinds.get(k)?.tileIcon;
+    if (declared) return declared;
+  }
   return undefined;
 }
 

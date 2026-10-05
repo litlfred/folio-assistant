@@ -14,12 +14,19 @@ import {
 import type { ReviewAnchors } from "./docx-to-folio.js";
 import {
   applyGithubComment,
+  channelOf,
+  consentByName,
   filterComments,
   importRows,
   isCommittee,
+  isEditor,
+  lineRanges,
+  logStatusMove,
+  nameKey,
   narrativeRows,
   parseGithubTag,
   resolveAnchor,
+  sectionsNamed,
   Store,
   summary,
   tableRows,
@@ -237,6 +244,17 @@ describe("GitHub tags", () => {
     expect(parseGithubTag("pc: PC-1\nrecommend: maybe")).toMatchObject({ error: expect.stringContaining("is not one of") });
   });
 
+  test("by default the editor is the repository's owner, and only the owner decides", () => {
+    const s = tempStore();
+    writeFileSync(join(s.dir, "config.json"), JSON.stringify({ document: "doc" }));
+    importRows(s, [{ row: 1, reviewer: {}, citation: { section: "3.4" }, text: "One." }], { channel: "comment-matrix", batch: "m", sha256: "e" }, "t0");
+    const ev = (login: string, association: string, body: string) => ({ login, association, body, url: "https://github.com/o/r/pull/1#issuecomment-1", at: "t1" });
+    expect(applyGithubComment(s, ev("member", "COLLABORATOR", "pc: PC-0001\ndecide: noted\n\nx")).refused[0]).toContain("the owner of this repository");
+    expect(applyGithubComment(s, ev("me", "OWNER", "pc: PC-0001\ndecide: noted\n\nAlready in 2.1.")).applied).toEqual(["PC-0001"]);
+    expect(isEditor({}, "x", "owner")).toBe(true);
+    expect(isEditor({ editors: ["ed"] }, "x", "OWNER")).toBe(false);
+  });
+
   test("by default the committee is the repository's collaborators", () => {
     const s = tempStore();
     writeFileSync(join(s.dir, "config.json"), JSON.stringify({ document: "doc", editors: ["ed"] }));
@@ -260,5 +278,82 @@ describe("GitHub tags", () => {
     expect(applyGithubComment(s, ev("someone", "pc: PC-0001\nrecommend: accepted")).refused[0]).toContain("not on the committee list");
     expect(applyGithubComment(s, ev("ed", "pc: PC-0001\ndecide: noted\n\nAlready in 2.1.")).applied).toEqual(["PC-0001"]);
     expect(s.get("PC-0001").public.decision).toMatchObject({ code: "noted", by: "ed", reason: "Already in 2.1." });
+  });
+});
+
+describe("a consolidated review log (the DPI-H master log, 2026-10-05)", () => {
+  // The shape of the owner's "Full_DPI-H_master_log_populated.xlsx": one header
+  // row, every reviewer column on every row, "Stakeholder type" LEFT of
+  // "Comment type", and the log's own Status, Disposition and categorisations.
+  const header = [
+    "No.", "Date received", "Channel", "Reviewer name", "Organisation", "Country / region", "Stakeholder type",
+    "Section no.", "Page", "Line no(s) / Table / Figure", "Comment type", "Theme",
+    "Consider by TWG? Human categorisation", "Comment / issue", "Suggested revision", "Status", "Disposition / rationale", "Handled by",
+  ];
+  const row = (no: string, status: string, disposition: string, text: string, type = "Technical") =>
+    [no, "", "Online form", "NAIR, Tapas", "WHO", "(not stated)", "Academia or research", "1.1.2", "9", "42", type, "Equity", "Core architects", text, "Fix it", status, disposition, "someone"];
+  const sheet = [header, row("1", "Pending", "", "Pending one."), row("2", "Accepted", "", "Accepted one."), row("3", "Not accepted", "Out of scope.", "Rejected one."), row("4", "Not accepted", "", "Rejected, no reason."), row("5", "Reviewed", "", "Reviewed one, mail me at tapas@who.int", "Q9 - Conformance and testing")];
+  const consent = consentByName([["No.", "Name", "Consent to acknowledge", "Notes"], ["1", "Tapas Nair", "Yes", "Email: tapas@who.int"]]);
+
+  test("the comment type is the COMMENT type, not the stakeholder type; the rest are labels", () => {
+    const t = tableRows(sheet, consent);
+    expect(t.rows).toHaveLength(5);
+    const r = t.rows[0]!;
+    expect(r).toMatchObject({ entry: "1", type: "Technical", channel: "Online form", status: "Pending" });
+    expect(r.labels).toEqual({ "Stakeholder type": "Academia or research", Theme: "Equity", "Consider by TWG? Human categorisation": "Core architects" });
+    // A type outside the three is kept verbatim as a label.
+    expect(t.rows[4]!.labels?.["Comment type"]).toBe("Q9 - Conformance and testing");
+    // Consent, read by name from the contributors sheet, whatever the name order.
+    expect(r.reviewer.acknowledge).toBe(true);
+    expect(nameKey("NAIR, Tapas")).toBe(nameKey("Tapas Nair"));
+  });
+
+  test("the log's own statuses arrive as decisions or triage; a refusal with no reason is held", () => {
+    expect(logStatusMove("Partially accepted")).toEqual({ decide: "accepted-modified" });
+    expect(logStatusMove("Pending")).toBeUndefined();
+    const s = tempStore();
+    const r = importRows(s, tableRows(sheet, consent).rows, { channel: "comment-matrix", batch: "log--master", sha256: "x", sheet: "Master log", series: "log" }, "2026-10-05T00:00:00Z");
+    const by = Object.fromEntries(s.all().map((c) => [c.public.source.entry, c]));
+    expect(by["1"]!.status).toBe("received");
+    expect(by["2"]!.public.decision).toMatchObject({ code: "accepted", by: "review-log" });
+    expect(by["3"]!.public.decision).toMatchObject({ code: "not-accepted", reason: "Out of scope." });
+    expect(by["4"]!.status).toBe("triaged");
+    expect(r.fromLog?.held.map((x) => x.ref)).toEqual([by["4"]!.public.ref]);
+    expect(by["5"]!.status).toBe("triaged");
+    expect(by["1"]!.public.source.channel).toBe(channelOf("Online form", "comment-matrix"));
+    expect(by["1"]!.public.reviewer.name).toBe("NAIR, Tapas");
+    // No address survives, from the reviewer columns or typed into a comment.
+    for (const f of ["PC-0001", "PC-0005"]) expect(readFileSync(join(s.dir, "comments", `${f}.json`), "utf-8")).not.toContain("@who.int");
+  });
+
+  test("a re-sent copy of the same log adds only the rows it has not seen", () => {
+    const s = tempStore();
+    const first = tableRows(sheet, consent).rows;
+    importRows(s, first, { channel: "comment-matrix", batch: "log--master", sha256: "v1", sheet: "Master log", series: "log" });
+    const later = tableRows([...sheet, row("6", "Pending", "", "A new one.")], consent).rows;
+    const r = importRows(s, later, { channel: "comment-matrix", batch: "log-v2--master", sha256: "v2", sheet: "Master log", series: "log" });
+    expect(r.known).toBe(5);
+    expect(r.created).toHaveLength(1);
+    expect(s.all()).toHaveLength(6);
+  });
+
+  test("a lines cell gives line numbers only when it says lines", () => {
+    expect(lineRanges("618–624")).toEqual([[618, 624]]);
+    expect(lineRanges("L339; L369")).toEqual([[339, 339], [369, 369]]);
+    expect(lineRanges("Principle IX L392–427")).toEqual([[392, 427]]);
+    expect(lineRanges("Requirement 5")).toEqual([]);
+    expect(lineRanges("A14.01")).toEqual([]);
+  });
+
+  test("a section named by title or acronym, and a page with no usable line", () => {
+    const named: ReviewAnchors = {
+      ...anchors,
+      sections: [...anchors.sections, { label: "sec:c-phsp", title: "Public Health Surveillance Platform", chapter: "ch1-intro" }],
+      blocks: [...anchors.blocks, { label: "prose:c-phsp-1", kind: "prose", chapter: "ch1-intro", root: "p-c", sections: ["sec:c-phsp"], hash: "h9", excerpt: "PHSP", page: 25, printedPage: "14", lineStart: 3, lineEnd: 9, method: "numbered" }],
+    };
+    expect(sectionsNamed("PHSP, 5", named).map((x) => x.label)).toEqual(["sec:c-phsp"]);
+    expect(sectionsNamed("Public Health Surveillance Platform", named)[0]!.label).toBe("sec:c-phsp");
+    expect(resolveAnchor({ section: "PHSP, 5", page: "14", lines: "Requirement 5" }, "", named)).toMatchObject({ targetLabel: "prose:c-phsp-1", method: "page", confidence: "medium" });
+    expect(resolveAnchor({ section: "Public Health Surveillance Platform" }, "", named)).toMatchObject({ targetLabel: "sec:c-phsp", method: "section" });
   });
 });

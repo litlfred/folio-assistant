@@ -23,10 +23,13 @@
  * After resolving, `bun run regen` asks every check the CI workflow runs and
  * runs each stale one's writer until the tree settles. A non-zero exit
  * (`unrepaired`, or a check with no writer) aborts the merge too: a resolution
- * the gates cannot reproduce is not a resolution.
+ * the gates cannot reproduce is not a resolution. It runs as `regen --changed
+ * <fork point>`, asking only the pairs either side touched; see
+ * {@link regenArgs} for why that is sound, and `--full-regen` for the old way.
  *
  * Usage:
  *   bun run merge:main                 # merge origin/main, resolve, regenerate, commit
+ *   bun run merge:main -- --full-regen # ...asking every pair, not only those the merge touched
  *   bun run merge:main -- --dry-run    # classify the conflicts, change nothing
  *   bun run cat-harness/scripts/merge-base.ts --base origin/<branch>
  *   bun run cat-harness/scripts/merge-base.ts --root <worktree> --base <sha> --dry-run
@@ -36,7 +39,7 @@
  * 2 could not start (dirty tree, no such base).
  */
 import { execFileSync, spawnSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { repoRootFor } from "../schemas/cat-harness.js";
@@ -47,6 +50,38 @@ import { REGEN_VERDICT_TAG, regenExitMeaning } from "./regen-after-merge.js";
 export interface Plan {
   resolvable: Classified[];
   refused: Classified[];
+}
+
+/**
+ * The arguments `merge:main` gives `regen` — bean `94zs`.
+ *
+ * `--changed <fork point>`, where the fork point is `git merge-base HEAD
+ * <base>` taken before the merge. regen runs before the merge is committed,
+ * so `HEAD` is still the branch tip, and the change it sees is the union of
+ * what the branch did since the fork point (`<fork>...HEAD`) and what the
+ * merge brought in (the working tree against `HEAD`).
+ *
+ * **Why this base.** A pair that union does not touch has identical inputs
+ * in the merged tree, at the branch tip, at the fork point and at `<base>`'s
+ * tip, because a three-way merge of a path neither side changed is that
+ * path. Its answer here is its answer at every one of them, so it is
+ * current if ANY of them was. The other two candidates need more:
+ *
+ * - the branch tip alone (`--changed HEAD`) skips a pair that only `<base>`
+ *   left alone — sound only if the BRANCH was regen-clean;
+ * - `<base>` alone skips a pair only the branch left alone — sound only if
+ *   `<base>` was green, which CI on `main` does not guarantee.
+ *
+ * And it still sees the case regen exists for (bean `lxpq`): when both sides
+ * touch one generated file, that file is in the union.
+ *
+ * What it does not do: repair a pair that was ALREADY stale at all three and
+ * that the merge did not touch. That staleness is not the merge's, and the
+ * branch's own CI reports it. `--full-regen`, or no fork point (a shallow
+ * clone), runs the full set as before.
+ */
+export function regenArgs(forkPoint: string | undefined): string[] {
+  return forkPoint === undefined ? [] : ["--changed", forkPoint];
 }
 
 /** Split conflicted paths into what a pattern resolves and what it refuses. */
@@ -130,6 +165,50 @@ export function takeBase(root: string, path: string): void {
   }
 }
 
+/**
+ * What an `owned-tree` resolution does with one conflicted path (#2176). It
+ * reads which PARENT COMMITS hold the path, never the conflict stages.
+ *
+ * Measured 2026-10-05: when both sides change one node's content-addressed
+ * payload, git reports a rename/rename. The old name has stage 1 only, the
+ * branch's new name stage 2 only, and the base's new name stage 3 only. Both
+ * new stages hold git's three-way merge of the bodies WITH conflict markers.
+ * `takeBase` reads stage 2 alone as "the base deleted it" and `git rm`s a path
+ * the branch ADDED, which `droppedInMerge` refuses at the `resolved`
+ * checkpoint. It also writes stage 3's marked bytes under a name that is the
+ * hash of other bytes.
+ *
+ * So: the base's committed copy when the base has the path, the branch's
+ * committed copy when only the branch has it, and a removal only when NEITHER
+ * parent has it, which is a deletion both sides made. Nothing a parent holds
+ * is dropped here. The pattern's `prunedBy` writer later deletes whatever is
+ * orphaned in the merged tree, and the `staged` checkpoint allows a writer to
+ * delete what it owns.
+ */
+export function ownedTreeAction(inBase: boolean, inBranch: boolean): "theirs" | "ours" | "delete" {
+  return inBase ? "theirs" : inBranch ? "ours" : "delete";
+}
+
+/** Whether `ref` (a commit) tracks `path`. */
+function tracks(root: string, ref: string, path: string): boolean {
+  return spawnSync("git", ["-C", root, "cat-file", "-e", `${ref}:${path}`], { stdio: "ignore" }).status === 0;
+}
+
+/** Resolve one `owned-tree` path from the parents' committed blobs; stages the result. */
+export function takeOwnedTree(root: string, path: string): void {
+  if (unmergedStages(root, path).size === 0) return; // resolved by an earlier step (bean vsv7)
+  const action = ownedTreeAction(tracks(root, "MERGE_HEAD", path), tracks(root, "HEAD", path));
+  if (action === "delete") {
+    git(root, "rm", "-q", "-f", "--", path);
+    return;
+  }
+  // `checkout <commit> -- <path>` writes that commit's blob to the index and
+  // the disk, resolving the unmerged entry. The blob is the one the side
+  // COMMITTED, not git's marked three-way merge of the bodies.
+  git(root, "checkout", action === "theirs" ? "MERGE_HEAD" : "HEAD", "--", path);
+  stageConflicted(root, path);
+}
+
 /** The resolution of one conflicted submodule GITLINK — bean `wczm` item 2. */
 export type GitlinkResolution =
   | { take: "ours" | "theirs"; pin: string; why: string }
@@ -193,28 +272,105 @@ export function stageGitlink(root: string, path: string, pin: string): void {
   git(root, "update-index", "--cacheinfo", `160000,${pin},${path}`);
 }
 
-/**
- * Paths both parents hold that the merged result does not (bean `vsv7`, done-when 2).
- *
- * A merge may drop a file one side deleted; it never drops one BOTH sides
- * still have. On #1955 (2026-10-03) a resolver mis-step `git rm`ed two such
- * generated sidecars and the run still said "proved", because no gate asks
- * whether a file vanished. This is that question, asked of the index just
- * before the merge commit. Pure over three path lists.
- */
-export function lostOnBothSides(ours: readonly string[], theirs: readonly string[], result: readonly string[]): string[] {
-  const kept = new Set(result);
-  const theirsSet = new Set(theirs);
-  return ours.filter((f) => theirsSet.has(f) && !kept.has(f)).sort();
+/** One path a merge would drop, and which parents track it. */
+export interface DroppedPath {
+  path: string;
+  heldBy: "both" | "ours" | "theirs";
 }
 
-/** Abort (tree restored) when the staged merge lost a path both parents hold. */
-function refuseLostFiles(root: string, abort: (why: string) => never): void {
+/**
+ * Paths a parent tracks that the merged result does not, where NEITHER side
+ * deleted the path since the merge base (beans `vsv7` and `8j9e`).
+ *
+ * A merge may drop a path only by taking a DELETION: the path was in the merge
+ * base and one side removed it. A path both parents hold, or one a side ADDED
+ * since the base, must survive. The first version (`vsv7`, after #1955 lost
+ * two kg-export sidecars to a resolver mis-step) asked only whether both
+ * parents held the path, so a file one side added and the merge lost passed as
+ * "a deletion the merge took", although nobody deleted it.
+ *
+ * Why this has to be checked: once a path leaves the index, nothing puts it
+ * back if it is gitignored. `cat-harness/test/results/` is ignored while main
+ * tracks files under it. Regen rewrites such a file on disk, every local check
+ * reads the disk and passes, and `git add -A` does not stage the file because
+ * it is now untracked and ignored. Only a fresh checkout shows the loss.
+ * Measured on #2000 (`a16089d07`, two LSI sidecars) and on #1898
+ * (`edf52fcf6`, three detangle sidecars, red on `kg:detangle:check`).
+ * Pure over four path lists.
+ */
+export function droppedPaths(
+  base: readonly string[],
+  ours: readonly string[],
+  theirs: readonly string[],
+  result: readonly string[],
+): DroppedPath[] {
+  const kept = new Set(result);
+  const inBase = new Set(base);
+  const o = new Set(ours);
+  const t = new Set(theirs);
+  const out: DroppedPath[] = [];
+  for (const path of new Set([...ours, ...theirs])) {
+    if (kept.has(path)) continue;
+    const both = o.has(path) && t.has(path);
+    // One side lacks a path the base had, so that side deleted it. Taking the
+    // deletion is a legitimate merge outcome.
+    if (!both && inBase.has(path)) continue;
+    out.push({ path, heldBy: both ? "both" : o.has(path) ? "ours" : "theirs" });
+  }
+  return out.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+}
+
+/**
+ * The refusal line for one dropped path. It has the `  ✗ <path>  [...]` shape
+ * that merge-main.yml and merge-main-comment.ts read.
+ */
+export function droppedLine(d: DroppedPath, onDisk: boolean): string {
+  const held = d.heldBy === "both" ? "tracked by both parents" : `added on ${d.heldBy === "ours" ? "the branch" : "the base"} since the merge base`;
+  const disk = onDisk ? "; still on disk, so local checks pass while a fresh checkout lacks it" : "";
+  return `  ✗ ${d.path}  [dropped: ${held}, deleted by neither side${disk}]`;
+}
+
+/**
+ * `droppedPaths` for the merge in progress at `root`. It reads the INDEX
+ * (`ls-files`) and never the working tree, because the working tree is exactly
+ * where a dropped ignored file hides.
+ */
+export function droppedInMerge(root: string): DroppedPath[] {
   const list = (ref: string) => git(root, "ls-tree", "-r", "--name-only", ref).split("\n").filter(Boolean);
-  const lost = lostOnBothSides(list("HEAD"), list("MERGE_HEAD"), git(root, "ls-files").split("\n").filter(Boolean));
-  if (lost.length) {
-    for (const f of lost) console.error(`  ✗ ${f}  [present on both sides, absent from the merge]`);
-    abort(`${lost.length} file(s) both sides hold would be deleted by this merge (bean vsv7)`);
+  // With no merge base (unrelated histories) `base` is empty. That only makes
+  // the guard stricter: every dropped path is then refused.
+  const mb = spawnSync("git", ["-C", root, "merge-base", "HEAD", "MERGE_HEAD"], { encoding: "utf-8" });
+  const base = mb.status === 0 ? list(mb.stdout.trim()) : [];
+  return droppedPaths(base, list("HEAD"), list("MERGE_HEAD"), git(root, "ls-files").split("\n").filter(Boolean));
+}
+
+/**
+ * Which dropped paths to refuse, at one of the two points the guard runs.
+ *
+ * - `resolved`: after the conflict resolution and before anything is staged
+ *   with `add -A`. Only the resolvers have touched the index at this point,
+ *   and a resolver never has a reason to drop a path neither side deleted, so
+ *   EVERY dropped path is refused. This is where #1898's `git rm` would have
+ *   been caught.
+ * - `staged`: after the writers have run and `add -A` has staged their
+ *   output. A writer may delete what it owns: a content-addressed payload is
+ *   superseded when the merge changes its node, and the writer's own `:check`
+ *   proves the result. That was measured on this guard's first merge of main,
+ *   where `subgraph:jsonld` replaced a payload main had added. So only drops
+ *   still ON DISK are refused here. That is the 8j9e signature: the index lost
+ *   the path while the disk keeps it, and an ignored path is never restaged.
+ */
+export function refusable(dropped: readonly DroppedPath[], when: "resolved" | "staged", onDisk: (path: string) => boolean): DroppedPath[] {
+  return when === "resolved" ? [...dropped] : dropped.filter((d) => onDisk(d.path));
+}
+
+/** Abort, restoring the tree, when the merge drops a path that neither side deleted (see `refusable`). */
+function refuseDroppedFiles(root: string, abort: (why: string) => never, when: "resolved" | "staged"): void {
+  const onDisk = (p: string) => existsSync(join(root, p));
+  const dropped = refusable(droppedInMerge(root), when, onDisk);
+  if (dropped.length) {
+    for (const d of dropped) console.log(droppedLine(d, onDisk(d.path)));
+    abort(`${dropped.length} tracked path(s) would be dropped by this merge, and neither side deleted them (beans vsv7, 8j9e)`);
   }
 }
 
@@ -244,6 +400,8 @@ if (import.meta.main) {
   // generated files are rewritten by the final regen anyway. Each member's
   // merge commit is NOT proved on its own; the train is proved at its end.
   const noRegen = args.includes("--no-regen");
+  // `--full-regen` asks every pair, as regen did before bean `94zs`.
+  const fullRegen = args.includes("--full-regen");
   const base = opt("--base") ?? "origin/main";
   // `--root` lets the command run against another checkout (a worktree at an
   // old commit, for a replay of a historical merge) without copying itself in.
@@ -263,6 +421,13 @@ if (import.meta.main) {
     console.error(`merge-base: no such base ${base}`);
     process.exit(2);
   }
+
+  // The fork point, taken BEFORE merging (bean `94zs`): regen is told to ask
+  // only the pairs whose inputs changed on EITHER side since it. See
+  // `regenArgs` for why this base and not the branch tip or `base`.
+  const forkPoint = fullRegen
+    ? undefined
+    : spawnSync("git", ["-C", root, "merge-base", "HEAD", base], { encoding: "utf-8" }).stdout?.trim() || undefined;
 
   const merged = spawnSync("git", ["-C", root, "merge", "--no-ff", "--no-commit", base], { encoding: "utf-8" });
   const conflicted = git(root, "diff", "--name-only", "--diff-filter=U").split("\n").filter(Boolean);
@@ -346,7 +511,10 @@ if (import.meta.main) {
     const oneSided = c.strategy === "generated-regions" && unmergedStages(root, c.path).size < 3;
     let resolved: string | undefined;
     try {
-      if (c.strategy === "take-base" || oneSided) {
+      if (c.strategy === "owned-tree") {
+        takeOwnedTree(root, c.path);
+        continue;
+      } else if (c.strategy === "take-base" || oneSided) {
         takeBase(root, c.path);
         continue;
       } else if (c.strategy === "generated-regions") {
@@ -365,6 +533,9 @@ if (import.meta.main) {
       abort(`${c.path}: a hunk lies outside a generated region (authored text conflicts)`);
     }
   }
+  // Every resolver has now staged what it resolved, and nothing else has been
+  // staged yet: the index is the resolution alone. Beans vsv7, 8j9e.
+  refuseDroppedFiles(root, abort, "resolved");
 
   if (noRegen) {
     // Sync the submodule checkouts to the merged gitlinks BEFORE staging.
@@ -375,7 +546,7 @@ if (import.meta.main) {
     // (2026-10-04).
     syncSubmodules(root);
     git(root, "add", "-A");
-    refuseLostFiles(root, abort);
+    refuseDroppedFiles(root, abort, "staged");
     git(root, "commit", "-q", "--no-edit");
     console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern. NOT regenerated (--no-regen): run \`bun run regen\` once over the train.`);
     process.exit(0);
@@ -409,7 +580,7 @@ if (import.meta.main) {
   const mount = spawnSync("bun", ["run", "state:mount"], { cwd: root, stdio: "inherit" });
   if (mount.status !== 0) abort("state:mount against the merged declarations failed");
   console.log("\nmerge-base: regenerating, and asking every gate the CI workflow runs …");
-  const regen = spawnSync("bun", ["run", "regen"], { cwd: root, stdio: "inherit" });
+  const regen = spawnSync("bun", ["run", "regen", ...regenArgs(forkPoint)], { cwd: root, stdio: "inherit" });
   // NOT one message for every non-zero exit. `regen`'s `exitCodeFor` returns
   // three distinct verdicts and this line used to assert "regen reported
   // unrepaired checks" for all of them — false for exit 2 (which reports no
@@ -429,7 +600,7 @@ if (import.meta.main) {
     );
   }
   git(root, "add", "-A");
-  refuseLostFiles(root, abort);
+  refuseDroppedFiles(root, abort, "staged");
   git(root, "commit", "-q", "--no-edit");
   console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern, regenerated and proved.`);
 }

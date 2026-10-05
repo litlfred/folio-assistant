@@ -425,7 +425,10 @@ export async function buildLocaleExports(opts: {
   // core was correct throughout: `kg-export.ts` was the function's only
   // caller, so the projection existed and this path went around it.
   const core = publishedDocument(
-    await buildExport({ baseUrl: opts.baseUrl, instanceRoot: opts.instanceRoot }),
+    // `scope: "instance"` — the document `kg-export` publishes for the host,
+    // tombstones included (bean `4ak5` item 2); a locale variant translates
+    // that document, so it must not hold nodes the original no longer does.
+    await buildExport({ baseUrl: opts.baseUrl, instanceRoot: opts.instanceRoot, scope: "instance" }),
   ) as unknown as Record<string, unknown>;
   // `config.translation.defaultLocale`, NOT `config.defaultLocale` — `tsc`
   // caught the second spelling, and it would have been the `dh4f` shape: a

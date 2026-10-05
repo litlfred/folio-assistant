@@ -20,15 +20,22 @@ Run `bun run audit:reachability` before saying a decision table works, before
 saying a script has a caller, and before building any reachability report of
 your own.
 
-> **It is not wired into CI yet, and that is not the same as passing.** There is
-> no `audit:reachability:check` alias and no step in `code-quality-gates.yml`, so
-> `gates.ts` does not derive it and `bun run gates` does not run it. Judge it by
-> hand with `bun run cat-harness/scripts/audit-reachability.ts --check`. Both the
-> alias and the step land in one follow-up pull request, together — splitting a
-> gate's NAME from its WIRING is how a check becomes registered-and-never-run
-> (`t373`; `1xhc` measured 21 of 33 such scripts), and the workflow file had to
-> leave the first change because `merge-main`'s resolution push carries no
-> `workflows` scope. Bean `dxqm` holds it.
+`audit:reachability:check` is a step in `code-quality-gates.yml`, so
+`gates.ts` derives it and `bun run gates` runs it. `--strict` is not wired: the
+self-declared entry points nothing runs are a backlog, and `failOnNew` is what
+makes a new one fail meanwhile. Bean `dxqm` holds the day it wires.
+
+**The wiring arrived in a change of its own, and the seam is the lesson.** The
+script, its tests and this skill landed first with no step at all, because
+`merge-main`'s resolution push carries no `workflows` scope — so any pull
+request touching that file needs a human push on every main-merge round, and 9
+of 20 open PRs were in that state. What could NOT be split is the gate's
+**name** from its **wiring**: `gates.ts`'s `unrunScripts` ratchet refuses a
+`check:` script that appears in no workflow, and it is right to. `1xhc` measured
+21 of 33 such scripts, and `t373` was red on `main` while CI reported green
+because nothing ran it. So the alias waited for its step rather than arriving
+ahead of it — and while it waited, the skill said in this spot that the gate was
+not wired, because an unwired gate must never read as a passing one.
 
 ---
 

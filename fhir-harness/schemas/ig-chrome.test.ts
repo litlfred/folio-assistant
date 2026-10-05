@@ -174,4 +174,22 @@ describe("chromeFileFor", () => {
     );
     expect(found).toBeUndefined();
   });
+
+  test("a PATH reaches an instance the one-level scan cannot: the platform as a submodule in a fork (n3ni stage E)", () => {
+    // In an IG fork the platform is a submodule, so the chrome's owner sits two levels down.
+    const d = deps(
+      ["/fork/platform", "/fork/ig-data"],
+      { "/fork/platform": "platform", "/fork/ig-data": "some-ig", "/fork/platform/base-harness": "base-harness" },
+      { "/fork/platform/base-harness": ["/fork/platform/base-harness/themes"] },
+      ["/fork/platform/base-harness/themes/chrome.json"],
+    );
+    expect(chromeFileFor("/fork", "base-harness", d)).toBeUndefined();
+    expect(chromeFileFor("/fork", "platform/base-harness", d)).toBe("/fork/platform/base-harness/themes/chrome.json");
+  });
+
+  test("a path to a directory that declares no instance yields undefined, never a guess", () => {
+    const d = deps([], {}, {}, ["/fork/nowhere/themes/chrome.json"]);
+    expect(chromeFileFor("/fork", "nowhere", d)).toBeUndefined();
+    expect(chromeFileFor("/fork", "x/nowhere", d)).toBeUndefined();
+  });
 });

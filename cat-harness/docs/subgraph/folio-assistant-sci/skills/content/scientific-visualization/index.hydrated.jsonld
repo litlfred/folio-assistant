@@ -4,22 +4,15 @@
   "@type": "bootstrap:Subgraph",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/scientific-visualization",
-      "@type": "cat-harness:SkillPackage",
-      "hasManifest": true,
-      "name": "scientific-visualization",
-      "path": "../folio-assistant-sci/skills/content/scientific-visualization"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/scientific-visualization",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/scientific-visualization",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
       "description": "Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning.",
       "hasIOContract": false,
       "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/scientific-visualization",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/skills",
       "instructionLines": 303,
-      "instructionsPath": "../folio-assistant-sci/skills/content/scientific-visualization/scientific-visualization.md",
+      "instructionsPath": "skills/content/scientific-visualization/scientific-visualization.md",
       "name": "scientific-visualization",
       "payload": {
         "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f7c7f9a2350ea02db2db55cd28921a54c74b089f6762f1b0b63a13b8f6eeec33",

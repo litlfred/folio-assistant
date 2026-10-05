@@ -38,6 +38,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`glass.e2e.ts`](glass.e2e.ts) | a file |  |
 | [`graph-tiles.e2e.ts`](graph-tiles.e2e.ts) | a file |  |
 | [`harness-config-panel.e2e.ts`](harness-config-panel.e2e.ts) | a file |  |
+| [`harness-row-alignment.e2e.ts`](harness-row-alignment.e2e.ts) | a file |  |
 | [`id-lookup.e2e.ts`](id-lookup.e2e.ts) | a file |  |
 | [`kg-viewer.e2e.ts`](kg-viewer.e2e.ts) | a file |  |
 | [`kind-fan.e2e.ts`](kind-fan.e2e.ts) | a file |  |
@@ -51,6 +52,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`panel-chrome.e2e.ts`](panel-chrome.e2e.ts) | a file |  |
 | [`qa-badge.e2e.ts`](qa-badge.e2e.ts) | a file |  |
 | [`qa-panel.e2e.ts`](qa-panel.e2e.ts) | a file |  |
+| [`rail-icon-row.e2e.ts`](rail-icon-row.e2e.ts) | a file |  |
 | [`rail-tips.e2e.ts`](rail-tips.e2e.ts) | a file |  |
 | [`render-wait.e2e.ts`](render-wait.e2e.ts) | a file |  |
 | [`review-diff.e2e.ts`](review-diff.e2e.ts) | a file |  |
@@ -82,6 +84,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`todos-page-board.e2e.ts`](todos-page-board.e2e.ts) | a file |  |
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
 | [`attestations/`](attestations/README.md) | described in its own README | |
+| [`fixtures/`](fixtures/) | _nothing declares what this holds_ | |
 | [`health/`](health/) | _nothing declares what this holds_ | |
 | [`results/`](results/README.md) | described in its own README | |
 | [`support/`](support/) | _nothing declares what this holds_ | |

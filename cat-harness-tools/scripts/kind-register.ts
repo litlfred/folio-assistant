@@ -4,7 +4,7 @@
  * `skill:register` of kinds.
  *
  * @module scripts/kind-register
- * @covers cat-harness
+ * @covers cat-harness, kinds — it loads every declared kind node (which parses each against folio-graph-kind/v1) and checks each owes nothing
  *
  * ## The measurement that made this a command rather than a list
  *
@@ -67,7 +67,7 @@
 import { spawnSync } from "node:child_process";
 
 import { defaultGraphKinds } from "../../cat-harness/schemas/cat-harness.js";
-import { AVATARS, hasAvatar } from "../../cat-harness/schemas/avatars.js";
+import { allAvatars, hasAvatar } from "../../cat-harness/schemas/avatars.js";
 import { documentedKinds, KIND_TABLE_DOC } from "../../cat-harness/scripts/kind-table.ts";
 // `folio` is registered by CORE as a load-time side effect, so the harness alone
 // does not know it exists. Same import, same reason, as `check-declared-dirs`.
@@ -83,13 +83,20 @@ export interface Step {
 }
 
 /**
- * The five GENERATED obligations, in order.
+ * The six GENERATED obligations, in order.
  *
  * Hand-declared, because no file states which artefacts a kind feeds — but each
  * was measured stale-then-current on #2022 by adding one kind, and {@link main}
  * re-proves every one at runtime rather than asserting it here.
  */
 export const STEPS: readonly Step[] = [
+  {
+    write: ["kind:table"],
+    verify: ["kind:table:check"],
+    because:
+      "the graph-kind TABLE in skills/kg/kg-core/directory-conventions.md, generated from each kind's " +
+      "`description` since the owner moved the prose onto the kinds (bean dmx1). Edit the kind, not the row",
+  },
   {
     write: ["avatars:css"],
     verify: ["avatars:css:check"],
@@ -144,7 +151,7 @@ export function authoredGaps(root?: string): AuthoredGap[] {
         kind,
         owes: "avatar",
         detail:
-          `no entry in \`schemas/avatars.ts\`. It needs a glyph (24x24 path data), a \`tone\` ` +
+          `no avatar: an \`avatar\` on its \`kinds/\` node for a declared kind, else an entry in \`schemas/avatars.ts\`. It needs a glyph (24x24 path data), a \`tone\` ` +
           `(hue, 0-359) and a \`reads\` sentence saying why that mark. Check the clearance report ` +
           `below before choosing the tone.`,
       });
@@ -153,7 +160,7 @@ export function authoredGaps(root?: string): AuthoredGap[] {
       out.push({
         kind,
         owes: "kind-table-row",
-        detail: `no row in \`${KIND_TABLE_DOC}\`. Columns: kind, declared by, contents, renderable.`,
+        detail: `no row in \`${KIND_TABLE_DOC}\`: the table is GENERATED from each kind's \`description\` (bean dmx1), so run \`bun run kind:table\`, and give the kind a \`description\` if it has none.`,
       });
     }
   }
@@ -183,7 +190,7 @@ export interface HueReport {
  */
 export function hueReport(): HueReport {
   const byTone = new Map<number, string[]>();
-  for (const [kind, a] of Object.entries(AVATARS)) {
+  for (const [kind, a] of allAvatars()) {
     byTone.set(a.tone, [...(byTone.get(a.tone) ?? []), kind]);
   }
   const collisions = [...byTone.entries()]
@@ -196,7 +203,7 @@ export function hueReport(): HueReport {
     const d = Math.abs(a - b) % 360;
     return Math.min(d, 360 - d);
   };
-  const entries = Object.entries(AVATARS);
+  const entries = allAvatars();
   const nearest = entries
     .map(([kind, a]) => {
       let neighbour = "";

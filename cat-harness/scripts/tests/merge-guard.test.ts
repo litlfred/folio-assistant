@@ -20,14 +20,20 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import {
+  CannotAsk,
   evaluate,
+  fetchPull,
+  getAll,
   isBotMerge,
   openQuestions,
   parseMergeMainDispatches,
   readyMarkers,
+  sameRepoNext,
   signingSession,
   untickedItems,
   SELF_WORKFLOW_FILE,
+  NOT_WAITED_FOR_WORKFLOW_FILES,
+  DEPLOY_ONLY_STEP,
   type CheckId,
   type GuardOptions,
   type GuardRun,
@@ -56,10 +62,21 @@ const SCAN: TriggerScan = {
 /** What today's `merge-main.yml` dispatches, fixed here for the reason {@link SCAN} is. */
 const DISPATCHED = ["code-quality-gates.yml", "jsonld-gen-check.yml"] as const;
 
-/** A fresh, mutable copy of a real PR's snapshot. */
+/**
+ * A fresh, mutable copy of a real PR's snapshot.
+ *
+ * `mergeable: true` is supplied here, not in the fixture: the fixtures were
+ * trimmed to what `evaluate` read before check 8 (bean `vihx`) existed, and
+ * they are captures, so a field is not written into them after the fact. The
+ * value is not invented either. All three PRs DID merge, and GitHub refuses
+ * the merge PUT of a conflicting head (HTTP 405), so each one was mergeable
+ * at the instant captured. Check 8's own tests set the field explicitly.
+ */
 function real(n: 1937 | 1957 | 1960): GuardSnapshot {
   const fx = JSON.parse(readFileSync(join(FIXTURES, `pr-${n}.json`), "utf8")) as { snapshot: Omit<GuardSnapshot, "scan"> };
-  return { ...structuredClone(fx.snapshot), scan: SCAN, mergeMainDispatches: [...DISPATCHED] };
+  const s: GuardSnapshot = { ...structuredClone(fx.snapshot), scan: SCAN, mergeMainDispatches: [...DISPATCHED] };
+  s.pr.mergeable ??= true;
+  return s;
 }
 
 const status = (s: GuardSnapshot, id: CheckId, o: GuardOptions = {}) => evaluate(s, o).checks.find((c) => c.id === id)!;
@@ -419,6 +436,7 @@ describe("every check passes only when every fact is in hand", () => {
       ["ci", "pass"],
       ["checklist", "pass"],
       ["open-question", "pass"],
+      ["mergeable", "pass"],
     ]);
     expect(v.exitCode).toBe(0);
   });
@@ -500,5 +518,291 @@ describe("the commit-status state: pending for unfinished, failure for a defect"
     expect(evaluate(s).state).toBe("success");
     s.runs = { state: "cannot-ask", reason: "HTTP 502" };
     expect(evaluate(s).state).toBe("error");
+  });
+});
+
+/**
+ * Paging (issue #2137). GitHub's `Link: rel="next"` names the numeric
+ * `/repositories/<id>/…` form, which the agent proxy refuses with a 403, so a
+ * PR with more than 100 commits or timeline events was COULD NOT DETERMINE
+ * from every agent session. The walk now follows the `repos/{owner}/{repo}/…`
+ * form; a page that still cannot be read still throws {@link CannotAsk},
+ * which `main` reports as COULD NOT DETERMINE (exit 2).
+ */
+describe("paging — page 2 is asked in the repos/{owner}/{repo} form", () => {
+  const API = "https://api.github.com";
+  const START = "repos/litlfred/folio-assistant/pulls/1955/commits?per_page=100";
+  const NUMERIC_NEXT = `${API}/repositories/1189760173/pulls/1955/commits?per_page=100&page=2`;
+  const NAMED_NEXT = `${API}/repos/litlfred/folio-assistant/pulls/1955/commits?per_page=100&page=2`;
+
+  /** A fetch that serves `pages` by URL and records what it was asked; any other URL gets the proxy's 403. */
+  function fakeFetch(pages: Record<string, { body: unknown; next?: string }>): { fetch: typeof fetch; asked: string[] } {
+    const asked: string[] = [];
+    const impl = async (input: string | URL | Request): Promise<Response> => {
+      const url = String(input);
+      asked.push(url);
+      const page = pages[url];
+      if (!page) {
+        return new Response(
+          JSON.stringify({ message: "Numeric-ID repository paths (repositories/{id}/...) are not supported through this proxy." }),
+          { status: 403, headers: { "content-type": "application/json" } },
+        );
+      }
+      const headers: Record<string, string> = { "content-type": "application/json" };
+      if (page.next) headers.link = `<${page.next}>; rel="next", <${page.next}>; rel="last"`;
+      return new Response(JSON.stringify(page.body), { status: 200, headers });
+    };
+    return { fetch: impl as unknown as typeof fetch, asked };
+  }
+
+  test("sameRepoNext rewrites the numeric form to the walk's own repos/{owner}/{repo} prefix", () => {
+    expect(sameRepoNext(NUMERIC_NEXT, START)).toBe(NAMED_NEXT);
+    expect(sameRepoNext(NUMERIC_NEXT, `${API}/${START}`)).toBe(NAMED_NEXT);
+  });
+
+  test("sameRepoNext leaves a next it cannot place unchanged", () => {
+    expect(sameRepoNext(NAMED_NEXT, START)).toBe(NAMED_NEXT);
+    expect(sameRepoNext(NUMERIC_NEXT, "user/repos?per_page=100")).toBe(NUMERIC_NEXT);
+  });
+
+  test("a two-page list is read whole, with page 2 asked by name and never by numeric id", async () => {
+    const { fetch, asked } = fakeFetch({
+      [`${API}/${START}`]: { body: [{ sha: "a" }, { sha: "b" }], next: NUMERIC_NEXT },
+      [NAMED_NEXT]: { body: [{ sha: "c" }] },
+    });
+    const got = await getAll<{ sha: string }>(START, fetch);
+    expect(got.map((c) => c.sha)).toEqual(["a", "b", "c"]);
+    expect(asked).toEqual([`${API}/${START}`, NAMED_NEXT]);
+    expect(asked.some((u) => u.includes("/repositories/"))).toBe(false);
+  });
+
+  test("a page 2 that cannot be read is CannotAsk (could-not-determine), never a short list", async () => {
+    // page 2 deliberately absent: the fake answers it with the proxy's 403
+    const { fetch } = fakeFetch({ [`${API}/${START}`]: { body: [{ sha: "a" }], next: NUMERIC_NEXT } });
+    const err = await getAll(START, fetch).then(
+      () => undefined,
+      (e: unknown) => e,
+    );
+    expect(err).toBeInstanceOf(CannotAsk);
+    expect((err as Error).message).toContain(`GET ${NAMED_NEXT}: HTTP 403`);
+    expect((err as Error).message).toContain("not supported through this proxy");
+  });
+});
+
+/**
+ * Bean `gnnj`, owner ruling 2026-10-05: check 5 JUDGES Feature Staging once it
+ * finishes but never WAITS for it. Its deploy is held by the #1956 rate limit —
+ * measured up to 41 min that day — and every PR in the merge queue inherited it.
+ */
+describe("check 5 — Feature Staging is judged once finished, never waited for", () => {
+  const STAGING = "Feature Staging (GitHub Pages)";
+  /** #1937's head with every `pull_request` run green, then `patch` applied to staging's. */
+  const green = (patch?: Partial<GuardRun> | null) => {
+    const s = real(1937);
+    if (s.runs.state !== "has-run") throw new Error("fixture");
+    for (const r of s.runs.runs) if (r.event === "pull_request") r.conclusion = "success";
+    s.runs.runs = s.runs.runs.flatMap((r) => {
+      if (r.name !== STAGING || patch === undefined) return [r];
+      return patch === null ? [] : [{ ...r, ...patch }];
+    });
+    return s;
+  };
+
+  test("the scan maps the exempt FILE to the run name check 5 sees", () => {
+    expect(NOT_WAITED_FOR_WORKFLOW_FILES.has(".github/workflows/feature-staging.yml")).toBe(true);
+    expect(SCAN.triggers.find((t) => NOT_WAITED_FOR_WORKFLOW_FILES.has(t.file))?.name).toBe(STAGING);
+  });
+
+  test("every run green: passes, as before", () => {
+    expect(status(green(), "ci").status).toBe("pass");
+  });
+
+  test("staging still IN PROGRESS (waiting out the #1956 window): passes, and says it did not wait", () => {
+    const c = status(green({ status: "in_progress", conclusion: null }), "ci");
+    expect(c.status).toBe("pass");
+    expect(c.detail).toContain(`not waited for (judged only once finished, bean \`gnnj\`): ${STAGING} (in_progress)`);
+    expect(c.detail).toContain("2 `pull_request` workflow(s) on the head");
+  });
+
+  test("staging QUEUED: passes", () => {
+    expect(status(green({ status: "queued", conclusion: null }), "ci").status).toBe("pass");
+  });
+
+  test("staging has no run on the head at all: passes", () => {
+    expect(status(green(null), "ci").status).toBe("pass");
+  });
+
+  test("staging FINISHED red: still refused — the exemption is from waiting, never from judging", () => {
+    const c = status(green({ status: "completed", conclusion: "failure" }), "ci");
+    expect(c.status).toBe("refuse");
+    expect(c.detail).toContain(`${STAGING}: failure`);
+  });
+
+  /** Staging finished red, with `steps` as the failed steps of its run (or `undefined` = not fetched). */
+  const redWith = (steps: string[] | { unknown: string } | undefined) => {
+    const s = green({ status: "completed", conclusion: "failure" });
+    if (s.runs.state !== "has-run") throw new Error("fixture");
+    const run = s.runs.runs.find((r) => r.name === STAGING && r.event === "pull_request") as GuardRun;
+    if (steps !== undefined) s.failedSteps = { [run.id!]: steps };
+    return s;
+  };
+
+  test("staging red ONLY in the deploy step (push window never opened): passes, and says so", () => {
+    const c = status(redWith([DEPLOY_ONLY_STEP]), "ci");
+    expect(c.status).toBe("pass");
+    expect(c.detail).toContain(`${STAGING} (failure in the deploy step only)`);
+  });
+
+  test("staging red in a build step as well as the deploy: still refused", () => {
+    const c = status(redWith(["Build the site", DEPLOY_ONLY_STEP]), "ci");
+    expect(c.status).toBe("refuse");
+    expect(c.detail).toContain(`${STAGING}: failure`);
+  });
+
+  test("staging red, failed steps could not be read: still refused", () => {
+    expect(status(redWith({ unknown: "HTTP 403" }), "ci").status).toBe("refuse");
+    expect(status(redWith(undefined), "ci").status).toBe("refuse");
+    expect(status(redWith([]), "ci").status).toBe("refuse");
+  });
+
+  test("control: a gating workflow in progress is still waited for", () => {
+    const s = green();
+    if (s.runs.state !== "has-run") throw new Error("fixture");
+    const gates = s.runs.runs.find((r) => r.name === "Code-quality gates" && r.event === "pull_request")!;
+    gates.status = "in_progress";
+    gates.conclusion = null;
+    const c = status(s, "ci");
+    expect(c.status).toBe("refuse");
+    expect(c.detail).toContain("Code-quality gates: in_progress");
+  });
+});
+
+/**
+ * Check 8, bean `vihx`. Check 5 judges the head's `pull_request` runs, which
+ * tested the head merged with main AS MAIN WAS when it was pushed. #1898 was
+ * signed, green and labelled, passed checks 1-7, and conflicted with main by
+ * the time it was merged; twice on 2026-10-05 GitHub refused a guard-passed
+ * merge with HTTP 405 "merge conflicts". #1898 has merged since, and on a
+ * merged PR the PR API's mergeability is stale, serving the pre-merge view
+ * (bean `fx5r`); it now reads `null` / `unknown`. So its conflicting state is
+ * rebuilt here as the PR API reports any conflicting OPEN head, the one
+ * reading check 8 trusts — only `dirty`: `mergeable: false`, `mergeable_state: "dirty"`.
+ */
+describe("check 8 — the head still merges cleanly into main", () => {
+  /** #1957 as it should have been (checks 1-7 pass), with the PR API's mergeability set. */
+  const passingOtherwise = (mergeable: boolean | null | undefined, state?: string) => {
+    const s = real(1957);
+    const own = signingSession(s.pr.body)!;
+    const ev = s.timeline.find((e) => e.event === "ready_for_review")!;
+    s.comments.push(signed(12, shift(ev.created_at!, 4_000), own, `ready: ${s.pr.head.sha.slice(0, 11)}`));
+    if (mergeable === undefined) delete s.pr.mergeable;
+    else s.pr.mergeable = mergeable;
+    // An OPEN PR's state is set directly: the post-merge staleness (bean `fx5r`) is check 1's case.
+    if (state === undefined) delete s.pr.mergeable_state;
+    else s.pr.mergeable_state = state;
+    return s;
+  };
+
+  test("control: every check passes on the base case", () => {
+    const v = evaluate(passingOtherwise(true, "clean"));
+    expect(v.checks.filter((c) => c.status !== "pass")).toEqual([]);
+    expect([v.verdict, v.state, v.exitCode]).toEqual(["pass", "success", 0]);
+  });
+
+  test("#1898's state — signed, green, labelled, but conflicting (`dirty`) — is refused, not-ready, with the remedy", () => {
+    const s = passingOtherwise(false, "dirty");
+    const c = status(s, "mergeable");
+    expect(c.n).toBe(8);
+    expect(c.status).toBe("refuse");
+    expect(c.kind).toBe("not-ready");
+    expect(c.detail).toContain("conflicts with `main`");
+    expect(c.detail).toContain("Merge `main` into the head");
+    const v = evaluate(s);
+    expect([v.verdict, v.state, v.exitCode]).toEqual(["refused", "pending", 1]);
+  });
+
+  test("`mergeable: false` alone refuses; so does `dirty` alone", () => {
+    expect(status(passingOtherwise(false), "mergeable").status).toBe("refuse");
+    expect(status(passingOtherwise(true, "dirty"), "mergeable").status).toBe("refuse");
+  });
+
+  test("`mergeable: null` (not computed yet) is unknown, never a pass, and the verdict is `error`, exit 2", () => {
+    const s = passingOtherwise(null, "unknown");
+    const c = status(s, "mergeable");
+    expect(c.status).toBe("unknown");
+    expect(c.detail).toContain("has not computed");
+    const v = evaluate(s);
+    expect([v.verdict, v.state, v.exitCode]).toEqual(["unknown", "error", 2]);
+  });
+
+  test("a record with no `mergeable` field is unknown, not a pass", () => {
+    const c = status(passingOtherwise(undefined), "mergeable");
+    expect(c.status).toBe("unknown");
+    expect(c.detail).toContain("no `mergeable` field");
+  });
+
+  test("`mergeable: true` passes, including `unstable`, `blocked` and `behind`: CI and review are not this check's", () => {
+    for (const state of ["clean", "unstable", "blocked", "behind", undefined]) {
+      const s = passingOtherwise(true, state);
+      expect(status(s, "mergeable").status).toBe("pass");
+      expect(evaluate(s).exitCode).toBe(0);
+    }
+  });
+
+  test("a conflict beside a defect elsewhere still posts `failure`: the conflict adds, it does not mask", () => {
+    const s = passingOtherwise(false, "dirty");
+    s.pr.labels.push({ name: "needs-merge-human" });
+    expect(evaluate(s).state).toBe("failure");
+  });
+});
+
+describe("fetchPull — re-asks while GitHub has not computed `mergeable`", () => {
+  const PR_URL = "https://api.github.com/repos/litlfred/folio-assistant/pulls/1898";
+  // `unknown` is not computed yet (bean `h2s9`); a closed PR's view is stale (bean `fx5r`).
+  type Answer = { mergeable?: boolean | null; mergeable_state?: string; state?: string };
+  /** Serves `answers` in order (the last one repeats) for the PR URL, recording each wait. */
+  const serve = (answers: Answer[]) => {
+    let i = 0;
+    const waits: number[] = [];
+    const impl = (async (input: string | URL | Request) => {
+      expect(String(input)).toBe(PR_URL);
+      const body = { number: 1898, state: "open", ...answers[Math.min(i, answers.length - 1)] };
+      i += 1;
+      return new Response(JSON.stringify(body), { status: 200, headers: { "content-type": "application/json" } });
+    }) as unknown as typeof fetch;
+    return {
+      impl,
+      waits,
+      asked: () => i,
+      sleep: async (ms: number) => {
+        waits.push(ms);
+      },
+    };
+  };
+
+  test("null then false: the second answer is the one returned", async () => {
+    // `unknown` = not computed yet (bean `h2s9`); then a conflict, the reading trusted.
+    const f = serve([{ mergeable: null, mergeable_state: "unknown" }, { mergeable: false, mergeable_state: "dirty" }]);
+    const pr = await fetchPull("litlfred/folio-assistant", 1898, { fetchImpl: f.impl, sleep: f.sleep, waitsMs: [1, 2, 3] });
+    expect([pr.mergeable, pr.mergeable_state]).toEqual([false, "dirty"]);
+    expect(f.waits).toEqual([1]);
+  });
+
+  test("still null after every wait: returned as null, so check 8 says unknown", async () => {
+    const f = serve([{ mergeable: null }]);
+    const pr = await fetchPull("litlfred/folio-assistant", 1898, { fetchImpl: f.impl, sleep: f.sleep, waitsMs: [1, 2, 3] });
+    expect(pr.mergeable).toBeNull();
+    expect(f.waits).toEqual([1, 2, 3]);
+    expect(f.asked()).toBe(4);
+  });
+
+  test("an answer on the first ask is not re-asked; nor is a closed PR", async () => {
+    // `clean` on an open PR; on a merged one it would be stale (bean `fx5r`).
+    const a = serve([{ mergeable: true, mergeable_state: "clean" }]);
+    await fetchPull("litlfred/folio-assistant", 1898, { fetchImpl: a.impl, sleep: a.sleep, waitsMs: [1, 2] });
+    expect(a.asked()).toBe(1);
+    const b = serve([{ mergeable: null, state: "closed" }]);
+    await fetchPull("litlfred/folio-assistant", 1898, { fetchImpl: b.impl, sleep: b.sleep, waitsMs: [1, 2] });
+    expect(b.asked()).toBe(1);
   });
 });

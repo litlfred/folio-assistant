@@ -90,7 +90,7 @@
   //
   // Same `test/` and `*.e2e.ts` reasoning as above applies to each, which is
   // why these are per-directory globs rather than a bare `*/**/*.ts`.
-  "include": ["bootstrap-tools/**/*.ts", "cat-harness/src/**/*.ts", "cat-harness/schemas/**/*.ts", "cat-harness/content/**/*.ts", "cat-harness/scripts/**/*.ts", "cat-harness/skills/**/*.ts", "cat-harness/adapters/**/*.ts", "cat-harness-tools/**/*.ts", "cat-harness/test/health/**/*.ts", "cat-harness/types/**/*.d.ts", "tools/**/*.ts", "folio-assistant-core/schemas/**/*.ts", "folio-assistant-core/adapters/**/*.ts", "folio-assistant-core/src/**/*.ts",
+  "include": ["bootstrap-tools/**/*.ts", "cat-harness/src/**/*.ts", "cat-harness/schemas/**/*.ts", "cat-harness/content/**/*.ts", "cat-harness/scripts/**/*.ts", "cat-harness/skills/**/*.ts", "cat-harness/adapters/**/*.ts", "cat-harness-tools/**/*.ts", "cat-harness/test/health/**/*.ts", "cat-harness/types/**/*.d.ts", "tools/**/*.ts", "folio-assistant-core/schemas/**/*.ts", "folio-assistant-core/adapters/**/*.ts", "folio-assistant-core/src/**/*.ts", "folio-assistant-core/skills/**/*.ts",
     "folio-assistant-sci/adapters/**/*.ts", "fhir-harness/schemas/**/*.ts", "fhir-harness/scripts/**/*.ts", "who-iris/scripts/**/*.ts", "who-iris/schemas/**/*.ts", "smart-base/schemas/**/*.ts", "smart-base/scripts/**/*.ts", "smart-base/content/**/*.ts", "smart-base/contributions.ts"],
   "exclude": [
     // `block-qa-schema` publishes to npm and owns its compiler settings. Its

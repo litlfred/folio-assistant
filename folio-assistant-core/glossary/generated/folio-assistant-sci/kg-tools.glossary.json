@@ -7,6 +7,14 @@
   "source": "Tools of folio-assistant-sci",
   "terms": [
     {
+      "id": "lean-formal-edges",
+      "prefLabel": "Formal edges from the Lean build",
+      "definition": "Extract ELABORATED formal dependencies between a folio's lean.ref declarations (LeanArchitect's rule over the folio's own lean.ref set). Needs a Lean toolchain and a built Lake project. Tagged declarations missing from the build are reported, never recorded as dependency-free; with ingest the result is recorded in the formal cache as source \"elaborated\".",
+      "notation": "lean-formal-edges",
+      "source": "folio-assistant-sci/tools/index.ts#lean-formal-edges",
+      "status": "candidate"
+    },
+    {
       "id": "paper-feature-build",
       "prefLabel": "Paper feature build (changed chapters + latexdiff)",
       "definition": "Quick preview of a paper folio's branch: render the paper with the sci print template (plus the folio's notation fragment when it has one), then compile ONLY the chapters changed against a base ref, and a colored and a plain latexdiff of each. Margin notes are off by default (`FAST_PREVIEW=1`, about 2x). Cross-references to chapters outside the build print as '??'. A preview, never a publish build. Run from the folio. Without a TeX engine the render still runs and the compile steps are skipped with a message.",

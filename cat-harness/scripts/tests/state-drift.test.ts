@@ -14,7 +14,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { MANIFEST_SCHEMA } from "../branch-store.ts";
-import { brief, candidatesOf, driftOf, exitCodeFor, type DriftRow } from "../state-drift.ts";
+import { brief, candidatesOf, driftOf, exitCodeFor, observedRows, type DriftRow } from "../state-drift.ts";
 
 const made: string[] = [];
 afterAll(() => {
@@ -224,5 +224,36 @@ describe("exitCodeFor", () => {
 
   test("an EMPTY report is not a pass by accident — it is 0 because there was nothing to compare", () => {
     expect(exitCodeFor([])).toBe(0);
+  });
+});
+
+describe("observed, not tabled (bean rva2)", () => {
+  test("every cat/** branch on the remote is a row, and one no directory declares is marked undeclared", () => {
+    const remote = mkdtempSync(join(tmpdir(), "observed-remote-"));
+    const repo = mkdtempSync(join(tmpdir(), "observed-repo-"));
+    const run = (cwd: string, ...a: string[]) => expect(spawnSync("git", a, { cwd, encoding: "utf-8" }).status).toBe(0);
+    run(remote, "init", "-q", "--bare");
+    const work = mkdtempSync(join(tmpdir(), "observed-work-"));
+    run(work, "init", "-q", "-b", "main");
+    run(work, "config", "user.email", "t@t");
+    run(work, "config", "user.name", "t");
+    writeFileSync(join(work, "f"), "x");
+    run(work, "add", "f");
+    run(work, "commit", "-q", "-m", "x");
+    for (const b of ["cat/fx/declared", "cat/fx/stray", "feature/not-special"]) run(work, "push", "-q", remote, `HEAD:refs/heads/${b}`);
+    mkdirSync(join(repo, "d"));
+    writeFileSync(
+      join(repo, "fx.json"),
+      JSON.stringify({ name: "fx", directories: [{ id: "d", path: "d/", graphKinds: ["docs"], storage: { branch: "cat/fx/declared", keyedBy: "tip" } }] }),
+    );
+    const rows = observedRows({ repoRoot: repo, remote })!;
+    expect(rows.map((r) => [r.name, r.id, r.declared])).toEqual([
+      ["cat/fx/declared", "d", true],
+      ["cat/fx/stray", "cat/fx/stray", false],
+    ]);
+    for (const d of [remote, repo, work]) rmSync(d, { recursive: true, force: true });
+  });
+  test("a remote that cannot be listed is undefined, never an empty set", () => {
+    expect(observedRows({ repoRoot: tmpdir(), remote: join(tmpdir(), "no-such-remote-xyz") })).toBeUndefined();
   });
 });

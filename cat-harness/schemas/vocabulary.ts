@@ -376,7 +376,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   },
   contentSourceKind: {
     gloss:
-      "Which kind of content source: `directory` or `branch`, as a plain value. Its own term, NOT " +
+      "Which kind of content source: `directory`, `branch`, or a branch `family`, as a plain value. Its own term, NOT " +
       "`dcterms:type`: that property's range is a class, and the published subgraph files use it as a " +
       "link (`holdsGraph`), so a literal under it failed publish-verify's object-link check " +
       "(ld-object-property-is-a-link, 2026-10-03).",
@@ -385,6 +385,16 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   keyedBy: {
     gloss:
       "How entries are keyed on a content branch: one entry per `commit`, or one live copy at the `tip`.",
+  },
+  keyFrom: {
+    gloss:
+      "What the key of a branch FAMILY is, in words (an IG's package id; a Lean package and toolchain): each member " +
+      "branch is the family's prefix followed by one key.",
+  },
+  familyRepository: {
+    gloss:
+      "The remote repository (`owner/repo`) a branch FAMILY is read from. Absent when the family is materialised " +
+      "on the declaring repository itself.",
   },
   sourceDeclaredIn: {
     gloss:

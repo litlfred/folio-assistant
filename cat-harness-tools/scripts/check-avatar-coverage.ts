@@ -42,7 +42,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { AVATARS, GENERIC, hasAvatar } from "../../cat-harness/schemas/avatars.js";
+import { allAvatars, AVATARS, GENERIC, hasAvatar } from "../../cat-harness/schemas/avatars.js";
 import {
   BASE_GRAPH_KINDS,
   defaultGraphKinds,
@@ -206,7 +206,7 @@ if (import.meta.main) {
   // sidecar too, so the gate form was also a writer.
   if (!check) writeQaResult(ROOT, "avatar-coverage", doc);
 
-  console.log(`Avatar coverage  (${c.required.length} kinds required, ${Object.keys(AVATARS).length} declared)`);
+  console.log(`Avatar coverage  (${c.required.length} kinds required, ${allAvatars().length} declared)`);
   console.log(`  ✓ ${c.required.length - c.missing.length} covered`);
   if (c.missing.length) {
     console.log(`  ✗ ${c.missing.length} with no avatar — each falls back to "${GENERIC.reads}":`);

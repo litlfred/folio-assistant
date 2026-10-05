@@ -262,7 +262,7 @@ document run through a JSON-LD processor, with **zero** expanded IRIs outside
 
 **Where a prefix cannot be bound at all, a different spelling is never the
 answer.** CSVW metadata allows only `@language` and `@base` in its local
-context, so the `fac:` keys in [`tabular-metadata`](tabular-metadata.md)
+context, so the `fac:` keys in `tabular-metadata`
 dangled under ANY prefix. The two real answers are absolute IRIs, or not being
 JSON-LD at all. Bean `792y` took the second: the record became plain JSON and
 the CSVW document is derived from it. **A file whose extension says `.jsonld`
@@ -477,6 +477,39 @@ Three consequences, all of which the implementation carries:
    checked only against the exporter's own collection would have passed the
    original bug.
 
+## Whose nodes — an instance publishes its own, and leaves a tombstone
+
+**The published document holds the instance's OWN declared directories**
+(owner ruling 2026-10-05, option B; bean `4ak5` item 2). `buildExport` takes
+`scope`, and the CLI `--scope <instance|checkout>`:
+
+| scope | reads | for |
+|---|---|---|
+| `instance` (default) | this instance's declaration alone | the published document, its locale variants, its QA sidecar |
+| `checkout` | this instance plus every instance stacked on it | a corpus-wide consumer that says so — the `kg` search slice |
+
+Before the split one checkout-scope document carried five other instances'
+nodes under `cat-harness.jsonld#…` — 825 of 3369, measured the day it
+landed. Each stacked instance is in its own document now
+(`instance-exports.ts`).
+
+**An `@id` that moved keeps a tombstone for ONE release**, because GitHub
+Pages cannot redirect a fragment:
+
+```json
+{ "@id": "<old>", "deprecated": true, "isReplacedBy": "<the same node in its owner's document>" }
+```
+
+`deprecated` and `isReplacedBy` are `owl:deprecated` and
+`dcterms:isReplacedBy` in the context, as `ns-export` already publishes a
+retired term. A tombstone has no `@type` and is in neither `counts` nor
+`danglingLinks` — a link to a node that left still reads as dangling. A node
+no owner's document mints (a package, a schema module: those collectors are
+instance-bound) forwards to the owner's DOCUMENT. The owner's IRI is minted
+the way the deploy publishes it (`publishedIdentity`): no `--base-url` for an
+instance declaring its own `canonicalUrl`. The release after next deletes
+`tombstonesFor`, its call, and the two terms.
+
 ## Named subgraphs — one IRI, two files, framed from one graph
 
 **Contract (bean `c1m4`; owner rulings 2026-10-03).** A *named subgraph* is a
@@ -537,7 +570,9 @@ Rules for the pair:
   context URL, the way content documents already use
   `ns/content/v1.jsonld`.
 - **Where it is built.** `bun run subgraph:jsonld`
-  (`scripts/gen-subgraph-jsonld.ts`) frames kg-export's in-memory graph and
+  (`scripts/gen-subgraph-jsonld.ts`) frames kg-export's in-memory graphs —
+  one per framed instance, each from its OWN export, never a stacked
+  instance's node under this document's tombstoned `@id` — and
   writes `docs/subgraph/<HARNESS>/<PATH>/index[.hydrated].jsonld`, which Pages
   serves at the subgraph IRI, plus the context at `ns/subgraph/v1.jsonld`.
   `subgraph:jsonld:check` is the gate. The file shape is
@@ -975,6 +1010,8 @@ bun run kg:export -- --base-url https://… --out path.jsonld
 ```
 
 `--base-url` (or `KG_BASE_URL`) overrides the declaration's `canonicalUrl`.
+`--scope instance|checkout` picks whose directories are read (see "Whose
+nodes" above); the deploy says `instance` aloud.
 
 The output is a **build artifact**, deliberately not committed: it is a
 snapshot of a tree that changes every commit, so a committed copy is stale by

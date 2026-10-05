@@ -9,7 +9,29 @@
   "version": "0.1.0",
   "title": "C@T OpenAPI",
   "description": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph kind `openapi`, and gives every operation in them a page and an IRI, rendered in the browser from the served document.",
+  "avatar": {
+    "glyph": "M9 4c-2 0-3 1-3 3v2c0 1-1 2-2 3 1 1 2 2 2 3v2c0 2 1 3 3 3M15 4c2 0 3 1 3 3v2c0 1 1 2 2 3-1 1-2 2-2 3v2c0 2-1 3-3 3",
+    "tone": 76,
+    "reads": "braces — an API described as data"
+  },
+  "_avatar_comment": "A pair of braces — an interface described as data. Moved here from cat-harness/schemas/avatars.ts, 2026-10-05 (bean sod4 #4): an instance declares its own mark.",
   "directories": [
+    {
+      "id": "cat-openapi-validators",
+      "path": "validators/",
+      "description": "The validators cat-openapi's code provides, one folio-validator/v1 node each naming the graph kind and $schema family it checks (bean riit). Owner, 2026-10-04: validators are KG nodes, and the validator names the family.",
+      "graphKinds": [
+        "validators"
+      ]
+    },
+    {
+      "id": "cat-openapi-kinds",
+      "path": "kinds/",
+      "description": "The graph kinds cat-openapi owns, one folio-graph-kind/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph. Moved here from cat-harness/schemas/graph-kind-registry.ts, with each entry's code comments kept as its rationale.",
+      "graphKinds": [
+        "kinds"
+      ]
+    },
     {
       "id": "cat-openapi-schemas",
       "path": "schemas/",

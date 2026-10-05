@@ -26,8 +26,7 @@ import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { IgIdentitySchema, readIgIdentity } from "../../fhir-harness/schemas/ig-identity";
-import { igSiteData } from "../../fhir-harness/scripts/ig-site-data";
+import { IgIdentitySchema, igSiteData, readIgIdentity } from "../platform";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 const page = (instance: string): string => readFileSync(join(ROOT, instance, "docs", "index.md"), "utf8");

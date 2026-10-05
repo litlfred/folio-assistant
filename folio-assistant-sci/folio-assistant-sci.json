@@ -17,6 +17,12 @@
     }
   ],
   "description": "Scientific source material used by folios that formalise mathematics, and the methodologies for formalising it in Lean that this layer adopts from that material.",
+  "avatar": {
+    "glyph": "M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3M7 15h10",
+    "tone": 56,
+    "reads": "a laboratory flask — folios that are scientific papers"
+  },
+  "_avatar_comment": "A conical flask with a fill line — the scientific-paper profile. Moved here from cat-harness/schemas/avatars.ts, 2026-10-05 (bean sod4 #4): an instance declares its own mark.",
   "assets": [
     {
       "id": "agent-instructions",
@@ -34,6 +40,54 @@
     }
   ],
   "directories": [
+    {
+      "id": "folio-assistant-sci-qa-checkers",
+      "path": "qa-checkers/",
+      "description": "The QA checkers this instance's Lean tooling provides, one folio-qa-checker/v1 node per criterion, naming COST_AUTOMATED_CHECKERS in content/pipeline/qa-checkers-cost.ts (bean riit, step 3b). Registered for a folio by loadContributions through its dependency tree; they replace the qaCheckers array contributions.ts returned.",
+      "graphKinds": [
+        "qa-checkers"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-pipeline-plugins",
+      "path": "pipeline-plugins/",
+      "description": "The generic pipeline slots this instance fills, one folio-pipeline-plugin/v1 node per slot, naming PIPELINE_IMPLEMENTATIONS in content/pipeline/plugin-slots.ts (bean riit, step 3b). Registered for a folio by loadContributions through its dependency tree; they replace the pipelinePlugins array contributions.ts returned.",
+      "graphKinds": [
+        "pipeline-plugins"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-translations",
+      "path": "translations/",
+      "description": "The gettext side of folio-assistant-sci's own strings, one directory per target locale. Today: `block-kinds.pot`/`.po`, the headings of the block kinds this instance declares in block-kinds/, keyed `msgctxt \"block-kind:<kind>\"` with the node's English `heading` as msgid (bean riit, step 2b). Owner, 2026-10-04: locale headings live in the translation graph (option 1 of 2), and kinds are not centrally managed, so the catalogue sits with the kinds rather than in cat-harness/translations/.",
+      "graphKinds": [
+        "translation-sources"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-block-kinds",
+      "path": "block-kinds/",
+      "description": "The paper adapter's math block kinds — the ones whose assertion is a formal mathematical claim (definition, theorem, lemma, proposition, corollary, conjecture, proof), one folio-block-kind/v1 node per file (bean riit, step 2). Owner, 2026-10-04: kinds are discoverable and not centrally managed; cat-harness/schemas/block-kinds.ts finds these by scanning every instance's declared block-kinds graph, and the seven parallel tables they replace are gone.",
+      "graphKinds": [
+        "block-kinds"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-content-adapters",
+      "path": "content-adapters/",
+      "description": "The paper block VOCABULARY's node, folio-content-adapter/v1 (bean riit, step 5): its name, its companion roles (md, ts, lean) and that cat-harness's code types it. cat-harness/schemas/block-kinds.ts derives CONTENT_ADAPTERS from the typed nodes, and block-qa.ts derives ADAPTER_COMPANION_ROLES. Owner, 2026-10-05, option 1: the vocabulary is a node; the server adapter class stays in contentAdapters.",
+      "graphKinds": [
+        "content-adapters"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-kinds",
+      "path": "kinds/",
+      "description": "The graph kinds folio-assistant-sci owns, one folio-graph-kind/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph.",
+      "graphKinds": [
+        "kinds"
+      ]
+    },
     {
       "id": "library",
       "path": "library/",
