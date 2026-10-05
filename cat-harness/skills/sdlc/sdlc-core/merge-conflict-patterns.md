@@ -82,6 +82,99 @@ correct one are indistinguishable from their output, and the stale one here
 reads as *more* work rather than less, so nothing about the result looks
 wrong.
 
+## A merge round — run each check ONCE (owner ruling, 2026-10-05)
+
+**Owner, 2026-10-05, verbatim: *"trim duplicated steps"*.** A round of folding
+`main` into a PR was costing about 45 minutes, and most of it was the same
+question asked twice. Measured 2026-10-04 on PR #1898's merge rounds, bean
+`7xmc`:
+
+| step | cost | what it adds |
+|---|---|---|
+| `merge:main`, including its own regen | 5–10 min — regen 238–309 s with nothing stale, 601–639 s when a writer runs | THE regen; rule 2 above |
+| `skill:register` | 1–2 min | the derived artefacts the merge left owed |
+| a standalone `regen` after `merge:main` | 4–5 min | **nothing** — same tree, same gate set |
+| full local `bun run gates` | ~24 min (1429 s), nearly all `bun test` (~21.8k tests) on 3–4 local cores | what CI's sharded run says in ~5 min, 4 ways |
+| `regen` again in a fresh checkout, to prove a no-op | 4–5 min | what CI's own clean checkout already proves |
+
+Three of five rows repeat a measurement somebody else, or the same command,
+has already made. So:
+
+### When every conflict is generated — the trimmed round
+
+"Generated" means every conflicted path was resolved by a declared
+`take-base`, region or sidecar pattern below, and the merge brought in no
+authored change of yours to reconcile.
+
+1. **`bun run state:mount`, then `bun run merge:main`.** `merge:main`'s regen
+   IS the regen. Do not run another one after it.
+2. **`bun run skill:register` until `bun run skill:register:check` passes.**
+   The chain can need two passes: one writer's output is another's input.
+3. **Targeted checks, and only these:**
+   - `skill:register:check` and `kg:detangle:check` — the two reds a
+     generated-only merge actually hit in CI;
+   - `subgraph:jsonld:check` — a merge or edit that changes a skill also
+     changes its payload hash; `skill:register` does not run
+     `subgraph:jsonld`, so run the writer (`bun run subgraph:jsonld`) when the
+     check is red. Measured on #2139 itself: CI's `gen-slice-sqlite` test
+     failed on three edited skills whose payloads the published tree did not
+     hold;
+   - `check:declared-paths` (never with `--update` here) and
+     `check:process-index`;
+   - `bun run typecheck`, and `eslint .` at **0 errors**;
+   - **the deletion audit** —
+     `git diff --name-status --diff-filter=D HEAD^1 HEAD -- '*/test/results/*'`
+     must list only files `main` itself deleted. A gitignored-but-tracked file
+     is dropped by a merge silently, local checks stay green because the
+     writer recreated it on disk, and CI's fresh checkout fails (bean `8j9e`).
+     `merge:main` now refuses such a drop itself (§"When one side deleted
+     the file"); after a hand merge, restore each one main still tracks with
+     `git checkout HEAD^2 -- <path>`;
+   - **submodule pins equal to `main`'s** —
+     `git ls-tree HEAD bootstrap bootstrap-tools` against
+     `git ls-tree origin/main bootstrap bootstrap-tools`. Not
+     `git submodule status`: [`merge-queue`](merge-queue.md) §"`git add -A`
+     after a merge silently reverts the submodule gitlinks" says why it cannot
+     see this;
+   - the `fsh-guts` mount is **not committed** — `git diff --stat
+     origin/main HEAD -- fsh-guts` is empty;
+   - `git merge-tree --write-tree origin/main HEAD` reports **0 conflicts**,
+     with the exit status captured on the next line
+     ([`prepare-merge`](prepare-merge.md) step 4).
+4. **Push, never with force.** CI's sharded run is the full gate set. Skip the
+   local full `bun run gates` and the fresh-checkout regen for this kind of
+   merge: each repeats something CI does better.
+
+### When it is NOT generated-only — keep the full local run
+
+**An AUTHORED file conflicted, or the merge touched code** (yours or `main`'s
+reconciled against yours): run the full local `bun run gates` before pushing,
+and read [`prepare-merge`](prepare-merge.md) §"What a green LOCAL run entitles
+you to claim" before quoting it. The targeted list above is chosen for a merge
+that changed only artefacts with one right answer. A semantic conflict — #2043
+importing a module #2112 had moved, in
+[`merge-queue`](merge-queue.md) §"A train admits only members that STACK
+cleanly" — is exactly what that list cannot see.
+
+### Four things a round needs to know
+
+- **`merge:main` has no "continue after a manual fix" mode.** When one path
+  blocks it, it aborts and restores the tree (rule 1). Do its steps by hand:
+  `git merge origin/main`, fix the blocking path, take each declared path with
+  `git checkout --theirs <path>` and stage it with `git add -f <path>`, then
+  run the regen it would have run.
+- **Give the regen a long leash.** Cold, it needs ≥1200 s of wall time. Run it
+  in the background rather than under a default 2-minute tool timeout, which
+  kills it part-way and leaves a half-written tree.
+- **`merge:main` commits with git's default message.** Amend that commit to
+  add the session's trailers (`git commit --amend`) before pushing — it is
+  your unpushed commit, so this is not a rewrite of shared history.
+- **Do not fold `main` in while another big PR is minutes from landing.** Wait
+  for it. Merging now buys a second round the moment it lands — on train
+  `merge-train-2026-10-04a`, #2112 landing mid-round re-conflicted the train
+  and cost another 12-minute regen plus a semantic conflict
+  ([`merge-queue`](merge-queue.md)).
+
 ## A pattern is not always the answer — ask what the file's record is
 
 **Read this before declaring a pattern for a path that already has one.** The
