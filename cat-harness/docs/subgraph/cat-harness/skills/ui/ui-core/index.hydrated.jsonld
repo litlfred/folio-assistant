@@ -17,6 +17,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/liquid-templates",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/markdown-render-check",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pdf-inline-viewer",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/readme-sections",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/render-logging",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/render-order",
@@ -220,6 +221,25 @@
         "sha256": "65d45b8448f535c7a1a34fe6cd41b7bf919c19dfab0af78c35edc9a6ab63fa20"
       },
       "title": "Markdown Render Check"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pdf-inline-viewer",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Show a published PDF inside a generated page — search, scroll, jump to page, print and download — with the pinned pdf.js viewer the site build installs. Which two Tools do it, the publication-gate rule that decides whether a page may embed a document at all, why the viewer opens only allowlisted hosts, and the three pdf.js behaviours that were measured rather than assumed. Read before putting a PDF on a page, before bumping the pdf.js pin, and when an embedded viewer shows an empty frame.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 156,
+      "instructionsPath": "skills/ui/ui-core/pdf-inline-viewer.md",
+      "name": "pdf-inline-viewer",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a13f822aa43c8e91e00d14aab43c008bce9a13976540fb61c2c6d5ea11798172",
+        "bytes": 8303,
+        "sha256": "a13f822aa43c8e91e00d14aab43c008bce9a13976540fb61c2c6d5ea11798172"
+      },
+      "title": "Inline PDF viewer — a pinned pdf.js, installed at build time"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/readme-sections",
