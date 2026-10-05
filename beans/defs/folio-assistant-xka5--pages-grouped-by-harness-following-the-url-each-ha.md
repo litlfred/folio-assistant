@@ -1,10 +1,11 @@
 ---
 # folio-assistant-xka5
 title: Pages grouped by harness, following the URL; each harness owns its sub-doc graphs
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-10-05T14:39:33Z
-updated_at: 2026-10-05T16:20:41Z
+updated_at: 2026-10-05T21:45:52Z
 parent: folio-assistant-9rq1
 ---
 
@@ -19,3 +20,5 @@ Measured today: just-the-docs 0.12, order by nav_order then title; 79 top-level 
 - [ ] no category exists that someone has to maintain
 
 _2026-10-05T16:20:38Z_ — Claimed by claude/vibrant-darwin-r6im60 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+Landed in #2215 (merged, main dca45031b7): pages grouped into start/concepts/guides/process/fhir as named doc-group sub-graphs, locale-sorted nav, no redirects (owner's choice).

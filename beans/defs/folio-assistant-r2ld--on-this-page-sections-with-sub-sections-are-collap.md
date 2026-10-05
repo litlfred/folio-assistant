@@ -1,11 +1,11 @@
 ---
 # folio-assistant-r2ld
 title: '''On this page'': sections with sub-sections are collapsible'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T14:39:33Z
-updated_at: 2026-10-05T15:36:48Z
+updated_at: 2026-10-05T21:45:52Z
 parent: folio-assistant-9rq1
 ---
 
@@ -18,3 +18,5 @@ Owner, 2026-10-05: 'on this page should have sub-sections collapsible'. Both sur
 _2026-10-05T15:28:15Z_ — Claimed by claude/vibrant-darwin-r6im60 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 Done in this branch: h3s fold under their h2 behind a closed 'N sub-sections' disclosure below the link, on both surfaces (docs-ui mountDocumentIndex; navbar.ts NavItem.fold via documentIndexOf). Unit + e2e added.
+
+Landed in #2206 (merged, main 3f6f7c13ec).
