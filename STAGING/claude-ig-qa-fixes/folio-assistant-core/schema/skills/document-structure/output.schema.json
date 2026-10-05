@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Document Structure Output",
+  "type": "object",
+  "required": [
+    "manifestsChanged"
+  ],
+  "properties": {
+    "manifestsChanged": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "chapters": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Chapter directory names in their new reading order."
+    },
+    "forwardReferences": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Labels whose uses[] now points forward in reading order. A real finding after a reorder, not a mechanical detail."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ig-qa-fixes/folio-assistant-core/schema/skills/document-structure/output.schema.json",
+  "staging": {
+    "branch": "claude/ig-qa-fixes",
+    "sha": "f7b8878083f3401030946c8db3c4d5dad155baa5",
+    "pr": "2236/merge",
+    "run": "37376404920"
+  }
+}

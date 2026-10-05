@@ -1,0 +1,1262 @@
+{
+  "$ref": "#/definitions/KgMaterializationRecord",
+  "definitions": {
+    "KgMaterializationRecord": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-kg-materialization/v1"
+        },
+        "subscription": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "description": "A forge repository's full name, owner/name"
+        },
+        "ref": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "part": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "subgraph"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "kind",
+                "id",
+                "path"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "asset"
+                },
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "kind",
+                "path"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "materialization": {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "folio-materialization/v1"
+            },
+            "state": {
+              "type": "string",
+              "enum": [
+                "unknown",
+                "referenced",
+                "materialized"
+              ]
+            },
+            "provenance": {
+              "type": "object",
+              "properties": {
+                "upstream": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "local": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "signature": {
+                  "type": "object",
+                  "properties": {
+                    "format": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "value": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "signer": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "verifiedAt": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "format",
+                    "value"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "localPath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "collectionBytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "gates": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "type": "string",
+                      "enum": [
+                        "unknown",
+                        "refused",
+                        "permitted"
+                      ]
+                    },
+                    "basis": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedAt": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedBy": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "verdict",
+                    "basis"
+                  ],
+                  "additionalProperties": false
+                },
+                "restrictions": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "type": "string",
+                      "enum": [
+                        "unknown",
+                        "refused",
+                        "permitted"
+                      ]
+                    },
+                    "basis": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedAt": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedBy": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "verdict",
+                    "basis"
+                  ],
+                  "additionalProperties": false
+                },
+                "retention": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "type": "string",
+                      "enum": [
+                        "unknown",
+                        "refused",
+                        "permitted"
+                      ]
+                    },
+                    "basis": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedAt": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedBy": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "verdict",
+                    "basis"
+                  ],
+                  "additionalProperties": false
+                },
+                "sourceLoss": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "type": "string",
+                      "enum": [
+                        "unknown",
+                        "refused",
+                        "permitted"
+                      ]
+                    },
+                    "basis": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedAt": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedBy": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "verdict",
+                    "basis"
+                  ],
+                  "additionalProperties": false
+                },
+                "copyright": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "type": "string",
+                      "enum": [
+                        "unknown",
+                        "refused",
+                        "permitted"
+                      ]
+                    },
+                    "basis": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedAt": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedBy": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "verdict",
+                    "basis"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "size",
+                "restrictions",
+                "retention",
+                "sourceLoss",
+                "copyright"
+              ],
+              "additionalProperties": false
+            },
+            "purpose": {
+              "type": "string",
+              "enum": [
+                "working",
+                "archival",
+                "both",
+                "compiled"
+              ]
+            },
+            "fixity": {
+              "type": "object",
+              "properties": {
+                "algorithm": {
+                  "type": "string",
+                  "const": "sha256"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "verifiedAt": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "algorithm",
+                "digest"
+              ],
+              "additionalProperties": false
+            },
+            "inputs": {
+              "type": "object",
+              "properties": {
+                "toolchain": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sourceRevision": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "inputDigest": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "toolchain",
+                "sourceRevision"
+              ],
+              "additionalProperties": false
+            },
+            "materializedAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "upstreamVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expiresAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "note": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "state",
+            "provenance"
+          ],
+          "additionalProperties": false
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "materialization": {
+                "type": "object",
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "const": "folio-materialization/v1"
+                  },
+                  "state": {
+                    "type": "string",
+                    "enum": [
+                      "unknown",
+                      "referenced",
+                      "materialized"
+                    ]
+                  },
+                  "provenance": {
+                    "type": "object",
+                    "properties": {
+                      "upstream": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "local": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "signature": {
+                        "type": "object",
+                        "properties": {
+                          "format": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "signer": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "verifiedAt": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "format",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "localPath": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "bytes": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "collectionBytes": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "gates": {
+                    "type": "object",
+                    "properties": {
+                      "size": {
+                        "type": "object",
+                        "properties": {
+                          "verdict": {
+                            "type": "string",
+                            "enum": [
+                              "unknown",
+                              "refused",
+                              "permitted"
+                            ]
+                          },
+                          "basis": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "decidedAt": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "decidedBy": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "verdict",
+                          "basis"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "restrictions": {
+                        "type": "object",
+                        "properties": {
+                          "verdict": {
+                            "type": "string",
+                            "enum": [
+                              "unknown",
+                              "refused",
+                              "permitted"
+                            ]
+                          },
+                          "basis": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "decidedAt": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "decidedBy": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "verdict",
+                          "basis"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "retention": {
+                        "type": "object",
+                        "properties": {
+                          "verdict": {
+                            "type": "string",
+                            "enum": [
+                              "unknown",
+                              "refused",
+                              "permitted"
+                            ]
+                          },
+                          "basis": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "decidedAt": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "decidedBy": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "verdict",
+                          "basis"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "sourceLoss": {
+                        "type": "object",
+                        "properties": {
+                          "verdict": {
+                            "type": "string",
+                            "enum": [
+                              "unknown",
+                              "refused",
+                              "permitted"
+                            ]
+                          },
+                          "basis": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "decidedAt": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "decidedBy": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "verdict",
+                          "basis"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "copyright": {
+                        "type": "object",
+                        "properties": {
+                          "verdict": {
+                            "type": "string",
+                            "enum": [
+                              "unknown",
+                              "refused",
+                              "permitted"
+                            ]
+                          },
+                          "basis": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "decidedAt": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "decidedBy": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "verdict",
+                          "basis"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "size",
+                      "restrictions",
+                      "retention",
+                      "sourceLoss",
+                      "copyright"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "enum": [
+                      "working",
+                      "archival",
+                      "both",
+                      "compiled"
+                    ]
+                  },
+                  "fixity": {
+                    "type": "object",
+                    "properties": {
+                      "algorithm": {
+                        "type": "string",
+                        "const": "sha256"
+                      },
+                      "digest": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      },
+                      "verifiedAt": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "algorithm",
+                      "digest"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "inputs": {
+                    "type": "object",
+                    "properties": {
+                      "toolchain": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "sourceRevision": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "inputDigest": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    },
+                    "required": [
+                      "toolchain",
+                      "sourceRevision"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "materializedAt": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "upstreamVersion": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "expiresAt": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "note": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "state",
+                  "provenance"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "materialization"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "licence": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "materialization": {
+              "type": "object",
+              "properties": {
+                "$schema": {
+                  "type": "string",
+                  "const": "folio-materialization/v1"
+                },
+                "state": {
+                  "type": "string",
+                  "enum": [
+                    "unknown",
+                    "referenced",
+                    "materialized"
+                  ]
+                },
+                "provenance": {
+                  "type": "object",
+                  "properties": {
+                    "upstream": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "local": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "signature": {
+                      "type": "object",
+                      "properties": {
+                        "format": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "value": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "signer": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "verifiedAt": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "format",
+                        "value"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "localPath": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "bytes": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "collectionBytes": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "gates": {
+                  "type": "object",
+                  "properties": {
+                    "size": {
+                      "type": "object",
+                      "properties": {
+                        "verdict": {
+                          "type": "string",
+                          "enum": [
+                            "unknown",
+                            "refused",
+                            "permitted"
+                          ]
+                        },
+                        "basis": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "decidedAt": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "decidedBy": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "verdict",
+                        "basis"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "restrictions": {
+                      "type": "object",
+                      "properties": {
+                        "verdict": {
+                          "type": "string",
+                          "enum": [
+                            "unknown",
+                            "refused",
+                            "permitted"
+                          ]
+                        },
+                        "basis": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "decidedAt": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "decidedBy": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "verdict",
+                        "basis"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "retention": {
+                      "type": "object",
+                      "properties": {
+                        "verdict": {
+                          "type": "string",
+                          "enum": [
+                            "unknown",
+                            "refused",
+                            "permitted"
+                          ]
+                        },
+                        "basis": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "decidedAt": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "decidedBy": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "verdict",
+                        "basis"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "sourceLoss": {
+                      "type": "object",
+                      "properties": {
+                        "verdict": {
+                          "type": "string",
+                          "enum": [
+                            "unknown",
+                            "refused",
+                            "permitted"
+                          ]
+                        },
+                        "basis": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "decidedAt": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "decidedBy": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "verdict",
+                        "basis"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "copyright": {
+                      "type": "object",
+                      "properties": {
+                        "verdict": {
+                          "type": "string",
+                          "enum": [
+                            "unknown",
+                            "refused",
+                            "permitted"
+                          ]
+                        },
+                        "basis": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "decidedAt": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "decidedBy": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "verdict",
+                        "basis"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "size",
+                    "restrictions",
+                    "retention",
+                    "sourceLoss",
+                    "copyright"
+                  ],
+                  "additionalProperties": false
+                },
+                "purpose": {
+                  "type": "string",
+                  "enum": [
+                    "working",
+                    "archival",
+                    "both",
+                    "compiled"
+                  ]
+                },
+                "fixity": {
+                  "type": "object",
+                  "properties": {
+                    "algorithm": {
+                      "type": "string",
+                      "const": "sha256"
+                    },
+                    "digest": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "verifiedAt": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "algorithm",
+                    "digest"
+                  ],
+                  "additionalProperties": false
+                },
+                "inputs": {
+                  "type": "object",
+                  "properties": {
+                    "toolchain": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "sourceRevision": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "inputDigest": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  },
+                  "required": [
+                    "toolchain",
+                    "sourceRevision"
+                  ],
+                  "additionalProperties": false
+                },
+                "materializedAt": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "upstreamVersion": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "expiresAt": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "note": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "state",
+                "provenance"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "materialization"
+          ],
+          "additionalProperties": false
+        },
+        "refusal": {
+          "type": "object",
+          "properties": {
+            "gates": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "type": "string",
+                      "enum": [
+                        "unknown",
+                        "refused",
+                        "permitted"
+                      ]
+                    },
+                    "basis": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedAt": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedBy": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "verdict",
+                    "basis"
+                  ],
+                  "additionalProperties": false
+                },
+                "restrictions": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "type": "string",
+                      "enum": [
+                        "unknown",
+                        "refused",
+                        "permitted"
+                      ]
+                    },
+                    "basis": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedAt": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedBy": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "verdict",
+                    "basis"
+                  ],
+                  "additionalProperties": false
+                },
+                "retention": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "type": "string",
+                      "enum": [
+                        "unknown",
+                        "refused",
+                        "permitted"
+                      ]
+                    },
+                    "basis": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedAt": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedBy": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "verdict",
+                    "basis"
+                  ],
+                  "additionalProperties": false
+                },
+                "sourceLoss": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "type": "string",
+                      "enum": [
+                        "unknown",
+                        "refused",
+                        "permitted"
+                      ]
+                    },
+                    "basis": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedAt": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedBy": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "verdict",
+                    "basis"
+                  ],
+                  "additionalProperties": false
+                },
+                "copyright": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "type": "string",
+                      "enum": [
+                        "unknown",
+                        "refused",
+                        "permitted"
+                      ]
+                    },
+                    "basis": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedAt": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decidedBy": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "verdict",
+                    "basis"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "size",
+                "restrictions",
+                "retention",
+                "sourceLoss",
+                "copyright"
+              ],
+              "additionalProperties": false
+            },
+            "refused": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "size",
+                  "restrictions",
+                  "retention",
+                  "sourceLoss",
+                  "copyright"
+                ]
+              }
+            },
+            "unanswered": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "size",
+                  "restrictions",
+                  "retention",
+                  "sourceLoss",
+                  "copyright"
+                ]
+              }
+            },
+            "purposeMissing": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "gates",
+            "refused",
+            "unanswered"
+          ],
+          "additionalProperties": false
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "$schema",
+        "subscription",
+        "repository",
+        "ref",
+        "part",
+        "materialization"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ig-qa-fixes/folio-assistant-core/schema/zod/kg-materialization/KgMaterializationRecordSchema.schema.json",
+  "title": "KgMaterializationRecordSchema",
+  "description": "Generated from `KgMaterializationRecordSchema` in schemas/kg-materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/ig-qa-fixes",
+    "sha": "f7b8878083f3401030946c8db3c4d5dad155baa5",
+    "pr": "2236/merge",
+    "run": "37376404920"
+  }
+}
