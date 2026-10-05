@@ -139,8 +139,21 @@ const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
   // Case 2. A real page of this site the index does not list — derived, so the
   // next translation batch cannot expire it.
   const dir = join(ROOT, SITE);
-  for (const f of readdirSync(dir).sort()) {
-    if (!f.endsWith(".md") || f === "index.md") continue;
+  // The top level AND the docs graph's named groups (bean `xka5`): since the
+  // root pages moved into `start/`, `concepts/`, `guides/`, `process/` and
+  // `fhir/`, the top level holds almost nothing a reader navigates to. The
+  // groups are READ from `docs.json` (typology `doc-group`), not listed here,
+  // so a new group is scanned without anyone editing this test.
+  const groups = (JSON.parse(readFileSync(join(dir, "docs.json"), "utf8")).directories as
+    { path: string; graphTypologies?: string[] }[])
+    .filter((d) => (d.graphTypologies ?? []).includes("doc-group"))
+    .map((d) => d.path.replace(/\/+$/, ""));
+  const candidates = [
+    ...readdirSync(dir).filter((f) => f.endsWith(".md")),
+    ...groups.flatMap((g) => readdirSync(join(dir, g)).filter((f) => f.endsWith(".md")).map((f) => `${g}/${f}`)),
+  ].sort();
+  for (const f of candidates) {
+    if (!f.endsWith(".md") || f === "index.md" || f.endsWith("/index.md")) continue;
     const key = f.slice(0, -3);
     if (key in INDEX.pages) continue;
     const head = readFileSync(join(dir, f), "utf8").slice(0, 2000);

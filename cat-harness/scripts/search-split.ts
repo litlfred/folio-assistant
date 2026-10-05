@@ -193,7 +193,7 @@ export function scopeOf(relUrl: string, instances: ReadonlySet<string>, locales:
 /**
  * The platform section a page path belongs to: its first segment, when the
  * page is BELOW it (`/reference/skills.html`) or is its index (`/reference/`).
- * A page at the root (`/`, `/getting-started.html`) belongs to none. The
+ * A page at the root (`/`, `/start/getting-started.html`) belongs to none. The
  * client's `scopeForPage` applies the same rule to `location.pathname`.
  */
 export function sectionOfPath(path: string): string | undefined {

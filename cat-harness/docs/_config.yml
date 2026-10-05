@@ -108,3 +108,93 @@ exclude:
 
 plugins:
   - jekyll-remote-theme
+
+# THE PAGES LIST, GROUPED BY THE DOCS GRAPH'S NAMED SUB-GRAPHS — owner,
+# 2026-10-05 (bean `xka5`): "group cat-harness docs semantically and make named
+# doc subgraphs", no hand-kept categories. A page's group is its FOLDER: each
+# entry below sets `parent` for one folder, so a page dropped into `start/` is
+# in "Start here" with nothing else to edit. A group's own landing page sets
+# `parent: ""` to stay top-level (a null would NOT override the default:
+# Jekyll keeps the old value when the new one is nil). Order within a level is the reader's
+# locale collation, applied by docs-ui.js (`sortNavByLocale`).
+defaults:
+  - scope:
+      path: "start"
+    values:
+      parent: "Start here"
+  - scope:
+      path: "concepts"
+    values:
+      parent: "Concepts"
+  - scope:
+      path: "guides"
+    values:
+      parent: "Authoring guides"
+  - scope:
+      path: "process"
+    values:
+      parent: "Process & methodology"
+  - scope:
+      path: "methodologies"
+    values:
+      parent: "Process & methodology"
+  - scope:
+      path: "fhir"
+    values:
+      parent: "FHIR"
+  - scope:
+      path: "glossary"
+    values:
+      parent: "Reference"
+  - scope:
+      path: "external-schemas"
+    values:
+      parent: "Reference"
+  - scope:
+      path: "tools"
+    values:
+      parent: "Reference"
+  - scope:
+      path: "subscriptions"
+    values:
+      parent: "Reference"
+  - scope:
+      path: "themes"
+    values:
+      parent: "Reference"
+  - scope:
+      path: "lsi"
+    values:
+      parent: "Reference"
+  - scope:
+      path: "reference"
+    values:
+      parent: "Reference"
+  - scope:
+      path: "uml"
+    values:
+      parent: "Reference"
+  - scope:
+      path: "cat-harness/published-graphs.md"
+    values:
+      parent: "Reference"
+  - scope:
+      path: "prov-qaqc"
+    values:
+      parent: "Quality"
+  - scope:
+      path: "fsh-guts"
+    values:
+      parent: "Quality"
+  - scope:
+      path: "proposals"
+    values:
+      parent: "Proposals"
+  - scope:
+      path: "requirements"
+    values:
+      parent: "Requirements"
+  - scope:
+      path: "research-and-analysis"
+    values:
+      parent: "Research and analysis"

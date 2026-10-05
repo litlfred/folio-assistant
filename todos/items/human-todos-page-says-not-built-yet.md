@@ -21,7 +21,7 @@ artefacts:
   - kind: pull-request
     id: "314"
 ---
-`content/docs/beans-and-todos/human-todos.md` opens **"Not built yet"**, and
+`content/docs/guides-beans-and-todos/human-todos.md` opens **"Not built yet"**, and
 that is no longer true. `todos/` is a declared graph with items on disk, a
 reader, a published JSON index and a board on the site.
 

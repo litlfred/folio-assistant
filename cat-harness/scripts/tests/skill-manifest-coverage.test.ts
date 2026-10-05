@@ -35,7 +35,7 @@
  * `schemas/skills/<name>/`, a directory of input/output JSON schemas with no
  * instruction body. Eleven of the nineteen "dangling" entries were skills that
  * exist by the shared definition and not by this file's narrower one, and
- * `docs/skills.md` documents them as deliberate: those packages "ship the
+ * `docs/concepts/skills.md` documents them as deliberate: those packages "ship the
  * manifest + JSON definitions" with bodies TBD.
  *
  * So this now uses `knownSkills()`. Two definitions of existence in one

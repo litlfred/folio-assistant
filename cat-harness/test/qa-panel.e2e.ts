@@ -116,7 +116,7 @@ const BLOCK_JSON = sidecarWithVerdicts(CORPUS_PATH, [
     result: "fail",
     severity: "critical",
     evidence: [
-      "content/docs/crdm-methodology/what-is-not-built-yet.md:36: **Not yet implemented:**",
+      "content/docs/process-crdm-methodology/what-is-not-built-yet.md:36: **Not yet implemented:**",
     ],
     // The script verdict alone. The agent witness that overturned it IS the
     // adjudication, and a criterion shown as failing has not been adjudicated
