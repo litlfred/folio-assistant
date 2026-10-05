@@ -70,8 +70,8 @@ Une compétence est définie à travers plusieurs couches — et non dans un seu
 | Couche | Emplacement | État |
 |--------|-------------|------|
 | **Définition** (rôles, capacités requises, exigences, modèles de routage, étapes du cycle de vie, réf. de schéma) | `.claude/skills/local/<skill>.json` | ✅ les 22 compétences de rédaction — validées en CI par `scripts/validate-skills.ts` |
-| **Contrat typé** (JSON Schema d'entrée/sortie) | `schemas/skills/<skill>/` | ✅ les 22 — voir la [référence]({{ '/reference/skills/' | relative_url }}) |
-| **Corps d'instructions** (guide textuel que le LLM charge) — parcourez-les dans la référence des [instructions de compétences]({{ '/reference/skill-instructions/' | relative_url }}) | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ compétences de cycle de vie, d'agent, du lot de plateforme et de **folio-document-adapter** ; ⏳ **les corps pour authoring-math / authoring-who-smart-guidelines sont à venir** (ces paquets fournissent le manifeste + les définitions JSON) |
+| **Contrat typé** (JSON Schema d'entrée/sortie) | `schemas/skills/<skill>/` | ✅ les 22 — voir la [référence]({{ site.baseurl }}/reference/skills/) |
+| **Corps d'instructions** (guide textuel que le LLM charge) — parcourez-les dans la référence des [instructions de compétences]({{ site.baseurl }}/reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ compétences de cycle de vie, d'agent, du lot de plateforme et de **folio-document-adapter** ; ⏳ **les corps pour authoring-math / authoring-who-smart-guidelines sont à venir** (ces paquets fournissent le manifeste + les définitions JSON) |
 | **Paquet** (dépendances Docker / exécution) | `skills/<package>/package-manifest.json` | ✅ les quatre paquets |
 
 Ainsi, *oui, les compétences existent* — sous forme de définitions structurées et de schémas typés, avec des corps
@@ -86,31 +86,31 @@ Les étapes du cycle de vie qui s'appliquent à **chaque** type de contenu :
 
 | Compétence | Étape | Objectif |
 |------------|-------|----------|
-| [`content-plan`]({{ '/reference/skills/content-plan.html' | relative_url }}) | plan | Périmètre, équipe, calendrier, gouvernance |
-| [`content-author`]({{ '/reference/skills/content-author.html' | relative_url }}) | author | Créer des artefacts structurés |
-| [`content-validate`]({{ '/reference/skills/content-validate.html' | relative_url }}) | validate | Vérifier le schéma + les contraintes |
-| [`content-review`]({{ '/reference/skills/content-review.html' | relative_url }}) | review | Relecture formelle et approbation |
-| [`content-test`]({{ '/reference/skills/content-test.html' | relative_url }}) | test | QA de bout en bout / compilation au vert |
-| [`content-publish`]({{ '/reference/skills/content-publish.html' | relative_url }}) | publish | Rendu et déploiement |
-| [`content-feedback`]({{ '/reference/skills/content-feedback.html' | relative_url }}) | feedback | Recueillir et trier les retours |
+| [`content-plan`]({{ site.baseurl }}/reference/skills/content-plan.html) | plan | Périmètre, équipe, calendrier, gouvernance |
+| [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) | author | Créer des artefacts structurés |
+| [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) | validate | Vérifier le schéma + les contraintes |
+| [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) | review | Relecture formelle et approbation |
+| [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) | test | QA de bout en bout / compilation au vert |
+| [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) | publish | Rendu et déploiement |
+| [`content-feedback`]({{ site.baseurl }}/reference/skills/content-feedback.html) | feedback | Recueillir et trier les retours |
 | `content-retire` | retire | Déprécier / archiver |
 
 ### Documents et directives politiques : `folio-document-adapter`
 
 | Compétence | Objectif |
 |------------|----------|
-| [`document-authoring`]({{ '/reference/skills/document-authoring.html' | relative_url }}) | Créer et réviser des blocs dans un folio de prose |
-| [`document-structure`]({{ '/reference/skills/document-structure.html' | relative_url }}) | Chapitres et sections — ajouter, supprimer, réordonner |
-| [`normative-statements`]({{ '/reference/skills/normative-statements.html' | relative_url }}) | Porter une recommandation, une exigence ou une règle |
-| [`document-publishing`]({{ '/reference/skills/document-publishing.html' | relative_url }}) | Markdown → HTML / PDF, sans TeX |
+| [`document-authoring`]({{ site.baseurl }}/reference/skills/document-authoring.html) | Créer et réviser des blocs dans un folio de prose |
+| [`document-structure`]({{ site.baseurl }}/reference/skills/document-structure.html) | Chapitres et sections — ajouter, supprimer, réordonner |
+| [`normative-statements`]({{ site.baseurl }}/reference/skills/normative-statements.html) | Porter une recommandation, une exigence ou une règle |
+| [`document-publishing`]({{ site.baseurl }}/reference/skills/document-publishing.html) | Markdown → HTML / PDF, sans TeX |
 
 ### Articles scientifiques et livres : `authoring-math`
 
 | Compétence | Objectif |
 |------------|----------|
-| [`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}) | Formaliser des énoncés/preuves en Lean 4 |
-| [`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}) | Rédiger des documents LaTeX |
-| [`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }}) | Vérifier les preuves, auditer les `sorry`/axiomes |
+| [`lean-formalization`]({{ site.baseurl }}/reference/skills/lean-formalization.html) | Formaliser des énoncés/preuves en Lean 4 |
+| [`latex-authoring`]({{ site.baseurl }}/reference/skills/latex-authoring.html) | Rédiger des documents LaTeX |
+| [`proof-verification`]({{ site.baseurl }}/reference/skills/proof-verification.html) | Vérifier les preuves, auditer les `sorry`/axiomes |
 | `scientific-visualization` | Figures et diagrammes |
 | `hypothesis-generation` | Proposer des conjectures / orientations |
 | `scientific-critical-thinking` | Examen contradictoire des arguments |
@@ -119,14 +119,14 @@ Les étapes du cycle de vie qui s'appliquent à **chaque** type de contenu :
 
 | Compétence | Objectif |
 |------------|----------|
-| [`l2-dak-authoring`]({{ '/reference/skills/l2-dak-authoring.html' | relative_url }}) | Artefacts DAK L2 (dictionnaire de données, etc.) |
-| [`l3-fhir-authoring`]({{ '/reference/skills/l3-fhir-authoring.html' | relative_url }}) | Ressources FHIR L3 via FSH |
-| [`bpmn-authoring`]({{ '/reference/skills/bpmn-authoring.html' | relative_url }}) | Processus métier BPMN 2.0 |
-| [`dmn-authoring`]({{ '/reference/skills/dmn-authoring.html' | relative_url }}) | Tables de décision DMN |
-| [`terminology-management`]({{ '/reference/skills/terminology-management.html' | relative_url }}) | Systèmes de codage / jeux de valeurs |
-| [`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) | Valider par rapport aux profils FHIR |
-| [`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}) | Compiler et publier l'IG |
-| [`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}) | Points de contrôle QA (QA gates) |
+| [`l2-dak-authoring`]({{ site.baseurl }}/reference/skills/l2-dak-authoring.html) | Artefacts DAK L2 (dictionnaire de données, etc.) |
+| [`l3-fhir-authoring`]({{ site.baseurl }}/reference/skills/l3-fhir-authoring.html) | Ressources FHIR L3 via FSH |
+| [`bpmn-authoring`]({{ site.baseurl }}/reference/skills/bpmn-authoring.html) | Processus métier BPMN 2.0 |
+| [`dmn-authoring`]({{ site.baseurl }}/reference/skills/dmn-authoring.html) | Tables de décision DMN |
+| [`terminology-management`]({{ site.baseurl }}/reference/skills/terminology-management.html) | Systèmes de codage / jeux de valeurs |
+| [`fhir-validation`]({{ site.baseurl }}/reference/skills/fhir-validation.html) | Valider par rapport aux profils FHIR |
+| [`ig-publication`]({{ site.baseurl }}/reference/skills/ig-publication.html) | Compiler et publier l'IG |
+| [`quality-control`]({{ site.baseurl }}/reference/skills/quality-control.html) | Points de contrôle QA (QA gates) |
 
 ### Compétences d'agent/de plateforme (`src/skills`)
 

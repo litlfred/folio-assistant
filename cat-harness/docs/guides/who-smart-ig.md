@@ -67,10 +67,10 @@ Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
 
 | Step | Skill |
 |------|-------|
-| Author FSH (profiles, extensions, value sets, examples) | [`l3-fhir-authoring`]({{ '/reference/skills/l3-fhir-authoring.html' | relative_url }}) |
-| Validate against FHIR profiles | [`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) |
-| QC gates | [`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}) |
-| Publish the IG | [`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}) |
+| Author FSH (profiles, extensions, value sets, examples) | [`l3-fhir-authoring`]({{ site.baseurl }}/reference/skills/l3-fhir-authoring.html) |
+| Validate against FHIR profiles | [`fhir-validation`]({{ site.baseurl }}/reference/skills/fhir-validation.html) |
+| QC gates | [`quality-control`]({{ site.baseurl }}/reference/skills/quality-control.html) |
+| Publish the IG | [`ig-publication`]({{ site.baseurl }}/reference/skills/ig-publication.html) |
 
 ## Workflow
 {: #workflow data-fa-label="sec:guides-who-smart-ig-workflow" }
@@ -119,9 +119,9 @@ to today's full build, and only a green build of `main` or a release seeds the c
 |------|----------------|
 | Restore and seed the derived state | `ig-cache.sh` (proposed; the `lake-cache.sh` contract) |
 | Compute the cone of the change | [`content/pipeline/fsh-cone.ts`](https://github.com/litlfred/folio-assistant/blob/main/content/pipeline/fsh-cone.ts) |
-| Validate the cone | [`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) over the warm validator service (proposed MCP tools) |
-| Rebuild the meta-index, assemble the site | `ig_metaindex_rebuild` (proposed), [`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}) |
-| QC gates, deploy | [`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}), [`content-publish`]({{ '/reference/skills/content-publish.html' | relative_url }}) |
+| Validate the cone | [`fhir-validation`]({{ site.baseurl }}/reference/skills/fhir-validation.html) over the warm validator service (proposed MCP tools) |
+| Rebuild the meta-index, assemble the site | `ig_metaindex_rebuild` (proposed), [`ig-publication`]({{ site.baseurl }}/reference/skills/ig-publication.html) |
+| QC gates, deploy | [`quality-control`]({{ site.baseurl }}/reference/skills/quality-control.html), [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) |
 
 ## A mock session
 {: #a-mock-session data-fa-label="sec:guides-who-smart-ig-a-mock-session" }

@@ -3,12 +3,12 @@ page disagree, **the Skill wins and this page is wrong**.
 
 | question | where it is answered |
 |---|---|
-| How an instance declares its directories, and every graph typology | [`directory-conventions`]({{ '/reference/skill-instructions/directory-conventions.html' | relative_url }}) |
-| What `content`, `context`, `state` and `derived` each promise a consumer | [`content-context-and-state-graphs`]({{ '/reference/skill-instructions/content-context-and-state-graphs.html' | relative_url }}) |
-| Actors, Roles, Permissions, and why a Role is a swimlane | [`role-model`]({{ '/reference/skill-instructions/role-model.html' | relative_url }}) |
-| Authoring a Workflow activity, and what a bean-marked step performs | [`bpmn-processes`]({{ '/reference/skill-instructions/bpmn-processes.html' | relative_url }}) |
-| Which store answers which question about a running Workflow | [`workflow-state`]({{ '/reference/skill-instructions/workflow-state.html' | relative_url }}) |
-| Why a Skill states a capability and a Tool the mechanism | [`skills-and-tools`]({{ '/reference/skill-instructions/skills-and-tools.html' | relative_url }}) |
+| How an instance declares its directories, and every graph typology | [`directory-conventions`]({{ site.baseurl }}/reference/skill-instructions/directory-conventions.html) |
+| What `content`, `context`, `state` and `derived` each promise a consumer | [`content-context-and-state-graphs`]({{ site.baseurl }}/reference/skill-instructions/content-context-and-state-graphs.html) |
+| Actors, Roles, Permissions, and why a Role is a swimlane | [`role-model`]({{ site.baseurl }}/reference/skill-instructions/role-model.html) |
+| Authoring a Workflow activity, and what a bean-marked step performs | [`bpmn-processes`]({{ site.baseurl }}/reference/skill-instructions/bpmn-processes.html) |
+| Which store answers which question about a running Workflow | [`workflow-state`]({{ site.baseurl }}/reference/skill-instructions/workflow-state.html) |
+| Why a Skill states a capability and a Tool the mechanism | [`skills-and-tools`]({{ site.baseurl }}/reference/skill-instructions/skills-and-tools.html) |
 | Context Overlays, and the several ways context is generated | [Managing agent context](managing-agent-context.html) |
 | What a visualiser owes a declared directory | [Subgraph viewers](subgraph-viewers.html) |
 

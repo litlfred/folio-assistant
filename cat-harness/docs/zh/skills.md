@@ -52,8 +52,8 @@ flowchart TD
 | 层次 | 位置 | 状态 |
 |-------|----------|--------|
 | **定义**（角色、所需能力、门禁要求、路由模式、生命周期阶段、模式引用） | `.claude/skills/local/<skill>.json` | ✅ 全部 22 项创作技能 — 由 `scripts/validate-skills.ts` 在 CI 中验证 |
-| **类型化契约**（输入/输出 JSON Schema） | `schemas/skills/<skill>/` | ✅ 全部 22 项 — 参见[参考]({{ '/reference/skills/' | relative_url }}) |
-| **指令正文**（LLM 加载的文字操作指南） — 可在[技能指令]({{ '/reference/skill-instructions/' | relative_url }})参考中查阅 | `skills/authoring/content-lifecycle/*.md`、`skills/folio-*-adapter/*.md`、`src/skills/*.md` | ✅ lifecycle、agent、platform-bundle 以及 **folio-document-adapter** 技能；⏳ **authoring-math / authoring-who-smart-guidelines 正文待补充**（这些技能包已提供清单 + JSON 定义） |
+| **类型化契约**（输入/输出 JSON Schema） | `schemas/skills/<skill>/` | ✅ 全部 22 项 — 参见[参考]({{ site.baseurl }}/reference/skills/) |
+| **指令正文**（LLM 加载的文字操作指南） — 可在[技能指令]({{ site.baseurl }}/reference/skill-instructions/)参考中查阅 | `skills/authoring/content-lifecycle/*.md`、`skills/folio-*-adapter/*.md`、`src/skills/*.md` | ✅ lifecycle、agent、platform-bundle 以及 **folio-document-adapter** 技能；⏳ **authoring-math / authoring-who-smart-guidelines 正文待补充**（这些技能包已提供清单 + JSON 定义） |
 | **技能包**（Docker/运行时依赖项） | `skills/<package>/package-manifest.json` | ✅ 全部四个技能包 |
 
 所以，*是的，这些技能确实存在* — 表现为结构化定义与类型化模式，且生命周期和智能体技能已随附详细的文本指南。`skill_fetch` MCP 工具当前提供 `src/skills/*.md` 指令正文；创作技能的文本正文是后续待补充的内容（它们所属的定义和契约均已就绪）。
@@ -64,31 +64,31 @@ flowchart TD
 
 | 技能 | 阶段 | 用途 |
 |-------|-------|---------|
-| [`content-plan`]({{ '/reference/skills/content-plan.html' | relative_url }}) | plan | 范围、团队、时间线、治理 |
-| [`content-author`]({{ '/reference/skills/content-author.html' | relative_url }}) | author | 创建结构化制品 |
-| [`content-validate`]({{ '/reference/skills/content-validate.html' | relative_url }}) | validate | 检查模式（schema）与约束 |
-| [`content-review`]({{ '/reference/skills/content-review.html' | relative_url }}) | review | 正式审阅与批准 |
-| [`content-test`]({{ '/reference/skills/content-test.html' | relative_url }}) | test | 端到端 QA / 构建绿灯（build green） |
-| [`content-publish`]({{ '/reference/skills/content-publish.html' | relative_url }}) | publish | 渲染与部署 |
-| [`content-feedback`]({{ '/reference/skills/content-feedback.html' | relative_url }}) | feedback | 收集与分流反馈 |
+| [`content-plan`]({{ site.baseurl }}/reference/skills/content-plan.html) | plan | 范围、团队、时间线、治理 |
+| [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) | author | 创建结构化制品 |
+| [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) | validate | 检查模式（schema）与约束 |
+| [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) | review | 正式审阅与批准 |
+| [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) | test | 端到端 QA / 构建绿灯（build green） |
+| [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) | publish | 渲染与部署 |
+| [`content-feedback`]({{ site.baseurl }}/reference/skills/content-feedback.html) | feedback | 收集与分流反馈 |
 | `content-retire` | retire | 弃用 / 归档 |
 
 ### 文档与政策指南：`folio-document-adapter`
 
 | 技能 | 用途 |
 |-------|---------|
-| [`document-authoring`]({{ '/reference/skills/document-authoring.html' | relative_url }}) | 在纯文本（prose）folio 中创建并修订块 |
-| [`document-structure`]({{ '/reference/skills/document-structure.html' | relative_url }}) | 章节与小节 — 添加、删除、重新排序 |
-| [`normative-statements`]({{ '/reference/skills/normative-statements.html' | relative_url }}) | 承载建议、要求或规则 |
-| [`document-publishing`]({{ '/reference/skills/document-publishing.html' | relative_url }}) | Markdown → HTML / PDF，无需 TeX |
+| [`document-authoring`]({{ site.baseurl }}/reference/skills/document-authoring.html) | 在纯文本（prose）folio 中创建并修订块 |
+| [`document-structure`]({{ site.baseurl }}/reference/skills/document-structure.html) | 章节与小节 — 添加、删除、重新排序 |
+| [`normative-statements`]({{ site.baseurl }}/reference/skills/normative-statements.html) | 承载建议、要求或规则 |
+| [`document-publishing`]({{ site.baseurl }}/reference/skills/document-publishing.html) | Markdown → HTML / PDF，无需 TeX |
 
 ### 论文与专著：`authoring-math`
 
 | 技能 | 用途 |
 |-------|---------|
-| [`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}) | 在 Lean 4 中形式化陈述与证明 |
-| [`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}) | 撰写 LaTeX 文档 |
-| [`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }}) | 验证证明，审计 `sorry` / 公理 |
+| [`lean-formalization`]({{ site.baseurl }}/reference/skills/lean-formalization.html) | 在 Lean 4 中形式化陈述与证明 |
+| [`latex-authoring`]({{ site.baseurl }}/reference/skills/latex-authoring.html) | 撰写 LaTeX 文档 |
+| [`proof-verification`]({{ site.baseurl }}/reference/skills/proof-verification.html) | 验证证明，审计 `sorry` / 公理 |
 | `scientific-visualization` | 图表与示意图 |
 | `hypothesis-generation` | 提出猜想与研究方向 |
 | `scientific-critical-thinking` | 对论证进行对抗性审阅（adversarial review） |
@@ -97,14 +97,14 @@ flowchart TD
 
 | 技能 | 用途 |
 |-------|---------|
-| [`l2-dak-authoring`]({{ '/reference/skills/l2-dak-authoring.html' | relative_url }}) | L2 DAK 制品（数据字典等） |
-| [`l3-fhir-authoring`]({{ '/reference/skills/l3-fhir-authoring.html' | relative_url }}) | 通过 FSH 编写 L3 FHIR 资源 |
-| [`bpmn-authoring`]({{ '/reference/skills/bpmn-authoring.html' | relative_url }}) | BPMN 2.0 业务流程 |
-| [`dmn-authoring`]({{ '/reference/skills/dmn-authoring.html' | relative_url }}) | DMN 决策表 |
-| [`terminology-management`]({{ '/reference/skills/terminology-management.html' | relative_url }}) | 代码系统（code systems）与值集（value sets） |
-| [`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) | 对照 FHIR Profile（配置文件）进行验证 |
-| [`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}) | 构建并发布 IG（实施指南） |
-| [`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}) | 质量保证（QA）门禁 |
+| [`l2-dak-authoring`]({{ site.baseurl }}/reference/skills/l2-dak-authoring.html) | L2 DAK 制品（数据字典等） |
+| [`l3-fhir-authoring`]({{ site.baseurl }}/reference/skills/l3-fhir-authoring.html) | 通过 FSH 编写 L3 FHIR 资源 |
+| [`bpmn-authoring`]({{ site.baseurl }}/reference/skills/bpmn-authoring.html) | BPMN 2.0 业务流程 |
+| [`dmn-authoring`]({{ site.baseurl }}/reference/skills/dmn-authoring.html) | DMN 决策表 |
+| [`terminology-management`]({{ site.baseurl }}/reference/skills/terminology-management.html) | 代码系统（code systems）与值集（value sets） |
+| [`fhir-validation`]({{ site.baseurl }}/reference/skills/fhir-validation.html) | 对照 FHIR Profile（配置文件）进行验证 |
+| [`ig-publication`]({{ site.baseurl }}/reference/skills/ig-publication.html) | 构建并发布 IG（实施指南） |
+| [`quality-control`]({{ site.baseurl }}/reference/skills/quality-control.html) | 质量保证（QA）门禁 |
 
 ### 智能体／平台技能（`src/skills`）
 

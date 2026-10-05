@@ -70,8 +70,8 @@ flowchart TD
 | Уровень | Расположение | Статус |
 |---------|--------------|--------|
 | **Определение** (роли, требуемые возможности, требования, шаблоны маршрутизации, этапы жизненного цикла, ссылка на схему) | `.claude/skills/local/<skill>.json` | ✅ все 22 навыка создания контента — валидированы в CI с помощью `scripts/validate-skills.ts` |
-| **Типизированный контракт** (JSON Schema ввода/вывода) | `schemas/skills/<skill>/` | ✅ все 22 — см. [справочник]({{ '/reference/skills/' | relative_url }}) |
-| **Тело инструкций** (текстовое руководство, загружаемое LLM) — ознакомьтесь с ними в справочнике [Инструкции к навыкам]({{ '/reference/skill-instructions/' | relative_url }}) | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ навыки жизненного цикла, агента, платформенного набора и **folio-document-adapter**; ⏳ **тексты инструкций для authoring-math / authoring-who-smart-guidelines находятся в разработке (TBD)** (эти пакеты поставляют манифест + определения JSON) |
+| **Типизированный контракт** (JSON Schema ввода/вывода) | `schemas/skills/<skill>/` | ✅ все 22 — см. [справочник]({{ site.baseurl }}/reference/skills/) |
+| **Тело инструкций** (текстовое руководство, загружаемое LLM) — ознакомьтесь с ними в справочнике [Инструкции к навыкам]({{ site.baseurl }}/reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ навыки жизненного цикла, агента, платформенного набора и **folio-document-adapter**; ⏳ **тексты инструкций для authoring-math / authoring-who-smart-guidelines находятся в разработке (TBD)** (эти пакеты поставляют манифест + определения JSON) |
 | **Пакет** (зависимости среды выполнения/Docker) | `skills/<package>/package-manifest.json` | ✅ все четыре пакета |
 
 Таким образом, *да, навыки существуют* — в виде структурированных определений и типизированных схем,
@@ -86,31 +86,31 @@ flowchart TD
 
 | Навык | Этап | Назначение |
 |-------|------|------------|
-| [`content-plan`]({{ '/reference/skills/content-plan.html' | relative_url }}) | plan | Определение границ, команда, график, управление (governance) |
-| [`content-author`]({{ '/reference/skills/content-author.html' | relative_url }}) | author | Создание структурированных артефактов |
-| [`content-validate`]({{ '/reference/skills/content-validate.html' | relative_url }}) | validate | Проверка схемы и ограничений |
-| [`content-review`]({{ '/reference/skills/content-review.html' | relative_url }}) | review | Официальное рецензирование и утверждение |
-| [`content-test`]({{ '/reference/skills/content-test.html' | relative_url }}) | test | Сквозной контроль качества (E2E QA) / успешная сборка («зеленый» билд) |
-| [`content-publish`]({{ '/reference/skills/content-publish.html' | relative_url }}) | publish | Рендеринг и развертывание |
-| [`content-feedback`]({{ '/reference/skills/content-feedback.html' | relative_url }}) | feedback | Сбор и триаж обратной связи |
+| [`content-plan`]({{ site.baseurl }}/reference/skills/content-plan.html) | plan | Определение границ, команда, график, управление (governance) |
+| [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) | author | Создание структурированных артефактов |
+| [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) | validate | Проверка схемы и ограничений |
+| [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) | review | Официальное рецензирование и утверждение |
+| [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) | test | Сквозной контроль качества (E2E QA) / успешная сборка («зеленый» билд) |
+| [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) | publish | Рендеринг и развертывание |
+| [`content-feedback`]({{ site.baseurl }}/reference/skills/content-feedback.html) | feedback | Сбор и триаж обратной связи |
 | `content-retire` | retire | Вывод из эксплуатации / архивация |
 
 ### Документы и нормативные руководства: `folio-document-adapter`
 
 | Навык | Назначение |
 |-------|------------|
-| [`document-authoring`]({{ '/reference/skills/document-authoring.html' | relative_url }}) | Создание и редактирование блоков в текстовом фолио (prose folio) |
-| [`document-structure`]({{ '/reference/skills/document-structure.html' | relative_url }}) | Главы и разделы — добавление, удаление, изменение порядка |
-| [`normative-statements`]({{ '/reference/skills/normative-statements.html' | relative_url }}) | Формулирование рекомендаций, требований или правил |
-| [`document-publishing`]({{ '/reference/skills/document-publishing.html' | relative_url }}) | Markdown → HTML / PDF, без TeX |
+| [`document-authoring`]({{ site.baseurl }}/reference/skills/document-authoring.html) | Создание и редактирование блоков в текстовом фолио (prose folio) |
+| [`document-structure`]({{ site.baseurl }}/reference/skills/document-structure.html) | Главы и разделы — добавление, удаление, изменение порядка |
+| [`normative-statements`]({{ site.baseurl }}/reference/skills/normative-statements.html) | Формулирование рекомендаций, требований или правил |
+| [`document-publishing`]({{ site.baseurl }}/reference/skills/document-publishing.html) | Markdown → HTML / PDF, без TeX |
 
 ### Статьи и книги: `authoring-math`
 
 | Навык | Назначение |
 |-------|------------|
-| [`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}) | Формализация утверждений и доказательств в Lean 4 |
-| [`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}) | Создание документов LaTeX |
-| [`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }}) | Верификация доказательств, аудит `sorry` и аксиом |
+| [`lean-formalization`]({{ site.baseurl }}/reference/skills/lean-formalization.html) | Формализация утверждений и доказательств в Lean 4 |
+| [`latex-authoring`]({{ site.baseurl }}/reference/skills/latex-authoring.html) | Создание документов LaTeX |
+| [`proof-verification`]({{ site.baseurl }}/reference/skills/proof-verification.html) | Верификация доказательств, аудит `sorry` и аксиом |
 | `scientific-visualization` | Рисунки и диаграммы |
 | `hypothesis-generation` | Формулирование гипотез и направлений исследований |
 | `scientific-critical-thinking` | Критическое (состязательное) рецензирование аргументов |
@@ -119,14 +119,14 @@ flowchart TD
 
 | Навык | Назначение |
 |-------|------------|
-| [`l2-dak-authoring`]({{ '/reference/skills/l2-dak-authoring.html' | relative_url }}) | Артефакты L2 DAK (словарь данных и др.) |
-| [`l3-fhir-authoring`]({{ '/reference/skills/l3-fhir-authoring.html' | relative_url }}) | Ресурсы L3 FHIR через FSH |
-| [`bpmn-authoring`]({{ '/reference/skills/bpmn-authoring.html' | relative_url }}) | Бизнес-процессы BPMN 2.0 |
-| [`dmn-authoring`]({{ '/reference/skills/dmn-authoring.html' | relative_url }}) | Таблицы решений DMN |
-| [`terminology-management`]({{ '/reference/skills/terminology-management.html' | relative_url }}) | Системы кодирования / наборы значений |
-| [`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) | Валидация на соответствие профилям FHIR |
-| [`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}) | Сборка и публикация IG |
-| [`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}) | Рубежи контроля качества (QA gates) |
+| [`l2-dak-authoring`]({{ site.baseurl }}/reference/skills/l2-dak-authoring.html) | Артефакты L2 DAK (словарь данных и др.) |
+| [`l3-fhir-authoring`]({{ site.baseurl }}/reference/skills/l3-fhir-authoring.html) | Ресурсы L3 FHIR через FSH |
+| [`bpmn-authoring`]({{ site.baseurl }}/reference/skills/bpmn-authoring.html) | Бизнес-процессы BPMN 2.0 |
+| [`dmn-authoring`]({{ site.baseurl }}/reference/skills/dmn-authoring.html) | Таблицы решений DMN |
+| [`terminology-management`]({{ site.baseurl }}/reference/skills/terminology-management.html) | Системы кодирования / наборы значений |
+| [`fhir-validation`]({{ site.baseurl }}/reference/skills/fhir-validation.html) | Валидация на соответствие профилям FHIR |
+| [`ig-publication`]({{ site.baseurl }}/reference/skills/ig-publication.html) | Сборка и публикация IG |
+| [`quality-control`]({{ site.baseurl }}/reference/skills/quality-control.html) | Рубежи контроля качества (QA gates) |
 
 ### Навыки агента и платформы (`src/skills`)
 

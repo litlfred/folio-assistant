@@ -112,10 +112,10 @@ folio-assistant is **pluggable** — each content type is handled by a content
 
 | Content type | Artifacts | Skill package |
 |--------------|-----------|---------------|
-| **Scientific papers & books** | Lean 4 formalization + LaTeX/Markdown | [`authoring-math`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#scientific-papers--books) |
-| **WHO SMART Guidelines DAKs** | L2 artifacts — BPMN, DMN, Excel data dictionaries, personas | [`authoring-who-smart-guidelines`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#who-smart-guidelines-daks-l2) |
-| **WHO SMART Implementation Guides** | L3 FHIR resources, FSH, IG Publisher output | [`authoring-who-smart-guidelines`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#who-smart-implementation-guides-l3) |
-| **Others** | Pluggable — add a new adapter + skill package | [Adding a content type]({{ '/docs/cat-harness/guides/new-content-type.html' | relative_url }}) |
+| **Scientific papers & books** | Lean 4 formalization + LaTeX/Markdown | [`authoring-math`]({{ site.baseurl }}/docs/cat-harness/content-types.html#scientific-papers--books) |
+| **WHO SMART Guidelines DAKs** | L2 artifacts — BPMN, DMN, Excel data dictionaries, personas | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/content-types.html#who-smart-guidelines-daks-l2) |
+| **WHO SMART Implementation Guides** | L3 FHIR resources, FSH, IG Publisher output | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/content-types.html#who-smart-implementation-guides-l3) |
+| **Others** | Pluggable — add a new adapter + skill package | [Adding a content type]({{ site.baseurl }}/docs/cat-harness/guides/new-content-type.html) |
 
 The cross-cutting [`content-lifecycle`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#the-content-lifecycle)
 package (plan → author → validate → review → test → publish → feedback → retire)

@@ -261,19 +261,19 @@ excuse a missing review, and a clean review does not excuse a red build.
 | Activity | Lane | Skill |
 |----------|------|-------|
 | Describe the intended change | Editor / author | — (human) |
-| Claim or open the bean | Work plan | [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}) |
-| Draft the block edit | Authoring agent | [`content-author`]({{ '/reference/skills/content-author.html' | relative_url }}) |
-| Schema and constraint checks | Mechanical validation | [`content-validate`]({{ '/reference/skills/content-validate.html' | relative_url }}) |
-| Syntax, spelling and links | Mechanical validation | [`content-validate`]({{ '/reference/skills/content-validate.html' | relative_url }}) |
-| Build and QA gates | Mechanical validation | [`content-test`]({{ '/reference/skills/content-test.html' | relative_url }}) |
-| Agent review of the change | Non-mechanical validation | [`content-review`]({{ '/reference/skills/content-review.html' | relative_url }}) |
-| Human / SME review | Non-mechanical validation | [`content-review`]({{ '/reference/skills/content-review.html' | relative_url }}) |
+| Claim or open the bean | Work plan | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
+| Draft the block edit | Authoring agent | [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) |
+| Schema and constraint checks | Mechanical validation | [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) |
+| Syntax, spelling and links | Mechanical validation | [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) |
+| Build and QA gates | Mechanical validation | [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) |
+| Agent review of the change | Non-mechanical validation | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Human / SME review | Non-mechanical validation | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
 | Collate findings into a report | HCI validation pipeline | — (pipeline) |
-| Log findings on the bean | Work plan | [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}) |
+| Log findings on the bean | Work plan | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 | Review the findings | Editor / author | — (human — this is the gate) |
-| Revise the proposed change | Authoring agent | [`content-author`]({{ '/reference/skills/content-author.html' | relative_url }}) |
+| Revise the proposed change | Authoring agent | [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) |
 | Commit into the corpus | Corpus | — (subject to the `commit-hygiene` requirement) |
-| Resolve or re-open the bean | Work plan | [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}) |
+| Resolve or re-open the bean | Work plan | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 
 The domain-specific checks hang off `content-validate` / `content-test` by
 content type:
@@ -317,17 +317,17 @@ Three things to note:
 
 | Activity | Lane | Skill |
 |----------|------|-------|
-| Open or claim the release bean | Work plan | [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}) |
-| Build the draft publication | Corpus + build pipeline | [`content-publish`]({{ '/reference/skills/content-publish.html' | relative_url }}) |
-| Run publication QA gates | Corpus + build pipeline | [`content-test`]({{ '/reference/skills/content-test.html' | relative_url }}) · [`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}) |
+| Open or claim the release bean | Work plan | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
+| Build the draft publication | Corpus + build pipeline | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) |
+| Run publication QA gates | Corpus + build pipeline | [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) · [`quality-control`]({{ site.baseurl }}/reference/skills/quality-control.html) |
 | Editing and HCI validation | Editors + authoring agents | call activity → [diagram 3](#editing-and-the-hci-validation-gate) |
-| Circulate the draft | Publication manager | [`content-review`]({{ '/reference/skills/content-review.html' | relative_url }}) |
-| Review the draft publication | Review team | [`content-review`]({{ '/reference/skills/content-review.html' | relative_url }}) |
-| Clinical / scientific sign-off | SMEs | [`content-review`]({{ '/reference/skills/content-review.html' | relative_url }}) |
-| Open beans for the change requests | Work plan | [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}) · [`content-feedback`]({{ '/reference/skills/content-feedback.html' | relative_url }}) |
-| Authorise the release | Programme manager | [`content-publish`]({{ '/reference/skills/content-publish.html' | relative_url }}) |
-| Version, tag and publish | Publication manager | [`content-publish`]({{ '/reference/skills/content-publish.html' | relative_url }}) · [`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}) |
-| Close the release beans | Work plan | [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}) |
+| Circulate the draft | Publication manager | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Review the draft publication | Review team | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Clinical / scientific sign-off | SMEs | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Open beans for the change requests | Work plan | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) · [`content-feedback`]({{ site.baseurl }}/reference/skills/content-feedback.html) |
+| Authorise the release | Programme manager | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) |
+| Version, tag and publish | Publication manager | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) · [`ig-publication`]({{ site.baseurl }}/reference/skills/ig-publication.html) |
+| Close the release beans | Work plan | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 
 This diagram implements the `req:content-lifecycle` phase gates —
 `validate-before-review`, `review-before-test`, `test-before-publish`,
@@ -486,11 +486,11 @@ implies actors performing activities over time, which none of these have:
 
 | Diagram | Notation | Why |
 |---------|----------|-----|
-| `README.md`, [home]({{ '/index.html' | relative_url }}) — "What it does" | Mermaid | Component / data-flow map of the platform, not a sequence of activities |
+| `README.md`, [home]({{ site.baseurl }}/index.html) — "What it does" | Mermaid | Component / data-flow map of the platform, not a sequence of activities |
 | [Architecture](architecture.html) — server and adapters | Mermaid | Deployment and module structure |
 | [Skills & roles](skills.html) — how the five concepts compose | Mermaid | Conceptual composition, no time axis |
 | [Skills & roles](skills.html) — `viewer → reviewer → author → admin` | Mermaid | An inheritance lattice, not a flow |
-| [Home]({{ '/index.html' | relative_url }}) — documentation map | Mermaid | Navigation graph |
+| [Home]({{ site.baseurl }}/index.html) — documentation map | Mermaid | Navigation graph |
 | [Adding a content type](guides/new-content-type.html) — "What you provide" | Mermaid | What you hand over, not what you do |
 | [Writing a paper](guides/writing-a-paper.html) — the Lean session | Mermaid `sequenceDiagram` | An interaction transcript between you, the assistant and the MCP server. BPMN's equivalent — a collaboration with message flows — would add ceremony without adding meaning |
 

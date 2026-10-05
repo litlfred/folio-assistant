@@ -121,7 +121,7 @@ of making the editor accessible substitutes for them.
 | | where |
 |---|---|
 | Agent-facing preferences, committed, read at session start | `interaction/interaction.json`, surfaced by `scripts/session-start-coord-sweep.sh` |
-| The rules an agent follows when asking | [`interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }}) |
+| The rules an agent follows when asking | [`interaction-modality`]({{ site.baseurl }}/reference/skill-instructions/interaction-modality.html) |
 | Reader-facing controls on this site | the gear in the sidebar header — larger text, higher contrast, underlined links, reduced motion |
 | Reduced motion honoured without being asked | `prefers-reduced-motion` media query, and it seeds the panel's default |
 

@@ -123,7 +123,7 @@ effort pour rendre l'éditeur accessible ne peut s'y substituer.
 | | où |
 |---|---|
 | Préférences destinées à l'agent, commitées, lues au démarrage de la session | `interaction/interaction.json`, exposé par `scripts/session-start-coord-sweep.sh` |
-| Les règles suivies par un agent lorsqu'il pose des questions | [`interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }}) |
+| Les règles suivies par un agent lorsqu'il pose des questions | [`interaction-modality`]({{ site.baseurl }}/reference/skill-instructions/interaction-modality.html) |
 | Contrôles destinés aux lecteurs sur ce site | la roue dentée dans l'en-tête de la barre latérale — texte plus grand, contraste plus élevé, liens soulignés, animations réduites |
 | Prise en compte de la réduction des animations sans qu'on le demande | requête média `prefers-reduced-motion`, qui initialise la valeur par défaut du panneau |
 

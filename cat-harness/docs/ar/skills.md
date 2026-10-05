@@ -69,8 +69,8 @@ flowchart TD
 | الطبقة | الموقع | الحالة |
 |-------|----------|--------|
 | **التعريف** (الأدوار، القدرات المطلوبة، المتطلبات، أنماط التوجيه، مراحل دورة الحياة، مرجع المخطط) | `.claude/skills/local/<skill>.json` | ✅ جميع مهارات التأليف الـ 22 — تم التحقق منها في التكامل المستمر (CI) عبر `scripts/validate-skills.ts` |
-| **العقد محدد الأنواع** (JSON Schema للمدخلات/المخرجات) | `schemas/skills/<skill>/` | ✅ جميع الـ 22 — راجع [المرجع]({{ '/reference/skills/' | relative_url }}) |
-| **متن التعليمات** (الدليل النثري الإرشادي الذي يحمّله النموذج اللغوي) — تصفحها في مرجع [تعليمات المهارات]({{ '/reference/skill-instructions/' | relative_url }}) | `skills/authoring/content-lifecycle/*.md`، و`skills/folio-*-adapter/*.md`، و`src/skills/*.md` | ✅ مهارات دورة الحياة، والوكيل، وحزمة المنصة، و**folio-document-adapter**؛ ⏳ **نصوص authoring-math / authoring-who-smart-guidelines قيد التحديد (TBD)** (توفر تلك الحزم البيان الرسمي + تعريفات JSON) |
+| **العقد محدد الأنواع** (JSON Schema للمدخلات/المخرجات) | `schemas/skills/<skill>/` | ✅ جميع الـ 22 — راجع [المرجع]({{ site.baseurl }}/reference/skills/) |
+| **متن التعليمات** (الدليل النثري الإرشادي الذي يحمّله النموذج اللغوي) — تصفحها في مرجع [تعليمات المهارات]({{ site.baseurl }}/reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`، و`skills/folio-*-adapter/*.md`، و`src/skills/*.md` | ✅ مهارات دورة الحياة، والوكيل، وحزمة المنصة، و**folio-document-adapter**؛ ⏳ **نصوص authoring-math / authoring-who-smart-guidelines قيد التحديد (TBD)** (توفر تلك الحزم البيان الرسمي + تعريفات JSON) |
 | **الحزمة** (تبعات Docker/بيئة التشغيل) | `skills/<package>/package-manifest.json` | ✅ جميع الحزم الأربع |
 
 إذن، *نعم، المهارات موجودة بالفعل* — كتعريفات مهيكلة + مخططات محددة الأنواع، مع توفير
@@ -84,31 +84,31 @@ flowchart TD
 
 | المهارة | المرحلة | الغرض |
 |-------|-------|---------|
-| [`content-plan`]({{ '/reference/skills/content-plan.html' | relative_url }}) | plan (تخطيط) | تحديد النطاق، والفريق، والجدول الزمني، والحوكمة |
-| [`content-author`]({{ '/reference/skills/content-author.html' | relative_url }}) | author (تأليف) | إنشاء مخرجات مهيكلة |
-| [`content-validate`]({{ '/reference/skills/content-validate.html' | relative_url }}) | validate (تحقق) | فحص المخطط + القيود |
-| [`content-review`]({{ '/reference/skills/content-review.html' | relative_url }}) | review (مراجعة) | المراجعة والاعتماد الرسمي |
-| [`content-test`]({{ '/reference/skills/content-test.html' | relative_url }}) | test (اختبار) | ضمان جودة شامل من البداية للنهاية / بناء ناجح |
-| [`content-publish`]({{ '/reference/skills/content-publish.html' | relative_url }}) | publish (نشر) | التصيير والنشر |
-| [`content-feedback`]({{ '/reference/skills/content-feedback.html' | relative_url }}) | feedback (ملاحظات) | جمع الملاحظات وتصنيفها وتوجيهها |
+| [`content-plan`]({{ site.baseurl }}/reference/skills/content-plan.html) | plan (تخطيط) | تحديد النطاق، والفريق، والجدول الزمني، والحوكمة |
+| [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) | author (تأليف) | إنشاء مخرجات مهيكلة |
+| [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) | validate (تحقق) | فحص المخطط + القيود |
+| [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) | review (مراجعة) | المراجعة والاعتماد الرسمي |
+| [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) | test (اختبار) | ضمان جودة شامل من البداية للنهاية / بناء ناجح |
+| [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) | publish (نشر) | التصيير والنشر |
+| [`content-feedback`]({{ site.baseurl }}/reference/skills/content-feedback.html) | feedback (ملاحظات) | جمع الملاحظات وتصنيفها وتوجيهها |
 | `content-retire` | retire (تقاعد) | إيقاف الاستخدام / الأرشفة |
 
 ### المستندات وإرشادات السياسات: `folio-document-adapter`
 
 | المهارة | الغرض |
 |-------|---------|
-| [`document-authoring`]({{ '/reference/skills/document-authoring.html' | relative_url }}) | إنشاء الكتل ومراجعتها في folio نثري |
-| [`document-structure`]({{ '/reference/skills/document-structure.html' | relative_url }}) | الفصول والأقسام — إضافة، وحذف، وإعادة ترتيب |
-| [`normative-statements`]({{ '/reference/skills/normative-statements.html' | relative_url }}) | تضمين توصية أو متطلب أو قاعدة |
-| [`document-publishing`]({{ '/reference/skills/document-publishing.html' | relative_url }}) | من Markdown إلى HTML / PDF، دون الحاجة إلى TeX |
+| [`document-authoring`]({{ site.baseurl }}/reference/skills/document-authoring.html) | إنشاء الكتل ومراجعتها في folio نثري |
+| [`document-structure`]({{ site.baseurl }}/reference/skills/document-structure.html) | الفصول والأقسام — إضافة، وحذف، وإعادة ترتيب |
+| [`normative-statements`]({{ site.baseurl }}/reference/skills/normative-statements.html) | تضمين توصية أو متطلب أو قاعدة |
+| [`document-publishing`]({{ site.baseurl }}/reference/skills/document-publishing.html) | من Markdown إلى HTML / PDF، دون الحاجة إلى TeX |
 
 ### الأوراق والكتب العلمية: `authoring-math`
 
 | المهارة | الغرض |
 |-------|---------|
-| [`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}) | الصياغة الرياضية الرسمية للعبارات/البراهين في Lean 4 |
-| [`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}) | تأليف مستندات LaTeX |
-| [`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }}) | التحقق من البراهين، وتدقيق `sorry`/المسلّمات |
+| [`lean-formalization`]({{ site.baseurl }}/reference/skills/lean-formalization.html) | الصياغة الرياضية الرسمية للعبارات/البراهين في Lean 4 |
+| [`latex-authoring`]({{ site.baseurl }}/reference/skills/latex-authoring.html) | تأليف مستندات LaTeX |
+| [`proof-verification`]({{ site.baseurl }}/reference/skills/proof-verification.html) | التحقق من البراهين، وتدقيق `sorry`/المسلّمات |
 | `scientific-visualization` | الأشكال والرسوم البيانية |
 | `hypothesis-generation` | اقتراح تخمينات / توجهات بحثية |
 | `scientific-critical-thinking` | المراجعة النقدية والجدلية للحجج |
@@ -117,14 +117,14 @@ flowchart TD
 
 | المهارة | الغرض |
 |-------|---------|
-| [`l2-dak-authoring`]({{ '/reference/skills/l2-dak-authoring.html' | relative_url }}) | مخرجات DAK للمستوى L2 (قاموس البيانات، وما إلى ذلك) |
-| [`l3-fhir-authoring`]({{ '/reference/skills/l3-fhir-authoring.html' | relative_url }}) | موارد FHIR للمستوى L3 عبر FSH |
-| [`bpmn-authoring`]({{ '/reference/skills/bpmn-authoring.html' | relative_url }}) | العمليات التجارية بـ BPMN 2.0 |
-| [`dmn-authoring`]({{ '/reference/skills/dmn-authoring.html' | relative_url }}) | جداول قرارات DMN |
-| [`terminology-management`]({{ '/reference/skills/terminology-management.html' | relative_url }}) | أنظمة الترميز / مجموعات القيم |
-| [`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) | التحقق مقابل ملفات تعريف FHIR |
-| [`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}) | بناء دليل التطبيق (IG) ونشره |
-| [`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}) | بوابات ضمان الجودة (QA gates) |
+| [`l2-dak-authoring`]({{ site.baseurl }}/reference/skills/l2-dak-authoring.html) | مخرجات DAK للمستوى L2 (قاموس البيانات، وما إلى ذلك) |
+| [`l3-fhir-authoring`]({{ site.baseurl }}/reference/skills/l3-fhir-authoring.html) | موارد FHIR للمستوى L3 عبر FSH |
+| [`bpmn-authoring`]({{ site.baseurl }}/reference/skills/bpmn-authoring.html) | العمليات التجارية بـ BPMN 2.0 |
+| [`dmn-authoring`]({{ site.baseurl }}/reference/skills/dmn-authoring.html) | جداول قرارات DMN |
+| [`terminology-management`]({{ site.baseurl }}/reference/skills/terminology-management.html) | أنظمة الترميز / مجموعات القيم |
+| [`fhir-validation`]({{ site.baseurl }}/reference/skills/fhir-validation.html) | التحقق مقابل ملفات تعريف FHIR |
+| [`ig-publication`]({{ site.baseurl }}/reference/skills/ig-publication.html) | بناء دليل التطبيق (IG) ونشره |
+| [`quality-control`]({{ site.baseurl }}/reference/skills/quality-control.html) | بوابات ضمان الجودة (QA gates) |
 
 ### مهارات الوكيل/المنصة (`src/skills`)
 

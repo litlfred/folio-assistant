@@ -72,8 +72,8 @@ bun run src/index.ts --check-deps      # what this environment can do
 | `skills/folio-core/` | не зависит от контента: координация, наблюдатели, QA, рендеринг, библиография |
 | `folio-assistant-sci/skills/content/folio-paper-adapter/` | статьи: Lean, LaTeX, доказательства, симуляторы |
 | `smart-base/skills/content/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
-| [Справочник по схемам навыков]({{ '/reference/skills/' | relative_url }}) | сгенерированный контракт ввода/вывода для каждого навыка |
-| [Инструкции по навыкам]({{ '/reference/skill-instructions/' | relative_url }}) | сгенерированные полные тексты инструкций |
+| [Справочник по схемам навыков]({{ site.baseurl }}/reference/skills/) | сгенерированный контракт ввода/вывода для каждого навыка |
+| [Инструкции по навыкам]({{ site.baseurl }}/reference/skill-instructions/) | сгенерированные полные тексты инструкций |
 | [Навыки и роли](../../skills.html) | композиция навыков, ролей и возможностей |
 
 Оба каталога `reference/` являются **сгенерированными** — никогда не редактируйте
@@ -187,8 +187,8 @@ lean_build), затем выполняет push. **Слияние (merge) при
 | Вопрос | Ответ |
 |---|---|
 | Команды проекта, соглашения | `AGENTS.md` (общий источник истины для агентов) |
-| Что делает навык | `skills/**/` или сгенерированные [тексты инструкций]({{ '/reference/skill-instructions/' | relative_url }}) |
-| Типизированный контракт навыка | [Справочник по схемам навыков]({{ '/reference/skills/' | relative_url }}) |
+| Что делает навык | `skills/**/` или сгенерированные [тексты инструкций]({{ site.baseurl }}/reference/skill-instructions/) |
+| Типизированный контракт навыка | [Справочник по схемам навыков]({{ site.baseurl }}/reference/skills/) |
 | Что означает критерий QA | `content/pipeline/qa-criteria-registry.ts` — описания служат спецификацией |
 | Схема блока | `schemas/types.ts` |
 | Схема файла QA | `schemas/block-qa.ts` |

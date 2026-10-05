@@ -89,7 +89,7 @@ Vale la pena detenerse en la Parte B de ATAG, porque es la parte que una platafo
 | | dónde |
 |---|---|
 | Preferencias orientadas al agente, guardadas en el repositorio (committed), leídas al inicio de la sesión | `interaction/interaction.json`, expuestas por `scripts/session-start-coord-sweep.sh` |
-| Las reglas que sigue un agente al preguntar | [`interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }}) |
+| Las reglas que sigue un agente al preguntar | [`interaction-modality`]({{ site.baseurl }}/reference/skill-instructions/interaction-modality.html) |
 | Controles para el lector en este sitio | el engranaje en el encabezado de la barra lateral —texto más grande, mayor contraste, enlaces subrayados, movimiento reducido |
 | Movimiento reducido respetado sin tener que solicitarlo | media query `prefers-reduced-motion`, que inicializa el valor predeterminado del panel |
 

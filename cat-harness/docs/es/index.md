@@ -97,10 +97,10 @@ folio-assistant es **extensible** — cada tipo de contenido es gestionado por u
 
 | Tipo de contenido | Artefactos | Paquete de habilidades |
 |-------------------|------------|------------------------|
-| **Artículos científicos y libros** | Formalización Lean 4 + LaTeX/Markdown | [`authoring-math`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#scientific-papers--books) |
-| **Kits de adaptación digital (DAK) de las Directrices SMART de la OMS** | Artefactos L2 — BPMN, DMN, diccionarios de datos Excel, personas | [`authoring-who-smart-guidelines`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#who-smart-guidelines-daks-l2) |
-| **Guías de implementación SMART de la OMS** | Recursos FHIR L3, FSH, salida de IG Publisher | [`authoring-who-smart-guidelines`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#who-smart-implementation-guides-l3) |
-| **Otros** | Extensible — añade un nuevo adaptador + paquete de habilidades | [Añadir un tipo de contenido]({{ '/docs/cat-harness/guides/new-content-type.html' | relative_url }}) |
+| **Artículos científicos y libros** | Formalización Lean 4 + LaTeX/Markdown | [`authoring-math`]({{ site.baseurl }}/docs/cat-harness/content-types.html#scientific-papers--books) |
+| **Kits de adaptación digital (DAK) de las Directrices SMART de la OMS** | Artefactos L2 — BPMN, DMN, diccionarios de datos Excel, personas | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/content-types.html#who-smart-guidelines-daks-l2) |
+| **Guías de implementación SMART de la OMS** | Recursos FHIR L3, FSH, salida de IG Publisher | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/content-types.html#who-smart-implementation-guides-l3) |
+| **Otros** | Extensible — añade un nuevo adaptador + paquete de habilidades | [Añadir un tipo de contenido]({{ site.baseurl }}/docs/cat-harness/guides/new-content-type.html) |
 
 El paquete transversal [`content-lifecycle`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#the-content-lifecycle)
 (planificar → redactar → validar → revisar → probar → publicar → retroalimentación → retirar)

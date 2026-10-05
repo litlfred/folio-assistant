@@ -94,10 +94,10 @@ actuellement pris en charge :
 
 | Type de contenu | Artefacts | Ensemble de compétences |
 |-----------------|-----------|-------------------------|
-| **Articles scientifiques et livres** | Formalisation Lean 4 + LaTeX/Markdown | [`authoring-math`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#scientific-papers--books) |
-| **Kits d'adaptation numérique (DAK) des Lignes directrices SMART de l'OMS** | Artefacts L2 — BPMN, DMN, dictionnaires de données Excel, personas | [`authoring-who-smart-guidelines`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#who-smart-guidelines-daks-l2) |
-| **Guides d'implémentation SMART de l'OMS** | Ressources FHIR L3, FSH, sortie de l'éditeur d'IG | [`authoring-who-smart-guidelines`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#who-smart-implementation-guides-l3) |
-| **Autres** | Extensible — ajoutez un nouvel adaptateur + ensemble de compétences | [Ajouter un type de contenu]({{ '/docs/cat-harness/guides/new-content-type.html' | relative_url }}) |
+| **Articles scientifiques et livres** | Formalisation Lean 4 + LaTeX/Markdown | [`authoring-math`]({{ site.baseurl }}/docs/cat-harness/content-types.html#scientific-papers--books) |
+| **Kits d'adaptation numérique (DAK) des Lignes directrices SMART de l'OMS** | Artefacts L2 — BPMN, DMN, dictionnaires de données Excel, personas | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/content-types.html#who-smart-guidelines-daks-l2) |
+| **Guides d'implémentation SMART de l'OMS** | Ressources FHIR L3, FSH, sortie de l'éditeur d'IG | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/content-types.html#who-smart-implementation-guides-l3) |
+| **Autres** | Extensible — ajoutez un nouvel adaptateur + ensemble de compétences | [Ajouter un type de contenu]({{ site.baseurl }}/docs/cat-harness/guides/new-content-type.html) |
 
 Le cycle transversal [`content-lifecycle`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#the-content-lifecycle)
 (planifier → rédiger → valider → réviser → tester → publier → retour → retirer)

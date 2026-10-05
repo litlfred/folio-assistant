@@ -82,10 +82,10 @@ folio-assistant 是**可插拔的**——每种内容类型都由一个内容*�
 
 | 内容类型 | 制品 | 技能包 |
 |--------------|-----------|---------------|
-| **科学论文与专著** | Lean 4 形式化 + LaTeX/Markdown | [`authoring-math`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#scientific-papers--books) |
-| **WHO SMART 指南 DAK** | L2 制品——BPMN、DMN、Excel 数据字典、用户画像（personas） | [`authoring-who-smart-guidelines`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#who-smart-guidelines-daks-l2) |
-| **WHO SMART 实施指南** | L3 FHIR 资源、FSH、IG Publisher 输出 | [`authoring-who-smart-guidelines`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#who-smart-implementation-guides-l3) |
-| **其他** | 可插拔——添加新适配器 + 技能包 | [添加内容类型]({{ '/docs/cat-harness/guides/new-content-type.html' | relative_url }}) |
+| **科学论文与专著** | Lean 4 形式化 + LaTeX/Markdown | [`authoring-math`]({{ site.baseurl }}/docs/cat-harness/content-types.html#scientific-papers--books) |
+| **WHO SMART 指南 DAK** | L2 制品——BPMN、DMN、Excel 数据字典、用户画像（personas） | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/content-types.html#who-smart-guidelines-daks-l2) |
+| **WHO SMART 实施指南** | L3 FHIR 资源、FSH、IG Publisher 输出 | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/content-types.html#who-smart-implementation-guides-l3) |
+| **其他** | 可插拔——添加新适配器 + 技能包 | [添加内容类型]({{ site.baseurl }}/docs/cat-harness/guides/new-content-type.html) |
 
 通用横切 [`content-lifecycle`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#the-content-lifecycle)
 包（规划 → 创作 → 验证 → 审阅 → 测试 → 发布 → 反馈 → 归档）适用于每种内容类型。

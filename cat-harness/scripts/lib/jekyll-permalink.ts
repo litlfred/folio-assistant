@@ -170,3 +170,43 @@ export function publishedHref(siteDir: string, href: string): string {
   if (published === `${stem}.html` || `/${published}` === `/${stem.replace(/index$/, "")}`) return href;
   return `/${published}${rest}`;
 }
+
+function frontMatterOf(file: string): Record<string, unknown> {
+  const m = /^---\r?\n([\s\S]*?)\r?\n---/.exec(readFileSync(file, "utf-8"));
+  if (!m) return {};
+  try {
+    const parsed = parseYaml(m[1]!) as unknown;
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? (parsed as Record<string, unknown>) : {};
+  } catch {
+    return {};
+  }
+}
+
+/**
+ * The inverse: the source page (site-relative, `/`-separated, `.md`) that is
+ * published at a site-absolute `url`, or `undefined` when no page in `siteDir`
+ * is. Tries the path as written first, then each permalink default's fixed
+ * prefix stripped (`/docs/cat-harness/x.html` → `x.md`), and accepts a
+ * candidate only when the FORWARD rule maps it back to `url` — so a mapping
+ * is never guessed from a shape.
+ */
+export function sourceForPermalink(siteDir: string, url: string): string | undefined {
+  const defaults = permalinkDefaultsIn(siteDir);
+  const norm = (u: string): string => u.replace(/[?#].*$/, "").replace(/\/index\.html$/, "/");
+  const want = norm(url);
+  const asFile = (u: string): string => {
+    const rel = u.replace(/^\//, "").replace(/\.html$/, ".md");
+    return rel === "" || rel.endsWith("/") ? `${rel}index.md` : rel;
+  };
+  const candidates = [asFile(want)];
+  for (const d of defaults) {
+    const prefix = d.permalink.split(":")[0]!;
+    if (prefix.length > 1 && want.startsWith(prefix)) candidates.push(asFile(`/${want.slice(prefix.length)}`));
+  }
+  for (const rel of candidates) {
+    const file = join(siteDir, rel);
+    if (!existsSync(file)) continue;
+    if (norm(pagePermalink(rel, frontMatterOf(file), defaults)) === want) return rel;
+  }
+  return undefined;
+}

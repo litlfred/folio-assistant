@@ -310,6 +310,13 @@ export const RULES: Rule[] = [
       // makes is about INSTANCES and where their directories resolve; it
       // opens the files only to copy bytes, and never asks what a page says.
       "scripts/compose-docs.ts",             // docs layers -> one composed tree
+      // Where the built instance's docs pages publish (`docs/<name>`, bean
+      // `kc7k`), and Jekyll's permalink rule that puts them there, read once
+      // for every generator that links to a page by its source path. Both
+      // are about the SITE's addressing, the platform's concern, and neither
+      // reads what a page says.
+      "scripts/docs-route.ts",
+      "scripts/lib/jekyll-permalink.ts",
       // Whether a swimlane DEFINES itself — `name`, `<documentation>`, and
       // both reaching the translation templates. Harness by subject for the
       // same reason as its neighbour above: a lane is a ROLE boundary, which

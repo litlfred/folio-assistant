@@ -86,10 +86,10 @@ folio-assistant **расширяем** — каждый тип контента 
 
 | Тип контента | Артефакты | Пакет навыков |
 |--------------|-----------|---------------|
-| **Научные статьи и книги** | Формализация Lean 4 + LaTeX/Markdown | [`authoring-math`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#scientific-papers--books) |
-| **Комплекты цифровой адаптации (DAK) руководств ВОЗ SMART Guidelines** | Артефакты L2 — BPMN, DMN, словари данных Excel, персоны | [`authoring-who-smart-guidelines`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#who-smart-guidelines-daks-l2) |
-| **Руководства по реализации ВОЗ SMART Guidelines** | Ресурсы FHIR L3, FSH, выходные данные IG Publisher | [`authoring-who-smart-guidelines`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#who-smart-implementation-guides-l3) |
-| **Другие** | Расширяемость — добавьте новый адаптер + пакет навыков | [Добавление типа контента]({{ '/docs/cat-harness/guides/new-content-type.html' | relative_url }}) |
+| **Научные статьи и книги** | Формализация Lean 4 + LaTeX/Markdown | [`authoring-math`]({{ site.baseurl }}/docs/cat-harness/content-types.html#scientific-papers--books) |
+| **Комплекты цифровой адаптации (DAK) руководств ВОЗ SMART Guidelines** | Артефакты L2 — BPMN, DMN, словари данных Excel, персоны | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/content-types.html#who-smart-guidelines-daks-l2) |
+| **Руководства по реализации ВОЗ SMART Guidelines** | Ресурсы FHIR L3, FSH, выходные данные IG Publisher | [`authoring-who-smart-guidelines`]({{ site.baseurl }}/docs/cat-harness/content-types.html#who-smart-implementation-guides-l3) |
+| **Другие** | Расширяемость — добавьте новый адаптер + пакет навыков | [Добавление типа контента]({{ site.baseurl }}/docs/cat-harness/guides/new-content-type.html) |
 
 Сквозной пакет [`content-lifecycle`]({{ '/docs/cat-harness/content-types.html' | relative_url }}#the-content-lifecycle)
 (планирование → написание → валидация → рецензирование → тестирование → публикация → обратная связь → вывод из эксплуатации)

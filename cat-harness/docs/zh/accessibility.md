@@ -89,7 +89,7 @@ ATAG Part B 值得重点关注，因为这是内容平台能够唯独提供的�
 | | 位置 |
 |---|---|
 | 面向智能体的偏好设置，已提交，在会话启动时读取 | `interaction/interaction.json`，由 `scripts/session-start-coord-sweep.sh` 呈现 |
-| 智能体在提问时遵循的规则 | [`interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }}) |
+| 智能体在提问时遵循的规则 | [`interaction-modality`]({{ site.baseurl }}/reference/skill-instructions/interaction-modality.html) |
 | 本站点上面向读者的控制项 | 侧边栏标头中的齿轮图标——更大字号、更高对比度、带下划线的链接、减少动效 |
 | 无需询问即可遵循减少动效偏好 | `prefers-reduced-motion` 媒体查询，并作为面板默认值的种子 |
 

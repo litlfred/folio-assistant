@@ -72,8 +72,8 @@ bun run src/index.ts --check-deps      # what this environment can do
 | `skills/folio-core/` | مهارات غير مرتبطة بمحتوى معين: التنسيق، المراقبون (watchers)، ضمان الجودة (QA)، التصيير، المراجع |
 | `folio-assistant-sci/skills/content/folio-paper-adapter/` | الأوراق البحثية: Lean، وLaTeX، والبراهين، والمحاكيات |
 | `smart-base/skills/content/authoring-who-smart-guidelines/` | حزم DAK / أدلة IG لإرشادات منظمة الصحة العالمية SMART |
-| [مرجع مخطط المهارات]({{ '/reference/skills/' | relative_url }}) | عقد الإدخال/الإخراج المصنف للأنواع والمولّد آليًا لكل مهارة |
-| [تعليمات المهارات]({{ '/reference/skill-instructions/' | relative_url }}) | نصوص التعليمات الكاملة المولّدة آليًا |
+| [مرجع مخطط المهارات]({{ site.baseurl }}/reference/skills/) | عقد الإدخال/الإخراج المصنف للأنواع والمولّد آليًا لكل مهارة |
+| [تعليمات المهارات]({{ site.baseurl }}/reference/skill-instructions/) | نصوص التعليمات الكاملة المولّدة آليًا |
 | [المهارات والأدوار](../../skills.html) | كيفية تكوين المهارات والأدوار والقدرات معًا |
 
 كلا الدليلين في `reference/` **مولّدان آليًا** — إياك وتعديلهما يدويًا.
@@ -187,8 +187,8 @@ lean_build)، ثم يدفع التغييرات. **إنه لا يقوم بالد�
 | السؤال | الإجابة |
 |---|---|
 | أوامر المشروع واتفاقياته | `AGENTS.md` (مصدر الحقيقة العام للوكيل) |
-| ما تفعله مهارة معينة | `skills/**/`، أو [نصوص التعليمات]({{ '/reference/skill-instructions/' | relative_url }}) المولّدة آليًا |
-| العقد المصنف للأنواع للمهارة | [مرجع مخطط المهارات]({{ '/reference/skills/' | relative_url }}) |
+| ما تفعله مهارة معينة | `skills/**/`، أو [نصوص التعليمات]({{ site.baseurl }}/reference/skill-instructions/) المولّدة آليًا |
+| العقد المصنف للأنواع للمهارة | [مرجع مخطط المهارات]({{ site.baseurl }}/reference/skills/) |
 | ما يعنيه معيار ضمان الجودة (QA) | `content/pipeline/qa-criteria-registry.ts` — الأوصاف هي المواصفة القياسية |
 | مخطط الكتلة (block schema) | `schemas/types.ts` |
 | مخطط ملف QA الجانبي | `schemas/block-qa.ts` |

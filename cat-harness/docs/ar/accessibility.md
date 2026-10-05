@@ -123,7 +123,7 @@ W3C الخاصة بـ **COGA** ومعيار **WCAG 3.1** — وهو أيضاً �
 | | أين |
 |---|---|
 | تفضيلات موجهة للوكيل، محفوظة في المستودع، وتُقرأ عند بدء الجلسة | `interaction/interaction.json`، وتُوفَّر عبر `scripts/session-start-coord-sweep.sh` |
-| القواعد التي يتبعها الوكيل عند طرح الأسئلة | [`interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }}) |
+| القواعد التي يتبعها الوكيل عند طرح الأسئلة | [`interaction-modality`]({{ site.baseurl }}/reference/skill-instructions/interaction-modality.html) |
 | عناصر تحكم موجهة للقارئ في هذا الموقع | رمز الترس في رأس الشريط الجانبي — نص أكبر، تباين أعلى، خط تحت الروابط، تقليل الحركة |
 | مراعاة تقليل الحركة دون الحاجة لطلب ذلك | استعلام الوسائط `prefers-reduced-motion`، وهو الذي يُعيّن القيمة الافتراضية للوحة |
 

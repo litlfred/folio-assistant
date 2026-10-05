@@ -89,7 +89,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 | | где |
 |---|---|
 | Настройки для агента, зафиксированные в репозитории, считываемые в начале сессии | `interaction/interaction.json`, передаются через `scripts/session-start-coord-sweep.sh` |
-| Правила, которым следует агент при формулировании вопросов | [`interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }}) |
+| Правила, которым следует агент при формулировании вопросов | [`interaction-modality`]({{ site.baseurl }}/reference/skill-instructions/interaction-modality.html) |
 | Элементы управления для читателя на этом сайте | шестеренка в шапке боковой панели — увеличенный текст, повышенный контраст, подчеркнутые ссылки, уменьшение анимации |
 | Учет предпочтения об уменьшении анимации без явного запроса | медиа-запрос `prefers-reduced-motion`, определяющий значение по умолчанию в панели |
 

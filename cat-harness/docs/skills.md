@@ -70,8 +70,8 @@ A skill is defined across a few layers — not a single file. For any skill:
 | Layer | Location | Status |
 |-------|----------|--------|
 | **Definition** (roles, required capabilities, requirements, routing patterns, lifecycle stages, schema ref) | `.claude/skills/local/<skill>.json` | ✅ all 22 authoring skills — validated in CI by `scripts/validate-skills.ts` |
-| **Typed contract** (input/output JSON Schema) | `schemas/skills/<skill>/` | ✅ all 22 — see [reference]({{ '/reference/skills/' | relative_url }}) |
-| **Instruction body** (prose how-to the LLM loads) — browse them in the [Skill instructions]({{ '/reference/skill-instructions/' | relative_url }}) reference | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ lifecycle, agent, platform-bundle and **folio-document-adapter** skills; ⏳ **authoring-math / authoring-who-smart-guidelines bodies are TBD** (those packages ship the manifest + JSON definitions) |
+| **Typed contract** (input/output JSON Schema) | `schemas/skills/<skill>/` | ✅ all 22 — see [reference]({{ site.baseurl }}/reference/skills/) |
+| **Instruction body** (prose how-to the LLM loads) — browse them in the [Skill instructions]({{ site.baseurl }}/reference/skill-instructions/) reference | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ lifecycle, agent, platform-bundle and **folio-document-adapter** skills; ⏳ **authoring-math / authoring-who-smart-guidelines bodies are TBD** (those packages ship the manifest + JSON definitions) |
 | **Package** (Docker/runtime deps) | `skills/<package>/package-manifest.json` | ✅ all four packages |
 
 So *yes, the skills exist* — as structured definitions + typed schemas, with prose
@@ -86,31 +86,31 @@ The lifecycle stages that apply to **every** content type:
 
 | Skill | Stage | Purpose |
 |-------|-------|---------|
-| [`content-plan`]({{ '/reference/skills/content-plan.html' | relative_url }}) | plan | Scope, team, timeline, governance |
-| [`content-author`]({{ '/reference/skills/content-author.html' | relative_url }}) | author | Create structured artifacts |
-| [`content-validate`]({{ '/reference/skills/content-validate.html' | relative_url }}) | validate | Check schema + constraints |
-| [`content-review`]({{ '/reference/skills/content-review.html' | relative_url }}) | review | Formal review & approval |
-| [`content-test`]({{ '/reference/skills/content-test.html' | relative_url }}) | test | End-to-end QA / build green |
-| [`content-publish`]({{ '/reference/skills/content-publish.html' | relative_url }}) | publish | Render & deploy |
-| [`content-feedback`]({{ '/reference/skills/content-feedback.html' | relative_url }}) | feedback | Collect & triage feedback |
+| [`content-plan`]({{ site.baseurl }}/reference/skills/content-plan.html) | plan | Scope, team, timeline, governance |
+| [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) | author | Create structured artifacts |
+| [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) | validate | Check schema + constraints |
+| [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) | review | Formal review & approval |
+| [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) | test | End-to-end QA / build green |
+| [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) | publish | Render & deploy |
+| [`content-feedback`]({{ site.baseurl }}/reference/skills/content-feedback.html) | feedback | Collect & triage feedback |
 | `content-retire` | retire | Deprecate / archive |
 
 ### Documents & policy guidance: `folio-document-adapter`
 
 | Skill | Purpose |
 |-------|---------|
-| [`document-authoring`]({{ '/reference/skills/document-authoring.html' | relative_url }}) | Create and revise blocks in a prose folio |
-| [`document-structure`]({{ '/reference/skills/document-structure.html' | relative_url }}) | Chapters and sections — add, remove, reorder |
-| [`normative-statements`]({{ '/reference/skills/normative-statements.html' | relative_url }}) | Carry a recommendation, requirement or rule |
-| [`document-publishing`]({{ '/reference/skills/document-publishing.html' | relative_url }}) | Markdown → HTML / PDF, no TeX |
+| [`document-authoring`]({{ site.baseurl }}/reference/skills/document-authoring.html) | Create and revise blocks in a prose folio |
+| [`document-structure`]({{ site.baseurl }}/reference/skills/document-structure.html) | Chapters and sections — add, remove, reorder |
+| [`normative-statements`]({{ site.baseurl }}/reference/skills/normative-statements.html) | Carry a recommendation, requirement or rule |
+| [`document-publishing`]({{ site.baseurl }}/reference/skills/document-publishing.html) | Markdown → HTML / PDF, no TeX |
 
 ### Papers & books: `authoring-math`
 
 | Skill | Purpose |
 |-------|---------|
-| [`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}) | Formalize statements/proofs in Lean 4 |
-| [`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}) | Author LaTeX documents |
-| [`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }}) | Verify proofs, audit `sorry`/axioms |
+| [`lean-formalization`]({{ site.baseurl }}/reference/skills/lean-formalization.html) | Formalize statements/proofs in Lean 4 |
+| [`latex-authoring`]({{ site.baseurl }}/reference/skills/latex-authoring.html) | Author LaTeX documents |
+| [`proof-verification`]({{ site.baseurl }}/reference/skills/proof-verification.html) | Verify proofs, audit `sorry`/axioms |
 | `scientific-visualization` | Figures & diagrams |
 | `hypothesis-generation` | Propose conjectures / directions |
 | `scientific-critical-thinking` | Adversarial review of arguments |
@@ -119,14 +119,14 @@ The lifecycle stages that apply to **every** content type:
 
 | Skill | Purpose |
 |-------|---------|
-| [`l2-dak-authoring`]({{ '/reference/skills/l2-dak-authoring.html' | relative_url }}) | L2 DAK artifacts (data dictionary, etc.) |
-| [`l3-fhir-authoring`]({{ '/reference/skills/l3-fhir-authoring.html' | relative_url }}) | L3 FHIR resources via FSH |
-| [`bpmn-authoring`]({{ '/reference/skills/bpmn-authoring.html' | relative_url }}) | BPMN 2.0 business processes |
-| [`dmn-authoring`]({{ '/reference/skills/dmn-authoring.html' | relative_url }}) | DMN decision tables |
-| [`terminology-management`]({{ '/reference/skills/terminology-management.html' | relative_url }}) | Code systems / value sets |
-| [`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) | Validate against FHIR profiles |
-| [`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}) | Build & publish the IG |
-| [`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}) | QA gates |
+| [`l2-dak-authoring`]({{ site.baseurl }}/reference/skills/l2-dak-authoring.html) | L2 DAK artifacts (data dictionary, etc.) |
+| [`l3-fhir-authoring`]({{ site.baseurl }}/reference/skills/l3-fhir-authoring.html) | L3 FHIR resources via FSH |
+| [`bpmn-authoring`]({{ site.baseurl }}/reference/skills/bpmn-authoring.html) | BPMN 2.0 business processes |
+| [`dmn-authoring`]({{ site.baseurl }}/reference/skills/dmn-authoring.html) | DMN decision tables |
+| [`terminology-management`]({{ site.baseurl }}/reference/skills/terminology-management.html) | Code systems / value sets |
+| [`fhir-validation`]({{ site.baseurl }}/reference/skills/fhir-validation.html) | Validate against FHIR profiles |
+| [`ig-publication`]({{ site.baseurl }}/reference/skills/ig-publication.html) | Build & publish the IG |
+| [`quality-control`]({{ site.baseurl }}/reference/skills/quality-control.html) | QA gates |
 
 ### Agent/platform skills (`src/skills`)
 

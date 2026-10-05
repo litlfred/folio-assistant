@@ -38,10 +38,11 @@
  * @covers translation-sources
  */
 import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, relative, sep } from "node:path";
 
 import { directoryForGraph } from "../../schemas/cat-harness.ts";
 import { buildTranslationIndex, siteRoot } from "./translation-index.ts";
+import { sourceForPermalink } from "../../scripts/lib/jekyll-permalink.ts";
 
 /** One heading, reduced to what can be compared ACROSS a translation. */
 export interface Heading {
@@ -274,6 +275,13 @@ export function catalogueFor(instanceRoot: string, locale: string, page: string)
  * corpora.
  */
 export function fileForUrl(site: string, url: string): string {
+  // The INVERSE of Jekyll's permalink rule, not of a path shape: since bean
+  // `kc7k` the docs-folder pages publish under `/docs/cat-harness/`, so
+  // `/docs/cat-harness/x.html` is served from `x.md`. Falls back to the
+  // shape when no page maps there, so a missing file is still reported as
+  // missing at the path a reader would look for.
+  const found = sourceForPermalink(site, url);
+  if (found !== undefined) return join(site, found);
   const rel = url.replace(/^\//, "").replace(/\.html$/, ".md");
   return join(site, rel === "" || rel.endsWith("/") ? `${rel}index.md` : rel);
 }
@@ -337,7 +345,9 @@ export function driftFor(
 
     for (const [locale, t] of Object.entries(page.translations)) {
       const file = fileForUrl(site, t.url);
-      const name = page.sourceUrl.replace(/^\//, "").replace(/\.html$/, "").replace(/\/$/, "") || "index";
+      // The page NAME is its SOURCE path, which keys its catalogue — not its
+      // published URL, which since bean `kc7k` carries `docs/cat-harness/`.
+      const name = relative(site, srcFile).replace(/\.md$/i, "").split(sep).join("/").replace(/(^|\/)index$/, "") || "index";
       // The FULL page path, not its basename. Flattening here made
       // `guides/agent-onboarding` indistinguishable from a hypothetical
       // top-level `agent-onboarding`, and it made this gate look for a catalogue
