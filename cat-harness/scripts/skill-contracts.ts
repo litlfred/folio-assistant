@@ -22,7 +22,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join, normalize, relative } from "node:path";
 import { findInstanceRoot } from "../schemas/cat-harness.js";
 import { frontMatter } from "./front-matter.js";
-import { isSkillMd, skillMdDirs, corpusScopeFor } from "./known-skills.js";
+import { isSkillMd, skillMdDirs, corpusScopeFor, type CorpusScope } from "./known-skills.js";
 
 export type ContractIo = "input" | "output";
 
@@ -69,10 +69,12 @@ export function contractFile(root: string, ref: string): string | undefined {
 /**
  * Every skill under `root` that declares a contract, keyed by skill name. A
  * skill declaring none is absent — the common case, and not a defect.
+ * `scope` is {@link corpusScopeFor}'s unless the caller says otherwise —
+ * `kg-export`'s instance-scoped build does (bean `4ak5` item 2).
  */
-export function skillContracts(root: string): Map<string, SkillContract> {
+export function skillContracts(root: string, scope: CorpusScope = corpusScopeFor(root)): Map<string, SkillContract> {
   const out = new Map<string, SkillContract>();
-  for (const dir of skillMdDirs(root, corpusScopeFor(root))) {
+  for (const dir of skillMdDirs(root, scope)) {
     const abs = join(root, ...dir);
     if (!existsSync(abs)) continue;
     for (const f of readdirSync(abs)) {
