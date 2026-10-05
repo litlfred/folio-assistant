@@ -1,0 +1,1871 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "bootstrap": "https://litlfred.github.io/bootstrap/0.1.0/ns#",
+    "cat-harness": "https://litlfred.github.io/cat-harness/0.1.0/ns#",
+    "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "id": "@id",
+    "type": "@type",
+    "graph": "@graph",
+    "name": "rdfs:label",
+    "title": "http://purl.org/dc/terms/title",
+    "description": "http://purl.org/dc/terms/description",
+    "summary": "rdfs:comment",
+    "prefLabel": "http://www.w3.org/2004/02/skos/core#prefLabel",
+    "notation": "http://www.w3.org/2004/02/skos/core#notation",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "sourceCommit": {
+      "@id": "http://www.w3.org/ns/prov#wasDerivedFrom",
+      "@type": "@id"
+    },
+    "sourceCommitSha": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceCommitSha",
+    "sourceCommitAt": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceCommitAt",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "sourceTreeDirty": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceTreeDirty",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "sourceCommitUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceCommitUnavailable",
+    "dependsOn": "https://litlfred.github.io/cat-harness/0.1.0/ns#dependsOn",
+    "packageId": "https://litlfred.github.io/cat-harness/0.1.0/ns#packageId",
+    "uri": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#uri",
+      "@type": "@id"
+    },
+    "dependsOnGaps": "https://litlfred.github.io/cat-harness/0.1.0/ns#dependsOnGaps",
+    "dependsOnUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#dependsOnUnavailable",
+    "partOf": {
+      "@id": "http://purl.org/dc/terms/isPartOf",
+      "@type": "@id"
+    },
+    "inSubgraph": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
+      "@type": "@id"
+    },
+    "implementedBy": {
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#skill",
+      "@type": "@id"
+    },
+    "performedBy": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#performedBy",
+      "@type": "@id"
+    },
+    "declaresSkill": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#declaresSkill",
+      "@type": "@id"
+    },
+    "inPackage": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inPackage",
+      "@type": "@id"
+    },
+    "providesCapability": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#providesCapability",
+      "@type": "@id"
+    },
+    "requiresCapability": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#requiresCapability",
+      "@type": "@id"
+    },
+    "fallbackToCapability": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#fallbackToCapability",
+      "@type": "@id"
+    },
+    "satisfies": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#satisfies",
+      "@type": "@id"
+    },
+    "hasSkill": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasSkill",
+      "@type": "@id"
+    },
+    "bindsRole": {
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#role",
+      "@type": "@id"
+    },
+    "inLane": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inLane",
+      "@type": "@id"
+    },
+    "maintains": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#maintains",
+      "@type": "@id"
+    },
+    "maintainsFrom": "https://litlfred.github.io/cat-harness/0.1.0/ns#maintainsFrom",
+    "maintainedBy": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#maintainedBy",
+      "@type": "@id"
+    },
+    "module": "https://litlfred.github.io/cat-harness/0.1.0/ns#module",
+    "holdsGraph": {
+      "@id": "http://purl.org/dc/terms/type",
+      "@type": "@id"
+    },
+    "startNode": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#startNode",
+      "@type": "@id"
+    },
+    "incoming": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#incoming",
+      "@type": "@id"
+    },
+    "outgoing": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#outgoing",
+      "@type": "@id"
+    },
+    "from": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#sourceRef",
+      "@type": "@id"
+    },
+    "to": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#targetRef",
+      "@type": "@id"
+    },
+    "alternateOf": {
+      "@id": "http://www.w3.org/ns/prov#alternateOf",
+      "@type": "@id"
+    },
+    "canonicalDocument": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#canonicalDocument",
+      "@type": "@id"
+    },
+    "deprecated": {
+      "@id": "http://www.w3.org/2002/07/owl#deprecated",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "isReplacedBy": {
+      "@id": "http://purl.org/dc/terms/isReplacedBy",
+      "@type": "@id"
+    },
+    "conformsTo": {
+      "@id": "http://purl.org/dc/terms/conformsTo",
+      "@type": "@id"
+    },
+    "validator": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#validator",
+      "@type": "@id"
+    },
+    "validatorRef": "https://litlfred.github.io/cat-harness/0.1.0/ns#validatorRef",
+    "validatorNotApplicable": "https://litlfred.github.io/cat-harness/0.1.0/ns#validatorNotApplicable",
+    "authority": "https://litlfred.github.io/cat-harness/0.1.0/ns#authority",
+    "specVersion": "https://litlfred.github.io/cat-harness/0.1.0/ns#specVersion",
+    "specUse": "https://litlfred.github.io/cat-harness/0.1.0/ns#specUse",
+    "specUrl": "https://litlfred.github.io/cat-harness/0.1.0/ns#specUrl",
+    "namespace": "https://litlfred.github.io/cat-harness/0.1.0/ns#namespace",
+    "inputSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inputSchema",
+      "@type": "@id"
+    },
+    "outputSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#outputSchema",
+      "@type": "@id"
+    },
+    "localId": "https://litlfred.github.io/cat-harness/0.1.0/ns#localId",
+    "actorKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKind",
+    "actorKinds": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKinds",
+    "reach": "https://litlfred.github.io/cat-harness/0.1.0/ns#reach",
+    "actedUpon": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "judgementOnly": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#judgementOnly",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "bpmnType": "https://litlfred.github.io/cat-harness/0.1.0/ns#bpmnType",
+    "statement": "https://litlfred.github.io/cat-harness/0.1.0/ns#statement",
+    "rationale": "https://litlfred.github.io/cat-harness/0.1.0/ns#rationale",
+    "applies": "https://litlfred.github.io/cat-harness/0.1.0/ns#applies",
+    "nodeKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#nodeKind",
+    "enforcement": "https://litlfred.github.io/cat-harness/0.1.0/ns#enforcement",
+    "workPlanOp": "https://litlfred.github.io/cat-harness/0.1.0/ns#workPlanOp",
+    "touchesWorkPlan": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#touchesWorkPlan",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "relaxable": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#relaxable",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "nodeCount": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#nodeCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "flowCount": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#flowCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "decisionRef": "https://litlfred.github.io/cat-harness/0.1.0/ns#decisionRef",
+    "decidedBy": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#decidedBy",
+      "@type": "@id"
+    },
+    "hitPolicy": "https://litlfred.github.io/cat-harness/0.1.0/ns#hitPolicy",
+    "calledElement": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#calledElement",
+      "@type": "@id"
+    },
+    "depiction": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#depiction",
+      "@type": "@id"
+    },
+    "sourceUrl": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceUrl",
+      "@type": "@id"
+    },
+    "sourcePath": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourcePath",
+    "sourceKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceKind",
+    "instructionsPath": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionsPath",
+    "readmePath": "https://litlfred.github.io/cat-harness/0.1.0/ns#readmePath",
+    "contentSource": {
+      "@id": "http://purl.org/dc/terms/source",
+      "@context": {
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
+        "branch": "http://purl.org/dc/terms/identifier",
+        "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
+        "keyFrom": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyFrom",
+        "familyRepository": "https://litlfred.github.io/cat-harness/0.1.0/ns#familyRepository",
+        "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
+      }
+    },
+    "instructionLines": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionLines",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "fileCount": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#fileCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "hasInstructions": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasInstructions",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "hasIOContract": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasIOContract",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "ambiguous": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#ambiguous",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "hasManifest": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasManifest",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "renderable": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderable",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "path": "https://litlfred.github.io/cat-harness/0.1.0/ns#path",
+    "assetRole": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetRole",
+    "version": "https://schema.org/softwareVersion",
+    "hasCapability": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasCapability",
+      "@type": "@id"
+    },
+    "roleName": "https://litlfred.github.io/cat-harness/0.1.0/ns#roleName",
+    "mayTakeRole": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#mayTakeRole",
+      "@type": "@id"
+    },
+    "satisfiesStatement": "https://litlfred.github.io/cat-harness/0.1.0/ns#satisfiesStatement",
+    "permissionName": "https://litlfred.github.io/cat-harness/0.1.0/ns#permissionName",
+    "io": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#io",
+      "@type": "@json"
+    },
+    "invoke": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#invoke",
+      "@type": "@json"
+    },
+    "install": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#install",
+      "@type": "@json"
+    },
+    "detection": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#detection",
+      "@type": "@json"
+    },
+    "meta": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#meta",
+      "@type": "@json"
+    },
+    "assignments": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#assignments",
+      "@type": "@json"
+    },
+    "requirements": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#requirements",
+      "@type": "@json"
+    },
+    "staging": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#staging",
+      "@context": {
+        "branch": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingBranch",
+        "sha": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingSha",
+        "pr": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingRef",
+        "run": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingRun"
+      }
+    },
+    "repository": {
+      "@id": "https://schema.org/codeRepository",
+      "@type": "@id"
+    },
+    "counts": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#counts",
+      "@type": "@json"
+    },
+    "omitted": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#omitted",
+      "@container": "@set"
+    },
+    "sourceLanguage": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceLanguage"
+    }
+  },
+  "@id": "http://smart.who.int/base/smart-base.jsonld",
+  "@type": "http://www.w3.org/ns/prov#Entity",
+  "repository": "smart-base",
+  "omitted": [
+    "registry",
+    "packages",
+    "schemas",
+    "tools"
+  ],
+  "generatedAt": "2026-10-05T14:59:09.461Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fe03028ce19b45e810a8001803d404724adc6ae1",
+  "sourceCommitSha": "fe03028ce19b45e810a8001803d404724adc6ae1",
+  "sourceCommitAt": "2026-10-05T14:49:05Z",
+  "sourceTreeDirty": true,
+  "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
+  "counts": {
+    "Skill": 8,
+    "Process": 2,
+    "SequenceFlow": 35,
+    "Lane": 7,
+    "ProcessNode": 29,
+    "GraphKind": 15,
+    "Subgraph": 16,
+    "Asset": 2
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-postprocessing",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "dak-postprocessing",
+      "title": "dak-postprocessing",
+      "description": "What the DAK post-processing phase accomplishes after the IG Publisher runs — the JSON/JSON-LD surface, the DAK API hub, and the metadata-to-Liquid bridge that is the seam the just-the-docs transition cuts at. Read before changing a post-processing step, and before assuming the Publisher produced something it did not.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
+      "instructionLines": 209,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/ig-artifact-ingestion",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "ig-artifact-ingestion",
+      "title": "ig-artifact-ingestion",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
+      "instructionLines": 269,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-stack-layering",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "smart-stack-layering",
+      "title": "smart-stack-layering",
+      "description": "Which layer a WHO SMART asset, rule, script or page belongs to — fhir-harness, smart-base (with its L1 and DAK document kinds) or smart-ig — and the one question that settles it. Read before adding anything to fhir-harness, smart-base or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-stack-layering.md",
+      "instructionLines": 184,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "l2-dak-authoring",
+      "title": "l2-dak-authoring",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l2-dak-authoring.md",
+      "instructionLines": 72,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-preprocessing",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "dak-preprocessing",
+      "title": "dak-preprocessing",
+      "description": "What the DAK pre-processing phase actually accomplishes, step by step, before the IG Publisher runs — and which of its steps exist only to satisfy the Publisher's own page index. Read before changing a pre-processing step, before assuming one is needed, and before moving one to another layer.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-preprocessing.md",
+      "instructionLines": 139,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-base-tools",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "smart-base-tools",
+      "title": "smart-base Toolchain",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
+      "instructionLines": 90,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/toolchain-ownership",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "toolchain-ownership",
+      "title": "toolchain-ownership",
+      "description": "Taking ownership of the WHO smart-base scripts in a litlfred fork, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move. Read before touching, copying or rewriting any upstream smart-base script.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
+      "instructionLines": 136,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/grade",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "grade",
+      "title": "grade",
+      "description": "GRADE — the grading system a WHO guideline folio declares for certainty of evidence, and the Evidence-to-Decision judgement a recommendation rests on. Read when a folio's `Task_AppraiseGrade` runs under GRADE, before recording a certainty, an EtD judgement or a recommendation's direction and strength.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/grade.md",
+      "instructionLines": 109,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "DIIG — from a health system bottleneck to a costed implementation plan",
+      "summary": "The nine-chapter sequence of the WHO/ITU Digital Implementation Investment Guide, as the Guide numbers it.",
+      "description": "The nine-chapter sequence of the WHO/ITU Digital Implementation Investment Guide, as the Guide numbers it. Each chapter's output is the next chapter's input, and the two exclusive gateways are the Guide's OWN progress checks (4.5 and 8.5) rather than gates added here.\n\nAdopted whole per `methodology-adoption`, and rendered from the ingested sections at `smart-base/library/9789240010567-eng/`. Chapter 1 is the Guide's introduction — scope, key terms and when the Guide applies — so it is the start event's documentation rather than an activity: nothing is performed there.\n\nADVISORY, not strict. This is a per-methodology process and DIIG is somebody else's method: the engine can report where a programme has got to, but what counts as an adequate answer to \"have we identified the bottlenecks\" belongs to the programme and its stakeholders, not to this repository. The four unrelaxable steps of the base editorial gate are untouched by it.\n\nWHAT THIS DIAGRAM DOES NOT DO. DIIG Table 3.3.1 scores bottlenecks on three 1-3 criteria and sums them into a ranking. The three criteria are adopted; the arithmetic is refused, per `methodology-adoption` — three ordinal judgements on incommensurable scales, summed with equal weight, produce a number whose precision is invented. So A_PrioritizeBottlenecks records each criterion's answer and its reason and orders by argument. There is no computed score anywhere in this process, and a DMN-backed gateway would be the wrong shape for exactly that reason.",
+      "enforcement": "advisory",
+      "sourcePath": "methodologies/processes/diig-investment-path.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/diig-investment-path.svg",
+      "startNode": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/Start_Process_DIIG"
+      ],
+      "nodeCount": 13,
+      "flowCount": 14,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_01",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/Start_Process_DIIG",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_FormTeam",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_02",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_FormTeam",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_MapCurrentState",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_03",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_MapCurrentState",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_PrioritizeBottlenecks",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_04",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_PrioritizeBottlenecks",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_DetermineInterventions",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_05",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_DetermineInterventions",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/GW_ProgressCheck4",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_06",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no — revisit the bottlenecks",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/GW_ProgressCheck4",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_MapCurrentState",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_07",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/GW_ProgressCheck4",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_PlanImplementation",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_08",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_PlanImplementation",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_LinkEnterpriseArchitecture",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_09",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_LinkEnterpriseArchitecture",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_DevelopBudget",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_10",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_DevelopBudget",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_MonitorAndUseData",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_11",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_MonitorAndUseData",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/GW_ProgressCheck8",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_12",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no — adapt",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/GW_ProgressCheck8",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_MonitorAndUseData",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_13",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/GW_ProgressCheck8",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_ValueProposition",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_14",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_ValueProposition",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/End_Process_DIIG",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Programme manager",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_BusinessAnalyst",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Business analyst",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/Start_Process_DIIG",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "A health programme needs digital support",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_01"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_FormTeam",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Form the team and establish goals",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim",
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_01"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_02"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_MapCurrentState",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Map the current state and confirm bottlenecks",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_BusinessAnalyst",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_02",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_06"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_03"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_PrioritizeBottlenecks",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Prioritize, and map to health system challenges",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_BusinessAnalyst",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_03"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_04"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_DetermineInterventions",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Determine appropriate digital health interventions",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_BusinessAnalyst",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_04"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_05"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/GW_ProgressCheck4",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Progress check 4.5: requirements settled?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_BusinessAnalyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_05"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_06",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_07"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_PlanImplementation",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Plan the implementation",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_07"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_08"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_LinkEnterpriseArchitecture",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Link to the enterprise architecture",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_BusinessAnalyst",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_08"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_09"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_DevelopBudget",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Develop a budget",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_09"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_10"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_MonitorAndUseData",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Monitor, and use data effectively",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_10",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_12"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_11"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/GW_ProgressCheck8",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Progress check 8.5: implementation on track?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_11"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_12",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_13"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_ValueProposition",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Make the value proposition and set next steps",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/methodology-adoption"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "resolve",
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_13"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_14"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/End_Process_DIIG",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Costed implementation plan, and its case",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_14"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "L2 DAK authoring",
+      "summary": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager.",
+      "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/content/l2-dak-authoring.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l2-dak-authoring.svg",
+      "startNode": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline"
+      ],
+      "nodeCount": 16,
+      "flowCount": 21,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B01",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B04",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B05",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B06",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Bpmn",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B08",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_DataDict",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B09",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B10",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Terminology",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B07",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Dmn",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B11",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B12",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Bpmn",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B14",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_DataDict",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B15",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B16",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Terminology",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B13",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Dmn",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B17",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B18",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B19",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "changes needed",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B20",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "validated",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B21",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Programme manager / technical officer",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Work plan — beans (shared by humans and agents)",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/work-plan",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Business analyst",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Terminologist",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/terminologist",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Clinical SME",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "bindsRole": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "WHO guideline / recommendations",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B01"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Scope the DAK",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/programme-manager",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-plan"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B01"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Seed the work plan",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/work-plan",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/todo-manager"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim",
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Gateway_AuthorMerge",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B19"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B04"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Gateway_AuthorFork",
+      "nodeKind": "parallel",
+      "bpmnType": "bpmn:ParallelGateway",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B04"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B05",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B06",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B08",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B09",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B10",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B07"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Personas and scenarios",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B05"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B11"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Bpmn",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Business processes · BPMN 2.0",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/bpmn-authoring"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B06"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B12"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Dmn",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Decision logic · DMN tables",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/dmn-authoring"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B07"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B13"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_DataDict",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Data dictionary and core data elements",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B08"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B14"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Indicators and requirements",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B09"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B15"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Terminology",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Terminology bindings",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/terminologist",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/terminology-management"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B10"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B16"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Gateway_AuthorJoin",
+      "nodeKind": "parallel",
+      "bpmnType": "bpmn:ParallelGateway",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B11",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B12",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B14",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B15",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B16",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B13"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B17"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Clinical validation",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B17"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B18"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Clinically accurate?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/clinical-sme",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B18"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B19",
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B20"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Assemble and validate the DAK",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/content-validate"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B20"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B21"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "L2 DAK ready for L3",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B21"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa-checkers",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "qa-checkers",
+      "renderable": false,
+      "summary": "The QA checkers a harness provides, one node per criterion naming the table that holds the code; registered for a folio through its dependency tree."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/block-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "block-kinds",
+      "renderable": false,
+      "summary": "The block kinds a harness's adapter owns, one node per kind carrying its label prefix, RDF types, profile and builder. Discovered across the instances; no module lists them."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/content-adapters",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "content-adapters",
+      "renderable": false,
+      "summary": "The block vocabularies a harness owns, one node per vocabulary carrying its companion roles and whether the platform's code types it. Discovered across the instances; no module lists them."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/tools",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "tools",
+      "renderable": false,
+      "summary": "Tool definitions — themselves nodes in the KG, per the repo taxonomy."
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/processes",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "processes",
+      "renderable": false,
+      "summary": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/methodology",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "methodology",
+      "renderable": false,
+      "summary": "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "docs",
+      "renderable": true,
+      "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/external-schema",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "external-schema",
+      "renderable": false,
+      "summary": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed; and, beside a record, the pinned edition's own codes where something resolves against them."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "qa",
+      "renderable": false,
+      "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "library",
+      "renderable": false,
+      "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/themes",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "themes",
+      "renderable": false,
+      "summary": "Themes derived from an instance's own sources — one Theme node each, carrying `kind: sticky | webpage | publication`. The palette vocabulary is shared across every kind and only the geometry varies; every value cites where it was measured."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/document-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "document-kinds",
+      "renderable": false,
+      "summary": "Document kinds — named structures of sections (fixed or semi-fixed) that a document authored with a harness follows, one `folio-document-kind/v1` JSON each, plus computed `folio-document-kind-coverage/v1` reports of how a subject realises one. Every kind and section names its sources; `computedFrom` names the declared graphs a section derives from."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/translation-sources",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "translation-sources",
+      "renderable": false,
+      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/fhir-artifact-index",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "fhir-artifact-index",
+      "renderable": false,
+      "summary": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/ig-pages",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "ig-pages",
+      "renderable": false,
+      "summary": "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived."
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-qa-checkers",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "smart-base-qa-checkers",
+      "path": "qa-checkers/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa-checkers"
+      ],
+      "description": "The dak adapter's automated QA checkers, one folio-qa-checker/v1 node per criterion, naming DAK_AUTOMATED_CHECKERS in content/pipeline/qa-checkers-dak.ts (bean riit, step 3b). Registered for a folio by loadContributions through its dependency tree; they replace the qaCheckers array contributions.ts returned.",
+      "readmePath": "qa-checkers/README.md",
+      "fileCount": 6,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-qa-checkers"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-block-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "smart-base-block-kinds",
+      "path": "block-kinds/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/block-kinds"
+      ],
+      "description": "The `dak` adapter's 21 block kinds, one folio-block-kind/v1 node per file (bean riit, step 3): kind, builder, label prefix and RDF types. Read off these nodes by smart-base/schemas/dak-kinds.ts and dak-jsonld.ts, and registered for a folio by loadContributions only when the folio's dependency tree includes smart-base (owner, 2026-10-04: a folio sees the nodes of the instances it depends on, option 1 of 3). They replace the blockKinds array contributions.ts returned.",
+      "readmePath": "block-kinds/README.md",
+      "fileCount": 22,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-block-kinds"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-content-adapters",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "smart-base-content-adapters",
+      "path": "content-adapters/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/content-adapters"
+      ],
+      "description": "The dak block VOCABULARY's node, folio-content-adapter/v1 (bean riit, step 5): its name, its companion roles, and its vocabulary module schemas/dak-blocks.ts. It is untyped by cat-harness, so loadContributions registers it for a folio only through that folio's dependency tree. It replaces the adapter contributions.ts returned in code.",
+      "readmePath": "content-adapters/README.md",
+      "fileCount": 2,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-content-adapters"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-translations",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "smart-base-translations",
+      "path": "translations/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/translation-sources"
+      ],
+      "description": "The gettext side of smart-base's own strings, one directory per target locale: today the `processes/` templates of the BPMN diagrams this instance draws. Moved here from cat-harness/translations/ on the owner's ruling of 2026-10-04, \"move things to semantically appropriate place\" (bean riit): a diagram's templates sit with the instance that draws it.",
+      "readmePath": "translations/README.md",
+      "fileCount": 11,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-translations"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "library",
+      "path": "library/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/library"
+      ],
+      "description": "L1 source content: one `<bib-slug>/` per ingested WHO publication, holding `sections/*.md` and `structure.json`. Every knowledge-graph reference to one of these sources resolves through here, never to a loose path or a bare URL — which is the whole reason the bytes could not stay in `uploads/`. The corpus-grep checklist searches `library/` ONLY, so a publication left in the incoming queue does not merely go unread: it makes a clean grep mean \"nobody has done this\" while the source sits right there. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it — overrides match on id and never on path, and a distinct id at the same path yields two entries for one directory that every fan-out consumer then scans twice.",
+      "readmePath": "library/README.md",
+      "fileCount": 3350,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/library"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/methodologies",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "methodologies",
+      "path": "methodologies/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/methodology"
+      ],
+      "description": "Methodologies adopted from the WHO digital-health corpus in `library/` -- somebody else's work, adopted whole, never a house process with a citation bolted on. `diig.md` is the first. Declared in the commit that created its content rather than ahead of it: a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it. `skip` rather than `reproduce` because a downstream instance inherits the METHOD by depending on this layer, not by copying the directory.",
+      "readmePath": "methodologies/README.md",
+      "fileCount": 4,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/methodologies"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/processes",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "processes",
+      "path": "methodologies/processes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/processes"
+      ],
+      "description": "The executable half of this layer's methodologies -- `diig-investment-path.bpmn` renders DIIG's own nine chapters as a process with its two progress checks as gateways. A SEPARATE declaration from `methodologies/` even though it nests inside it, because `processes` and `methodology` are different graph kinds and a directory entry names one graph: the prose node says what the method IS, the diagram says how it RUNS. Bean `x4v4` raised whether `methodologies/` is a graph or a folder; this follows the shape already on main, where `methodology-crdm-processes` is declared beside `methodologies/` rather than inferred from it. Issue #877, bean `qnvy`.",
+      "readmePath": "methodologies/processes/README.md",
+      "fileCount": 2,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "smart-base-house-processes",
+      "path": "processes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/processes"
+      ],
+      "description": "The BPMN this layer OWNS as a house process, as against `methodologies/processes/`, which holds the executable half of a methodology adopted whole from the corpus. `l2-dak-authoring.bpmn` is the first: moved here from cat-harness/processes/ on 2026-10-01 by owner ruling (issue #1772 item 3), because placement PR1 had moved its `l2-dak-authoring` skill into `skills/content/authoring-who-smart-guidelines/` and the three activities naming it no longer resolved from cat-harness, which cannot reach this layer. Here the skill sits beside the diagram; the remaining refs (`content-plan`, `todo-manager`, `bpmn-authoring`, `dmn-authoring`, `content-review`, `content-validate`, `terminology-management`) point down, through `fhir-harness`. A TOP-LEVEL directory rather than a second file in `methodologies/processes/`, for the reason `folio-assistant-core-processes` gives: that nested shape is a baselined `check:layout-norms` exception, and a house process is not a methodology read out of `library/`. Declared WITH its file in one commit, per bean `dh4f`.",
+      "readmePath": "processes/README.md",
+      "fileCount": 2,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-artifact-index",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "smart-base-artifact-index",
+      "path": "fhir-artifact-index/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/fhir-artifact-index"
+      ],
+      "description": "The published IG's artefact index, reconstructed by `ingest:ig` from smart.who.int.base v0.3.0 (FHIR 4.0.1). 225 artefacts known, 47 materialized -- the DAK API surface, whose JSON Schemas and OpenAPI have no other home, against resource JSON that does. `dak/` sits INSIDE this directory rather than beside it, so one entry covers both the index and the bytes it points at; a sibling would be an undeclared directory holding the very bytes the index claims to have, which is the `dh4f` shape. NOTHING HERE IS AUTHORED: `ingest:ig:check` re-derives it and a hand-edit is a defect the next check either overwrites or reports. The four CDHI/CDSC ConceptMaps -- the v1-to-v2 crosswalks and the two hierarchy maps -- are indexed `referenced`: the index says where they are and holds none of their rows. Materializing one is `materialize-remote.bpmn`, not a flag. Issue #877, bean `cpmo`. UNTIL plan Q4 (bean `rbz3`, 2026-10-02) IT ALSO HELD `chrome.json`; the chrome is the TEMPLATE's styling, so it now lives in `themes/` beside the template's theme, and ships with the harness. When it was here, it was a THIRD provenance in one directory rather than a second copy of an existing one: `index.json` is harvested from an IG's published output, `menu.json` (smart-trust's) is read from its `sushi-config.yaml`, and `chrome.json` is resolved from the `fhir.template` packages its `ig.ini` names -- `fhir.base.template` and `who.template.root`, separate repositories the IG merely depends on. An IG declares its appearance in NO file it owns, which is why the chrome could not be folded into either of the other two. It lives at smart-base so every WHO SMART IG (through `smart-ig`) inherits one answer instead of each re-copying it; `schemas/ig-chrome.ts` carries why the consumer NAMES this instance rather than walking `needs` to it, and the layering gap that forces it, which is `nsbb`'s.",
+      "readmePath": "fhir-artifact-index/README.md",
+      "fileCount": 143,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-artifact-index"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/tools",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "tools",
+      "path": "tools/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/tools"
+      ],
+      "description": "smart-base's Tool nodes. The owner, 2026-09-22: \"things like dmn -> fhir questionnaire should be a tool. the skill/tools under smart-base should consolidate under the smart-base/tools/ directory under this repo\", serving \"want to slowly get smart-base back to a more conventional IG state w/o tooling\". THIS REVERSES NOTHING THIS FILE'S HEADER SAYS: the header refuses to VENDOR the upstream Python, and a Tool node is a declaration -- what the capability consumes, what it produces, which skill it satisfies -- not a copy of a line of it. Declare here, execute upstream, until the execution moves too. The two Library strippers are deliberately NOT here: they are not DAK-shaped and belong to `fhir-harness` by the placement question in `smart-stack-layering`, and filing them here to tidy the list would be a step's own name overruling the layering rule.",
+      "readmePath": "tools/README.md",
+      "fileCount": 2,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/tools"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/qa",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "qa",
+      "path": "test/results/",
+      "contentSource": {
+        "@id": "https://github.com/litlfred/smart-base/tree/cat/cat-harness/qa-reports",
+        "kind": "branch",
+        "branch": "cat/cat-harness/qa-reports",
+        "keyedBy": "commit",
+        "declaredIn": "storage"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa"
+      ],
+      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 12 files across methodologies (1), scenarios (1), skills (1), tools (9). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "readmePath": "test/results/README.md",
+      "fileCount": 22,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/qa"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-themes",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "smart-base-themes",
+      "path": "themes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/themes"
+      ],
+      "description": "The WHO SMART IG template's web theme, measured from `who.template.root`'s own `who.css` and pinned by commit. Colour and geometry only: the IG's top navbar is deliberately not reproduced, because the owner asked for the nav to stay on the LEFT (2026-09-30). `upstream/who.css` is the vendored source the tests re-read, CC0-1.0.",
+      "readmePath": "themes/README.md",
+      "fileCount": 5,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-themes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-docs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "smart-base-docs",
+      "path": "docs/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs",
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/ig-pages"
+      ],
+      "description": "The reader-facing pages, and the landing page `/smart-base/` serves. Generated by `smart-base:pages` (`fhir-harness/scripts/gen-ig-pages.ts --summary`) from `fhir-artifact-index/index.json` plus this declaration: the index page opens with this instance's own description and every declared graph with its viewer (the `harness_details.html` include over `site.data.harness`), then the artefact index. WHY IT EXISTS: before it, smart-base declared no renderable graph, so `/smart-base/` published nothing and the navbar tile fell back to the library viewer -- `harness-tiles.ts` reported that as a finding. Owner, 2026-10-01 (#1767): \"smart-base/ needs a landing page\". NOTHING HERE IS AUTHORED; `smart-base:pages:check` is the gate. The banner names THIS IG (`smart.who.int.base`) from the index, not the IG the chrome was ingested from, and draws no status watermark because the chrome's status is smart-trust's (bean `bamf`).",
+      "readmePath": "docs/README.md",
+      "fileCount": 306,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-docs"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-document-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "smart-base-document-kinds",
+      "path": "document-kinds/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/document-kinds"
+      ],
+      "description": "WHO SMART document kinds: the DAK (a fixed structure, the ten components) and, to follow, L1 (semi-fixed) and the Digital Transformation Handbook (an L1 subtype).",
+      "readmePath": "document-kinds/README.md",
+      "fileCount": 8,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-document-kinds"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-findings",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "smart-base-findings",
+      "path": "findings/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs"
+      ],
+      "description": "Findings about the WHO digital-health corpus in `library/` that are recorded for the owner rather than adopted: where sources disagree, each version kept as an alternative with its citation. `dth-term-alternatives.json` is authored (the one DIIG phase figure and its reproductions, approaches recorded as alternatives, and what \"actor\" means in the RA, SMART Guidelines and folio-assistant, with one proposal per layer); `dth-terms.md` is GENERATED from it and the DTH candidate list by `smart-base:dth-terms` (`smart-base/scripts/gen-dth-term-findings.ts`), and `smart-base:dth-terms:check` fails on a stale page or on a quote that no longer matches its source. A SEPARATE directory from `docs/` because `docs/` is wholly generated by `smart-base:pages`, whose check reports any other file there as an orphan. Owner, 2026-10-03 (#1984, bean `5blc`): \"make a docs page under smart-base showing the glossary/terms differences findings\".",
+      "readmePath": "findings/README.md",
+      "fileCount": 5,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-findings"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-external-schemas",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "smart-base-external-schemas",
+      "path": "external-schemas/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/external-schema"
+      ],
+      "description": "Specifications smart-base depends on and does not hold: the smart-kg ontology (L1 and L2 class vocabulary), pinned by commit.",
+      "readmePath": "external-schemas/README.md",
+      "fileCount": 3,
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-external-schemas"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — smart-base",
+      "description": "Cold start for work in this layer: what is ingested rather than authored, what is referenced upstream rather than vendored, and why a voice rule with no resolvable citation is refused."
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#asset/instance-readme",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "instance-readme",
+      "path": "README.md",
+      "assetRole": "instance-readme",
+      "title": "smart-base",
+      "description": "What this layer holds, where each document came from, and how to re-derive an entry."
+    }
+  ],
+  "staging": {
+    "branch": "claude/vibrant-darwin-r6im60",
+    "sha": "edf2289904ad6fbc9aff3674295d85cb1e3e37e9",
+    "pr": "2185/merge",
+    "run": "37327804757"
+  }
+}
