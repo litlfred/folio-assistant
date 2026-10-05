@@ -218,8 +218,8 @@ describe("the key it takes", () => {
   });
 
   test("a branch FAMILY is refused: a prefix is not a seed", () => {
-    const fam = rowFor("lake-cache")!;
-    expect(fam.shape).toBe("family");
+    // Built inline: the special-branches table this used to read is retired (bean rva2).
+    const fam = { id: "lake-cache", shape: "family", name: "cat/folio-assistant-sci/lake-cache/", legacy: [] };
     const res = refreshSeed(fam, { log: () => {} });
     expect(res.state).toBe("refused");
     expect(res.reason).toMatch(/branch FAMILY/);

@@ -266,16 +266,17 @@ export const CHROME_GRAPHS = ["themes", "fhir-artifact-index"] as const;
  *
  * The owner placed the chrome at `smart-base` so every WHO SMART IG (through
  * `smart-ig`) inherits it instead of each re-copying it. The obvious
- * implementation is to walk `needs` from the consumer upward — and it does not
- * work: `smart-trust` needs `smart-ig`, while `smart-base` needs
- * `fhir-harness`, so **there is no `needs` path from smart-trust to
- * smart-base.** Measured, not assumed, from the two declarations.
+ * implementation is to walk `needs` from the consumer upward. When this was
+ * written that did not work: `smart-trust` needed `smart-ig`, `smart-base`
+ * needed `fhir-harness`, and there was no `needs` path between them.
  *
- * That is a real gap in the stack's layering and it belongs to `nsbb`, which
- * already owns the question of how the IG pipeline layers. Resolving it here,
- * by inventing an edge or by widening the walk until something matched, would
- * settle a layering question inside a stylesheet loader. So the instance is
- * named, the reason is written down, and the gap stays visible.
+ * **That gap has since closed** — `smart-ig` now needs `smart-base`, so
+ * smart-trust → smart-ig → smart-base resolves, and `check:derived-from`
+ * resolves each IG page set's `derivedFrom: smart-base-themes` across it (bean
+ * `nama`, measured 2026-10-04). The instance is still NAMED, for the other
+ * reason: the generator is generic, and walking to "the nearest instance with
+ * a chrome" would let the layout of a WHO stack decide what a non-WHO IG wears.
+ * The caller names the owner; the declaration says which graph it reads.
  */
 export function chromeFileFor(
   repoRoot: string,
@@ -288,8 +289,15 @@ export function chromeFileFor(
     join: (...parts: string[]) => string;
   },
 ): string | undefined {
-  for (const root of deps.instanceRootsIn(repoRoot)) {
-    if (deps.declarationNameOf(root) !== instanceName) continue;
+  // A PATH names the owning instance's root directly, relative to the repository
+  // root (n3ni stage E). In a fork the platform is a submodule, so smart-base sits
+  // at `folio-assistant/smart-base`: two levels down, where `instanceRootsIn`
+  // (one level, by design) cannot see it. Naming it by path keeps the choice
+  // explicit, as above, rather than widening a walk until something matches.
+  const roots = instanceName.includes("/")
+    ? [deps.join(repoRoot, instanceName)].filter((r) => deps.declarationNameOf(r) !== undefined)
+    : deps.instanceRootsIn(repoRoot).filter((r) => deps.declarationNameOf(r) === instanceName);
+  for (const root of roots) {
     // The chrome is the TEMPLATE's styling, so it ships with the harness that
     // carries the template's theme (plan Q4; rehearsed on litlfred/smart-base,
     // bean `rbz3`): a `themes` directory first, then, for an instance that

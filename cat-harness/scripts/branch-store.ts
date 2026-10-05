@@ -230,7 +230,8 @@ export interface TipLocation {
  */
 function keptAt(inst: string, repoRoot: string, d: ResolvedDirectory): { branch: string; keyedBy: string } | undefined {
   if (d.storage?.keyedBy === "route" || d.storage?.keyedBy === "route-family") {
-    return { branch: d.storage.branch, keyedBy: d.storage.keyedBy };
+    // Non-null by DirectoryStorageSchema's refine: every keying but `family` requires `branch`.
+    return { branch: d.storage.branch!, keyedBy: d.storage.keyedBy };
   }
   const src = resolveSubgraphSource(d, subgraphSourceOverrides(inst, repoRoot));
   switch (src.kind) {
@@ -238,6 +239,12 @@ function keptAt(inst: string, repoRoot: string, d: ResolvedDirectory): { branch:
       return undefined;
     case "branch":
       return { branch: src.branch, keyedBy: src.keyedBy };
+    // A FAMILY (bean `lehh`) has no single tip: every caller below either skips
+    // a keying it is not (`tipLocations`), refuses it (`resolveTipLocation`), or
+    // reports it as on a branch and not mounted (`contentAt`). It is returned as
+    // the prefix so each of them can name it, and never opened as a branch.
+    case "family":
+      return { branch: src.branchPrefix, keyedBy: "family" };
     default: {
       const unknown: never = src;
       throw new BranchStoreUsageError(`directory ${d.id} has a source kind this store does not know: ${JSON.stringify(unknown)}`);

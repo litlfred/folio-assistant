@@ -11,7 +11,9 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { BASE_GRAPH_KINDS } from "../../../cat-harness/schemas/cat-harness.js";
+// The whole REGISTRY: since bean dmx1 kinds are declared per harness, and the
+// sweep reaches every one of them (riit), not only the code list.
+import { defaultGraphKinds } from "../../../cat-harness/schemas/graph-kind-registry.js";
 import { sweep } from "../check-kind-validators.js";
 import { HARNESS_ROOT } from "../lib/roots.ts";
 
@@ -38,7 +40,7 @@ describe("the three states partition the registry", () => {
       ...r.contradictory,
     ];
     expect(new Set(named).size).toBe(named.length);
-    expect(named.length).toBe(Object.keys(BASE_GRAPH_KINDS).length);
+    expect(named.length).toBe(defaultGraphKinds.names().length);
   });
 });
 
@@ -79,9 +81,17 @@ describe("a kind cannot claim both", () => {
     // parses my nodes" and "nothing can parse my nodes" are both true.
     const r = await sweep(INSTANCE);
     for (const n of r.notApplicable) {
-      const def = BASE_GRAPH_KINDS[n.kind];
+      const def = defaultGraphKinds.get(n.kind);
       expect(def?.validator, `${n.kind} declares a validator AND that none applies`).toBeUndefined();
       expect(def?.nodeSchemas, `${n.kind} declares nodeSchemas AND that none applies`).toBeUndefined();
     }
+  });
+});
+
+describe("the clean break (bean riit): validators are nodes, not strings on a kind", () => {
+  test("no authored kind carries validator code, except code in another repository", async () => {
+    const { authoredValidatorStrings, FOREIGN_REPOSITORY_PREFIXES } = await import("../check-kind-validators.js");
+    const inline = authoredValidatorStrings().filter((a) => !FOREIGN_REPOSITORY_PREFIXES.some((p) => a.ref.startsWith(p)));
+    expect(inline).toEqual([]);
   });
 });

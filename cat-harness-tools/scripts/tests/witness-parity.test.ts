@@ -9,7 +9,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { stripEphemeral } from "../../../cat-harness/schemas/computation-witness.ts";
-import { checkParity, diffPaths, environmentMismatch } from "../witness-parity.ts";
+import { checkParity, diffPaths, environmentMismatch, resolveScript } from "../witness-parity.ts";
 
 describe("stripEphemeral", () => {
   it("removes run-specific fields at every depth and keeps the rest", () => {
@@ -119,6 +119,18 @@ describe("checkParity", () => {
     }
   });
 
+  it("is unknown, not fail, when the witness was written by another version of its script", () => {
+    const w = { ...run("cp computations/out.json computations/w.witness.json"), scriptHash: "aaa" };
+    const t = repo(w, JSON.stringify({ ...w, scriptHash: "bbb", data: { x: 2 } }));
+    try {
+      const r = checkParity(t.root, "computations/w.witness.json");
+      expect(r.verdict).toBe("unknown");
+      expect(r.reason).toContain("stale");
+    } finally {
+      t.cleanup();
+    }
+  });
+
   it("leaves the folio's own checkout untouched", () => {
     const w = run("echo changed > computations/w.witness.json");
     const t = repo(w, "{}");
@@ -132,6 +144,31 @@ describe("checkParity", () => {
       expect(wl.stdout.trim().split("\n")).toHaveLength(1);
     } finally {
       t.cleanup();
+    }
+  });
+});
+
+describe("resolveScript", () => {
+  it("finds a bare scriptFile beside the witness, else by its unique name, else nothing", () => {
+    const root = mkdtempSync(join(tmpdir(), "witness-parity-resolve-"));
+    const g = (...a: string[]) => spawnSync("git", a, { cwd: root, encoding: "utf8" });
+    try {
+      g("init", "-q");
+      g("config", "user.email", "t@t");
+      g("config", "user.name", "t");
+      for (const f of ["computations/probes/p.py", "computations/probes/w.witness.json", "computations/other/q.py", "a/dup.py", "b/dup.py"]) {
+        mkdirSync(join(root, f, ".."), { recursive: true });
+        writeFileSync(join(root, f), "");
+      }
+      g("add", "-A");
+      g("commit", "-qm", "init");
+      expect(resolveScript(root, "computations/probes/w.witness.json", "p.py")).toBe("computations/probes/p.py");
+      expect(resolveScript(root, "computations/probes/w.witness.json", "q.py")).toBe("computations/other/q.py");
+      expect(resolveScript(root, "computations/probes/w.witness.json", "dup.py")).toBeUndefined();
+      expect(resolveScript(root, "computations/probes/w.witness.json", "computations/other/q.py")).toBe("computations/other/q.py");
+      expect(resolveScript(root, "computations/probes/w.witness.json", "missing.py")).toBeUndefined();
+    } finally {
+      rmSync(root, { recursive: true, force: true });
     }
   });
 });

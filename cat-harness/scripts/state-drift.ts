@@ -49,12 +49,16 @@
  *
  * Exit codes: 0 every seed current · 1 drift · 4 could not determine.
  */
+import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
+
+import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.ts";
 
 import { BranchStore, MANIFEST_FILE, MANIFEST_SCHEMA } from "./branch-store.ts";
 
 export const SPECIAL_BRANCHES = join(import.meta.dir, "special-branches.json");
+const REPO_ROOT = resolve(import.meta.dir, "..", "..");
 
 export interface SpecialBranch {
   id: string;
@@ -64,7 +68,7 @@ export interface SpecialBranch {
 }
 
 /** The manifest a seeded state branch carries at its root. */
-interface SeedManifest {
+export interface SeedManifest {
   $schema?: string;
   status?: string;
   /** Why, when `status` is `retired` — reported verbatim so the reason travels with the branch. */
@@ -73,6 +77,27 @@ interface SeedManifest {
   subgraph?: string;
   source?: { ref?: string; sha?: string };
   graphs?: Array<{ path: string; tree?: string; files?: number }>;
+  /** A ROUTE-keyed seed (`keyedBy: "route"`) lists its directories here instead of `graphs`. */
+  keyedBy?: string;
+  directories?: Array<{ id?: string; path: string }>;
+  /** Repo-relative globs (`*` within one segment) the seed deliberately does not carry. */
+  excluded?: string[];
+}
+
+/** `*` matches within one path segment; nothing else is special. */
+export function globToRegExp(glob: string): RegExp {
+  return new RegExp(`^${glob.split("*").map((p) => p.replace(/[.+?^${}()|[\]\\]/g, "\\$&")).join("[^/]*")}$`);
+}
+
+/**
+ * The ref a seed is current WITH. A tip seed records it (`source.ref`). A
+ * ROUTE seed's source is the default branch by construction, not by guess: a
+ * route has ONE writer, the generator that regenerates it from `main` after
+ * every merge (bean `1j3q`). The two route seeds (uml-overview, ig-docs)
+ * record only `seededFrom`, so without this they were never measured.
+ */
+export function sourceRefOf(m: Pick<SeedManifest, "source" | "keyedBy">): string | undefined {
+  return m.source?.ref ?? (m.keyedBy === "route" ? "main" : undefined);
 }
 
 export interface DriftRow {
@@ -101,6 +126,8 @@ export interface DriftRow {
   detail?: string;
   /** On `drift`, `git diff-tree --name-status` between the two trees. */
   files?: string[];
+  /** The branch is on the remote and no directory declares it (the health finding, bean rva2). */
+  undeclared?: true;
 }
 
 /** A commit's root tree. The reads below are tree-addressed, `fetchTip` is not. */
@@ -123,6 +150,56 @@ export function candidatesOf(b: SpecialBranch): string[] | undefined {
   return [b.name, ...(b.legacy ?? [])];
 }
 
+/**
+ * The special branches OBSERVED on the remote (bean rva2, owner 2026-10-04:
+ * *"retire special-branches.json from being in infrastructure. it can be in
+ * health checks"*): every `cat/**` head, and `gh-pages`. Asked of the remote
+ * rather than read from a list, so a branch nobody declared (measured that day:
+ * `cat/cat-harness/merge-queue`) is SEEN rather than missing from a table.
+ * `undefined` when the remote cannot be listed: never an empty set.
+ */
+export function observedBranches(opts: { repoRoot?: string; remote?: string } = {}): string[] | undefined {
+  const cwd = opts.repoRoot ?? REPO_ROOT;
+  const remote = opts.remote ?? process.env.BRANCH_STORE_REMOTE ?? "origin";
+  const r = spawnSync("git", ["ls-remote", "--heads", remote, "refs/heads/cat/*", "refs/heads/gh-pages"], { cwd, encoding: "utf-8", timeout: 60_000 });
+  if (r.status !== 0) return undefined;
+  return r.stdout
+    .split("\n")
+    .map((l) => l.split("\t")[1]?.replace(/^refs\/heads\//, ""))
+    .filter((n): n is string => Boolean(n))
+    .sort();
+}
+
+/**
+ * Which declared directory each branch backs: a single-branch \`storage\` or
+ * \`source\`, read from every instance's declaration. A FAMILY declares a
+ * prefix, so its members match by prefix. The declarations are the only source
+ * of a branch's NAME; this map is how an observed branch is told apart from an
+ * undeclared one.
+ */
+export function declaredBranches(repoRoot: string = REPO_ROOT): { exact: Map<string, string>; prefixes: Map<string, string> } {
+  const exact = new Map<string, string>();
+  const prefixes = new Map<string, string>();
+  for (const root of instanceRootsIn(repoRoot)) {
+    let decl;
+    try {
+      decl = readDeclaration(root);
+    } catch {
+      continue; // an unreadable declaration is check:declared-dirs' finding
+    }
+    for (const d of decl?.directories ?? []) {
+      const st = d.storage as { branch?: string; branchPrefix?: string } | undefined;
+      const src = d.source as { kind?: string; branch?: string; branchPrefix?: string } | undefined;
+      const branch = st?.branch ?? (src?.kind === "branch" ? src.branch : undefined);
+      const prefix = st?.branchPrefix ?? (src?.kind === "family" ? src.branchPrefix : undefined);
+      if (branch && !exact.has(branch)) exact.set(branch, d.id);
+      if (prefix && !prefixes.has(prefix)) prefixes.set(prefix, d.id);
+    }
+  }
+  return { exact, prefixes };
+}
+
+/** The table, read ONLY when a caller names it (the fixture tests). No default: infrastructure no longer reads it. */
 export function specialBranches(file: string = SPECIAL_BRANCHES): SpecialBranch[] {
   return (JSON.parse(readFileSync(file, "utf-8")) as { branches: SpecialBranch[] }).branches;
 }
@@ -181,9 +258,16 @@ export function driftOf(b: SpecialBranch, opts: DriftOptions = {}): DriftRow[] {
   }
   if (m.authoritative === true) return [row({ branch: here.branch, state: "authoritative", detail: "the manifest says this branch IS the store" })];
 
-  const ref = m.source?.ref;
+  const ref = sourceRefOf(m);
   if (!ref) return [row({ state: "unknown", detail: `${MANIFEST_FILE} records no \`source.ref\`, so there is nothing to be current with` })];
-  const graphs = m.graphs?.length ? m.graphs : m.subgraph ? [{ path: m.subgraph }] : [];
+  const graphs = m.graphs?.length
+    ? m.graphs
+    : m.directories?.length
+      ? m.directories.map((d) => ({ path: d.path.replace(/\/$/, "") }))
+      : m.subgraph
+        ? [{ path: m.subgraph }]
+        : [];
+  const excluded = (m.excluded ?? []).map(globToRegExp);
   if (!graphs.length) return [row({ state: "unknown", detail: `${MANIFEST_FILE} names no graph path` })];
 
   // The SOURCE ref, fetched into the same bare store, so the two trees' object
@@ -220,7 +304,14 @@ export function driftOf(b: SpecialBranch, opts: DriftOptions = {}): DriftRow[] {
     store.hydrate(mine.sha);
     src.hydrate(theirs.sha);
     const d = store.git(["diff-tree", "-r", "--name-status", mine.sha, theirs.sha]);
-    const files = d.status === 0 ? d.stdout.toString("utf-8").split("\n").filter(Boolean) : [];
+    // `diff-tree` paths are relative to the subtree; `excluded` globs are repo-relative.
+    const files = (d.status === 0 ? d.stdout.toString("utf-8").split("\n").filter(Boolean) : []).filter(
+      (l) => !excluded.some((r) => r.test(`${g.path}/${l.split("\t").pop()}`)),
+    );
+    if (d.status === 0 && files.length === 0) {
+      out.push(row({ ...base, state: "in-sync", detail: `${base.detail} (differing only in what the manifest excludes)` }));
+      continue;
+    }
     out.push(
       row({
         ...base,
@@ -233,8 +324,30 @@ export function driftOf(b: SpecialBranch, opts: DriftOptions = {}): DriftRow[] {
   return out;
 }
 
+/**
+ * The special branches as rows, from OBSERVATION and DECLARATION, never from a
+ * table: every branch the remote holds under `cat/**` (and `gh-pages`), named
+ * by the directory that declares it when one does. `undefined` when the remote
+ * cannot be listed.
+ */
+export function observedRows(opts: { repoRoot?: string; remote?: string } = {}): (SpecialBranch & { declared: boolean })[] | undefined {
+  const names = observedBranches(opts);
+  if (names === undefined) return undefined;
+  const { exact, prefixes } = declaredBranches(opts.repoRoot ?? REPO_ROOT);
+  return names.map((name) => {
+    const prefix = [...prefixes.keys()].find((p) => name.startsWith(p));
+    const id = exact.get(name) ?? (prefix ? prefixes.get(prefix)! : name);
+    return { id, shape: "branch", name, legacy: [], declared: exact.has(name) || prefix !== undefined };
+  });
+}
+
 export function driftRows(opts: DriftOptions & { file?: string } = {}): DriftRow[] {
-  return specialBranches(opts.file).flatMap((b) => driftOf(b, opts));
+  if (opts.file !== undefined) return specialBranches(opts.file).flatMap((b) => driftOf(b, opts));
+  const rows = observedRows({ repoRoot: opts.repoRoot, remote: opts.remote });
+  if (rows === undefined) {
+    return [{ id: "(remote)", branch: "", path: "", state: "unknown", detail: "could not list the remote's branches (git ls-remote failed)" }];
+  }
+  return rows.flatMap((b) => driftOf(b, opts).map((r) => (b.declared ? r : { ...r, undeclared: true as const })));
 }
 
 export function exitCodeFor(rows: readonly DriftRow[]): number {
@@ -286,11 +399,23 @@ if (import.meta.main) {
       console.log(`  ${mark[r.state]} ${r.id}${r.path ? `:${r.path}` : ""} — ${r.state}${r.detail ? `: ${r.detail}` : ""}`);
       for (const f of r.files ?? []) console.log(`      ${f}`);
     }
+    // THE HEALTH FINDING (bean rva2): on the remote, declared by no directory.
+    // A seed whose cutover has not landed is expected to be undeclared; any
+    // other undeclared branch is a branch nobody owns in the KG.
+    // One line per BRANCH: a seed carrying three graphs is still one undeclared branch.
+    const undeclared = rows.filter((r, i) => r.undeclared && rows.findIndex((x) => x.undeclared && x.branch === r.branch) === i);
+    for (const r of undeclared) {
+      // A seed (pre-cutover) or a retired branch is EXPECTED to be undeclared.
+      const seed = r.state === "in-sync" || r.state === "drift" || r.state === "retired";
+      const why = r.state === "retired" ? " (retired: nothing reads it)" : seed ? " (a seed: its cutover has not declared it yet)" : "";
+      console.log(`  ${seed ? "·" : "✗"} ${r.branch || r.id} — on the remote, declared by no directory${why}`);
+    }
     const seeds = rows.filter((r) => r.state === "in-sync" || r.state === "drift" || r.state === "unknown");
     const drifted = rows.filter((r) => r.state === "drift");
     const unknown = rows.filter((r) => r.state === "unknown");
     console.log(
-      `\n${seeds.length} seeded graph(s) across ${rows.length} special-branch row(s); ` +
+      `\n${seeds.length} seeded graph(s) across ${rows.length} branch(es) observed on the remote; ` +
+        `${undeclared.length} undeclared; ` +
         `${drifted.length} drifted; ${unknown.length} could not be determined`,
     );
     if (drifted.length) {

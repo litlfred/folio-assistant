@@ -21,6 +21,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { checkoutRootFor, isForeignCheckout, instanceRootsIn, repoRootFor, rootForScope, siblingScopeFor } from "../../cat-harness/schemas/cat-harness.js";
+import { checkoutHolding } from "../../cat-harness/test/support/checkout.js";
 import { declareInstance } from "../../cat-harness/test/support/instance-fixture.js";
 import { skillMdDirs } from "../../cat-harness/scripts/known-skills.js";
 import { findPublishWorkflows } from "../../cat-harness/scripts/pages-bootstrap.js";
@@ -140,9 +141,14 @@ describe("sibling clones in a plain directory — the separated layout (ho66)", 
 
 describe("checkoutRootFor — repository-level reads stay inside the checkout (g43f)", () => {
   test("THIS checkout — the main one or a nested agent worktree — answers itself", () => {
-    const here = resolve(import.meta.dir, "..", "..");
+    // The oracle is git's own toplevel, not a path climbed from this file:
+    // the aggregate when cat-harness is nested in it, cat-harness itself when
+    // it is its own clone (the standalone rehearsal, bean `ho66`). Either way
+    // the checkout answers itself, and so does the instance it holds.
+    const instance = resolve(import.meta.dir, "..");
+    const here = checkoutHolding(instance);
     expect(checkoutRootFor(here)).toBe(here);
-    expect(checkoutRootFor(join(here, "cat-harness"))).toBe(here);
+    expect(checkoutRootFor(instance)).toBe(here);
   });
 
   test("the root instance of a worktree, of the main checkout, and a nested instance", () => {
