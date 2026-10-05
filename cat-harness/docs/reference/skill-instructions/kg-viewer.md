@@ -36,10 +36,14 @@ paid for:
 So the exporter, which already knows the stub, writes it into the page. The
 page resolves nothing.
 
-**It fetches its sibling relative to its own location.** The same bytes work at
-`<canonical>/kg/` and at `STAGING/<slug>/kg/` with no configuration, no
-`--base-url`, and no build-time branch. A staging build that needed a different
-page would be a staging build testing something other than what ships.
+**It fetches the document relative to its own location.** The page is
+`<site>/<stub>/index.html` and reads `../<stub>.jsonld`, so the same bytes
+work on the canonical site and under `STAGING/<slug>/` with no configuration,
+no `--base-url`, and no build-time branch. A staging build that needed a
+different page would be a staging build testing something other than what
+ships. Which documents the site publishes, and where:
+[`instance-publication`](instance-publication.md) §"What each
+instance publishes".
 
 ## No dependencies, and that is a requirement rather than a preference
 

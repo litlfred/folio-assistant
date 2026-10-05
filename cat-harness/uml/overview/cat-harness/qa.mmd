@@ -144,7 +144,7 @@ classDiagram
       <<json: ViewerNavQaSchema>>
       path [1] string
       source [1] string
-      verdict [1] railed | declined | missing
+      verdict [1] railed | declined | linked | missing
       reason [0..1] string
       flags [0..*] enum(8)[]
     }

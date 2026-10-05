@@ -59,6 +59,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`review-nav.e2e.ts`](review-nav.e2e.ts) | a file |  |
 | [`review-visual.e2e.ts`](review-visual.e2e.ts) | a file |  |
 | [`schema-overview-filter.e2e.ts`](schema-overview-filter.e2e.ts) | a file |  |
+| [`search-band.e2e.ts`](search-band.e2e.ts) | a file |  |
 | [`search-lazy.e2e.ts`](search-lazy.e2e.ts) | a file |  |
 | [`search-pinned.e2e.ts`](search-pinned.e2e.ts) | a file |  |
 | [`search-restore.e2e.ts`](search-restore.e2e.ts) | a file |  |

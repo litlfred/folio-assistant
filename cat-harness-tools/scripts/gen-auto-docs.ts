@@ -99,7 +99,7 @@ import {
 } from "../../cat-harness/schemas/cat-harness.ts";
 import { checkoutDirectories } from "../../cat-harness/schemas/harness-config.ts";
 import { gitFiles } from "../../cat-harness/schemas/git-corpus.ts";
-import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
+import { makeEmit } from "../../cat-harness/scripts/viewer-page.ts";
 import { railNames } from "../../cat-harness/scripts/mount-instance-docs.ts";
 import { harnessTitle, kindTitle } from "../../cat-harness/scripts/lib/nav-label.ts";
 import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
@@ -1377,17 +1377,20 @@ function autoDocsManifest(): string {
   )}\n`;
 }
 
+// THROUGH `makeEmit`, like every viewer generator: the rail is drawn from
+// shared data (bean `lnoy`, owner: "4. Option 3 everywhere"), and the shared
+// file is checked or written under the same contract as the page.
+let emitRailed: ((path: string, content: string) => void) | undefined;
 function emit(path: string, content: string): void {
-  content = withViewerNav(content, path, { built: basename(ROOT), docsRoot: join(ROOT, siteDirFor(ROOT)) }) ?? content;
-  if (check) {
-    const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
-    if (current === content) return;
-    console.error(`  ✗ ${path} ${existsSync(path) ? "is stale" : "is missing"}`);
-    stale++;
-    return;
-  }
-  mkdirSync(dirname(path), { recursive: true });
-  writeFileSync(path, content);
+  emitRailed ??= makeEmit({
+    check,
+    quiet: true,
+    onStale: () => {
+      stale++;
+    },
+    nav: { built: basename(ROOT), docsRoot: join(ROOT, siteDirFor(ROOT)) },
+  });
+  emitRailed(path, content);
 }
 
 if (import.meta.main) {
