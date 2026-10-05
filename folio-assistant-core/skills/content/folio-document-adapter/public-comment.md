@@ -54,6 +54,31 @@ The `unaligned` rest are listed by method, not hidden.
 | narrative letter or email | `import-narrative <file> --reviewer …` | section, page/line, table or quotation in each paragraph |
 | committee or editor on GitHub | the `github` job, from an issue or PR comment | the `pc:` reference |
 
+### A consolidated review log
+
+A secretariat often keeps one workbook for the whole review: a master log, a
+tab per large submission, and a contributors sheet. `import` reads **every**
+sheet that holds a comment table, records the sheet on each comment, and
+passes over a blank template tab. Pass `--series <id>` naming the log. A copy
+re-sent later is a different file holding the same rows, and each comment
+carries the log's own row number ("No."), so a re-import adds only the rows
+it has not seen.
+
+What the log already says is carried, not re-done:
+
+- **Status.** "Accepted", "Partially accepted", "Not accepted", "Noted" and
+  "Deferred" arrive *decided*, with the log's disposition as the reason and
+  `review-log` as who recorded it. "Reviewed" arrives *triaged*. A refusal
+  with no rationale arrives triaged and is listed as held, because the
+  commenter is owed a reason.
+- **Categorisations.** Theme, stakeholder type, committee routing, a review
+  question or priority ("Q9 - Conformance and testing", "P1") are kept in
+  `labels`, verbatim and keyed by the column header. The three comment types
+  stay `type`.
+- **Consent.** Read from the contributors sheet by name, and only the name
+  and consent columns are read. "NAIR, Tapas" and "Tapas Nair" are one
+  person.
+
 Rules that are not negotiable:
 
 - **A row that resolves to nothing is `unplaced`, not dropped.** Triage places
@@ -62,7 +87,8 @@ Rules that are not negotiable:
   nothing stay together as ONE general comment. Inventing an anchor for them
   would put a reviewer's words on a paragraph they never mentioned.
 - **Re-importing a file is a no-op.** Batches are keyed by sha256.
-- **Privacy.** The reviewer's email is never written. Their name is written
+- **Privacy.** The reviewer's email is never written, and an address typed
+  into a comment's text is removed too. Their name is written
   only when they answered the acknowledgement question "Yes". Keep the
   original spreadsheets OUT of the folio's repository, because they hold
   emails. Record the batch, and keep the file in the review owner's private
@@ -74,14 +100,18 @@ Rules that are not negotiable:
 trust it:
 
 - `caption` (high): "Table 3.1" named a captioned block.
+- `page` (medium or low): a page with no usable line. A lines cell such as
+  "Requirement 5" or "A14.01" names an item, not a line, so it is not read
+  as one. Lands on the page's first block in the cited section.
 - `page-line` (high, when the cited section agrees): the page is read as the
   **printed** page first, then as the PDF page index. Printed numbering restarts
   in the front matter, so the cited section breaks ties. "Section does NOT
   agree" in `anchor.note` is a triage signal. Check the comment.
 - `quote` (medium or low): a quotation found in the text. Low means it occurs
   more than once. The other places are in `candidates`.
-- `section` (medium): only the section number resolved. The anchor is the
-  section label.
+- `section` (medium): only the section resolved, by its number or by its
+  title or acronym ("PHSP" is the Public Health Surveillance Platform). The
+  anchor is the section label.
 - `manual`: a person placed it with `reassign`.
 
 ## The lifecycle, and who moves it

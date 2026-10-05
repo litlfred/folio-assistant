@@ -16,7 +16,7 @@
  *
  * ## The operations (each a task in public-comment.bpmn)
  *
- *   import <file.xlsx|.csv> [--channel comment-matrix|online-form] [--batch id]
+ *   import <file.xlsx|.csv> [--channel comment-matrix|online-form] [--batch id] [--series id]
  *   import-narrative <file.md|.txt> --reviewer "Name" [--org ..] [--country ..] [--acknowledge]
  *   list [--status open|<status>] [--page N] [--line L] [--block <label>] [--section 3.4] [--unplaced] [--json]
  *   triage <ref> [--type technical] [--priority high] [--to <label>]
@@ -69,6 +69,7 @@ import {
   DECISION_CODES,
   type DecisionCode,
   formatRef,
+  INTAKE_CHANNELS,
   OPEN_STATUSES,
   parseCaptionRef,
   parseLines,
@@ -191,7 +192,12 @@ export function resolveAnchor(c: Citation, text: string, anchors: ReviewAnchors,
   };
   const inSection = (b: AnchorBlock, labels: Set<string>) => b.sections.some((l) => labels.has(l));
   const section = c.section ? parseSection(c.section) : undefined;
-  const secSet = section ? secLabels(section) : undefined;
+  // A section NAMED rather than numbered: the appendix's components carry no
+  // number, and reviewers cite them by title or acronym ("Health Workforce
+  // Registry, 6", "PHSP, 5"). Both feed the same tie-break as a number.
+  const named = c.section ? sectionsNamed(c.section, anchors) : [];
+  const numbered = section ? secLabels(section) : new Set<string>();
+  const secSet = numbered.size || named.length ? new Set([...numbered, ...named.map((x) => x.label)]) : undefined;
 
   const cap = c.caption ?? parseCaptionRef(c.lines) ?? parseCaptionRef(text);
   if (cap) {
@@ -199,7 +205,7 @@ export function resolveAnchor(c: Citation, text: string, anchors: ReviewAnchors,
     if (hit.length === 1) return { targetLabel: hit[0].label, method: "caption", confidence: "high", candidates: [], note: `${cap} as cited` };
   }
 
-  const ranges = parseLines(c.lines);
+  const ranges = lineRanges(c.lines);
   const pageNum = c.page ? Number(/\d+/.exec(c.page)?.[0]) : NaN;
   if (ranges.length && Number.isFinite(pageNum)) {
     const pdfPages = new Set<number>();
@@ -240,11 +246,96 @@ export function resolveAnchor(c: Citation, text: string, anchors: ReviewAnchors,
     }
   }
 
+  // A page and no usable line: the page's first block, preferring one in the
+  // cited section. Coarser than a line, and the confidence says so.
+  if (Number.isFinite(pageNum)) {
+    const onPage = (pages: number[]) => anchors.blocks.filter((b) => pages.some((p) => p >= b.page && p <= (b.pageEnd ?? b.page)));
+    const printed = anchors.blocks.filter((b) => b.printedPage === String(pageNum)).map((b) => b.page);
+    for (const [how, pages] of [["printed page", [...new Set(printed)]], ["PDF page", [pageNum]]] as Array<[string, number[]]>) {
+      const hits = onPage(pages);
+      if (!hits.length) continue;
+      const inSec = secSet?.size ? hits.filter((b) => inSection(b, secSet)) : [];
+      if (secSet?.size && !inSec.length) continue;
+      const pool = inSec.length ? inSec : hits;
+      return {
+        targetLabel: pool[0].label,
+        method: "page",
+        confidence: inSec.length ? "medium" : "low",
+        candidates: pool.slice(1, 4).map((b) => b.label),
+        note: `p.${c.page} read as the ${how}, no line resolved${inSec.length ? `; in the cited section` : ""}`,
+      };
+    }
+  }
+
   if (section) {
     const s = anchors.sections.find((x) => x.number === section);
     if (s) return { targetLabel: s.label, method: "section", confidence: "medium", candidates: [], note: `section ${section} only` };
   }
+  // "Chapter 2": the chapter itself, when nothing finer resolved.
+  const chap = /\bch(?:apter|\.)?\s*(\d+)\b/i.exec(c.section ?? "")?.[1];
+  const ch = chap ? anchors.chapters.find((x) => x.number === Number(chap)) : undefined;
+  if (ch && !named.length) return { targetLabel: ch.label, method: "section", confidence: "low", candidates: [], note: `chapter ${chap} only` };
+  if (named.length) {
+    return {
+      targetLabel: named[0].label,
+      method: "section",
+      confidence: named.length === 1 ? "medium" : "low",
+      candidates: named.slice(1, 4).map((x) => x.label),
+      note: `section named "${named[0].title}"`,
+    };
+  }
   return { targetLabel: null, method: "unplaced", confidence: "low", candidates: [], note: "nothing in the citation resolved; triage places it" };
+}
+
+/**
+ * The line numbers a "lines" cell actually gives. A cell that starts with a
+ * number ("618–624", "L339; L369") is read whole; otherwise only numbers
+ * marked as lines ("Principle IX L392–427") count. "Requirement 5",
+ * "Governance item 2" and "A14.01" name a row or an item, not line 5, 2 or 14.
+ */
+export function lineRanges(cell: string | undefined): Array<[number, number]> {
+  if (!cell) return [];
+  if (/^\s*(?:l{1,2}\.?|lines?\s*(?:no\.?)?)?\s*\d/i.test(cell)) return parseLines(cell);
+  const marked = [...cell.matchAll(/\b(?:L|lines?\s*|ll?\.\s*)(\d+(?:\s*[-–]\s*\d+)?)/gi)].map((m) => m[1]);
+  return marked.length ? parseLines(marked.join(", ")) : [];
+}
+
+/** "Public Health Surveillance Platform" → "PHSP". */
+const acronymOf = (title: string) =>
+  title
+    .split(/[^A-Za-z]+/)
+    .filter((w) => w.length > 2 || /^[A-Z]/.test(w))
+    .filter((w) => !/^(and|of|the|for)$/i.test(w))
+    .map((w) => w[0]!.toUpperCase())
+    .join("");
+
+/**
+ * Sections a citation names by TITLE or acronym, best first. The cited text
+ * is split at its separators, so "Ch. 4, §4.3.1 (Data models first; FHIR)"
+ * tries each part. A part names a section when it equals the title, or is
+ * the title's acronym, or is a phrase of at least two words the title
+ * contains.
+ */
+export function sectionsNamed(cited: string, anchors: ReviewAnchors): Array<{ label: string; title: string }> {
+  const parts = cited
+    .split(/[,;/()]|\s[–-]\s/)
+    .map((p) => p.replace(/§/g, "").trim())
+    .filter((p) => p && !/^\d+(\.\d+)*$/.test(p));
+  const out: Array<{ label: string; title: string; score: number }> = [];
+  for (const sec of anchors.sections) {
+    const t = norm(sec.title);
+    if (!t) continue;
+    let score = 0;
+    for (const p of parts) {
+      const q = norm(p);
+      if (!q) continue;
+      if (q === t) score = Math.max(score, 3);
+      else if (p.trim() === acronymOf(sec.title) && p.trim().length >= 3) score = Math.max(score, 2);
+      else if (q.split(" ").length >= 2 && (` ${t} `.includes(` ${q} `) || ` ${q} `.includes(` ${t} `))) score = Math.max(score, 1);
+    }
+    if (score) out.push({ label: sec.label, title: sec.title, score });
+  }
+  return out.sort((a, b) => b.score - a.score);
 }
 
 // ── Intake ───────────────────────────────────────────────────────
@@ -261,19 +352,34 @@ export interface ReviewerInput {
 export interface IntakeRow {
   row?: number;
   segment?: number;
+  /** The log's own row number ("No."). */
+  entry?: string;
   reviewer: ReviewerInput;
   citation: Citation;
   type?: string;
   text: string;
   suggestedRevision?: string;
+  /** How the comment reached the log, as the log's own "Channel" column says. */
+  channel?: string;
+  /** The log's own status and its disposition, where the log already decided. */
+  status?: string;
+  disposition?: string;
+  /** Every other non-empty column, by its header. */
+  labels?: Record<string, string>;
 }
 
 /** The header cells that identify each column, by the words in them. */
 const HEADERS: Array<[keyof IntakeRow | "section" | "page" | "lines" | "name" | "organisation" | "country" | "email", RegExp]> = [
+  ["entry", /^\s*no\.?\s*$/i],
   ["section", /section/i],
   ["page", /^\s*page/i],
   ["lines", /line|table|figure/i],
-  ["type", /type/i],
+  // "Comment type", never "Stakeholder type": the consolidated master log
+  // carries both, stakeholder first, and a bare /type/ took the wrong one.
+  ["type", /^\s*(comment\s+)?type\b/i],
+  ["channel", /^\s*channel/i],
+  ["status", /^\s*status\b/i],
+  ["disposition", /disposition|rationale/i],
   ["suggestedRevision", /suggest|revision|proposed/i],
   ["text", /comment|issue|feedback/i],
   ["name", /^\s*(reviewer\s*)?name/i],
@@ -288,7 +394,32 @@ const HEADERS: Array<[keyof IntakeRow | "section" | "page" | "lines" | "name" | 
  * export (one header row, reviewer columns on every row). The header is the
  * first row naming both a comment column and a section or page column.
  */
-export function tableRows(rows: Cell[][]): { rows: IntakeRow[]; skipped: Array<{ row: number; why: string }> } {
+/**
+ * Consent to be acknowledged, by reviewer NAME, from a log's contributors
+ * sheet ("Name | … | Consent to acknowledge"). Only those two columns are
+ * read: the sheet also holds emails, and nothing here reads them.
+ */
+export function consentByName(rows: Cell[][]): Map<string, boolean> | undefined {
+  const h = rows.findIndex((r) => r.some((c) => /consent/i.test(str(c))) && r.some((c) => /^\s*name\s*$/i.test(str(c))));
+  if (h < 0) return undefined;
+  const ni = rows[h].findIndex((c) => /^\s*name\s*$/i.test(str(c)));
+  const ci = rows[h].findIndex((c) => /consent/i.test(str(c)));
+  const out = new Map<string, boolean>();
+  for (const r of rows.slice(h + 1)) {
+    const name = str(r[ni]);
+    const v = str(r[ci]);
+    if (name && v) out.set(nameKey(name), /^y/i.test(v));
+  }
+  return out;
+}
+
+/** "NAIR, Tapas" and "Tapas Nair" are one person: the words, case and order aside. */
+export const nameKey = (n: string) => n.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim().split(/\s+/).sort().join(" ");
+
+/** Columns that are bookkeeping, not a categorisation of the comment. */
+const NOT_A_LABEL = /^\s*(date|handled by|transferred)/i;
+
+export function tableRows(rows: Cell[][], consent?: Map<string, boolean>): { rows: IntakeRow[]; skipped: Array<{ row: number; why: string }> } {
   const h = rows.findIndex((r) => r.some((c) => /comment|issue|feedback/i.test(str(c))) && r.some((c) => /section|page/i.test(str(c))));
   if (h < 0) throw new Error("no header row naming a comment column and a section or page column");
   const col: Partial<Record<string, number>> = {};
@@ -301,6 +432,10 @@ export function tableRows(rows: Cell[][]): { rows: IntakeRow[]; skipped: Array<{
     if (hit) col[hit[0]] = i;
   });
   if (col.text === undefined) throw new Error("the header names no comment column");
+  const mapped = new Set(Object.values(col));
+  const labelCols = rows[h]
+    .map((c, i) => ({ i, name: str(c) }))
+    .filter((x) => x.name && !mapped.has(x.i) && !NOT_A_LABEL.test(x.name) && !/e-?mail/i.test(x.name));
 
   // Matrix-style reviewer details: "Label | value" rows above the header.
   const sheetReviewer: ReviewerInput = {};
@@ -328,9 +463,21 @@ export function tableRows(rows: Cell[][]): { rows: IntakeRow[]; skipped: Array<{
     }
     const reviewer: ReviewerInput = { ...sheetReviewer };
     for (const k2 of ["name", "organisation", "country", "email"] as const) if (get(k2)) reviewer[k2] = get(k2);
+    if (reviewer.acknowledge === undefined && reviewer.name && consent?.has(nameKey(reviewer.name))) {
+      reviewer.acknowledge = consent.get(nameKey(reviewer.name));
+    }
+    const labels: Record<string, string> = {};
+    for (const l of labelCols) if (str(r[l.i])) labels[l.name] = str(r[l.i]);
+    // A type outside the three is still the log's categorisation: kept verbatim.
+    if (get("type") && !typeOf(get("type")) && col.type !== undefined) labels[str(rows[h][col.type])] = get("type");
     out.push({
       row: rowNo,
+      ...(get("entry") ? { entry: get("entry") } : {}),
       reviewer,
+      ...(get("channel") ? { channel: get("channel") } : {}),
+      ...(get("status") ? { status: get("status") } : {}),
+      ...(get("disposition") ? { disposition: get("disposition") } : {}),
+      ...(Object.keys(labels).length ? { labels } : {}),
       citation: {
         ...(get("section") ? { section: get("section") } : {}),
         ...(get("page") ? { page: get("page") } : {}),
@@ -390,24 +537,103 @@ export interface ImportResult {
   unplaced: string[];
   skipped: Array<{ row: number; why: string }>;
   alreadyImported?: boolean;
+  /** Rows a previous copy of the same log already brought in (series, sheet and "No." match). */
+  known?: number;
+  /** Comments the log had already decided or reviewed, carried as decisions or triage. */
+  fromLog?: { decided: string[]; triaged: string[]; held: Array<{ ref: string; why: string }> };
+}
+
+const EMAIL = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
+/**
+ * An address a reviewer typed INTO a comment ("contact dsw@…") is removed
+ * too. The rule is that no email is written to the store, and the reviewer
+ * column is only one of the places an email turns up.
+ */
+function scrubRow(r: IntakeRow): IntakeRow {
+  const x = (s: string | undefined) => s?.replace(EMAIL, "[email removed]");
+  return {
+    ...r,
+    text: x(r.text)!,
+    ...(r.suggestedRevision ? { suggestedRevision: x(r.suggestedRevision) } : {}),
+    ...(r.disposition ? { disposition: x(r.disposition) } : {}),
+    ...(r.labels ? { labels: Object.fromEntries(Object.entries(r.labels).map(([k, v]) => [k, x(v)!])) } : {}),
+    citation: { ...r.citation, ...(r.citation.raw ? { raw: x(r.citation.raw) } : {}) },
+  };
+}
+
+/** The log's own "Channel" column, as one of the intake channels. */
+export function channelOf(v: string | undefined, fallback: IntakeChannel): IntakeChannel {
+  const t = (v ?? "").toLowerCase();
+  if (!t) return fallback;
+  if (/matrix/.test(t)) return "comment-matrix";
+  if (/form/.test(t)) return "online-form";
+  if (/github/.test(t)) return "github";
+  // A Word document, a PDF, an email, a spreadsheet with no matrix: a narrative.
+  return "narrative";
+}
+type IntakeChannel = (typeof INTAKE_CHANNELS)[number];
+
+/**
+ * A review log's own status, as the lifecycle's move. The five decision codes
+ * map one-to-one ("Partially accepted" is accepted-modified); "Reviewed" is
+ * triage; "Pending" and anything unrecognised leave the comment received.
+ */
+export function logStatusMove(status: string | undefined): { decide: DecisionCode } | { triage: true } | undefined {
+  const t = (status ?? "").toLowerCase().replace(/[\s_-]+/g, " ").trim();
+  if (!t || t === "pending") return undefined;
+  if (/^partial/.test(t) || /modif/.test(t)) return { decide: "accepted-modified" };
+  if (/^not accepted|^rejected/.test(t)) return { decide: "not-accepted" };
+  if (/^accepted/.test(t)) return { decide: "accepted" };
+  if (/^noted/.test(t)) return { decide: "noted" };
+  if (/^deferred/.test(t)) return { decide: "deferred" };
+  if (/^reviewed|^triaged/.test(t)) return { triage: true };
+  return undefined;
 }
 
 export function importRows(
   store: Store,
   rows: IntakeRow[],
-  src: { channel: "comment-matrix" | "online-form" | "narrative"; batch: string; sha256: string; skipped?: Array<{ row: number; why: string }> },
+  src: {
+    channel: "comment-matrix" | "online-form" | "narrative";
+    batch: string;
+    sha256: string;
+    skipped?: Array<{ row: number; why: string }>;
+    /** The sheet, for a workbook with several comment sheets. */
+    sheet?: string;
+    /**
+     * The log this file is a copy of. Rows whose (series, sheet, "No.") a
+     * comment already carries are skipped, so a re-sent log adds only what is
+     * new rather than duplicating every row.
+     */
+    series?: string;
+  },
   at = new Date().toISOString(),
 ): ImportResult {
-  if (store.batches().some((b) => b.sha256 === src.sha256)) {
+  if (store.batches().some((b) => b.sha256 === src.sha256 && (b as { sheet?: string }).sheet === src.sheet)) {
     return { batch: src.batch, created: [], unplaced: [], skipped: [], alreadyImported: true };
   }
   const anchors = store.anchors();
   const existing = store.all();
+  const seriesKey = (sheet: string | undefined, entry: string) => `${src.series}\u0000${sheet ?? ""}\u0000${entry}`;
+  const known = new Set(
+    src.series
+      ? existing
+          .filter((c) => c.public.source.entry && c.public.source.series === src.series)
+          .map((c) => seriesKey(c.public.source.sheet, c.public.source.entry!))
+      : [],
+  );
+  let skippedKnown = 0;
+  const fromLog = { decided: [] as string[], triaged: [] as string[], held: [] as Array<{ ref: string; why: string }> };
   let next = existing.reduce((m, c) => Math.max(m, Number(c.public.ref.slice(3))), 0) + 1;
   const created: string[] = [];
   const unplaced: string[] = [];
   const ingest = PUBLIC_COMMENT_TRANSITIONS.find((t) => t.name === "ingest")!.by;
-  for (const r of rows) {
+  for (const raw of rows) {
+    const r = scrubRow(raw);
+    if (src.series && r.entry && known.has(seriesKey(src.sheet, r.entry))) {
+      skippedKnown++;
+      continue;
+    }
     const ref = formatRef(next++);
     const anchor = resolveAnchor(r.citation, r.text, anchors, (b) => store.blockText(b));
     const ack = r.reviewer.acknowledge === true;
@@ -432,9 +658,12 @@ export function importRows(
       public: {
         ref,
         source: {
-          channel: src.channel,
+          channel: channelOf(r.channel, src.channel),
           batch: src.batch,
           sha256: src.sha256,
+          ...(src.sheet ? { sheet: src.sheet } : {}),
+          ...(r.entry ? { entry: r.entry } : {}),
+          ...(src.series ? { series: src.series } : {}),
           ...(r.row ? { row: r.row } : {}),
           ...(r.segment !== undefined ? { segment: r.segment } : {}),
           receivedAt: at,
@@ -451,10 +680,31 @@ export function importRows(
         ...(type ? { type } : {}),
         text: r.text,
         ...(r.suggestedRevision ? { suggestedRevision: r.suggestedRevision } : {}),
+        ...(r.labels ? { labels: r.labels } : {}),
         history: [{ at, transition: "ingest", by: "intake", task: `${ingest.process}#${ingest.task}`, note: `${src.batch}${r.row ? ` row ${r.row}` : ""}` }],
       },
     });
-    store.save(c);
+    // The log's own status, carried rather than re-done: a comment the log
+    // already decided arrives decided, with the log's disposition as the
+    // reason and the log named as who recorded it. One it decided WITHOUT a
+    // reason, where a reason is owed, arrives triaged and is listed as held.
+    let saved = c;
+    const move = logStatusMove(r.status);
+    const by = "review-log";
+    const note = `the log's status was "${r.status}"`;
+    if (move && "decide" in move) {
+      if (move.decide !== "accepted" && !r.disposition) {
+        saved = transition(c, "triage", { by, at, note: `${note}, with no rationale; held for the editor` });
+        fromLog.held.push({ ref, why: `"${r.status}" with no rationale` });
+      } else {
+        saved = transition(c, "decide", { by, at, note, decision: { code: move.decide, reason: r.disposition ?? "" } });
+        fromLog.decided.push(ref);
+      }
+    } else if (move) {
+      saved = transition(c, "triage", { by, at, note });
+      fromLog.triaged.push(ref);
+    }
+    store.save(saved);
     created.push(ref);
     if (!anchor.targetLabel) unplaced.push(ref);
   }
@@ -462,20 +712,23 @@ export function importRows(
     id: src.batch,
     channel: src.channel,
     sha256: src.sha256,
+    ...(src.sheet ? { sheet: src.sheet } : {}),
+    ...(src.series ? { series: src.series } : {}),
+    ...(skippedKnown ? { known: skippedKnown } : {}),
     importedAt: at,
     rows: rows.length,
     created,
     unplaced,
     skipped: src.skipped ?? [],
   });
-  return { batch: src.batch, created, unplaced, skipped: src.skipped ?? [] };
+  return { batch: src.batch, created, unplaced, skipped: src.skipped ?? [], known: skippedKnown, fromLog };
 }
 
-function readRows(file: string): Cell[][][] {
+function readRows(file: string): Array<{ name: string; rows: Cell[][] }> {
   const here = dirname(new URL(import.meta.url).pathname);
-  const r = spawnSync("python3", [join(here, "intake-rows.py"), file], { encoding: "utf-8", maxBuffer: 64 << 20 });
+  const r = spawnSync("python3", [join(here, "intake-rows.py"), file], { encoding: "utf-8", maxBuffer: 256 << 20 });
   if (r.status !== 0) throw new Error(r.stderr || `intake-rows.py exited ${r.status}`);
-  return (JSON.parse(r.stdout).sheets as Array<{ rows: Cell[][] }>).map((s) => s.rows);
+  return (JSON.parse(r.stdout).sheets as Array<{ name?: string; rows: Cell[][] }>).map((s, i) => ({ name: s.name ?? `sheet${i + 1}`, rows: s.rows }));
 }
 
 // ── GitHub tags ──────────────────────────────────────────────────
@@ -643,21 +896,46 @@ if (import.meta.main) {
         const file = resolve(positional);
         const sha256 = createHash("sha256").update(readFileSync(file)).digest("hex");
         const sheets = readRows(file);
-        const sheet = sheets.find((rows) => {
+        // EVERY sheet with a comment table, not the first: a consolidated log
+        // keeps its master log and each large submission on separate tabs.
+        // A sheet whose table holds no comment yet (a blank template) is
+        // reported and passed over.
+        const consent = sheets.map((sh) => consentByName(sh.rows)).find(Boolean);
+        const tables = sheets.flatMap((sh) => {
           try {
-            tableRows(rows);
-            return true;
+            return [{ name: sh.name, ...tableRows(sh.rows, consent) }];
           } catch {
-            return false;
+            return [];
           }
         });
-        if (!sheet) throw new Error(`${basename(file)}: no sheet has a comment table`);
-        const t = tableRows(sheet);
+        if (!tables.length) throw new Error(`${basename(file)}: no sheet has a comment table`);
         const channel = (opt("channel") as "comment-matrix" | "online-form") ?? (file.endsWith(".csv") ? "online-form" : "comment-matrix");
         const batch = opt("batch") ?? basename(file).replace(/\.[^.]+$/, "").replace(/[^A-Za-z0-9._-]+/g, "-");
-        const r = importRows(store, t.rows, { channel, batch, sha256, skipped: t.skipped }, now);
-        if (r.alreadyImported) console.error(`= ${basename(file)} was already imported (same sha256); nothing to do`);
-        else console.error(`✓ ${batch}: ${r.created.length} comment(s) ${r.created[0] ?? ""}${r.created.length > 1 ? `…${r.created.at(-1)}` : ""}, ${r.unplaced.length} unplaced, ${r.skipped.length} skipped`);
+        const several = tables.length > 1;
+        const series = opt("series") ?? (several ? batch : undefined);
+        if (consent) console.error(`  consent to acknowledge read for ${consent.size} contributor(s), by name`);
+        for (const t of tables) {
+          if (!t.rows.length) {
+            console.error(`  · ${t.name}: a comment table with no comments; passed over`);
+            continue;
+          }
+          const id = several ? `${batch}--${t.name.replace(/[^A-Za-z0-9._-]+/g, "-").replace(/-+$/, "")}` : batch;
+          const r = importRows(store, t.rows, { channel, batch: id, sha256, skipped: t.skipped, ...(several ? { sheet: t.name } : {}), ...(series ? { series } : {}) }, now);
+          const where = several ? `${t.name}: ` : "";
+          if (r.alreadyImported) {
+            console.error(`= ${where}${basename(file)} was already imported (same sha256); nothing to do`);
+            continue;
+          }
+          const log = r.fromLog;
+          console.error(
+            `✓ ${where}${r.created.length} comment(s) ${r.created[0] ?? ""}${r.created.length > 1 ? `…${r.created.at(-1)}` : ""}, ` +
+              `${r.unplaced.length} unplaced, ${r.skipped.length} skipped` +
+              (r.known ? `, ${r.known} already in from an earlier copy of ${series}` : "") +
+              (log && (log.decided.length || log.triaged.length || log.held.length)
+                ? `; from the log's status: ${log.decided.length} decided, ${log.triaged.length} triaged, ${log.held.length} held (${log.held.map((x) => `${x.ref} ${x.why}`).join("; ")})`
+                : ""),
+          );
+        }
         break;
       }
       case "import-narrative": {
