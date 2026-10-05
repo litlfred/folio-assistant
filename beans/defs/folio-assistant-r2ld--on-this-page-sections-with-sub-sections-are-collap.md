@@ -1,10 +1,10 @@
 ---
 # folio-assistant-r2ld
 title: '''On this page'': sections with sub-sections are collapsible'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-05T14:39:33Z
-updated_at: 2026-10-05T14:39:33Z
+updated_at: 2026-10-05T15:28:15Z
 parent: folio-assistant-9rq1
 ---
 
@@ -13,3 +13,5 @@ Owner, 2026-10-05: 'on this page should have sub-sections collapsible'. Both sur
 ## Done when
 - [ ] theme sidebar and rail both nest h3 under their h2, closed by default
 - [ ] e2e on both
+
+_2026-10-05T15:28:15Z_ — Claimed by claude/vibrant-darwin-r6im60 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
