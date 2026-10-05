@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_IgIncremental` · advisory · 19 step(s)
 
-One change — a PR push or a push to main — through the incremental IG build
+A proposed incremental build for a WHO SMART Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy. One change — a PR push or a push to main — through the incremental IG build
 proposed in issue #199: restore the derived state, compute
 the change's dependency cone, compile and validate only the cone against the
 warm validator, re-render the cone's records, rebuild the meta-index, assemble

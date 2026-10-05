@@ -873,6 +873,12 @@ classDiagram
       preview [1] string
       file [1] string
     }
+    class cat_harness_docs_folio_bean_index_v1_Edge["Edge"] {
+      <<json: BeanIndexSchema>>
+      blocker [1] string
+      blocked [1] string
+      declaredOn [1..*] list~blocked_by | blocking~
+    }
     class cat_harness_docs_folio_bean_index_v1_Finding["Finding"] {
       <<json: BeanIndexSchema>>
       kind [1] blocked-without-expiry | blocker-closed | blocking-unknown
@@ -886,6 +892,7 @@ classDiagram
       tile [0..1] map~object~
       repoWeb [1] string
       items [0..*] Item[]
+      edges [0..*] Edge[]
       findings [0..*] Finding[]
       plan [0..1] object
     }
@@ -1150,6 +1157,13 @@ classDiagram
       tile [0..1] map~object~
       directories [0..*] Directory[]
       nodes [0..*] Node[]
+    }
+    class cat_harness_docs_cat_harness_payload_v1_cat_harness_payload_v1["cat-harness-payload/v1"] {
+      <<json: PayloadSidecarSchema>>
+      $schema [1] 'cat-harness-payload/v1'
+      sha256 [1] string
+      bytes [1] integer
+      mediaType [1] string
     }
   }
   namespace cat_harness__swimlane_glossary {
@@ -1648,6 +1662,7 @@ classDiagram
   cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo_index_v1_Relation : relations
   cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_docs_folio_todo_index_v1_Item : items
   cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Item : items
+  cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Edge : edges
   cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Finding : findings
   cat_harness_docs_folio_translation_status_v1_folio_translation_status_v1 *-- "0..*" cat_harness_docs_folio_translation_status_v1_Locale : locales
   cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Module : modules
@@ -1675,6 +1690,7 @@ classDiagram
   cssClass "cat_harness_docs_folio_qa_graph_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_translation_index_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_bean_index_v1_Item" fa_uml_kind_docs
+  cssClass "cat_harness_docs_folio_bean_index_v1_Edge" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_bean_index_v1_Finding" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_translation_status_v1_Locale" fa_uml_kind_docs
@@ -1702,6 +1718,7 @@ classDiagram
   cssClass "cat_harness_docs_folio_graph_projection_v1_Link" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_Node" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_folio_graph_projection_v1" fa_uml_kind_docs
+  cssClass "cat_harness_docs_cat_harness_payload_v1_cat_harness_payload_v1" fa_uml_kind_docs
   cssClass "cat_harness_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0" fa_uml_kind_swimlane_glossary
   cssClass "n_cat_harness_cat_harness_scripts_code" fa_uml_kind_code
   cssClass "n_cat_harness_cat_harness_scripts_code" fa_uml_undetermined

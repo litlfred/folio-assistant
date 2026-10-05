@@ -2665,6 +2665,62 @@
       "status": "candidate"
     },
     {
+      "id": "process_slicesqlitepublish.a_check",
+      "prefLabel": "Gate every slice: slice:sqlite:check",
+      "definition": "For every slice: build twice and require one sha256; read the row digest back from the file and require it to equal the digest computed from the source without SQLite; run an FTS5 phrase query for a known row; and audit the payloads with `auditPayloadTree` (deploy payloads as written, the kg slice's pointers against the committed payload tree). A slice whose rows do not match its source fails; it never passes as whole.",
+      "notation": "A_Check",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Check",
+      "status": "candidate"
+    },
+    {
+      "id": "process_slicesqlitepublish.a_define",
+      "prefLabel": "Write the slice definition",
+      "definition": "Add one `SliceDef` to the builder's slice table: the DDL (one table per node type, edge tables, one CONTENTLESS full-detail FTS5), the order each table's rows go in, the `load` that turns the source into rows, where the payloads live (written at deploy, or already published), and the `search` block the generic page reads. Choose the heavy fields by `kg-export` §\"What is heavy\": a heavy field is a `payload_sha256` pointer, never a stored column. Never copy the builder.",
+      "notation": "A_Define",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Define",
+      "status": "candidate"
+    },
+    {
+      "id": "process_slicesqlitepublish.a_deploy",
+      "prefLabel": "Build each slice into _site at deploy",
+      "definition": "`gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice <name>`, once per slice, from the tree being published: the file, its manifest, the slice index, and the deploy payloads beside the committed KG payloads. Never into the committed `docs/payload/`, whose orphan audit admits KG nodes only.",
+      "notation": "A_Deploy",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Deploy",
+      "status": "candidate"
+    },
+    {
+      "id": "process_slicesqlitepublish.a_measure",
+      "prefLabel": "Build it locally and measure the file",
+      "definition": "Run `bun run slice:sqlite -- --slice <name> --out <scratch>` and read the manifest: `bytes`, the row counts, the payload count and bytes, `overBudget`, `duplicateIds` and `findings`. Record the measurement on the bean with its provenance (the command and the date), beside the size of the source it replaces.",
+      "notation": "A_Measure",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Measure",
+      "status": "candidate"
+    },
+    {
+      "id": "process_slicesqlitepublish.a_report",
+      "prefLabel": "Report the measurement; ship nothing",
+      "definition": "Write the measurement and what was tried onto the bean, and ask the owner whether the slice should ship at that size, be cut further, or not exist. Nothing is wired: no manifest is published, no gate added, no deploy line written.",
+      "notation": "A_Report",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Report",
+      "status": "candidate"
+    },
+    {
+      "id": "process_slicesqlitepublish.a_verify",
+      "prefLabel": "Search the published slice in a browser",
+      "definition": "Open `slices/search.html?slice=<name>` on the deployed site, run a phrase search for a known row, open it so its payload is fetched, and look at the result; send the screenshot rather than a description of it. Report the mode the page says it used (OPFS or in memory), never an assumed one.",
+      "notation": "A_Verify",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Verify",
+      "status": "candidate"
+    },
+    {
+      "id": "process_slicesqlitepublish.a_wire",
+      "prefLabel": "Wire it: gate, deploy line, search, tests",
+      "definition": "Give the slice everything a slice owes: its manifest (written by the builder from the definition), its `--check` (covered by `slice:sqlite:check`), one deploy line in `docs-site.yml` and in `feature-staging.yml`, its search (the generic page needs no code, only the definition's `search` block), a unit test over a fixture and over the real source, and a search in `slice-sqlite.e2e.ts`.",
+      "notation": "A_Wire",
+      "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Wire",
+      "status": "candidate"
+    },
+    {
       "id": "process_stalledagenttriage.a_collect",
       "prefLabel": "Collect or reconstruct a handover report per agent",
       "definition": "Use the agent's own report and check it against live state; if none, ask the agent if it is still reachable, else reconstruct with the handover-report template and mark it reconstructed. Unpushed state is unknown, never empty.",

@@ -58,8 +58,14 @@ export function plan(paths: string[]): Plan {
   };
 }
 
+// `maxBuffer` well above Node's 1 MB default: `ls-tree -r` / `ls-files` of this
+// repository are over 2 MB, and the lost-file guard (bean `vsv7`) reads both
+// parents' full lists. At the default it threw ENOBUFS on its first live run,
+// 2026-10-04, after regen had finished — the merge was left uncommitted.
+const GIT_MAX_BUFFER = 256 * 1024 * 1024;
+
 function git(root: string, ...args: string[]): string {
-  return execFileSync("git", ["-C", root, ...args], { encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+  return execFileSync("git", ["-C", root, ...args], { encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"], maxBuffer: GIT_MAX_BUFFER }).trim();
 }
 
 /** Check each submodule out at the commit the index pins. */
@@ -79,7 +85,13 @@ function syncSubmodules(root: string): void {
  * produced. The other direction (deleted on the branch, changed on the base)
  * has stage 3 and takes it, as before.
  */
-export function takeBaseAction(stages: ReadonlySet<number>): "theirs" | "delete" {
+export function takeBaseAction(stages: ReadonlySet<number>): "theirs" | "delete" | "resolved" {
+  // No stages at all is NOT a deletion: the path was already resolved by an
+  // earlier step (`qa:resolve-conflicts` runs first and stages what it
+  // resolves). Reading "no stage 3" there as "the base deleted it" `git rm`ed
+  // two generated kg-export sidecars on #1955, 2026-10-03, while the run still
+  // reported proved (bean `vsv7`).
+  if (stages.size === 0) return "resolved";
   return stages.has(3) ? "theirs" : "delete";
 }
 
@@ -108,7 +120,9 @@ export function stageConflicted(root: string, path: string): void {
 
 /** Take the base's side of `path`, deletion included; stages the result. */
 export function takeBase(root: string, path: string): void {
-  if (takeBaseAction(unmergedStages(root, path)) === "delete") {
+  const action = takeBaseAction(unmergedStages(root, path));
+  if (action === "resolved") return;
+  if (action === "delete") {
     git(root, "rm", "-q", "--", path);
   } else {
     git(root, "checkout", "--theirs", "--", path);
@@ -177,6 +191,31 @@ export function resolveGitlink(root: string, path: string): GitlinkResolution | 
 /** Stage a resolved gitlink pin. */
 export function stageGitlink(root: string, path: string, pin: string): void {
   git(root, "update-index", "--cacheinfo", `160000,${pin},${path}`);
+}
+
+/**
+ * Paths both parents hold that the merged result does not (bean `vsv7`, done-when 2).
+ *
+ * A merge may drop a file one side deleted; it never drops one BOTH sides
+ * still have. On #1955 (2026-10-03) a resolver mis-step `git rm`ed two such
+ * generated sidecars and the run still said "proved", because no gate asks
+ * whether a file vanished. This is that question, asked of the index just
+ * before the merge commit. Pure over three path lists.
+ */
+export function lostOnBothSides(ours: readonly string[], theirs: readonly string[], result: readonly string[]): string[] {
+  const kept = new Set(result);
+  const theirsSet = new Set(theirs);
+  return ours.filter((f) => theirsSet.has(f) && !kept.has(f)).sort();
+}
+
+/** Abort (tree restored) when the staged merge lost a path both parents hold. */
+function refuseLostFiles(root: string, abort: (why: string) => never): void {
+  const list = (ref: string) => git(root, "ls-tree", "-r", "--name-only", ref).split("\n").filter(Boolean);
+  const lost = lostOnBothSides(list("HEAD"), list("MERGE_HEAD"), git(root, "ls-files").split("\n").filter(Boolean));
+  if (lost.length) {
+    for (const f of lost) console.error(`  ✗ ${f}  [present on both sides, absent from the merge]`);
+    abort(`${lost.length} file(s) both sides hold would be deleted by this merge (bean vsv7)`);
+  }
 }
 
 /**
@@ -336,6 +375,7 @@ if (import.meta.main) {
     // (2026-10-04).
     syncSubmodules(root);
     git(root, "add", "-A");
+    refuseLostFiles(root, abort);
     git(root, "commit", "-q", "--no-edit");
     console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern. NOT regenerated (--no-regen): run \`bun run regen\` once over the train.`);
     process.exit(0);
@@ -389,6 +429,7 @@ if (import.meta.main) {
     );
   }
   git(root, "add", "-A");
+  refuseLostFiles(root, abort);
   git(root, "commit", "-q", "--no-edit");
   console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern, regenerated and proved.`);
 }

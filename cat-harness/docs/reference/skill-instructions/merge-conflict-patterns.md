@@ -445,6 +445,19 @@ or one that moves a region boundary, **refuses**. The file-count churn
 (`beans/README.md`, 76 alone) is resolved here rather than by changing what
 the README shows — the owner kept the exact counts (#1707).
 
+### `standalone-baseline` — take the base, regenerate NOTHING
+
+`cat-harness-tools/scripts/standalone-baseline.json`, `check:standalone`'s list of
+accepted standalone failures (bean `ho66`, #1977). It is the one take-base
+pattern with **no** regeneration, because it is a ratchet. Re-measuring after a
+merge would write any new standalone failure into the list unreviewed, which
+is exactly what the gate exists to stop. Git conflicts on it only when BOTH sides
+changed the list, so taking the base is fail-closed: if this side's change was
+a new failure, its CI goes red until its author runs `bun run
+standalone:baseline` on purpose; if it was a fix, all that is lost is a shorter
+list, and the check reports it. Not measured by replay: the file was new when
+the pattern was added, so there was no merge history to count.
+
 ### `beans` — refused, by declaration (44)
 
 **Before you go looking for the other session, check whether there is one.**

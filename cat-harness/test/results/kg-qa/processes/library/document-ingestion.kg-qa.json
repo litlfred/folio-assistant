@@ -2,107 +2,226 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_Ingestion",
+    "id": "document-ingestion",
     "path": "processes/library/document-ingestion.bpmn"
   },
-  "source_hash": "sha256:63465a2b242b7a9a1bc78f1ab6bd14f9ed08db4515d69142c8cafada88cc4e11",
+  "source_hash": "sha256:57d921879dd23886d6a777c231e5f48c4f207a0701d2a6415d03e39656dc767e",
   "criteria": {
-    "raci-role-resolves": {
-      "result": "n/a",
-      "findings": []
-    },
-    "raci-single-accountable": {
-      "result": "n/a",
-      "findings": []
-    },
-    "raci-accountable-not-consulted": {
-      "result": "n/a",
-      "findings": []
-    },
-    "convention-ref-resolves": {
-      "result": "n/a",
-      "findings": []
-    },
     "skill-ref-resolves": {
-      "result": "pass",
-      "findings": []
-    },
-    "skill-servable": {
-      "result": "pass",
-      "findings": []
-    },
-    "activity-skill-has-tool": {
-      "result": "pass",
-      "findings": []
-    },
-    "decision-ref-resolves": {
-      "result": "n/a",
-      "findings": []
-    },
-    "role-ref-resolves": {
-      "result": "pass",
-      "findings": []
-    },
-    "activity-in-lane": {
-      "result": "pass",
-      "findings": []
-    },
-    "lane-binds-role": {
-      "result": "pass",
-      "findings": []
-    },
-    "variable-performer-declared-alone": {
-      "result": "n/a",
-      "findings": []
-    },
-    "role-carries-activity-skill": {
-      "result": "fail",
+      "result": "unknown",
       "findings": [
         {
-          "where": "Task_Place",
-          "detail": "needs skill \"upload-routes\", but its lane's role \"user\" does not carry it."
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
+    },
+    "variable-performer-declared-alone": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
+    },
+    "role-ref-resolves": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
+    },
+    "activity-in-lane": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
+    },
+    "lane-binds-role": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
+    },
+    "role-carries-activity-skill": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
+    },
+    "skill-servable": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
+    },
+    "convention-ref-resolves": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
         }
       ]
     },
     "activity-names-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
+    },
+    "activity-skill-has-tool": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
+    },
+    "raci-role-resolves": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
+    },
+    "raci-single-accountable": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
+    },
+    "raci-accountable-not-consulted": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
+    },
+    "raci-involvement-vocabulary": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
     },
     "activity-fulfilment-kind": {
-      "result": "pass",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
     },
     "call-activity-resolves": {
-      "result": "n/a",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
     },
     "process-diagram-published": {
-      "result": "pass",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
     },
     "activity-documented": {
-      "result": "pass",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
     },
     "activity-calls-skill-process": {
-      "result": "pass",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
     },
     "gateway-documented": {
-      "result": "pass",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
     },
     "gateway-branches-named": {
-      "result": "pass",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
     },
     "node-reachable": {
-      "result": "pass",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
     },
     "node-has-exit": {
-      "result": "pass",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the diagram would not load: unparsable content <<<<<<<> detected\n\tline: 24\n\tcolumn: 0\n\tnested error: illegal first char nodeName"
+        }
+      ]
     },
     "prose-reviewed-since-code-changed": {
       "result": "n/a",
@@ -114,9 +233,9 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 1,
-    "n/a": 9,
-    "unknown": 0
+    "pass": 0,
+    "fail": 0,
+    "n/a": 2,
+    "unknown": 24
   }
 }

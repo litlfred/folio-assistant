@@ -23,7 +23,7 @@
     <bpmn:participant id="Participant_Ingestion" name="Basic ingestion — an upload to an asset catalogued in library/" processRef="Process_Ingestion" />
   </bpmn:collaboration>
   <bpmn:process id="Process_Ingestion" name="Basic ingestion — an upload to an asset catalogued in library/" isExecutable="false">
-    <bpmn:documentation>folio-assistant — Basic ingestion — an upload to an asset catalogued in library/.
+    <bpmn:documentation>Accepts an upload, records its extracted metadata in the knowledge graph, and catalogues the asset in `library/` — held if materialized, referenced if not. folio-assistant — Basic ingestion — an upload to an asset catalogued in library/.
 
   Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
