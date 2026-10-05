@@ -381,6 +381,7 @@
     "publish:verify": "bun run cat-harness/scripts/publish-verify.ts",
     "qa:attestations:migrate": "bun run cat-harness-tools/scripts/migrate-qa-attestations.ts",
     "qa:attestations:migrate:check": "bun run cat-harness-tools/scripts/migrate-qa-attestations.ts --check",
+    "bib:attestations:migrate": "bun run cat-harness-tools/scripts/migrate-bib-attestations.ts",
     "qa:fetch": "bun run cat-harness/scripts/qa-store.ts fetch",
     "qa:prune": "bun run cat-harness/scripts/qa-store.ts prune",
     "qa:publish": "bun run cat-harness/scripts/qa-store.ts publish",
