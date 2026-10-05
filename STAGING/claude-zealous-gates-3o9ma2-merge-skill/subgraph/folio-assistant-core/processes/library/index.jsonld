@@ -1,0 +1,112 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/processes/library/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "@type": "bootstrap:Process",
+      "name": "Deep document research"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_3",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_5",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Again",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "not yet, and iterations remain"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Exhausted",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "out of iterations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Held",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "held"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_NotHeld",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "not held"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Sufficient",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "sufficient"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/lane/Lane_DeepResearcher",
+      "@type": "cat-harness:Lane",
+      "name": "Deep researcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Plan",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Filter the corpus, choose the granularity, decompose the question"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Refine",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Deduplicate, and keep what is actually relevant"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Report",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Synthesise, cite to a location, and say what was not found"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Search",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Retrieve for each sub-question"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/End_Answered",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Answered, with its citations and its gaps"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/End_NotHeld",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Not held — a question for library-ingestion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Held",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Is the corpus there to search?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Sufficient",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Enough, or out of iterations?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/Start_Question",
+      "@type": "bootstrap:ProcessNode",
+      "name": "A question about held documents"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/processes"
+  ],
+  "name": "processes/library",
+  "path": "processes/library/"
+}

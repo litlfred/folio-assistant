@@ -1,0 +1,1268 @@
+{
+  "@context": {
+    "name": "https://litlfred.github.io/cat-harness/0.1.0/ns#name",
+    "stub": "https://litlfred.github.io/cat-harness/0.1.0/ns#stub",
+    "title": "https://litlfred.github.io/cat-harness/0.1.0/ns#title",
+    "description": "https://litlfred.github.io/cat-harness/0.1.0/ns#description",
+    "version": "https://litlfred.github.io/cat-harness/0.1.0/ns#version",
+    "path": "https://litlfred.github.io/cat-harness/0.1.0/ns#path",
+    "nodes": "https://litlfred.github.io/cat-harness/0.1.0/ns#nodes",
+    "bytes": "https://litlfred.github.io/cat-harness/0.1.0/ns#bytes",
+    "sha256": "https://litlfred.github.io/cat-harness/0.1.0/ns#sha256",
+    "dependsOn": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#dependsOn",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "directory": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#directory",
+      "@container": "@set"
+    },
+    "graphKinds": {
+      "@id": "http://purl.org/dc/terms/type",
+      "@container": "@set"
+    },
+    "subgraph": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasSubgraph",
+      "@type": "@id"
+    },
+    "url": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentUrl",
+      "@type": "@id"
+    },
+    "hasHarness": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasMember",
+      "@container": "@set"
+    }
+  },
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/index.jsonld",
+  "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#KnowledgeGraph",
+  "hasHarness": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/bootstrap/bootstrap.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "bootstrap",
+      "stub": "bootstrap",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/bootstrap/bootstrap.jsonld",
+      "title": "Bootstrap",
+      "description": "The graph an agent reads before it knows what this repository is.",
+      "version": "0.1.0",
+      "directory": [
+        {
+          "name": "skills",
+          "path": "skills/",
+          "graphKinds": [
+            "skills"
+          ]
+        },
+        {
+          "name": "schemas",
+          "path": "schemas/",
+          "graphKinds": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "scenarios",
+          "path": "scenarios/",
+          "graphKinds": [
+            "scenarios"
+          ]
+        },
+        {
+          "name": "processes",
+          "path": "processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "models",
+          "path": "models/",
+          "graphKinds": [
+            "models"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/bootstrap/subgraph/",
+      "nodes": 166,
+      "bytes": 141369,
+      "sha256": "b83baa29c10c833dd7f9a81ff3b6d0416ee2a939ce360536e9e1b07b3716a05a"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/bootstrap-tools/bootstrap-tools.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "bootstrap-tools",
+      "stub": "bootstrap-tools",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/bootstrap-tools/bootstrap-tools.jsonld",
+      "title": "Bootstrap tools",
+      "description": "The Zod source of bootstrap's schemas, the generators that write bootstrap's JSON Schemas, schema page and READMEs, and the checks bootstrap's content must pass — runnable by an agent, with zod, liquidjs, Playwright and bpmn-js as its dependencies.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/bootstrap/bootstrap.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "bootstrap-tools-schemas",
+          "path": "schemas/",
+          "graphKinds": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-skills",
+          "path": "skills/",
+          "graphKinds": [
+            "skills"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-processes",
+          "path": "processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-scenarios",
+          "path": "scenarios/",
+          "graphKinds": [
+            "scenarios"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/bootstrap-tools/subgraph/",
+      "nodes": 43,
+      "bytes": 71835,
+      "sha256": "8f2b7298423d571db7a75808244b0065a9df91fddf4ca63745ac7e4417230886"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/cat-harness.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "cat-harness",
+      "stub": "cat-harness",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/cat-harness.jsonld",
+      "title": "C@T Harness",
+      "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/bootstrap/bootstrap.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/bootstrap-tools/bootstrap-tools.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "cat-harness-validators",
+          "path": "validators/",
+          "graphKinds": [
+            "validators"
+          ]
+        },
+        {
+          "name": "tools",
+          "path": "tools/",
+          "graphKinds": [
+            "tools"
+          ]
+        },
+        {
+          "name": "external-schemas",
+          "path": "external-schemas/",
+          "graphKinds": [
+            "external-schema"
+          ]
+        },
+        {
+          "name": "subscriptions",
+          "path": "subscriptions/",
+          "graphKinds": [
+            "substrate-snapshot"
+          ]
+        },
+        {
+          "name": "code-lists",
+          "path": "code-lists/",
+          "graphKinds": [
+            "code-list"
+          ]
+        },
+        {
+          "name": "vocab-mappings",
+          "path": "vocab-mappings/",
+          "graphKinds": [
+            "vocab-mapping"
+          ]
+        },
+        {
+          "name": "schemas",
+          "path": "schemas/",
+          "graphKinds": [
+            "schemas",
+            "cat-harness"
+          ]
+        },
+        {
+          "name": "uml",
+          "path": "uml/",
+          "graphKinds": [
+            "uml"
+          ]
+        },
+        {
+          "name": "skills",
+          "path": "skills/",
+          "graphKinds": [
+            "skills"
+          ]
+        },
+        {
+          "name": "scenarios",
+          "path": "scenarios/",
+          "graphKinds": [
+            "scenarios"
+          ]
+        },
+        {
+          "name": "policies",
+          "path": "policies/",
+          "graphKinds": [
+            "policies"
+          ]
+        },
+        {
+          "name": "processes",
+          "path": "processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "methodologies",
+          "path": "methodologies/",
+          "graphKinds": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        },
+        {
+          "name": "attestations",
+          "path": "test/attestations/",
+          "graphKinds": [
+            "attestations"
+          ]
+        },
+        {
+          "name": "health",
+          "path": "test/health/results/",
+          "graphKinds": [
+            "health"
+          ]
+        },
+        {
+          "name": "uploads",
+          "path": "uploads/",
+          "graphKinds": [
+            "uploads"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphKinds": [
+            "library"
+          ]
+        },
+        {
+          "name": "translation-sources",
+          "path": "translations/",
+          "graphKinds": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "folio",
+          "path": "folio/",
+          "graphKinds": [
+            "folio"
+          ]
+        },
+        {
+          "name": "docs",
+          "path": "docs/",
+          "graphKinds": [
+            "docs"
+          ]
+        },
+        {
+          "name": "swimlane-glossary",
+          "path": "glossary/",
+          "graphKinds": [
+            "swimlane-glossary"
+          ]
+        },
+        {
+          "name": "cat-harness-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-src",
+          "path": "src/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-adapters",
+          "path": "adapters/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tests",
+          "path": "test/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "folio-templates",
+          "path": "templates/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-deploy",
+          "path": "deploy/",
+          "graphKinds": [
+            "code"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/",
+      "nodes": 3380,
+      "bytes": 4555032,
+      "sha256": "67dda3cbfd9ff9d1a182daedae5b61068a9da060954112d5462f65de7b2f6260"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/cat-harness-tools.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "cat-harness-tools",
+      "stub": "cat-harness-tools",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/cat-harness-tools/cat-harness-tools.jsonld",
+      "title": "C@T Harness Tools",
+      "description": "What implements the harness's Tool definitions: the MCP servers, their tool registrars and routes. Definitions stay in cat-harness; this layer runs them.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/cat-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/bootstrap-tools/bootstrap-tools.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "cat-harness-tools-adapters",
+          "path": "adapters/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-schemas",
+          "path": "schemas/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-id-lookup",
+          "path": "id-lookup/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-tests",
+          "path": "test/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-src",
+          "path": "src/",
+          "graphKinds": [
+            "code"
+          ]
+        }
+      ],
+      "nodes": 9,
+      "bytes": 23113,
+      "sha256": "3d333e70cb43c108f5b03f25c3837d34f2d941da5b3a5d8a285d5846c6b8b841"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/cat-openapi.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "cat-openapi",
+      "stub": "cat-openapi",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/cat-openapi/cat-openapi.jsonld",
+      "title": "C@T OpenAPI",
+      "description": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph kind `openapi`, and gives every operation in them a page and an IRI, rendered in the browser from the served document.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/cat-harness.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "cat-openapi-validators",
+          "path": "validators/",
+          "graphKinds": [
+            "validators"
+          ]
+        },
+        {
+          "name": "cat-openapi-kinds",
+          "path": "kinds/",
+          "graphKinds": [
+            "kinds"
+          ]
+        },
+        {
+          "name": "cat-openapi-schemas",
+          "path": "schemas/",
+          "graphKinds": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "cat-openapi-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        }
+      ],
+      "nodes": 10,
+      "bytes": 20203,
+      "sha256": "d52c07ab72ebc1f7d450b1904572b53890744a3e424e3bf01444938c1bd2982b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/fhir-harness.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "fhir-harness",
+      "stub": "fhir-harness",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/fhir-harness/fhir-harness.jsonld",
+      "title": "FHIR IG Harness",
+      "description": "The bare FHIR IG pipeline — SUSHI, the IG Publisher, Jekyll assembly and publication — with no WHO, DAK or SMART assumption. What a non-WHO implementation guide instantiates.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/folio-assistant-core/folio-assistant-core.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "fhir-harness-translations",
+          "path": "translations/",
+          "graphKinds": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "fhir-harness-validators",
+          "path": "validators/",
+          "graphKinds": [
+            "validators"
+          ]
+        },
+        {
+          "name": "fhir-harness-kinds",
+          "path": "kinds/",
+          "graphKinds": [
+            "kinds"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphKinds": [
+            "library"
+          ]
+        },
+        {
+          "name": "fhir-ig-skills",
+          "path": "skills/",
+          "graphKinds": [
+            "skills"
+          ]
+        },
+        {
+          "name": "fhir-ig-tools",
+          "path": "tools/",
+          "graphKinds": [
+            "tools"
+          ]
+        },
+        {
+          "name": "fhir-ig-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "fhir-harness-processes",
+          "path": "processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/",
+      "nodes": 152,
+      "bytes": 165171,
+      "sha256": "54f986a2485ca88bb23907da2191b0ae4e6fef0ea13d078745794dfa9195b80b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/folio-assistant/folio-assistant.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "folio-assistant",
+      "stub": "folio-assistant",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/folio-assistant/folio-assistant.jsonld",
+      "title": "Folio Assistant",
+      "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/bootstrap/bootstrap.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/bootstrap-tools/bootstrap-tools.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/cat-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/cat-harness-tools.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/fhir-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/folio-assistant-core/folio-assistant-core.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/folio-assistant-sci/folio-assistant-sci.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-base.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-ig/smart-ig.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-immunizations/smart-immunizations.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-trust/smart-trust.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/who-iris/who-iris.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "uploads",
+          "path": "uploads/",
+          "graphKinds": [
+            "uploads"
+          ]
+        },
+        {
+          "name": "root-tools",
+          "path": "tools/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "fsh-guts",
+          "path": "fsh-guts/",
+          "graphKinds": [
+            "fsh-guts"
+          ]
+        },
+        {
+          "name": "beans",
+          "path": "beans/",
+          "graphKinds": [
+            "beans"
+          ]
+        },
+        {
+          "name": "todos",
+          "path": "todos/",
+          "graphKinds": [
+            "todos"
+          ]
+        },
+        {
+          "name": "memory",
+          "path": "memory/",
+          "graphKinds": [
+            "memory",
+            "waiver"
+          ]
+        },
+        {
+          "name": "interaction",
+          "path": "interaction/",
+          "graphKinds": [
+            "interaction"
+          ]
+        },
+        {
+          "name": "issue-marks",
+          "path": "issue-marks/",
+          "graphKinds": [
+            "issue-marks"
+          ]
+        },
+        {
+          "name": "root-docs",
+          "path": "docs/",
+          "graphKinds": [
+            "docs"
+          ]
+        }
+      ],
+      "nodes": 31,
+      "bytes": 40388,
+      "sha256": "4a7b6be0ae3c1011a3bfc244bcba542ee8fd637457e49b9a970a111270343a62"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/folio-assistant-core/folio-assistant-core.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "folio-assistant-core",
+      "stub": "folio-assistant-core",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/folio-assistant-core/folio-assistant-core.jsonld",
+      "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph kind itself.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/cat-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/cat-harness-tools.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "folio-assistant-core-translations",
+          "path": "translations/",
+          "graphKinds": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-block-kinds",
+          "path": "block-kinds/",
+          "graphKinds": [
+            "block-kinds"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-validators",
+          "path": "validators/",
+          "graphKinds": [
+            "validators"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-kinds",
+          "path": "kinds/",
+          "graphKinds": [
+            "kinds"
+          ]
+        },
+        {
+          "name": "core-schemas",
+          "path": "schemas/",
+          "graphKinds": [
+            "schemas",
+            "cat-harness"
+          ]
+        },
+        {
+          "name": "folios",
+          "path": "folios/",
+          "graphKinds": [
+            "folio"
+          ]
+        },
+        {
+          "name": "glossary",
+          "path": "glossary/",
+          "graphKinds": [
+            "glossary"
+          ]
+        },
+        {
+          "name": "core-tools",
+          "path": "tools/",
+          "graphKinds": [
+            "tools"
+          ]
+        },
+        {
+          "name": "core-adapters",
+          "path": "adapters/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "core-src",
+          "path": "src/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "core-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "core-library",
+          "path": "library/",
+          "graphKinds": [
+            "library"
+          ]
+        },
+        {
+          "name": "core-methodologies",
+          "path": "methodologies/",
+          "graphKinds": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "core-skills",
+          "path": "skills/",
+          "graphKinds": [
+            "skills"
+          ]
+        },
+        {
+          "name": "core-processes",
+          "path": "processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/",
+      "nodes": 529,
+      "bytes": 826045,
+      "sha256": "1d255c5bc276b1cd860a4984f6554862818a6c6502918570c46f4da2973b8a5a"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/folio-assistant-sci/folio-assistant-sci.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "folio-assistant-sci",
+      "stub": "folio-assistant-sci",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/folio-assistant-sci/folio-assistant-sci.jsonld",
+      "description": "Scientific source material used by folios that formalise mathematics, and the methodologies for formalising it in Lean that this layer adopts from that material.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/folio-assistant-core/folio-assistant-core.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "folio-assistant-sci-qa-checkers",
+          "path": "qa-checkers/",
+          "graphKinds": [
+            "qa-checkers"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-pipeline-plugins",
+          "path": "pipeline-plugins/",
+          "graphKinds": [
+            "pipeline-plugins"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-translations",
+          "path": "translations/",
+          "graphKinds": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-block-kinds",
+          "path": "block-kinds/",
+          "graphKinds": [
+            "block-kinds"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-content-adapters",
+          "path": "content-adapters/",
+          "graphKinds": [
+            "content-adapters"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-kinds",
+          "path": "kinds/",
+          "graphKinds": [
+            "kinds"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphKinds": [
+            "library"
+          ]
+        },
+        {
+          "name": "sci-methodologies",
+          "path": "methodologies/",
+          "graphKinds": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "skills",
+          "path": "skills/",
+          "graphKinds": [
+            "skills"
+          ]
+        },
+        {
+          "name": "sci-adapters",
+          "path": "adapters/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "sci-tools",
+          "path": "tools/",
+          "graphKinds": [
+            "tools"
+          ]
+        },
+        {
+          "name": "sci-sources",
+          "path": "sources/",
+          "graphKinds": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "sci-processes",
+          "path": "processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        },
+        {
+          "name": "attestations",
+          "path": "test/attestations/",
+          "graphKinds": [
+            "attestations"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/",
+      "nodes": 133,
+      "bytes": 180082,
+      "sha256": "cf514b3ac771bb85a335f7e0c9503c37fa593ce67dc05d9836cf87f802ea2cd9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-base.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "smart-base",
+      "stub": "smart-base",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-base/smart-base.jsonld",
+      "title": "SMART Base",
+      "description": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/fhir-harness.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "smart-base-qa-checkers",
+          "path": "qa-checkers/",
+          "graphKinds": [
+            "qa-checkers"
+          ]
+        },
+        {
+          "name": "smart-base-block-kinds",
+          "path": "block-kinds/",
+          "graphKinds": [
+            "block-kinds"
+          ]
+        },
+        {
+          "name": "smart-base-content-adapters",
+          "path": "content-adapters/",
+          "graphKinds": [
+            "content-adapters"
+          ]
+        },
+        {
+          "name": "smart-base-translations",
+          "path": "translations/",
+          "graphKinds": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphKinds": [
+            "library"
+          ]
+        },
+        {
+          "name": "methodologies",
+          "path": "methodologies/",
+          "graphKinds": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "processes",
+          "path": "methodologies/processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "smart-base-house-processes",
+          "path": "processes/",
+          "graphKinds": [
+            "processes"
+          ]
+        },
+        {
+          "name": "smart-base-artifact-index",
+          "path": "fhir-artifact-index/",
+          "graphKinds": [
+            "fhir-artifact-index"
+          ]
+        },
+        {
+          "name": "tools",
+          "path": "tools/",
+          "graphKinds": [
+            "tools"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        },
+        {
+          "name": "smart-base-themes",
+          "path": "themes/",
+          "graphKinds": [
+            "themes"
+          ]
+        },
+        {
+          "name": "smart-base-docs",
+          "path": "docs/",
+          "graphKinds": [
+            "docs",
+            "ig-pages"
+          ]
+        },
+        {
+          "name": "smart-base-document-kinds",
+          "path": "document-kinds/",
+          "graphKinds": [
+            "document-kinds"
+          ]
+        },
+        {
+          "name": "smart-base-findings",
+          "path": "findings/",
+          "graphKinds": [
+            "docs"
+          ]
+        },
+        {
+          "name": "smart-base-external-schemas",
+          "path": "external-schemas/",
+          "graphKinds": [
+            "external-schema"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/",
+      "nodes": 114,
+      "bytes": 108218,
+      "sha256": "0ab88b5c5ffdeaa6e85d1f4ea4db41fed9fea10985566715677384e4ce2b5453"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-ig/smart-ig.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "smart-ig",
+      "stub": "smart-ig",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-ig/smart-ig.jsonld",
+      "title": "SMART IG",
+      "description": "The L3 layer — a WHO SMART Guideline's FHIR Implementation Guide, and what one owes beyond a bare FHIR IG.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-base.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        }
+      ],
+      "nodes": 4,
+      "bytes": 18181,
+      "sha256": "c7d50741c5afe66059991a2938f2e1c9f29773a8dc96dfe184d6570dc46d7fd9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-immunizations/smart-immunizations.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "smart-immunizations",
+      "stub": "smart-immunizations",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-immunizations/smart-immunizations.jsonld",
+      "description": "WHO SMART Immunizations (smart.who.int.immunizations) v0.2.0, FHIR 4.0.1 — the published IG's artefact index, reconstructed: 748 artefacts known, 200 materialized.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-ig/smart-ig.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "smart-immunizations-artifact-index",
+          "path": "fhir-artifact-index/",
+          "graphKinds": [
+            "fhir-artifact-index"
+          ]
+        },
+        {
+          "name": "smart-immunizations-docs",
+          "path": "docs/",
+          "graphKinds": [
+            "docs",
+            "ig-pages"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        }
+      ],
+      "nodes": 9,
+      "bytes": 23415,
+      "sha256": "fd094ff9eec2f17c68fdeec8d9c9a93f83384c6792491a6fb60cf6d75294eee4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-trust/smart-trust.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "smart-trust",
+      "stub": "smart-trust",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-trust/smart-trust.jsonld",
+      "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/smart-ig/smart-ig.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/cat-openapi.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "smart-trust-ast",
+          "path": "fhir-ast/",
+          "graphKinds": [
+            "ig-ast"
+          ]
+        },
+        {
+          "name": "smart-trust-artifact-index",
+          "path": "fhir-artifact-index/",
+          "graphKinds": [
+            "fhir-artifact-index"
+          ]
+        },
+        {
+          "name": "smart-trust-openapi",
+          "path": "openapi/",
+          "graphKinds": [
+            "openapi"
+          ]
+        },
+        {
+          "name": "smart-trust-docs",
+          "path": "docs/",
+          "graphKinds": [
+            "docs",
+            "ig-pages"
+          ]
+        },
+        {
+          "name": "smart-trust-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        }
+      ],
+      "nodes": 15,
+      "bytes": 30731,
+      "sha256": "2bd86aac914c1e678da7264c00afe8787e88ada31af1b55b0d9b2f8c95c9a339"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/who-iris/who-iris.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
+      "name": "who-iris",
+      "stub": "who-iris",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/who-iris/who-iris.jsonld",
+      "title": "WHO IRIS",
+      "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2-merge-skill/folio-assistant-core/folio-assistant-core.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "who-iris-translations",
+          "path": "translations/",
+          "graphKinds": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphKinds": [
+            "library"
+          ]
+        },
+        {
+          "name": "who-iris-site",
+          "path": "site/",
+          "graphKinds": [
+            "docs"
+          ]
+        },
+        {
+          "name": "who-iris-catalogue",
+          "path": "catalogue/",
+          "graphKinds": [
+            "catalogue"
+          ]
+        },
+        {
+          "name": "who-iris-uploads",
+          "path": "uploads/",
+          "graphKinds": [
+            "uploads"
+          ]
+        },
+        {
+          "name": "who-iris-skills",
+          "path": "skills/",
+          "graphKinds": [
+            "skills"
+          ]
+        },
+        {
+          "name": "glossary",
+          "path": "glossary/",
+          "graphKinds": [
+            "glossary"
+          ]
+        },
+        {
+          "name": "who-iris-themes",
+          "path": "themes/",
+          "graphKinds": [
+            "themes"
+          ]
+        },
+        {
+          "name": "who-iris-docs",
+          "path": "docs/",
+          "graphKinds": [
+            "docs"
+          ]
+        },
+        {
+          "name": "who-iris-scripts",
+          "path": "scripts/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "who-iris-sources",
+          "path": "sources/",
+          "graphKinds": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "id-lookup",
+          "path": "id-lookup/",
+          "graphKinds": [
+            "code"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphKinds": [
+            "qa"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/",
+      "nodes": 28,
+      "bytes": 41814,
+      "sha256": "aebdd6dea4cf2a49c0c5a82fb601f569a5a68f7459c82ceaf0991f8dcb595525"
+    }
+  ]
+}
