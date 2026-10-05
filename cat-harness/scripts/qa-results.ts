@@ -314,7 +314,9 @@ function storedOn(absPath: string, repoRoot?: string): string | undefined {
   try {
     const loc = resolveQaLocation(repoRoot);
     const abs = resolve(absPath);
-    return loc.directories.find((x) => x.storage && (abs === x.absPath || abs.startsWith(x.absPath + sep)))?.storage?.branch;
+    const s = loc.directories.find((x) => x.storage && (abs === x.absPath || abs.startsWith(x.absPath + sep)))?.storage;
+    // A qa directory is keyed by commit, so its storage is a single branch; the resolver refuses a family.
+    return s && "branch" in s ? s.branch : undefined;
   } catch {
     // Not inside a checkout (a test's temp directory), or the declarations do
     // not resolve: nothing here is stored, which is the pre-move default.

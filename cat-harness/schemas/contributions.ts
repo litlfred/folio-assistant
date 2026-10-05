@@ -369,6 +369,11 @@ export class ContributionRegistry {
    * contributor is a no-op, so a diamond dependency graph loads cleanly.
    * Registering the same identifier from a *different* contributor throws.
    */
+  /** A declared node of a BUILT-IN adapter is the platform's own kind, not a contribution (bean riit, step 3). */
+  acceptsDeclaredKind(adapter: string): boolean {
+    return !(CONTENT_ADAPTERS as readonly string[]).includes(adapter);
+  }
+
   register(contribution: FolioContribution): void {
     const who = contribution.name;
 

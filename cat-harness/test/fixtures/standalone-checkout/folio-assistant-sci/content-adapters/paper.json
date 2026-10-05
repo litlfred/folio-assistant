@@ -1,0 +1,7 @@
+{
+  "$schema": "folio-content-adapter/v1",
+  "adapter": "paper",
+  "typed": true,
+  "companionRoles": ["md", "ts", "lean"],
+  "rationale": "The paper vocabulary: every block kind whose node names adapter \"paper\", the document kinds in folio-assistant-core and the math kinds here. cat-harness's BlockSchema types it, so its kinds are the platform's own and no contributor may redefine one. md and ts are shared by every block; lean is paper-only. Declared here because the vocabulary is completed by this layer's formal-claim kinds; the row stood in ADAPTER_COMPANION_ROLES in cat-harness/schemas/block-qa.ts until bean riit, step 5."
+}

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-70zt
 title: SVG rendering of DIIG Fig. 1.1.1 (seven phases of planning and implementing a digital health enterprise)
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-03T10:55:02Z
-updated_at: 2026-10-04T08:36:08Z
+updated_at: 2026-10-04T12:41:46Z
 parent: folio-assistant-qvxh
 ---
 
@@ -34,3 +34,7 @@ Compared against the PDF's own raster render of page 17 at 144 dpi, by pixel.
 - **A false alarm, recorded so it is not chased again:** MuPDF's own SVG renderer drew each phase badge's soft drop-shadow (a soft mask) as a hard grey rectangle. In Chromium the shadow is correct. MuPDF is not a valid judge of these SVGs, and it renders poppler's output as solid black.
 - **poppler `pdftocairo -svg`** was tried as an alternative and is worse in Chromium (2.785% solid). PyMuPDF's export stays.
 - The `--check` compares bytes and the content hash, never a render, so none of the above affects the gate.
+
+## Closed 2026-10-04
+
+#2062 merged 2026-10-04 with every gating check green on 572f7c2 (17 success, 2 skipped). vfig-p017.svg, pdf-vector-svg.py and smart-base:diig-figure:check are on main.

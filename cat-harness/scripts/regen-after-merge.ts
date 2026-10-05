@@ -137,6 +137,7 @@ import {
   decide,
   fingerprint,
   loadCache,
+  qaBaselineIdentity,
   saveCache,
   type HashCache,
   type PairIO,
@@ -867,7 +868,9 @@ if (import.meta.main) {
   // N+1 must hash again, and a reused table could serve a stale digest when an
   // mtime does not move within one clock tick.
   let digests = new FileDigests(repoRoot);
-  const fp = (pair: Pair) => fingerprint(repoRoot, scripts, scriptsOf(pair), pair.io, digests);
+  // Resolved once per run: a baseline that moves DURING a run is the next run's input.
+  const baseline = qaBaselineIdentity({ repoRoot });
+  const fp = (pair: Pair) => fingerprint(repoRoot, scripts, scriptsOf(pair), pair.io, digests, baseline);
   const skip = (pair: Pair): SkipDecision => decide(cache, cacheKey(pair), fp(pair));
 
   const checks = new Set(repairable.map((p) => p.check));

@@ -68,6 +68,12 @@
  * @graphNode schema
  */
 
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import { blockKindNode } from "./block-kinds";
+import { declaredDirectories } from "./declared-nodes";
+import { poKey, readPoStrings } from "./po-strings";
 import { z } from "zod";
 
 // ── BCP 47 locale tag ────────────────────────────────────────────
@@ -386,129 +392,45 @@ export const TranslationConfigSchema = z.object({
 // ── Kind heading translations ────────────────────────────────────
 
 /**
- * Translatable kind headings for the six UN languages.
+ * Where a block kind's heading comes from, per locale (bean riit, step 2b).
  *
- * These replace the hardcoded `KIND_HEADING` map in `render-markdown.ts`.
- * The viewer and the render pipeline both read this map to produce
- * locale-appropriate block headers.
+ * English is the `heading` on the kind's own `folio-block-kind/v1` node. Every
+ * other locale is an entry in the TRANSLATION GRAPH — owner, 2026-10-04: locale
+ * headings live there, not on the node (option 1 of 2) — read from
+ * `<translations>/<lang>/block-kinds.po` in each instance that declares a
+ * `translation-sources` directory, with `msgctxt "block-kind:<kind>"`. So a
+ * harness that owns a kind ships its headings beside it, and no module lists
+ * them; the six-locale table that stood here was the last per-kind table in
+ * cat-harness, and is gone.
  *
- * Entries cover all paper block kinds. DAK kinds use their own heading
- * convention (the kind name itself, title-cased).
+ * Read lazily, once per locale.
  */
-export const KIND_HEADINGS: Record<string, Record<string, string>> = {
-  en: {
-    definition: "Definition",
-    theorem: "Theorem",
-    lemma: "Lemma",
-    proposition: "Proposition",
-    corollary: "Corollary",
-    algorithm: "Algorithm",
-    conjecture: "Conjecture",
-    example: "Example",
-    remark: "Remark",
-    proof: "Proof",
-    simulator: "Simulator",
-    equation: "Equation",
-    diagram: "Figure",
-    table: "Table",
-    prose: "",
-  },
-  fr: {
-    definition: "Définition",
-    theorem: "Théorème",
-    lemma: "Lemme",
-    proposition: "Proposition",
-    corollary: "Corollaire",
-    algorithm: "Algorithme",
-    conjecture: "Conjecture",
-    example: "Exemple",
-    remark: "Remarque",
-    proof: "Preuve",
-    simulator: "Simulateur",
-    equation: "Équation",
-    diagram: "Figure",
-    table: "Tableau",
-    prose: "",
-  },
-  es: {
-    definition: "Definición",
-    theorem: "Teorema",
-    lemma: "Lema",
-    proposition: "Proposición",
-    corollary: "Corolario",
-    algorithm: "Algoritmo",
-    conjecture: "Conjetura",
-    example: "Ejemplo",
-    remark: "Observación",
-    proof: "Demostración",
-    simulator: "Simulador",
-    equation: "Ecuación",
-    diagram: "Figura",
-    table: "Tabla",
-    prose: "",
-  },
-  ar: {
-    definition: "تعريف",
-    theorem: "مبرهنة",
-    lemma: "تمهيدية",
-    proposition: "قضية",
-    corollary: "نتيجة طبيعية",
-    algorithm: "خوارزمية",
-    conjecture: "حدسية",
-    example: "مثال",
-    remark: "ملاحظة",
-    proof: "برهان",
-    simulator: "محاكي",
-    equation: "معادلة",
-    diagram: "شكل",
-    table: "جدول",
-    prose: "",
-  },
-  zh: {
-    definition: "定义",
-    theorem: "定理",
-    lemma: "引理",
-    proposition: "命题",
-    corollary: "推论",
-    algorithm: "算法",
-    conjecture: "猜想",
-    example: "例",
-    remark: "注",
-    proof: "证明",
-    simulator: "模拟器",
-    equation: "方程",
-    diagram: "图",
-    table: "表",
-    prose: "",
-  },
-  ru: {
-    definition: "Определение",
-    theorem: "Теорема",
-    lemma: "Лемма",
-    proposition: "Предложение",
-    corollary: "Следствие",
-    algorithm: "Алгоритм",
-    conjecture: "Гипотеза",
-    example: "Пример",
-    remark: "Замечание",
-    proof: "Доказательство",
-    simulator: "Симулятор",
-    equation: "Уравнение",
-    diagram: "Рисунок",
-    table: "Таблица",
-    prose: "",
-  },
-};
+const PLATFORM_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
+const headingCache = new Map<string, Map<string, string>>();
+
+function translatedHeadings(lang: string): Map<string, string> {
+  let m = headingCache.get(lang);
+  if (m === undefined) {
+    m = new Map();
+    for (const dir of declaredDirectories(PLATFORM_ROOT, "translation-sources")) {
+      for (const [k, v] of readPoStrings(join(dir, lang, "block-kinds.po"))) m.set(k, v);
+    }
+    headingCache.set(lang, m);
+  }
+  return m;
+}
 
 /**
- * Look up the translated heading for a block kind in a given locale.
- * Falls back to English, then to the kind name title-cased.
+ * The translated heading for a block kind in a given locale.
+ * Falls back to the node's English heading, then to the kind name
+ * title-cased (a contributed kind with no node here).
  */
 export function kindHeading(kind: string, locale: string): string {
   const lang = locale.split("-")[0]; // "zh-Hans" → "zh"
-  return (
-    KIND_HEADINGS[lang]?.[kind] ??
-    KIND_HEADINGS["en"]?.[kind] ??
-    kind.charAt(0).toUpperCase() + kind.slice(1)
-  );
+  const english = blockKindNode(kind)?.heading;
+  if (lang !== "en") {
+    const t = translatedHeadings(lang).get(poKey(`block-kind:${kind}`, english ?? ""));
+    if (t !== undefined) return t;
+  }
+  return english ?? kind.charAt(0).toUpperCase() + kind.slice(1);
 }

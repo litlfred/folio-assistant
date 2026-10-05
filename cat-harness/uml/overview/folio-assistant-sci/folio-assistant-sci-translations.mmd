@@ -1,0 +1,13 @@
+classDiagram
+  direction TB
+  namespace folio_assistant_sci__folio_assistant_sci_translations {
+    class folio_assistant_sci_folio_assistant_sci_translations_TranslationConfig["TranslationConfig"] {
+      <<json: TranslationConfigSchema>>
+      defaultLocale [0..1] string
+      supportedLocales [0..*] string[]
+      translationDir [0..1] string
+      potGranularity [0..1] block | chapter | folio
+      officialRequired [0..1] boolean
+    }
+  }
+  cssClass "folio_assistant_sci_folio_assistant_sci_translations_TranslationConfig" fa_uml_kind_translation_sources
