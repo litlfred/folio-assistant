@@ -907,8 +907,9 @@ The helpers are `subgraphContainer` and `memberOf` in `scripts/subgraph-node.ts`
 and `subgraphPublicationFindings` is the check: `subgraph-node.test.ts` runs it
 over every adopting publisher. **Converting a publisher adds its row there.**
 The declaring instance's document must be published for the `@id` to
-dereference — `docs-site.yml` exports the checkout root's graph for exactly
-that reason.
+dereference. Which documents are published, and where:
+[`instance-publication`](instance-publication.md) §"What each instance
+publishes".
 
 One trap, measured while building it: do not restate the subgraph's `name` on
 a container written to `<dir>/<id>.json`. A file whose `name` equals its stem
@@ -1097,6 +1098,11 @@ word.
   `<name>.json`, and composing either from the other resolves to nothing.
 - **The renderable site lives at `docs/<stub>/`.** Compute it with
   `siteDir(d)` or `siteDirFor(root)`, never by writing the path out.
+
+Where each `<stub>.jsonld` is served, which base its `@id`s are minted
+against, and what is stripped from it are not naming rules:
+[`instance-publication`](instance-publication.md) §"What each instance
+publishes — graph, address, schema, and what is stripped".
 
 ### Identity: `repository` and `livesAt` (owner, 2026-09-30, bean `6rmv`)
 
