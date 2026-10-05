@@ -48,7 +48,7 @@ _Эта страница сгенерирована из [`content/docs/publicat
 утверждало тридцать девять против пятидесяти пяти.
 
 Число в тексте — это утверждение; производный индекс — это доказательство. Поэтому само число
-находится в [производном индексе процессов](../cat-harness/auto-docs/index/processes/), который
+находится в [производном индексе процессов]({{ '/cat-harness/auto-docs/index/processes/' | relative_url }}), который
 генерируется из объявления командой `bun run auto:docs`, проверяется в CI и не может разойтись
 с диаграммами, которые он подсчитывает. **Задача этой страницы — та половина информации,
 которую невозможно сгенерировать автоматически**: для чего предназначен каждый процесс, в какой
@@ -88,8 +88,8 @@ Bean `pve3` фиксирует этот выбор: **обе половины bo
 
 | Диаграмма | На какой вопрос отвечает |
 |---------|---------|
-| `bootstrap/workflows/bootstrap.bpmn` | Агента направили на репозиторий, и ему ничего не известно. Является ли это уже экземпляром — загрузить его — или нет, и в таком случае чем он должен стать? Единственный ввод — **ссылка на экземпляр**; тип harness, граф знаний и голос считываются из объявления *этого* экземпляра. См. [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) и [предложение](../proposals/bootstrap.html) |
-| `bootstrap/workflows/initialize-harness.bpmn` | Агента направили на репозиторий, и ему ничего не известно. **Единственный процесс в bootstrap, который ЗАПУСКАЕТ актор** — агент начальной загрузки (Bootstrapping Agent), прочитавший `bootstrap/README.md`, находится на начальном событии и ему больше неоткуда начать. Три дорожки: Bootstrapping Agent, Инициатор (Requestor) и Хранилище данных графа знаний (Knowledge Graph Data Store). См. [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) и [предложение](../proposals/bootstrap.html) |
+| `bootstrap/workflows/bootstrap.bpmn` | Агента направили на репозиторий, и ему ничего не известно. Является ли это уже экземпляром — загрузить его — или нет, и в таком случае чем он должен стать? Единственный ввод — **ссылка на экземпляр**; тип harness, граф знаний и голос считываются из объявления *этого* экземпляра. См. [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) и [предложение]({{ site.baseurl }}/proposals/bootstrap.html) |
+| `bootstrap/workflows/initialize-harness.bpmn` | Агента направили на репозиторий, и ему ничего не известно. **Единственный процесс в bootstrap, который ЗАПУСКАЕТ актор** — агент начальной загрузки (Bootstrapping Agent), прочитавший `bootstrap/README.md`, находится на начальном событии и ему больше неоткуда начать. Три дорожки: Bootstrapping Agent, Инициатор (Requestor) и Хранилище данных графа знаний (Knowledge Graph Data Store). См. [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) и [предложение]({{ site.baseurl }}/proposals/bootstrap.html) |
 | `bootstrap/workflows/discussion.bpmn` | Два факта **не имеют ответа ни в одном файле, доступном Bootstrapping Agent** — каким harness должен стать этот репозиторий, и из каких репозиториев выполняется чтение и запись. Это решения того, кто запросил harness, поэтому никакие инструкции их не генерируют. Вход выполняется из `initialize-harness`, когда требуется такой факт, именно поэтому в bootstrap вообще есть второй процесс: он *предполагается* каждой задачей, а не указывается явно какой-то одной |
 | `bootstrap/workflows/log-message.bpmn` | **Подпроцесс, ни в коем случае не точка входа** — вызывается через call activity, никогда не запускается самостоятельно, именно поэтому в README bootstrap по-прежнему может говориться, что запускаемый процесс всего один. Вызывается опционально из любой задачи (актору, протоколирующему свои действия, разрешение не требуется) или обязательно на диаграмме, где вызов указан явно; в обоих случаях это один и тот же подпроцесс, разница лишь в том, нарисовал ли его вызывающий процесс. Он находится в bootstrap, а не в harness, поскольку bootstrap не может импортировать harness, так что логгер, определенный выше по течению (upstream), был бы недоступен актору, который больше всего нуждается в протоколировании своих действий |
 | `getting-started.bpmn` | Кто-то сказал: «создай фолио». Что именно из пяти вариантов имелось в виду и какие условия должны выполняться до того, как что-либо будет записано? |
@@ -117,7 +117,7 @@ Bean `pve3` фиксирует этот выбор: **обе половины bo
 | `authoring-a-paper.bpmn` | Научные статьи и книги | [Написание статьи](../guides/writing-a-paper.html#the-end-to-end-workflow) |
 | `l2-dak-authoring.bpmn` | Комплект цифровой адаптации ВОЗ (WHO SMART Guidelines DAK, L2) | [Создание WHO SMART DAK](../guides/who-smart-dak.html#the-l2-artifacts) |
 | `l3-fhir-pipeline.bpmn` | Руководство по внедрению ВОЗ (WHO SMART Implementation Guide, L3) | [Создание WHO SMART IG](../guides/who-smart-ig.html#the-l3-pipeline) |
-| `ig-incremental-build.bpmn` | WHO SMART IG (L3) — дорожка сборки, инкрементальная по конусу зависимостей (предложено) | [Инкрементальная сборка](../guides/who-smart-ig.html#making-the-build-incremental) · [обзор](proposals/ig-incremental-build-overview.html) |
+| `ig-incremental-build.bpmn` | WHO SMART IG (L3) — дорожка сборки, инкрементальная по конусу зависимостей (предложено) | [Инкрементальная сборка](../guides/who-smart-ig.html#making-the-build-incremental) · [обзор]({{ site.baseurl }}/ru/proposals/ig-incremental-build-overview.html) |
 
 **Процессы агента** — как работает агент, в отличие от того, как создается контент.
 Они выполняются параллельно с процессами контента, а не внутри них:
@@ -329,7 +329,7 @@ Bean `pve3` фиксирует этот выбор: **обе половины bo
 Это упорядочивание, а не принудительное ограничение: пока ничто не мешает агенту вызвать инструмент
 напрямую. Обоснование того, почему эти правила должны стать обязательными — и аргумент в пользу того,
 что граница коммита является правильным местом для этого — изложены в
-[Предложение: оркестрация рабочих процессов](proposals/workflow-orchestration.html).
+[Предложение: оркестрация рабочих процессов]({{ '/ru/proposals/workflow-orchestration.html' | relative_url }}).
 
 ### Некоторые решения вычисляются, а не принимаются на основе суждения
 {: #some-decisions-are-computed-not-judged data-fa-label="sec:publication-workflow-some-decisions-are-computed-not-judged" }
@@ -420,7 +420,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 изменение в одном блоке контента**.
 
 <div class="bpmn-figure" id="figure-editing-and-the-hci-validation-gate">
-  <img src="assets/img/workflows/editing-hci-validation.svg"
+  <img src="{{ '/assets/img/workflows/editing-hci-validation.svg' | relative_url }}"
        alt="BPMN-диаграмма с дорожками: редактор описывает изменение, агент создания контента готовит черновик, предлагаемое изменение параллельно проходит механическую и немеханическую валидацию, замечания показываются редактору, и только принятое изменение фиксируется в корпусе.">
 </div>
 
@@ -469,27 +469,27 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 | Действие | Дорожка | Навык |
 |----------|------|-------|
 | Описание предполагаемого изменения | Редактор / автор | — (человек) |
-| Резервирование или создание bean | План работы | [`todo-manager`](../reference/skill-instructions/todo-manager.html) |
-| Подготовка черновика изменения блока | Агент создания контента | [`content-author`](../reference/skills/content-author.html) |
-| Проверки схемы и ограничений | Механическая валидация | [`content-validate`](../reference/skills/content-validate.html) |
-| Синтаксис, орфография и ссылки | Механическая валидация | [`content-validate`](../reference/skills/content-validate.html) |
-| Рубежи сборки и QA | Механическая валидация | [`content-test`](../reference/skills/content-test.html) |
-| Рецензирование изменения агентом | Немеханическая валидация | [`content-review`](../reference/skills/content-review.html) |
-| Рецензирование человеком / экспертом (SME) | Немеханическая валидация | [`content-review`](../reference/skills/content-review.html) |
+| Резервирование или создание bean | План работы | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
+| Подготовка черновика изменения блока | Агент создания контента | [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) |
+| Проверки схемы и ограничений | Механическая валидация | [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) |
+| Синтаксис, орфография и ссылки | Механическая валидация | [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) |
+| Рубежи сборки и QA | Механическая валидация | [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) |
+| Рецензирование изменения агентом | Немеханическая валидация | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Рецензирование человеком / экспертом (SME) | Немеханическая валидация | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
 | Сведение замечаний в отчет | Конвейер валидации HCI | — (конвейер) |
-| Фиксация замечаний в bean | План работы | [`todo-manager`](../reference/skill-instructions/todo-manager.html) |
+| Фиксация замечаний в bean | План работы | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 | Ознакомление с замечаниями | Редактор / автор | — (человек — это контрольный рубеж) |
-| Доработка предлагаемого изменения | Агент создания контента | [`content-author`](../reference/skills/content-author.html) |
+| Доработка предлагаемого изменения | Агент создания контента | [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) |
 | Фиксация в корпусе (Commit) | Корпус | — (при условии соблюдения требования `commit-hygiene`) |
-| Закрытие или повторное открытие bean | План работы | [`todo-manager`](../reference/skill-instructions/todo-manager.html) |
+| Закрытие или повторное открытие bean | План работы | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 
 Специфичные для предметной области проверки зависят от `content-validate` / `content-test`
 в соответствии с типом контента:
-[`lean-formalization`](../reference/skills/lean-formalization.html) и
-[`proof-verification`](../reference/skills/proof-verification.html) для научных статей,
-[`fhir-validation`](../reference/skills/fhir-validation.html) и
-[`quality-control`](../reference/skills/quality-control.html) для руководств по внедрению (IG),
-[`latex-authoring`](../reference/skills/latex-authoring.html) для рендеринга.
+[`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}) и
+[`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }}) для научных статей,
+[`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}) и
+[`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}) для руководств по внедрению (IG),
+[`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}) для рендеринга.
 
 ---
 
@@ -502,7 +502,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 группой рецензентов и только после этого выпускается.
 
 <div class="bpmn-figure" id="figure-from-corpus-to-published-folio">
-  <img src="assets/img/workflows/draft-to-publication.svg"
+  <img src="{{ '/assets/img/workflows/draft-to-publication.svg' | relative_url }}"
        alt="BPMN-диаграмма с дорожками: корпус собирается в черновик публикации, выполняются контрольные рубежи QA, менеджер публикации распространяет черновик, группа рецензирования и профильные эксперты (SME) проводят параллельное рецензирование, запросы на изменение превращаются в beans, которые возвращаются на этап редактирования, а утвержденный черновик авторизуется руководителем программы и публикуется.">
 </div>
 
@@ -525,17 +525,17 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 
 | Действие | Дорожка | Навык |
 |----------|------|-------|
-| Открытие или резервирование bean релиза | План работы | [`todo-manager`](../reference/skill-instructions/todo-manager.html) |
-| Сборка черновика публикации | Корпус + конвейер сборки | [`content-publish`](../reference/skills/content-publish.html) |
-| Выполнение контрольных рубежей QA публикации | Корпус + конвейер сборки | [`content-test`](../reference/skills/content-test.html) · [`quality-control`](../reference/skills/quality-control.html) |
+| Открытие или резервирование bean релиза | План работы | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
+| Сборка черновика публикации | Корпус + конвейер сборки | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) |
+| Выполнение контрольных рубежей QA публикации | Корпус + конвейер сборки | [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) · [`quality-control`]({{ site.baseurl }}/reference/skills/quality-control.html) |
 | Редактирование и валидация HCI | Редакторы + агенты создания контента | действие-вызов → [диаграмма 3](#editing-and-the-hci-validation-gate) |
-| Распространение черновика | Менеджер публикации | [`content-review`](../reference/skills/content-review.html) |
-| Рецензирование черновика публикации | Группа рецензирования | [`content-review`](../reference/skills/content-review.html) |
-| Клиническое / научное утверждение | Профильные эксперты (SME) | [`content-review`](../reference/skills/content-review.html) |
-| Создание beans для запросов на изменение | План работы | [`todo-manager`](../reference/skill-instructions/todo-manager.html) · [`content-feedback`](../reference/skills/content-feedback.html) |
-| Авторизация выпуска | Руководитель программы | [`content-publish`](../reference/skills/content-publish.html) |
-| Присвоение версии, тегирование и публикация | Менеджер публикации | [`content-publish`](../reference/skills/content-publish.html) · [`ig-publication`](../reference/skills/ig-publication.html) |
-| Закрытие beans релиза | План работы | [`todo-manager`](../reference/skill-instructions/todo-manager.html) |
+| Распространение черновика | Менеджер публикации | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Рецензирование черновика публикации | Группа рецензирования | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Клиническое / научное утверждение | Профильные эксперты (SME) | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Создание beans для запросов на изменение | План работы | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) · [`content-feedback`]({{ site.baseurl }}/reference/skills/content-feedback.html) |
+| Авторизация выпуска | Руководитель программы | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) |
+| Присвоение версии, тегирование и публикация | Менеджер публикации | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) · [`ig-publication`]({{ site.baseurl }}/reference/skills/ig-publication.html) |
+| Закрытие beans релиза | План работы | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 
 Эта диаграмма реализует фазовые рубежи требования `req:content-lifecycle` —
 `validate-before-review`, `review-before-test`, `test-before-publish`,
@@ -553,7 +553,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 представлены здесь как действия-вызовы.
 
 <div class="bpmn-figure" id="figure-content-lifecycle-overview">
-  <img src="assets/img/workflows/content-lifecycle.svg"
+  <img src="{{ '/assets/img/workflows/content-lifecycle.svg' | relative_url }}"
        alt="BPMN-диаграмма с дорожками: руководитель программы планирует работу, план заносится в виде beans, выполняются редактирование и валидация HCI, интеграционное тестирование и прогон QA, черновик-рецензирование-публикация; обратная связь проходит триаж и регистрируется в виде beans, затем либо начинается следующий цикл, либо фолио выводится из эксплуатации.">
 </div>
 
@@ -595,7 +595,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
   Зарезервируйте bean перед началом работы и никогда не закрывайте чужой bean.
 - **Команда `beans create` не идемпотентна.** Проверяйте наличие существующего bean по точному
   заголовку перед созданием нового — защитный механизм и инцидент, послуживший поводом для него,
-  описаны в [`todo-manager`](../reference/skill-instructions/todo-manager.html).
+  описаны в [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}).
 - **Beans — это не вспомогательные файлы (sidecars).** Автоматически генерируемые очереди (файлы QA `*.qa.json`,
   файлы-свидетели, очереди наблюдателей) остаются обычным JSON; они никогда не превращаются в beans.
 
@@ -694,11 +694,11 @@ bun run render:bpmn:check
 
 | Диаграмма | Нотация | Почему |
 |---------|----------|-----|
-| `README.md`, [главная](index.html) — «Что делает платформа» | Mermaid | Карта компонентов и потоков данных платформы, а не последовательность действий |
+| `README.md`, [главная]({{ site.baseurl }}/ru/index.html) — «Что делает платформа» | Mermaid | Карта компонентов и потоков данных платформы, а не последовательность действий |
 | [Архитектура](architecture.html) — сервер и адаптеры | Mermaid | Структура развертывания и модулей |
 | [Навыки и роли](skills.html) — как сочетаются пять концепций | Mermaid | Концептуальная композиция, отсутствие временной оси |
 | [Навыки и роли](skills.html) — `viewer → reviewer → author → admin` | Mermaid | Решетка наследования, а не поток управления |
-| [Главная](index.html) — карта документации | Mermaid | Граф навигации |
+| [Главная]({{ site.baseurl }}/ru/index.html) — карта документации | Mermaid | Граф навигации |
 | [Добавление типа контента](../guides/new-content-type.html) — «Что вы предоставляете» | Mermaid | То, что вы передаете, а не то, что вы делаете |
 | [Написание статьи](../guides/writing-a-paper.html) — сессия Lean | Mermaid `sequenceDiagram` | Протокол взаимодействия между вами, ассистентом и MCP-сервером. Эквивалент в BPMN — взаимодействие с потоками сообщений — добавил бы формализма, не добавив смысла |
 
@@ -714,5 +714,5 @@ bun run render:bpmn:check
 
 - [Типы контента](content-types.html) — линейный жизненный цикл и то, что создает каждый тип
 - [Навыки и роли](skills.html) — каждый навык и каждая роль, а также их взаимодействие с LLM
-- [Справочник схем навыков](../reference/skills/) — типизированный ввод/вывод для каждого навыка
+- [Справочник схем навыков]({{ '/reference/skills/' | relative_url }}) — типизированный ввод/вывод для каждого навыка
 - [Адаптация агента](../guides/agent-onboarding.html) — ориентация для агента, подключенного к фолио

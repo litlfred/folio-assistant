@@ -59,7 +59,7 @@ La distinction n'est pas une simple question de terminologie. Les deux ont des p
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/bean-lifecycle.bpmn){: .fa-node-edit title="Edit processes/sdlc/bean-lifecycle.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-agent-bean-lifecycle.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/beans-and-todos/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-agent-bean-lifecycle.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/beans-and-todos/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-the-agent-bean-lifecycle">
-  <img src="assets/img/workflows/bean-lifecycle.svg"
+  <img src="{{ '/assets/img/workflows/bean-lifecycle.svg' | relative_url }}"
        alt="Diagramme swimlane BPMN avec deux couloirs. Dans le couloir de l'agent : le travail durable est identifié, l'agent exécute une recherche par titre exact avant de créer quoi que ce soit, puis une passerelle demande si le bean existe déjà. Si ce n'est pas le cas, il en crée un ; si c'est le cas, une deuxième passerelle demande à qui il appartient. Un bean appartenant à quelqu'un d'autre est acheminé vers le couloir inférieur — session voisine ou humain — où la seule action consiste à ne pas y toucher et à se coordonner, pour s'arrêter là. Le propre bean de l'agent ou un bean non réclamé est réservé comme in-progress, traité en maintenant le corps à jour, puis atteint une passerelle d'issue à trois branches : done mène à complete, not wanted mène à scrap avec les motifs et sans jamais supprimer, et blocked mène à l'enregistrement du point de blocage et à sa rétrocession. Toutes trois convergent vers un unique événement de fin, état enregistré.">
 </div>
 
@@ -121,7 +121,7 @@ Tant que cela n'a pas été conçu, **ne détournez pas les beans pour cet usage
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/work-plan-state.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/work-plan-state.md" } <span class="fa-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-Le reste de cette page explique ce qu'**est** un bean. Cette section indique ce que le stockage **contient** actuellement — lu en direct depuis [`/assets/beans/index.json`](../assets/beans/index.json), la projection que `gen-docs-pages.ts` écrit à partir de `beans/defs/` à chaque compilation, aux côtés de l'index des tâches qu'il publie depuis plus longtemps.
+Le reste de cette page explique ce qu'**est** un bean. Cette section indique ce que le stockage **contient** actuellement — lu en direct depuis [`/assets/beans/index.json`]({{ '/assets/beans/index.json' | relative_url }}), la projection que `gen-docs-pages.ts` écrit à partir de `beans/defs/` à chaque compilation, aux côtés de l'index des tâches qu'il publie depuis plus longtemps.
 
 Jusqu'au 2026-09-20, il n'y avait rien à afficher ici. `todos/` disposait d'un lecteur, d'un index publié et d'un tableau de bord par-dessus ; `beans/` ne disposait d'aucun des trois, bien qu'il s'agisse d'un espace de stockage plus vaste de deux ordres de grandeur. Un plan de travail que personne ne peut consulter est un plan que personne ne vérifie.
 
@@ -140,7 +140,7 @@ Jusqu'au 2026-09-20, il n'y avait rien à afficher ici. `todos/` disposait d'un 
 <div class="fa-workplan" data-fa-workplan>
   <p class="fa-workplan-fallback">
     Le tableau de bord interactif du plan de travail nécessite JavaScript. La projection qu'il lit est
-    <a href="assets/beans/index.json">un simple fichier JSON</a> et peut être lue
+    <a href="{{ '/assets/beans/index.json' | relative_url }}">un simple fichier JSON</a> et peut être lue
     directement.
   </p>
 </div>

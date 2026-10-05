@@ -46,11 +46,11 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 الشاملة **`content-lifecycle`**:
 
 <div class="bpmn-figure" id="figure-the-content-lifecycle">
-  <img src="assets/img/workflows/content-lifecycle.svg"
+  <img src="{{ '/assets/img/workflows/content-lifecycle.svg' | relative_url }}"
        alt="مخطط مسارات BPMN لدورة folio واحدة: يخطط مدير البرنامج، وتُزرع الخطة كـ beans، وتعمل عمليات التحرير والتحقق من التفاعل البشري الحاسوبي (HCI) لكل تغيير مقترح، ويتبع ذلك اختبار تكاملي ومسح لضمان الجودة، ثم المسودة-المراجعة-النشر؛ وتُفرز الملاحظات وتُسجل كـ beans، ثم إما أن تتكرر الدورة أو يُحال الـ folio إلى التقاعد.">
 </div>
 
-[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [ملف SVG بالحجم الكامل](../assets/img/workflows/content-lifecycle.svg)
+[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [ملف SVG بالحجم الكامل]({{ '/assets/img/workflows/content-lifecycle.svg' | relative_url }})
 {: .bpmn-source }
 
 | المرحلة | المهارة | ما يجري |
@@ -103,17 +103,17 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
   أو ملف مجاور بامتداد `.lean`، وتعمل عند كل استدعاء لـ `content_validate`.
 
 مخططات المهارات ذات الصلة:
-[`document-authoring`](../reference/skills/document-authoring.html)،
-[`document-structure`](../reference/skills/document-structure.html)،
-[`normative-statements`](../reference/skills/normative-statements.html)،
-[`document-publishing`](../reference/skills/document-publishing.html).
+[`document-authoring`]({{ '/reference/skills/document-authoring.html' | relative_url }})،
+[`document-structure`]({{ '/reference/skills/document-structure.html' | relative_url }})،
+[`normative-statements`]({{ '/reference/skills/normative-statements.html' | relative_url }})،
+[`document-publishing`]({{ '/reference/skills/document-publishing.html' | relative_url }}).
 
 <div class="bpmn-figure" id="figure-documents-policy-guidance">
-  <img src="assets/img/workflows/authoring-a-document.svg"
+  <img src="{{ '/assets/img/workflows/authoring-a-document.svg' | relative_url }}"
        alt="مخطط مسارات BPMN لتأليف المستندات: يخطط المؤلف، وتُزرع الخطة كـ beans، وينشئ الوكيل هيكل الـ folio ويؤلف الكتل، ويتحقق خط أنابيب البناء من ملف التعريف المعلن قبل التحقق والتصيير إلى Markdown وHTML وPDF، بينما يتحكم المراجع في بوابة النشر.">
 </div>
 
-[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [ملف SVG بالحجم الكامل](../assets/img/workflows/authoring-a-document.svg)
+[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [ملف SVG بالحجم الكامل]({{ '/assets/img/workflows/authoring-a-document.svg' | relative_url }})
 {: .bpmn-source }
 
 ### حمل العبارات المعيارية
@@ -128,7 +128,7 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 
 لا يوجد **نوع كتلة `recommendation` من الدرجة الأولى**. في الوقت الحالي، الحامل لها هو
 كتلة `prose` ذات تسمية وعنوان؛ وتوضح مهارة
-[`normative-statements`](../reference/skill-instructions/normative-statements.html)
+[`normative-statements`]({{ '/reference/skill-instructions/normative-statements.html' | relative_url }})
 هذا العرف وحدوده. وكانت الإرشادات السابقة في
 `document-intake` قد ربطت توصيات الأدلة الإرشادية بكتلة `definition` — وهو ما
 يسبق إنشاء نوع المحتوى هذا ويعد غير صحيح بالنسبة لـ folio المستند، حيث
@@ -158,7 +158,7 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 
 - **نموذج المصدر** — المحتوى عبارة عن شجرة من *الكتل* المصنفة (`definition`،
   و`theorem`، و`lemma`، و`proof`، و`equation`، و`prose`، …). راجع
-  [مرجع واجهة برمجة تطبيقات TypeScript](api/) للاطلاع على `Block` و`Chapter` و`Paper`.
+  [مرجع واجهة برمجة تطبيقات TypeScript]({{ '/ar/api/' | relative_url }}) للاطلاع على `Block` و`Chapter` و`Paper`.
 - **الصياغة الرسمية** — تقود مهارتا `lean-formalization` و`proof-verification` نظام
   Lean؛ حيث يمكن تتبع كل كتلة شبيهة بالمبرهنة مقابل نظيرتها في Lean، ويكون
   كل تعبير `sorry` قابلاً للتدقيق.
@@ -190,9 +190,9 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 على قاعدة ثانية تتجاوز مجرد السؤال "هل هذا النوع مسموح به".
 
 مخططات المهارات ذات الصلة:
-[`latex-authoring`](../reference/skills/latex-authoring.html)،
-[`lean-formalization`](../reference/skills/lean-formalization.html)،
-[`proof-verification`](../reference/skills/proof-verification.html).
+[`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }})،
+[`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }})،
+[`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }}).
 
 ---
 
@@ -215,17 +215,17 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 - **شخصيات المستخدمين، والسيناريوهات، والمؤشرات، والمتطلبات**
 
 مخططات المهارات ذات الصلة:
-[`l2-dak-authoring`](../reference/skills/l2-dak-authoring.html)،
-[`bpmn-authoring`](../reference/skills/bpmn-authoring.html)،
-[`dmn-authoring`](../reference/skills/dmn-authoring.html)،
-[`terminology-management`](../reference/skills/terminology-management.html).
+[`l2-dak-authoring`]({{ '/reference/skills/l2-dak-authoring.html' | relative_url }})،
+[`bpmn-authoring`]({{ '/reference/skills/bpmn-authoring.html' | relative_url }})،
+[`dmn-authoring`]({{ '/reference/skills/dmn-authoring.html' | relative_url }})،
+[`terminology-management`]({{ '/reference/skills/terminology-management.html' | relative_url }}).
 
 <div class="bpmn-figure" id="figure-who-smart-guidelines-daks-l2">
-  <img src="assets/img/workflows/l2-dak-authoring.svg"
+  <img src="{{ '/assets/img/workflows/l2-dak-authoring.svg' | relative_url }}"
        alt="مخطط مسارات BPMN لتأليف DAK من المستوى L2: بوابة متوازية توزع شخصيات المستخدمين وعمليات BPMN ومنطق قرارات DMN وقاموس البيانات والمؤشرات عبر مسار محلل الأعمال جنبًا إلى جنب مع ارتباطات أخصائي المصطلحات، ثم يتحكم التحقق من جانب خبير الموضوع السريري (SME) في تجميع الـ DAK.">
 </div>
 
-[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn) · [ملف SVG بالحجم الكامل](../assets/img/workflows/l2-dak-authoring.svg)
+[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn) · [ملف SVG بالحجم الكامل]({{ '/assets/img/workflows/l2-dak-authoring.svg' | relative_url }})
 {: .bpmn-source }
 
 ---
@@ -247,17 +247,17 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 - بوابات **مراقبة الجودة** (`quality-control`)
 
 مخططات المهارات ذات الصلة:
-[`l3-fhir-authoring`](../reference/skills/l3-fhir-authoring.html)،
-[`fhir-validation`](../reference/skills/fhir-validation.html)،
-[`ig-publication`](../reference/skills/ig-publication.html)،
-[`quality-control`](../reference/skills/quality-control.html).
+[`l3-fhir-authoring`]({{ '/reference/skills/l3-fhir-authoring.html' | relative_url }})،
+[`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }})،
+[`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }})،
+[`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}).
 
 <div class="bpmn-figure" id="figure-who-smart-implementation-guides-l3">
-  <img src="assets/img/workflows/l3-fhir-pipeline.svg"
+  <img src="{{ '/assets/img/workflows/l3-fhir-pipeline.svg' | relative_url }}"
        alt="مخطط مسارات BPMN لخط أنابيب المستوى L3: تعيين L2 إلى L3، وتأليف FSH، والترجمة عبر SUSHI، والتحقق مقابل ملفات التعريف مع حلقة عودة إلى FSH عند الفشل، وبوابات مراقبة الجودة التي تسجل النتائج كـ beans، وبناء IG Publisher، ونشر موقع دليل التطبيق (IG).">
 </div>
 
-[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [ملف SVG بالحجم الكامل](../assets/img/workflows/l3-fhir-pipeline.svg)
+[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [ملف SVG بالحجم الكامل]({{ '/assets/img/workflows/l3-fhir-pipeline.svg' | relative_url }})
 {: .bpmn-source }
 
 ---

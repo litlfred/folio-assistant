@@ -50,7 +50,7 @@ them. No Lean. No LaTeX.
 > feature "the paper adapter has", check first — you probably already have it.
 
 <div class="bpmn-figure" id="figure-what-a-document-folio-is">
-  <img src="../assets/img/workflows/authoring-a-document.svg"
+  <img src="{{ '/assets/img/workflows/authoring-a-document.svg' | relative_url }}"
        alt="BPMN swimlane diagram of document authoring, plan to published.">
 </div>
 

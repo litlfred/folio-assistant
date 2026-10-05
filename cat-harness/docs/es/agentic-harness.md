@@ -202,7 +202,7 @@ son riesgos de seguridad, cuánto debe ser determinista y cómo se comparan los 
 subflujos de trabajo bajo una superposición controlada de contexto y recuerdos son tres
 preguntas que este repositorio ahora puede plantear y aún no ha respondido. La agenda, con
 cada afirmación marcada como medida, decidida o hipótesis, es
-[`deterministic-and-agentic`](../reference/skill-instructions/deterministic-and-agentic.html).
+[`deterministic-and-agentic`]({{ '/reference/skill-instructions/deterministic-and-agentic.html' | relative_url }}).
 Léela como una agenda: contiene más hipótesis que mediciones, y así lo declara.
 
 ## Ejecución de BPMN: una habilidad, dos motores
@@ -215,7 +215,7 @@ El responsable (*owner*), 2026-09-23, nombrando la habilidad sobre la que trata 
 > **Habilidad de ejecución de BPMN:** dados un Proceso, Contexto, Estado y Rol, utilizar
 > una o más Habilidades para ejecutar una Tarea.
 
-![Ejecución de BPMN, de determinista a agéntica. Una barra de color va de "determinista" (azul, izquierda: ejecución gestionada por agente de una sola tarea) a "agéntica" (verde, derecha: agentes en la mayoría o todas las tareas). A la izquierda, bajo un icono de engranaje y motor: "Herramienta de ejecución de BPMN: cualquiera de los motores BPMN de código abierto, estado y carriles estrictamente aplicados", sobre un diagrama plano de carriles del ciclo de vida del folio con una nota adhesiva, un grupo de beans, una persona y un gato-robot junto a los carriles. A la derecha, bajo un icono de gato-robot: "Herramienta de ejecución de BPMN: enjambre agéntico con estado no gobernado. Los agentes 'relajan' los carriles, mitigado por informes de QA/QC mecánicos + agénticos", sobre el mismo diagrama inclinado en perspectiva, beans dispersos por cada carril y muchos gatos-robot debajo.](../assets/img/bpmn-execution-spectrum.webp)
+![Ejecución de BPMN, de determinista a agéntica. Una barra de color va de "determinista" (azul, izquierda: ejecución gestionada por agente de una sola tarea) a "agéntica" (verde, derecha: agentes en la mayoría o todas las tareas). A la izquierda, bajo un icono de engranaje y motor: "Herramienta de ejecución de BPMN: cualquiera de los motores BPMN de código abierto, estado y carriles estrictamente aplicados", sobre un diagrama plano de carriles del ciclo de vida del folio con una nota adhesiva, un grupo de beans, una persona y un gato-robot junto a los carriles. A la derecha, bajo un icono de gato-robot: "Herramienta de ejecución de BPMN: enjambre agéntico con estado no gobernado. Los agentes 'relajan' los carriles, mitigado por informes de QA/QC mecánicos + agénticos", sobre el mismo diagrama inclinado en perspectiva, beans dispersos por cada carril y muchos gatos-robot debajo.]({{ '/assets/img/bpmn-execution-spectrum.webp' | relative_url }})
 
 **Una habilidad, dos tipos de Herramienta.** La habilidad es la misma en ambos extremos: tomar el
 proceso, el contexto, el estado actual y el rol, elegir las habilidades y realizar
@@ -238,7 +238,7 @@ si las reglas y el registro son datos legibles por un informe, lo cual se cumple
 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) como lenguaje de permisos
 y [W3C PROV-O](https://www.w3.org/TR/prov-o/) como registro de ejecución (responsable,
 2026-09-23; el esquema que esto implica es la
-[propuesta de actores, ODRL y PROV-O](../proposals/odrl-prov-actor-model.html)).
+[propuesta de actores, ODRL y PROV-O]({{ '/proposals/odrl-prov-actor-model.html' | relative_url }})).
 
 **La mayoría de las ejecuciones reales se sitúan entre ambos extremos**, y por tarea más que por proceso:
 la [sección anterior](#deterministic-and-agentic) ya contabiliza qué

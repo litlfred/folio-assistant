@@ -46,11 +46,11 @@ Chaque type de contenu traverse le même cycle de vie, fourni par
 l'ensemble transversal de compétences **`content-lifecycle`** :
 
 <div class="bpmn-figure" id="figure-the-content-lifecycle">
-  <img src="assets/img/workflows/content-lifecycle.svg"
+  <img src="{{ '/assets/img/workflows/content-lifecycle.svg' | relative_url }}"
        alt="Diagramme BPMN à couloirs d'un cycle de folio : le gestionnaire de programme planifie, le plan est initialisé sous forme de beans, l'édition et la validation IHM s'exécutent pour chaque modification proposée, un test d'intégration et un balayage QA suivent, puis brouillon-relecture-publication ; les retours sont triés et enregistrés sous forme de beans, et le cycle se répète ou le folio est retiré.">
 </div>
 
-[Source BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [SVG en taille réelle](../assets/img/workflows/content-lifecycle.svg)
+[Source BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [SVG en taille réelle]({{ '/assets/img/workflows/content-lifecycle.svg' | relative_url }})
 {: .bpmn-source }
 
 | Étape | Compétence | Ce qui se passe |
@@ -103,17 +103,17 @@ formelle — et donc moins les deux chaînes d'outils qui la desservent.
   `lean` ou fichier frère `.lean`, et s'exécute à chaque `content_validate`.
 
 Schémas de compétences pertinents :
-[`document-authoring`](../reference/skills/document-authoring.html),
-[`document-structure`](../reference/skills/document-structure.html),
-[`normative-statements`](../reference/skills/normative-statements.html),
-[`document-publishing`](../reference/skills/document-publishing.html).
+[`document-authoring`]({{ '/reference/skills/document-authoring.html' | relative_url }}),
+[`document-structure`]({{ '/reference/skills/document-structure.html' | relative_url }}),
+[`normative-statements`]({{ '/reference/skills/normative-statements.html' | relative_url }}),
+[`document-publishing`]({{ '/reference/skills/document-publishing.html' | relative_url }}).
 
 <div class="bpmn-figure" id="figure-documents-policy-guidance">
-  <img src="assets/img/workflows/authoring-a-document.svg"
+  <img src="{{ '/assets/img/workflows/authoring-a-document.svg' | relative_url }}"
        alt="Diagramme BPMN à couloirs de la rédaction d'un document : l'auteur planifie, le plan est initialisé sous forme de beans, un agent échafaude le folio et rédige les blocs, le pipeline de compilation vérifie le profil déclaré avant de valider et de restituer en Markdown, HTML et PDF, et un relecteur contrôle l'accès à la publication.">
 </div>
 
-[Source BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [SVG en taille réelle](../assets/img/workflows/authoring-a-document.svg)
+[Source BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [SVG en taille réelle]({{ '/assets/img/workflows/authoring-a-document.svg' | relative_url }})
 {: .bpmn-source }
 
 ### Porter un énoncé normatif
@@ -128,7 +128,7 @@ théorème, car rien ne le prouve.
 
 Il n'existe **pas de genre de bloc `recommendation` de premier ordre**. Aujourd'hui, le support est un
 bloc `prose` doté d'une étiquette et d'un titre ; la compétence
-[`normative-statements`](../reference/skill-instructions/normative-statements.html)
+[`normative-statements`]({{ '/reference/skill-instructions/normative-statements.html' | relative_url }})
 énonce la convention et ses limites. Les directives antérieures dans
 `document-intake` faisaient correspondre les recommandations des lignes directrices à `definition` — cela
 précédait ce type de contenu et s'avère incorrect pour un folio de type document, où
@@ -158,7 +158,7 @@ formalisation **Lean 4** vérifiée par machine et restituées via **LaTeX**.
 
 - **Modèle source** — le contenu est un arbre de *blocs* typés (`definition`,
   `theorem`, `lemma`, `proof`, `equation`, `prose`, …). Voir la
-  [référence de l'API TypeScript](api/) pour `Block`, `Chapter` et `Paper`.
+  [référence de l'API TypeScript]({{ '/fr/api/' | relative_url }}) pour `Block`, `Chapter` et `Paper`.
 - **Formalisation** — les compétences `lean-formalization` et `proof-verification` pilotent
   Lean ; chaque bloc de type théorème peut être suivi par rapport à son équivalent Lean, et
   chaque `sorry` est vérifiable.
@@ -190,9 +190,9 @@ autorise ce que le profil interdit, raison pour laquelle `content_profile_check`
 seconde règle au-delà de « ce genre est-il autorisé ? ».
 
 Schémas de compétences pertinents :
-[`latex-authoring`](../reference/skills/latex-authoring.html),
-[`lean-formalization`](../reference/skills/lean-formalization.html),
-[`proof-verification`](../reference/skills/proof-verification.html).
+[`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}),
+[`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}),
+[`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }}).
 
 ---
 
@@ -215,17 +215,17 @@ rédige les artefacts L2 :
 - **Personas, scénarios, indicateurs, exigences**
 
 Schémas de compétences pertinents :
-[`l2-dak-authoring`](../reference/skills/l2-dak-authoring.html),
-[`bpmn-authoring`](../reference/skills/bpmn-authoring.html),
-[`dmn-authoring`](../reference/skills/dmn-authoring.html),
-[`terminology-management`](../reference/skills/terminology-management.html).
+[`l2-dak-authoring`]({{ '/reference/skills/l2-dak-authoring.html' | relative_url }}),
+[`bpmn-authoring`]({{ '/reference/skills/bpmn-authoring.html' | relative_url }}),
+[`dmn-authoring`]({{ '/reference/skills/dmn-authoring.html' | relative_url }}),
+[`terminology-management`]({{ '/reference/skills/terminology-management.html' | relative_url }}).
 
 <div class="bpmn-figure" id="figure-who-smart-guidelines-daks-l2">
-  <img src="assets/img/workflows/l2-dak-authoring.svg"
+  <img src="{{ '/assets/img/workflows/l2-dak-authoring.svg' | relative_url }}"
        alt="Diagramme BPMN à couloirs de la rédaction d'un DAK L2 : une passerelle parallèle distribue les personas, les processus BPMN, la logique de décision DMN, le dictionnaire de données et les indicateurs sur le couloir de l'analyste métier aux côtés des liaisons du terminologue, puis la validation par l'expert métier clinique contrôle l'assemblage du DAK.">
 </div>
 
-[Source BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn) · [SVG en taille réelle](../assets/img/workflows/l2-dak-authoring.svg)
+[Source BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn) · [SVG en taille réelle]({{ '/assets/img/workflows/l2-dak-authoring.svg' | relative_url }})
 {: .bpmn-source }
 
 ---
@@ -247,17 +247,17 @@ La couche *L3* transforme un DAK L2 en un **Guide d'implémentation FHIR** calcu
 - Portes de **contrôle qualité** (`quality-control`)
 
 Schémas de compétences pertinents :
-[`l3-fhir-authoring`](../reference/skills/l3-fhir-authoring.html),
-[`fhir-validation`](../reference/skills/fhir-validation.html),
-[`ig-publication`](../reference/skills/ig-publication.html),
-[`quality-control`](../reference/skills/quality-control.html).
+[`l3-fhir-authoring`]({{ '/reference/skills/l3-fhir-authoring.html' | relative_url }}),
+[`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}),
+[`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}),
+[`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}).
 
 <div class="bpmn-figure" id="figure-who-smart-implementation-guides-l3">
-  <img src="assets/img/workflows/l3-fhir-pipeline.svg"
+  <img src="{{ '/assets/img/workflows/l3-fhir-pipeline.svg' | relative_url }}"
        alt="Diagramme BPMN à couloirs du pipeline L3 : mapper L2 vers L3, rédiger en FSH, compiler avec SUSHI, valider par rapport aux profils avec une boucle de retour vers FSH en cas d'échec, portes de contrôle qualité qui enregistrent les anomalies sous forme de beans, compilation avec l'IG Publisher, et publication du site de l'IG.">
 </div>
 
-[Source BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [SVG en taille réelle](../assets/img/workflows/l3-fhir-pipeline.svg)
+[Source BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [SVG en taille réelle]({{ '/assets/img/workflows/l3-fhir-pipeline.svg' | relative_url }})
 {: .bpmn-source }
 
 ---

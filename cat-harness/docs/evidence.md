@@ -75,11 +75,11 @@ can assert about itself**; it is a fact resolved at the publisher. Drawing that
 lane inside the system boundary would make "authoritative" a self-assessment.
 
 <div class="bpmn-figure" id="figure-the-subprocess">
-  <img src="assets/img/workflows/evidence-retrieval.svg"
+  <img src="{{ '/assets/img/workflows/evidence-retrieval.svg' | relative_url }}"
        alt="BPMN swimlane diagram across four lanes. The author reviews the guidance already in their content, then frames the question as PICO. A parallel gateway fans out to three retrieval tasks run by the evidence agent: trusted L1 sources under library/, trusted L2 DAK and L3 IG content, and data repositories and statistical datasets. The candidates join, and the trusted-registries lane verifies each one's authority against the publishing body's API; an exclusive gateway routes an unconfirmed citation to a bean on the work plan before rejoining. The author then appraises and grades the body of evidence, and a second exclusive gateway asks whether it is sufficient for a recommendation: if not, the gap is recorded as a bean and the process ends without one; if so, the evidence is attached to the recommendation.">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/evidence-retrieval.bpmn) · [full-size SVG](assets/img/workflows/evidence-retrieval.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/evidence-retrieval.bpmn) · [full-size SVG]({{ '/assets/img/workflows/evidence-retrieval.svg' | relative_url }})
 {: .bpmn-source }
 
 ## Step one looks inward

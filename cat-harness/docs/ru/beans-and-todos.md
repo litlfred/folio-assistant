@@ -76,7 +76,7 @@ _Эта страница сгенерирована из [`content/docs/beans-an
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/bean-lifecycle.bpmn){: .fa-node-edit title="Edit processes/sdlc/bean-lifecycle.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-agent-bean-lifecycle.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/beans-and-todos/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-agent-bean-lifecycle.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/beans-and-todos/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-the-agent-bean-lifecycle">
-  <img src="assets/img/workflows/bean-lifecycle.svg"
+  <img src="{{ '/assets/img/workflows/bean-lifecycle.svg' | relative_url }}"
        alt="BPMN-диаграмма с двумя дорожками. На дорожке агента: выявляется долговременная работа, агент запускает поиск по точному совпадению заголовка перед созданием чего-либо, затем шлюз проверяет, существует ли уже этот bean. Если нет, создается новый; если да, второй шлюз определяет владельца. Bean, принадлежащий кому-то другому, направляется на нижнюю дорожку — соседней сессии или человека, — где единственным действием является оставить его в покое и скоординироваться, на чем ветка завершается. Собственный или незанятый bean резервируется со статусом in-progress, выполняется работа с поддержанием актуальности описания, после чего достигается шлюз результатов с тремя исходами: готово ведет к завершению (complete), ненужно направляется на списание (scrap) с указанием причин и категорическим запретом удаления, а заблокировано ведет к фиксации блокирующего фактора и возврату. Все три ветки сходятся в одном конечном событии — состояние зафиксировано.">
 </div>
 
@@ -188,7 +188,7 @@ _Эта страница сгенерирована из [`content/docs/beans-an
 
 Остальная часть страницы объясняет, чем bean **является**. В этом разделе показано,
 что хранилище сейчас **содержит** — данные считываются в режиме реального времени из
-[`/assets/beans/index.json`](../assets/beans/index.json), проекции, которую
+[`/assets/beans/index.json`]({{ '/assets/beans/index.json' | relative_url }}), проекции, которую
 `gen-docs-pages.ts` формирует из `beans/defs/` при каждой сборке, наряду с индексом todo,
 публикуемым уже давно.
 
@@ -244,6 +244,6 @@ _Эта страница сгенерирована из [`content/docs/beans-an
 <div class="fa-workplan" data-fa-workplan>
   <p class="fa-workplan-fallback">
     Интерактивный дашборд плана работы требует JavaScript. Проекция, которую он считывает, —
-    это <a href="assets/beans/index.json">обычный JSON-файл</a>, и его можно читать напрямую.
+    это <a href="{{ '/assets/beans/index.json' | relative_url }}">обычный JSON-файл</a>, и его можно читать напрямую.
   </p>
 </div>

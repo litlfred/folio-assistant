@@ -47,11 +47,11 @@ Every content type moves through the same lifecycle, provided by the
 cross-cutting **`content-lifecycle`** skill package:
 
 <div class="bpmn-figure" id="figure-the-content-lifecycle">
-  <img src="assets/img/workflows/content-lifecycle.svg"
+  <img src="{{ '/assets/img/workflows/content-lifecycle.svg' | relative_url }}"
        alt="BPMN swimlane diagram of one folio cycle: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs per proposed change, an integration test and QA sweep follows, then draft-review-publish; feedback is triaged and filed as beans, and the cycle either repeats or the folio is retired.">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [full-size SVG](assets/img/workflows/content-lifecycle.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [full-size SVG]({{ '/assets/img/workflows/content-lifecycle.svg' | relative_url }})
 {: .bpmn-source }
 
 | Stage | Skill | What happens |
@@ -110,11 +110,11 @@ Relevant skill schemas:
 [`document-publishing`]({{ '/reference/skills/document-publishing.html' | relative_url }}).
 
 <div class="bpmn-figure" id="figure-documents-policy-guidance">
-  <img src="assets/img/workflows/authoring-a-document.svg"
+  <img src="{{ '/assets/img/workflows/authoring-a-document.svg' | relative_url }}"
        alt="BPMN swimlane diagram of document authoring: the author plans, the plan is seeded as beans, an agent scaffolds the folio and authors blocks, the build pipeline checks the declared profile before validating and rendering to Markdown, HTML and PDF, and a reviewer gates publication.">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [full-size SVG](assets/img/workflows/authoring-a-document.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [full-size SVG]({{ '/assets/img/workflows/authoring-a-document.svg' | relative_url }})
 {: .bpmn-source }
 
 ### Carrying a normative statement
@@ -222,11 +222,11 @@ Relevant skill schemas:
 [`terminology-management`]({{ '/reference/skills/terminology-management.html' | relative_url }}).
 
 <div class="bpmn-figure" id="figure-who-smart-guidelines-daks-l2">
-  <img src="assets/img/workflows/l2-dak-authoring.svg"
+  <img src="{{ '/assets/img/workflows/l2-dak-authoring.svg' | relative_url }}"
        alt="BPMN swimlane diagram of L2 DAK authoring: a parallel gateway fans out personas, BPMN processes, DMN decision logic, the data dictionary and indicators across the business-analyst lane alongside the terminologist's bindings, then clinical SME validation gates assembly of the DAK.">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn) · [full-size SVG](assets/img/workflows/l2-dak-authoring.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn) · [full-size SVG]({{ '/assets/img/workflows/l2-dak-authoring.svg' | relative_url }})
 {: .bpmn-source }
 
 ---
@@ -254,11 +254,11 @@ Relevant skill schemas:
 [`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}).
 
 <div class="bpmn-figure" id="figure-who-smart-implementation-guides-l3">
-  <img src="assets/img/workflows/l3-fhir-pipeline.svg"
+  <img src="{{ '/assets/img/workflows/l3-fhir-pipeline.svg' | relative_url }}"
        alt="BPMN swimlane diagram of the L3 pipeline: map L2 to L3, author FSH, SUSHI compile, validate against profiles with a loop back to FSH on failure, QC gates that file findings as beans, IG Publisher build, and publication of the IG site.">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [full-size SVG](assets/img/workflows/l3-fhir-pipeline.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [full-size SVG]({{ '/assets/img/workflows/l3-fhir-pipeline.svg' | relative_url }})
 {: .bpmn-source }
 
 ---

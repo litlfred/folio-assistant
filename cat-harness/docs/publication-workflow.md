@@ -213,7 +213,7 @@ This is the diagram that matters most day to day: **one proposed change to one
 content block**.
 
 <div class="bpmn-figure" id="figure-editing-and-the-hci-validation-gate">
-  <img src="assets/img/workflows/editing-hci-validation.svg"
+  <img src="{{ '/assets/img/workflows/editing-hci-validation.svg' | relative_url }}"
        alt="BPMN swimlane diagram: an editor describes a change, an authoring agent drafts it, the proposed change fans out through mechanical and non-mechanical validation, the findings are shown to the editor, and only an accepted change is committed to the corpus.">
 </div>
 
@@ -294,7 +294,7 @@ The corpus is not the publication. A **draft** is built from it, reviewed as a
 whole by the review team, and only then released.
 
 <div class="bpmn-figure" id="figure-from-corpus-to-published-folio">
-  <img src="assets/img/workflows/draft-to-publication.svg"
+  <img src="{{ '/assets/img/workflows/draft-to-publication.svg' | relative_url }}"
        alt="BPMN swimlane diagram: the corpus is built into a draft publication, QA gates run, the publication manager circulates it, the review team and SMEs review in parallel, change requests become beans that re-enter editing, and an approved draft is authorised by the programme manager and published.">
 </div>
 
@@ -345,7 +345,7 @@ One cycle of a folio, plan to retire. Both diagrams above appear here as call
 activities.
 
 <div class="bpmn-figure" id="figure-content-lifecycle-overview">
-  <img src="assets/img/workflows/content-lifecycle.svg"
+  <img src="{{ '/assets/img/workflows/content-lifecycle.svg' | relative_url }}"
        alt="BPMN swimlane diagram: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs, integration test and QA sweep, draft-review-publish, feedback is triaged and filed as beans, then either another cycle or retirement.">
 </div>
 

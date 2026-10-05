@@ -204,7 +204,7 @@ présentent des risques pour la sécurité, quelle part doit être déterministe
 entre sous-flux de travail sous une superposition contrôlée de contexte et de mémoires sont trois
 questions que ce dépôt peut maintenant poser et auxquelles il n'a pas encore répondu. Le programme d'action, où
 chaque affirmation est marquée comme mesurée, décidée ou hypothèse, se trouve dans
-[`deterministic-and-agentic`](../reference/skill-instructions/deterministic-and-agentic.html).
+[`deterministic-and-agentic`]({{ '/reference/skill-instructions/deterministic-and-agentic.html' | relative_url }}).
 Considérez-le comme un programme de travail : il comporte plus d'hypothèses que de mesures, et il
 l'indique explicitement.
 
@@ -218,7 +218,7 @@ Le propriétaire, 2026-09-23, nommant la compétence dont traite ce spectre :
 > **Compétence d'exécution BPMN (BPMN Execution Skill) :** étant donné un Processus, un Contexte, un État et un Rôle, utiliser
 > une ou plusieurs Compétences afin d'exécuter une Tâche.
 
-![Exécution BPMN, du déterministe à l'agentique. Une barre de couleur va de « déterministe » (bleu, à gauche : exécution gérée par agent d'une tâche unique) à « agentique » (vert, à droite : des agents sur la plupart ou la totalité des tâches). À gauche, sous une icône d'engrenage et de moteur : « Outil d'exécution BPMN : n'importe quel moteur BPMN open source, état et couloirs strictement appliqués », sur un diagramme plat de couloirs du cycle de vie du folio avec un pense-bête, un groupe de beans, une personne et un robot-chat à côté des couloirs. À droite, sous une icône de robot-chat : « Outil d'exécution BPMN : essaim agentique à l'état non gouverné. Les agents assouplissent les couloirs, compensé par des rapports QA/QC mécaniques et agentiques », sur le même diagramme incliné en perspective, des beans dispersés sur chaque couloir et de nombreux robots-chats en dessous.](../assets/img/bpmn-execution-spectrum.webp)
+![Exécution BPMN, du déterministe à l'agentique. Une barre de couleur va de « déterministe » (bleu, à gauche : exécution gérée par agent d'une tâche unique) à « agentique » (vert, à droite : des agents sur la plupart ou la totalité des tâches). À gauche, sous une icône d'engrenage et de moteur : « Outil d'exécution BPMN : n'importe quel moteur BPMN open source, état et couloirs strictement appliqués », sur un diagramme plat de couloirs du cycle de vie du folio avec un pense-bête, un groupe de beans, une personne et un robot-chat à côté des couloirs. À droite, sous une icône de robot-chat : « Outil d'exécution BPMN : essaim agentique à l'état non gouverné. Les agents assouplissent les couloirs, compensé par des rapports QA/QC mécaniques et agentiques », sur le même diagramme incliné en perspective, des beans dispersés sur chaque couloir et de nombreux robots-chats en dessous.]({{ '/assets/img/bpmn-execution-spectrum.webp' | relative_url }})
 
 **Une compétence, deux types d'Outil.** La compétence est la même aux deux extrémités : prendre le
 processus, le contexte, l'état actuel et le rôle, choisir les compétences et accomplir
@@ -241,7 +241,7 @@ que si les règles et l'historique sont des données qu'un rapport peut lire, ce
 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) comme langage d'autorisations
 et [W3C PROV-O](https://www.w3.org/TR/prov-o/) comme journal d'exécution (propriétaire,
 2026-09-23 ; le schéma que cela implique est la
-[proposition acteurs, ODRL et PROV-O](../proposals/odrl-prov-actor-model.html)).
+[proposition acteurs, ODRL et PROV-O]({{ '/proposals/odrl-prov-actor-model.html' | relative_url }})).
 
 **La plupart des exécutions réelles se situent entre ces deux extrémités**, et par tâche plutôt que par processus :
 la [section précédente](#deterministic-and-agentic) dénombre déjà quelles

@@ -1154,7 +1154,7 @@ async function main(): Promise<void> {
   idx.push("");
   idx.push("For each skill's *typed input/output contract*, see the");
   idx.push("[Skill schema reference](../skills/); for the conceptual overview of skills,");
-  idx.push("roles, and how they compose with the LLM, see [Skills & roles](../../skills.html).");
+  idx.push(`roles, and how they compose with the LLM, see [Skills & roles](../../${publishedPagePath(SITE_ROOT, "skills")}).`);
   idx.push("");
   for (const group of GROUPS) {
     const rows = indexRows[group.category];
