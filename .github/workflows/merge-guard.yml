@@ -32,6 +32,12 @@
 # (`DEPLOY_ONLY_STEP`); a finished-red run found later is caught by the next label, comment
 # or gating-workflow completion, or by a dispatch.
 #
+# CHECK 8 (`mergeable`, bean `vihx`) READS A FACT THAT CHANGES WHEN MAIN
+# MOVES, and none of the four events fires then. So a posted `success` can go
+# stale on exactly that check until the next event on the PR. The status is a
+# backstop: `merge:guard --merge` re-evaluates live, and GitHub's own merge
+# PUT refuses a conflicting head with a 405 regardless.
+#
 # THE SCRIPT COMES FROM MAIN, NOT FROM THE PR, as in `merge-main.yml`: a PR
 # that edits `merge-guard.ts` must not judge itself with its own copy. The
 # one exception is the bootstrap — until this lands, main has no guard — and
