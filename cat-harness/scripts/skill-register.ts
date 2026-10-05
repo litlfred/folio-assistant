@@ -619,6 +619,18 @@ export interface Flags {
   json: boolean;
   /** Skip the committed QA sidecar. For a scratch tree that must not be dirtied. */
   noReport: boolean;
+  /**
+   * With `--check` only: judge the DECLARATIONS and the third states, and run
+   * none of the chain's checks (bean `8qyc`).
+   *
+   * For `regen`, which asks every one of {@link CHECKS} as a pair of its own:
+   * re-running them here doubled the most expensive part of the run (107 s of
+   * 637 s, measured 2026-10-05). `regen` derives this gate's verdict as this
+   * residual AND those pairs' verdicts on the same tree — the same programs,
+   * spelt the same way, so the conjunction is the gate's answer. It is never
+   * what CI runs: CI runs the whole `--check`.
+   */
+  declarationsOnly: boolean;
 }
 
 /**
@@ -641,6 +653,7 @@ export function parseFlags(argv: readonly string[]): Flags {
     dryRun: argv.includes("--dry-run"),
     json: argv.includes("--json"),
     noReport: argv.includes("--no-report"),
+    declarationsOnly: argv.includes("--declarations-only"),
   };
 }
 
@@ -744,7 +757,10 @@ const HELP =
   `  bun run skill:register --check      verify only, write nothing (not even the QA sidecar) — what CI runs\n` +
   `  bun run skill:register --dry-run    print the chain; write and verify nothing\n` +
   `  bun run skill:register --json       emit the verdicts as JSON\n` +
-  `  bun run skill:register --no-report  skip the committed QA sidecar\n\n` +
+  `  bun run skill:register --no-report  skip the committed QA sidecar\n` +
+  `  bun run skill:register --check --declarations-only\n` +
+  `                                      the declarations only, none of the chain's checks — for regen,\n` +
+  `                                      which asks each of those as a pair of its own. Not a gate.\n\n` +
   `It deliberately does NOT add a package-manifest entry: which package a\n` +
   `file belongs to is your assertion, not a derivable fact.\n\n` +
   `Exit 2 is a THIRD STATE, never a pass and never a finding: no package\n` +
@@ -779,6 +795,13 @@ async function main(): Promise<number> {
   if (process.argv.includes("--help")) {
     console.log(HELP);
     return 0;
+  }
+
+  if (flags.declarationsOnly && (!checking || flags.dryRun || flags.json)) {
+    // Refused rather than ignored: without `--check` the flag would silently
+    // run the WRITER, and a residual that wrote would not be a residual.
+    console.error("skill-register: --declarations-only is a --check form; it takes no --dry-run or --json.");
+    return 2;
   }
 
   const f = audit();
@@ -880,6 +903,13 @@ async function main(): Promise<number> {
         return rc;
       }
     }
+  }
+
+  if (flags.declarationsOnly) {
+    // The residual: everything above, none of the chain's checks. Its caller
+    // owns asking those (see {@link Flags.declarationsOnly}).
+    console.log(`  (--declarations-only: the ${STEPS.length} chain check(s) were NOT run; the caller asks them)`);
+    return problems > 0 ? 1 : 0;
   }
 
   // Verification is the point. The list above is hand-maintained and so can

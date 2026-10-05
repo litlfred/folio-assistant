@@ -144,6 +144,7 @@ import {
 } from "./input-hash.ts";
 import { ReadWriteGate, jobsFromArgv, orderedEmitter, runCaptured, runPool } from "./task-pool.ts";
 import { pairIO } from "./task-io.ts";
+import { foldable, settleCovered } from "./pair-cover.ts";
 import { repoRootFor } from "../schemas/cat-harness.ts";
 
 const ROOT = join(import.meta.dir, "..");
@@ -357,6 +358,12 @@ export interface Result {
   outcome: Outcome;
   /** `current` because its inputs hash to its last green run, not because it was asked. */
   skipped?: boolean;
+  /**
+   * The pair whose verdict this one's was DERIVED from (`pair-cover.ts`): the
+   * check was answered by its residual plus its coverers, and this names the
+   * coverer that decided a non-`current` outcome.
+   */
+  coveredBy?: string;
 }
 
 /** One verify/write pair, with what it declares about its files (`task-io.ts`). */
@@ -441,6 +448,10 @@ export async function regenPass(
     o.report?.(pairs[i]!, v.result, v.why, v.ms),
   );
 
+  // Checks other pairs in THIS pass already answer (bean `8qyc`): each is asked
+  // only for its residual, and its verdict is settled from the coverers' below.
+  const folds = foldable(pairs.map((p) => p.check));
+
   // Checks that only read share; writers (and the re-ask after one) run alone.
   const gate = new ReadWriteGate();
   const askOne = async (pair: Pair, index: number): Promise<{ result: Result; why: string | undefined; ms: number }> => {
@@ -450,9 +461,17 @@ export async function regenPass(
     if (decision?.skip === true) {
       return { result: { check, writer, outcome: "current", skipped: true }, why: decision.why, ms: 0 };
     }
-    const why = decision?.why;
+    const fold = folds.get(check);
+    const why =
+      fold === undefined
+        ? decision?.why
+        : `${decision?.why ?? "asked"}; verdict DERIVED from ${fold.residual ?? "no residual"} + ` +
+          `${fold.covers.length} covering pair(s) (pair-cover.ts)`;
     const done = (result: Result) => ({ result, why, ms: performance.now() - t0 });
-    if (await gate.read(async () => runner(check))) return done({ check, writer, outcome: "current" });
+    // A folded check runs its residual in its place, or nothing at all.
+    const ask = fold === undefined ? check : fold.residual;
+    if (ask === undefined) return done({ check, writer, outcome: "current" });
+    if (await gate.read(async () => runner(ask))) return done({ check, writer, outcome: "current" });
     if (writer === undefined) return done({ check, outcome: "no-writer" });
     if (o.dryRun) return done({ check, writer, outcome: "regenerated" });
     return gate.write(index, async () => {
@@ -462,7 +481,7 @@ export async function regenPass(
       // it as one would be the false-clean this whole command is about.
       // And a writer that EXITED NON-ZERO is named as such (bean `i1q7`): the
       // defect is in the declared writer, not in what it generates from.
-      const outcome: Outcome = (await runner(check)) ? "regenerated" : wrote ? "unrepaired" : "writer-failed";
+      const outcome: Outcome = (await runner(ask)) ? "regenerated" : wrote ? "unrepaired" : "writer-failed";
       return done({ check, writer, outcome });
     });
   };
@@ -482,7 +501,7 @@ export async function regenPass(
   // Writers in PAIR order, not completion order, so the record is deterministic.
   const order = new Map(pairs.map((p, i) => [p.writer, i]));
   writerRan.sort((a, b) => (order.get(a) ?? 0) - (order.get(b) ?? 0));
-  return { results: done.map((d) => d.result), writerRan };
+  return { results: settleCovered(done.map((d) => d.result), folds), writerRan };
 }
 
 /**
@@ -899,6 +918,12 @@ if (import.meta.main) {
     saveCache(repoRoot, hashesToRecord(repairable, results, settled, fp, cache));
   }
   for (const r of results) {
+    if (r.coveredBy !== undefined) {
+      // Derived (`pair-cover.ts`): the line that matters is the coverer's own,
+      // printed in its place; this one says where the verdict came from.
+      console.log(`  ${r.outcome === "regenerated" ? "·" : "✗"} ${r.check} is ${r.outcome} through ${r.coveredBy} (see its line)`);
+      continue;
+    }
     if (r.outcome === "regenerated") {
       console.log(
         dryRun
