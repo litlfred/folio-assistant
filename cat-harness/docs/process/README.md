@@ -14,4 +14,9 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `process`, holding `do
 | [`evidence.md`](evidence.md) | Evidence for a recommendation |  |
 | [`index.md`](index.md) | [Process](https://litlfred.github.io/bootstrap/schemas/#process) & methodology |  |
 | [`publication-workflow.md`](publication-workflow.md) | Publication workflow |  |
+| [`ar/`](ar/) | _nothing declares what this holds_ | |
+| [`es/`](es/) | _nothing declares what this holds_ | |
+| [`fr/`](fr/) | _nothing declares what this holds_ | |
+| [`ru/`](ru/) | _nothing declares what this holds_ | |
+| [`zh/`](zh/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

@@ -21,5 +21,10 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `concepts`, holding `d
 | [`skills.md`](skills.md) | [Skills](https://litlfred.github.io/bootstrap/schemas/#skill) & roles |  |
 | [`subgraph-viewers.md`](subgraph-viewers.md) | [Subgraph](https://litlfred.github.io/bootstrap/schemas/#subgraph) viewers |  |
 | [`tool-graph.md`](tool-graph.md) | "What a Tool is, how it differs from a skill, and how the two are joined without being conflated." |  |
+| [`ar/`](ar/) | _nothing declares what this holds_ | |
 | [`architecture/`](architecture/) | _nothing declares what this holds_ | |
+| [`es/`](es/) | _nothing declares what this holds_ | |
+| [`fr/`](fr/) | _nothing declares what this holds_ | |
+| [`ru/`](ru/) | _nothing declares what this holds_ | |
+| [`zh/`](zh/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

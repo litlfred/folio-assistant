@@ -29,20 +29,20 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`beans/`](beans/) | _nothing declares what this holds_ | |
 | [`bootstrap/`](bootstrap/) | _nothing declares what this holds_ | |
 | [`cat-harness/`](cat-harness/) | _nothing declares what this holds_ | |
-| [`concepts/`](concepts/) | Concepts: what the harness, the knowledge graph and their parts are. | |
+| [`concepts/`](concepts/README.md) | Concepts: what the harness, the knowledge graph and their parts are. | |
 | [`es/`](es/) | _nothing declares what this holds_ | |
 | [`external-schemas/`](external-schemas/) | _nothing declares what this holds_ | |
-| [`fhir/`](fhir/) | FHIR: FHIR content and the IG Publisher. | |
+| [`fhir/`](fhir/README.md) | FHIR: FHIR content and the IG Publisher. | |
 | [`fr/`](fr/) | _nothing declares what this holds_ | |
 | [`fsh-guts/`](fsh-guts/) | _nothing declares what this holds_ | |
 | [`glossary/`](glossary/) | _nothing declares what this holds_ | |
-| [`guides/`](guides/) | Authoring guides: how to do a task with the harness, one guide per task. | |
+| [`guides/`](guides/README.md) | Authoring guides: how to do a task with the harness, one guide per task. | |
 | [`health/`](health/) | _nothing declares what this holds_ | |
 | [`issue-marks/`](issue-marks/) | _nothing declares what this holds_ | |
 | [`lsi/`](lsi/) | _nothing declares what this holds_ | |
 | [`methodologies/`](methodologies/) | _nothing declares what this holds_ | |
 | [`payload/`](payload/) | _nothing declares what this holds_ | |
-| [`process/`](process/) | [Process](https://litlfred.github.io/bootstrap/schemas/#process) & methodology: the publication workflow, CRDM and what counts as evidence. | |
+| [`process/`](process/README.md) | [Process](https://litlfred.github.io/bootstrap/schemas/#process) & methodology: the publication workflow, CRDM and what counts as evidence. | |
 | [`processes/`](processes/) | _nothing declares what this holds_ | |
 | [`proposals/`](proposals/README.md) | Proposals for this harness's own features — initial analysis, MVP, options — argued, and updated in place, before and while they are built. | |
 | [`prov-qaqc/`](prov-qaqc/) | _nothing declares what this holds_ | |
@@ -54,7 +54,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`ru/`](ru/) | _nothing declares what this holds_ | |
 | [`site/`](site/) | _nothing declares what this holds_ | |
 | [`slices/`](slices/) | _nothing declares what this holds_ | |
-| [`start/`](start/) | Start here: installing, getting started, contributing and accessibility. | |
+| [`start/`](start/README.md) | Start here: installing, getting started, contributing and accessibility. | |
 | [`subgraph/`](subgraph/) | _nothing declares what this holds_ | |
 | [`subscriptions/`](subscriptions/) | _nothing declares what this holds_ | |
 | [`swimlane-glossary/`](swimlane-glossary/) | _nothing declares what this holds_ | |

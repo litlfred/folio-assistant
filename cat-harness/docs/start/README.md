@@ -15,4 +15,9 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `start`, holding `doc-
 | [`getting-started.md`](getting-started.md) | Getting started |  |
 | [`index.md`](index.md) | Start here |  |
 | [`installation.md`](installation.md) | Installation |  |
+| [`ar/`](ar/) | _nothing declares what this holds_ | |
+| [`es/`](es/) | _nothing declares what this holds_ | |
+| [`fr/`](fr/) | _nothing declares what this holds_ | |
+| [`ru/`](ru/) | _nothing declares what this holds_ | |
+| [`zh/`](zh/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->
