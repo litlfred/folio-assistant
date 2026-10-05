@@ -492,17 +492,14 @@
      * the inverse is the same control in the same place). Its NAME is
      * "Language"; the state is `aria-expanded`, as on the magnifier.
      *
-     * ON A PHONE ONLY. Owner, reviewing #2202: *"dropdown on phone only"* --
-     * where the six tabs fit beside search they stay inline, one click to
-     * switch, and the toggle is not drawn (`docs-ui.css`, 40rem). Both forms
-     * are in the DOM; the stylesheet picks one, so a resize needs no script.
-     * The inline form's globe is its own span: the toggle's is hidden with
-     * the toggle. */
-    container.appendChild(el("span", {
-      class: "fa-page-lang-globe fa-page-lang-globe--inline",
-      title: "Available translations for this page",
-      "aria-hidden": "true",
-    }, "🌐"));
+     * AT EVERY WIDTH, STARTING CLOSED. #2210 kept the six tabs always inline
+     * above 40rem with no toggle; the owner then asked (2026-10-05) *"make
+     * globe click open and closed the desktop view of the locale selector.
+     * start closed too."* So the same toggle is drawn everywhere and starts
+     * closed. Above 40rem it is the globe alone and opens the six tabs
+     * inline beside it, one click each; at 40rem and below it reads
+     * "globe EN" with a caret, as the phone dropdown it already was
+     * (`docs-ui.css`). */
     var listId = "fa-page-lang-list";
     var toggle = el("button", {
       type: "button",
@@ -2006,16 +2003,13 @@
      * there is nothing to adopt. Nothing is mounted, no magnifier is drawn,
      * and the warning says what was looked for.
      */
-    /* Per-viewer convenience only, as the old "Hide search" choice was: a
-     * reader who keeps search open gets it open on the next page. The old
-     * key (`fa-search-place`) is not read — its default was OPEN, which is
-     * the thing the owner has now asked to change. */
-    var SEARCH_OPEN_KEY = "fa-search-open";
-
-    function storedSearchOpen() {
-      try { return window.localStorage.getItem(SEARCH_OPEN_KEY) === "true"; }
-      catch (_e) { return false; }
-    }
+    /* ALWAYS CLOSED ON ARRIVAL. Owner, 2026-10-05: *"start with search bar
+     * closed"*. Until then an open search was remembered per viewer
+     * (`fa-search-open`) and restored on the next page, which is exactly the
+     * page that opened with the field already across the band. Nothing reads
+     * or writes that key any more; a stale value left in a browser is inert.
+     * What survives is #2202's: closing never clears, so within a page the
+     * typed text is there again when the magnifier reopens it. */
 
     var searchHolder = null;
     var searchHome = null;
@@ -2135,7 +2129,7 @@
       glassBandSlot("end").appendChild(searchHome);
       glassBandItem("search", function () { closeSearch(false); });
 
-      paintSearchOpen(storedSearchOpen());
+      paintSearchOpen(false);
     } else {
       console.warn("docs-ui: no site search found (tried " + SEARCH_SELECTORS.join(", ") +
                    "); search was not mounted and no magnifier was drawn.");
@@ -2160,16 +2154,10 @@
       glassBandActive("search", open);
     }
 
-    function rememberSearchOpen(open) {
-      try { window.localStorage.setItem(SEARCH_OPEN_KEY, open ? "true" : "false"); }
-      catch (_e) { /* private mode: the state just is not remembered */ }
-    }
-
     /** Close search and, when asked, put focus back on the magnifier. */
     function closeSearch(returnFocus) {
       if (!searchHome) return;
       paintSearchOpen(false);
-      rememberSearchOpen(false);
       if (returnFocus) searchToggle.focus();
     }
 
@@ -2183,7 +2171,6 @@
     function revealSearch() {
       if (!searchHome) return;
       paintSearchOpen(true);
-      rememberSearchOpen(true);
       var input = searchHolder && searchHolder.querySelector("input");
       if (input) input.focus();
     }
