@@ -18,9 +18,11 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `proposals`, holding `
 | [`bootstrap.md`](bootstrap.md) | bootstrap/ — the graph an agent can read before it knows anything |  |
 | [`cat-harness-tools-split-2026-10-01.md`](cat-harness-tools-split-2026-10-01.md) | Split plan: cat-harness/ → litlfred/cat-harness (content) + litlfred/cat-harness-tools (code) |  |
 | [`cmsl-external-directories-2026-09-30.md`](cmsl-external-directories-2026-09-30.md) | "Why each exists, which way its arrow points, and the options for moving the declaration or reversing the arrow. |  |
+| [`contributions-as-nodes-2026-10-04.md`](contributions-as-nodes-2026-10-04.md) | Contributions and validators as KG nodes |  |
 | [`dak-kinds-contribution-2026-10-02.md`](dak-kinds-contribution-2026-10-02.md) | DAK block kinds as a smart-base contribution |  |
 | [`declaration-gap.md`](declaration-gap.md) | Which top-level directories are not declared subgraphs? |  |
 | [`deployment-topologies.md`](deployment-topologies.md) | Deployment topologies and operating modes |  |
+| [`derived-graph-dependencies-2026-10-04.md`](derived-graph-dependencies-2026-10-04.md) | Derived-graph dependencies |  |
 | [`dth-candidates-2026-10-02.json`](dth-candidates-2026-10-02.json) | data |  |
 | [`dth-candidates-2026-10-02.md`](dth-candidates-2026-10-02.md) | DTH candidates: methodologies, processes and glossary |  |
 | [`index.md`](index.md) | Proposals |  |

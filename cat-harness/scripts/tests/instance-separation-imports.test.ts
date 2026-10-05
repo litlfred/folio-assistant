@@ -50,6 +50,7 @@ import { dirname, join, relative, resolve } from "node:path";
 
 import { specifiersOf } from "../../../bootstrap-tools/scripts/check-closure.js";
 import { declarationPathIn } from "../../schemas/cat-harness.js";
+import { inAggregate } from "../../test/support/checkout.js";
 
 const ROOT = resolve(import.meta.dir, "..", "..", "..");
 const SHIM = "platform.ts";
@@ -120,7 +121,10 @@ const NOT_YET_SHIMMED: Record<string, number> = {
   "who-iris": 19,
 };
 
-describe("staged instances reach the platform only through platform.ts", () => {
+// Every subject here is ANOTHER instance's code (smart-base, smart-trust,
+// who-iris), so the guard has nothing to read when cat-harness stands alone
+// (bean `ho66`): skipped visibly there rather than failing or passing vacuously.
+describe.skipIf(!inAggregate())("staged instances reach the platform only through platform.ts", () => {
   const staged = stagedInstances();
   const covered = staged.filter((i) => !PLATFORM_LAYERS.has(i));
 

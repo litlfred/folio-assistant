@@ -8,15 +8,17 @@
  */
 
 import { z } from "zod";
-import { execSync, spawnSync } from "child_process";
+import { execSync, spawn } from "child_process";
 import { existsSync, readdirSync } from "fs";
 import { join } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { resolve } from "path";
+import { findContentRepoRoot } from "../../../cat-harness/content/pipeline/repo-root";
 
-// Resolve from repo root (folio-assistant/src/tools/ → ../../..)
-const REPO_ROOT = resolve(import.meta.dir, "../../..");
-const BUILD_DIR = resolve(REPO_ROOT, "build");
+// The FOLIO's root, not the platform's: `resolve(import.meta.dir, "../../..")`
+// was right only when the platform is a submodule two levels down, and named
+// the directory above the platform when run in the platform repository itself.
+const BUILD_DIR = resolve(findContentRepoRoot(), "build");
 
 /** Detect the system's "open" command. */
 function getOpenCommand(): string | null {
@@ -117,7 +119,12 @@ export function registerPreviewTools(server: McpServer): void {
         };
       }
 
-      spawnSync(openCmd, [fullPath], { stdio: "pipe" });
+      // `spawn`, not `spawnSync`: `detached` is not a `spawnSync` option at
+      // all, and `spawnSync` BLOCKS until the child exits — so opening a
+      // viewer would hold the tool call open for as long as the window stays
+      // up. `unref` lets this process exit without waiting on it.
+      const child = spawn(openCmd, [fullPath], { stdio: "ignore", detached: true });
+      child.unref();
 
       return {
         content: [{

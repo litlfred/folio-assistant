@@ -38,6 +38,7 @@ import {
   type OpenApiConfig,
   type OpenApiProvenance,
 } from "../schemas/openapi.ts";
+import { findDeclarationFile } from "../../cat-harness/schemas/cat-harness.ts";
 
 export const CONFIG_FILE = "cat-openapi.config.json";
 
@@ -56,7 +57,12 @@ export function readConfig(instanceRoot: string): OpenApiConfig {
  * is one edit to `<instance>.json` and nothing else.
  */
 export function openapiDir(instanceRoot: string, config: OpenApiConfig): string {
-  const decl = join(instanceRoot, `${basename(resolve(instanceRoot))}.json`);
+  // The declaration is FOUND, never composed from the directory name: in an IG
+  // fork the instance lives at `smart-base/` and declares itself `smart-trust`
+  // (n3ni stage E), so `<dirname>.json` names a file that is not there.
+  const found = findDeclarationFile(instanceRoot);
+  if (found === undefined) throw new Error(`no instance declaration in ${resolve(instanceRoot)}`);
+  const decl = join(instanceRoot, found);
   const d = JSON.parse(readFileSync(decl, "utf8")) as { directories?: Array<{ id: string; path: string; graphKinds?: string[] }> };
   const entry = d.directories?.find((x) => x.id === config.directory);
   if (!entry) throw new Error(`${decl}: no directory with id "${config.directory}" (named by ${CONFIG_FILE})`);

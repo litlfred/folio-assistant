@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-01T08:10:21Z
-updated_at: 2026-10-04T08:24:28Z
+updated_at: 2026-10-04T12:46:42Z
 parent: folio-assistant-uhkv
 ---
 
@@ -31,3 +31,9 @@ Staged per cat-harness/docs/proposals/smart-separation-2026-10-01.md (owner deci
 ## Progress 2026-10-04 (wm63 session)
 
 Stages B, C and D are ticked on evidence: r939 (#1782), y4t4 (#1783) and kg83 (#1795) all merged with green gates and were closed in #2062. D's L1/DAK kinds stay with qvxh, as the box says. Remaining: E (forks seeded in litlfred/smart-base, outside this repo's session scope) and F (cutover, only on the owner's OK).
+
+## Stage E, first fork (2026-10-04, wm63 session; owner: 'one fork first')
+
+- litlfred/smart-trust#5 (draft): `smart-base/` seeded from folio-assistant's `smart-trust/`, with history carried (378 commits, git subtree split + add), plus a root `smart-base.config.json`. The IG source is untouched.
+- **The falsifier, measured:** nothing in the seed runs standalone. `smart-base/scripts/tests/pages-markdown.test.ts` fails with "Cannot find module '../../../fhir-harness/...'". The fork needs the platform: either stage F's subscription or a folio-assistant submodule (owner's choice, asked).
+- Not yet done: smart-base and smart-immunizations, which wait on the layout being accepted. Nothing in folio-assistant has been deleted (F).

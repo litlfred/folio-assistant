@@ -37,9 +37,10 @@
  * `1335`. The five `dak-*` CRITERIA stay declared in core's registry, marked
  * `checker_contributed` — the cut `folio-assistant-sci` already made for the
  * elaboration-cost checkers: a criterion is a rule, a checker is the tooling
- * that answers it. `smart-base/contributions.ts` hands {@link
- * DAK_AUTOMATED_CHECKERS} to core with this file as each checker's
- * `sourceFile`, which is what keeps their verdicts freshness-hashed.
+ * that answers it. Each `smart-base/qa-checkers/` node names its entry in
+ * {@link DAK_AUTOMATED_CHECKERS}, and `loadContributions` hands it to core
+ * with this file as the checker's `sourceFile`, which is what keeps their
+ * verdicts freshness-hashed (bean riit, step 3b).
  *
  * @module smart-base/content/pipeline/qa-checkers-dak
  */

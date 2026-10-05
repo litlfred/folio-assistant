@@ -43,6 +43,8 @@
  * @graphNode schema
  */
 
+import { defaultGraphKinds } from "./graph-kind-registry";
+
 /**
  * One avatar.
  *
@@ -368,10 +370,48 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 28,
     reads: "a signed sheet — a judgement somebody recorded, kept apart from what a script derives",
   },
-  "review-verdicts": {
-    glyph: "M5 4h14v16H5zM8 12l3 3 5-6",
-    tone: 200,
-    reads: "a page with a tick — somebody read this version and judged it",
+
+  "qa-checkers": {
+    // A magnifier over a tick: code that judges content against a criterion.
+    // Bean riit, step 3b.
+    glyph: "M10 4a6 6 0 1 1 0 12a6 6 0 0 1 0-12zM14.5 14.5L20 20M7.5 10l2 2 3.5-3.5",
+    tone: 96,
+    reads: "a magnifier over a tick — a QA checker, declared by the harness whose code it is",
+  },
+  "pipeline-plugins": {
+    // A plug entering a socket: an implementation filling a generic slot.
+    // Bean riit, step 3b.
+    glyph: "M4 12h6M10 8h4v8h-4zM14 10h3M14 14h3M17 7v10h3",
+    tone: 300,
+    reads: "a plug in a socket — a pipeline slot filled by the harness that owns the code",
+  },
+  "block-kinds": {
+    // Three stacked blocks with a tag on the top one: each kind a node,
+    // labelled by its prefix. Bean riit, step 2.
+    glyph: "M5 15h14v4H5zM5 10h14v4H5zM5 5h9v4H5zM16 5l3 2-3 2",
+    tone: 32,
+    reads: "stacked blocks, the top one tagged — block kinds, each declared by the harness that owns it",
+  },
+  "content-adapters": {
+    // A book with a bookmark: a vocabulary, the words its blocks are made of.
+    // Bean riit, step 5.
+    glyph: "M6 4h10a2 2 0 0 1 2 2v14H8a2 2 0 0 1-2-2zM6 18a2 2 0 0 1 2-2h10M13 4v6l2-1.5 2 1.5V4",
+    tone: 44,
+    reads: "a book with a bookmark — a content adapter's block vocabulary, declared by the harness that owns it",
+  },
+  validators: {
+    // A check mark inside a shield: code that judges a node, declared as a node.
+    // Bean riit.
+    glyph: "M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6zM8.5 12.5l2.5 2.5 4.5-5M12 3v2",
+    tone: 132,
+    reads: "a shield with a tick — a validator, declared by the harness whose code it is",
+  },
+  kinds: {
+    // A stack of three cards, the top one tagged: a graph whose nodes are the
+    // KINDS of the other graphs. Bean dmx1.
+    glyph: "M5 8h12v11H5zM7 5h12v11M9 2h12v11M8 12h6M8 15h4",
+    tone: 300,
+    reads: "a stack of type cards — the graph kinds a harness declares it owns",
   },
   tools: {
     glyph: "M14 4a4 4 0 00-5 5l-5 5 2 2 5-5a4 4 0 005-5l-2 2-2-2 2-2z",
@@ -491,49 +531,14 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 168,
     reads: "a clipboard carrying a tick and a cross — one run's own account of what it did, both outcomes on the same sheet",
   },
-  uploads: {
-    glyph: "M12 17V5m0 0l-4 4m4-4l4 4M5 19h14",
-    tone: 200,
-    reads: "an arrow onto a line — something arriving",
-  },
-  catalogue: {
-    // A card index: drawers of cards standing for things that are elsewhere.
-    // Deliberately NOT books on a shelf — that is `library`, and the difference
-    // between "we have it" and "we know of it" is the point of the kind.
-    glyph: "M4 6h16v12H4zM4 10h16M10 6v12M13 13h4M13 15h3",
-    tone: 258,
-    reads: "a card index — what is known to exist, mostly not held",
-  },
-  "fhir-artifact-index": {
-    // A card index with a braced tail: the `catalogue` drawer, plus the
-    // JSON-Schema brace that is the whole reason this kind exists. It quotes
-    // `catalogue`'s glyph deliberately — the two are siblings sharing a
-    // materialisation model, and an unrelated mark would hide that.
-    glyph: "M4 6h12v12H4zM4 10h12M10 6v12M19 7c-1 0-1 2-2 2 1 0 1 2 2 2",
-    tone: 168,
-    reads: "a card index with a schema brace — an IG's artefacts, known by canonical URL",
-  },
-  "ig-metadata-index": {
-    // The `fhir-artifact-index` drawer with an arrow LEAVING it. It quotes
-    // that glyph on purpose, as that one quotes `catalogue`'s: the three are
-    // a family, and an unrelated mark would hide the relation the kind was
-    // registered to keep. What the arrow adds is the distinction itself —
-    // the index says what an IG HOLDS, this says what its toolchain REPORTED
-    // about what it holds.
-    glyph: "M4 6h12v12H4zM4 10h12M10 6v12M18 13h4m-2-2l2 2-2 2",
-    tone: 190,
-    reads: "a card index with an arrow leaving it — not what the IG holds, but what its toolchain reported about it",
-  },
-  openapi: {
-    // Curly braces around a two-way arrow: a machine-readable description
-    // (the braces) of something you call and that answers (the arrow out and
-    // back). Deliberately NOT `fhir-artifact-index`'s card drawer — an API
-    // document is one node holding operations, not an index of things held
-    // elsewhere. Bean `s4ta`.
-    glyph: "M8 4c-2 0-2 2-2 4s-1 3-2 4c1 1 2 2 2 4s0 4 2 4M16 4c2 0 2 2 2 4s1 3 2 4c-1 1-2 2-2 4s0 4-2 4M9 10h6l-2-2m2 6H9l2 2",
-    tone: 136,
-    reads: "braces around an arrow out and back — an API described as data: what you can call, and what answers",
-  },
+
+
+
+
+
+
+
+
   "computation-witness": {
     // A clipboard with a tick: the record a computation keeps of what it
     // checked and that the checks held. Deliberately NOT `qa`'s verdict — a
@@ -727,19 +732,28 @@ export const GENERIC: Avatar = {
   reads: "a question mark — no avatar is declared for this kind",
 };
 
+/**
+ * A kind DECLARED as a node (bean dmx1) carries its own avatar, so this table
+ * is not a second central registry for kinds it does not list.
+ */
+function declaredAvatar(kind: string): Avatar | undefined {
+  return defaultGraphKinds.get(kind)?.avatar;
+}
+
 /** Has this kind got an avatar of its own? */
 export function hasAvatar(kind: string): boolean {
-  return Object.prototype.hasOwnProperty.call(AVATARS, kind);
+  return Object.prototype.hasOwnProperty.call(AVATARS, kind) || declaredAvatar(kind) !== undefined;
 }
 
 /** The avatar for a kind, falling back to {@link GENERIC}. */
 export function avatarFor(kind: string): Avatar {
-  return AVATARS[kind] ?? GENERIC;
+  return AVATARS[kind] ?? declaredAvatar(kind) ?? GENERIC;
 }
 
-/** Every kind that has one, in declaration order. */
+/** Every kind that has one: this table's, in declaration order, then the declared kinds'. */
 export function avatarKinds(): string[] {
-  return Object.keys(AVATARS);
+  const listed = Object.keys(AVATARS);
+  return [...listed, ...defaultGraphKinds.names().filter((k) => !listed.includes(k) && declaredAvatar(k) !== undefined)];
 }
 
 /**

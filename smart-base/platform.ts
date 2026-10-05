@@ -130,3 +130,20 @@ export {
 export {
   igSiteData,
 } from "../fhir-harness/scripts/ig-site-data.js";
+export {
+  loadContributionsSync,
+} from "../cat-harness/schemas/harness-config.js";
+export {
+  BlockKindNodeSchema,
+  builderOf,
+  type BlockKindNode,
+} from "../cat-harness/schemas/block-kind-node.js";
+export {
+  ownDeclaredDirectories,
+} from "../cat-harness/schemas/declared-nodes.js";
+export {
+  siteFilter,
+} from "../cat-harness/scripts/staging-cone.ts";
+export {
+  AST_SITE_WRITERS,
+} from "../fhir-harness/scripts/stage-ast-sites.ts";

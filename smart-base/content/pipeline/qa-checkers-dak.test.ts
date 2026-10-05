@@ -35,11 +35,13 @@ import {
   COMPANION_ROLES,
 } from "../../platform.js";
 import { ContributionRegistry } from "../../platform.js";
-import contribute, { DAK_COMPANION_ROLES } from "../../contributions";
+import { loadContributionsSync } from "../../platform.js";
 
 /** smart-base's contribution, registered as `loadContributions` would. */
-const registry = new ContributionRegistry();
-registry.register({ ...contribute(), root: resolve(import.meta.dir, "../..") });
+// The registry a folio depending on smart-base gets (smart-ig's): since bean
+// riit, step 3b, the checkers reach it as `smart-base/qa-checkers/` nodes
+// through the dependency walk, not from an array contributions.ts returns.
+const registry = loadContributionsSync(resolve(import.meta.dir, "../../../smart-ig"), new ContributionRegistry());
 
 const DIR = mkdtempSync(join(tmpdir(), "dak-checkers-"));
 const p = (n: string) => join(DIR, n);
@@ -122,7 +124,10 @@ describe("dak-companion-present", () => {
     // requirement would fail every block that satisfies it.
     for (const [, role] of Object.entries(REQUIRED_COMPANION)) {
       expect(COMPANION_ROLES).toContain(role);
-      expect(DAK_COMPANION_ROLES).toContain(role);
+      // Through the registry, so the roles are the ones the `dak` node in
+      // smart-base/content-adapters/ declares and the loader registers (bean
+      // riit, step 5), not a constant beside the test.
+      expect(registry.adapterCompanionRoles("dak")).toContain(role);
     }
   });
 

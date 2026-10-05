@@ -34,7 +34,7 @@
  * |---|---|
  * | `pass` | the producer ran cleanly and wrote the same witness |
  * | `fail` | it ran cleanly and wrote a DIFFERENT witness; the differing paths are listed |
- * | `unknown` | it could not be decided: environment mismatch before or after the run, no reproduce command, a non-zero exit, a timeout, or no witness written |
+ * | `unknown` | it could not be decided: environment mismatch before or after the run, a stale witness (its `scriptHash` is not the current script's), a `scriptFile` that resolves to no unique file, no reproduce command, a non-zero exit, a timeout, or no witness written |
  *
  * A non-zero exit is `unknown`, never `fail`, because folio producers refuse
  * by design (a precision floor not met, a guard raised) and explain it on
@@ -55,7 +55,7 @@
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { isAbsolute, join, relative, resolve } from "node:path";
+import { basename, dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { stripEphemeral } from "../../cat-harness/schemas/computation-witness.ts";
 import { findContentRepoRoot } from "../../cat-harness/content/pipeline/repo-root";
 
@@ -135,6 +135,28 @@ function git(cwd: string, ...args: string[]) {
   return spawnSync("git", args, { cwd, encoding: "utf8" });
 }
 
+/**
+ * Where a witness's `scriptFile` lives at HEAD.
+ *
+ * Producers record it inconsistently: a repository-relative path, or a bare
+ * filename for a script beside the witness or elsewhere in the tree. Measured
+ * on litlfred/qou: 8 of a 13-witness sample recorded a bare name for a script
+ * in a subdirectory (`computations/probes/…`), and joining it to the top-level
+ * directory ran nothing. So: the path as written, else beside the witness,
+ * else the ONE tracked file with that name. Two or more candidates is
+ * ambiguous and resolves to nothing, rather than to a guess.
+ */
+export function resolveScript(root: string, witnessRel: string, scriptFile: string): string | undefined {
+  const tracked = (p: string) => git(root, "cat-file", "-e", `HEAD:${p}`).status === 0;
+  if (scriptFile.includes("/")) return tracked(scriptFile) ? scriptFile : undefined;
+  const beside = join(dirname(witnessRel), scriptFile);
+  if (tracked(beside)) return beside;
+  const hits = git(root, "ls-files", "--", `*/${scriptFile}`, scriptFile)
+    .stdout.split("\n")
+    .filter((p) => p && basename(p) === scriptFile);
+  return hits.length === 1 ? hits[0] : undefined;
+}
+
 /** Run one witness's producer in a scratch worktree and compare. */
 export function checkParity(
   root: string,
@@ -152,8 +174,11 @@ export function checkParity(
   }
   const inv = w.invocation as { reproduce?: unknown } | undefined;
   const scriptFile = typeof w.scriptFile === "string" ? w.scriptFile : undefined;
-  const reproduce =
-    typeof inv?.reproduce === "string" ? inv.reproduce : scriptFile ? `python3 ${scriptFile.includes("/") ? scriptFile : join(rel.split("/")[0]!, scriptFile)}` : undefined;
+  const script = scriptFile ? resolveScript(root, rel, scriptFile) : undefined;
+  if (scriptFile && !script && typeof inv?.reproduce !== "string") {
+    return { witness: rel, verdict: "unknown", reason: `scriptFile \`${scriptFile}\` resolves to no unique file at HEAD` };
+  }
+  const reproduce = typeof inv?.reproduce === "string" ? inv.reproduce : script ? `python3 -u ${script}` : undefined;
   if (!reproduce) return { witness: rel, verdict: "unknown", reason: "no invocation.reproduce and no scriptFile" };
 
   const mismatch = environmentMismatch(w.environment);
@@ -212,6 +237,19 @@ export function checkParity(
         witness: rel,
         verdict: "unknown",
         reason: `the re-run recorded a different environment (${envAfter.join(", ")}); re-run with --force for an advisory comparison`,
+      };
+    }
+    // A witness written by a DIFFERENT version of its producer is stale, not
+    // irreproducible: the committed record was never this script's output.
+    // Measured on qou: `q-pinning-50-digit` recorded scriptHash 58f994b46a01
+    // while the script now hashes to e6f6426e55c7, and was reported as `fail`.
+    const before = typeof w.scriptHash === "string" ? w.scriptHash : undefined;
+    const after = (fresh as Record<string, unknown>).scriptHash;
+    if (before && typeof after === "string" && before !== after && !opts.force) {
+      return {
+        witness: rel,
+        verdict: "unknown",
+        reason: `the witness is stale: written by script ${before}, the script is now ${after}; re-run with --force for an advisory comparison`,
       };
     }
     const d = diffPaths(stripEphemeral(w, opts.ignore), stripEphemeral(fresh, opts.ignore));
