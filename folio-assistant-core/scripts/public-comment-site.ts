@@ -125,16 +125,18 @@ const STYLE = `
   .tile { border:1px solid var(--line); border-radius:.5rem; padding:.5rem .9rem; min-width:7rem; }
   .tile b { display:block; font-size:1.6rem; }
   form { display:flex; flex-wrap:wrap; gap:.75rem; align-items:end; margin:1rem 0; }
-  label { display:flex; flex-direction:column; font-size:.85rem; color:var(--muted); }
-  select, input { font:inherit; padding:.35rem .5rem; color:var(--fg); background:var(--bg); border:1px solid var(--line); border-radius:.35rem; min-height:2.4rem; }
+  /* Form, table and details rules are scoped to main: the harness rail's header
+     is a label too, and a bare label rule stacked it and hid its avatar. */
+  main label { display:flex; flex-direction:column; font-size:.85rem; color:var(--muted); }
+  main select, main input { font:inherit; padding:.35rem .5rem; color:var(--fg); background:var(--bg); border:1px solid var(--line); border-radius:.35rem; min-height:2.4rem; }
   .table-wrap { overflow-x:auto; }
-  table { border-collapse:collapse; width:100%; font-size:.92rem; }
-  th, td { border-bottom:1px solid var(--line); padding:.45rem .5rem; text-align:left; vertical-align:top; }
-  th { position:sticky; top:0; background:var(--bg); }
+  main table { border-collapse:collapse; width:100%; font-size:.92rem; }
+  main th, main td { border-bottom:1px solid var(--line); padding:.45rem .5rem; text-align:left; vertical-align:top; }
+  main th { position:sticky; top:0; background:var(--bg); }
   .phase { font-weight:600; white-space:nowrap; }
   .phase-open { color:var(--open); } .phase-editing { color:var(--editing); } .phase-decided { color:var(--decided); } .phase-closed { color:var(--closed); }
   .chip { display:inline-block; background:var(--chip); border-radius:.3rem; padding:0 .35rem; margin:0 .2rem .2rem 0; font-size:.82rem; }
-  details > summary { cursor:pointer; }
+  main details > summary { cursor:pointer; }
   .muted { color:var(--muted); }
   .links a { margin-right:.5rem; white-space:nowrap; }
 `;
