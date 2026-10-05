@@ -6569,6 +6569,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.avatar",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.avatar"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance's mark — the same shape a kind node carries (bean sod4 #4). It sat in `schemas/avatars.ts`'s AVATARS beside the kinds' until 2026-10-05, so a new instance needed an edit to cat-harness to get a face; declared here, it brings its own. `avatarFor(name)` reads it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.avatar",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.contentadapters",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -16221,6 +16240,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-node.graphkindnodeschema.kgcontent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindNodeSchema.kgContent"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kind is harness knowledge-graph content (sod4 #5)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.kgContent",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-node.graphkindnodeschema.kind",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -16240,6 +16278,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-node.graphkindnodeschema.published",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindNodeSchema.published"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`false`: never part of a published graph (sod4 #5)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.published",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-node.graphkindnodeschema.rationale",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -16256,6 +16313,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.rationale",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-node.graphkindnodeschema.skillbearing",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindNodeSchema.skillBearing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The directory may be scanned for skill bodies (sod4 #5)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.skillBearing",
       "skos:note": "candidate"
     },
     {
@@ -16392,6 +16468,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.kgcontent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.kgContent"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kind IS harness knowledge-graph content — the `cat-harness` umbrella and the kinds split out of it. Was `KG_CONTENT_GRAPH_KINDS` (sod4 #5)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.kgContent",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.layer",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -16446,6 +16541,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.perInstance",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.published",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.published"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`false` keeps the kind out of every PUBLISHED graph: not one edge of a published artefact may lead to it (`isPublishedGraphKind`). Absent means published. Was `UNPUBLISHED_GRAPH_KINDS` in cat-harness.ts (sod4 #5)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.published",
       "skos:note": "candidate"
     },
     {
@@ -16525,6 +16639,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.skillbearing",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.skillBearing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kind's directory may be scanned for SKILL BODIES (`*.md` with a `name:` front matter). Was `SKILL_BEARING_GRAPH_KINDS` (sod4 #5)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.skillBearing",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.tileicon",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -16537,7 +16670,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The navbar tile icon for a DECLARED kind (bean dmx1); cat-harness's own kinds keep theirs in graph-tiles.ts."
+          "@value": "The navbar tile icon (a name in `TILE_GLYPHS`); on cat-harness's own kinds too since sod4 #5, so `graph-tiles.ts` keeps no table."
         }
       ],
       "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.tileIcon",
