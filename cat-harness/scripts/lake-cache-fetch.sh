@@ -68,6 +68,36 @@ if [ -z "$BRANCH" ]; then
   # tests/special-branches.test.ts. New name first, then each legacy one,
   # newest first, until bean folio-assistant-oycs removes the fallback.
   CANDIDATES="cat/folio-assistant-sci/lake-cache/qou-${slug} cat-lake-cache/qou-${slug} lake-cache/qou-${slug}"
+  # The folio's own declaration goes first (bean rva2): a directory with
+  # graphKind `lake-cache` and `storage.keyedBy: "family"` in its
+  # <instance>.json. Same reader as lake-cache.sh; no python3 or no
+  # declaration leaves the list above unchanged.
+  if command -v python3 >/dev/null 2>&1; then
+    declared=$(python3 - "$REPO_ROOT" <<'PY' 2>/dev/null
+import glob, json, os, sys
+for path in sorted(glob.glob(os.path.join(sys.argv[1], "*.json"))):
+    try:
+        d = json.load(open(path))
+    except Exception:
+        continue
+    dirs = d.get("directories") if isinstance(d, dict) else None
+    if not isinstance(dirs, list):
+        continue
+    for e in dirs:
+        if not isinstance(e, dict):
+            continue
+        st = e.get("storage") if isinstance(e.get("storage"), dict) else {}
+        kinds = e.get("graphKinds") if isinstance(e.get("graphKinds"), list) else []
+        if "lake-cache" in kinds and st.get("keyedBy") == "family" and isinstance(st.get("branchPrefix"), str) and st["branchPrefix"]:
+            print(st["branchPrefix"].rstrip("/"))
+            sys.exit(0)
+PY
+)
+    case " $CANDIDATES " in
+      *" ${declared}/qou-${slug} "*) ;;
+      *) [ -n "$declared" ] && CANDIDATES="${declared}/qou-${slug} $CANDIDATES" ;;
+    esac
+  fi
 else
   CANDIDATES="$BRANCH"
 fi
