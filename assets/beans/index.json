@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 871,
+      "count": 872,
       "unit": "beans"
     }
   },
@@ -6426,6 +6426,20 @@
       "updatedAt": "2026-10-01T15:09:20Z",
       "preview": "Failing on main cdb0a018 (gh api jobs): Repository gates #13 'workflow skill refs'; TypeScript #7 'bun test'; E2E #7 'playwright test'; Skill-registration chain #5 'registration chain is current'; Docs site #7 'Regenerate skill instruction pages'. Four merges landed before CI finished.\n\n## Done when\n- [x] each failing job named with step and cause (PR #1774 body; root cause: take-main merges 198a9",
       "file": "beans/defs/folio-assistant-hx65--s0-main-green-five-red-jobs-on-cdb0a018-submodule.md"
+    },
+    {
+      "id": "folio-assistant-hxi9",
+      "title": "regen input-hash cache must see the --against baseline",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-xpcu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T05:59:45Z",
+      "updatedAt": "2026-10-05T06:00:06Z",
+      "preview": "Eight gates run `--check --against main` and judge against the latest main entry on the qa-reports branch. That entry moves on every main publish while the working tree does not, so the input-hash fingerprint (files only) could SKIP a pair whose verdict the moved baseline changes. Fix: hash the resolved baseline identity (entry key + verified payloadTree) into the fingerprint; an unresolvable base",
+      "file": "beans/defs/folio-assistant-hxi9--regen-input-hash-cache-must-see-the-against-baseli.md"
     },
     {
       "id": "folio-assistant-hylg",
@@ -13943,14 +13957,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 229,
+        "total": 230,
         "closed": 93,
-        "open": 136,
-        "inProgress": 74,
+        "open": 137,
+        "inProgress": 75,
         "todo": 61,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.40611353711790393
+        "share": 0.4043478260869565
       },
       {
         "id": "folio-assistant-yg29",
@@ -13969,8 +13983,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 503,
-    "coveredOpen": 500,
+    "openTotal": 504,
+    "coveredOpen": 501,
     "duplicateIds": 0
   }
 }
