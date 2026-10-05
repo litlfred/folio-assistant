@@ -176,6 +176,15 @@ export interface NavItem {
    */
   children?: readonly NavItem[];
   /**
+   * FOLD the {@link children} under a disclosure with this summary, closed on
+   * arrival. Owner, 2026-10-05: *"on this page should have sub-sections
+   * collapsible"* (bean `r2ld`). The row itself stays a plain link and the
+   * disclosure sits BELOW it, never around it — the shape the sidebar's
+   * "Sub-graphs of …" fold already has — because a link inside a `<summary>`
+   * is two targets in one row. `<details>`, so it works with no script.
+   */
+  fold?: string;
+  /**
    * A control rendered BESIDE the row — never inside it.
    *
    * The sidebar's ⚙ opens the glass's Harnesses panel with this harness chosen
@@ -488,7 +497,17 @@ export function navbarCss(): string {
     // column it never uses is a strip that is narrower than it looks.
     `.fa-nav-row{display:grid;grid-template-columns:1fr auto;align-items:center}`,
     `.fa-nav-row>a,.fa-nav-row>.fa-nav-dead{min-width:0}`,
-    `.fa-nav-kids{grid-column:1/-1}`,
+    `.fa-nav-kids,.fa-nav-fold{grid-column:1/-1}`,
+    // A FOLDED SET OF CHILDREN (bean `r2ld`): the summary is a small row under
+    // its parent, indented one step, with the caret every disclosure here
+    // wears. 24px floor: it is a target (SC 2.5.8).
+    `.fa-nav-fold>summary{display:flex;align-items:center;gap:6px;min-height:24px;`,
+    `padding:2px ${NAV_PAD_PX}px 2px ${NAV_PAD_PX + NAV_GLYPH_PX + 8}px;font-size:12px;opacity:.8;`,
+    `cursor:pointer;user-select:none;list-style:none}`,
+    `.fa-nav-fold>summary::-webkit-details-marker{display:none}`,
+    `.fa-nav-fold>summary::before{content:"\\25B8";display:inline-block;transition:transform .12s}`,
+    `.fa-nav-fold[open]>summary::before{transform:rotate(90deg)}`,
+    `.fa-nav-fold>summary:hover{background:#30363d;opacity:1}`,
     // The control is hidden with the labels rather than on its own timer: at
     // rest the strip shows marks only, and a ⚙ floating beside a mark with no
     // label names nothing. Same trigger as `.fa-nav-label`, so the two cannot
@@ -662,9 +681,13 @@ function itemHtml(i: NavItem, c: Ctx): string {
     ? `<button type="button" class="fa-nav-action" ${esc(i.action.data)}="${esc(i.action.value)}"` +
       ` aria-label="${esc(i.action.label)}" data-fa-tip="${esc(i.action.label)}">${esc(i.action.glyph)}</button>`
     : "";
-  const kids = i.children?.length
-    ? `<div class="fa-nav-kids">${i.children.map((k) => itemHtml(k, c)).join("")}</div>`
-    : "";
+  const inner = i.children?.length ? i.children.map((k) => itemHtml(k, c)).join("") : "";
+  const kids = !inner
+    ? ""
+    : i.fold
+      ? `<details class="fa-nav-fold"><summary><span class="fa-nav-label">${esc(i.fold)}</span></summary>` +
+        `<div class="fa-nav-kids">${inner}</div></details>`
+      : `<div class="fa-nav-kids">${inner}</div>`;
   // `fa-nav-row` exists so the row and its action can sit on one line without
   // the children joining them. Without it the action would have to be absolutely
   // positioned against a row it is not inside, which is the kind of geometry
@@ -869,7 +892,7 @@ export const NAVBAR_CSS = "assets/css/navbar.css";
  * here and would not be in a validator.
  */
 export function documentIndexOf(html: string, label = "Contents"): NavGroup | undefined {
-  const items: NavItem[] = [];
+  const flat: NavItem[] = [];
   const re = /<(h2|h3)\b[^>]*\bid="([^"]+)"[^>]*>([\s\S]*?)<\/\1>/gi;
   for (const m of html.matchAll(re)) {
     const text = m[3]
@@ -881,17 +904,33 @@ export function documentIndexOf(html: string, label = "Contents"): NavGroup | un
       .replace(/\s+/g, " ")
       .trim();
     if (!text) continue;
-    items.push({ href: `#${m[2]}`, label: text, ...(m[1].toLowerCase() === "h3" ? { depth: 1 } : {}) });
+    flat.push({ href: `#${m[2]}`, label: text, ...(m[1].toLowerCase() === "h3" ? { depth: 1 } : {}) });
+  }
+  // SUB-SECTIONS FOLD UNDER THEIR SECTION (bean `r2ld`): an h3 becomes a
+  // child of the h2 above it, behind a closed "N sub-sections" disclosure.
+  // An h3 before any h2 has no section to sit in and stays a row of its own.
+  const items: NavItem[] = [];
+  for (const it of flat) {
+    const parent = items[items.length - 1];
+    if (it.depth && parent && !parent.depth) {
+      const kids = [...(parent.children ?? []), it];
+      items[items.length - 1] = { ...parent, children: kids, fold: subSections(kids.length) };
+    } else items.push(it);
   }
   // ABSENT rather than empty, and rather than a one-item index. An empty
   // disclosure invites a click that does nothing -- the rule this module
   // already applies to the harnesses region -- and a "Contents" holding the
   // single section the reader is looking at is the same defect with a row in
   // it.
-  if (items.length < 2) return undefined;
+  if (flat.length < 2) return undefined;
   // `§`, not `≡`: at rest the rail shows only this glyph, directly under the
   // avatar, and `≡` there reads as the hamburger #1757 excised.
   return { label, icon: "§", items, collapsible: true };
+}
+
+/** The summary of a folded set of sub-sections — one wording, both surfaces. */
+export function subSections(n: number): string {
+  return n === 1 ? "1 sub-section" : `${n} sub-sections`;
 }
 
 /** The marker a visualiser puts its own navigation under. */
