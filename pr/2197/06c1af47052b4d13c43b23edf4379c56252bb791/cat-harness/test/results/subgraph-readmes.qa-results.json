@@ -1,0 +1,1318 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "scripts/subgraph-readmes.ts",
+    "script_hash": "460cbaabeb6a"
+  },
+  "subject": {
+    "kind": "graph",
+    "id": "subgraph-readmes"
+  },
+  "families": {
+    "absent-directory": {
+      "summary": "Declared directories not on disk and not declared `absent`: a consumer scanning them finds nothing and may report a clean run.",
+      "count": 0,
+      "entries": []
+    },
+    "long-description": {
+      "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
+      "count": 93,
+      "entries": [
+        {
+          "instance": "folio-assistant",
+          "directory": "uploads",
+          "path": "uploads"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "root-tools",
+          "path": "tools"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "todos",
+          "path": "todos"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "memory",
+          "path": "memory"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "interaction",
+          "path": "interaction"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "issue-marks",
+          "path": "issue-marks"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "root-docs",
+          "path": "docs"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "archive",
+          "path": "beans/defs/archive"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "queue",
+          "path": "beans/queue"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "boards",
+          "path": "todos/boards"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "processes",
+          "path": "bootstrap/processes"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "models",
+          "path": "bootstrap/models"
+        },
+        {
+          "instance": "bootstrap-tools",
+          "directory": "bootstrap-tools-scripts",
+          "path": "bootstrap-tools/scripts"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "external-schemas",
+          "path": "cat-harness/external-schemas"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "subscriptions",
+          "path": "cat-harness/subscriptions"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "code-lists",
+          "path": "cat-harness/code-lists"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "vocab-mappings",
+          "path": "cat-harness/vocab-mappings"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "uml",
+          "path": "cat-harness/uml"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "skills",
+          "path": "cat-harness/skills"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "scenarios",
+          "path": "cat-harness/scenarios"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "policies",
+          "path": "cat-harness/policies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "processes",
+          "path": "cat-harness/processes"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "methodologies",
+          "path": "cat-harness/methodologies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "attestations",
+          "path": "cat-harness/test/attestations"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "health",
+          "path": "cat-harness/test/health/results"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "uploads",
+          "path": "cat-harness/uploads"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "library",
+          "path": "cat-harness/library"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "translation-sources",
+          "path": "cat-harness/translations"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "swimlane-glossary",
+          "path": "cat-harness/glossary"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "cat-harness-scripts",
+          "path": "cat-harness/scripts"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "cat-harness-src",
+          "path": "cat-harness/src"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "cat-harness-tests",
+          "path": "cat-harness/test"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-templates",
+          "path": "cat-harness/templates"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "voices",
+          "path": "cat-harness/skills/voices"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "auto-docs",
+          "path": "cat-harness/docs/cat-harness/auto-docs"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "uml-overview-pages",
+          "path": "cat-harness/docs/uml/overview"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "uml-overview-svgs",
+          "path": "cat-harness/docs/assets/img/uml/overview"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-schemas",
+          "path": "cat-harness-tools/schemas"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-scripts",
+          "path": "cat-harness-tools/scripts"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-src",
+          "path": "cat-harness-tools/src"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "library",
+          "path": "fhir-harness/library"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-ig-skills",
+          "path": "fhir-harness/skills"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-ig-tools",
+          "path": "fhir-harness/tools"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-ig-scripts",
+          "path": "fhir-harness/scripts"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-harness-processes",
+          "path": "fhir-harness/processes"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "folio-assistant-core-docs",
+          "path": "folio-assistant-core/docs"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "folio-assistant-core-translations",
+          "path": "folio-assistant-core/translations"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "folios",
+          "path": "folio-assistant-core/folios"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "glossary",
+          "path": "folio-assistant-core/glossary"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-adapters",
+          "path": "folio-assistant-core/adapters"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-src",
+          "path": "folio-assistant-core/src"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-scripts",
+          "path": "folio-assistant-core/scripts"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-library",
+          "path": "folio-assistant-core/library"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-methodologies",
+          "path": "folio-assistant-core/methodologies"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-processes",
+          "path": "folio-assistant-core/processes"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "voices",
+          "path": "folio-assistant-core/skills/voices"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "folio-assistant-sci-translations",
+          "path": "folio-assistant-sci/translations"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "library",
+          "path": "folio-assistant-sci/library"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-methodologies",
+          "path": "folio-assistant-sci/methodologies"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "skills",
+          "path": "folio-assistant-sci/skills"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-adapters",
+          "path": "folio-assistant-sci/adapters"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-sources",
+          "path": "folio-assistant-sci/sources"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-processes",
+          "path": "folio-assistant-sci/processes"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "attestations",
+          "path": "folio-assistant-sci/test/attestations"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "voices",
+          "path": "folio-assistant-sci/skills/voices"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "data-skills",
+          "path": "folio-assistant-sci/skills/data"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-block-kinds",
+          "path": "smart-base/block-kinds"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "library",
+          "path": "smart-base/library"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "methodologies",
+          "path": "smart-base/methodologies"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "processes",
+          "path": "smart-base/methodologies/processes"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-house-processes",
+          "path": "smart-base/processes"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-artifact-index",
+          "path": "smart-base/fhir-artifact-index"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "tools",
+          "path": "smart-base/tools"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-docs",
+          "path": "smart-base/docs"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-findings",
+          "path": "smart-base/findings"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "voices",
+          "path": "smart-base/skills/voices"
+        },
+        {
+          "instance": "smart-immunizations",
+          "directory": "smart-immunizations-artifact-index",
+          "path": "smart-immunizations/fhir-artifact-index"
+        },
+        {
+          "instance": "smart-immunizations",
+          "directory": "smart-immunizations-docs",
+          "path": "smart-immunizations/docs"
+        },
+        {
+          "instance": "smart-trust",
+          "directory": "smart-trust-artifact-index",
+          "path": "smart-trust/fhir-artifact-index"
+        },
+        {
+          "instance": "smart-trust",
+          "directory": "smart-trust-openapi",
+          "path": "smart-trust/openapi"
+        },
+        {
+          "instance": "smart-trust",
+          "directory": "smart-trust-docs",
+          "path": "smart-trust/docs"
+        },
+        {
+          "instance": "smart-trust",
+          "directory": "smart-trust-scripts",
+          "path": "smart-trust/scripts"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "library",
+          "path": "who-iris/library"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-site",
+          "path": "who-iris/site"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-catalogue",
+          "path": "who-iris/catalogue"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-uploads",
+          "path": "who-iris/uploads"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-skills",
+          "path": "who-iris/skills"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "glossary",
+          "path": "who-iris/glossary"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-docs",
+          "path": "who-iris/docs"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-scripts",
+          "path": "who-iris/scripts"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-sources",
+          "path": "who-iris/sources"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "id-lookup",
+          "path": "who-iris/id-lookup"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "voices",
+          "path": "who-iris/skills/voices"
+        }
+      ]
+    },
+    "no-description": {
+      "summary": "Declared directories with no `description`: their README says so instead of saying what they hold.",
+      "count": 2,
+      "entries": [
+        {
+          "instance": "bootstrap",
+          "directory": "skills",
+          "path": "bootstrap/skills"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-themes",
+          "path": "who-iris/themes"
+        }
+      ]
+    },
+    "no-title": {
+      "summary": "Declared directories with no `title`: their README heading falls back to the id.",
+      "count": 154,
+      "entries": [
+        {
+          "instance": "folio-assistant",
+          "directory": "uploads",
+          "path": "uploads"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "root-tools",
+          "path": "tools"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "beans",
+          "path": "beans"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "todos",
+          "path": "todos"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "memory",
+          "path": "memory"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "interaction",
+          "path": "interaction"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "issue-marks",
+          "path": "issue-marks"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "root-docs",
+          "path": "docs"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "defs",
+          "path": "beans/defs"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "archive",
+          "path": "beans/defs/archive"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "notes",
+          "path": "beans/notes"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "workflows",
+          "path": "beans/workflows"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "queue",
+          "path": "beans/queue"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "surveys",
+          "path": "beans/surveys"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "items",
+          "path": "todos/items"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "feedback",
+          "path": "todos/feedback"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "boards",
+          "path": "todos/boards"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "skills",
+          "path": "bootstrap/skills"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "schemas",
+          "path": "bootstrap/schemas"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "scenarios",
+          "path": "bootstrap/scenarios"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "processes",
+          "path": "bootstrap/processes"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "models",
+          "path": "bootstrap/models"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "cat-harness-validators",
+          "path": "cat-harness/validators"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "tools",
+          "path": "cat-harness/tools"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "external-schemas",
+          "path": "cat-harness/external-schemas"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "code-lists",
+          "path": "cat-harness/code-lists"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "vocab-mappings",
+          "path": "cat-harness/vocab-mappings"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "schemas",
+          "path": "cat-harness/schemas"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "uml",
+          "path": "cat-harness/uml"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "skills",
+          "path": "cat-harness/skills"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "scenarios",
+          "path": "cat-harness/scenarios"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "policies",
+          "path": "cat-harness/policies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "processes",
+          "path": "cat-harness/processes"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "methodologies",
+          "path": "cat-harness/methodologies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "attestations",
+          "path": "cat-harness/test/attestations"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "health",
+          "path": "cat-harness/test/health/results"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "uploads",
+          "path": "cat-harness/uploads"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "library",
+          "path": "cat-harness/library"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "translation-sources",
+          "path": "cat-harness/translations"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio",
+          "path": "cat-harness/folio"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "docs",
+          "path": "cat-harness/docs"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "swimlane-glossary",
+          "path": "cat-harness/glossary"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "cat-harness-scripts",
+          "path": "cat-harness/scripts"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "cat-harness-src",
+          "path": "cat-harness/src"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "cat-harness-adapters",
+          "path": "cat-harness/adapters"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "cat-harness-tests",
+          "path": "cat-harness/test"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-templates",
+          "path": "cat-harness/templates"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "cat-harness-deploy",
+          "path": "cat-harness/deploy"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "voices",
+          "path": "cat-harness/skills/voices"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "vendors",
+          "path": "cat-harness/skills/voices/vendors"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "agent-skill-authoring-claude",
+          "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-claude"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "agent-skill-authoring-gemini-cli",
+          "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-gemini-cli"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "agent-skill-authoring-openai",
+          "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-openai"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "proposals",
+          "path": "cat-harness/docs/proposals"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "requirements",
+          "path": "cat-harness/docs/requirements"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "auto-docs",
+          "path": "cat-harness/docs/cat-harness/auto-docs"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "glossary",
+          "path": "cat-harness/docs/cat-harness/auto-docs/glossary"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-dmn",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/dmn"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-docs",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/docs"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-processes",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/processes"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-roles",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/roles"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-schemas",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/schemas"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-skills",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/skills"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-tasks",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/tasks"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "index-tools",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/tools"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "uml-overview-pages",
+          "path": "cat-harness/docs/uml/overview"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "uml-overview-svgs",
+          "path": "cat-harness/docs/assets/img/uml/overview"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-adapters",
+          "path": "cat-harness-tools/adapters"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-schemas",
+          "path": "cat-harness-tools/schemas"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-scripts",
+          "path": "cat-harness-tools/scripts"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-id-lookup",
+          "path": "cat-harness-tools/id-lookup"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-tests",
+          "path": "cat-harness-tools/test"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-src",
+          "path": "cat-harness-tools/src"
+        },
+        {
+          "instance": "cat-openapi",
+          "directory": "cat-openapi-validators",
+          "path": "cat-openapi/validators"
+        },
+        {
+          "instance": "cat-openapi",
+          "directory": "cat-openapi-typologies",
+          "path": "cat-openapi/typologies"
+        },
+        {
+          "instance": "cat-openapi",
+          "directory": "cat-openapi-schemas",
+          "path": "cat-openapi/schemas"
+        },
+        {
+          "instance": "cat-openapi",
+          "directory": "cat-openapi-scripts",
+          "path": "cat-openapi/scripts"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-harness-translations",
+          "path": "fhir-harness/translations"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-harness-validators",
+          "path": "fhir-harness/validators"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-harness-typologies",
+          "path": "fhir-harness/typologies"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "library",
+          "path": "fhir-harness/library"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-ig-skills",
+          "path": "fhir-harness/skills"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-ig-tools",
+          "path": "fhir-harness/tools"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-ig-scripts",
+          "path": "fhir-harness/scripts"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-harness-processes",
+          "path": "fhir-harness/processes"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "folio-assistant-core-docs",
+          "path": "folio-assistant-core/docs"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "folio-assistant-core-translations",
+          "path": "folio-assistant-core/translations"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "folio-assistant-core-block-typologies",
+          "path": "folio-assistant-core/block-kinds"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "folio-assistant-core-validators",
+          "path": "folio-assistant-core/validators"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "folio-assistant-core-typologies",
+          "path": "folio-assistant-core/typologies"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-schemas",
+          "path": "folio-assistant-core/schemas"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "folios",
+          "path": "folio-assistant-core/folios"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "glossary",
+          "path": "folio-assistant-core/glossary"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-tools",
+          "path": "folio-assistant-core/tools"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-adapters",
+          "path": "folio-assistant-core/adapters"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-src",
+          "path": "folio-assistant-core/src"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-scripts",
+          "path": "folio-assistant-core/scripts"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-library",
+          "path": "folio-assistant-core/library"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-methodologies",
+          "path": "folio-assistant-core/methodologies"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-skills",
+          "path": "folio-assistant-core/skills"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "core-processes",
+          "path": "folio-assistant-core/processes"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "voices",
+          "path": "folio-assistant-core/skills/voices"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "folio-assistant-sci-qa-checkers",
+          "path": "folio-assistant-sci/qa-checkers"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "folio-assistant-sci-pipeline-plugins",
+          "path": "folio-assistant-sci/pipeline-plugins"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "folio-assistant-sci-translations",
+          "path": "folio-assistant-sci/translations"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "folio-assistant-sci-block-typologies",
+          "path": "folio-assistant-sci/block-kinds"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "folio-assistant-sci-content-adapters",
+          "path": "folio-assistant-sci/content-adapters"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "folio-assistant-sci-typologies",
+          "path": "folio-assistant-sci/typologies"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "library",
+          "path": "folio-assistant-sci/library"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-methodologies",
+          "path": "folio-assistant-sci/methodologies"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "skills",
+          "path": "folio-assistant-sci/skills"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-adapters",
+          "path": "folio-assistant-sci/adapters"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-tools",
+          "path": "folio-assistant-sci/tools"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-sources",
+          "path": "folio-assistant-sci/sources"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-processes",
+          "path": "folio-assistant-sci/processes"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "attestations",
+          "path": "folio-assistant-sci/test/attestations"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "voices",
+          "path": "folio-assistant-sci/skills/voices"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "lean-skills",
+          "path": "folio-assistant-sci/skills/lean"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "data-skills",
+          "path": "folio-assistant-sci/skills/data"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-qa-checkers",
+          "path": "smart-base/qa-checkers"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-block-kinds",
+          "path": "smart-base/block-kinds"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-content-adapters",
+          "path": "smart-base/content-adapters"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-translations",
+          "path": "smart-base/translations"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "library",
+          "path": "smart-base/library"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "methodologies",
+          "path": "smart-base/methodologies"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "processes",
+          "path": "smart-base/methodologies/processes"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-house-processes",
+          "path": "smart-base/processes"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-artifact-index",
+          "path": "smart-base/fhir-artifact-index"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "tools",
+          "path": "smart-base/tools"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-themes",
+          "path": "smart-base/themes"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-docs",
+          "path": "smart-base/docs"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-document-kinds",
+          "path": "smart-base/document-kinds"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-findings",
+          "path": "smart-base/findings"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-external-schemas",
+          "path": "smart-base/external-schemas"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "voices",
+          "path": "smart-base/skills/voices"
+        },
+        {
+          "instance": "smart-immunizations",
+          "directory": "smart-immunizations-artifact-index",
+          "path": "smart-immunizations/fhir-artifact-index"
+        },
+        {
+          "instance": "smart-immunizations",
+          "directory": "smart-immunizations-docs",
+          "path": "smart-immunizations/docs"
+        },
+        {
+          "instance": "smart-trust",
+          "directory": "smart-trust-artifact-index",
+          "path": "smart-trust/fhir-artifact-index"
+        },
+        {
+          "instance": "smart-trust",
+          "directory": "smart-trust-openapi",
+          "path": "smart-trust/openapi"
+        },
+        {
+          "instance": "smart-trust",
+          "directory": "smart-trust-docs",
+          "path": "smart-trust/docs"
+        },
+        {
+          "instance": "smart-trust",
+          "directory": "smart-trust-scripts",
+          "path": "smart-trust/scripts"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-translations",
+          "path": "who-iris/translations"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "library",
+          "path": "who-iris/library"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-site",
+          "path": "who-iris/site"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-catalogue",
+          "path": "who-iris/catalogue"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-uploads",
+          "path": "who-iris/uploads"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-skills",
+          "path": "who-iris/skills"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "glossary",
+          "path": "who-iris/glossary"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-themes",
+          "path": "who-iris/themes"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-docs",
+          "path": "who-iris/docs"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-scripts",
+          "path": "who-iris/scripts"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-sources",
+          "path": "who-iris/sources"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "id-lookup",
+          "path": "who-iris/id-lookup"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "voices",
+          "path": "who-iris/skills/voices"
+        }
+      ]
+    },
+    "unmarked-readme": {
+      "summary": "READMEs that exist without the kg:subgraph markers, left untouched because somebody wrote them. Add the marker pair to adopt the generated section.",
+      "count": 5,
+      "entries": [
+        {
+          "instance": "folio-assistant",
+          "directory": "notes",
+          "path": "beans/notes/README.md"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "queue",
+          "path": "beans/queue/README.md"
+        },
+        {
+          "instance": "folio-assistant",
+          "directory": "surveys",
+          "path": "beans/surveys/README.md"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "schemas",
+          "path": "cat-harness/schemas/README.md"
+        },
+        {
+          "instance": "folio-assistant-core",
+          "directory": "folios",
+          "path": "folio-assistant-core/folios/README.md"
+        }
+      ]
+    },
+    "unresolved-process": {
+      "summary": "Directories whose `coverage.process` names a diagram no instance declares: the README says `could not determine` in place of the drawing. Declaring none is not here — a directory owes no process, and only a declaration that points at nothing is a finding.",
+      "count": 0,
+      "entries": []
+    }
+  },
+  "total": 254
+}
