@@ -1,0 +1,16 @@
+/* folio-site: the one stylesheet every shell page shares (build-folio-site.ts). */
+:root { color-scheme: light dark; --fg: #1b1b1b; --bg: #fdfdfb; --muted: #5b5b5b; --link: #0b5cad; --rule: #e2e2dc; }
+@media (prefers-color-scheme: dark) { :root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; --rule: #333; } }
+body { margin: 0; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); display: grid; grid-template-columns: minmax(14rem, 18rem) 1fr; }
+#toc { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 1.5rem 1rem; border-right: 1px solid var(--rule); font-size: .9rem; box-sizing: border-box; }
+#toc ul { list-style: none; margin: 0; padding-left: .9rem; } #toc > ul { padding-left: 0; }
+#toc li { margin: .15rem 0; } #toc a { text-decoration: none; } #toc a[aria-current] { font-weight: 600; }
+main { max-width: 46rem; padding: 1.5rem 1.5rem 4rem; min-width: 0; }
+a { color: var(--link); } a:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
+h1, h2, h3, h4 { line-height: 1.25; } .crumbs, .muted { color: var(--muted); font-size: .9rem; }
+.unit { border-top: 1px solid var(--rule); margin-top: 1.5rem; }
+table { border-collapse: collapse; } th, td { border: 1px solid var(--muted); padding: .3rem .5rem; }
+.katex-display { overflow-x: auto; overflow-y: hidden; }
+dfn.defterm { font-style: normal; font-weight: 600; } .cite { color: var(--muted); }
+:target { scroll-margin-top: 1rem; }
+@media (max-width: 52rem) { body { display: block; } #toc { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--rule); } }
