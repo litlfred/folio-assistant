@@ -1,10 +1,10 @@
 ---
 # folio-assistant-xka5
 title: Pages grouped by harness, following the URL; each harness owns its sub-doc graphs
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-05T14:39:33Z
-updated_at: 2026-10-05T14:39:33Z
+updated_at: 2026-10-05T16:20:41Z
 parent: folio-assistant-9rq1
 ---
 
@@ -17,3 +17,5 @@ Measured today: just-the-docs 0.12, order by nav_order then title; 79 top-level 
 - [ ] below a harness, its own declared sub-doc graphs make the hierarchy
 - [ ] order within a level is alphabetical in the reader's locale
 - [ ] no category exists that someone has to maintain
+
+_2026-10-05T16:20:38Z_ — Claimed by claude/vibrant-darwin-r6im60 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
