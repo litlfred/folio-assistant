@@ -193,7 +193,9 @@ them in your PR body so the steward can copy them. That list is the
 association between a PR and its beans.
 
 **Where to read it depends on the state-branch cutover** (arc `fs43`, bean
-`9ofm`):
+`9ofm`). Bean `ugxd` moves the queue to its OWN branch,
+`cat/cat-harness/merge-queue`, ahead of `fs43` — §"Where the queue is GOING"
+below — and where the two disagree, that section is the newer plan:
 - **Before the cutover**, `main` is authoritative. Entries reach it only through
   the steward's own PRs, a PR cycle late, so the edited-in-place status comment
   on your PR is the live answer.
@@ -218,6 +220,58 @@ signal either way: the bean is where the conversation is kept.
 repository (bean `1hjm`). The `merge-guard` commit status (bean `uoob`) checks
 the six submission points mechanically; once it lands, run it against your own
 PR before you announce.
+
+## Where the queue is GOING, and the tool that will write it (bean `najo`)
+
+**Not cut over yet.** The queue is still on `main` under `beans/queue/`
+(owner, 2026-10-05: *"Land code now, switch later"*). The store and CLI below
+landed first; the cutover to its own branch, `cat/cat-harness/merge-queue`, is
+bean `ugxd`, a separate small PR during which the steward pauses queue writes.
+Until it lands, `merge:queue:read` reads the checkout and `merge:queue:record`
+**refuses** — keep committing entries to `main` as §"The steward answers in the
+queue" describes. The branch's `manifest.json` says which state it is in.
+
+Why the queue comes off `main` at all is structural: an entry on `main` arrives
+only through a pull request, and **the steward does no development work** — it
+must not open PRs of its own, which would have it setting its own priority in
+the queue it manages, spending the CI the queue is starved of, and judging its
+own head. For the two days after the graph was declared it therefore held **no
+entry at all**: the one actor whose decisions it records was the one actor that
+could not write to it.
+
+After the cutover:
+
+```sh
+bun run state:mount                  # the queue on disk at its declared path
+bun run merge:queue:read             # the recorded decisions
+bun run merge:queue:record --pr <n> --class <c> --rank <r> --rule <id> \
+    --reason "<why>" --by <your session URL>          # ...or --position <n> for an owner override
+```
+
+- **`record` pushes by default**, as a splice onto the branch tip carrying the
+  blob each file was read at. So the entry is live for every sibling at once,
+  and a steward who edited the same entry since gets this write stopped as a
+  **`conflict`** with the path named rather than overwritten. On a conflict,
+  re-mount and decide again; nothing was pushed and the local edit is the only
+  copy. `--no-push` leaves it in the mount, where **nobody else can see it**.
+- **`--reason` and `--by` are required.** A placement nobody can explain cannot
+  be honoured or safely undone by the next steward, and every session here acts
+  with the owner's token, so the session link is the only thing that says which
+  steward decided.
+- **An unreachable queue is not an empty one.** `merge:queue:read` exits 4 and
+  `readQueueEntries` THROWS when the branch is not mounted, because "no
+  decisions recorded, all clear" printed over a graph nobody read is `dh4f`.
+  Exit 1 — declared-but-absent — is a different answer with a different remedy.
+- **The decisions are read back.** `merge:steward` feeds recorded overrides into
+  the table's `ownerOverride` input and their positions into the order, treats
+  an un-cleared ejection as refused, and prints a live hold. Until 2026-10-04 it
+  passed none of them: a decision nobody reads back is a decision nobody took.
+
+**The pairing with `workflows/` is what this cost.** The queue held the
+decisions and a finished train run next door held the evidence they met, in one
+store. `beans/` is still on `main` until arc `fs43` lands (beans `9ofm`,
+`p3ny`), so for now the two are one `state:mount` apart. That trade was made
+knowingly: the pairing was costing the graph every one of its nodes.
 
 ## Placement is computed, not chosen
 

@@ -8112,11 +8112,34 @@
           "optional": true,
           "array": false,
           "doc": "This directory is DECLARED and deliberately not on disk, with the reason."
+        },
+        {
+          "name": "subgraph",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This entry is an instance SUBGRAPH, not a part of its parent's graph."
+        },
+        {
+          "name": "source",
+          "type": "SubgraphSourceSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where this entry's content comes from, when it is not the checkout."
+        },
+        {
+          "name": "storage",
+          "type": "z.lazy(() => DirectoryStorageSchema).optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema",
+        "cat-harness/schemas/subgraph-source.ts#SubgraphSourceSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -55728,6 +55751,22 @@
       "via": "",
       "kind": "extends",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
+      "to": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema",
+      "via": "storage",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
+      "to": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
