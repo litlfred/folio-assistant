@@ -1,7 +1,14 @@
 import { describe, expect, test } from "bun:test";
 import { z } from "zod";
 
-import { cell, columnsFor, dashboardHtml, dashboardSection, fieldsOf, kindDir, nodeHtml, nodeSection, plannedPages, type FieldInfo } from "../gen-node-kind-pages.ts";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
+import {
+  cell, columnsFor, dashboardHtml, dashboardSection, fieldsOf, isKindPages, kindDir, nodeHtml, nodeSection, PAGE_MARK, plannedPages,
+  unresolvedPages, type FieldInfo,
+} from "../gen-node-kind-pages.ts";
 import type { NodeKindEntry } from "../../schemas/node-kind-index.ts";
 import type { KindNode } from "../../schemas/node-kind-nodes.ts";
 
@@ -79,8 +86,14 @@ describe("the dashboard", () => {
     expect(html).toContain('<li><b>2</b><a href="beta/">beta</a></li>');
   });
 
-  test("links each node to its own page, relative to this one", () => {
-    expect(html).toContain('href="beta/p/two/"');
+  test("links each node to its page under the kind it IS — one address per node", () => {
+    expect(html).toContain('href="alpha/c/one/"');
+    expect(html).toContain('href="../public-comment/beta/p/two/"');
+  });
+
+  test("a renderer's sections sit between the tiles and the table", () => {
+    const withExtra = dashboardHtml(parent, nodes, fields, byId, "en", undefined, [{ id: "coverage", label: "Coverage", html: "<p>X</p>" }]);
+    expect(withExtra).toMatch(/By status[\s\S]*<h2 id="coverage">Coverage<\/h2>\n<p>X<\/p>[\s\S]*<h2 id="nodes">/);
   });
 
   test("a harness page has no harness filter or column, and links back to every harness", () => {
@@ -104,6 +117,12 @@ describe("the node page", () => {
   test("shows a nested value as JSON rather than flattening it", () => {
     expect(html).toContain("&quot;kind&quot;: &quot;bean&quot;");
   });
+  test("a renderer's sections come before the fields", () => {
+    const n = node("todo", "alpha", "t/x", {});
+    expect(nodeHtml(kind("todo"), n, "en", [{ id: "comments", label: "Comments", html: "<p>Y</p>" }])).toMatch(
+      /<h2 id="comments">Comments<\/h2>\n<p>Y<\/p>\n<h2 id="fields">Fields<\/h2>/,
+    );
+  });
 });
 
 describe("plannedPages", () => {
@@ -112,6 +131,33 @@ describe("plannedPages", () => {
     const pages = plannedPages(index, (id) => (id === "todo" ? [node("todo", "alpha", "t/a", {})] : []));
     expect(pages).toEqual(["en/core/todo", "en/core/todo/alpha", "en/core/todo/alpha/t/a"]);
     expect(kindDir("en", kind("todo"))).toBe("en/core/todo");
+  });
+
+  test("a subclass's node gets its page under its own kind only, though its parent's pages list it", () => {
+    const index = { kinds: [kind("todo", { subclasses: ["sub"] }), kind("sub", { parents: ["todo"] })], unkinded: [], collisions: [] };
+    const sub = node("sub", "alpha", "s/a", {});
+    const pages = plannedPages(index, (id) => (id === "todo" ? [sub] : id === "sub" ? [sub] : []));
+    expect(pages).toEqual(["en/core/todo", "en/core/todo/alpha", "en/core/sub", "en/core/sub/alpha", "en/core/sub/alpha/s/a"]);
+  });
+});
+
+describe("unresolvedPages", () => {
+  test("a planned page resolves only when it exists AND this generator wrote it", () => {
+    const site = mkdtempSync(join(tmpdir(), "nk-site-"));
+    try {
+      mkdirSync(join(site, "en/a"), { recursive: true });
+      writeFileSync(join(site, "en/a/index.html"), `<body ${PAGE_MARK}>`);
+      mkdirSync(join(site, "en/b"), { recursive: true });
+      writeFileSync(join(site, "en/b/index.html"), "<body>someone else's</body>");
+      expect(unresolvedPages(site, ["en/a", "en/b", "en/c"])).toEqual(["en/b", "en/c"]);
+    } finally {
+      rmSync(site, { recursive: true, force: true });
+    }
+  });
+
+  test("a renderer must provide at least one of its two hooks", () => {
+    expect(isKindPages({ node: () => [] })).toBe(true);
+    expect(isKindPages({})).toBe(false);
   });
 });
 
@@ -140,5 +186,13 @@ describe("each page's own rail section (#1757)", () => {
       { label: "alpha", href: "../../../" },
       { label: "x", items: [{ label: "Fields", href: "#fields" }] },
     ]);
+  });
+
+  test("a renderer's sections are regions in the rail too", () => {
+    expect(nodeSection(k, node("todo", "alpha", "t/x", {}), [{ id: "comments", label: "Comments" }])[2]).toEqual({
+      label: "x",
+      items: [{ label: "Comments", href: "#comments" }, { label: "Fields", href: "#fields" }],
+    });
+    expect(dashboardSection(k, nodes, fields, undefined, [{ id: "coverage", label: "Coverage" }])[0]!.items!.map((i) => i.href)).toContain("#coverage");
   });
 });

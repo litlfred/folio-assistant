@@ -20800,6 +20800,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind-index.nodekindentry.pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NodeKindEntry.pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kind's own page renderer, when its validator node names one (`pages`), repo-relative. Absent: the generic pages built from the schema."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.pages",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/node-kind-index.nodekindentry.parents",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -33166,6 +33185,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/validator-node.validatornodeschema.pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ValidatorNodeSchema.pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kind's own page renderer, `<harness>:<path>#<Export>`, when the generic pages built from its schema are not enough (issue #2195: *\"Generic + override\"*). The export is a `KindPages` (`scripts/gen-node-kind-pages.ts`). Declared here, beside the schema, so the harness whose code knows the kind is the one that says how to show it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.pages",
       "skos:note": "candidate"
     },
     {
