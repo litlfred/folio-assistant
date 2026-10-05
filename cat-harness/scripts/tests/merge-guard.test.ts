@@ -31,6 +31,8 @@ import {
   signingSession,
   untickedItems,
   SELF_WORKFLOW_FILE,
+  NOT_WAITED_FOR_WORKFLOW_FILES,
+  DEPLOY_ONLY_STEP,
   type CheckId,
   type GuardOptions,
   type GuardRun,
@@ -571,5 +573,93 @@ describe("paging — page 2 is asked in the repos/{owner}/{repo} form", () => {
     expect(err).toBeInstanceOf(CannotAsk);
     expect((err as Error).message).toContain(`GET ${NAMED_NEXT}: HTTP 403`);
     expect((err as Error).message).toContain("not supported through this proxy");
+  });
+});
+
+/**
+ * Bean `gnnj`, owner ruling 2026-10-05: check 5 JUDGES Feature Staging once it
+ * finishes but never WAITS for it. Its deploy is held by the #1956 rate limit —
+ * measured up to 41 min that day — and every PR in the merge queue inherited it.
+ */
+describe("check 5 — Feature Staging is judged once finished, never waited for", () => {
+  const STAGING = "Feature Staging (GitHub Pages)";
+  /** #1937's head with every `pull_request` run green, then `patch` applied to staging's. */
+  const green = (patch?: Partial<GuardRun> | null) => {
+    const s = real(1937);
+    if (s.runs.state !== "has-run") throw new Error("fixture");
+    for (const r of s.runs.runs) if (r.event === "pull_request") r.conclusion = "success";
+    s.runs.runs = s.runs.runs.flatMap((r) => {
+      if (r.name !== STAGING || patch === undefined) return [r];
+      return patch === null ? [] : [{ ...r, ...patch }];
+    });
+    return s;
+  };
+
+  test("the scan maps the exempt FILE to the run name check 5 sees", () => {
+    expect(NOT_WAITED_FOR_WORKFLOW_FILES.has(".github/workflows/feature-staging.yml")).toBe(true);
+    expect(SCAN.triggers.find((t) => NOT_WAITED_FOR_WORKFLOW_FILES.has(t.file))?.name).toBe(STAGING);
+  });
+
+  test("every run green: passes, as before", () => {
+    expect(status(green(), "ci").status).toBe("pass");
+  });
+
+  test("staging still IN PROGRESS (waiting out the #1956 window): passes, and says it did not wait", () => {
+    const c = status(green({ status: "in_progress", conclusion: null }), "ci");
+    expect(c.status).toBe("pass");
+    expect(c.detail).toContain(`not waited for (judged only once finished, bean \`gnnj\`): ${STAGING} (in_progress)`);
+    expect(c.detail).toContain("2 `pull_request` workflow(s) on the head");
+  });
+
+  test("staging QUEUED: passes", () => {
+    expect(status(green({ status: "queued", conclusion: null }), "ci").status).toBe("pass");
+  });
+
+  test("staging has no run on the head at all: passes", () => {
+    expect(status(green(null), "ci").status).toBe("pass");
+  });
+
+  test("staging FINISHED red: still refused — the exemption is from waiting, never from judging", () => {
+    const c = status(green({ status: "completed", conclusion: "failure" }), "ci");
+    expect(c.status).toBe("refuse");
+    expect(c.detail).toContain(`${STAGING}: failure`);
+  });
+
+  /** Staging finished red, with `steps` as the failed steps of its run (or `undefined` = not fetched). */
+  const redWith = (steps: string[] | { unknown: string } | undefined) => {
+    const s = green({ status: "completed", conclusion: "failure" });
+    if (s.runs.state !== "has-run") throw new Error("fixture");
+    const run = s.runs.runs.find((r) => r.name === STAGING && r.event === "pull_request") as GuardRun;
+    if (steps !== undefined) s.failedSteps = { [run.id!]: steps };
+    return s;
+  };
+
+  test("staging red ONLY in the deploy step (push window never opened): passes, and says so", () => {
+    const c = status(redWith([DEPLOY_ONLY_STEP]), "ci");
+    expect(c.status).toBe("pass");
+    expect(c.detail).toContain(`${STAGING} (failure in the deploy step only)`);
+  });
+
+  test("staging red in a build step as well as the deploy: still refused", () => {
+    const c = status(redWith(["Build the site", DEPLOY_ONLY_STEP]), "ci");
+    expect(c.status).toBe("refuse");
+    expect(c.detail).toContain(`${STAGING}: failure`);
+  });
+
+  test("staging red, failed steps could not be read: still refused", () => {
+    expect(status(redWith({ unknown: "HTTP 403" }), "ci").status).toBe("refuse");
+    expect(status(redWith(undefined), "ci").status).toBe("refuse");
+    expect(status(redWith([]), "ci").status).toBe("refuse");
+  });
+
+  test("control: a gating workflow in progress is still waited for", () => {
+    const s = green();
+    if (s.runs.state !== "has-run") throw new Error("fixture");
+    const gates = s.runs.runs.find((r) => r.name === "Code-quality gates" && r.event === "pull_request")!;
+    gates.status = "in_progress";
+    gates.conclusion = null;
+    const c = status(s, "ci");
+    expect(c.status).toBe("refuse");
+    expect(c.detail).toContain("Code-quality gates: in_progress");
   });
 });

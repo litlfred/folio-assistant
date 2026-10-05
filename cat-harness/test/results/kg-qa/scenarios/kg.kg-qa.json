@@ -64,10 +64,6 @@
           "detail": "no role carries \"artefact-reachability\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
         },
         {
-          "where": "asset-extraction",
-          "detail": "no role carries \"asset-extraction\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
           "where": "audit-coverage",
           "detail": "no role carries \"audit-coverage\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `core-skills` at `skills/`, `core-processes` at `processes/`, `scenarios` at `scenarios/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`, `scenarios` at `scenarios/`, `who-iris-skills` at `skills/`, `skills` at `skills/`, `sci-processes` at `processes/`, `lean-skills` at `skills/lean/`, `data-skills` at `skills/data/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`, `skills` at `skills/`, `scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
         },
@@ -423,7 +419,7 @@
         },
         {
           "where": "folio-assistant-core/folio-assistant-core.json",
-          "detail": "nested instance \"folio-assistant-core\" declares its own graph, and this audit does not read it — 12 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+          "detail": "nested instance \"folio-assistant-core\" declares its own graph, and this audit does not read it — 17 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
           "where": "folio-assistant-core/skills/skills.json",

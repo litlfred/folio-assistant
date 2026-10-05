@@ -118,6 +118,7 @@ export const INTAKE_CHANNELS = ["comment-matrix", "online-form", "narrative", "g
 
 export const ANCHOR_METHODS = [
   "page-line", // page and line(s) of the review PDF
+  "page", // a page with no usable line: the page's first block, preferring the cited section
   "caption", // "Table 3.1" / "Figure 2.2"
   "section", // only a section number resolved
   "quote", // a quotation in the comment found in the text
@@ -191,6 +192,14 @@ export const SourceSchema = z.object({
   sha256: z.string().optional(),
   sheet: z.string().optional(),
   row: z.number().int().positive().optional(),
+  /**
+   * The log's OWN number for the row ("No."), within its sheet. A review log
+   * is re-sent as it is worked, so a later copy is a different file with the
+   * same rows: this, with the sheet and the series, is what recognises them.
+   */
+  entry: z.string().optional(),
+  /** The log this row belongs to, across the copies of it that are re-sent. */
+  series: z.string().optional(),
   /** For a narrative: which passage of the letter this comment is. */
   segment: z.number().int().nonnegative().optional(),
   /** For a GitHub comment: its URL. */
@@ -258,6 +267,13 @@ export const PublicFieldsSchema = z.object({
   /** The comment as written. */
   text: z.string().min(1),
   suggestedRevision: z.string().optional(),
+  /**
+   * Categorisations the intake log carried, keyed by its column header and
+   * kept verbatim: a theme, a stakeholder type, a review question, a priority,
+   * a committee routing. Read, never re-coded, so a log can grow a column
+   * without a schema change.
+   */
+  labels: z.record(z.string(), z.string()).optional(),
   assignees: z.array(z.string()).default([]),
   recommendations: z.array(RecommendationSchema).default([]),
   decision: DecisionSchema.optional(),

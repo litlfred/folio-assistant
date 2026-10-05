@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/library/library-core/bib-human-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/bib-human-review.md) — do not edit here.
+> Generated from [`folio-assistant-core/skills/library/cataloguing/bib-human-review.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/cataloguing/bib-human-review.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/bib-human-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/cataloguing/bib-human-review.md){: .fa-edit-source }
 
 {% raw %}
 # bib-human-review
