@@ -505,8 +505,24 @@ export interface GraphKindDef {
    * in `AVATARS`.
    */
   avatar?: { glyph: string; tone: number; reads: string };
-  /** The navbar tile icon for a DECLARED kind (bean dmx1); cat-harness's own kinds keep theirs in graph-tiles.ts. */
+  /** The navbar tile icon (a name in `TILE_GLYPHS`); on cat-harness's own kinds too since sod4 #5, so `graph-tiles.ts` keeps no table. */
   tileIcon?: string;
+  /**
+   * `false` keeps the kind out of every PUBLISHED graph: not one edge of a
+   * published artefact may lead to it (`isPublishedGraphKind`). Absent means
+   * published. Was `UNPUBLISHED_GRAPH_KINDS` in cat-harness.ts (sod4 #5).
+   */
+  published?: false;
+  /**
+   * The kind's directory may be scanned for SKILL BODIES (`*.md` with a
+   * `name:` front matter). Was `SKILL_BEARING_GRAPH_KINDS` (sod4 #5).
+   */
+  skillBearing?: true;
+  /**
+   * The kind IS harness knowledge-graph content — the `cat-harness` umbrella
+   * and the kinds split out of it. Was `KG_CONTENT_GRAPH_KINDS` (sod4 #5).
+   */
+  kgContent?: true;
   /**
    * What a directory of this kind HOLDS, as the kind table states it: the
    * editorial prose that used to be hand-written in that table's `contents`
@@ -671,6 +687,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "and whether the platform's code types it. Discovered across the instances; no module lists them.",
   },
   tools: {
+    tileIcon: "tools",
     description:
       "Tool definitions, themselves nodes in the KG",
     title: "Tools",
@@ -693,6 +710,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   //
   // `kg` remains readable as a deprecated alias — see GRAPH_KIND_ALIASES.
   "cat-harness": {
+    kgContent: true,
+    skillBearing: true,
     description:
       "the harness layer's own knowledge graph, where a directory holds MORE THAN ONE of its parts — in practice the `[\"schemas\", \"cat-harness\"]` entries, where it means \"a schema IS a knowledge-graph node\". Renamed from `kg` on 2026-09-19; `kg` still reads, deprecated. **Not itself deprecated** by the 2026-09-21 split: an alias maps one name to one name, and this would have to become three. A downstream declaration still saying `[\"cat-harness\"]` keeps parsing and keeps being scanned for skills; what it loses is the finer query, which it never had.",
     title: "Harness graph",
@@ -739,6 +758,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // A downstream declaration still saying `["cat-harness"]` therefore keeps
   // parsing. What it loses is the finer query, which is the thing it never had.
   skills: {
+    tileIcon: "skills",
+    kgContent: true,
+    skillBearing: true,
     anyLayer: true,
     description:
       "Skill packages — the authored instruction bodies an Actor performs a Task from. A Skill is a **Capability with defined inputs and outputs**, stated generically so it is portable across forges, binaries and machines. Split out of `cat-harness` on 2026-09-21.",
@@ -769,6 +791,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: BOOTSTRAP_GRAPH_KINDS["skills"],
   },
   processes: {
+    tileIcon: "processes",
+    kgContent: true,
     anyLayer: true,
     description:
       "Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth rather than illustrations of one. **Where a running instance GOT TO is not here** — that is `workflow-state`, which is `state` rather than `content`. Two questions, two graphs. Split out of `cat-harness` on 2026-09-21.",
@@ -799,6 +823,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: BOOTSTRAP_GRAPH_KINDS["processes"],
   },
   scenarios: {
+    kgContent: true,
     anyLayer: true,
     description:
       "Actors, the Roles they take on, and the User Stories those Roles serve. `roles.json` and `stories.json`; a User Story points at its Role (#1168), where it was once free text on the role. Split out of `cat-harness` on 2026-09-21.",
@@ -1145,6 +1170,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "producible as a FHIR ConceptMap.",
   },
   schemas: {
+    tileIcon: "schemas",
     description:
       "schema definitions, self-declared in the smart-base manner",
     title: "Schemas",
@@ -1585,6 +1611,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: BOOTSTRAP_GRAPH_KINDS["models"],
   },
   beans: {
+    tileIcon: "beans",
     description:
       "the work plan as a whole (`beans/`); its inner nodes are declared by `beans/beans.json`",
     title: "Beans",
@@ -1905,6 +1932,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     tileIcon: "uploads",
   },
   library: {
+    tileIcon: "library",
     description:
       "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where scanned, `ocr/page-NNN.txt`.",
     title: "Library",
@@ -2388,6 +2416,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   },
 
   "fsh-guts": {
+    published: false,
     description:
       "Deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. **THAT IS TRUE AGAIN AS OF 2026-09-23, AND WAS NOT FOR SOME TIME.** The kind also held `proposals/` — the LIVE design corpus, cited as the governing scheme by seven skills and four code modules — so an agent that read this row, learned the kind was throwaway and skipped it had skipped the schemes it needed. That is exactly what happened (bean `5kn6`): a session proposed three options for a question `instance-versioning.md` §3.3 and an owner ruling of 2026-09-20 had already settled. **The owner's fix was to move them, not to re-describe the kind** — *\"proposals not in fsh-guts but docs/ for needed &lt;stub&gt;\"* — so proposals now live in the `docs/` of the instance whose stub they concern, published rather than hidden. What remains here is `retired/` and one-off migration `scripts/`, which are what the label always described. **The lesson survives the fix**: a kind whose name tells an agent to skip it must not hold anything an agent needs.",
     renderableNote: "on purpose",

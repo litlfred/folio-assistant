@@ -56,6 +56,7 @@
  * @graphNode schema
  */
 
+import { KindAvatarSchema, type KindAvatar } from "./graph-kind-node";
 import {
   existsSync,
   mkdirSync,
@@ -163,11 +164,13 @@ export * from "./graph-kind-registry.js";
 // default their `registry` parameter to the shared instance. `export *`
 // forwards a name; it does not bring it into local scope.
 import {
+  BASE_GRAPH_KINDS,
   defaultGraphKinds,
   graphKindIri,
   REGISTRATION_MODULE,
   resolveGraphKind,
   type GraphKind,
+  type GraphKindDef,
   type GraphKindRegistry,
   type GraphLayer,
 } from "./graph-kind-registry.js";
@@ -509,6 +512,8 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   summary?: string;
   /** Other spellings of the name, listed on the landing (`ob3m` 5). */
   alsoWritten?: string[];
+  /** The instance's own avatar (sod4 #4); the table in avatars.ts covers only the instances below the harness. */
+  avatar?: KindAvatar;
   /**
    * Images this instance names — its marks, in the graph rather than beside it.
    *
@@ -2766,6 +2771,13 @@ export const CatHarnessDeclarationSchema = z.object({
    * Owner's choice, 2026-10-01: keep the spellings visible, as a list.
    */
   alsoWritten: z.array(z.string().min(1)).nonempty().optional(),
+  /**
+   * The instance's mark — the same shape a kind node carries (bean sod4 #4).
+   * It sat in `schemas/avatars.ts`'s AVATARS beside the kinds' until
+   * 2026-10-05, so a new instance needed an edit to cat-harness to get a face;
+   * declared here, it brings its own. `avatarFor(name)` reads it.
+   */
+  avatar: KindAvatarSchema.optional(),
   images: z.array(KgImageSchema).optional(),
   /**
    * Declared non-image artefacts — `AGENTS.md` first among them.
@@ -3678,6 +3690,20 @@ export function renderingPath(base: string, ...segments: string[]): string {
 }
 
 /**
+ * The kinds whose definition satisfies `test`, in registry order (sod4 #5).
+ * The per-kind lists below were hand-kept arrays of kind names beside the
+ * registry; each is now a FIELD on the kind (`published`, `skillBearing`,
+ * `kgContent`), so a kind's properties are stated once, where the kind is.
+ * Read from cat-harness's own kinds: a kind another harness declares as a
+ * node carries the same fields, and the predicates below ask the registry.
+ */
+function kindsWith(test: (d: GraphKindDef) => boolean): string[] {
+  return Object.entries(BASE_GRAPH_KINDS)
+    .filter(([, d]) => test(d as GraphKindDef))
+    .map(([k]) => k);
+}
+
+/**
  * Graph kinds that must NEVER reach a published knowledge graph.
  *
  * Owner, 2026-09-19: *"NEVER include fsh-guts, references to fsh-guts
@@ -3698,7 +3724,7 @@ export function renderingPath(base: string, ...segments: string[]): string {
  * One list, read by every emitter, so two filters cannot disagree about what
  * is excluded.
  */
-export const UNPUBLISHED_GRAPH_KINDS: readonly string[] = ["fsh-guts"] as const;
+export const UNPUBLISHED_GRAPH_KINDS: readonly string[] = kindsWith((d) => d.published === false);
 
 /** Is this graph kind allowed into a published graph? */
 export function isPublishedGraphKind(name: string): boolean {
@@ -4966,7 +4992,7 @@ export const KG_GRAPH_KIND = "cat-harness";
  * quote the paragraph. It also still said `workflows` after that kind was
  * renamed to `processes`.
  */
-export const SKILL_BEARING_GRAPH_KINDS: readonly string[] = ["skills", KG_GRAPH_KIND];
+export const SKILL_BEARING_GRAPH_KINDS: readonly string[] = kindsWith((d) => d.skillBearing === true);
 
 /**
  * Every kind that IS harness knowledge-graph content — the umbrella and the
@@ -4977,12 +5003,7 @@ export const SKILL_BEARING_GRAPH_KINDS: readonly string[] = ["skills", KG_GRAPH_
  * four, while one asking "may I scan this for skill bodies?" wants two. One
  * list serving both questions is what made `cat-harness` ambiguous.
  */
-export const KG_CONTENT_GRAPH_KINDS: readonly string[] = [
-  KG_GRAPH_KIND,
-  "skills",
-  "processes",
-  "scenarios",
-];
+export const KG_CONTENT_GRAPH_KINDS: readonly string[] = kindsWith((d) => d.kgContent === true);
 
 /**
  * Does this directory hold ONLY the knowledge graph?

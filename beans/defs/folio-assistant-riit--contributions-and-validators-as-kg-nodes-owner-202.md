@@ -1,11 +1,11 @@
 ---
 # folio-assistant-riit
 title: CONTRIBUTIONS AND VALIDATORS AS KG NODES (owner 2026-10-04)
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-04T17:42:33Z
-updated_at: 2026-10-05T05:29:21Z
+updated_at: 2026-10-05T11:39:15Z
 parent: folio-assistant-fs43
 ---
 
@@ -21,9 +21,9 @@ Every contribution is a node in the contributing harness's KG, declared like `ki
 ## Done when
 - [x] the owner agrees the node shapes for a validator and for each contribution type (one proposal, with the open choices put to them)
 - [x] validators are nodes, and the validator names its family (ruling 2): 71 in cat-harness, 9 fhir-harness, 8 folio-assistant-core, 1 cat-openapi. The one exception is `models`: its code is in bootstrap-tools, another repository, so its string stays until bootstrap-tools declares the node
-- [ ] block kinds and adapters are nodes (sod4 #1 lands here: the paper block kinds first)
-- [ ] checkers, renderers, pipeline plugins and MCP tools are nodes referencing their code
-- [ ] `contributions.ts` modules are gone, or reduced to the code the nodes reference
+- [x] block kinds and adapters are nodes (sod4 #1 lands here: the paper block kinds first): steps 2a, 3 and 5
+- [x] checkers, renderers, pipeline plugins and MCP tools are nodes referencing their code. Checkers and pipeline plugins are done (step 3b); MCP tools are Tool nodes served from the dependency tree (3c, #2082). No renderer is contributed anywhere, so there was none to convert; the shape's fate is in j00t.
+- [x] `contributions.ts` modules are gone, or reduced to the code the nodes reference. No instance declares a `contributes` module; smart-base's went in step 5 and sci's in 3c. The loader branch that would still read one is j00t.
 
 Raised by the audit, folio-assistant-sod4.
 
@@ -140,3 +140,6 @@ Work is on the local branch riit-3c-local, to be pushed after #2082 merges so it
 Content adapters become vocabulary nodes: a `content-adapters/` graph with one `folio-content-adapter/v1` node per block vocabulary, `paper` in folio-assistant-sci and `dak` in smart-base. Each node carries the name, the companion roles, and whether cat-harness's code types its blocks. CONTENT_ADAPTERS and ADAPTER_COMPANION_ROLES are derived from the nodes, and smart-base/contributions.ts drops its `adapter`. The server adapter classes stay as `contentAdapters` data in each `<instance>.json`. The two notions are kept separate because they do not line up: `document` has a class but no vocabulary, and `dak` has a vocabulary but no class.
 
 Done in 317054c: paper.json (sci) and dak.json (smart-base); CONTENT_ADAPTERS and ADAPTER_COMPANION_ROLES are derived; the loader registers dak through the dependency tree; smart-base/contributions.ts is deleted. With this, the only contributes module left is sci's, which registers the lean_formal_edges tool group.
+
+## 2026-10-05: closed
+All three remaining boxes are measured done (above). #2082 merged green at fb1caf5. What riit leaves behind is the unused `contributes` config field and loader branch, which is filed as j00t rather than kept open here.

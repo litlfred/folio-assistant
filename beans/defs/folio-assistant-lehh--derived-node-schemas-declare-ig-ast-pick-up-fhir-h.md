@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lehh
 title: 'DERIVED NODE SCHEMAS: declare ig-ast (pick up fhir-harness/schemas/ig-ast.ts), lake-cache and gh-pages as graphs with schemas'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T13:52:13Z
-updated_at: 2026-10-04T17:21:55Z
+updated_at: 2026-10-05T14:33:29Z
 parent: folio-assistant-nama
 ---
 
@@ -35,3 +35,5 @@ Owner, 2026-10-04: *"bean - was an AST schema somewhere. pickup. add schemas for
 ## 2026-10-04: ig-ast declared, not centrally
 
 The `ig-ast` kind is a node in `fhir-harness/kinds/` (dmx1), never a central entry. Per the owner's rulings it is ingested into the CONSUMING folio, which may read it remotely or materialise it on a local branch. So family storage gained an optional `repository` (absent = materialised here), and smart-trust declares `smart-trust-ast` on `cat/fhir-harness/fhir-ast/` at litlfred/smart-trust, whose one member today is `smart.who.int.trust`. lake-cache follows the same pattern; the `.lake/` mount path is still open (rva2).
+
+_2026-10-05T14:33:29Z_ — Claimed by claude/gifted-fermi-t8k217 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
