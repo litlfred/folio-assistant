@@ -62,10 +62,9 @@ import {
   mkdirSync,
   readFileSync,
   readdirSync,
-  statSync,
   writeFileSync,
 } from "node:fs";
-import { isAbsolute, join, relative, resolve, basename } from "node:path";
+import { isAbsolute, join, relative, resolve, basename, dirname } from "node:path";
 import { z } from "zod";
 import { RepoFullNameSchema, type RepoFullName } from "./repo-full-name.js";
 
@@ -3470,30 +3469,35 @@ export function instanceRootsIn(repoRoot: string): string[] {
     return out;
   }
 
-  // Inside a checkout, any nested checkout git does not declare is foreign
-  // (bean `g43f`). Outside one, the children are either worktrees — a `.git`
-  // FILE, another session's tree, as under `.claude/worktrees/` — or the
-  // sibling CLONES a seeded instance stands among (`.git` a directory), each
-  // its own repository and each an instance to discover. Excluding the clones
-  // too made the standalone rehearsal (`check:cat-harness-standalone`) find no
-  // instance at all, and with it no Tool, no skill and no graph.
   const submodules = submodulePathsOf(root);
-  const rootIsCheckout = existsSync(join(root, ".git"));
-  const isWorktree = (p: string): boolean => {
-    try {
-      return statSync(join(p, ".git")).isFile();
-    } catch {
-      return false;
-    }
-  };
+  // Only a directory INSIDE a checkout has foreign checkouts to exclude. A
+  // plain directory of sibling clones — the separated layout, and the
+  // standalone rehearsal (bean `ho66`) that lays it out — has no repository
+  // for a clone to be foreign to, so every clone in it is an instance. Without
+  // this, g43f's filter dropped all of them: `needs` resolved to nothing and
+  // 86 tests failed standalone on `main` at 24b5c12 (2026-10-05).
+  const inCheckout = insideGitCheckout(root);
   const subs = entries
     .filter((e) => e.isDirectory() && !e.name.startsWith("."))
     .map((e) => join(root, e.name))
-    .filter((p) => !(isForeignCheckout(p, submodules) && (rootIsCheckout || isWorktree(p))))
+    .filter((p) => !inCheckout || !isForeignCheckout(p, submodules))
     .filter((p) => findDeclarationFile(p) !== undefined)
     .sort();
 
   return out.concat(subs);
+}
+
+/**
+ * Whether `dir` or any ancestor holds a `.git` — that is, whether `dir` lies
+ * inside some checkout. Read from the filesystem for the reason
+ * {@link checkoutRootFor} gives: a spawned `git rev-parse` would be slower on
+ * a hot path and no more correct.
+ */
+function insideGitCheckout(dir: string): boolean {
+  for (let d = resolve(dir); ; d = dirname(d)) {
+    if (existsSync(join(d, ".git"))) return true;
+    if (dirname(d) === d) return false;
+  }
 }
 
 /**
