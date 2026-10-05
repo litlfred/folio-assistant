@@ -8,21 +8,28 @@
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { dirname, join, resolve, basename } from "node:path";
+import { dirname, join, relative, resolve, basename, sep } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { workflowFiles, workflowFile } from "../known-skills.js";
 import { processPresentations, processTarget, type Presentation } from "../process-presentations.js";
+import { sourceForPermalink } from "../lib/jekyll-permalink.ts";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 const SITE = join(ROOT, siteDirFor(ROOT));
 const SVG_DIR = join(SITE, "assets/img/workflows");
 
-const p = (page: string, node: string): Presentation => ({ page, node, pageTitle: page });
+// `href` is where the page is PUBLISHED, which may differ from its slug —
+// since bean `kc7k` the docs-folder pages publish under `docs/cat-harness/`.
+const p = (page: string, node: string, href = `${page}.html`): Presentation => ({ page, node, href, pageTitle: page });
 
 describe("processTarget — where a subprocess box lands", () => {
   test("exactly one section presents it → that section", () => {
     expect(processTarget("x", [p("evidence", "the-subprocess")])).toBe("evidence.html#the-subprocess");
+  });
+
+  test("the link is the PUBLISHED address, not the slug", () => {
+    expect(processTarget("x", [p("evidence", "s", "docs/cat-harness/evidence.html")])).toBe("docs/cat-harness/evidence.html#s");
   });
 
   test("a slug with a path keeps it", () => {
@@ -76,7 +83,10 @@ describe("this repository, right now", () => {
       // Relative to the SVG FILE — which is how docs-ui re-anchors it when inlined.
       const [path, anchor] = href.split("#");
       const abs = resolve(SVG_DIR, path!);
-      const md = abs.replace(/\.html$/, ".md");
+      // Published address -> the page that is served there, by Jekyll's own
+      // permalink rule (bean `kc7k`), not by swapping `.html` for `.md`.
+      const source = abs.startsWith(SITE) ? sourceForPermalink(SITE, `/${relative(SITE, abs).split(sep).join("/")}`) : undefined;
+      const md = source === undefined ? abs.replace(/\.html$/, ".md") : join(SITE, source);
       if (!abs.startsWith(SITE) || !existsSync(md)) {
         broken.push(`${svg}: ${href} — no page at ${md.slice(SITE.length + 1)}`);
         continue;

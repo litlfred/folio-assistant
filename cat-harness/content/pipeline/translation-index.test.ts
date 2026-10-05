@@ -19,6 +19,7 @@
  * not a fixture — every expectation below is either derived from the corpus at
  * test time or stated explicitly as a synthetic case in a temp instance.
  */
+import { sourceForPermalink } from "../../scripts/lib/jekyll-permalink.ts";
 import { describe, it, expect } from "bun:test";
 import {
   existsSync,
@@ -461,11 +462,10 @@ describe("this repository's own corpus", () => {
     expect(Object.keys(index.pages).length).toBeGreaterThan(0);
     for (const [key, page] of Object.entries(index.pages)) {
       expect(pageKey(page.sourceUrl), `${page.sourceUrl} does not key to ${key}`).toBe(key);
-      const candidates = [
-        join(INSTANCE_ROOT, SITE_DIR, key === "" ? "index.md" : `${key}.md`),
-        join(INSTANCE_ROOT, SITE_DIR, key, "index.md"),
-      ];
-      expect(candidates.some((c) => existsSync(c)), `no source page for key "${key}"`).toBe(true);
+      // The URL is where Jekyll PUBLISHES the page, which since bean `kc7k` is
+      // not always its source path; ask the permalink rule which file serves it.
+      const source = sourceForPermalink(join(INSTANCE_ROOT, SITE_DIR), page.sourceUrl);
+      expect(source !== undefined && existsSync(join(INSTANCE_ROOT, SITE_DIR, source)), `no source page for key "${key}"`).toBe(true);
     }
   });
 });

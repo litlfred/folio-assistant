@@ -109,7 +109,9 @@ describe("living deck: every claim about the KG still holds", () => {
 
   test("every generated asset the deck shows exists", () => {
     const md = readdirSync(DECK).filter((f) => f.endsWith(".md")).map((f) => read(join(DECK, f))).join("\n");
-    const assets = [...md.matchAll(/\]\((assets\/[^)\s]+)\)/g)].map((m) => m[1]!);
+    // Written through `relative_url` since the deck's page moved under
+    // `docs/cat-harness/` (bean `kc7k`); a bare relative path would resolve there.
+    const assets = [...md.matchAll(/\]\(\{\{ '\/(assets\/[^']+)' \| relative_url \}\}\)/g)].map((m) => m[1]!);
     expect(assets.length).toBeGreaterThan(0);
     for (const a of assets) expect(existsSync(join(SITE, a)), a).toBe(true);
   });

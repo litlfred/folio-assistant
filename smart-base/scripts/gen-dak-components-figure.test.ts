@@ -36,6 +36,7 @@ describe("living deck slide 3: the DAK components", () => {
     for (let i = 1; i <= DAK_COMPONENTS.length; i++) expect(svg).toContain(`>${i}</text>`);
     expect(svg).toContain("Not yet its own DAK model field");
     expect(read(DAK_FIGURE_PATH), "run smart-base/scripts/gen-dak-components-figure.ts").toBe(svg);
-    expect(read(join(DECK, "slide-03.md"))).toContain("](assets/img/dak-components.svg)");
+    // Through `relative_url`: the deck's page publishes under `docs/cat-harness/` (bean `kc7k`).
+    expect(read(join(DECK, "slide-03.md"))).toContain("]({{ '/assets/img/dak-components.svg' | relative_url }})");
   });
 });
