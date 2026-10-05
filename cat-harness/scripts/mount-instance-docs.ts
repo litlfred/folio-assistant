@@ -975,6 +975,8 @@ export function railStandalonePages(
         instance: named.harness ?? instanceName,
         ...(homeLabel ? { homeLabel } : {}),
         toRoot,
+        // The row's files and its site-root hrefs are the PLATFORM's (bean `lhvt`).
+        assetRoot: linkRoot,
         ...(mark ? { mark } : {}),
         links,
         ...(harnesses ? { harnesses } : {}),
