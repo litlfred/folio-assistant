@@ -391,8 +391,10 @@ jobs:
           working-directory: cat-harness/docs
 
       - name: Build each IG's own site
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
         run: |
-          BASE="/${{ github.event.repository.name }}"
+          BASE="/${REPO_NAME}"
           curl -sSfL -o /tmp/plantuml.jar \
             https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar
           bun run fhir-harness/scripts/stage-ig-sites.ts --work ./_ig --baseurl "$BASE" \
