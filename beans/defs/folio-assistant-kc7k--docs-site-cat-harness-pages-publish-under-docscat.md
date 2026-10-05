@@ -1,10 +1,11 @@
 ---
 # folio-assistant-kc7k
 title: 'Docs site: cat-harness pages publish under /docs/cat-harness/, not the site root (#2188)'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-05T14:02:31Z
-updated_at: 2026-10-05T14:02:31Z
+updated_at: 2026-10-05T14:03:34Z
 parent: folio-assistant-0lmb
 ---
 
