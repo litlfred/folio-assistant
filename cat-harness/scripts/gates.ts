@@ -321,6 +321,16 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "decision and shrink judgement are covered by qa-site-assets.test.ts in `bun test`",
   },
   {
+    // Bean `bejf`, #2217. The built-site half of `check:qa-result-links` reads
+    // `./_site`, which only the site build produces; the sources half runs as
+    // its own step in `gates-docs`, and is therefore in the gate set.
+    match: "check:qa-result-links --site",
+    kind: "ci-only",
+    reason:
+      "judges the built ./_site that only the docs build produces; the sources half is a gate step " +
+      "in gates-docs, and the rule itself is covered by check-qa-result-links.test.ts in `bun test`",
+  },
+  {
     // Bean `tfqf`. `folio-staging.yml` reads the FOLIO's own `qa-reports`
     // entry for its PR before sweeping. A read keyed by a downstream PR
     // number; the read path is pinned by qa-store.test.ts in `bun test`.

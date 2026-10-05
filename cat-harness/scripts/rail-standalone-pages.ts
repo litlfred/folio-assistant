@@ -49,7 +49,7 @@ function main(): number {
   const site = at("--site");
   const built = at("--built");
   if (!site || !built) {
-    console.error("usage: rail-standalone-pages.ts --site <dir> --built <instance-dir-name> [--foreign-site [--home-label <name>]]");
+    console.error("usage: rail-standalone-pages.ts --site <dir> --built <instance-dir-name> [--foreign-site [--home-label <name>] [--instance <name>]]");
     return 2;
   }
   // `--foreign-site`: the site is a FOLIO's, not the platform's (folio-staging.yml).
@@ -57,7 +57,7 @@ function main(): number {
   // of the platform's mount routes exist here to be left alone.
   const homeLabel = at("--home-label");
   const foreign: ForeignSiteRail | undefined = argv.includes("--foreign-site")
-    ? { platformBase: DOCS_SITE_BASE.replace(/\/$/, ""), ...(homeLabel ? { homeLabel } : {}) }
+    ? { platformBase: DOCS_SITE_BASE.replace(/\/$/, ""), ...(homeLabel ? { homeLabel } : {}), ...(at("--instance") ? { instance: at("--instance")! } : {}) }
     : undefined;
   const siteAbs = resolve(site);
   if (!existsSync(siteAbs)) {

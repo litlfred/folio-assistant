@@ -227,8 +227,23 @@ export interface QaWitnessDoc {
   family: QaFamily;
   /** Human-readable subject: a block label, a script path, a process id. */
   subject: string;
-  /** Repo-relative sidecar path(s) this was projected from. */
+  /**
+   * The sidecar path(s) this was projected from, relative to the `repoRoot`
+   * argument, which every caller passes as the INSTANCE root. They were
+   * documented as repo-relative, and the panel built URLs from them on that
+   * belief, missing `cat-harness/` (bean `bejf`). They are not an address:
+   * link through {@link QaWitnessDoc.sidecarLinks}.
+   */
   sidecars: string[];
+  /**
+   * Each sidecar as a reader should see it and reach it: the repo-relative path
+   * and the forge URL built by `scripts/qa-result-link.ts`, the one place that
+   * knows whether a result is still committed on `main` or stored on the
+   * `qa-reports` branch, and under which entry. Stamped by the site generator.
+   * Absent on a projection nobody stamped, and a renderer then links nothing
+   * rather than composing a URL itself.
+   */
+  sidecarLinks?: Array<{ path: string; href?: string; addressedBy: "main" | "entry" | "tip"; key?: string }>;
   state: QaState;
   counts: { fail: number; warn: number; pass: number; na: number; unknown: number };
   criteria: QaCriterionView[];

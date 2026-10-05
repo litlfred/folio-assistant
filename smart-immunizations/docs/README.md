@@ -10,8 +10,7 @@ Part of [smart-immunizations](../README.md) 0.1.0, declared as `smart-immunizati
 
 | file | what it is | used by |
 |---|---|---|
-| [`index.md`](index.md) | "All 748 artefacts of the WHO SMART Immunizations IG 0.2.0, reconstructed from its published output." |  |
+| [`artifacts.md`](artifacts.md) | text |  |
 | [`artifact/`](artifact/) | _nothing declares what this holds_ | |
 | [`assets/`](assets/) | _nothing declares what this holds_ | |
-| [`category/`](category/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

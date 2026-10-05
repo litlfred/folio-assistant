@@ -1878,6 +1878,16 @@ jobs:
       - name: every claimed locale has a page behind it
         run: bun run check:available-locales
 
+      # ITS OWN STEP, above the drift batch, for the reason the steps above
+      # record: a gate inside that batch never runs. Bean `bejf`, #2217. Every
+      # QA panel linked its result files as `blob/main/` + an instance-relative
+      # path, which was dead twice over. This rejects a `blob/main` link into a
+      # `qa` directory that declares `storage`, or into a `test/results/` path
+      # no declaration holds. The built-site half runs after the build, in
+      # `docs-site.yml` and `feature-staging.yml`.
+      - name: no link addresses a stored QA result on main
+        run: bun run check:qa-result-links
+
       # ITS OWN STEP, above the batch. The reason changed under this gate while it
       # was in review, and the original is recorded because it is why the gate
       # exists: `translation:drift:check` used to be the THIRD of 106 commands in

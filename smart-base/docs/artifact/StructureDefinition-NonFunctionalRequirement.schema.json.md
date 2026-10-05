@@ -4,8 +4,8 @@ description: "The JSON Schema sidecar of StructureDefinition/NonFunctionalRequir
 nav_exclude: true
 ig_api: {"label":"JSON Schema","file":"StructureDefinition-NonFunctionalRequirement.schema.json","src":"../fhir-artifact-index/dak/StructureDefinition-NonFunctionalRequirement.schema.json","artifact":{"title":"Non-Functional Requirement (DAK)","page":"StructureDefinition-NonFunctionalRequirement.html"},"tabs":[{"label":"Narrative Content","href":"StructureDefinition-NonFunctionalRequirement.html","active":false},{"label":"XML","href":"https://worldhealthorganization.github.io/smart-base/StructureDefinition-NonFunctionalRequirement.xml","active":false},{"label":"JSON","href":"https://worldhealthorganization.github.io/smart-base/StructureDefinition-NonFunctionalRequirement.json","active":false},{"label":"TTL","href":"https://worldhealthorganization.github.io/smart-base/StructureDefinition-NonFunctionalRequirement.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-NonFunctionalRequirement.schema.json.html","active":true}],"script":"../assets/ig-api-view.js"}
 ---
-<link rel="stylesheet" href="{{ '/smart-base/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-base/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/base">smart.who.int.base</a></div>
@@ -36,4 +36,4 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <script src="{{ page.ig_api.script }}" defer></script>
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-base/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>
