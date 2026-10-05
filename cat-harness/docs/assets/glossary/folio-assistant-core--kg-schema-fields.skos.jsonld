@@ -2047,6 +2047,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.publicfieldsschema.labels",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PublicFieldsSchema.labels"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Categorisations the intake log carried, keyed by its column header and kept verbatim: a theme, a stakeholder type, a review question, a priority, a committee routing. Read, never re-coded, so a log can grow a column without a schema change."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.labels",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.publicfieldsschema.ref",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2180,6 +2199,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.sourceschema.entry",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SourceSchema.entry"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The log's OWN number for the row (\"No.\"), within its sheet. A review log is re-sent as it is worked, so a later copy is a different file with the same rows: this, with the sheet and the series, is what recognises them."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.entry",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.sourceschema.segment",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2196,6 +2234,25 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.segment",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.sourceschema.series",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SourceSchema.series"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The log this row belongs to, across the copies of it that are re-sent."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.series",
       "skos:note": "candidate"
     },
     {
