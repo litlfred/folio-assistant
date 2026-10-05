@@ -13,9 +13,9 @@
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
-import { join, relative, resolve, sep } from "node:path";
+import { join, resolve } from "node:path";
 
-import { declaredDiagrams, framedInstances, publishedProcesses, unframedProcesses } from "../check-process-index.ts";
+import { declaredDiagrams, diagramPath, framedInstances, publishedProcesses, unframedProcesses } from "../check-process-index.ts";
 import { firstSentence } from "../kg-export.ts";
 import { subgraphOutDir } from "../gen-subgraph-jsonld.ts";
 import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.ts";
@@ -149,14 +149,14 @@ describe("the committed subgraph JSON-LD", () => {
   const { processes, problems } = publishedProcesses(OUT);
   const declared = declaredDiagrams(REPO);
   const framed = framedInstances(HARNESS);
-  const pathOf = (sourcePath: string): string => relative(REPO, resolve(HARNESS, sourcePath)).split(sep).join("/");
 
   test("every file the walk reaches exists and validates", () => {
     expect(problems).toEqual([]);
   });
   test("every diagram an instance in this graph declares is a Process node, and nothing else is", () => {
     const want = [...declared].filter(([, inst]) => framed.has(inst)).map(([p]) => p).sort();
-    expect(processes.map((p) => pathOf(p.sourcePath)).sort()).toEqual(want);
+    // Each `sourcePath` against the instance whose tree it is in (bean `4ak5` item 2).
+    expect(processes.map((p) => diagramPath(p, REPO)).sort()).toEqual(want);
   });
   test("bootstrap's diagrams are not re-carried into this graph (pve3, #432)", () => {
     const boot = [...declared].filter(([p]) => p.startsWith("bootstrap/") || p.startsWith("bootstrap-tools/"));
