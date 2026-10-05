@@ -435,6 +435,118 @@
                   "reason"
                 ]
               },
+              "subgraph": {
+                "type": "boolean",
+                "const": true
+              },
+              "source": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "directory"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "branch"
+                      },
+                      "branch": {
+                        "type": "string",
+                        "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+                      },
+                      "keyedBy": {
+                        "type": "string",
+                        "enum": [
+                          "commit",
+                          "tip",
+                          "route",
+                          "route-family",
+                          "family"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "branch",
+                      "keyedBy"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "family"
+                      },
+                      "branchPrefix": {
+                        "type": "string",
+                        "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+\\/$"
+                      },
+                      "keyFrom": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "repository": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "branchPrefix",
+                      "keyFrom"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "storage": {
+                "type": "object",
+                "properties": {
+                  "branch": {
+                    "type": "string",
+                    "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+                  },
+                  "keyedBy": {
+                    "type": "string",
+                    "enum": [
+                      "commit",
+                      "tip",
+                      "route",
+                      "route-family",
+                      "family"
+                    ]
+                  },
+                  "branchPrefix": {
+                    "type": "string",
+                    "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+\\/$"
+                  },
+                  "keyFrom": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "repository": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
+                  }
+                },
+                "required": [
+                  "keyedBy"
+                ],
+                "additionalProperties": false
+              },
               "title": {
                 "type": "string",
                 "minLength": 1
@@ -629,41 +741,6 @@
               "kindRouteRedirect": {
                 "type": "boolean"
               },
-              "storage": {
-                "type": "object",
-                "properties": {
-                  "branch": {
-                    "type": "string",
-                    "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
-                  },
-                  "keyedBy": {
-                    "type": "string",
-                    "enum": [
-                      "commit",
-                      "tip",
-                      "route",
-                      "route-family",
-                      "family"
-                    ]
-                  },
-                  "branchPrefix": {
-                    "type": "string",
-                    "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+\\/$"
-                  },
-                  "keyFrom": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "repository": {
-                    "type": "string",
-                    "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
-                  }
-                },
-                "required": [
-                  "keyedBy"
-                ],
-                "additionalProperties": false
-              },
               "derivedFrom": {
                 "minItems": 1,
                 "type": "array",
@@ -703,79 +780,6 @@
                   "themeId"
                 ],
                 "additionalProperties": false
-              },
-              "source": {
-                "oneOf": [
-                  {
-                    "type": "object",
-                    "properties": {
-                      "kind": {
-                        "type": "string",
-                        "const": "directory"
-                      }
-                    },
-                    "required": [
-                      "kind"
-                    ],
-                    "additionalProperties": false
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "kind": {
-                        "type": "string",
-                        "const": "branch"
-                      },
-                      "branch": {
-                        "type": "string",
-                        "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
-                      },
-                      "keyedBy": {
-                        "type": "string",
-                        "enum": [
-                          "commit",
-                          "tip",
-                          "route",
-                          "route-family",
-                          "family"
-                        ]
-                      }
-                    },
-                    "required": [
-                      "kind",
-                      "branch",
-                      "keyedBy"
-                    ],
-                    "additionalProperties": false
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "kind": {
-                        "type": "string",
-                        "const": "family"
-                      },
-                      "branchPrefix": {
-                        "type": "string",
-                        "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+\\/$"
-                      },
-                      "keyFrom": {
-                        "type": "string",
-                        "minLength": 1
-                      },
-                      "repository": {
-                        "type": "string",
-                        "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
-                      }
-                    },
-                    "required": [
-                      "kind",
-                      "branchPrefix",
-                      "keyFrom"
-                    ],
-                    "additionalProperties": false
-                  }
-                ]
               }
             },
             "required": [
@@ -1226,8 +1230,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "f40954429cfd0826f86b8fe563d5b8f358d26c09",
+    "sha": "a46f8791571232b326f1df8230ed8086860ca391",
     "pr": "main",
-    "run": "37332468578"
+    "run": "37334677033"
   }
 }

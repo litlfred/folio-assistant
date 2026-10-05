@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 904,
+      "count": 906,
       "unit": "beans"
     }
   },
@@ -3211,14 +3211,14 @@
     {
       "id": "folio-assistant-82qs",
       "title": "Locale selector back in the LHS navbar's top row",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-9rq1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T14:39:33Z",
-      "updatedAt": "2026-10-05T14:39:33Z",
+      "updatedAt": "2026-10-05T15:24:15Z",
       "preview": "Owner, 2026-10-05: 'we lost locale selector in top navbar LHS again'. Cause (measured): docs-ui.css ~5729 hides .fa-lang-mini whenever .fa-nav-icons exists; the icon row took the launcher and the light/dark bulb but never a language control. Fix: a globe beside the bulb in the row's after-hook (opens the launcher on the language view), plus an e2e asserting a visible language control in .side-bar ",
       "file": "beans/defs/folio-assistant-82qs--locale-selector-back-in-the-lhs-navbars-top-row.md"
     },
@@ -6214,15 +6214,15 @@
     {
       "id": "folio-assistant-gpbc",
       "title": "Graphs and Folders are one heading, with the count badge",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-9rq1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T14:39:33Z",
-      "updatedAt": "2026-10-05T14:39:33Z",
-      "preview": "Owner, 2026-10-05: 'graphs containing ONLY folders is weird. combine w/ badge of count.' mountSidebarRail wraps mountInstanceGraphs' 'Folders N' details in a second 'Graphs' details. Make one disclosure titled Graphs carrying the count.\n\n## Done when\n- [ ] one 'Graphs N' disclosure on the theme sidebar; the rail already has one\n- [ ] e2e updated",
+      "updatedAt": "2026-10-05T15:25:10Z",
+      "preview": "Owner, 2026-10-05: 'graphs containing ONLY folders is weird. combine w/ badge of count.' mountSidebarRail wraps mountInstanceGraphs' 'Folders N' details in a second 'Graphs' details. Make one disclosure titled Graphs carrying the count.\n\n## Done when\n- [ ] one 'Graphs N' disclosure on the theme sidebar; the rail already has one\n- [ ] e2e updated\n\n_2026-10-05T15:25:10Z_ — Claimed by claude/vibrant-",
       "file": "beans/defs/folio-assistant-gpbc--graphs-and-folders-are-one-heading-with-the-count.md"
     },
     {
@@ -8295,6 +8295,20 @@
       "file": "beans/defs/folio-assistant-nafz--glossary-export-walks-one-instances-diagrams-while.md"
     },
     {
+      "id": "folio-assistant-najo",
+      "title": "MERGE QUEUE OFF MAIN: the queue graph on its own branch store, so a steward can record a decision without opening a PR",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T08:20:32Z",
+      "updatedAt": "2026-10-04T08:21:20Z",
+      "preview": "## Brief\n\n**What and why.** `beans/queue/` holds no entries — only its README — and the reason is\nstructural. `main` is authoritative for `beans/`, so an entry reaches it only through a PR,\nand the owner has ruled that the merge steward does no development work: it must not open\nPRs of its own, because that has it setting its own priority in the queue it manages,\nspending the CI the queue is starv",
+      "file": "beans/defs/folio-assistant-najo--merge-queue-off-main-the-queue-graph-on-its-own-br.md"
+    },
+    {
       "id": "folio-assistant-nama",
       "title": "DERIVED-GRAPH DEPENDENCIES: declare which derived/rendered subgraph is computed from which (fhir-ast -> ig-docs -> gh-pages; lean-cache), and walk them",
       "status": "in-progress",
@@ -9503,15 +9517,15 @@
     {
       "id": "folio-assistant-r2ld",
       "title": "'On this page': sections with sub-sections are collapsible",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-9rq1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T14:39:33Z",
-      "updatedAt": "2026-10-05T14:39:33Z",
-      "preview": "Owner, 2026-10-05: 'on this page should have sub-sections collapsible'. Both surfaces: mountDocumentIndex (docs-ui.js) and documentIndexOf (navbar.ts, rail) — independent implementations of one rule; nest h3 under h2 as a closed disclosure.\n\n## Done when\n- [ ] theme sidebar and rail both nest h3 under their h2, closed by default\n- [ ] e2e on both",
+      "updatedAt": "2026-10-05T15:28:15Z",
+      "preview": "Owner, 2026-10-05: 'on this page should have sub-sections collapsible'. Both surfaces: mountDocumentIndex (docs-ui.js) and documentIndexOf (navbar.ts, rail) — independent implementations of one rule; nest h3 under h2 as a closed disclosure.\n\n## Done when\n- [ ] theme sidebar and rail both nest h3 under their h2, closed by default\n- [ ] e2e on both\n\n_2026-10-05T15:28:15Z_ — Claimed by claude/vibrant",
       "file": "beans/defs/folio-assistant-r2ld--on-this-page-sections-with-sub-sections-are-collap.md"
     },
     {
@@ -10879,6 +10893,20 @@
       "updatedAt": "2026-09-26T09:00:43Z",
       "preview": "Found 2026-09-22 while re-deriving `j41m`'s own numbers adversarially, in the\nspirit of `w4tq`. **Not fixed, because it cannot be confirmed from here** —\nsee §\"Why this is a bean and not a push\".\n\n## What the files say\n\n    .github/workflows/discoverability-docs.yml:206   working-directory: folio-assistant\n    .github/workflows/publish.yml:566                working-directory: folio-assistant\n\nNei",
       "file": "beans/defs/folio-assistant-u9r9--two-typedoc-steps-name-a-working-directory-that-do.md"
+    },
+    {
+      "id": "folio-assistant-ugxd",
+      "title": "MERGE QUEUE CUTOVER: flip beans/queue to cat/cat-harness/merge-queue and move the main entries, as its own small PR",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T11:46:51Z",
+      "updatedAt": "2026-10-05T11:46:51Z",
+      "preview": "Split out of #2065 (bean folio-assistant-najo) by owner ruling 2026-10-05 (\"Land code now, switch later\", relayed by the merge manager). #2065 lands the code only: merge-queue-store.ts, merge-queue-cli.ts + tests, the checker ownId/unmountable fixes, steward read-back, merge:queue:* scripts. The queue stays on main until this lands.\n\n## What this PR does\n- [ ] Steward PAUSES queue writes on main f",
+      "file": "beans/defs/folio-assistant-ugxd--merge-queue-cutover-flip-beansqueue-to-catcat-harn.md"
     },
     {
       "id": "folio-assistant-uhkv",
@@ -14424,14 +14452,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 545,
+        "total": 547,
         "closed": 196,
-        "open": 349,
-        "inProgress": 129,
-        "todo": 219,
+        "open": 351,
+        "inProgress": 133,
+        "todo": 217,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3596330275229358
+        "share": 0.3583180987202925
       },
       {
         "id": "folio-assistant-vuip",
@@ -14465,8 +14493,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 528,
-    "coveredOpen": 525,
+    "openTotal": 530,
+    "coveredOpen": 527,
     "duplicateIds": 0
   }
 }
