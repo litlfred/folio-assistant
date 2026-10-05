@@ -115,6 +115,19 @@ export const BeanIndexSchema = z
 
 // ── folio-translation-status/v1 — scripts/gen-translation-status.ts ──
 
+const LocaleStatusSchema = z
+  .object({
+    locale: z.string().min(1),
+    templates: Count,
+    catalogues: Count,
+    entries: Count,
+    translated: Count,
+    fuzzy: Count,
+    untranslated: Count,
+    unreadable: StringList,
+  })
+  .strict();
+
 export const TranslationStatusSchema = z
   .object({
     ...envelope("folio-translation-status/v1"),
@@ -122,20 +135,23 @@ export const TranslationStatusSchema = z
     changedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
     /** The translations directory counted, repository-relative. */
     scope: z.string(),
-    locales: z.array(
-      z
-        .object({
-          locale: z.string().min(1),
-          templates: Count,
-          catalogues: Count,
-          entries: Count,
-          translated: Count,
-          fuzzy: Count,
-          untranslated: Count,
-          unreadable: StringList,
-        })
-        .strict(),
-    ),
+    locales: z.array(LocaleStatusSchema),
+    /**
+     * Every OTHER instance's declared `translation-sources` directory, each
+     * measured on its own (issue #2228). Optional: an index written before
+     * the field existed is still a valid index.
+     */
+    instances: z
+      .array(
+        z
+          .object({
+            instance: z.string().min(1),
+            scope: z.string(),
+            locales: z.array(LocaleStatusSchema),
+          })
+          .strict(),
+      )
+      .optional(),
   })
   .strict();
 
