@@ -335,6 +335,66 @@ export function qaStorageOf(absPath: string, repoRoot?: string): string | undefi
 }
 
 /**
+ * DECLARED SUBJECT MOVES — where a sidecar's baseline lived before its subject
+ * moved. Bean `xka5` moved the docs graph's pages into named groups, so a
+ * chapter's sidecars went from `content/docs/<name>/` to
+ * `content/docs/<group>-<name>/` and a page's from `docs/<name>.<loc>`
+ * to `docs/<group>/<name>.<loc>`. The baseline on `qa-reports` is
+ * keyed by PATH, so without this every finding on a moved subject read as NEW
+ * — an inherited defect reported as a regression. Consulted only on a MISS at
+ * the current path; once `qa-reports` holds the new paths, nothing reaches it.
+ * Each entry is `[now, before]`, substrings of the sidecar path.
+ */
+export const MOVED_QA_SUBJECTS: ReadonlyArray<readonly [string, string]> = [
+  ["/content/docs/concepts-agentic-harness/", "/content/docs/agentic-harness/"],
+  ["/content/docs/guides-beans-and-todos/", "/content/docs/beans-and-todos/"],
+  ["/content/docs/concepts-content-types/", "/content/docs/content-types/"],
+  ["/content/docs/process-crdm-methodology/", "/content/docs/crdm-methodology/"],
+  ["/content/docs/guides-document-ingestion/", "/content/docs/document-ingestion/"],
+  ["/content/docs/process-evidence/", "/content/docs/evidence/"],
+  ["/content/docs/fhir-fhir-content/", "/content/docs/fhir-content/"],
+  ["/content/docs/concepts-harness/", "/content/docs/harness/"],
+  ["/content/docs/concepts-harnessed-kg-overview/", "/content/docs/harnessed-kg-overview/"],
+  ["/content/docs/fhir-ig-publisher/", "/content/docs/ig-publisher/"],
+  ["/content/docs/concepts-knowledge-graph/", "/content/docs/knowledge-graph/"],
+  ["/content/docs/guides-managing-agent-context/", "/content/docs/managing-agent-context/"],
+  ["/content/docs/process-publication-workflow/", "/content/docs/publication-workflow/"],
+  ["/translation-qa/docs/start/accessibility.", "/translation-qa/docs/accessibility."],
+  ["/translation-qa/docs/concepts/agentic-harness.", "/translation-qa/docs/agentic-harness."],
+  ["/translation-qa/docs/concepts/architecture.", "/translation-qa/docs/architecture."],
+  ["/translation-qa/docs/guides/beans-and-todos.", "/translation-qa/docs/beans-and-todos."],
+  ["/translation-qa/docs/concepts/content-types.", "/translation-qa/docs/content-types."],
+  ["/translation-qa/docs/start/contributing.", "/translation-qa/docs/contributing."],
+  ["/translation-qa/docs/process/crdm-methodology.", "/translation-qa/docs/crdm-methodology."],
+  ["/translation-qa/docs/guides/detangle.", "/translation-qa/docs/detangle."],
+  ["/translation-qa/docs/guides/document-ingestion.", "/translation-qa/docs/document-ingestion."],
+  ["/translation-qa/docs/process/evidence.", "/translation-qa/docs/evidence."],
+  ["/translation-qa/docs/fhir/fhir-content.", "/translation-qa/docs/fhir-content."],
+  ["/translation-qa/docs/start/getting-started.", "/translation-qa/docs/getting-started."],
+  ["/translation-qa/docs/concepts/harness.", "/translation-qa/docs/harness."],
+  ["/translation-qa/docs/concepts/harnessed-kg-overview.", "/translation-qa/docs/harnessed-kg-overview."],
+  ["/translation-qa/docs/fhir/ig-publisher.", "/translation-qa/docs/ig-publisher."],
+  ["/translation-qa/docs/start/installation.", "/translation-qa/docs/installation."],
+  ["/translation-qa/docs/concepts/kg-navigation.", "/translation-qa/docs/kg-navigation."],
+  ["/translation-qa/docs/concepts/knowledge-graph.", "/translation-qa/docs/knowledge-graph."],
+  ["/translation-qa/docs/guides/managing-agent-context.", "/translation-qa/docs/managing-agent-context."],
+  ["/translation-qa/docs/process/publication-workflow.", "/translation-qa/docs/publication-workflow."],
+  ["/translation-qa/docs/concepts/skills.", "/translation-qa/docs/skills."],
+  ["/translation-qa/docs/concepts/subgraph-viewers.", "/translation-qa/docs/subgraph-viewers."],
+  ["/translation-qa/docs/guides/swarm-management.", "/translation-qa/docs/swarm-management."],
+  ["/translation-qa/docs/concepts/tool-graph.", "/translation-qa/docs/tool-graph."],
+  ["/translation-qa/docs/guides/translation-support.", "/translation-qa/docs/translation-support."],
+];
+
+/** The path a sidecar's baseline had before its subject moved, if it moved. */
+export function movedFrom(path: string): string | undefined {
+  for (const [now, before] of MOVED_QA_SUBJECTS) {
+    if (path.includes(now)) return path.replace(now, before);
+  }
+  return undefined;
+}
+
+/**
  * Read a baseline: from the `qa-reports` branch when `against` names a ref,
  * otherwise from the working copy at `absPath`.
  *
@@ -899,7 +959,13 @@ export function judgeSidecarTree(args: {
   for (const s of args.fresh) {
     let before: unknown[] | undefined;
     if (entry.state === "hit") {
-      const b = readBaseline(s.path, { against: args.against, store: args.store });
+      let b = readBaseline(s.path, { against: args.against, store: args.store });
+      // A MOVED subject's baseline is at its old path (bean ).
+      const was = b.state === "miss" ? movedFrom(s.path) : undefined;
+      if (was !== undefined) {
+        const prev = readBaseline(was, { against: args.against, store: args.store });
+        if (prev.state === "hit") b = prev;
+      }
       if (b.state === "hit") {
         before = args.findingsOf(b.text);
         if (before === undefined) unknowns.push(`${label(s.path)} at ${b.from} is not a readable sidecar`);

@@ -75,7 +75,7 @@ export type Repo = "harness" | "core" | "sci" | "kg" | "base" | "test";
  * declaration, the directory and `AGENTS.md` all already carry. Only the
  * architecture docs and this table still said the old thing.
  *
- * The docs page `/agentic-harness.html` is NOT this name and was not touched:
+ * The docs page `/concepts/agentic-harness.html` is NOT this name and was not touched:
  * it documents the agent-user interaction model, which is a concept rather
  * than a repository, and its slug is a published URL.
  */
@@ -92,7 +92,7 @@ export const REPOS: Array<{ id: Repo; name: string; instance?: string }> = [
  * What each repo is permitted to import from — itself plus its ancestors in
  * the dependency DAG. An edge to anything else is a wrong-direction edge.
  *
- * Mirrors the diagram in `docs/architecture/future-state.md`:
+ * Mirrors the diagram in `docs/concepts/architecture/future-state.md`:
  *   core -> harness;  sci -> core;  kg -> core;  base -> kg
  */
 export const ALLOWED: Record<Repo, Repo[]> = {

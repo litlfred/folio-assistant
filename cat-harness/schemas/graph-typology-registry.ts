@@ -1046,6 +1046,28 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       "a `Requirement` in its front matter. A sub-graph of `docs`. Test runs point " +
       "at these statements by `req:<slug>#<key>`.",
   },
+  // THE DOCS GRAPH'S NAMED GROUPS — owner, 2026-10-05 (bean `xka5`): *"group
+  // cat-harness docs semantically and make named doc subgraphs"*. ONE kind for
+  // every group, on the argument `docs/docs.json` already makes for its two
+  // `auto-docs` entries: a sub-graph's identity is its DIRECTORY id, and a
+  // kind per group would be a registry entry restating one sentence. Which
+  // pages a group holds is its folder, so nobody keeps a list.
+  "doc-group": {
+    description:
+      "a named group of the docs graph's own pages — Start here, Concepts, Authoring guides, Process & methodology, FHIR — one folder each, declared from within by `docs/docs.json`. A **sub-graph of `docs`** (`within: \"docs\"`): its pages are `docs` pages, grouped by where they live. The Pages list nests a group's pages under it through `_config.yml` `defaults` (one `parent` per folder). Bean `xka5`.",
+    renderableNote: "its pages are built by `docs`",
+    title: "Doc group",
+    // NOT a site of its own: its pages are built by `docs`, which it is
+    // `within` — the same reason `proposals` and `requirements` are false.
+    renderable: false,
+    within: "docs",
+    // `content`: authored or generated pages of the docs site, grouped.
+    holds: "content",
+    validatorNotApplicable:
+      "its nodes are the docs site's markdown pages, judged as `docs` pages are; a group adds a folder, not a shape.",
+    summary:
+      "A named group of the documentation's own pages — one folder, one heading in the Pages list. A sub-graph of `docs`.",
+  },
   "auto-docs": {
     description:
       "derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH that type reaches, written by `scripts/gen-auto-docs.ts` and never by hand. A **sub-graph of `docs`** (`within: \"docs\"`), declared from within by `docs/docs.json`; its own sub-sub-graphs are named one level further down by `auto-docs.json`, which is GENERATED from that script's `TYPES` because they carry `collect()` functions that cannot live in JSON. `derived`, and the question that settles it against its parent is the same one everywhere: a `docs` page is RE-AUTHORED, an index is REGENERATED. Bean `xsrv`, owner 2026-10-03.",
@@ -1907,7 +1929,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   // checklist searches `library/` and not `uploads/`, so a source still in
   // `uploads/` makes a clean grep read as "nobody has done this" while the
   // file sits on disk. Collapsing them into one kind would erase exactly
-  // the distinction `content/docs/document-ingestion/uploads-and-library-
+  // the distinction `content/docs/guides-document-ingestion/uploads-and-library-
   // are-two-stages-of-one-pipeline.md` exists to state. A QUEUE, and a
   // queue is a position in a pipeline. The declaration already says these
   // files are NOT L1 and read as absent to every corpus consumer: the file

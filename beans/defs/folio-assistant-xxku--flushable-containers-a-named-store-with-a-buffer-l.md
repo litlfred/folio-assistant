@@ -98,7 +98,7 @@ Diffing one page that neither branch touched, `crdm-methodology.html`, says why:
 86 of 1881 lines differ, and **75 of the 86 carry the preview slug** —
 
     <link rel="stylesheet" href="/folio-assistant/STAGING/<slug>/assets/css/…">
-    <link rel="canonical" href="https://…/STAGING/<slug>/crdm-methodology.html" />
+    <link rel="canonical" href="https://…/STAGING/<slug>/process/crdm-methodology.html" />
     <meta property="og:url" content="https://…/STAGING/<slug>/…" />
 
 Each preview is built with an absolute `baseurl` of

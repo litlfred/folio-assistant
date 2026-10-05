@@ -97,7 +97,14 @@ echo "preview-site: using $jekyll ($("$jekyll" --version 2>/dev/null))"
 # Front-matter defaults apply only where a page sets no layout, which is the
 # same scope as the plugin's.
 default_layout() {
-  printf 'defaults:\n  - scope: { path: "" }\n    values: { layout: page }\n'
+  # A config that already declares `defaults:` (the docs graph's sub-graph
+  # groups, bean `xka5`) gets ONE MORE ENTRY under it: a second top-level
+  # `defaults:` key would replace the first, and YAML says so silently.
+  if grep -q '^defaults:' "$cfg"; then
+    sed -i 's/^defaults:$/defaults:\n  - scope: { path: "" }\n    values: { layout: page }/' "$cfg"
+  else
+    printf 'defaults:\n  - scope: { path: "" }\n    values: { layout: page }\n'
+  fi
 }
 
 # A config with the remote theme stripped and the local gem used instead —

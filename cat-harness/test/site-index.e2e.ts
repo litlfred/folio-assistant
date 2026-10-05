@@ -9,7 +9,7 @@
  * total, and ONE distinct payload** (sha1 over the payloads). It is now
  * published once at `assets/harness/site.json` and fetched by `docs-ui.js`.
  *
- * `docs/architecture/folio-board-requirements.md` §R4 forbade that while it
+ * `docs/concepts/architecture/folio-board-requirements.md` §R4 forbade that while it
  * required a rendering be "reachable without JavaScript"; the owner relaxed
  * that to "reachable without XSS" on 2026-10-02. The obligations the
  * relaxation came with are in

@@ -1,0 +1,29 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio-assistant/"
+    }
+  ],
+  "@id": "site/fhir/ig-publisher.jsonld",
+  "@type": [
+    "folio-assistant-core:WebPage",
+    "doco:Section"
+  ],
+  "label": "fhir/ig-publisher",
+  "title": "The FHIR IG Publisher",
+  "contains": [
+    "site/fhir/ig-publisher/nodes/overview.jsonld",
+    "site/fhir/ig-publisher/nodes/what-it-emits.jsonld",
+    "site/fhir/ig-publisher/nodes/what-only-it-can-do.jsonld",
+    "site/fhir/ig-publisher/nodes/what-it-cannot-be-asked-for.jsonld",
+    "site/fhir/ig-publisher/nodes/the-version-floats.jsonld",
+    "site/fhir/ig-publisher/nodes/where-the-rules-live.jsonld"
+  ],
+  "provenance": "authored",
+  "meta": {
+    "publishedAt": "fhir/ig-publisher.html",
+    "sourceDir": "content/docs/fhir-ig-publisher",
+    "navOrder": 12
+  }
+}

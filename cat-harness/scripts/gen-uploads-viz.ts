@@ -31,7 +31,7 @@
  * browser to render a queue.
  *
  * And the repository already argued the split, in
- * `content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md`:
+ * `content/docs/guides-document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md`:
  * uploads is the incoming queue and is **not greppable by the corpus
  * checklist**, library is L1 source content and is. That page also states what
  * this viewer is FOR, better than this comment would:
