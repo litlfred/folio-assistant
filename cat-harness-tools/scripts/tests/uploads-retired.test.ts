@@ -222,7 +222,7 @@ describe("the denominator, because a clean zero is the failure mode", () => {
   // list, so a repository that had retired every source would be red for
   // ever. Both halves matter and they are different answers, which is this
   // repository's own rule — "an empty directory is still a determined empty".
-  // `library-ingestion.md` requires an ingested source's `*.extraction.json`
+  // `library-ingestion/uploads-retirement.md` requires an ingested source's `*.extraction.json`
   // companion to move WITH it. Nothing enforced that: every other judgement
   // here is a file's own sha256 against the ingested set, and a companion's
   // bytes match no `source_sha256`, so it could never be a finding. Found by

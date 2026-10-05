@@ -32,13 +32,18 @@
     {
       "role": "ingestion-agent",
       "skills": [
-        "document-intake"
+        "document-intake",
+        "l1-document-ingestion"
       ]
     },
     {
       "role": "librarian",
       "skills": [
-        "document-intake"
+        "document-intake",
+        "filing-dublin-core",
+        "archiving-web-pages",
+        "archiving-arxiv",
+        "l1-document-ingestion"
       ]
     },
     {
@@ -58,6 +63,27 @@
       "role": "corpus",
       "skills": [
         "document-intake"
+      ]
+    },
+    {
+      "role": "editorial-authoring-agent",
+      "skills": [
+        "ontologist",
+        "bib-human-review",
+        "bib-qa"
+      ]
+    },
+    {
+      "role": "docs-authoring-agent",
+      "skills": [
+        "glossary-build",
+        "tabular-metadata"
+      ]
+    },
+    {
+      "role": "integration-watcher",
+      "skills": [
+        "bib-photo-ingestion-watcher"
       ]
     }
   ]

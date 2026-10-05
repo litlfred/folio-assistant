@@ -188,6 +188,6 @@ documentation is how a partition stops meaning anything.
 
 | process | step(s) that name it |
 |---|---|
-| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | Ingest the theme (calls a sub-process) |
 | [Ingestion subprocess — ingest a theme](../../processes/ingest-theme.html) | Read the served stylesheet's declarations; Read the guide's own stated rules; Map values onto the shared palette ROLES; Record contradictions IN the source |
+| [L1 document ingestion — a document to the L1 source knowledge graph](../../processes/l1-document-ingestion.html) | Ingest the theme (calls a sub-process) |
 

@@ -32,6 +32,8 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`source-licence.qa-results.json`](source-licence.qa-results.json) | data |  |
 | [`subgraph-readmes.qa-results.json`](subgraph-readmes.qa-results.json) | data |  |
 | [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
+| [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
+| [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
 | [`wireframes.qa-results.json`](wireframes.qa-results.json) | data |  |
 | [`agent-skills/`](agent-skills/) | _nothing declares what this holds_ | |
 | [`block-qa/`](block-qa/) | _nothing declares what this holds_ | |
