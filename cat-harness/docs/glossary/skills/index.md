@@ -1058,7 +1058,7 @@ injection-boundaries <span class="fa-gloss-status">candidate, extracted</span>
 instance-kinds <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH kind must declare. Read before naming a new instance, before adding a value to the graph-typology registry, and before building a visualiser. Carries the test that usually says &quot;this is not a new kind&quot;.</p>
+<p>How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH typology must declare. Read before naming a new instance, before adding a value to the graph-typology registry, and before building a visualiser. Carries the test that usually says &quot;this is not a new kind&quot;.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/instance-kinds.md"><code>cat-harness/skills/kg/kg-core/instance-kinds.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--instance-publication" data-fa-state="extracted" data-fa-gloss="">
