@@ -307,6 +307,13 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "smart-immunizations:pages:check": READ_ONLY, // `if (CHECK)` compares; the rebuild is the else
   "smart-trust:openapi:check": READ_ONLY, //       exits before `--source` is even read
   "smart-trust:openapi:pages:check": READ_ONLY,
+  // NO `inputs` for these five, read rather than assumed (bean `8qyc`): four
+  // build through `kg-export.ts`'s `buildExport`, which stamps the document
+  // with `stagingFields(process.env)` (`staging-stamp.ts`), and `kg:export`
+  // also reads `KG_BASE_URL`; `render:bpmn` renders through whatever Chromium
+  // the machine has. An answer that depends on the environment may not be
+  // skipped, so they are always asked — in the pool now, rather than alone.
+  //
   // These five DO write, and only into a directory each makes for itself with
   // `mkdtemp` (strace `-y` resolved every write fd: nothing outside
   // `/tmp/<own prefix>-XXXXXX`, Chromium's per-launch profile included) and
