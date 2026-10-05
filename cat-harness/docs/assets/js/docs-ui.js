@@ -11725,15 +11725,23 @@
    *      arrival (*"any indices/toc should be closed"*, 2026-09-23).
    *   2. The page list -- the only group open on arrival, so it gets the
    *      height. The rail's `single-open` rule, applied to this surface.
-   *   3. "Graphs" -- FOLDERS, in a disclosure that starts folded and keeps
-   *      FOLDERS' own fold inside it.
+   *   3. "Folders" -- a TOP-LEVEL section of its own, folded on arrival,
+   *      with no "Graphs" wrapper around it. Owner's ruling on #2150,
+   *      2026-10-05, option (a): *"Folders becomes its own top-level section
+   *      on the Jekyll sidebar, next to "On this page" and "Pages". Drop the
+   *      Jekyll Graphs wrapper, which would otherwise be empty."* That
+   *      SUPERSEDES this ruling's original step 3, which put FOLDERS inside a
+   *      folded "Graphs" group -- so a folded Graphs hid Folders, and the
+   *      owner read it as gone (*"there used to be"*). Its heading takes the
+   *      slot Graphs had: pinned to the scroller's bottom while folded, above
+   *      ▦, so it is one row away however long the page list is.
    *   4. "▦ Harnesses" -- the harness group, moved out of the footer, folded,
-   *      LAST and BESIDE Graphs rather than inside it. That is where the
+   *      LAST and BESIDE Folders rather than inside it. That is where the
    *      viewer rail keeps it too (`navbarHtml`: graphs in the middle,
    *      harnesses below them), and it is what keeps the owner's ruling on
    *      finding 1 (#1805): *"Make ▦ Harnesses visible on the landing page
    *      too"* -- ▦ is a mark in the 56px strip at rest and ONE click shows
-   *      the harnesses. Folded inside Graphs it would be invisible at rest and
+   *      the harnesses. Folded inside another group it would be invisible at rest and
    *      two clicks away, which is the state that ruling removed. Both folded
    *      headings are pinned to the scroller's bottom edge, ▦ lowest, so the
    *      one-scroller property of this ruling is unchanged.
@@ -11750,11 +11758,16 @@
    * touched: just-the-docs renders the same include a second time for the
    * phone layout, outside `.side-bar`, and that copy is not this region.
    */
+  /** A path as the Folders section compares it: no `index.html`, one trailing slash. */
+  function foldersPathKey(path) {
+    return String(path || "").replace(/index\.html$/, "").replace(/\/*$/, "/");
+  }
+
   function mountSidebarRail() {
     var bar = document.querySelector(".side-bar");
     var nav = bar && bar.querySelector(".site-nav");
     if (!bar || !nav) return;
-    if (bar.querySelector(".fa-nav-graphs-group, .fa-nav-harness-group")) return;
+    if (bar.querySelector(".fa-nav-folders--rail, .fa-nav-harness-group")) return;
 
     // THE ONE SCROLLER. `mountInstanceGraphs` builds it when the folder row
     // could be read; when it could not, the nav still needs a region to share
@@ -11789,12 +11802,31 @@
     }
 
     if (folders) {
-      var group = el("details", { class: "fa-nav-graphs-group" });
-      group.appendChild(el("summary", { class: "fa-nav-graphs-group__heading" }, "Graphs"));
-      group.appendChild(folders);
-      middle.appendChild(group);
-      mirrorExpanded(group);
-      toTopOnOpen(group);
+      // MOVED to the end of the scroller, after the page list, and marked so
+      // a second run finds it done. Its fold, its count and its
+      // `aria-expanded` are the ones `mountInstanceGraphs` already gave it:
+      // folded on arrival and not remembered, as before the ruling.
+      folders.classList.add("fa-nav-folders--rail");
+      middle.appendChild(folders);
+      // UNLESS THE PAGE BEING READ IS ONE OF ITS ROWS: a folded default must
+      // not hide where the reader is (#2150). Then it opens, with any
+      // "Sub-graphs of" fold that holds the row, and the row says so to
+      // assistive technology.
+      var here = foldersPathKey(window.location.pathname);
+      var mine = null;
+      Array.prototype.forEach.call(folders.querySelectorAll("a[href]"), function (a) {
+        if (mine) return;
+        var to;
+        try { to = new URL(a.getAttribute("href"), window.location.href).pathname; } catch (_e) { return; }
+        if (foldersPathKey(to) === here) mine = a;
+      });
+      if (mine) {
+        mine.setAttribute("aria-current", "page");
+        for (var up = mine.parentNode; up && up !== middle; up = up.parentNode) {
+          if (up.tagName === "DETAILS") up.open = true;
+        }
+      }
+      toTopOnOpen(folders);
     }
 
     if (harnesses) {
@@ -11802,11 +11834,11 @@
       middle.appendChild(harnesses);
       mirrorExpanded(harnesses);
       toTopOnOpen(harnesses);
-      // THE FOLDED GRAPHS HEADING SITS ON TOP OF ▦, not under it: both are
-      // pinned to the bottom edge, so Graphs is offset by ▦'s height. That
+      // THE FOLDED FOLDERS HEADING SITS ON TOP OF ▦, not under it: both are
+      // pinned to the bottom edge, so Folders is offset by ▦'s height. That
       // height changes between the strip and the open bar, so it is measured
       // rather than restated (`--fa-nav-harness-rest`, read by docs-ui.css).
-      // The FOLDED box is what sits under Graphs, so it is read only while
+      // The FOLDED box is what sits under Folders, so it is read only while
       // folded; the stylesheet stops reading it once ▦ is opened.
       var setRest = function () {
         if (!harnesses.open) middle.style.setProperty("--fa-nav-harness-rest", harnesses.offsetHeight + "px");

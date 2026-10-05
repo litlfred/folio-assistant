@@ -38,6 +38,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`glass.e2e.ts`](glass.e2e.ts) | a file |  |
 | [`graph-tiles.e2e.ts`](graph-tiles.e2e.ts) | a file |  |
 | [`harness-config-panel.e2e.ts`](harness-config-panel.e2e.ts) | a file |  |
+| [`harness-row-alignment.e2e.ts`](harness-row-alignment.e2e.ts) | a file |  |
 | [`id-lookup.e2e.ts`](id-lookup.e2e.ts) | a file |  |
 | [`kg-viewer.e2e.ts`](kg-viewer.e2e.ts) | a file |  |
 | [`kind-fan.e2e.ts`](kind-fan.e2e.ts) | a file |  |
