@@ -28,7 +28,7 @@ import {
   type NavbarModel,
 } from "../lib/navbar.js";
 import { NAVBAR_LINKED, NAVBAR_ROW_CSS, NAVBAR_ROW_INLINE, NAVBAR_ROW_JS, declinesNavbar, injectRail, wantsLinkedRail, railModel, withNavbarRow } from "../lib/harness-rail.js";
-import { NAVBAR_CSS, documentIndexOf } from "../lib/navbar.js";
+import { NAVBAR_CSS, documentIndexOf, visualiserLabelOf } from "../lib/navbar.js";
 import { thinPageHtml } from "../thin-page.js";
 import {
   BEGIN,
@@ -1327,5 +1327,19 @@ describe("every committed railed page carries the harness row's data (bean wckf,
 
   it("every one of them loads navbar-row.js, which draws it (bean lhvt)", () => {
     expect(undrawn).toEqual([]);
+  });
+});
+
+// Bean `mftp`: a page may NAME its own section (an IG site names it after the IG).
+describe("a page's declared section label", () => {
+  const page = (head: string) => `<html><head>${head}</head><body><script type="application/json" data-fa-visualiser-nav>[{"label":"Home","href":"/x/"}]</script><p>hi</p></body></html>`;
+  it("is read off the page and names the section", () => {
+    expect(visualiserLabelOf(page('<meta name="fa-visualiser-label" content="WHO SMART Trust">'))).toBe("WHO SMART Trust");
+    const railed = injectRail(page('<meta name="fa-visualiser-label" content="WHO SMART Trust">'), { instance: "x", toRoot: "..", links: [] })!;
+    expect(railed).toContain("WHO SMART Trust");
+  });
+  it("is absent when undeclared, and the section stays Contents", () => {
+    expect(visualiserLabelOf(page(""))).toBeUndefined();
+    expect(injectRail(page(""), { instance: "x", toRoot: "..", links: [] })!).toContain("Contents");
   });
 });

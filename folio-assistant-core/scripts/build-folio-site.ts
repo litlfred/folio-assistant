@@ -64,6 +64,8 @@ export interface SiteSection {
   /** Block payload paths, relative to the paper directory. */
   blocks: string[];
   sections: SiteSection[];
+  /** How many of this section's blocks (its subsections included) have a sorry-free / sorry-carrying Lean sibling. */
+  lean: { proved: number; sorry: number };
 }
 export interface SiteChapter {
   slug: string;
@@ -241,6 +243,17 @@ export function declaredRepository(repoRoot: string): { repository: string; ref:
   return undefined;
 }
 
+/**
+ * `sorry` when a `sorry` term remains outside comments, else `proved`. A
+ * text-level reading of the sibling, not an elaboration: it does not see a
+ * sorry inherited from an import, so the site labels it "no sorry here", and
+ * the Lean build (L3's baseline) stays the authority on whether it compiles.
+ */
+export function leanStatus(src: string): "proved" | "sorry" {
+  const code = src.replace(/\/-[\s\S]*?-\//g, "").replace(/--.*$/gm, "");
+  return /\bsorry\b/.test(code) ? "sorry" : "proved";
+}
+
 export interface FolioSiteResult {
   papers: { slug: string; blocks: number; pages: number; qa: SiteQaReport }[];
   errors: string[];
@@ -330,7 +343,7 @@ export async function buildFolioSite(
           const path = `${parentPath}/${slug}`;
           const number = `${parentNum}.${++secIndex}`;
           const count = counter ?? { section: number, n: 0 };
-          const s: SiteSection = { slug, number, title: sec.title, ...(sec.label ? { label: sec.label } : {}), blocks: [], sections: [] };
+          const s: SiteSection = { slug, number, title: sec.title, ...(sec.label ? { label: sec.label } : {}), blocks: [], sections: [], lean: { proved: 0, sorry: 0 } };
           if (sec.label) {
             outline.labels[sec.label] = path;
             outline.numbers[sec.label] = number;
@@ -370,7 +383,11 @@ export async function buildFolioSite(
             // Repo-relative paths, so the loader can link the edit page and the Lean sibling.
             node.source = relative(repoRoot, mdPath);
             const leanSibling = join(chDir, `${root}.lean`);
-            if (existsSync(leanSibling)) node.leanSource = relative(repoRoot, leanSibling);
+            if (existsSync(leanSibling)) {
+              node.leanSource = relative(repoRoot, leanSibling);
+              node.leanStatus = leanStatus(readFileSync(leanSibling, "utf-8"));
+              s.lean[node.leanStatus === "sorry" ? "sorry" : "proved"]++;
+            }
             node.heading = block.kind === "prose" ? "" : kindHeading(block.kind, "en");
             if ("title" in block && typeof block.title === "string") node.title = block.title;
             if (NUMBERED_KINDS.has(block.kind)) {
@@ -386,7 +403,13 @@ export async function buildFolioSite(
             blockCount++;
             if ("label" in block && typeof block.label === "string") outline.labels[block.label] = path;
           }
-          if (sec.subsections) s.sections = await walk(sec.subsections, path, new Set(), number, count);
+          if (sec.subsections) {
+            s.sections = await walk(sec.subsections, path, new Set(), number, count);
+            for (const sub of s.sections) {
+              s.lean.proved += sub.lean.proved;
+              s.lean.sorry += sub.lean.sorry;
+            }
+          }
           writeShell(path, sec.title);
           out.push(s);
         }

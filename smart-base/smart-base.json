@@ -140,8 +140,8 @@
         "fhir-harness/scripts/gen-ig-pages.ts",
         "fhir-harness/scripts/templates/ig-pages/"
       ],
-      "composed": true,
-      "_comment_composed": "Rendered THROUGH just-the-docs, as smart-trust's are -- the same reasoning, recorded on `smart-trust-docs`.",
+      "igSite": true,
+      "_comment_igSite": "Built INTO smart-base's own IG site at /smart-base/, as smart-trust's are -- the same reasoning, recorded on `smart-trust-docs` (bean mftp). Owner, 2026-10-05: \"make sure changes you do for smart-trust are reflected in smart-base and so smart-*\", and \"make sure no drift issues\". The IG's own home page is the root; the harness is reached through the navbar.",
       "tile": {
         "icon": "docs"
       }

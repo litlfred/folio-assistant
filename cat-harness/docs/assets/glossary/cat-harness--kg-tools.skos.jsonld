@@ -1414,6 +1414,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/rail-standalone-pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Give every page Jekyll did not lay out the folio-assistant navbar"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A LAST pass over the finished site: inject the shared navbar (`lib/navbar.ts`, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated instance pages, and each IG site built by `stage-ig-sites`. A page under an `igSite` instance's route is railed as THAT instance's page (its name, mark and graphs); a page may declare its own section (`data-fa-visualiser-nav`) and its label (`fa-visualiser-label`). Mount routes are left to the mount pass, and a page that declines (`folio-navbar: none`) is left bare."
+        }
+      ],
+      "skos:notation": "rail-standalone-pages",
+      "dcterms:source": "cat-harness/tools/index.ts#rail-standalone-pages",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/readme-audit",
       "@type": "skos:Concept",
       "skos:inScheme": {

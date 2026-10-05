@@ -4,8 +4,8 @@ description: "The JSON representation of ValueSet/Actors."
 nav_exclude: true
 json_view: {"heading":"WHO GDHCN Actor ValueSet of actor codes - JSON Representation","package":"../fhir-artifact-index/package.tgz","entry":"package/ValueSet-Actors.json","raw":"https://litlfred.github.io/smart-trust/ValueSet-Actors.json","rawName":"ValueSet-Actors.json","tabs":[{"label":"Narrative Content","href":"ValueSet-Actors.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-Actors.xml","active":false},{"label":"JSON","href":"ValueSet-Actors.json.html","active":true},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-Actors.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-Actors.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-Actors.jsonld.html","active":false}],"script":"../assets/resource-json.js"}
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -39,4 +39,4 @@ page: `resource-json.js` reads it out of the package in the browser (`visualizer
 <script src="{{ page.json_view.script }}" defer></script>
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

@@ -78,7 +78,7 @@ import { createHash } from "node:crypto";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { preambleMacros, texFences } from "./build-folio-site.js";
 import { qaBlockHtml } from "./folio-site-qa.js";
-import { renderDocumentHtml, texInMarkdown } from "./build-document-site.js";
+import { citationsToHtml, renderDocumentHtml, texInMarkdown } from "./build-document-site.js";
 
 describe("rendered-content handling and QA (owner, 2026-10-05)", () => {
   test("a ```tex fence becomes its pre-rendered SVG only when the HASH matches", () => {
@@ -109,6 +109,14 @@ describe("rendered-content handling and QA (owner, 2026-10-05)", () => {
     expect(texInMarkdown("| $\\langle a | b\\rangle$ | x |")).toContain("\\langle a \\vert  b\\rangle");
     expect(texInMarkdown("$a$$b$")).toBe("$a$ $b$");
     expect(texInMarkdown("see \\ref{eq:x}")).toBe('see <a href="#eq:x">eq:x</a>');
+    expect(texInMarkdown("$\\begin{psmallmatrix} a \\end{psmallmatrix}$")).toBe("$\\left(\\begin{smallmatrix} a \\end{smallmatrix}\\right)$");
+  });
+
+  test("a citation wrapped across lines is one citation; fenced code is left alone", () => {
+    expect(citationsToHtml("as in \\cite{a,\n  b}; done")).toBe('as in <span class="cite" data-keys="a b">[a, b]</span>; done');
+    const fenced = "```tex\n\\cite{x}\n```\n\n\\cite{y}";
+    expect(citationsToHtml(fenced)).toBe('```tex\n\\cite{x}\n```\n\n<span class="cite" data-keys="y">[y]</span>');
+    expect(citationsToHtml("a\n\nb")).toBe("a\n\nb");
   });
 
   test("the QA reads the HTML a reader gets: raw TeX, stray dollars and KaTeX errors are findings", async () => {
@@ -120,4 +128,11 @@ describe("rendered-content handling and QA (owner, 2026-10-05)", () => {
     const clean = await qaBlockHtml("c", await renderDocumentHtml("A $\\langle a, b\\rangle$ & $x<y$.", { math: true }), { math: true, macros: {} });
     expect(clean.findings).toEqual([]);
   });
+});
+
+import { leanStatus } from "./build-folio-site.js";
+test("Lean status reads a sorry outside comments only", () => {
+  expect(leanStatus("theorem t : 1 = 1 := rfl")).toBe("proved");
+  expect(leanStatus("theorem t : P := by\n  sorry")).toBe("sorry");
+  expect(leanStatus("-- sorry was here\n/- sorry -/\ntheorem t : 1 = 1 := rfl")).toBe("proved");
 });
