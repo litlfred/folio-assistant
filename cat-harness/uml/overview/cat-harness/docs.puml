@@ -96,6 +96,8 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
   }
   class "Kind" as cat_harness_docs_node_kind_index_1_0_0_Kind <<json: NodeKindIndexFileKind>> #f4f4f1 {
     id [1] : string
+    version [0..1] : string
+    tag [0..1] : string
     parents [0..*] : string[]
     subclasses [0..*] : string[]
     declaredBy [0..1] : string
