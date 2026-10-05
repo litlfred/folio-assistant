@@ -376,9 +376,17 @@ describe("the IRIS home replica", () => {
     expect(home).toContain(`${n} nodes`);
   });
 
-  it("the search box is inert and says so", () => {
-    expect(home).toContain("<button type=\"button\" disabled>");
-    expect(home).toContain("Disabled.");
+  it("the search box is active and provides search", () => {
+    expect(home).toContain("id=\"iris-search-input\"");
+    expect(home).toContain("id=\"iris-search-form\"");
+    expect(home).not.toContain("<button type=\"button\" disabled>");
+    expect(home).toContain("action=\"../id-lookup/\"");
+    expect(home).toContain("name=\"index\" value=\"who-iris/\"");
+    expect(home).toContain("id=\"iris-search-results\"");
+    expect(home).toContain("Publication and information products style guide");
+    expect(home).toContain("WHO handbook for guideline development");
+    expect(home).toContain("WHO editorial style manual");
+    expect(home).toContain("../id-lookup/?index=who-iris/");
   });
 });
 
