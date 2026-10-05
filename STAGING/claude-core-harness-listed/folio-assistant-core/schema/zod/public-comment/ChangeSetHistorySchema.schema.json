@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/ChangeSetHistory",
+  "definitions": {
+    "ChangeSetHistory": {
+      "type": "object",
+      "properties": {
+        "at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "what": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "at",
+        "by",
+        "what"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-core-harness-listed/folio-assistant-core/schema/zod/public-comment/ChangeSetHistorySchema.schema.json",
+  "title": "ChangeSetHistorySchema",
+  "description": "Generated from `ChangeSetHistorySchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/core-harness-listed",
+    "sha": "9c6c9d24f43a19bf365419ad5f8f602bbc5a4e77",
+    "pr": "2197/merge",
+    "run": "37362710188"
+  }
+}

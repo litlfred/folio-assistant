@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Lean Formalization Output",
+  "description": "Output schema for the lean-formalization skill.",
+  "type": "object",
+  "required": [
+    "leanFiles",
+    "buildStatus"
+  ],
+  "properties": {
+    "leanFiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "module"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "module": {
+            "type": "string"
+          },
+          "sorryCount": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "buildStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "warnings",
+        "errors"
+      ]
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-core-harness-listed/folio-assistant-sci/schema/skills/lean-formalization/output.schema.json",
+  "staging": {
+    "branch": "claude/core-harness-listed",
+    "sha": "9c6c9d24f43a19bf365419ad5f8f602bbc5a4e77",
+    "pr": "2197/merge",
+    "run": "37362710188"
+  }
+}

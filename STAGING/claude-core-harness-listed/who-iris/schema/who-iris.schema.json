@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-core-harness-listed/who-iris/schema/who-iris.schema.json",
+  "title": "who-iris schemas",
+  "description": "The schemas instance `who-iris` publishes: its declaration, which is a CatHarness declaration and is validated by the shared schema this `$ref`s, and its skills' I/O contracts and its public Zod schemas — every exported Zod `*Schema` const (owner ruling 2026-10-05) — listed in `$defs` by `$id`.",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-core-harness-listed/cat-harness.schema.json"
+    }
+  ],
+  "$defs": {},
+  "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-core-harness-listed/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/core-harness-listed",
+    "sha": "9c6c9d24f43a19bf365419ad5f8f602bbc5a4e77",
+    "pr": "2197/merge",
+    "run": "37362710188"
+  }
+}
