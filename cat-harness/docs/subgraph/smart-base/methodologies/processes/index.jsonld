@@ -4,142 +4,147 @@
   "@type": "bootstrap:Subgraph",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/processes",
+      "@type": "bootstrap:Subgraph",
+      "name": "processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
       "@type": "bootstrap:Process",
       "name": "DIIG — from a health system bottleneck to a costed implementation plan"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_01",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_01",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_02",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_02",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_03",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_03",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_04",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_04",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_05",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_05",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_06",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_06",
       "@type": "bootstrap:SequenceFlow",
       "name": "no — revisit the bottlenecks"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_07",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_07",
       "@type": "bootstrap:SequenceFlow",
       "name": "yes"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_08",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_08",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_09",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_09",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_10",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_10",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_11",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_11",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_12",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_12",
       "@type": "bootstrap:SequenceFlow",
       "name": "no — adapt"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_13",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_13",
       "@type": "bootstrap:SequenceFlow",
       "name": "yes"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/flow/SF_DIIG_14",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_14",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/lane/Lane_BusinessAnalyst",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_BusinessAnalyst",
       "@type": "cat-harness:Lane",
       "name": "Business analyst"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_ProgrammeManager",
       "@type": "cat-harness:Lane",
       "name": "Programme manager"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_DetermineInterventions",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_DetermineInterventions",
       "@type": "bootstrap:ProcessNode",
       "name": "Determine appropriate digital health interventions"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_DevelopBudget",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_DevelopBudget",
       "@type": "bootstrap:ProcessNode",
       "name": "Develop a budget"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_FormTeam",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_FormTeam",
       "@type": "bootstrap:ProcessNode",
       "name": "Form the team and establish goals"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_LinkEnterpriseArchitecture",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_LinkEnterpriseArchitecture",
       "@type": "bootstrap:ProcessNode",
       "name": "Link to the enterprise architecture"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_MapCurrentState",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_MapCurrentState",
       "@type": "bootstrap:ProcessNode",
       "name": "Map the current state and confirm bottlenecks"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_MonitorAndUseData",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_MonitorAndUseData",
       "@type": "bootstrap:ProcessNode",
       "name": "Monitor, and use data effectively"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_PlanImplementation",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_PlanImplementation",
       "@type": "bootstrap:ProcessNode",
       "name": "Plan the implementation"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_PrioritizeBottlenecks",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_PrioritizeBottlenecks",
       "@type": "bootstrap:ProcessNode",
       "name": "Prioritize, and map to health system challenges"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/A_ValueProposition",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_ValueProposition",
       "@type": "bootstrap:ProcessNode",
       "name": "Make the value proposition and set next steps"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/End_Process_DIIG",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/End_Process_DIIG",
       "@type": "bootstrap:ProcessNode",
       "name": "Costed implementation plan, and its case"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/GW_ProgressCheck4",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/GW_ProgressCheck4",
       "@type": "bootstrap:ProcessNode",
       "name": "Progress check 4.5: requirements settled?"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/GW_ProgressCheck8",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/GW_ProgressCheck8",
       "@type": "bootstrap:ProcessNode",
       "name": "Progress check 8.5: implementation on track?"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/Start_Process_DIIG",
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/Start_Process_DIIG",
       "@type": "bootstrap:ProcessNode",
       "name": "A health programme needs digital support"
     }

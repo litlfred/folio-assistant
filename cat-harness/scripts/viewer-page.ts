@@ -270,6 +270,9 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
     links,
     ...(harnesses ? { harnesses } : {}),
     navbarRow: navbarRowData(o.built),
+    // INLINED, like the narrow-viewport rules below: these pages fetch nothing
+    // (`state-visualizer.test.ts` holds them to it). Bean `lhvt`.
+    inlineRowAssets: navbarRowAssets(),
   });
   return railed === undefined ? undefined : withNarrowViewport(withSavedScheme(railed));
 }
@@ -343,6 +346,18 @@ export function schemeKey(): string {
   if (!m) throw new Error("viewer-page: docs-ui.js no longer declares SCHEME_KEY — the dashboards cannot follow the reader's scheme");
   schemeKeyCache = m[1]!;
   return schemeKeyCache;
+}
+
+let rowAssets: { js: string; css: string } | undefined;
+/** The harness icon row's script and stylesheet, read once — inlined by {@link withViewerNav}. */
+function navbarRowAssets(): { js: string; css: string } {
+  // declared-path-literal: platform assets beside this module, not a folio
+  // directory. The docs site publishes them at the same relative paths.
+  rowAssets ??= {
+    js: readFileSync(new URL("../docs/assets/js/navbar-row.js", import.meta.url), "utf-8"),
+    css: readFileSync(new URL("../docs/assets/css/navbar-row.css", import.meta.url), "utf-8"),
+  };
+  return rowAssets;
 }
 
 let narrowCss: string | undefined;

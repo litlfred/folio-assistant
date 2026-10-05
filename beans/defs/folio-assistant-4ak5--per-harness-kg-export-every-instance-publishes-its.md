@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T21:36:29Z
-updated_at: 2026-10-04T08:16:28Z
+updated_at: 2026-10-05T05:09:44Z
 parent: folio-assistant-whlc
 ---
 
@@ -83,3 +83,15 @@ Scope agreed with the owner: items 1 and 5. Items 2–4 (the split, the root ind
 ## Owner ruling 2026-10-04 — the root index is built at publish time, not committed
 
 Asked: build the root index (item 3) only when the site publishes, with no committed copy at the repository root? The owner answered **"1"**, i.e. *"Yes, build it at publish time only."* So item 3's "plus a committed root copy" and the matching Done-when clause are dropped. Why: a committed generated file conflicts whenever two PRs change the set of harnesses, the churn measured across this session's merges. q8ar's slices already work this way. Item 3 stays with session_01AxhsSvodhTgaioG1nUBWkh.
+
+
+
+## Claimed 2026-10-05: item 2 only (session_01BccmnVFbtRpKxM39kyVw9q, branch claude/4ak5-item2-split-cat-harness-jsonld)
+
+Item 2 was offered to session_01AxhsSvodhTgaioG1nUBWkh, which held c1m4/f233/q8ar/ax6r. That session stalled, and this session took over its work, including #1955 (owner, 2026-10-04). Item 3 landed with #1955. Items 1 and 5 landed from session_01Jf39Vh4B8EQT6TBYzTtMCA.
+
+**Owner ruling, 2026-10-05: the full split (option B).**
+- cat-harness.jsonld is exported in instance scope, so it holds only cat-harness's own declared directories.
+- Every dropped @id gets a deprecated tombstone, with owl:deprecated and dcterms:isReplacedBy pointing at the owning instance's export, for one release. GitHub Pages cannot redirect a fragment IRI.
+- gen-subgraph-jsonld frames each instance with its own export's @ids, so the committed subgraph tree stops minting cat-harness.jsonld#<foreign> fragments.
+- Measured before the change: about 850 of cat-harness.jsonld's nodes belong to other instances (folio-assistant-core ~511, fhir-harness ~142, folio-assistant-sci ~107, smart-base ~87, who-iris 2).

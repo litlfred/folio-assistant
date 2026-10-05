@@ -82,7 +82,7 @@ describe("publishedInstances", () => {
   });
 
   test("this instance's own export carries no --instance and is not counted", () => {
-    expect(publishedInstances('bun run cat-harness/scripts/kg-export.ts             --out "./_site/${STUB}.jsonld"', "w.yml")).toEqual([]);
+    expect(publishedInstances('bun run cat-harness/scripts/kg-export.ts             --scope instance --out "./_site/${STUB}.jsonld"', "w.yml")).toEqual([]);
   });
 });
 

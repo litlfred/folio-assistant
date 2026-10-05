@@ -193,9 +193,7 @@ them in your PR body so the steward can copy them. That list is the
 association between a PR and its beans.
 
 **Where to read it depends on the state-branch cutover** (arc `fs43`, bean
-`9ofm`). Bean `ugxd` moves the queue to its OWN branch,
-`cat/cat-harness/merge-queue`, ahead of `fs43` — §"Where the queue is GOING"
-below — and where the two disagree, that section is the newer plan:
+`9ofm`):
 - **Before the cutover**, `main` is authoritative. Entries reach it only through
   the steward's own PRs, a PR cycle late, so the edited-in-place status comment
   on your PR is the live answer.
@@ -220,58 +218,6 @@ signal either way: the bean is where the conversation is kept.
 repository (bean `1hjm`). The `merge-guard` commit status (bean `uoob`) checks
 the six submission points mechanically; once it lands, run it against your own
 PR before you announce.
-
-## Where the queue is GOING, and the tool that will write it (bean `najo`)
-
-**Not cut over yet.** The queue is still on `main` under `beans/queue/`
-(owner, 2026-10-05: *"Land code now, switch later"*). The store and CLI below
-landed first; the cutover to its own branch, `cat/cat-harness/merge-queue`, is
-bean `ugxd`, a separate small PR during which the steward pauses queue writes.
-Until it lands, `merge:queue:read` reads the checkout and `merge:queue:record`
-**refuses** — keep committing entries to `main` as §"The steward answers in the
-queue" describes. The branch's `manifest.json` says which state it is in.
-
-Why the queue comes off `main` at all is structural: an entry on `main` arrives
-only through a pull request, and **the steward does no development work** — it
-must not open PRs of its own, which would have it setting its own priority in
-the queue it manages, spending the CI the queue is starved of, and judging its
-own head. For the two days after the graph was declared it therefore held **no
-entry at all**: the one actor whose decisions it records was the one actor that
-could not write to it.
-
-After the cutover:
-
-```sh
-bun run state:mount                  # the queue on disk at its declared path
-bun run merge:queue:read             # the recorded decisions
-bun run merge:queue:record --pr <n> --class <c> --rank <r> --rule <id> \
-    --reason "<why>" --by <your session URL>          # ...or --position <n> for an owner override
-```
-
-- **`record` pushes by default**, as a splice onto the branch tip carrying the
-  blob each file was read at. So the entry is live for every sibling at once,
-  and a steward who edited the same entry since gets this write stopped as a
-  **`conflict`** with the path named rather than overwritten. On a conflict,
-  re-mount and decide again; nothing was pushed and the local edit is the only
-  copy. `--no-push` leaves it in the mount, where **nobody else can see it**.
-- **`--reason` and `--by` are required.** A placement nobody can explain cannot
-  be honoured or safely undone by the next steward, and every session here acts
-  with the owner's token, so the session link is the only thing that says which
-  steward decided.
-- **An unreachable queue is not an empty one.** `merge:queue:read` exits 4 and
-  `readQueueEntries` THROWS when the branch is not mounted, because "no
-  decisions recorded, all clear" printed over a graph nobody read is `dh4f`.
-  Exit 1 — declared-but-absent — is a different answer with a different remedy.
-- **The decisions are read back.** `merge:steward` feeds recorded overrides into
-  the table's `ownerOverride` input and their positions into the order, treats
-  an un-cleared ejection as refused, and prints a live hold. Until 2026-10-04 it
-  passed none of them: a decision nobody reads back is a decision nobody took.
-
-**The pairing with `workflows/` is what this cost.** The queue held the
-decisions and a finished train run next door held the evidence they met, in one
-store. `beans/` is still on `main` until arc `fs43` lands (beans `9ofm`,
-`p3ny`), so for now the two are one `state:mount` apart. That trade was made
-knowingly: the pairing was costing the graph every one of its nodes.
 
 ## Placement is computed, not chosen
 
@@ -469,7 +415,7 @@ per-checkout `git config`.
 never the web button, never `merge_pull_request` from an MCP tool, and never
 by marking a PR ready or labelling it yourself first. The script
 (`cat-harness/scripts/merge-guard.ts`, bean `uoob`, child (f) of `nok9`) is
-the merge: it evaluates seven checks over GitHub's live facts, and performs
+the merge: it evaluates eight checks over GitHub's live facts, and performs
 the PUT, pinned to the head it evaluated, only when every one passes.
 
 Owner ruling 2026-10-03, after three PRs were landed unfinished by a steward
@@ -481,7 +427,7 @@ calling the PUT directly on the same day:
 | #1960 | no `ready-to-merge`, no `ready:` comment, `- [ ] CI green` in the body | 3, 4, 6 |
 | #1957 | the steward itself called `ready_for_review` and added `ready-to-merge` 75 s before merging; no `ready:` comment | 2, 3 |
 
-The seven checks, each named in a refusal by number and id:
+The eight checks, each named in a refusal by number and id:
 
 1. **`base`** — open, based on `main`, and the base is not the head branch of
    a merged PR. A stacked PR is retargeted by its owning session first.
@@ -519,6 +465,18 @@ The seven checks, each named in a refusal by number and id:
 7. **`open-question`** — no comment after the marker asks the owner or the
    Merge Manager a question (a heuristic; its limits are on `openQuestions`
    in the script — a fresh `ready:` after the answer moves the window).
+8. **`mergeable`** — GitHub says the head still merges cleanly into `main`
+   (bean `vihx`). Check 5's runs tested the head merged with `main` **as
+   `main` was when the head was pushed**; once `main` moves, a stale green
+   head with a valid marker passed checks 1-7 while it conflicted (#1898,
+   and two HTTP 405 "merge conflicts" refusals on 2026-10-05). The PR API's
+   `mergeable: false` (`mergeable_state: dirty`) refuses **not-ready** —
+   merge `main` into the head and re-sign `ready:`. `mergeable: null` means
+   GitHub has not computed it yet: the guard re-asks for up to 14 s, then
+   reports **unknown**, never a pass. `unstable` and `blocked` pass here,
+   because they are about checks and reviews, which check 5 and the owner
+   judge. The status workflow does not fire when `main` moves, so a posted
+   `success` can go stale on exactly this check; `--merge` re-evaluates live.
 
 Exit 0 is pass (or merged), 1 refused, **2 could not determine — never a
 pass.** A refusal is handed back to the owning session through
@@ -535,7 +493,7 @@ like #1937's, is refused.
 
 **The status has four states, and red means wrong, not unfinished.** A PR
 that is merely not ready yet (a draft, no marker, no label, an unticked box,
-CI still running, an open question) posts `pending`. Only a defect posts
+CI still running, an open question, a conflict with `main`) posts `pending`. Only a defect posts
 `failure`: a base that is not `main` or is dead, `needs-merge-human`, red CI
 on the head, or a marker or ready-flip by a session other than the PR's own.
 `success` is pass and `error` is could-not-determine. The status is posted on

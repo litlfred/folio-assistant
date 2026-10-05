@@ -621,6 +621,46 @@ export function navbarRowData(built: string): unknown {
 }
 
 /**
+ * The icon row's destinations, made absolute on the platform's site.
+ *
+ * The row's hrefs and folder paths are site-absolute (`/todos/`). On a FOLIO's
+ * site the same path names the folio's own root, where none of them exists
+ * (owner, 2026-10-05: "still missing navbar icons on upper left" on smart-ra).
+ * `docs-ui.js`'s `withBase` leaves an absolute URL alone, so this holds
+ * whatever base the script works out for itself.
+ */
+export function rebaseNavbarRow(row: unknown, platformBase: string): unknown {
+  if (!row || typeof row !== "object") return row;
+  const at = (v: unknown) => (typeof v === "string" && v.startsWith("/") ? `${platformBase}${v}` : v);
+  const r = row as { hrefs?: Record<string, unknown>; folders?: Array<Record<string, unknown>> };
+  return {
+    ...r,
+    ...(r.hrefs ? { hrefs: Object.fromEntries(Object.entries(r.hrefs).map(([k, v]) => [k, at(v)])) } : {}),
+    ...(Array.isArray(r.folders) ? { folders: r.folders.map((f) => ("path" in f ? { ...f, path: at(f.path) } : f)) } : {}),
+  };
+}
+
+/** The attribute marking the platform UI a foreign page loads, so a second pass adds none. */
+export const PLATFORM_UI_ATTR = "data-fa-platform-ui";
+
+/**
+ * Load the platform's `docs-ui` stylesheet and script into a FOLIO's page.
+ *
+ * The rail itself is static, but its icon row is drawn by `docs-ui.js` from
+ * `#fa-navbar-row`, and a folio's site carries neither file. Both are loaded
+ * from the platform's published site, once, before `</head>`.
+ */
+export function withPlatformUi(html: string, platformBase: string): string {
+  if (html.includes(PLATFORM_UI_ATTR)) return html;
+  const head = html.search(/<\/head>/i);
+  if (head < 0) return html;
+  const tags =
+    `<link rel="stylesheet" href="${platformBase}/assets/css/docs-ui.css" ${PLATFORM_UI_ATTR}>` +
+    `<script src="${platformBase}/assets/js/docs-ui.js" defer ${PLATFORM_UI_ATTR}></script>`;
+  return html.slice(0, head) + tags + html.slice(head);
+}
+
+/**
  * The NAMES the rail shows, read off the same `_data/harness.json` every other
  * surface reads: the harness's own display name (`C@T Harness`, for the header
  * and the rows' descriptions) and the site's title (for the home row).
@@ -975,16 +1015,18 @@ export function railStandalonePages(
         instance: named.harness ?? instanceName,
         ...(homeLabel ? { homeLabel } : {}),
         toRoot,
+        // The row's files and its site-root hrefs are the PLATFORM's (bean `lhvt`).
+        assetRoot: linkRoot,
         ...(mark ? { mark } : {}),
         links,
         ...(harnesses ? { harnesses } : {}),
-        navbarRow: navbarRowData(built),
+        navbarRow: foreign ? rebaseNavbarRow(navbarRowData(built), foreign.platformBase) : navbarRowData(built),
       });
       if (after === undefined) {
         skipped.push(rel);
         continue;
       }
-      writeFileSync(abs, after);
+      writeFileSync(abs, foreign ? withPlatformUi(after, foreign.platformBase) : after);
       injected++;
     }
   };
