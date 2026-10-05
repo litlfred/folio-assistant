@@ -245,7 +245,7 @@ describe("a FOLIO's site (folio-staging.yml): platform links point at the platfo
     const html = readFileSync(join(root, "index.html"), "utf-8");
     expect(html).toContain(`<script src="${BASE}/assets/js/docs-ui.js" defer`);
     expect(html).toContain(`href="${BASE}/assets/css/docs-ui.css"`);
-    const row = /<script type="application\/json" id="fa-navbar-row">(.*?)<\/script>/s.exec(html);
+    const row = /<script type="application\/json" id="fa-navbar-row"[^>]*>(.*?)<\/script>/s.exec(html);
     expect(row).not.toBeNull();
     const data = JSON.parse(row![1]!) as { hrefs?: Record<string, string> };
     const targets = Object.values(data.hrefs ?? {});
