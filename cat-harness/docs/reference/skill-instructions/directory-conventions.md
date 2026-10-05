@@ -887,6 +887,61 @@ layer either names its sources or says why not: a `library/` is derived from an
 *external* publication, which is not a declared graph. Silence is not an answer. The
 gate is `check:derived-from` (bean `nama`, step 2).
 
+### The storage clock — a derived artefact is kept no closer to main than its inputs (STRICT)
+
+Owner, 2026-10-05, after one `state:push` turned every open PR red: *"how to
+fix process so wont fail?"* and *"use dependencies between KG derivations and
+such (caches, auto-docs, etc)"*. Bean `0b8c`, #2230.
+
+**A derived artefact can be current in a commit only if every input it is
+computed from is kept in the commit.** Follow `derivedFrom` upstream; if any
+input is kept on a BRANCH (a `source` that is not a directory, or a
+`storage`), that input moves without a commit, and a committed copy of the
+artefact is stale on main and on every open PR the moment somebody writes
+there. No `:check` gate can hold it current, because the check and the input
+are on different clocks.
+
+**A visualisation is a derived artefact of the directory it shows.** The
+edge is implicit: a viewer of X is computed from X by definition. So the rule
+covers viewer pages as well as derived directories (caches, auto-docs, IG
+pages).
+
+| inputs, transitively | where the artefact is kept | what holds it current |
+|---|---|---|
+| all in the checkout | committed | its `:check` gate, at every commit |
+| any on a branch | **built at publish, never committed** — gitignored | `derive:publish`, which runs its declared `writer` after `state:mount` |
+
+What is declared:
+
+- the visualisation (or derived directory) names its `writer` — the script
+  `derive:publish` runs. A visualisation built at publish with no writer is
+  refused (`publish-without-writer`): nothing would build it;
+- nothing else. Which artefacts are built at publish is DERIVED from the edges
+  and the inputs' storage, never listed — not in a workflow, not here. The
+  next graph moved onto a branch (beans, todos) carries its viewers with it
+  by declaring their writers.
+
+What is checked, by `check:derived-from`:
+
+- a **tracked** artefact with a branch-kept input is refused
+  (`committed-from-branch`), naming the chain to the input;
+- `--list` on `derive:publish` prints what will be built and why.
+
+What the readers do: a visualisation built at publish **resolves by its
+writer**, not by the disk (`visualisationResolves` in `schemas/cat-harness.ts`).
+Subgraph coverage, harness tiles and viewer declarations all ask that one
+function, so the generated `docs/_data/harness.json` is the same whether or not a checkout
+happens to hold a locally built copy. Asking the disk would emit one answer
+locally and another in CI.
+
+**The measured failure.** The fsh-guts viewer was committed on main while
+`fsh-guts/` is kept on `cat/cat-harness/fsh-guts`. On 2026-10-05 a `state:push`
+(bean `rva2`) relocated files there, and `fsh-guts:viz:check` went red on main
+and on every open PR at once, until someone regenerated and committed the page —
+which a sibling then had to repeat on its own PR. Bean `foaq` was the same
+design seen from a dirty local mount. A take-base merge pattern for the page
+(it had one) only made the collision cheap; this removes it.
+
 ### Publishing a subgraph's contents — the declared Subgraph node is the container (STRICT)
 
 Owner, 2026-10-03: *"todos = subgraph node + todo content nodes"*. A generator

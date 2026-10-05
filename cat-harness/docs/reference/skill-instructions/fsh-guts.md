@@ -99,6 +99,13 @@ the branch. A relocation is both halves.
   reporting a clean, empty corpus. CI mounts before it reads.
 - **`fsh-guts/logs/` stays local scratch.** It is never pushed, and logs
   written before the first mount do not block the mount.
+- **There is no viewer page to commit after a relocation.** The page
+  `cat-harness/docs/fsh-guts/index.md` is derived from this branch, so it is
+  built at publish by `derive:publish` and gitignored (bean `0b8c`, #2230).
+  Before that it was committed, and one relocation made it stale on main and
+  on every open PR at once (2026-10-05). `fsh-guts:viz:check` now judges that
+  the mounted graph renders. The rule is general:
+  [`directory-conventions`](directory-conventions.md) §"The storage clock".
 
 ## Files declare themselves
 

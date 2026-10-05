@@ -77,6 +77,7 @@ import {
   readDeclaration,
   siteDirFor,
   visualisationsOf,
+  visualisationResolves,
   defaultGraphTypologies,
   instanceDirectories,
   nestedDirectories,
@@ -697,7 +698,9 @@ function tileFor(
   const declared = new Map<string, string>();
   for (const d of dirs) {
     for (const v of visualisationsOf(d.coverage, d.id)) {
-      if (!existsSync(join(repoRoot, v.ref))) continue;
+      // Built at publish (bean 0b8c) counts as present: its page is never
+      // committed, and the answer must not depend on a local copy.
+      if (!visualisationResolves(v, (p) => existsSync(join(repoRoot, p)))) continue;
       const page = publishedRefOf(v.ref);
       if (page === undefined) continue;
       for (const kind of d.graphTypologies ?? []) {
@@ -815,7 +818,7 @@ function tileFor(
       if (!(d.graphTypologies ?? []).includes(kind)) continue;
       for (const v of visualisationsOf(d.coverage, d.id)) {
         if ((v.publish === "staging-only") !== stagingOnly) continue;
-        if (existsSync(join(siteDir, "..", "..", v.ref))) return v.ref;
+        if (visualisationResolves(v, (p) => existsSync(join(siteDir, "..", "..", p)))) return v.ref;
       }
     }
     return undefined;
@@ -946,7 +949,7 @@ function tileFor(
     // then has a title)"* — and checking only the first would report a clean
     // directory whose second viewer is missing.
     for (const v of visualisationsOf(d.coverage, d.id)) {
-      if (!existsSync(join(siteDir, "..", "..", v.ref))) {
+      if (!visualisationResolves(v, (p) => existsSync(join(siteDir, "..", "..", p)))) {
         findings.push(
           `${decl.name}/${d.id}: declares visualiser "${v.title}" at "${v.ref}", ` +
             `which does not resolve on disk.`,
