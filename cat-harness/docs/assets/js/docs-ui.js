@@ -10610,8 +10610,6 @@
     unknown: "currency unknown"
   };
 
-  var REPO_BLOB = "https://github.com/litlfred/folio-assistant/blob/main/";
-
   /** Short SHA for display; the full value stays in the title attribute. */
   function shortSha(s) {
     if (!s) return null;
@@ -10824,10 +10822,32 @@
     head.appendChild(el("span", { class: "fa-qa-subject" }, doc.subject || ""));
     head.appendChild(el("span", { class: "fa-qa-counts" }, qaCountsLine(doc)));
 
-    (doc.sidecars || []).forEach(function (p) {
-      var a = el("a", { class: "fa-qa-sidecar-link", href: safeHref(REPO_BLOB + p), rel: "noopener" }, p);
-      head.appendChild(a);
-    });
+    // Each result file's ADDRESS comes from the projection (`sidecarLinks`,
+    // stamped by `qa-result-link.ts`), never composed here. This used to be
+    // `blob/main/` + `p`, which was wrong twice (bean `bejf`, #2217). `p` is
+    // relative to the instance, not the repository, and a derived result's
+    // record is the `qa-reports` branch, keyed by commit, not `main`. A
+    // projection with no stamped links shows the paths as plain text, because a
+    // link that 404s invites the click that proves the page broken.
+    var links = doc.sidecarLinks;
+    if (links && links.length) {
+      links.forEach(function (s) {
+        var label = s.path + (s.addressedBy === "tip" ? " (newest stored entry)" : "");
+        var title = s.addressedBy === "entry"
+          ? "Stored on the qa-reports branch, entry " + s.key
+          : s.addressedBy === "tip"
+            ? "Stored on the qa-reports branch; this build did not record which entry, so this opens the branch's index of the newest entry per ref"
+            : "Committed on main";
+        head.appendChild(s.href
+          ? el("a", { class: "fa-qa-sidecar-link", href: safeHref(s.href), rel: "noopener", title: title,
+                      "data-qa-addressed-by": s.addressedBy }, label)
+          : el("code", { class: "fa-qa-sidecar-link", title: "No forge to link to" }, s.path));
+      });
+    } else {
+      (doc.sidecars || []).forEach(function (p) {
+        head.appendChild(el("code", { class: "fa-qa-sidecar-link" }, p));
+      });
+    }
 
     var close = el("button", { type: "button", class: "fa-qa-close", title: "Close this panel" },
       "✕ Close");
