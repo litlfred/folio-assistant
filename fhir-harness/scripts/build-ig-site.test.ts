@@ -493,8 +493,8 @@ describe("composeIgSite: a staged IG moved into a host Jekyll source", () => {
 
 describe("relinkPublisherOutputs — the Publisher's downloads live on the published IG", () => {
   test("points a bare .zip/.tgz link at the canonical site", () => {
-    const r = relinkPublisherOutputs("* [IG Package](package.tgz)\n* [JSON](definitions.json.zip)", "http://smart.who.int/immunizations/");
-    expect(r.text).toBe("* [IG Package](http://smart.who.int/immunizations/package.tgz)\n* [JSON](http://smart.who.int/immunizations/definitions.json.zip)");
+    const r = relinkPublisherOutputs("* [IG Package](package.tgz)\n* [JSON](definitions.json.zip)", "http://example.org/ig/");
+    expect(r.text).toBe("* [IG Package](http://example.org/ig/package.tgz)\n* [JSON](http://example.org/ig/definitions.json.zip)");
     expect(r.count).toBe(2);
   });
   test("leaves pages, paths and absolute URLs alone", () => {
@@ -523,9 +523,9 @@ describe("relinkOffSite — what this build cannot serve goes where it is served
   writeFileSync(join(src, ".github", "skills", "s.yaml"), "x");
   mkdirSync(join(src, "input", "bpmn"), { recursive: true });
   writeFileSync(join(src, "input", "bpmn", "D.bpmn"), "x");
-  const o = { canonical: "http://smart.who.int/trust", sourceBlob: "https://github.com/o/r/blob/main", srcRoot: src, isServed: (t: string) => t === "index.html" };
+  const o = { canonical: "http://example.org/ig", sourceBlob: "https://github.com/o/r/blob/main", srcRoot: src, isServed: (t: string) => t === "index.html" };
   test("a Publisher-only page goes to the published IG", () => {
-    expect(relinkOffSite('<a href="qa.html">QA</a>', o).text).toBe('<a href="http://smart.who.int/trust/qa.html">QA</a>');
+    expect(relinkOffSite('<a href="qa.html">QA</a>', o).text).toBe('<a href="http://example.org/ig/qa.html">QA</a>');
   });
   test("a repository file goes to GitHub, found at its path or under input/", () => {
     const r = relinkOffSite("[s](.github/skills/s.yaml) [d](bpmn/D.bpmn)", o);
