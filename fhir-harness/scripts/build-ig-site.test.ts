@@ -9,7 +9,7 @@ import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
 import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, contrast, dedupeIds, includeTargets, pageNav, relinkArtifacts, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
-import { copyDocsInto, igSiteDocs } from "./stage-ig-sites";
+import { copyDocsInto, igSiteDocs, webpagePalette } from "./stage-ig-sites";
 import type { IgReleases } from "../schemas/ig-releases.ts";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
 
@@ -338,10 +338,26 @@ describe("copyDocsInto (an igSite instance's pages built into its IG site)", () 
     writeFileSync(join(docs, "artifacts.md"), "mine");
     writeFileSync(join(site, "artifacts.md"), "the IG site's");
     const c = copyDocsInto(docs, site);
-    expect(c).toEqual({ copied: 1, collisions: ["artifacts.md"] });
+    expect(c).toEqual({ copied: 1, merged: [], collisions: ["artifacts.md"] });
     expect(readFileSync(join(site, "artifact", "A.md"), "utf-8")).toBe("a");
     expect(readFileSync(join(site, "artifacts.md"), "utf-8")).toBe("the IG site's");
     expect(existsSync(join(site, "README.md"))).toBe(false);
+    rmSync(d, { recursive: true, force: true });
+  });
+});
+
+describe("copyDocsInto: a front-matter-only page declares something ABOUT a generated page", () => {
+  test("its keys land on the generated page's front matter, the page's own keys winning", () => {
+    const d = mkdtempSync(join(tmpdir(), "ig-docs-"));
+    mkdirSync(join(d, "docs"), { recursive: true });
+    mkdirSync(join(d, "site"), { recursive: true });
+    writeFileSync(join(d, "docs", "artifacts.md"), "---\ntitle: mine\nrenders:\n  - x/fhir-artifact-index\nrendered-by: ig-pages\n---\n");
+    writeFileSync(join(d, "site", "artifacts.md"), "---\ntitle: Artifact Index\nparent: Indices\n---\nbody\n");
+    writeFileSync(join(d, "docs", "orphan.md"), "---\nrenders:\n  - y\n---\n");
+    const c = copyDocsInto(join(d, "docs"), join(d, "site"));
+    expect(c.merged).toEqual(["artifacts.md"]);
+    expect(c.collisions).toEqual(["orphan.md (front matter only, and no generated page to lay it on)"]);
+    expect(readFileSync(join(d, "site", "artifacts.md"), "utf-8")).toBe("---\ntitle: Artifact Index\nparent: Indices\nrenders:\n  - x/fhir-artifact-index\nrendered-by: ig-pages\n---\nbody\n");
     rmSync(d, { recursive: true, force: true });
   });
 });
@@ -351,5 +367,15 @@ describe("igSiteDocs", () => {
     expect(igSiteDocs(join(import.meta.dir, "..", "..", "smart-trust"))).toBe(join(import.meta.dir, "..", "..", "smart-trust", "docs/"));
     // smart-base holds an IG menu too, but its root is a harness landing page.
     expect(igSiteDocs(join(import.meta.dir, "..", "..", "smart-base"))).toBeUndefined();
+  });
+});
+
+describe("webpagePalette inherits along needs (bean `mftp`)", () => {
+  test("smart-trust declares no theme and wears smart-base's, found through smart-ig", () => {
+    const root = join(import.meta.dir, "..", "..");
+    const t = webpagePalette(root, "smart-trust");
+    expect(t.palette).toBeDefined();
+    expect(t.note).toContain("inherited from smart-base");
+    expect(webpagePalette(root, "smart-base").note).not.toContain("inherited");
   });
 });

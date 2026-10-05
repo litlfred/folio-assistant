@@ -23,7 +23,7 @@
  * @module smart-base/scripts/ig-pages-committed.test
  */
 import { describe, expect, it } from "bun:test";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { IgIdentitySchema, igSiteData, readIgIdentity } from "../platform";
@@ -40,8 +40,10 @@ function banner(src: string): string {
 }
 
 describe("the committed pages: the banner's identity is the index's", () => {
+  // smart-trust's docs build into its IG site (`igSite`, bean `mftp`), whose
+  // index the IG writes; the banner is on every artefact page it commits.
   it("smart-trust, whose chrome IS its own, keeps its draft watermark", () => {
-    const b = banner(page("smart-trust"));
+    const b = banner(readFileSync(join(ROOT, "smart-trust", "docs", "artifact", "ActorDefinition-Holder.md"), "utf8"));
     expect(b).toContain(">smart.who.int.trust</a>");
     expect(b).toContain('class="ig-status-draft"');
   });
@@ -65,10 +67,14 @@ describe("the committed pages: the landing page", () => {
     expect(index).toBeGreaterThan(include);
   });
 
-  it("smart-trust, generated without --summary, is unchanged: no include, artefact-index title", () => {
-    const src = page("smart-trust");
+  // Since bean `mftp` smart-trust commits no landing page: its IG site's own
+  // index is the root, and what it commits for the artefact index is the
+  // viewer declaration alone, laid onto the IG site's `artifacts` page.
+  it("smart-trust commits no landing page, only the artefact index's viewer declaration", () => {
+    expect(existsSync(join(ROOT, "smart-trust", "docs", "index.md"))).toBe(false);
+    const src = readFileSync(join(ROOT, "smart-trust", "docs", "artifacts.md"), "utf8");
     expect(src).not.toContain("harness_details.html");
-    expect(src).toMatch(/^---\ntitle: "WHO SMART Trust — artefact index"\n/);
+    expect(src).toMatch(/^---\ntitle: "WHO SMART Trust — artefact index"\nrenders:\n {2}- smart-trust\/fhir-artifact-index\nrendered-by: ig-pages\n---\n$/);
   });
 });
 

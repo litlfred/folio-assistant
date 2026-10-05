@@ -32,10 +32,9 @@
  * @module smart-trust/scripts/tests/pages-markdown.test
  */
 import { describe, expect, it } from "bun:test";
-import { VIEW_PAGE } from "../../platform.ts";
+import { artifactVariables, VIEW_PAGE } from "../../platform.ts";
 import { existsSync, readFileSync, readdirSync } from "fs";
 import { join, resolve } from "path";
-import { artifactVariables } from "../../../fhir-harness/scripts/build-ig-site";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const DOCS = join(INSTANCE, "docs");

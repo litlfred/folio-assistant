@@ -38,7 +38,7 @@
 
 import { igApiHubFill } from "./ig-api-views.ts";
 import { execFileSync } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join, relative, resolve, sep } from "node:path";
 import { instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
 import { instanceThemes } from "../../cat-harness/schemas/theme-by-ref.js";
@@ -61,14 +61,50 @@ export interface IgToBuild {
   declaredAs: string;
 }
 
-/** The palette of the one webpage theme an instance declares, or why there is none. */
+/**
+ * The palette of the one webpage theme an instance declares, or why there is none.
+ *
+ * An instance that declares no webpage theme INHERITS the nearest one along
+ * its `needs` chain, breadth-first — as it inherits its dependencies'
+ * directories. smart-trust is the case (bean `mftp`): its WHO theme moved to
+ * `smart-base/themes/` in the smart-* separation (`kg83`), because the theme
+ * is the WHO template's rather than one IG's, and from then on the IG site
+ * built in just-the-docs' default scheme. Two webpage themes at the same
+ * distance are refused, as two in one instance are: nothing says which.
+ */
 export function webpagePalette(repoRoot: string, instance: string): { palette?: SitePalette; note: string } {
-  const found = instanceThemes(repoRoot, instance);
-  if (!found.ok) return { note: `${instance}: no webpage theme (${found.miss.kind})` };
-  const web = found.themes.filter((t) => t.kind === "webpage");
-  if (web.length > 1) throw new Error(`${instance} declares ${web.length} webpage themes (${web.map((t) => t.id).join(", ")}) — nothing says which dresses its IG site`);
-  if (web.length === 0) return { note: `${instance}: declares themes, none of kind webpage` };
-  return { palette: web[0].palette as SitePalette, note: `${instance}: webpage theme ${web[0].id}` };
+  const seen = new Set<string>([instance]);
+  let level = [instance];
+  const misses: string[] = [];
+  while (level.length > 0) {
+    const hits: { from: string; id: string; palette: SitePalette }[] = [];
+    for (const name of level) {
+      const found = instanceThemes(repoRoot, name);
+      if (!found.ok) {
+        misses.push(`${name}: ${found.miss.kind}`);
+        continue;
+      }
+      const web = found.themes.filter((t) => t.kind === "webpage");
+      if (web.length > 1) throw new Error(`${name} declares ${web.length} webpage themes (${web.map((t) => t.id).join(", ")}) — nothing says which dresses ${instance}'s IG site`);
+      if (web.length === 1) hits.push({ from: name, id: web[0]!.id, palette: web[0]!.palette as SitePalette });
+      else misses.push(`${name}: declares themes, none of kind webpage`);
+    }
+    if (hits.length > 1) throw new Error(`${instance} inherits ${hits.length} webpage themes at the same distance (${hits.map((h) => `${h.from}/${h.id}`).join(", ")}) — nothing says which dresses its IG site`);
+    if (hits.length === 1) {
+      const h = hits[0]!;
+      return { palette: h.palette, note: h.from === instance ? `${instance}: webpage theme ${h.id}` : `${instance}: webpage theme ${h.id}, inherited from ${h.from}` };
+    }
+    level = level
+      .flatMap((name) => instanceNeeds(repoRoot, name))
+      .filter((n) => !seen.has(n) && (seen.add(n), true));
+  }
+  return { note: `${instance}: no webpage theme, its own or along its needs (${misses.join("; ")})` };
+}
+
+/** The instances `name` declares it `needs`, by name. */
+function instanceNeeds(repoRoot: string, name: string): string[] {
+  const root = instanceRootsIn(repoRoot).find((r) => (readDeclaration(r)?.name ?? basename(r)) === name);
+  return root ? (readDeclaration(root)?.needs ?? []) : [];
 }
 
 /**
@@ -105,9 +141,20 @@ export function igSiteDocs(root: string): string | undefined {
  * path is two answers for one URL, and the generator is supposed to have
  * dropped every page the IG site writes itself. The directory's README is
  * repository documentation, not a page.
+ *
+ * ONE exception, and it carries no body: a docs page that is front matter
+ * ONLY declares something ABOUT the page the IG build generated there — the
+ * artefact index's viewer declaration on `artifacts.md` (`gen-ig-pages`) —
+ * so its keys are laid onto that page's front matter, the page's own keys
+ * winning. A front-matter-only page with nothing to land on is a collision
+ * in reverse, and reported the same way.
  */
-export function copyDocsInto(docs: string, site: string): { copied: number; collisions: string[] } {
+/** A file that is a front-matter block and nothing else (whitespace aside). */
+const FRONT_MATTER_ONLY = /^---\n([\s\S]*?)\n---\s*$/;
+
+export function copyDocsInto(docs: string, site: string): { copied: number; merged: string[]; collisions: string[] } {
   let copied = 0;
+  const merged: string[] = [];
   const collisions: string[] = [];
   const walk = (rel: string): void => {
     for (const name of readdirSync(join(docs, rel)).sort()) {
@@ -115,6 +162,22 @@ export function copyDocsInto(docs: string, site: string): { copied: number; coll
       if (!rel && name === "README.md") continue;
       if (statSync(join(docs, r)).isDirectory()) {
         walk(r);
+        continue;
+      }
+      const fmOnly = FRONT_MATTER_ONLY.exec(readFileSync(join(docs, r), "utf-8"));
+      if (fmOnly) {
+        const target = join(site, r);
+        const page = existsSync(target) ? readFileSync(target, "utf-8") : undefined;
+        if (page === undefined || !page.startsWith("---\n")) {
+          collisions.push(`${r} (front matter only, and no generated page to lay it on)`);
+          continue;
+        }
+        const end = page.indexOf("\n---", 3);
+        const own = new Set([...page.slice(4, end).matchAll(/^([A-Za-z_][\w-]*):/gm)].map((m) => m[1]));
+        // Each top-level key with its indented continuation lines, skipping the page's own.
+        const blocks = fmOnly[1]!.split(/\n(?=[A-Za-z_])/).filter((b) => !own.has(/^([A-Za-z_][\w-]*):/.exec(b)?.[1] ?? ""));
+        writeFileSync(target, `${page.slice(0, end)}\n${blocks.join("\n")}${page.slice(end)}`);
+        merged.push(r);
         continue;
       }
       if (existsSync(join(site, r))) {
@@ -127,7 +190,7 @@ export function copyDocsInto(docs: string, site: string): { copied: number; coll
     }
   };
   walk("");
-  return { copied, collisions };
+  return { copied, merged, collisions };
 }
 
 /**
@@ -203,7 +266,7 @@ if (import.meta.main) {
     if (r.siteData.refused.length) process.exit(1);
     if (docs) {
       const c = copyDocsInto(docs, site);
-      console.error(`${ig.instance}: igSite — ${c.copied} file(s) from ${relative(resolve("."), docs)} built into the IG site at /${ig.instance}/`);
+      console.error(`${ig.instance}: igSite — ${c.copied} file(s) from ${relative(resolve("."), docs)} built into the IG site at /${ig.instance}/${c.merged.length ? `; front matter laid onto ${c.merged.join(", ")}` : ""}`);
       if (c.collisions.length) {
         console.error(`${ig.instance}: ${c.collisions.length} file(s) the IG site already writes — refusing two answers for one URL:\n  ${c.collisions.slice(0, 20).join("\n  ")}`);
         process.exit(1);

@@ -210,8 +210,18 @@ describe("fhir-artifact-index — a viewer inside a COMPOSED directory is linked
    *
    * Positive, for the reason the who-iris case gives: the finding's absence
    * would equally follow from the viewer being deleted.
+   *
+   * smart-trust's docs are `igSite` since bean `mftp`: its artefact index is
+   * the IG site's own `artifacts` page, and the committed `docs/artifacts.md`
+   * that carries the viewer declaration is laid onto it at build time.
    */
-  for (const name of ["smart-trust", "smart-base", "smart-immunizations"]) {
+  it("smart-trust's fhir-artifact-index tile links its IG site's artifacts page", () => {
+    const h = harnesses.find((x) => x.name === "smart-trust");
+    expect(h, "smart-trust is not in the report").toBeDefined();
+    const v = (h!.visualisations ?? []).find((x) => x.kind === "fhir-artifact-index");
+    expect(v?.path).toBe("/smart-trust/artifacts.html");
+  });
+  for (const name of ["smart-base", "smart-immunizations"]) {
     it(`${name}'s fhir-artifact-index tile links /${name}/`, () => {
       const h = harnesses.find((x) => x.name === name);
       expect(h, `${name} is not in the report`).toBeDefined();

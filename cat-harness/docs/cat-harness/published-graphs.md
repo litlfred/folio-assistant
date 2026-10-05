@@ -176,7 +176,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - [SMART Base]({{ '/smart-base/' | relative_url }})
 - [smart-immunizations]({{ '/smart-immunizations/' | relative_url }})
-- [smart-trust]({{ '/smart-trust/' | relative_url }})
+- [smart-trust]({{ '/smart-trust/artifacts.html' | relative_url }})
 
 ### `folio`
 

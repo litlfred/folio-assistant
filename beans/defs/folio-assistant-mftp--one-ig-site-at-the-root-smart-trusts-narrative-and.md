@@ -38,4 +38,6 @@ Local build of the merged site (fork `litlfred/smart-trust` @ `25771f6`, jekyll 
 - Still broken on the root pages: Publisher-generated downloads (`*.zip`, `qa.html`, `video_tutorial.html`), an upstream case defect (`StructureDefinition-hcert.html`), and `openapi/` + `fhir-artifact-index/` — those two are served mounts that exist in production and that the old `/ig/` location could never reach.
 - Build time ~29 s.
 
-Not done here: smart-trust's IG site has no webpage theme (`no-themes-directory`: the theme moved to smart-base in `kg83`), so it renders in just-the-docs' default scheme. Separate item.
+Theme: smart-trust's IG site had no webpage theme (`no-themes-directory`: the theme moved to smart-base in `kg83`). Owner, 2026-10-05: *"fix upstream smart-base issues as needed"* -- `webpagePalette` now inherits the nearest webpage theme along `needs` (smart-trust -> smart-ig -> smart-base: `who-smart-ig`), and the site renders WHO blue.
+
+Viewer: the retired index carried the `fhir-artifact-index` viewer declaration. It now lives on a front-matter-only `docs/artifacts.md` that `copyDocsInto` lays onto the IG site's generated `artifacts` page; the navbar tile links `/smart-trust/artifacts.html`.

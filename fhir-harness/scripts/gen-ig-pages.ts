@@ -90,7 +90,7 @@ import {
   type IgChrome,
 } from "../schemas/ig-chrome.js";
 import { readIgIdentity, statusOf, type IgIdentity } from "../schemas/ig-identity.js";
-import { renderedPath, withRendersFrontMatter } from "../../cat-harness/scripts/viewer-declarations.js";
+import { renderedPath, rendersFrontMatter, withRendersFrontMatter } from "../../cat-harness/scripts/viewer-declarations.js";
 import {
   declarationPathIn,
   directoriesForGraph,
@@ -184,6 +184,12 @@ const SITE_PREFIX = IG_SITE ? "" : `/${INSTANCE_NAME}`;
  * build into it, else this generator's index at the docs root.
  */
 const ALL_ARTEFACTS_HREF = IG_SITE ? "../artifacts.html" : "../";
+/**
+ * The front-matter-only page an `igSite` instance commits so its artefact
+ * index keeps a viewer declaration; its body is the IG site's own generated
+ * `artifacts` page (`FRONT_MATTER_ONLY` in `stage-ig-sites.ts`).
+ */
+const ARTIFACTS_FRONT_MATTER_PAGE = "artifacts.md";
 /** The pages' shared stylesheets, under the docs root (one copy each, linked from every page). */
 const PAGES_CSS = "assets/ig-pages.css";
 const CHROME_CSS = "assets/ig-chrome.css";
@@ -1386,6 +1392,19 @@ for (const [label, list] of byCategory(ix.artifacts)) {
 if (IG_SITE) {
   for (const k of [...pages.keys()]) {
     if (k === "index.md" || k.startsWith("menu/") || k.startsWith("category/") || (ix.igApiHub?.localPath && k === `${hubPage(ix)}.md`)) pages.delete(k);
+  }
+  // THE VIEWER DECLARATION MOVES WITH THE INDEX. The index page carried it;
+  // in the IG site the artefact index is the IG's own `artifacts` page, which
+  // `build-ig-site` writes from data and nothing commits. So this writes
+  // front matter only — the declaration — and `stage-ig-sites` lays it onto
+  // that generated page (`copyDocsInto`), so `harness-tiles` still finds a
+  // committed viewer for `fhir-artifact-index`, at `/<instance>/artifacts.html`.
+  const rendered = directoriesForGraph(INSTANCE, "fhir-artifact-index").map((d) => renderedPath(repoRootFor(INSTANCE), d));
+  if (rendered.length > 0) {
+    pages.set(
+      ARTIFACTS_FRONT_MATTER_PAGE,
+      `${["---", `title: ${yamlScalar(`${LABEL} — artefact index`)}`, ...rendersFrontMatter(rendered), "rendered-by: ig-pages", "---"].join("\n")}\n`,
+    );
   }
 }
 

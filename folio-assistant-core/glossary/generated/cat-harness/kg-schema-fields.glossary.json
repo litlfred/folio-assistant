@@ -2590,6 +2590,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectory.igsite",
+      "prefLabel": "ContentDirectory.igSite",
+      "definition": "Built into the instance's own IG site at `/<instance>/` (bean `mftp`); see `igSite` on the shape below.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.igSite",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectory.readonly",
       "prefLabel": "ContentDirectory.readOnly",
       "definition": "This directory holds MATERIALIZED content: readable, and not editable here.",
@@ -2657,6 +2664,13 @@
       "prefLabel": "ContentDirectoryShape.heldEntries",
       "definition": "Entry slugs (`<library>/<slug>/`) held back from the summary drain while the rest of this `library` drains — the per-entry form of `summaries: \"held\"`. It exists because a hold is the OWNER's decision about a set of documents, and a set can outlive the directory it was stated on: agent-skills' library was held on 2026-09-24 (bean `x80s`) and dissolved into cat-harness's on 2026-10-01 (bean `j7ql`), where the other entries drain. Folding the hold into the directory's would either drop it or extend it to documents the owner never held. Listed, never derived, so a move cannot release it silently.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.heldEntries",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentdirectoryshape.igsite",
+      "prefLabel": "ContentDirectoryShape.igSite",
+      "definition": "This directory is built INTO the instance's own IG site, which is served at `/<instance>/` — never composed into the main site.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.igSite",
       "status": "candidate"
     },
     {
