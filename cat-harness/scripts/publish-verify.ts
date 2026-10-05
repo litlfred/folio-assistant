@@ -59,6 +59,7 @@ import { readDeclaration } from "../schemas/cat-harness";
 import { OWN_NAMESPACE_VALUES } from "../schemas/namespaces";
 import { heldProvJsonldContext, PROV_JSONLD_CONTEXT_URL } from "../schemas/prov-jsonld.ts";
 import { duplicateIds } from "./check-duplicate-ids";
+import { isVendoredViewer } from "./pdf-viewer.ts";
 import { ID_LOOKUP_DIR, SCOPES_DIR, type SearchManifest } from "./search-split.ts";
 
 export interface Finding {
@@ -467,9 +468,13 @@ export const JSONLD_OWN_BASE: Verifier = {
  * blocks the release and raises the publication-manager alert instead of
  * going live. One scanner, two call sites.
  *
- * Every page in the tree is in scope. Unlike a JSON-LD document, which may be
- * someone else's data we carry, an HTML page here is one our site build wrote
- * and publishes under our URL.
+ * Every page in the tree is in scope but one directory. Unlike a JSON-LD
+ * document, which may be someone else's data we carry, an HTML page here is
+ * one our site build wrote and publishes under our URL — except the pinned
+ * pdf.js viewer `pdf-viewer.ts` installs, whose `viewer.html` is Mozilla's
+ * markup byte for byte bar one `<script>`. It declares `id="buttons"` twice
+ * at v6.4.299; a finding there is one nobody here can fix without forking it,
+ * so it is counted out of scope rather than silenced.
  */
 export const HTML_UNIQUE_IDS: Verifier = {
   id: "html-unique-ids",
@@ -479,13 +484,18 @@ export const HTML_UNIQUE_IDS: Verifier = {
   async run(dir) {
     const findings: Finding[] = [];
     let checked = 0;
+    let outOfScope = 0;
     for (const f of treeFiles(dir, ".html")) {
+      if (isVendoredViewer(relative(dir, f))) {
+        outOfScope += 1;
+        continue;
+      }
       checked += 1;
       for (const [id, n] of duplicateIds(readFileSync(f, "utf-8"))) {
         findings.push({ verifier: "html-unique-ids", file: relative(dir, f), detail: `duplicate id ${id} ×${n}` });
       }
     }
-    return { checked, outOfScope: 0, findings };
+    return { checked, outOfScope, findings };
   },
 };
 

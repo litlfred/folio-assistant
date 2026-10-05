@@ -217,6 +217,30 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       satisfies: ["directory-conventions"],
       requires: { runtime: ["bun"], network: false },
     }),
+    // Story T4 of the qou tools migration: before a producer is declared as a
+    // Tool whose output is a witness node, this checks that running it really
+    // yields that node.
+    defineTool({
+      id: "witness-parity",
+      title: "Witness reproduction check",
+      description:
+        "Re-run a computation witness's producer and say whether it reproduces the committed witness. Reads the command from `invocation.reproduce` (else `python3 <scriptFile>`) and the recorded package versions from `environment`; on a version mismatch it stops at `unknown`, since a different environment is not a reproduction test. Otherwise it runs the COMMITTED producer in a scratch git worktree, so the folio's own checkout is never written, and compares the result with the committed witness with run-specific fields (commit, timing, environment) masked at every depth. `pass`, `fail` (with the differing JSON paths), or `unknown` (mismatch, non-zero exit, timeout, no witness written).",
+      install: { none: true },
+      invoke: { shell: "bun run witness:parity" },
+      io: {
+        inputs: [
+          { name: "witness", schema: t("RepoPath"), required: true, description: "One or more `*.witness.json` paths, committed at HEAD." },
+          { name: "timeout", schema: t("Count"), required: false, arg: { flag: "--timeout" }, description: "Seconds before a run counts as `unknown`. Default 300." },
+          { name: "force", schema: t("Flag"), required: false, arg: { flag: "--force" }, description: "Run despite an environment mismatch; the verdict is then marked advisory." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" }, description: "Machine-readable output." },
+        ],
+        outputs: [
+          { name: "verdicts", schema: t("Text"), description: "One line per witness: pass, fail or unknown, with the reason, any environment mismatch and the differing paths. Exit 1 when any witness fails; `unknown` alone exits 0." },
+        ],
+      },
+      satisfies: ["directory-conventions"],
+      requires: { runtime: ["bun", "git", "bash"], network: false },
+    }),
     defineTool({
       id: "subgraph-readmes",
       title: "Directory READMEs from the Knowledge Graph",
@@ -410,6 +434,66 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           "It decides nothing beyond the raster. WHICH documents get a cover, where the file lands, and what the catalogue must say about the derivation are the catalogue's to declare — see `folio-assistant-core/scripts/gen-covers.ts`, which reads them from an instance's catalogue and refuses to write bytes for a THUMBNAIL that does not declare itself derived. It also cannot tell you whether the page it rendered IS the cover; it can only tell you it is page 1.",
         cost:
           "One PyMuPDF wheel, no network at run time, and a few milliseconds per page. Deterministic — identical input gives identical bytes, which is what lets a caller gate on `--check` rather than re-deciding.",
+      },
+    }),
+
+    // ── The inline PDF viewer (bean `folio-assistant-5ea6`, issue #2119).
+    //
+    // Owner, 2026-10-04: "is there a lightweight inline viewer that could be
+    // used for viewing PDF on CDN … basic functionality (search, scroll, jump
+    // to page, print, d/l)", then "add as skill and tool". Two Tools for one
+    // script, because installing the viewer into a built site and embedding it
+    // in a page are different acts with different callers: a workflow does the
+    // first once per build, a page generator does the second once per page.
+    defineTool({
+      id: "pdf-viewer-install",
+      title: "Install the inline PDF viewer into a built site",
+      description:
+        "Download the pinned pdf.js release (legacy build), verify its SHA-256, copy the parts a site needs into `<site>/assets/vendor/pdfjs/`, and add the shim that opens `?src=` only for the allowlisted URL prefixes or the site's own origin. Nothing is committed: the viewer exists only in the built site.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/pdf-viewer.ts" },
+      requires: { runtime: ["bun", "unzip"], network: true },
+      io: {
+        inputs: [
+          { name: "site", schema: t("RepoPath"), required: true, arg: { flag: "--site" }, description: "The built site directory, `_site` in both site workflows." },
+          { name: "allow", schema: t("Url"), required: true, arg: { flag: "--allow" }, description: "An https URL prefix the viewer may open, ending in `/`. Repeat the flag for more than one. `same-origin-only` is the explicit way to allow none — an omitted flag is a usage error, because a viewer that refuses every CDN document would otherwise ship green." },
+          { name: "zip", schema: t("RepoPath"), required: false, arg: { flag: "--zip" }, description: "A local copy of the release zip, for offline runs and tests. Its hash is checked exactly as a download's would be." },
+        ],
+        outputs: [
+          { name: "summary", schema: t("Text"), description: "One line on stdout: version, destination, file count, and the prefixes it will open. Exit 2 on a usage error; a hash mismatch or a release missing a kept path throws, refusing the install." },
+        ],
+      },
+      satisfies: ["pdf-inline-viewer"],
+      selection: {
+        when: "A site build that publishes pages carrying `pdf-viewer-embed` fragments. Run it after the site is assembled and before any pass that walks every page.",
+        limits:
+          "It installs one pinned version and nothing else: moving the pin is `upstream-version-adoption`, with the hash re-measured. It does not decide which PDFs may be shown — the allowlist bounds where the viewer will FETCH from, and a page's publication gates decide whether a page embeds a document at all.",
+        cost: "One ~7 MB download per build and ~12 MB (404 files) added to the built site. Not committed, so no clone cost.",
+      },
+    }),
+
+    defineTool({
+      id: "pdf-viewer-embed",
+      title: "Embed a PDF inline in a page",
+      description:
+        "Print the HTML fragment that shows a PDF in the installed viewer: a lazily loaded frame whose address is derived from the page's own location (so one page works at the site root, under a project base and under a staging preview), plus plain open and download links that work without it.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/pdf-viewer.ts --embed" },
+      requires: { runtime: ["bun"], network: false },
+      io: {
+        inputs: [
+          { name: "spec", schema: t("Text"), required: true, arg: { stdin: true }, description: "One JSON object: `src` (the PDF's URL, which must fall under a prefix `pdf-viewer-install` was given, or the viewer refuses it on screen), `title` (what the document is; the frame's accessible name), `route` (a regular expression over the page's pathname whose group 1 is the site root — the `folio-mount.ts` convention) and optionally `page` (open at this 1-based page). On stdin because a title and a regular expression are free text." },
+        ],
+        outputs: [
+          { name: "fragment", schema: t("Text"), description: "The HTML fragment on stdout. TypeScript callers import `embed` from `cat-harness/scripts/pdf-viewer.ts` instead, as `who-iris/scripts/gen-iris-pages.ts` does." },
+        ],
+      },
+      satisfies: ["pdf-inline-viewer"],
+      selection: {
+        when: "A generated page should let a reader search, page through, print or download a PDF without leaving it. Only for a document whose publication gates permit linking it: an embed is a link that also renders.",
+        limits:
+          "It renders PDFs only. It cannot tell whether the site it lands on had the viewer installed; when it did not, or the page is off the route, the frame says so and the plain links still work.",
+        cost: "Nothing until the reader scrolls to it; then the viewer and worker (~3 MB, cached after the first) and the PDF itself.",
       },
     }),
 
