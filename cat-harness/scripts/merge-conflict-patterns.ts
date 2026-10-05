@@ -215,8 +215,12 @@ export const PATTERNS: readonly ConflictPattern[] = [
     // authored prose. A page added to `content/docs/` is refused until it is
     // named here, which is the safe direction to be wrong in.
     globs: [
-      "cat-harness/docs/{agentic-harness,beans-and-todos,content-types,crdm-methodology,document-ingestion,evidence,fhir-content,harness,harnessed-kg-overview,ig-publisher,knowledge-graph,managing-agent-context,publication-workflow}.md",
-      "cat-harness/docs/guides/{who-smart-dak,who-smart-ig,writing-a-document,writing-a-paper}.md",
+      // In the docs graph's named groups since bean `xka5`: the same 17 pages,
+      // each under the folder its slug names.
+      "cat-harness/docs/concepts/{agentic-harness,content-types,harness,harnessed-kg-overview,knowledge-graph}.md",
+      "cat-harness/docs/guides/{beans-and-todos,document-ingestion,managing-agent-context,who-smart-dak,who-smart-ig,writing-a-document,writing-a-paper}.md",
+      "cat-harness/docs/process/{crdm-methodology,evidence,publication-workflow}.md",
+      "cat-harness/docs/fhir/{fhir-content,ig-publisher}.md",
     ],
     strategy: "take-base",
     why: "the 17 whole-file docs pages gen-docs-pages.ts writes from the authored blocks under cat-harness/content/docs/<slug>/ (`docs:pages`, gated by `docs:pages:check`), each carrying `generated: scripts/gen-docs-pages.ts — do not hand-edit` in its own front matter. Bean `8c6v`: all 17 were named by NO pattern, so merge:main refused them and handed back for hand-editing the files that forbid it — docs/process/publication-workflow.md was one of the 2 refusals that blocked #1888 after 53 of its 55 conflicts resolved. Safe because `emit()` is compare-or-write and the only read of a prior page is inside its `--check` branch, so nothing is carried forward; and the `page` kind is gated on EXACT content, which makes regeneration the verifiable resolution. The AUTHORED SOURCES under cat-harness/content/docs/** are the neighbour and stay refused.",

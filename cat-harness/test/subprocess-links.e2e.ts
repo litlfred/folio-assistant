@@ -46,12 +46,12 @@ const hrefs = (p: Page): Promise<(string | null)[]> =>
 test.describe("subprocess links resolve from the SVG file, not the page (xl55)", () => {
   test("from a page at the docs root", async ({ page: p }) => {
     await open(p, "/content-lifecycle.html", "assets/img/workflows/x.svg");
-    expect((await hrefs(p))[0]).toBe(`${ORIGIN}/process/evidence.html#the-subprocess`);
+    expect((await hrefs(p))[0]).toBe(`${ORIGIN}/evidence.html#the-subprocess`);
   });
 
   test("from a page under processes/ — where page-relative links broke", async ({ page: p }) => {
     await open(p, "/processes/editing-hci-validation.html", "../assets/img/workflows/x.svg");
-    expect((await hrefs(p))[0]).toBe(`${ORIGIN}/process/evidence.html#the-subprocess`);
+    expect((await hrefs(p))[0]).toBe(`${ORIGIN}/evidence.html#the-subprocess`);
   });
 
   test("a link that fails the URL check keeps no href", async ({ page: p }) => {

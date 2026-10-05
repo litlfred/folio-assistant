@@ -11822,6 +11822,11 @@
   function sortNavByLocale() {
     var nav = document.querySelector(".side-bar .site-nav");
     if (!nav || typeof Intl === "undefined" || !Intl.Collator) return;
+    // A list SCOPED to one harness (#1902, `scopeSiteNav`) is that harness's
+    // own table of contents, in the order it declares: the owner's ruling is
+    // that "each harness is responsible for managing its own sub doc graphs".
+    // Only the site's own list is put into the reader's alphabet.
+    if (nav.hasAttribute("data-fa-scope")) return;
     var lang = document.documentElement.getAttribute("lang") || undefined;
     var collator;
     try { collator = new Intl.Collator(lang, { sensitivity: "base", numeric: true }); }

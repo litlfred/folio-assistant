@@ -92,7 +92,7 @@ describe("living deck: every claim about the KG still holds", () => {
   });
 
   test("slide 10 — the taxonomy still uses smart-kg as its example, and says it is its own repository", () => {
-    const t = read(join(SITE, "architecture/repo-taxonomy.md"));
+    const t = read(join(SITE, "concepts/architecture/repo-taxonomy.md"));
     expect(t).toContain("`smart-kg` and `smart-kg-tools` is the worked example");
     expect(t).toContain("`smart-kg` is already its own repository");
     // Its stub left this checkout for that reason (bean `wg7r`).

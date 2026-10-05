@@ -144,6 +144,28 @@ export const TRANSLATION_CRITERIA = [
 ] as const;
 
 /**
+ * The chapter's PAGE slug, which is what its catalogue is named after.
+ *
+ * A chapter directory is `content/docs/<dir>/`, and its page manifest
+ * `<dir>.ts` declares `slug:`. They were the same word until the docs graph's
+ * named groups (bean `xka5`): `process-crdm-methodology/` now publishes
+ * `process/crdm-methodology`, whose catalogue is
+ * `translations/<locale>/process/crdm-methodology.po` — so the directory's
+ * basename found NO catalogue, and every moved chapter's block QA reported
+ * "no PO source". The manifest says, so this asks it; the basename stays the
+ * answer for a chapter with no manifest or no `slug:` line.
+ */
+export function chapterSlugOf(chapterDir: string): string {
+  const dir = basename(chapterDir);
+  const manifest = join(chapterDir, `${dir}.ts`);
+  if (existsSync(manifest)) {
+    const m = /\bslug:\s*["']([^"']+)["']/.exec(readFileSync(manifest, "utf-8"));
+    if (m) return m[1]!;
+  }
+  return dir;
+}
+
+/**
  * A translation verdict's inputs: the block's own companions, plus the `.po`.
  *
  * Widened HERE rather than by adding `po` to `COMPANION_ROLES`, deliberately.
@@ -909,7 +931,7 @@ function sweepSubject(
   poContext?: PoResolveContext,
 ): void {
   const stem = catalogueStem ?? basename(md).replace(/\.md$/, "");
-  const chapterSlug = basename(join(md, ".."));
+  const chapterSlug = chapterSlugOf(join(md, ".."));
   const subjectRoot = md.replace(/\.md$/, "");
   for (const locale of locales) {
     const sources = resolvePoSources({
