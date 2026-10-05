@@ -1038,7 +1038,7 @@ jobs:
           # command writes went out with no build identity at all (bean `lx2s`).
           # The stamp reads KG_BRANCH above plus the GITHUB_* variables the runner
           # sets for every step.
-          bun run cat-harness/scripts/kg-export.ts             --base-url "$BASE" --out "./_site/${STUB}.jsonld"
+          bun run cat-harness/scripts/kg-export.ts             --base-url "$BASE" --scope instance --out "./_site/${STUB}.jsonld"
           bun run cat-harness/scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
           # The `.json` alias is copied AFTER the export, so the two documents
           # cannot disagree about which build they came from.
