@@ -473,6 +473,79 @@ function checkSectionDedupes(
 }
 
 /**
+ * no-unlisted-block — a block manifest in the chapter directory that no
+ * section of the chapter lists.
+ *
+ * Bean `eqly`. Such a block renders nowhere: no section emits it, so it is in
+ * no page, no PDF and no index, while its `.md`, `.ts` and QA verdict go on
+ * looking like live content to every census taken over the directory. The qou
+ * orphaned-content census of 2026-10-04 (issue #2106) found 3 of 3,676 block
+ * manifests in that state, each with a QA sidecar.
+ *
+ * The OTHER direction — listed in a section, absent from disk — is not here
+ * because it is already an error: `loadBlocksFromDir` reports
+ * `Block manifest not found` for every listed name with no `.ts`.
+ *
+ * Only manifests that PARSE AS A BLOCK are reported. A chapter directory also
+ * holds its own manifest (`<dir>.ts`) and may hold helper modules; a file that
+ * is not a block cannot be an unlisted one, and flagging it would be noise
+ * that teaches readers to ignore the finding. Only the candidates are
+ * imported — the listed blocks are imported anyway by the load that follows.
+ *
+ * A chapter with a section REFERENCE (`{ name }`, no `blocks`) keeps part of
+ * its membership somewhere this function does not read, so "listed in no
+ * section" cannot be determined. That is said once, as `info`, rather than
+ * reported as a set of orphans that might be listed after all.
+ *
+ * A warning rather than an error: it marks content that renders nowhere, not
+ * a build that will fail, and a folio decides whether the block is dead
+ * (move it to `fsh-guts`) or simply unplaced (list it).
+ */
+async function checkUnlistedBlocks(
+  chapter: Chapter,
+  dir: string,
+  chapterFile: string,
+  listed: readonly string[],
+  issues: ValidationIssue[],
+): Promise<void> {
+  const isRef = (sec: object): boolean => !("blocks" in sec);
+  const hasRef = chapter.sections.some(
+    (sec) => isRef(sec) || ((sec as Section).subsections ?? []).some(isRef),
+  );
+  if (hasRef) {
+    issues.push({
+      level: "info",
+      block: "(chapter)",
+      file: chapterFile,
+      message:
+        `check "no-unlisted-block" could not determine unlisted blocks in ${dir}: ` +
+        `the chapter lists a section by reference, so its membership is not all in this manifest.`,
+    });
+    return;
+  }
+  const own = basename(dir);
+  const listedSet = new Set(listed);
+  for (const name of discoverManifests(dir)) {
+    if (name === own || listedSet.has(name)) continue;
+    let block: unknown;
+    try {
+      block = (await import(join(dir, `${name}.ts`))).default;
+    } catch {
+      continue; // not loadable, so not demonstrably a block; other checks own import errors
+    }
+    if (!BlockSchema.safeParse(block).success) continue;
+    issues.push({
+      level: "warning",
+      block: name,
+      file: `${name}.ts`,
+      message:
+        `[unlisted-block] block "${name}" is in ${dir} but no section of ${basename(chapterFile)} lists it, ` +
+        `so it renders nowhere. List it in a section, or move it out of the chapter.`,
+    });
+  }
+}
+
+/**
  * Scan a block's `.md` content for Markdown link syntax inside a math
  * block. The remark renderer doesn't recurse into `$$…$$` or `\[…\]`
  * content (math is a leaf node), so `[text](#anchor)` leaks through
@@ -555,6 +628,7 @@ export async function validateObjects(
       }
     }
 
+    await checkUnlistedBlocks(chapter, objectsDir, manifestPath, blockNames, issues);
     const chBlocks = await loadBlocksFromDir(objectsDir, blockNames, issues);
     for (const [name, block] of chBlocks) {
       allBlocks.set(name, { block, dir: objectsDir });
@@ -636,6 +710,7 @@ export async function validateObjects(
         }
 
         // Load and validate blocks in this chapter dir
+        await checkUnlistedBlocks(chapter, chDir, chPath, blockNames, issues);
         const chBlocks = await loadBlocksFromDir(chDir, blockNames, issues);
         for (const [name, block] of chBlocks) {
           allBlocks.set(name, { block, dir: chDir });

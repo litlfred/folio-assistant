@@ -5,8 +5,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T14:13:18Z
-updated_at: 2026-10-04T14:13:47Z
-parent: folio-assistant-p5wm
+updated_at: 2026-10-05T04:57:14Z
+parent: folio-assistant-rwmf
 ---
 
 Finish PR #1918 for issue #1900: library cards on the folio glass open their declared view (else the entry page), resize by a corner grip (keys + move-bar buttons as the non-drag path), and x asks first, naming where the card goes back to (library / Todos / the landing sticky's page) via the page's one confirm dialog shared with fsh-guts. Caption uses the index title.

@@ -10,6 +10,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 
 | file | what it is | used by |
 |---|---|---|
+| [`content-adapter.ts`](content-adapter.ts) | a file |  |
 | [`index.ts`](index.ts) | a file |  |
 | [`no-content-adapter.ts`](no-content-adapter.ts) | a file |  |
 | [`route-groups.ts`](route-groups.ts) | a file |  |

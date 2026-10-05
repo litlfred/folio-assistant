@@ -713,7 +713,7 @@
     {
       "id": "subgraph-resolve",
       "prefLabel": "Resolve a declared subgraph's content source",
-      "definition": "Say where a declared subgraph gets its content — the checkout's own directory, or a declared repository branch (with its keying and its `special-branches.json` row) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
+      "definition": "Say where a declared subgraph gets its content — the checkout's own directory, a declared repository branch (with its keying), or a branch family (with its prefix, key and repository) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
       "notation": "subgraph-resolve",
       "source": "cat-harness/tools/index.ts#subgraph-resolve",
       "status": "candidate"
@@ -948,6 +948,14 @@
       "definition": "Check every `*.witness.json` in the folio's declared `computation-witness` directories against the two schemas in `schemas/computation-witness.ts`: the envelope every witness should meet (a failure is a malformed file) and the producer contract (a failure is a finding against the producer, grouped by the fields at fault). Also lists files that are not strict JSON, which Python's reader accepts and every other consumer rejects. Report-only: it never edits a witness, which is generator output.",
       "notation": "witness-conformance",
       "source": "cat-harness/tools/index.ts#witness-conformance",
+      "status": "candidate"
+    },
+    {
+      "id": "witness-parity",
+      "prefLabel": "Witness reproduction check",
+      "definition": "Re-run a computation witness's producer and say whether it reproduces the committed witness. Reads the command from `invocation.reproduce` (else `python3 <scriptFile>`) and the recorded package versions from `environment`; on a version mismatch it stops at `unknown`, since a different environment is not a reproduction test. Otherwise it runs the COMMITTED producer in a scratch git worktree, so the folio's own checkout is never written, and compares the result with the committed witness with run-specific fields (commit, timing, environment) masked at every depth. `pass`, `fail` (with the differing JSON paths), or `unknown` (mismatch, non-zero exit, timeout, no witness written).",
+      "notation": "witness-parity",
+      "source": "cat-harness/tools/index.ts#witness-parity",
       "status": "candidate"
     },
     {

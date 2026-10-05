@@ -24,15 +24,20 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { TOOL_GROUPS, registerMcpToolGroups } from "../adapters/mcp-server/tool-groups.ts";
 import {
   registerDeclaredToolGroups,
+  registerServedToolGroups,
+  servedToolGroups,
+  toolGroupsFromNodes,
   type ToolGroupDeclaration,
 } from "../src/tool-groups.ts";
+import { tools as harnessTools } from "../../cat-harness/tools/index.ts";
 
-/** The MCP server's own root, for the ad-hoc declarations below: this
- * instance, which `adapters/mcp-server/tool-groups.ts` also roots itself in. */
+/** This instance's root, for the ad-hoc declarations below. */
 const MCP_ROOT = new URL("..", import.meta.url).pathname;
+/** The repository: an instance root whose dependency tree holds every layer. */
+const REPO = new URL("../..", import.meta.url).pathname;
+const HARNESS = new URL("../../cat-harness/", import.meta.url).pathname;
 import {
   AdapterDeclarationCollisionError,
   BUILTIN_ADAPTERS,
@@ -47,27 +52,51 @@ import { dispatchGet, dispatchPost, mountDeclaredRoutes } from "../src/route-gro
 const SERVER_ROOT = new URL("../../cat-harness/", import.meta.url).pathname;
 
 describe("MCP tool groups", () => {
-  test("every declared group's module exists and registers here", async () => {
+  // Bean riit 3c (owner, 2026-10-05): both MCP servers serve every Tool node
+  // in the folio's dependency tree, so neither keeps a list. These replace the
+  // tests of the viewer server's `TOOL_GROUPS`, which is gone with the six
+  // forked modules it named.
+  test("every served group in the dependency tree registers here", async () => {
     // A recording server: the registrars only need something to hang tools on.
     const calls: string[] = [];
     const fake = { tool: (name: string) => calls.push(name), registerTool: (n: string) => calls.push(n) };
-    const outcomes = await registerMcpToolGroups(fake);
+    const { outcomes, failures } = await registerServedToolGroups(fake, REPO, [REPO]);
+    expect(failures).toEqual([]);
     expect(outcomes.filter((o) => o.state !== "registered")).toEqual([]);
-    expect(outcomes).toHaveLength(TOOL_GROUPS.length);
+    expect(outcomes.length).toBeGreaterThan(0);
+    expect(calls).toContain("folio_init");
   });
 
-  test("the declaration covers all six groups the server used to import", () => {
-    expect(TOOL_GROUPS.map((g) => g.id).sort()).toEqual(
-      ["deps", "lean", "preferences", "preview", "render", "validate"],
-    );
+  test("the served groups ARE the Tool nodes' modules — no list restates them", () => {
+    const sets = servedToolGroups(REPO).sets;
+    // The harness's own, exactly — the set the harness server served before
+    // the walk existed.
+    const harness = sets.find((s) => s.root === HARNESS.replace(/\/$/, ""));
+    expect(harness?.groups.map((g) => g.module).sort()).toEqual(toolGroupsFromNodes(harnessTools()).map((g) => g.module).sort());
+    // And a layer ABOVE the harness, reached only through the tree: sci's
+    // `lean_formal_edges` was a `contributes` tool group until its Tool node
+    // replaced it (bean riit).
+    const sci = sets.find((s) => s.instance === "folio-assistant-sci");
+    expect(sci?.groups.map((g) => g.module)).toEqual(["content/pipeline/formal-edges-mcp.ts"]);
   });
 
-  test("the three TeX/Lean groups are declared `sci`", () => {
-    // The boundary is reviewable in one place rather than inferable from six
-    // import lines. `render`, `preview` and `lean` need a TeX installation or
-    // a Lean toolchain, which is the line adapters/paper already draws.
-    const sci = TOOL_GROUPS.filter((g) => g.layer === "sci").map((g) => g.id).sort();
-    expect(sci).toEqual(["lean", "preview", "render"]);
+  test("a folio that declares nothing still gets the harness's tools", () => {
+    // Bean `zmdo`: `folio_init` must reach a fresh instance, whose chain is
+    // empty because it has no declaration yet.
+    const tmp = mkdtempSync(join(tmpdir(), "served-tools-"));
+    try {
+      const { sets } = servedToolGroups(tmp, [{ name: "cat-harness", root: HARNESS }]);
+      expect(sets.map((s) => s.instance)).toEqual(["cat-harness"]);
+      expect(sets[0]!.groups.map((g) => g.module)).toContain("src/tools/folio-init.ts");
+    } finally {
+      rmSync(tmp, { recursive: true, force: true });
+    }
+  });
+
+  test("a group carries the instance that declares it as its layer", () => {
+    for (const set of servedToolGroups(REPO).sets) {
+      for (const g of set.groups) expect(g.layer).toBe(set.instance);
+    }
   });
 
   test("an uninstalled layer is SKIPPED and reported, not a crash", async () => {
@@ -88,7 +117,7 @@ describe("MCP tool groups", () => {
     // Different states because the remedies are opposite: fix the module vs
     // install the layer. Collapsing them sends the operator the wrong way.
     const broken: ToolGroupDeclaration[] = [
-      { id: "wrong-export", module: "adapters/mcp-server/tools/render.ts", registrar: "registerNoSuchThing", layer: "sci" },
+      { id: "wrong-export", module: "src/tools/preview.ts", registrar: "registerNoSuchThing", layer: "sci" },
     ];
     const [o] = await registerDeclaredToolGroups({}, broken, MCP_ROOT);
     expect(o.state).toBe("failed");
@@ -98,8 +127,8 @@ describe("MCP tool groups", () => {
   test("a registrar that throws is `failed`, and does not abort the rest", async () => {
     const calls: string[] = [];
     const groups: ToolGroupDeclaration[] = [
-      { id: "wrong-export", module: "adapters/mcp-server/tools/render.ts", registrar: "registerNoSuchThing", layer: "sci" },
-      ...TOOL_GROUPS.filter((g) => g.id === "preferences"),
+      { id: "wrong-export", module: "src/tools/preview.ts", registrar: "registerNoSuchThing", layer: "sci" },
+      { id: "preferences", module: "src/tools/preferences.ts", registrar: "registerPreferenceTools", layer: "cat-harness" },
     ];
     const fake = { tool: (n: string) => calls.push(n), registerTool: (n: string) => calls.push(n) };
     const out = await registerDeclaredToolGroups(fake, groups, MCP_ROOT);

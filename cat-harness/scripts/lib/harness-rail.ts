@@ -83,6 +83,25 @@ export interface RailOptions {
    */
   mark?: NavbarModel["mark"];
   /**
+   * The harness's NAVBAR ROW — the icon row (todos, beans, processes, kg,
+   * fsh-guts, launcher) — exactly as `_data/harness.json` carries it under
+   * `navbar`, which is what the Jekyll sidebar reads through
+   * `head_custom.html`'s `#fa-navbar-row`.
+   *
+   * Bean `wckf` (#2147), owner 2026-10-05: *"still no LHS icons top navbar on
+   * who-iris page"*, then *"this should be a common navbar functionality in
+   * harness"* (bean `9rq1`). The row is drawn by ONE function,
+   * `mountNavIconRow` in `docs-ui.js`; a railed page lacked only its DATA, so
+   * this writes the same block the theme writes and the same function draws
+   * the same row. No second renderer here, and no script: the rail stays
+   * script-free, and a page without `docs-ui.js` simply shows no row.
+   *
+   * Three states, as everywhere the row is read: `undefined` — the caller
+   * could not find out, nothing is written; `null` — declared none, written as
+   * `null`, which `readNavbarRow` reports at info level; an object — the row.
+   */
+  navbarRow?: unknown;
+  /**
    * What the page's own section is CALLED — the visualiser's name, `todos` on
    * `/todos/`. Absent on a mounted document, whose section is its "Contents".
    */
@@ -160,5 +179,26 @@ export function declinesNavbar(html: string): boolean {
 export function injectRail(html: string, o: RailOptions): string | undefined {
   const label = o.visualiserLabel ?? "Contents";
   const documentIndex = o.documentIndex ?? visualiserNavOf(html, label) ?? documentIndexOf(html, label);
-  return injectNavbar(html, railModel({ ...o, ...(documentIndex ? { documentIndex } : {}) }));
+  const railed = injectNavbar(html, railModel({ ...o, ...(documentIndex ? { documentIndex } : {}) }));
+  return railed === undefined ? undefined : withNavbarRow(railed, o.navbarRow);
+}
+
+/** The id `docs-ui.js`'s `readNavbarRow` looks for — the same one `head_custom.html` writes. */
+export const NAVBAR_ROW_ID = "fa-navbar-row";
+
+/**
+ * The navbar row's data block, written right after the opening `<body>` —
+ * once, and never when `row` is `undefined` (see {@link RailOptions.navbarRow}).
+ *
+ * `<` is escaped so a value can never close the script element early: the
+ * hrefs are generated, but "generated" is not "trusted" (`docs-ui.js`
+ * `safeHref`'s own argument), and the bytes land inside somebody else's page.
+ */
+export function withNavbarRow(html: string, row: unknown): string {
+  if (row === undefined || html.includes(`id="${NAVBAR_ROW_ID}"`)) return html;
+  const body = /<body\b[^>]*>/i.exec(html);
+  if (!body) return html;
+  const at = body.index + body[0].length;
+  const json = JSON.stringify(row).replace(/</g, "\\u003c");
+  return html.slice(0, at) + `<script type="application/json" id="${NAVBAR_ROW_ID}">${json}</script>` + html.slice(at);
 }

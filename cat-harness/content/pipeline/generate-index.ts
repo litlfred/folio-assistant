@@ -10,6 +10,7 @@
  *   bun run cat-harness/content/pipeline/generate-index.ts [paper-name]
  */
 
+import { BLOCK_KIND_NODES } from "../../schemas/block-kinds.js";
 import { folioDirDeferred } from "../../schemas/cat-harness.js";
 import { writeFileSync } from "fs";
 import { join} from "path";
@@ -41,23 +42,15 @@ function isInlineSection(s: Section | SectionRef): s is Section {
 }
 
 /**
- * Plural section headings, keyed by block kind. Explicit because the kind set
- * is fixed and small; the fallback below only covers a kind added later.
+ * The kinds the index lists, in reading order, with their plural headings —
+ * read off each discovered `folio-block-kind/v1` node (`indexRank`,
+ * `headingPlural`; bean riit, step 2) rather than kept here as three lists.
  */
-const KIND_HEADINGS: Record<string, string> = {
-  definition: "Definitions",
-  theorem: "Theorems",
-  proposition: "Propositions",
-  lemma: "Lemmas",
-  corollary: "Corollaries",
-  conjecture: "Conjectures",
-  example: "Examples",
-};
-
-const INDEXED_KINDS = new Set([
-  "definition", "theorem", "proposition", "lemma",
-  "corollary", "conjecture", "example",
-]);
+const INDEXED = BLOCK_KIND_NODES.filter((n) => n.indexRank !== undefined).sort(
+  (a, b) => a.indexRank! - b.indexRank!,
+);
+const INDEXED_KINDS = new Set(INDEXED.map((n) => n.kind));
+const KIND_HEADINGS: Record<string, string> = Object.fromEntries(INDEXED.map((n) => [n.kind, n.headingPlural ?? n.kind]));
 
 interface IndexEntry {
   kind: string;
@@ -127,7 +120,7 @@ async function main() {
   }
 
   // Sort by kind, then alphabetically by title
-  const kindOrder = ["definition", "theorem", "proposition", "lemma", "corollary", "conjecture", "example"];
+  const kindOrder = INDEXED.map((n) => n.kind);
   entries.sort((a, b) => {
     const ka = kindOrder.indexOf(a.kind);
     const kb = kindOrder.indexOf(b.kind);

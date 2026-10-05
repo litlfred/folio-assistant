@@ -1,11 +1,11 @@
 ---
 # folio-assistant-p5wm
 title: 'GOAL 2: LHS navbar working with instantiated harness, showing folios with the bootstrap exception, and stickies that move around on the folio'
-status: in-progress
+status: completed
 type: milestone
 priority: high
 created_at: 2026-09-20T18:48:29Z
-updated_at: 2026-10-04T19:47:04Z
+updated_at: 2026-10-05T04:57:29Z
 ---
 
 The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim:
@@ -304,3 +304,8 @@ Re-derived on `main` @ `84a36a8` in session https://claude.ai/code/session_01Ga3
 - **Box 3 — two-instance and zero-instance layouts.** Until today only hand-made `Harness` rows were tested. This change adds two tests to `gen-navbar-include.test.ts` that run the REAL pipeline — `harnessTiles` over a scanned temp root → JSON round trip → `render` — for a root with two instantiated harnesses and one declared-only (exactly two sections), and a root with no declaration (no tiles, renders, no empty Harnesses group). Falsified once by instantiating the third harness: it then appeared.
 
 **This milestone stays `in-progress`.** Its subtree still has open work, and whether GOAL 2 is met is the owner's sign-off, not a checker's — the same rule `yg29` followed.
+
+
+## Owner sign-off, 2026-10-05 — GOAL 2 is met, closed
+
+In session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi the owner was shown the three Done-when boxes, each ticked on evidence re-derived on `main` (§"2026-10-04 — every box measured" above, merged in #2125), and chose to close the milestone. Its 10 open direct children (76 open beans in their subtrees) were not part of those boxes. Asked where they go, the owner chose **"Move to GOAL 4 PLATFORM"**, so `10uc`, `6lb8`, `8jt6`, `o3xy`, `l4c5`, `gp2f`, `q4jm`, `yj32`, `4ccr` and `68op` now hang from `rwmf`.

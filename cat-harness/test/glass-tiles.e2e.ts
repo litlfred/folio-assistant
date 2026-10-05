@@ -371,25 +371,23 @@ test.describe("cards on the glass move, resize and zoom — the glass is a surfa
     expect(await leftOf(page)).toBe(before);
   });
 
-  test("− in move mode shrinks it, and below the DECLARED width it zooms to its avatar", async ({ page }) => {
-    // The card's own −/+ buttons went in issue #1900; the move mode's −/+
-    // (keys, and the move bar's buttons) are the same step.
+  test("its own − shrinks it, and below the DECLARED width it zooms to its avatar", async ({ page }) => {
+    // Owner, 2026-10-05: *"Only the plus minus"* — the card's own buttons.
     await pull(page);
     const card = page.locator(book);
     await expect(card).toHaveAttribute("data-fa-zoom", "card");
     await expect(card.locator(".fa-glass-asset-name")).toBeVisible();
     const w = await widthOf(page);
-    await card.locator('[data-fa-control="move"]').click();
-    await page.keyboard.press("-");
+    await card.locator('button[aria-label="Make A handbook smaller"]').click();
     expect(await widthOf(page)).toBe(w - 48);
     // 288 → 240 → 192: 192 is below the declared 220.
-    await page.locator('.fa-glass-move-bar button[aria-label="Make A handbook smaller"]').click();
+    await card.locator('button[aria-label="Make A handbook smaller"]').click();
     await expect(card).toHaveAttribute("data-fa-zoom", "avatar");
     await expect(card.locator(".fa-glass-asset-name")).toBeHidden();
     await expect(card.locator(".fa-glass-avatar img")).toBeVisible();
     // The name is still the card's accessible name.
     await expect(card).toHaveAttribute("aria-label", "A handbook");
-    await page.locator('.fa-glass-move-bar button[aria-label="Make A handbook larger"]').click();
+    await card.locator('button[aria-label="Make A handbook larger"]').click();
     await expect(card).toHaveAttribute("data-fa-zoom", "card");
   });
 
