@@ -68,9 +68,9 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { directoriesForGraph, repoRootFor } from "../../cat-harness/schemas/cat-harness.ts";
-import { pagesOf, readStructure, STRUCTURE_FILENAME, type BaseSection, type BaseStructure } from "../../cat-harness/schemas/document-structure.ts";
-import { ExternalSchemaSchema } from "../../cat-harness/schemas/external-schema.ts";
+import { directoriesForGraph, repoRootFor } from "../platform.js";
+import { pagesOf, readStructure, STRUCTURE_FILENAME, type BaseSection, type BaseStructure } from "../platform.js";
+import { ExternalSchemaSchema } from "../platform.js";
 import { pinnedTerms, SMART_KG_PIN } from "./pin-smart-kg.ts";
 
 const HERE = resolve(import.meta.dir, "..");

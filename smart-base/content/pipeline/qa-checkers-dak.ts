@@ -46,7 +46,7 @@
  */
 
 import { existsSync, readFileSync } from "fs";
-import type { CheckerPaths, CheckerResult } from "../../../cat-harness/schemas/block-qa";
+import type { CheckerPaths, CheckerResult } from "../../platform.js";
 
 import { DAK_LABEL_PREFIXES, type DakBlockKind } from "../../schemas/dak-kinds";
 
