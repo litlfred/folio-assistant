@@ -636,8 +636,33 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         ],
         outputs: [{ name: "url", schema: t("Url"), description: "Where the tree is served.", render: { as: "url", reason: "a reader opens it; the scheme is checked before it reaches an href" } }],
       },
-      satisfies: ["kg-export"],
+      // `docs-generation` too (owner, 2026-10-05, bean lehh): this is the CI
+      // build of the site, and `site-build-local` is the same build on a
+      // developer's machine — two Tools, one skill.
+      satisfies: ["kg-export", "docs-generation"],
       requires: { network: true },
+    }),
+
+    defineTool({
+      id: "site-build-local",
+      title: "Build the docs site locally",
+      description:
+        "Build the published site on this machine, so a page can be looked at rather than described: the same Jekyll build `pages-publish` runs in CI, into a directory of your choosing, and never pushed. The local half of the two site builds (owner, 2026-10-05: local and GitHub builds are two Tools for one skill).",
+      install: { none: true },
+      invoke: { shell: "cat-harness/scripts/preview-site.sh" },
+      io: {
+        inputs: [
+          { name: "dest", schema: t("RepoPath"), required: false, arg: { positional: 0 }, description: "Where to write the built site. Default: a temporary directory." },
+        ],
+        outputs: [{ name: "site", schema: t("RepoPath"), description: "The built site, as `pages-publish` would publish it." }],
+      },
+      satisfies: ["docs-generation"],
+      selection: {
+        when: "Looking at a rendered page before pushing it: a layout, an anchor, a generated index.",
+        limits: "Not what CI builds: it uses the installed just-the-docs gem rather than the pinned remote theme, so chrome can differ, while Liquid and kramdown do not. It runs the cheap post-Jekyll steps and names the rest it skipped. Read a layout question off the staging preview.",
+        cost: "Local Ruby and Jekyll; a minute or two.",
+      },
+      requires: { runtime: ["bash"], network: false },
     }),
 
     // ── The preview host: one STAGING/<slug> per open pull request ─────────

@@ -202,14 +202,15 @@ export async function sweepFamilies(root: string): Promise<FamilySweep[]> {
     const s: FamilySweep = { kind, counts: {}, unmapped: [], unresolvable: [], invalid: [] };
     for (const f of fams) if (f.state === "unresolvable") s.unresolvable.push({ tag: f.tag, reason: f.reason });
     const dirs = new Set<string>();
-    // A directory stored on a BRANCH FAMILY (bean lehh) holds its nodes on the
-    // family's branches by declaration, never in the checkout: named, not swept.
+    // A directory stored on a BRANCH FAMILY (bean lehh), or ROUTE-keyed on a
+    // published branch (the site, `gh-pages`), holds its nodes on those
+    // branches by declaration, never in the checkout: named, not swept.
     const onFamily = new Set<string>();
     for (const inst of instanceRootsIn(join(root, ".."))) {
       for (const e of readDeclaration(inst)?.directories ?? []) {
         const st = e.storage as { keyedBy?: string } | undefined;
         const src = e.source as { kind?: string } | undefined;
-        if (e.graphKinds.includes(kind as never) && (st?.keyedBy === "family" || src?.kind === "family")) onFamily.add(join(inst, e.path).replace(/\/$/, ""));
+        if (e.graphKinds.includes(kind as never) && (st?.keyedBy === "family" || st?.keyedBy === "route" || st?.keyedBy === "route-family" || src?.kind === "family")) onFamily.add(join(inst, e.path).replace(/\/$/, ""));
       }
       for (const d of directoriesForGraph(inst, kind)) if (!onFamily.has(d.replace(/\/$/, ""))) dirs.add(d);
     }
@@ -270,7 +271,7 @@ async function main(): Promise<number> {
       );
     }
     if (f.onFamily && Object.keys(f.counts).length === 0) {
-      console.log(`  · ${f.onFamily} director(ies) on a branch FAMILY by declaration — the nodes are on the family's branches, not in this checkout, so not examined here`);
+      console.log(`  · ${f.onFamily} director(ies) on a branch family or a route-keyed branch by declaration — the nodes are on those branches, not in this checkout, so not examined here`);
     } else if (f.noDirectory) {
       console.log(`  · no instance declares a ${f.kind} directory — nothing to route (a nested kind is reached through its parent)`);
     } else if (nodes === 0) {

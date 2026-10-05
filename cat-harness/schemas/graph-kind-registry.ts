@@ -2115,6 +2115,43 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "schema is strict throughout, and a file a deploy phase deleted must still say where " +
       "to get it back and why it went.",
   },
+  // A published static site, as a graph (bean `lehh`, owner 2026-10-05). Two
+  // capability tiers, both declared now so a real CDN has a kind to land in:
+  // `basic-cdn-site` serves files by path and nothing more (GitHub Pages);
+  // `cdn-site` adds media types, redirects and headers (who-iris's CDN, beans
+  // l9v6 and xies). A site is an archive with routes: its files reuse
+  // ArchiveEntrySchema, and the kind adds the route layout.
+  "basic-cdn-site": {
+    description:
+      "a published static site on a CDN that serves files by path only: no media-type mapping, no redirects, no headers. One `folio-basic-cdn-site/v1` document describes it: its root URL, its routes (the release root, the staging-preview template `STAGING/<slug>/`, the per-instance sub-sites), the commit it was built from, and its files as archive entries. `derived`: built from the renderable graphs its directory's `derivedFrom` names, by a build Tool, and put on the CDN by the Tool its `storage.tool` names. GitHub Pages is one such CDN.",
+    title: "Basic CDN site",
+    renderable: false,
+    holds: "derived",
+    // declared-path-literal: this table IS the declaration, as on `binary-release`.
+    schema: "schemas/site.ts",
+    nodeSchemas: {
+      "folio-basic-cdn-site/v1": {},
+    },
+    summary:
+      "A published static site on a CDN that serves files by path only (GitHub Pages): its routes, " +
+      "the commit it was built from, and its files as archive entries. Built from the renderable graphs " +
+      "its directory names, and deployed by the Tool its storage names.",
+  },
+  "cdn-site": {
+    description:
+      "a published site on a CDN that also controls media types, redirects and response headers. One `folio-cdn-site/v1` document: everything a `basic-cdn-site` carries, plus `mimeTypes`, `redirects` and `headers`. Declared ahead of its first instance so a CDN deployment (who-iris, beans l9v6 and xies) lands in a kind rather than widening `basic-cdn-site`, whose point is what it cannot do.",
+    title: "CDN site",
+    renderable: false,
+    holds: "derived",
+    // declared-path-literal: this table IS the declaration.
+    schema: "schemas/site.ts",
+    nodeSchemas: {
+      "folio-cdn-site/v1": {},
+    },
+    summary:
+      "A published site on a CDN that also controls media types, redirects and headers: " +
+      "a `basic-cdn-site` plus those three. No instance declares one yet.",
+  },
   // Named editorial voice profiles, overlaid on the base house voice. A
   // separate kind from `kg` because a voice is OPT-IN per folio while a skill is
   // simply available: the activation list in `harness.config.json` is what makes
