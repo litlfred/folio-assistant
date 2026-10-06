@@ -4,7 +4,7 @@
 plain page text, which has thrown away what makes a heading visible: it is set
 larger, bolder, in capitals or in italics. `_pdf_headings.py` reads the text
 WITH its font metrics. Over the 13 corpus PDFs that carry an outline, hidden and
-used as the answer key (`toc-benchmark.py`), title F1 went from 0.30 to 0.90.
+used as the answer key (`toc-benchmark.py`), title F1 went from 0.30 to 0.92 (0.26 to 0.83 on 20 held-out PDFs).
 
 ## What these tests hold
 
@@ -106,6 +106,19 @@ def test_ieee_small_caps_and_italic_headings():
     lines += [ln(3, 100, "III. RESULTS")] + body(3, 120)
     got = titles(H.font_headings(lines))
     assert got == [(1, "INTRODUCTION"), (1, "METHOD"), (2, "Search strategy"), (1, "RESULTS")], got
+
+
+def test_wrapped_heading_continues_but_next_heading_does_not_merge():
+    lines = [ln(1, 60, "Abstract—we study things.", size=9, bold=True)]
+    lines += [ln(1, 100, "I. RESULTS")] + body(1, 120)
+    lines += [ln(2, 100, "A. RQ1. What agile approaches have been", italic=True),
+              ln(2, 112, "proposed for ML-enabled systems?", italic=True)] + body(2, 130)
+    lines += [ln(2, 300, "B. Search strategy", italic=True),
+              ln(2, 312, "Data sources", italic=True)] + body(2, 330)
+    got = [h.title for h in H.font_headings(lines)]
+    assert "RQ1. What agile approaches have been proposed for ML-enabled systems?" in got, got
+    # "Data sources" opens with a capital: a separate line, not part of "Search strategy".
+    assert "Search strategy" in got, got
 
 
 def test_levels_are_tree_depths():

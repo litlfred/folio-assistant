@@ -687,8 +687,9 @@ def infer_toc(lines: list | None, pages: list[str]) -> tuple[list[TocEntry], str
     against the body, else heading styles confirmed by numbering, each entry
     carrying its confidence and evidence (`consensus_headings`). Measured over
     the 13 corpus PDFs that carry an outline, with the outline hidden and used
-    as the answer key (`toc-benchmark.py`, issue #2302): title F1 0.90, against
-    0.30 for `infer_headings` alone. The text heuristic stays for
+    as the answer key (`toc-benchmark.py`, issue #2302): title F1 0.83 on 20
+    held-out PDFs (0.92 on the 13 it was developed on), against 0.26 for
+    `infer_headings` alone. The text heuristic stays for
     OCR'd text, which carries no font metrics, and for a document where the
     layout finds nothing.
     """

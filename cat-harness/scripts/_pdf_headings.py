@@ -404,6 +404,41 @@ def font_headings(lines: list[Line], max_levels: int = 4, styles_out: list | Non
             continue
         cands.append(l)
 
+    # Continue a heading onto the lines that carry on its title: same page
+    # and style, directly below, not numbered themselves. The continuation
+    # need not have qualified as a heading on its own — a numbered italic
+    # heading's second line carries no number, so the numbered-line rule
+    # never admits it. Measured on 2506.20759v1 (IEEE): five "A. RQ1. What
+    # agile management approaches have been / proposed for developing …?"
+    # headings were cut at the line break, each a miss AND an extra.
+    pos = {id(l): i for i, l in enumerate(lines)}
+    grown: list[Line] = []
+    for l in cands:
+        i = pos[id(l)]
+        cur = l
+        while i + 1 < len(lines) and len(cur.text) < 200:
+            n = lines[i + 1]
+            # A wrapped title continues in lower case ("proposed for …") or
+            # after a hyphen or comma; a line opening with a capital in the
+            # same style is the NEXT heading. Without this test the rule
+            # joined adjacent headings and cost 0.07 title F1 overall.
+            wraps = n.text.lstrip()[:1].islower() or cur.text.rstrip().endswith(("-", ","))
+            if (not wraps or n.page != cur.page or n.style != cur.style
+                    or not (0 <= n.y0 - cur.y1 < 0.8 * n.size)
+                    or split_number(n.text)[0] is not None):
+                break
+            text = (cur.text[:-1] + n.text.lstrip()) if cur.text.endswith("-") and n.text[:1].islower() \
+                else f"{cur.text} {n.text}"
+            cur = Line(cur.page, text, cur.size, cur.bold, cur.italic, cur.caps, cur.font, cur.uniform,
+                       min(cur.x0, n.x0), cur.y0, max(cur.x1, n.x1), n.y1, cur.page_height, cur.page_width)
+            i += 1
+        grown.append(cur)
+    # A continuation that was also a candidate in its own right is now part
+    # of the heading above it.
+    absorbed = {id(x) for g, c in zip(grown, cands) if g is not c
+                for x in lines[pos[id(c)] + 1: pos[id(c)] + 1 + g.text.count(" ") + 1]}
+    cands = [g for g, c in zip(grown, cands) if id(c) not in absorbed]
+
     # Merge a heading set over two lines: same page and style, close below,
     # and the continuation does not start a new number.
     merged: list[Line] = []

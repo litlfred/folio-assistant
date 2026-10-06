@@ -40,7 +40,6 @@ from __future__ import annotations
 
 import argparse
 import contextlib
-import glob
 import importlib.util
 import io
 import json
@@ -321,6 +320,17 @@ def teds(gold: list[H.Heading], pred: list[H.Heading]) -> float | None:
     return 1 - ted(a, b) / max(len(gold), len(pred), 1)
 
 
+def outline_is_pages(gold: list[H.Heading]) -> bool:
+    """An outline that bookmarks pages ("p. 177", "p. 178" …), or entries with
+    no destination in this file, rather than its own sections, is not an
+    answer key for a TOC. Set aside, like a /PageLabels that repeats the
+    physical index in page-label-benchmark.py. Measured: a JSTOR download's
+    outline is its page bookmarks plus the whole journal ISSUE's contents,
+    13 articles of which are not in the PDF."""
+    foreign = sum(1 for g in gold if RE_PAGE_ENTRY.match(g.title) or g.page is None)
+    return foreign >= 0.6 * max(1, len(gold))
+
+
 def score(gold: list[H.Heading], pred: list[H.Heading]) -> dict:
     gold_tree, pred_tree = gold, pred          # TEDS reads the nesting as given
     gold, pred = in_page_order(gold), in_page_order(pred)
@@ -355,20 +365,36 @@ def score(gold: list[H.Heading], pred: list[H.Heading]) -> dict:
 # ---------------------------------------------------------------- driver
 
 
+RE_SLIDE = re.compile(r"^\s*slide\s+\d+\s*[:.\-–—]?\s*", re.I)
+RE_PAGE_ENTRY = re.compile(r"^\s*(?:p\.|pp\.|page)?\s*[\divxlc]+\s*$", re.I)
+
+
 def gold_outline(path: str) -> list[H.Heading]:
+    """The outline as the answer key. A presentation's export prefixes every
+    entry "Slide N:" — not part of the title a reader sees — so it is
+    dropped before comparing."""
     import pymupdf
     with pymupdf.open(path) as d:
         out = []
         for level, title, page in d.get_toc(simple=True):
-            num, t = H.split_number(str(title).strip())
+            num, t = H.split_number(RE_SLIDE.sub("", str(title).strip()))
             out.append(H.Heading(level, t, page if page and page > 0 else None, num))
         return out
 
 
 def default_corpus(root: str) -> list[str]:
+    """Every TRACKED PDF with an outline of five or more entries.
+
+    Tracked, not every file on disk: `bun run state:mount` puts untracked
+    PDFs beside the tracked ones, and a corpus that depends on what was last
+    mounted gives a number nobody can reproduce. Pass paths explicitly to
+    score others — that is how the held-out set is scored.
+    """
     import pymupdf
+    import subprocess
+    tracked = subprocess.run(["git", "-C", root, "ls-files", "*.pdf"], capture_output=True, text=True).stdout.split()
     found = []
-    for p in sorted(glob.glob(os.path.join(root, "**", "*.pdf"), recursive=True)):
+    for p in sorted(os.path.join(root, t) for t in tracked):
         if "node_modules" in p:
             continue
         try:
@@ -411,6 +437,10 @@ def main() -> int:
     for path in pdfs:
         doc = load(path, args.layout_backend)
         rel = os.path.relpath(path, args.root)
+        if outline_is_pages(doc.gold):
+            print(f"set aside, outline bookmarks pages not sections: {rel}", file=sys.stderr)
+            pdfs = [p for p in pdfs if p != path]
+            continue
         for m in methods:
             t0 = time.time()
             pred = METHODS[m](doc)

@@ -252,7 +252,7 @@ someone time:
   near the page it names, set in a heading style, numbered. Trust the high
   ones; look at the flagged ones before citing them. Measured over the 13
   corpus PDFs that carry an outline, hidden and used as the answer key: title
-  F1 0.90 for this consensus against 0.30 for text patterns alone (issue
+  F1 0.83 for this consensus on 20 held-out PDFs (0.92 on the development set) against 0.26 for text patterns alone (issue
   #2302). The same artefact carries `figures` — the list of figures and
   tables, each caption with `confidence` and `evidence` (cited in the text,
   in its numbering run, a graphic on its page) — with numbering gaps in

@@ -3,7 +3,7 @@ title: "Table-of-contents extraction — methods compared against held-out PDF o
 kind: research
 bean: folio-assistant-cp3v
 summary: >-
-  Which way of inferring a PDF's table of contents works, when the PDF has no outline? Seven methods scored on 2026-10-06 against the 13 corpus PDFs that do carry one, with the outline hidden and used as the answer key. Layout (a printed contents page, else heading styles from font metrics) reaches title F1 0.88, and the consensus of the methods 0.90, against 0.30 for the text-pattern heuristic it replaces. Grobid measured (title F1 0.59, CRF models); Nougat assessed from the literature, its run handed to bean u9lb.
+  Which way of inferring a PDF's table of contents works, when the PDF has no outline? Seven methods scored on 2026-10-06 against the 13 corpus PDFs that do carry one, with the outline hidden and used as the answer key. Layout (a printed contents page, else heading styles from font metrics) reaches title F1 0.89, and the consensus of the methods 0.92 (0.83 on 20 held-out PDFs), against 0.30 for the text-pattern heuristic it replaces. Grobid measured (title F1 0.59, CRF models); Nougat assessed from the literature, its run handed to bean u9lb.
 ---
 
 # Table-of-contents extraction
@@ -79,10 +79,10 @@ distance is too slow at 2,500 nodes) and is averaged over the other 12.
 |---|---|---|---|---|---|---|---|---|
 | `regex` | 0.46 | 0.29 | 0.30 | 0.30 | 0.29 | 0.28 | 0.28 | 0.15 |
 | `size` | 0.43 | 0.63 | 0.44 | 0.51 | 0.42 | 0.36 | 0.35 | 0.27 |
-| `font` | 0.69 | 0.94 | 0.77 | 0.82 | 0.76 | 0.75 | 0.74 | 0.64 |
+| `font` | 0.72 | 0.94 | 0.79 | 0.84 | 0.78 | 0.76 | 0.76 | 0.65 |
 | `contents` | 0.21 | 0.21 | 0.21 | 0.21 | 0.21 | 0.16 | 0.15 | 0.20 |
-| `layout` | 0.83 | 0.95 | 0.88 | 0.90 | 0.87 | 0.81 | 0.80 | 0.76 |
-| **`consensus`** | **0.87** | **0.95** | **0.90** | **0.91** | **0.90** | **0.84** | **0.83** | **0.82** |
+| `layout` | 0.85 | 0.96 | 0.89 | 0.91 | 0.88 | 0.82 | 0.82 | 0.77 |
+| **`consensus`** | **0.90** | **0.96** | **0.92** | **0.93** | **0.91** | **0.85** | **0.85** | **0.83** |
 | `consensus` + Grobid voter | 0.85 | 0.95 | 0.89 | 0.91 | 0.89 | 0.82 | 0.82 | 0.79 |
 | `grobid` | 0.52 | 0.75 | 0.59 | 0.61 | 0.58 | 0.51 | 0.51 | 0.33 |
 
@@ -110,6 +110,14 @@ Title F1 per document, smallest outline first:
 | `who-dpi-h-reference-architecture-draft-v1.pdf` | 138 | 0.45 | 0.07 | 0.37 | 1.00 | 1.00 | 0.31 |
 | `9789241548960_eng.pdf` | 258 | 0.70 | 0.81 | 0.77 | 0.98 | 0.98 | 0.75 |
 | `ihris_admin_handbook_sep_17_2010.pdf` | 1357 | 0.01 | 0.97 | 0.97 | 0.00 | 0.97 | 0.51 |
+
+A heading set over two lines is now continued onto its second line when that
+line carries on the title (lower case, or after a hyphen or comma). That
+fixed the one IEEE outlier, `2506.20759v1`: its italic research-question
+headings were cut at the line break — each a miss and an extra — 0.71 → 0.94.
+The first version, which joined any same-style line below, merged adjacent
+headings and cost 0.07 overall; the lower-case test is what separates a
+wrapped title from the next heading.
 
 ### What the table says
 
@@ -380,11 +388,60 @@ run for an agent that has it. Either can also run elsewhere and write its output
 as `(level, title, page)` rows, which `toc-benchmark.py`'s `score()` accepts
 unchanged.
 
+## Held-out test — 20 PDFs the rules never saw
+
+Every number above is a **development** score: the rules were written while
+looking at those 13 documents. On 2026-10-06 a `state:mount` put 22 further
+PDFs with outlines under `fsh-guts/uploads/` — arXiv papers, W3C and OMG
+specifications, a slide deck, a JSTOR download — none of which had been looked
+at. They were scored with the method frozen (no rule changed in response):
+
+| method | title F1, development (13) | title F1, **held-out (20)** | TEDS, held-out |
+|---|---|---|---|
+| `regex` (previous fallback) | 0.30 | 0.26 | 0.17 |
+| `size` | 0.44 | 0.55 | 0.36 |
+| `font` | 0.79 | 0.80 | 0.65 |
+| `layout` | 0.89 | 0.82 | 0.70 |
+| **`consensus`** | **0.92** | **0.83** | **0.72** |
+
+**The development set overstated the method by about 0.09**, as expected; on
+documents it has never seen it still scores three times the fallback it
+replaces. Two outlines were not answer keys and the benchmark now says so,
+by rules about the outline rather than about the method: a JSTOR download
+whose "outline" is page bookmarks plus the whole journal issue's contents (13
+articles not in the file) is set aside, and a slide deck's "Slide N:" prefix
+is dropped before titles are compared. The one unexplained low score is the
+W3C PROV-O specification (0.23), left as found.
+
+| document | outline entries | `regex` | `layout` | `consensus` |
+|---|---|---|---|---|
+| `2504.21474v1.pdf` | 10 | 0.14 | 0.71 | 0.71 |
+| `neubauer-2025-ai-assisted-schema-creation.pdf` | 12 | 0.74 | 0.92 | 0.92 |
+| `2607.25032v1.pdf` | 12 | 0.00 | 0.92 | 0.92 |
+| `2504.07199v3.pdf` | 18 | 0.32 | 0.76 | 0.76 |
+| `2605.03537v1.pdf` | 18 | 0.00 | 0.90 | 0.90 |
+| `2508.21620v2.pdf` | 20 | 0.74 | 0.88 | 0.70 |
+| `2608.08453v1.pdf` | 21 | 0.25 | 0.86 | 1.00 |
+| `qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf` | 23 | 0.79 | 0.93 | 0.93 |
+| `feng-2023-designing-with-language.pdf` | 23 | 0.30 | 0.94 | 0.94 |
+| `dong-2025-doc-researcher.pdf` | 24 | 0.29 | 0.85 | 0.92 |
+| `2504.19675v2.pdf` | 25 | 0.00 | 0.91 | 0.91 |
+| `arxiv-2202.02427v1.pdf` | 27 | 0.00 | 0.88 | 0.98 |
+| `2606.04382v1.pdf` | 29 | 0.00 | 0.93 | 0.93 |
+| `strauch-carbno-2025-spdx-3-1-supply-chain.pdf` | 43 | 0.00 | 0.40 | 0.40 |
+| `w3c-2018-odrl-model-2-2.pdf` | 66 | 0.76 | 0.87 | 0.87 |
+| `2602.12670v4.pdf` | 81 | 0.08 | 0.91 | 0.91 |
+| `w3c-2013-prov-o.pdf` | 111 | 0.22 | 0.23 | 0.23 |
+| `2607.20636v1.pdf` | 149 | 0.02 | 1.00 | 1.00 |
+| `w3c-2020-json-ld-1-1.pdf` | 193 | 0.63 | 0.69 | 0.74 |
+| `omg-2024-spdx-3-0.pdf` | 434 | 0.00 | 0.98 | 0.98 |
+
 ## What this could not establish
 
-- **There is no held-out set.** The rules were developed while looking at these
-  13 documents, so the numbers are a development score, and some optimism
-  is built in. Each rule is written to the general convention it handles (IEEE
+- **The held-out set is small** — 20 PDFs, and they are mounted from a state
+  branch rather than tracked, so its scores are reported but not part of
+  the default benchmark run. The development set overstated the method by
+  about 0.09. Each rule is written to the general convention it handles (IEEE
   small capitals, a cover page, a printed contents page), never to a document,
   and the 18 PDFs with no outline were read by eye after each change. The honest
   test is the `qou` library (715 `structure.json`, many with outlines), which
