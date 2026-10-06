@@ -1,8 +1,9 @@
 /**
- * Input-hash staleness skipping for `bun run regen` — bean `xpcu`.
+ * Input-hash staleness skipping for `bun run regen` and `bun run gates` —
+ * beans `xpcu`, `f017`.
  *
  * @module scripts/input-hash
- * @graphNode none — a local-only cache helper for `regen-after-merge.ts`
+ * @graphNode none — a local-only cache helper for `regen-after-merge.ts` and `gates.ts`
  *
  * ## What it answers
  *
@@ -54,6 +55,16 @@
  *   such as `tsc`, an inline shell expression);
  * - an imported module uses a NON-LITERAL dynamic import, whose target cannot
  *   be followed.
+ *
+ * ## Two kinds of entry, one file
+ *
+ * `pairs` is regen's: a verify/write pair (check AND writer) at a green run.
+ * `checks` is a CHECK SCRIPT ALONE, recorded from a run of that script that
+ * exited 0 with its inputs unmoved across the run ({@link recordCheckRun}) —
+ * by `gates`, or by `regen` asking the check. Both commands read it, so the
+ * `gates` run that follows a `regen` on the same tree does not ask again what
+ * `regen` just asked (bean `f017`), and a gate listed twice in the workflow
+ * is asked once.
  *
  * ## The cache is local, never committed, and off in CI
  *
@@ -433,18 +444,29 @@ export function fingerprint(
 
 export interface HashCache {
   version: number;
+  /** Verify/write PAIR (`regen`'s key, check and writer) → fingerprint at its last green run. */
   pairs: Record<string, string>;
+  /**
+   * A CHECK SCRIPT ALONE → its fingerprint the last time it was RUN and
+   * exited 0, by `regen` or by `gates` (bean `f017`). Shared, so a gate `regen`
+   * just asked on this tree is not asked again by the `gates` run that
+   * follows it, and vice versa. Absent in a cache written before it existed.
+   */
+  checks?: Record<string, string>;
 }
 
 /** Read the cache; anything unreadable is an empty cache, which makes every pair run. */
 export function loadCache(root: string): HashCache {
   try {
     const raw = JSON.parse(readFileSync(join(root, CACHE_FILE), "utf-8")) as HashCache;
-    if (raw.version === RECIPE_VERSION && typeof raw.pairs === "object" && raw.pairs !== null) return raw;
+    if (raw.version === RECIPE_VERSION && typeof raw.pairs === "object" && raw.pairs !== null) {
+      const checks = typeof raw.checks === "object" && raw.checks !== null ? raw.checks : {};
+      return { ...raw, checks };
+    }
   } catch {
     /* absent or corrupt — start empty */
   }
-  return { version: RECIPE_VERSION, pairs: {} };
+  return { version: RECIPE_VERSION, pairs: {}, checks: {} };
 }
 
 export function saveCache(root: string, cache: HashCache): void {
@@ -475,4 +497,54 @@ export function decide(cache: HashCache | undefined, key: string, fp: Fingerprin
   if (prev === undefined) return { skip: false, why: `no hash recorded at a previous green run (${scope(fp)})` };
   if (prev !== fp.hash) return { skip: false, why: `inputs changed since the last green run (${scope(fp)})` };
   return { skip: true, why: `inputs unchanged since the last green run (${scope(fp)})` };
+}
+
+/**
+ * The fingerprint of ONE check script — what `gates` runs, and what a `regen`
+ * pair's check runs — over the same inputs as {@link fingerprint}, minus any
+ * writer. `io` is the script's own declaration (`task-io.ts`); without
+ * `inputs` it is undetermined, so the script is always run.
+ */
+export function checkFingerprint(
+  root: string,
+  scripts: Readonly<Record<string, string>>,
+  script: string,
+  io: PairIO | undefined,
+  digests: FileDigests = new FileDigests(root),
+  baseline?: BaselineResolver,
+): Fingerprint {
+  return fingerprint(root, scripts, [script], io, digests, baseline);
+}
+
+/** Whether a check script may be skipped: its inputs hash to its last recorded pass. */
+export function decideCheck(cache: HashCache | undefined, script: string, fp: Fingerprint): SkipDecision {
+  if (cache === undefined) return { skip: false, why: "cache disabled (--no-cache or CI)" };
+  if ("undetermined" in fp) return { skip: false, why: `inputs could not be determined: ${fp.undetermined}` };
+  const prev = cache.checks?.[script];
+  if (prev === undefined) return { skip: false, why: `no hash recorded at a previous pass of this check (${scope(fp)})` };
+  if (prev !== fp.hash) return { skip: false, why: `inputs changed since this check last passed (${scope(fp)})` };
+  return { skip: true, why: `inputs unchanged since this check last passed (${scope(fp)})` };
+}
+
+/**
+ * Record — or forget — one RUN of a check script, in place.
+ *
+ * `before` is the fingerprint taken just before it ran and `after` just after
+ * (with fresh digests). A hash is recorded only when the run exited 0 AND the
+ * two agree: equal fingerprints mean nothing the check reads moved while it was
+ * reading, so the pass is a fact about exactly the inputs that hash names. Any
+ * other combination — red, undetermined, or inputs that moved underneath it
+ * (a writer beside it, a person editing, the check writing its own input) —
+ * DELETES the entry, so a later run cannot skip on the strength of it.
+ */
+export function recordCheckRun(
+  cache: HashCache,
+  script: string,
+  passed: boolean,
+  before: Fingerprint,
+  after: Fingerprint,
+): void {
+  cache.checks ??= {};
+  if (passed && "hash" in before && "hash" in after && before.hash === after.hash) cache.checks[script] = before.hash;
+  else delete cache.checks[script];
 }

@@ -48,10 +48,12 @@
  *   bun run gates --all        # plus the jobs that need a browser
  *   bun run gates --list       # print them and exit, running nothing
  *   bun run gates --jobs 3     # pool size for read-only gates (default: CPUs - 1)
+ *   bun run gates --no-cache   # ask every gate; neither read nor update the input-hash cache
  *
  * Gates whose script declares `outputs: []` in `task-io.ts` run in a worker
  * pool, output printed in workflow order; every other gate runs alone, as it
- * always did (bean `xpcu`).
+ * always did (bean `xpcu`). A gate whose declared inputs are unchanged since it
+ * last passed is SKIPPED and reported as such (bean `f017`, {@link GateSkipper}).
  *
  * @module scripts/gates
  */
@@ -71,7 +73,22 @@ import {
   type GateMutation,
 } from "./gate-tree-guard.js";
 import { jobsFromArgv, orderedEmitter, runCaptured, runPool } from "./task-pool.ts";
-import { gateReadsOnly } from "./task-io.ts";
+import { gateReadsOnly, pairIO } from "./task-io.ts";
+import {
+  FileDigests,
+  cacheEnabled,
+  checkFingerprint,
+  decideCheck,
+  loadCache,
+  qaBaselineIdentity,
+  recordCheckRun,
+  saveCache,
+  type BaselineResolver,
+  type Fingerprint,
+  type HashCache,
+  type PairIO,
+  type SkipDecision,
+} from "./input-hash.ts";
 
 // The REPOSITORY root. `GATES_WORKFLOW` is `.github/workflows/…`, which
 // belongs to the repository rather than to this instance, and the gates
@@ -1610,6 +1627,95 @@ async function runTee(cmd: string, args: string[]): Promise<{ code: number; outp
   return { code: await child.exited, output: chunks.join("") };
 }
 
+/**
+ * Skipping a gate whose inputs have not changed since it last passed — bean `f017`.
+ *
+ * ## Why gates may skip at all
+ *
+ * The merge cycle is `regen` then `gates`, on the same tree. `regen` has just
+ * asked every verify/write pair, and `gates` asks each of those checks again —
+ * and `skill:register:check` twice in one run, because two CI jobs run it.
+ * A check whose DECLARED inputs (`task-io.ts`) hash to what they were when it
+ * last passed cannot answer differently, so asking again buys nothing.
+ *
+ * ## What may be skipped, and what never is
+ *
+ * Only a gate that is exactly `bun run <script>` whose script declares
+ * `inputs`, and only when the input-hash cache holds a hash for THAT SCRIPT
+ * equal to its fingerprint now — recorded by a real run that exited 0 (by
+ * `gates`, or by `regen`'s check). Everything else runs: undeclared scripts,
+ * inputs that cannot be determined, a moved `--against` baseline, `CI`, or
+ * `--no-cache`. A skipped gate is reported as SKIPPED, by name and with its
+ * reason, and counted apart from the gates that passed — never as a pass.
+ *
+ * ## Recording
+ *
+ * A gate's hash is recorded only when it exited 0 AND its fingerprint was the
+ * same just before and just after it ran (`recordCheckRun`): a gate whose
+ * inputs moved while it read them — a writer, a person editing, the gate
+ * itself — records nothing.
+ *
+ * **The falsifier** is a script that reads something its declaration does not
+ * name; `task-io.ts` carries the rule (declare by reading, `{tracked}` for
+ * whole-tree walkers, nothing for environment, network or clock readers).
+ */
+export class GateSkipper {
+  private readonly touched = new Set<string>();
+  constructor(
+    private readonly root: string,
+    private readonly scripts: Readonly<Record<string, string>>,
+    /** `undefined`: the cache is off (`--no-cache`, `CI`) — nothing is skipped or recorded. */
+    readonly cache: HashCache | undefined,
+    private readonly baseline: BaselineResolver | undefined,
+    private readonly ioOf: (script: string) => PairIO | undefined = pairIO,
+  ) {}
+
+  /** The script a gate runs, when it is exactly one script that declares its inputs. */
+  scriptOf(command: string): string | undefined {
+    const m = /^bun run ([A-Za-z0-9:_-]+)\s*$/.exec(command.trim());
+    if (m === null) return undefined;
+    return this.ioOf(m[1]!)?.inputs === undefined ? undefined : m[1]!;
+  }
+
+  /** The script's fingerprint over `digests` (fresh per moment: before, after). */
+  fingerprint(script: string, digests: FileDigests): Fingerprint {
+    return checkFingerprint(this.root, this.scripts, script, this.ioOf(script), digests, this.baseline);
+  }
+
+  /** Whether to skip `command` now; `fp` is what to hand {@link GateSkipper.record} if it runs. */
+  decide(command: string, digests: FileDigests): (SkipDecision & { script: string; fp: Fingerprint }) | undefined {
+    if (this.cache === undefined) return undefined;
+    const script = this.scriptOf(command);
+    if (script === undefined) return undefined;
+    const fp = this.fingerprint(script, digests);
+    return { ...decideCheck(this.cache, script, fp), script, fp };
+  }
+
+  /** Record (or forget) one run, comparing the fingerprint before it with one after it. */
+  record(script: string, passed: boolean, before: Fingerprint, digestsAfter: FileDigests): void {
+    if (this.cache === undefined) return;
+    recordCheckRun(this.cache, script, passed, before, this.fingerprint(script, digestsAfter));
+    this.touched.add(script);
+  }
+
+  /**
+   * Write what this run learned, over whatever is on disk NOW — `regen` may
+   * have recorded since this run loaded the cache. Only scripts this run ran
+   * are touched; every other entry is left as it is on disk.
+   */
+  save(): void {
+    if (this.cache === undefined || this.touched.size === 0) return;
+    const disk = loadCache(this.root);
+    disk.checks ??= {};
+    for (const s of this.touched) {
+      const h = this.cache.checks?.[s];
+      if (h === undefined) delete disk.checks[s];
+      else disk.checks[s] = h;
+    }
+    saveCache(this.root, disk);
+  }
+}
+
 /** A run of consecutive gates: either all read-only (may share the pool) or one that runs alone. */
 export interface GateSegment {
   parallel: boolean;
@@ -1828,29 +1934,65 @@ if (import.meta.main) {
   const failed: { gate: Gate; why: string[] }[] = [];
   const t0 = performance.now();
   const parallelCount = segments.filter((s) => s.parallel).reduce((n, s) => n + s.gates.length, 0);
+
+  // ── Input-hash skipping (bean `f017`) — see `GateSkipper` ──────────────
+  const useCache = cacheEnabled(process.argv, process.env);
+  const pkgScripts =
+    (JSON.parse(readFileSync(join(ROOT, "package.json"), "utf-8")) as { scripts?: Record<string, string> }).scripts ?? {};
+  const skipper = new GateSkipper(
+    ROOT,
+    pkgScripts,
+    useCache ? loadCache(ROOT) : undefined,
+    qaBaselineIdentity({ repoRoot: ROOT }),
+  );
+  const skippedGates: { gate: Gate; why: string }[] = [];
   console.log(
     `${jobs} worker(s): ${parallelCount} read-only gate(s) run in parallel, ` +
-      `${gates.length - parallelCount} one at a time (undeclared or writing)\n`,
+      `${gates.length - parallelCount} one at a time (undeclared or writing); ` +
+      `input-hash skip ${useCache ? "ON" : "OFF (--no-cache or CI)"}\n`,
   );
+  /** Decide each gate of a run-list now; the skipped ones are reported, the rest returned with their "before" fingerprints. */
+  const triage = (list: readonly Gate[]): { gate: Gate; script?: string; fp?: Fingerprint }[] => {
+    const digests = new FileDigests(ROOT);
+    const out: { gate: Gate; script?: string; fp?: Fingerprint }[] = [];
+    for (const g of list) {
+      const d = skipper.decide(g.command, digests);
+      if (d?.skip === true) {
+        process.stdout.write(`▸ ${g.command}   SKIPPED — ${d.why}\n`);
+        skippedGates.push({ gate: g, why: d.why });
+        continue;
+      }
+      out.push(d === undefined ? { gate: g } : { gate: g, script: d.script, fp: d.fp });
+    }
+    return out;
+  };
   for (const seg of segments) {
     if (!seg.parallel || jobs === 1) {
       for (const g of seg.gates) {
+        // One at a time, so a gate's "before" is taken after the gate ahead of
+        // it ran — the second `skill:register:check` sees the first's record.
+        const [t] = triage([g]);
+        if (t === undefined) continue;
         process.stdout.write(`▸ ${g.command}\n`);
         const [cmd, ...args] = g.command.split(/\s+/);
         const r = await runTee(cmd!, args);
         if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
+        if (t.script !== undefined && t.fp !== undefined) skipper.record(t.script, r.code === 0, t.fp, new FileDigests(ROOT));
         seen = snapshot(seen, g.command);
       }
       continue;
     }
+    const run = triage(seg.gates);
+    const codes: number[] = [];
     const emitter = orderedEmitter<{ code: number; output: string; ms: number }>((i, r) => {
-      const g = seg.gates[i]!;
+      const g = run[i]!.gate;
+      codes[i] = r.code;
       process.stdout.write(`▸ ${g.command}   (${(r.ms / 1000).toFixed(1)}s, parallel)\n`);
       process.stdout.write(r.output);
       if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
     });
     await runPool(
-      seg.gates.map((g) => ({
+      run.map(({ gate: g }) => ({
         id: g.command,
         outputs: [],
         run: () => runCaptured(g.command.split(/\s+/), ROOT),
@@ -1858,8 +2000,15 @@ if (import.meta.main) {
       jobs,
       (i, r) => emitter.push(i, r),
     );
-    seen = snapshot(seen, `one of the parallel read-only gates: ${seg.gates.map((g) => g.command).join(", ")}`);
+    // "After" for the whole batch: a gate's inputs moving under ANY member of
+    // it means its fingerprints disagree, and it records nothing.
+    const after = new FileDigests(ROOT);
+    run.forEach((t, i) => {
+      if (t.script !== undefined && t.fp !== undefined) skipper.record(t.script, codes[i] === 0, t.fp, after);
+    });
+    seen = snapshot(seen, `one of the parallel read-only gates: ${run.map((t) => t.gate.command).join(", ")}`);
   }
+  skipper.save();
   console.log(`\n(${((performance.now() - t0) / 1000).toFixed(0)}s wall for the gate run)`);
 
   /** Compare the tree with the last snapshot and attribute any change to `who`. */
@@ -1889,7 +2038,21 @@ if (import.meta.main) {
     // Every gate passed AND nothing moved underneath them. Only this pair earns
     // the clean line.
     if (mutations.length === 0) {
-      console.log(`✓ ${gates.length} gate(s) pass — the ${all ? "whole" : "fast"} set.`);
+      if (skippedGates.length === 0) {
+        console.log(`✓ ${gates.length} gate(s) pass — the ${all ? "whole" : "fast"} set.`);
+      } else {
+        // Never folded into the pass count (bean `f017`): a skipped gate was
+        // not asked. Its inputs hash to a run that passed, which is a
+        // different statement, and the reader is told which gates it covers.
+        console.log(
+          `✓ ${gates.length - skippedGates.length} gate(s) pass and ${skippedGates.length} were SKIPPED — ` +
+            `the ${all ? "whole" : "fast"} set.`,
+        );
+        console.log(
+          "  Skipped: inputs unchanged since each last passed (input-hash cache; `--no-cache` asks them):",
+        );
+        for (const { gate } of skippedGates) console.log(`    - ${gate.command}`);
+      }
       reportUnresolved(ROOT, { all });
       if (!all) console.log("  `bun run gates --all` adds the browser jobs before you push.");
       process.exit(0);
@@ -1911,6 +2074,9 @@ if (import.meta.main) {
     process.exit(1);
   }
   reportUnresolved(ROOT, { all });
+  if (skippedGates.length > 0) {
+    console.log(`  (${skippedGates.length} gate(s) SKIPPED — inputs unchanged since each last passed; \`--no-cache\` asks them)`);
+  }
   console.log(`✗ ${failed.length} of ${gates.length} failed:`);
   for (const { gate, why } of failed) {
     console.log(`  · ${gate.command}   (${gate.job} / ${gate.step})`);

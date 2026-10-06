@@ -13,7 +13,8 @@
  *   check that writes is treated as undeclared, and the test says so.)
  * - `inputs` — what can change the script's answer. This is what lets `regen`
  *   SKIP a verify/write pair whose inputs hash to the value recorded at its last
- *   green run (`input-hash.ts`). `{tracked}` means the whole working tree as
+ *   green run, and `gates` skip the script itself when its inputs hash to its
+ *   last pass (`input-hash.ts`, bean `f017`). `{tracked}` means the whole working tree as
  *   version control sees it; a narrower glob list hashes only what it names,
  *   plus the script's own source and every module it imports.
  *
