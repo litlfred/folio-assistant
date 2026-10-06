@@ -378,11 +378,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `schemas`
 
-5 of 7 published.
+7 of 7 published.
 {: .fa-hx-dim }
 
-- Bootstrap — *declared, not published*
-- Bootstrap tools — *declared, not published*
+- [Bootstrap]({{ '/cat-harness/schemas/bootstrap/' | relative_url }})
+- [Bootstrap tools]({{ '/cat-harness/schemas/bootstrap-tools/' | relative_url }})
 - [C@T Harness]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
 - [C@T OpenAPI]({{ '/cat-harness/schemas/cat-openapi/' | relative_url }})
 - [Folio Assistant Core]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }})

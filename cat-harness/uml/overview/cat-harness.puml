@@ -903,7 +903,7 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     id [1] : string
     name [1] : string
     module [1] : string
-    kind [1] : enum(9)
+    kind [1] : enum(10)
     note [0..1] : string
     doc [0..1] : string
     fields [0..*] : Field[]
@@ -922,6 +922,18 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     optional [1] : boolean
     array [1] : boolean
   }
+  class "NodeKind" as cat_harness_docs_folio_schema_graph_v1_NodeKind <<json: SchemaGraphIndexSchema>> #f4f4f1 {
+    id [1] : string
+    source [1] : node-kind | family | typology
+    instance [0..1] : string
+    decl [0..1] : string
+    tag [0..1] : string
+    parents [0..*] : string[]
+    subclasses [0..*] : string[]
+    typologies [0..*] : string[]
+    page [0..1] : string
+    note [0..1] : string
+  }
   class "folio-schema-graph/v1" as cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 <<json: SchemaGraphIndexSchema>> #f4f4f1 {
     $schema [1] : 'folio-schema-graph/v1'
     tile [0..1] : map<object>
@@ -929,6 +941,7 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     modules [0..*] : Module[]
     decls [0..*] : Decl[]
     edges [0..*] : Edge[]
+    nodeKinds [0..*] : NodeKind[]
   }
   class "Link" as cat_harness_docs_folio_library_index_v1_Link <<json: LibraryIndexSchema>> #f4f4f1 {
     label [1] : string
@@ -1475,6 +1488,7 @@ cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harn
 cat_harness_docs_folio_schema_graph_v1_Decl *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Field : fields
 cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Decl : decls
 cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Edge : edges
+cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_NodeKind : nodeKinds
 cat_harness_docs_folio_library_index_v1_Entry *-- "0..*" cat_harness_docs_folio_library_index_v1_Link : links
 cat_harness_docs_folio_library_index_v1_Entry *-- "0..*" cat_harness_docs_folio_library_index_v1_ReferencedBy : referencedBy
 cat_harness_docs_folio_library_index_v1_folio_library_index_v1 *-- "0..*" cat_harness_docs_folio_library_index_v1_Entry : entries

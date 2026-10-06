@@ -1161,7 +1161,7 @@ classDiagram
       id [1] string
       name [1] string
       module [1] string
-      kind [1] enum(9)
+      kind [1] enum(10)
       note [0..1] string
       doc [0..1] string
       fields [0..*] Field[]
@@ -1181,6 +1181,19 @@ classDiagram
       optional [1] boolean
       array [1] boolean
     }
+    class cat_harness_docs_folio_schema_graph_v1_NodeKind["NodeKind"] {
+      <<json: SchemaGraphIndexSchema>>
+      id [1] string
+      source [1] node-kind | family | typology
+      instance [0..1] string
+      decl [0..1] string
+      tag [0..1] string
+      parents [0..*] string[]
+      subclasses [0..*] string[]
+      typologies [0..*] string[]
+      page [0..1] string
+      note [0..1] string
+    }
     class cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1["folio-schema-graph/v1"] {
       <<json: SchemaGraphIndexSchema>>
       $schema [1] 'folio-schema-graph/v1'
@@ -1189,6 +1202,7 @@ classDiagram
       modules [0..*] Module[]
       decls [0..*] Decl[]
       edges [0..*] Edge[]
+      nodeKinds [0..*] NodeKind[]
     }
     class cat_harness_docs_folio_library_index_v1_Link["Link"] {
       <<json: LibraryIndexSchema>>
@@ -1930,6 +1944,7 @@ classDiagram
   cat_harness_docs_folio_schema_graph_v1_Decl *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Field : fields
   cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Decl : decls
   cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Edge : edges
+  cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_NodeKind : nodeKinds
   cat_harness_docs_folio_library_index_v1_Entry *-- "0..*" cat_harness_docs_folio_library_index_v1_Link : links
   cat_harness_docs_folio_library_index_v1_Entry *-- "0..*" cat_harness_docs_folio_library_index_v1_ReferencedBy : referencedBy
   cat_harness_docs_folio_library_index_v1_folio_library_index_v1 *-- "0..*" cat_harness_docs_folio_library_index_v1_Entry : entries
@@ -1965,6 +1980,7 @@ classDiagram
   cssClass "cat_harness_docs_folio_schema_graph_v1_Field" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_schema_graph_v1_Decl" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_schema_graph_v1_Edge" fa_uml_kind_docs
+  cssClass "cat_harness_docs_folio_schema_graph_v1_NodeKind" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_library_index_v1_Link" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_library_index_v1_ReferencedBy" fa_uml_kind_docs

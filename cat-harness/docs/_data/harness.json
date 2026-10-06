@@ -3361,7 +3361,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
@@ -3382,7 +3382,7 @@
         },
         {
           "kind": "schemas",
-          "note": "no viewer yet",
+          "path": "/cat-harness/schemas/bootstrap-tools/",
           "label": "Schemas"
         },
         {
@@ -3434,7 +3434,7 @@
         }
       ],
       "findings": [
-        "bootstrap-tools: declares 4 graph(s) with no published viewer — code, scenarios, schemas, skills. Declared and not rendered is a gap, not a dead link.",
+        "bootstrap-tools: declares 3 graph(s) with no published viewer — code, scenarios, skills. Declared and not rendered is a gap, not a dead link.",
         "bootstrap-tools: has no docs/ of its own, so the tile opens a kind handler's viewer (/processes/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -3506,7 +3506,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
@@ -3527,7 +3527,7 @@
         },
         {
           "kind": "schemas",
-          "note": "no viewer by design",
+          "path": "/cat-harness/schemas/bootstrap/",
           "label": "Schemas"
         },
         {
@@ -3579,7 +3579,7 @@
         }
       ],
       "findings": [
-        "bootstrap: 4 graph(s) render no viewer — models, scenarios, schemas, skills — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
+        "bootstrap: 3 graph(s) render no viewer — models, scenarios, skills — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
         "bootstrap: has no docs/ of its own, so the tile opens its section of the landing (/#harness-bootstrap) rather than the instance's own themed root."
       ],
       "navbarIcons": [
