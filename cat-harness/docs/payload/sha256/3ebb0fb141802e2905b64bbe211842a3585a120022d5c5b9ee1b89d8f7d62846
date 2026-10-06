@@ -862,7 +862,10 @@ so nothing could say where its work plan lived. The scaffold never asked the
 
 - **The default is a property of the KIND, read once at scaffold time.** A
   graph typology may carry `newInstanceSource: { kind: "branch", keyedBy:
-  "tip" }`, beside `perInstance`. `beans` and `todos` carry it. It has no
+  "tip" }`, beside `perInstance`. `beans`, `todos` and `fsh-guts` carry it
+  (`fsh-guts` since 2026-10-06, so a new instance's first cutover has
+  somewhere to deposit — see the main half below). It is a storage fact and
+  says nothing about `holds`: `fsh-guts` stays `context`. It has no
   `branch`, because a kind has no branch name to give. `folio_init` composes
   the name and writes a **complete** `source` into the new instance's own
   `<instance>.json`. After that the declaration is the one answer. The
@@ -917,16 +920,37 @@ so nothing could say where its work plan lived. The scaffold never asked the
   1. **The branch half:** `state:seed --id <id> --authoritative`. The branch
      becomes the store.
   2. **The main half:** `state:seed --id <id> --cutover`. It is a dry run
-     that reports files and bytes. Add `--commit` to stage `git rm -r
-     <path>` and a `/<path>/**` ignore line as **one** commit naming the
-     branch and the tree id. It never pushes. It refuses unless all of these
-     hold:
+     that reports files and bytes and the deposit it would make. Add
+     `--commit` to deposit, then stage `git rm -r <path>` and a
+     `/<path>/**` ignore line as **one** commit naming the branch, the tree
+     id and the deposit. It never pushes `main`. It refuses unless all of
+     these hold:
      - the manifest says `authoritative: true`;
      - the manifest says `keyedBy: "tip"`, or the mount would be `corrupt`;
      - a declaration keeps the path on that branch;
      - nothing under the path is uncommitted;
      - `HEAD:<path>` and the branch's `<path>` are the same tree id, so the
-       two copies are byte-identical.
+       two copies are byte-identical;
+     - the directory's **own** instance declares a `fsh-guts` graph kept at a
+       branch tip, and the deposit into it lands and re-reads verified.
+
+  **What a cutover removes goes to `fsh-guts` first — the one rule for it**
+  (owner, 2026-10-06: *"cutover dirs should go to fsh-guts"*). Before any
+  `git rm`, `--commit` packs `<path>/` at `HEAD` with `git archive`, checks
+  the pack extracts to **the same tree id** it is about to remove, and
+  splices the existing `retired/` pair onto the trashcan's tip through
+  `branch-store` (never a force push, `expect: null` so it never
+  overwrites): `retired/cutover-<instance>-<dir>-<tree12>.tar.gz` plus a
+  same-basename `.md` declaring `folio-fsh-guts/v1`, `kind:
+  cutover-snapshot`, `movedFrom`, `movedOn`, `reason: cutover`, the
+  instance, `sourceCommit`, `tree` and `authoritativeBranch`. It re-reads
+  the tip, and only if both blobs are there does it make the removal
+  commit. No trashcan declared, a trashcan not on a tip, a branch that is
+  not there, or a push that did not land: **refused, `main` untouched**,
+  with the fix named. This is not a second disposal of beans — the branch
+  is still the live store; the deposit is the copy `main` last held.
+  `deletion-requires-confirmation` still governs: the dry run is the
+  report, and `--commit` is only run on the owner's explicit go.
 
   Then run `state:mount`. Both halves, and the refusals, were checked end
   to end on a fresh repository.
