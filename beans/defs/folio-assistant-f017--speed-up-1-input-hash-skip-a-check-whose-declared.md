@@ -1,11 +1,11 @@
 ---
 # folio-assistant-f017
 title: 'SPEED-UP 1: input-hash skip — a check whose declared inputs are unchanged since its last green run is skipped and says so'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T17:42:23Z
-updated_at: 2026-10-06T10:47:48Z
+updated_at: 2026-10-06T19:02:53Z
 parent: folio-assistant-7x5n
 ---
 
@@ -50,3 +50,5 @@ The boxes were ticked on these measurements. Bun 1.3.14 throughout.
 **Falsifier, unchanged:** a script that reads something its declaration does not name. All 15 skippable declarations are `{tracked}` (whole tree), so the remaining exposure is ignored files, the environment, the network and the clock. `task-io.ts` excludes declaring inputs for those by rule.
 
 Status is left as is: the gates half is not on main until `local/regen-speedup` is merged.
+
+_2026-10-06T19:02:53Z_ — Claimed by claude/f017-input-hash-coverage — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

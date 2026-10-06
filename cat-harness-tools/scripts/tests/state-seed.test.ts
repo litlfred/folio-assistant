@@ -18,13 +18,13 @@
  */
 import { afterAll, describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { BranchStore, MANIFEST_SCHEMA } from "../../../cat-harness/scripts/branch-store.ts";
-import { exitCode, refreshSeed, rowFor } from "../state-seed.ts";
-import { driftOf } from "../../../cat-harness/scripts/state-drift.ts";
+import { cutoverMain, exitCode, refreshSeed, rowFor } from "../state-seed.ts";
+import { defaultRepoRoot, driftOf, observedRows } from "../../../cat-harness/scripts/state-drift.ts";
 
 const made: string[] = [];
 afterAll(() => {
@@ -223,5 +223,111 @@ describe("the key it takes", () => {
     const res = refreshSeed(fam, { log: () => {} });
     expect(res.state).toBe("refused");
     expect(res.reason).toMatch(/branch FAMILY/);
+  });
+});
+
+
+/**
+ * Bean `hp54`, measured 2026-10-06 cutting a folio over: run from a folio
+ * that links the platform, every default read the PLATFORM's declarations,
+ * and the cutover's main half had no command at all. A scratch folio — its
+ * own declaration, its own remote — stands in for the folio.
+ */
+describe("a folio's own repository (hp54)", () => {
+  /** A folio `x` declaring `beans/` on `cat/x/beans`, committed on main while main still tracks it. */
+  function folio(): ReturnType<typeof remote> {
+    const r = remote();
+    // `cutoverMain` commits with plain `git commit`, so the clone needs an
+    // identity of its own — CI's fresh HOME has none (the env `run` passes
+    // does not reach a commit the module under test makes).
+    run(r.work, "config", "user.name", "t");
+    run(r.work, "config", "user.email", "t@t");
+    writeFileSync(
+      join(r.work, "x.json"),
+      JSON.stringify({
+        name: "x",
+        directories: [{ id: "beans", path: "beans/", graphTypologies: ["beans"], source: { kind: "branch", branch: "cat/x/beans", keyedBy: "tip" } }],
+      }, null, 2) + "\n",
+    );
+    run(r.work, "add", "-A");
+    run(r.work, "commit", "-qm", "declare beans on its branch");
+    return r;
+  }
+  const cut = (r: ReturnType<typeof remote>, commit = false) =>
+    cutoverMain(row(), { repoRoot: r.work, remote: r.url, storeDir: r.storeDir, commit });
+
+  test("the default repository is the cwd's git toplevel, and resolves the folio's branch", () => {
+    const r = folio();
+    expect(realpathSync(defaultRepoRoot(join(r.work, "beans")))).toBe(realpathSync(r.work));
+    seed(r, "cat/x/beans", SEED);
+    expect(rowFor("beans", observedRows({ repoRoot: r.work, remote: r.url }) ?? [])?.name).toBe("cat/x/beans");
+  });
+
+  test("the CLI run FROM the folio root resolves the folio's branch, not the platform's", () => {
+    const r = folio();
+    seed(r, "cat/x/beans", { ...SEED, keyedBy: "tip", authoritative: true });
+    const cli = spawnSync("bun", ["run", join(import.meta.dir, "..", "state-seed.ts"), "--id", "beans", "--cutover"], {
+      cwd: r.work,
+      encoding: "utf-8",
+      env: { ...process.env, BRANCH_STORE_DIR: r.storeDir },
+    });
+    expect(cli.stdout + cli.stderr).toContain("cat/x/beans");
+    expect(cli.stdout).toContain("would-cut-over");
+    expect(cli.status).toBe(0);
+  });
+
+  test("--cutover refuses a branch whose manifest is not tip-keyed (the mount would be corrupt)", () => {
+    const r = folio();
+    seed(r, "cat/x/beans", { ...SEED, authoritative: true, keyedBy: undefined });
+    const c = cut(r);
+    expect(c.state).toBe("refused");
+    expect(c.reason).toContain("not tip");
+  });
+
+  test("--cutover refuses while the branch is not authoritative", () => {
+    const r = folio();
+    seed(r, "cat/x/beans", { ...SEED, keyedBy: "tip" });
+    const c = cut(r);
+    expect(c.state).toBe("refused");
+    expect(c.reason).toContain("authoritative");
+  });
+
+  test("--cutover refuses when the branch's tree is not byte-identical to HEAD's", () => {
+    const r = folio();
+    seed(r, "cat/x/beans", { ...SEED, keyedBy: "tip", authoritative: true });
+    writeFileSync(join(r.work, "beans", "defs", "a.md"), "edited after the seed\n");
+    run(r.work, "commit", "-qam", "edit on main");
+    const c = cut(r);
+    expect(c.state).toBe("refused");
+    expect(c.reason).toContain("not byte-identical");
+  });
+
+  test("--cutover refuses a path no declaration keeps on that branch", () => {
+    const r = remote(); // main tracks beans/ but declares nothing
+    seed(r, "cat/x/beans", { ...SEED, keyedBy: "tip", authoritative: true });
+    const c = cut(r);
+    expect(c.state).toBe("refused");
+    expect(c.reason).toContain("Declare");
+  });
+
+  test("dry run reports files and bytes; --commit removes and ignores in ONE commit, and pushes nothing", () => {
+    const r = folio();
+    seed(r, "cat/x/beans", { ...SEED, keyedBy: "tip", authoritative: true });
+    const dry = cut(r);
+    expect(dry.state).toBe("would-cut-over");
+    if (dry.state !== "would-cut-over") return;
+    expect(dry.paths).toEqual([expect.objectContaining({ path: "beans", files: 1, bytes: 4 })]);
+    expect(existsSync(join(r.work, "beans", "defs", "a.md"))).toBe(true); // a dry run touches nothing
+
+    const remoteMain = run(r.work, "ls-remote", "origin", "refs/heads/main");
+    const before = run(r.work, "rev-parse", "HEAD");
+    const done = cut(r, true);
+    expect(done.state).toBe("cut-over");
+    expect(run(r.work, "rev-parse", "HEAD~1")).toBe(before); // exactly one commit
+    expect(spawnSync("git", ["rev-parse", "--verify", "--quiet", "HEAD:beans"], { cwd: r.work }).status).not.toBe(0);
+    expect(readFileSync(join(r.work, ".gitignore"), "utf-8")).toContain("/beans/**");
+    expect(run(r.work, "show", "--stat", "--format=%B", "HEAD")).toContain("cat/x/beans");
+    expect(run(r.work, "ls-remote", "origin", "refs/heads/main")).toBe(remoteMain); // not pushed
+    expect(cut(r).state).toBe("refused"); // already cut over
   });
 });
