@@ -18,10 +18,10 @@
  *    merge and restores the tree, and this records why and on which paths.
  *    Nothing is resolved by hand. A member already contained is recorded so.
  * 3. One `bun run regen` over the whole train, then the checks regen does not
- *    repair today: `check:l1-complete --write`; `extract-smart-kg-l1.ts
- *    --entry <dir>` for each entry its `--check` reports stale; and
- *    `kg:audit:all:check` (its writer runs once when it is stale). What they
- *    wrote is committed as one commit.
+ *    repair today: `check:l1-complete --write`; every task an instance
+ *    declares `afterMerge` under `taskIo`, its declared writer run when the
+ *    check is red (bean `0r7u`); and `kg:audit:all:check` (its writer runs
+ *    once when it is stale). What they wrote is committed as one commit.
  * 4. Merge `origin/main` with `merge-base.ts` (full form): conflicts that are
  *    only declared generated paths take main's side and regenerate once more;
  *    anything else is refused and the train stays at step 3. The step-3
@@ -57,6 +57,7 @@ import { join } from "node:path";
 import { repoRootFor } from "../../cat-harness/schemas/cat-harness.ts";
 import { plan } from "../../cat-harness/scripts/merge-base.ts";
 import { git, parseMemberSpec, resolveMember, type GitResult } from "../../cat-harness/scripts/merge-pipeline-git.ts";
+import { TASK_IO, type ScriptIO } from "../../cat-harness/scripts/task-io.ts";
 import { HARNESS_ROOT } from "./lib/roots.ts";
 
 export type MemberStatus = "merged" | "already-contained" | "refused" | "would-merge" | "would-refuse";
@@ -140,14 +141,12 @@ export function parseAbortReason(log: string): string {
   return lines[lines.length - 1] ?? "merge-base exited non-zero with no output";
 }
 
-/** Entries `extract-smart-kg-l1.ts --check` reports stale: `✗ … is stale — run with --entry <dir>`. */
-export function parseStaleSmartKgEntries(log: string): string[] {
-  const out: string[] = [];
-  for (const line of log.split("\n")) {
-    const m = /run with --entry\s+(\S+)/.exec(line);
-    if (m && !out.includes(m[1]!)) out.push(m[1]!);
-  }
-  return out;
+/** The checks a train re-asks after merging, with their writers: every declared `afterMerge` task (bean `0r7u`). */
+export function afterMergeRepairs(io: Readonly<Record<string, ScriptIO>> = TASK_IO): Array<{ check: string; writer: string }> {
+  return Object.entries(io)
+    .filter(([, t]) => t.afterMerge === true && t.writer !== undefined)
+    .map(([check, t]) => ({ check, writer: t.writer! }))
+    .sort((a, b) => (a.check < b.check ? -1 : 1));
 }
 
 /** Classify `git merge-tree --write-tree --name-only` output: the tree, and conflicted paths when it exited 1. */
@@ -247,15 +246,19 @@ function postChecks(root: string, label: string, regen: boolean): TrainCheck[] {
   record("l1-complete", "bun run check:l1-complete -- --write", l1, "passed", l1 === 1 ? "findings" : "failed",
     l1 === 1 ? "a library entry has an unmet L1 requirement (the verdict is written)" : l1 === 2 ? "could not check" : undefined);
 
-  const kgCheck = run(root, "bun", ["run", "smart-base:smart-kg-l1:check"], true);
-  const stale = parseStaleSmartKgEntries(kgCheck.out);
-  if (kgCheck.code === 0) record("smart-kg-l1", "bun run smart-base:smart-kg-l1:check", 0, "passed", "failed");
-  else if (!stale.length) record("smart-kg-l1", "bun run smart-base:smart-kg-l1:check", kgCheck.code, "passed", "failed", "failed, and named no stale entry to re-extract");
-  else {
-    const failedEntries = stale.filter((e) => run(root, "bun", ["run", "smart-base/scripts/extract-smart-kg-l1.ts", "--entry", e]).code !== 0);
-    const again = run(root, "bun", ["run", "smart-base:smart-kg-l1:check"], true).code;
-    record("smart-kg-l1", `extract-smart-kg-l1.ts --entry ${stale.join(" --entry ")}`, again, "repaired", "failed",
-      `re-extracted ${stale.length} stale entr${stale.length === 1 ? "y" : "ies"}${failedEntries.length ? `; extraction failed for ${failedEntries.join(", ")}` : ""}`);
+  // Each check an instance declares `afterMerge` under `taskIo`, with its
+  // writer run when red (bean `0r7u`). It named one instance's gate and
+  // extractor until 2026-10-06 — a layer above this one, so the train broke
+  // standalone; that instance now declares the pair itself.
+  for (const { check, writer } of afterMergeRepairs()) {
+    const first = run(root, "bun", ["run", check], true).code;
+    if (first === 0) {
+      record(check, `bun run ${check}`, 0, "passed", "failed");
+      continue;
+    }
+    const wrote = run(root, "bun", ["run", writer]).code;
+    record(check, `bun run ${writer}, then ${check}`, run(root, "bun", ["run", check], true).code, "repaired", "failed",
+      wrote === 0 ? undefined : `its writer \`${writer}\` exited ${wrote}`);
   }
 
   const audit = run(root, "bun", ["run", "kg:audit:all:check"]).code;
@@ -333,7 +336,7 @@ if (import.meta.main) {
     const sim = simulate(root, base.out, ok, main);
     report.members.push(...sim.members);
     if (main) report.main = sim.main;
-    report.checks = [{ name: "post-merge checks", command: "regen, check:l1-complete --write, smart-kg-l1, kg:audit:all:check", status: "skipped", exit: null, detail: "--dry-run runs no check" }];
+    report.checks = [{ name: "post-merge checks", command: "regen, check:l1-complete --write, declared afterMerge checks, kg:audit:all:check", status: "skipped", exit: null, detail: "--dry-run runs no check" }];
     report.verdict = verdictOf(report);
     finish(report.verdict === "built" ? 0 : 1);
   }
