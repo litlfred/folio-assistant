@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 950,
+      "count": 951,
       "unit": "beans"
     }
   },
@@ -719,14 +719,14 @@
     {
       "id": "folio-assistant-1q4b",
       "title": "Re-draw the navbar wireframe after ob3m's 12 findings landed",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T05:55:48Z",
-      "updatedAt": "2026-10-06T05:55:48Z",
+      "updatedAt": "2026-10-06T15:44:13Z",
       "preview": "ob3m's closing step, split out when ob3m closed on 2026-10-06: 'When fixed, re-draw cat-harness/docs/wireframes/navbar/ and re-run wireframe:check and check:wireframes.' intent.md's Observed and Findings sections still describe main with #1010/#1022 (before #1762, #1804, #1805, #1807, #1808 and #1819), so the wireframe documents a navbar that no longer exists.\n\n## Done when\n- [ ] as-is.html and in",
       "file": "beans/defs/folio-assistant-1q4b--re-draw-the-navbar-wireframe-after-ob3ms-12-findin.md"
     },
@@ -3915,14 +3915,14 @@
     {
       "id": "folio-assistant-9hfi",
       "title": "smart-immunizations codings.html: CodeSystems and ValueSets show 'not rendered: list-simple-*.xhtml'",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T05:56:52Z",
-      "updatedAt": "2026-10-06T06:01:00Z",
+      "updatedAt": "2026-10-06T15:43:51Z",
       "preview": "Owner, 2026-10-06: on https://litlfred.github.io/smart-immunizations/codings.html both lists render as placeholders:\n\n    CodeSystems ✎ 📣\n    ⟦not rendered: list-simple-codesystems.xhtml⟧ — the IG Publisher renders it from a source this build does not hold; no renderer was given to this build.\n    ValueSets ✎ 📣\n    ⟦not rendered: list-simple-valuesets.xhtml⟧ — (same)\n\nThe owner asked \"what to do",
       "file": "beans/defs/folio-assistant-9hfi--smart-immunizations-codingshtml-codesystems-and-va.md"
     },
@@ -7198,6 +7198,22 @@
       "file": "beans/defs/folio-assistant-iwtn--bootstrap-self-definitional-130-mentions-of-harnes.md"
     },
     {
+      "id": "folio-assistant-ixmq",
+      "title": "MERGE RELEASE: capture a person's merge decision on the queue entry, bound to the SHA, and read it back at landing",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [
+        "folio-assistant-najo"
+      ],
+      "createdAt": "2026-10-04T13:21:37Z",
+      "updatedAt": "2026-10-04T13:21:37Z",
+      "preview": "The PR's own agent records a PERSON's merge decision on the PR's queue entry, bound to the commit it was given for, and the merge path reads it back.\n\nRequested by the owner 2026-10-04 (session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi): *\"fill in gaps in merge process and send to Merge Manager. Agent working on PR should be able to capture human merge decision and associate it to me",
+      "file": "beans/defs/folio-assistant-ixmq--merge-release-capture-a-persons-merge-decision-on.md"
+    },
+    {
       "id": "folio-assistant-iym1",
       "title": "VACUITY IS GUARDED ONE SCRIPT AT A TIME: no cross-gate reader pins a corpus-walking gate non-empty",
       "status": "in-progress",
@@ -8735,7 +8751,9 @@
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-hfag",
-      "blocking": [],
+      "blocking": [
+        "folio-assistant-ixmq"
+      ],
       "blockedBy": [],
       "createdAt": "2026-10-04T08:20:32Z",
       "updatedAt": "2026-10-04T08:21:20Z",
@@ -12563,14 +12581,14 @@
     {
       "id": "folio-assistant-x78e",
       "title": "smart-immunizations landing: Summary heading has a wrong feedback link and no section edit link",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T05:56:52Z",
-      "updatedAt": "2026-10-06T05:56:52Z",
+      "updatedAt": "2026-10-06T15:44:01Z",
       "preview": "Owner, 2026-10-06, on https://litlfred.github.io/smart-immunizations/ : \"was bad feedback/shout link. there is no edit link\" — and: \"there is one at the very bottom of the page, but no context aware edit link\". So the page-level edit link exists in the footer; what is missing is the per-heading ✎.\n\nThe \"Summary\" heading shows only 📣, and its link is:\n\n    https://github.com/litlfred/smart-immuniz",
       "file": "beans/defs/folio-assistant-x78e--smart-immunizations-landing-summary-heading-has-a.md"
     },
@@ -14225,6 +14243,13 @@
       ]
     },
     {
+      "blocker": "folio-assistant-najo",
+      "blocked": "folio-assistant-ixmq",
+      "declaredOn": [
+        "blocked_by"
+      ]
+    },
+    {
       "blocker": "folio-assistant-nama",
       "blocked": "folio-assistant-4j86",
       "declaredOn": [
@@ -14701,6 +14726,12 @@
     },
     {
       "kind": "blocked-without-expiry",
+      "bean": "folio-assistant-najo",
+      "blocks": "folio-assistant-ixmq",
+      "detail": "blocks `folio-assistant-ixmq` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
+    },
+    {
+      "kind": "blocked-without-expiry",
       "bean": "folio-assistant-nama",
       "blocks": "folio-assistant-4j86",
       "detail": "blocks `folio-assistant-4j86` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
@@ -15044,14 +15075,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 567,
+        "total": 568,
         "closed": 228,
-        "open": 339,
-        "inProgress": 118,
-        "todo": 220,
+        "open": 340,
+        "inProgress": 120,
+        "todo": 219,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4021164021164021
+        "share": 0.4014084507042254
       },
       {
         "id": "folio-assistant-vuip",
@@ -15062,8 +15093,8 @@
         "total": 257,
         "closed": 99,
         "open": 158,
-        "inProgress": 89,
-        "todo": 68,
+        "inProgress": 91,
+        "todo": 66,
         "draft": 1,
         "unclassified": 0,
         "share": 0.3852140077821012
@@ -15085,8 +15116,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 536,
-    "coveredOpen": 533,
+    "openTotal": 537,
+    "coveredOpen": 534,
     "duplicateIds": 0
   }
 }
