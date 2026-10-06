@@ -88,7 +88,7 @@ export const ROOT = resolve(import.meta.dir, "..");
 // EVERY instance's, since the owner's ruling of 2026-10-06 (bean `ar1s`):
 // memory moved out of the repository root and SPLIT by the harness each lesson
 // belongs to — platform discipline in `cat-harness/memory/`, content authoring
-// in `folio-assistant-core/memory/`. One agent may be owed lessons from both,
+// in the content harness's `memory/`. One agent may be owed lessons from both,
 // so the assembler reads every declared `memory` directory rather than the one
 // `corpusDirectoryForGraph` allows.
 export const MEMORY_DIRS = deferResolution(

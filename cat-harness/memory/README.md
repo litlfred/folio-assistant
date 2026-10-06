@@ -4,7 +4,7 @@
 
 # memory
 
-Agent memory for the platform: durable lessons an agent carries between sessions, one `"$schema": "folio-memory/v1"` node each, assembled into `.claude/agent-memory/<agent>/MEMORY.md` by `scripts/agent-memory.ts`, which reads EVERY instance's declared `memory` directory. `context`: read during a process, never written by one; it changes when a person directs an authoring agent. Also holds the `interaction` node (how each person wants to be asked, read at session start) and any `folio-waiver/v1` confirmation waivers, told apart by their `$schema` tag. Moved from the repository root on the owner's ruling of 2026-10-06 (bean `ar1s`): memory belongs to the harness its lesson is about, so lessons about content authoring live in `folio-assistant-core/memory/`.
+Agent memory for the platform: durable lessons an agent carries between sessions, one `"$schema": "folio-memory/v1"` node each, assembled into `.claude/agent-memory/<agent>/MEMORY.md` by `scripts/agent-memory.ts`, which reads EVERY instance's declared `memory` directory. `context`: read during a process, never written by one; it changes when a person directs an authoring agent. Also holds the `interaction` node (how each person wants to be asked, read at session start) and any `folio-waiver/v1` confirmation waivers, told apart by their `$schema` tag. Moved from the repository root on the owner's ruling of 2026-10-06 (bean `ar1s`): memory belongs to the harness its lesson is about, so lessons about content authoring live in the content harness's own `memory/`.
 
 Part of [C@T Harness](../README.md) 0.1.0, declared as `memory`, holding `memory`, `waiver`, `interaction`.
 

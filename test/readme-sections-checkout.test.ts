@@ -10,7 +10,7 @@
  * changed.
  */
 import { describe, it, expect, afterEach } from "bun:test";
-import { rmSync } from "fs";
+import { existsSync, rmSync } from "fs";
 import { join, resolve } from "path";
 
 import {
@@ -34,13 +34,18 @@ describe("cat-harness:instances — both entries, per instance (issue #592)", ()
   const section = SECTIONS.find((s) => s.marker === "cat-harness:instances")!;
   const out = section.render({ root: repo, cfg: loadReadmeConfig(repo), fetch: false });
 
-  it("a declared `scope: \"repository\"` directory is linked at the REPOSITORY root", () => {
-    // cat-harness declares `memory/` with `scope: "repository"`. Composing
-    // `./cat-harness/memory/` rendered a link to a directory that is not
-    // there — and a dead link in a generated table is worse than a missing
-    // row, because the row asserts the entry exists.
-    expect(out.markdown).toContain("[memory](memory/)");
-    expect(out.markdown).not.toContain("./cat-harness/memory/");
+  it("every relative link in the table resolves in the checkout", () => {
+    // A dead link in a generated table is worse than a missing row, because
+    // the row asserts the entry exists. This once guarded one case — the
+    // root `memory/` rendered as `./cat-harness/memory/` — and memory now
+    // lives in each harness (bean `ar1s`), so `./cat-harness/memory/` is the
+    // right link. The property was never about memory: resolve every link.
+    const links = [...out.markdown.matchAll(/\]\(([^)#\s]+)\)/g)]
+      .map((m) => m[1]!)
+      .filter((l) => !/^[a-z]+:/.test(l));
+    expect(links.length).toBeGreaterThan(0);
+    expect(links.filter((l) => !existsSync(join(repo, l)))).toEqual([]);
+    expect(out.markdown).toContain("[memory](./cat-harness/memory/)");
   });
 });
 

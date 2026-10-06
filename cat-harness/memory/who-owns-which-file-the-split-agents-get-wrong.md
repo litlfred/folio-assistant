@@ -21,7 +21,7 @@ archived: true
 schema under `schemas/` (`types.ts`, `constraints.ts`, `builders.ts`,
 `block-kinds.ts`, `block-qa.ts`, `lean-packages.ts`).
 
-**The CONTENT layer (`folio-assistant-core/`)** holds the pipeline scripts whose
+**The CONTENT layer (the harness above this one)** holds the pipeline scripts whose
 subject is a folio's content rather than the harness. `build-glossary.ts` and
 `codemod-refterm.ts` moved there on 2026-09-30 (bean `yj6r`) and are named here
 because this list carried `build-glossary.ts` on the platform side until then.
@@ -30,7 +30,7 @@ harness module importing core's `schemas/glossary.ts` was an import against the
 harness's own declaration — and a circular dependency between repositories once
 the split lands. They are
 still addressed as pipeline scripts by id; `resolvePipelineScript` searches the
-folio, then the platform, then `folio-assistant-core/scripts/`.
+folio, then the platform, then the content harness's `scripts/`.
 
 **A folio** holds its own audit scripts — vacuity/axiom, clarity, orphan,
 trace-convention, and so on — under its own `content/pipeline/`.

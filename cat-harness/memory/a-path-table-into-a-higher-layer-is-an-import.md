@@ -15,8 +15,9 @@ archived: true
 > entry makes way is a call for whoever owns the agent, so this stays a node in
 > the `memory` graph and out of the prompt until then.
 
-`cat-harness/src/builtin-adapters.ts` held `../folio-assistant-sci/adapters/paper/index.ts`
-and `../folio-assistant-core/adapters/document/index.ts`, loaded by a VARIABLE
+`cat-harness/src/builtin-adapters.ts` held a relative path into the science harness's
+`adapters/paper/index.ts` and one into the content harness's `adapters/document/index.ts`,
+both layers above it, loaded by a VARIABLE
 `import(abs)`. With the static axis measured at 0, it was still the edge that kept
 cat-harness from lifting into its own repository — and `check:partition`,
 `kg:detangle:direction` and `check:reference-direction` were all green over it.
