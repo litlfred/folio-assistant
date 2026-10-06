@@ -51,6 +51,15 @@ can decline to overlay rather than place text somewhere nobody chose.
 
 Reader-facing walkthrough: `docs/start/getting-started.md` §8.
 
+**A new instance's `beans/` and `todos/` are not written into its checkout.**
+By default `folio_init` declares them on their own branches,
+`cat/<instance>/beans` and `cat/<instance>/todos`, and prints a one-time seed
+command. Say so when you hand the scaffold over: until the seed has been run
+and mounted, an empty `beans list` means *not mounted*, not *no work*. The
+rule, the branch naming and the override live in
+[`directory-conventions`](../../kg/kg-core/directory-conventions.md)
+§"Where a NEW instance's state lives".
+
 ## 0. Why this skill exists
 
 `folio_init` scaffolds a folio, and it does it well. What it cannot do is know

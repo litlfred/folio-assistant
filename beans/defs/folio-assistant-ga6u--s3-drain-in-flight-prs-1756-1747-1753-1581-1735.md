@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ga6u
 title: 'S3 drain in-flight PRs: #1756, #1747, #1753, #1581, #1735'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T08:14:33Z
-updated_at: 2026-10-01T17:41:33Z
+updated_at: 2026-10-06T19:03:20Z
 parent: folio-assistant-7x5n
 blocked_by:
     - folio-assistant-hx65
@@ -30,3 +30,5 @@ blocked_by:
 Owner ruling (earlier, recorded on #1735, 16:26Z) re-affirmed: **the outdated `dependents` prose in the who-iris files is reworded NOW**, in #1735's merge — who-iris.json's `_dependents_comment` on who-iris-themes, the who-iris-docs `_comment`, and the `qa` description — each describing the current mechanism (the graph kind's `perInstance` and nested subgraphs declared with `"subgraph": true`). The same stale wording in the ~15 other declarations stays out of scope there. Consistent with the Q-B ruling (Q1: REWORD) on `zhg2`.
 
 Bean `qsx4` exists only on #1735's branch, so this is recorded here and on the PR rather than by creating its file on main (an add/add conflict for #1735).
+
+_2026-10-06T19:03:20Z_ — Claimed by claude/sep-bookkeeping-s1-s3 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

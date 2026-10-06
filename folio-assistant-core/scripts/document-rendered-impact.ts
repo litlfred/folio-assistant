@@ -42,6 +42,21 @@
  * a manifest under a known document, nor the comment store can change any
  * page: `undetermined`, `scope: all`, never "no change".
  *
+ * ## …and what it can say reaches nothing
+ *
+ * Except a file the site's builders cannot read (bean `ehh6`). On the first
+ * real run (smart-ra#26) the work-plan bean the branch carried was reported
+ * "may change any page", and an undetermined input holds the coverage gate
+ * shut, so every PR that touches a bean would wait on a false alarm. A
+ * document site is built from the graphs its instance DECLARES, the platform
+ * (a submodule), and the build's own definition (`.github/`, the root's
+ * declaration, config and lockfiles). A file outside all of those — an
+ * undeclared directory such as `beans/`, or a Markdown note at the root — is
+ * an input that reaches no page ({@link siteMayRead}). With no declaration to
+ * read, nothing is excluded: doubt carries. The claim is checked, not
+ * trusted: the staging build's diff counts any page it changed that the list
+ * did not name.
+ *
  * Usage:
  *   bun run folio-assistant-core/scripts/document-rendered-impact.ts --root <folio repo>
  *     (--changed a,b | --base <ref> [--head <ref>]) [--changeset changeset.json]
@@ -51,7 +66,7 @@
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { join, resolve } from "node:path";
 
 import {
   pinImpact,
@@ -60,6 +75,7 @@ import {
   type RenderedFile,
   type RenderedImpact,
 } from "../../cat-harness/schemas/rendered-impact.js";
+import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
 import { gitBlobs } from "../../cat-harness/scripts/git-blobs.js";
 import { ChangeSetSchema, computeChangeSet, type ChangeSet } from "../schemas/changeset.js";
 
@@ -109,6 +125,32 @@ function finish(renderer: string, inputs: string[], acc: Acc, opts: { base?: str
   });
 }
 
+/** What the document site's builders can read, from the instance's own declarations. */
+export interface SiteReads {
+  /** Directories the instance declares (`<instance>.json` `directories[].path`), repo-relative. */
+  declared: string[];
+  /** Submodule paths (`.gitmodules`): the platform, whose code builds every page. */
+  submodules: string[];
+}
+
+const under = (f: string, dir: string) => {
+  const d = dir.replace(/\/+$/, "");
+  return d === "" || d === "." || f === d || f.startsWith(`${d}/`);
+};
+
+/**
+ * Whether a document site's builders can read `f`: under a declared
+ * directory, a submodule, or `.github/`, or a root file that is not Markdown
+ * (the declaration, config, lockfiles). `undefined` reads (no declaration)
+ * means every file may be read.
+ */
+export function siteMayRead(f: string, reads: SiteReads | undefined): boolean {
+  if (!reads) return true;
+  if (reads.declared.some((d) => under(f, d)) || reads.submodules.some((d) => under(f, d))) return true;
+  if (under(f, ".github")) return true;
+  return !f.includes("/") && !/\.md$/i.test(f);
+}
+
 export interface DocImpactOptions {
   /** Changed files, relative to the repository root. */
   changed: string[];
@@ -120,6 +162,8 @@ export interface DocImpactOptions {
   head?: string;
   /** Where the site's pages sit in the built output ("" for its root). */
   site?: string;
+  /** What the site's builders can read; absent, every file may be read. */
+  reads?: SiteReads;
 }
 
 /** The first path segment under the folio root: the document's slug. */
@@ -188,6 +232,8 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
         continue;
       }
     }
+    // Read by no builder of the site: an input, and no page (see the module doc).
+    if (!siteMayRead(f, opts.reads)) continue;
     doc.undetermined.push({ input: f, reason: "not a block the ChangeSet names, a media file, a manifest of a known document, or the comment store: may change any page", scope: "all" });
   }
 
@@ -197,6 +243,34 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
 }
 
 const readJson = (p: string) => JSON.parse(readFileSync(p, "utf-8"));
+
+/**
+ * The repository's {@link SiteReads}, or `undefined` when it declares nothing
+ * readable: then no file is excluded.
+ */
+export function siteReadsOf(root: string): SiteReads | undefined {
+  const decl = declarationPathIn(root);
+  if (!decl) return undefined;
+  let declared: string[];
+  try {
+    const dirs = (readJson(decl) as { directories?: Array<{ path?: unknown }> }).directories;
+    if (!Array.isArray(dirs)) return undefined;
+    declared = dirs.map((d) => d.path).filter((p): p is string => typeof p === "string");
+  } catch {
+    return undefined;
+  }
+  let submodules: string[] = [];
+  if (existsSync(join(root, ".gitmodules"))) {
+    try {
+      submodules = execFileSync("git", ["-C", root, "config", "-f", ".gitmodules", "--get-regexp", "^submodule\\..*\\.path$"], { encoding: "utf-8" })
+        .split("\n").map((l) => l.split(" ").slice(1).join(" ")).filter(Boolean);
+    } catch {
+      // A .gitmodules git cannot read: every submodule is unknown, so nothing is excluded.
+      return undefined;
+    }
+  }
+  return { declared, submodules };
+}
 
 
 if (import.meta.main) {
@@ -221,7 +295,7 @@ if (import.meta.main) {
   const olPath = arg("--outline");
   const outline = olPath && existsSync(olPath) ? (readJson(olPath) as OutlineLike) : undefined;
   // Pinned to the inputs' blobs at head, so a page verdict is about this version (see rendered-impact.ts, "A PIN").
-  let impacts = documentRenderedImpact({ changed, changeset, outline, base, head, site: arg("--site") });
+  let impacts = documentRenderedImpact({ changed, changeset, outline, base, head, site: arg("--site"), reads: siteReadsOf(root) });
   try {
     const blobs = gitBlobs(root, head ?? "HEAD", changed);
     impacts = impacts.map((i) => pinImpact(i, (p) => blobs.get(p)));
