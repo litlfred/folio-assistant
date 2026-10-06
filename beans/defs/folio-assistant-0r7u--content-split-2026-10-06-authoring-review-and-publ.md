@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-06T06:42:34Z
-updated_at: 2026-10-06T14:54:31Z
+updated_at: 2026-10-06T15:38:49Z
 parent: folio-assistant-7x5n
 ---
 
@@ -123,3 +123,6 @@ Also: the `ns-vocabulary` Tool maintains `folio-assistant-core/ns.jsonld` from c
 
 
 **Amended by owner 2026-10-06: CLEAN BREAK — no deprecated aliases.** The old `folio-assistant-core:` content-model IRIs are dropped, not kept resolvable; no `owl:deprecated`/`isReplacedBy`/equivalence records. PR 1 therefore needs no alias mechanism: define the terms at `layer: "harness"`, rename the clashing `meta`/`fileCount`, and switch `CONTENT_CONTEXT` + minting sites; PR 3 rewrites the committed `.jsonld` `@type`s and block-kind `folioType`s.
+
+
+**Block-kind classes — owner ruling 2026-10-06: each owner mints its own namespace.** The content model proper (Block, SourceDocument, WebPage and the ~34 content properties) moves to `cat-harness:`. Each block-kind class moves to the namespace of the instance that declares the kind: core kinds (Prose, Figure, Table, …) stay `folio-assistant-core:`; sci kinds (Theorem, Lemma, Proof, …) go to a new `folio-assistant-sci:` namespace; smart-base kinds (Persona, BusinessProcess, …) to a new `smart-base:` namespace. Both new namespaces need own-namespaces.json entries, NS_PREFIXES bindings, CONTENT_CONTEXT bindings (derived from the declarations, not hard-coded — cat-harness must not name them) and publishing in docs-site.yml's ns loop. Clean break, no aliases.
