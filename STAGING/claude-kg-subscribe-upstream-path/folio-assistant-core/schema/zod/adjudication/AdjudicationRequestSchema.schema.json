@@ -1,0 +1,94 @@
+{
+  "$ref": "#/definitions/AdjudicationRequest",
+  "definitions": {
+    "AdjudicationRequest": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-adjudication/v1"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "unknown",
+                  "referenced",
+                  "materialized"
+                ]
+              },
+              "at": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "ref",
+              "state"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "prompt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "codes": {
+          "minItems": 2,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1
+              },
+              "means": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "code",
+              "means"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "id",
+        "assets",
+        "prompt",
+        "codes"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-subscribe-upstream-path/folio-assistant-core/schema/zod/adjudication/AdjudicationRequestSchema.schema.json",
+  "title": "AdjudicationRequestSchema",
+  "description": "Generated from `AdjudicationRequestSchema` in schemas/adjudication.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/kg-subscribe-upstream-path",
+    "sha": "240236e023a6c0524d687c5ebfcfa9f54dcacc85",
+    "pr": "2330/merge",
+    "run": "37526653018"
+  }
+}
