@@ -273,4 +273,19 @@ describe("mount:remote over fixture repositories", () => {
     expect(remoteFanOut(root, { urlFor }).state).toBe("mounted");
     expect(remoteFanOut(root, { check: true }).state).toBe("mounted");
   });
+
+  test("15. a declaration whose directory is NOT its name is found, and lands at livesAt.path", () => {
+    // The smart-* forks: `smart-base/smart-trust.json` declares `smart-trust`.
+    const odd = bareRepo(base, "odd", {
+      "shared/trust.json": decl("trust", { livesAt: { repository: "o/odd", path: "trust" }, directories: [{ id: "trust-x", path: "x/", graphTypologies: ["code"] }] }),
+      "shared/x/a.txt": "a\n",
+    });
+    const local = (r: string): string => (r === "o/odd" ? `file://${odd.bare}` : urlFor(r));
+    const root = downstream({});
+    write(root, { "down.json": decl("down", { remoteMounts: [{ harness: "trust", repository: "o/odd", ref: odd.sha }] }) });
+    const r = mountRemote({ instanceRoot: root, urlFor: local });
+    expect(summarise(r.plan.outcomes).state).toBe("mounted");
+    expect(readFileSync(join(root, "trust/x/a.txt"), "utf-8")).toBe("a\n");
+    expect(r.plan.instances[0]).toMatchObject({ upstreamRoot: "shared", path: "trust" });
+  });
 });

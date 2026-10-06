@@ -503,12 +503,79 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     $schema [1] : 'kg-qa-manifest/v1'
     auditor [1] : object
   }
+  class "block-qa/v1" as cat_harness_qa_block_qa_v1_block_qa_v1 <<json: BlockQaReport>> #f4e6e6 {
+    $schema [1] : 'block-qa/v1'
+    label [1] : string
+    kind [1] : string
+    paths [1] : object
+    source_hashes [1] : object
+    criteria [1] : map<object[]>
+    updated_at [1] : string
+  }
+  class "Case" as cat_harness_qa_folio_test_run_v1_Case <<json: TestRunSchema>> #f4e6e6 {
+    input [1] : any
+    output [1] : any
+  }
+  class "folio-test-run/v1" as cat_harness_qa_folio_test_run_v1_folio_test_run_v1 <<json: TestRunSchema>> #f4e6e6 {
+    $schema [1] : 'folio-test-run/v1'
+    skill [1] : string
+    subject [1] : string
+    data [1] : object
+    process [1] : object
+    outcome [1] : map<any>
+    cases [0..*] : Case[]
+    requirements [0..*] : string[]
+    updated_at [1] : string
+    plan [0..1] : object
+    sut [0..1] : object
+  }
+  class "qa-witness/v1" as cat_harness_qa_qa_witness_v1 <<ts: QaWitness>> #f4e6e6 {
+    kind [1] : 'script' | 'agent' | 'human'
+    id [1] : string
+    version [0..1] : string
+    at [0..1] : string
+    sha [0..1] : string
+    scriptHash [0..1] : string
+    scriptCommitSha [0..1] : string
+    depsHash [0..1] : string
+    model [0..1] : string
+    session [0..1] : string
+    skill [0..1] : string
+    method [0..1] : string
+    freshness [1] : QaFreshness
+    changed [0..1] : string[]
+    notCompared [0..1] : string[]
+    notes [0..1] : string
+  }
   class "qa-results/v1" as cat_harness_qa_qa_results_v1 <<ts: QaResult>> #f4e6e6 {
     $schema [1] : 'qa-results/v1'
     producer [1] : { /** Repo-relative path to the script. */ script: string; /** 12-char SHA-256 prefix of that script's source, as `script-qa` writes. */ script_hash: string; }
     subject [1] : { kind: string; id: string }
     families [1] : Record<string, QaResultFamily>
     total [1] : number
+  }
+  class "translation-qa/v1" as cat_harness_qa_translation_qa_v1 <<ts: TranslationBlockQaReport>> #f4e6e6 {
+    $schema [1] : 'translation-qa/v1'
+    label [1] : string
+    block [0..1] : string
+    locale [1] : string
+    paths [1] : { md: string; ts?: string }
+    po [1] : string
+    source_hashes [1] : TranslationFieldHash
+    criteria [1] : Record<string, TranslationQaEntry[]>
+    updated_at [1] : string
+  }
+  class "folio-qa-index/v1" as cat_harness_qa_folio_qa_index_v1_folio_qa_index_v1 <<json: QaIndexSchema>> #f4e6e6 {
+    $schema [1] : 'folio-qa-index/v1'
+    page [1] : string
+    corpus [0..1] : present | absent
+    badges [1] : map<object>
+    unswept [0..*] : string[]
+  }
+  class "folio-qa-translation-pages/v1" as cat_harness_qa_folio_qa_translation_pages_v1_folio_qa_translation_pages_v1 <<json: QaTranslationPagesSchema>> #f4e6e6 {
+    $schema [1] : 'folio-qa-translation-pages/v1'
+    corpus [1] : present | absent
+    pages [0..*] : string[]
   }
   class "folio-detangle-sidecar/v1" as cat_harness_qa_folio_detangle_sidecar_v1 <<ts: DetangleSidecar>> #f4e6e6 {
     $schema [1] : 'folio-detangle-sidecar/v1'
@@ -548,6 +615,19 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     outcome [1] : succeeded | failed
     inputFingerprint [1] : string
     detail [0..1] : string
+  }
+  class "Page" as cat_harness_qa_viewer_nav_qa_v1_Page <<json: ViewerNavQaSchema>> #f4e6e6 {
+    path [1] : string
+    source [1] : string
+    verdict [1] : railed | declined | linked | missing
+    reason [0..1] : string
+    flags [0..*] : enum(8)[]
+  }
+  class "viewer-nav-qa/v1" as cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1 <<json: ViewerNavQaSchema>> #f4e6e6 {
+    $schema [1] : 'viewer-nav-qa/v1'
+    root [1] : string
+    totals [1] : object
+    pages [0..*] : Page[]
   }
 }
 package "cat-harness/attestations" as pkg_cat_harness_attestations <<attestations>> {
@@ -1379,6 +1459,8 @@ cat_harness_policies_Permission *-- "0..*" cat_harness_policies_Constraint : con
 cat_harness_policies_OdrlPolicy *-- "0..*" cat_harness_policies_Permission : permission
 cat_harness_policies_Prohibition *-- "0..*" cat_harness_policies_Constraint : constraint
 cat_harness_policies_OdrlPolicy *-- "0..*" cat_harness_policies_Prohibition : prohibition
+cat_harness_qa_folio_test_run_v1_folio_test_run_v1 *-- "0..*" cat_harness_qa_folio_test_run_v1_Case : cases
+cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1 *-- "0..*" cat_harness_qa_viewer_nav_qa_v1_Page : pages
 cat_harness_health_Check *-- "0..*" cat_harness_health_Threshold : thresholds
 cat_harness_health_Check *-- "0..*" cat_harness_health_Measurement : measurements
 cat_harness_health_Check *-- "0..*" cat_harness_health_Finding : findings

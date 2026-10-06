@@ -5,8 +5,8 @@
  * @module scripts/remote-tree
  * @graphNode none — a library: it fetches and reads, and judges nothing
  *
- * Bean `0mpw`. `gitPartFetcher` lived in `folio-assistant-core/scripts/
- * kg-materialize.ts` until the remote mount needed it, and cat-harness may not
+ * Bean `0mpw`. `gitPartFetcher` lived in the content layer's KG materialiser
+ * (`kg-materialize.ts`) until the remote mount needed it, and cat-harness may not
  * import core (`check:reference-direction` — a wrong-direction edge). So it
  * moved DOWN, unchanged in behaviour, and core re-exports it; the remote mount
  * reads through the same {@link RemoteTree} rather than a second copy of
