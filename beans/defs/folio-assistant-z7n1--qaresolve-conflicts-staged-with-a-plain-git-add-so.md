@@ -1,11 +1,13 @@
 ---
 # folio-assistant-z7n1
 title: qa:resolve-conflicts staged with a plain git add, so a branch that gitignores its results directory aborted merge:main
-status: todo
+status: in-progress
 type: bug
 parent: folio-assistant-d33q
+tags:
+  - ready-to-close
 created_at: 2026-10-03T17:55:24Z
-updated_at: 2026-10-03T17:55:24Z
+updated_at: 2026-10-06T23:36:21Z
 ---
 
 Found 2026-10-03 while measuring why `merge:main`'s last `push` run
@@ -78,6 +80,17 @@ repositories for that reason.
 - [x] a falsification, on its own repository, that the plain `add` collapses
       the stages
 - [x] verified end to end on #1801's own head, not only in unit tests
-- [ ] #1801's next `merge:main` run goes green (needs this on `main` first —
+- [x] #1801's next `merge:main` run goes green (needs this on `main` first —
       `merge-base.ts` runs from main's copy of the tool)
 
+_2026-10-06T23:36:18Z_ — Claimed by claude/z7n1-close-landed-resolver-staged-f — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Evidence
+
+1. Fix implemented in commit `ac829fb1a050218a17174de86a7a816370815e83`: both `git add` sites in `cat-harness/scripts/qa-resolve-conflicts.ts` pass `-f` (`takeProvisionalSide` and final resolution staging) so that a branch gitignoring its results directory can be staged without collapsing unmerged stages.
+2. The fix landed on `main` via PR #2079 (merged 2026-10-04T12:45:03Z).
+3. #1801's next run passed and PR #1801 merged successfully on `main` at `2026-10-04T08:10:36Z`.
+4. Re-tested and verified clean execution of regression test suite:
+   `bun test ./cat-harness/scripts/tests/qa-resolve-conflicts.test.ts`
+   Result: 26 pass, 0 fail, 63 expect() calls.
+5. All fast quality checks pass: `bun run typecheck`, `bun run lint` (0 errors), `bun run check:retired-front-matter`, `bun run check:bean-parents`.
