@@ -1,10 +1,11 @@
 ---
 # folio-assistant-doy3
 title: tipLocations/resolveTipLocation read only legacy storage — a source-declared branch subgraph is invisible to branch-store's CLI and StateStore
-status: in-progress
+status: completed
 type: bug
+priority: normal
 created_at: 2026-10-03T15:53:53Z
-updated_at: 2026-10-03T15:53:53Z
+updated_at: 2026-10-06T06:26:35Z
 parent: folio-assistant-fs43
 ---
 
@@ -23,3 +24,10 @@ Why it matters now: bean 9c7h moves fsh-guts onto a branch. If it declares that 
 
 ## Fixed in #1997 (2026-10-03), folded into nij4's combination
 `tipLocations` and `resolveTipLocation` now read each entry's RESOLVED source: `resolveSubgraphSource(entry, subgraphSourceOverrides(instance, root))`, the same resolver `declaredSubgraph` uses, minus its whole-checkout walk. `route` is still read straight off `storage`, because the source union has no `route` member and the resolver would throw on it. That is a latent defect in `resolveSubgraphSource` for whoever does the route-keyed cutover (bean `xsrv`); it is not fixed here.
+
+
+## Summary of Changes
+
+**Closed on evidence, 2026-10-06** (re-measured on main at 2fdbb5109a by session_01QSd18GZBc9NJNMy6GV9v7D, not quoted from earlier notes). Status history: never completed before, so not an owner reopen; no holder.
+
+`tipLocations`/`resolveTipLocation` resolve through `keptAt` → `resolveSubgraphSource` (branch-store.ts); a fixture declaring only `source: {kind: branch, keyedBy: tip}` mounts through `branch-store where/mount --id todos` (exit 0, 2 files). state-mount.test.ts (incl. 'the resolved source, not only legacy storage') and state-mount-per-branch.test.ts pass. Landed in #1997.
