@@ -55,7 +55,7 @@ import { join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { fshGutsDirectory } from "../schemas/fsh-guts.js";
-import { exitUnlessMounted } from "./branch-store.js";
+import { exitUnlessMounted, readMarker } from "./branch-store.js";
 import { baseDocsDir } from "./compose-docs.js";
 import { publishPlan } from "./derive-at-publish.js";
 
@@ -172,14 +172,30 @@ function titleOf(abs: string): string | undefined {
 }
 
 /**
+ * Tracked files under `dir`: when mounted from a state branch, read from the
+ * mount marker so untracked local files (e.g. `fsh-guts/logs/*.json` written
+ * by the activity logger) are excluded. Falls back to a filesystem walk when
+ * not a mount (e.g. in test fixtures).
+ */
+function trackedRels(dir: string, repo = REPO): string[] {
+  const m = readMarker(repo, KIND);
+  if (m && resolve(m.into) === resolve(dir)) {
+    return Object.keys(m.files)
+      .filter((r) => existsSync(join(dir, r)))
+      .sort();
+  }
+  return walk(dir);
+}
+
+/**
  * Read the corpus and classify every file.
  *
  * Exported so the classification is unit-testable without the page: the
  * `sidecar` state is the part most easily got wrong, and a test that went
  * through the rendered markdown would be testing the table renderer.
  */
-export function gutsFiles(dir: string): GutsFile[] {
-  const rels = walk(dir);
+export function gutsFiles(dir: string, repo = REPO): GutsFile[] {
+  const rels = trackedRels(dir, repo);
   const tagged = new Set(
     rels.filter((r) => {
       try {
