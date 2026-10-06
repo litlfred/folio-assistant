@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/test-plan-execution.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/test-plan-execution.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/test-plan-execution.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/test-plan-execution.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/test-plan-execution.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Running a test plan — from a request to a signed certification

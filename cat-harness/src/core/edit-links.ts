@@ -318,3 +318,33 @@ if (import.meta.main && process.argv.includes("--write-asset")) {
   writeFileSync(out, editLinksAsset());
   console.error(`✓ wrote ${out}`);
 }
+
+/**
+ * The single-link form as Markdown, for a generator that writes kramdown:
+ * `[text](plain href){: .class data-fa-link=… data-src=… }`. The plain href is
+ * the no-JS fallback; edit-links.js replaces it from the shared recipe.
+ */
+export function markdownEditLink(
+  cfg: BlockActionsConfig,
+  o: { source: string; kind?: "edit" | "source"; text?: string; className?: string; title?: string; line?: number; repo?: string },
+): string {
+  const kind = o.kind ?? "edit";
+  const href = kind === "edit" ? editUrl(cfg, o.source, o.repo) : sourceUrl(cfg, o.source, o.line, o.repo);
+  const text = o.text ?? (kind === "edit" ? "✎ Edit" : "Source");
+  if (!href) return text;
+  const repo = o.repo ?? cfg.repo;
+  const attrs = [
+    o.className ? `.${o.className}` : "",
+    o.title ? `title="${o.title.replace(/"/g, "&quot;")}"` : "",
+    `data-fa-link="${kind}"`,
+    `data-src="${esc(o.source)}"`,
+    repo ? `data-repo="${esc(repo)}"` : "",
+    o.line ? `data-line="${o.line}"` : "",
+  ].filter(Boolean);
+  return `[${text}](${href}){: ${attrs.join(" ")} }`;
+}
+
+/** `owner/repo` for this checkout's GitHub origin, else the given fallback: what a generator's links name. */
+export function repoOf(repoWebUrl: string | undefined, fallback = "litlfred/folio-assistant"): string {
+  return repoWebUrl?.match(/github\.com\/([^/]+\/[^/]+?)(?:\.git)?\/?$/)?.[1] ?? fallback;
+}

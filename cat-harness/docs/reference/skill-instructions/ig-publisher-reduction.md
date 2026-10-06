@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md`](https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md){: .fa-edit-source data-fa-link="edit" data-src="fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # ig-publisher-reduction

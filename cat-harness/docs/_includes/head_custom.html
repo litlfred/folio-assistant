@@ -648,6 +648,10 @@
 <!-- BEFORE docs-ui.js, which calls it: the one drawing of the harness icon row (beans `lhvt`, `9rq1`). -->
 <script src="{{ '/assets/js/navbar-row.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 <script src="{{ '/assets/js/docs-ui.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
+<!-- The edit, source and feedback links of every page, from the platform's one
+  recipe (cat-harness/src/core/edit-links.ts, bean v433): links carry their
+  facts and this builds the hrefs. -->
+<script src="{{ '/assets/js/edit-links.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying

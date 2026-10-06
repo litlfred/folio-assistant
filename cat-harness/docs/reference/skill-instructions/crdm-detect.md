@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/crdm/crdm-detect.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/crdm/crdm-detect.md) — do not edit here. Typed contract: [schema reference](../skills/crdm-detect.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/crdm/crdm-detect.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/crdm/crdm-detect.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/crdm/crdm-detect.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Feature-request detection (CRDM trigger)

@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/ui/ui-core/kg-viewer.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/kg-viewer.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/ui-core/kg-viewer.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/ui-core/kg-viewer.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/ui/ui-core/kg-viewer.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Rendering the knowledge graph

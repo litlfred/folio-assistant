@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`folio-assistant-sci/skills/content/folio-paper-adapter/proof-simplifier.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-simplifier.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-simplifier.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-simplifier.md){: .fa-edit-source data-fa-link="edit" data-src="folio-assistant-sci/skills/content/folio-paper-adapter/proof-simplifier.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Proof Simplifier

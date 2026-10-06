@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/kg/kg-core/kg-export.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/kg-export.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/kg-export.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/kg-export.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/kg/kg-core/kg-export.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # KG export — publishing the graph as linked data, not as a page

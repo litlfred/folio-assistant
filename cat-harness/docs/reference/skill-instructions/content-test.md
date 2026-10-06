@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/authoring/content-lifecycle/content-test.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/content-lifecycle/content-test.md) — do not edit here. Typed contract: [schema reference](../skills/content-test.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/content-lifecycle/content-test.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/content-lifecycle/content-test.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/authoring/content-lifecycle/content-test.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Content Testing

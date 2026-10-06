@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/process/raci/raci.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/raci/raci.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/raci/raci.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/raci/raci.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/process/raci/raci.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # RACI — involvement, over the graph that already exists

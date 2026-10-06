@@ -32,6 +32,7 @@
  * @covers docs
  */
 
+import { markdownEditLink, repoOf } from "../src/core/edit-links.js";
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, rmSync, unlinkSync } from "node:fs";
 import { workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { join, dirname, relative, resolve } from "node:path";
@@ -117,7 +118,7 @@ const OUT_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT));
  * a sandbox, a tarball — rather than emitting hrefs that go nowhere.
  */
 const REPO_WEB = detectRepoUrl(repoRootFor(INSTANCE_ROOT)) ?? "https://github.com/litlfred/folio-assistant";
-const EDIT_BASE = `${REPO_WEB}/edit/main`;
+// Edit links come from the shared recipe now (markdownEditLink, bean v433).
 
 /**
  * The forge this checkout actually has, and the branch its links point at.
@@ -739,7 +740,8 @@ function emitNode(page: WebPage, node: WebPageNode): string[] {
     // about THIS node, and a second row would separate them for no reason.
     const qa = qaIcons(page, node);
     out.push(
-      `[${EDIT_GLYPH} Edit](${EDIT_BASE}/${target}){: .fa-node-edit title="Edit ${target}" }${qa}`,
+      // The shared recipe (bean v433): facts on the link, href built by edit-links.js.
+      `${markdownEditLink({ repo: repoOf(REPO_WEB) }, { source: target, text: `${EDIT_GLYPH} Edit`, className: "fa-node-edit", title: `Edit ${target}` })}${qa}`,
     );
     out.push("");
   }

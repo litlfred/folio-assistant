@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/kg/kg-core/kg-contribution-offer.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/kg-contribution-offer.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/kg-contribution-offer.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/kg-contribution-offer.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/kg/kg-core/kg-contribution-offer.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Offering the knowledge graph — the question nobody was asking

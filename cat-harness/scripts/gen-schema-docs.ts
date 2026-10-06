@@ -19,10 +19,15 @@
  * @covers schemas, docs
  */
 
+import { markdownEditLink, repoOf } from "../src/core/edit-links.js";
+import { detectRepoUrl } from "../src/core/git-refs.js";
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
 import { join, relative, resolve } from "path";
 import { repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
+
+/** The repository the links name: this checkout's origin, else folio-assistant (bean v433). */
+const SCHEMA_DOCS_REPO = repoOf(detectRepoUrl(process.cwd()));
 
 /**
  * THIS INSTANCE'S OWN `schemas` directory, or the convention.
@@ -263,8 +268,8 @@ function renderSkillPage(skill: string, input: JsonSchema | null, output: JsonSc
     lines.push(renderProperties(input, 3));
     lines.push("");
     lines.push(
-      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/${SKILLS_REPO_PREFIX}/${skill}/input.schema.json)` +
-        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/${SKILLS_REPO_PREFIX}/${skill}/input.schema.json){: .fa-edit-source }`,
+      markdownEditLink({ repo: SCHEMA_DOCS_REPO }, { source: `${SKILLS_REPO_PREFIX}/${skill}/input.schema.json`, kind: "source", text: "Raw schema" }) +
+        ` · ${markdownEditLink({ repo: SCHEMA_DOCS_REPO }, { source: `${SKILLS_REPO_PREFIX}/${skill}/input.schema.json`, text: `${EDIT_GLYPH} Edit`, className: "fa-edit-source" })}`,
     );
     lines.push("");
   }
@@ -276,8 +281,8 @@ function renderSkillPage(skill: string, input: JsonSchema | null, output: JsonSc
     lines.push(renderProperties(output, 3));
     lines.push("");
     lines.push(
-      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/${SKILLS_REPO_PREFIX}/${skill}/output.schema.json)` +
-        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/${SKILLS_REPO_PREFIX}/${skill}/output.schema.json){: .fa-edit-source }`,
+      markdownEditLink({ repo: SCHEMA_DOCS_REPO }, { source: `${SKILLS_REPO_PREFIX}/${skill}/output.schema.json`, kind: "source", text: "Raw schema" }) +
+        ` · ${markdownEditLink({ repo: SCHEMA_DOCS_REPO }, { source: `${SKILLS_REPO_PREFIX}/${skill}/output.schema.json`, text: `${EDIT_GLYPH} Edit`, className: "fa-edit-source" })}`,
     );
     lines.push("");
   }

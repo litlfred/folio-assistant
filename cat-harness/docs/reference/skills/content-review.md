@@ -23,7 +23,7 @@ Input schema for formal content review and approval workflow.
 | `validationReport` | string | no | Path to the validation report for this content. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-review/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-review/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-review/input.schema.json){: data-fa-link="source" data-src="cat-harness/schemas/skills/content-review/input.schema.json" data-repo="litlfred/folio-assistant" } · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-review/input.schema.json){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/schemas/skills/content-review/input.schema.json" data-repo="litlfred/folio-assistant" }
 
 ## Output
 
@@ -102,4 +102,4 @@ What a review produces: findings, a decision about them, and the audit notes tha
 | `id` | string | **yes** |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-review/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-review/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-review/output.schema.json){: data-fa-link="source" data-src="cat-harness/schemas/skills/content-review/output.schema.json" data-repo="litlfred/folio-assistant" } · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-review/output.schema.json){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/schemas/skills/content-review/output.schema.json" data-repo="litlfred/folio-assistant" }

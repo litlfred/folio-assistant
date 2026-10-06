@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`folio-assistant-sci/skills/content/folio-paper-adapter/remark-audit.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/remark-audit.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/folio-paper-adapter/remark-audit.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/folio-paper-adapter/remark-audit.md){: .fa-edit-source data-fa-link="edit" data-src="folio-assistant-sci/skills/content/folio-paper-adapter/remark-audit.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Remark Audit Skill

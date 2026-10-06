@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`folio-assistant-core/skills/library/cataloguing/bib-human-review.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/cataloguing/bib-human-review.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/cataloguing/bib-human-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/cataloguing/bib-human-review.md){: .fa-edit-source data-fa-link="edit" data-src="folio-assistant-core/skills/library/cataloguing/bib-human-review.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # bib-human-review

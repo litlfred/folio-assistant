@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/kg/kg-core/instance-kinds.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/instance-kinds.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/instance-kinds.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/instance-kinds.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/kg/kg-core/instance-kinds.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Instance kinds — naming one, and what a new kind must declare
