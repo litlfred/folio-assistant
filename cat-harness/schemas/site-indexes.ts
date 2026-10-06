@@ -159,7 +159,7 @@ export const TranslationStatusSchema = z
 
 const DECL_KINDS = [
   "zod-object", "zod-union", "zod-enum", "zod-array", "zod-record", "zod-scalar",
-  "interface", "type-alias", "undetermined",
+  "interface", "type-alias", "json-schema", "undetermined",
 ] as const;
 
 export const SchemaGraphIndexSchema = z
@@ -220,6 +220,25 @@ export const SchemaGraphIndexSchema = z
         })
         .strict(),
     ),
+    /** Node kinds and `$schema` families, joined to their declarations (issue #2278). */
+    nodeKinds: z
+      .array(
+        z
+          .object({
+            id: z.string().min(1),
+            source: z.enum(["node-kind", "family", "typology"]),
+            instance: z.string().optional(),
+            decl: z.string().optional(),
+            tag: z.string().optional(),
+            parents: StringList.optional(),
+            subclasses: StringList.optional(),
+            typologies: StringList,
+            page: z.string().optional(),
+            note: z.string().optional(),
+          })
+          .strict(),
+      )
+      .optional(),
   })
   .strict();
 

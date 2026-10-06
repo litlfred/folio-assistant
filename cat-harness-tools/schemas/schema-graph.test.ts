@@ -25,7 +25,7 @@ import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { readSchemaGraph } from "../../cat-harness/scripts/schema-graph.ts";
+import { readJsonSchemaModule, readSchemaGraph } from "../../cat-harness/scripts/schema-graph.ts";
 
 /** A throwaway instance whose `schemas/` holds exactly the given files. */
 function fixture(files: Record<string, string>): { root: string; cleanup: () => void } {
@@ -268,5 +268,46 @@ describe("the real schema graph", () => {
   test("`z` is external everywhere, and nowhere unresolved", () => {
     const g = readSchemaGraph(root)!;
     expect(g.decls.filter((d) => d.unresolved.includes("z"))).toEqual([]);
+  });
+});
+
+// Issue #2278: bootstrap's schemas are JSON Schema, and a `.ts`-only reader
+// reported them as no schemas at all.
+describe("JSON Schema files", () => {
+  const text = JSON.stringify({
+    title: "Knowledge Graph declaration",
+    description: "A declaration.\nMore.",
+    type: "object",
+    required: ["name"],
+    properties: {
+      name: { type: "string", description: "Its name." },
+      nodes: { type: "array", items: { $ref: "#/$defs/Node" } },
+    },
+    allOf: [{ $ref: "#/$defs/Base" }],
+    $defs: { Node: { title: "Node", uses: ["Base"] }, Base: { type: "object" } },
+  });
+  const r = readJsonSchemaModule(text, "x/schemas/graph.schema.json");
+
+  test("the root and every $defs entry are declarations", () => {
+    expect(r.decls.map((d) => d.name)).toEqual(["KnowledgeGraphDeclaration", "Node", "Base"]);
+    expect(r.decls.every((d) => d.kind === "json-schema")).toBe(true);
+    expect(r.summary).toBe("A declaration.");
+  });
+
+  test("fields carry type, optionality and doc", () => {
+    const [name, nodes] = r.decls[0]!.fields;
+    expect(name).toMatchObject({ name: "name", type: "string", optional: false, doc: "Its name." });
+    expect(nodes).toMatchObject({ name: "nodes", type: "Node[]", optional: true, array: true });
+  });
+
+  test("$ref, allOf and uses become refs of the right kind", () => {
+    expect(r.refs.map((x) => `${x.kind}:${x.ref}`).sort()).toEqual(
+      ["extends:#/$defs/Base", "field:#/$defs/Node", "id-ref:#/$defs/Base"],
+    );
+  });
+
+  test("unparseable JSON is undetermined, not an empty schema", () => {
+    const bad = readJsonSchemaModule("{", "x/schemas/bad.schema.json");
+    expect(bad.decls[0]!.kind).toBe("undetermined");
   });
 });

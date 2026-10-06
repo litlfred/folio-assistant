@@ -75,7 +75,24 @@ import { basename, join, relative } from "node:path";
 import ts from "typescript";
 
 import { checkoutRootFor } from "../schemas/cat-harness.js";
-import { corpusDirectoriesForGraph, rootInstanceName } from "../schemas/harness-config.js";
+import { checkoutDirectoriesForGraph, corpusDirectoriesForGraph, rootInstanceName } from "../schemas/harness-config.js";
+
+/**
+ * Which instances' `schemas` directories a reading covers.
+ *
+ * - `corpus` (the default): this instance and every instance stacked ON it,
+ *   never its own dependencies — the rule for a tool shipped BY an instance
+ *   (`directory-conventions` §corpus scope). `kg-audit` and the glossary read
+ *   this, and their verdicts are about the corpus they serve.
+ * - `checkout`: every instance in the checkout, dependencies included. The
+ *   schemas VIEWER reads this (issue #2278): it is a handler publishing one
+ *   page per subject, and a dependency such as `bootstrap` is a subject the
+ *   owner expects to browse. Leaving it out made
+ *   `/cat-harness/schemas/bootstrap/` a 404 with nothing saying why.
+ */
+export interface SchemaGraphScope {
+  scope?: "corpus" | "checkout";
+}
 
 /**
  * EVERY declared `schemas` directory reachable from this root.
@@ -102,8 +119,11 @@ import { corpusDirectoriesForGraph, rootInstanceName } from "../schemas/harness-
  * instance — and an absent conventional directory yields `[]` rather than a
  * path nothing is at.
  */
-export function schemaRoots(root: string): string[] {
-  const declared = corpusDirectoriesForGraph(root, "schemas");
+export function schemaRoots(root: string, opts: SchemaGraphScope = {}): string[] {
+  const declared =
+    opts.scope === "checkout"
+      ? checkoutDirectoriesForGraph("schemas", root)
+      : corpusDirectoriesForGraph(root, "schemas");
   if (declared.length > 0) return [...declared].sort();
   const conventional = join(root, "schemas");
   return existsSync(conventional) ? [conventional] : [];
@@ -123,6 +143,7 @@ export type DeclKind =
   | "zod-scalar"
   | "interface"
   | "type-alias"
+  | "json-schema"
   | "undetermined";
 
 /** One field of an object-like declaration. */
@@ -760,6 +781,202 @@ function readModule(
   return { decls, bindings: bindingsOf(src) };
 }
 
+// ── JSON Schema files (issue #2278) ─────────────────────────────────────
+//
+// `bootstrap/schemas/` holds `*.schema.json` and no TypeScript: bootstrap must
+// be readable with nothing installed, so its shapes are JSON Schema. A reader
+// that took `.ts` only reported bootstrap as having no schemas at all, which
+// is a wrong answer rather than a partial one. Each file is read as one
+// declaration for the root schema and one per `definitions` / `$defs` entry.
+
+const JSON_SCHEMA_SUFFIX = ".schema.json";
+
+/** One `$ref` found in a JSON Schema file, before it is resolved. */
+interface JsonSchemaRef {
+  from: string;
+  /** The `$ref` as written. */
+  ref: string;
+  /** The module the ref was written in, which a relative ref resolves against. */
+  module: string;
+  via: string;
+  kind: "field" | "extends" | "id-ref";
+  optional: boolean;
+  array: boolean;
+}
+
+type Json = Record<string, unknown>;
+const isObj = (v: unknown): v is Json => typeof v === "object" && v !== null && !Array.isArray(v);
+
+/** `Knowledge Graph declaration` → `KnowledgeGraphDeclaration`. */
+function identifierOf(title: string): string {
+  return title
+    .split(/[^A-Za-z0-9]+/)
+    .filter(Boolean)
+    .map((w) => w[0]!.toUpperCase() + w.slice(1))
+    .join("");
+}
+
+/** The last segment of a `$ref`: `#/definitions/Node` → `Node`. */
+const refName = (ref: string): string => ref.split(/[#/]/).filter(Boolean).pop() ?? ref;
+
+/** A property's type, written the way the field table shows a Zod type. */
+function jsonTypeOf(p: unknown): string {
+  if (!isObj(p)) return "unknown";
+  if (typeof p.$ref === "string") return refName(p.$ref);
+  if (p.const !== undefined) return JSON.stringify(p.const);
+  if (Array.isArray(p.enum)) return p.enum.map((v) => JSON.stringify(v)).join(" | ");
+  for (const k of ["oneOf", "anyOf"] as const) {
+    if (Array.isArray(p[k])) return (p[k] as unknown[]).map(jsonTypeOf).join(" | ");
+  }
+  if (p.type === "array") return `${jsonTypeOf(p.items)}[]`;
+  if (Array.isArray(p.type)) return p.type.join(" | ");
+  if (typeof p.type === "string") return p.type;
+  if (Array.isArray(p.allOf)) return (p.allOf as unknown[]).map(jsonTypeOf).join(" & ");
+  return "unknown";
+}
+
+/** Every `$ref` anywhere under `v`. */
+function refsUnder(v: unknown, out: string[] = []): string[] {
+  if (Array.isArray(v)) v.forEach((x) => refsUnder(x, out));
+  else if (isObj(v)) {
+    if (typeof v.$ref === "string") out.push(v.$ref);
+    for (const [k, x] of Object.entries(v)) if (k !== "$ref") refsUnder(x, out);
+  }
+  return out;
+}
+
+const firstLine = (v: unknown): string | undefined =>
+  typeof v === "string" ? v.split("\n").map((l) => l.trim()).find(Boolean) : undefined;
+
+/** Read one `*.schema.json` file: its declarations and its unresolved `$ref`s. */
+export function readJsonSchemaModule(
+  text: string,
+  moduleRel: string,
+): { decls: SchemaDecl[]; refs: JsonSchemaRef[]; summary?: string } {
+  let doc: unknown;
+  try {
+    doc = JSON.parse(text);
+  } catch (e) {
+    // Unparseable is UNDETERMINED, stated, never an empty schema.
+    const name = basename(moduleRel, JSON_SCHEMA_SUFFIX);
+    return {
+      decls: [{
+        id: `${moduleRel}#${name}`, name, module: moduleRel, kind: "undetermined",
+        note: `not valid JSON: ${(e as Error).message}`.slice(0, 120),
+        fields: [], extendsNames: [], values: [], refs: [], unresolved: [], external: [], line: 1, exported: true,
+      }],
+      refs: [],
+    };
+  }
+  if (!isObj(doc)) return { decls: [], refs: [] };
+  const decls: SchemaDecl[] = [];
+  const refs: JsonSchemaRef[] = [];
+  const taken = new Set<string>();
+
+  const one = (name: string, schema: Json): void => {
+    let unique = name;
+    for (let i = 2; taken.has(unique); i++) unique = `${name}${i}`;
+    taken.add(unique);
+    const id = `${moduleRel}#${unique}`;
+    const required = new Set(Array.isArray(schema.required) ? (schema.required as string[]) : []);
+    const props = isObj(schema.properties) ? schema.properties : {};
+    const fields: SchemaField[] = Object.entries(props).map(([fname, p]) => {
+      const array = isObj(p) && p.type === "array";
+      for (const r of refsUnder(p)) {
+        refs.push({ from: id, ref: r, module: moduleRel, via: fname, kind: "field", optional: !required.has(fname), array });
+      }
+      return {
+        name: fname,
+        type: jsonTypeOf(p),
+        optional: !required.has(fname),
+        array,
+        names: refsUnder(p).map(refName),
+        ...(isObj(p) && firstLine(p.description) ? { doc: firstLine(p.description) } : {}),
+      };
+    });
+    const extendsNames: string[] = [];
+    if (Array.isArray(schema.allOf)) {
+      for (const part of schema.allOf) {
+        if (isObj(part) && typeof part.$ref === "string") {
+          extendsNames.push(refName(part.$ref));
+          refs.push({ from: id, ref: part.$ref, module: moduleRel, via: "", kind: "extends", optional: false, array: false });
+        }
+      }
+    }
+    // `uses` is bootstrap's own vocabulary keyword: a term naming the terms
+    // it is defined with. It is an association the AUTHOR declared, not one
+    // the structure proves, so it is drawn as an id-ref — the `@ref` rule.
+    if (Array.isArray(schema.uses)) {
+      for (const n of schema.uses) {
+        if (typeof n === "string") refs.push({ from: id, ref: `#/$defs/${n}`, module: moduleRel, via: "uses", kind: "id-ref", optional: false, array: false });
+      }
+    }
+    decls.push({
+      id,
+      name: unique,
+      module: moduleRel,
+      kind: "json-schema",
+      ...(firstLine(schema.description) ? { doc: firstLine(schema.description) } : {}),
+      fields,
+      extendsNames,
+      values: Array.isArray(schema.enum) ? schema.enum.map((v) => String(v)) : [],
+      refs: [],
+      unresolved: [],
+      external: [],
+      line: 1,
+      exported: true,
+    });
+  };
+
+  const rootName = typeof doc.title === "string" && identifierOf(doc.title) ? identifierOf(doc.title) : identifierOf(basename(moduleRel, JSON_SCHEMA_SUFFIX));
+  one(rootName, doc);
+  for (const key of ["definitions", "$defs"] as const) {
+    const defs = doc[key];
+    if (isObj(defs)) for (const [n, d] of Object.entries(defs)) if (isObj(d)) one(n, d);
+  }
+  return { decls, refs, ...(firstLine(doc.description) ? { summary: firstLine(doc.description) } : {}) };
+}
+
+/**
+ * Resolve JSON Schema `$ref`s to declarations. A ref resolves within its own
+ * file (`#/definitions/X`) or to a sibling file in the same directory, named
+ * relatively or by an IRI whose last segment is that file. Anything else — the
+ * JSON Schema meta-schema, an outside standard — is external and not an edge.
+ */
+function resolveJsonSchemaRefs(
+  refs: readonly JsonSchemaRef[],
+  byId: ReadonlyMap<string, SchemaDecl>,
+): { edges: SchemaEdge[]; unresolved: Map<string, string[]> } {
+  const edges: SchemaEdge[] = [];
+  const unresolved = new Map<string, string[]>();
+  const rootOfModule = new Map<string, string>();
+  for (const d of byId.values()) if (d.kind === "json-schema" && !rootOfModule.has(d.module)) rootOfModule.set(d.module, d.id);
+  const seen = new Set<string>();
+  for (const r of refs) {
+    const [file, frag = ""] = r.ref.split("#");
+    const dir = r.module.slice(0, r.module.lastIndexOf("/"));
+    const module = file === "" ? r.module : `${dir}/${file!.split("/").pop()}`;
+    if (!rootOfModule.has(module)) {
+      // Outside this graph, or a sibling that is not here.
+      if (file !== "" && !/^https?:/.test(file!)) {
+        unresolved.set(r.from, [...(unresolved.get(r.from) ?? []), r.ref]);
+      }
+      continue;
+    }
+    const to = frag === "" || frag === "/" ? rootOfModule.get(module)! : `${module}#${refName(frag)}`;
+    if (!byId.has(to)) {
+      unresolved.set(r.from, [...(unresolved.get(r.from) ?? []), r.ref]);
+      continue;
+    }
+    if (to === r.from) continue; // a self-reference is a property of the box
+    const key = `${r.from}\0${to}\0${r.via}\0${r.kind}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    edges.push({ from: r.from, to, via: r.via, kind: r.kind, optional: r.optional, array: r.array });
+  }
+  return { edges, unresolved };
+}
+
 /**
  * Read the whole schema graph.
  *
@@ -767,8 +984,8 @@ function readModule(
  * exist. The two are different answers and a caller rendering them alike
  * reports a clean run over a directory it never opened.
  */
-export function readSchemaGraph(root: string): SchemaGraph | null {
-  const dirs = schemaRoots(root);
+export function readSchemaGraph(root: string, opts: SchemaGraphScope = {}): SchemaGraph | null {
+  const dirs = schemaRoots(root, opts);
   if (dirs.length === 0) return null;
   // `kg-audit` passes the ROOT instance here; `dirname` of it is outside the checkout (g43f).
   const repoRoot = checkoutRootFor(root);
@@ -787,6 +1004,8 @@ export function readSchemaGraph(root: string): SchemaGraph | null {
    * export, which is the `wggr` failure in miniature.
    */
   const exportsByDirStem = new Map<string, Map<string, string>>();
+  /** `$ref`s read from JSON Schema files, resolved after every file is read. */
+  const jsonRefs: JsonSchemaRef[] = [];
   const bindingsByModule = new Map<string, Map<string, string | null>>();
   /** Module path → the directory it was read from, for scoped resolution. */
   const dirOfModule = new Map<string, string>();
@@ -804,6 +1023,25 @@ export function readSchemaGraph(root: string): SchemaGraph | null {
       throw new Error(`${dirRel} sits at the root of ${repoRoot}, which declares no instance and has no single landing harness (issue #1904)`);
     }
     for (const f of readdirSync(dir).sort()) {
+      if (f.endsWith(JSON_SCHEMA_SUFFIX)) {
+        const moduleRel = `${dirRel}/${f}`;
+        const read = readJsonSchemaModule(readFileSync(join(dir, f), "utf-8"), moduleRel);
+        dirOfModule.set(moduleRel, dirRel);
+        modules.push({
+          module: moduleRel,
+          instance,
+          name: basename(f, JSON_SCHEMA_SUFFIX),
+          // A JSON Schema file IS a schema node: it carries `$id`, and the
+          // `@graphNode` tag is a TypeScript docblock convention it cannot hold.
+          graphNode: "schema",
+          ...(read.summary ? { summary: read.summary } : {}),
+          isTest: false,
+          decls: read.decls.map((d) => d.id),
+        });
+        decls.push(...read.decls);
+        jsonRefs.push(...read.refs);
+        continue;
+      }
       if (!f.endsWith(".ts")) continue;
       const moduleRel = `${dirRel}/${f}`;
       const text = readFileSync(join(dir, f), "utf-8");
@@ -925,7 +1163,15 @@ export function readSchemaGraph(root: string): SchemaGraph | null {
     edges.push({ from: d.id, to: hit.id, via: f.name, kind: "id-ref", optional: f.optional, array: f.array });
   };
 
+  const jsonEdges = resolveJsonSchemaRefs(jsonRefs, byId);
+  edges.push(...jsonEdges.edges);
+
   for (const d of decls) {
+    if (d.kind === "json-schema") {
+      d.refs = [...new Set(jsonEdges.edges.filter((e) => e.from === d.id).map((e) => e.to))].sort();
+      d.unresolved = [...new Set(jsonEdges.unresolved.get(d.id) ?? [])].sort();
+      continue;
+    }
     const refs = new Set<string>();
     const unresolved = new Set<string>();
     const external = new Set<string>();

@@ -60,10 +60,12 @@
  *   bun run schema:viz:check    # fail if either artefact is stale
  */
 import { rmSync } from "node:fs";
-import { basename, join, relative, sep } from "node:path";
+import { basename, dirname, join, relative, resolve, sep } from "node:path";
 
 import { readSchemaGraph, schemaRoots, type SchemaGraph } from "./schema-graph.ts";
-import { readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
+import { defaultGraphTypologies, readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
+import { nodeKindIndex } from "../schemas/node-kind-index.ts";
+import { parseValidatorRef, rootOf } from "../schemas/kind-validator.ts";
 import { directoryByVisualisationRef } from "./graph-tiles.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 
@@ -80,11 +82,137 @@ const check = process.argv.includes("--check");
  */
 const DOC_MAX = 400;
 
+/**
+ * One node kind, or one `$schema` family, as the schemas page lists it
+ * (issue #2278: *"i also expected to be able to search for node kinds and see
+ * them here"*).
+ *
+ * Three sources, and the `source` field says which, because they are
+ * different facts and the owner ruled there are exactly two concepts (a graph
+ * typology's families, and a TypeScript `nodeKind()`):
+ *
+ * - `node-kind` — a `nodeKind()` the node-kind index found through the
+ *   typologies. It has a page at `/<locale>/<declaring>/<kind>/`.
+ * - `family` — a `$schema` family a typology holds whose validator is not (yet)
+ *   a `nodeKind()`, or one an instance declares in its own `nodeSchemas`
+ *   (bootstrap's `model-registry/1.0.0`, a JSON Schema file).
+ * - `typology` — a typology validated as a whole, with no families.
+ *
+ * `instance` is the instance whose schemas DEFINE it — the one the validator
+ * path names, the node-kind index's `declaredBy` rule — so a subject page
+ * lists the kinds its own schemas define. Absent when nothing names a
+ * validator: such a row appears on the unscoped page only, and says why.
+ */
+export interface NodeKindRow {
+  id: string;
+  source: "node-kind" | "family" | "typology";
+  instance?: string;
+  /** The declaration that defines it, when it is in the graph. */
+  decl?: string;
+  tag?: string;
+  parents?: string[];
+  subclasses?: string[];
+  /** Graph typologies that hold nodes of it. */
+  typologies: string[];
+  /** Site-relative path of its node-kind page, when it has one. */
+  page?: string;
+  /** Why it has no declaration, when it has none. */
+  note?: string;
+}
+
+/** Every node kind and family, joined to the declarations that define them. */
+export async function nodeKindRows(g: SchemaGraph, root: string, repoRoot: string): Promise<NodeKindRow[]> {
+  const declIds = new Set(g.decls.map((d) => d.id));
+  const rel = (abs: string): string => relative(repoRoot, abs).split(sep).join("/");
+  const instanceOf = (module: string): string | undefined => g.modules.find((m) => m.module === module)?.instance ?? module.split("/")[0];
+  /** A validator ref → the declaration id it names, and the instance holding it. */
+  const at = (ref: string | undefined): { decl?: string; instance?: string } => {
+    if (!ref) return {};
+    try {
+      const v = parseValidatorRef(ref);
+      const base = rootOf(v.instance, root);
+      if (base === undefined) return {};
+      const module = rel(resolve(join(base, v.module)));
+      const id = `${module}#${v.exportName}`;
+      return { ...(declIds.has(id) ? { decl: id } : {}), instance: instanceOf(module) };
+    } catch {
+      return {};
+    }
+  };
+
+  const rows = new Map<string, NodeKindRow>();
+  const put = (row: NodeKindRow): void => {
+    const prior = rows.get(`${row.source}\0${row.id}`);
+    if (!prior) {
+      rows.set(`${row.source}\0${row.id}`, row);
+      return;
+    }
+    prior.typologies = [...new Set([...prior.typologies, ...row.typologies])].sort();
+    prior.decl ??= row.decl;
+    prior.instance ??= row.instance;
+  };
+
+  const index = await nodeKindIndex(defaultGraphTypologies, root, repoRoot);
+  for (const k of index.kinds) {
+    const decl = k.module && k.exportName ? `${k.module}#${k.exportName}` : undefined;
+    put({
+      id: k.id,
+      source: "node-kind",
+      ...(k.declaredBy ? { instance: k.declaredBy } : {}),
+      ...(decl && declIds.has(decl) ? { decl } : {}),
+      ...(k.tag ? { tag: k.tag } : {}),
+      parents: k.parents,
+      subclasses: k.subclasses,
+      typologies: [...new Set(k.holdings.map((h) => h.typology))].sort(),
+      // The node-kind generator writes a page only for a kind with a home.
+      ...(k.declaredBy ? { page: `en/${k.declaredBy}/${k.id}/` } : {}),
+      ...(k.declaredBy
+        ? decl && !declIds.has(decl)
+          ? { note: `${decl} — an export this reader does not model as a declaration` }
+          : {}
+        : { note: "reached only as an ancestor — a mixin no typology names directly" }),
+    });
+  }
+  for (const u of index.unkinded) {
+    const where = at(u.ref);
+    put({
+      id: u.family ?? u.typology,
+      source: u.family === undefined ? "typology" : "family",
+      ...where,
+      typologies: [u.typology],
+      ...(u.reason === "no-validator" ? { note: "no validator is named for it, so no schema defines it" } : {}),
+      ...(u.reason === "unresolvable" ? { note: `its validator ${u.ref ?? ""} could not be resolved` } : {}),
+    });
+  }
+
+  // Families an instance declares in its OWN declaration (bootstrap's
+  // `nodeSchemas`). A path is relative to the declaration; an IRI is an
+  // outside standard and is not a family of this graph.
+  for (const dir of g.roots) {
+    const instanceRoot = dirname(join(repoRoot, dir));
+    const decl = readDeclaration(instanceRoot) as { name?: string; nodeSchemas?: Record<string, string> } | null;
+    for (const [family, target] of Object.entries(decl?.nodeSchemas ?? {})) {
+      if (/^[a-z]+:/i.test(target)) continue;
+      const module = rel(resolve(instanceRoot, target));
+      const rootDecl = g.decls.find((d) => d.module === module);
+      put({
+        id: family,
+        source: "family",
+        instance: decl?.name ?? instanceOf(module),
+        ...(rootDecl ? { decl: rootDecl.id } : {}),
+        typologies: [],
+      });
+    }
+  }
+  return [...rows.values()].sort((a, b) => a.id.localeCompare(b.id) || a.source.localeCompare(b.source));
+}
+
 /** The projection, trimmed for the page. */
 function projection(
   g: SchemaGraph,
   /** Subject-page counts, `directory id -> [count, unit]`. Empty is normal. */
   scoped: Readonly<Record<string, readonly [number, string]>>,
+  nodeKinds: readonly NodeKindRow[] = [],
 ): unknown {
   return {
     $schema: "folio-schema-graph/v1",
@@ -169,6 +297,7 @@ function projection(
       exported: d.exported,
     })),
     edges: g.edges,
+    nodeKinds,
   };
 }
 
@@ -250,7 +379,7 @@ const VIEWER_TOOL = "schemas-viewer";
 export { orphanSubjectPages, declaresItsOwnDirectory, carriesMarker } from "./orphan-pages.ts";
 export type { OwnershipTest } from "./orphan-pages.ts";
 
-export function viewerHtml(dataHref: string, scope = ""): string {
+export function viewerHtml(dataHref: string, scope = "", siteHref = ""): string {
   // NO BACKTICKS BELOW THIS LINE — not in strings, not in comments.
   //
   // The whole page is one template literal, so a backtick anywhere inside it
@@ -374,6 +503,17 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
 .ov-key i.k-gen { width: 16px; height: 0; border-top: 2px solid var(--fg); border-radius: 0; }
 .ov-key i.k-field { width: 16px; height: 0; border-top: 2px solid var(--accent); border-radius: 0; }
 .ov-key i.k-idref { width: 16px; height: 0; border-top: 2px dashed var(--warn); border-radius: 0; }
+/* Node kinds (issue #2278). Open by default: on a subject page the kinds its
+   schemas define are the first thing the owner asked to see, and the table is
+   short. It scrolls sideways inside itself, never the page. */
+#kinds { border-bottom: 1px solid var(--line); }
+#kinds > summary { cursor: pointer; padding: 10px 16px; font-weight: 600; font-size: .9rem; list-style: revert; }
+#kinds > summary:hover { color: var(--accent); }
+.nk-wrap { overflow-x: auto; max-height: 40vh; overflow-y: auto; }
+#nk-table { margin: 0; }
+#nk-table td { overflow-wrap: anywhere; }
+#nk-table button { border: 0; background: none; padding: 0; color: var(--accent); cursor: pointer; text-decoration: underline; font: inherit; }
+.tag.nk { color: var(--accent); border-color: var(--accent); }
 </style>
 </head>
 <body>
@@ -392,10 +532,19 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
     <div class="ov-key" id="ov-key"></div>
   </div>
 </details>
+<details id="kinds" open>
+  <summary>Node kinds &mdash; <span id="nk-count">loading&hellip;</span></summary>
+  <div class="ov-body">
+    <p class="ov-cap">A <b>node kind</b> is a TypeScript <code>nodeKind()</code>; a <b>family</b> is a <code>$schema</code>
+      value a graph typology holds or an instance declares, whose validator is not (yet) a node kind; a <b>typology</b>
+      is validated as a whole. Each row links to the declaration that defines it. The search box filters this table too.</p>
+    <div class="nk-wrap"><table id="nk-table"><thead><tr><th>kind</th><th>source</th><th>held by</th><th>defined by</th></tr></thead><tbody id="nk-rows"></tbody></table></div>
+  </div>
+</details>
 <main>
   <section id="list" aria-label="Declarations">
     <div class="controls">
-      <input id="q" type="search" placeholder="Search declarations…" aria-label="Search declarations">
+      <input id="q" type="search" placeholder="Search declarations and node kinds…" aria-label="Search declarations and node kinds">
       <select id="kind" aria-label="Filter by kind"><option value="">any kind</option></select>
       <select id="mod" aria-label="Filter by module"><option value="">any module</option></select>
     </div>
@@ -411,7 +560,12 @@ var DATA_HREF = "${dataHref}";
    One projection serves every page — a second JSON per subject would be the
    same facts written N+1 times, free to disagree once one is regenerated. */
 var SCOPE = "${scope}";
+/* The site root, relative to this page: where a node kind's own page is. */
+var SITE_HREF = "${siteHref}";
 function inScope(d){ return !SCOPE || d.instance === SCOPE; }
+function nkInScope(r){ return !SCOPE || r.instance === SCOPE; }
+/* The node kinds a declaration defines, by declaration id. */
+function kindsOf(d){ return (G.nkByDecl && G.nkByDecl[d.id]) || []; }
 var $ = function (id) { return document.getElementById(id); };
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -530,6 +684,12 @@ function detail(d) {
   var h = '<h2>' + esc(d.name) + '</h2><p class="sub">' + esc(d.module) +
     ' &middot; ' + esc(d.kind) + (d.exported ? "" : " &middot; not exported") + "</p>";
   if (d.doc) h += "<p>" + esc(d.doc) + "</p>";
+  kindsOf(d).forEach(function (r) {
+    h += '<p class="sub">Defines ' + esc(r.source) + " <code>" + esc(r.tag || r.id) + "</code>" +
+      ((r.typologies || []).length ? ", held by " + esc(r.typologies.join(", ")) : "") +
+      (r.parents && r.parents.length ? "; subclass of " + esc(r.parents.join(", ")) : "") +
+      (r.page && SITE_HREF ? ' &middot; <a href="' + esc(SITE_HREF + r.page) + '">its node-kind page</a>' : "") + "</p>";
+  });
   if (d.kind === "undetermined") {
     h += '<p class="note"><strong>Could not be classified.</strong> This is not "it has no fields" — ' +
       "the reader saw an expression it does not model, and says so rather than rendering an empty type: <code>" +
@@ -643,10 +803,40 @@ function diaWidth(svg) {
    look identical to the person looking at them. */
 function matchesFilter(d, q, k, m) {
   if (!inScope(d)) return false;
-  if (k && d.kind !== k) return false;
+  if (k === "@nk") { if (!kindsOf(d).length) return false; }
+  else if (k && d.kind !== k) return false;
   if (m && d.module !== m) return false;
   if (!q) return true;
-  return (d.name + " " + d.module + " " + (d.doc || "")).toLowerCase().indexOf(q) >= 0;
+  var nk = kindsOf(d).map(function (r) { return r.id + " " + (r.tag || ""); }).join(" ");
+  return (d.name + " " + d.module + " " + (d.doc || "") + " " + nk).toLowerCase().indexOf(q) >= 0;
+}
+
+/* The node-kind table: scoped like the list, and narrowed by the same search. */
+function renderKinds() {
+  var q = $("q") ? $("q").value.trim().toLowerCase() : "";
+  var all = (G.nodeKinds || []).filter(nkInScope);
+  var rows = all.filter(function (r) {
+    if (!q) return true;
+    var d = r.decl ? byId(r.decl) : null;
+    return (r.id + " " + (r.tag || "") + " " + r.source + " " + (r.typologies || []).join(" ") + " " +
+      (d ? d.name + " " + d.module : "")).toLowerCase().indexOf(q) >= 0;
+  });
+  $("nk-count").textContent = rows.length + " of " + all.length + (SCOPE ? " defined in " + SCOPE : "");
+  $("nk-rows").innerHTML = rows.map(function (r) {
+    var d = r.decl ? byId(r.decl) : null;
+    var name = r.page && SITE_HREF
+      ? '<a href="' + esc(SITE_HREF + r.page) + '"><code>' + esc(r.id) + "</code></a>"
+      : "<code>" + esc(r.id) + "</code>";
+    var by = d
+      ? '<button type="button" data-sel="' + esc(d.id) + '"><code>' + esc(d.name) + "</code></button>" +
+        '<br><span class="sub">' + esc(d.module) + "</span>"
+      : '<span class="sub">' + esc(r.note || "not a declaration in this graph") + "</span>";
+    return "<tr><td>" + name + (r.tag && r.tag !== r.id ? '<br><span class="sub">' + esc(r.tag) + "</span>" : "") +
+      "</td><td>" + esc(r.source) + (SCOPE || !r.instance ? "" : '<br><span class="sub">' + esc(r.instance) + "</span>") +
+      "</td><td>" + esc((r.typologies || []).join(", ") || "\u2014") + "</td><td>" + by + "</td></tr>";
+  }).join("") || '<tr><td colspan="4" class="empty">' +
+    (all.length ? "No node kind matches the search." : "No node kind or family is defined in " + esc(SCOPE || "this graph") + ".") +
+    "</td></tr>";
 }
 
 /** The three filter controls, read once so every caller sees one state. */
@@ -980,6 +1170,7 @@ function render() {
     return '<li><button type="button" data-id="' + esc(d.id) + '" aria-current="' + (SEL === d.id) + '">' +
       '<span class="nm">' + esc(d.name) + "</span>" +
       (d.kind === "undetermined" ? '<span class="tag warn">undetermined</span>' : '<span class="tag">' + esc(d.kind) + "</span>") +
+      (kindsOf(d).length ? '<span class="tag nk">' + esc(kindsOf(d).map(function (r) { return r.id; }).join(", ")) + "</span>" : "") +
       '<br><span class="sub">' + esc(d.module.split("/").pop()) + "</span></li>";
   }).join("") || '<li><p class="empty">Nothing matches.</p></li>';
   $("counts").textContent = "";
@@ -998,6 +1189,7 @@ function render() {
     "<b>" + rows.length + "</b> of <b>" + scoped.length + "</b> declarations &middot; <b>" +
     mods.length + "</b> modules &middot; <b>" + edgeCount + "</b> edges &middot; <b>" +
     scoped.filter(function (d) { return d.kind === "undetermined"; }).length + "</b> undetermined";
+  renderKinds();
 }
 
 function select(id) {
@@ -1023,9 +1215,21 @@ fetch(DATA_HREF).then(function (r) {
   var instOf = {};
   G.modules.forEach(function (m) { instOf[m.module] = m.instance; });
   G.decls.forEach(function (d) { d.instance = instOf[d.module]; });
+  G.nkByDecl = {};
+  (G.nodeKinds || []).forEach(function (r) {
+    if (r.decl) (G.nkByDecl[r.decl] = G.nkByDecl[r.decl] || []).push(r);
+  });
   var kinds = [...new Set(G.decls.map(function (d) { return d.kind; }))].sort();
   kinds.forEach(function (k) {
     var o = document.createElement("option"); o.value = k; o.textContent = k; $("kind").appendChild(o);
+  });
+  var nko = document.createElement("option");
+  nko.value = "@nk"; nko.textContent = "defines a node kind or family"; $("kind").appendChild(nko);
+  $("nk-rows").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-sel]");
+    if (!b) return;
+    select(b.getAttribute("data-sel"));
+    $("detail").scrollIntoView({ block: "start" });
   });
   var withDecls = {};
   G.decls.forEach(function (d) { withDecls[d.module] = true; });
@@ -1127,7 +1331,11 @@ const emit = makeEmit({ check, onStale: () => { stale++; } });
 const emitPage = (nav: ViewerNav) => makeEmit({ check, onStale: () => { stale++; }, nav });
 
 if (import.meta.main) {
-  const g = readSchemaGraph(ROOT);
+  // The WHOLE checkout, dependencies included (issue #2278). This is a
+  // handler publishing one page per subject, and bootstrap is a subject: the
+  // corpus scope — the default, and right for kg-audit — left it out, so
+  // `/cat-harness/schemas/bootstrap/` was a 404 with nothing saying why.
+  const g = readSchemaGraph(ROOT, { scope: "checkout" });
   if (g === null) {
     // No schemas directory is not an empty graph. A folio without one simply
     // gets no projection, and the viewer reads the absent file as "could not
@@ -1168,7 +1376,7 @@ if (import.meta.main) {
    * and one segment if it does not. `8325` tracks it either way.
    */
   const ownPrefix = `${ROOT}${sep}`;
-  const roots = schemaRoots(ROOT);
+  const roots = schemaRoots(ROOT, { scope: "checkout" });
   const own = roots.find((d) => d.startsWith(ownPrefix)) ?? roots[0];
   if (own === undefined) {
     console.log("  · no schemas directory is declared — nothing to publish");
@@ -1252,7 +1460,8 @@ if (import.meta.main) {
     scoped[id] = modules(g.modules.filter((m) => m.instance === subject).length);
   }
 
-  const data = JSON.stringify(projection(g, scoped), null, 2) + "\n";
+  const kinds = await nodeKindRows(g, ROOT, REPO_ROOT);
+  const data = JSON.stringify(projection(g, scoped, kinds), null, 2) + "\n";
   // Indented for the reason the todo and bean indices both document: a
   // minified projection is one line, git merges by line, and two branches each
   // adding a schema would conflict on the whole file every time.
@@ -1268,6 +1477,8 @@ if (import.meta.main) {
   const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
   emit(join(dataDir, "index.json"), data);
   const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
+  /** The site root relative to a page, with a trailing slash: where node-kind pages hang. */
+  const siteHrefFrom = (dir: string): string => `${relative(dir, site).split(sep).join("/")}/`;
   // Each page says which directories it draws (#1168 B7a-2): the schema
   // directories read — every one here, those holding the subject's modules on
   // a subject page.
@@ -1278,14 +1489,15 @@ if (import.meta.main) {
   // The rail section (#1757): the static regions the script draws into.
   const regions = [
     { label: "Overview", id: "overview" },
+    { label: "Node kinds", id: "kinds" },
     { label: "Declarations", id: "list" },
     { label: "Detail", id: "detail" },
   ];
-  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions, subjectNames(nav.built, "schemas")) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
+  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions, subjectNames(nav.built, "schemas")) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref, "", siteHrefFrom(pageDir)), drawn(), VIEWER_TOOL));
 
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions, subjectNames(nav.built, "schemas")) })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
+    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions, subjectNames(nav.built, "schemas")) })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject, siteHrefFrom(sub.pageDir)), drawn(subject), VIEWER_TOOL));
   }
 
 
