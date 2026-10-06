@@ -66,6 +66,7 @@ import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
 import { handleFromUrl } from "../../folio-assistant-core/schemas/catalogue.ts";
+import { readStructure } from "../platform.js";
 import { DublinCoreRecordSchema, type DublinCoreRecord } from "../../folio-assistant-core/schemas/dublin-core.ts";
 import { isCurrent, L1_CONTEXT, L1_ONTOLOGY_VERSION, publicationId, readEntry, readIsbn, serialise, type LibraryEntry } from "./extract-smart-kg-l1.ts";
 
@@ -333,11 +334,11 @@ function heldByHandle(repo: string, libraryDirs: string[]): Map<string, Held> {
   const entryBySha = new Map<string, string>();
   for (const lib of libraryDirs) {
     for (const d of existsSync(lib) ? readdirSync(lib, { withFileTypes: true }) : []) {
-      const s = join(lib, d.name, "structure.json");
-      if (d.isDirectory() && existsSync(s)) {
-        const sha = JSON.parse(readFileSync(s, "utf-8"))?.source?.sha256;
-        if (sha) entryBySha.set(sha, relative(repo, join(lib, d.name)));
-      }
+      if (!d.isDirectory()) continue;
+      const structure = readStructure(join(lib, d.name));
+      if ("reason" in structure) continue;
+      const sha = (structure.raw as unknown as { source?: { sha256?: string } }).source?.sha256;
+      if (sha) entryBySha.set(sha, relative(repo, join(lib, d.name)));
     }
   }
   for (const d of readdirSync(uploads, { withFileTypes: true })) {
