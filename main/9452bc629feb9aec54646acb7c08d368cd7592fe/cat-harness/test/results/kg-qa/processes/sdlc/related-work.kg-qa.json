@@ -1,0 +1,139 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_RelatedWork",
+    "path": "processes/sdlc/related-work.bpmn"
+  },
+  "source_hash": "sha256:fabebdbd1b8d26e0255cdecf44517c4ae6ee04d439aad349f2e8f88d1754ee3e",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_SearchBeans",
+          "detail": "names skill \"related-work-coordination\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_SearchIssues",
+          "detail": "names skill \"related-work-coordination\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Categorize",
+          "detail": "names skill \"related-work-coordination\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Record",
+          "detail": "names skill \"related-work-coordination\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "U_Coordinate",
+          "detail": "\"Coordinate? How?\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        }
+      ]
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "n/a",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "n/a",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 11,
+    "fail": 2,
+    "n/a": 12,
+    "unknown": 0
+  }
+}
