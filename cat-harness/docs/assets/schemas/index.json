@@ -31565,22 +31565,15 @@
       "name": "BasicCdnSiteSchema",
       "module": "cat-harness/schemas/site.ts",
       "kind": "zod-object",
-      "doc": "A site on a CDN that serves files by path and nothing more.",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(BASIC_CDN_SITE_SCHEMA_ID)",
-          "optional": false,
-          "array": false
-        }
+      "fields": [],
+      "extendsNames": [
+        "BasicCdnSiteKind"
       ],
-      "extendsNames": [],
       "values": [],
       "refs": [],
       "unresolved": [],
       "external": [
-        "BASIC_CDN_SITE_SCHEMA_ID",
-        "z"
+        "BasicCdnSiteKind"
       ],
       "exported": true
     },
@@ -31598,49 +31591,38 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/site.ts#CdnSiteKind",
+      "name": "CdnSiteKind",
+      "module": "cat-harness/schemas/site.ts",
+      "kind": "zod-object",
+      "doc": "A SUBCLASS of {@link BasicCdnSiteKind}: everything a basic site carries,",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/site.ts#CdnSiteSchema",
       "name": "CdnSiteSchema",
       "module": "cat-harness/schemas/site.ts",
       "kind": "zod-object",
-      "doc": "A site on a CDN that also controls media types, redirects and headers.",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(CDN_SITE_SCHEMA_ID)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "mimeTypes",
-          "type": "z.array(MimeTypeRuleSchema).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "redirects",
-          "type": "z.array(RedirectRuleSchema).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "headers",
-          "type": "z.array(HeaderRuleSchema).optional()",
-          "optional": true,
-          "array": true
-        }
+      "fields": [],
+      "extendsNames": [
+        "CdnSiteKind"
       ],
-      "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/site.ts#HeaderRuleSchema",
-        "cat-harness/schemas/site.ts#MimeTypeRuleSchema",
-        "cat-harness/schemas/site.ts#RedirectRuleSchema"
+        "cat-harness/schemas/site.ts#CdnSiteKind"
       ],
       "unresolved": [],
-      "external": [
-        "CDN_SITE_SCHEMA_ID",
-        "z"
-      ],
+      "external": [],
       "exported": true
     },
     {
@@ -60740,27 +60722,11 @@
     },
     {
       "from": "cat-harness/schemas/site.ts#CdnSiteSchema",
-      "to": "cat-harness/schemas/site.ts#HeaderRuleSchema",
-      "via": "headers",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/site.ts#CdnSiteSchema",
-      "to": "cat-harness/schemas/site.ts#MimeTypeRuleSchema",
-      "via": "mimeTypes",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/site.ts#CdnSiteSchema",
-      "to": "cat-harness/schemas/site.ts#RedirectRuleSchema",
-      "via": "redirects",
-      "kind": "field",
-      "optional": true,
-      "array": true
+      "to": "cat-harness/schemas/site.ts#CdnSiteKind",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/site.ts#RedirectRuleSchema",
