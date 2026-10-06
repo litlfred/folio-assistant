@@ -64,8 +64,14 @@ export const SubstrateSnapshotSchema = z
     repository: RepoFullNameSchema,
     /** The pinned commit the bytes were read at — a full SHA, never a branch. */
     ref: z.string().regex(/^[0-9a-f]{40}$/),
-    /** The upstream file, relative to the substrate's repository root: `<name>.json`. */
-    file: z.string().regex(/^[^/]+\.json$/),
+    /**
+     * The upstream file, relative to the substrate's repository root:
+     * `<name>.json` at the root, or `<upstreamPath>/<name>.json` when the
+     * declaration is nested (bean `437w`). Its directory is the
+     * subscription's `upstreamPath`, and `kg:subscribe:check` holds the two
+     * equal.
+     */
+    file: z.string().regex(/^(?:[A-Za-z0-9_-][A-Za-z0-9._-]*\/)*[^/]+\.json$/),
     /** The upstream bytes, exactly as fetched. */
     raw: z.string().min(1),
     fixity: z.object({ algorithm: z.literal("sha256"), digest: z.string().regex(/^[0-9a-f]{64}$/) }).strict(),

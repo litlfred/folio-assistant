@@ -8925,6 +8925,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.subscription.upstreampath",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Subscription.upstreamPath"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The repository-relative directory holding the substrate's declaration; absent: the root. See {@link SubscriptionSchema}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#Subscription.upstreamPath",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.subscriptionschema.upstreampath",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubscriptionSchema.upstreamPath"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The repository-relative DIRECTORY holding the substrate's declaration, when that is not the root — `smart-base` for a fork whose declaration is `smart-base/smart-trust.json` (bean `437w`). Absent: the root. The same name and meaning as `upstreamPath` on a remote subgraph source (`schemas/subgraph-source.ts`, PR #2326), so one word means one thing across both, and the same pattern (a trailing slash is admitted and means nothing). Recorded so `kg:subscribe:check` and a re-subscribe judge the same subtree that was judged the first time."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#SubscriptionSchema.upstreamPath",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.topology.outwardfacing",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -27196,7 +27234,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The upstream file, relative to the substrate's repository root: `<name>.json`."
+          "@value": "The upstream file, relative to the substrate's repository root: `<name>.json` at the root, or `<upstreamPath>/<name>.json` when the declaration is nested (bean `437w`). Its directory is the subscription's `upstreamPath`, and `kg:subscribe:check` holds the two equal."
         }
       ],
       "dcterms:source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.file",

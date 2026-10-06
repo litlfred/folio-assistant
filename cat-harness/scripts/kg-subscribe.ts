@@ -1,7 +1,8 @@
 #!/usr/bin/env bun
 /**
  * SUBSCRIBE an instance to an external Knowledge Graph — a **substrate** — at a
- * pinned commit: fetch ONLY the substrate's root declaration, judge it, and on
+ * pinned commit: fetch ONLY the substrate's declaration (at its root, or one
+ * directory down — `upstreamPath`), judge it, and on
  * success record the subscription and a cached snapshot of what was judged.
  *
  * @module cat-harness/scripts/kg-subscribe
@@ -16,9 +17,10 @@
  *
  * A repository is a substrate at a commit when **both** hold:
  *
- * 1. **Its root carries a bootstrap declaration.** The root declaration is
- *    found by bootstrap's own rule (`declarationFileIn`: the `<stem>.json`
- *    whose `name` equals `<stem>`, and exactly one of them), and it parses as
+ * 1. **It carries a bootstrap declaration — at the root, or in ONE directory
+ *    named for it.** The declaration is found by bootstrap's own rule
+ *    (`declarationFileIn`: the `<stem>.json` whose `name` equals `<stem>`, and
+ *    exactly one of them) — where to look is the section after next — and it parses as
  *    bootstrap's `KnowledgeGraphDeclarationSchema`. Nothing of this harness's
  *    schema is asked of it: a substrate need not be built on cat-harness, and
  *    every field bootstrap does not define is an Extension it may carry.
@@ -44,18 +46,46 @@
  *   BOOTSTRAP's requirements. Judging it by our vocabulary would make "is a
  *   substrate" depend on which harness is asking.
  *
- * ### Only the root is judged, and that is a limit, not a rule
+ * ### Where the declaration is looked for — `upstreamPath` (bean `437w`)
  *
- * The fetch reads one file. A repository whose harnesses are all NESTED
- * instances (this monorepo's root declares only `uploads/` and `tools/`) is
- * judged not-a-substrate, and the reason names the gap. Reading one level
- * down is `knowledgeGraphsIn`'s rule and costs a blob per root directory;
- * it is recorded as an open question on the epic, not done quietly here.
+ * A fork that left a monorepo often keeps its instance one directory down:
+ * `litlfred/smart-trust` carries `smart-base/smart-trust.json` and nothing at
+ * its root, and the directory is NOT named for the instance. So the search is,
+ * in order ({@link judgeTree}):
+ *
+ * 1. **`--upstream-path <dir>`, or the one the subscription already records.**
+ *    Only that directory is read, and it must hold exactly one declaration
+ *    (the one named `--name`, when given). This is the spelling to use
+ *    whenever the fallback below would have to choose.
+ * 2. **The root**, by bootstrap's rule — unchanged, so every subscription
+ *    recorded before this existed judges the same bytes.
+ * 3. **Exactly one level down**: every top-level directory's `<stem>.json`
+ *    whose `name` is `<stem>` — the rule `findInstance` in
+ *    `scripts/remote-mount.ts` (PR #2326) applies to a remote tree, and
+ *    `findDeclarationFile` applies on disk. With `--name`, or the name a
+ *    recorded snapshot carries, only a file of that name counts. ONE
+ *    candidate is accepted and its directory recorded as the subscription's
+ *    `upstreamPath`; TWO OR MORE are refused by name, never guessed between
+ *    (`ambiguous`) — pick one with `--upstream-path` or `--name`.
+ *
+ * The field is named and shaped as `upstreamPath` on #2326's remote subgraph
+ * source — a repository-relative directory — so one word means one thing.
+ * Deeper than one level is reached only by naming it: a walk of the whole
+ * tree would cost a blob per `.json` file in the repository, and would find
+ * fixtures and vendored instances as readily as the one meant.
+ *
+ * A harness that is NOT the declaration found — a second instance nested
+ * elsewhere in the same repository — is still not seen; that is a limit of
+ * reading one declaration, and the zero-harness reason says so.
  *
  * ## Three answers, never two
  *
  * - **substrate** — both points hold; the harness names are listed.
  * - **not-a-substrate(reason)** — the bytes were read and one point fails.
+ * - **ambiguous(reason, candidates)** — the bytes were read and more than one
+ *   directory one level down holds a declaration. `subscribe` reports it as
+ *   REFUSED, with every candidate: the fix is a choice somebody makes, not a
+ *   verdict on the repository.
  * - **could-not-determine(reason)** — the bytes were NOT read: the network,
  *   the forge, a SHA the remote does not serve. Collapsing this into "not a
  *   substrate" would record a guess about a repository nobody looked at, and
@@ -89,13 +119,14 @@
  * It is what JUDGES the `substrate-snapshot` kind rather than merely typing it.
  *
  * Usage:
- *   bun run kg:subscribe <owner/repo>@<40-char-sha> [--instance <dir>] [--id <id>] [--dry-run]
+ *   bun run kg:subscribe <owner/repo>@<40-char-sha> [--upstream-path <dir>] [--name <instance>]
+ *                        [--instance <dir>] [--id <id>] [--dry-run]
  *   bun run kg:subscribe:check
  */
 import { createHash } from "node:crypto";
 import { existsSync, lstatSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, relative, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { declarationFileIn } from "../../bootstrap-tools/schemas/declaration.ts";
 import { KnowledgeGraphDeclarationSchema } from "../../bootstrap-tools/schemas/graph.ts";
@@ -138,19 +169,34 @@ export const HARNESS_GRAPH_TYPOLOGIES: readonly string[] = KG_CONTENT_GRAPH_TYPO
 export type SubstrateVerdict =
   | {
       state: "substrate";
+      /** Repository-relative: `<name>.json`, or `<upstreamPath>/<name>.json`. */
       file: string;
+      /** The directory the declaration was found in; absent at the root. */
+      upstreamPath?: string;
       raw: string;
       summary: SubstrateSnapshot["summary"];
     }
   | { state: "not-a-substrate"; reason: string }
+  | { state: "ambiguous"; reason: string; candidates: string[] }
   | { state: "could-not-determine"; reason: string };
 
+/** Where {@link judgeTree} looks, and which instance it accepts. */
+export interface LocateOptions {
+  /** Read only this repository-relative directory. `"."` or `""` names the root. */
+  upstreamPath?: string;
+  /** The instance name the declaration must carry (`--name`, or the one a recorded snapshot names). */
+  name?: string;
+}
+
 /**
- * Put the substrate's ROOT `.json` files at `ref` into a directory and return
+ * Put the substrate's `.json` files at `ref` into a directory, at their
+ * repository-relative paths, and return it: the root's and those directly in
+ * each top-level directory — or, given `upstreamPath`, only those directly in
  * it. Throwing means the bytes were not read: could-not-determine. Injectable,
- * so the judgement is tested against fixtures with no network.
+ * so the judgement is tested against fixtures with no network; a fixture may
+ * serve more than asked, because {@link judgeTree} reads only where it looks.
  */
-export type RootFetcher = (repository: string, ref: string) => string | Promise<string>;
+export type RootFetcher = (repository: string, ref: string, opts?: { upstreamPath?: string }) => string | Promise<string>;
 
 /** `owner/repo@sha`, or why not. The pin is checked with `pinnedRef`. */
 export function parseTarget(arg: string): { ok: true; repository: string; ref: string } | { ok: false; why: string } {
@@ -171,21 +217,121 @@ export function harnessesOf(decl: { name: string; directories?: { graphTypologie
   return isHarness ? [decl.name] : [];
 }
 
-/** Judge the `.json` files a fetcher left in `dir`. Pure over the directory. */
-export function judgeRoot(dir: string): SubstrateVerdict {
-  let file: string | undefined;
+/**
+ * A repository-relative directory, normalised: no trailing slash, and `""` or
+ * `"."` for the root (returned with no `path`). Refused with
+ * {@link safeRelPath}'s reason otherwise — no `..`, no dot-prefixed segment.
+ */
+export function normalizeUpstreamPath(p: string | undefined): { ok: true; path?: string } | { ok: false; why: string } {
+  if (p === undefined) return { ok: true };
+  const trimmed = p.replace(/\/+$/, "");
+  if (trimmed === "" || trimmed === ".") return { ok: true };
+  const safe = safeRelPath(trimmed);
+  return safe.ok ? { ok: true, path: safe.path } : { ok: false, why: `upstreamPath ${safe.why}` };
+}
+
+/**
+ * Every `<stem>.json` directly in `dir` whose `name` is `<stem>` — bootstrap's
+ * `declarationFileIn` rule without its throw on two, so a caller can name every
+ * candidate rather than the first. Sorted; `[]` for a missing directory.
+ */
+function declarationsIn(dir: string): string[] {
+  let entries: string[];
   try {
-    file = declarationFileIn(dir);
+    entries = readdirSync(dir);
+  } catch {
+    return [];
+  }
+  return entries
+    .filter((entry) => {
+      if (!entry.endsWith(".json") || entry === ".json") return false;
+      try {
+        return (JSON.parse(readFileSync(join(dir, entry), "utf8")) as { name?: unknown }).name === entry.slice(0, -5);
+      } catch {
+        return false;
+      }
+    })
+    .sort();
+}
+
+/** The top-level directories of a fetched tree that may hold an instance: not dot-prefixed, sorted. */
+function topLevelDirs(dir: string): string[] {
+  return readdirSync(dir, { withFileTypes: true })
+    .filter((e) => e.isDirectory() && !e.name.startsWith("."))
+    .map((e) => e.name)
+    .sort();
+}
+
+const quoted = (xs: readonly string[]): string => xs.map((x) => `\`${x}\``).join(", ");
+
+/**
+ * Find and judge the declaration among the `.json` files a fetcher left in
+ * `dir`, by the search in the module docblock: the named `upstreamPath`
+ * alone; else the root; else exactly one directory one level down. Pure over
+ * the directory.
+ */
+export function judgeTree(dir: string, opts: LocateOptions = {}): SubstrateVerdict {
+  const up = normalizeUpstreamPath(opts.upstreamPath);
+  if (!up.ok) return { state: "not-a-substrate", reason: up.why };
+  const want = opts.name;
+  const wanted = want ? ` named \`${want}\`` : "";
+  const named = (f: string): boolean => !want || basename(f) === `${want}.json`;
+  const read = (rel: string): SubstrateVerdict => judgeDeclaration(rel, readFileSync(join(dir, rel), "utf8"));
+
+  if (up.path !== undefined) {
+    const found = declarationsIn(join(dir, up.path));
+    const matching = found.filter(named);
+    if (matching.length === 1) return read(`${up.path}/${matching[0]}`);
+    if (matching.length > 1) {
+      return {
+        state: "not-a-substrate",
+        reason: `\`${up.path}/\` carries ${matching.length} declarations (${quoted(matching)}); a directory is one Knowledge Graph`,
+      };
+    }
+    return {
+      state: "not-a-substrate",
+      reason:
+        `\`${up.path}/\` carries no Knowledge Graph declaration${wanted} — no \`<name>.json\` whose \`name\` is \`<name>\`` +
+        (found.length ? ` (it carries ${quoted(found)})` : ""),
+    };
+  }
+
+  let rootFile: string | undefined;
+  try {
+    rootFile = declarationFileIn(dir);
   } catch (e) {
     return { state: "not-a-substrate", reason: e instanceof Error ? e.message.replace(dir, "the root") : String(e) };
   }
-  if (!file) {
+  if (rootFile && named(rootFile)) return read(relative(dir, rootFile));
+
+  // One level down: every top-level directory's declarations, so an
+  // ambiguity is reported whole rather than settled by readdir order.
+  const nested = topLevelDirs(dir).flatMap((d) => declarationsIn(join(dir, d)).map((f) => `${d}/${f}`));
+  const matching = nested.filter(named);
+  if (matching.length === 1) return read(matching[0]!);
+  if (matching.length > 1) {
     return {
-      state: "not-a-substrate",
-      reason: "the root carries no Knowledge Graph declaration — no `<name>.json` whose `name` is `<name>`",
+      state: "ambiguous",
+      candidates: matching,
+      reason:
+        `the root carries no Knowledge Graph declaration${wanted}, and ${matching.length} directories one level down do ` +
+        `(${quoted(matching)}). Not guessing: name one with \`--upstream-path <dir>\`${want ? "" : " or `--name <instance>`"}`,
     };
   }
-  return judgeDeclaration(relative(dir, file), readFileSync(file, "utf8"));
+  const seen = [...(rootFile ? [relative(dir, rootFile)] : []), ...nested];
+  return {
+    state: "not-a-substrate",
+    reason:
+      `the root carries no Knowledge Graph declaration${wanted} — no \`<name>.json\` whose \`name\` is \`<name>\` — ` +
+      `and neither does any directory one level down` +
+      (seen.length ? ` (found ${quoted(seen)})` : "") +
+      `. A declaration deeper than that is reached with \`--upstream-path <dir>\``,
+  };
+}
+
+/** {@link judgeTree} with nothing named: the search a first subscribe makes. Kept for its callers. */
+export function judgeRoot(dir: string): SubstrateVerdict {
+  return judgeTree(dir);
 }
 
 /**
@@ -216,12 +362,14 @@ export function judgeDeclaration(name: string, raw: string): SubstrateVerdict {
       reason:
         `\`${name}\` declares no harness: none of its ${(decl.directories ?? []).length} Subgraph(s) holds ` +
         `${HARNESS_GRAPH_TYPOLOGIES.map((k) => `\`${k}\``).join(", ")} — bootstrap's kinds for Skills, Roles and Processes. ` +
-        `Only the root declaration is read; harnesses declared by nested instances are not seen`,
+        `Only this one declaration is read; harnesses declared by other nested instances are not seen`,
     };
   }
+  const at = dirname(name);
   return {
     state: "substrate",
     file: name,
+    ...(at !== "." ? { upstreamPath: at } : {}),
     raw,
     summary: {
       name: decl.name,
@@ -233,44 +381,74 @@ export function judgeDeclaration(name: string, raw: string): SubstrateVerdict {
   };
 }
 
-/** Fetch, then judge. A fetch that throws is could-not-determine, never either verdict. */
-export async function judgeSubstrate(repository: string, ref: string, fetch: RootFetcher): Promise<SubstrateVerdict> {
+/** Fetch, then judge. A fetch that throws is could-not-determine, never any verdict. */
+export async function judgeSubstrate(repository: string, ref: string, fetch: RootFetcher, opts: LocateOptions = {}): Promise<SubstrateVerdict> {
+  const up = normalizeUpstreamPath(opts.upstreamPath);
+  if (!up.ok) return { state: "not-a-substrate", reason: up.why };
   let dir: string;
   try {
-    dir = await fetch(repository, ref);
+    dir = await fetch(repository, ref, up.path !== undefined ? { upstreamPath: up.path } : {});
   } catch (e) {
     return {
       state: "could-not-determine",
-      reason: `the root declaration of ${repository} at ${ref.slice(0, 12)} was not read: ${e instanceof Error ? e.message : String(e)}`,
+      reason: `the declaration of ${repository} at ${ref.slice(0, 12)}${up.path ? ` under \`${up.path}/\`` : ""} was not read: ${e instanceof Error ? e.message : String(e)}`,
     };
   }
   try {
-    return judgeRoot(dir);
+    return judgeTree(dir, opts);
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
 }
 
 /**
- * The real fetcher: a shallow, BLOBLESS fetch of the one commit, then only the
- * root's `.json` blobs are read. No checkout, so a large substrate costs its
- * root tree and a few small files.
+ * The real fetcher, from any URL: a shallow, BLOBLESS fetch of the one commit,
+ * then only the `.json` blobs {@link judgeTree} can read — the root's and each
+ * top-level directory's, or, given `upstreamPath`, that directory's alone. The
+ * trees arrive with the fetch, so listing them is local; a blob is fetched
+ * when it is read. No checkout, so a large substrate costs its trees and a
+ * few small files. `urlFor` is injectable so a test serves a bare repository
+ * from disk through the same git path.
  */
-export const gitRootFetcher: RootFetcher = (repository, ref) => {
-  const repo = shallowFetch(`https://github.com/${repository}.git`, ref, { blobless: true, prefix: "kg-subscribe-" });
-  try {
-    const head = git(["rev-parse", "FETCH_HEAD"], repo).trim();
-    if (head !== ref) throw new Error(`the remote served ${head} for ${ref}`);
-    const out = mkdtempSync(join(tmpdir(), "kg-subscribe-root-"));
-    const names = git(["ls-tree", "--name-only", "FETCH_HEAD"], repo)
-      .split("\n")
-      .filter((n) => n.endsWith(".json") && !n.includes("/"));
-    for (const n of names) writeFileSync(join(out, n), git(["show", `FETCH_HEAD:${n}`], repo));
-    return out;
-  } finally {
-    rmSync(repo, { recursive: true, force: true });
-  }
-};
+export function gitDeclarationFetcher(urlFor: (repository: string) => string = (r) => `https://github.com/${r}.git`): RootFetcher {
+  return (repository, ref, opts = {}) => {
+    const repo = shallowFetch(urlFor(repository), ref, { blobless: true, prefix: "kg-subscribe-" });
+    try {
+      const head = git(["rev-parse", "FETCH_HEAD"], repo).trim();
+      if (head !== ref) throw new Error(`the remote served ${head} for ${ref}`);
+      // `<mode> <type> <oid>\t<path>`, NUL-separated. A submodule is a
+      // `commit` entry and holds nothing to read.
+      const entries = (args: string[]): { type: string; path: string }[] =>
+        git(["ls-tree", "-z", "FETCH_HEAD", ...args], repo)
+          .split("\0")
+          .filter(Boolean)
+          .map((l) => {
+            const tab = l.indexOf("\t");
+            return { type: l.slice(0, tab).split(" ")[1] ?? "", path: l.slice(tab + 1) };
+          });
+      const blobs = (es: { type: string; path: string }[]): string[] => es.filter((e) => e.type === "blob").map((e) => e.path);
+      const up = opts.upstreamPath?.replace(/\/+$/, "");
+      let names: string[];
+      if (up) names = blobs(entries(["--", `${up}/`]));
+      else {
+        const root = entries([]);
+        const dirs = root.filter((e) => e.type === "tree" && !e.path.startsWith(".")).map((e) => `${e.path}/`);
+        names = [...blobs(root), ...(dirs.length ? blobs(entries(["--", ...dirs])) : [])];
+      }
+      const out = mkdtempSync(join(tmpdir(), "kg-subscribe-root-"));
+      for (const n of names.filter((x) => x.endsWith(".json"))) {
+        mkdirSync(dirname(join(out, n)), { recursive: true });
+        writeFileSync(join(out, n), git(["show", `FETCH_HEAD:${n}`], repo));
+      }
+      return out;
+    } finally {
+      rmSync(repo, { recursive: true, force: true });
+    }
+  };
+}
+
+/** {@link gitDeclarationFetcher} against github.com. */
+export const gitRootFetcher: RootFetcher = gitDeclarationFetcher();
 
 // ── Writing the subscriber's declaration without reformatting it ─────────────
 
@@ -341,8 +519,22 @@ export interface SubscribeOptions {
   target: string;
   instance?: string;
   id?: string;
+  /** The directory holding the declaration (`--upstream-path`); `"."` names the root. Absent: the recorded one, else the search. */
+  upstreamPath?: string;
+  /** The instance name the declaration must carry (`--name`). Absent: the name the recorded snapshot carries, if any. */
+  name?: string;
   dryRun?: boolean;
   fetch?: RootFetcher;
+}
+
+/** The instance name a subscription's committed snapshot records, when it has a readable one. */
+function recordedName(snapshotDir: string, id: string): string | undefined {
+  try {
+    const snap = SubstrateSnapshotSchema.safeParse(JSON.parse(readFileSync(join(snapshotDir, `${id}${SNAPSHOT_SUFFIX}`), "utf8")));
+    return snap.success ? snap.data.summary.name : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 /** The instance's declared `substrate-snapshot` directory, resolved; `undefined` when it declares none. */
@@ -374,11 +566,26 @@ export async function subscribe(opts: SubscribeOptions): Promise<SubscribeResult
     };
   }
 
-  const verdict = await judgeSubstrate(t.repository, t.ref, opts.fetch ?? gitRootFetcher);
+  const requested = normalizeUpstreamPath(opts.upstreamPath);
+  if (!requested.ok) return { ok: false, state: "refused", reason: requested.why };
+
+  const existing = ((raw["subscriptions"] ?? []) as Subscription[]).slice();
+  // What was recorded the last time this repository was subscribed: the
+  // directory, and the instance its snapshot names. A re-subscribe judges the
+  // SAME subtree for the SAME instance unless it is told otherwise.
+  const sameRepo = existing.filter((s) => s.repository === t.repository);
+  const recorded = opts.id ? sameRepo.find((s) => s.id === opts.id) : sameRepo.length === 1 ? sameRepo[0] : undefined;
+  const locate: LocateOptions = {};
+  const upstreamPath = opts.upstreamPath !== undefined ? (requested.path ?? ".") : recorded?.upstreamPath;
+  if (upstreamPath !== undefined) locate.upstreamPath = upstreamPath;
+  const name = opts.name ?? (recorded ? recordedName(snapshotDir, recorded.id) : undefined);
+  if (name !== undefined) locate.name = name;
+
+  const verdict = await judgeSubstrate(t.repository, t.ref, opts.fetch ?? gitRootFetcher, locate);
+  if (verdict.state === "ambiguous") return { ok: false, state: "refused", reason: verdict.reason };
   if (verdict.state !== "substrate") return { ok: false, state: verdict.state, reason: verdict.reason };
 
   const id = opts.id ?? verdict.summary.name;
-  const existing = ((raw["subscriptions"] ?? []) as Subscription[]).slice();
   const at = existing.findIndex((s) => s.id === id);
   const prior = at >= 0 ? existing[at] : undefined;
   if (prior && prior.repository !== t.repository) {
@@ -388,7 +595,8 @@ export async function subscribe(opts: SubscribeOptions): Promise<SubscribeResult
       reason: `subscription \`${id}\` already names ${prior.repository}; pass \`--id\` to subscribe ${t.repository} under another name`,
     };
   }
-  if (prior && prior.ref !== t.ref && (prior.subgraphs?.length || prior.harnesses?.length || (prior.assets && prior.assets.policy !== "none"))) {
+  const chosen = Boolean(prior && (prior.subgraphs?.length || prior.harnesses?.length || (prior.assets && prior.assets.policy !== "none")));
+  if (prior && chosen && prior.ref !== t.ref) {
     return {
       ok: false,
       state: "refused",
@@ -397,8 +605,26 @@ export async function subscribe(opts: SubscribeOptions): Promise<SubscribeResult
         `Moving the pin is \`refresh-materialized\`, not a re-subscribe`,
     };
   }
+  const priorPath = prior ? normalizeUpstreamPath(prior.upstreamPath) : undefined;
+  if (prior && chosen && priorPath?.ok && priorPath.path !== verdict.upstreamPath) {
+    return {
+      ok: false,
+      state: "refused",
+      reason:
+        `subscription \`${id}\` was judged from ${priorPath.path ? `\`${priorPath.path}/\`` : "the root"} and has chosen parts; ` +
+        `this declaration is ${verdict.upstreamPath ? `under \`${verdict.upstreamPath}/\`` : "at the root"}. ` +
+        `A different declaration is a different subscription — pass \`--id\``,
+    };
+  }
   // Nothing chosen on a first subscribe; a re-subscribe keeps every choice.
-  const entry: Subscription = prior ? { ...prior, ref: t.ref } : { id, repository: t.repository, ref: t.ref };
+  // `upstreamPath` is what was judged THIS time, so the record names exactly that.
+  const { upstreamPath: _judgedBefore, ...kept } = prior ?? { id, repository: t.repository, ref: t.ref };
+  void _judgedBefore;
+  const entry: Subscription = {
+    ...kept,
+    ref: t.ref,
+    ...(verdict.upstreamPath !== undefined ? { upstreamPath: verdict.upstreamPath } : {}),
+  };
   if (at >= 0) existing[at] = entry;
   else existing.push(entry);
 
@@ -424,7 +650,7 @@ export async function subscribe(opts: SubscribeOptions): Promise<SubscribeResult
   });
   const snapshotFile = join(snapshotDir, `${id}.substrate.json`);
   const snapshotText = `${JSON.stringify(snapshot, null, 2)}\n`;
-  const nextText = prior && prior.ref === t.ref ? text : setTopLevelKey(text, "subscriptions", existing);
+  const nextText = prior && JSON.stringify(prior) === JSON.stringify(entry) ? text : setTopLevelKey(text, "subscriptions", existing);
 
   const changed: string[] = [];
   if (nextText !== text) changed.push(declarationFile);
@@ -469,7 +695,8 @@ export function checkSubscriptions(instanceRoot: string): string[] {
     const file = join(dir, `${s.id}${SNAPSHOT_SUFFIX}`);
     seen.add(`${s.id}${SNAPSHOT_SUFFIX}`);
     if (!existsSync(file)) {
-      out.push(`${s.id}: no snapshot at ${relative(instanceRoot, file)} — run \`bun run kg:subscribe ${s.repository}@${s.ref}\``);
+      const flags = `${s.upstreamPath ? ` --upstream-path ${s.upstreamPath}` : ""}${s.id !== s.repository.split("/")[1] ? ` --id ${s.id}` : ""}`;
+      out.push(`${s.id}: no snapshot at ${relative(instanceRoot, file)} — run \`bun run kg:subscribe ${s.repository}@${s.ref}${flags}\``);
       continue;
     }
     const parsed = SubstrateSnapshotSchema.safeParse(JSON.parse(readFileSync(file, "utf8")));
@@ -481,6 +708,18 @@ export function checkSubscriptions(instanceRoot: string): string[] {
     if (snap.subscription !== s.id) out.push(`${s.id}: the snapshot says it belongs to \`${snap.subscription}\``);
     if (snap.repository !== s.repository || snap.ref !== s.ref) {
       out.push(`${s.id}: the snapshot is of ${snap.repository}@${snap.ref.slice(0, 12)}, the subscription pins ${s.repository}@${s.ref.slice(0, 12)} — re-subscribe`);
+    }
+    // The subtree: the snapshot's file must sit in the directory the
+    // subscription records, so a re-subscribe and this check are about the
+    // declaration that was judged the first time.
+    const recordedAt = normalizeUpstreamPath(s.upstreamPath);
+    const readAt = dirname(snap.file) === "." ? undefined : dirname(snap.file);
+    if (!recordedAt.ok) out.push(`${s.id}: ${recordedAt.why}`);
+    else if (recordedAt.path !== readAt) {
+      out.push(
+        `${s.id}: the snapshot was read from ${readAt ? `\`${readAt}/\`` : "the root"}, the subscription records ` +
+          `${recordedAt.path ? `\`upstreamPath\` \`${recordedAt.path}\`` : "the root"} — re-subscribe`,
+      );
     }
     if (createHash("sha256").update(snap.raw).digest("hex") !== snap.fixity.digest) {
       out.push(`${s.id}: the snapshot's bytes do not match their digest — somebody else's bytes were edited in place`);
@@ -764,19 +1003,29 @@ if (import.meta.main) {
     console.log(subs ? "  ✓ every subscription has a snapshot at its pin, and each snapshot holds" : "  ✓ none subscribed — every declaration was read, and no snapshot is orphaned");
     process.exit(0);
   }
-  const target = argv.find((a, i) => !a.startsWith("--") && !["--instance", "--id"].includes(argv[i - 1] ?? ""));
+  const valued = ["--instance", "--id", "--upstream-path", "--name"];
+  const target = argv.find((a, i) => !a.startsWith("--") && !valued.includes(argv[i - 1] ?? ""));
   if (!target) {
-    console.error("usage: bun run kg:subscribe <owner/repo>@<40-char-sha> [--instance <dir>] [--id <id>] [--dry-run]");
+    console.error(
+      "usage: bun run kg:subscribe <owner/repo>@<40-char-sha> [--upstream-path <dir>] [--name <instance>] [--instance <dir>] [--id <id>] [--dry-run]",
+    );
     process.exit(2);
   }
   const dryRun = argv.includes("--dry-run");
-  const r = await subscribe({ target, instance: flag(argv, "--instance"), id: flag(argv, "--id"), dryRun });
+  const r = await subscribe({
+    target,
+    instance: flag(argv, "--instance"),
+    id: flag(argv, "--id"),
+    upstreamPath: flag(argv, "--upstream-path"),
+    name: flag(argv, "--name"),
+    dryRun,
+  });
   if (!r.ok) {
     const mark = r.state === "could-not-determine" ? "?" : "✗";
     console.error(`  ${mark} ${r.state}: ${r.reason}`);
     process.exit(r.state === "could-not-determine" ? 3 : 1);
   }
-  console.log(`  ✓ substrate: ${r.verdict.summary.name} — harness(es) ${r.verdict.summary.harnesses.join(", ")}, ${r.verdict.summary.subgraphs.length} subgraph(s), all referenced`);
+  console.log(`  ✓ substrate: ${r.verdict.summary.name} at ${r.verdict.file} — harness(es) ${r.verdict.summary.harnesses.join(", ")}, ${r.verdict.summary.subgraphs.length} subgraph(s), all referenced`);
   if (r.changed.length === 0) console.log("  ✓ already subscribed at this pin — nothing to write");
   for (const f of r.changed) console.log(`  ${dryRun ? "would write" : "wrote"} ${relative(process.cwd(), f)}`);
 }

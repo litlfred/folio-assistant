@@ -2493,6 +2493,8 @@ export interface Subscription {
   repository: RepoFullName;
   /** The pinned commit, a full 40-character SHA. A tag replaces it once the substrate publishes releases. */
   ref: string;
+  /** The repository-relative directory holding the substrate's declaration; absent: the root. See {@link SubscriptionSchema}. */
+  upstreamPath?: string;
   /** Subgraph ids (the substrate's `directories[].id`) CHOSEN for materialisation. Everything else stays referenced. */
   subgraphs?: string[];
   /** How referenced binary assets are materialised. Each copy still passes `Process_MaterializeRemote`'s gates. */
@@ -2515,6 +2517,21 @@ export const SubscriptionSchema = z
     // A full SHA, and only that. A branch name moves under the subscriber;
     // an abbreviated SHA is ambiguous by definition.
     ref: z.string().regex(/^[0-9a-f]{40}$/, "ref must be a full 40-character commit SHA — pin, never follow a branch"),
+    /**
+     * The repository-relative DIRECTORY holding the substrate's declaration,
+     * when that is not the root — `smart-base` for a fork whose declaration
+     * is `smart-base/smart-trust.json` (bean `437w`). Absent: the root. The
+     * same name and meaning as `upstreamPath` on a remote subgraph source
+     * (`schemas/subgraph-source.ts`, PR #2326), so one word means one thing
+     * across both, and the same pattern (a trailing slash is admitted and
+     * means nothing). Recorded so `kg:subscribe:check` and a re-subscribe judge
+     * the same subtree that was judged the first time.
+     */
+    upstreamPath: z
+      .string()
+      .regex(/^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\/?$/, "a repository-relative path, no dot-prefixed segment")
+      .refine((p) => !p.split("/").includes(".."), "may not climb with `..`")
+      .optional(),
     subgraphs: uniqueStrings("subgraphs").optional(),
     assets: z.object({ policy: z.enum(["none", "on-demand", "all"]) }).strict().optional(),
     harnesses: z.array(z.string().regex(INSTANCE_NAME)).refine((xs) => new Set(xs).size === xs.length, { message: "harnesses: a name appears twice" }).optional(),
