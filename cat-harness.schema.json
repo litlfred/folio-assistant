@@ -1325,6 +1325,81 @@
             "additionalProperties": false
           }
         },
+        "contentTranslations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "contentType": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "formats": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "extensions": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "smartBaseScript": {
+                      "type": "string"
+                    },
+                    "smartBaseExtractRef": {
+                      "type": "string"
+                    },
+                    "smartBaseInjectRef": {
+                      "type": "string"
+                    },
+                    "extractModule": {
+                      "type": "string"
+                    },
+                    "injectModule": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "extensions"
+                  ]
+                }
+              },
+              "rtlSupported": {
+                "default": false,
+                "type": "boolean"
+              },
+              "bpmnDiagrams": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "notes": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "contentType",
+              "name",
+              "formats"
+            ]
+          }
+        },
         "liquid": {
           "type": "object",
           "properties": {
@@ -1358,8 +1433,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "e993f7c9e503a8aacbb1f6968a9de35ef9c04d34",
+    "sha": "b9e74a14f495580a5ea115fa4e151ead8ad4a248",
     "pr": "main",
-    "run": "37493579457"
+    "run": "37503261743"
   }
 }

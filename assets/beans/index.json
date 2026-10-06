@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 951,
+      "count": 954,
       "unit": "beans"
     }
   },
@@ -302,7 +302,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T06:42:34Z",
-      "updatedAt": "2026-10-06T08:49:31Z",
+      "updatedAt": "2026-10-06T15:38:49Z",
       "preview": "Owner, 2026-10-06, verbatim: *\"do content split propoerly across repos\"*, *\"that needs to be done before F\"*, and *\"not a race to separate.   do it properly.\"* Placement rule: *\"folio-asst-core focused on content authroiung, review pubilcation.   cat-harness on SDLC, tooling, decision making, general methdologies, basic common infra/state mgmt\"*.\n\nStory `rfuq` (S4, direction and placement) owns th",
       "file": "beans/defs/folio-assistant-0r7u--content-split-2026-10-06-authoring-review-and-publ.md"
     },
@@ -3026,7 +3026,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T09:15:31Z",
-      "updatedAt": "2026-10-06T09:15:31Z",
+      "updatedAt": "2026-10-06T11:19:19Z",
       "preview": "Measured 2026-10-06 on #2267 (coordinator) and reported independently by session A, from #2268.\n\n**What happens.** Since #2080 (5hox), the QA results tree is computed and not committed. Some generators read it from disk, at least `uml:overview` and `readme:subgraphs`. A container's local copy can be partial or stale. On #2267 only `kg-qa` was present, so `bun run regen` rewrote the QA overview wit",
       "file": "beans/defs/folio-assistant-7how--regen-reads-a-stale-qa-tree-generators-that-read-g.md"
     },
@@ -4760,14 +4760,14 @@
     {
       "id": "folio-assistant-bnjs",
       "title": "RENDERED IMPACT: a Change Set lists the rendered files it changes — each renderer maps changed inputs to changed outputs through its dependency cone, and review approves against that list",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T07:13:23Z",
-      "updatedAt": "2026-10-06T07:13:23Z",
+      "updatedAt": "2026-10-06T16:54:17Z",
       "preview": "Owner, 2026-10-06 (#971): \"for a Change Set (generalize/apply concept from Ref Arch) and Issue -> create PR with change set. see a list of rendered justthedocs files (fhir IG, whatever) that changed due to the described changeset. use that as part of review process of changeset PR approval. updates skills and processes.\" Then: \"each renderer should be able to give you from list of input changed fi",
       "file": "beans/defs/folio-assistant-bnjs--rendered-impact-a-change-set-lists-the-rendered-fi.md"
     },
@@ -6438,14 +6438,14 @@
     {
       "id": "folio-assistant-giiw",
       "title": "ARABIC (RTL) DISPLAY: the unverified-translation notice is English set right-to-left — reordered and clipped; audit the rest of the chrome under dir=rtl",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T07:58:59Z",
-      "updatedAt": "2026-10-06T14:11:01Z",
+      "updatedAt": "2026-10-06T16:54:18Z",
       "preview": "Owner, 2026-10-06, from a screenshot of the staging preview of #2261 (Arabic selected): \"note bean up arabic display issues\".\n\n## Observed (screenshot, AR active in the language selector)\n- The one-line notice reads \"…matically and has — **Unverified translation** ⚠\": the English sentence is laid out right-to-left, so its start ('⚠ Unverified translation —') sits at the RIGHT end, and the one-line",
       "file": "beans/defs/folio-assistant-giiw--arabic-rtl-display-the-unverified-translation-noti.md"
     },
@@ -8791,6 +8791,20 @@
       "file": "beans/defs/folio-assistant-nba0--qa-scoping-automatedfalse-criteria-bypass-both-the.md"
     },
     {
+      "id": "folio-assistant-ncvl",
+      "title": "E2E TEST SERVER DIES MID-SHARD: slice-sqlite.e2e.ts hits ERR_CONNECTION_REFUSED, passes on re-run (#2192, #2273)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T11:19:19Z",
+      "updatedAt": "2026-10-06T11:19:19Z",
+      "preview": "Reported 2026-10-06 by session A (session_01FrpbCpM7BWxGCPsu618MLr). On #2273, and on #2192 earlier, `slice-sqlite.e2e.ts` failed with ERR_CONNECTION_REFUSED: the Playwright webServer (`node test-server.mjs`) died partway through the shard. One re-run passed each time.\n\n'Flake' is not a root cause. A server that dies under one spec is a defect either in that spec (a payload or slice size that cras",
+      "file": "beans/defs/folio-assistant-ncvl--e2e-test-server-dies-mid-shard-slice-sqlitee2ets-h.md"
+    },
+    {
       "id": "folio-assistant-nf2z",
       "title": "WORKFLOW TOOLS SEE NO PROCESS: from the repo root workflow_list reports none — diagrams live in dependencies, the resolver is root-only",
       "status": "in-progress",
@@ -9374,6 +9388,20 @@
       "updatedAt": "2026-10-04T07:23:15Z",
       "preview": "deletion-requires-confirmation. Not before every reader in P3 and gate in P4 is green on the branch.\n\n## Done when\n- [ ] owner's go recorded\n- [ ] files removed; beans/README.md count-line churn (y7b3) gone\n\nProposal: cat-harness/docs/proposals/state-branch-2026-10-02.md\n\n_2026-10-04T06:10:27Z_ — Claimed by claude/beans-off-main-9ofm — pushed to main so sibling sessions see it before this branch h",
       "file": "beans/defs/folio-assistant-p3ny--state-branch-p6-remove-the-moved-state-files-from.md"
+    },
+    {
+      "id": "folio-assistant-p3yl",
+      "title": "IG repo onboarding asks two owner questions: disable automatic gh-pages builds? just-the-docs site (default yes)?",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T16:21:43Z",
+      "updatedAt": "2026-10-06T16:21:43Z",
+      "preview": "Owner, 2026-10-06: \"make this part of the process/skill. if gh-pages is being populated, ask use if disable. ask use if they want justthedocs rendering (default is yes)\". Follows #2291 (folio-site template manual-only) and #1901. Rule lives in fhir-harness ig-build-pipeline; fhir-ig-create and ig-render-jekyll point to it.\n\n## Done when\n- [ ] the rule is in one skill with detect / ask-disable / as",
+      "file": "beans/defs/folio-assistant-p3yl--ig-repo-onboarding-asks-two-owner-questions-disabl.md"
     },
     {
       "id": "folio-assistant-p3zo",
@@ -10819,6 +10847,20 @@
       "updatedAt": "2026-09-20T15:07:23Z",
       "preview": "Owner, 2026-09-20, answering the four options put to them — first \"2+ 2\",\ncorrected immediately to:\n\n> 2+3 + recomend....\n\nand, in the same breath:\n\n> recommendatio on what to do based on curent state of where harness go to in\n> its intialzaiton. would also have harness health check badges.\n\n## What was chosen\n\n**Option 2 AND option 3, together**, plus a third thing neither option had:\n\n| part | w",
       "file": "beans/defs/folio-assistant-supn--harness-cards-become-todos-outstanding-work-a-next.md"
+    },
+    {
+      "id": "folio-assistant-sxft",
+      "title": "Re-seed the smart-trust FHIR AST cache from main 644bfda (needs FHIR network)",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T15:06:56Z",
+      "updatedAt": "2026-10-06T16:37:45Z",
+      "preview": "## Brief\n\nYou are the EXECUTOR for this bean. A cloud Claude session (the coordinator)\nhanded it to you because it cannot reach `packages.fhir.org`, and you can.\nYou were sent here by one sentence:\n`Do bean sxft on branch claude/smart-trust-ast-rehand of repo litlfred/folio-assistant.`\n\nWHERE\n- Repo:     litlfred/folio-assistant\n- Checkout: `~/space_cats/folio-assistant` (NOT `~/space_cats/folio-a",
+      "file": "beans/defs/folio-assistant-sxft--re-seed-the-smart-trust-fhir-ast-cache-from-main-6.md"
     },
     {
       "id": "folio-assistant-syiq",
@@ -15075,14 +15117,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 568,
-        "closed": 228,
-        "open": 340,
-        "inProgress": 120,
-        "todo": 219,
+        "total": 569,
+        "closed": 230,
+        "open": 339,
+        "inProgress": 118,
+        "todo": 220,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4014084507042254
+        "share": 0.40421792618629176
       },
       {
         "id": "folio-assistant-vuip",
@@ -15090,14 +15132,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 257,
-        "closed": 99,
-        "open": 158,
-        "inProgress": 91,
+        "total": 259,
+        "closed": 100,
+        "open": 159,
+        "inProgress": 92,
         "todo": 66,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3852140077821012
+        "share": 0.3861003861003861
       },
       {
         "id": "folio-assistant-yg29",
