@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-06T19:10:49Z
-updated_at: 2026-10-06T19:27:00Z
+updated_at: 2026-10-06T19:30:28Z
 parent: folio-assistant-n3ni
 ---
 
@@ -39,3 +39,14 @@ Claimed 2026-10-06 by session_01EcBv3uwKYcnNbCC6BcPG92 on branch claude/cutover-
 ## Orphaned open PRs (measured 2026-10-06)
 - #2307: modifies 1146 files under these dirs. It is sequenced first.
 - #2189: modifies smart-base/scripts/gen-dak-components-figure.test.ts
+
+
+
+## Gate inventory without the mount (bun run gates, 2026-10-06, head 649fd175b05)
+`gates` refused to run (exit 2): `qa:working-copy` failed because three qa:refresh writers failed. Each one traces to the absent instances, and none is a defect to repair on main:
+- `p2:refusals`: 'smart-trust/fhir-artifact-index/index.json does not exist'.
+- `skill:register` → `skills:docs`: '10 page(s) in the output directory were produced by NO source'. These are smart-base skills' generated pages. Regenerating them away would remove pages from the site, which the owner forbade, so they are left until the mount restores their source.
+- `check:wireframes`: visualiser refs into smart-base, smart-trust and smart-immunizations docs are undeclared.
+- Every overlay warns: needs smart-base / smart-trust / smart-immunizations (root) and smart-base (smart-ig) match no instance.
+- audit:coverage: check:fhir-harness-exclusions 'none of its 1 script path(s) could be read'.
+All of these are expected to clear unchanged once a remote mount lands each fork's smart-base/ at the old local path.
