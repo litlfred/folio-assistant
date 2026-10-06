@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-06T06:42:34Z
-updated_at: 2026-10-06T08:16:27Z
+updated_at: 2026-10-06T08:49:31Z
 parent: folio-assistant-7x5n
 ---
 
@@ -89,3 +89,23 @@ Each instance now declares its own tasks; cat-harness(-tools) collects them thro
   - **Correction to the note above:** for `library` graphs, `needOf` today flags exactly cat-harness, smart-base and who-iris, so the old literal was not out of date. It was an upward name, which is why it went.
 
 Still open in step 0: the content-vocabulary contributions (translation-tools core BPMN, the ns.jsonld Tool, jsonld.ts core/sci terms).
+
+
+
+## Owner ruling 2026-10-06 ~08:50Z: whole-checkout tests live at the TOP-LEVEL instance
+
+Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, after session A's #2268 brought standalone cat-harness from 392 to 195 failing. The options, recommended first:
+1. top-level instance;
+2. cat-harness-tools (the gnnj precedent);
+3. each upper instance tests itself.
+
+**The owner chose "Top-level instance".**
+
+- The parent folio-assistant checkout, which holds every layer, gets a DECLARED test home: a directory in its declaration, never a literal path in a runner.
+- Whole-checkout tests move there:
+  - Z, the every-instance sweeps;
+  - C, sibling content data;
+  - V, voices;
+  - the B+E aggregate-root reads that #2268 had moved to cat-harness-tools/scripts/tests.
+- Same basis as the orchestration ruling: whatever must name every layer belongs at the top, so each layer stays standalone-green.
+- Relayed to session A (session_01FrpbCpM7BWxGCPsu618MLr) for #2268.
