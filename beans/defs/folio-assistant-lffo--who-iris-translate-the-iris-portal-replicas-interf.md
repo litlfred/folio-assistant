@@ -793,7 +793,7 @@ Issue #2228. Owner, 2026-10-05: 'help make sure who-iris has all translations'; 
 - [x] round-trip QA recorded above (self-check, not tool-isolated)
 - [x] iris:pages:check covers the catalogues; translation-status counts every instance
 - [ ] a person reviews the five catalogues (or an independent checker repeats the round trip) — then they can be signed off
-- [ ] rendered check of one page per locale, Arabic in particular — no browser was available here
+- [x] rendered check of one page per locale, Arabic in particular — done 2026-10-06 on #2290, evidence in §"Bidi isolation, and the rendered check per locale" below
 
 PR #2229 (draft), issue #2228.
 
@@ -831,3 +831,30 @@ Five fresh checkers, one per locale. Each read ONLY its 116 msgstr values, with 
 Then re-run `iris:pages` and look at the ar page again. The `.po` catalogues need no change unless a `{placeholder}` moves inside a tag. Left out of #2229 at the parent session's request; recorded here so it is not lost.
 
 _2026-10-06T15:44:31Z_ — Claimed by claude/lffo-who-iris-ui-l10n — on the branch: `beans:claim` refused because #2229 left the bean in-progress with no holder; #2229 is merged and no open PR works this bean. Scope: the bidi defect above, and the rendered check of one page per locale.
+
+## Bidi isolation, and the rendered check per locale (2026-10-06, PR #2290)
+
+**Fixed, in `who-iris/scripts/gen-iris-pages.ts`.** These follow the recipe recorded above, with one refinement:
+- Inline record data goes through `data()`: escaped, wrapped in `<bdi>`, with `lang` from the record's own `dc.language.iso`, and only where that differs from the page. That covers authors, the citation, the date in the byline, collection and community names, the "In:" path, the record file name, and the URIs.
+- Whole-block data gets `dir="auto"` instead: the item and collection `<h1>`, a submission's title and abstract, and the client-side search results.
+- Nothing gets `dir="ltr"`, with one exception: repository paths (the footer's, an item's `sections/` link), which are left-to-right by nature.
+- Refinement: `lang="en"` is set only where the record declares it. A collection or community has no record, so it gets isolation and no `lang`. Writing `en` there would be a claim the catalogue does not make.
+- Breadcrumbs: a crumb naming a node is isolated; "Home" is not.
+
+**Found by looking, and fixed:**
+- Translated text in `<code>`: the size, the "qualified Dublin Core · {size} KB" line, and "in {communities}". It was set in the monospace face, which breaks Arabic joining, so "ميغابايت" rendered as eight separate letters. `code.ui:lang(ar)` now takes the page's face.
+- The search badge's `margin-right` is now `margin-inline-end`.
+
+**No `.po` change.** No placeholder moved inside a tag. `iris:pages:check` passes: 47 pages up to date, 116/116 strings in each of the five locales.
+
+**Rendered.** Chromium 1194, with each page served as it is mounted: the page at `/who-iris/…`, the platform's `docs-ui` assets at the root, covers from `library/`.
+- Pages: home in en, ar, fr, es, ru and zh at 1280; en and ar home and the WPRO item page at 390; the ar community list at 1280. A pre-fix ar home and item page from `origin/main` were shot as the control.
+- Every page: 0 px horizontal overflow and no page errors.
+- On ar, the WPRO byline now reads `(WPR/RDO/2020/003, تاريخ النشر: 2020-05-12)` in RTL order. Before the fix the date showed as `12-05-2020`.
+- Abstracts are left-aligned LTR blocks, with the ellipsis at their end.
+- The ar item page's `<h1>` computes `direction: ltr`, while the page computes `rtl`.
+- en, fr, es, ru and zh look unchanged.
+- `who-iris/scripts/tests/gen-iris-pages.test.ts` pins the markup ("record data is direction-isolated…").
+- The `folio-mount`, `mounted-locale` and `search-band` e2e files: 42/42 passed.
+
+**Still not done here:** the first box above. A person, or an independent checker, still has to sign off the five catalogues. The pdf.js viewer's caption ("Search, page jump, print and download are in the viewer's toolbar…") is still English on every translated item page. It comes from the platform's `pdfViewer`, not from `SITE_STRINGS`, so translating it is a platform change and is left out of this bean.
