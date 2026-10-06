@@ -304,7 +304,12 @@ function stateEntry(slug: string, g: StateGraphDef): {
  * so the two placements cannot start from different content.
  */
 function stateGraphFiles(slug: string, id: StateGraphDef["id"]): Record<string, string> {
-  if (id === "beans") return { "beans/.gitkeep": "" };
+  // `beans/beans.json` is the bean graph's own declaration, and it is not
+  // optional once the graph is on a branch: `beans:claim` reads it FROM THE
+  // BRANCH to find the \`bean-defs\` directory and refuses to guess (measured
+  // end to end on a fresh repository, 2026-10-06). Same layout as the
+  // platform's own: the CLI's store at \`beans/defs\`.
+  if (id === "beans") return { "beans/beans.json": beansGraph(slug), "beans/defs/.gitkeep": "" };
   return {
     "todos/todos.json": todosGraph(slug),
     "todos/items/.gitkeep": "",
@@ -1041,9 +1046,28 @@ function todosGraph(slug: string): string {
   ) + "\n";
 }
 
+/** The bean graph's declaration, `beans/beans.json` — the shape `schemas/bean-graph.ts` reads. */
+function beansGraph(slug: string): string {
+  return JSON.stringify(
+    {
+      name: slug,
+      directories: [
+        {
+          id: "defs",
+          path: "defs",
+          graphTypologies: ["bean-defs"],
+          description: "Work items — one Markdown file each, in the layout the `beans` CLI reads (`.beans.yml`).",
+        },
+      ],
+    },
+    null,
+    2,
+  ) + "\n";
+}
+
 function beansYml(slug: string): string {
   return `beans:
-    path: beans
+    path: beans/defs
     prefix: ${slug}-
     id_length: 4
     default_status: todo

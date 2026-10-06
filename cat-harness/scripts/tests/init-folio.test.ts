@@ -646,6 +646,8 @@ describe("state graphs follow their resolved source (hp54)", () => {
       expect(g.seed).toContain("manifest.json");
     }
     expect(r.stateGraphs.find((x) => x.id === "todos")!.seed).toContain("todos/todos.json");
+    // beans:claim reads the bean graph's declaration FROM THE BRANCH, so the seed must carry it.
+    expect(r.stateGraphs.find((x) => x.id === "beans")!.seed).toContain("beans/beans.json");
     // The mount must never be committed to main.
     const ignore = readFileSync(join(d, ".gitignore"), "utf-8");
     expect(ignore).toContain("/beans/**");
@@ -665,7 +667,7 @@ describe("state graphs follow their resolved source (hp54)", () => {
       expect(g.source.declaredIn).toBe("config");
       expect(g.seed).toBeUndefined();
     }
-    expect(r.created).toContain("beans/.gitkeep");
+    expect(r.created).toContain("beans/beans.json");
     expect(r.created).toContain("todos/todos.json");
     expect(readFileSync(join(d, ".gitignore"), "utf-8")).not.toContain("/beans/**");
   });
