@@ -74,6 +74,10 @@ export const PROPERTY_SKILLS = {
   // calls that layer's subprocesses, so its skill lives beside them.
   subscriptions: { skills: ["kg-subscription", "materialize-remote"] },
   knownSubstrates: { skills: ["kg-subscription"] },
+  // Bean `0mpw`: the harness's defaults and the downstream's mounts are two
+  // halves of one relation, and one skill walks both.
+  mountDefaults: { skills: ["remote-mount"] },
+  remoteMounts: { skills: ["remote-mount"] },
   stickies: { skills: ["create-sticky-note"] },
   renderExemption: { skills: ["harness-tiles"] },
   needs: { skills: ["instance-kinds", "confirm-harness"] },

@@ -1,10 +1,10 @@
 ---
 # folio-assistant-7te5
 title: who-iris's 12 generated pages are counted as authored — gen-iris-pages marks nothing it writes
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-04T06:25:09Z
-updated_at: 2026-10-04T06:25:09Z
+updated_at: 2026-10-06T22:49:38Z
 parent: folio-assistant-0lmb
 ---
 
@@ -76,3 +76,5 @@ heading promising "every AUTHORED documentation page"**.
 who-iris still passes `check:docs-populated`: `style-guide.md` is 558 prose
 words and `style-guide-agents.md` 347, both over `MIN_PROSE_WORDS` (250). Only
 the evidence changes. A fix that turns the harness red has over-corrected.
+
+_2026-10-06T22:49:38Z_ — Claimed by claude/7te5-iris-generated-pages-marker — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -6398,6 +6398,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.mountdefaults",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.mountDefaults"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What a downstream remote-mounts of this instance by default — `schemas/remote-mount.ts`, bean `0mpw`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.mountDefaults",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.name",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6509,6 +6528,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.remoteGraphs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.remotemounts",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.remoteMounts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Harnesses this instance remote-mounts at a pin, transitively — `schemas/remote-mount.ts`, bean `0mpw`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.remoteMounts",
       "skos:note": "candidate"
     },
     {
@@ -6892,6 +6930,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.mountdefaults",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.mountDefaults"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What a DOWNSTREAM mounts of this instance by default, and where — see `schemas/remote-mount.ts` (bean `0mpw`). Owner, 2026-10-06: the defaults live in the harness's own declaration, so a downstream names only the harness and its pin and never restates the paths. Absent is the stated default (home path, every in-checkout directory), not \"unmountable\"."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.mountDefaults",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.navbaricons",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6965,6 +7022,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteGraphs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.remotemounts",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.remoteMounts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Harnesses this instance REMOTE-MOUNTS — each a repository and a 40-char pin, resolved transitively through the harness's `needs` (bean `0mpw`). Not a submodule and not `.deps/`: the mounted directories are declared, locked by tree digest, and checked by `mount:remote:check`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteMounts",
       "skos:note": "candidate"
     },
     {
@@ -17468,7 +17544,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Git clone URL for the dependency. Used when `path` is absent or the directory does not exist. The agent should clone to a deterministic location (e.g. `.deps/<name>/`)."
+          "@value": "Git clone URL for the dependency. Used when `path` is absent or the directory does not exist. Not cloned into `.deps/` (owner, 2026-10-06): a remote dependency is a REMOTE MOUNT — `remoteMounts` on the declaration, laid down by `bun run mount:remote` (bean `0mpw`)."
         }
       ],
       "dcterms:source": "cat-harness/schemas/harness-config.ts#FolioAssistantDependency.git",
@@ -23362,6 +23438,234 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/referenced-source.ts#PublishedSourceSchema.url",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockeddirectoryschema.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedDirectorySchema.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Relative to the downstream instance's root, no trailing slash."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockeddirectoryschema.treedigest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedDirectorySchema.treeDigest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "SHA-256 over the sorted `<sha256> <file>` listing — `treeDigest`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.treeDigest",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockeddirectoryschema.upstreampath",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedDirectorySchema.upstreamPath"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the bytes are in the upstream repository."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.upstreamPath",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedInstanceSchema.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where its root landed downstream."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.pinnedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedInstanceSchema.pinnedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How the pin was found: the declared ref, the same tree, or a gitlink in a parent's tree."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.pinnedBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.upstreamroot",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedInstanceSchema.upstreamRoot"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance's root in the upstream repository; `\"\"` is that repository's root."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.upstreamRoot",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.via",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedInstanceSchema.via"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The `remoteMounts` entry that brought it in."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.via",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountdefaultsschema.directories",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountDefaultsSchema.directories"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Directory ids, in this instance's own declaration."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountDefaultsSchema.directories",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountlockschema.mounts",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountLockSchema.mounts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The `remoteMounts` it was written for, so a changed pin reads as stale."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountLockSchema.mounts",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountlockschema.unmounted",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountLockSchema.unmounted"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the closure reached and did NOT mount, with why — so the check, which reads the lock and never the network, cannot report clean over an instance the mount never laid down. `local` and `skipped` are recorded too: they are answers, and a reader should see them as such."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountLockSchema.unmounted",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.remotemountschema.harness",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RemoteMountSchema.harness"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The harness's instance name, as its own declaration states it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.harness",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.remotemountschema.overrides",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RemoteMountSchema.overrides"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Per-instance overrides across the closure, keyed by instance name."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.overrides",
       "skos:note": "candidate"
     },
     {
