@@ -12,7 +12,7 @@
   var branch = c.branch || "main";
   var repo = b.repo || c.repo;
   var src = "https://github.com/" + repo + "/blob/" + branch + "/" + path + (b.line ? "#L" + b.line : "");
-  var url = c.siteUrl && b.page ? c.siteUrl.replace(/\/$/, "") + "/" + b.page + "#" + enc(b.label) : "";
+  var url = c.siteUrl && b.page ? c.siteUrl.replace(/\/$/, "") + "/" + b.page + "#" + enc(b.label) : (b.pageUrl || "");
   var values = { block: b.label, section: b.section || "", source: b.source, page: b.page || "", url: url };
   var q = new URLSearchParams();
   q.set("title", "Feedback: " + (b.section ? b.section + " — " : "") + b.label);
@@ -25,7 +25,7 @@
     if (b.section) facts.push("**Section:** " + b.section);
     facts.push("**Source:** " + src);
     if (url) facts.push("**On the site:** " + url);
-    q.set("body", facts.concat(["", "**Feedback:**", ""]).join("\n"));
+    q.set("body", facts.concat(["", "**Type:** general | technical | editorial", "", "**Comment:**", "", "", "**Proposed change:**", ""]).join("\n"));
   }
   return { edit: "https://github.com/" + repo + "/edit/" + branch + "/" + path, source: src, feedback: "https://github.com/" + c.repo + "/issues/new?" + q };
 }
@@ -45,13 +45,18 @@
     const c = config();
     if (!c.repo && !host.dataset.repo) return;
     host.dataset.ready = "1";
-    const u = faBlockUrls(c, { label: host.dataset.block || host.dataset.src, source: host.dataset.src, section: host.dataset.sec,
-      line: host.dataset.line ? Number(host.dataset.line) : undefined, repo: host.dataset.repo, page: host.dataset.page || c.page });
+    const label = host.dataset.block || host.dataset.src;
+    const u = faBlockUrls(c, { label: label, source: host.dataset.src, section: host.dataset.sec,
+      line: host.dataset.line ? Number(host.dataset.line) : undefined, repo: host.dataset.repo, page: host.dataset.page || c.page,
+      pageUrl: location.href.split("#")[0] + "#" + encodeURIComponent(label) });
     const links = host.matches("a[data-fa-link]") ? [host] : host.querySelectorAll("a[data-fa-link]");
-    for (const a of links) if (u[a.dataset.faLink]) a.href = u[a.dataset.faLink];
+    // Only this host's own links: a nested host (a Lean link inside a block's row) fills itself.
+    for (const a of links) if (a.closest("[data-src]") === host && u[a.dataset.faLink]) a.href = u[a.dataset.faLink];
   };
   const fill = (root) => { for (const h of (root || document).querySelectorAll("[data-src]")) ready(h); };
-  window.faEditLinks = { urls: faBlockUrls, fill: fill };
+  // A page that learns its repository later (the folio site reads it from its outline) says so here.
+  const configure = (c) => { cfg = c; };
+  window.faEditLinks = { urls: faBlockUrls, fill: fill, configure: configure };
   for (const ev of ["pointerover", "focusin", "touchstart"])
     document.addEventListener(ev, (e) => { const h = e.target.closest && e.target.closest("[data-src]"); if (h) ready(h); }, { passive: true });
 })();

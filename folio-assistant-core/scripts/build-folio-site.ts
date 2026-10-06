@@ -42,6 +42,7 @@
  * absolute is baked in. A cross-reference `#label` that is not on the current
  * page is resolved through the outline to the section page that holds it.
  */
+import { editLinksAsset } from "../../cat-harness/src/core/edit-links.js";
 import { createHash } from "node:crypto";
 import { copyFileSync, cpSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
@@ -124,6 +125,7 @@ export function shellHtml(title: string, depth: number, scope: { paper?: string;
 <title>${esc(title)}</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <link rel="stylesheet" href="${root}assets/folio-site.css">
+<script defer src="${root}assets/edit-links.js"></script>
 <script defer src="${root}assets/folio-site.js"></script>
 </head>
 <body data-root="${root}" data-paper="${esc(scope.paper ?? "")}" data-path="${esc(scope.path ?? "")}">
@@ -280,6 +282,8 @@ export async function buildFolioSite(
   }
   mkdirSync(join(base, "assets"), { recursive: true });
   cpSync(join(import.meta.dir, "folio-site-assets"), join(base, "assets"), { recursive: true });
+  // The platform's one recipe for edit and feedback links (bean v433).
+  writeFileSync(join(base, "assets", "edit-links.js"), editLinksAsset());
 
   const papers: { slug: string; title: string }[] = [];
   const sourceRepo = opts.repository ? { repository: opts.repository, ref: opts.ref ?? "main" } : declaredRepository(repoRoot);

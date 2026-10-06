@@ -171,30 +171,19 @@
         const h = el("p", { class: "prose-title" }); const b = el("b"); b.append(titled(n.title)); h.append(b); d.prepend(h);
       }
       // Edit the source, give feedback, read the Lean (owner, 2026-10-05). The
-      // feedback issue carries the block's reference and the comment matrix's
-      // columns (type, comment, proposed change), as public-comment reads them.
+      // URLs come from the platform's one recipe, edit-links.js (bean v433):
+      // the row carries the block's facts and the hrefs are built when a
+      // pointer or focus reaches them. The feedback issue carries the comment
+      // matrix's columns (type, comment, proposed change), as public-comment
+      // reads them.
       if (outline.source && n.source) {
-        const gh = `https://github.com/${outline.source.repository}`;
-        const row = el("span", { class: "block-links" });
-        const name = n.number ? `${n.heading} ${n.number}` : n.heading || n.label || n.source;
-        const ref = n.label || n.source;
-        const body = [
-          `**Block:** \`${ref}\`${n.number ? ` (${name})` : ""}`,
-          `**Page:** ${location.href.split("#")[0]}${n.label ? "#" + encodeURIComponent(n.label) : ""}`,
-          `**Source:** \`${n.source}\``,
-          "",
-          "**Type:** general | technical | editorial",
-          "",
-          "**Comment:**",
-          "",
-          "",
-          "**Proposed change:**",
-          "",
-        ].join("\n");
-        const issue = `${gh}/issues/new?title=${encodeURIComponent(`Feedback: ${name}${n.title ? " — " + n.title : ""}`)}&body=${encodeURIComponent(body)}`;
-        row.append(el("a", { href: `${gh}/edit/${outline.source.ref}/${n.source}`, title: "Edit the source on GitHub", "aria-label": "Edit the source" }, "\u270E edit"));
-        row.append(el("a", { href: issue, title: "Give feedback: open an issue on this block", "aria-label": "Give feedback" }, "\u{1F4E3} feedback"));
-        if (n.leanSource) row.append(el("a", { href: `${gh}/blob/${outline.source.ref}/${n.leanSource}`, title: n.leanStatus === "sorry" ? "Lean formalisation — still has a sorry" : "Lean formalisation — no sorry in this file", "aria-label": "Lean source", class: `lean-${n.leanStatus || "proved"}` }, n.leanStatus === "sorry" ? "Lean \u25D0" : "Lean \u2713"));
+        if (window.faEditLinks) window.faEditLinks.configure({ repo: outline.source.repository, branch: outline.source.ref });
+        const name = n.number ? `${n.heading} ${n.number}` : n.heading || "";
+        const row = el("span", { class: "block-links", "data-src": n.source, "data-block": n.label || n.source,
+          ...(name || n.title ? { "data-sec": [name, n.title].filter(Boolean).join(" \u2014 ") } : {}) });
+        row.append(el("a", { "data-fa-link": "edit", href: `https://github.com/${outline.source.repository}/edit/${outline.source.ref}/${n.source}`, title: "Edit the source on GitHub", "aria-label": "Edit the source" }, "\u270E edit"));
+        row.append(el("a", { "data-fa-link": "feedback", title: "Give feedback: open an issue on this block", "aria-label": "Give feedback" }, "\u{1F4E3} feedback"));
+        if (n.leanSource) row.append(el("a", { "data-src": n.leanSource, "data-fa-link": "source", title: n.leanStatus === "sorry" ? "Lean formalisation — still has a sorry" : "Lean formalisation — no sorry in this file", "aria-label": "Lean source", class: `lean-${n.leanStatus || "proved"}` }, n.leanStatus === "sorry" ? "Lean \u25D0" : "Lean \u2713"));
         d.prepend(row);
       }
       // A \ref link names its label; show the number the label has.
