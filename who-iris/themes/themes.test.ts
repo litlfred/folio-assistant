@@ -27,8 +27,7 @@ import {
   WPRO_PRIMARY_PALETTE,
   whoThemeById,
 } from "./themes.js";
-import { ResolvedThemeSchema, themeKey } from "../../cat-harness/schemas/theme.js";
-import { DEFAULT_THEME_ID, themeById } from "../../cat-harness/schemas/themes.js";
+import { DEFAULT_THEME_ID, ResolvedThemeSchema, themeById, themeKey } from "../platform.ts";
 
 const INSTANCE = resolve(import.meta.dir, "..");
 /**

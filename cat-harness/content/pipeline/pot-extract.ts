@@ -826,7 +826,7 @@ export function potWithoutTimestamp(text: string): string {
 /**
  * Quote a string for POT format — handles multiline and escaping.
  */
-function potQuote(s: string): string {
+export function potQuote(s: string): string {
   const escaped = s
     .replace(/\\/g, "\\\\")
     .replace(/"/g, '\\"')

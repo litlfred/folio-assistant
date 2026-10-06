@@ -58,6 +58,7 @@ import { dirname, join, relative, resolve } from "path";
 
 import type { CatalogueNode, MaskedRegion } from "../schemas/catalogue.js";
 import { bytesFor } from "./lib/bytes.js";
+import { inputSiteReached } from "../../cat-harness/scripts/input-trace.ts";
 
 /** The platform checkout — where the renderer and the render cache live, never the instance. */
 const REPO = resolve(import.meta.dir, "..", "..");
@@ -189,6 +190,8 @@ export function pngSize(buf: Buffer): { w: number; h: number } | undefined {
 
 /** Is the PDF backend available? A determined answer, asked once. */
 function backendAvailable(): boolean {
+  // input-site: traced #e76de5d9 — whether pymupdf is installed is a fact about the machine
+  inputSiteReached("gen-covers: probes the PDF backend");
   const r = Bun.spawnSync(["python3", "-c", "import pymupdf"]);
   return r.exitCode === 0;
 }
@@ -214,6 +217,8 @@ function render(c: Cover): { png: Buffer; facts: Record<string, unknown> } {
   // same regions, so a committed masked cover compares equal to a fresh one.
   // Masking in this script instead would leave the renderer's provenance
   // describing an image nobody has.
+  // input-site: traced #0f3cf01b — renders a cover with the PDF backend, a binary outside the tree
+  inputSiteReached("gen-covers: renders through python");
   const r = Bun.spawnSync([
     "python3", RENDERER, c.sourcePdf, "-o", tmp, "--width", String(COVER_WIDTH), "--json",
     ...c.masks.flatMap((m) => ["--mask", `${m.x0},${m.y0},${m.x1},${m.y1}`]),

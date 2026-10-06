@@ -500,7 +500,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Cutover",
       "@type": "bootstrap:ProcessNode",
-      "name": "13 · Cutover: delete the parent's copy"
+      "name": "13 · Cutover: retire the parent's copy"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Decide",
@@ -767,12 +767,115 @@
       "name": "A graph exists, and a portal needs it"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "@type": "bootstrap:Process",
+      "name": "Remote-mount a dependency"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D3",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D5",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D6",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D7",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D8",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/lane/Lane_Author",
+      "@type": "cat-harness:Lane",
+      "name": "Downstream author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/lane/Lane_Pipeline",
+      "@type": "cat-harness:Lane",
+      "name": "Build pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/End_Mounted",
+      "@type": "bootstrap:ProcessNode",
+      "name": "The closure is on disk, pinned and locked"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/End_Reported",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Reported loudly: missing / could not determine"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/GW_State",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Every instance mounted or local?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Start_LayerNeeded",
+      "@type": "bootstrap:ProcessNode",
+      "name": "A layer this checkout does not hold"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_CheckAgainstLock",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Check disk against lock against declaration"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_DeclareMount",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Declare the mount: harness, repository, pin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_MountInstances",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Mount each instance at its declared path"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_ResolveClosure",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Resolve the closure at the pin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_WriteLock",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Write the lock"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
       "@type": "bootstrap:Process",
       "name": "Mount a declared subgraph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M10",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "remote"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M11",
       "@type": "bootstrap:SequenceFlow"
     },
     {
@@ -844,6 +947,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_MountBranchTip",
       "@type": "bootstrap:ProcessNode",
       "name": "Mount the branch tip at the declared path"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_MountRemotePin",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Mount the remote tree at its pin"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_RefuseUnknownKind",

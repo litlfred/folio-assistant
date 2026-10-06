@@ -246,6 +246,11 @@ function keptAt(inst: string, repoRoot: string, d: ResolvedDirectory): { branch:
     // the prefix so each of them can name it, and never opened as a branch.
     case "family":
       return { branch: src.branchPrefix, keyedBy: "family" };
+    // A REMOTE mount (bean `0mpw`) is another repository's tree at a pin: no
+    // branch of THIS repository keeps it, so this store has nothing to mount
+    // or push. `remote-mount.ts` puts it on disk and checks it against its lock.
+    case "remote":
+      return undefined;
     default: {
       const unknown: never = src;
       throw new BranchStoreUsageError(`directory ${d.id} has a source kind this store does not know: ${JSON.stringify(unknown)}`);

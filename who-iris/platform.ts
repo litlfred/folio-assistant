@@ -13,21 +13,44 @@
  * NEW climbs, against a who-iris ceiling that "may only fall". Rather than
  * raise it, `gen-iris-pages.ts` now routes every platform import through
  * here, which takes it from fourteen climbs to none. The tests and the theme
- * module still climb directly; they are what the ceiling now counts.
+ * module still climbed directly; they were what the ceiling counted.
+ *
+ * Since 2026-10-06 (bean `g8jp`) EVERYTHING climbs here, and this file in
+ * turn reaches only `folio-assistant-core` — the one instance who-iris
+ * `needs`. cat-harness symbols come through core's surface,
+ * `folio-assistant-core/scripts/platform.ts`, so who-iris names no layer
+ * below the one it declares. Owner: *"who-iris depends on folio-asst-core"*.
  *
  * @module who-iris/platform
  */
-export { readDeclaration, repoRootFor, siteDirFor } from "../cat-harness/schemas/cat-harness.js";
-export { fragment as folioMountFragment } from "../cat-harness/scripts/folio-mount.ts";
-export { embed as pdfViewer } from "../cat-harness/scripts/pdf-viewer.ts";
-export { subjectPage } from "../cat-harness/scripts/harness-tiles.js";
-export { withRoutes } from "../cat-harness/scripts/mount-instance-docs.ts";
-export { libraryResolver } from "../cat-harness/scripts/lib/library-links.ts";
-export { withViewerNav } from "../cat-harness/scripts/viewer-page.ts";
-export { withInlineCode } from "../cat-harness/schemas/inline-code.ts";
-export { formatPot, type PotEntry } from "../cat-harness/content/pipeline/pot-extract.js";
-export { parsePo, parsePoEntries } from "../cat-harness/content/pipeline/po-inject.js";
+export {
+  readDeclaration,
+  repoRootFor,
+  siteDirFor,
+  fragment as folioMountFragment,
+  embed as pdfViewer,
+  subjectPage,
+  withRoutes,
+  libraryResolver,
+  withViewerNav,
+  withInlineCode,
+  formatPot,
+  type PotEntry,
+  parsePo,
+  parsePoEntries,
+  THEME_SCHEMA_TAG,
+  ThemeSchema,
+  ResolvedThemeSchema,
+  explainThemeFailure,
+  resolveTheme,
+  themeKey,
+  type ResolvedTheme,
+  type Theme,
+  DEFAULT_THEME_ID,
+  themeById,
+} from "../folio-assistant-core/scripts/platform.ts";
 export { bytesFor, repoRelative } from "../folio-assistant-core/scripts/lib/bytes.js";
 export { resolvableIri, type CatalogueNode } from "../folio-assistant-core/schemas/catalogue.js";
 export { dcRenderingsFor } from "../folio-assistant-core/scripts/dc-render.ts";
 export { publicationBlockers } from "../folio-assistant-core/schemas/materialization.js";
+export { nodes as coverNodes, pngSize } from "../folio-assistant-core/scripts/gen-covers.js";

@@ -7,8 +7,9 @@ priority: normal
 tags:
     - latex
     - preflight
+    - ready-to-close
 created_at: 2026-10-04T18:57:25Z
-updated_at: 2026-10-06T18:53:18Z
+updated_at: 2026-10-06T18:54:54Z
 parent: folio-assistant-d308
 ---
 
@@ -20,3 +21,11 @@ cat-harness/content/pipeline/latex-known-macros.json contains neither (grep coun
 Done when: both are in the known list (or a re-seed adds them), and the preflight on qou's render reports 0 findings for them.
 
 _2026-10-06T18:53:18Z_ — Claimed by claude/tdi0-latex-known-macros — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## Evidence
+
+- Added `\phantom` and `\lessgtr` in alphabetical order to `cat-harness/content/pipeline/latex-known-macros.json`.
+- Added unit test `cat-harness/content/pipeline/latex-known-macros.test.ts` verifying JSON validity, sorted ordering, uniqueness, and presence of both macros.
+- `bun test ./cat-harness/content/pipeline/latex-known-macros.test.ts` passed (2/2).
+- `bun run typecheck` and `eslint` clean.

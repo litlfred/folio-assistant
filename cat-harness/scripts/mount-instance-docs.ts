@@ -101,7 +101,7 @@
  *   bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
  */
 import { VIEWER_DIR } from "./pdf-viewer.ts";
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, realpathSync, statSync, writeFileSync } from "fs";
 import { dirname, isAbsolute, join, posix, relative, resolve, sep } from "path";
 
 import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
@@ -114,6 +114,8 @@ import { kindTitle } from "./lib/nav-label.js";
 import { withSavedScheme } from "./lib/scheme-css.js";
 import { viewersOf } from "./viewer-declarations.js";
 import { translationMetaBlock, withTranslationMeta } from "./lib/translation-meta.ts";
+import { layoutSubscribedInstances, subscribedTrees } from "./subscribed-trees.ts";
+import { mountedInstanceRoots } from "../schemas/remote-mount.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -1160,38 +1162,150 @@ interface DeclaredEntry {
   coverage?: Parameters<typeof visualisationsOf>[0];
 }
 
-/**
- * Every instance declaration at the repository's top level, with each entry's
- * directory resolved — the one walk {@link mountable} and
- * {@link kindRouteRedirects} both read, so the two cannot disagree about which
- * instances exist or what a directory is called.
- */
-function declaredEntries(): { name: string; instanceDir: string; entry: DeclaredEntry & { path: string }; abs: string }[] {
-  const out: { name: string; instanceDir: string; entry: DeclaredEntry & { path: string }; abs: string }[] = [];
-  for (const e of readdirSync(REPO, { withFileTypes: true })) {
+/** One declared directory, resolved — in-tree, or held from a subscription. */
+interface ResolvedEntry {
+  name: string;
+  instanceDir: string;
+  entry: DeclaredEntry & { path: string };
+  abs: string;
+  /** Set when the directory is read out of a subscription's materialised tree (bean `g8jp`): the subscription's id. */
+  subscribed?: string;
+}
+
+type ParsedDeclaration = Record<string, unknown> & { name?: string; directories?: DeclaredEntry[] };
+
+/** Every instance declaration at `repo`'s top level, parsed — an unparseable one is skipped, since `kg:schema:check` owns it. */
+function topLevelDeclarations(repo: string): { dirName: string; dir: string; decl: ParsedDeclaration }[] {
+  const out: { dirName: string; dir: string; decl: ParsedDeclaration }[] = [];
+  for (const e of readdirSync(repo, { withFileTypes: true })) {
     if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
-    const decl = declarationPathIn(join(REPO, e.name));
+    const decl = declarationPathIn(join(repo, e.name));
     if (decl === undefined) continue;
     if (!existsSync(decl)) continue;
-    let d: { name?: string; directories?: DeclaredEntry[] };
     try {
-      d = JSON.parse(readFileSync(decl, "utf-8"));
+      out.push({ dirName: e.name, dir: join(repo, e.name), decl: JSON.parse(readFileSync(decl, "utf-8")) });
     } catch {
       // A declaration that does not parse is a FINDING, not a skip — but it is
       // not this script's finding. `kg:schema:check` owns it; here it is noise.
       continue;
     }
-    for (const entry of d.directories ?? []) {
-      if (!entry.path) continue;
-      out.push({
-        name: d.name ?? e.name,
-        instanceDir: join(REPO, e.name),
-        entry: entry as DeclaredEntry & { path: string },
-        abs: join(REPO, e.name, entry.path),
-      });
+  }
+  // A REMOTE MOUNT an override placed below the top level (bean `0mpw`) is
+  // published like any other instance; its lock says where it landed. One at
+  // its default home path is already a top-level directory above.
+  const seen = new Set(out.map((o) => resolve(o.dir)));
+  for (const [, root] of mountedInstanceRoots(repo)) {
+    if (seen.has(resolve(root))) continue;
+    const decl = declarationPathIn(root);
+    if (decl === undefined || !existsSync(decl)) continue;
+    try {
+      out.push({ dirName: posix.basename(root), dir: root, decl: JSON.parse(readFileSync(decl, "utf-8")) });
+    } catch {
+      continue;
     }
   }
   return out;
+}
+
+type SubscribedRead = { entries: ResolvedEntry[]; problems: string[]; shadowed: string[] };
+const subscribedCache = new Map<string, SubscribedRead>();
+
+/**
+ * The declared directories of every SUBSCRIBED instance whose tree this
+ * checkout holds, and every chosen one it cannot vouch for (bean `g8jp`).
+ *
+ * The walk below finds an instance only when it is a top-level directory, so
+ * an instance read back by subscription — who-iris after its cutover — would
+ * publish nothing and exit 0. This reads the subscriptions instead, through
+ * `subscribedTrees`, the seam a remote mount shares: a `held` subgraph is an
+ * ordinary declared entry whose files sit under the part's `tree/`, laid out
+ * at the instance's own paths by `layoutSubscribedInstances` so a page's
+ * `../library/x.png` resolves as it would in-tree.
+ *
+ * A chosen subgraph that is not held is in `problems` — could-not-determine,
+ * which fails the build rather than publishing an absence. A subscribed
+ * instance that is ALSO staged in the tree is `shadowed`: the staged copy is
+ * what gets published, and the overlap is said out loud rather than resolved
+ * by timing. A subscribed directory has no `viewer` here: a declared
+ * visualiser ref is relative to the substrate's repository, not this checkout.
+ *
+ * Read once per repository per process, so every caller sees one layout.
+ */
+export function subscribedMountEntries(repo = REPO): SubscribedRead {
+  const hit = subscribedCache.get(repo);
+  if (hit) return hit;
+  const r = readSubscribedMountEntries(repo);
+  subscribedCache.set(repo, r);
+  return r;
+}
+
+function readSubscribedMountEntries(repo: string): SubscribedRead {
+  const decls = topLevelDeclarations(repo);
+  const all = [...decls];
+  const rootDecl = declarationPathIn(repo);
+  if (rootDecl !== undefined && existsSync(rootDecl)) {
+    try {
+      all.push({ dirName: ".", dir: repo, decl: JSON.parse(readFileSync(rootDecl, "utf-8")) });
+    } catch {
+      // as above: `kg:schema:check`'s finding
+    }
+  }
+  const inTree = new Set(decls.map((d) => d.decl.name ?? d.dirName));
+  const trees = subscribedTrees(
+    all
+      .filter((d) => Array.isArray(d.decl["subscriptions"]))
+      .map((d) => ({ dir: d.dir, decl: { ...d.decl, name: d.decl.name ?? d.dirName } as Parameters<typeof subscribedTrees>[0][number]["decl"] })),
+  );
+  const problems: string[] = [];
+  const shadowed: string[] = [];
+  const held = trees.filter((t) => {
+    const at = `${t.subscriber} → ${t.subscription.id}/${t.subgraph}`;
+    if (t.state === "could-not-determine") {
+      problems.push(`${at}: ${t.reason}`);
+      return false;
+    }
+    if (t.state !== "held" || !t.entry || !t.instance) return false; // `referenced`: a determined absence
+    if (inTree.has(t.instance)) {
+      shadowed.push(`${at}: \`${t.instance}\` is also staged in this tree, which is what is published`);
+      return false;
+    }
+    return true;
+  });
+  const roots = layoutSubscribedInstances(held);
+  const entries = held.map((t) => {
+    const root = roots.get(t.instance!)!;
+    return {
+      name: t.instance!,
+      instanceDir: root,
+      entry: { ...(t.entry as DeclaredEntry), path: t.entry!.path },
+      abs: join(root, t.entry!.path),
+      subscribed: t.subscription.id,
+    };
+  });
+  return { entries, problems, shadowed };
+}
+
+/**
+ * Every instance declaration at the repository's top level, with each entry's
+ * directory resolved — the one walk {@link mountable} and
+ * {@link kindRouteRedirects} both read, so the two cannot disagree about which
+ * instances exist or what a directory is called. Since bean `g8jp` it includes
+ * the held directories of subscribed instances ({@link subscribedMountEntries}).
+ */
+function declaredEntries(repo = REPO): ResolvedEntry[] {
+  const out: ResolvedEntry[] = [];
+  for (const { dirName, dir, decl: d } of topLevelDeclarations(repo)) {
+    for (const entry of d.directories ?? []) {
+      if (!entry.path) continue;
+      out.push({
+        name: d.name ?? dirName,
+        instanceDir: dir,
+        entry: entry as DeclaredEntry & { path: string },
+        abs: join(dir, entry.path),
+      });
+    }
+  }
+  return [...out, ...subscribedMountEntries(repo).entries];
 }
 
 /** A directory whose bytes are published verbatim for pages to fetch (`served: true`, bean `680p`). */
@@ -1215,13 +1329,14 @@ export function servedDirectories(entries: { name: string; entry: DeclaredEntry 
 }
 
 /** The directory's own declared viewer, repo-relative, or `undefined` (#1168 B7a-2b). */
-function viewerOf(x: { instanceDir: string; entry: DeclaredEntry & { path: string } }): string | undefined {
+function viewerOf(x: { instanceDir: string; entry: DeclaredEntry & { path: string }; subscribed?: string }): string | undefined {
+  if (x.subscribed !== undefined) return undefined;
   return viewersOf({ ...x.entry, id: x.entry.id ?? x.entry.path, path: x.entry.path }, x.instanceDir, REPO)[0]?.ref;
 }
 
-function mountable(): Mountable[] {
+export function mountable(repo = REPO): Mountable[] {
   const out: Mountable[] = [];
-  for (const { name, instanceDir, entry, abs } of declaredEntries()) {
+  for (const { name, instanceDir, entry, abs, subscribed } of declaredEntries(repo)) {
     // COMPOSED directories belong to Jekyll, not to this script.
     //
     // `compose-docs.ts` lays them into the Jekyll SOURCE at
@@ -1242,7 +1357,7 @@ function mountable(): Mountable[] {
     // The directory's own declared visualiser, if it has one. Read here
     // rather than re-derived later: the declaration is the only place that
     // knows, and a second answer is free to disagree with it.
-    const visualiser = viewerOf({ instanceDir, entry });
+    const visualiser = viewerOf({ instanceDir, entry, ...(subscribed === undefined ? {} : { subscribed }) });
     for (const kind of entry.graphTypologies ?? []) {
       out.push({
         name,
@@ -1550,6 +1665,19 @@ function main(): number {
     return true;
   });
 
+  // SUBSCRIBED INSTANCES — bean `g8jp`. A chosen subgraph this checkout
+  // cannot vouch for fails the build: publishing without it would read as
+  // "nothing to publish" when the truth is "could not tell".
+  const subscribedRead = subscribedMountEntries();
+  for (const s of subscribedRead.shadowed) console.log(`  shadowed ${s}`);
+  for (const e of subscribedRead.entries) {
+    console.log(`  subscribed ${e.name}/${e.entry.path} — from \`${e.subscribed}\`, held at ${relative(REPO, realpathSync(e.abs))}`);
+  }
+  if (subscribedRead.problems.length) {
+    console.error(`\n${subscribedRead.problems.length} subscribed director(ies) COULD NOT BE DETERMINED — not published, and not a pass:`);
+    for (const p of subscribedRead.problems) console.error(`  ${p}`);
+  }
+
   const { candidates, undetermined } = withRoutes(found);
   for (const u of undetermined) {
     console.error(
@@ -1563,7 +1691,9 @@ function main(): number {
 
   for (const m of mounts) {
     const withheld = withheldPaths(m.dir);
-    cpSync(m.dir, join(siteAbs, m.route), { recursive: true, filter: withheldFilter(m.dir, withheld) });
+    // `realpathSync`: a subscribed directory is a link to its held tree, and copying a link copies a link.
+    const src = realpathSync(m.dir);
+    cpSync(src, join(siteAbs, m.route), { recursive: true, filter: withheldFilter(src, withheld) });
     if (withheld.length) {
       console.log(`  /${m.route}/: withheld ${withheld.length} path(s) named by its ${WITHHELD_FILE}: ${withheld.join(", ")}`);
     }
@@ -1617,7 +1747,8 @@ function main(): number {
       continue;
     }
     const withheld = withheldPaths(sv.dir);
-    cpSync(sv.dir, dest, { recursive: true, filter: withheldFilter(sv.dir, withheld) });
+    const src = realpathSync(sv.dir);
+    cpSync(src, dest, { recursive: true, filter: withheldFilter(src, withheld) });
     servedDone.push({ route: sv.route, files: countFiles(dest) });
   }
 
@@ -1680,7 +1811,7 @@ function main(): number {
   }
 
   if (mounts.length === 0 && refused.length === 0 && written.length === 0) {
-    if (servedProblems.length) return 1;
+    if (servedProblems.length || subscribedRead.problems.length) return 1;
     console.log("mount-instance-docs: nothing declared has rendered content to mount.");
     return 0;
   }
@@ -1706,7 +1837,7 @@ function main(): number {
     // published" (1,377 printed for a /who-iris/ that received 131).
     const w = withheldPaths(m.dir).length;
     console.log(
-      `  ${m.dir.slice(REPO.length + 1)}  ->  /${m.route}/  (${countFiles(m.dir)} file(s) in source` +
+      `  ${m.dir.startsWith(REPO) ? m.dir.slice(REPO.length + 1) : m.dir}  ->  /${m.route}/  (${countFiles(m.dir)} file(s) in source` +
         `${w ? `, ${w} withheld path(s) not copied` : ""})`,
     );
   }
@@ -1723,6 +1854,7 @@ function main(): number {
     for (const p of assetProblems) console.error(`  ${p}`);
   }
   if (servedProblems.length) failed = true;
+  if (subscribedRead.problems.length) failed = true;
   if (redirectProblems.length) {
     failed = true;
     console.error(`\n${redirectProblems.length} kind-route redirect(s) REFUSED:`);

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-4tts
 title: 'IG VARIABLES via Liquid: lift generate_smart_liquid.py into site.data and render IG pages from Jekyll/Liquid templates in one pass'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-01T12:36:15Z
-updated_at: 2026-10-01T12:42:30Z
+updated_at: 2026-10-06T19:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -55,3 +55,9 @@ as `fhir-ig-scripts`); `artifactVariables` computes `artifacts_listed` and
 `text.label`, so the template neither counts nor escapes. Re-verified by a
 Jekyll build: 677 artefacts, same sequence and 7 categories as the
 Publisher's `artifacts.html`.
+
+## Summary of Changes
+
+Closed 2026-10-06 by claude/sep-bookkeeping-s1-s3 (7x5n sweep of in-progress beans whose work has landed). Every Done-when box was already ticked by its holder. That was NOT taken as the evidence: the measurement below was re-run on main at 24b221415 (2026-10-06), and no open PR names this bean.
+
+- `fhir-harness/scripts/templates/ig-site/artifacts.liquid` is on main (box 3: a Publisher page kind rendered from a Liquid template). The holder's Jekyll re-verification is recorded above: 677 artefacts, same sequence and 7 categories as the Publisher's `artifacts.html`.

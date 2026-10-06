@@ -166,7 +166,7 @@
 <li><a href="../cat-openapi-schemas/">cat-openapi-schemas</a> <span class="p">cat-openapi/schemas</span> <span class="n">1</span></li>
 <li><a href="../core-schemas/">core-schemas</a> <span class="p">folio-assistant-core/schemas</span> <span class="n">12</span></li>
 <li><a href="../fhir-harness-schemas/">fhir-harness-schemas</a> <span class="p">fhir-harness/schemas</span> <span class="n">7</span></li>
-<li><strong>schemas</strong> <span class="p">cat-harness/schemas</span> <span class="n">174</span></li>
+<li><strong>schemas</strong> <span class="p">cat-harness/schemas</span> <span class="n">176</span></li>
 <li><a href="../smart-base-schemas/">smart-base-schemas</a> <span class="p">smart-base/schemas</span> <span class="n">5</span></li>
 </ul>
 
@@ -289,6 +289,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/content-adapter-node.ts"><code>content-adapter-node</code></a><br><span class="p">cat-harness/schemas/content-adapter-node.ts</span></td>
   <td>A content adapter's block VOCABULARY as a KG node: <code>folio-content-adapter/v1</code>, one JSON file per adapter in a <code>content-adapters/</code> graph the owning harness declares (bean riit, step 5).</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/content-context.ts"><code>content-context</code></a><br><span class="p">cat-harness/schemas/content-context.ts</span></td>
+  <td>The <code>@context</code> a content document carries, built from the types it uses.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/content-type.ts"><code>content-type</code></a><br><span class="p">cat-harness/schemas/content-type.ts</span></td>
@@ -597,6 +601,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/referenced-source.ts"><code>referenced-source</code></a><br><span class="p">cat-harness/schemas/referenced-source.ts</span></td>
   <td><code>referenced.json</code>: a library entry that RECORDS a source and holds none of its text, written by <code>scripts/referenced-source.py</code>.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/remote-mount.ts"><code>remote-mount</code></a><br><span class="p">cat-harness/schemas/remote-mount.ts</span></td>
+  <td>REMOTE MOUNTS — a harness, and its dependency closure, read from another repository at a pinned commit and laid down as declared directories.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/render-log.ts"><code>render-log</code></a><br><span class="p">cat-harness/schemas/render-log.ts</span></td>
