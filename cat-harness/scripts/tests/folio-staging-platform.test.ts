@@ -93,3 +93,55 @@ describe("folio-staging passes render-log only paths it accepts", () => {
     for (const p of literals) expect({ path: p, safe: isSafeRenderPath(p) }).toEqual({ path: p, safe: true });
   });
 });
+
+describe("stage: a dispatched run finds its pull request (ehh6)", () => {
+  // smart-ra#26: its staging runs only by dispatch, so the run said "PR n/a",
+  // commented nothing and ingested no review comments, though GitHub listed
+  // the run under the PR. These run the step's own script with a fake `gh`.
+  const find = step("stage", "Find the pull request");
+  const bin = mkdtempSync(join(tmpdir(), "fake-gh-"));
+  writeFileSync(
+    join(bin, "gh"),
+    '#!/usr/bin/env bash\n[ -n "${FAKE_GH_FAIL:-}" ] && exit 1\nwhile [ $# -gt 0 ]; do [ "$1" = --jq ] && Q="$2"; shift; done\nprintf %s "$FAKE_GH" | jq -c "$Q"\n',
+    { mode: 0o755 },
+  );
+  const dispatch = (prs: unknown[], extra: Record<string, string> = {}) =>
+    run(find.run!, realpathSync(mkdtempSync(join(tmpdir(), "runner-"))), {
+      PATH: `${bin}:${process.env.PATH}`, EVENT_PR: "", EVENT_BASE: "", BRANCH: "claude/x", GITHUB_REPOSITORY: "o/r", FAKE_GH: JSON.stringify(prs), ...extra,
+    });
+
+  test("a pull_request run keeps its own number and base, and asks nothing", () => {
+    // A lookup would fail loudly here, so a quiet run proves none was made.
+    const r = dispatch([], { EVENT_PR: "7", EVENT_BASE: "main", FAKE_GH_FAIL: "1" });
+    expect(r.status).toBe(0);
+    expect(r.out).toEqual({ number: "7", base: "main" });
+    expect(r.stderr).not.toContain("could not list");
+  });
+
+  test("a dispatch takes the branch's one open PR from this repository; a fork's branch of the same name is not it", () => {
+    const r = dispatch([{ number: 26, baseRefName: "main", isCrossRepository: false }, { number: 99, baseRefName: "main", isCrossRepository: true }]);
+    expect(r.status).toBe(0);
+    expect(r.out).toEqual({ number: "26", base: "main" });
+  });
+
+  test("no PR, several, or a failed lookup: tied to none, and the run goes on", () => {
+    expect(dispatch([]).out).toEqual({});
+    const two = dispatch([{ number: 1, baseRefName: "main", isCrossRepository: false }, { number: 2, baseRefName: "dev", isCrossRepository: false }]);
+    expect(two.out).toEqual({});
+    expect(two.stderr).toContain("several open pull requests");
+    const failed = dispatch([], { FAKE_GH_FAIL: "1" });
+    expect(failed.status).toBe(0);
+    expect(failed.out).toEqual({});
+    expect(failed.stderr).toContain("could not list pull requests");
+  });
+
+  test("every later step reads the PR from this step, never from the event", () => {
+    const later = jobs.stage!.steps.slice(jobs.stage!.steps.indexOf(find) + 1);
+    const text = JSON.stringify(later);
+    expect(text).not.toContain("github.event.pull_request.number");
+    expect(text).not.toContain("github.event.pull_request.base");
+    expect(text).not.toContain("event_name == 'pull_request'");
+    expect(text).not.toContain("context.issue.number");
+    for (const n of ["Ingest review comments", "Comment staging URL on PR"]) expect((step("stage", n) as Step & { if?: string }).if).toBe("steps.pr.outputs.number != ''");
+  });
+});
