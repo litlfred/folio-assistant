@@ -63,3 +63,9 @@ Measured on `claude/laughing-fermat-v46nqs` @ d82b69e11 and on local branch `loc
 Other jobs on the box: other sessions' regen/gates and `bun test` (worktrees 2197, 2088), and a `git index-pack`. The two gates runs are not directly comparable on wall time.
 
 **Where the gate time goes now:** two SERIAL gates are 2021 of 2765 s: `bun test` (1525 s) and `check:cat-harness-standalone` (496 s, undeclared, so it runs as a barrier). The 10 skippable gates cost about 250 s of summed time in the base run.
+
+## 2026-10-06 (late): f017 measured on PR #2327 (`244608c`)
+
+- **regen warm:** 179 s with 62 of 121 pairs skipped (231 s and 13 before). Cold: 404 s.
+- **gates on the same tree:** 136 of 251 gates skipped (10 before).
+- **gates wall time:** 1840 s, nearly unchanged. `bun test` (935 s) and `check:cat-harness-standalone` (338 s) are serial and not skippable, and together they are 1273 s of that. The next speed-up is theirs: v3nf, and test sharding. Details are in bean f017.

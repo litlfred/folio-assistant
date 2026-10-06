@@ -68,6 +68,31 @@ Work is on branch `claude/f017-input-hash-coverage`, PR #2327, issue #2325.
   - `skill:register:check` spawns `uml:overview:check`, which reads the network.
   - `lsi:viz:check` reads the qa-reports branch at `main` when its indexes are not checked out.
   - The audit now refuses the first. The trace refuses the second for any run that read the store.
-- **Open:**
-  - Wall-time before and after, same tree.
-  - About 57 tasks are still blocked by unreviewed sites; `--blockers` lists them. The biggest are kind-validator, staging-stamp and kg-export.
+- **Open (follow-up, not this PR):** about 57 tasks are still blocked by unreviewed sites; `--blockers` lists them. The biggest are kind-validator, staging-stamp and kg-export.
+
+### Measured on `244608c`, same tree
+
+All runs used Bun 1.3.14 on 4 shared CPUs. Load is noted per run.
+
+| run | wall | user | sys | load | skipped |
+|---|---|---|---|---|---|
+| regen, cold cache | 404 s | 786 s | 312 s | 1–3.5 | 0 |
+| regen, warm | **179 s** | 321 s | 140 s | 3.5–4 | **62 of 121 pairs** |
+| gates after regen | 1876 s | 1907 s | 655 s | 2–4 | 62 of 251 |
+| gates again, same tree | 1840 s | **1820 s** | 678 s | 2–3 | **136 of 251** |
+| gates, cold (earlier commit, includes the QA working-copy build) | 2117 s* | 2555 s | 738 s | 1–3 | 0 |
+
+\* This is the gate loop's own wall time. The full command took 2425 s.
+
+**Against the earlier figures in this bean:**
+- regen warm took 231 s with 13 pairs skipped. It now takes 179 s with 62 skipped.
+- gates on the same tree skipped 10. It now skips 136.
+
+**Why gates wall time barely moves:** two serial gates take 1273 s of the 1840 s. `bun test` takes 935 s and `check:cat-harness-standalone` takes 338 s. Neither can be skipped by input hash: `bun test` reads tmp dirs, the clock and spawns, and the standalone check is not declared. So skipping cuts CPU, about 29% less user time than a cold gates run, but the critical path stays. That is a parallelism and test-sharding question for v3nf and xpcu, not for f017.
+
+**Two failures in the local gates runs, neither from this PR:**
+- `check:reference-direction:check --against main` fails identically on a clean `origin/main` worktree.
+- `bun test` failures:
+  - The attestation-history test fails because this clone is shallow.
+  - `workflow-overlay` "OUTSIDE the root" timed out at 5660 ms under full-suite load. It passes alone on both the branch and main, and the whole file takes 4.4–5.1 s alone on either.
+- CI is green on every job on `244608c`.
