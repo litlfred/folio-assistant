@@ -45,7 +45,7 @@ Branch `agent/ig-create-subkg` (local, not pushed).
 | 11 | verify from a fresh clone; measured falsifier "Cannot find module ../../../fhir-harness" | #2082, w1gy |
 | 12 | cutover deletes the in-repo copy only on the owner's OK | n3ni F, arc S8, deletion-requires-confirmation |
 
-- [ ] owner answers the open decisions below
+- [x] owner answers the open decisions below (1 yes, 2 yes, 3 frozen copy in fsh-guts)
 - [ ] PR opened and green (the branch is local only; this session did not push)
 
 ## Validation (2026-10-06, branch agent/ig-create-subkg)
@@ -69,7 +69,7 @@ skill:register (two passes to a fixed point) and skill:register:check: green. re
 ## Todo (from the rulings)
 - [x] `init-folio --staged <path>`, with a test that it writes the declaration and nothing at the repository level (`init-folio-staged.test.ts` snapshots the whole host tree; branch agent/3tza-rulings)
 - [x] fresh-clone verification command `sub-kg:verify-clone` (`cat-harness-tools/scripts/verify-clone.ts`, Tool `sub-kg-verify-clone` satisfying `sub-kg-lifecycle`), named by the lifecycle's verify task; `verify-clone.test.ts` covers green / red / unknown
-- [ ] lifecycle: replace "retire the in-repo copy" with "mirror read-only into fsh-guts". **Held, not built:** fsh-guts does not fit a refreshed mirror (see below). The confirmation task stays and now says it is not taken past until this is answered.
+- [x] lifecycle: replace "retire the in-repo copy" with a FROZEN copy in fsh-guts/separated/ (ruling 3 clarified: "1"). **Held, not built:** fsh-guts does not fit a refreshed mirror (see below). The confirmation task stays and now says it is not taken past until this is answered.
 
 ### Ruling 3: what fsh-guts is, and why it does not fit a mirror as stated
 
@@ -83,3 +83,6 @@ Question for the owner. Which do you mean by "read only mirror in fsh-guts"?
 3. **A refreshed mirror inside fsh-guts.** fsh-guts gains a "mirror" kind refreshed from upstream. This is a new design for fsh-guts and needs its own bean.
 
 Default if unanswered: nothing is deleted or relocated. Stage 13 waits at its confirmation.
+
+## Ruling 3 clarified (owner, 2026-10-06: "1")
+A FROZEN copy in fsh-guts: at cutover the in-repo directory moves to `fsh-guts/separated/<name>/` with one note naming the new repository and commit. Built into `sub-kg-lifecycle.bpmn` steps 12-13 and the skill.
