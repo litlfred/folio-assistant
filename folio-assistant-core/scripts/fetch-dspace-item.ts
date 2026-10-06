@@ -119,11 +119,16 @@ interface Fetched {
   intake: Intake;
 }
 
-async function json(url: string): Promise<any> {
+/** GET a DSpace REST resource; `T` names only the fields the caller reads. */
+async function json<T>(url: string): Promise<T> {
   const r = await fetch(url, { headers: { accept: "application/json" } });
   if (!r.ok) throw new Error(`${url}: HTTP ${r.status}`);
-  return r.json();
+  return (await r.json()) as T;
 }
+
+type DspaceItem = { metadata: Parameters<typeof dspaceToRecord>[1] };
+type DspaceBundles = { _embedded: { bundles: { name: string; _links: { bitstreams: { href: string } } }[] } };
+type DspaceBitstreams = { _embedded: { bitstreams: { name: string; _links: { content: { href: string } } }[] } };
 
 /** Resolve a handle URL to the item, its metadata and its one ORIGINAL PDF. */
 export async function fetchItem(handleUrl: string, now = new Date()): Promise<Fetched> {
@@ -135,14 +140,14 @@ export async function fetchItem(handleUrl: string, now = new Date()): Promise<Fe
   const uuid = /\/items\/([0-9a-f-]{36})/.exec(redirect.headers.get("location") ?? "")?.[1];
   if (!uuid) throw new Error(`${origin}/handle/${handle} did not redirect to an item (HTTP ${redirect.status})`);
   const api = `${origin}/server/api/core/items/${uuid}`;
-  const item = await json(api);
+  const item = await json<DspaceItem>(api);
   const retrievedAt = now.toISOString().replace(/\.\d+Z$/, "Z");
   const record = dspaceToRecord(uuid, item.metadata, api, retrievedAt);
 
-  const bundles = await json(`${api}/bundles`);
-  const original = bundles._embedded.bundles.find((b: { name: string }) => b.name === "ORIGINAL");
+  const bundles = await json<DspaceBundles>(`${api}/bundles`);
+  const original = bundles._embedded.bundles.find((b) => b.name === "ORIGINAL");
   if (!original) throw new Error(`${api}: no ORIGINAL bundle`);
-  const streams = (await json(original._links.bitstreams.href))._embedded.bitstreams as { name: string; _links: { content: { href: string } } }[];
+  const streams = (await json<DspaceBitstreams>(original._links.bitstreams.href))._embedded.bitstreams;
   const pdfs = streams.filter((s) => /\.pdf$/i.test(s.name));
   // More than one PDF is a choice (language editions, annexes) and is refused, not guessed.
   if (pdfs.length !== 1) throw new Error(`${api}: ${pdfs.length} PDF bitstreams (${streams.map((s) => s.name).join(", ")}) — name the one to ingest`);

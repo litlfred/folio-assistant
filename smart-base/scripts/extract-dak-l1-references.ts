@@ -65,9 +65,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
-import { handleFromUrl } from "../../folio-assistant-core/schemas/catalogue.ts";
-import { readStructure } from "../platform.js";
-import { DublinCoreRecordSchema, type DublinCoreRecord } from "../../folio-assistant-core/schemas/dublin-core.ts";
+import { DublinCoreRecordSchema, handleFromUrl, readStructure, type DublinCoreRecord } from "../platform.js";
 import { isCurrent, L1_CONTEXT, L1_ONTOLOGY_VERSION, publicationId, readEntry, readIsbn, serialise, type LibraryEntry } from "./extract-smart-kg-l1.ts";
 
 /** Written beside the DAK's entry. Not `smart-kg-l1.json`: that name is the recommendation extractor's. */
