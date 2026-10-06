@@ -528,13 +528,45 @@ drafts: [{block, source_hash, text}]}`, with `source_hash` echoed from
 longer matches, and a block that already has a current summary.
 
 **Drain K at a time during ingestion work**, not all at once: a thousand
-unreviewed drafts at once is a buried reviewer. Write 1–3 sentences in your
-own words, from the block's text only, adding nothing from outside it. If the
+unreviewed drafts at once is a buried reviewer. Write in your own words, from
+the block's text only, adding nothing from outside it.
+
+**Length scales with the source** (owner, 2026-10-06: *"summaries 1-4
+short-medium-long sentences depending on length of source content"*):
+
+| source text | summary |
+|---|---|
+| under ~150 words | 1 short sentence |
+| ~150–600 words | 2 sentences, short to medium |
+| ~600–2,000 words | 3 medium sentences |
+| over ~2,000 words | 4 sentences, medium to long |
+
+A one-paragraph section does not earn four sentences, and a chapter is not
+done justice by one. If the
 extraction put the wrong text under a heading, summarise what is there and say
 so. The backlog is reported by `check:l1-complete` (`block-summaries`) and on
 the library page. It is advisory, never a gate. What the gate does fail is a
 sidecar that does not parse, names another entry, or holds a record for a block
 or source that is not there.
+
+### The Document panel — what a reader browses (issue #2302)
+
+Every entry carrying a `structure.json` gets a **Document** panel in the
+library viewer, built from the ingestion schema by
+`cat-harness/scripts/lib/library-document.ts` and published as
+`assets/library/entries/<id>.doc.json` (`folio-library-document/v1`) by
+`bun run library:viz`. Tabs: **Contents** (the TOC as a tree, collapsed below
+the first level that branches, each inferred entry's confidence, linking to its
+section), **Pages** (physical page, printed label, sections starting, figures),
+**Figures & tables**, **Sections** (the summary, else an *extract* — the
+section's own opening text, labelled as such and cut at a word), **Checks**
+(contents vs body, numbering gaps, page-label conflicts). Because it reads the
+schema, a new field in `structure.json` reaches every library at once; a field
+an older ingestion lacks shows "not recorded — re-ingest", never an empty table.
+
+For a withheld entry the panel keeps structure, page labels, figure and table
+**captions** (labels, like TOC titles — owner, 2026-10-06) and our summaries,
+and omits only section body extracts.
 
 ### A WITHHELD entry in the viewer — its summary, else the gate, never "no content" (issue #1794)
 

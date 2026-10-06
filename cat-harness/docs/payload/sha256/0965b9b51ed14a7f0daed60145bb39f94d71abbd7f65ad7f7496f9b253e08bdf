@@ -119,6 +119,10 @@ skills point here.
 Reference implementation: `gen-library-viz.ts` (`viewerHtml`, `VIEWER_JS`,
 `VIEWER_CSS`) and `scripts/lib/library-address.ts`; browser check
 `test/library-entry-iri.e2e.ts`.
+A library entry's DOCUMENT view — TOC, pages with printed labels, figures,
+sections, checks — is `scripts/lib/library-document.ts`: a projection read
+from the ingestion schema plus the browser code that renders it, kept in one
+module so a test runs the same text the page runs.
 
 ## Do not draw the whole graph
 
