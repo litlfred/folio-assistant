@@ -7,6 +7,7 @@ section_number: 9.5.2
 pages: 131-132
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 observational studies
 Observational studies are considered low quality evidence from the outset by virtue 
