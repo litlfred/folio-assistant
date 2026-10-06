@@ -2,6 +2,10 @@
 title: "Retrieve HL7 FHIR compatible business rules — WHO SMART Trust artefact"
 description: "Requirements/RetrieveBusinessRulesFHIR in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Requirements-RetrieveBusinessRulesCertLogic.html"
+ig_next: "Requirements-RetrievePKIMaterial.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Retrieve business rules from a distribution point using HL7 FHIR standards
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 19 of 678 carry one.
-
-<footer id="ig-footer" data-prev="Requirements-RetrieveBusinessRulesCertLogic.html" data-next="Requirements-RetrievePKIMaterial.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -2,6 +2,10 @@
 title: "Smart Guidelines Documentation Section — WHO SMART Base artefact"
 description: "ValueSet/DocumentationSection in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ValueSet-DecisionTableActions.html"
+ig_next: "ValueSet-ISCO08ValueSet.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Value Set for Smart Guidelines Documentation Section to autogenerate documentati
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="ValueSet-DecisionTableActions.html" data-next="ValueSet-ISCO08ValueSet.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

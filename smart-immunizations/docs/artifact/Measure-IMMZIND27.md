@@ -2,6 +2,10 @@
 title: "IMMZIND27 — WHO SMART Immunizations artefact"
 description: "Measure/IMMZIND27 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Measure-IMMZIND26.html"
+ig_next: "Measure-IMMZIND28.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ IMMZ.IND.27 Immunization coverage for JE vaccines
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="Measure-IMMZIND26.html" data-next="Measure-IMMZIND28.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

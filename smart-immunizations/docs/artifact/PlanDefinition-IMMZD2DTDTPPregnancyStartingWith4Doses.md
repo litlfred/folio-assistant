@@ -2,6 +2,10 @@
 title: "IMMZ.D2.DT.DTP.Pregnancy starting with 4 doses — WHO SMART Immunizations artefact"
 description: "PlanDefinition/IMMZD2DTDTPPregnancyStartingWith4Doses in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "PlanDefinition-IMMZD2DTDTPPregnancyStartingWith3Doses.html"
+ig_next: "PlanDefinition-IMMZD2DTHepatitisAInactivatedHAV1Dose.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ IMMZ.D2.DT.DTP.Pregnancy starting with 4 doses Diphtheria and tetanus vaccinatio
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="PlanDefinition-IMMZD2DTDTPPregnancyStartingWith3Doses.html" data-next="PlanDefinition-IMMZD2DTHepatitisAInactivatedHAV1Dose.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

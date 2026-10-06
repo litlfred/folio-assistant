@@ -307,4 +307,5 @@ This skill has its own process: **[A knowledge graph leaves for its own reposito
 | process | step(s) that name it |
 |---|---|
 | [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | Measure the signals; Separate this graph?; 4 · Identity: version, iriBase, nodeSchemas; 5 · Move harness output about it to the host; 6 · Split content from tools; 8 · Rehearse standalone; Create the repositories; Drain: land, close or re-target the open PRs; 10 · Seed both repositories |
+| [A sub-KG is staged in place, then leaves for its own repository](../../processes/sub-kg-lifecycle.html) | Drain: land, close or re-target the open PRs |
 

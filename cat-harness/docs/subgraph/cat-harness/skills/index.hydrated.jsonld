@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "fileCount": 278,
+      "fileCount": 280,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
@@ -961,13 +961,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/conduct-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 226,
+              "instructionLines": 242,
               "instructionsPath": "skills/conduct/conduct-core/getting-started.md",
               "name": "getting-started",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1a4d47dcc8827d57fcbee4e380988872694d1071796d3625632d38b10aa66042",
-                "bytes": 12896,
-                "sha256": "1a4d47dcc8827d57fcbee4e380988872694d1071796d3625632d38b10aa66042"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6c10f861c9d518abbb86411bca4c24f110317c36666e38018fa986d72d302b5c",
+                "bytes": 13883,
+                "sha256": "6c10f861c9d518abbb86411bca4c24f110317c36666e38018fa986d72d302b5c"
               },
               "title": "/getting-started — what did they actually ask for?"
             },
@@ -1364,7 +1364,8 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-detanglement",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-rendering",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation",
-                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lsi-indexing"
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lsi-indexing",
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sub-kg-lifecycle"
               ],
               "description": "How a graph is RESTRUCTURED — detanglement, sub-graph declaration in place, and extraction when a part of it should leave — and how any graph is DRAWN so the restructuring can be seen (graph-rendering). The complement of kg-navigation, which answers how a graph is READ and has no write, restructure, split or extract operation in it. Split out rather than added to folio-core for the reason the `workflow` package was: folio-core holds 97 skills, and a package that holds everything is one nobody can be pointed at.",
               "hasManifest": true,
@@ -1439,13 +1440,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 140,
+              "instructionLines": 176,
               "instructionsPath": "skills/kg/graph-management/graph-rendering.md",
               "name": "graph-rendering",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/26805cde335e323433857bd5ceb5c663c869b077bc195b3dffa1a8b568d4b50e",
-                "bytes": 9071,
-                "sha256": "26805cde335e323433857bd5ceb5c663c869b077bc195b3dffa1a8b568d4b50e"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/eab87eba224a4ee1316735cdeafc9f9d72617f1351f9ef82ee79cb07d5fda1cf",
+                "bytes": 11400,
+                "sha256": "eab87eba224a4ee1316735cdeafc9f9d72617f1351f9ef82ee79cb07d5fda1cf"
               },
               "title": "Graph rendering: one set of rules for every drawn graph"
             },
@@ -1486,6 +1487,25 @@
                 "sha256": "0fc1a338debc2461ae060e8f52bb35197e79f3fd4fac6e261efa71e27929d47e"
               },
               "title": "LSI indexing — the platform's application of `methodologies/lsi.md`"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sub-kg-lifecycle",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "A sub-KG is a knowledge graph staged as a directory inside a harnessed repository, declared as its own instance, that may later leave for a repository of its own. The lifecycle: declare it in place, grow it, stage it for separation (one import seam, the separation guard, a self-contained rehearsal), and then, each behind an explicit owner confirmation, create the repository, copy the staged contents in with history, re-point the declaration, verify on a fresh clone and delete the in-repo copy. Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-06 (beans n3ni, rbz3, kg83, hcpz). The light sibling of kg-separation: use this for a DATA instance that leaves whole, and kg-separation when a graph must split into a content repository and a tools repository.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 282,
+              "instructionsPath": "skills/kg/graph-management/sub-kg-lifecycle.md",
+              "name": "sub-kg-lifecycle",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/985eb47f6a6620b91a1fe60dcbfebfa3f52616d15b876ae9f7171d3fed49cd5d",
+                "bytes": 15464,
+                "sha256": "985eb47f6a6620b91a1fe60dcbfebfa3f52616d15b876ae9f7171d3fed49cd5d"
+              },
+              "title": "Sub-KG lifecycle — staged here, separated later"
             }
           ],
           "holdsGraph": [
@@ -1677,9 +1697,9 @@
               "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
               "name": "directory-conventions",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f51f2af8bfd0168b7c2201fd0f45f54094410b82c46c8af350186feaaeaebe84",
-                "bytes": 122891,
-                "sha256": "f51f2af8bfd0168b7c2201fd0f45f54094410b82c46c8af350186feaaeaebe84"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2abf1481207e42e1c21d5d4681e21f444555450f74962dcd12a63915e1d45630",
+                "bytes": 122888,
+                "sha256": "2abf1481207e42e1c21d5d4681e21f444555450f74962dcd12a63915e1d45630"
               },
               "title": "Directory conventions — what an instance declares it scans"
             },
@@ -2263,13 +2283,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 133,
+              "instructionLines": 146,
               "instructionsPath": "skills/library/library-core/library-ingestion.md",
               "name": "library-ingestion",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/16c0d72822f48ac638faf9438ede41452247ffc4b3d1ac99d1dadba667469bc4",
-                "bytes": 7651,
-                "sha256": "16c0d72822f48ac638faf9438ede41452247ffc4b3d1ac99d1dadba667469bc4"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8df00722fff79e2004bfca430f9f5454a79502030ce6b98ff681b52a9d941271",
+                "bytes": 8399,
+                "sha256": "8df00722fff79e2004bfca430f9f5454a79502030ce6b98ff681b52a9d941271"
               },
               "title": "Library ingestion — the basic flow"
             },
@@ -3149,6 +3169,7 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-witness",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ref-stewardship",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/related-work-coordination",
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-impact",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-verification",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-intent",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review",
@@ -3275,13 +3296,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 401,
+              "instructionLines": 407,
               "instructionsPath": "skills/sdlc/sdlc-core/before-after-preview.md",
               "name": "before-after-preview",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/86d4787caba578530c2dfc8caeea7e1c1725401a7265a06275a20d7c8c8705f5",
-                "bytes": 20395,
-                "sha256": "86d4787caba578530c2dfc8caeea7e1c1725401a7265a06275a20d7c8c8705f5"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/05f74543442f132221f4d077ee78ec0cbb0d8434cb7c8e12db3bc4bef3fb60d1",
+                "bytes": 20732,
+                "sha256": "05f74543442f132221f4d077ee78ec0cbb0d8434cb7c8e12db3bc4bef3fb60d1"
               },
               "title": "/before-after-preview — show the reviewer the change, not a description of it"
             },
@@ -4006,6 +4027,25 @@
               "title": "Related work: find it, sort it, ask"
             },
             {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-impact",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The list of rendered files a Change Set alters, and how a reviewer approves against it. Each renderer maps the input files a change touched to the rendered files of its site through its dependency cone, before any build; a build diff then confirms the prediction. Use when opening or reviewing a Change Set PR, when asked \"which pages does this change\", when a prediction and a build disagree, or when adding a renderer.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 115,
+              "instructionsPath": "skills/sdlc/sdlc-core/rendered-impact.md",
+              "name": "rendered-impact",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0bbed8731b4c116aaadf2d119faa671620ef6a703783bf81435841a4d3432e89",
+                "bytes": 6263,
+                "sha256": "0bbed8731b4c116aaadf2d119faa671620ef6a703783bf81435841a4d3432e89"
+              },
+              "title": "Rendered impact — which rendered files a Change Set changes"
+            },
+            {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-verification",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -4052,13 +4092,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 673,
+              "instructionLines": 682,
               "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
               "name": "staging-review",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7d791e3038c42b4b3771f02d80cc6a5c172f867fb2b48bf2043f29340c44850b",
-                "bytes": 33698,
-                "sha256": "7d791e3038c42b4b3771f02d80cc6a5c172f867fb2b48bf2043f29340c44850b"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/63aa0038ab5fa53883371fdd45acf28e0ebc734a74c9d93fe17fe3c78d992641",
+                "bytes": 34128,
+                "sha256": "63aa0038ab5fa53883371fdd45acf28e0ebc734a74c9d93fe17fe3c78d992641"
               },
               "title": "Staging review — before/after comparison"
             },
@@ -4679,13 +4719,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 596,
+              "instructionLines": 619,
               "instructionsPath": "skills/ui/ui-core/harness-tiles.md",
               "name": "harness-tiles",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6653f76219ada69330eb6145acf7e2912d416acc4a8eadac9390cbb3d14ac7bd",
-                "bytes": 33501,
-                "sha256": "6653f76219ada69330eb6145acf7e2912d416acc4a8eadac9390cbb3d14ac7bd"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e583d471331be2ed503b42c3c3ed8c1693b61ac6ef6616f99c6b115260bfe5c9",
+                "bytes": 35686,
+                "sha256": "e583d471331be2ed503b42c3c3ed8c1693b61ac6ef6616f99c6b115260bfe5c9"
               },
               "title": "A tile is the harness's, not the node's"
             },

@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "Two packages. `fhir-client` is SMART on FHIR app launch (`smart-launch`) and FHIR resource operations (`fhir-client-operations`) through the SMARTerFHIR library, authored here against a pinned upstream commit because that repository ships no skill files (issue #556, bean `wlqd`). `fhir-ig-base` is the IG pipeline. `ig-build-pipeline` states what the layer runs and the list of things it refuses to know about, including the deploy phase's assignment. `ig-render-jekyll` states the three render contracts -- JSON only, navigation derived from `sushi-config.yaml`'s own ordered `pages:` and `menu:` maps rather than authored, and the LHS rail with the IG theme captured rather than discarded. `ig-publisher-reduction` is the five-phase transition to an AST-only Publisher, each phase carrying an exit criterion that is a measurement or a diff rather than an impression. `ig-publisher-fork` is the brief for the AST work: built as a library ON TOP of the Publisher (`ast-export/` on `litlfred/fhir-ig-publisher@claude/ast-export`), with the Library/PlanDefinition/Measure edges supplied beside the publisher's own `DependencyAnalyser`, where upstream leaves them empty. Only page-fragment provenance needs `org.hl7.fhir.core`. `ig-ast-delta` is the consumer half: list, check (`compiledValidity` on the AST's inputs), diff and render deltas between ASTs, every page carrying the provisional mark P3 requires.",
-      "fileCount": 23,
+      "fileCount": 24,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
@@ -172,6 +172,24 @@
       "@type": "bootstrap:Subgraph",
       "hasMember": [
         {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-ig-create",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Somebody asked for a new FHIR Implementation Guide. Decide where it lives, in a new repository of its own or as a staged sub-KG inside the harnessed repository the session is already in, by reading three facts and, when they do not settle it, asking ONE numbered question with a default. Then route: a new repository goes to init-folio; an in-repository IG is declared as a staged instance and follows sub-kg-lifecycle, so it can move to its own repository later. FHIR-generic only; a harness built on this one may specialise it. Use whenever a user asks to create, start, set up or stand up an IG, an implementation guide, or a FHIR guide.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
+          "instructionLines": 156,
+          "instructionsPath": "skills/fhir-ig-base/fhir-ig-create.md",
+          "name": "fhir-ig-create",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/958243f446205dbdeb75a7af02d8e25e013adffff891fac6bb36497103776a2d",
+            "bytes": 7956,
+            "sha256": "958243f446205dbdeb75a7af02d8e25e013adffff891fac6bb36497103776a2d"
+          },
+          "title": "fhir-ig-create"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-ast-delta",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -179,13 +197,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
-          "instructionLines": 193,
+          "instructionLines": 206,
           "instructionsPath": "skills/fhir-ig-base/ig-ast-delta.md",
           "name": "ig-ast-delta",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f222f605064ad20c3fb2e7e1f8d5693d2e1ea58c31b7215e4edfbab8d9aa2b6d",
-            "bytes": 10253,
-            "sha256": "f222f605064ad20c3fb2e7e1f8d5693d2e1ea58c31b7215e4edfbab8d9aa2b6d"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e652c43d9e19101796d803221fbe6fe67d9c8bca8fa79a96f2da0f789fb6f561",
+            "bytes": 10845,
+            "sha256": "e652c43d9e19101796d803221fbe6fe67d9c8bca8fa79a96f2da0f789fb6f561"
           },
           "title": "ig-ast-delta"
         },
@@ -287,13 +305,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
-          "instructionLines": 83,
+          "instructionLines": 96,
           "instructionsPath": "skills/fhir-ig-base/ig-site-links.md",
           "name": "ig-site-links",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e443015d740c9c9e36aa09b2e91b3d808d165852471b0aecf892c33bf86d797f",
-            "bytes": 4708,
-            "sha256": "e443015d740c9c9e36aa09b2e91b3d808d165852471b0aecf892c33bf86d797f"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c0eff75ae49bbb875fcf014df55ebb82a8f774e4f53446d42d1d683b10b795ed",
+            "bytes": 5479,
+            "sha256": "c0eff75ae49bbb875fcf014df55ebb82a8f774e4f53446d42d1d683b10b795ed"
           },
           "title": "ig-site-links"
         },

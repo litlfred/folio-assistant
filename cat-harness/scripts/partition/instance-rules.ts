@@ -181,6 +181,7 @@ export const RULES: Rule[] = [
       "scripts/word-diff.ts",            // the word diff those renderers run, embedded by toString (bean `d903`)
       "scripts/review-heat.ts",          // the review page heat map, embedded by toString (bean `qbfi`)
       "scripts/review-nav.ts",           // the review page outline, breadcrumb and minimap, embedded by toString (bean `eb4l`)
+      "scripts/review-rendered.ts",      // the review page's rendered-pages list, embedded by toString (bean `bnjs`)
       "scripts/publish-block-qa.ts",     // a folio's QA verdicts summarised for the heat map (bean `qbfi`)
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
       "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)

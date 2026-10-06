@@ -3,6 +3,8 @@ title: "Retrieve Cert Logic compatible business rules — change history"
 description: "Retrieve CertLogic Business Rules - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Requirements-RetrieveBusinessRulesCertLogic.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Requirements-RetrieveBusinessRulesCertLogic.xml","active":false},{"label":"JSON","href":"Requirements-RetrieveBusinessRulesCertLogic.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Requirements-RetrieveBusinessRulesCertLogic.ttl","active":false}],"heading":"Retrieve CertLogic Business Rules - Change History","sections":[{"text":"History of changes for RetrieveBusinessRulesCertLogic ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

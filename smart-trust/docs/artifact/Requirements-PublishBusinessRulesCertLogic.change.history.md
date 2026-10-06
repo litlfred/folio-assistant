@@ -3,6 +3,8 @@ title: "Publish Cert Logic business rules — change history"
 description: "Publish CertLogic Business Rules - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Requirements-PublishBusinessRulesCertLogic.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Requirements-PublishBusinessRulesCertLogic.xml","active":false},{"label":"JSON","href":"Requirements-PublishBusinessRulesCertLogic.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Requirements-PublishBusinessRulesCertLogic.ttl","active":false}],"heading":"Publish CertLogic Business Rules - Change History","sections":[{"text":"History of changes for PublishBusinessRulesCertLogic ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

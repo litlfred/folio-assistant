@@ -3,6 +3,8 @@ title: "CBOR Web Token (CWT) Claim — change history"
 description: "Logical Model: CWT - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Content","href":"StructureDefinition-CWT.html","active":false},{"label":"Detailed Descriptions","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT-definitions.html","active":false},{"label":"Mappings","href":"StructureDefinition-CWT-mappings.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT.xml","active":false},{"label":"JSON","href":"StructureDefinition-CWT.profile.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-CWT.schema.json.html","active":false}],"heading":"Logical Model: CWT - Change History","status":"Active as of 2026-10-01","sections":[{"text":"Changes in the CWT logical model."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

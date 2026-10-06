@@ -2,6 +2,10 @@
 title: "User Scenario Source — WHO SMART Base artefact"
 description: "StructureDefinition/UserScenarioSource in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureDefinition-UserScenario.html"
+ig_next: "StructureDefinition-LinkIdExt.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-UserScenarioSource.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-UserScenarioSource.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
-
-<footer id="ig-footer" data-prev="StructureDefinition-UserScenario.html" data-next="StructureDefinition-LinkIdExt.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -225,7 +225,7 @@
     {
       "id": "process_contentchangereview.task_commentpr",
       "prefLabel": "Comment staging URL on PR",
-      "definition": "Bot comments or updates the staging URL on the PR. Includes commit SHA, branch name, and build log link.",
+      "definition": "Bot comments or updates the staging URL on the PR. Includes commit SHA, branch name, and build log link, and the review list of rendered files the change alters (skill rendered-impact), each linked on the preview and on main, with any input the renderer could not place named as not known.",
       "notation": "Task_CommentPR",
       "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_CommentPR",
       "status": "candidate"
@@ -241,7 +241,7 @@
     {
       "id": "process_contentchangereview.task_comparebeforeafter",
       "prefLabel": "Compare main vs staging",
-      "definition": "Review committee opens both URLs side by side: - Main site: <pages-url>/ (current published state) - Staging: <pages-url>/STAGING/<branch-slug>/ The staging banner shows the commit SHA so they can verify what they are reviewing matches the PR. A changed figure, diagram or table is also pictured before and after on the review page, with the share of changed pixels in words (skill visual-diff, Tool folio-block-screenshots). Anything the staging job cannot picture (page chrome, scroll behaviour, a PDF page, an IG page) is in the agent's before/after preview (skill before-after-preview).",
+      "definition": "The review starts from the Change Set's RENDERED list (skill rendered-impact): every rendered file the change alters, predicted from each renderer's dependency cone and checked against the build. The reviewer opens every content page on it, not only the pages the author mentions; index files are listed but not reviewed. An input the renderer could not place is shown as not known, never as no change. Review committee opens both URLs side by side: - Main site: <pages-url>/ (current published state) - Staging: <pages-url>/STAGING/<branch-slug>/ The staging banner shows the commit SHA so they can verify what they are reviewing matches the PR. A changed figure, diagram or table is also pictured before and after on the review page, with the share of changed pixels in words (skill visual-diff, Tool folio-block-screenshots). Anything the staging job cannot picture (page chrome, scroll behaviour, a PDF page, an IG page) is in the agent's before/after preview (skill before-after-preview).",
       "notation": "Task_CompareBeforeAfter",
       "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_CompareBeforeAfter",
       "status": "candidate"
@@ -369,7 +369,7 @@
     {
       "id": "process_contentchangereview.task_sliceandassign",
       "prefLabel": "Slice the change and assign reviewers",
-      "definition": "From the ChangeSet and the heat map on the review page: cut the change into slices a reviewer can hold (usually a section, or a run of sections where the heat map clusters), and assign each slice to a review lane by what it contains — clinical content to a clinical SME, a decision table to a QC reviewer, prose to a narrative reviewer. A block that needs no review (a pure rename, say) is WAIVED here with a written reason, which is what the coverage gate counts. Re-entered from GW_Covered when coverage is incomplete: the uncovered blocks become new slices.",
+      "definition": "From the ChangeSet, its rendered list (skill rendered-impact: each changed rendered page is assigned like a changed block) and the heat map on the review page: cut the change into slices a reviewer can hold (usually a section, or a run of sections where the heat map clusters), and assign each slice to a review lane by what it contains — clinical content to a clinical SME, a decision table to a QC reviewer, prose to a narrative reviewer. A block that needs no review (a pure rename, say) is WAIVED here with a written reason, which is what the coverage gate counts. Re-entered from GW_Covered when coverage is incomplete: the uncovered blocks become new slices.",
       "notation": "Task_SliceAndAssign",
       "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_SliceAndAssign",
       "status": "candidate"

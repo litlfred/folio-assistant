@@ -313,6 +313,28 @@ jobs:
             --folio "$FOLIO_DIR" --base "origin/$BASE_REF" --head worktree \
             --out "$SITE_DIR/changeset.json" --text-out "$SITE_DIR/changeset-text.json"
 
+      - name: Compute the rendered impact
+        # Which rendered pages the change alters (bean `bnjs`, issue #971):
+        # the review list a Change Set is approved against. Loaded from the
+        # ChangeSet just computed and the site build's outline.json, never from
+        # source; the review page fetches the result when it is opened. A
+        # platform with no renderer writes nothing, and the page and the PR
+        # comment then say the list is not known, never that it is empty.
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          BASE_REF: ${{ steps.base.outputs.ref }}
+          SITE_DIR: ${{ inputs.site_dir }}
+        run: |
+          set -eu
+          R="$PLATFORM_DIR/folio-assistant-core/scripts/document-rendered-impact.ts"
+          if [ ! -f "$R" ]; then
+            echo "this platform has no document renderer ($R): rendered-impact.json not written"
+            exit 0
+          fi
+          bun run "$PLATFORM_DIR/folio-assistant-core/scripts/document-rendered-impact.ts" --root . --base "origin/$BASE_REF" --head HEAD \
+            --changeset "$SITE_DIR/changeset.json" --outline "$SITE_DIR/outline.json" \
+            --out "$SITE_DIR/rendered-impact.json"
+
       - name: Fetch the folio's QA results from its qa-reports branch
         # Bean `tfqf`, reader audit R60. The folio's derived QA verdicts are
         # published to ITS OWN `qa-reports` branch (keyed `pr/<n>/<sha>`, the
@@ -522,7 +544,7 @@ jobs:
           # the author meant to delete. The data files the steps above write
           # (changeset and its text, blocks, block QA, review comments, the
           # visual diff and its pictures) are not a site on their own.
-          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|changeset-text\.json|blocks\.json|block-qa\.json|review-comments\.json|visual-diff\.json|visual' || true)" ]; then
+          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|changeset-text\.json|rendered-impact\.json|blocks\.json|block-qa\.json|review-comments\.json|visual-diff\.json|visual' || true)" ]; then
             echo "::error::the build produced no site in $SITE_DIR — refusing to deploy, so STAGING/$STAGING_SLUG keeps its last working preview"
             exit 1
           fi
@@ -583,13 +605,38 @@ jobs:
             } catch {
               summary = "\n**Blocks changed:** could not be read — see the build log.\n";
             }
+            // The rendered list (bean bnjs): what review approves against.
+            let rendered = "\n**Rendered pages:** not known — this build published no rendered-impact.json.\n";
+            try {
+              const raw = JSON.parse(fs.readFileSync(`${process.env.SITE_DIR}/rendered-impact.json`, "utf8"));
+              const impacts = Array.isArray(raw) ? raw : [raw];
+              const rows = [];
+              let index = 0;
+              const unknown = [];
+              for (const imp of impacts) {
+                for (const f of imp.files) {
+                  if (f.role === "index") { index++; continue; }
+                  for (const a of f.anchors && f.anchors.length ? f.anchors : [null]) {
+                    const frag = a ? `#${encodeURIComponent(a)}` : "";
+                    const before = f.change === "added" ? "" : ` · [before](${process.env.BEFORE_URL}/${f.path}${frag})`;
+                    rows.push(`- ${f.change}: [\`${f.path}${a ? " › " + a : ""}\`](${url}${f.path}${frag})${before}`);
+                  }
+                }
+                for (const u of imp.undetermined || []) unknown.push(`- not known (${u.scope === "all" ? "any page" : "unknown pages"}): \`${u.input}\` — ${u.reason}`);
+              }
+              const shown = rows.slice(0, 20);
+              rendered = `\n**Rendered pages to review:** ${rows.length}` + (index ? ` (and ${index} index file(s), not listed)` : "") +
+                ` — [rendered-impact.json](${url}rendered-impact.json)\n` + shown.join("\n") +
+                (rows.length > shown.length ? `\n- … ${rows.length - shown.length} more on the [review page](${url}review/)` : "") +
+                (unknown.length ? `\n\n**Not known** (never read as "no change"):\n` + unknown.join("\n") : "") + "\n";
+            } catch {}
             const body = `## 🔍 Folio staging preview deployed
 
             **URL:** ${url}
             **Review page:** ${url}review/ (every changed block, before and after, with the heat map, outline and open comments)
             **Commit:** \`${sha}\`
             **Branch:** \`${process.env.BRANCH}\`
-            ${summary}
+            ${summary}${rendered}
             > Compare with [${process.env.BEFORE_LABEL}'s site](${process.env.BEFORE_URL}/) to review changes.`;
             const comments = await github.rest.issues.listComments({ owner, repo, issue_number: context.issue.number });
             const existing = comments.data.find(

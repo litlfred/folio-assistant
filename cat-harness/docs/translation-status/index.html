@@ -427,9 +427,13 @@ button.fa-nav-icon {
     });
   }
 
-  function linkSlot(id, label, href, notes) {
+  function linkSlot(id, label, href, notes, whose) {
     // `safeHref` AFTER `withBase`, so what is checked is the href written.
     var at = safeHref(withBase(href));
+    // A link BORROWED from another site (a folio's site linking the
+    // platform's graph) says whose it is, as a borrowed tile shows its
+    // qualifier (#2263): `whose` is written by `foreign-site-scope.ts`.
+    if (at && whose && typeof whose[id] === "string") label = label + " \u2014 " + whose[id];
     if (at) {
       var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label, "data-fa-tip": label });
       a.innerHTML = rowGlyph(id);
@@ -525,6 +529,7 @@ button.fa-nav-icon {
     // "resolved to nothing" and "never declared". See `navbarRow` in
     // `sync-docs-harness.ts`.
     var notes = row.notes && typeof row.notes === "object" ? row.notes : {};
+    var whose = row.whose && typeof row.whose === "object" ? row.whose : {};
 
     var host = el("div", {
       class: "fa-nav-icons", role: "group", "aria-label": "Harness actions",
@@ -539,7 +544,16 @@ button.fa-nav-icon {
       var label = LABELS[id] || id;
 
       if (id === "fsh-guts") {
-        if (full) {
+        // THE BUTTON ONLY WHERE THE TRASHCAN IS THIS SITE'S. Its count and
+        // list are fetched from this site's `/fsh-guts.json`. On a folio's
+        // site the slot is either re-based onto the platform (an absolute
+        // href) or unlinked with a note (`foreign-site-scope.ts`), and a
+        // button there showed "?" for a document that was never published
+        // (#2263 follow-up). It is then a link that says whose, or an inert
+        // icon that says why, like every other borrowed slot.
+        var elsewhere = typeof notes[id] === "string" ||
+          (typeof hrefs[id] === "string" && /^([a-z][a-z0-9+.-]*:|\/\/)/i.test(hrefs[id]));
+        if (full && !elsewhere) {
           // THE TRASHCAN, "with the others" (#1925). A button: it opens the
           // fsh-guts dialog and carries the live count, both wired by
           // `docs-ui.js` (`mountFshGutsNav`) through `data-fa-fsh-guts-open`.
@@ -551,8 +565,9 @@ button.fa-nav-icon {
           fish.appendChild(el("span", { class: "fa-nav-count", "data-fa-count-state": "pending", "aria-hidden": "true" }, "…"));
           host.appendChild(fish);
         } else {
-          // No dialog on this page, so the fish goes to the fsh-guts page.
-          host.appendChild(linkSlot(id, label, hrefs[id], notes));
+          // No dialog on this page, or not this site's trashcan: the fish
+          // goes to the fsh-guts page, or says why it does not.
+          host.appendChild(linkSlot(id, label, hrefs[id], notes, whose));
         }
         continue;
       }
@@ -568,7 +583,7 @@ button.fa-nav-icon {
         continue;
       }
 
-      host.appendChild(linkSlot(id, label, hrefs[id], notes));
+      host.appendChild(linkSlot(id, label, hrefs[id], notes, whose));
     }
 
     // Line 1 is the mark and the name, line 2 is this. On the rail, straight
@@ -711,7 +726,7 @@ numbers last <strong>changed</strong> on 2026-10-06.</p>
 <tbody>
 <tr id="locale-ar">
   <th scope="row"><code>ar</code></th>
-  <td>15 / 81<br><span class="ts-dim">18.5%</span></td>
+  <td>15 / 82<br><span class="ts-dim">18.3%</span></td>
   <td>1056</td>
   <td>1005<br><span class="ts-dim">95.2%</span></td>
   <td>2</td>
@@ -719,7 +734,7 @@ numbers last <strong>changed</strong> on 2026-10-06.</p>
 </tr>
 <tr id="locale-es">
   <th scope="row"><code>es</code></th>
-  <td>17 / 81<br><span class="ts-dim">21%</span></td>
+  <td>17 / 82<br><span class="ts-dim">20.7%</span></td>
   <td>1352</td>
   <td>1301<br><span class="ts-dim">96.2%</span></td>
   <td>2</td>
@@ -727,7 +742,7 @@ numbers last <strong>changed</strong> on 2026-10-06.</p>
 </tr>
 <tr id="locale-fr">
   <th scope="row"><code>fr</code></th>
-  <td>19 / 84<br><span class="ts-dim">22.6%</span></td>
+  <td>19 / 85<br><span class="ts-dim">22.4%</span></td>
   <td>1427</td>
   <td>1320<br><span class="ts-dim">92.5%</span></td>
   <td>2</td>
@@ -735,7 +750,7 @@ numbers last <strong>changed</strong> on 2026-10-06.</p>
 </tr>
 <tr id="locale-ru">
   <th scope="row"><code>ru</code></th>
-  <td>18 / 81<br><span class="ts-dim">22.2%</span></td>
+  <td>18 / 82<br><span class="ts-dim">22%</span></td>
   <td>1420</td>
   <td>1369<br><span class="ts-dim">96.4%</span></td>
   <td>2</td>
@@ -743,7 +758,7 @@ numbers last <strong>changed</strong> on 2026-10-06.</p>
 </tr>
 <tr id="locale-zh">
   <th scope="row"><code>zh</code></th>
-  <td>14 / 81<br><span class="ts-dim">17.3%</span></td>
+  <td>14 / 82<br><span class="ts-dim">17.1%</span></td>
   <td>905</td>
   <td>852<br><span class="ts-dim">94.1%</span></td>
   <td>4</td>
