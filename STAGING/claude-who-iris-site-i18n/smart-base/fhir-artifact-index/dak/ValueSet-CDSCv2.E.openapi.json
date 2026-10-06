@@ -1,0 +1,92 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Services and Application Types: Surveillance and Response Schema API",
+    "description": "JSON Schema for Services and Application Types: Surveillance and Response ValueSet codes. Generated from FHIR expansions using IRI format.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-CDSCv2.E.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-CDSCv2.E",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-CDSCv2.E.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-CDSCv2.E",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-CDSCv2.E.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-CDSCv2.E": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/ValueSet-CDSCv2.E.schema.json",
+        "title": "Services and Application Types: Surveillance and Response Schema",
+        "description": "JSON Schema for Services and Application Types: Surveillance and Response ValueSet codes. Generated from FHIR expansions using IRI format.",
+        "type": "string",
+        "enum": [
+          "http://smart.who.int/base/CodeSystem/CDSCv2#A",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#A1",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#A2",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#A3",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#A4",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#A5",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#A6",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#A7",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#A8",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#A9",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#B",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#B1",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#B2",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#B3",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#B4",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#B5",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#B6",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#B7",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#B8",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#C",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#C1",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#C2",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#C3",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#C4",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#C5",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#C6",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#C7",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#C8",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#C9",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#C10",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#C11",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#D",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#D1",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#D2",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#D3",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#D4",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#D5",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#D6",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#D7",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#D8",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#E",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#E1",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#E2",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#E",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#E1",
+          "http://smart.who.int/base/CodeSystem/CDSCv2#E2"
+        ],
+        "narrative": "This schema validates IRI-formatted codes for the Services and Application Types: Surveillance and Response ValueSet. Each enum value includes the system URI in the format {systemuri}#{code} to match JSON-LD enumeration IRIs. Display values are available at http://smart.who.int/base/ValueSet-CDSCv2.E.displays.json. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/base/ValueSet-CDSCv2.E.displays.json",
+        "fhir:valueSet": "http://smart.who.int/base/ValueSet/CDSCv2.E",
+        "fhir:version": "0.3.0",
+        "fhir:expansionTimestamp": "2026-08-26T08:29:22.806900"
+      }
+    }
+  }
+}
