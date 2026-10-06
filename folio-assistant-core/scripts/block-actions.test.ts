@@ -86,5 +86,6 @@ describe("the browser builds the same URLs (bean v433)", () => {
     expect(r.html).toContain('data-src="folio/doc/ch2/p-2-1-2.md"');
     expect(r.html).not.toMatch(/class="ba-(edit|feedback)" href=/);
     expect(r.html.match(/function faBlockUrls/g)!.length).toBe(1);
+    expect(r.html).toContain('id="fa-edit-cfg"');
   });
 });

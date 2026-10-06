@@ -1,0 +1,57 @@
+/*
+ * edit-links.js: the "edit on GitHub" and "feedback" links of every page,
+ * built in the browser from one recipe. GENERATED from
+ * cat-harness/src/core/edit-links.ts (EDIT_LINKS_RUNTIME); do not edit here.
+ * cat-harness/src/core/tests/edit-links.test.ts fails if the two differ.
+ */
+(() => {
+  if (window.faEditLinks) return;
+  function faBlockUrls(c, b) {
+  var enc = encodeURIComponent;
+  var path = b.source.split("/").map(enc).join("/");
+  var branch = c.branch || "main";
+  var repo = b.repo || c.repo;
+  var src = "https://github.com/" + repo + "/blob/" + branch + "/" + path + (b.line ? "#L" + b.line : "");
+  var url = c.siteUrl && b.page ? c.siteUrl.replace(/\/$/, "") + "/" + b.page + "#" + enc(b.label) : "";
+  var values = { block: b.label, section: b.section || "", source: b.source, page: b.page || "", url: url };
+  var q = new URLSearchParams();
+  q.set("title", "Feedback: " + (b.section ? b.section + " — " : "") + b.label);
+  if (c.labels && c.labels.length) q.set("labels", c.labels.join(","));
+  if (c.template) {
+    q.set("template", c.template);
+    (c.templateFields || []).forEach(function (f) { if (values[f]) q.set(f, values[f]); });
+  } else {
+    var facts = ["**Block:** \u0060" + b.label + "\u0060"];
+    if (b.section) facts.push("**Section:** " + b.section);
+    facts.push("**Source:** " + src);
+    if (url) facts.push("**On the site:** " + url);
+    q.set("body", facts.concat(["", "**Feedback:**", ""]).join("\n"));
+  }
+  return { edit: "https://github.com/" + repo + "/edit/" + branch + "/" + path, source: src, feedback: "https://github.com/" + c.repo + "/issues/new?" + q };
+}
+  let cfg = null;
+  const config = () => {
+    if (cfg) return cfg;
+    const el = document.getElementById("fa-edit-cfg");
+    if (el) cfg = JSON.parse(el.textContent);
+    else {
+      const meta = (n) => { const m = document.querySelector('meta[name="' + n + '"]'); return m ? m.content : undefined; };
+      cfg = { repo: meta("fa-repo"), branch: meta("fa-branch") || "main" };
+    }
+    return cfg;
+  };
+  const ready = (host) => {
+    if (host.dataset.ready) return;
+    const c = config();
+    if (!c.repo && !host.dataset.repo) return;
+    host.dataset.ready = "1";
+    const u = faBlockUrls(c, { label: host.dataset.block || host.dataset.src, source: host.dataset.src, section: host.dataset.sec,
+      line: host.dataset.line ? Number(host.dataset.line) : undefined, repo: host.dataset.repo, page: host.dataset.page || c.page });
+    const links = host.matches("a[data-fa-link]") ? [host] : host.querySelectorAll("a[data-fa-link]");
+    for (const a of links) if (u[a.dataset.faLink]) a.href = u[a.dataset.faLink];
+  };
+  const fill = (root) => { for (const h of (root || document).querySelectorAll("[data-src]")) ready(h); };
+  window.faEditLinks = { urls: faBlockUrls, fill: fill };
+  for (const ev of ["pointerover", "focusin", "touchstart"])
+    document.addEventListener(ev, (e) => { const h = e.target.closest && e.target.closest("[data-src]"); if (h) ready(h); }, { passive: true });
+})();
