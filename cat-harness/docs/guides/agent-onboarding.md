@@ -15,7 +15,7 @@ folio-assistant. This page is your orientation: what you are looking at,
 what to do first, and where to look things up.
 
 For the *architecture* of skills, roles, and capabilities, read
-[Skills & roles](../skills.html). This page is the practical version.
+[Skills & roles](../concepts/skills.html). This page is the practical version.
 
 1. TOC
 {:toc}
@@ -91,7 +91,7 @@ start:
 |---|---|
 | [Skill schema reference](../reference/skills/) | generated input/output contract per skill |
 | [Skill instructions](../reference/skill-instructions/) | generated full instruction bodies |
-| [Skills & roles](../skills.html) | how skills, roles, and capabilities compose |
+| [Skills & roles](../concepts/skills.html) | how skills, roles, and capabilities compose |
 
 Both `reference/` directories are **generated** — never hand-edit them.
 Regenerate with `bun run cat-harness/scripts/gen-schema-docs.ts` and

@@ -1,6 +1,12 @@
-/* folio-site: the one stylesheet every shell page shares (build-folio-site.ts). */
-:root { color-scheme: light dark; --fg: #1b1b1b; --bg: #fdfdfb; --muted: #5b5b5b; --link: #0b5cad; --rule: #e2e2dc; }
-@media (prefers-color-scheme: dark) { :root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; --rule: #333; } }
+/* folio-site: the one stylesheet every shell page shares (build-folio-site.ts).
+   Light and dark follow the HARNESS's scheme (data-fa-scheme on <html>, set by
+   its toggle), and the reader's system setting only when the harness has not
+   set one — keyed on prefers-color-scheme alone, the harness toggle did nothing. */
+:root { color-scheme: light; --fg: #1b1b1b; --bg: #fdfdfb; --muted: #5b5b5b; --link: #0b5cad; --rule: #e2e2dc; --svg-filter: none; }
+:root[data-fa-scheme="dark"] { color-scheme: dark; --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; --rule: #333; --svg-filter: invert(1) hue-rotate(180deg); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-fa-scheme]) { color-scheme: dark; --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; --rule: #333; --svg-filter: invert(1) hue-rotate(180deg); }
+}
 body { margin: 0; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
 /* The grid is on a wrapper, not on body: the harness rail injects its own elements into body. */
 .folio-page { display: grid; grid-template-columns: minmax(14rem, 18rem) 1fr; }
@@ -17,7 +23,7 @@ dfn.defterm { font-style: normal; font-weight: 600; } .cite { color: var(--muted
 :target { scroll-margin-top: 1rem; }
 @media (max-width: 52rem) { .folio-page { display: block; } #toc { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--rule); } }
 .tex-svg { margin: 1rem 0; text-align: center; } .tex-svg img { max-width: 100%; height: auto; }
-@media (prefers-color-scheme: dark) { .tex-svg img { filter: invert(1) hue-rotate(180deg); } }
+.tex-svg img { filter: var(--svg-filter); }
 .tex-ph { border: 1px dashed var(--rule); padding: .5rem .75rem; margin: 1rem 0; } .tex-ph pre { overflow-x: auto; font-size: .85rem; }
 
 /* ── A math paper, not a web page (owner, 2026-10-05): the text face IS the math
@@ -25,15 +31,14 @@ dfn.defterm { font-style: normal; font-weight: 600; } .cite { color: var(--muted
    1.21em enlargement is what made prose and formulas jar — and the column
    follows the screen instead of a fixed narrow measure. ── */
 body { font-family: KaTeX_Main, "Latin Modern Roman", "CMU Serif", "Times New Roman", serif; font-size: 1.15rem; line-height: 1.55; }
-.katex { font-size: 1em; }
+body .katex { font-size: 1em; }
 main { max-width: none; padding: 1.5rem clamp(1rem, 4vw, 4.5rem) 4rem; }
 main h1 { text-align: center; font-weight: 700; font-size: 1.75rem; margin: 1rem 0 1.5rem; }
 h2, h3, h4 { font-weight: 700; } .unit h2 { font-size: 1.4rem; } .unit h3 { font-size: 1.2rem; } .unit h4 { font-size: 1.05rem; }
 .unit h2 a, .unit h3 a, .unit h4 a, .crumbs a { color: inherit; text-decoration: none; }
 .unit { border-top: 0; margin-top: 2rem; }
 .thm-head b { font-weight: 700; }
-.kind-theorem p, .kind-lemma p, .kind-proposition p, .kind-corollary p, .kind-conjecture p { font-style: italic; }
-.kind-theorem .thm-head, .kind-lemma .thm-head, .kind-proposition .thm-head, .kind-corollary .thm-head, .kind-conjecture .thm-head { font-style: normal; }
+/* Statements stay upright (owner, 2026-10-05: \"too much italics\"); the bold numbered heading marks them. */
 .kind-proof.qed > :last-child::after { content: "\220E"; float: right; }
 .block { margin: 1rem 0; } .block p { text-align: justify; hyphens: auto; }
 #toc { font-family: KaTeX_Main, serif; font-size: .95rem; }
@@ -47,3 +52,6 @@ body.in-harness .folio-page { display: block; }
 .block-links { float: right; margin-left: 1rem; font-family: system-ui, sans-serif; font-size: .75rem; opacity: .35; transition: opacity .15s; }
 .block:hover .block-links, .block-links:focus-within { opacity: 1; }
 .block-links a { margin-left: .6rem; text-decoration: none; }
+.lean-badge { font-family: system-ui, sans-serif; font-size: .7rem; color: var(--muted); white-space: nowrap; }
+.block-links a.lean-sorry { color: #b26b00; }
+.tex-svg img { max-width: 100%; height: auto; }

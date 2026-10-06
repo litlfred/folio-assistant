@@ -75,7 +75,7 @@ export type Repo = "harness" | "core" | "sci" | "kg" | "base" | "test";
  * declaration, the directory and `AGENTS.md` all already carry. Only the
  * architecture docs and this table still said the old thing.
  *
- * The docs page `/agentic-harness.html` is NOT this name and was not touched:
+ * The docs page `/concepts/agentic-harness.html` is NOT this name and was not touched:
  * it documents the agent-user interaction model, which is a concept rather
  * than a repository, and its slug is a published URL.
  */
@@ -92,7 +92,7 @@ export const REPOS: Array<{ id: Repo; name: string; instance?: string }> = [
  * What each repo is permitted to import from — itself plus its ancestors in
  * the dependency DAG. An edge to anything else is a wrong-direction edge.
  *
- * Mirrors the diagram in `docs/architecture/future-state.md`:
+ * Mirrors the diagram in `docs/concepts/architecture/future-state.md`:
  *   core -> harness;  sci -> core;  kg -> core;  base -> kg
  */
 export const ALLOWED: Record<Repo, Repo[]> = {
@@ -206,6 +206,9 @@ export const RULES: Rule[] = [
       // `derivedFrom` edges with the same reach, and reads no folio content.
       "scripts/check-derived-from.ts",
       "scripts/derived-from.baseline.ts",
+      // HARNESS, beside it (bean `0b8c`): runs the writers of the artefacts
+      // check:derived-from names as built at publish; reads declarations only.
+      "scripts/derive-at-publish.ts",
       // HARNESS: the staging cone (bean `4j86`) computes over declarations and
       // module specifiers, and reads no folio content.
       "scripts/staging-cone.ts",
@@ -281,6 +284,20 @@ export const RULES: Rule[] = [
       // HARNESS beside `navbar.ts` -- the switch is the platform's, and every
       // page carrying it, a folio's included, has to agree on what it means.
       "scripts/lib/scheme-css.ts",
+      // The locale half of that chrome (issue #2219): the docs pages'
+      // `fa-translation-meta` block, written onto a MOUNTED page so it draws
+      // the same band globe. HARNESS beside `scheme-css.ts` -- it is
+      // `head_custom.html`'s block, and a folio owning it would let one
+      // instance decide what every other mounted page declares.
+      "scripts/lib/translation-meta.ts",
+      // The migration a renamed or major-bumped NODE KIND ships with (issue
+      // #2195): rewrites `$schema` values only. HARNESS, beside the node-kind
+      // machinery in `schemas/node-kind.ts` it serves.
+      "scripts/retag-schemas.ts",
+      // The generic node-kind pages (issue #2195): one per kind, harness and
+      // node. HARNESS for the reason the viewer pages are: it is the
+      // platform's view of any harness's nodes, and its reader beside it.
+      "scripts/gen-node-kind-pages.ts",
       // The geometry that navbar became a reader of, and the generator that
       // renders it to CSS (bean `sjic`). HARNESS for the same reason as
       // `navbar.ts` and one step more plainly: the numbers are the width of
@@ -367,6 +384,7 @@ export const RULES: Rule[] = [
       "scripts/qa-store.ts",                 // the qa-reports branch: readQa / publishQa / pruneQa
       "scripts/qa-verify-moved.ts",          // bean 5hox: hash-verify the moved QA files against a qa-reports entry
       "scripts/qa-site-assets.ts",           // a site build's QA evidence: fetch from qa-reports, verify the copy (tfqf)
+      "scripts/qa-result-link.ts",           // the ONE address of a QA result file: main or qa-reports entry, by declaration (bejf)
       // Its generalisation (bean `2h76`): the same branch-kept store for ANY
       // directory declaring `storage.keyedBy: "tip"`. Harness-level for the
       // same reason as `qa-store` — it reads the declaration and git, and no

@@ -37,7 +37,7 @@
 
 import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
-import { basename, extname, join, resolve } from "node:path";
+import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { parse as parseYaml } from "yaml";
 import { describeSiteData, igSiteData, type IgSiteDataResult } from "./ig-site-data";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
@@ -146,9 +146,394 @@ export interface StageResult {
   notRendered: string[];
   /** `input/images` data files (`.json`, `.jsonld`) that do not parse: not published, with the parser's reason. */
   unparseable: string[];
+  /** Links the IG's source writes to an artefact's flat Publisher page (`ValueSet-X.html`), pointed at this site's artefact page instead. */
+  relinked: number;
+  /** Links a page makes to a `.html` page no source or build serves: the IG's own dead links, REPORTED (#2235). */
+  deadLinks: string[];
   /** The colour scheme written from the instance's palette; undefined when none was declared. */
   scheme: ColourScheme | undefined;
   siteData: IgSiteDataResult;
+}
+
+/**
+ * Point the IG source's links to an artefact page at THIS site's copy.
+ *
+ * The Publisher writes every artefact page flat beside the narrative pages,
+ * so the IG's own prose links `ValueSet-Domains.html`. This site keeps them
+ * under `pagesHref` (`artifact/`), so those links 404 unless rewritten.
+ * Only a bare relative link whose page name IS an artefact page is touched —
+ * in a markdown link target or an `href` — so a narrative page that happens
+ * to share a name is never redirected. Measured on smart-trust at `25771f6`
+ * (bean `mftp`): 34 such links over 4 artefacts.
+ */
+export function relinkArtifacts(text: string, pageNames: ReadonlySet<string>, pagesHref: string): { text: string; count: number } {
+  let count = 0;
+  // A CASE-ONLY mismatch resolves to the one page it can mean. smart-trust's
+  // `hcert_spec.md` links `StructureDefinition-hcert.html` where the artefact
+  // is `HCert`: dead on any case-sensitive host, the IG's own included (6 links,
+  // #2235). Only a UNIQUE case-insensitive match is taken; two candidates
+  // differing only in case leave the link as written.
+  const byLower = new Map<string, string | null>();
+  for (const n of pageNames) byLower.set(n.toLowerCase(), byLower.has(n.toLowerCase()) ? null : n);
+  const out = text.replace(/(\]\(|href=["'])([A-Za-z0-9][A-Za-z0-9._-]*)\.html(?=[#)"'?])/g, (whole, pre: string, name: string) => {
+    const page = pageNames.has(name) ? name : byLower.get(name.toLowerCase());
+    if (!page) return whole;
+    count++;
+    return `${pre}${pagesHref}${page}.html`;
+  });
+  return { text: out, count };
+}
+
+/**
+ * Point a page's links to the IG Publisher's DOWNLOADS at the IG's published
+ * site. `downloads.md` links `package.tgz` and `definitions.json.zip` beside
+ * itself because the Publisher writes them there; this build renders pages,
+ * not packages, so those links resolved to nothing (7 per IG, measured on
+ * litlfred/smart-immunizations' site, 2026-10-05). The published IG at the
+ * sushi `canonical` serves the same files. Only a bare relative `.zip`/`.tgz`
+ * name is touched: an archive is a Publisher output by construction here,
+ * and a path, a query or an absolute URL is the author's and is left alone.
+ */
+export function relinkPublisherOutputs(text: string, publishedBase: string): { text: string; count: number } {
+  let count = 0;
+  const base = publishedBase.replace(/\/$/, "");
+  const out = text.replace(/(\]\(|href=["'])([A-Za-z0-9][A-Za-z0-9._-]*\.(?:zip|tgz))(?=[)"'])/g, (_w, pre: string, file: string) => {
+    count++;
+    return `${pre}${base}/${file}`;
+  });
+  return { text: out, count };
+}
+
+/**
+ * Pages only the IG Publisher writes, beside the IG's own (its QA report, the
+ * full TOC, the search form). This build does not produce them; the published
+ * IG at the sushi `canonical` does, so a link to one goes there (#2235:
+ * smart-trust's `support.md` links `qa.html`).
+ */
+export const PUBLISHER_PAGES: ReadonlySet<string> = new Set(["qa.html", "qa-tx.html", "qa-ipreview.html", "qa-eslintcompare.html", "toc.html", "searchform.html"]);
+
+/**
+ * Point a page's links that THIS build cannot serve somewhere that can:
+ *
+ * - a Publisher-only page ({@link PUBLISHER_PAGES}) → the published IG;
+ * - a FILE of the IG's repository that is not published as a page (smart-base
+ *   links `.github/skills/bpmn_layout/skills.yaml` and `bpmn/<name>.bpmn`,
+ *   the latter from `input/bpmn/`) → that file on GitHub, at `sourceBlob`.
+ *   A target is looked for at `<path>` and `input/<path>` in the checkout.
+ *
+ * A link nothing can serve (smart-trust's `video_tutorial.html`, in no
+ * source) is left as written and RETURNED, so the stage reports an upstream
+ * dead link rather than hiding it.
+ */
+export function relinkOffSite(
+  text: string,
+  o: { canonical?: string; sourceBlob?: string; srcRoot: string; isServed: (target: string) => boolean },
+): { text: string; count: number; dead: string[] } {
+  let count = 0;
+  const dead: string[] = [];
+  const out = text.replace(/(\]\(|href=["'])([^)"'\s#?]+)([#?][^)"'\s]*)?(?=[)"'])/g, (whole, pre: string, target: string, tail = "") => {
+    if (/^([a-z][a-z0-9+.-]*:|\/|\.\.\/|\{)/i.test(target) || target.includes("{")) return whole;
+    if (o.isServed(target) || o.isServed(target.replace(/^\.\//, ""))) return whole;
+    if (PUBLISHER_PAGES.has(target) && o.canonical) {
+      count++;
+      return `${pre}${o.canonical.replace(/\/$/, "")}/${target}${tail}`;
+    }
+    if (!/\.(html|md)$/.test(target) && o.sourceBlob) {
+      const at = [target, `input/${target}`].find((p) => existsSync(join(o.srcRoot, p)) && statSync(join(o.srcRoot, p)).isFile());
+      if (at) {
+        count++;
+        return `${pre}${o.sourceBlob.replace(/\/$/, "")}/${at}${tail}`;
+      }
+    }
+    if (/\.html$/.test(target)) dead.push(target);
+    return whole;
+  });
+  return { text: out, count, dead };
+}
+
+/**
+ * Rewrite a Liquid string the IG Publisher accepts and Jekyll does not.
+ *
+ * The Publisher's Liquid (Java) reads `"<a href=\\"x.html\\">X</a>"` as one
+ * string with escaped quotes; Ruby Liquid has no escapes, ends the string at
+ * the first `\\"`, and the page shows `<a href=\\` (smart-base's
+ * `smart.liquid`, every `…__link__html` value, #2235). A double-quoted
+ * `{% assign %}` value holding `\\"` and no `'` is written single-quoted,
+ * with plain `"` inside — the same string in both engines. One that also
+ * holds a `'` has no faithful Ruby form and is left as written.
+ */
+export function rubyLiquidStrings(text: string): { text: string; count: number } {
+  let count = 0;
+  const out = text.replace(/(\{%-?\s*assign\s+[\w.-]+\s*=\s*)"((?:[^"\\]|\\.)*)"/g, (whole, pre: string, body: string) => {
+    if (!body.includes('\\"') || body.includes("'")) return whole;
+    count++;
+    return `${pre}'${body.replace(/\\"/g, '"')}'`;
+  });
+  return { text: out, count };
+}
+
+/** A menu href made site-absolute under `baseurl`; an absolute or external one is kept. */
+const siteHref = (baseurl: string, href: string): string =>
+  /^([a-z][a-z0-9+.-]*:|\/|#)/i.test(href) ? href : `${baseurl.replace(/\/$/, "")}/${href}`;
+
+const escHtml = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/**
+ * The IG's TOC as a DECLARED navbar section (`visualiserNavOf` in
+ * `cat-harness/scripts/lib/navbar.ts`): one row per menu group, its items one
+ * level below — the depth the navbar allows, and the shape of the IG's own
+ * menu. The rail lifts it into the folio-assistant LHS navbar.
+ */
+export function igTocNav(menu: IgMenu, baseurl: string, extra: ReadonlyArray<{ label: string; href: string }> = []): string {
+  const rows = [
+    ...menu.groups.map((g) => ({
+      label: g.label,
+      ...(g.items?.length ? { items: g.items.map((it) => ({ label: it.label, href: siteHref(baseurl, it.href) })) } : {}),
+    })),
+    ...extra.map((e) => ({ label: e.label, href: siteHref(baseurl, e.href) })),
+  ];
+  return `<script type="application/json" data-fa-visualiser-nav>${JSON.stringify(rows).replace(/</g, "\\u003c")}</script>`;
+}
+
+/**
+ * The IG's own top bar, preserved: the Publisher's menu as a row of
+ * dropdowns, one per group. `<details>`, so it needs no script; and not a
+ * `<nav class="fa-nav">`, which the rail pass would read as "already
+ * navigated" and skip.
+ */
+export function igTopBar(menu: IgMenu, baseurl: string, title: string): string {
+  const groups = menu.groups
+    .map((g) =>
+      g.items?.length
+        ? `<details class="ig-topbar-group"><summary>${escHtml(g.label)}</summary><ul>${g.items
+            .map((it) => `<li><a href="${escHtml(siteHref(baseurl, it.href))}">${escHtml(it.label)}</a></li>`)
+            .join("")}</ul></details>`
+        : `<span class="ig-topbar-group">${escHtml(g.label)}</span>`,
+    )
+    .join("");
+  return `<div class="ig-topbar" role="navigation" aria-label="${escHtml(title)} menu"><a class="ig-topbar-home" href="${escHtml(siteHref(baseurl, "index.html"))}">${escHtml(title)}</a>${groups}</div>`;
+}
+
+/** The top bar's style: a horizontal row, dropdowns that overlay the page. */
+const IG_TOPBAR_CSS = `
+.ig-topbar{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 1rem;padding:.5rem 1rem;background:var(--ig-topbar-bg,#1c4b7c);color:#fff;font-size:.95rem}
+.ig-topbar a{color:#fff;text-decoration:none}
+.ig-topbar-home{font-weight:600;margin-right:.5rem}
+.ig-topbar-group{position:relative}
+.ig-topbar-group summary{cursor:pointer;list-style:none}
+.ig-topbar-group summary::after{content:" \\25BE"}
+.ig-topbar-group ul{position:absolute;z-index:20;margin:.25rem 0 0;padding:.25rem 0;min-width:16rem;list-style:none;background:#fff;border:1px solid #ccc;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.ig-topbar-group li a{display:block;padding:.25rem .75rem;color:#1c4b7c}
+.ig-topbar-group li a:hover{background:#eef3f8}
+.ig-main{max-width:60rem;padding:1rem 1.5rem 3rem}
+.ig-edit{margin-top:2rem;font-size:.85rem}
+.ig-src{font-size:.7em;text-decoration:none;opacity:.45;margin-left:.25em}
+.ig-src:hover{opacity:1}
+.ig-feedback{font-size:.7em;text-decoration:none;opacity:.55;margin-left:.15em}
+.ig-feedback:hover{opacity:1}
+`;
+
+/**
+ * The plain layout for `chrome: "harness"`: just-the-docs' stylesheet for the
+ * prose (and the IG's colour scheme), the IG's top bar and TOC declaration,
+ * the page — and no sidebar, so the rail pass supplies the navbar.
+ */
+export function harnessLayout(topBar: string, tocNav: string, sectionLabel?: string): string {
+  return [
+    "<!DOCTYPE html>",
+    '<html lang="{{ page.lang | default: site.lang | default: \'en\' }}">',
+    "<head>",
+    '<meta charset="UTF-8">',
+    '<meta name="viewport" content="width=device-width, initial-scale=1">',
+    "<title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>",
+    "<link rel=\"stylesheet\" href=\"{{ '/assets/css/just-the-docs-default.css' | relative_url }}\">",
+    `<style>${IG_TOPBAR_CSS.trim()}</style>`,
+    // The navbar section is named after the IG (owner, 2026-10-05).
+    ...(sectionLabel ? [`<meta name="fa-visualiser-label" content="${escHtml(sectionLabel)}">`] : []),
+    "</head>",
+    "<body>",
+    tocNav,
+    topBar,
+    '<main class="ig-main main-content" id="main-content">',
+    "{{ content }}",
+    '{% if page.ig_edit_url %}<p class="ig-edit"><a href="{{ page.ig_edit_url }}">Edit this page on GitHub</a></p>{% endif %}',
+    '{% if page.ig_source_lines %}<script type="application/json" id="ig-source-lines">{"blob": {{ page.ig_source_blob | jsonify }}, "lines": {{ page.ig_source_lines | jsonify }}}</script>',
+    `<script>${SOURCE_LINKS_JS}</script>{% endif %}`,
+    "</main>",
+    "</body>",
+    "</html>",
+    "",
+  ].join("\n");
+}
+
+/**
+ * Every ATX heading of a markdown source with its 1-based line, outside code
+ * fences: `{ t, l }`, `t` the heading's text with markdown, links and a
+ * trailing `{#id}` removed — what a reader sees, which is what the layout
+ * matches it against. Setext headings are not read; a heading the reader
+ * sees and this does not simply gets no source link.
+ */
+export function sourceHeadings(md: string): Array<{ t: string; l: number }> {
+  const out: Array<{ t: string; l: number }> = [];
+  let fence: string | undefined;
+  md.split(/\r?\n/).forEach((line, i) => {
+    const f = /^\s{0,3}(```|~~~)/.exec(line);
+    if (f) {
+      fence = fence === undefined ? f[1] : fence === f[1] ? undefined : fence;
+      return;
+    }
+    if (fence !== undefined) return;
+    const h = /^\s{0,3}#{1,6}\s+(.*?)\s*#*\s*$/.exec(line);
+    if (!h) return;
+    const t = h[1]!
+      .replace(/\{[#:][^}]*\}\s*$/, "")
+      .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
+      .replace(/<[^>]+>/g, "")
+      .replace(/[*_`]/g, "")
+      .trim();
+    if (t) out.push({ t, l: i + 1 });
+  });
+  return out;
+}
+
+/**
+ * The layout's per-section links: each heading in the page body that matches
+ * a source heading (by its visible text, in order) gets a small link to that
+ * line on GitHub, and EVERY heading gets a feedback link — a new issue on the
+ * IG's repository, pre-filled with the page, the section and its source line
+ * (owner, 2026-10-05: "add [shoutout] Feedback icon that opens a github issue
+ * next to the section as well w/ preopopulted github issue content"). Script, because Jekyll has rendered the headings by
+ * the time a template could see them; matched by text, because an include can
+ * add headings the page's own source does not hold.
+ */
+const SOURCE_LINKS_JS = `(function(){var d=document.getElementById("ig-source-lines");if(!d)return;var m;try{m=JSON.parse(d.textContent)}catch(e){return}
+var repo=(m.blob.match(/^https:\\/\\/github\\.com\\/[^/]+\\/[^/]+/)||[])[0];
+var n=function(s){return s.toLowerCase().replace(/[^a-z0-9]+/g," ").trim()};var used={};
+var link=function(h,cls,href,title,glyph){var a=document.createElement("a");a.className=cls;a.href=href;a.title=title;a.textContent=glyph;a.rel="noopener";a.target="_blank";h.appendChild(document.createTextNode(" "));h.appendChild(a)};
+document.querySelectorAll("#main-content h1,#main-content h2,#main-content h3,#main-content h4,#main-content h5,#main-content h6").forEach(function(h){
+var text=h.textContent.trim(),k=n(text),line;for(var i=0;i<m.lines.length;i++){if(!used[i]&&n(m.lines[i].t)===k){used[i]=1;line=m.lines[i].l;break}}
+var src=line?m.blob+"#L"+line:m.blob;
+if(line)link(h,"ig-src",src,"This section's source, line "+line+", on GitHub","\\u270E");
+if(repo){var here=location.href.split("#")[0]+(h.id?"#"+h.id:"");
+var body="**Page:** "+here+"\\n**Section:** "+text+"\\n**Source:** "+src+"\\n\\n**Feedback:**\\n\\n";
+link(h,"ig-feedback",repo+"/issues/new?title="+encodeURIComponent("Feedback: "+document.title.split(" | ")[0]+" \\u2014 "+text)+"&body="+encodeURIComponent(body),"Give feedback on this section (opens a GitHub issue)","\\uD83D\\uDCE3")}})})();`;
+
+/**
+ * The IG's chrome that goes INTO a page when the IG is built inside a host
+ * site (`composeIgSite`): the IG's own top bar at the top, and at the bottom
+ * the edit link and the per-section source and feedback links. The host's
+ * layout supplies everything else — sidebar, search, language selector — so
+ * an IG page wears the same chrome as every other page of the site (owner,
+ * 2026-10-05, bean `mftp`: *"the chrome is not the standrad harness chrome.
+ * missing search bar/locale selctor"*).
+ */
+export function igChromeIncludes(topBar: string): { top: string; bottom: string } {
+  return {
+    top: `<style>${IG_TOPBAR_CSS.trim()}</style>\n${topBar}\n`,
+    bottom: [
+      '{% if page.ig_edit_url %}<p class="ig-edit"><a href="{{ page.ig_edit_url }}">Edit this page on GitHub</a></p>{% endif %}',
+      '{% if page.ig_source_lines %}<script type="application/json" id="ig-source-lines">{"blob": {{ page.ig_source_blob | jsonify }}, "lines": {{ page.ig_source_lines | jsonify }}}</script>',
+      `<script>${SOURCE_LINKS_JS}</script>{% endif %}`,
+      "",
+    ].join("\n"),
+  };
+}
+
+/**
+ * Move a staged IG site INTO a host Jekyll source at `<docsRoot>/<instance>/`,
+ * so the host's own build renders it with the host's chrome (bean `mftp`,
+ * owner's choice: "Build in main site"). What made a separate site per IG
+ * necessary (bean `bamf`) is namespaced instead of isolated:
+ *
+ * - the IG's `_includes/` go to `_includes/ig/<instance>/`, and every
+ *   `{% include x %}` naming one of them is rewritten to that path;
+ * - its `_data/*.json` go to `_data/ig/<instance>/`, and `site.data.fhir` /
+ *   `site.data.ig_releases` become `site.data.ig["<instance>"].…`;
+ * - its navigation nests under ONE entry: the IG's index becomes the IG's
+ *   top-level page (titled after the IG), each menu group its child, each
+ *   item a grandchild (`grand_parent`), so a group called "Home" cannot
+ *   collide with another site's "Home";
+ * - each page gets the IG's top bar above and the edit / source / feedback
+ *   links below (`igChromeIncludes`);
+ * - artefact pages stay out of search, which would otherwise index thousands
+ *   of near-identical pages.
+ *
+ * The staged `_layouts/`, `_sass/` and `_config.yml` are the standalone
+ * site's and are not carried. A file already at a destination path is
+ * reported, never overwritten.
+ */
+export function composeIgSite(staged: string, docsRoot: string, instance: string): { pages: number; files: number; includes: number; collisions: string[] } {
+  const title = /^title:\s*(.+)$/m.exec(readFileSync(join(staged, "_config.yml"), "utf-8"))?.[1]?.replace(/^"(.*)"$/, "$1") ?? instance;
+  const q = JSON.stringify(title);
+  const dest = join(docsRoot, instance);
+  const incDest = join(docsRoot, "_includes", "ig", instance);
+  const dataDest = join(docsRoot, "_data", "ig", instance);
+  const collisions: string[] = [];
+  const incNames = new Set(files(join(staged, "_includes")));
+  const rewrite = (text: string): string =>
+    text
+      .replace(/(\{%-?\s*include\s+)([^\s%}]+)/g, (whole, pre: string, name: string) => (incNames.has(name) ? `${pre}ig/${instance}/${name}` : whole))
+      .replace(/site\.data\.fhir\b/g, `site.data.ig[${JSON.stringify(instance)}].fhir`)
+      .replace(/site\.data\.ig_releases\b/g, `site.data.ig[${JSON.stringify(instance)}].ig_releases`);
+  const put = (to: string, body: string | Buffer): void => {
+    if (existsSync(to)) {
+      collisions.push(relative(docsRoot, to));
+      return;
+    }
+    mkdirSync(dirname(to), { recursive: true });
+    writeFileSync(to, body);
+  };
+  let includes = 0;
+  for (const f of incNames) {
+    put(join(incDest, f), rewrite(readFileSync(join(staged, "_includes", f), "utf-8")));
+    includes++;
+  }
+  for (const f of files(join(staged, "_data"))) put(join(dataDest, f), readFileSync(join(staged, "_data", f)));
+  const topBar = /<div class="ig-topbar"[\s\S]*?<\/div>(?=\n|$)/.exec(existsSync(join(staged, "_layouts", "default.html")) ? readFileSync(join(staged, "_layouts", "default.html"), "utf-8") : "")?.[0] ?? "";
+  const chrome = igChromeIncludes(topBar);
+  put(join(incDest, "_top.html"), chrome.top);
+  const bottom = join(docsRoot, "_includes", "ig", "_bottom.html");
+  if (!existsSync(bottom)) put(bottom, chrome.bottom);
+  let pages = 0;
+  let count = 0;
+  const walk = (rel: string): void => {
+    for (const name of readdirSync(join(staged, rel)).sort()) {
+      const r = rel ? join(rel, name) : name;
+      if (!rel && (name.startsWith("_") || name === "Gemfile")) continue;
+      const abs = join(staged, r);
+      if (statSync(abs).isDirectory()) {
+        walk(r);
+        continue;
+      }
+      count++;
+      const isPage = /\.(md|html)$/.test(name) && readFileSync(abs, "utf-8").startsWith("---\n");
+      if (!isPage) {
+        put(join(dest, r), readFileSync(abs));
+        continue;
+      }
+      const text = rewrite(readFileSync(abs, "utf-8"));
+      const end = text.indexOf("\n---", 3);
+      let fm = text.slice(4, end);
+      const body = text.slice(end + 4).replace(/^\n/, "");
+      if (r === "index.md") {
+        fm = fm.replace(/^(parent|grand_parent|nav_exclude|has_children|nav_order|title):.*\n?/gm, "");
+        fm = `title: ${q}\nhas_children: true\nnav_order: 900\n${fm}`;
+      } else if (/^has_children:\s*true/m.test(fm)) {
+        if (!/^parent:/m.test(fm)) fm += `\nparent: ${q}`;
+      } else if (/^parent:/m.test(fm) && !/^grand_parent:/m.test(fm)) {
+        fm += `\ngrand_parent: ${q}`;
+      }
+      if (r.startsWith(`artifact${"/"}`) && !/^search_exclude:/m.test(fm)) fm += "\nsearch_exclude: true";
+      // Named, not inherited: GitHub Pages' default-layout plugin assigns one
+      // and a plain Jekyll build does not, so the page says which it uses.
+      if (!/^layout:/m.test(fm)) fm += "\nlayout: default";
+      fm = fm.replace(/\n+$/, "");
+      put(join(dest, r), `---\n${fm}\n---\n{% include ig/${instance}/_top.html %}\n\n${body.replace(/\s*$/, "")}\n\n{% include ig/_bottom.html %}\n`);
+      pages++;
+    }
+  };
+  walk("");
+  return { pages, files: count, includes, collisions };
 }
 
 const files = (dir: string) => (existsSync(dir) ? readdirSync(dir).filter((f) => statSync(join(dir, f)).isFile()) : []);
@@ -198,6 +583,15 @@ export interface StageOptions {
    * `releases` page lists them; the bytes stay on GitHub (bean `b8ip`).
    */
   releases?: IgReleases;
+  /**
+   * Where the IG's source can be edited on GitHub, `https://github.com/<o>/<r>/edit/<branch>`.
+   * Given, every page read from `input/pagecontent/` carries `ig_edit_url`
+   * (`<editBase>/input/pagecontent/<file>`) and the layout links it, as the
+   * just-the-docs layout's "Edit this page" link did (owner, 2026-10-05, bean
+   * `mftp`: *"lost the links to edit the orignial source on github"*). A page
+   * this build GENERATES has no source to edit, so it gets none.
+   */
+  editBase?: string;
 }
 
 /** The fields of a `folio-fhir-artifact/v1` entry this build reads. */
@@ -478,6 +872,35 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   const unlisted: string[] = [];
   const filled: string[] = [];
   const usedMarkers = new Set<string>();
+  const artifactPages = new Set((opts.artifacts?.list ?? []).map((a) => artifactPageName(a)));
+  let relinked = 0;
+  const canonical = typeof sushi.canonical === "string" ? sushi.canonical : undefined;
+  const sourceBlob = opts.editBase?.replace(/\/$/, "").replace(/\/edit\//, "/blob/");
+  // What THIS site serves at a bare relative name: the IG's pages, its
+  // `input/images/*` (published at the root), the artefact pages, and the
+  // artefact index page.
+  const pageHtml = new Set(files(pagecontent).filter((f) => f.endsWith(".md")).map((f) => `${basename(f, ".md")}.html`));
+  const rootImages = new Set(files(join(src, "input", "images")));
+  const isServed = (t: string): boolean =>
+    pageHtml.has(t) || rootImages.has(t) || t === "artifacts.html" || (opts.artifacts !== undefined && t.startsWith(opts.artifacts.pagesHref));
+  const dead = new Set<string>();
+  const relink = (text: string): string => {
+    let t = text;
+    if (canonical) {
+      const p = relinkPublisherOutputs(t, canonical);
+      relinked += p.count;
+      t = p.text;
+    }
+    if (opts.artifacts) {
+      const r = relinkArtifacts(t, artifactPages, opts.artifacts.pagesHref);
+      relinked += r.count;
+      t = r.text;
+    }
+    const o = relinkOffSite(t, { canonical, sourceBlob, srcRoot: src, isServed });
+    relinked += o.count;
+    for (const d of o.dead) dead.add(d);
+    return o.text;
+  };
   for (const f of files(pagecontent).filter((f) => f.endsWith(".md"))) {
     const name = basename(f, ".md");
     let n = nav.get(name);
@@ -487,10 +910,19 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
       // Under a menu it stays reachable but out of the nav, as on the IG.
       n = { title: name, navOrder: 1000 + unlisted.length, ...(fromMenu ? { navExclude: true } : {}) };
     }
-    let body = readFileSync(join(pagecontent, f), "utf-8");
+    let body = relink(readFileSync(join(pagecontent, f), "utf-8"));
     // Standard HL7 IG Publisher macro for localized includes: {% lang-fragment <file> %}
     body = body.replace(/\{%-?\s*lang-fragment\s+([^\s%]+)\s*-?%\}/g, "{% include $1 %}");
-    let data: Record<string, unknown> = {};
+    let data: Record<string, unknown> = opts.editBase
+      ? {
+          ig_edit_url: `${opts.editBase.replace(/\/$/, "")}/input/pagecontent/${f}`,
+          // Per-section source links (owner, 2026-10-05: "feedback on (sub-*)sections
+          // should link to line numbers if possible"): each heading's line in the
+          // ORIGINAL file, read before anything here rewrites it.
+          ig_source_blob: `${opts.editBase.replace(/\/$/, "").replace(/\/edit\//, "/blob/")}/input/pagecontent/${f}`,
+          ig_source_lines: sourceHeadings(readFileSync(join(pagecontent, f), "utf-8")),
+        }
+      : {};
     for (const fill of opts.fills ?? []) {
       if (!body.includes(fill.marker)) continue;
       body = body.split(fill.marker).join(fill.body);
@@ -542,7 +974,10 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   let includes = 0;
   for (const dir of [join(src, "input", "includes"), pagecontent]) {
     for (const f of files(dir)) {
-      copyFileSync(join(dir, f), join(out, "_includes", f));
+      // A transcluded page carries the same flat artefact links as a page does.
+      if (dir === pagecontent && f.endsWith(".md")) writeFileSync(join(out, "_includes", f), relink(readFileSync(join(dir, f), "utf-8")));
+      else if (/\.(liquid|html|md)$/.test(f)) writeFileSync(join(out, "_includes", f), rubyLiquidStrings(readFileSync(join(dir, f), "utf-8")).text);
+      else copyFileSync(join(dir, f), join(out, "_includes", f));
       includes++;
     }
   }
@@ -605,6 +1040,20 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
     mkdirSync(join(out, "_sass", "custom"), { recursive: true });
     writeFileSync(join(out, "_sass", "custom", "custom.scss"), SIDEBAR_SCSS);
   }
+  // EVERY IG site wears the folio-assistant navbar and keeps the IG's own top
+  // bar — one layout, no per-site choice to drift (owner, 2026-10-05, bean
+  // `mftp`: "use folio-assistnat LHS navbar, not custome one", "the orignal
+  // topnvar bar should be preserved", "make sure no drift issues"). The
+  // layout carries no sidebar, so the post-build rail pass supplies the
+  // navbar, with the IG's TOC declared as its section. Needs the IG's menu;
+  // without one the site keeps just-the-docs' layout and says so.
+  if (opts.menu) {
+    // The extra rows are the IG-level pages the Publisher links outside its
+    // menu: its own table of contents, and the releases page when written.
+    const extra = [{ label: "Table of Contents", href: "toc.html" }, ...(generated.includes("releases.md") ? [{ label: "Releases", href: "releases.html" }] : [])];
+    mkdirSync(join(out, "_layouts"), { recursive: true });
+    writeFileSync(join(out, "_layouts", "default.html"), harnessLayout(igTopBar(opts.menu, baseurl, title), igTocNav(opts.menu, baseurl, extra), title));
+  }
   writeFileSync(
     join(out, "_config.yml"),
     [
@@ -620,7 +1069,7 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
     ].join("\n"),
   );
   const fillsResult = opts.fills?.length ? { filled, unused: opts.fills.map((x) => x.marker).filter((m) => !usedMarkers.has(m)) } : undefined;
-  return { pages: pages.sort(), generated, fills: fillsResult, variables: lifted ? { artifacts: Object.keys(lifted.vars.artifacts).length, notSourced: lifted.notSourced } : undefined, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, scheme, siteData };
+  return { pages: pages.sort(), generated, fills: fillsResult, variables: lifted ? { artifacts: Object.keys(lifted.vars.artifacts).length, notSourced: lifted.notSourced } : undefined, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, relinked, deadLinks: [...dead].sort(), scheme, siteData };
 }
 
 /**
@@ -672,6 +1121,8 @@ export function describeStage(r: StageResult): string {
     ...(r.fills?.filled.length ? [`post-processing filled: ${r.fills.filled.join(", ")}`] : []),
     ...(r.fills?.unused.length ? [`post-processing fill with no marker in any page (NOT applied): ${r.fills.unused.join(", ")}`] : []),
     ...(r.variables ? [`site.data.fhir.artifacts: ${r.variables.artifacts} artefact(s); elements not sourced (not written): ${r.variables.notSourced.join(", ") || "none"}`] : []),
+    ...(r.relinked ? [`links pointed where they resolve (artefact pages, the published IG, the source repository): ${r.relinked}`] : []),
+    ...(r.deadLinks.length ? [`DEAD in the IG's own source — no page anywhere serves: ${r.deadLinks.join(", ")}`] : []),
     ...(r.notRendered.length ? [`NOT RENDERED (a visible marker stands in): ${r.notRendered.join(", ")}`] : []),
     ...(r.unparseable.length ? [`NOT PUBLISHED (not valid JSON in the IG source): ${r.unparseable.join("; ")}`] : []),
     r.scheme

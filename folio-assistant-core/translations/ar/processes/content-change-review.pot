@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: content-change-review\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.914Z\n"
+"POT-Creation-Date: 2026-10-05T18:40:30.345Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -236,7 +236,7 @@ msgstr ""
 
 #: ../folio-assistant-core/processes/content/content-change-review.bpmn:320
 #. Diagram element documentation
-msgid "Every PR conversation comment that starts with `block: <label>` becomes a `folio-review-comment/v1` todo (open), idempotently, and is published with the preview as `review-comments.json`. The staging workflow runs this on every push and on every tagged comment; the coordinator owns that it has run before slicing, because the slices are cut around what reviewers have already said. This is the `ingest` transition of REVIEW_TRANSITIONS."
+msgid "Every PR conversation comment that starts with `block: <label>` becomes a `review-comment/1.0.0` todo (open), idempotently, and is published with the preview as `review-comments.json`. The staging workflow runs this on every push and on every tagged comment; the coordinator owns that it has run before slicing, because the slices are cut around what reviewers have already said. This is the `ingest` transition of REVIEW_TRANSITIONS."
 msgstr ""
 
 #: ../folio-assistant-core/processes/content/content-change-review.bpmn:287

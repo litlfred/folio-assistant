@@ -84,7 +84,7 @@ describe("what it deliberately allows", () => {
 
   test("one directory may hold both kinds — it is a place to look", () => {
     // `graphs` is an array because a directory may hold more than one part of
-    // the graph; the FILES say which they are (`$schema: folio-todo/v1`).
+    // the graph; the FILES say which they are (`$schema: todo/1.0.0`).
     const g = parseTodoGraph({
       name: "x",
       directories: [{ id: "all", path: "all", graphTypologies: ["todo-items", "todo-feedback"] }],

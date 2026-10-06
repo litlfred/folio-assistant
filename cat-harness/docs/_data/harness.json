@@ -141,7 +141,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 911,
+      "count": 916,
       "unit": "beans"
     },
     {
@@ -300,7 +300,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 227,
+      "count": 232,
       "unit": "modules"
     },
     {
@@ -805,10 +805,9 @@
         },
         {
           "kind": "fhir-artifact-index",
-          "path": "/smart-trust/",
+          "path": "/smart-trust/artifacts.html",
           "readOnly": true,
-          "label": "smart-trust",
-          "sameAs": "smart-trust"
+          "label": "FHIR artefact index"
         },
         {
           "kind": "ig-ast",
@@ -942,10 +941,9 @@
         },
         {
           "kind": "fhir-artifact-index",
-          "path": "/smart-immunizations/",
+          "path": "/smart-immunizations/artifacts.html",
           "readOnly": true,
-          "label": "smart-immunizations",
-          "sameAs": "smart-immunizations"
+          "label": "FHIR artefact index"
         },
         {
           "kind": "ig-pages",
@@ -1128,10 +1126,9 @@
         },
         {
           "kind": "fhir-artifact-index",
-          "path": "/smart-base/",
+          "path": "/smart-base/artifacts.html",
           "readOnly": true,
-          "label": "SMART Base",
-          "sameAs": "smart-base"
+          "label": "FHIR artefact index"
         },
         {
           "kind": "ig-pages",
@@ -2613,12 +2610,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 52
+          "value": 62
         },
         {
           "id": "kinds",
           "label": "declared graph typologies",
-          "value": 29
+          "value": 30
         },
         {
           "id": "views",
@@ -2653,6 +2650,12 @@
           "kind": "code-list",
           "note": "no viewer yet",
           "label": "Code lists"
+        },
+        {
+          "kind": "doc-group",
+          "within": "docs",
+          "note": "no viewer yet",
+          "label": "Doc group"
         },
         {
           "kind": "docs",
@@ -3022,6 +3025,46 @@
           "path": "cat-harness/docs/requirements/"
         },
         {
+          "id": "docs/start",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/start/"
+        },
+        {
+          "id": "docs/concepts",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/concepts/"
+        },
+        {
+          "id": "docs/guides",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/guides/"
+        },
+        {
+          "id": "docs/process",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/process/"
+        },
+        {
+          "id": "docs/fhir",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/fhir/"
+        },
+        {
           "id": "docs/auto-docs",
           "kinds": [
             "auto-docs"
@@ -3100,6 +3143,46 @@
           ],
           "where": "local",
           "path": "cat-harness/docs/requirements/"
+        },
+        {
+          "id": "start",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/start/"
+        },
+        {
+          "id": "concepts",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/concepts/"
+        },
+        {
+          "id": "guides",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/guides/"
+        },
+        {
+          "id": "process",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/process/"
+        },
+        {
+          "id": "fhir",
+          "kinds": [
+            "doc-group"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/fhir/"
         },
         {
           "id": "auto-docs",
@@ -3199,7 +3282,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 10 graph(s) with no published viewer — auto-docs, code, code-list, policies, scenarios, substrate-snapshot, uml, validators, vocab-mapping, voice-vendors. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 11 graph(s) with no published viewer — auto-docs, code, code-list, doc-group, policies, scenarios, substrate-snapshot, uml, validators, vocab-mapping, voice-vendors. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -3511,6 +3594,12 @@
         "note": "no viewer yet"
       },
       {
+        "kind": "doc-group",
+        "label": "Doc group",
+        "within": "docs",
+        "note": "no viewer yet"
+      },
+      {
         "kind": "docs",
         "label": "Docs",
         "path": "/cat-harness/auto-docs/index/docs/docs/"
@@ -3647,6 +3736,11 @@
           "path": "/cat-harness/auto-docs/index/docs/smart-immunizations-docs/"
         },
         {
+          "kind": "fhir-artifact-index",
+          "label": "FHIR artefact index",
+          "path": "/smart-immunizations/artifacts.html"
+        },
+        {
           "kind": "qa",
           "label": "QA",
           "note": "no viewer yet"
@@ -3667,6 +3761,11 @@
           "kind": "docs",
           "label": "Docs",
           "path": "/cat-harness/auto-docs/index/docs/smart-trust-docs/"
+        },
+        {
+          "kind": "fhir-artifact-index",
+          "label": "FHIR artefact index",
+          "path": "/smart-trust/artifacts.html"
         },
         {
           "kind": "ig-ast",
@@ -3714,6 +3813,11 @@
           "kind": "external-schema",
           "label": "External schemas",
           "note": "no viewer yet"
+        },
+        {
+          "kind": "fhir-artifact-index",
+          "label": "FHIR artefact index",
+          "path": "/smart-base/artifacts.html"
         },
         {
           "kind": "library",

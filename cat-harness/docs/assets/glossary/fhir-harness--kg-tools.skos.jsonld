@@ -26,7 +26,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Turn an IG source repository into ONE Jekyll source for just-the-docs, as the IG Publisher builds one IG per site: `input/pagecontent` pages with title, parent and order from `sushi-config.yaml` `pages:`, the files the Publisher resolves `{% include %}` against, images, `_data/fhir.json` from `ig-site-data`, and a `_config.yml`. The pages render unchanged, `{{ site.data.fhir.* }}` included (bean `bamf`, owner's choice of one site per IG)."
+          "@value": "Turn an IG source repository into ONE Jekyll source for just-the-docs, as the IG Publisher builds one IG per site: `input/pagecontent` pages with title, parent and order from `sushi-config.yaml` `pages:`, the files the Publisher resolves `{% include %}` against, images, `_data/fhir.json` from `ig-site-data`, and a `_config.yml`. The pages render unchanged, `{{ site.data.fhir.* }}` included (bean `bamf`, owner's choice of one site per IG). With the IG's menu, the layout is the one every IG site wears (bean `mftp`): the IG's own top bar, the IG's TOC declared as the folio-assistant navbar's section (added by `rail-standalone-pages`), no sidebar of its own, an edit link per page, and per heading a source-line link and a pre-filled feedback issue."
         }
       ],
       "skos:notation": "build-ig-site",
@@ -306,7 +306,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved down to this layer because nothing in it was one IG's own (#1767); with `--summary` it writes an instance's landing page, opening with that instance's harness section. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published."
+          "@value": "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved down to this layer because nothing in it was one IG's own (#1767); with `--summary` it writes an instance's landing page, opening with that instance's harness section. For an instance whose docs declare `igSite` (bean `mftp`) it writes no index, menu or category pages — the IG site's own replace them — and only a front-matter `artifacts.md` carrying the viewer declaration. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published."
         }
       ],
       "skos:notation": "ig-pages",
@@ -331,6 +331,26 @@
       ],
       "skos:notation": "ig-site-data",
       "dcterms:source": "fhir-harness/tools/index.ts#ig-site-data",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ingest-ig-menu",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Ingest an IG's navigation from its sushi-config"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read `menu:` (and the page tree) out of an IG source repository's `sushi-config.yaml` into `fhir-artifact-index/menu.json`, recording the repository and commit it was read at — the declared source `stage-ig-sites` clones. `--check` re-derives it against a checkout; with no `--source` it reports COULD NOT DETERMINE and exits 2, never 0."
+        }
+      ],
+      "skos:notation": "ingest-ig-menu",
+      "dcterms:source": "fhir-harness/tools/index.ts#ingest-ig-menu",
       "skos:note": "candidate"
     },
     {
@@ -411,6 +431,26 @@
       ],
       "skos:notation": "pin-ig-terminology",
       "dcterms:source": "fhir-harness/tools/index.ts#pin-ig-terminology",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/stage-ig-sites",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Stage every IG whose instance records its source, one Jekyll site each"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For every instance holding `fhir-artifact-index/menu.json` with a sushi-config source, clone the IG at the recorded commit and stage it with `build-ig-site`: the instance's webpage theme (inherited along `needs` when it declares none), its artefact pages and `artifacts` page, its post-processing fills, and an edit link to the IG's default branch. An instance whose docs directory declares `igSite` is staged to be served AT `/<instance>/` with its artefact pages copied in (a collision is refused); otherwise beside it at `/<instance>/ig/`. Prints one `<instance> <jekyll source> <at>` line per IG for the caller's `jekyll build` (beans `bamf`, `mftp`)."
+        }
+      ],
+      "skos:notation": "stage-ig-sites",
+      "dcterms:source": "fhir-harness/tools/index.ts#stage-ig-sites",
       "skos:note": "candidate"
     },
     {

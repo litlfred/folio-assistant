@@ -77,6 +77,7 @@ import {
   readDeclaration,
   siteDirFor,
   visualisationsOf,
+  visualisationResolves,
   defaultGraphTypologies,
   instanceDirectories,
   nestedDirectories,
@@ -685,7 +686,8 @@ function tileFor(
   // names. #1767, stage C3.
   const instanceRel = relative(repoRoot, instanceDir).split(sep).join("/");
   const composedPrefixes = (decl.directories ?? [])
-    .filter((d) => (d as { composed?: boolean }).composed === true && typeof d.path === "string")
+    // An `igSite` directory is served at the same `/<name>/` route, inside the IG's own site (bean `mftp`).
+    .filter((d) => ((d as { composed?: boolean }).composed === true || (d as { igSite?: boolean }).igSite === true) && typeof d.path === "string")
     .map((d) => `${instanceRel}/${d.path!.replace(/^\.?\/+/, "").replace(/\/*$/, "/")}`);
   const publishedRefOf = (ref: string): string | undefined => {
     if (ref.startsWith(sitePrefix)) return publishedUrlOf(ref.slice(sitePrefix.length));
@@ -696,7 +698,9 @@ function tileFor(
   const declared = new Map<string, string>();
   for (const d of dirs) {
     for (const v of visualisationsOf(d.coverage, d.id)) {
-      if (!existsSync(join(repoRoot, v.ref))) continue;
+      // Built at publish (bean 0b8c) counts as present: its page is never
+      // committed, and the answer must not depend on a local copy.
+      if (!visualisationResolves(v, (p) => existsSync(join(repoRoot, p)))) continue;
       const page = publishedRefOf(v.ref);
       if (page === undefined) continue;
       for (const kind of d.graphTypologies ?? []) {
@@ -814,7 +818,7 @@ function tileFor(
       if (!(d.graphTypologies ?? []).includes(kind)) continue;
       for (const v of visualisationsOf(d.coverage, d.id)) {
         if ((v.publish === "staging-only") !== stagingOnly) continue;
-        if (existsSync(join(siteDir, "..", "..", v.ref))) return v.ref;
+        if (visualisationResolves(v, (p) => existsSync(join(siteDir, "..", "..", p)))) return v.ref;
       }
     }
     return undefined;
@@ -945,7 +949,7 @@ function tileFor(
     // then has a title)"* — and checking only the first would report a clean
     // directory whose second viewer is missing.
     for (const v of visualisationsOf(d.coverage, d.id)) {
-      if (!existsSync(join(siteDir, "..", "..", v.ref))) {
+      if (!visualisationResolves(v, (p) => existsSync(join(siteDir, "..", "..", p)))) {
         findings.push(
           `${decl.name}/${d.id}: declares visualiser "${v.title}" at "${v.ref}", ` +
             `which does not resolve on disk.`,
@@ -1448,7 +1452,7 @@ export function harnessTiles(
  * | source | served at | measured |
  * |---|---|---|
  * | `processes/index.md` | `/processes/` | 200 |
- * | `tool-graph.md` | `/tool-graph.html` | 200 |
+ * | `tool-graph.md` | `/concepts/tool-graph.html` | 200 |
  * | `tool-graph.md` | ~~`/tool-graph/`~~ | **404** |
  *
  * So an `index` leaf addresses as its directory and every other page addresses

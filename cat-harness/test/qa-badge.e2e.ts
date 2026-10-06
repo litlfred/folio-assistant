@@ -38,7 +38,7 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  *   - **not available in this build** — the index says `corpus: "absent"`:
  *     the build had no QA results, so whether anything was swept is unknown.
  *
- * **The markup is the generator's own, lifted out of `docs/publication-workflow.md`.**
+ * **The markup is the generator's own, lifted out of `docs/process/publication-workflow.md`.**
  * The verdicts are NOT the corpus's: `qa-badge-fixture.ts` sets them, and
  * throws by name if a node the spec addresses has left the page. A test whose
  * fixture is a live corpus verdict is the very defect this PR is about, and
@@ -51,7 +51,7 @@ const SITE = siteDirFor(ROOT);
 const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 
-const PAGE_MD = join(ROOT, SITE, "publication-workflow.md");
+const PAGE_MD = join(ROOT, SITE, "process/publication-workflow.md");
 /**
  * The page's badge index, as a COMMITTED FIXTURE — a copy of the generator's
  * `folio-qa-index/v1` output for this page. It was read from
@@ -74,7 +74,7 @@ const NO_ROW = "see-also.block";
 const KG = "editing-and-the-hci-validation-gate.kg";
 
 const PAGE_URL = "http://qa.test/page.html";
-const INDEX_URL = "/assets/qa/publication-workflow/qa-index.json";
+const INDEX_URL = "/assets/qa/process-publication-workflow/qa-index.json";
 
 /** The verdicts this spec asserts on, set here rather than read off disk. */
 const INDEX_BODY = indexWithRows(INDEX_JSON, {
@@ -317,7 +317,7 @@ test.describe("the index says the build had no QA corpus", () => {
   // claim nobody checked) and never a verdict.
   const ABSENT = JSON.stringify({
     $schema: "folio-qa-index/v1",
-    page: "publication-workflow",
+    page: "process-publication-workflow",
     corpus: "absent",
     badges: {},
     unswept: [],

@@ -439,6 +439,14 @@
       "status": "candidate"
     },
     {
+      "id": "node-kind-pages",
+      "prefLabel": "Node kind pages",
+      "definition": "Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195).",
+      "notation": "node-kind-pages",
+      "source": "cat-harness/tools/viewers.ts#node-kind-pages",
+      "status": "candidate"
+    },
+    {
       "id": "ns-vocabulary",
       "prefLabel": "Namespace vocabulary",
       "definition": "Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets.",
@@ -564,6 +572,14 @@
       "definition": "Run every registered criterion over the blocks under a path and write a per-block QA sidecar. A sidecar rather than a console report, because a printed verdict cannot distinguish \"never checked\" from \"checked and clean\".",
       "notation": "qa-sweep",
       "source": "cat-harness/tools/index.ts#qa-sweep",
+      "status": "candidate"
+    },
+    {
+      "id": "rail-standalone-pages",
+      "prefLabel": "Give every page Jekyll did not lay out the folio-assistant navbar",
+      "definition": "A LAST pass over the finished site: inject the shared navbar (`lib/navbar.ts`, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated instance pages, and each IG site built by `stage-ig-sites`. A page under an `igSite` instance's route is railed as THAT instance's page (its name, mark and graphs); a page may declare its own section (`data-fa-visualiser-nav`) and its label (`fa-visualiser-label`). Mount routes are left to the mount pass, and a page that declines (`folio-navbar: none`) is left bare.",
+      "notation": "rail-standalone-pages",
+      "source": "cat-harness/tools/index.ts#rail-standalone-pages",
       "status": "candidate"
     },
     {

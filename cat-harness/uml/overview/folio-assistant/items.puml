@@ -9,11 +9,11 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "folio-assistant/items" as pkg_folio_assistant_items <<todo-items>> {
-  class "AlsoAbout" as folio_assistant_items_AlsoAbout <<json: TodoNodeSchema>> #f6eedf {
+  class "AlsoAbout" as folio_assistant_items_AlsoAbout <<json: TodoNodeKind>> #f6eedf {
     kind [1] : 'block'
     label [1] : string
   }
-  class "TodoNode" as folio_assistant_items_TodoNode <<json: TodoNodeSchema>> #f6eedf {
+  class "TodoNodeKind" as folio_assistant_items_TodoNodeKind <<json: TodoNodeKind>> #f6eedf {
     id [1] : string
     summary [1] : string
     comment [0..1] : string
@@ -28,9 +28,9 @@ package "folio-assistant/items" as pkg_folio_assistant_items <<todo-items>> {
     status [1] : string
     priority [1] : string
     origin [1] : string
-    $schema [1] : 'folio-todo/v1'
+    $schema [1] : string
   }
 }
 
-folio_assistant_items_TodoNode *-- "0..*" folio_assistant_items_AlsoAbout : alsoAbout
+folio_assistant_items_TodoNodeKind *-- "0..*" folio_assistant_items_AlsoAbout : alsoAbout
 @enduml

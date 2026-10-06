@@ -95,6 +95,12 @@ on:
       # bean `iwtn`), so a change to any of them changes the site.
       - 'bootstrap/**'
       - 'bootstrap-tools/**'
+      # The IG sites this workflow builds (bean `mftp`): the stager and the
+      # page generator, each IG instance's index, menu and pages. Without these
+      # an IG re-ingest or a generator fix would not redeploy what it changes.
+      - 'fhir-harness/scripts/**'
+      - '*/fhir-artifact-index/**'
+      - 'smart-trust/**'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
@@ -164,6 +170,14 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
+
+      - name: Build the derived artefacts kept off the commit (bean 0b8c)
+        # A page derived from a branch-kept graph (the fsh-guts viewer) cannot
+        # be current in a commit, so it is never committed: one state:push
+        # made a committed copy stale on main and every open PR (2026-10-05).
+        # check:derived-from names them; this runs each one's declared writer
+        # against the mount above, sources before consumers.
+        run: bun run derive:publish
 
       # WHERE THIS BUILD'S QA EVIDENCE COMES FROM, decided before anything is
       # generated. Bean `tfqf`, reader audit F6 (defects C9, C10).
@@ -339,6 +353,24 @@ jobs:
       - name: Compose the docs layers
         run: bun run cat-harness/scripts/compose-docs.ts --out ./_docs
 
+      # EACH IG IS BUILT INSIDE THIS SITE (bean `mftp`, owner 2026-10-05:
+      # "Build in main site"), so its pages wear this site's chrome — sidebar,
+      # search, language selector — rather than a site of their own. Each IG
+      # whose instance records its source (`fhir-artifact-index/menu.json`) is
+      # cloned at that commit, staged, and composed into `_docs/<instance>/`,
+      # its includes and data namespaced per IG. Which IGs is DATA, so this
+      # names none. Before the Jekyll build, which is what renders them.
+      - name: Compose each IG into the docs source
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: |
+          # Retried: Maven Central answers 429 under load, and one unretried
+          # 429 failed a whole preview build on 2026-10-05 (#2238).
+          curl -sSfL --retry 5 --retry-delay 15 --retry-all-errors -o /tmp/plantuml.jar \
+            https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar
+          bun run fhir-harness/scripts/stage-ig-sites.ts --work ./_ig --baseurl "/${REPO_NAME}" \
+            --plantuml-jar /tmp/plantuml.jar --compose-into ./_docs > ./_ig-list.txt
+
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
         with:
@@ -354,6 +386,15 @@ jobs:
       - name: Take ownership of the Jekyll output
         run: sudo chown -R "$(id -u):$(id -g)" ./_site
 
+      # An IG's source can repeat an anchor, and the Publisher's output repeats
+      # it too. Keep the first copy (where every link already lands), rename
+      # the rest, and report each one — per IG, over its composed pages.
+      - name: Rename repeated ids on the IG pages
+        run: |
+          while read -r INSTANCE SRC AT; do
+            bun run fhir-harness/scripts/build-ig-site.ts --dedupe-ids "./_site/${INSTANCE}"
+          done < ./_ig-list.txt
+
       # Mount every OTHER instance's rendered content under the built site.
       #
       # Jekyll above builds ONE directory — `cat-harness/docs` — so an instance
@@ -368,6 +409,7 @@ jobs:
       # with a front door of its own. No change here when it does.
       - name: Mount instance-rendered content
         run: bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
+
 
       # The inline PDF viewer (bean `folio-assistant-5ea6`): pdf.js, pinned and
       # hash-checked in `pdf-viewer.ts`, installed into the BUILT site and never
@@ -788,6 +830,11 @@ jobs:
           bun run cat-harness/scripts/qa-site-assets.ts verify \
             --site ./_site --results cat-harness/test/results \
             --state "$RUNNER_TEMP/qa-site-assets.state.json"
+          # The panels' links to each result file, judged on what was BUILT
+          # (bean `bejf`, #2217): every projection carries `sidecarLinks`, and
+          # none addresses a stored result on `main`. Mirrored in
+          # `feature-staging.yml`.
+          bun run check:qa-result-links --site ./_site
 
       # THE NAVBAR TILES POINT AT FILES THIS BUILD PUBLISHES -- checked, not
       # composed.

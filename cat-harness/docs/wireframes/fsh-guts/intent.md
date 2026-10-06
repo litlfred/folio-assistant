@@ -5,7 +5,8 @@
 Three surfaces show the `fsh-guts` graph or lead to it:
 
 1. **The page.** `cat-harness/docs/fsh-guts/index.md` is tile `fsh-guts` in `cat-harness/docs/_data/harness.json`, with surfaces `navbar`, `board` and, since #1010, `glass`.
-   - Generator: `cat-harness/scripts/gen-fsh-guts-viz.ts`.
+   - Generator: `cat-harness/scripts/gen-fsh-guts-viz.ts`, declared as the visualisation's `writer`.
+   - It is NOT committed: `fsh-guts/` is kept on a branch, so the page is built at publish by `derive:publish` after `state:mount` (bean `0b8c`, #2230).
    - It is declared `publish: "staging-only"` in `cat-harness.json`, so `compose-docs.ts` includes it only in local builds and `STAGING/<slug>/` previews.
 2. **The dead-fish viewer.** Bean `folio-assistant-7vhe` (status in-progress): *"only available under settings at dead fish icon … has counter on icon … dialog to select and display them"*.
    - It is implemented in `cat-harness/docs/assets/js/docs-ui.js` (`FISH_GLYPH`, `fetchDiscarded`, `buildDiscardedView`, `buildDiscardedDetail`, and the Settings view in `buildViews`).

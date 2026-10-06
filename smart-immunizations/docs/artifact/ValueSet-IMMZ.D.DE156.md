@@ -3,8 +3,8 @@ title: "IMMZ.D.DE156 ValueSet for Immunization recommendation status — WHO SMA
 description: "ValueSet/IMMZ.D.DE156 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/smart-immunizations/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-immunizations/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/immunizations">smart.who.int.immunizations</a></div>
@@ -14,7 +14,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/immunizations">http://smart.who.int/immunizations</a>.</p>
 </div>
 
-[← all 748 artefacts](../)
+[← all 748 artefacts](../artifacts.html)
 
 ## IMMZ.D.DE156 ValueSet for Immunization recommendation status
 
@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE156.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.D.DE156.schema.json` · [view](ValueSet-IMMZ.D.DE156.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE156.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.D.DE156.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE156.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.D.DE156.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE156.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.D.DE156.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.D.DE156.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZ.D.DE156.jsonld` · [view](ValueSet-IMMZ.D.DE156.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.D.DE156.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZ.D.DE156.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZ.D.DE126.html" data-next="ValueSet-IMMZ.D.DE161.html" class="st-ig"></footer>
-<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>125</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>71</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>103</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>127</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>72</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>105</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,19 +48,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 103 |
+| <span class="tg-tag tg-shell">shell</span> | 105 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 25 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 7 |
 
 | installation | tools |
 |---|---|
-| `none` | 116 |
+| `none` | 118 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **71** skills named across **125** tools resolve to a
+Yes — all **72** skills named across **127** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -122,6 +122,7 @@ tool advertising a capability the graph cannot locate.
 | `merge-train`<br>Merge train | Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, `extract-smart-kg-l1.ts --entry` for each stale entry, and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR. | <span class="tg-tag tg-shell">shell</span> | [`merge-conflict-patterns`](../reference/skill-instructions/merge-conflict-patterns.html)<br>[`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | 5 in / 1 out |
 | `methodologies-viewer`<br>Methodologies viewer | Render the declared methodology graph as one page. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `narrative-queue`<br>What narratives are waiting on a person | List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it. | <span class="tg-tag tg-shell">shell</span> | [`library-ingestion`](../reference/skill-instructions/library-ingestion.html) | 0 in / 1 out |
+| `node-kind-pages`<br>Node kind pages | Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195). | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `ns-vocabulary`<br>Namespace vocabulary | Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets. | <span class="tg-tag tg-shell">shell</span> | [`kg-export`](../reference/skill-instructions/kg-export.html) | 2 in / 1 out |
 | `package-release-manual`<br>Package release by hand | A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `<package>-v<version>`, and creates the release on the host. The same four steps with nothing to configure. | <span class="tg-tag tg-manual">manual</span> | [`package-release`](../reference/skill-instructions/package-release.html) | 2 in / 1 out |
 | `pages-index`<br>Published-paper index page | Write the gh-pages `index.html` for a built paper: a Paper tab embedding the PDF and, when given, a Visualizer tab, with download links and the build's branch and commit. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 8 in / 1 out |
@@ -138,6 +139,7 @@ tool advertising a capability the graph cannot locate.
 | `proof-objects-extract`<br>Proof-object extraction | Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read. | <span class="tg-tag tg-shell">shell</span> | [`proof-status-tracking`](../reference/skill-instructions/proof-status-tracking.html) | 1 in / 1 out |
 | `proof-status-update`<br>Proof status from a Lean build | Update each proof object's status in `proof-objects.json` from a Lean build log — which objects built, which carry `sorry`, which failed. Exits 1 on a manifest with no objects rather than writing an empty status. | <span class="tg-tag tg-shell">shell</span> | [`proof-status-tracking`](../reference/skill-instructions/proof-status-tracking.html) | 2 in / 1 out |
 | `qa-sweep`<br>QA sweep | Run every registered criterion over the blocks under a path and write a per-block QA sidecar. A sidecar rather than a console report, because a printed verdict cannot distinguish "never checked" from "checked and clean". | <span class="tg-tag tg-shell">shell</span> | [`content-test`](../reference/skill-instructions/content-test.html) | 4 in / 1 out |
+| `rail-standalone-pages`<br>Give every page Jekyll did not lay out the folio-assistant navbar | A LAST pass over the finished site: inject the shared navbar (`lib/navbar.ts`, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated instance pages, and each IG site built by `stage-ig-sites`. A page under an `igSite` instance's route is railed as THAT instance's page (its name, mark and graphs); a page may declare its own section (`data-fa-visualiser-nav`) and its label (`fa-visualiser-label`). Mount routes are left to the mount pass, and a page that declines (`folio-navbar: none`) is left bare. | <span class="tg-tag tg-shell">shell</span> | [`harness-tiles`](../reference/skill-instructions/harness-tiles.html) | 4 in / 1 out |
 | `readme-audit`<br>Audit README links | Verify every Markdown link in a folio's README still resolves — relative paths against the tree, repo refs against a real ls-tree, Pages URLs against the publish ref. Writes nothing. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 3 in / 1 out |
 | `readme-sync`<br>Sync generated README sections | Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 5 in / 1 out |
 | `release-please`<br>release-please (declared, not configured here) | Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`). | <span class="tg-tag tg-shell">shell</span> | [`package-release`](../reference/skill-instructions/package-release.html) | 2 in / 1 out |

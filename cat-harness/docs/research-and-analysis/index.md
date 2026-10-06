@@ -3,6 +3,8 @@ title: "Research and analysis"
 kind: research
 summary: >-
   Index of research and analysis — surveys of prior art, measurements and comparisons that inform a decision without proposing one.
+parent: ""
+has_children: true
 ---
 
 # Research and analysis

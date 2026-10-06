@@ -70,6 +70,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`check-module-scope-resolution.ts`](check-module-scope-resolution.ts) | a file |  |
 | [`check-nav-names.ts`](check-nav-names.ts) | a file |  |
 | [`check-navbar-consistency.ts`](check-navbar-consistency.ts) | a file |  |
+| [`check-node-kinds.ts`](check-node-kinds.ts) | a file |  |
 | [`check-process-bindings.ts`](check-process-bindings.ts) | a file |  |
 | [`check-process-documentation.ts`](check-process-documentation.ts) | a file |  |
 | [`check-process-index.ts`](check-process-index.ts) | a file |  |
@@ -80,6 +81,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`check-published-refs.ts`](check-published-refs.ts) | a file |  |
 | [`check-python-deps.ts`](check-python-deps.ts) | a file |  |
 | [`check-qa-corpus.ts`](check-qa-corpus.ts) | a file |  |
+| [`check-qa-result-links.ts`](check-qa-result-links.ts) | a file |  |
 | [`check-qa-reviewer-permission.ts`](check-qa-reviewer-permission.ts) | a file |  |
 | [`check-quiet-claim-liveness.ts`](check-quiet-claim-liveness.ts) | a file |  |
 | [`check-read-only-graphs.ts`](check-read-only-graphs.ts) | a file |  |
@@ -132,6 +134,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`merge-leftover.ts`](merge-leftover.ts) | a file |  |
 | [`merge-overlap.ts`](merge-overlap.ts) | a file |  |
 | [`merge-train.ts`](merge-train.ts) | a file |  |
+| [`migrate-bib-attestations.ts`](migrate-bib-attestations.ts) | a file |  |
 | [`migrate-qa-attestations.ts`](migrate-qa-attestations.ts) | a file |  |
 | [`milestone-status.ts`](milestone-status.ts) | a file |  |
 | [`publish-id-lookup.ts`](publish-id-lookup.ts) | a file |  |

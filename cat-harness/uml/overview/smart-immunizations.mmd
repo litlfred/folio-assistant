@@ -51,6 +51,26 @@ classDiagram
       count [1] integer
       artifacts [0..*] Artifact[]
     }
+    class smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Item["Item"] {
+      <<json: IgMenuSchema>>
+      label [1] string
+      href [1] string
+    }
+    class smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Group["Group"] {
+      <<json: IgMenuSchema>>
+      label [1] string
+      href [0..1] string
+      items [0..*] Item[]
+    }
+    class smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1["folio-ig-menu/v1"] {
+      <<json: IgMenuSchema>>
+      $schema [1] 'folio-ig-menu/v1'
+      id [1] string
+      canonical [1] string~uri~
+      version [0..1] string
+      source [1] object
+      groups [0..*] Group[]
+    }
     class smart_immunizations_smart_immunizations_artifact_index_dak_StructureDefinition_IMMZ_C4_Create_client_record_schema_json_IMMZ_C4_Create_client_record["IMMZ.C4.Create client record"] {
       <<schema: dak/StructureDefinition-IMMZ_C4_Create_client_record.schema.json>>
       resourceType [1] 'IMMZC4'
@@ -1195,10 +1215,15 @@ classDiagram
   smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Context : contexts
   smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound : sidecarsUnbound
   smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Artifact : artifacts
+  smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Group *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Item : items
+  smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Group : groups
   cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Context" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Artifact" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Item" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Group" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_dak_StructureDefinition_IMMZ_C4_Create_client_record_schema_json_IMMZ_C4_Create_client_record" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_dak_StructureDefinition_IMMZ_D13_Update_client_record_schema_json_IMMZ_D13_Update_client_record" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_dak_StructureDefinition_IMMZ_D17_Report_AEFI_schema_json_IMMZ_D17_Report_AEFI" fa_uml_kind_fhir_artifact_index

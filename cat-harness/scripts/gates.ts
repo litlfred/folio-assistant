@@ -180,6 +180,19 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "read real content; a contributor's session-start hook runs the same command",
   },
   {
+    // Bean `0b8c` (#2230). The site builds run every writer of an artefact
+    // derived from a branch-kept graph (today the fsh-guts viewer), after
+    // `state:mount`. Nothing it writes is committed. Its verdicts run in the
+    // fast set: `check:derived-from` decides WHICH artefacts are publish-time
+    // and refuses a committed one, and `fsh-guts:viz:check` runs the writer
+    // over the mount.
+    match: "bun run derive:publish",
+    kind: "covered-by",
+    reason:
+      "a BUILD step, not a check: it writes the derived artefacts that cannot be committed because an input is " +
+      "kept on a branch; check:derived-from and each writer's own :check (fsh-guts:viz:check) are its verdict",
+  },
+  {
     // Bean `wnhh`: each IG whose repository carries a seeded `fhir-ast/*`
     // cache is rendered from it into the preview at `/<instance>/ast/`. The
     // lister asks each IG repository over the network (`git ls-remote`).
@@ -306,6 +319,16 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason:
       "a build step keyed by the run's own ref (network fetch) and the built ./_site; its source " +
       "decision and shrink judgement are covered by qa-site-assets.test.ts in `bun test`",
+  },
+  {
+    // Bean `bejf`, #2217. The built-site half of `check:qa-result-links` reads
+    // `./_site`, which only the site build produces; the sources half runs as
+    // its own step in `gates-docs`, and is therefore in the gate set.
+    match: "check:qa-result-links --site",
+    kind: "ci-only",
+    reason:
+      "judges the built ./_site that only the docs build produces; the sources half is a gate step " +
+      "in gates-docs, and the rule itself is covered by check-qa-result-links.test.ts in `bun test`",
   },
   {
     // Bean `tfqf`. `folio-staging.yml` reads the FOLIO's own `qa-reports`

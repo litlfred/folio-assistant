@@ -140,7 +140,7 @@ withholding** — the artefact is technically reachable and practically hidden.
 
 **Where to get the links.** The staging workflow deploys to
 `…/STAGING/<branch-slug>/`, and Jekyll rewrites `baseurl` so paths mirror
-`docs/`. A page at `docs/architecture/foo.md` is at
+`docs/`. A page at `docs/concepts/architecture/foo.md` is at
 `…/STAGING/<slug>/architecture/foo.html`; a skill at
 `skills/<pkg>/bar.md` is at
 `…/STAGING/<slug>/reference/skill-instructions/bar.html`. Derive one per
