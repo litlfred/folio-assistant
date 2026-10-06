@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "fileCount": 280,
+      "fileCount": 281,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
@@ -1538,6 +1538,7 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-export",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-to-portal",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/placement",
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/remote-mount",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/schema-management",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skill-registration",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skill-voice-review",
@@ -1693,13 +1694,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 1703,
+              "instructionLines": 1706,
               "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
               "name": "directory-conventions",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a4f5ad7f1d5501c974f8c1cdebdd98bd784b7b5158e677ff856620f894aabc63",
-                "bytes": 129598,
-                "sha256": "a4f5ad7f1d5501c974f8c1cdebdd98bd784b7b5158e677ff856620f894aabc63"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3ebb0fb141802e2905b64bbe211842a3585a120022d5c5b9ee1b89d8f7d62846",
+                "bytes": 129792,
+                "sha256": "3ebb0fb141802e2905b64bbe211842a3585a120022d5c5b9ee1b89d8f7d62846"
               },
               "title": "Directory conventions — what an instance declares it scans"
             },
@@ -1854,6 +1855,25 @@
                 "sha256": "4640bfe07cfad32d0f150b6a02d00c4f8226302f616dcf61b8ffba741d0b963e"
               },
               "title": "Placement — decide where it goes before you write it"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/remote-mount",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: `remoteMounts` on the downstream and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 159,
+              "instructionsPath": "skills/kg/kg-core/remote-mount.md",
+              "name": "remote-mount",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f2ce6cdb6cb3ec885882e1758dd79432534c894797d2c36db177f20007da303a",
+                "bytes": 7168,
+                "sha256": "f2ce6cdb6cb3ec885882e1758dd79432534c894797d2c36db177f20007da303a"
+              },
+              "title": "Remote-mount a harness"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/schema-management",

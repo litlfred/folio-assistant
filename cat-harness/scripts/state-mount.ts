@@ -97,6 +97,7 @@ import { spawnSync } from "node:child_process";
 import { mountTip, pendingMountChanges, tipLocations, type BranchStoreOptions, type TipLocation } from "./branch-store.js";
 import { instanceRootsIn, nestedDirectories, readDeclaration } from "../schemas/cat-harness.js";
 import { tools } from "../tools/discover.js";
+import { exitCode as remoteExitCode, remoteFanOut } from "./remote-mount.ts";
 
 /**
  * One declared graph's outcome in the fan-out. `state` is {@link mountTip}'s
@@ -386,8 +387,14 @@ if (import.meta.main) {
   const argv = process.argv.slice(2);
   const at = argv.indexOf("--id");
   const r = mountState({ id: at === -1 ? undefined : argv[at + 1] });
-  if (argv.includes("--json")) console.log(JSON.stringify(r, null, 2));
-  else console.log(report(r) + delegatedReport(delegatedStores()));
+  // REMOTE MOUNTS (bean `0mpw`) ride the same entry point, so the
+  // session-start hook and CI need no second step: a dependency layer that is
+  // not on disk is the same "do not trust an empty read" as a state graph.
+  // Skipped for `--id`, which names one branch-kept graph.
+  const remote = at === -1 ? remoteFanOut(repoRootOf()) : undefined;
+  if (argv.includes("--json")) console.log(JSON.stringify(remote ? { ...r, remote: { state: remote.state } } : r, null, 2));
+  else console.log(report(r) + delegatedReport(delegatedStores()) + (remote ? `\n\n${remote.text}` : ""));
+  if (remote && remoteExitCode(remote.state) !== 0) process.exit(remoteExitCode(remote.state));
   // Loud means a non-zero exit too: a hook that only prints is a hook a wrapper
   // can swallow, and the sweep calls this with `|| true`. `partial` counts: a
   // graph that did not mount is a finding even when its siblings did.

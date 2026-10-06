@@ -214,6 +214,7 @@ one cancelled.
 
 | process | step(s) that name it |
 |---|---|
+| [Remote-mount a dependency](../../processes/mount-dependency.html) | Check disk against lock against declaration |
 | [Is CI actually working on the default branch?](../../processes/ci-health-watch.html) | Run check:ci-health, WRITING the report file; Ensure the tracking label exists; Close the tracking issue; Open or EDIT the one tracking issue |
 | [Code change and review](../../processes/code-change-review.html) | Root-cause the failure |
 | [Merge the base branch in](../../processes/merge-base.html) | Report what the run found, once |

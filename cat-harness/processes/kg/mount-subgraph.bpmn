@@ -27,7 +27,7 @@
 
 You are in this process whenever a step is about to read or write the contents of a declared subgraph — beans, todos, fsh-guts, or any directory a declaration names. The source is resolved once, by `declaredSubgraph` (`schemas/harness-config.ts`) through `resolveSubgraphSource` (`schemas/subgraph-source.ts`): the instance config's `subgraphSources` override by id, then the entry's `source`, then a legacy `storage`, then the `directory` default.
 
-The gateway is on the source KIND, and its flows are the only places the kinds differ. A `directory` subgraph is already where its path says, and writing it is an ordinary commit. A `branch` subgraph is mounted from the declared branch's tip into its path, and written back by splicing onto the tip without force. A kind with no flow here is refused.</bpmn:documentation>
+The gateway is on the source KIND, and its flows are the only places the kinds differ. A `directory` subgraph is already where its path says, and writing it is an ordinary commit. A `branch` subgraph is mounted from the declared branch's tip into its path, and written back by splicing onto the tip without force. A `remote` subgraph is another repository's tree at a pinned commit, laid down by `Process_MountDependency` and read-only here. A kind with no flow here is refused.</bpmn:documentation>
 
     <bpmn:laneSet id="LaneSet_MountSubgraph">
       <bpmn:lane id="Lane_MountPipeline" name="Build pipeline">
@@ -38,6 +38,7 @@ The gateway is on the source KIND, and its flows are the only places the kinds d
         <bpmn:flowNodeRef>GW_SourceKind</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_UseCheckoutPath</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_MountBranchTip</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_MountRemotePin</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RefuseUnknownKind</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Join</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Mounted</bpmn:flowNodeRef>
@@ -60,7 +61,7 @@ The gateway is on the source KIND, and its flows are the only places the kinds d
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_SourceKind" name="Which source kind?">
-      <bpmn:documentation>The resolved source's `kind`: `directory`, `branch`, or a kind this diagram has no flow for.</bpmn:documentation>
+      <bpmn:documentation>The resolved source's `kind`: `directory`, `branch`, `remote`, or a kind this diagram has no flow for.</bpmn:documentation>
     </bpmn:exclusiveGateway>
 
     <bpmn:task id="Task_UseCheckoutPath" name="Use the checkout path&#10;in place">
@@ -83,6 +84,18 @@ The gateway is on the source KIND, and its flows are the only places the kinds d
         per commit through its own store (`qa-store`), not mounted.
       </bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="directory-conventions"/><bootstrap.processes:skill ref="content-context-and-state-graphs"/></bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:task id="Task_MountRemotePin" name="Mount the remote tree&#10;at its pin">
+      <bpmn:documentation>
+        A `remote` source (bean `0mpw`): another repository's tree at a full
+        40-character commit. `bun run mount:remote` lays it down at the declared
+        path and locks its tree digest; it is never written back, because the
+        bytes are somebody else's at somebody else's pin. Usually reached
+        through `remoteMounts`, which expands a whole harness and its closure —
+        `Process_MountDependency`.
+      </bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="remote-mount"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="Task_RefuseUnknownKind" name="Refuse: no flow for&#10;this source kind">
@@ -109,13 +122,15 @@ The gateway is on the source KIND, and its flows are the only places the kinds d
     <bpmn:sequenceFlow id="F_M7" sourceRef="Task_MountBranchTip" targetRef="GW_Join"/>
     <bpmn:sequenceFlow id="F_M8" sourceRef="GW_Join" targetRef="End_Mounted"/>
     <bpmn:sequenceFlow id="F_M9" sourceRef="Task_RefuseUnknownKind" targetRef="End_Refused"/>
+    <bpmn:sequenceFlow id="F_M10" name="remote" sourceRef="GW_SourceKind" targetRef="Task_MountRemotePin"/>
+    <bpmn:sequenceFlow id="F_M11" sourceRef="Task_MountRemotePin" targetRef="GW_Join"/>
 
   </bpmn:process>
 
   <bpmndi:BPMNDiagram id="Diagram_MountSubgraph">
     <bpmndi:BPMNPlane id="Plane_MountSubgraph" bpmnElement="Process_MountSubgraph">
       <bpmndi:BPMNShape id="S_Lane_MountPipeline" bpmnElement="Lane_MountPipeline" isHorizontal="true">
-        <dc:Bounds x="160" y="60" width="1080" height="360"/>
+        <dc:Bounds x="160" y="60" width="1080" height="450"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="S_Start_SubgraphWanted" bpmnElement="Start_SubgraphWanted">
         <dc:Bounds x="200" y="212" width="36" height="36"/>
@@ -132,8 +147,11 @@ The gateway is on the source KIND, and its flows are the only places the kinds d
       <bpmndi:BPMNShape id="S_Task_MountBranchTip" bpmnElement="Task_MountBranchTip">
         <dc:Bounds x="580" y="195" width="170" height="70"/>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_MountRemotePin" bpmnElement="Task_MountRemotePin">
+        <dc:Bounds x="580" y="300" width="170" height="70"/>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="S_Task_RefuseUnknownKind" bpmnElement="Task_RefuseUnknownKind">
-        <dc:Bounds x="580" y="310" width="170" height="70"/>
+        <dc:Bounds x="580" y="410" width="170" height="70"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="S_GW_Join" bpmnElement="GW_Join" isMarkerVisible="true">
         <dc:Bounds x="800" y="150" width="50" height="50"/>
@@ -142,7 +160,7 @@ The gateway is on the source KIND, and its flows are the only places the kinds d
         <dc:Bounds x="920" y="157" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="S_End_Refused" bpmnElement="End_Refused">
-        <dc:Bounds x="920" y="327" width="36" height="36"/>
+        <dc:Bounds x="920" y="427" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="E_F_M1" bpmnElement="F_M1">
         <di:waypoint x="236" y="230"/><di:waypoint x="280" y="230"/>
@@ -157,7 +175,7 @@ The gateway is on the source KIND, and its flows are the only places the kinds d
         <di:waypoint x="530" y="230"/><di:waypoint x="580" y="230"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="E_F_M5" bpmnElement="F_M5">
-        <di:waypoint x="505" y="255"/><di:waypoint x="505" y="345"/><di:waypoint x="580" y="345"/>
+        <di:waypoint x="505" y="255"/><di:waypoint x="505" y="445"/><di:waypoint x="580" y="445"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="E_F_M6" bpmnElement="F_M6">
         <di:waypoint x="750" y="125"/><di:waypoint x="825" y="125"/><di:waypoint x="825" y="150"/>
@@ -169,7 +187,13 @@ The gateway is on the source KIND, and its flows are the only places the kinds d
         <di:waypoint x="850" y="175"/><di:waypoint x="920" y="175"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="E_F_M9" bpmnElement="F_M9">
-        <di:waypoint x="750" y="345"/><di:waypoint x="920" y="345"/>
+        <di:waypoint x="750" y="445"/><di:waypoint x="920" y="445"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_M10" bpmnElement="F_M10">
+        <di:waypoint x="520" y="245"/><di:waypoint x="540" y="335"/><di:waypoint x="580" y="335"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_M11" bpmnElement="F_M11">
+        <di:waypoint x="750" y="335"/><di:waypoint x="840" y="335"/><di:waypoint x="840" y="190"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
