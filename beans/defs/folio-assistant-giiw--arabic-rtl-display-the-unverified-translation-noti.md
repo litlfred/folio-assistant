@@ -1,10 +1,11 @@
 ---
 # folio-assistant-giiw
 title: 'ARABIC (RTL) DISPLAY: the unverified-translation notice is English set right-to-left — reordered and clipped; audit the rest of the chrome under dir=rtl'
-status: in-progress
+status: completed
 type: bug
+priority: normal
 created_at: 2026-10-06T07:58:59Z
-updated_at: 2026-10-06T14:11:01Z
+updated_at: 2026-10-06T16:54:18Z
 parent: folio-assistant-bzyu
 ---
 
@@ -56,4 +57,3 @@ Remaining (why items 2 and 3 stay open):
 - Round 2: every other English panel docs-ui draws is marked English at its root, or per element where the row mirrors or the content is translated; QA badges carry the attributes in generated markup and at paint time; the Stickies panel and todo listing in markup; sidebar tooltips are mirrored for an RTL page; the staging banner is marked English so its 🔀 stays at the start.
 - Left in the page's direction on purpose: `.site-nav`, the document index's rows, the badge row, the icon row and the glass band (their order mirrors).
 - Tests: 3 + 18 RTL cases in `translation-badges.e2e.ts`, 1 in `staging-banner.e2e.ts`, 1 unit assertion; each fails on the code before its fix.
-
