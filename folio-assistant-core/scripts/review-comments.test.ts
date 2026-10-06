@@ -37,6 +37,15 @@ describe("buildReviewComments", () => {
     expect(buildReviewComments({ ...base, comments: [], existing: f }).verdicts).toHaveLength(1);
   });
 
+  it("records a `page:` verdict against the build's pin, and refuses one the build cannot place (bnjs)", () => {
+    const rendered = { files: [{ path: "doc/index.html", role: "content", hash: "pin-doc" }], undetermined: [] };
+    const f = buildReviewComments({ ...base, rendered, comments: [pc(1, "page: doc/index.html\nverdict: ok"), pc(2, "page: nope.html\nverdict: ok")] });
+    expect(f.comments).toEqual([]);
+    expect(f.verdicts.map((v) => [v.target, v.targetLabel, v.blockHash])).toEqual([["page", "doc/index.html", "pin-doc"]]);
+    expect(f.malformed.map((m) => m.error)).toEqual([expect.stringContaining("no page `nope.html`")]);
+    expect(f.untagged).toBe(0);
+  });
+
   it("is idempotent over its own output, and keeps a status the process set", () => {
     const first = buildReviewComments({ ...base, comments: [pc(1, "block: prose:overview\nWhy?")] });
     const moved = { ...first, comments: [{ ...first.comments[0]!, status: "addressed" as const }] };

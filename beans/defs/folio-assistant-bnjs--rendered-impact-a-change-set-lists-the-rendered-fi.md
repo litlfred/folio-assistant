@@ -21,7 +21,7 @@ Related: q4cm (edit set, accept = approve), c65n (measured FHIR chain), jwox (bl
 - [ ] docs-site renderer (staging-cone, directory -> pages)
 - [x] skill rendered-impact; update staging-review, before-after-preview, ig-ast-delta, public-comment change-sets
 - [x] process: content-change-review.bpmn names rendered-impact at Compare, Slice and Comment-PR (produce/read/assign)
-- [ ] gate: the coverage DMN counts unreviewed rendered pages, missed files and site-wide undetermined inputs, once the staging build publishes rendered-impact.json (an input nothing computes is not added)
+- [x] gate: the coverage DMN counts unreviewed rendered pages, missed files and site-wide undetermined inputs, once the staging build publishes rendered-impact.json (an input nothing computes is not added)
 - [x] staging build: folio-staging.yml step "Compute the rendered impact" publishes rendered-impact.json beside changeset.json; the PR comment lists up to 20 pages with after/before links
 - [x] PR comment + review page show the list: the review page FETCHES rendered-impact.json when opened (owner: "dynamic loading on review page"), and says "not known" when the build published none
 
@@ -42,3 +42,38 @@ Owner, 2026-10-06: "original stays in library/. the presumed workflow is then it
 
 ## Staging step + review page (2026-10-06)
 `folio-staging.yml` runs the document renderer after the ChangeSet and publishes `rendered-impact.json`; the PR comment lists the review pages (after + before links, block anchors) and the not-known inputs. The review page (`gen-review-page.ts` + `review-rendered.ts`) fetches the file in the browser, like `changeset.json`. Checked in Chromium on the smart-ra test build: the edited block's after link (200) and before link, and the missing-file state; no page errors.
+
+## Coverage gate design (2026-10-06, this session; owner chose "1" = start it)
+
+The DMN engine throws on a fact that is not supplied, so every fact is always
+supplied and a status fact says whether it was COMPUTED: an uncomputed count is
+never read as 0.
+
+- Facts added to `review-coverage-gate.dmn`: `rendered` (known|absent),
+  `unreviewedPages`, `undeterminedInputs`, `measured` (known|absent|not-base),
+  `missedPages`. A page rule only fires when its status is `known`.
+- A page is reviewed when every block anchor on it has a current block verdict,
+  OR it has a current PAGE verdict. New tag lines beside `block:`:
+  `page: <path>` and `input: <path>` (same `verdict:` / `waive:`). An anchorless
+  page (manifest, media, comment store, every FHIR IG page) can only be
+  reviewed that way.
+- A page verdict is pinned like a block verdict: to a hash of the git blobs of
+  the changed inputs on the page's `via` at head (not the built bytes, which
+  carry a per-build banner). An input waiver pins to the input's blob. So an
+  edit after review reopens exactly the pages and inputs it touched.
+- `missedPages`: measured in the staging job, which already checks out the
+  before site: `diffBuiltSites(before, _site)` before the banner is injected,
+  over main's `_main-site.json` file list only. Counted only when that manifest's
+  commit IS the PR's base (`not-base` otherwise: main drift would be read as
+  missed pages). Missed pages need a page verdict too.
+
+## Todo (coverage gate)
+
+- [x] rendered-impact: optional `hash` on files and undetermined; `pinImpact`; renderers pin
+- [x] `rendered-measured/v1` + `measure-rendered-impact.ts` (build diff + comparePrediction + base check)
+- [x] verdict tag: `page:` / `input:`; ingestion validates against the published impact
+- [x] computeCoverage / review-coverage CLI: the five new facts
+- [x] DMN rules + process documentation + skills (rendered-impact, review verdict syntax)
+- [x] folio-staging.yml: pin, measure step, ingestion args, PR comment shows missed pages
+
+- [ ] see it on a real staging run (smart-ra: blocked on SUSHI's package hosts, issue litlfred/smart-ra#23)

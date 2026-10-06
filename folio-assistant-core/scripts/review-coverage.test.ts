@@ -9,7 +9,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { buildReviewComments } from "./review-comments";
-import { buildCoverage } from "./review-coverage";
+import { buildCoverage, pinMaps, renderedFacts } from "./review-coverage";
 
 const SCRIPT = resolve(import.meta.dir, "review-coverage.ts");
 const pc = (id: number, body: string) => ({ id, body, user: "sme1", createdAt: "2026-09-23T07:00:00Z", url: `https://github.com/o/r/pull/7#issuecomment-${id}` });
@@ -27,7 +27,7 @@ const rc = buildReviewComments({
 describe("buildCoverage", () => {
   it("gives the gate's facts: one block unread, one defect open", () => {
     const f = buildCoverage({ changeset, blocks, reviewComments: rc });
-    expect(f.facts).toEqual({ uncoveredBlocks: 1, openDefects: 1 });
+    expect(f.facts).toEqual({ uncoveredBlocks: 1, openDefects: 1, rendered: "absent", unreviewedPages: 0, undeterminedInputs: 0, measured: "absent", missedPages: 0 });
     expect(f.uncovered).toEqual(["prose:b"]);
   });
 
@@ -35,6 +35,39 @@ describe("buildCoverage", () => {
     const f = buildCoverage({ changeset, blocks: { ...blocks, "prose:a": { hash: "ha2", renamedFrom: [] } }, reviewComments: rc });
     expect(f.uncovered).toEqual(["prose:a", "prose:b"]);
     expect(f.stale).toHaveLength(1);
+  });
+});
+
+describe("the rendered half (bean bnjs)", () => {
+  const impact = {
+    $schema: "rendered-impact/v1",
+    renderer: "document-site",
+    method: "cone",
+    inputs: ["folio/doc/doc.ts"],
+    files: [
+      { path: "doc/index.html", change: "changed", role: "content", via: ["folio/doc/doc.ts"], hash: "pin-doc" },
+      { path: "outline.json", change: "changed", role: "index", via: ["folio/doc/doc.ts"], hash: "pin-doc" },
+    ],
+    undetermined: [{ input: "_config.yml", reason: "site-wide", scope: "all", hash: "pin-cfg" }],
+  };
+  const measured = {
+    $schema: "rendered-measured/v1",
+    status: "known",
+    baseCommit: "b",
+    beforeCommit: "b",
+    measured: { $schema: "rendered-impact/v1", renderer: "build-diff", method: "build-diff", files: [{ path: "x.html", change: "changed", role: "content", hash: "pin-x" }] },
+    check: { missed: ["x.html"], confirmed: [], unconfirmed: [] },
+  };
+
+  it("every fact is supplied, and the counts are KNOWN when the build published them", () => {
+    const f = buildCoverage({ changeset, blocks, reviewComments: rc, rendered: renderedFacts([impact], measured) });
+    expect(f.facts).toEqual({ uncoveredBlocks: 1, openDefects: 1, rendered: "known", unreviewedPages: 1, undeterminedInputs: 1, measured: "known", missedPages: 1 });
+  });
+
+  it("the pins a page or input verdict may be recorded against include missed pages", () => {
+    const m = pinMaps(renderedFacts([impact], measured));
+    expect([...m.pages]).toEqual([["doc/index.html", "pin-doc"], ["outline.json", "pin-doc"], ["x.html", "pin-x"]]);
+    expect([...m.inputs]).toEqual([["_config.yml", "pin-cfg"]]);
   });
 });
 
@@ -64,7 +97,7 @@ describe("the command", () => {
     setup();
     const r = run();
     expect(r.status).toBe(0);
-    expect(JSON.parse(r.stdout)).toEqual({ uncoveredBlocks: 1, openDefects: 1 });
+    expect(JSON.parse(r.stdout)).toEqual({ uncoveredBlocks: 1, openDefects: 1, rendered: "absent", unreviewedPages: 0, undeterminedInputs: 0, measured: "absent", missedPages: 0 });
   });
 
   it("refuses to commit verdicts on the base branch, and writes nothing", () => {

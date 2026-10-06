@@ -450,6 +450,29 @@ jobs:
           echo "url=$URL" >> "$GITHUB_OUTPUT"
           echo "label=$LABEL" >> "$GITHUB_OUTPUT"
 
+      - name: Measure the rendered impact against main's site
+        # What the build ACTUALLY changed, against main's published site, and
+        # what the prediction missed (bean `bnjs`): a missed page was never on
+        # the review list, so the coverage gate counts it. Run before the
+        # banner is injected, which names the commit and so would change
+        # every page. Counted only when main's site was built from this PR's
+        # base (`status: known`); with no published main site nothing is
+        # written, which reads as "not measured", never "nothing missed".
+        if: steps.before.outputs.dir == 'pages'
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          BASE_REF: ${{ steps.base.outputs.ref }}
+          SITE_DIR: ${{ inputs.site_dir }}
+        run: |
+          set -eu
+          if [ ! -f "$SITE_DIR/rendered-impact.json" ]; then
+            echo "no rendered-impact.json: nothing predicted, so nothing to measure"
+            exit 0
+          fi
+          bun run "$PLATFORM_DIR/cat-harness/scripts/measure-rendered-impact.ts" --before pages --after "$SITE_DIR" \
+            --predicted "$SITE_DIR/rendered-impact.json" --base "$(git rev-parse "origin/$BASE_REF")" \
+            --out "$SITE_DIR/rendered-measured.json"
+
       - name: Inject staging banner
         env:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
@@ -517,6 +540,7 @@ jobs:
             --repo "$GITHUB_REPOSITORY" --pr "$PR" --commit "$GITHUB_SHA" \
             --folio "$FOLIO_DIR" --blocks-out "$SITE_DIR/blocks.json" \
             --existing "pages/STAGING/$STAGING_SLUG/review-comments.json" \
+            --rendered "$SITE_DIR/rendered-impact.json" --measured "$SITE_DIR/rendered-measured.json" \
             --out "$SITE_DIR/review-comments.json"
 
       - name: Deploy the preview and log the render, in one commit
@@ -544,7 +568,7 @@ jobs:
           # the author meant to delete. The data files the steps above write
           # (changeset and its text, blocks, block QA, review comments, the
           # visual diff and its pictures) are not a site on their own.
-          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|changeset-text\.json|rendered-impact\.json|blocks\.json|block-qa\.json|review-comments\.json|visual-diff\.json|visual' || true)" ]; then
+          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|changeset-text\.json|rendered-impact\.json|rendered-measured\.json|blocks\.json|block-qa\.json|review-comments\.json|visual-diff\.json|visual' || true)" ]; then
             echo "::error::the build produced no site in $SITE_DIR — refusing to deploy, so STAGING/$STAGING_SLUG keeps its last working preview"
             exit 1
           fi
@@ -630,13 +654,25 @@ jobs:
                 (rows.length > shown.length ? `\n- … ${rows.length - shown.length} more on the [review page](${url}review/)` : "") +
                 (unknown.length ? `\n\n**Not known** (never read as "no change"):\n` + unknown.join("\n") : "") + "\n";
             } catch {}
+            // What the build changed that the list above did not name (bean bnjs).
+            let measuredLine = "\n**Measured against main:** not measured — no published main site to compare with.\n";
+            try {
+              const m = JSON.parse(fs.readFileSync(`${process.env.SITE_DIR}/rendered-measured.json`, "utf8"));
+              const missed = m.check.missed;
+              measuredLine = m.status !== "known"
+                ? `\n**Measured against main:** main's site was built from \`${String(m.beforeCommit).slice(0, 7)}\`, not this PR's base, so missed pages are not counted.\n`
+                : missed.length
+                  ? `\n**Missed by the list above:** ${missed.length} page(s) the build changed but no renderer predicted — each needs a \`page:\` verdict — [rendered-measured.json](${url}rendered-measured.json)\n` +
+                    missed.slice(0, 20).map((p) => `- [\`${p}\`](${url}${p})`).join("\n") + "\n"
+                  : `\n**Measured against main:** the build changed nothing the list above did not name.\n`;
+            } catch {}
             const body = `## 🔍 Folio staging preview deployed
 
             **URL:** ${url}
             **Review page:** ${url}review/ (every changed block, before and after, with the heat map, outline and open comments)
             **Commit:** \`${sha}\`
             **Branch:** \`${process.env.BRANCH}\`
-            ${summary}${rendered}
+            ${summary}${rendered}${measuredLine}
             > Compare with [${process.env.BEFORE_LABEL}'s site](${process.env.BEFORE_URL}/) to review changes.`;
             const comments = await github.rest.issues.listComments({ owner, repo, issue_number: context.issue.number });
             const existing = comments.data.find(
@@ -905,6 +941,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" --pr "$PR" \
               --commit "$(jq -r '.commit // "unknown"' "$DIR/review-comments.json" 2>/dev/null || echo unknown)" \
               --blocks "$DIR/blocks.json" --existing "$DIR/review-comments.json" \
+              --rendered "$DIR/rendered-impact.json" --measured "$DIR/rendered-measured.json" \
               --out "$DIR/review-comments.json"
             git -C pages add "STAGING/$SLUG/review-comments.json"
             git -C pages commit -m "review-comments($SLUG): refresh on a PR comment" || exit 0
