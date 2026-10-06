@@ -298,9 +298,7 @@ def _depth(num: str | None) -> int | None:
         return 1
     if re.fullmatch(r"[A-Z]", num, re.I):
         return None
-    if re.match(r"[A-Z]\.", num, re.I):
-        return num.count(".") + 1
-    return num.count(".") + 1
+    return num.count(".") + 1                  # "2.1" and "A.1" alike
 
 
 def body_size(lines: Iterable[Line]) -> float:
