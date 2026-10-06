@@ -1,11 +1,11 @@
 ---
 # folio-assistant-uvt0
 title: 'who-iris replica: the locale band shifts the page 52px; make it an overlay (owner: no shift)'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-06T08:56:44Z
-updated_at: 2026-10-06T12:30:00Z
+updated_at: 2026-10-06T14:30:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -32,3 +32,6 @@ That breaks the replica-fidelity rule (bean `g9r2`): mounting the harness must n
 - Measured `<main>` top before → after: en 1280 404→352, en 390 654→602, ar 1280 453→401, ar 390 708→656. That is −52 px in every case, with no horizontal overflow.
 - The locale control and the handle share the strip without touching. In ar-390 the control is at x 314–382 and the handle at x 151–239. Four new e2e cases cover en and ar at 1280 and 390.
 - Screenshots of all eight cases (before/after × en/ar × 1280/390) were sent to the owner in the session.
+
+## Merged 2026-10-06 (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92)
+#2277 merged as e11bc28 after CI PASS on f1ee624 (20 checks; every owed workflow ran).
