@@ -1372,6 +1372,13 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
+      - name: Produce the QA working copy this job reads (bean 72a8)
+        # As in gates-kg: `test/results/` is not committed (bean `5hox`), and
+        # `kg:audit:all:check` below compares every instance's kg-qa sidecars
+        # under it. Without this step the tree is absent and the audit reports a
+        # finding on every instance that has sidecars.
+        run: bun run qa:working-copy
+
       # The same audit, over EVERY declared instance rather than the root alone.
       #
       # Not a second answer to the step above — it is the step above, with its

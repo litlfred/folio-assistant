@@ -450,6 +450,16 @@ function main(argv: string[]): number {
         "the commit's own copy is their record, so they do not run (5hox's hash check needs main/<sha> byte-identical to it)",
     );
   }
+  // Every declared results directory exists before any writer runs. This
+  // command IS the computation, so an absent directory here means "not yet
+  // written", never "not computed". Without it, a fresh checkout's first writer
+  // (kg:audit:all) audits each nested instance before anything has created that
+  // instance's directory, so its test-run criteria read `unknown` (bean `2gst`'s
+  // rule for an uncomputed tree), and that critical `unknown` is recorded in the
+  // very sidecars it then writes there. `check:qa-corpus` failed on 8 instances
+  // in CI on #2080 for exactly this. On main the directories exist because their
+  // sidecars are committed; this restores that, nothing more.
+  for (const r of roots) mkdirSync(join(repoRoot, r), { recursive: true });
   // A writer may rewrite committed files beside its QA output (bean `72a8`);
   // restore those so the gates judge the tree that was committed.
   const before = dirtyTracked(repoRoot);
