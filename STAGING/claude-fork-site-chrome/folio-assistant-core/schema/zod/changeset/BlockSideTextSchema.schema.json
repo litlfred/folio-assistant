@@ -1,0 +1,29 @@
+{
+  "$ref": "#/definitions/BlockSideText",
+  "definitions": {
+    "BlockSideText": {
+      "type": "object",
+      "properties": {
+        "prose": {
+          "type": "string"
+        },
+        "html": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prose",
+        "html"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fork-site-chrome/folio-assistant-core/schema/zod/changeset/BlockSideTextSchema.schema.json",
+  "title": "BlockSideTextSchema",
+  "description": "Generated from `BlockSideTextSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/fork-site-chrome",
+    "sha": "5dc861e7e570be42f967dcd6c273b7bff6956b7e",
+    "pr": "2237/merge",
+    "run": "37393288541"
+  }
+}
