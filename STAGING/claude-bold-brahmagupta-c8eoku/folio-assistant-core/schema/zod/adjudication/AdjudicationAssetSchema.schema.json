@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/AdjudicationAsset",
+  "definitions": {
+    "AdjudicationAsset": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "unknown",
+            "referenced",
+            "materialized"
+          ]
+        },
+        "at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "ref",
+        "state"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bold-brahmagupta-c8eoku/folio-assistant-core/schema/zod/adjudication/AdjudicationAssetSchema.schema.json",
+  "title": "AdjudicationAssetSchema",
+  "description": "Generated from `AdjudicationAssetSchema` in schemas/adjudication.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/bold-brahmagupta-c8eoku",
+    "sha": "a6b9e48b752078d5b01a16ce9f8d12f6bf33659c",
+    "pr": "2296/merge",
+    "run": "37506791180"
+  }
+}
