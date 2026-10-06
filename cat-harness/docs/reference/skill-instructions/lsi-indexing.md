@@ -77,10 +77,10 @@ then reduces it to k dimensions and the per-unit view was gone.
 `keywordsOf(matrix, cols, texts, top, headings)` keeps it: a unit's (or a
 pooled set of units') top terms and two-word phrases, from the same weights.
 Its first consumer is `bun run library:keywords` (per library section and per
-document, written as `keywords.json` and shown in the library viewer); the
-scoring rules and what each fixed are in
-[`l1-document-ingestion`](l1-document-ingestion.md)
-§"Keywords". Reuse it for any unit set the index covers — beans, chapters —
+document, written as `keywords.json` and shown in the library viewer). The
+scoring rules are documented with `keywordsOf` in `content/pipeline/lsi.ts`,
+and the ingestion skill that runs it says when (`skill_fetch
+l1-document-ingestion`, §"Keywords"). Reuse it for any unit set the index covers — beans, chapters —
 rather than writing a second term weighting.
 
 ## Correspondence analysis — the parallel track

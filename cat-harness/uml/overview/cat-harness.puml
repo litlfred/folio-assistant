@@ -722,6 +722,18 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
     entry [1] : string
     summaries [0..*] : Summary[]
   }
+  class "Document" as cat_harness_library_folio_keywords_v1_Document <<json: KeywordsFileSchema>> #f4f4f1 {
+    term [1] : string
+    score [1] : number
+    evidence [0..*] : heading[]
+  }
+  class "folio-keywords/v1" as cat_harness_library_folio_keywords_v1_folio_keywords_v1 <<json: KeywordsFileSchema>> #f4f4f1 {
+    $schema [1] : 'folio-keywords/v1'
+    entry [1] : string
+    corpus [1] : object
+    document [0..*] : Document[]
+    sections [1] : map<object[]>
+  }
   class "folio-slides-accessibility/v1" as cat_harness_library_folio_slides_accessibility_v1_folio_slides_accessibility_v1 <<json: SlidesAccessibilitySchema>> #f4f4f1 {
     $schema [1] : 'folio-slides-accessibility/v1'
     source [1] : object
@@ -1030,6 +1042,8 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     $schema [1] : 'folio-library-entry/v1'
     id [1] : string
     blocks [0..*] : Block[]
+  }
+  class "folio-library-document/v1" as cat_harness_docs_folio_library_document_v1_folio_library_document_v1 <<json: LibraryDocumentSchema>> #f4f4f1 {
   }
   class "Directory" as cat_harness_docs_folio_voices_index_v1_Directory <<json: VoicesIndexSchema>> #f4f4f1 {
     instance [1] : string
@@ -1467,6 +1481,7 @@ cat_harness_health_Check *-- "0..*" cat_harness_health_Finding : findings
 cat_harness_health_HealthReport *-- "1..*" cat_harness_health_Check : checks
 cat_harness_library_folio_block_summaries_v1_Summary *-- "0..*" cat_harness_library_folio_block_summaries_v1_Superseded : superseded
 cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1 *-- "0..*" cat_harness_library_folio_block_summaries_v1_Summary : summaries
+cat_harness_library_folio_keywords_v1_folio_keywords_v1 *-- "0..*" cat_harness_library_folio_keywords_v1_Document : document
 cat_harness_library_folio_referenced_source_v1_folio_referenced_source_v1 *-- "0..*" cat_harness_library_folio_referenced_source_v1_Outline : outline
 cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo_index_v1_Relation : relations
 cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_docs_folio_todo_index_v1_Item : items

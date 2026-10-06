@@ -51,6 +51,18 @@ package "who-iris/library" as pkg_who_iris_library <<library>> {
     entry [1] : string
     summaries [0..*] : Summary[]
   }
+  class "Document" as who_iris_library_folio_keywords_v1_Document <<json: KeywordsFileSchema>> #f4f4f1 {
+    term [1] : string
+    score [1] : number
+    evidence [0..*] : heading[]
+  }
+  class "folio-keywords/v1" as who_iris_library_folio_keywords_v1_folio_keywords_v1 <<json: KeywordsFileSchema>> #f4f4f1 {
+    $schema [1] : 'folio-keywords/v1'
+    entry [1] : string
+    corpus [1] : object
+    document [0..*] : Document[]
+    sections [1] : map<object[]>
+  }
   class "Gate" as who_iris_library_folio_withheld_v1_Gate <<json: WithheldSchema>> #f4f4f1 {
     gate [1] : string
     verdict [1] : string
@@ -70,6 +82,7 @@ package "who-iris/library" as pkg_who_iris_library <<library>> {
 
 who_iris_library_folio_block_summaries_v1_Summary *-- "0..*" who_iris_library_folio_block_summaries_v1_Superseded : superseded
 who_iris_library_folio_block_summaries_v1_folio_block_summaries_v1 *-- "0..*" who_iris_library_folio_block_summaries_v1_Summary : summaries
+who_iris_library_folio_keywords_v1_folio_keywords_v1 *-- "0..*" who_iris_library_folio_keywords_v1_Document : document
 who_iris_library_folio_withheld_v1_Path *-- "1..*" who_iris_library_folio_withheld_v1_Gate : gates
 who_iris_library_folio_withheld_v1_folio_withheld_v1 *-- "0..*" who_iris_library_folio_withheld_v1_Path : paths
 @enduml

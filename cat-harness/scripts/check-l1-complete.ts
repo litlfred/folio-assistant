@@ -70,7 +70,7 @@ import {
 import { LICENCE_FILENAME } from "../content/pipeline/gen-library-jsonld.ts";
 import { NARRATIVE_BEARING, narrativesIn } from "./narratives.ts";
 import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
-import { KEYWORDS_FILE } from "./library-keywords.ts";
+import { KEYWORDS_FILE } from "../schemas/library-keywords.ts";
 import { entryDirs, entryItems, sidecarDefects, tally } from "./summaries.ts";
 import { againstOrUsage, buildQaResult, qaResultPath, qaResultState, writeQaResult, type QaResultState } from "./qa-results.ts";
 import { REFERENCED_SOURCE_SCHEMA_ID, ReferencedSourceSchema } from "../schemas/referenced-source.ts";

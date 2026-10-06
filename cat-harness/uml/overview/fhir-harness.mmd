@@ -60,6 +60,20 @@ classDiagram
       images [1] object[] | null
       undetermined_reason [0..1] string
     }
+    class fhir_harness_library_folio_keywords_v1_Document["Document"] {
+      <<json: KeywordsFileSchema>>
+      term [1] string
+      score [1] number
+      evidence [0..*] heading[]
+    }
+    class fhir_harness_library_folio_keywords_v1_folio_keywords_v1["folio-keywords/v1"] {
+      <<json: KeywordsFileSchema>>
+      $schema [1] 'folio-keywords/v1'
+      entry [1] string
+      corpus [1] object
+      document [0..*] Document[]
+      sections [1] map~object[]~
+    }
   }
   namespace fhir_harness__fhir_ig_skills {
     class n_fhir_harness_fhir_ig_skills_skills["skills: no node schema"] {
@@ -149,7 +163,10 @@ classDiagram
   cssClass "fhir_harness_fhir_harness_translations_TranslationConfig" fa_uml_kind_translation_sources
   cssClass "fhir_harness_fhir_harness_validators_folio_validator_v1_folio_validator_v1" fa_uml_kind_validators
   cssClass "fhir_harness_fhir_harness_typologies_folio_graph_typology_v1_folio_graph_typology_v1" fa_uml_kind_typologies
+  fhir_harness_library_folio_keywords_v1_folio_keywords_v1 *-- "0..*" fhir_harness_library_folio_keywords_v1_Document : document
   cssClass "fhir_harness_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
+  cssClass "fhir_harness_library_folio_keywords_v1_Document" fa_uml_kind_library
+  cssClass "fhir_harness_library_folio_keywords_v1_folio_keywords_v1" fa_uml_kind_library
   cssClass "n_fhir_harness_fhir_ig_skills_skills" fa_uml_kind_skills
   cssClass "n_fhir_harness_fhir_ig_skills_skills" fa_uml_undetermined
   fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Remedy : remedies

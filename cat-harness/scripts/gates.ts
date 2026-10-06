@@ -521,6 +521,14 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
       "`library:viz:check` is intentionally not gated — see code-quality-gates.yml",
   },
   {
+    match: "run library:keywords",
+    kind: "covered-by",
+    reason:
+      "the site build runs the writer at deploy, so nothing PUBLISHED goes stale; " +
+      "`library:keywords:check` is intentionally not gated, for `library:viz:check`'s reason — " +
+      "keywords derive from a WHOLE library's term weights (issue #2302)",
+  },
+  {
     match: "run uploads:viz",
     kind: "covered-by",
     reason:
@@ -1352,6 +1360,12 @@ const OWN_SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "covered-by",
     reason:
       "same as `schema:viz:check` and for the same reason: the writer runs at deploy, and the projection derives from the whole repository, so its red means a sibling merged rather than that this diff forgot. Run it by hand, or from `/prepare-merge`",
+  },
+  {
+    script: "library:keywords:check",
+    kind: "covered-by",
+    reason:
+      "same as `library:viz:check`: the writer runs at deploy (`docs-site.yml`, before the projection that reads it), and log-entropy weights derive from the WHOLE library, so one sibling ingesting an entry reweights every keywords.json in it — a red here means a sibling merged rather than that this diff forgot (issue #2302). Run it by hand, or from `/prepare-merge`",
   },
   {
     script: "uploads:viz:check",

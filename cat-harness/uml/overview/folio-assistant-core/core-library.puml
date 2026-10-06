@@ -21,6 +21,19 @@ package "folio-assistant-core/core-library" as pkg_folio_assistant_core_core_lib
     attribution [0..1] : Record<string, { inspected_by: unknown; inspected_at: string }>
     verdicts [1] : Record<string, Record<string, Verdict>>
   }
+  class "Document" as folio_assistant_core_core_library_folio_keywords_v1_Document <<json: KeywordsFileSchema>> #f4f4f1 {
+    term [1] : string
+    score [1] : number
+    evidence [0..*] : heading[]
+  }
+  class "folio-keywords/v1" as folio_assistant_core_core_library_folio_keywords_v1_folio_keywords_v1 <<json: KeywordsFileSchema>> #f4f4f1 {
+    $schema [1] : 'folio-keywords/v1'
+    entry [1] : string
+    corpus [1] : object
+    document [0..*] : Document[]
+    sections [1] : map<object[]>
+  }
 }
 
+folio_assistant_core_core_library_folio_keywords_v1_folio_keywords_v1 *-- "0..*" folio_assistant_core_core_library_folio_keywords_v1_Document : document
 @enduml

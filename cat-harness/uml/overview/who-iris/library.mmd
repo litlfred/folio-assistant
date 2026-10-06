@@ -49,6 +49,20 @@ classDiagram
       entry [1] string
       summaries [0..*] Summary[]
     }
+    class who_iris_library_folio_keywords_v1_Document["Document"] {
+      <<json: KeywordsFileSchema>>
+      term [1] string
+      score [1] number
+      evidence [0..*] heading[]
+    }
+    class who_iris_library_folio_keywords_v1_folio_keywords_v1["folio-keywords/v1"] {
+      <<json: KeywordsFileSchema>>
+      $schema [1] 'folio-keywords/v1'
+      entry [1] string
+      corpus [1] object
+      document [0..*] Document[]
+      sections [1] map~object[]~
+    }
     class who_iris_library_folio_withheld_v1_Gate["Gate"] {
       <<json: WithheldSchema>>
       gate [1] string
@@ -70,6 +84,7 @@ classDiagram
   }
   who_iris_library_folio_block_summaries_v1_Summary *-- "0..*" who_iris_library_folio_block_summaries_v1_Superseded : superseded
   who_iris_library_folio_block_summaries_v1_folio_block_summaries_v1 *-- "0..*" who_iris_library_folio_block_summaries_v1_Summary : summaries
+  who_iris_library_folio_keywords_v1_folio_keywords_v1 *-- "0..*" who_iris_library_folio_keywords_v1_Document : document
   who_iris_library_folio_withheld_v1_Path *-- "1..*" who_iris_library_folio_withheld_v1_Gate : gates
   who_iris_library_folio_withheld_v1_folio_withheld_v1 *-- "0..*" who_iris_library_folio_withheld_v1_Path : paths
   cssClass "who_iris_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
@@ -78,6 +93,8 @@ classDiagram
   cssClass "who_iris_library_folio_block_summaries_v1_Superseded" fa_uml_kind_library
   cssClass "who_iris_library_folio_block_summaries_v1_Summary" fa_uml_kind_library
   cssClass "who_iris_library_folio_block_summaries_v1_folio_block_summaries_v1" fa_uml_kind_library
+  cssClass "who_iris_library_folio_keywords_v1_Document" fa_uml_kind_library
+  cssClass "who_iris_library_folio_keywords_v1_folio_keywords_v1" fa_uml_kind_library
   cssClass "who_iris_library_folio_withheld_v1_Gate" fa_uml_kind_library
   cssClass "who_iris_library_folio_withheld_v1_Path" fa_uml_kind_library
   cssClass "who_iris_library_folio_withheld_v1_folio_withheld_v1" fa_uml_kind_library

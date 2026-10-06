@@ -34,27 +34,15 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { buildTermMatrix, keywordsOf, tokenize, type Keyword } from "../content/pipeline/lsi.ts";
 import { readStructure } from "../schemas/document-structure.ts";
+import { KEYWORDS_FILE, KEYWORDS_SCHEMA_ID, type KeywordsFile, type ScoredKeyword } from "../schemas/library-keywords.ts";
+export { KEYWORDS_FILE };
 import type { PdfStructure } from "../schemas/pdf-structure.ts";
 import { readLibraryGraph } from "./library-graph.ts";
 import { unitsOf } from "./lsi.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
-/** The file each library entry carries. */
-export const KEYWORDS_FILE = "keywords.json";
 export const DOC_TOP = 12;
 export const SECTION_TOP = 8;
-
-export interface ScoredKeyword extends Keyword {
-  evidence: string[];
-}
-
-export interface KeywordsFile {
-  $schema: "folio-keywords/v1";
-  entry: string;
-  corpus: { library: string; sections: number; terms: number; weighting: string };
-  document: ScoredKeyword[];
-  sections: Record<string, ScoredKeyword[]>;
-}
 
 /** Does every word of `term` appear among the tokens of `text`? */
 export function namedBy(term: string, text: string): boolean {
@@ -63,7 +51,7 @@ export function namedBy(term: string, text: string): boolean {
 }
 
 function withEvidence(ks: Keyword[], headings: string[]): ScoredKeyword[] {
-  return ks.map((k) => ({ ...k, evidence: headings.some((h) => namedBy(k.term, h)) ? ["heading"] : [] }));
+  return ks.map((k) => ({ ...k, evidence: headings.some((h) => namedBy(k.term, h)) ? ["heading" as const] : [] }));
 }
 
 /** keywords.json for every entry under one library root. */
@@ -104,7 +92,7 @@ export function libraryKeywords(libRoot: string, repoRoot = ROOT): Map<string, K
     }
     const docKs = keywordsOf(m, e.cols, e.cols.map((j) => units[j].text), DOC_TOP);
     out.set(slug, {
-      $schema: "folio-keywords/v1",
+      $schema: KEYWORDS_SCHEMA_ID,
       entry: slug,
       corpus: { library: libRel, sections: units.length, terms: m.terms.length, weighting: m.weighting },
       document: withEvidence(docKs, docHeadings),

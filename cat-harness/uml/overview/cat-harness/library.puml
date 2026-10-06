@@ -55,6 +55,18 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
     entry [1] : string
     summaries [0..*] : Summary[]
   }
+  class "Document" as cat_harness_library_folio_keywords_v1_Document <<json: KeywordsFileSchema>> #f4f4f1 {
+    term [1] : string
+    score [1] : number
+    evidence [0..*] : heading[]
+  }
+  class "folio-keywords/v1" as cat_harness_library_folio_keywords_v1_folio_keywords_v1 <<json: KeywordsFileSchema>> #f4f4f1 {
+    $schema [1] : 'folio-keywords/v1'
+    entry [1] : string
+    corpus [1] : object
+    document [0..*] : Document[]
+    sections [1] : map<object[]>
+  }
   class "folio-slides-accessibility/v1" as cat_harness_library_folio_slides_accessibility_v1_folio_slides_accessibility_v1 <<json: SlidesAccessibilitySchema>> #f4f4f1 {
     $schema [1] : 'folio-slides-accessibility/v1'
     source [1] : object
@@ -81,5 +93,6 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
 
 cat_harness_library_folio_block_summaries_v1_Summary *-- "0..*" cat_harness_library_folio_block_summaries_v1_Superseded : superseded
 cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1 *-- "0..*" cat_harness_library_folio_block_summaries_v1_Summary : summaries
+cat_harness_library_folio_keywords_v1_folio_keywords_v1 *-- "0..*" cat_harness_library_folio_keywords_v1_Document : document
 cat_harness_library_folio_referenced_source_v1_folio_referenced_source_v1 *-- "0..*" cat_harness_library_folio_referenced_source_v1_Outline : outline
 @enduml

@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 238,
+      "count": 239,
       "unit": "modules"
     }
   },
@@ -799,6 +799,14 @@
       "graphNode": "none",
       "reason": "a mint rule, not a schema",
       "summary": "A library entry's ONE IRI — the address of its published JSON-LD.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/library-keywords.ts",
+      "instance": "cat-harness",
+      "name": "library-keywords",
+      "graphNode": "undeclared",
+      "summary": "`library/<slug>/keywords.json` — an entry's keywords, read from the LSI",
       "isTest": false
     },
     {
@@ -22664,6 +22672,116 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/library-keywords.ts#KeywordsFile",
+      "name": "KeywordsFile",
+      "module": "cat-harness/schemas/library-keywords.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/library-keywords.ts#KeywordsFileSchema",
+      "name": "KeywordsFileSchema",
+      "module": "cat-harness/schemas/library-keywords.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(KEYWORDS_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "entry",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "corpus",
+          "type": "z .object({ library: z.string(), sections: z.number().int(), terms: z.number().int(), weighting: z.string() }) .strict()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "document",
+          "type": "z.array(ScoredKeywordSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "sections",
+          "type": "z.record(z.string(), z.array(ScoredKeywordSchema))",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/library-keywords.ts#ScoredKeywordSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "KEYWORDS_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/library-keywords.ts#ScoredKeyword",
+      "name": "ScoredKeyword",
+      "module": "cat-harness/schemas/library-keywords.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/library-keywords.ts#ScoredKeywordSchema",
+      "name": "ScoredKeywordSchema",
+      "module": "cat-harness/schemas/library-keywords.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "term",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "score",
+          "type": "z.number()",
+          "optional": false,
+          "array": false,
+          "doc": "Comparable within one library's matrix only."
+        },
+        {
+          "name": "evidence",
+          "type": "z.array(z.enum([\"heading\"]))",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/log-entry.ts#LogCapture",
       "name": "LogCapture",
       "module": "cat-harness/schemas/log-entry.ts",
@@ -31552,6 +31670,36 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/site-indexes.ts#AlignmentList",
+      "name": "AlignmentList",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "count",
+          "type": "z.number().int()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "items",
+          "type": "StringList",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#StringList"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
       "name": "BeanIndexItemSchema",
       "module": "cat-harness/schemas/site-indexes.ts",
@@ -31774,6 +31922,35 @@
       "exported": false
     },
     {
+      "id": "cat-harness/schemas/site-indexes.ts#DocKeyword",
+      "name": "DocKeyword",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "doc": "One entry's DOCUMENT view (`entries/<id>.doc.json`, issue #2302), built by",
+      "fields": [
+        {
+          "name": "term",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "heading",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/site-indexes.ts#envelope",
       "name": "envelope",
       "module": "cat-harness/schemas/site-indexes.ts",
@@ -31811,6 +31988,120 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/site-indexes.ts#Count"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#LibraryDocumentSchema",
+      "name": "LibraryDocumentSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "folio-library-document/v1"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "name": "LibraryDocumentViewSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"folio-library-document/v1\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pages",
+          "type": "z.number().int()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tocSource",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tocMethod",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "toc",
+          "type": "z.array( z .object({ level: z.number().int(), title: z.string(), number: z.string().nullable(), page: PageNumber, pageL…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "sections",
+          "type": "z.array( z .object({ id: z.string(), number: z.string().nullable(), title: z.string(), level: z.number().int(), pageSta…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "keywords",
+          "type": "z.array(DocKeyword).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "pageLabels",
+          "type": "z .array(z.object({ physical: z.number().int(), label: z.string().nullable(), source: z.string().nullable(), confidence…",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "figures",
+          "type": "z .array( z .object({ kind: z.string(), number: z.string(), title: z.string(), page: z.number().int(), pageLabel: z.str…",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "checks",
+          "type": "z .object({ tocAlignment: z.record(z.string(), AlignmentList).optional(), figureSequenceGaps: StringList.optional(), pa…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "withheld",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#AlignmentList",
+        "cat-harness/schemas/site-indexes.ts#DocKeyword",
+        "cat-harness/schemas/site-indexes.ts#PageNumber",
+        "cat-harness/schemas/site-indexes.ts#StringList"
       ],
       "unresolved": [],
       "external": [
@@ -60356,6 +60647,22 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/library-keywords.ts#KeywordsFileSchema",
+      "to": "cat-harness/schemas/library-keywords.ts#ScoredKeywordSchema",
+      "via": "document",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/library-keywords.ts#KeywordsFileSchema",
+      "to": "cat-harness/schemas/library-keywords.ts#ScoredKeywordSchema",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/log-entry.ts#LogEntrySchema",
       "to": "cat-harness/schemas/log-entry.ts#LogExecutionSchema",
       "via": "execution",
@@ -61652,6 +61959,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/site-indexes.ts#AlignmentList",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "items",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
       "to": "cat-harness/schemas/site-indexes.ts#StringList",
       "via": "blockedBy",
@@ -61719,6 +62034,70 @@
       "from": "cat-harness/schemas/site-indexes.ts#FolioGraphProjectionSchema",
       "to": "cat-harness/schemas/site-indexes.ts#Count",
       "via": "nodes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#AlignmentList",
+      "via": "checks",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#DocKeyword",
+      "via": "keywords",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#DocKeyword",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#PageNumber",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#PageNumber",
+      "via": "toc",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "checks",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "figures",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "toc",
       "kind": "field",
       "optional": false,
       "array": true

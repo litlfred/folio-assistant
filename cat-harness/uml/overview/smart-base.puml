@@ -78,6 +78,18 @@ package "smart-base/library" as pkg_smart_base_library <<library>> {
     figures [1] : object[] | null
     undetermined_reason [0..1] : string
   }
+  class "Document" as smart_base_library_folio_keywords_v1_Document <<json: KeywordsFileSchema>> #f4f4f1 {
+    term [1] : string
+    score [1] : number
+    evidence [0..*] : heading[]
+  }
+  class "folio-keywords/v1" as smart_base_library_folio_keywords_v1_folio_keywords_v1 <<json: KeywordsFileSchema>> #f4f4f1 {
+    $schema [1] : 'folio-keywords/v1'
+    entry [1] : string
+    corpus [1] : object
+    document [0..*] : Document[]
+    sections [1] : map<object[]>
+  }
   class "Outline" as smart_base_library_folio_referenced_source_v1_Outline <<json: ReferencedSourceSchema>> #f4f4f1 {
     level [1] : integer
     title [1] : string
@@ -648,7 +660,7 @@ package "smart-base/smart-base-themes" as pkg_smart_base_smart_base_themes <<the
   }
 }
 package "smart-base/smart-base-docs" as pkg_smart_base_smart_base_docs <<docs, ig-pages>> {
-  note "docs: no node schema declared\n(no node here carries a $schema family docs names (13 named): could not determine)" as n_smart_base_smart_base_docs_docs
+  note "docs: no node schema declared\n(no node here carries a $schema family docs names (14 named): could not determine)" as n_smart_base_smart_base_docs_docs
   note "ig-pages: no node schema declared\n(no validator registered: could not determine)" as n_smart_base_smart_base_docs_ig_pages
 }
 package "smart-base/smart-base-document-kinds" as pkg_smart_base_smart_base_document_kinds <<document-kinds>> {
@@ -702,7 +714,7 @@ package "smart-base/smart-base-document-kinds" as pkg_smart_base_smart_base_docu
   }
 }
 package "smart-base/smart-base-findings" as pkg_smart_base_smart_base_findings <<docs>> {
-  note "docs: no node schema declared\n(no node here carries a $schema family docs names (13 named): could not determine)" as n_smart_base_smart_base_findings_docs
+  note "docs: no node schema declared\n(no node here carries a $schema family docs names (14 named): could not determine)" as n_smart_base_smart_base_findings_docs
 }
 package "smart-base/smart-base-external-schemas" as pkg_smart_base_smart_base_external_schemas <<external-schema>> {
   class "Term" as smart_base_smart_base_external_schemas_folio_external_schema_v1_Term <<json: ExternalSchemaSchema>> #e9edf3 {
@@ -782,6 +794,7 @@ package "smart-base/voices" as pkg_smart_base_voices <<voices>> {
   }
 }
 
+smart_base_library_folio_keywords_v1_folio_keywords_v1 *-- "0..*" smart_base_library_folio_keywords_v1_Document : document
 smart_base_library_folio_referenced_source_v1_folio_referenced_source_v1 *-- "0..*" smart_base_library_folio_referenced_source_v1_Outline : outline
 smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_Context : contexts
 smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound : sidecarsUnbound

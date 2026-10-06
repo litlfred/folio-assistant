@@ -304,6 +304,9 @@ classDiagram
       id [1] string
       blocks [0..*] Block[]
     }
+    class cat_harness_docs_folio_library_document_v1_folio_library_document_v1["folio-library-document/v1"] {
+      <<json: LibraryDocumentSchema>>
+    }
     class cat_harness_docs_folio_voices_index_v1_Directory["Directory"] {
       <<json: VoicesIndexSchema>>
       instance [1] string
@@ -460,6 +463,7 @@ classDiagram
   cssClass "cat_harness_docs_folio_library_index_v1_folio_library_index_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_library_entry_v1_Block" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_library_entry_v1_folio_library_entry_v1" fa_uml_kind_docs
+  cssClass "cat_harness_docs_folio_library_document_v1_folio_library_document_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_voices_index_v1_Directory" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_voices_index_v1_Source" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_voices_index_v1_ProvenanceFlag" fa_uml_kind_docs

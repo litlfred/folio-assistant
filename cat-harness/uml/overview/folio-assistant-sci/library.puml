@@ -27,6 +27,19 @@ package "folio-assistant-sci/library" as pkg_folio_assistant_sci_library <<libra
     pages [1] : object[] | null
     undetermined_reason [0..1] : string
   }
+  class "Document" as folio_assistant_sci_library_folio_keywords_v1_Document <<json: KeywordsFileSchema>> #f4f4f1 {
+    term [1] : string
+    score [1] : number
+    evidence [0..*] : heading[]
+  }
+  class "folio-keywords/v1" as folio_assistant_sci_library_folio_keywords_v1_folio_keywords_v1 <<json: KeywordsFileSchema>> #f4f4f1 {
+    $schema [1] : 'folio-keywords/v1'
+    entry [1] : string
+    corpus [1] : object
+    document [0..*] : Document[]
+    sections [1] : map<object[]>
+  }
 }
 
+folio_assistant_sci_library_folio_keywords_v1_folio_keywords_v1 *-- "0..*" folio_assistant_sci_library_folio_keywords_v1_Document : document
 @enduml
