@@ -509,6 +509,33 @@
                       "keyFrom"
                     ],
                     "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "remote"
+                      },
+                      "repository": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$"
+                      },
+                      "ref": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{40}$"
+                      },
+                      "upstreamPath": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\\/?$"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "repository",
+                      "ref"
+                    ],
+                    "additionalProperties": false
                   }
                 ]
               },
@@ -948,6 +975,82 @@
             },
             "required": [
               "id",
+              "repository",
+              "ref"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "mountDefaults": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\\/?$"
+            },
+            "directories": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "remoteMounts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "harness": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "repository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                "description": "A forge repository's full name, owner/name"
+              },
+              "ref": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "overrides": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                },
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\\/?$"
+                    },
+                    "directories": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "skip": {
+                      "type": "boolean",
+                      "const": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "harness",
               "repository",
               "ref"
             ],
@@ -1433,8 +1536,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "c77fafec4329aadbd3f6986421a61d9d9d4e46c1",
+    "sha": "4158c50e478c8ef1a85268fd2158c7b16d7ed8aa",
     "pr": "main",
-    "run": "37532813547"
+    "run": "37543324418"
   }
 }

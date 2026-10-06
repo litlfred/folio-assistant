@@ -111,13 +111,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 324,
+          "instructionLines": 325,
           "instructionsPath": "skills/kg/graph-management/kg-separation.md",
           "name": "kg-separation",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/65cd28898a252f39600ad9a1c4d58838a010549c1f62d18d8a46008d76fef9fb",
-            "bytes": 20598,
-            "sha256": "65cd28898a252f39600ad9a1c4d58838a010549c1f62d18d8a46008d76fef9fb"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2dadeb3a72eff4564c53fec88ca3366a21c37e2a42f21353879f68dc056518fa",
+            "bytes": 21113,
+            "sha256": "2dadeb3a72eff4564c53fec88ca3366a21c37e2a42f21353879f68dc056518fa"
           },
           "title": "Knowledge Graph separation — the method"
         },
@@ -149,13 +149,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 310,
+          "instructionLines": 316,
           "instructionsPath": "skills/kg/graph-management/sub-kg-lifecycle.md",
           "name": "sub-kg-lifecycle",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cf19bb1ffdf8533de988d1cbb2b4e99c10d3ec7c4129dfacd2bd9b6301118018",
-            "bytes": 17089,
-            "sha256": "cf19bb1ffdf8533de988d1cbb2b4e99c10d3ec7c4129dfacd2bd9b6301118018"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/316ed3badb20921b3f582059faec0005ff565184af44211ca98ba93b96d90b26",
+            "bytes": 17501,
+            "sha256": "316ed3badb20921b3f582059faec0005ff565184af44211ca98ba93b96d90b26"
           },
           "title": "Sub-KG lifecycle — staged here, separated later"
         }
@@ -190,6 +190,7 @@
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-export",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-to-portal",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/placement",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/remote-mount",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/schema-management",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skill-registration",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skill-voice-review",
@@ -345,13 +346,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 1703,
+          "instructionLines": 1706,
           "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
           "name": "directory-conventions",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a4f5ad7f1d5501c974f8c1cdebdd98bd784b7b5158e677ff856620f894aabc63",
-            "bytes": 129598,
-            "sha256": "a4f5ad7f1d5501c974f8c1cdebdd98bd784b7b5158e677ff856620f894aabc63"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3ebb0fb141802e2905b64bbe211842a3585a120022d5c5b9ee1b89d8f7d62846",
+            "bytes": 129792,
+            "sha256": "3ebb0fb141802e2905b64bbe211842a3585a120022d5c5b9ee1b89d8f7d62846"
           },
           "title": "Directory conventions — what an instance declares it scans"
         },
@@ -506,6 +507,25 @@
             "sha256": "4640bfe07cfad32d0f150b6a02d00c4f8226302f616dcf61b8ffba741d0b963e"
           },
           "title": "Placement — decide where it goes before you write it"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/remote-mount",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: `remoteMounts` on the downstream and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 159,
+          "instructionsPath": "skills/kg/kg-core/remote-mount.md",
+          "name": "remote-mount",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f2ce6cdb6cb3ec885882e1758dd79432534c894797d2c36db177f20007da303a",
+            "bytes": 7168,
+            "sha256": "f2ce6cdb6cb3ec885882e1758dd79432534c894797d2c36db177f20007da303a"
+          },
+          "title": "Remote-mount a harness"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/schema-management",

@@ -335,24 +335,24 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-06T21:33:15.508Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c77fafec4329aadbd3f6986421a61d9d9d4e46c1",
-  "sourceCommitSha": "c77fafec4329aadbd3f6986421a61d9d9d4e46c1",
-  "sourceCommitAt": "2026-10-06T23:17:23+02:00",
+  "generatedAt": "2026-10-06T23:11:25.456Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4158c50e478c8ef1a85268fd2158c7b16d7ed8aa",
+  "sourceCommitSha": "4158c50e478c8ef1a85268fd2158c7b16d7ed8aa",
+  "sourceCommitAt": "2026-10-07T00:52:43+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 221,
+    "Skill": 222,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 18,
     "Decision": 7,
-    "Process": 62,
-    "SequenceFlow": 794,
-    "Lane": 143,
-    "ProcessNode": 766,
+    "Process": 63,
+    "SequenceFlow": 804,
+    "Lane": 145,
+    "ProcessNode": 776,
     "Tool": 129,
-    "Schema": 153,
+    "Schema": 154,
     "ExternalSchema": 22,
     "GraphTypology": 31,
     "Role": 53,
@@ -1346,7 +1346,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/sub-kg-lifecycle.md",
-      "instructionLines": 310,
+      "instructionLines": 316,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1378,7 +1378,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/kg-separation.md",
-      "instructionLines": 324,
+      "instructionLines": 325,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1697,7 +1697,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1703,
+      "instructionLines": 1706,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1730,6 +1730,22 @@
       ],
       "instructionsPath": "skills/kg/kg-core/artefact-reachability.md",
       "instructionLines": 314,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/remote-mount",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "remote-mount",
+      "title": "Remote-mount a harness",
+      "description": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: `remoteMounts` on the downstream and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/remote-mount.md",
+      "instructionLines": 159,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3151,7 +3167,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
-      "instructionLines": 592,
+      "instructionLines": 611,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5126,6 +5142,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-export",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-to-portal",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/placement",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/remote-mount",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/schema-management",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skill-registration",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skill-voice-review",
@@ -9361,6 +9378,302 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "Remote-mount a dependency",
+      "summary": "Laying a harness — and every instance it needs — down from another repository at a pinned commit, as declared directories, with a lock that says exactly what arrived.",
+      "description": "Laying a harness — and every instance it needs — down from another repository at a pinned commit, as declared directories, with a lock that says exactly what arrived.\n\nYou are in this process whenever a folio or harness needs a layer it does not hold: a downstream folio built on a content layer above this harness, a separated instance whose foundation lives elsewhere. The downstream names the harness, its repository and a 40-character pin in `remoteMounts`; everything else is read from the harness's own declaration at that pin.\n\nEvery instance reached ends in one of three states — mounted, missing, could-not-determine — and the third is never reported as the first. The skill is `remote-mount`.",
+      "enforcement": "strict",
+      "sourcePath": "processes/kg/mount-dependency.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-dependency.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/mount-dependency.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Start_LayerNeeded"
+      ],
+      "nodeCount": 9,
+      "flowCount": 8,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D1",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Start_LayerNeeded",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_DeclareMount",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D2",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_DeclareMount",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_ResolveClosure",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D3",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_ResolveClosure",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_MountInstances",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D4",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_MountInstances",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_WriteLock",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D5",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_WriteLock",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_CheckAgainstLock",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D6",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_CheckAgainstLock",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/GW_State",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D7",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": {
+        "@value": "sí",
+        "@language": "es"
+      },
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/GW_State",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/End_Mounted",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D8",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": {
+        "@value": "no",
+        "@language": "es"
+      },
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/GW_State",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/End_Reported",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/lane/Lane_Author",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Downstream author",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/author",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/lane/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Build pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Start_LayerNeeded",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "A layer this checkout does not hold",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/lane/Lane_Author",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_DeclareMount",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Declare the mount: harness, repository, pin",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/lane/Lane_Author",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/remote-mount"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_ResolveClosure",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Resolve the closure at the pin",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/lane/Lane_Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/remote-mount"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_MountInstances",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Mount each instance at its declared path",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/lane/Lane_Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/remote-mount",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/directory-conventions"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_WriteLock",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Write the lock",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/lane/Lane_Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/remote-mount"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/Task_CheckAgainstLock",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Check disk against lock against declaration",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/lane/Lane_Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/remote-mount",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ci-health"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/GW_State",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Every instance mounted or local?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/lane/Lane_Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D7",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/End_Mounted",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "The closure is on disk, pinned and locked",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/lane/Lane_Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D7"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/node/End_Reported",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Reported loudly: missing / could not determine",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/lane/Lane_Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency/flow/F_D8"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
       "name": "KG to public portal",
@@ -10846,7 +11159,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Cutover",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "13 · Cutover: delete the parent's copy",
+      "name": "13 · Cutover: retire the parent's copy",
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
@@ -12337,8 +12650,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Start_SubgraphWanted"
       ],
-      "nodeCount": 9,
-      "flowCount": 9,
+      "nodeCount": 10,
+      "flowCount": 11,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
@@ -12421,6 +12734,23 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M10",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "remote",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_SourceKind",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_MountRemotePin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M11",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_MountRemotePin",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
       "name": "Build pipeline",
@@ -12486,7 +12816,8 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M3",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M4",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M5"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M5",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M10"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
@@ -12536,6 +12867,28 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_MountRemotePin",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Mount the remote tree at its pin",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/remote-mount"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_RefuseUnknownKind",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "Refuse: no flow for this source kind",
@@ -12571,7 +12924,8 @@
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M6",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M7"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M7",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M11"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M8"
@@ -38801,6 +39155,15 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/remote-mount",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "remote-mount",
+      "title": "remote-mount",
+      "summary": "REMOTE MOUNTS — a harness, and its dependency closure, read from another",
+      "module": "schemas/remote-mount.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/render-log",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "render-log",
@@ -41052,7 +41415,7 @@
       ],
       "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
       "readmePath": "schemas/README.md",
-      "fileCount": 273,
+      "fileCount": 274,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
@@ -41086,7 +41449,7 @@
       ],
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "readmePath": "skills/README.md",
-      "fileCount": 280,
+      "fileCount": 281,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
@@ -41137,7 +41500,7 @@
       ],
       "description": "Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth, not illustrations of one: a lane binds a Role, an activity names the Skill to run through `<folio:skill ref>`, and `workflow_complete` refuses a step that is not enabled. WHERE A RUNNING INSTANCE GOT TO is not here — that is `beans/workflows/`, kind `workflow-state`, which is `state` rather than `content`. Two questions, two graphs. GROUPED BY CONCERN since placement PR3 (bean `63wl`): `processes.json` names the groups, each diagram sits in `processes/<group>/` and a DMN in `processes/<group>/decisions/` beside the diagrams that read it; the content-type diagrams moved up to the instances that own their skills (folio-assistant-core, folio-assistant-sci, fhir-harness), whose same-named `processes/<group>/` are members of these groups.",
       "readmePath": "processes/README.md",
-      "fileCount": 72,
+      "fileCount": 73,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
@@ -41258,7 +41621,7 @@
       ],
       "description": "The gettext side of translation — one directory per target locale holding `.pot` templates, `.po` catalogues and the `TranslationNode` `.ts` manifests that make each pair addressable in the graph. The INPUT to injection. There is deliberately NO matching declaration for the rendered OUTPUT: a translated page is the same kind of thing as the page it translates — renderable content, differing by a field — and it declares its own `lang` and `translation_source` in front matter, so the locale subtrees under `docs/` are DISCOVERED from the files rather than enumerated here. A first draft of PR #351 enumerated them, ten entries for five locales across two subtrees, and that restated what all ten files already said. Undeclared until 2026-09-19: the `dh4f` defect in reverse, five committed directories that no declaration mentioned.",
       "readmePath": "translations/README.md",
-      "fileCount": 505,
+      "fileCount": 510,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/translation-sources"
     },
     {
@@ -41292,7 +41655,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 3223,
+      "fileCount": 3228,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
     {
@@ -41344,7 +41707,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 932,
+      "fileCount": 939,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
     {

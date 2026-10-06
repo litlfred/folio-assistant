@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-reference-direction.ts",
-    "script_hash": "0339fb6a5996"
+    "script_hash": "88cd89169fd4"
   },
   "subject": {
     "kind": "reference-direction",
@@ -654,7 +654,7 @@
     },
     "pending-held": {
       "summary": "The files held pending a ruling, as the source declares them. Not findings: the RULING, committed, so a reader with only this file can tell a question nobody has answered from an axis nobody has run. Membership moves only when somebody edits the list, which is why it is graded while the occurrence count it holds is not.",
-      "count": 43,
+      "count": 42,
       "entries": [
         {
           "file": "cat-harness-tools/scripts/check-context-emission.ts",
@@ -695,10 +695,6 @@
         {
           "file": "cat-harness/schemas/harness-config.ts",
           "names": 3
-        },
-        {
-          "file": "cat-harness/schemas/jsonld.ts",
-          "names": 2
         },
         {
           "file": "cat-harness/schemas/namespaces.ts",
@@ -869,26 +865,26 @@
       ]
     },
     "verdict-census": {
-      "summary": "Not findings, and NOT graded: what the axis says on the run that wrote this. Verdict counts are recorded because they ARE this axis's answer — a reader holding only this file cannot otherwise tell `audited clean` from `never audited`, which is the whole reason the sidecar exists. They are not graded because they move whenever anybody writes a paragraph, and `audit-coverage` already established that a gate keyed on a number like that is stale by default. FILE counts are not here at all — how many files were skipped as machine-written or self-declared generator output is a census of the tree, not a statement about direction, and stays in the printed report. 43 file(s) held pending; 6 exemption(s) declared, each with a stated reason.",
+      "summary": "Not findings, and NOT graded: what the axis says on the run that wrote this. Verdict counts are recorded because they ARE this axis's answer — a reader holding only this file cannot otherwise tell `audited clean` from `never audited`, which is the whole reason the sidecar exists. They are not graded because they move whenever anybody writes a paragraph, and `audit-coverage` already established that a gate keyed on a number like that is stale by default. FILE counts are not here at all — how many files were skipped as machine-written or self-declared generator output is a census of the tree, not a statement about direction, and stays in the printed report. 42 file(s) held pending; 6 exemption(s) declared, each with a stated reason.",
       "count": 1,
       "entries": [
         {
           "instances": 14,
-          "occurrences": 63939,
+          "occurrences": 63437,
           "allowed": 0,
-          "wrongDirection": 4551,
-          "wrongDirectionFiles": 525,
-          "exempt": 14777,
-          "namesRepository": 43343,
-          "undetermined": 1268,
-          "pendingFiles": 43,
-          "pendingOccurrences": 331
+          "wrongDirection": 4541,
+          "wrongDirectionFiles": 517,
+          "exempt": 14284,
+          "namesRepository": 43342,
+          "undetermined": 1270,
+          "pendingFiles": 42,
+          "pendingOccurrences": 327
         }
       ]
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 927,
+      "count": 918,
       "entries": [
         {
           "file": "cat-harness-tools/cat-harness-tools.json",
@@ -1369,26 +1365,6 @@
         {
           "file": "cat-harness/content/pipeline/repo-root.ts",
           "target": "folio-assistant-sci"
-        },
-        {
-          "file": "cat-harness/content/pipeline/script-sidecars/dak-bpmn-has-process.script.json",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/content/pipeline/script-sidecars/dak-companion-present.script.json",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/content/pipeline/script-sidecars/dak-dmn-has-decision-table.script.json",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/content/pipeline/script-sidecars/dak-fsh-declares-kind.script.json",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/content/pipeline/script-sidecars/dak-label-prefix-matches-kind.script.json",
-          "target": "smart-base"
         },
         {
           "file": "cat-harness/content/pipeline/script-sidecars/proof-compile-cost.script.json",
@@ -2855,14 +2831,6 @@
           "target": "smart-base"
         },
         {
-          "file": "cat-harness/schemas/jsonld.ts",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness/schemas/jsonld.ts",
-          "target": "smart-base"
-        },
-        {
           "file": "cat-harness/schemas/kg-node.ts",
           "target": "smart-base"
         },
@@ -3341,10 +3309,6 @@
         {
           "file": "cat-harness/scripts/kg-export.ts",
           "target": "who-iris"
-        },
-        {
-          "file": "cat-harness/scripts/kg-subscribe.ts",
-          "target": "folio-assistant-core"
         },
         {
           "file": "cat-harness/scripts/known-skills.ts",
@@ -4103,10 +4067,6 @@
           "target": "who-iris"
         },
         {
-          "file": "cat-harness/vocab-mappings/licence-naming.json",
-          "target": "folio-assistant-core"
-        },
-        {
           "file": "cat-openapi/cat-openapi.json",
           "target": "smart-trust"
         },
@@ -4601,5 +4561,5 @@
       ]
     }
   },
-  "total": 1137
+  "total": 1127
 }

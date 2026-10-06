@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 238,
+      "count": 239,
       "unit": "modules"
     }
   },
@@ -1190,6 +1190,14 @@
       "name": "referenced-source",
       "graphNode": "schema",
       "summary": "`referenced.json`: a library entry that RECORDS a source and holds none of",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "instance": "cat-harness",
+      "name": "remote-mount",
+      "graphNode": "schema",
+      "summary": "REMOTE MOUNTS — a harness, and its dependency closure, read from another",
       "isTest": false
     },
     {
@@ -7553,6 +7561,20 @@
           "doc": "Substrates known to exist or planned that NO declaration here names — {@link KnownSubstrate}. Issue #1719."
         },
         {
+          "name": "mountDefaults",
+          "type": "MountDefaults",
+          "optional": true,
+          "array": false,
+          "doc": "What a downstream remote-mounts of this instance by default — `schemas/remote-mount.ts`, bean `0mpw`."
+        },
+        {
+          "name": "remoteMounts",
+          "type": "RemoteMount[]",
+          "optional": true,
+          "array": true,
+          "doc": "Harnesses this instance remote-mounts at a pin, transitively — `schemas/remote-mount.ts`, bean `0mpw`."
+        },
+        {
           "name": "stickies",
           "type": "StickyContribution[]",
           "optional": true,
@@ -7646,6 +7668,8 @@
         "cat-harness/schemas/kg-node.ts#KgAsset",
         "cat-harness/schemas/kg-node.ts#KgImage",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels",
+        "cat-harness/schemas/remote-mount.ts#MountDefaults",
+        "cat-harness/schemas/remote-mount.ts#RemoteMount",
         "cat-harness/schemas/repo-full-name.ts#RepoFullName",
         "cat-harness/schemas/sticky-contribution.ts#StickyContribution"
       ],
@@ -7817,6 +7841,20 @@
           "doc": "External Knowledge Graphs this one subscribes to — see {@link Subscription}."
         },
         {
+          "name": "mountDefaults",
+          "type": "MountDefaultsSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What a DOWNSTREAM mounts of this instance by default, and where — see"
+        },
+        {
+          "name": "remoteMounts",
+          "type": "RemoteMountsSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Harnesses this instance REMOTE-MOUNTS — each a repository and a 40-char"
+        },
+        {
           "name": "knownSubstrates",
           "type": "z .array(KnownSubstrateSchema) .refine((xs) => new Set(xs.map((x) => x.name)).size === xs.length, { message: \"knownSubs…",
           "optional": true,
@@ -7910,6 +7948,8 @@
         "cat-harness/schemas/graph-typology-node.ts#KindAvatarSchema",
         "cat-harness/schemas/kg-node.ts#KgAssetSchema",
         "cat-harness/schemas/kg-node.ts#KgImageSchema",
+        "cat-harness/schemas/remote-mount.ts#MountDefaultsSchema",
+        "cat-harness/schemas/remote-mount.ts#RemoteMountsSchema",
         "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
         "cat-harness/schemas/sticky-contribution.ts#StickyContributionSchema"
       ],
@@ -29124,6 +29164,423 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/remote-mount.ts#CommitShaSchema",
+      "name": "CommitShaSchema",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "zod-scalar",
+      "doc": "A full commit SHA. A branch moves under the reader; an abbreviated SHA is ambiguous.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/remote-mount.ts#InstanceNameSchema",
+      "name": "InstanceNameSchema",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "zod-scalar",
+      "doc": "An instance name — the same rule `cat-harness.ts` applies to `needs` and subscriptions.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema",
+      "name": "LockedDirectorySchema",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Relative to the downstream instance's root, no trailing slash."
+        },
+        {
+          "name": "upstreamPath",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Where the bytes are in the upstream repository."
+        },
+        {
+          "name": "treeDigest",
+          "type": "z.string().regex(/^[0-9a-f]{64}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "SHA-256 over the sorted `<sha256>  <file>` listing — `treeDigest`."
+        },
+        {
+          "name": "files",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/remote-mount.ts#LockedInstance",
+      "name": "LockedInstance",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema",
+      "name": "LockedInstanceSchema",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "instance",
+          "type": "InstanceNameSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repository",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sha",
+          "type": "CommitShaSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "upstreamRoot",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "The instance's root in the upstream repository; `\"\"` is that repository's root."
+        },
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Where its root landed downstream."
+        },
+        {
+          "name": "via",
+          "type": "InstanceNameSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The `remoteMounts` entry that brought it in."
+        },
+        {
+          "name": "pinnedBy",
+          "type": "z.enum([\"declared\", \"same-tree\", \"gitlink\"])",
+          "optional": false,
+          "array": false,
+          "doc": "How the pin was found: the declared ref, the same tree, or a gitlink in a parent's tree."
+        },
+        {
+          "name": "declaration",
+          "type": "z.object({ file: z.string().min(1), sha256: z.string().regex(/^[0-9a-f]{64}$/) }).strict()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "directories",
+          "type": "z.array(LockedDirectorySchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/remote-mount.ts#CommitShaSchema",
+        "cat-harness/schemas/remote-mount.ts#InstanceNameSchema",
+        "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/remote-mount.ts#MountDefaults",
+      "name": "MountDefaults",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/remote-mount.ts#MountDefaultsSchema",
+      "name": "MountDefaultsSchema",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "zod-object",
+      "doc": "HARNESS SIDE — what a downstream mounts of THIS instance unless it says",
+      "fields": [
+        {
+          "name": "path",
+          "type": "MountPathSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "directories",
+          "type": "z .array(z.string().min(1)) .refine((xs) => new Set(xs).size === xs.length, { message: \"mountDefaults.directories: an i…",
+          "optional": true,
+          "array": true,
+          "doc": "Directory ids, in this instance's own declaration."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/remote-mount.ts#MountPathSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/remote-mount.ts#MountLock",
+      "name": "MountLock",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/remote-mount.ts#MountLockSchema",
+      "name": "MountLockSchema",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(MOUNT_LOCK_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mounts",
+          "type": "z.array(z.object({ harness: InstanceNameSchema, repository: z.string().min(1), ref: CommitShaSchema }).strict())",
+          "optional": false,
+          "array": true,
+          "doc": "The `remoteMounts` it was written for, so a changed pin reads as stale."
+        },
+        {
+          "name": "instances",
+          "type": "z.array(LockedInstanceSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unmounted",
+          "type": "z .array( z .object({ instance: InstanceNameSchema, state: z.enum([\"local\", \"skipped\", \"missing\", \"could-not-determine\"…",
+          "optional": true,
+          "array": true,
+          "doc": "What the closure reached and did NOT mount, with why — so the check,"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/remote-mount.ts#CommitShaSchema",
+        "cat-harness/schemas/remote-mount.ts#InstanceNameSchema",
+        "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "MOUNT_LOCK_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/remote-mount.ts#MountOverride",
+      "name": "MountOverride",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema",
+      "name": "MountOverrideSchema",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "zod-object",
+      "doc": "DOWNSTREAM SIDE — an override of ONE instance's defaults in the closure,",
+      "fields": [
+        {
+          "name": "path",
+          "type": "MountPathSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "directories",
+          "type": "z .array(z.string().min(1)) .refine((xs) => new Set(xs).size === xs.length, { message: \"override directories: an id app…",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "skip",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/remote-mount.ts#MountPathSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/remote-mount.ts#MountPathSchema",
+      "name": "MountPathSchema",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "zod-scalar",
+      "doc": "A mount path in the downstream checkout: repository-relative, POSIX, no",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/remote-mount.ts#RemoteMount",
+      "name": "RemoteMount",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema",
+      "name": "RemoteMountSchema",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "zod-object",
+      "doc": "One remote mount a downstream declares: a harness, the repository it lives",
+      "fields": [
+        {
+          "name": "harness",
+          "type": "InstanceNameSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The harness's instance name, as its own declaration states it."
+        },
+        {
+          "name": "repository",
+          "type": "RepoFullNameSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "CommitShaSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "overrides",
+          "type": "z.record(InstanceNameSchema, MountOverrideSchema).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Per-instance overrides across the closure, keyed by instance name."
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/remote-mount.ts#CommitShaSchema",
+        "cat-harness/schemas/remote-mount.ts#InstanceNameSchema",
+        "cat-harness/schemas/remote-mount.ts#MountOverrideSchema",
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/remote-mount.ts#RemoteMountsSchema",
+      "name": "RemoteMountsSchema",
+      "module": "cat-harness/schemas/remote-mount.ts",
+      "kind": "zod-array",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/render-log.ts#RenderEvent",
       "name": "RenderEvent",
       "module": "cat-harness/schemas/render-log.ts",
@@ -36411,6 +36868,47 @@
       "refs": [
         "cat-harness/schemas/subgraph-source.ts#KeyedBySchema"
       ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#RemoteSourceSchema",
+      "name": "RemoteSourceSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-object",
+      "doc": "The content is ANOTHER REPOSITORY's tree at a pinned commit — a REMOTE MOUNT",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"remote\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repository",
+          "type": "z.string().regex(/^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$/, \"owner/repo\").refine((r) => !r.includes(\".…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "z.string().regex(/^[0-9a-f]{40}$/, \"ref must be a full 40-character commit SHA — pin, never follow a branch\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "upstreamPath",
+          "type": "z .string() .regex(/^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\\/?$/, \"a repository-relative path,…",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [
         "z"
@@ -57690,6 +58188,22 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/remote-mount.ts#MountDefaults",
+      "via": "mountDefaults",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/remote-mount.ts#RemoteMount",
+      "via": "remoteMounts",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness/schemas/repo-full-name.ts#RepoFullName",
       "via": "repository",
       "kind": "field",
@@ -57839,6 +58353,22 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#MountDefaultsSchema",
+      "via": "mountDefaults",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#RemoteMountsSchema",
+      "via": "remoteMounts",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
@@ -61095,6 +61625,126 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#CommitShaSchema",
+      "via": "sha",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#InstanceNameSchema",
+      "via": "instance",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#InstanceNameSchema",
+      "via": "via",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema",
+      "via": "directories",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#MountDefaultsSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#MountPathSchema",
+      "via": "path",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#MountLockSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#CommitShaSchema",
+      "via": "mounts",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#MountLockSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#InstanceNameSchema",
+      "via": "mounts",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#MountLockSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#InstanceNameSchema",
+      "via": "unmounted",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#MountLockSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema",
+      "via": "instances",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#MountPathSchema",
+      "via": "path",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#CommitShaSchema",
+      "via": "ref",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#InstanceNameSchema",
+      "via": "harness",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#InstanceNameSchema",
+      "via": "overrides",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema",
+      "to": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema",
+      "via": "overrides",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "repository",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/render-log.ts#RenderLogEntrySchema",

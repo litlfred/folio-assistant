@@ -215,12 +215,23 @@
       "notation": "author",
       "definition": "Writes and revises folio content. The position, not the person: an editor and a guideline developer both act as author when they are changing a block.",
       "altLabel": [
-        "Copier's own folio/"
+        "Copier's own folio/",
+        "Downstream author"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
       "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MountDependency/Lane_Author",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Folio"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MountDependency/Lane_Author",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/author",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "label": "Downstream author",
+      "scopeNote": "A person decides WHICH harness and WHICH pin, and whether to override a default. Nothing below chooses a pin: a branch name is refused, and so is an abbreviated SHA.",
+      "source": "cat-harness/processes/kg/mount-dependency.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Folio",
@@ -453,7 +464,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "label": "Administrator",
-      "scopeNote": "The person's decisions: whether to separate at all, authorising the extraction, creating the repositories, and the cutover that deletes the parent's copy. An agent reports and waits at each; none of them may be relaxed by a package.",
+      "scopeNote": "The person's decisions: whether to separate at all, authorising the extraction, creating the repositories, and the cutover that retires the parent's copy. An agent reports and waits at each; none of them may be relaxed by a package.",
       "source": "cat-harness/processes/kg/kg-separation.bpmn"
     },
     {
@@ -1367,6 +1378,7 @@
       "usage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MountDependency/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MountSubgraph/Lane_MountPipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Pipeline",
@@ -1408,6 +1420,15 @@
       "label": "Build pipeline",
       "scopeNote": "Executes E_Scope's decision as bytes — cut, serialize, package — precisely enough that GW_Budget can weigh the actual package rather than guess from the graph's node count. Each step reports what it did rather than only succeeding, which is what lets an empty selection be told apart from one that never ran.",
       "source": "cat-harness/processes/kg/kg-to-portal.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MountDependency/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountDependency",
+      "label": "Build pipeline",
+      "scopeNote": "Mechanical from the declaration on: the same declaration mounts the same bytes in every container, and only an override by id changes where or what.",
+      "source": "cat-harness/processes/kg/mount-dependency.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MountSubgraph/Lane_MountPipeline",

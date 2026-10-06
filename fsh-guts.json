@@ -30,7 +30,7 @@
   "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsGraph",
   "name": "cat-harness — fsh-guts",
   "description": "The trashcan that is kept: deprecated and throwaway structured content, addressable and exported and deliberately absent from the rendered site. Reachable BY NAME only — every other published graph has its references stripped, so nothing links here. Activity logs live under this tree and are excluded: a file is included only if it declares itself folio-fsh-guts/v1.",
-  "nodeCount": 82,
+  "nodeCount": 83,
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bootstrap-split.md",
@@ -383,6 +383,33 @@
       "bean": "folio-assistant-nfgo",
       "description": "A one-shot helper that split a hand-written docs page into a content/docs/<slug>/ node tree, deriving node ids with kramdown's OWN slug rule so that every anchor the page already published kept working. Retired — `content/` does not exist in this repository — but the anchor-preservation argument is worth keeping, because it is the part a reimplementation would get wrong.",
       "body": "# `split-docs-page.py`\n\nSelf-described as a *\"One-shot migration helper\"*, and its sole remaining value is\none design decision.\n\n## The decision worth keeping\n\nWhen a published page is split into a node tree, the node ids become the anchors.\nDerive them with your own slug function and **every inbound link and every\ntable-of-contents entry that already exists breaks** — silently, because a\nmissing anchor scrolls to the top of the page rather than erroring.\n\nSo it derived ids with **kramdown's own slug rule**, matching what the page was\nalready publishing, and then **pinned them in the manifest** so they stop tracking\nthe heading text. Two properties, and the second matters as much as the first:\n\n| | |\n|---|---|\n| derive with the *renderer's* rule | today's anchors keep resolving |\n| then **pin** the result | tomorrow's heading edit does not move them |\n\nAn id that keeps tracking its heading is a URL that changes when someone fixes a\ntypo.\n\n## Why it is here\n\n`content/` does not exist in this repository — the platform carries no folio — and\nthe directory it lived in (`scripts/migrations/`) held only this file and is now\ngone. Moved rather than deleted, per\n[`fsh-guts`](../../cat-harness/skills/kg/kg-core/fsh-guts.md)."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/smart-trust.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "smart-trust/ (smart-trust), as it left folio-assistant for https://github.com/litlfred/smart-trust",
+      "nodeKind": "separated-instance",
+      "sourcePath": "fsh-guts/separated/smart-trust.md",
+      "movedOn": "2026-10-06",
+      "movedFrom": "smart-trust/",
+      "description": "smart-trust, smart-trust.config.json as folio-assistant's main tracked them at e229d4646ee6 (2312 file(s), 6818933 bytes), packed beside this file as smart-trust.tar.gz. Frozen: never refreshed, never rendered. The live graph is https://github.com/litlfred/smart-trust, whose tip was 4b025211d2e6 at the time; its layout was not compared to this copy.",
+      "body": "# smart-trust/ (smart-trust), at its separation\n\n`smart-trust.tar.gz` beside this file holds `smart-trust`, `smart-trust.config.json` exactly as\n`folio-assistant`'s `main` tracked them at `e229d4646ee66b05ea09123011168414c2116d33` — list it with `tar -tzf smart-trust.tar.gz`.\nExtracted and added to a fresh index, each path writes the id recorded above, which is how\nthe separation verified the copy before removing anything.\n\nThe live graph is `https://github.com/litlfred/smart-trust`. Change it there; do not unpack this back onto `main`.",
+      "data": {
+        "reason": "separated",
+        "repository": "https://github.com/litlfred/smart-trust",
+        "matchesCommit": "e229d4646ee66b05ea09123011168414c2116d33",
+        "repositoryTip": "4b025211d2e6f9ad8ceb7a4971a97fbb39b17bf3",
+        "repositoryCompared": "false",
+        "instance": "smart-trust",
+        "into": "folio-assistant",
+        "archive": "smart-trust.tar.gz",
+        "paths": [
+          "smart-trust = 3eb228e210a4bc6b6f116749ca472618e48098d1 (2311 file(s), 6818240 bytes)",
+          "smart-trust.config.json = cc525ce64257ca8420f6865fad0682f25c0b2cfb (1 file(s), 693 bytes)"
+        ],
+        "files": "2312",
+        "bytes": "6818933"
+      }
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2504.07199v3.md",
@@ -1085,6 +1112,10 @@
     },
     {
       "path": "fsh-guts/scripts/wire_stale_claims.py",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/separated/smart-trust.tar.gz",
       "reason": "declares no $schema, so it is not a node of this graph"
     },
     {
