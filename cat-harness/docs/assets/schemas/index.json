@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 233,
+      "count": 234,
       "unit": "modules"
     }
   },
@@ -651,6 +651,14 @@
       "graphNode": "schema",
       "summary": "The `owner/repo ↔ instance` map — DERIVED, never kept by hand (bean `6rmv`).",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/instance-root-named.test.ts",
+      "instance": "cat-harness",
+      "name": "instance-root-named.test",
+      "graphNode": "undeclared",
+      "summary": "`instanceRootNamed` — one rule for both layouts (bean `uxn1`).",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/instance-roots.ts",
@@ -7524,6 +7532,20 @@
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
         },
         {
+          "name": "taskIo",
+          "type": "Record< string, { inputs?: string[]; outputs?: string[]; /** The task that REPAIRS this check when the `X` / `X:check` …",
+          "optional": true,
+          "array": false,
+          "doc": "What this instance's own package tasks read and write, keyed by task name"
+        },
+        {
+          "name": "gateExemptions",
+          "type": "{ steps?: Array<{ match: string; kind: \"covered-by\" | \"ci-only\" | \"no-folio\"; reason: string }>; scripts?: Array<{ scri…",
+          "optional": true,
+          "array": false,
+          "doc": "The CI steps and check scripts of THIS instance that the local gate set"
+        },
+        {
           "name": "contentAdapters",
           "type": "ContentAdapterDeclaration[]",
           "optional": true,
@@ -7769,6 +7791,19 @@
           "optional": true,
           "array": true,
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
+        },
+        {
+          "name": "taskIo",
+          "type": "z .record( z.string().min(1), z .object({ inputs: z.array(z.string().min(1)).optional(), outputs: z.array(z.string().mi…",
+          "optional": true,
+          "array": false,
+          "doc": "What this instance's own package tasks read and write, keyed by task name"
+        },
+        {
+          "name": "gateExemptions",
+          "type": "z .object({ steps: z .array( z .object({ match: z.string().min(1), kind: z.enum([\"covered-by\", \"ci-only\", \"no-folio\"]),…",
+          "optional": true,
+          "array": false
         },
         {
           "name": "contentAdapters",
@@ -14857,81 +14892,54 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageKind",
+      "name": "DocumentKindCoverageKind",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema",
       "name": "DocumentKindCoverageSchema",
       "module": "cat-harness/schemas/document-kind.ts",
       "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(DOCUMENT_KIND_COVERAGE_SCHEMA_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "kind",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The kind's id."
-        },
-        {
-          "name": "subject",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The instance whose content was classified."
-        },
-        {
-          "name": "from",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Repo-relative path of what was classified."
-        },
-        {
-          "name": "method",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The rule, in a sentence a reader can check."
-        },
-        {
-          "name": "total",
-          "type": "z.number().int().nonnegative()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "sections",
-          "type": "z.array(z.object({ id: z.string().min(1), members: z.array(CoverageMemberSchema) }))",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "unplaced",
-          "type": "z.array(z.object({ group: z.string().min(1), count: z.number().int().positive() }))",
-          "optional": false,
-          "array": true,
-          "doc": "What no rule placed, grouped so the remainder is legible."
-        },
-        {
-          "name": "generatedBy",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        }
+      "fields": [],
+      "extendsNames": [
+        "DocumentKindCoverageKind"
       ],
-      "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/document-kind.ts#CoverageMemberSchema"
+        "cat-harness/schemas/document-kind.ts#DocumentKindCoverageKind"
       ],
       "unresolved": [],
-      "external": [
-        "DOCUMENT_KIND_COVERAGE_SCHEMA_TAG",
-        "z"
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindKind",
+      "name": "DocumentKindKind",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
       ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
       "exported": true
     },
     {
@@ -14939,76 +14947,16 @@
       "name": "DocumentKindSchema",
       "module": "cat-harness/schemas/document-kind.ts",
       "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(DOCUMENT_KIND_SCHEMA_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "id",
-          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "description",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "structure",
-          "type": "z.enum([\"fixed\", \"semi-fixed\"])",
-          "optional": false,
-          "array": false,
-          "doc": "`fixed`: exactly these sections, every one required."
-        },
-        {
-          "name": "extends",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "A parent kind's id; this kind's sections extend the parent's."
-        },
-        {
-          "name": "sections",
-          "type": "z.array(DocumentKindSectionSchema).min(1)",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "sources",
-          "type": "z.array(DocumentKindSourceSchema).min(1)",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "generatedBy",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Set when the file is generated; names the generator, so a hand edit is visibly a defect."
-        }
+      "fields": [],
+      "extendsNames": [
+        "DocumentKindKind"
       ],
-      "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
-        "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema"
+        "cat-harness/schemas/document-kind.ts#DocumentKindKind"
       ],
       "unresolved": [],
-      "external": [
-        "DOCUMENT_KIND_SCHEMA_TAG",
-        "z"
-      ],
+      "external": [],
       "exported": true
     },
     {
@@ -31284,6 +31232,73 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "name": "LocaleStatusSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "locale",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "templates",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "catalogues",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "entries",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "translated",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "fuzzy",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "untranslated",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "unreadable",
+          "type": "StringList",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#Count",
+        "cat-harness/schemas/site-indexes.ts#StringList"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/site-indexes.ts#PageNumber",
       "name": "PageNumber",
       "module": "cat-harness/schemas/site-indexes.ts",
@@ -31493,16 +31508,22 @@
         },
         {
           "name": "locales",
-          "type": "z.array( z .object({ locale: z.string().min(1), templates: Count, catalogues: Count, entries: Count, translated: Count,…",
+          "type": "z.array(LocaleStatusSchema)",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "instances",
+          "type": "z .array( z .object({ instance: z.string().min(1), scope: z.string(), locales: z.array(LocaleStatusSchema), }) .strict(…",
+          "optional": true,
+          "array": true,
+          "doc": "Every OTHER instance's declared `translation-sources` directory, each"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/site-indexes.ts#Count",
-        "cat-harness/schemas/site-indexes.ts#StringList"
+        "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema"
       ],
       "unresolved": [],
       "external": [
@@ -58130,27 +58151,19 @@
     },
     {
       "from": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema",
-      "to": "cat-harness/schemas/document-kind.ts#CoverageMemberSchema",
-      "via": "sections",
-      "kind": "field",
+      "to": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageKind",
+      "via": "",
+      "kind": "extends",
       "optional": false,
-      "array": true
+      "array": false
     },
     {
       "from": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",
-      "to": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
-      "via": "sections",
-      "kind": "field",
+      "to": "cat-harness/schemas/document-kind.ts#DocumentKindKind",
+      "via": "",
+      "kind": "extends",
       "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",
-      "to": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema",
-      "via": "sources",
-      "kind": "field",
-      "optional": false,
-      "array": true
+      "array": false
     },
     {
       "from": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
@@ -60641,6 +60654,62 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "catalogues",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "entries",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "fuzzy",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "templates",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "translated",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "untranslated",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "unreadable",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/site-indexes.ts#QaIndexBadgeSchema",
       "to": "cat-harness/schemas/site-indexes.ts#Count",
       "via": "counts",
@@ -60674,15 +60743,15 @@
     },
     {
       "from": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema",
-      "to": "cat-harness/schemas/site-indexes.ts#Count",
-      "via": "locales",
+      "to": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "via": "instances",
       "kind": "field",
-      "optional": false,
+      "optional": true,
       "array": true
     },
     {
       "from": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema",
-      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "to": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
       "via": "locales",
       "kind": "field",
       "optional": false,

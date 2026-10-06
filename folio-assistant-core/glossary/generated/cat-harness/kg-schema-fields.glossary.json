@@ -2296,6 +2296,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.gateexemptions",
+      "prefLabel": "CatHarnessDeclaration.gateExemptions",
+      "definition": "The CI steps and check scripts of THIS instance that the local gate set deliberately does not run, each with its reason — the rows `cat-harness/scripts/gates.ts` holds as `STEP_EXEMPTIONS` and `SCRIPT_EXEMPTIONS` for the harness's own. Same contract: a reason is required, a step `match` is a substring of the workflow command, a script name is matched exactly. Declared by the owner so the harness need not name a layer above itself (bean `0r7u` step 0).",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.gateExemptions",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.glassstrip",
       "prefLabel": "CatHarnessDeclaration.glassStrip",
       "definition": "Which tiles the glass's bottom strip pins, in order — see `GlassStripSchema`. Absent inherits.",
@@ -2436,6 +2443,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.taskio",
+      "prefLabel": "CatHarnessDeclaration.taskIo",
+      "definition": "What this instance's own package tasks read and write, keyed by task name — the same {@link ScriptIO}-shaped facts `cat-harness/scripts/task-io.ts` holds for the harness's own tasks: `outputs: []` (measured to write nothing, so it may run in the pool) and `inputs` (what can change the answer, so `regen` may skip it on an unchanged tree; `\"{tracked}\"` is the whole working tree). `because` keeps the measurement that justified it.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.taskIo",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.topology",
       "prefLabel": "CatHarnessDeclaration.topology",
       "definition": "The topology axes this deployment declares about itself. See {@link Topology} — every field optional, absent meaning \"has not said\".",
@@ -2573,6 +2587,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.summary",
       "definition": "One line for a READER, where `description` is written for an author.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.summary",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.taskio",
+      "prefLabel": "CatHarnessDeclarationSchema.taskIo",
+      "definition": "What this instance's own package tasks read and write, keyed by task name — the same {@link ScriptIO}-shaped facts `cat-harness/scripts/task-io.ts` holds for the harness's own tasks: `outputs: []` (measured to write nothing, so it may run in the pool) and `inputs` (what can change the answer, so `regen` may skip it on an unchanged tree; `\"{tracked}\"` is the whole working tree). `because` keeps the measurement that justified it.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.taskIo",
       "status": "candidate"
     },
     {
@@ -4610,62 +4631,6 @@
       "prefLabel": "ThresholdBasisSchema.value",
       "definition": "The cutoff, exactly as supplied. Images below it were filed `furniture`.",
       "source": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema.value",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindcoverageschema.from",
-      "prefLabel": "DocumentKindCoverageSchema.from",
-      "definition": "Repo-relative path of what was classified.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.from",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindcoverageschema.kind",
-      "prefLabel": "DocumentKindCoverageSchema.kind",
-      "definition": "The kind's id.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.kind",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindcoverageschema.method",
-      "prefLabel": "DocumentKindCoverageSchema.method",
-      "definition": "The rule, in a sentence a reader can check.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.method",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindcoverageschema.subject",
-      "prefLabel": "DocumentKindCoverageSchema.subject",
-      "definition": "The instance whose content was classified.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.subject",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindcoverageschema.unplaced",
-      "prefLabel": "DocumentKindCoverageSchema.unplaced",
-      "definition": "What no rule placed, grouped so the remainder is legible.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.unplaced",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindschema.extends",
-      "prefLabel": "DocumentKindSchema.extends",
-      "definition": "A parent kind's id; this kind's sections extend the parent's.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindSchema.extends",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindschema.generatedby",
-      "prefLabel": "DocumentKindSchema.generatedBy",
-      "definition": "Set when the file is generated; names the generator, so a hand edit is visibly a defect.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindSchema.generatedBy",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindschema.structure",
-      "prefLabel": "DocumentKindSchema.structure",
-      "definition": "`fixed`: exactly these sections, every one required. `semi-fixed`: the required sections must be present; others are allowed.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindSchema.structure",
       "status": "candidate"
     },
     {
@@ -9251,6 +9216,13 @@
       "prefLabel": "TranslationStatusSchema.changedAt",
       "definition": "`YYYY-MM-DD`: the day the counts last changed.",
       "source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.changedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.translationstatusschema.instances",
+      "prefLabel": "TranslationStatusSchema.instances",
+      "definition": "Every OTHER instance's declared `translation-sources` directory, each measured on its own (issue #2228). Optional: an index written before the field existed is still a valid index.",
+      "source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.instances",
       "status": "candidate"
     },
     {

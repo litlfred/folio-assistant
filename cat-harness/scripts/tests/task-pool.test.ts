@@ -23,18 +23,31 @@ import {
   cacheEnabled,
   decide,
   entryFiles,
+  FileDigests,
   fingerprint,
   againstRefsOf,
   loadCache,
   RECIPE_VERSION,
+  recordCheckRun,
   saveCache,
   sourceClosure,
+  TRACKED,
   type BaselineResolver,
   type HashCache,
+  type PairIO,
 } from "../input-hash.ts";
-import { cacheKey, hashesToRecord, regenPass, regenToFixpoint, type Pair, type Runner } from "../regen-after-merge.ts";
-import { gateSegments, type Gate } from "../gates.ts";
-import { TASK_IO, pairIO, gateReadsOnly } from "../task-io.ts";
+import {
+  cacheKey,
+  hashesToRecord,
+  pairSkip,
+  regenPass,
+  regenToFixpoint,
+  type Pair,
+  type Result,
+  type Runner,
+} from "../regen-after-merge.ts";
+import { GateSkipper, gateSegments, type Gate } from "../gates.ts";
+import { TASK_IO, collectTaskIo, pairIO, gateReadsOnly } from "../task-io.ts";
 
 const tick = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -395,6 +408,59 @@ describe("output order is the original order", () => {
     expect(r.settled).toBe(true);
     expect(v.aOut).toBe(v.bOut);
   });
+
+  test("v3nf: SERIAL and PARALLEL give the same verdicts and the same tree", async () => {
+    // A chain (c reads b's output, b reads a's), a stale independent pair, a
+    // broken writer, a red check with no writer, and an undeclared barrier —
+    // with random delays so the pool's completion order differs from pair order.
+    const world = () => {
+      const v: Record<string, number> = { aIn: 1, aOut: 0, bOut: 0, cOut: 0, dIn: 7, dOut: 0, eOut: 0 };
+      const fns: Record<string, () => boolean> = {
+        "a:check": () => v.aOut === v.aIn,
+        a: () => ((v.aOut = v.aIn), true),
+        "b:check": () => v.bOut === v.aOut * 2,
+        b: () => ((v.bOut = v.aOut * 2), true),
+        "c:check": () => v.cOut === v.bOut + 1,
+        c: () => ((v.cOut = v.bOut + 1), true),
+        "d:check": () => v.dOut === v.dIn,
+        d: () => ((v.dOut = v.dIn), true),
+        "e:check": () => v.eOut === 1,
+        e: () => false, // a writer that fails and changes nothing
+        "f:check": () => false,
+        "u:check": () => true,
+      };
+      return { v, fns };
+    };
+    // Reverse chain order, so a pass reads before the write it depends on.
+    const pairs: Pair[] = [
+      { check: "c:check", writer: "c", io: { outputs: [] } },
+      { check: "b:check", writer: "b", io: { outputs: [] } },
+      { check: "u:check", writer: "u" }, // undeclared: a barrier
+      { check: "a:check", writer: "a", io: { outputs: [] } },
+      { check: "d:check", writer: "d", io: { outputs: [] } },
+      { check: "e:check", writer: "e", io: { outputs: [] } },
+      { check: "f:check", writer: undefined, io: { outputs: [] } },
+    ];
+    const run = async (jobs: number) => {
+      const w = world();
+      let seed = 42;
+      const rand = () => ((seed = (seed * 1103515245 + 12345) % 2 ** 31), seed % 7);
+      const runner: Runner = async (s) => (await tick(rand()), w.fns[s]!());
+      const r = await regenToFixpoint(pairs, runner, 8, { jobs });
+      return { results: r.results, settled: r.settled, tree: w.v };
+    };
+    const serial = await run(1);
+    for (const jobs of [2, 3, 8]) expect(await run(jobs)).toEqual(serial);
+    expect(serial.results.map((x) => x.outcome)).toEqual([
+      "regenerated",
+      "regenerated",
+      "current",
+      "regenerated",
+      "regenerated",
+      "writer-failed",
+      "no-writer",
+    ]);
+  });
 });
 
 describe("gates: read-only gates are batched, everything else is a barrier", () => {
@@ -447,5 +513,255 @@ describe("task-io declarations", () => {
     for (const [name, io] of Object.entries(TASK_IO)) {
       if (io.outputs !== undefined) expect(io.outputs, `${name} declares outputs; only [] is supported`).toEqual([]);
     }
+  });
+});
+
+// ── Bean `f017`: a CHECK's own record, shared by `regen` and `gates` ──────
+//
+// The falsifier the bean names: a check skipped while something it reads has
+// changed. Each test below changes one thing a check reads and asserts it is
+// RUN; the rest pin that nothing but a real, passing, undisturbed run is ever
+// recorded.
+describe("f017: check-level records — skipped only on a hash a passing run left", () => {
+  let root: string;
+  const scripts = { "x:check": "bun run scripts/x.ts --check", "t:check": "bun run scripts/t.ts --check" };
+  const table: Record<string, PairIO> = {
+    "x:check": { inputs: ["src/**/*.md"], outputs: [] },
+    "t:check": { inputs: [TRACKED], outputs: [] },
+  };
+  const ioOf = (s: string) => table[s];
+  const git = (...args: string[]) => {
+    const r = Bun.spawnSync(["git", ...args], { cwd: root, stdout: "pipe", stderr: "pipe" });
+    if (r.exitCode !== 0) throw new Error(r.stderr.toString());
+  };
+
+  beforeEach(() => {
+    root = mkdtempSync(join(tmpdir(), "f017-"));
+    mkdirSync(join(root, "scripts"));
+    mkdirSync(join(root, "src"));
+    mkdirSync(join(root, "elsewhere"));
+    writeFileSync(join(root, "scripts", "x.ts"), 'import { y } from "./y.ts";\nconsole.log(y);\n');
+    writeFileSync(join(root, "scripts", "y.ts"), "export const y = 1;\n");
+    writeFileSync(join(root, "scripts", "t.ts"), "console.log(1);\n");
+    writeFileSync(join(root, "src", "a.md"), "alpha\n");
+    writeFileSync(join(root, "elsewhere", "read-by-t.json"), "{}\n");
+    writeFileSync(join(root, ".gitignore"), "build/\n");
+    git("init", "-q");
+    git("add", "-A");
+    git("-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qm", "fixture");
+  });
+  afterEach(() => rmSync(root, { recursive: true, force: true }));
+
+  const fresh = () => new FileDigests(root);
+  const skipper = () => new GateSkipper(root, scripts, loadCache(root), undefined, ioOf);
+  /** The cache OFF (`--no-cache`, `CI`). */
+  const offSkipper = () => new GateSkipper(root, scripts, undefined, undefined, ioOf);
+  /** One passing, undisturbed run of `script`, recorded and saved. */
+  const passOnce = (s: GateSkipper, script: string) => {
+    const d = s.decide(`bun run ${script}`, fresh())!;
+    s.record(script, true, d.fp, fresh());
+    s.save();
+  };
+
+  test("a passing, undisturbed run is recorded, and the next run on the same inputs SKIPS", () => {
+    passOnce(skipper(), "x:check");
+    const d = skipper().decide("bun run x:check", fresh())!;
+    expect(d.skip).toBe(true);
+    expect(d.why).toContain("unchanged since this check last passed");
+  });
+
+  test.each([
+    ["a declared input edited", () => writeFileSync(join(root, "src", "a.md"), "beta\n")],
+    ["a new file under a declared glob", () => writeFileSync(join(root, "src", "b.md"), "new\n")],
+    ["the script itself edited", () => writeFileSync(join(root, "scripts", "x.ts"), 'import { y } from "./y.ts";\n')],
+    ["a module it IMPORTS edited", () => writeFileSync(join(root, "scripts", "y.ts"), "export const y = 2;\n")],
+  ])("%s → it RUNS", (_name, change) => {
+    passOnce(skipper(), "x:check");
+    change();
+    const d = skipper().decide("bun run x:check", fresh())!;
+    expect(d.skip).toBe(false);
+  });
+
+  test("{tracked}: editing ANY file in the tree — even one no glob names — makes it run", () => {
+    // The undeclared-read falsifier, for the declaration every gate that can
+    // skip today uses: a whole-tree reader is never skipped past a change it
+    // might read, tracked or untracked, committed or not.
+    passOnce(skipper(), "t:check");
+    expect(skipper().decide("bun run t:check", fresh())!.skip).toBe(true);
+    writeFileSync(join(root, "elsewhere", "read-by-t.json"), '{"changed":true}\n');
+    expect(skipper().decide("bun run t:check", fresh())!.skip).toBe(false);
+    git("checkout", "--", "elsewhere/read-by-t.json");
+    expect(skipper().decide("bun run t:check", fresh())!.skip).toBe(true);
+    writeFileSync(join(root, "elsewhere", "untracked.txt"), "new\n");
+    expect(skipper().decide("bun run t:check", fresh())!.skip).toBe(false);
+  });
+
+  test("a moved --against baseline makes it run, though no file changed", () => {
+    const s2 = { ...scripts, "x:check": "bun run scripts/x.ts --check --against main" };
+    let id = "entry-1";
+    const baseline: BaselineResolver = () => ({ id });
+    const mk = () => new GateSkipper(root, s2, loadCache(root), baseline, ioOf);
+    const first = mk();
+    const d = first.decide("bun run x:check", fresh())!;
+    first.record("x:check", true, d.fp, fresh());
+    first.save();
+    expect(mk().decide("bun run x:check", fresh())!.skip).toBe(true);
+    id = "entry-2";
+    expect(mk().decide("bun run x:check", fresh())!.skip).toBe(false);
+  });
+
+  test("a RED run records nothing — and forgets an earlier pass", () => {
+    passOnce(skipper(), "x:check");
+    const s = skipper();
+    const d = s.decide("bun run x:check", fresh())!;
+    s.record("x:check", false, d.fp, fresh());
+    s.save();
+    expect(loadCache(root).checks?.["x:check"]).toBeUndefined();
+    expect(skipper().decide("bun run x:check", fresh())!.skip).toBe(false);
+  });
+
+  test("inputs that MOVED while it ran record nothing, though it passed", () => {
+    const s = skipper();
+    const d = s.decide("bun run x:check", fresh())!;
+    writeFileSync(join(root, "src", "a.md"), "edited mid-run\n"); // a writer beside it, or a person
+    s.record("x:check", true, d.fp, fresh());
+    s.save();
+    expect(loadCache(root).checks?.["x:check"]).toBeUndefined();
+  });
+
+  test("never skipped: undeclared, not exactly one script, undetermined, or the cache off", () => {
+    passOnce(skipper(), "x:check");
+    expect(skipper().decide("bun run other:check", fresh())).toBeUndefined();
+    expect(skipper().decide("bun run x:check --extra", fresh())).toBeUndefined();
+    expect(skipper().decide("bunx tsc --noEmit", fresh())).toBeUndefined();
+    expect(offSkipper().decide("bun run x:check", fresh())).toBeUndefined();
+    rmSync(join(root, "src", "a.md")); // the glob now matches nothing: undetermined
+    const d = skipper().decide("bun run x:check", fresh())!;
+    expect(d.skip).toBe(false);
+    expect(d.why).toContain("could not be determined");
+  });
+
+  test("the cache off records nothing either", () => {
+    const s = offSkipper();
+    s.record("x:check", true, { hash: "h", files: 1 }, fresh());
+    s.save();
+    expect(loadCache(root).checks).toEqual({});
+  });
+
+  test("save() keeps entries another process wrote since this one loaded", () => {
+    const mine = skipper();
+    saveCache(root, { version: RECIPE_VERSION, pairs: {}, checks: { "other:check": "theirs" } });
+    const d = mine.decide("bun run x:check", fresh())!;
+    mine.record("x:check", true, d.fp, fresh());
+    mine.save();
+    expect(Object.keys(loadCache(root).checks ?? {}).sort()).toEqual(["other:check", "x:check"]);
+  });
+
+  test("recordCheckRun: only passed AND before === after records", () => {
+    const c: HashCache = { version: RECIPE_VERSION, pairs: {}, checks: { s: "old" } };
+    recordCheckRun(c, "s", true, { hash: "a", files: 1 }, { hash: "a", files: 1 });
+    expect(c.checks!.s).toBe("a");
+    recordCheckRun(c, "s", true, { hash: "a", files: 1 }, { hash: "b", files: 1 });
+    expect(c.checks!.s).toBeUndefined();
+    c.checks!.s = "a";
+    recordCheckRun(c, "s", true, { undetermined: "x" }, { undetermined: "x" });
+    expect(c.checks!.s).toBeUndefined();
+    c.checks!.s = "a";
+    recordCheckRun(c, "s", false, { hash: "a", files: 1 }, { hash: "a", files: 1 });
+    expect(c.checks!.s).toBeUndefined();
+  });
+});
+
+describe("f017: regen records and reads the CHECK's own entry", () => {
+  const pairs: Pair[] = [
+    { check: "run:check", writer: "run" },
+    { check: "skipped:check", writer: "skipped" },
+    { check: "assumed:check", writer: "assumed" },
+    { check: "derived:check", writer: "derived" },
+    { check: "red:check", writer: "red" },
+  ];
+  const results: Result[] = [
+    { check: "run:check", writer: "run", outcome: "regenerated" },
+    { check: "skipped:check", writer: "skipped", outcome: "current", skipped: true },
+    { check: "assumed:check", writer: "assumed", outcome: "current", skipped: true, assumed: true },
+    { check: "derived:check", writer: "derived", outcome: "current", derived: true },
+    { check: "red:check", writer: "red", outcome: "unrepaired" },
+  ];
+  const fp = (p: Pair) => ({ hash: `pair-${p.check}`, files: 1 });
+  const fpCheck = (c: string) => ({ hash: `check-${c}`, files: 1 });
+  const prev = (): HashCache => ({ version: RECIPE_VERSION, pairs: {}, checks: { "red:check": "old", "derived:check": "kept" } });
+
+  test("only a check that RAN and came back green in a settled run is recorded", () => {
+    const next = hashesToRecord(pairs, results, true, fp, prev(), fpCheck);
+    // skipped: no run stands behind it now; assumed: --changed premise;
+    // derived: pair-cover answered for it — each keeps what a real run left.
+    expect(next.checks).toEqual({ "run:check": "check-run:check", "derived:check": "kept" });
+  });
+
+  test("an unsettled run records no check and drops the ones it asked", () => {
+    const next = hashesToRecord(pairs, results, false, fp, prev(), fpCheck);
+    expect(next.checks).toEqual({ "derived:check": "kept" });
+  });
+
+  test("without fpCheck the check entries are carried through untouched", () => {
+    expect(hashesToRecord(pairs, results, true, fp, prev()).checks).toEqual(prev().checks);
+  });
+
+  test("pairSkip: a check-level record skips the pair; a stale one does not", () => {
+    const pair: Pair = { check: "g:check", writer: "g", io: { inputs: [TRACKED], outputs: [] } };
+    const cache: HashCache = { version: RECIPE_VERSION, pairs: {}, checks: { "g:check": "check-g:check" } };
+    expect(pairSkip(cache, pair, fp, fpCheck).skip).toBe(true);
+    expect(pairSkip(cache, pair, fp, () => ({ hash: "moved", files: 1 })).skip).toBe(false);
+    expect(pairSkip(undefined, pair, fp, fpCheck).skip).toBe(false);
+    expect(pairSkip(cache, pair, fp, () => ({ undetermined: "x" })).skip).toBe(false);
+  });
+
+  test("a folded check's result is marked derived, so it records no check entry", async () => {
+    const ran: string[] = [];
+    const runner: Runner = (s) => (ran.push(s), true);
+    const folded: Pair[] = [
+      { check: "kg:audit:all:check", writer: "kg:audit:all" },
+      { check: "kg:audit:check", writer: "kg:audit" },
+    ];
+    const r = await regenPass(folded, runner, {});
+    expect(ran).toEqual(["kg:audit:all:check"]);
+    expect(r.results[1]!.derived).toBe(true);
+    expect(r.results[0]!.derived).toBeUndefined();
+  });
+});
+
+describe("task-io: each instance declares its own tasks (bean 0r7u)", () => {
+  let root: string;
+  const writeInstance = (name: string, taskIo?: Record<string, unknown>) => {
+    mkdirSync(join(root, name), { recursive: true });
+    writeFileSync(
+      join(root, name, `${name}.json`),
+      JSON.stringify({ name, version: "0.1.0", directories: [], ...(taskIo === undefined ? {} : { taskIo }) }),
+    );
+  };
+  beforeEach(() => {
+    root = mkdtempSync(join(tmpdir(), "task-io-"));
+  });
+  afterEach(() => rmSync(root, { recursive: true, force: true }));
+
+  test("standalone, with no instance above, the result is the own rows alone", () => {
+    writeInstance("acme");
+    expect(collectTaskIo(root, { "own:check": { outputs: [] } })).toEqual({ "own:check": { outputs: [] } });
+  });
+
+  test("a declared row is collected from the instance that owns it", () => {
+    writeInstance("acme", { "acme:check": { inputs: ["{tracked}"], outputs: [], because: "read for writes" } });
+    expect(collectTaskIo(root, {})).toEqual({ "acme:check": { inputs: ["{tracked}"], outputs: [] } });
+  });
+
+  test("a task declared by two owners is refused, not silently resolved", () => {
+    writeInstance("acme", { "x:check": { outputs: [] } });
+    expect(() => collectTaskIo(root, { "x:check": { outputs: [] } })).toThrow(/one task, one owner/);
+  });
+
+  test("no instance above cat-harness-tools is named in the own table", () => {
+    const upper = /^(smart-|iris:|ig-ast:|p2:|check:(glossary|catalogue|voices|artifact-index|materialized-fixity)$)/;
+    const own = collectTaskIo(join(root, "absent"));
+    for (const k of Object.keys(own)) expect(upper.test(k), `${k} belongs in its owner's declaration`).toBe(false);
   });
 });
