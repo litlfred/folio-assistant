@@ -411,18 +411,32 @@ export function overlaySnippet(rows: SiteComment[], opts: { repo?: string; issue
   const data = JSON.parse(document.getElementById("pc-data").textContent);
   const meta = JSON.parse(document.getElementById("pc-meta").textContent);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-  let total = 0, open = 0;
-  for (const [label, list] of Object.entries(data)) {
+  // LIGHT ON LOAD (owner, 2026-10-06: ease "2,520 comment notes built all at
+  // once"). Each block gets its one-line summary only; the list inside is
+  // built the first time the note is opened. Blocks are done in small batches
+  // in idle time, so the page never freezes, and a #fragment target is
+  // re-scrolled to once at the end because the notes above it moved it.
+  const item = (c) => "<li><a href=\\"../public-comments/index.html#" + esc(c.ref) + "\\">" + esc(c.ref) + "</a> · " + esc(c.status) +
+    (c.type ? " · " + esc(c.type) : "") + (c.decision ? " · <b>" + esc(c.decision.label) + "</b>" : "") +
+    (c.sets ? " · " + c.sets.map((id) => "<a href=\\"../public-comments/index.html#" + esc(id) + "\\">" + esc(id) + "</a>").join(" ") : "") +
+    " — " + esc(c.summary) + "</li>";
+  const note = (label, list) => {
     const a = document.getElementById(label);
-    if (!a) continue;
-    total += list.length; open += list.filter((c) => c.phase === "open").length;
+    if (!a) return;
     const host = a.parentElement && a.parentElement.tagName === "P" && a.parentElement.textContent.trim() === "" ? a.parentElement : a;
     const d = document.createElement("details");
     d.className = "pc-note";
     const n = list.filter((c) => c.phase === "open").length;
-    d.innerHTML = "<summary>" + list.length + " public comment" + (list.length > 1 ? "s" : "") + (n ? " (" + n + " open)" : "") + "</summary><ul>" +
-      list.map((c) => "<li><a href=\\"../public-comments/index.html#" + esc(c.ref) + "\\">" + esc(c.ref) + "</a> · " + esc(c.status) +
-        (c.type ? " · " + esc(c.type) : "") + (c.decision ? " · <b>" + esc(c.decision.label) + "</b>" : "") + (c.sets ? " · " + c.sets.map((id) => "<a href=\\"../public-comments/index.html#" + esc(id) + "\\">" + esc(id) + "</a>").join(" ") : "") + " — "+ esc(c.summary) + "</li>").join("") + "</ul>";
+    const sum = document.createElement("summary");
+    sum.textContent = list.length + " public comment" + (list.length > 1 ? "s" : "") + (n ? " (" + n + " open)" : "");
+    d.append(sum);
+    d.addEventListener("toggle", () => {
+      if (!d.open || d.dataset.built) return;
+      d.dataset.built = "1";
+      const ul = document.createElement("ul");
+      ul.innerHTML = list.map(item).join("");
+      d.append(ul);
+    });
     host.after(d);
     // Beside the block's [feedback]: the issues where its change-sets are
     // already being discussed, so a reader joins rather than duplicates.
@@ -434,7 +448,18 @@ export function overlaySnippet(rows: SiteComment[], opts: { repo?: string; issue
       s.innerHTML = "discussed in " + nums.map((n) => "<a href=\\"https://github.com/" + esc(meta.repo) + "/issues/" + n + "\\">#" + n + "</a>").join(" ");
       acts.append(s);
     }
-  }
+  };
+  const entries = Object.entries(data);
+  let total = 0, open = 0;
+  for (const [, list] of entries) { total += list.length; open += list.filter((c) => c.phase === "open").length; }
+  const idle = window.requestIdleCallback || ((f) => setTimeout(() => f({ timeRemaining: () => 8 }), 1));
+  let i = 0;
+  const batch = (deadline) => {
+    do { if (i >= entries.length) break; note(entries[i][0], entries[i][1]); i++; } while (deadline.timeRemaining() > 2 || i % 40 !== 0);
+    if (i < entries.length) idle(batch);
+    else if (location.hash.length > 1) document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView();
+  };
+  idle(batch);
   const bar = document.createElement("div");
   bar.className = "pc-bar";
   bar.innerHTML = '<a href="../public-comments/index.html">Public comments</a>: ' + total + " shown in this document, " + open + " open";
