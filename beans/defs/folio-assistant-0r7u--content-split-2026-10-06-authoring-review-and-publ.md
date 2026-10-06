@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-06T06:42:34Z
-updated_at: 2026-10-06T06:42:52Z
+updated_at: 2026-10-06T06:54:20Z
 parent: folio-assistant-7x5n
 ---
 
@@ -35,3 +35,10 @@ Evidence and every candidate: `cat-harness/docs/proposals/separation-placement-r
 
 ## Holder 2026-10-06
 Claimed by https://claude.ai/code/session_012qoycyCSGidZqW245vXhze on branch `claude/dazzling-wright-xshj1s` (PR #2254). Starting with step 0.
+
+## Lanes, 2026-10-06 06:54Z (owner: "dispatch agents/two new sessions to help speed up / parallelize work if it will help")
+Split by FILE AREA so the lanes don't collide:
+- **G** (session_01PpkdTJt4sgLQ82hbnTb1sU): steps 1–3, skills and processes (`*/skills/**`, `*/processes/**`).
+- **H** (session_012dn4UVLnHDxP1qR9xmotSw): step 4 and the doc candidates of step 3 (`cat-harness/docs/**`, `content/docs/**`).
+- **Coordinator**: step 0 (hard-coded upward paths), step 5 (code), then S5 `txue`.
+Generated files conflict across lanes by design; each lane merges main and runs `bun run regen`.
