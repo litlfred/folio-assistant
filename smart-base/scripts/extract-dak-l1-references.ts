@@ -65,7 +65,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
-import { DublinCoreRecordSchema, handleFromUrl, readStructure, type DublinCoreRecord } from "../platform.js";
+import { DublinCoreRecordSchema, handleFromUrl, ownDeclaredDirectories, readStructure, type DublinCoreRecord } from "../platform.js";
 import { isCurrent, L1_CONTEXT, L1_ONTOLOGY_VERSION, publicationId, readEntry, readIsbn, serialise, type LibraryEntry } from "./extract-smart-kg-l1.ts";
 
 /** Written beside the DAK's entry. Not `smart-kg-l1.json`: that name is the recommendation extractor's. */
@@ -327,8 +327,10 @@ const dc = (rec: DublinCoreRecord, element: string, qualifier?: string): string[
 /** Dublin Core records under `<repo>/uploads/*`, keyed by handle, joined to their library entry by PDF hash. */
 function heldByHandle(repo: string, libraryDirs: string[]): Map<string, Held> {
   const out = new Map<string, Held>();
-  const uploads = join(repo, "uploads");
-  if (!existsSync(uploads)) return out;
+  // The checkout's own `uploads` graph, by its declaration (check:foreign-paths):
+  // the directory belongs to the instance at `repo`, not to smart-base.
+  const [uploads] = ownDeclaredDirectories(repo, "uploads");
+  if (uploads === undefined || !existsSync(uploads)) return out;
   const entryBySha = new Map<string, string>();
   for (const lib of libraryDirs) {
     for (const d of existsSync(lib) ? readdirSync(lib, { withFileTypes: true }) : []) {

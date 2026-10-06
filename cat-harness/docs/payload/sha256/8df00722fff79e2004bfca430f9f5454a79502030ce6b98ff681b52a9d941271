@@ -133,14 +133,10 @@ flow above is run again for each, and the citing document's graph is
 regenerated once they are in, so a cited source the library HOLDS is described
 from its own metadata rather than from a one-line reference.
 
-The content type owns which section that is and how its citations resolve; this
-layer owns only the rule. For a WHO SMART Guidelines DAK it is Component 1, and
-the skill is smart-base's
-[`dak-l1-library`](../../../../smart-base/skills/content/authoring-who-smart-guidelines/dak-l1-library.md)
-(bean `5uyl`). A source in a DSpace 7 repository — WHO IRIS, PAHO IRIS — is
-acquired with `folio-assistant-core/scripts/fetch-dspace-item.ts`, which writes
-the `uploads/<doc_id>/` this flow takes, its licence read from the item's own
-`dc.rights` and stated only when the repository states it.
+The content type owns which section that is, how its citations resolve, and how
+a cited source is acquired (for instance from a DSpace repository); it says so
+in its own authoring skill. This layer owns only the rule: the flow above runs
+once per cited source, and the citing document's graph is regenerated after.
 
 ## Related
 
