@@ -1,0 +1,57 @@
+{
+  "$ref": "#/definitions/IgChromeToken",
+  "definitions": {
+    "IgChromeToken": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^--[\\w-]+$"
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "overrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "package": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "package",
+              "value"
+            ]
+          }
+        }
+      },
+      "required": [
+        "name",
+        "value",
+        "from",
+        "overrides"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-chrome/IgChromeTokenSchema.schema.json",
+  "title": "IgChromeTokenSchema",
+  "description": "Generated from `IgChromeTokenSchema` in schemas/ig-chrome.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/smart-trust-ast-rehand",
+    "sha": "b7945841dc15965a81cab9df82ccacc23a6ffddc",
+    "pr": "2288/merge",
+    "run": "37490889607"
+  }
+}
