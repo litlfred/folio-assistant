@@ -102,9 +102,18 @@
  * hands every reader a could-not-determine in exchange for a case that only
  * arises when somebody edits the repository while judging it. Commit before the
  * run or after it.
+ *
+ * **Partly narrowed since bean `v3nf`.** The runner records when each gate ran,
+ * and each changed path's mtime is checked against those windows: a write that
+ * landed while NO gate was running is reported as an outside change rather
+ * than pinned on a gate, and a write inside a parallel batch names only the
+ * gates running at that instant. An outside write made DURING a gate still
+ * names the gate — see {@link attributeWrite}.
  */
 
 import { spawnSync } from "node:child_process";
+import { statSync } from "node:fs";
+import { join } from "node:path";
 
 /**
  * One porcelain entry: `code` is the fixed-width two-character XY status, `key`
@@ -219,6 +228,96 @@ export function diffReadings(
 export interface GateMutation {
   readonly gate: string;
   readonly changes: readonly TreeChange[];
+  /** Per change key: who was running when the path was last written ({@link attributeChanges}). */
+  readonly attribution?: ReadonlyMap<string, WriteAttribution>;
+}
+
+// ── Who was running when it was written (bean `v3nf`) ─────────────────────
+//
+// A read-only batch runs its gates in a pool, so a snapshot after the batch
+// can only say "one of these N gates" — and N is most of the gate set. The
+// path's own mtime narrows that: a gate can only have written the file while
+// it was running, so the suspects are the gates whose [start, end] window
+// contains the write. A write inside NO window happened while no gate was
+// running — between gates, or before the first — which is an outside change
+// (an editor, a `git add`) that the per-snapshot delta alone reports against
+// an innocent gate.
+//
+// What it CANNOT do, stated rather than implied: a write made from outside
+// WHILE a gate was running still names that gate, since nothing short of a
+// sandbox tells two writers in the same instant apart. And the mtime is the
+// LAST write, so a path written by one gate and rewritten by another names
+// the second.
+
+/** When one gate ran, in epoch milliseconds (the clock `statSync().mtimeMs` uses). */
+export interface GateWindow {
+  readonly gate: string;
+  readonly start: number;
+  readonly end: number;
+}
+
+/** Who could have written one changed path, judged by its mtime. */
+export type WriteAttribution =
+  | { readonly kind: "running"; readonly at: number; readonly gates: readonly string[] }
+  | { readonly kind: "idle"; readonly at: number }
+  | { readonly kind: "unknown"; readonly why: string };
+
+/**
+ * The repository-relative path a porcelain key names, or undefined when the
+ * key is a shape this code will not parse — a quoted path or a rename. Those
+ * are reported as "could not determine" rather than guessed at, which keeps
+ * the raw-key rule above intact: the KEY is still never parsed for identity.
+ */
+export function pathOfKey(key: string): string | undefined {
+  if (key.startsWith('"') || key.includes(" -> ")) return undefined;
+  return key.endsWith("/") ? key.slice(0, -1) : key;
+}
+
+/**
+ * The gates whose window contains `at`. `slackMs` absorbs timestamp
+ * granularity only: a child cannot write before it was spawned or after it was
+ * reaped, and both ends are taken around exactly that — but the kernel stamps
+ * mtimes from a coarse clock that can read up to a tick (4–10 ms) behind
+ * `Date.now()`, so a few ticks are allowed.
+ */
+export function attributeWrite(at: number, windows: readonly GateWindow[], slackMs = 20): WriteAttribution {
+  const gates = windows.filter((w) => at >= w.start - slackMs && at <= w.end + slackMs).map((w) => w.gate);
+  return gates.length > 0 ? { kind: "running", at, gates } : { kind: "idle", at };
+}
+
+/** {@link attributeWrite} for each change, reading each path's mtime under `root`. */
+export function attributeChanges(
+  root: string,
+  changes: readonly TreeChange[],
+  windows: readonly GateWindow[],
+  mtimeOf: (abs: string) => number = (abs) => statSync(abs).mtimeMs,
+): Map<string, WriteAttribution> {
+  const out = new Map<string, WriteAttribution>();
+  for (const c of changes) {
+    const rel = pathOfKey(c.key);
+    if (rel === undefined) {
+      out.set(c.key, { kind: "unknown", why: "quoted or renamed path, not resolved" });
+      continue;
+    }
+    let at: number;
+    try {
+      at = mtimeOf(join(root, rel));
+    } catch {
+      // A deleted path has no mtime; when it went is not recorded anywhere.
+      out.set(c.key, { kind: "unknown", why: "path no longer exists" });
+      continue;
+    }
+    out.set(c.key, attributeWrite(at, windows));
+  }
+  return out;
+}
+
+/** One attribution, as the suffix printed after its change line. */
+export function formatAttribution(a: WriteAttribution): string {
+  const t = (ms: number) => new Date(ms).toISOString().slice(11, 23);
+  if (a.kind === "unknown") return `when written: could not determine (${a.why})`;
+  if (a.kind === "idle") return `written ${t(a.at)}Z while NO gate was running — an outside change, not a gate's`;
+  return `written ${t(a.at)}Z while running: ${a.gates.join(", ")}`;
 }
 
 /**
@@ -252,6 +351,8 @@ export function formatMutations(mutations: readonly GateMutation[], cap = 8): st
             ? `wrote     ("${c.after}")`
             : `changed   ("${c.before}" -> "${c.after}")`;
       lines.push(`      ${how}  ${c.key}`);
+      const a = m.attribution?.get(c.key);
+      if (a !== undefined) lines.push(`                 ↳ ${formatAttribution(a)}`);
     }
     if (m.changes.length > cap) {
       lines.push(`      …and ${m.changes.length - cap} more path(s) not listed`);
@@ -275,6 +376,12 @@ export function formatMutations(mutations: readonly GateMutation[], cap = 8): st
   lines.push("  change to the tree during the run, so an edit, a `git add` or a commit made");
   lines.push("  while it was in flight is reported against whichever gate was running. If a");
   lines.push("  path above is one you touched, the gate named is innocent — commit, then re-run.");
+  if (mutations.some((m) => m.attribution !== undefined)) {
+    // Bean `v3nf`: the mtime line narrows that, in one direction only.
+    lines.push("  A `↳` line saying NO gate was running settles it: that write was not a gate's.");
+    lines.push("  One naming gates narrows a parallel batch to those running at that instant,");
+    lines.push("  and cannot clear an edit you made during the same instant.");
+  }
   return lines;
 }
 

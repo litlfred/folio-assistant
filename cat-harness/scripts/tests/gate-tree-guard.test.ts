@@ -24,14 +24,19 @@ import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 
 import {
+  attributeChanges,
+  attributeWrite,
   diffReadings,
   formatMutations,
   formatUndetermined,
   isUntracked,
   parsePorcelain,
+  pathOfKey,
   readTree,
   type GateMutation,
+  type GateWindow,
 } from "../gate-tree-guard.js";
+import { runPool } from "../task-pool.ts";
 
 describe("parsePorcelain", () => {
   it("keys on the line after the fixed-width status, and reads the code from the first two chars", () => {
@@ -315,5 +320,140 @@ describe("readTree — against real git, not a stub", () => {
   it("cleans up its throwaway repositories", () => {
     for (const d of repos) rmSync(d, { recursive: true, force: true });
     expect(repos.length).toBeGreaterThan(0);
+  });
+});
+
+// ── Who was running when it was written (bean `v3nf`) ─────────────────────
+//
+// Each test states what it would fail on. The pair that matters most is the
+// last one: a real write inside a pooled gate names that gate, AND a real
+// write made after every gate finished names none — a guard that named the
+// batch for both would pass the first and fail the second.
+
+describe("pathOfKey", () => {
+  it("returns a plain key as its path, and drops an untracked directory's trailing slash", () => {
+    expect(pathOfKey("cat-harness/a.ts")).toBe("cat-harness/a.ts");
+    expect(pathOfKey("scratch/")).toBe("scratch");
+  });
+
+  it("refuses a quoted key and a rename rather than guessing at them", () => {
+    // Would catch an unescape or an arrow split creeping in: both are the
+    // parsing the raw-key rule exists to avoid.
+    expect(pathOfKey('"a\\tb.ts"')).toBeUndefined();
+    expect(pathOfKey("old.ts -> new.ts")).toBeUndefined();
+  });
+});
+
+describe("attributeWrite", () => {
+  const w: GateWindow[] = [
+    { gate: "A", start: 1000, end: 2000 },
+    { gate: "B", start: 1500, end: 3000 },
+    { gate: "C", start: 5000, end: 6000 },
+  ];
+
+  it("names only the gates whose window contains the write", () => {
+    expect(attributeWrite(1200, w)).toEqual({ kind: "running", at: 1200, gates: ["A"] });
+    expect(attributeWrite(1800, w)).toEqual({ kind: "running", at: 1800, gates: ["A", "B"] });
+    expect(attributeWrite(5500, w)).toEqual({ kind: "running", at: 5500, gates: ["C"] });
+  });
+
+  it("calls a write between windows idle — no gate was running — instead of blaming a neighbour", () => {
+    expect(attributeWrite(4000, w)).toEqual({ kind: "idle", at: 4000 });
+    expect(attributeWrite(500, w)).toEqual({ kind: "idle", at: 500 });
+  });
+
+  it("tolerates only the stated slack at a window's edge", () => {
+    expect(attributeWrite(2999 + 5 + 1, w, 5).kind).toBe("running"); // 3005 ≤ 3000 + 5
+    expect(attributeWrite(3006, w, 5).kind).toBe("idle");
+  });
+});
+
+describe("attributeChanges", () => {
+  it("is unknown — not idle — for a deleted path and for a key it will not resolve", () => {
+    // `idle` would CLEAR the gates of a deletion nobody can date, which is the
+    // could-not-determine-rendered-as-clean failure.
+    const out = attributeChanges(
+      "/nowhere",
+      [{ key: "gone.ts", before: " M" }, { key: "a -> b", after: "R " }],
+      [{ gate: "A", start: 0, end: Number.MAX_SAFE_INTEGER }],
+      () => {
+        throw new Error("ENOENT");
+      },
+    );
+    expect(out.get("gone.ts")?.kind).toBe("unknown");
+    expect(out.get("a -> b")?.kind).toBe("unknown");
+  });
+
+  // Gaps of 150 ms: well clear of the 20 ms edge slack, so a loaded box does
+  // not blur "already finished" into "still running".
+  it("END TO END: a pooled gate's real write names it, and a write after the pool names no gate", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "gate-tree-guard-attr-"));
+    try {
+      const windows: GateWindow[] = [];
+      const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+      const gate = (name: string, body: () => Promise<void>) => ({
+        id: name,
+        outputs: [] as string[],
+        run: async () => {
+          const start = Date.now();
+          try {
+            await body();
+          } finally {
+            windows.push({ gate: name, start, end: Date.now() });
+          }
+        },
+      });
+      await runPool(
+        [
+          gate("writer", async () => {
+            await sleep(150);
+            writeFileSync(join(dir, "written.txt"), "x\n");
+          }),
+          gate("slow-reader", () => sleep(300)),
+          gate("late-reader", async () => undefined),
+        ],
+        3,
+        () => undefined,
+      );
+      await sleep(150);
+      writeFileSync(join(dir, "outside.txt"), "y\n");
+
+      const out = attributeChanges(
+        dir,
+        [{ key: "written.txt", after: "??" }, { key: "outside.txt", after: "??" }],
+        windows,
+      );
+      const w = out.get("written.txt");
+      expect(w?.kind).toBe("running");
+      if (w?.kind === "running") {
+        expect(w.gates).toContain("writer");
+        // Narrowed: the gate that had already finished is not a suspect.
+        expect(w.gates).not.toContain("late-reader");
+      }
+      expect(out.get("outside.txt")?.kind).toBe("idle");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+});
+
+describe("formatMutations with attribution", () => {
+  const changes = [{ key: "x.json", after: " M" }];
+
+  it("prints the who-was-running line under its change, and the reading note once", () => {
+    const m: GateMutation = {
+      gate: "one of the parallel read-only gates: a, b",
+      changes,
+      attribution: new Map([["x.json", { kind: "idle", at: 0 }]]),
+    };
+    const out = formatMutations([m]).join("\n");
+    expect(out).toContain("NO gate was running");
+    expect(out).toContain("settles it");
+  });
+
+  it("prints neither without attribution — the old report is unchanged", () => {
+    const out = formatMutations([{ gate: "g", changes }]).join("\n");
+    expect(out).not.toContain("↳");
+    expect(out).not.toContain("settles it");
   });
 });
