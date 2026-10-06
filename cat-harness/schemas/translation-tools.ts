@@ -34,6 +34,7 @@
 
 import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   checkoutRootFor,
   ContentTypeTranslationSchema,
@@ -107,7 +108,9 @@ export function resolveTranslationPath(ct: DeclaredContentTypeTranslation, rel: 
 }
 
 export const CONTENT_TYPE_TRANSLATIONS: DeclaredContentTypeTranslation[] = collectContentTypeTranslations(
-  checkoutRootFor(dirname(import.meta.dir)),
+  // `import.meta.url`, not Bun's `import.meta.dir`: Playwright loads this module
+  // under Node, where `import.meta.dir` is undefined.
+  checkoutRootFor(dirname(dirname(fileURLToPath(import.meta.url)))),
 );
 
 /**

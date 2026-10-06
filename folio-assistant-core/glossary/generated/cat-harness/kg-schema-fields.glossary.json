@@ -2289,6 +2289,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.contenttranslations",
+      "prefLabel": "CatHarnessDeclaration.contentTranslations",
+      "definition": "The translation profile of each content type THIS instance owns: which formats it can extract and inject, and which diagrams need re-rendering. Collected by `schemas/translation-tools.ts` from every present instance (bean `0r7u`, step 0 part 3), so cat-harness names no content type above it. Module and diagram paths resolve from the declaring instance, then down its `needs` chain.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.contentTranslations",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.directories",
       "prefLabel": "CatHarnessDeclaration.directories",
       "definition": "Directories this instance scans, before inheritance.",
@@ -2821,6 +2828,48 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contenttypetranslationschema.bpmndiagrams",
+      "prefLabel": "ContentTypeTranslationSchema.bpmnDiagrams",
+      "definition": "BPMN diagrams that need re-rendering for translation.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.bpmnDiagrams",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contenttypetranslationschema.contenttype",
+      "prefLabel": "ContentTypeTranslationSchema.contentType",
+      "definition": "Content type identifier (matches adapter name).",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.contentType",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contenttypetranslationschema.formats",
+      "prefLabel": "ContentTypeTranslationSchema.formats",
+      "definition": "Translatable formats this content type supports.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.formats",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contenttypetranslationschema.name",
+      "prefLabel": "ContentTypeTranslationSchema.name",
+      "definition": "Human-readable name.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.name",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contenttypetranslationschema.notes",
+      "prefLabel": "ContentTypeTranslationSchema.notes",
+      "definition": "Additional notes about translation for this content type.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.notes",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contenttypetranslationschema.rtlsupported",
+      "prefLabel": "ContentTypeTranslationSchema.rtlSupported",
+      "definition": "Whether RTL rendering is supported.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.rtlSupported",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.declaredgraph.abspath",
       "prefLabel": "DeclaredGraph.absPath",
       "definition": "Set iff the graph is HERE.",
@@ -3259,6 +3308,69 @@
       "prefLabel": "TopologyConflict.reason",
       "definition": "Why the mechanism forbids it — an entailment, never a report.",
       "source": "cat-harness/schemas/cat-harness.ts#TopologyConflict.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.extensions",
+      "prefLabel": "TranslatableFormatSchema.extensions",
+      "definition": "File extensions this format applies to.",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.extensions",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.extractmodule",
+      "prefLabel": "TranslatableFormatSchema.extractModule",
+      "definition": "TypeScript module that implements extraction (relative to repo root).",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.extractModule",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.id",
+      "prefLabel": "TranslatableFormatSchema.id",
+      "definition": "Format identifier.",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.injectmodule",
+      "prefLabel": "TranslatableFormatSchema.injectModule",
+      "definition": "TypeScript module that implements injection (relative to repo root).",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.injectModule",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.name",
+      "prefLabel": "TranslatableFormatSchema.name",
+      "definition": "Human-readable name.",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.name",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.notes",
+      "prefLabel": "TranslatableFormatSchema.notes",
+      "definition": "Notes about translating THIS format specifically, as distinct from `ContentTypeTranslation.notes`, which describes the content type as a whole. \"Lean 4 terms stay in English\" and \"the diagram is re-rendered after injection\" are properties of the format, not of the folio.",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.notes",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.smartbaseextractref",
+      "prefLabel": "TranslatableFormatSchema.smartBaseExtractRef",
+      "definition": "Smart-base function/line range for extraction.",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.smartBaseExtractRef",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.smartbaseinjectref",
+      "prefLabel": "TranslatableFormatSchema.smartBaseInjectRef",
+      "definition": "Smart-base function/line range for injection.",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.smartBaseInjectRef",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.smartbasescript",
+      "prefLabel": "TranslatableFormatSchema.smartBaseScript",
+      "definition": "Smart-base Python script that handles this format (reference).",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.smartBaseScript",
       "status": "candidate"
     },
     {
@@ -10966,111 +11078,6 @@
       "prefLabel": "ToolSelectionSchema.when",
       "definition": "The case this Tool is the right answer to.",
       "source": "cat-harness/schemas/tool.ts#ToolSelectionSchema.when",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.contenttypetranslationschema.bpmndiagrams",
-      "prefLabel": "ContentTypeTranslationSchema.bpmnDiagrams",
-      "definition": "BPMN diagrams that need re-rendering for translation.",
-      "source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.bpmnDiagrams",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.contenttypetranslationschema.contenttype",
-      "prefLabel": "ContentTypeTranslationSchema.contentType",
-      "definition": "Content type identifier (matches adapter name).",
-      "source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.contentType",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.contenttypetranslationschema.formats",
-      "prefLabel": "ContentTypeTranslationSchema.formats",
-      "definition": "Translatable formats this content type supports.",
-      "source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.formats",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.contenttypetranslationschema.name",
-      "prefLabel": "ContentTypeTranslationSchema.name",
-      "definition": "Human-readable name.",
-      "source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.name",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.contenttypetranslationschema.notes",
-      "prefLabel": "ContentTypeTranslationSchema.notes",
-      "definition": "Additional notes about translation for this content type.",
-      "source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.notes",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.contenttypetranslationschema.rtlsupported",
-      "prefLabel": "ContentTypeTranslationSchema.rtlSupported",
-      "definition": "Whether RTL rendering is supported.",
-      "source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.rtlSupported",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.extensions",
-      "prefLabel": "TranslatableFormatSchema.extensions",
-      "definition": "File extensions this format applies to.",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.extensions",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.extractmodule",
-      "prefLabel": "TranslatableFormatSchema.extractModule",
-      "definition": "TypeScript module that implements extraction (relative to repo root).",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.extractModule",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.id",
-      "prefLabel": "TranslatableFormatSchema.id",
-      "definition": "Format identifier.",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.id",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.injectmodule",
-      "prefLabel": "TranslatableFormatSchema.injectModule",
-      "definition": "TypeScript module that implements injection (relative to repo root).",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.injectModule",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.name",
-      "prefLabel": "TranslatableFormatSchema.name",
-      "definition": "Human-readable name.",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.name",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.notes",
-      "prefLabel": "TranslatableFormatSchema.notes",
-      "definition": "Notes about translating THIS format specifically, as distinct from `ContentTypeTranslation.notes`, which describes the content type as a whole. \"Lean 4 terms stay in English\" and \"the diagram is re-rendered after injection\" are properties of the format, not of the folio.",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.notes",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.smartbaseextractref",
-      "prefLabel": "TranslatableFormatSchema.smartBaseExtractRef",
-      "definition": "Smart-base function/line range for extraction.",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.smartBaseExtractRef",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.smartbaseinjectref",
-      "prefLabel": "TranslatableFormatSchema.smartBaseInjectRef",
-      "definition": "Smart-base function/line range for injection.",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.smartBaseInjectRef",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.smartbasescript",
-      "prefLabel": "TranslatableFormatSchema.smartBaseScript",
-      "definition": "Smart-base Python script that handles this format (reference).",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.smartBaseScript",
       "status": "candidate"
     },
     {
