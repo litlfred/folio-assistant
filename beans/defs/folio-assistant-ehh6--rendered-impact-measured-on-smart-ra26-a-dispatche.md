@@ -5,8 +5,8 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-06T18:25:34Z
-updated_at: 2026-10-06T18:25:41Z
-parent: folio-assistant-bnjs
+updated_at: 2026-10-06T18:34:34Z
+parent: folio-assistant-q4jm
 ---
 
 Found by the real staging run on litlfred/smart-ra#26 (run 37507489070, bean dpi-h-ra-7ss8).
