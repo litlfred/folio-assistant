@@ -21,7 +21,7 @@ Related: q4cm (edit set, accept = approve), c65n (measured FHIR chain), jwox (bl
 - [ ] docs-site renderer (staging-cone, directory -> pages)
 - [x] skill rendered-impact; update staging-review, before-after-preview, ig-ast-delta, public-comment change-sets
 - [x] process: content-change-review.bpmn names rendered-impact at Compare, Slice and Comment-PR (produce/read/assign)
-- [ ] gate: the coverage DMN counts unreviewed rendered pages, missed files and site-wide undetermined inputs, once the staging build publishes rendered-impact.json (an input nothing computes is not added)
+- [x] gate: the coverage DMN counts unreviewed rendered pages, missed files and site-wide undetermined inputs, once the staging build publishes rendered-impact.json (an input nothing computes is not added)
 - [x] staging build: folio-staging.yml step "Compute the rendered impact" publishes rendered-impact.json beside changeset.json; the PR comment lists up to 20 pages with after/before links
 - [x] PR comment + review page show the list: the review page FETCHES rendered-impact.json when opened (owner: "dynamic loading on review page"), and says "not known" when the build published none
 
@@ -69,9 +69,11 @@ never read as 0.
 
 ## Todo (coverage gate)
 
-- [ ] rendered-impact: optional `hash` on files and undetermined; `pinImpact`; renderers pin
-- [ ] `rendered-measured/v1` + `measure-rendered-impact.ts` (build diff + comparePrediction + base check)
-- [ ] verdict tag: `page:` / `input:`; ingestion validates against the published impact
-- [ ] computeCoverage / review-coverage CLI: the five new facts
-- [ ] DMN rules + process documentation + skills (rendered-impact, review verdict syntax)
-- [ ] folio-staging.yml: pin, measure step, ingestion args, PR comment shows missed pages
+- [x] rendered-impact: optional `hash` on files and undetermined; `pinImpact`; renderers pin
+- [x] `rendered-measured/v1` + `measure-rendered-impact.ts` (build diff + comparePrediction + base check)
+- [x] verdict tag: `page:` / `input:`; ingestion validates against the published impact
+- [x] computeCoverage / review-coverage CLI: the five new facts
+- [x] DMN rules + process documentation + skills (rendered-impact, review verdict syntax)
+- [x] folio-staging.yml: pin, measure step, ingestion args, PR comment shows missed pages
+
+- [ ] see it on a real staging run (smart-ra: blocked on SUSHI's package hosts, issue litlfred/smart-ra#23)
