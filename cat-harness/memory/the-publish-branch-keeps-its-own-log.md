@@ -18,4 +18,4 @@ branch ROOT, outside `STAGING/` so `rm -rf "STAGING/$SLUG"` cannot reach it.
 A full replace does NOT preserve it: `CARRIED_PREFIXES` in
 `restore-staging.ts` carries it across, and `--verify` checks the carry as well
 as the previews. Add a prefix there, never a third code path. Skill:
-[`ui-core/render-logging.md`](../cat-harness/skills/ui/ui-core/render-logging.md).
+[`ui-core/render-logging.md`](../skills/ui/ui-core/render-logging.md).
