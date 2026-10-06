@@ -6,7 +6,7 @@
 
 Core's own server half: the HTTP routes that act on a folio's CONTENT — `routes/feedback.ts` (its feedback items), `routes/glossary.ts` (its glossary candidates), `routes/relevance.ts` (its bibliography relevance). Moved up from `cat-harness/src/routes/` when the server moved to `cat-harness-tools` (bean `70lx`, B1; owner, 2026-10-04: a content package's server half lives with its content). The server declares them by their `src/routes/*` path and finds them here through `needs`, since core needs `cat-harness-tools`; they import the server's contract (`route-groups`, `types`, `core/rbac`) DOWN from it.
 
-Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-src`, holding `code`.
+Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-src`, holding `code`.
 
 | file | what it is | used by |
 |---|---|---|
