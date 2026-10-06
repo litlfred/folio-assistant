@@ -77,7 +77,7 @@
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/agentic-harness.html"
+      "seeAlso": "https://litlfred.github.io/concepts/agentic-harness.html"
     },
     {
       "@id": "cat-harness:Folio",
@@ -93,7 +93,7 @@
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/getting-started.html"
+      "seeAlso": "https://litlfred.github.io/start/getting-started.html"
     },
     {
       "@id": "cat-harness:SushiProject",
@@ -124,7 +124,7 @@
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/agentic-harness.html"
+      "seeAlso": "https://litlfred.github.io/concepts/agentic-harness.html"
     },
     {
       "@id": "cat-harness:Requirement",
@@ -140,7 +140,7 @@
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/crdm-methodology.html"
+      "seeAlso": "https://litlfred.github.io/process/crdm-methodology.html"
     },
     {
       "@id": "cat-harness:Lane",
@@ -186,7 +186,7 @@
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/skills.html"
+      "seeAlso": "https://litlfred.github.io/concepts/skills.html"
     },
     {
       "@id": "cat-harness:Tool",
@@ -202,7 +202,7 @@
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/architecture.html"
+      "seeAlso": "https://litlfred.github.io/concepts/architecture.html"
     },
     {
       "@id": "cat-harness:Schema",
@@ -303,9 +303,9 @@
         "skos:Concept"
       ],
       "label": "attestations",
-      "comment": "QA attestations — the judgements a QA family carries across runs (pair attestations, voice reviews, agent and human verdicts), one `qa-attestations/v1` file per subject, mirroring the derived family's tree. Kept on main where deleting derived results cannot reach them; each entry pins the hash it attested, so a stale one is detectable.",
+      "comment": "QA attestations — the judgements a QA family carries across runs (pair attestations, voice reviews, agent and human verdicts, bibliography verifications and human reviews), one `qa-attestations/v1` file per subject, mirroring the derived family's tree. Kept on main where deleting derived results cannot reach them; each entry pins the hash it attested, so a stale one is detectable.",
       "prefLabel": "attestations",
-      "definition": "QA attestations — the judgements a QA family carries across runs (pair attestations, voice reviews, agent and human verdicts), one `qa-attestations/v1` file per subject, mirroring the derived family's tree. Kept on main where deleting derived results cannot reach them; each entry pins the hash it attested, so a stale one is detectable.",
+      "definition": "QA attestations — the judgements a QA family carries across runs (pair attestations, voice reviews, agent and human verdicts, bibliography verifications and human reviews), one `qa-attestations/v1` file per subject, mirroring the derived family's tree. Kept on main where deleting derived results cannot reach them; each entry pins the hash it attested, so a stale one is detectable.",
       "notation": "cat-harness:graphTypology/attestations",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
@@ -502,6 +502,21 @@
       "prefLabel": "content-adapters",
       "definition": "The block vocabularies a harness owns, one node per vocabulary carrying its companion roles and whether the platform's code types it. Discovered across the instances; no module lists them.",
       "notation": "cat-harness:graphTypology/content-adapters",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphTypology/doc-group",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "doc-group",
+      "comment": "A named group of the documentation's own pages — one folder, one heading in the Pages list. A sub-graph of `docs`.",
+      "prefLabel": "doc-group",
+      "definition": "A named group of the documentation's own pages — one folder, one heading in the Pages list. A sub-graph of `docs`.",
+      "notation": "cat-harness:graphTypology/doc-group",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"

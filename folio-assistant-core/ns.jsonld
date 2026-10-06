@@ -77,7 +77,7 @@
       "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core",
-      "seeAlso": "https://litlfred.github.io/content-types.html"
+      "seeAlso": "https://litlfred.github.io/concepts/content-types.html"
     },
     {
       "@id": "folio-assistant-core:GlossaryGraph",
@@ -185,6 +185,21 @@
       "layer": "core"
     },
     {
+      "@id": "folio-assistant-core:graphTypology/public-comments",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "public-comments",
+      "comment": "A public-comment record — one `public-comment/1.0.0` JSON per comment under `comments/`, and one `changeset/1.0.0` JSON per change-set under `changesets/`. Written by the public-comment tool as comments are triaged and change-sets agreed.",
+      "prefLabel": "public-comments",
+      "definition": "A public-comment record — one `public-comment/1.0.0` JSON per comment under `comments/`, and one `changeset/1.0.0` JSON per change-set under `changesets/`. Written by the public-comment tool as comments are triaged and change-sets agreed.",
+      "notation": "folio-assistant-core:graphTypology/public-comments",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "layer": "core"
+    },
+    {
       "@id": "folio-assistant-core:graphTypology/review-verdicts",
       "@type": [
         "bootstrap:GraphTypology",
@@ -221,9 +236,9 @@
         "skos:Concept"
       ],
       "label": "todo-items",
-      "comment": "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. Authored by people and by agents on their behalf.",
+      "comment": "Todo nodes — one file each, carrying `\"$schema\": \"todo/1.0.0\"`. Authored by people and by agents on their behalf.",
       "prefLabel": "todo-items",
-      "definition": "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. Authored by people and by agents on their behalf.",
+      "definition": "Todo nodes — one file each, carrying `\"$schema\": \"todo/1.0.0\"`. Authored by people and by agents on their behalf.",
       "notation": "folio-assistant-core:graphTypology/todo-items",
       "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",

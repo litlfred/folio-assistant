@@ -620,6 +620,14 @@
                               "enum": [
                                 "staging-only"
                               ]
+                            },
+                            "writer": {
+                              "minItems": 1,
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
                             }
                           },
                           "required": [
@@ -705,6 +713,14 @@
                     "enum": [
                       "staging-only"
                     ]
+                  },
+                  "writer": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
                   }
                 }
               },
@@ -758,6 +774,9 @@
                 }
               },
               "composed": {
+                "type": "boolean"
+              },
+              "igSite": {
                 "type": "boolean"
               },
               "served": {
@@ -1230,8 +1249,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "e8751061f7317857b430a4450402df9cc4bfcd69",
+    "sha": "13c92fcabbbc9f61cb046af88dd03de816d7a934",
     "pr": "main",
-    "run": "37361030793"
+    "run": "37393349013"
   }
 }

@@ -334,10 +334,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-05T19:15:29.745Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e8751061f7317857b430a4450402df9cc4bfcd69",
-  "sourceCommitSha": "e8751061f7317857b430a4450402df9cc4bfcd69",
-  "sourceCommitAt": "2026-10-05T21:06:43+02:00",
+  "generatedAt": "2026-10-06T00:33:40.698Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/13c92fcabbbc9f61cb046af88dd03de816d7a934",
+  "sourceCommitSha": "13c92fcabbbc9f61cb046af88dd03de816d7a934",
+  "sourceCommitAt": "2026-10-06T02:18:54+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -350,10 +350,10 @@
     "SequenceFlow": 763,
     "Lane": 139,
     "ProcessNode": 738,
-    "Tool": 125,
-    "Schema": 150,
+    "Tool": 127,
+    "Schema": 151,
     "ExternalSchema": 22,
-    "GraphTypology": 29,
+    "GraphTypology": 30,
     "Role": 53,
     "Subgraph": 28,
     "Asset": 3
@@ -712,7 +712,7 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "review-comments",
       "title": "Review comments — from a PR comment to a structured todo",
-      "description": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `folio-review-comment/v1` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
+      "description": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `review-comment/1.0.0` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-core"
       ],
@@ -1680,7 +1680,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1529,
+      "instructionLines": 1586,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2815,7 +2815,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/publish-verification.md",
-      "instructionLines": 65,
+      "instructionLines": 89,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2975,7 +2975,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 910,
+      "instructionLines": 914,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3070,7 +3070,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/ci-health.md",
-      "instructionLines": 184,
+      "instructionLines": 209,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -29923,6 +29923,66 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/rail-standalone-pages",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "rail-standalone-pages",
+      "title": "Give every page Jekyll did not lay out the folio-assistant navbar",
+      "description": "A LAST pass over the finished site: inject the shared navbar (`lib/navbar.ts`, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated instance pages, and each IG site built by `stage-ig-sites`. A page under an `igSite` instance's route is railed as THAT instance's page (its name, mark and graphs); a page may declare its own section (`data-fa-visualiser-nav`) and its label (`fa-visualiser-label`). Mount routes are left to the mount pass, and a page that declines (`folio-navbar: none`) is left bare.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/rail-standalone-pages.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The finished site directory.",
+            "required": true
+          },
+          {
+            "name": "built",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "The instance whose site this is (`cat-harness`).",
+            "required": true
+          },
+          {
+            "name": "foreign-site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "The site is a folio's, not the platform's: platform links point at the platform's published site.",
+            "required": false,
+            "arg": {
+              "flag": "--foreign-site"
+            }
+          },
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "With `--foreign-site`: the instance whose own site this is. Its name, mark and graphs head the navbar, and Harnesses lists it (linking to this site's root) and the harnesses it is built on.",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "railed",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "description": "Pages given the navbar, beside those already navigated, redirect stubs, pages that declined, and pages with no <body> — each counted, none silently."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-tiles"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/subgraph-resolve",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "subgraph-resolve",
@@ -34778,6 +34838,48 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/node-kind-pages",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "node-kind-pages",
+      "title": "Node kind pages",
+      "description": "Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run node-kind:pages"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-rendering"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/state-viewer",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "state-viewer",
@@ -36618,11 +36720,20 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bib-attestations",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "bib-attestations",
+      "title": "bib-attestations",
+      "summary": "BIBLIOGRAPHY ATTESTATIONS — the ONE reader and the ONE writer for a folio's",
+      "module": "schemas/bib-attestations.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bib-verification",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "bib-verification",
       "title": "bib-verification",
-      "summary": "Bibliography verification schema — `content/bib-qa-verifications.json`.",
+      "summary": "Bibliography verification schema — the source ledger.",
       "module": "schemas/bib-verification.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
@@ -38285,6 +38396,14 @@
       "validatorNotApplicable": "its nodes are markdown pages whose FRONT MATTER is a `Requirement`. A registry validator parses a JSON node, so one here would be a category error. `check:requirements` extracts the front matter and parses it against the Requirement schema instead, and requires the id to match the file name."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/doc-group",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "doc-group",
+      "renderable": false,
+      "summary": "A named group of the documentation's own pages — one folder, one heading in the Pages list. A sub-graph of `docs`.",
+      "validatorNotApplicable": "its nodes are the docs site's markdown pages, judged as `docs` pages are; a group adds a folder, not a shape."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/auto-docs",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "auto-docs",
@@ -38351,7 +38470,7 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "attestations",
       "renderable": false,
-      "summary": "QA attestations — the judgements a QA family carries across runs (pair attestations, voice reviews, agent and human verdicts), one `qa-attestations/v1` file per subject, mirroring the derived family's tree. Kept on main where deleting derived results cannot reach them; each entry pins the hash it attested, so a stale one is detectable.",
+      "summary": "QA attestations — the judgements a QA family carries across runs (pair attestations, voice reviews, agent and human verdicts, bibliography verifications and human reviews), one `qa-attestations/v1` file per subject, mirroring the derived family's tree. Kept on main where deleting derived results cannot reach them; each entry pins the hash it attested, so a stale one is detectable.",
       "validator": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/qa-attestations"
     },
     {
@@ -39416,7 +39535,7 @@
       ],
       "description": "The validators cat-harness's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit). Owner, 2026-10-04: validators are KG nodes, and the validator names the family.",
       "readmePath": "validators/README.md",
-      "fileCount": 78,
+      "fileCount": 79,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-validators"
     },
     {
@@ -39520,7 +39639,7 @@
       ],
       "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
       "readmePath": "schemas/README.md",
-      "fileCount": 262,
+      "fileCount": 267,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
@@ -39537,7 +39656,7 @@
       ],
       "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph typology's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which show the PlantUML rendering (docs/assets/img/uml/overview/, stamped with its source's hash) with the Mermaid beneath it, and link both sources. Owner, 2026-09-23.",
       "readmePath": "uml/README.md",
-      "fileCount": 373,
+      "fileCount": 383,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml"
     },
     {
@@ -39761,7 +39880,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 3140,
+      "fileCount": 3176,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
     {
@@ -39795,7 +39914,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 924,
+      "fileCount": 933,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
     {
@@ -39846,7 +39965,7 @@
       ],
       "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
       "readmePath": "test/README.md",
-      "fileCount": 1195,
+      "fileCount": 1197,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
     {
@@ -44834,8 +44953,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "e8751061f7317857b430a4450402df9cc4bfcd69",
+    "sha": "13c92fcabbbc9f61cb046af88dd03de816d7a934",
     "pr": "main",
-    "run": "37361030793"
+    "run": "37393349013"
   }
 }
