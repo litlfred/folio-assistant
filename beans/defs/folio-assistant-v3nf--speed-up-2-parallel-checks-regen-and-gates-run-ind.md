@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T17:42:24Z
-updated_at: 2026-10-06T19:00:43Z
+updated_at: 2026-10-06T19:00:41Z
 parent: folio-assistant-7x5n
 ---
 
