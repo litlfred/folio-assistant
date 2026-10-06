@@ -26,6 +26,8 @@
  * nothing. `--check` reports a missing or stale file and exits 1.
  *
  * Usage: bun run library:keywords [--check]
+ *
+ * @covers library
  */
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
@@ -37,6 +39,8 @@ import { readLibraryGraph } from "./library-graph.ts";
 import { unitsOf } from "./lsi.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
+/** The file each library entry carries. */
+export const KEYWORDS_FILE = "keywords.json";
 export const DOC_TOP = 12;
 export const SECTION_TOP = 8;
 
@@ -121,7 +125,7 @@ if (import.meta.main) {
   for (const root of [...roots].sort()) {
     for (const [slug, kf] of libraryKeywords(root)) {
       entries++;
-      const path = join(root, slug, "keywords.json");
+      const path = join(root, slug, KEYWORDS_FILE);
       const text = JSON.stringify(kf, null, 2) + "\n";
       const same = existsSync(path) && readFileSync(path, "utf8") === text;
       if (same) continue;

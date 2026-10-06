@@ -70,6 +70,7 @@ import {
 import { LICENCE_FILENAME } from "../content/pipeline/gen-library-jsonld.ts";
 import { NARRATIVE_BEARING, narrativesIn } from "./narratives.ts";
 import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
+import { KEYWORDS_FILE } from "./library-keywords.ts";
 import { entryDirs, entryItems, sidecarDefects, tally } from "./summaries.ts";
 import { againstOrUsage, buildQaResult, qaResultPath, qaResultState, writeQaResult, type QaResultState } from "./qa-results.ts";
 import { REFERENCED_SOURCE_SCHEMA_ID, ReferencedSourceSchema } from "../schemas/referenced-source.ts";
@@ -190,6 +191,8 @@ export const ENTRY_SIDECARS: readonly string[] = [
   VECTOR_FIGURES_FILE,
   "manifest.jsonld",
   SUMMARIES_FILE,
+  // The entry's LSI keywords, written by `library-keywords.ts` (issue #2302).
+  KEYWORDS_FILE,
   // Authored, not produced by an arm: the licence record gen-library-jsonld
   // carries into manifest.jsonld as dcterms:license + licenceRecord (#1492, D4).
   LICENCE_FILENAME,
