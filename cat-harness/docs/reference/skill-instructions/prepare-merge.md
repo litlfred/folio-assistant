@@ -62,6 +62,13 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
    judgement and has none. See §"Conflicts in `test/results/` and
    `test/attestations/`" below before resolving either by hand.
 
+   **Merge with `bun run merge:main`, never a plain `git merge` followed by
+   regen.** It resolves every conflict a declared pattern covers (glossaries,
+   translated glossaries, UML, viewer pages, site data, QA sidecars), refuses
+   the rest with the tree restored, and runs regen on the result. A plain
+   `git merge` stops on those same generated files, one by one (measured
+   2026-10-06, bean `xpcu`).
+
    **And after EVERY base merge, conflicted or not, run `bun run regen`.**
    A clean merge is not evidence that the generated artefacts are right — see
    §"A clean merge can produce a wrong artefact" below. **If you merged with
