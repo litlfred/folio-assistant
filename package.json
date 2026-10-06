@@ -475,6 +475,8 @@
     "start:stdio": "bun run cat-harness-tools/src/index.ts --stdio",
     "state:push": "bun run cat-harness-tools/scripts/state-push.ts",
     "state:mount": "bun run cat-harness/scripts/state-mount.ts",
+    "mount:remote": "bun run cat-harness/scripts/remote-mount.ts",
+    "mount:remote:check": "bun run cat-harness/scripts/remote-mount.ts --check",
     "state:seed": "bun run cat-harness-tools/scripts/state-seed.ts",
     "state:visualizer": "bun run cat-harness/scripts/state-visualizer.ts",
     "survey:owed": "bun run cat-harness/scripts/survey.ts",

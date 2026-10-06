@@ -624,10 +624,63 @@ export function reportOutcomes(title: string, state: CheckResult["state"], reaso
   return L.join("\n");
 }
 
+// ── Every declaring instance in a checkout (the session-start fan-out) ───────
+
+/** The instances in `checkout` that declare `remoteMounts`. An unreadable declaration is reported, not skipped. */
+export function declaringInstances(checkout: string): { roots: string[]; unreadable: Array<{ root: string; why: string }> } {
+  const roots: string[] = [];
+  const unreadable: Array<{ root: string; why: string }> = [];
+  for (const root of instanceRootsIn(checkout)) {
+    try {
+      if ((readDeclaration(root)?.remoteMounts ?? []).length > 0) roots.push(root);
+    } catch (e) {
+      unreadable.push({ root, why: (e as Error).message.split("\n")[0]! });
+    }
+  }
+  return { roots, unreadable };
+}
+
+/**
+ * Mount (or, with `check`, verify) every declaring instance in `checkout` —
+ * what `state:mount` and the session-start hook call. An instance whose
+ * declaration cannot be read is could-not-determine for the whole fan-out:
+ * it may be the one that declares mounts.
+ */
+export function remoteFanOut(checkout: string, opts: { check?: boolean; urlFor?: UrlFor } = {}): { state: CheckResult["state"]; text: string } {
+  const { roots, unreadable } = declaringInstances(checkout);
+  const parts: string[] = [];
+  const states: CheckResult["state"][] = [];
+  for (const u of unreadable) {
+    states.push("could-not-determine");
+    parts.push(`## Remote mounts\n\n🛑 **could-not-determine** — ${u.root}'s declaration is unreadable (${u.why}); it may declare mounts.`);
+  }
+  for (const root of roots) {
+    if (opts.check) {
+      const r = checkRemote({ instanceRoot: root });
+      states.push(r.state);
+      parts.push(reportOutcomes(`Remote mounts — ${root}`, r.state, r.reason, r.outcomes));
+    } else {
+      const r = mountRemote({ instanceRoot: root, urlFor: opts.urlFor });
+      const sum = summarise(r.plan.outcomes);
+      states.push(sum.state);
+      parts.push(reportOutcomes(`Remote mounts — ${root}`, sum.state, sum.reason, r.plan.outcomes));
+      if (r.excluded.length) parts.push(`Added to this worktree's info/exclude (not committed): ${r.excluded.map((p) => `\`${p}/\``).join(", ")}.`);
+    }
+  }
+  if (states.length === 0) return { state: "not-enabled", text: "## Remote mounts\n\nNot enabled — no instance in this checkout declares `remoteMounts`." };
+  const state = states.includes("could-not-determine") ? "could-not-determine" : states.includes("missing") ? "missing" : "mounted";
+  return { state, text: parts.join("\n\n") };
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const at = argv.indexOf("--instance");
-  const instanceRoot = at === -1 ? undefined : resolve(argv[at + 1]!);
+  if (at === -1) {
+    const r = remoteFanOut(checkoutRootFor(process.cwd()), { check: argv.includes("--check") });
+    console.log(r.text);
+    process.exit(exitCode(r.state));
+  }
+  const instanceRoot = resolve(argv[at + 1]!);
   if (argv.includes("--check")) {
     const r = checkRemote({ instanceRoot });
     console.log(argv.includes("--json") ? JSON.stringify(r, null, 2) : reportOutcomes("Remote mounts — check", r.state, r.reason, r.outcomes));

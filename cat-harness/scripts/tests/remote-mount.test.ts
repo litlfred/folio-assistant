@@ -23,7 +23,7 @@ import { declarationChain } from "../../schemas/harness-config.ts";
 import { instanceRootsIn } from "../../schemas/instance-roots.ts";
 import { RemoteSourceSchema, resolveSubgraphSource } from "../../schemas/subgraph-source.ts";
 import { MountLockSchema, mountedInstanceRoots } from "../../schemas/remote-mount.ts";
-import { checkRemote, exitCode, mountRemote, planRemote, summarise } from "../remote-mount.ts";
+import { checkRemote, exitCode, mountRemote, planRemote, remoteFanOut, summarise } from "../remote-mount.ts";
 
 function git(cwd: string, ...args: string[]): string {
   const r = spawnSync("git", args, { cwd, encoding: "utf-8", env: { ...process.env, GIT_AUTHOR_NAME: "t", GIT_AUTHOR_EMAIL: "t@t", GIT_COMMITTER_NAME: "t", GIT_COMMITTER_EMAIL: "t@t" } });
@@ -265,5 +265,12 @@ describe("mount:remote over fixture repositories", () => {
     const r = mountRemote({ instanceRoot: root, urlFor });
     expect(r.excluded.sort()).toEqual(["base", "boot", "core"]);
     expect(git(root, "status", "--porcelain")).not.toContain("core/");
+  });
+
+  test("14. the session-start fan-out mounts every declaring instance, then checks clean", () => {
+    const root = downstream({});
+    expect(remoteFanOut(root, { check: true }).state).toBe("missing");
+    expect(remoteFanOut(root, { urlFor }).state).toBe("mounted");
+    expect(remoteFanOut(root, { check: true }).state).toBe("mounted");
   });
 });
