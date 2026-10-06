@@ -1,0 +1,157 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/methodologies/processes/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/processes",
+      "@type": "bootstrap:Subgraph",
+      "name": "processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG",
+      "@type": "bootstrap:Process",
+      "name": "DIIG — from a health system bottleneck to a costed implementation plan"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_03",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_04",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_05",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_06",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no — revisit the bottlenecks"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_07",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_08",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_09",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_10",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_11",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_12",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no — adapt"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_13",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/flow/SF_DIIG_14",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_BusinessAnalyst",
+      "@type": "cat-harness:Lane",
+      "name": "Business analyst"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "@type": "cat-harness:Lane",
+      "name": "Programme manager"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_DetermineInterventions",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Determine appropriate digital health interventions"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_DevelopBudget",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Develop a budget"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_FormTeam",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Form the team and establish goals"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_LinkEnterpriseArchitecture",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Link to the enterprise architecture"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_MapCurrentState",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Map the current state and confirm bottlenecks"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_MonitorAndUseData",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Monitor, and use data effectively"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_PlanImplementation",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Plan the implementation"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_PrioritizeBottlenecks",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Prioritize, and map to health system challenges"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/A_ValueProposition",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Make the value proposition and set next steps"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/End_Process_DIIG",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Costed implementation plan, and its case"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/GW_ProgressCheck4",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Progress check 4.5: requirements settled?"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/GW_ProgressCheck8",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Progress check 8.5: implementation on track?"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_DIIG/node/Start_Process_DIIG",
+      "@type": "bootstrap:ProcessNode",
+      "name": "A health programme needs digital support"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/processes"
+  ],
+  "name": "methodologies/processes",
+  "path": "methodologies/processes/"
+}
