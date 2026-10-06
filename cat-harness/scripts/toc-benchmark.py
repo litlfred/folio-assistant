@@ -192,12 +192,23 @@ def m_nougat(doc: Doc) -> list[H.Heading]:
     return _mmd_headings(mmd) if os.path.exists(mmd) else []
 
 
+def m_consensus(doc: Doc) -> list[H.Heading]:
+    """Contents page cross-checked against the body, plus heading style and
+    numbering; Grobid joins as a voter when --grobid-tei is given."""
+    others = {}
+    g = m_grobid(doc)
+    if g:
+        others["grobid"] = g
+    return [s.heading for s in H.consensus_headings(doc.lines, others)]
+
+
 METHODS = {
     "regex": m_regex,
     "size": m_size,
     "font": m_font,
     "contents": m_contents,
     "layout": m_layout,
+    "consensus": m_consensus,
     "grobid": m_grobid,
     "nougat": m_nougat,
 }

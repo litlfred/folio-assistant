@@ -74,6 +74,14 @@ export const PdfTocEntrySchema = z
     page: z.number().int().min(1).nullable(),
     source: z.enum(["outline", "inferred"]),
     number: z.string().nullable(),
+    /**
+     * Inferred entries only (issue #2302): how sure the inference is, 0..1,
+     * and which independent evidence agreed — a printed contents page, the
+     * entry found in the body, a heading style, a section number, another
+     * extractor. Null on an outline entry, which is not scored.
+     */
+    confidence: z.number().min(0).max(1).nullable().optional(),
+    evidence: z.array(z.string()).nullable().optional(),
   })
   .strict();
 

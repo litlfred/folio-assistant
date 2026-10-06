@@ -21769,6 +21769,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdftocentryschema.confidence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfTocEntrySchema.confidence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Inferred entries only (issue #2302): how sure the inference is, 0..1, and which independent evidence agreed — a printed contents page, the entry found in the body, a heading style, a section number, another extractor. Null on an outline entry, which is not scored."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema.confidence",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pinned-terminology.pinnedconceptschema.deprecated",
       "@type": "skos:Concept",
       "skos:inScheme": {

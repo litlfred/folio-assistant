@@ -246,10 +246,14 @@ someone time:
   contents page, its page labels moved to physical pages by finding the titles
   in the body), `font` (lines set in a heading style: larger, bold, capitals or
   italic, numbered or not) or `regex` (text patterns — the last resort, used
-  for OCR'd text, which has no fonts). Weight a `regex` TOC lowest. Measured
-  over the 13 corpus PDFs that carry an outline, hidden and used as the answer
-  key: title F1 0.88 for the layout methods against 0.30 for text patterns
-  alone (issue #2302). Before changing `cat-harness/scripts/_pdf_headings.py`,
+  for OCR'd text, which has no fonts). Weight a `regex` TOC lowest. Each
+  inferred entry also carries `confidence` (0..1) and `evidence` — which
+  independent checks agreed: listed on the contents page, found in the body
+  near the page it names, set in a heading style, numbered. Trust the high
+  ones; look at the flagged ones before citing them. Measured over the 13
+  corpus PDFs that carry an outline, hidden and used as the answer key: title
+  F1 0.90 for this consensus against 0.30 for text patterns alone (issue
+  #2302). Before changing `cat-harness/scripts/_pdf_headings.py`,
   run `python3 cat-harness/scripts/toc-benchmark.py` before and after: a rule
   that fixes one document and costs two is visible only there. The numbers,
   the methods compared and what could not be run are in

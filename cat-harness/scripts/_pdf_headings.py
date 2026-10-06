@@ -19,7 +19,12 @@ offers two methods, measured against held-out PDF outlines by
   trailing page number), then map each printed page label to a physical page
   by finding the entry's title in the body (Wu, Mitra & Giles, ICDAR 2013).
 
-Both work on a list of `Line`s, which either backend can produce:
+* `consensus_headings` — both as EVIDENCE rather than alternatives: a
+  contents entry confirmed by the body and by a heading style, a style-found
+  heading confirmed by its numbering; each entry carries a confidence and the
+  evidence that agreed. This is what `pdf-structure.py` uses.
+
+All work on a list of `Line`s, which either backend can produce:
 `lines_pymupdf` (preferred, AGPL — see the licence note in pdf-structure.py)
 or `lines_pdfminer` (MIT). The methods themselves import nothing.
 
@@ -332,7 +337,9 @@ def _furniture_key(l: Line) -> str:
 # ---------------------------------------------------------------- method 1: font
 
 
-def font_headings(lines: list[Line], max_levels: int = 4) -> list[Heading]:
+def font_headings(lines: list[Line], max_levels: int = 4, styles_out: list | None = None) -> list[Heading]:
+    """Headings set in a heading style. If `styles_out` is a list, the style
+    of each returned heading is appended to it, in order."""
     if not lines:
         return []
     n_pages = max(l.page for l in lines)
@@ -465,10 +472,12 @@ def font_headings(lines: list[Line], max_levels: int = 4) -> list[Heading]:
     learned = {s: c.most_common(1)[0][0] for s, c in style_depth.items()}
 
     out: list[Heading] = []
+    out_styles: list[tuple] = []
     for l in merged:
         num, title = split_number(l.text.strip())
         level = _depth(num) or learned.get(l.style) or rank[l.style]
         out.append(Heading(min(level, max_levels + 2), title.strip(), l.page, num))
+        out_styles.append(l.style)
     out = tree_levels(out)
     # Drop a heading that repeats on the same or the next page (a chapter
     # title restated at the top of its first page, say). The same title
@@ -476,12 +485,14 @@ def font_headings(lines: list[Line], max_levels: int = 4) -> list[Heading]:
     # Settings" in chapter after chapter.
     last: dict[str, int] = {}
     uniq = []
-    for h in out:
+    for h, st in zip(out, out_styles):
         k = f"{h.number}|{norm_title(h.title)}"
         if k in last and h.page is not None and h.page - last[k] <= 1:
             continue
         last[k] = h.page if h.page is not None else last.get(k, 0)
         uniq.append(h)
+        if styles_out is not None:
+            styles_out.append(st)
     return uniq
 
 
@@ -633,6 +644,139 @@ def layout_headings(lines: list[Line]) -> tuple[list[Heading], str]:
     if len(toc) >= 5:
         return toc, "contents"
     return font_headings(lines), "font"
+
+
+# ---------------------------------------------------------------- method 4: consensus
+
+# Section names a document leaves unnumbered even when it numbers the rest.
+STOCK_SECTIONS = re.compile(
+    r"^(?:abstract|summary|executive summary|introduction|preface|foreword|acknowledge?ments?|"
+    r"references|bibliography|appendi(?:x|ces)\b.*|annex(?:es)?\b.*|glossary|abbreviations|"
+    r"conclusions?|discussion|limitations|related work|contents|index)$",
+    re.I,
+)
+
+
+class ScoredHeading(NamedTuple):
+    heading: Heading
+    confidence: float          # 0..1
+    sources: tuple[str, ...]   # which evidence agreed
+
+
+def _found_near(title: str, page: int | None, index: dict[str, list[int]], slack: int = 1) -> bool:
+    """Is `title` a line of the body, on or near `page`?"""
+    key = norm_title(title)
+    if not key:
+        return False
+    hits = index.get(key)
+    if hits is None:
+        # Titles wrap: also accept a body line that the title begins with, or
+        # that begins the title, when either is substantial.
+        hits = [p for k, ps in index.items() if len(k) >= 12 and (key.startswith(k) or k.startswith(key))
+                for p in ps]
+    if not hits:
+        return False
+    return page is None or any(abs(p - page) <= slack for p in hits)
+
+
+def _match(a: Heading, pool: list[Heading]) -> Heading | None:
+    ka = norm_title(a.title)
+    for b in pool:
+        if similar(ka, norm_title(b.title)) >= 0.85 and (a.page is None or b.page is None or abs(a.page - b.page) <= 1):
+            return b
+    return None
+
+
+def consensus_headings(lines: list[Line], others: dict[str, list[Heading]] | None = None,
+                       min_confidence: float = 0.5) -> list[ScoredHeading]:
+    """The highest-confidence TOC the evidence supports, each entry scored.
+
+    Independent evidence for an entry:
+      * a printed CONTENTS page lists it;
+      * the BODY carries it as a line on or near the page it points to — the
+        cross-check: a contents entry never found in the body is suspect;
+      * a heading STYLE marks it (`font_headings`);
+      * a section NUMBER is set with it;
+      * another extractor agrees (`others`, e.g. Grobid's TEI headings).
+
+    With a contents page, its entries are the spine and the evidence sets
+    each one's confidence: confirmed in the body and marked by a heading
+    style is near certain, listed only on the contents page is kept but
+    flagged. Nothing is added beneath it. Without one, the
+    style-found headings are the spine; in a document that numbers its
+    sections, an unnumbered heading in a style no numbered heading uses — a
+    box title, a run-in label — is dropped unless it is a stock section name
+    or another extractor confirms it.
+    """
+    others = others or {}
+    styles: list = []
+    font = font_headings(lines, styles_out=styles)
+    contents = contents_headings(lines)
+    by_page: dict[int, list[Line]] = defaultdict(list)
+    for l in lines:
+        by_page[l.page].append(l)
+    toc_pages = set(contents_pages(by_page))
+    index: dict[str, list[int]] = defaultdict(list)
+    for l in lines:
+        if l.page not in toc_pages:
+            index[norm_title(l.text)].append(l.page)
+
+    def agree(h: Heading) -> list[str]:
+        return [name for name, hs in others.items() if _match(h, hs)]
+
+    out: list[ScoredHeading] = []
+    if len(contents) >= 5:
+        for h in contents:
+            src = ["contents"]
+            if _found_near(h.title, h.page, index):
+                src.append("body")
+            if _match(h, font):
+                src.append("style")
+            if h.number:
+                src.append("number")
+            src += agree(h)
+            # The printed contents is the author's own list, so it alone keeps
+            # an entry (0.5); the body and style checks raise confidence. An
+            # entry the body never confirms stays, flagged low: measured on
+            # 9789240093362-eng, dropping the 4 unconfirmed entries removed
+            # real sections whose body wording differs from the contents line.
+            conf = min(1.0, 0.5 + 0.25 * ("body" in src) + 0.15 * ("style" in src)
+                       + 0.05 * ("number" in src) + 0.05 * (len(src) > 4))
+            out.append(ScoredHeading(h, conf, tuple(src)))
+        # No style-found subsections are added beneath a contents page: the
+        # printed contents is a deliberate choice of depth. Measured on
+        # 9789241548960_eng, adding the 35 subsections whose numbers extend a
+        # contents entry cost 0.06 title F1 against the document's outline.
+        out.sort(key=lambda s: (s.heading.page or 0))
+    else:
+        numbered_styles = {st for h, st in zip(font, styles) if h.number}
+        # "Numbers its sections" means MOST of its headings carry a number: a
+        # manual with a few numbered steps among unnumbered entries does not,
+        # and dropping its unnumbered headings lost 96% of the iHRIS handbook.
+        n_num = sum(1 for h in font if h.number)
+        doc_numbered = n_num >= 3 and n_num >= 0.5 * len(font)
+        for h, st in zip(font, styles):
+            src = ["style"]
+            if h.number:
+                src.append("number")
+            if st in numbered_styles:
+                src.append("numbered-style")
+            if STOCK_SECTIONS.match(h.title.strip()):
+                src.append("stock-name")
+            src += agree(h)
+            confirmed = len(src) > 1
+            if doc_numbered and not confirmed:
+                continue                      # an unconfirmed stray style
+            # In a document that does not number its sections the style is the
+            # only evidence there can be, so it alone clears the bar; in one
+            # that does, a heading must also be numbered or otherwise confirmed.
+            base = 0.45 if doc_numbered else 0.6
+            conf = min(1.0, base + 0.2 * ("number" in src) + 0.1 * ("numbered-style" in src)
+                       + 0.1 * ("stock-name" in src) + 0.25 * bool(agree(h)))
+            out.append(ScoredHeading(h, conf, tuple(src)))
+    kept = [s for s in out if s.confidence >= min_confidence]
+    relevelled = tree_levels([s.heading for s in kept]) if len(contents) < 5 else [s.heading for s in kept]
+    return [s._replace(heading=h) for s, h in zip(kept, relevelled)]
 
 
 # ---------------------------------------------------------------- scoring

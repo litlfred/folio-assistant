@@ -8022,6 +8022,13 @@
       "status": "candidate"
     },
     {
+      "id": "pdf-structure.pdftocentryschema.confidence",
+      "prefLabel": "PdfTocEntrySchema.confidence",
+      "definition": "Inferred entries only (issue #2302): how sure the inference is, 0..1, and which independent evidence agreed — a printed contents page, the entry found in the body, a heading style, a section number, another extractor. Null on an outline entry, which is not scored.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema.confidence",
+      "status": "candidate"
+    },
+    {
       "id": "pinned-terminology.pinnedconceptschema.deprecated",
       "prefLabel": "PinnedConceptSchema.deprecated",
       "definition": "The edition itself marks the code deprecated: still valid to read, not to write anew. Absent means the edition says nothing, not \"current\". First user: the SPDX License List (`isDeprecatedLicenseId`), bean `sd5v`.",

@@ -3,7 +3,7 @@ title: "Table-of-contents extraction — methods compared against held-out PDF o
 kind: research
 bean: folio-assistant-cp3v
 summary: >-
-  Which way of inferring a PDF's table of contents works, when the PDF has no outline? Six methods scored on 2026-10-06 against the 13 corpus PDFs that do carry one, with the outline hidden and used as the answer key. Layout (a printed contents page, else heading styles from font metrics) reaches title F1 0.88 against 0.30 for the text-pattern heuristic it replaces. Grobid measured (title F1 0.59, CRF models); Nougat assessed from the literature, its run handed to bean u9lb.
+  Which way of inferring a PDF's table of contents works, when the PDF has no outline? Seven methods scored on 2026-10-06 against the 13 corpus PDFs that do carry one, with the outline hidden and used as the answer key. Layout (a printed contents page, else heading styles from font metrics) reaches title F1 0.88, and the consensus of the methods 0.90, against 0.30 for the text-pattern heuristic it replaces. Grobid measured (title F1 0.59, CRF models); Nougat assessed from the literature, its run handed to bean u9lb.
 ---
 
 # Table-of-contents extraction
@@ -71,6 +71,7 @@ distance is too slow at 2,500 nodes) and is averaged over the other 12.
 | `font` | lines in a heading **style** — size, bold, capitals, italic — with running heads, captions, contents pages, cover pages and sentence-shaped lines removed; levels from section numbering where present, else style rank, repaired into a tree (Bentabet et al. 2019) | `_pdf_headings.py` `font_headings` |
 | `contents` | parse a printed contents page (dotted leaders or a trailing page number), levels from numbering or indentation, then move printed page labels to physical pages by finding the titles in the body (Wu et al. 2013) | `_pdf_headings.py` `contents_headings` |
 | `layout` | `contents` when it yields five or more entries, else `font` | `_pdf_headings.py` `layout_headings` |
+| `consensus` | every method as evidence, each entry scored: a contents entry is confirmed when the body carries it near the page it names, and by a heading style; without a contents page, a style-found heading is confirmed by a section number, a numbered style, a stock section name or another extractor, and in a numbered document an unconfirmed one is dropped | `_pdf_headings.py` `consensus_headings` — **the fallback `pdf-structure.py` uses** |
 
 ## Results
 
@@ -80,7 +81,9 @@ distance is too slow at 2,500 nodes) and is averaged over the other 12.
 | `size` | 0.43 | 0.63 | 0.44 | 0.51 | 0.42 | 0.36 | 0.35 | 0.27 |
 | `font` | 0.69 | 0.94 | 0.77 | 0.82 | 0.76 | 0.75 | 0.74 | 0.64 |
 | `contents` | 0.21 | 0.21 | 0.21 | 0.21 | 0.21 | 0.16 | 0.15 | 0.20 |
-| **`layout`** | **0.83** | **0.95** | **0.88** | **0.90** | **0.87** | **0.81** | **0.80** | **0.76** |
+| `layout` | 0.83 | 0.95 | 0.88 | 0.90 | 0.87 | 0.81 | 0.80 | 0.76 |
+| **`consensus`** | **0.87** | **0.95** | **0.90** | **0.91** | **0.90** | **0.84** | **0.83** | **0.82** |
+| `consensus` + Grobid voter | 0.85 | 0.95 | 0.89 | 0.91 | 0.89 | 0.82 | 0.82 | 0.79 |
 | `grobid` | 0.52 | 0.75 | 0.59 | 0.61 | 0.58 | 0.51 | 0.51 | 0.33 |
 
 `grobid` is Grobid 0.9.2-SNAPSHOT built from source (commit `e7c522b` of
@@ -176,6 +179,60 @@ on papers or on WHO publications. It remains the right tool for what it was
 built for — references, header metadata, citation parsing — which this
 benchmark does not measure. Its deep-learning (DeLFT) models were not tried;
 they need a GPU-scale Python stack and might narrow the precision gap.
+
+### The consensus TOC — cross-checking the methods
+
+The methods are not independent guesses at one list; they are different
+**evidence** for each entry, and the strongest rule is the one the owner put
+as a question: *a contents entry should be findable later as a heading.*
+`consensus_headings` turns that and its converse into confidence:
+
+| evidence | where it comes from |
+|---|---|
+| `contents` | listed on a printed contents page |
+| `body` | the title is a body line on or within a page of where the contents says |
+| `style` | a heading style marks it (`font_headings`) |
+| `number` | a section number is set with it |
+| `numbered-style` / `stock-name` | its style is one numbered headings use / it is "References", "Appendix A" … |
+| `grobid` (optional) | another extractor agrees |
+
+Every inferred entry in `structure.json` now carries `confidence` and
+`evidence`, so a consumer can trust the near-certain entries and look at the
+flagged ones. Per document, title F1:
+
+| document | outline entries | `layout` | `consensus` | + Grobid | TEDS `layout` | TEDS `consensus` |
+|---|---|---|---|---|---|---|
+| `2403.07553v1.pdf` | 16 | 0.94 | 0.94 | 0.94 | 0.89 | 0.89 |
+| `2609.07340v1.pdf` | 17 | 0.97 | 0.97 | 0.97 | 0.94 | 0.94 |
+| `2506.20759v1.pdf` | 17 | 0.71 | 0.71 | 0.71 | 0.71 | 0.71 |
+| `arxiv-2601.04544v1.pdf` | 19 | 0.90 | **0.97** | 0.93 | 0.83 | **0.95** |
+| `arxiv-2404.04834v4.pdf` | 23 | 0.77 | **0.83** | 0.81 | 0.56 | **0.70** |
+| `2603.10808v1.pdf` | 27 | 0.95 | 0.95 | 0.95 | 0.90 | 0.90 |
+| `2505.07664v1.pdf` | 29 | 0.92 | 0.93 | 0.93 | 0.84 | 0.87 |
+| `arxiv-2507.23348v1.pdf` | 33 | 0.79 | **0.99** | 0.90 | 0.65 | **0.97** |
+| `arxiv-2402.02172v5.pdf` | 39 | 0.67 | 0.68 | 0.68 | 0.51 | 0.51 |
+| `9789240093362-eng.pdf` | 54 | 0.81 | 0.81 | 0.81 | 0.36 | 0.36 |
+| `who-dpi-h-reference-architecture-draft-v1.pdf` | 138 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
+| `9789241548960_eng.pdf` | 258 | 0.98 | 0.98 | 0.98 | 0.98 | 0.98 |
+| `ihris_admin_handbook_sep_17_2010.pdf` | 1357 | 0.97 | 0.97 | 0.97 | n/a | n/a |
+
+No document is worse; the gains are the papers whose bold box titles and
+run-in labels `font` kept and the numbering now rejects. Three choices were
+measured rather than assumed, and each reversed a first attempt:
+
+- **The body check sets confidence; it does not filter.** Dropping the 4
+  entries of `9789240093362-eng` that the body never confirmed removed real
+  sections whose body wording differs from the contents line (0.81 → 0.76).
+  They are kept at confidence 0.5–0.55.
+- **Nothing is added beneath a contents page.** Adding the 35 style-found
+  subsections whose numbers extend a contents entry cost
+  `9789241548960_eng` 0.06: a printed contents is a deliberate choice of depth.
+- **"Numbers its sections" means most headings are numbered.** With a
+  threshold of three, the iHRIS manual's few numbered steps made every other
+  heading "unconfirmed" and 96% of it was dropped.
+
+**Grobid as a voter lowers the score** (0.89): agreeing with Grobid confirms
+some of the extra heads it emits. It stays available (`others=`) but off.
 
 ## The PDF-library question
 

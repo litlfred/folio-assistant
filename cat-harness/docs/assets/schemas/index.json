@@ -25142,6 +25142,13 @@
           "array": false
         },
         {
+          "name": "toc_inferred_method",
+          "type": "z.enum([\"contents\", \"font\", \"regex\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Which inference produced an inferred TOC (issue #2302): a printed"
+        },
+        {
           "name": "sections",
           "type": "z.number().int().min(0)",
           "optional": false,
@@ -25507,6 +25514,19 @@
           "type": "z.string().nullable()",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "confidence",
+          "type": "z.number().min(0).max(1).nullable().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Inferred entries only (issue #2302): how sure the inference is, 0..1,"
+        },
+        {
+          "name": "evidence",
+          "type": "z.array(z.string()).nullable().optional()",
+          "optional": true,
+          "array": true
         }
       ],
       "extendsNames": [],

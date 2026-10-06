@@ -394,6 +394,12 @@ class TocEntry:
     page: int | None
     source: str            # "outline" | "inferred"
     number: str | None = None
+    # For an inferred entry only: how sure the inference is (0..1) and which
+    # independent evidence agreed — "contents", "body", "style", "number", ...
+    # (`_pdf_headings.consensus_headings`). None for an outline entry, which is
+    # the document's own answer and is not scored.
+    confidence: float | None = None
+    evidence: list[str] | None = None
 
 
 @dataclass
@@ -629,10 +635,12 @@ def infer_headings(pages: list[str]) -> list[TocEntry]:
 def infer_toc(path: str, pages: list[str], ocr_used: bool) -> tuple[list[TocEntry], str | None]:
     """A table of contents for a document with no outline, and the method.
 
-    Layout first, text patterns last. Measured over the 13 corpus PDFs that
-    carry an outline, with the outline hidden and used as the answer key
-    (`toc-benchmark.py`, issue #2302): title F1 0.88 for the layout methods
-    against 0.30 for `infer_headings` alone. The text heuristic stays for
+    Layout first, text patterns last: the printed contents page cross-checked
+    against the body, else heading styles confirmed by numbering, each entry
+    carrying its confidence and evidence (`consensus_headings`). Measured over
+    the 13 corpus PDFs that carry an outline, with the outline hidden and used
+    as the answer key (`toc-benchmark.py`, issue #2302): title F1 0.90, against
+    0.30 for `infer_headings` alone. The text heuristic stays for
     OCR'd text, which carries no font metrics, and for a document where the
     layout finds nothing.
     """
@@ -642,9 +650,12 @@ def infer_toc(path: str, pages: list[str], ocr_used: bool) -> tuple[list[TocEntr
         except Exception:                       # no layout-capable backend
             lines = []
         if lines:
-            heads, method = _pdf_headings.layout_headings(lines)
-            if heads:
-                return [TocEntry(h.level, h.title, h.page, "inferred", h.number) for h in heads], method
+            scored = _pdf_headings.consensus_headings(lines)
+            if scored:
+                method = "contents" if any("contents" in s.sources for s in scored) else "font"
+                return [TocEntry(s.heading.level, s.heading.title, s.heading.page, "inferred",
+                                 s.heading.number, round(s.confidence, 2), list(s.sources))
+                        for s in scored], method
     found = infer_headings(pages)
     return found, ("regex" if found else None)
 

@@ -4,7 +4,7 @@
 plain page text, which has thrown away what makes a heading visible: it is set
 larger, bolder, in capitals or in italics. `_pdf_headings.py` reads the text
 WITH its font metrics. Over the 13 corpus PDFs that carry an outline, hidden and
-used as the answer key (`toc-benchmark.py`), title F1 went from 0.30 to 0.88.
+used as the answer key (`toc-benchmark.py`), title F1 went from 0.30 to 0.90.
 
 ## What these tests hold
 
@@ -25,8 +25,11 @@ used as the answer key (`toc-benchmark.py`), title F1 went from 0.30 to 0.88.
    the chapter level is the same hierarchy (constant shift), not a zero.
 8. End to end: `pdf-structure.py` on a PDF with no outline records
    `toc_inferred_method: "font"` and the headings. Skipped without PyMuPDF.
-9. The benchmark reads Grobid's TEI-XML: depth from the head's `n`, page from
-   its `coords`, body heads only.
+9. The benchmark reads Grobid's TEI-XML (depth from `n`, page from `coords`)
+   and Nougat's Markdown (depth from `#`).
+10. The consensus TOC: a contents entry the body confirms is near certain, one
+    it never finds is kept but flagged; in a numbered document a stray
+    unnumbered style is dropped.
 
 Synthetic `Line`s carry every case but the last, so nothing here needs a PDF
 library or a corpus file.
@@ -178,6 +181,34 @@ def test_nougat_markdown_heads_read_as_a_tree():
         got = [(h.level, h.title, h.number) for h in tb._mmd_headings(path)]
     assert got == [(1, "A Title", None), (2, "Introduction", "1"), (3, "Scope", "1.1"),
                    (2, "Methods", "2")], got
+
+
+def test_consensus_scores_contents_entries_by_body_evidence():
+    # Same fixture as the contents test, minus the body line for "Results".
+    contents = [ln(2, 60, "Contents", size=14, bold=True)]
+    entries = [("1 Introduction", 1, 72), ("1.1 Scope", 2, 90), ("2 Methods", 3, 72),
+               ("2.1 Data", 3, 90), ("3 Results", 5, 72), ("References", 7, 72)]
+    for i, (t, pg, x) in enumerate(entries):
+        contents.append(ln(2, 100 + 20 * i, f"{t} {'.' * 20} {pg}", x0=x))
+    lines = [ln(1, 100, "A Report", size=20)] + contents
+    for i, (t, pg, _) in enumerate(entries):
+        if t != "3 Results":
+            lines += [ln(pg + 3, 80 + i, t, size=14, bold=True)]
+        lines += body(pg + 3, 120, 3)
+    got = {s.heading.title: s for s in H.consensus_headings(lines)}
+    assert set(got) == {"Introduction", "Scope", "Methods", "Data", "Results", "References"}, got
+    assert "body" in got["Methods"].sources and got["Methods"].confidence >= 0.9, got["Methods"]
+    # Listed on the contents page, never found in the body: kept, flagged low.
+    assert "body" not in got["Results"].sources and got["Results"].confidence < 0.6, got["Results"]
+
+
+def test_consensus_drops_an_unconfirmed_style_in_a_numbered_document():
+    lines = [ln(1, 60, "Abstract")]
+    for p, t in ((1, "1 Introduction"), (2, "2 Method"), (3, "3 Results"), (4, "4 Discussion")):
+        lines += [ln(p, 100, t, size=14, bold=True)] + body(p, 120)
+    lines += [ln(3, 400, "Prompt Template", size=12, italic=True, bold=True)] + body(3, 420, 2)
+    got = [s.heading.title for s in H.consensus_headings(lines)]
+    assert got == ["Introduction", "Method", "Results", "Discussion"], got
 
 
 def test_pdf_structure_records_the_layout_method():
