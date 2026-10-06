@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/HistoryEntry",
+  "definitions": {
+    "HistoryEntry": {
+      "type": "object",
+      "properties": {
+        "at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "task": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "at",
+        "transition",
+        "by",
+        "task"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-ig-publisher/folio-assistant-core/schema/zod/public-comment/HistoryEntrySchema.schema.json",
+  "title": "HistoryEntrySchema",
+  "description": "Generated from `HistoryEntrySchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/awesome-fermi-ua31th-ig-publisher",
+    "sha": "bc0c4d6e3fac7860538c244dcea8603a2868481a",
+    "pr": "2264/merge",
+    "run": "37435952398"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "L3 FHIR Authoring Input",
+  "description": "Input schema for L3 FHIR IG authoring. Creates machine-readable FHIR artifacts from a source model.",
+  "type": "object",
+  "required": [
+    "artifactType",
+    "sourceModel"
+  ],
+  "properties": {
+    "artifactType": {
+      "type": "string",
+      "enum": [
+        "logical-model",
+        "profile",
+        "questionnaire",
+        "cql-library",
+        "structure-map",
+        "plan-definition",
+        "measure",
+        "test-case",
+        "actor-definition",
+        "requirements"
+      ],
+      "description": "Type of FHIR artifact to author."
+    },
+    "sourceModel": {
+      "type": "string",
+      "description": "Path or reference to the source model the FHIR artifacts are derived from: a logical model, a business specification, a data dictionary. The layer above supplies which (a WHO SMART guideline passes its DAK's L2 content)."
+    },
+    "fshOutputDir": {
+      "type": "string",
+      "default": "input/fsh",
+      "description": "Directory for FSH output files."
+    },
+    "igRoot": {
+      "type": "string",
+      "description": "IG repository root directory."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/l3-fhir-authoring/input.schema.json",
+  "staging": {
+    "branch": "claude/awesome-fermi-ua31th-ig-publisher",
+    "sha": "bc0c4d6e3fac7860538c244dcea8603a2868481a",
+    "pr": "2264/merge",
+    "run": "37435952398"
+  }
+}
