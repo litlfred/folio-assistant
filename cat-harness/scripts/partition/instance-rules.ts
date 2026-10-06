@@ -458,6 +458,14 @@ export const RULES: Rule[] = [
       // are instantiated at the root, read from their snapshots. HARNESS so the
       // tile above may import it; `kg-instantiate.ts` (core) imports it too.
       "scripts/subscribed-harnesses.ts",
+      // Its site half (bean `g8jp`): each subgraph a subscription chose,
+      // resolved to the tree held for it. HARNESS for the same reason — the
+      // tile above and `mount-instance-docs.ts` / `compose-docs.ts` (all
+      // harness) import it, and it reads declarations, never folio content.
+      "scripts/subscribed-trees.ts",
+      // The part LAYOUT both halves share, moved out of `kg-subscribe.ts`
+      // (core) so the reader above may import it (bean `g8jp`).
+      "scripts/kg-parts.ts",
       // Beside its sibling, and HARNESS rather than core — the opposite
       // classification to `gen-default-boards.ts`, for the reason that entry
       // records: what settles it is what a module is ABOUT. That one produces
