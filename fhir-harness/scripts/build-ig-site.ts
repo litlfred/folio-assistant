@@ -467,7 +467,7 @@ export function includeSource(igSrc: string): (name: string) => { md: string; pa
  * A line carrying `b` is in an included file, and ✎ goes to THAT file's line
  * (bean `x78e`). The issue title names the section first and the page apart
  * from it, and the page only when it is not the section itself: an IG's
- * landing page is titled after its menu entry, "Summary" on the WHO IGs, which
+ * landing page is titled after its menu entry, e.g. "Summary", which
  * is also its first section's name, and "Feedback: Summary — About this
  * implementation guide" read as one heading paired with another's link.
  */
