@@ -67,6 +67,19 @@ skill:register (two passes to a fixed point) and skill:register:check: green. re
 3. **After cutover the host keeps a READ-ONLY MIRROR in fsh-guts**: not a deletion, and not a second editable copy. The mirror lives on the fsh-guts surface and is refreshed from the separated repository; a hand edit to it is a defect.
 
 ## Todo (from the rulings)
-- [ ] `init-folio --staged <path>`, with a test that it writes the declaration and nothing at the repository level
-- [ ] fresh-clone verification command (`sub-kg:verify-clone` or similar), declared as a Tool, called by the lifecycle's verify task
-- [ ] lifecycle: replace "retire the in-repo copy" with "mirror read-only into fsh-guts"; the owner-confirmation task stays, now before the switch to the mirror
+- [x] `init-folio --staged <path>`, with a test that it writes the declaration and nothing at the repository level (`init-folio-staged.test.ts` snapshots the whole host tree; branch agent/3tza-rulings)
+- [x] fresh-clone verification command `sub-kg:verify-clone` (`cat-harness-tools/scripts/verify-clone.ts`, Tool `sub-kg-verify-clone` satisfying `sub-kg-lifecycle`), named by the lifecycle's verify task; `verify-clone.test.ts` covers green / red / unknown
+- [ ] lifecycle: replace "retire the in-repo copy" with "mirror read-only into fsh-guts". **Held, not built:** fsh-guts does not fit a refreshed mirror (see below). The confirmation task stays and now says it is not taken past until this is answered.
+
+### Ruling 3: what fsh-guts is, and why it does not fit a mirror as stated
+
+`fsh-guts` (skill `fsh-guts`, `cat-harness/skills/kg/kg-core/fsh-guts.md`) is the **kept trashcan**: "delete means relocate". It lives on its own branch `cat/cat-harness/fsh-guts`, mounted at `fsh-guts/` and ignored on main. It is never rendered and is stripped from every published graph. Every node is a one-time relocation carrying `$schema: folio-fsh-guts/v1`, `movedFrom` and `movedOn`, and a non-markdown file gets a same-basename `.md` sidecar. Nothing in it is refreshed from upstream, and nothing makes it read-only beyond convention.
+
+So a FROZEN copy of the in-repo directory at cutover fits fsh-guts exactly. A mirror **refreshed** from the separated repository does not: that would change what fsh-guts is.
+
+Question for the owner. Which do you mean by "read only mirror in fsh-guts"?
+1. **A frozen snapshot** *(recommended)*. At cutover the in-repo directory is relocated to `fsh-guts/separated/<name>/`, with one front-matter node naming the new repository and the commit it matched. It is never refreshed; the live copy is the submodule or subscription from stage 10.
+2. **A refreshed mirror outside fsh-guts.** The host keeps the directory, declared `readOnly: true` with a `readOnlyBasis`, refreshed from the new repository. That is what stage 10's submodule or subscription already gives, so nothing goes to fsh-guts.
+3. **A refreshed mirror inside fsh-guts.** fsh-guts gains a "mirror" kind refreshed from upstream. This is a new design for fsh-guts and needs its own bean.
+
+Default if unanswered: nothing is deleted or relocated. Stage 13 waits at its confirmation.

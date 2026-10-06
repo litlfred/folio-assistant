@@ -46,7 +46,7 @@ be a term this corpus is right to coin.</p>
 1 · Declare it in place, with its seam <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>&lt;name&gt;/&lt;name&gt;.json</code> with name, version, <code>repository</code> (the planned home), <code>livesAt</code> (where it sits today), <code>needs</code>, and only the directories that exist, each declared with its files in one commit (bean dh4f). <code>&lt;name&gt;/platform.ts</code> from the first commit, so no climb out of the directory ever needs rerouting. Not <code>init-folio</code>: it writes a whole repository's scaffolding.</p>
+<p><code>&lt;name&gt;/&lt;name&gt;.json</code> with name, version, <code>repository</code> (the planned home), <code>livesAt</code> (where it sits today), <code>needs</code>, and only the directories that exist, each declared with its files in one commit (bean dh4f). <code>&lt;name&gt;/platform.ts</code> from the first commit, so no climb out of the directory ever needs rerouting. Scaffolded by <code>init-folio --staged &lt;path&gt;</code>, which writes those two files and nothing at the host root; never <code>--instance</code>, which writes a whole repository.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/sub-kg-lifecycle.bpmn"><code>cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Declare</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_documentauthoring.task_plan" data-fa-state="extracted" data-fa-gloss="">
@@ -95,7 +95,7 @@ be a term this corpus is right to coin.</p>
 11 · Verify on a fresh clone <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Clone the new repository into an empty directory with only what it declares it needs, install, and run its gates. The measured falsifier (#2082): the first seeded fork failed with &quot;Cannot find module&quot; because nothing in a seed runs standalone until the seam is re-pointed.</p>
+<p><code>bun run sub-kg:verify-clone --repo &lt;owner&gt;/&lt;name&gt; --ref &lt;branch&gt;</code> (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. The measured falsifier (#2082): the first seeded fork failed with &quot;Cannot find module&quot; because nothing in a seed runs standalone until the seam is re-pointed.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/sub-kg-lifecycle.bpmn"><code>cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_FreshClone</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_release" data-fa-state="extracted" data-fa-gloss="">
@@ -109,7 +109,7 @@ be a term this corpus is right to coin.</p>
 12 · Owner confirms: delete the in-repo copy <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The agent reports the files that would go, their size and that the deletion is one revertable commit, then asks: (1) delete now, (2) keep until the first release, (3) show the file list first. Default if there is no answer: (2), nothing is deleted. A green fresh clone is the precondition for asking, not the answer. Non-relaxable.</p>
+<p>The agent reports the files that would go, their size and that the deletion is one revertable commit, then asks: (1) delete now, (2) keep until the first release, (3) show the file list first. Default if there is no answer: (2), nothing is deleted. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. The owner ruled on 2026-10-06 that the host keeps a read-only copy in fsh-guts instead of deleting it. How that copy maps onto fsh-guts is an open question in bean 3tza; until it is answered, this task is not taken past.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/sub-kg-lifecycle.bpmn"><code>cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_ConfirmCutover</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_cutover" data-fa-state="extracted" data-fa-gloss="">

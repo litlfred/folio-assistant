@@ -1834,6 +1834,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/sub-kg-verify-clone",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Verify a separated repository from a fresh clone"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Clone a separated sub-KG's repository (with submodules, and any sibling checkouts it needs) into an empty scratch directory, install, and run its gates: its `gates` script, else its `test` script (a person may pass `--gate` on the command line instead; it is not part of this contract because it is a shell command). Reports `green`, `red` or `unknown`; an empty tree, a failed clone or a repository with no gate is `unknown`, never green. Catches what a rehearsal inside this checkout cannot, because a rehearsal shares this checkout's `node_modules` and environment (#2082). Writes only inside the scratch directory."
+        }
+      ],
+      "skos:notation": "sub-kg-verify-clone",
+      "dcterms:source": "cat-harness/tools/index.ts#sub-kg-verify-clone",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/subgraph-readmes",
       "@type": "skos:Concept",
       "skos:inScheme": {

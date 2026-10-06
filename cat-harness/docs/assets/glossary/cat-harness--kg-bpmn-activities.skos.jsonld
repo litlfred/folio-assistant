@@ -6951,7 +6951,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The agent reports the files that would go, their size and that the deletion is one revertable commit, then asks: (1) delete now, (2) keep until the first release, (3) show the file list first. Default if there is no answer: (2), nothing is deleted. A green fresh clone is the precondition for asking, not the answer. Non-relaxable."
+          "@value": "The agent reports the files that would go, their size and that the deletion is one revertable commit, then asks: (1) delete now, (2) keep until the first release, (3) show the file list first. Default if there is no answer: (2), nothing is deleted. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. The owner ruled on 2026-10-06 that the host keeps a read-only copy in fsh-guts instead of deleting it. How that copy maps onto fsh-guts is an open question in bean 3tza; until it is answered, this task is not taken past."
         }
       ],
       "skos:notation": "Task_ConfirmCutover",
@@ -7031,7 +7031,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`<name>/<name>.json` with name, version, `repository` (the planned home), `livesAt` (where it sits today), `needs`, and only the directories that exist, each declared with its files in one commit (bean dh4f). `<name>/platform.ts` from the first commit, so no climb out of the directory ever needs rerouting. Not `init-folio`: it writes a whole repository's scaffolding."
+          "@value": "`<name>/<name>.json` with name, version, `repository` (the planned home), `livesAt` (where it sits today), `needs`, and only the directories that exist, each declared with its files in one commit (bean dh4f). `<name>/platform.ts` from the first commit, so no climb out of the directory ever needs rerouting. Scaffolded by `init-folio --staged <path>`, which writes those two files and nothing at the host root; never `--instance`, which writes a whole repository."
         }
       ],
       "skos:notation": "Task_Declare",
@@ -7071,7 +7071,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Clone the new repository into an empty directory with only what it declares it needs, install, and run its gates. The measured falsifier (#2082): the first seeded fork failed with \"Cannot find module\" because nothing in a seed runs standalone until the seam is re-pointed."
+          "@value": "`bun run sub-kg:verify-clone --repo <owner>/<name> --ref <branch>` (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. The measured falsifier (#2082): the first seeded fork failed with \"Cannot find module\" because nothing in a seed runs standalone until the seam is re-pointed."
         }
       ],
       "skos:notation": "Task_FreshClone",

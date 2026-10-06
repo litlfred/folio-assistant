@@ -111,7 +111,7 @@ Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-
       <bpmn:outgoing>F1</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_Declare" name="1 · Declare it in place,&#10;with its seam">
-      <bpmn:documentation>`&lt;name&gt;/&lt;name&gt;.json` with name, version, `repository` (the planned home), `livesAt` (where it sits today), `needs`, and only the directories that exist, each declared with its files in one commit (bean dh4f). `&lt;name&gt;/platform.ts` from the first commit, so no climb out of the directory ever needs rerouting. Not `init-folio`: it writes a whole repository's scaffolding.</bpmn:documentation>
+      <bpmn:documentation>`&lt;name&gt;/&lt;name&gt;.json` with name, version, `repository` (the planned home), `livesAt` (where it sits today), `needs`, and only the directories that exist, each declared with its files in one commit (bean dh4f). `&lt;name&gt;/platform.ts` from the first commit, so no climb out of the directory ever needs rerouting. Scaffolded by `init-folio --staged &lt;path&gt;`, which writes those two files and nothing at the host root; never `--instance`, which writes a whole repository.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="sub-kg-lifecycle"/>
         <cat-harness.processes:bean op="note"/>
@@ -267,7 +267,7 @@ Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-
       <bpmn:outgoing>F23</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_FreshClone" name="11 · Verify on a&#10;fresh clone">
-      <bpmn:documentation>Clone the new repository into an empty directory with only what it declares it needs, install, and run its gates. The measured falsifier (#2082): the first seeded fork failed with "Cannot find module" because nothing in a seed runs standalone until the seam is re-pointed.</bpmn:documentation>
+      <bpmn:documentation>`bun run sub-kg:verify-clone --repo &lt;owner&gt;/&lt;name&gt; --ref &lt;branch&gt;` (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. The measured falsifier (#2082): the first seeded fork failed with "Cannot find module" because nothing in a seed runs standalone until the seam is re-pointed.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="sub-kg-lifecycle"/>
         <cat-harness.processes:bean op="note"/>
@@ -287,7 +287,7 @@ Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-
       <bpmn:incoming>F26</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:userTask id="Task_ConfirmCutover" name="12 · Owner confirms:&#10;delete the in-repo copy">
-      <bpmn:documentation>The agent reports the files that would go, their size and that the deletion is one revertable commit, then asks: (1) delete now, (2) keep until the first release, (3) show the file list first. Default if there is no answer: (2), nothing is deleted. A green fresh clone is the precondition for asking, not the answer. Non-relaxable.</bpmn:documentation>
+      <bpmn:documentation>The agent reports the files that would go, their size and that the deletion is one revertable commit, then asks: (1) delete now, (2) keep until the first release, (3) show the file list first. Default if there is no answer: (2), nothing is deleted. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. The owner ruled on 2026-10-06 that the host keeps a read-only copy in fsh-guts instead of deleting it. How that copy maps onto fsh-guts is an open question in bean 3tza; until it is answered, this task is not taken past.</bpmn:documentation>
       <bpmn:extensionElements>
         <cat-harness.processes:policy relaxable="false"/>
         <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
