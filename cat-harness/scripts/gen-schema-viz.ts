@@ -511,7 +511,9 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
 #kinds > summary:hover { color: var(--accent); }
 .nk-wrap { overflow-x: auto; max-height: 40vh; overflow-y: auto; }
 #nk-table { margin: 0; }
-#nk-table td { overflow-wrap: anywhere; }
+/* Identifiers stay whole: a kind id broken mid-token cannot be read or
+   copied (finding 4 of the schemas wireframe). The wrapper scrolls instead. */
+#nk-table td code, #nk-table td .sub { white-space: nowrap; word-break: normal; }
 #nk-table button { border: 0; background: none; padding: 0; color: var(--accent); cursor: pointer; text-decoration: underline; font: inherit; }
 .tag.nk { color: var(--accent); border-color: var(--accent); }
 </style>
