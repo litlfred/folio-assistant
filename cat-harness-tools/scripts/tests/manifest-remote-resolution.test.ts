@@ -11,16 +11,17 @@
  * that `skill_fetch` does not read that directory, and `skill-fetch.ts` moved
  * up into THIS layer with the server (bean `70lx`). Standing alone, cat-harness
  * cannot hold it. The rest of that file's tests — the synthetic package, the
- * other readers, kg-audit — stay with the code they test. Every path here is
- * composed from ORIGIN_DIR, the directory the test was written in, so nothing
- * it reads changed.
+ * other readers, kg-audit — stay with the code they test. The cat-harness
+ * path is composed from ORIGIN_DIR, the directory the test was written in, and
+ * `skill-fetch.ts` is read from this layer's own root; the two files it reads
+ * are the two it read before the move.
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { implementingRootFor } from "../../../cat-harness/schemas/harness-config.js";
 import { codeWithoutComments } from "../../../cat-harness/scripts/repo-files.js";
+import { TOOLS_ROOT } from "../lib/roots.ts";
 
 /** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move, so nothing it reads changed. */
 const ORIGIN_DIR = join(import.meta.dir, "../../../cat-harness/scripts/tests");
@@ -42,10 +43,19 @@ describe("the reason the allowance was closed is still true", () => {
     // "cannot tell an implementation from a comment". Narrowing to quoted
     // strings alone does not fix it either, because a markdown code span in a
     // comment is backticked and backticks quote strings in TypeScript.
-    for (const f of ["src/tools/skill-fetch.ts", "scripts/generate-registry.ts"]) {
-      // Resolved through the implementing instance: `skill-fetch.ts` moved up
-      // with the server (bean `70lx`), and cat-harness names no path above it.
-      const code = codeWithoutComments(readFileSync(join(implementingRootFor(ROOT, f), f), "utf8"));
+    //
+    // Each file read from the layer that HOLDS it: `skill-fetch.ts` moved up
+    // with the server (bean `70lx`) into this layer, and the registry
+    // generator stayed in cat-harness. Until this test moved here it asked
+    // `implementingRootFor` from cat-harness, which finds this layer only in a
+    // checkout that stacks the two; standing alone, this layer is the answer
+    // without asking.
+    const homes: Record<string, string> = {
+      "src/tools/skill-fetch.ts": TOOLS_ROOT,
+      "scripts/generate-registry.ts": ROOT,
+    };
+    for (const [f, home] of Object.entries(homes)) {
+      const code = codeWithoutComments(readFileSync(join(home, f), "utf8"));
       expect(code).not.toContain("remote-packages");
     }
   });
