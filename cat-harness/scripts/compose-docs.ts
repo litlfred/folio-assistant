@@ -114,7 +114,7 @@ import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
 import { isDirectoryReadme } from "../schemas/kg-node.ts";
 import { coneForCheckout, type ConeDecision } from "./staging-cone.ts";
 import { DOCS_SITE_BASE } from "../schemas/jsonld.js";
-import { foreignScopeFor, isHostProjection, scopeHarnessData } from "./lib/foreign-site-scope.ts";
+import { foreignScopeFor, isHostProjection, scopeHarnessData, scopeSiteConfig } from "./lib/foreign-site-scope.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -803,16 +803,29 @@ export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): Co
   // after the layers so it scopes the merged result, once.
   let scoped: ComposeReport["scoped"];
   if (opts.shell) {
+    const scope = foreignScopeFor(repo, {
+      ...(opts.foreign?.instance ? { instance: opts.foreign.instance } : {}),
+      platformBase: opts.foreign?.platformBase ?? DOCS_SITE_BASE,
+      ...(opts.foreign?.title ? { title: opts.foreign.title } : {}),
+    });
     const data = join(out, "_data", "harness.json");
     if (existsSync(data)) {
-      const scope = foreignScopeFor(repo, {
-        ...(opts.foreign?.instance ? { instance: opts.foreign.instance } : {}),
-        platformBase: opts.foreign?.platformBase ?? DOCS_SITE_BASE,
-        ...(opts.foreign?.title ? { title: opts.foreign.title } : {}),
-      });
       const next = scopeHarnessData(JSON.parse(readFileSync(data, "utf-8")), scope);
       writeFileSync(data, `${JSON.stringify(next, null, 2)}\n`);
       scoped = { instance: scope.instance, platformBase: scope.platformBase, hostProjections: [...new Set(hostProjections)].sort() };
+    }
+    // The platform's `footer_content` describes the platform (its name, its
+    // licences); on a folio's site it read as the folio's own. Replaced by a
+    // line naming the folio and what built it, with no licence the folio did
+    // not declare. Only in a shell, so the platform's own build keeps its
+    // bytes (the byte-identity property `MERGE_RATHER_THAN_SHADOW` protects).
+    const config = join(out, "_config.yml");
+    if (existsSync(config)) {
+      const before = parseYaml(readFileSync(config, "utf-8")) as Record<string, unknown> | null;
+      if (before && typeof before === "object") {
+        const after = scopeSiteConfig(before, scope);
+        if (after !== before) writeFileSync(config, stringifyYaml(after));
+      }
     }
   }
 
