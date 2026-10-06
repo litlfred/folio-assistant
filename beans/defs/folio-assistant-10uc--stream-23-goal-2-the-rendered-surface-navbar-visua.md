@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-22T18:09:11Z
-updated_at: 2026-10-05T04:57:13Z
+updated_at: 2026-10-06T06:15:06Z
 parent: folio-assistant-rwmf
 ---
 
@@ -187,3 +187,7 @@ Every id below re-read from the store on `main` d1a5d6ea, not carried forward (`
 **Every one of these PRs is red only where `main` is** — placement-PR1 fallout (#1772): fix-up #1773 and the `Process_L2Dak` move. Nothing on this stream can go green before those land.
 
 **Close this bean last**, as the handover said: when `603s`, `6lb8` (via `q2wm`) and `ob3m` close.
+
+## 2026-10-06 — re-checked for closing: not yet
+
+Checked on main f44d88fd9 by session https://claude.ai/code/session_01FrpbCpM7BWxGCPsu618MLr. This bean says to close it last, when `603s`, `6lb8` (via `q2wm`) and `ob3m` close. Today: `603s` completed; `6lb8`, `q2wm` and `ob3m` all in-progress; `supn` todo. Left open.
