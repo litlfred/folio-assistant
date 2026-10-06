@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Document Publishing Output",
+  "type": "object",
+  "required": [
+    "outputPath",
+    "blockCount"
+  ],
+  "properties": {
+    "outputPath": {
+      "type": "string"
+    },
+    "engine": {
+      "type": "string",
+      "description": "The engine actually used, or absent for md/html."
+    },
+    "blockCount": {
+      "type": "integer"
+    },
+    "chapterCount": {
+      "type": "integer"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warn"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-remote-mount-0mpw/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
+  "staging": {
+    "branch": "claude/remote-mount-0mpw",
+    "sha": "9f6e99eaf8e0f257e953589c15a640373dfc20f4",
+    "pr": "2326/merge",
+    "run": "37520957371"
+  }
+}
