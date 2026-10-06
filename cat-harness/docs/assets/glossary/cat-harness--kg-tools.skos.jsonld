@@ -1134,6 +1134,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/node-kind-pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Node kind pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195)."
+        }
+      ],
+      "skos:notation": "node-kind-pages",
+      "dcterms:source": "cat-harness/tools/viewers.ts#node-kind-pages",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/ns-vocabulary",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -7679,6 +7679,20 @@
       "status": "candidate"
     },
     {
+      "id": "node-kind-index.nodekindentry.tag",
+      "prefLabel": "NodeKindEntry.tag",
+      "definition": "`<id>/<version>`: the `$schema` a current node carries.",
+      "source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.tag",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-index.nodekindentry.version",
+      "prefLabel": "NodeKindEntry.version",
+      "definition": "SemVer, for a kind whose nodes are files; absent for a mixin.",
+      "source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.version",
+      "status": "candidate"
+    },
+    {
       "id": "node-kind-index.nodekindindex.collisions",
       "prefLabel": "NodeKindIndex.collisions",
       "definition": "Two different kinds sharing one id — always a finding.",
@@ -7690,6 +7704,41 @@
       "prefLabel": "Unkinded.family",
       "definition": "The `$schema` family; absent when it is the typology's kind-level validator.",
       "source": "cat-harness/schemas/node-kind-index.ts#Unkinded.family",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-nodes.kindnode.file",
+      "prefLabel": "KindNode.file",
+      "definition": "Repo-relative, for a reader who wants the source.",
+      "source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.file",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-nodes.kindnode.harness",
+      "prefLabel": "KindNode.harness",
+      "definition": "The instance that holds it.",
+      "source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.harness",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-nodes.kindnode.kind",
+      "prefLabel": "KindNode.kind",
+      "definition": "The kind the node IS — the kind asked for, or one of its subclasses.",
+      "source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.kind",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-nodes.kindnode.node",
+      "prefLabel": "KindNode.node",
+      "definition": "The parsed node: a JSON object, or a Markdown file's front matter.",
+      "source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.node",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-nodes.kindnode.path",
+      "prefLabel": "KindNode.path",
+      "definition": "Relative to that instance's root, extension dropped: the node's address.",
+      "source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.path",
       "status": "candidate"
     },
     {
