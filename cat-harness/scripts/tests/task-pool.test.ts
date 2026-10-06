@@ -408,6 +408,59 @@ describe("output order is the original order", () => {
     expect(r.settled).toBe(true);
     expect(v.aOut).toBe(v.bOut);
   });
+
+  test("v3nf: SERIAL and PARALLEL give the same verdicts and the same tree", async () => {
+    // A chain (c reads b's output, b reads a's), a stale independent pair, a
+    // broken writer, a red check with no writer, and an undeclared barrier —
+    // with random delays so the pool's completion order differs from pair order.
+    const world = () => {
+      const v: Record<string, number> = { aIn: 1, aOut: 0, bOut: 0, cOut: 0, dIn: 7, dOut: 0, eOut: 0 };
+      const fns: Record<string, () => boolean> = {
+        "a:check": () => v.aOut === v.aIn,
+        a: () => ((v.aOut = v.aIn), true),
+        "b:check": () => v.bOut === v.aOut * 2,
+        b: () => ((v.bOut = v.aOut * 2), true),
+        "c:check": () => v.cOut === v.bOut + 1,
+        c: () => ((v.cOut = v.bOut + 1), true),
+        "d:check": () => v.dOut === v.dIn,
+        d: () => ((v.dOut = v.dIn), true),
+        "e:check": () => v.eOut === 1,
+        e: () => false, // a writer that fails and changes nothing
+        "f:check": () => false,
+        "u:check": () => true,
+      };
+      return { v, fns };
+    };
+    // Reverse chain order, so a pass reads before the write it depends on.
+    const pairs: Pair[] = [
+      { check: "c:check", writer: "c", io: { outputs: [] } },
+      { check: "b:check", writer: "b", io: { outputs: [] } },
+      { check: "u:check", writer: "u" }, // undeclared: a barrier
+      { check: "a:check", writer: "a", io: { outputs: [] } },
+      { check: "d:check", writer: "d", io: { outputs: [] } },
+      { check: "e:check", writer: "e", io: { outputs: [] } },
+      { check: "f:check", writer: undefined, io: { outputs: [] } },
+    ];
+    const run = async (jobs: number) => {
+      const w = world();
+      let seed = 42;
+      const rand = () => ((seed = (seed * 1103515245 + 12345) % 2 ** 31), seed % 7);
+      const runner: Runner = async (s) => (await tick(rand()), w.fns[s]!());
+      const r = await regenToFixpoint(pairs, runner, 8, { jobs });
+      return { results: r.results, settled: r.settled, tree: w.v };
+    };
+    const serial = await run(1);
+    for (const jobs of [2, 3, 8]) expect(await run(jobs)).toEqual(serial);
+    expect(serial.results.map((x) => x.outcome)).toEqual([
+      "regenerated",
+      "regenerated",
+      "current",
+      "regenerated",
+      "regenerated",
+      "writer-failed",
+      "no-writer",
+    ]);
+  });
 });
 
 describe("gates: read-only gates are batched, everything else is a barrier", () => {
