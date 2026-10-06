@@ -229,6 +229,49 @@ export const SubgraphSourceSchema = z.discriminatedUnion("kind", [DirectorySourc
 export type SubgraphSource = z.infer<typeof SubgraphSourceSchema>;
 export type SubgraphSourceKind = SubgraphSource["kind"];
 
+/**
+ * Where a NEW instance's graph of a kind lives — the scaffold default a graph
+ * typology may carry (`newInstanceSource` on the graph-typology registry). Bean `hp54`.
+ *
+ * It has NO `branch`, and that is the point. The objection recorded on
+ * `check-state-on-main.ts` still stands: a KIND has no branch name to give, so
+ * a kind-level default the RESOLVER applied would decide a directory's storage
+ * partly in its declaration and partly in a registry entry somebody else
+ * edits. This is not that. `folio_init` reads it once, composes the branch
+ * with {@link instanceStateBranch}, and writes an ordinary, complete
+ * `source: { kind: "branch", branch, keyedBy }` into the new instance's own
+ * declaration. After that the declaration is the one place that answers, and
+ * {@link resolveSubgraphSource} never consults this field — which is also why
+ * an existing instance's undeclared-source `beans/` (this repository's own)
+ * is not flipped by it.
+ *
+ * Only `tip`: it is for one-live-copy state, the keying beans and todos use.
+ */
+export const NewInstanceSourceSchema = z
+  .object({ kind: z.literal("branch"), keyedBy: KeyedBySchema.extract(["tip"]) })
+  .strict();
+export type NewInstanceSource = z.infer<typeof NewInstanceSourceSchema>;
+
+/**
+ * THE branch-name convention for an instance's own state subgraph:
+ * `cat/<instance>/<directory-id>`.
+ *
+ * The owner's 2026-10-02 ruling named special branches `cat/<harness>/<name>`
+ * (`cat/cat-harness/beans`, `cat/cat-harness/qa-reports`). A folio is an
+ * instance like any harness, so its own work plan is `cat/<instance>/beans` in
+ * ITS repository: keyed by the same instance name that already prefixes its
+ * bean ids (`.beans.yml` → `prefix: <instance>-`) and names its declaration
+ * (`<instance>.json`), so one name answers all three. The directory id, not
+ * the kind, is the last segment — the id is what `branch-store mount --id`
+ * and `state:seed --id` are keyed by.
+ *
+ * Validated, so an instance name that would make an invalid ref is refused
+ * here rather than by `git push` later.
+ */
+export function instanceStateBranch(instance: string, id: string): string {
+  return BranchNameSchema.parse(`cat/${instance}/${id}`);
+}
+
 /** Every kind the union knows — for a reader that must refuse the rest (`branch-store mount`'s exit code). */
 export const SUBGRAPH_SOURCE_KINDS: readonly SubgraphSourceKind[] = ["directory", "branch", "family"];
 

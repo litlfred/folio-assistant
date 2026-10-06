@@ -32,7 +32,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { auditInstance, auditNested, resolveDeclaredPath } from "../check-declared-dirs.ts";
+import { auditInstance, auditNested, auditUndeclaredState, conventionalStateDirectories, resolveDeclaredPath } from "../check-declared-dirs.ts";
 import { mayLeaveMain } from "../qa-results.ts";
 import { readDeclaration } from "../../schemas/cat-harness.ts";
 
@@ -285,5 +285,49 @@ describe("the real corpus", () => {
     // declaration itself and stay failing here, whatever the environment.
     const unmounted = (f: (typeof all)[number]): boolean => f.kind === "unmounted";
     expect(all.filter((f) => !offMain(f) && !unmounted(f))).toEqual([]);
+  });
+});
+
+/**
+ * `undeclared-state` (bean `hp54`): the REVERSE direction, for state only. A
+ * folio carried `beans/` and `todos/` on main, declared nowhere; every check
+ * above compares declarations to disk and could not see it.
+ */
+describe("undeclared-state — a state directory on disk that nothing declares (hp54)", () => {
+  test("the conventional state paths are beans/ and todos/, and nothing that holds content", () => {
+    const ids = conventionalStateDirectories().map((d) => d.id).sort();
+    expect(ids).toContain("beans");
+    expect(ids).toContain("todos");
+    expect(ids).not.toContain("library");
+    expect(ids).not.toContain("skills");
+  });
+
+  test("present and undeclared is a finding — named, with the declaration to add", () => {
+    const root = instance([]);
+    mkdirSync(join(root, "beans"));
+    mkdirSync(join(root, "todos"));
+    const f = auditUndeclaredState(root, root);
+    expect(f.map((x) => `${x.id}:${x.kind}`).sort()).toEqual(["beans:undeclared-state", "todos:undeclared-state"]);
+    expect(f[0]!.detail).toContain("cat/<instance>/");
+    // It reports; it never removes.
+    expect(f[0]!.detail).toContain("Nothing is removed");
+  });
+
+  test("declared — either source — is not a finding", () => {
+    const root = instance([
+      { id: "beans", path: "beans/", graphTypologies: ["beans"] },
+      { id: "todos", path: "todos/", graphTypologies: ["todos"], source: { kind: "branch", branch: "cat/fixture/todos", keyedBy: "tip" } },
+    ]);
+    mkdirSync(join(root, "beans"));
+    mkdirSync(join(root, "todos"));
+    expect(auditUndeclaredState(root, root)).toEqual([]);
+  });
+
+  test("absent is not a finding, and neither is an instance with no declaration at all", () => {
+    expect(auditUndeclaredState(instance([]), REPO)).toEqual([]);
+    const bare = mkdtempSync(join(tmpdir(), "declared-dirs-bare-"));
+    made.push(bare);
+    mkdirSync(join(bare, "beans"));
+    expect(auditUndeclaredState(bare, bare)).toEqual([]);
   });
 });
