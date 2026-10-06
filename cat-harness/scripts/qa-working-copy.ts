@@ -117,7 +117,7 @@ function readStamp(repoRoot: string): Stamp | undefined {
 export function workingCopyState(repoRoot: string, roots?: string[]): WorkingCopyState {
   const stamp = readStamp(repoRoot);
   if (stamp === undefined) return { state: "stale", why: `no stamp at ${STAMP_PATH} — the copy was never built here by this command` };
-  const tree = trackedTreeDigest(repoRoot, new FileDigests(repoRoot));
+  const tree = trackedTreeDigest(repoRoot, new FileDigests(repoRoot), { ignored: false });
   if ("undetermined" in tree) return { state: "undetermined", why: tree.undetermined };
   if (tree.hash !== stamp.tree) return { state: "stale", why: "the tree changed since the copy was built" };
   let qa: string;
@@ -169,7 +169,7 @@ export function ensureWorkingCopy(repoRoot: string, opts: EnsureOptions = {}): E
     });
     if (r.status !== 0) return { ran: true, ok: false, why: st.why, exit: r.status, step: step.join(" ") };
   }
-  const tree = trackedTreeDigest(repoRoot, new FileDigests(repoRoot));
+  const tree = trackedTreeDigest(repoRoot, new FileDigests(repoRoot), { ignored: false });
   const after = qaTreeDigest(repoRoot, opts.roots);
   // Undetermined tree: built, but no stamp — the next ensure builds again.
   if (!("undetermined" in tree)) {

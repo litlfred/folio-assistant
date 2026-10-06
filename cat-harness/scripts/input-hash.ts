@@ -333,7 +333,16 @@ export const TRACKED = "{tracked}";
  * with changes in its own tree cannot be hashed from here, so it makes the
  * digest UNDETERMINED rather than silently omitted.
  */
-export function trackedTreeDigest(root: string, digests: FileDigests): { hash: string } | { undetermined: string } {
+export function trackedTreeDigest(
+  root: string,
+  digests: FileDigests,
+  /**
+   * `false` leaves IGNORED files out — for a caller whose stamp is about the
+   * SOURCE tree and whose own output is ignored (`qa-working-copy.ts`: the QA
+   * copy is what it builds). A skip fingerprint always includes them.
+   */
+  opts: { ignored?: boolean } = {},
+): { hash: string } | { undetermined: string } {
   const git = (args: string[], stdin?: string): string | undefined => {
     // input-site: tree #e4bd9913 — ls-files listings of the index, the untracked and the ignored files, and hash-object of the files they name
     const r = Bun.spawnSync(["git", ...args], {
@@ -380,6 +389,7 @@ export function trackedTreeDigest(root: string, digests: FileDigests): { hash: s
   }
   const h = createHash("sha256");
   for (const p of [...ids.keys()].sort()) h.update(`${p} ${ids.get(p)}\n`);
+  if (opts.ignored === false) return { hash: h.digest("hex") };
   const ignored = git(["ls-files", "-o", "-i", "--exclude-standard", "--directory", "-z"]);
   if (ignored === undefined) return { undetermined: "could not list the ignored files" };
   for (const entry of split(ignored).sort()) {
