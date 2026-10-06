@@ -340,10 +340,10 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-06T10:49:54.960Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d0b249d22c299add45b3033f4c2eca284188141a",
-  "sourceCommitSha": "d0b249d22c299add45b3033f4c2eca284188141a",
-  "sourceCommitAt": "2026-10-06T12:39:08+02:00",
+  "generatedAt": "2026-10-06T11:34:30.723Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/713b9d3d33708c92baf2fb6e3a5979045110b52c",
+  "sourceCommitSha": "713b9d3d33708c92baf2fb6e3a5979045110b52c",
+  "sourceCommitAt": "2026-10-06T13:18:46+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -464,7 +464,7 @@
       ],
       "description": "The gettext side of who-iris's own strings, one directory per target locale: the `glossary/who-iris--who-terms` catalogues that translate this instance's WHO terms. Moved here from cat-harness/translations/ on the owner's ruling of 2026-10-04, \"move things to semantically appropriate place\" (bean riit): a scheme's translations sit with the instance whose terms they translate.",
       "readmePath": "translations/README.md",
-      "fileCount": 11,
+      "fileCount": 21,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-translations"
     },
     {
@@ -498,7 +498,7 @@
       ],
       "description": "The IRIS REPLICA: the home page, the community list, and one page per collection and per item, themed as IRIS and generated from `catalogue/` by `scripts/gen-iris-pages.ts` (gated by `bun run iris:pages:check`). It is what `/who-iris/` serves. Moved out of `library/` on 2026-09-30 (bean 2b5s) so that the corpus and its rendering are separate directories: before, the mount copied the corpus along with the pages. A page shows an item's cover by referencing `../library/<slug>-cover.png`; the build publishes exactly the files a page embeds, beside the replica, and not the directory they sit in.",
       "readmePath": "site/README.md",
-      "fileCount": 14,
+      "fileCount": 49,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-site"
     },
     {
@@ -693,8 +693,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "d0b249d22c299add45b3033f4c2eca284188141a",
+    "sha": "713b9d3d33708c92baf2fb6e3a5979045110b52c",
     "pr": "main",
-    "run": "37451193330"
+    "run": "37455564782"
   }
 }

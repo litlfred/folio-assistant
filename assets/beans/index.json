@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 939,
+      "count": 940,
       "unit": "beans"
     }
   },
@@ -3634,7 +3634,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T05:24:07Z",
-      "updatedAt": "2026-10-05T05:24:22Z",
+      "updatedAt": "2026-10-06T10:47:25Z",
       "preview": "## Why\nOwner goal 2026-10-05: minimise regen time while staying sound (never a false green). Measured (stream B, main, --jobs 1 --no-cache): 117 pairs, 637 s serial. skill:register:check (107 s, barrier) re-runs ~9 checks regen also asks separately; kg:audit:check (80 s) may be a subset of kg:audit:all:check (198 s); several none/barrier pairs (check:published-instance-exports 49 s, subgraph:jsonl",
       "file": "beans/defs/folio-assistant-8qyc--regen-duplicated-work-barriers-skillregistercheck.md"
     },
@@ -3750,7 +3750,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T05:12:20Z",
-      "updatedAt": "2026-10-05T05:12:27Z",
+      "updatedAt": "2026-10-06T10:47:25Z",
       "preview": "Owner, 2026-10-05: \"maximize efficiency, get regen time as minimal as possible\".\n\n## What\n1. `bun run regen --changed <base>`: changed paths = `git diff --name-only <base>...HEAD` plus the working tree. Ask only pairs whose declared inputs/outputs (globs) or script import closure intersect them. Undeclared and `{tracked}` pairs always run. `--explain` names each skip. Default stays the full run.\n2",
       "file": "beans/defs/folio-assistant-94zs--regen-changed-ask-only-the-pairs-a-merge-touched-a.md"
     },
@@ -5839,12 +5839,12 @@
       "title": "SPEED-UP 1: input-hash skip — a check whose declared inputs are unchanged since its last green run is skipped and says so",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T17:42:23Z",
-      "updatedAt": "2026-10-01T17:42:23Z",
+      "updatedAt": "2026-10-06T10:47:48Z",
       "preview": "Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 1 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: parallel checks, CI merge:main (`d33q` part B), CI sharding + BPMN cache + shallow checkout.\n\n## What\nEach verify/write pair that `bun run regen` / `bun run gates` runs records a hash of its declared INPUTS (the files it reads plus its own script)",
       "file": "beans/defs/folio-assistant-f017--speed-up-1-input-hash-skip-a-check-whose-declared.md"
     },
@@ -7953,6 +7953,20 @@
       "updatedAt": "2026-10-05T17:18:13Z",
       "preview": "Owner, 2026-10-04: *\"bean - was an AST schema somewhere. pickup. add schemas for lean-cache (cat/folio-assistant-sci/lean-cache branch?) and gh-pages too\"*\n\n## Found (2026-10-04)\n- **ig-ast**: the schema exists. `fhir-harness/schemas/ig-ast.ts` (Zod) has generated JSON Schemas `ig-ast.schema.json`, `ig-ast-plan.schema.json` and `ig-ast-dependencies.schema.json` (bean l0lq), gated by `ig-ast:schema",
       "file": "beans/defs/folio-assistant-lehh--derived-node-schemas-declare-ig-ast-pick-up-fhir-h.md"
+    },
+    {
+      "id": "folio-assistant-lffo",
+      "title": "who-iris: translate the IRIS portal replica's interface into ar, es, fr, ru, zh (#2228)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-05T18:46:23Z",
+      "updatedAt": "2026-10-06T07:45:49Z",
+      "preview": "Issue #2228. Owner, 2026-10-05: 'help make sure who-iris has all translations'; after measurement the owner chose the who-iris/site/ portal replica (7 pages) in the five non-English UN languages. Interface text only; publication metadata stays as WHO published it. Method and QA standard follow bean t0jg (#2209): translation, tool-isolated back-translation round trip, evidence recorded here.\n\n\n## R",
+      "file": "beans/defs/folio-assistant-lffo--who-iris-translate-the-iris-portal-replicas-interf.md"
     },
     {
       "id": "folio-assistant-lfxa",
@@ -11491,12 +11505,12 @@
       "title": "SPEED-UP 2: parallel checks — regen and gates run independent --check scripts concurrently, writers stay ordered",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T17:42:24Z",
-      "updatedAt": "2026-10-01T17:42:24Z",
+      "updatedAt": "2026-10-06T10:47:48Z",
       "preview": "Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 2 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: input-hash skip, CI merge:main (`d33q` part B), CI sharding + BPMN cache + shallow checkout.\n\n## What\n`bun run regen` asks its ~82 verify/write pairs one at a time, and `bun run gates` runs its fast set serially. Run independent checks in parallel",
       "file": "beans/defs/folio-assistant-v3nf--speed-up-2-parallel-checks-regen-and-gates-run-ind.md"
     },
@@ -12676,7 +12690,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T17:26:24Z",
-      "updatedAt": "2026-10-01T17:26:36Z",
+      "updatedAt": "2026-10-06T10:47:13Z",
       "preview": "## Why\n\nMeasured by the steward: `bun run regen` runs ~83 check/writer pairs serially\nvia `spawnSync`, up to 3 passes, ~25 min locally. `bun run gates` takes >50 min\nlocally. The box has 4 CPUs shared with other sessions.\n\n## What (owner-approved, 2026-10-01)\n\n1. **Input-hash staleness skipping** in regen: hash each pair's declared inputs\n   plus its script source; skip when it matches the hash re",
       "file": "beans/defs/folio-assistant-xpcu--regen-gates-speed-up-input-hash-staleness-skipping.md"
     },
@@ -14890,14 +14904,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 564,
+        "total": 565,
         "closed": 222,
-        "open": 342,
-        "inProgress": 120,
+        "open": 343,
+        "inProgress": 121,
         "todo": 221,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.39361702127659576
+        "share": 0.3929203539823009
       },
       {
         "id": "folio-assistant-vuip",
@@ -14931,8 +14945,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 532,
-    "coveredOpen": 529,
+    "openTotal": 533,
+    "coveredOpen": 530,
     "duplicateIds": 0
   }
 }

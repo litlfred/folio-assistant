@@ -16,7 +16,7 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 162,
+      "count": 161,
       "entries": [
         {
           "file": "cat-harness-tools/scripts/check-avatar-instances.ts",
@@ -60,10 +60,6 @@
         },
         {
           "file": "cat-harness-tools/scripts/kind-register.ts",
-          "names": 2
-        },
-        {
-          "file": "cat-harness-tools/scripts/qa-refresh.ts",
           "names": 2
         },
         {
@@ -392,7 +388,7 @@
         },
         {
           "file": "cat-harness/scripts/gates.ts",
-          "names": 3
+          "names": 2
         },
         {
           "file": "cat-harness/scripts/gen-library-viz.ts",
@@ -890,13 +886,13 @@
       "entries": [
         {
           "instances": 14,
-          "occurrences": 63123,
+          "occurrences": 63108,
           "allowed": 0,
-          "wrongDirection": 4575,
-          "wrongDirectionFiles": 529,
-          "exempt": 14860,
+          "wrongDirection": 4566,
+          "wrongDirectionFiles": 526,
+          "exempt": 14852,
           "namesRepository": 42424,
-          "undetermined": 1264,
+          "undetermined": 1266,
           "pendingFiles": 43,
           "pendingOccurrences": 328
         }
@@ -904,7 +900,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 940,
+      "count": 935,
       "entries": [
         {
           "file": "cat-harness-tools/cat-harness-tools.json",
@@ -1047,10 +1043,6 @@
           "target": "who-iris"
         },
         {
-          "file": "cat-harness-tools/scripts/check-secret-leaks.ts",
-          "target": "who-iris"
-        },
-        {
           "file": "cat-harness-tools/scripts/check-soft-hyphens.ts",
           "target": "smart-base"
         },
@@ -1115,20 +1107,8 @@
           "target": "who-iris"
         },
         {
-          "file": "cat-harness-tools/scripts/merge-train.ts",
-          "target": "smart-base"
-        },
-        {
           "file": "cat-harness-tools/scripts/milestone-status.ts",
           "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness-tools/scripts/qa-refresh.ts",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness-tools/scripts/qa-refresh.ts",
-          "target": "who-iris"
         },
         {
           "file": "cat-harness-tools/scripts/seed-ready.ts",
@@ -3192,10 +3172,6 @@
         },
         {
           "file": "cat-harness/scripts/gates.ts",
-          "target": "fhir-harness"
-        },
-        {
-          "file": "cat-harness/scripts/gates.ts",
           "target": "folio-assistant-core"
         },
         {
@@ -4669,5 +4645,5 @@
       ]
     }
   },
-  "total": 1154
+  "total": 1148
 }

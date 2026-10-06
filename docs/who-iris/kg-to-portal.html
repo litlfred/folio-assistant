@@ -41,6 +41,10 @@
   .ingested strong { letter-spacing: 0.02em; }
   .ingested .wrap { padding: 0; }
   .ingested a { color: #fff; text-decoration: underline; }
+  /* The language row and, on a translated page, where its translation stops. */
+  .ingested .langs { margin: 0.45rem 0 0; display: flex; flex-wrap: wrap; gap: 0.25rem 0.9rem; font-size: 0.9rem; }
+  .ingested .langs [aria-current] { font-weight: 700; }
+  .ingested .langnote { margin: 0.45rem 0 0; font-size: 0.88rem; }
 
   /* ── Masthead. NO WHO logo, by instruction — a wordmark in type. ────── */
   header.mast { background: #fff; border-bottom: 1px solid var(--iris-edge); }
@@ -59,8 +63,8 @@
   /* The CDN link is secondary to the one that is known to work. */
   .cdn { font-size: 0.88em; color: var(--iris-ingested); }
   .nologo {
-    margin-left: auto; font-size: 0.78rem; color: var(--iris-muted);
-    text-align: right; max-width: 16rem;
+    margin-inline-start: auto; font-size: 0.78rem; color: var(--iris-muted);
+    text-align: end; max-width: 16rem;
   }
 
   /* ── Navbar. Solid accent, white links, as the source page. ─────────── */
@@ -84,8 +88,8 @@
   .row { display: flex; align-items: baseline; gap: 0.7rem; }
   .chev { color: var(--iris-ink); font-size: 1.05rem; line-height: 1; }
   .row .title { font-size: 1.32rem; }
-  .note { color: var(--iris-muted); font-size: 0.95rem; margin: 0.2rem 0 0 1.9rem; }
-  .kids { margin: 0.35rem 0 0.5rem 1.9rem; padding: 0; list-style: none; }
+  .note { color: var(--iris-muted); font-size: 0.95rem; margin: 0.2rem 0 0; margin-inline-start: 1.9rem; }
+  .kids { margin: 0.35rem 0 0.5rem; margin-inline-start: 1.9rem; padding: 0; list-style: none; }
   .kids li { padding: 0.3rem 0; }
 
   /* ── Materialisation state. A WORD, never a colour alone (SC 1.4.1). ── */
@@ -102,13 +106,13 @@
      this page is ABOUT the catalogue rather than a mock of IRIS, and dressing
      it as IRIS would invite a reader to take its counts for IRIS's. */
   .kg { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
-  .kg th, .kg td { text-align: left; padding: .4rem .55rem; border-bottom: 1px solid var(--iris-edge); vertical-align: top; }
+  .kg th, .kg td { text-align: start; padding: .4rem .55rem; border-bottom: 1px solid var(--iris-edge); vertical-align: top; }
   .kg th { font-weight: 600; white-space: nowrap; }
   .dim { opacity: .65; font-size: .85em; }
 
   table.items { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.97rem; }
   table.items th, table.items td {
-    text-align: left; padding: 0.7rem 0.6rem; border-bottom: 1px solid var(--iris-edge);
+    text-align: start; padding: 0.7rem 0.6rem; border-bottom: 1px solid var(--iris-edge);
     vertical-align: top;
   }
   table.items th { font-weight: 700; background: var(--iris-wash); }
@@ -159,12 +163,14 @@
   .searchbar { display: flex; gap: 0; margin: 1.8rem 0 0.5rem; }
   .searchbar input {
     flex: 1; padding: 0.7rem 0.9rem; font-size: 1rem; font-family: inherit;
-    border: 1px solid var(--iris-edge); border-right: none; border-radius: 4px 0 0 4px;
+    border: 1px solid var(--iris-edge); border-inline-end: none;
+    border-radius: 0; border-start-start-radius: 4px; border-end-start-radius: 4px;
     background: #fff; color: var(--iris-ink);
   }
   .searchbar button {
     padding: 0.7rem 1.4rem; font-size: 1rem; font-family: inherit; font-weight: 600;
-    border: 1px solid var(--iris-accent); border-radius: 0 4px 4px 0;
+    border: 1px solid var(--iris-accent);
+    border-radius: 0; border-start-end-radius: 4px; border-end-end-radius: 4px;
     background: var(--iris-accent); color: #fff; cursor: pointer;
   }
   .searchbar button:hover, .searchbar button:focus {
@@ -265,7 +271,7 @@
 
   table.reqs { width: 100%; border-collapse: collapse; margin-top: 0.9rem; font-size: 0.95rem; }
   table.reqs th, table.reqs td {
-    text-align: left; padding: 0.65rem 0.7rem; border-bottom: 1px solid var(--iris-edge);
+    text-align: start; padding: 0.65rem 0.7rem; border-bottom: 1px solid var(--iris-edge);
     vertical-align: top;
   }
   table.reqs thead th { background: var(--iris-wash); font-weight: 700; }
@@ -287,7 +293,7 @@
   figure.arch figcaption { font-size: 0.88rem; color: var(--iris-muted); margin-top: 0.6rem; }
 
   .caveat {
-    border-left: 4px solid var(--iris-current); background: var(--iris-wash);
+    border-inline-start: 4px solid var(--iris-current); background: var(--iris-wash);
     padding: 0.9rem 1.1rem; margin: 1.6rem 0; font-size: 0.95rem;
   }
   .caveat p { margin: 0.4rem 0; }
@@ -321,16 +327,11 @@
     table.reqs tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
     .hero h1 { font-size: 2.6rem; }
     .searchbar { flex-direction: column; }
-    .searchbar input { border-right: 1px solid var(--iris-edge); border-radius: 4px 4px 0 0; }
+    .searchbar input { border-inline-end: 1px solid var(--iris-edge); border-radius: 4px 4px 0 0; }
     .searchbar button { border-radius: 0 0 4px 4px; }
     .sub { flex-direction: column; }
   }
-</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-1r9cimezp8w.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/css/navbar-row.css"><script src="../../assets/js/navbar-row.js" defer></script><script type="application/json" id="fa-translation-meta">{"lang":"en","translationStatus":"","translationSource":"","supportedLocales":["ar","zh","en","fr","ru","es"],"availableLocales":[]}</script></head><body><script type="application/json" id="fa-navbar-row" data-fa-root="../..">{"icons":["close","todos","beans","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"basic-cdn-site","label":"Basic CDN site","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"doc-group","label":"Doc group","within":"docs","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-1r9cimezp8w"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">C@T Harness</a></nav><div class="ingested"><div class="wrap"><strong>INGESTED COPY — not WHO, and not live.</strong>
-  This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a>
-  from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled
-  <em>by reference</em>: 13 nodes of a 273,559-item 361.55 GiB repository, of which <strong>3 items</strong> are held here. The WHO logo is deliberately omitted, and the
-  rendered covers are withheld from display for the same reason — they carry the
-  emblem printed on the publications.
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-4poueg0xhw.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/css/navbar-row.css"><script src="../../assets/js/navbar-row.js" defer></script><script type="application/json" id="fa-translation-meta">{"lang":"en","translationStatus":"","translationSource":"","supportedLocales":["ar","zh","en","fr","ru","es"],"availableLocales":[]}</script></head><body><script type="application/json" id="fa-navbar-row" data-fa-root="../..">{"icons":["close","todos","beans","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"basic-cdn-site","label":"Basic CDN site","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"doc-group","label":"Doc group","within":"docs","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-4poueg0xhw"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">C@T Harness</a></nav><div class="ingested"><div class="wrap"><strong>INGESTED COPY — not WHO, and not live.</strong> This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a> from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled <em>by reference</em>: 13 nodes of a 273,559-item 361.55 GiB repository, of which <strong>3 items</strong> are held here. The WHO logo is deliberately omitted, and the rendered covers are withheld from display for the same reason — they carry the emblem printed on the publications.
 </div></div><header class="mast"><div class="wrap"><div class="wordmark"><span class="org">World Health<br>Organization</span> <span class="bar"></span> <span class="stack"> <span class="iris">iris<span class="dot">.</span></span> <span class="sub">Institutional Repository<br>for Information Sharing</span> </span></div><div class="nologo">Logo omitted, covers withheld — replica, not published under WHO</div></div></header><nav class="main"><div class="wrap"><span>Communities &amp; Collections</span> <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span></div></nav><div class="crumbs"><div class="wrap"><a href="index.html">Documentation</a><span class="sep">•</span><span class="here">KG to portal</span></div></div><main class="wrap"><h1>From this catalogue to somebody else&rsquo;s portal</h1><p class="lede">This instance is a <strong>worked example</strong> of a general pattern: a knowledge
 graph reaching readers the repository never hears about. The pattern is the platform&rsquo;s —
 the skill is <code>kg-to-portal</code> and the process is
@@ -489,11 +490,7 @@ measured.</p><h2>What is deliberately not decided</h2><div class="caveat"><p><st
   this look like last term&rdquo;, and that is the question a reading list asks every year.</p><p><strong>Nothing here was measured against a live CDN.</strong> <code>cdn.jsdelivr.net</code> is egress-blocked from the container that generates these pages,
   so every CDN figure would be quoted rather than measured. The owner confirmed one link by hand
   on 2026-09-20, and that is the whole of the evidence.</p></div><p><a href="ingestion-notes.html">What ingesting these documents cost</a> &mdash; the
-requirements this instance paid for, generated from the skill that records them.</p></main><footer class="mast"><div class="wrap"><p><strong>Ingested replica.</strong> Rendered from
-  <code>who-iris/catalogue/</code> by <code>who-iris/scripts/gen-iris-pages.ts</code>.
-  Layout after <a href="https://iris.who.int/community-list">iris.who.int</a>; every
-  figure on this page is read out of the catalogue, not copied from a screenshot.</p><div class="rule"></div><p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO.
-  This copy asserts no endorsement and carries no WHO mark.</p></div></footer><script data-fa-folio-mount>(function(){
+requirements this instance paid for, generated from the skill that records them.</p></main><footer class="mast"><div class="wrap"><p><strong>Ingested replica.</strong> Rendered from <code>who-iris/catalogue/</code> by <code>who-iris/scripts/gen-iris-pages.ts</code>. Layout after <a href="https://iris.who.int/community-list">iris.who.int</a>; every figure on this page is read out of the catalogue, not copied from a screenshot.</p><div class="rule"></div><p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO. This copy asserts no endorsement and carries no WHO mark.</p></div></footer><script data-fa-folio-mount>(function(){
 var m=location.pathname.match(new RegExp("^(.*?)(?:docs\\/)?who-iris\\/"));
 if(!m||m[1]==null)return;
 var r=m[1];
