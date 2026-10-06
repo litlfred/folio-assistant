@@ -43,11 +43,52 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     belowPx [1] : number
     byKind [0..1] : map<object>
   }
+  class "folio-qa-graph/v1" as cat_harness_docs_folio_qa_graph_v1 <<ts: QaGraphIndex>> #f4f4f1 {
+    $schema [1] : typeof QA_GRAPH_INDEX_SCHEMA
+    files [1] : number
+    families [1] : QaFamily[]
+    unclassified [1] : number
+    unreadable [1] : number
+  }
   class "folio-translation-index/v1" as cat_harness_docs_folio_translation_index_v1 <<ts: TranslationIndex>> #f4f4f1 {
     $schema [1] : string
     sourceLocale [1] : string
     locales [1] : string[]
     pages [1] : Record<string, IndexedPage>
+  }
+  class "Item" as cat_harness_docs_folio_bean_index_v1_Item <<json: BeanIndexSchema>> #f4f4f1 {
+    id [1] : string
+    title [1] : string
+    status [1] : string
+    type [1] : string
+    priority [1] : string
+    parent [1] : '' | string
+    blocking [0..*] : string[]
+    blockedBy [0..*] : string[]
+    createdAt [1] : string
+    updatedAt [1] : string
+    preview [1] : string
+    file [1] : string
+  }
+  class "Edge" as cat_harness_docs_folio_bean_index_v1_Edge <<json: BeanIndexSchema>> #f4f4f1 {
+    blocker [1] : string
+    blocked [1] : string
+    declaredOn [1..*] : list<blocked_by | blocking>
+  }
+  class "Finding" as cat_harness_docs_folio_bean_index_v1_Finding <<json: BeanIndexSchema>> #f4f4f1 {
+    kind [1] : blocked-without-expiry | blocker-closed | blocking-unknown
+    bean [1] : string
+    blocks [1] : string
+    detail [1] : string
+  }
+  class "folio-bean-index/v1" as cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 <<json: BeanIndexSchema>> #f4f4f1 {
+    $schema [1] : 'folio-bean-index/v1'
+    tile [0..1] : map<object>
+    repoWeb [1] : string
+    items [0..*] : Item[]
+    edges [0..*] : Edge[]
+    findings [0..*] : Finding[]
+    plan [0..1] : object
   }
   class "Holding" as cat_harness_docs_node_kind_index_1_0_0_Holding <<json: NodeKindIndexFileKind>> #f4f4f1 {
     typology [1] : string
@@ -324,6 +365,9 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
 
 cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo_index_v1_Relation : relations
 cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_docs_folio_todo_index_v1_Item : items
+cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Item : items
+cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Edge : edges
+cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Finding : findings
 cat_harness_docs_node_kind_index_1_0_0_Kind *-- "0..*" cat_harness_docs_node_kind_index_1_0_0_Holding : holdings
 cat_harness_docs_node_kind_index_1_0_0_node_kind_index_1_0_0 *-- "0..*" cat_harness_docs_node_kind_index_1_0_0_Kind : kinds
 cat_harness_docs_node_kind_index_1_0_0_node_kind_index_1_0_0 *-- "0..*" cat_harness_docs_node_kind_index_1_0_0_Unkinded : unkinded
