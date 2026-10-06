@@ -736,10 +736,10 @@ test.describe("on a folio's site the sweep badge is the folio's or says why — 
   // `compose-docs --shell` no longer ships the platform's
   // `_data/translation-qa.json` into a folio's site, so the sweep there is
   // absent. `head_custom.html` then passes `foreignSite.absent.translationQa`
-  // as `sweep.absent`. "Swept 49/689" on every smart-trust page was the
+  // as `sweep.absent`. "Swept 49/689" on every page of an IG folio's site was the
   // platform's sweep, and "QA: not run" would be a claim about the folio
   // that nobody made.
-  const note = "smart-trust publishes no translation QA sweep on this site";
+  const note = "ig-folio publishes no translation QA sweep on this site";
 
   test("absent: inert, in words, with no ratio and no 'not run'", async ({ page }) => {
     await serve(page, { lang: "en", availableLocales: [], sweep: { absent: note, run: false, totalPages: 0, pagesWithTranslations: 0, complete: false } });

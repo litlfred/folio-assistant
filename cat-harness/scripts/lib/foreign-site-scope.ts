@@ -301,7 +301,7 @@ export function scopeHarnessData(data: Json, scope: ForeignScope): Json {
  */
 export const HOST_DATA_PROJECTIONS: Readonly<Record<string, { what: string; absent: string }>> = {
   // The title badge read it as this site's sweep: "Swept 49/689" on every
-  // smart-trust page was the platform's 49 translated pages out of 689.
+  // page of an IG folio's site was the platform's 49 translated pages out of 689.
   "_data/translation-qa.json": {
     what: "the platform's translation QA sweep (pages swept, pages translated)",
     absent: "the sweep badge says no sweep is published for this site — not 'not run', which would be a claim about the folio",

@@ -1194,14 +1194,14 @@ test.describe("on a folio's site the fish is not this site's trashcan — #2263 
   const borrowed = {
     icons: ["fsh-guts"],
     hrefs: { "fsh-guts": PLATFORM + "/fsh-guts/" },
-    whose: { "fsh-guts": "the platform's: smart-trust declares no fsh-guts graph" },
+    whose: { "fsh-guts": "the platform's: ig-folio declares no fsh-guts graph" },
     notes: {},
     folders: [],
   } as NavbarRow;
   const unlinked = {
     icons: ["fsh-guts"],
     hrefs: {},
-    notes: { "fsh-guts": "smart-trust declares no fsh-guts graph" },
+    notes: { "fsh-guts": "ig-folio declares no fsh-guts graph" },
     folders: [],
   } as NavbarRow;
 
@@ -1212,7 +1212,7 @@ test.describe("on a folio's site the fish is not this site's trashcan — #2263 
     const fish = page.locator('.fa-nav-icons a[aria-label^="fsh-guts"]');
     await expect(fish).toHaveCount(1);
     await expect(fish).toHaveAttribute("href", PLATFORM + "/fsh-guts/");
-    await expect(fish).toHaveAttribute("aria-label", "fsh-guts, discarded items — the platform's: smart-trust declares no fsh-guts graph");
+    await expect(fish).toHaveAttribute("aria-label", "fsh-guts, discarded items — the platform's: ig-folio declares no fsh-guts graph");
     await expect(fish.locator(".fa-nav-count")).toHaveCount(0);
   });
 
@@ -1222,7 +1222,7 @@ test.describe("on a folio's site the fish is not this site's trashcan — #2263 
     await expect(page.locator(".fa-nav-icons [data-fa-fsh-guts-open]")).toHaveCount(0);
     const fish = page.locator('.fa-nav-icons [aria-label^="fsh-guts"]');
     await expect(fish).toHaveClass(/fa-nav-icon--dead/);
-    await expect(fish).toHaveAttribute("aria-label", "fsh-guts, discarded items — smart-trust declares no fsh-guts graph");
+    await expect(fish).toHaveAttribute("aria-label", "fsh-guts, discarded items — ig-folio declares no fsh-guts graph");
     await expect(page.locator(".fa-nav-icons")).not.toContainText("?");
   });
 

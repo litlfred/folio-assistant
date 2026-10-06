@@ -21,7 +21,7 @@
  *
  *   (c) the platform's translation sweep and index are not shipped as the
  *       folio's, and the sweep badge is told what to SAY instead
- *       ("Swept 49/689" on every smart-trust page was the platform's);
+ *       ("Swept 49/689" on every page of an IG folio's site was the platform's);
  *   (d) the fsh-guts icon is not this site's trashcan unless the folio links
  *       its own, so its count is not fetched from a site that has none
  *       (it showed "?").
@@ -306,11 +306,11 @@ describe("the chrome reads foreignSite.absent (head_custom.html, rendered)", () 
         sep: "/",
       } as never,
     });
-    liquid.registerFilter("relative_url", (p: string) => `/smart-trust${p}`);
-    liquid.registerFilter("absolute_url", (p: string) => `https://example.org/smart-trust${p}`);
+    liquid.registerFilter("relative_url", (p: string) => `/ig-folio${p}`);
+    liquid.registerFilter("absolute_url", (p: string) => `https://example.org/ig-folio${p}`);
     liquid.registerFilter("jsonify", (v: unknown) => JSON.stringify(v ?? null));
     const src = readFileSync(join(CAT_HARNESS, siteDirFor(CAT_HARNESS), "_includes", "head_custom.html"), "utf-8");
-    const html = await liquid.parseAndRender(src, { site: { baseurl: "/smart-trust", data }, page: { path: "p.md" } });
+    const html = await liquid.parseAndRender(src, { site: { baseurl: "/ig-folio", data }, page: { path: "p.md" } });
     const meta = /id="fa-translation-meta">([\s\S]*?)<\/script>/.exec(html);
     expect(meta).not.toBeNull();
     return {
@@ -318,10 +318,10 @@ describe("the chrome reads foreignSite.absent (head_custom.html, rendered)", () 
       fishSrc: /<meta name="fa-fsh-guts-src"/.test(html.replace(/<!--[\s\S]*?-->/g, "")),
     };
   }
-  const absent = { translationQa: "smart-trust publishes no translation QA sweep on this site", fshGuts: "smart-trust declares no fsh-guts graph" };
+  const absent = { translationQa: "ig-folio publishes no translation QA sweep on this site", fshGuts: "ig-folio declares no fsh-guts graph" };
 
   test("(c, d) on a folio's site with no sweep of its own: the words, and no fsh-guts fetch", async () => {
-    const r = await render({ harness: { foreignSite: { instance: "smart-trust", absent } } });
+    const r = await render({ harness: { foreignSite: { instance: "ig-folio", absent } } });
     expect(r.sweep.absent).toBe(absent.translationQa);
     expect(r.sweep.run).toBe(false);
     expect(r.fishSrc).toBe(false);
@@ -329,7 +329,7 @@ describe("the chrome reads foreignSite.absent (head_custom.html, rendered)", () 
 
   test("(c) a folio that publishes its OWN sweep shows its own figure, not the note", async () => {
     const r = await render({
-      harness: { foreignSite: { instance: "smart-trust", absent } },
+      harness: { foreignSite: { instance: "ig-folio", absent } },
       "translation-qa": { sweptAt: "t", totalPages: 12, pagesWithTranslations: 3, complete: true },
     });
     expect(r.sweep.absent).toBeNull();
