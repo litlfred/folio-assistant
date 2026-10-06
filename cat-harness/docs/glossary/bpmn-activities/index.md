@@ -120,10 +120,10 @@ be a term this corpus is right to coin.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/sub-kg-lifecycle.bpmn"><code>cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Cutover</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_cutover" data-fa-state="extracted" data-fa-gloss="">
-13 · Cutover: retire the parent's copy to fsh-guts <span class="fa-gloss-status">candidate, extracted</span>
+13 · Cutover: retire the parent's copy <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences. It relocates the parent's copy to fsh-guts/separated/&lt;name&gt;/ (frozen, never refreshed, never rendered) rather than deleting it: owner, 2026-10-06, &quot;cutover dirs should go to fsh-guts&quot;.</p>
+<p>The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences. It retires the parent's copy, frozen, never refreshed and never rendered, rather than deleting it (owner, 2026-10-06). Where the copy goes is the sub-kg-lifecycle skill's stage 13; this diagram does not name that store, because the published graph must not.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/kg-separation.bpmn"><code>cat-harness/processes/kg/kg-separation.bpmn#Task_Cutover</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_subkglifecycle.task_grow" data-fa-state="extracted" data-fa-gloss="">
