@@ -121,6 +121,10 @@ export function siteComments(
 }
 
 const STYLE = `
+.cs-pcs > summary { cursor:pointer; }
+.cs-pc-list { margin:.3rem 0 .6rem; padding-left:1.1rem; }
+.cs-pc { margin:.5rem 0; padding-bottom:.4rem; border-bottom:1px solid #8883; }
+.cs-pc p { margin:.25rem 0; }
   :root { color-scheme: light dark; --fg:#1b1b1b; --bg:#fdfdfb; --muted:#5b5b5b; --line:#d6d6d0; --link:#0b5cad; --chip:#eef2f7;
     --open:#9a5b00; --editing:#0b5cad; --decided:#2e6b2e; --closed:#5b5b5b; }
   ${darkRules(`:root { --fg:#e8e8e6; --bg:#161616; --muted:#a8a8a4; --line:#3a3a38; --link:#7db4ff; --chip:#23272e;
@@ -168,7 +172,7 @@ export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: 
   const sets = (meta.changeSets ?? []).filter((c) => c.status !== "merged");
   const csRows = sets
     .map(
-      (c) => `<tr id="${esc(c.id)}" data-cs-status="${esc(c.status)}"><td>${esc(c.id)}</td><td>${esc(c.title)}<details><summary class="muted">requirements</summary><p>${esc(c.requirements).replace(/\n/g, "<br>")}</p></details></td><td>${esc(c.status)}</td><td class="cs-n">${c.refs.length}</td>` +
+      (c) => `<tr id="${esc(c.id)}" data-cs-status="${esc(c.status)}"><td>${esc(c.id)}</td><td>${esc(c.title)}<details><summary class="muted">requirements</summary><p>${esc(c.requirements).replace(/\n/g, "<br>")}</p></details><details class="cs-pcs" data-refs="${esc(c.refs.join(" "))}"><summary class="muted">its ${c.refs.length} comment${c.refs.length === 1 ? "" : "s"}, in full</summary></details></td><td>${esc(c.status)}</td><td class="cs-n">${c.refs.length}</td>` +
         `<td>${c.issue ? issueLink(c.issue) + (c.issues.length > 1 ? ` <span class="muted">+${c.issues.length - 1} more</span>` : "") : meta.repo ? `<a class="discuss" href="${esc(discussUrl(meta.repo, c))}">Discuss</a>` : "—"}</td>` +
         `<td>${c.pr && meta.repo ? `<a href="https://github.com/${esc(meta.repo)}/pull/${c.pr.number}">#${c.pr.number}</a>` : ""}</td>` +
         `<td><a href="#" class="show-cs" data-refs="${esc(c.refs.join(" "))}">show its comments</a></td></tr>`,
@@ -341,6 +345,43 @@ ${body}
     apply(); save();
     document.getElementById("comments").scrollIntoView();
   });
+  // A CHANGE-SET'S COMMENTS IN FULL, IN PLACE (owner, 2026-10-06: "in addition
+  // to jumping to comment from CS you can expand panel to see original PC
+  // details (who, what..)", and "that can be dynamic JS load of KG"). The
+  // records are LOADED when a panel is first opened, from "comments.json"
+  // beside this page (the comment store as published). Opened from file://,
+  // where fetch fails, it falls back to the comment rows already on the page.
+  let records = null;
+  const loadRecords = () => (records ??= fetch("comments.json")
+    .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+    .then((list) => new Map(list.map((x) => [x.ref, x])))
+    .catch(() => null));
+  const h = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const fromRecord = (x) => "<li class=\\"cs-pc\\"><a href=\\"#" + h(x.ref) + "\\">" + h(x.ref) + "</a> · " + h(x.status) + (x.type ? " · " + h(x.type) : "") +
+    "<div class=\\"muted\\">" + (x.target ? h(x.section + " " + x.sectionTitle) : "<em>unplaced</em>") + (x.citation ? " — " + h(x.citation) : "") + "</div>" +
+    "<p>" + h(x.text) + "</p>" + (x.suggestion ? "<p><b>Suggested revision:</b> " + h(x.suggestion) + "</p>" : "") +
+    "<p class=\\"muted\\">" + h(x.reviewer) + "</p>" +
+    (x.recommendations && x.recommendations.length ? "<p>" + x.recommendations.map((r) => "<span class=\\"chip\\" title=\\"" + h(r.rationale) + "\\">" + h(r.by) + ": " + h(r.code) + "</span>").join("") + "</p>" : "") +
+    "<div class=\\"cs-pc-decision\\">" + (x.decision ? "<b>" + h(x.decision.label) + "</b>" + (x.decision.reason ? " — " + h(x.decision.reason) : "") : "<span class=\\"muted\\">not decided yet</span>") + "</div></li>";
+  const fromRow = (ref) => {
+    const tr = document.getElementById(ref);
+    if (!tr) return "<li>" + h(ref) + " <span class=\\"muted\\">(not on this page)</span></li>";
+    const c = tr.cells;
+    const body = [...(c[5].querySelector("details")?.children || [])].filter((x) => x.tagName !== "SUMMARY").map((x) => x.outerHTML).join("");
+    return "<li class=\\"cs-pc\\"><a href=\\"#" + h(ref) + "\\">" + h(ref) + "</a> · " + c[2].textContent + (c[3].textContent ? " · " + c[3].textContent : "") +
+      "<div class=\\"muted\\">" + c[4].innerHTML + "</div>" + body + "<div class=\\"cs-pc-decision\\">" + c[7].innerHTML + "</div></li>";
+  };
+  document.addEventListener("toggle", async (e) => {
+    const d = e.target;
+    if (!(d instanceof HTMLDetailsElement) || !d.classList.contains("cs-pcs") || !d.open || d.dataset.built) return;
+    d.dataset.built = "1";
+    const ul = document.createElement("ul");
+    ul.className = "cs-pc-list";
+    ul.innerHTML = "<li class=\\"muted\\">Loading…</li>";
+    d.append(ul);
+    const byRef = await loadRecords();
+    ul.innerHTML = d.dataset.refs.split(" ").map((ref) => (byRef && byRef.get(ref) ? fromRecord(byRef.get(ref)) : fromRow(ref))).join("");
+  }, true);
   // GROUPING (issue #2183): tick comments, open the "new change-set" issue
   // form prefilled with them. The repository's workflow records the change-set
   // from the form and adopts that issue as its own.
