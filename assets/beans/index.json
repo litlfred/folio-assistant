@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 947,
+      "count": 950,
       "unit": "beans"
     }
   },
@@ -1564,6 +1564,20 @@
       "updatedAt": "2026-09-24T13:08:48Z",
       "preview": "`bun run audit:coverage` (bean `xutg`) reports coverage per declared graph kind\nfrom `@covers` lines gates carry in their own module docblocks. 118 scripts\ndeclare; **10 gates have not said**, measured 2026-09-24:\n\n- `check:agents-claims`\n- `check:context-emission`\n- `check:image-roles`\n- `check:avatar-instances`\n- `check:asset-roles`\n- `check:retired-front-matter`\n- `check:wireframes`\n- `check:pa",
       "file": "beans/defs/folio-assistant-3srh--ten-gates-have-not-declared-covers-so-every-audit.md"
+    },
+    {
+      "id": "folio-assistant-3tza",
+      "title": "IG / SMART Guideline creation: new repo or in-repo sub-KG, and the sub-KG lifecycle (stage, seed, re-point, cutover) extracted from the smart-* separation",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T07:13:44Z",
+      "updatedAt": "2026-10-06T07:13:52Z",
+      "preview": "Owner, 2026-10-06, verbatim: *\"add new skill/process: when asked to create a new FHIR IG or Smart Guideline, that can either be done in a new repo or within the folio of an existing harnessed repo. the agent should determine users intent and act accordingly. if user creates it in a folio/, then it can move it to another repo later (this is essentially the create a sub-KG process and skills we have",
+      "file": "beans/defs/folio-assistant-3tza--ig-smart-guideline-creation-new-repo-or-in-repo-su.md"
     },
     {
       "id": "folio-assistant-3vc1",
@@ -4744,6 +4758,20 @@
       "file": "beans/defs/folio-assistant-blgm--merge-pipeline-tools-mergetrain-mergeoverlap-merge.md"
     },
     {
+      "id": "folio-assistant-bnjs",
+      "title": "RENDERED IMPACT: a Change Set lists the rendered files it changes — each renderer maps changed inputs to changed outputs through its dependency cone, and review approves against that list",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T07:13:23Z",
+      "updatedAt": "2026-10-06T07:13:23Z",
+      "preview": "Owner, 2026-10-06 (#971): \"for a Change Set (generalize/apply concept from Ref Arch) and Issue -> create PR with change set. see a list of rendered justthedocs files (fhir IG, whatever) that changed due to the described changeset. use that as part of review process of changeset PR approval. updates skills and processes.\" Then: \"each renderer should be able to give you from list of input changed fi",
+      "file": "beans/defs/folio-assistant-bnjs--rendered-impact-a-change-set-lists-the-rendered-fi.md"
+    },
+    {
       "id": "folio-assistant-bnuy",
       "title": "PUBLISHED-PACKAGES: an unanswerable git reads as 'no packages' — [] where every neighbour refuses",
       "status": "completed",
@@ -6406,6 +6434,20 @@
       "updatedAt": "2026-09-24T19:38:13Z",
       "preview": "Found 2026-09-24 while retiring `bootstrap-tools` (bean 319n). `gen-schema-viz.ts` and `gen-uml-overview.ts` write one page per instance but never remove the page of an instance that no longer exists. So a retired instance keeps a published page that nothing links to.\n\n- `bootstrap-tools`: its two orphans (`cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html` and `cat-harness/docs/uml/",
       "file": "beans/defs/folio-assistant-ghgn--orphaned-viewer-pages-the-schema-viewer-and-uml-ge.md"
+    },
+    {
+      "id": "folio-assistant-giiw",
+      "title": "ARABIC (RTL) DISPLAY: the unverified-translation notice is English set right-to-left — reordered and clipped; audit the rest of the chrome under dir=rtl",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T07:58:59Z",
+      "updatedAt": "2026-10-06T07:58:59Z",
+      "preview": "Owner, 2026-10-06, from a screenshot of the staging preview of #2261 (Arabic selected): \"note bean up arabic display issues\".\n\n## Observed (screenshot, AR active in the language selector)\n- The one-line notice reads \"…matically and has — **Unverified translation** ⚠\": the English sentence is laid out right-to-left, so its start ('⚠ Unverified translation —') sits at the RIGHT end, and the one-line",
+      "file": "beans/defs/folio-assistant-giiw--arabic-rtl-display-the-unverified-translation-noti.md"
     },
     {
       "id": "folio-assistant-gkv6",
@@ -15002,14 +15044,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 565,
+        "total": 567,
         "closed": 223,
-        "open": 342,
-        "inProgress": 121,
-        "todo": 220,
+        "open": 344,
+        "inProgress": 122,
+        "todo": 221,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.39469026548672564
+        "share": 0.3932980599647266
       },
       {
         "id": "folio-assistant-vuip",
@@ -15017,14 +15059,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 256,
+        "total": 257,
         "closed": 98,
-        "open": 158,
-        "inProgress": 89,
+        "open": 159,
+        "inProgress": 90,
         "todo": 68,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3828125
+        "share": 0.38132295719844356
       },
       {
         "id": "folio-assistant-yg29",
@@ -15043,8 +15085,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 539,
-    "coveredOpen": 536,
+    "openTotal": 542,
+    "coveredOpen": 539,
     "duplicateIds": 0
   }
 }

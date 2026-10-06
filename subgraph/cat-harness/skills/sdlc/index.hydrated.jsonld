@@ -199,6 +199,7 @@
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-witness",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ref-stewardship",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/related-work-coordination",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-impact",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-verification",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-intent",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review",
@@ -325,13 +326,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 401,
+          "instructionLines": 407,
           "instructionsPath": "skills/sdlc/sdlc-core/before-after-preview.md",
           "name": "before-after-preview",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/86d4787caba578530c2dfc8caeea7e1c1725401a7265a06275a20d7c8c8705f5",
-            "bytes": 20395,
-            "sha256": "86d4787caba578530c2dfc8caeea7e1c1725401a7265a06275a20d7c8c8705f5"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/05f74543442f132221f4d077ee78ec0cbb0d8434cb7c8e12db3bc4bef3fb60d1",
+            "bytes": 20732,
+            "sha256": "05f74543442f132221f4d077ee78ec0cbb0d8434cb7c8e12db3bc4bef3fb60d1"
           },
           "title": "/before-after-preview — show the reviewer the change, not a description of it"
         },
@@ -1056,6 +1057,25 @@
           "title": "Related work: find it, sort it, ask"
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-impact",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The list of rendered files a Change Set alters, and how a reviewer approves against it. Each renderer maps the input files a change touched to the rendered files of its site through its dependency cone, before any build; a build diff then confirms the prediction. Use when opening or reviewing a Change Set PR, when asked \"which pages does this change\", when a prediction and a build disagree, or when adding a renderer.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 115,
+          "instructionsPath": "skills/sdlc/sdlc-core/rendered-impact.md",
+          "name": "rendered-impact",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0bbed8731b4c116aaadf2d119faa671620ef6a703783bf81435841a4d3432e89",
+            "bytes": 6263,
+            "sha256": "0bbed8731b4c116aaadf2d119faa671620ef6a703783bf81435841a4d3432e89"
+          },
+          "title": "Rendered impact — which rendered files a Change Set changes"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-verification",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -1102,13 +1122,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 673,
+          "instructionLines": 682,
           "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
           "name": "staging-review",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7d791e3038c42b4b3771f02d80cc6a5c172f867fb2b48bf2043f29340c44850b",
-            "bytes": 33698,
-            "sha256": "7d791e3038c42b4b3771f02d80cc6a5c172f867fb2b48bf2043f29340c44850b"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/63aa0038ab5fa53883371fdd45acf28e0ebc734a74c9d93fe17fe3c78d992641",
+            "bytes": 34128,
+            "sha256": "63aa0038ab5fa53883371fdd45acf28e0ebc734a74c9d93fe17fe3c78d992641"
           },
           "title": "Staging review — before/after comparison"
         },

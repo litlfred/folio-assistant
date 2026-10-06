@@ -340,14 +340,14 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-06T13:28:17.963Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1b35e021a5687f44153f0b2537d5755581fc9ff8",
-  "sourceCommitSha": "1b35e021a5687f44153f0b2537d5755581fc9ff8",
-  "sourceCommitAt": "2026-10-06T15:11:32+02:00",
+  "generatedAt": "2026-10-06T14:13:44.811Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4c8029c7cad33280aeacac03efc7d51255f34179",
+  "sourceCommitSha": "4c8029c7cad33280aeacac03efc7d51255f34179",
+  "sourceCommitAt": "2026-10-06T15:57:46+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 14,
+    "Skill": 15,
     "Process": 3,
     "SequenceFlow": 51,
     "Lane": 14,
@@ -453,6 +453,19 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-ig-create",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "fhir-ig-create",
+      "title": "fhir-ig-create",
+      "description": "Somebody asked for a new FHIR Implementation Guide. Decide where it lives, in a new repository of its own or as a staged sub-KG inside the harnessed repository the session is already in, by reading three facts and, when they do not settle it, asking ONE numbered question with a default. Then route: a new repository goes to init-folio; an in-repository IG is declared as a staged instance and follows sub-kg-lifecycle, so it can move to its own repository later. FHIR-generic only; a harness built on this one may specialise it. Use whenever a user asks to create, start, set up or stand up an IG, an implementation guide, or a FHIR guide.",
+      "instructionsPath": "skills/fhir-ig-base/fhir-ig-create.md",
+      "instructionLines": 156,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-render-jekyll",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "ig-render-jekyll",
@@ -537,7 +550,7 @@
       "title": "ig-ast-delta",
       "description": "List and view what changed between two IG ASTs, check whether an AST is still valid for the IG's current inputs, and render the delta as just-the-docs pages that carry the provisional mark. Read before trusting a cached AST, before reviewing an incremental IG build, and before rendering anything from a cache.",
       "instructionsPath": "skills/fhir-ig-base/ig-ast-delta.md",
-      "instructionLines": 193,
+      "instructionLines": 206,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2368,7 +2381,7 @@
       ],
       "description": "Two packages. `fhir-client` is SMART on FHIR app launch (`smart-launch`) and FHIR resource operations (`fhir-client-operations`) through the SMARTerFHIR library, authored here against a pinned upstream commit because that repository ships no skill files (issue #556, bean `wlqd`). `fhir-ig-base` is the IG pipeline. `ig-build-pipeline` states what the layer runs and the list of things it refuses to know about, including the deploy phase's assignment. `ig-render-jekyll` states the three render contracts -- JSON only, navigation derived from `sushi-config.yaml`'s own ordered `pages:` and `menu:` maps rather than authored, and the LHS rail with the IG theme captured rather than discarded. `ig-publisher-reduction` is the five-phase transition to an AST-only Publisher, each phase carrying an exit criterion that is a measurement or a diff rather than an impression. `ig-publisher-fork` is the brief for the AST work: built as a library ON TOP of the Publisher (`ast-export/` on `litlfred/fhir-ig-publisher@claude/ast-export`), with the Library/PlanDefinition/Measure edges supplied beside the publisher's own `DependencyAnalyser`, where upstream leaves them empty. Only page-fragment provenance needs `org.hl7.fhir.core`. `ig-ast-delta` is the consumer half: list, check (`compiledValidity` on the AST's inputs), diff and render deltas between ASTs, every page carrying the provisional mark P3 requires.",
       "readmePath": "skills/README.md",
-      "fileCount": 23,
+      "fileCount": 24,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills"
     },
     {
@@ -2402,7 +2415,7 @@
       ],
       "description": "The IG site pipeline's code and the Liquid templates it renders with: `stage-ig-sites.ts` stages each instance's IG as its own just-the-docs site, `build-ig-site.ts` turns an IG's `input/` and `sushi-config.yaml` into that site (navigation, colour scheme, the lifted `site.data.fhir` artefact variables, and the Publisher-generated pages `toc` and `artifacts`), `ig-site-data.ts` lifts the IG's `_data`, and `ig-ast.ts` lists, checks, diffs and renders IG ASTs. Templates sit under `templates/`, beside the writer that reads them (`liquid-templates`). Undeclared until 2026-10-01 while the Tool nodes in `tools/` invoked every one of these files: a `.liquid` file in an undeclared directory is one no checker looks at, which is what declaring it fixes.",
       "readmePath": "scripts/README.md",
-      "fileCount": 55,
+      "fileCount": 57,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-scripts"
     },
     {
@@ -2462,8 +2475,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "1b35e021a5687f44153f0b2537d5755581fc9ff8",
+    "sha": "4c8029c7cad33280aeacac03efc7d51255f34179",
     "pr": "main",
-    "run": "37468868227"
+    "run": "37475000012"
   }
 }

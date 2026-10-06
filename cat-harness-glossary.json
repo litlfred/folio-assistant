@@ -427,10 +427,14 @@
       "title": "Administrator",
       "notation": "administrator",
       "definition": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to — which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
+      "altLabel": [
+        "Administrator (owner)"
+      ],
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Admin",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Admin",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Admin",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Administrator"
       ]
     },
@@ -451,6 +455,15 @@
       "label": "Administrator",
       "scopeNote": "The person's decisions: whether to separate at all, authorising the extraction, creating the repositories, and the cutover that deletes the parent's copy. An agent reports and waits at each; none of them may be relaxed by a package.",
       "source": "cat-harness/processes/kg/kg-separation.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Admin",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle",
+      "label": "Administrator (owner)",
+      "scopeNote": "The person's decisions: whether the sub-KG leaves at all, whether the new repository may be created, and whether the in-repo copy may be deleted. An agent reports and waits at each, asks with numbered options and a default that changes nothing, and none of the three may be relaxed by a package.",
+      "source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Administrator",
@@ -898,6 +911,7 @@
       "usage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Translation/Lane_Platform",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_CRDM_Close/Lane_Agent",
@@ -938,6 +952,15 @@
       "label": "Authoring agent",
       "scopeNote": "Briefs, measures the signals, runs declare-detangle-isolate, reports what would move, seeds the repositories once they exist, and adopts each later release. Verification is always by re-running a gate, never by a change looking right.",
       "source": "cat-harness/processes/kg/kg-separation.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle",
+      "label": "Authoring agent",
+      "scopeNote": "Declares the sub-KG in place and grows it, reports what would move before each irreversible step, drains the open pull requests that keep the source from settling, and copies the staged contents into the new repository with their history.",
+      "source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
@@ -1346,6 +1369,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MountSubgraph/Lane_MountPipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Ci",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Audit",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RenderKgToCdn/Lane_Ci",
@@ -1402,6 +1426,15 @@
       "label": "CI/CD Pipeline",
       "scopeNote": "The gate and the deploy. `code-quality-gates.yml` runs `slice:sqlite:check` on every pull request; `docs-site.yml` and `feature-staging.yml` build each slice into `_site/` from the tree they publish, one line per slice.",
       "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle",
+      "label": "Build pipeline",
+      "scopeNote": "Runs the checks that decide the gateways: the separation guard and the three direction checks, the self-contained rehearsal, the seed-readiness table at seed time, and the gates of the new repository from a fresh clone. A check that could not run stops the process; it is never read as a pass.",
+      "source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Pipeline",
@@ -1853,7 +1886,8 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Platform",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Author"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Author",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Platform"
       ]
     },
     {
@@ -1873,6 +1907,15 @@
       "label": "Platform authoring agent",
       "scopeNote": "Whoever adds or changes a slice: writes its definition in the builder's slice table, measures the built file against the budget, wires it when it fits, and looks at the published search once it has deployed. The judgement in this process is theirs, at the budget gateway.",
       "source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Platform",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/platform-authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle",
+      "label": "Platform authoring agent",
+      "scopeNote": "The platform-side stages: pushing generic code and declarations down into the harness below, routing every climb out of the sub-KG through its one import seam, and re-pointing the declaration, the seam and the host's consumption once the new repository exists.",
+      "source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/session-coordinator",

@@ -340,14 +340,14 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-06T13:28:28.692Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1b35e021a5687f44153f0b2537d5755581fc9ff8",
-  "sourceCommitSha": "1b35e021a5687f44153f0b2537d5755581fc9ff8",
-  "sourceCommitAt": "2026-10-06T15:11:32+02:00",
+  "generatedAt": "2026-10-06T14:13:54.647Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4c8029c7cad33280aeacac03efc7d51255f34179",
+  "sourceCommitSha": "4c8029c7cad33280aeacac03efc7d51255f34179",
+  "sourceCommitAt": "2026-10-06T15:57:46+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 9,
+    "Skill": 10,
     "Process": 2,
     "SequenceFlow": 36,
     "Lane": 7,
@@ -357,6 +357,18 @@
     "Asset": 2
   },
   "@graph": [
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-create",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "smart-guideline-create",
+      "title": "smart-guideline-create",
+      "description": "Somebody asked for a new WHO SMART Guideline (an IG built on smart-base, or a DAK that will feed one). Specialises fhir-ig-create: the same three facts, the same numbered question with the same default (stage it inside this repository first), and the same routes, plus what the owner ruled for SMART guidelines during the 2026-10 separation: every guideline repository instantiates smart-base identically, forks under litlfred come before any WHO repository, the identity comes from the declaration and never from the directory, and the WHO template's theme and chrome come from smart-base by `needs`, never copied. Use whenever a user asks to create, start or set up a SMART Guideline, a SMART IG, a WHO IG or a DAK.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-create.md",
+      "instructionLines": 112,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-postprocessing",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
@@ -1907,8 +1919,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "1b35e021a5687f44153f0b2537d5755581fc9ff8",
+    "sha": "4c8029c7cad33280aeacac03efc7d51255f34179",
     "pr": "main",
-    "run": "37468868227"
+    "run": "37475000012"
   }
 }
