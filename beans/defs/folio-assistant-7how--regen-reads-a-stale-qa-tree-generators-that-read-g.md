@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7how
 title: 'REGEN READS A STALE QA TREE: generators that read gitignored */test/results write wrong pages unless qa:working-copy ran first'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T09:15:31Z
-updated_at: 2026-10-06T11:19:19Z
+updated_at: 2026-10-06T19:11:14Z
 parent: folio-assistant-1xhc
 ---
 
@@ -26,3 +26,17 @@ Measured 2026-10-06 on #2267 (coordinator) and reported independently by session
 
 - [ ] `qa:refresh` restores only paths that a writer in THIS run wrote. Or it refuses to start on a dirty tree, naming the dirty paths. It must never revert a change it did not make.
 - Until then: commit source changes BEFORE `qa:working-copy`.
+
+_2026-10-06T19:05:28Z_ — Claimed by claude/speed-merge-loop — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## 2026-10-06 — in progress on claude/speed-merge-loop (issue #2319)
+
+Dispatched for SPEED of the merge loop. The 6-step PR recipe (state:mount → regen → qa:working-copy → kg:detangle → regen, commit first) exists because of this bean, so fixing it collapses the recipe to one regen.
+
+- [x] qa:working-copy stamps the copy (build/regen-cache/qa-working-copy.json): tracked-tree digest + QA-tree content digest. workingCopyState → current / stale / undetermined; only current skips a build. A failed step removes the stamp.
+- [x] regen: beforePass hook rebuilds the copy before any pass whose tree moved; the QA paths it changed join the narrowed fixpoint's change set (and override a --changed decline in pass 1). A failed build exits 2.
+- [x] gates: rebuilds when NOT CURRENT, not only when absent.
+- [x] tests: cat-harness/scripts/tests/qa-working-copy.test.ts (13), incl. the falsifier that without the hook a regen settles on a page built from the old copy.
+- [ ] measured before/after on a fresh merge of main
+- [ ] qa:refresh restore window (the reverted uncommitted edit) — not addressed yet; still commit before qa:working-copy
+- [ ] prepare-merge / merge skill text updated to the one-command recipe
