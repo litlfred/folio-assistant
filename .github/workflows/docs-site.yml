@@ -621,6 +621,11 @@ jobs:
           mkdir -p "./_site/${STUB}/processes"
           for f in ns ns.jsonld ns.json; do cp ./cat-harness/processes/ns.jsonld "./_site/${STUB}/processes/$f"; done
 
+          # The identifier lookup (bean `1br0`, issue #1972 step 3): its client page
+          # and each instance's generated index, copied into the built tree before
+          # rail-standalone-pages so it receives the rail.
+          bun run cat-harness-tools/scripts/publish-id-lookup.ts --site ./_site
+
           # THE HARNESS RAIL ON EVERY STANDALONE PAGE — bean `oi1y`, and it is
           # here, after the line above, for a reason that cost a wrong claim.
           #
@@ -854,14 +859,6 @@ jobs:
       # finding one means something earlier went wrong quietly.
       - name: Check the navbar tiles resolve against the built site
         run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
-
-      # The identifier lookup (bean `1br0`, issue #1972 step 3): its client page
-      # and each instance's generated index, copied into the built tree — never
-      # into the Jekyll source, which the client says it must not sit under.
-      # BEFORE the split, which names every lookup it finds as a `remote` entry
-      # the search box links to.
-      - name: Publish the identifier lookup
-        run: bun run cat-harness-tools/scripts/publish-id-lookup.ts --site ./_site
 
       # One search index per scope — each instance, each target locale, the
       # platform — cut from the index Jekyll just wrote, plus the manifest a

@@ -108,6 +108,20 @@ describe("what it rails", () => {
     expect(html).toContain("a DRAWN sidebar");
     expect(html).toContain('<nav class="fa-nav"');
   });
+
+  test("the id-lookup page gets the rail with linked style and visualiser nav (bean 7ji4)", () => {
+    const root = site();
+    const idLookupSrc = join(import.meta.dir, "../../../cat-harness-tools/id-lookup/index.html");
+    const html = readFileSync(idLookupSrc, "utf-8");
+    mkdirSync(join(root, "id-lookup"), { recursive: true });
+    writeFileSync(join(root, "id-lookup/index.html"), html);
+    run(root);
+    expect(railed(root, "id-lookup/index.html")).toBe(true);
+    const after = readFileSync(join(root, "id-lookup/index.html"), "utf-8");
+    expect(after).toContain("assets/css/navbar.css");
+    expect(after).toContain("assets/js/navbar.js");
+    expect(after).toContain("assets/js/navbar-row.js");
+  });
 });
 
 describe("what it must NOT touch — each failure renders fine and is therefore invisible", () => {
