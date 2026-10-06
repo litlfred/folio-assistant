@@ -28,7 +28,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { QA_WRITERS, assess, claimants, globToRegExp, trackedQaFiles, type QaWriter } from "../qa-refresh.ts";
+import { QA_WRITERS, assess, claimants, globToRegExp, trackedQaFiles, writerSideEffects, type QaWriter } from "../qa-refresh.ts";
 import { clearQaCache, publishQa, readQaManifest, refreshReportComplete, REFRESH_SCHEMA, type QaStoreOptions } from "../../../cat-harness/scripts/qa-store.ts";
 import { movedRoots, type MovedInventory } from "../../../cat-harness/scripts/qa-verify-moved.ts";
 import { HARNESS_ROOT } from "../lib/roots.ts";
@@ -289,4 +289,18 @@ describe("qa:publish --completeness", () => {
     },
     T,
   );
+});
+
+describe("producing the working copy leaves the committed tree as the commit has it (bean 72a8)", () => {
+  test("a committed file a writer rewrote is restored", () => {
+    expect(writerSideEffects(new Set(), new Set(["cat-harness/docs/assets/beans/index.json"]))).toEqual([
+      "cat-harness/docs/assets/beans/index.json",
+    ]);
+  });
+  test("a file the person had already edited is theirs, and is never touched", () => {
+    expect(writerSideEffects(new Set(["a.ts"]), new Set(["a.ts", "b.json"]))).toEqual(["b.json"]);
+  });
+  test("nothing rewritten, nothing restored", () => {
+    expect(writerSideEffects(new Set(["a.ts"]), new Set(["a.ts"]))).toEqual([]);
+  });
 });
