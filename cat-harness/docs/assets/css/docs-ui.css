@@ -5932,6 +5932,18 @@ a.fa-nav-folders__link:focus-visible {
   .side-bar [data-fa-tip]:focus-visible::after {
     opacity: 1;
   }
+  /* THE MIRROR, ON AN RTL PAGE (bean `giiw`). The strip is docked to the
+     RIGHT edge there (`[dir="rtl"] .side-bar`), so "beyond the strip's
+     edge" is measured from the right. Measured on the Arabic home page at
+     1400px before this rule: hovering Beans in the strip at x 1344-1400 drew
+     "Beans — 535 open" at x 64, across the page from the icon it names.
+     Keyed on the HTML element's `dir`, not the control's: the control is
+     marked `dir="ltr"` as English text, and its tooltip still has to sit
+     beside a strip that is on the right. */
+  html[dir="rtl"] .side-bar [data-fa-tip]::after {
+    left: auto;
+    right: calc(var(--fa-nav-collapsed) + var(--fa-nav-text, 1) * (var(--fa-nav-open) - var(--fa-nav-collapsed)) + 0.5rem);
+  }
 
   /* THE STRIP DOES NOT PEEK WHEN THE POINTER ARRIVES ON THE ICON COLUMN.
    *
