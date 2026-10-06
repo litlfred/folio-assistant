@@ -94,8 +94,14 @@
  *   identical, every file, mode and name, so nothing is removed from `main`
  *   that the branch does not hold.
  *
+ * - the directory's OWN instance declares a `fsh-guts` graph kept at a branch
+ *   tip, and the snapshot DEPOSIT into it succeeds and re-reads verified
+ *   (§"The deposit", below). No trashcan, or a deposit that did not land, is
+ *   a refusal with main untouched.
+ *
  * It is a DRY RUN unless `--commit` is passed: it reports the files and bytes
- * it would remove. With `--commit` it stages `git rm -r <path>` and a
+ * it would remove and the deposit it would make. With `--commit` it first
+ * deposits, then stages `git rm -r <path>` and a
  * `/<path>/**` ignore line (the `/fsh-guts/**` precedent: a mount must never be
  * committed) as ONE commit naming the branch and the tree id. It never pushes —
  * the caller reviews and pushes. `deletion-requires-confirmation`: the dry run
@@ -112,10 +118,15 @@
  * · 1 pushed and still not verified · 4 could not determine · 5 refused.
  */
 import { spawnSync } from "node:child_process";
-import { appendFileSync, existsSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { appendFileSync, existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, relative, resolve } from "node:path";
 
-import { BranchStore, MANIFEST_FILE, MANIFEST_SCHEMA, tipLocations, type TreeEntry } from "../../cat-harness/scripts/branch-store.ts";
+import { resolveDirectories, type ResolvedDirectory } from "../../cat-harness/schemas/cat-harness.ts";
+import { FSH_GUTS_KIND, FSH_GUTS_SCHEMA_ID } from "../../cat-harness/schemas/fsh-guts.ts";
+import { findDeclarationFile, instanceRootsIn } from "../../cat-harness/schemas/instance-roots.ts";
+import { instanceStateBranch } from "../../cat-harness/schemas/subgraph-source.ts";
+import { BranchStore, gitBlobId, MANIFEST_FILE, MANIFEST_SCHEMA, tipLocations, type TreeEntry } from "../../cat-harness/scripts/branch-store.ts";
 import { candidatesOf, defaultRepoRoot, observedRows, type SpecialBranch } from "../../cat-harness/scripts/state-drift.ts";
 
 /** What the manifest says, as far as a refresh needs it. */
@@ -331,6 +342,284 @@ export function refreshSeed(row: SpecialBranch, opts: SeedOptions = {}): SeedRes
   };
 }
 
+// ── The deposit: what a cutover removes goes to fsh-guts FIRST (owner, 2026-10-06) ──
+
+/**
+ * Owner, 2026-10-06: *"cutover dirs should go to fsh-guts"*.
+ *
+ * The cutover's main half removes a directory from `main`. Its content is not
+ * lost — the authoritative branch holds it, byte-identical, which is the
+ * refusal condition above — but the `main` copy as it stood at the moment of
+ * removal stops being reachable from anything but history. `fsh-guts` is the
+ * repository's answer to "removed, but kept": so the removal DEPOSITS a
+ * snapshot there before it is made.
+ *
+ * ## The item is the existing `retired/` pair, not a new format
+ *
+ * `fsh-guts/retired/bootstrap-split.{md,tar.gz}` is the precedent: a packed
+ * archive, so the scanners that read every file in the checkout do not take
+ * the copies for live files (a loose copy of `beans/` would be a second bean
+ * store to every reader that walks a directory), plus a same-basename `.md`
+ * declaring itself `folio-fsh-guts/v1` with `movedFrom` / `movedOn`. This adds
+ * the cutover's provenance as passthrough fields — the schema is
+ * `.passthrough()` precisely so an open `kind` keeps what makes it distinct.
+ *
+ * ## The writer is `branch-store`, as for every other fsh-guts write
+ *
+ * The trashcan is itself a tip-keyed branch, so the deposit is one
+ * {@link BranchStore.write}: spliced onto the tip, pushed without `-f`, and
+ * `expect: null` on both paths, so an existing item of the same name is a
+ * `conflict` rather than an overwrite.
+ */
+export interface Deposit {
+  /** The fsh-guts directory id and the branch it is kept on. */
+  id: string;
+  branch: string;
+  /** Branch-relative paths of the archive and its provenance record. */
+  archive: string;
+  record: string;
+  /** Blob ids, as hashed locally and as re-read from the tip after the push. */
+  archiveBlob: string;
+  recordBlob: string;
+  /** The fsh-guts commit that holds the deposit (absent on a dry run). */
+  commit?: string;
+}
+
+/** The provenance fields a cutover deposit carries beyond the base node. */
+export interface CutoverProvenance {
+  instance: string;
+  directory: string;
+  path: string;
+  sourceCommit: string;
+  tree: string;
+  authoritativeBranch: string;
+  files: number;
+  bytes: number;
+  date: string;
+}
+
+/** Where the cut-over directory's OWN instance keeps its trashcan. */
+type GutsTarget =
+  | { state: "ok"; instance: string; directoryId: string; id: string; path: string; branch: string }
+  | { state: "refused" | "unknown"; reason: string };
+
+/**
+ * The fsh-guts graph of the instance that declares `path` — never another
+ * instance's. A folio linking the platform must not deposit into the
+ * platform's trashcan (a branch its own remote does not carry), and the
+ * submodule's declarations are not this checkout's instances anyway
+ * (`instanceRootsIn` excludes foreign checkouts).
+ */
+export function fshGutsTargetFor(repoRoot: string, path: string): GutsTarget {
+  let roots: string[];
+  try {
+    roots = instanceRootsIn(repoRoot);
+  } catch (e) {
+    return { state: "unknown", reason: `could not list the instances under ${repoRoot}: ${(e as Error).message}` };
+  }
+  for (const inst of roots) {
+    let dirs: ResolvedDirectory[];
+    try {
+      dirs = resolveDirectories([{ name: "(local)", root: inst, own: true }]).filter((d) => d.own);
+    } catch (e) {
+      return { state: "unknown", reason: `could not read the declaration under ${inst}: ${(e as Error).message}` };
+    }
+    const rel = (d: ResolvedDirectory) => relative(repoRoot, d.absPath).split("\\").join("/").replace(/\/+$/, "");
+    const owner = dirs.find((d) => rel(d) === path);
+    if (!owner) continue;
+    const declFile = findDeclarationFile(inst);
+    let instance = "";
+    try {
+      // `findDeclarationFile` answers with the FILENAME, relative to `inst`.
+      instance = String((JSON.parse(readFileSync(resolve(inst, declFile!), "utf-8")) as { name?: unknown }).name ?? "");
+    } catch {
+      // Named below as unknown: provenance without the instance is not provenance.
+    }
+    if (!instance) return { state: "unknown", reason: `could not read the instance name from ${declFile ?? inst}` };
+    const guts = dirs.filter((d) => (d.graphTypologies as readonly string[]).includes(FSH_GUTS_KIND));
+    const fix =
+      `Declare one in ${instance}.json — \`{ "id": "${FSH_GUTS_KIND}", "path": "${FSH_GUTS_KIND}/", "graphTypologies": ["${FSH_GUTS_KIND}"], ` +
+      `"source": { "kind": "branch", "branch": "${instanceStateBranch(instance, FSH_GUTS_KIND)}", "keyedBy": "tip" } }\` — and seed that branch ` +
+      `(the command \`folio_init\` prints for a new instance), then re-run.`;
+    if (guts.length === 0) {
+      return { state: "refused", reason: `${instance} declares no \`${FSH_GUTS_KIND}\` graph, so there is nowhere to deposit ${path}/ before removing it from main. ${fix}` };
+    }
+    if (guts.length > 1) return { state: "refused", reason: `${instance} declares \`${FSH_GUTS_KIND}\` ${guts.length} times, so there is no single trashcan to deposit into` };
+    let tips: ReturnType<typeof tipLocations>;
+    try {
+      tips = tipLocations(repoRoot, "tip");
+    } catch (e) {
+      return { state: "unknown", reason: `could not resolve where ${guts[0]!.id} is kept: ${(e as Error).message}` };
+    }
+    const at = tips.find((t) => t.id === guts[0]!.id && t.path === rel(guts[0]!));
+    if (!at) {
+      return {
+        state: "refused",
+        reason: `${instance}'s \`${FSH_GUTS_KIND}\` graph (${rel(guts[0]!)}/) is not kept at a branch tip, and a deposit goes through branch-store. ${fix}`,
+      };
+    }
+    return { state: "ok", instance, directoryId: owner.id, id: at.id, path: at.path, branch: at.branch };
+  }
+  return { state: "refused", reason: `no instance under ${repoRoot} declares ${path}/, so there is no instance whose trashcan it belongs in` };
+}
+
+/** `<fsh-guts>/retired/cutover-<instance>-<dir>-<tree12>`, without the extension. */
+export function depositStem(gutsPath: string, p: Pick<CutoverProvenance, "instance" | "directory" | "tree">): string {
+  return `${gutsPath}/retired/cutover-${p.instance}-${p.directory}-${p.tree.slice(0, 12)}`;
+}
+
+/** The provenance record: a `folio-fsh-guts/v1` node, the `retired/` precedent's shape. */
+export function depositRecord(p: CutoverProvenance, archiveName: string): string {
+  const q = (s: string) => JSON.stringify(s);
+  return [
+    "---",
+    `$schema: ${FSH_GUTS_SCHEMA_ID}`,
+    `title: ${q(`${p.path}/ of ${p.instance}, as removed from main by its cutover`)}`,
+    "kind: cutover-snapshot",
+    `movedOn: ${p.date}`,
+    `movedFrom: ${q(`${p.path}/`)}`,
+    "reason: cutover",
+    `instance: ${q(p.instance)}`,
+    `directory: ${q(p.directory)}`,
+    `sourceCommit: ${p.sourceCommit}`,
+    `tree: ${p.tree}`,
+    `authoritativeBranch: ${q(p.authoritativeBranch)}`,
+    `archive: ${q(archiveName)}`,
+    `files: ${p.files}`,
+    `bytes: ${p.bytes}`,
+    "summary: >-",
+    `  ${p.path}/ as main tracked it at ${p.sourceCommit.slice(0, 12)} (tree ${p.tree.slice(0, 12)}, ${p.files} file(s),`,
+    `  ${p.bytes} bytes), packed beside this file as ${archiveName} by git archive. It was removed from`,
+    `  main by state:seed --cutover after ${p.authoritativeBranch} was verified authoritative and`,
+    "  byte-identical; that branch is the live store, and this is the copy main last held.",
+    "---",
+    "",
+    `# ${p.path}/ of ${p.instance}, at its cutover`,
+    "",
+    `\`${archiveName}\` beside this file holds \`${p.path}/\` exactly as \`main\` tracked it at`,
+    `\`${p.sourceCommit}\` — list it with \`tar -tzf ${archiveName}\`. Extracted and added to a`,
+    `fresh index it writes tree \`${p.tree}\`, which is how the cutover verified it before`,
+    "removing anything.",
+    "",
+    `The live content is on \`${p.authoritativeBranch}\`, mounted at \`${p.path}/\` by \`state:mount\`.`,
+    "Do not unpack this back onto `main`: edit the branch.",
+    "",
+  ].join("\n");
+}
+
+/**
+ * The tree id a `.tar.gz` extracts to — every file, mode and name — so an
+ * archive is compared to the removed tree by the same identity the cutover's
+ * byte-identical check uses, not by a file count.
+ */
+export function archiveTreeId(archive: Buffer, prefix: string): string | undefined {
+  const dir = mkdtempSync(join(tmpdir(), "cutover-deposit-"));
+  try {
+    const git = (args: string[], input?: Buffer) =>
+      spawnSync("git", ["-c", "core.autocrlf=false", "-c", "core.fileMode=true", "-c", "core.symlinks=true", ...args], {
+        cwd: dir,
+        input,
+        encoding: "utf-8",
+        maxBuffer: 256 * 1024 * 1024,
+      });
+    if (git(["init", "-q"]).status !== 0) return undefined;
+    const tar = spawnSync("tar", ["-xzf", "-"], { cwd: dir, input: archive });
+    if (tar.status !== 0) return undefined;
+    // -f: a `.gitignore` INSIDE the snapshot must not hide a file it carries.
+    if (git(["add", "-A", "-f", "--", prefix]).status !== 0) return undefined;
+    const t = git(["rev-parse", `${git(["write-tree"]).stdout.trim()}:${prefix}`]);
+    return t.status === 0 ? t.stdout.trim() : undefined;
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+
+/**
+ * Pack `path` at `sourceCommit`, check the pack extracts to `tree`, splice the
+ * pair onto the trashcan's tip, and RE-READ the tip to confirm both blobs
+ * landed. Anything short of that is a refusal: the caller removes nothing.
+ */
+export function depositCutover(
+  target: Extract<GutsTarget, { state: "ok" }>,
+  p: CutoverProvenance,
+  opts: { repoRoot: string; remote?: string; storeDir?: string; dryRun?: boolean },
+): { state: "deposited" | "would-deposit"; deposit: Deposit } | { state: "refused" | "unknown"; reason: string } {
+  const at = spawnSync("git", ["log", "-1", "--format=%ct", p.sourceCommit], { cwd: opts.repoRoot, encoding: "utf-8" });
+  const archived = spawnSync(
+    "git",
+    ["archive", "--format=tar.gz", `--prefix=${p.path}/`, `--mtime=@${at.stdout.trim() || "0"}`, `${p.sourceCommit}:${p.path}`],
+    { cwd: opts.repoRoot, maxBuffer: 1024 * 1024 * 1024 },
+  );
+  if (archived.status !== 0) return { state: "unknown", reason: `git archive of ${p.path}/ at ${p.sourceCommit.slice(0, 12)} failed: ${archived.stderr.toString().trim()}` };
+  const archive = archived.stdout as Buffer;
+  const packed = archiveTreeId(archive, p.path);
+  if (packed !== p.tree) {
+    return {
+      state: "refused",
+      reason: `the snapshot of ${p.path}/ extracts to tree ${packed ?? "(unreadable)"}, not ${p.tree} — a deposit that is not the removed tree is not a deposit, so nothing was removed`,
+    };
+  }
+  const stem = depositStem(target.path, p);
+  const archiveName = `${stem.split("/").pop()}.tar.gz`;
+  const record = depositRecord(p, archiveName);
+  const deposit: Deposit = {
+    id: target.id,
+    branch: target.branch,
+    archive: `${stem}.tar.gz`,
+    record: `${stem}.md`,
+    archiveBlob: gitBlobId(archive),
+    recordBlob: gitBlobId(Buffer.from(record, "utf-8")),
+  };
+
+  let store: BranchStore;
+  try {
+    store = BranchStore.open(target.branch, { repoRoot: opts.repoRoot, remote: opts.remote, storeDir: opts.storeDir, log: () => {} });
+  } catch (e) {
+    return { state: "refused", reason: `cannot open ${target.branch}: ${(e as Error).message}` };
+  }
+  const probe = store.listDir("");
+  if (probe.state !== "hit") {
+    return { state: probe.state === "unknown" ? "unknown" : "refused", reason: `${target.branch} cannot take a deposit: ${probe.reason}, so nothing was removed from main` };
+  }
+  // A re-run after a deposit landed and the removal did not (an interrupted
+  // run, a refused commit) finds its own archive already there. Same archive
+  // blob → the deposit is MADE, not a conflict; a different one → refused,
+  // never overwritten.
+  const had = store.readFile(deposit.archive);
+  if (had.state === "hit") {
+    const rec = store.readFile(deposit.record);
+    if (had.blob === deposit.archiveBlob && rec.state === "hit") {
+      return { state: opts.dryRun ? "would-deposit" : "deposited", deposit: { ...deposit, recordBlob: rec.blob, commit: had.tip } };
+    }
+    return { state: "refused", reason: `${target.branch} already holds ${deposit.archive} with different content; nothing was overwritten and nothing removed from main` };
+  }
+  if (had.state !== "miss") return { state: had.state === "unknown" ? "unknown" : "refused", reason: `could not read ${deposit.archive} on ${target.branch}: ${had.reason}` };
+  // A dry run proves the trashcan is THERE and is a tip-keyed state branch,
+  // so the person saying go is not told a deposit will happen that the real
+  // run would refuse.
+  if (opts.dryRun) return { state: "would-deposit", deposit };
+  const w = store.write(
+    [
+      { path: deposit.archive, content: archive, expect: null },
+      { path: deposit.record, content: record, expect: null },
+    ],
+    `fsh-guts: deposit ${p.path}/ of ${p.instance} before its cutover removes it from main\n\n` +
+      `tree ${p.tree} at ${p.sourceCommit}; the live store is ${p.authoritativeBranch}.`,
+  );
+  if (w.state !== "pushed") {
+    return { state: "refused", reason: `the deposit to ${target.branch} was not made (${w.state}: ${w.reason}), so nothing was removed from main` };
+  }
+  // VERIFY by re-reading the tip, as `refreshSeed` does: a push that returned
+  // 0 says the ref moved, not that it holds what was intended.
+  const back = BranchStore.open(target.branch, { repoRoot: opts.repoRoot, remote: opts.remote, storeDir: opts.storeDir, log: () => {} });
+  const ra = back.readFile(deposit.archive);
+  const rr = back.readFile(deposit.record);
+  if (ra.state !== "hit" || ra.blob !== deposit.archiveBlob || rr.state !== "hit" || rr.blob !== deposit.recordBlob) {
+    return { state: "unknown", reason: `pushed ${w.commit?.slice(0, 12)} to ${target.branch}, but a re-read of its tip does not hold the deposit — nothing was removed from main` };
+  }
+  return { state: "deposited", deposit: { ...deposit, commit: w.commit } };
+}
+
 export interface CutoverOptions {
   repoRoot?: string;
   remote?: string;
@@ -344,6 +633,11 @@ export type CutoverResult =
       state: "would-cut-over" | "cut-over";
       branch: string;
       paths: Array<{ path: string; tree: string; files: number; bytes: number }>;
+      /**
+       * Each removed path's snapshot in its instance's fsh-guts graph — made
+       * and verified BEFORE the removal commit, or (dry run) checked possible.
+       */
+      deposits: Deposit[];
       /** The commit made, with `commit: true`. Not pushed. */
       commit?: string;
       reason: string;
@@ -429,8 +723,36 @@ export function cutoverMain(row: SpecialBranch, opts: CutoverOptions = {}): Cuto
   }
 
   const summary = out.map((p) => `${p.path}/ (${p.files} file(s), ${p.bytes} bytes, tree ${p.tree.slice(0, 12)})`).join(", ");
+
+  // DEPOSIT FIRST (owner, 2026-10-06: "cutover dirs should go to fsh-guts").
+  // Every path's snapshot lands in its instance's trashcan and is re-read from
+  // the tip before a single `git rm` runs; any refusal here returns with main
+  // untouched. A dry run checks the trashcan can take it and writes nothing.
+  const head = git(["rev-parse", "HEAD"]).stdout.trim();
+  const date = new Date().toISOString().slice(0, 10);
+  const deposits: Deposit[] = [];
+  for (const p of out) {
+    const target = fshGutsTargetFor(repoRoot, p.path);
+    if (target.state !== "ok") return { state: target.state, branch: tip.branch, reason: target.reason };
+    const d = depositCutover(
+      target,
+      { instance: target.instance, directory: target.directoryId, path: p.path, sourceCommit: head, tree: p.tree, authoritativeBranch: tip.branch, files: p.files, bytes: p.bytes, date },
+      { repoRoot, remote: opts.remote, storeDir: opts.storeDir, dryRun: opts.commit !== true },
+    );
+    // Narrowed on `"deposit" in d`: typescript7 declines to narrow this union by the state literals.
+    if (!("deposit" in d)) return { state: d.state, branch: tip.branch, reason: d.reason };
+    deposits.push(d.deposit);
+  }
+  const deposited = deposits.map((d) => `${d.archive} on ${d.branch}`).join(", ");
+
   if (opts.commit !== true) {
-    return { state: "would-cut-over", branch: tip.branch, paths: out, reason: `dry run: would remove ${summary} from main and ignore the mount path. Re-run with --commit to stage it as one commit (nothing is pushed).` };
+    return {
+      state: "would-cut-over",
+      branch: tip.branch,
+      paths: out,
+      deposits,
+      reason: `dry run: would deposit ${deposited}, then remove ${summary} from main and ignore the mount path. Re-run with --commit to deposit, verify, and stage the removal as one commit (main is not pushed).`,
+    };
   }
 
   for (const p of out) {
@@ -451,11 +773,13 @@ export function cutoverMain(row: SpecialBranch, opts: CutoverOptions = {}): Cuto
   const message =
     `state(${row.id}): cut ${out.map((p) => `${p.path}/`).join(", ")} over to ${tip.branch} — the main half\n\n` +
     out.map((p) => `${p.path}/ is tree ${p.tree} on ${tip.branch}@${tip.tip.slice(0, 12)}, byte-identical to HEAD:${p.path}; ${p.files} file(s), ${p.bytes} bytes removed from main.`).join("\n") +
-    `\n\nThe branch manifest says authoritative: true. Mount it with state:mount.`;
+    `\n\nDeposited first, and verified on the tip: ` +
+    deposits.map((d) => `${d.archive} (+ .md provenance) on ${d.branch}@${(d.commit ?? "").slice(0, 12)}`).join(", ") +
+    `.\n\nThe branch manifest says authoritative: true. Mount it with state:mount.`;
   const commit = git(["commit", "-q", "-m", message]);
   if (commit.status !== 0) return { state: "unknown", branch: tip.branch, reason: `git commit failed: ${commit.stderr.trim() || commit.stdout.trim()}` };
   const sha = git(["rev-parse", "HEAD"]).stdout.trim();
-  return { state: "cut-over", branch: tip.branch, paths: out, commit: sha, reason: `committed ${sha.slice(0, 12)} removing ${summary}; NOT pushed — review it, then push` };
+  return { state: "cut-over", branch: tip.branch, paths: out, deposits, commit: sha, reason: `deposited ${deposited}, then committed ${sha.slice(0, 12)} removing ${summary}; main NOT pushed — review it, then push` };
 }
 
 export function cutoverReport(r: CutoverResult): string {
@@ -464,6 +788,7 @@ export function cutoverReport(r: CutoverResult): string {
   if (r.state !== "would-cut-over" && r.state !== "cut-over") return `${r.state === "refused" ? "·" : "✗"} ${r.branch}: ${r.state} — ${r.reason}`;
   const L = [`${r.state === "cut-over" ? "✓" : "·"} ${r.branch}: ${r.state} — ${r.reason}`];
   for (const p of r.paths) L.push(`    - ${p.path}/: ${p.files} file(s), ${p.bytes} bytes, tree ${p.tree}`);
+  for (const d of r.deposits) L.push(`    ${d.commit ? "✓" : "·"} fsh-guts: ${d.archive} + ${d.record.split("/").pop()} on ${d.branch}${d.commit ? `@${d.commit.slice(0, 12)}` : " (not yet written)"}`);
   return L.join("\n");
 }
 

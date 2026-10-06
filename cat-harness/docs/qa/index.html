@@ -1850,7 +1850,11 @@ button.fa-nav-icon {
       'stroke-linecap="round"/></svg>'
   };
 
-  var WORKPLAN_OPEN = { "todo": true, "in-progress": true };
+  /* OPEN is `draft`, `todo` and `in-progress` — `OPEN_STATUSES` in
+   * `scripts/bean-store-read.ts`, the definition the navbar's Beans badge and
+   * the Beans tile count by (bean `v215`). `draft` was missing here, so the
+   * board's "open" could read lower than the badge that opened it. */
+  var WORKPLAN_OPEN = { "draft": true, "todo": true, "in-progress": true };
 
   /**
    * The forge this data came from, or `""`.
@@ -2318,13 +2322,17 @@ button.fa-nav-icon {
     for (i = 0; i < beans.length; i++) {
       status[beans[i].status] = (status[beans[i].status] || 0) + 1;
     }
-    var open = (status["todo"] || 0) + (status["in-progress"] || 0);
+    var open = 0;
+    for (var st in status) {
+      if (Object.prototype.hasOwnProperty.call(status, st) && WORKPLAN_OPEN[st] === true) open += status[st];
+    }
 
     var section = el("section", { class: "fa-workplan-panel" });
     section.appendChild(el("h3", { class: "fa-workplan-panel-title" },
                             "Beans — the agent work plan"));
     var row = el("dl", { class: "fa-workplan-counts" });
     row.appendChild(countItem("open", open, true));
+    row.appendChild(countItem("draft", status["draft"] || 0));
     row.appendChild(countItem("todo", status["todo"] || 0));
     row.appendChild(countItem("in progress", status["in-progress"] || 0));
     row.appendChild(countItem("completed", status["completed"] || 0));
