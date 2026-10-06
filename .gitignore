@@ -257,6 +257,10 @@ cat-harness/ingest-staging/
 # The composed documentation tree (`compose-docs.ts`). A build output: the
 # BASE is `cat-harness/docs/` and the overlay is the root `docs/`, both tracked.
 _docs/
+# The IG staging work tree and its build list (stage-ig-sites --work ./_ig,
+# docs-site.yml): a local production-style build writes both here (#2235).
+/_ig/
+/_ig-list.txt
 
 # The WORKING COPY of every declared `qa` directory (bean `5hox`, arc `3fva`,
 # owner ruling D4). Each of these declares `storage: { branch: qa-reports }`:

@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.schema.json` · [view](ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.jsonld` · [view](ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD18SCholeraWCRBSVaccine2DosesVS.html" data-next="ValueSet-IMMZD18SCholeraWCVaccinesVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

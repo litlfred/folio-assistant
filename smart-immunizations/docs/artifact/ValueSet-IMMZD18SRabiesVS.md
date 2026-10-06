@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SRabiesVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRabiesVS.schema.json` · [view](ValueSet-IMMZD18SRabiesVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SRabiesVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRabiesVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SRabiesVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRabiesVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SRabiesVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRabiesVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SRabiesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRabiesVS.jsonld` · [view](ValueSet-IMMZD18SRabiesVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SRabiesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRabiesVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD18SPolioSequentialIPVbOPVVS.html" data-next="ValueSet-IMMZD18SRotavirusVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>
