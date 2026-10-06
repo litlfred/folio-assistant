@@ -1,8 +1,8 @@
 {
   "$schema": "qa-results/v1",
   "producer": {
-    "script": "cat-harness/scripts/check-wireframes.ts",
-    "script_hash": "e43af8f4af34"
+    "script": "cat-harness-tools/scripts/check-wireframes.ts",
+    "script_hash": "60e9e8239631"
   },
   "subject": {
     "kind": "corpus",
@@ -11,7 +11,7 @@
   "families": {
     "covered": {
       "summary": "A declared visualiser with a wireframe whose checks pass at both viewports.",
-      "count": 41,
+      "count": 44,
       "entries": [
         {
           "ref": "cat-harness/docs/beans/index.html",
@@ -52,6 +52,10 @@
         {
           "ref": "cat-harness/docs/cat-harness/auto-docs/index/docs/who-iris-site/index.html",
           "wireframe": "docs-index"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/auto-docs/index/skills/skills/index.html",
+          "wireframe": "skills-index"
         },
         {
           "ref": "cat-harness/docs/cat-harness/catalogue/who-iris/index.html",
@@ -150,8 +154,16 @@
           "wireframe": "glossary-page"
         },
         {
+          "ref": "cat-harness/docs/lsi/index.md",
+          "wireframe": "lsi"
+        },
+        {
           "ref": "cat-harness/docs/methodologies/index.md",
           "wireframe": "methodologies"
+        },
+        {
+          "ref": "cat-harness/docs/processes/index.md",
+          "wireframe": "processes"
         },
         {
           "ref": "cat-harness/docs/todos/index.html",
@@ -201,15 +213,11 @@
     },
     "unknown-ref": {
       "summary": "index.json names a ref that no declaration declares: a stale or mistyped mapping.",
-      "count": 8,
+      "count": 7,
       "entries": [
         {
-          "wireframe": "lsi",
-          "ref": "cat-harness/docs/lsi/index.md"
-        },
-        {
-          "wireframe": "processes",
-          "ref": "cat-harness/docs/processes/index.md"
+          "wireframe": "docs-index",
+          "ref": "cat-harness/docs/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/index.html"
         },
         {
           "wireframe": "skills-index",
@@ -225,11 +233,11 @@
         },
         {
           "wireframe": "skills-index",
-          "ref": "cat-harness/docs/cat-harness/auto-docs/index/skills/lean-skills/index.html"
+          "ref": "cat-harness/docs/cat-harness/auto-docs/index/skills/folio-assistant-sci-skills/index.html"
         },
         {
           "wireframe": "skills-index",
-          "ref": "cat-harness/docs/cat-harness/auto-docs/index/skills/skills/index.html"
+          "ref": "cat-harness/docs/cat-harness/auto-docs/index/skills/lean-skills/index.html"
         },
         {
           "wireframe": "skills-index",
@@ -238,5 +246,5 @@
       ]
     }
   },
-  "total": 49
+  "total": 51
 }
