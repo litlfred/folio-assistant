@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/f-l/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1882 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1883 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 416 terms and is 236 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 417 terms and is 237 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2175</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2175</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2176</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2176</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">416</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">417</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a></nav>
 
@@ -853,6 +853,13 @@ GraphTypologyDef.layer <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Whose namespace the kind is named in, when it is not the harness's: <code>core</code> for the folio's own furniture (<code>voices</code>, <code>library</code>, <code>todos</code>, …). A kind bootstrap defines is bootstrap's whatever this says (<code>BOOTSTRAP_GRAPH_TYPOLOGIES</code>). The kind IS its individual, <code>&lt;ns&gt;graphTypology/&lt;name&gt;</code> (&#123;@link graphTypologyIri}); there is no class per kind. Owner, 2026-09-30 (bean <code>3r47</code>): &quot;Drop per-kind classes&quot; — bootstrap names a kind as one <code>GraphTypology</code> individual, and the harness now does the same.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-typology-registry.ts"><code>cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.layer</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--graph-typology-registry.graphtypologydef.newinstancesource" data-fa-state="extracted" data-fa-gloss="">
+GraphTypologyDef.newInstanceSource <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where a NEW instance's own graph of this kind lives, when <code>folio_init</code> scaffolds it — <code>perInstance</code>'s companion: that field says a dependent HAS its own; this one says where the new one is kept. Bean <code>hp54</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-typology-registry.ts"><code>cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.newInstanceSource</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--graph-typology-registry.graphtypologydef.nodeschemas" data-fa-state="extracted" data-fa-gloss="">
 GraphTypologyDef.nodeSchemas <span class="fa-gloss-status">candidate, extracted</span>

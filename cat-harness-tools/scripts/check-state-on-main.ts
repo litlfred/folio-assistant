@@ -22,6 +22,11 @@
  * answering one question is the defect `resolveSubgraphSource` throws on when
  * `source` and `storage` disagree; a default would reintroduce it by design.
  *
+ * (What DID land, bean `hp54`, is a SCAFFOLD default instead:
+ * `newInstanceSource` on a kind is read once by `folio_init`, which writes a
+ * complete `source` — branch `cat/<instance>/<id>` — into the new instance's
+ * own declaration. The resolver never reads it, so the objection above stands.)
+ *
  * **The check half is worth building, and this is it.** After a cutover, a
  * `holds: state` directory declared on `main` is silently fine — nothing
  * fails, and the next one gets declared the old way. That is what the row was

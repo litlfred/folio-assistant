@@ -6272,6 +6272,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-typology-registry.graphtypologydef.newinstancesource",
+      "prefLabel": "GraphTypologyDef.newInstanceSource",
+      "definition": "Where a NEW instance's own graph of this kind lives, when `folio_init` scaffolds it — `perInstance`'s companion: that field says a dependent HAS its own; this one says where the new one is kept. Bean `hp54`.",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.newInstanceSource",
+      "status": "candidate"
+    },
+    {
       "id": "graph-typology-registry.graphtypologydef.nodeschemas",
       "prefLabel": "GraphTypologyDef.nodeSchemas",
       "definition": "One entry per `$schema` family a node of this kind may carry, keyed by the tag. Bean `rdkm`.",
