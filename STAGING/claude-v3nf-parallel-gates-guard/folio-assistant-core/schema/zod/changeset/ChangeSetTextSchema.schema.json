@@ -1,0 +1,68 @@
+{
+  "$ref": "#/definitions/ChangeSetText",
+  "definitions": {
+    "ChangeSetText": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-changeset-text/v1"
+        },
+        "blocks": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "base": {
+                "type": "object",
+                "properties": {
+                  "prose": {
+                    "type": "string"
+                  },
+                  "html": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "prose",
+                  "html"
+                ]
+              },
+              "head": {
+                "type": "object",
+                "properties": {
+                  "prose": {
+                    "type": "string"
+                  },
+                  "html": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "prose",
+                  "html"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "blocks"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-v3nf-parallel-gates-guard/folio-assistant-core/schema/zod/changeset/ChangeSetTextSchema.schema.json",
+  "title": "ChangeSetTextSchema",
+  "description": "Generated from `ChangeSetTextSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/v3nf-parallel-gates-guard",
+    "sha": "ccc91eee6fb1093c302bf7d779dd4076a15f10ec",
+    "pr": "2333/merge",
+    "run": "37531448622"
+  }
+}

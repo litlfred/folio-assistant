@@ -1,0 +1,72 @@
+{
+  "$ref": "#/definitions/ModelRegistry",
+  "definitions": {
+    "ModelRegistry": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "model-registry/1.0.0"
+        },
+        "models": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "preferredLanguages": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 2
+                }
+              },
+              "validation": {
+                "type": "string",
+                "enum": [
+                  "unverified",
+                  "self-reported",
+                  "human-validated"
+                ]
+              },
+              "validatedBy": {
+                "type": "string"
+              },
+              "validatedOn": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "validation"
+            ]
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "models"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-v3nf-parallel-gates-guard/bootstrap-tools/schema/zod/model-registry/ModelRegistrySchema.schema.json",
+  "title": "ModelRegistrySchema",
+  "description": "Generated from `ModelRegistrySchema` in schemas/model-registry.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/v3nf-parallel-gates-guard",
+    "sha": "ccc91eee6fb1093c302bf7d779dd4076a15f10ec",
+    "pr": "2333/merge",
+    "run": "37531448622"
+  }
+}

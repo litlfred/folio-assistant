@@ -1,0 +1,35 @@
+{
+  "$ref": "#/definitions/IgValueSetRef",
+  "definitions": {
+    "IgValueSetRef": {
+      "type": "object",
+      "properties": {
+        "valueSet": {
+          "type": "string",
+          "minLength": 1
+        },
+        "codeSystems": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "valueSet",
+        "codeSystems"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-metadata-index/IgValueSetRefSchema.schema.json",
+  "title": "IgValueSetRefSchema",
+  "description": "Generated from `IgValueSetRefSchema` in schemas/ig-metadata-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/v3nf-parallel-gates-guard",
+    "sha": "ccc91eee6fb1093c302bf7d779dd4076a15f10ec",
+    "pr": "2333/merge",
+    "run": "37531448622"
+  }
+}
