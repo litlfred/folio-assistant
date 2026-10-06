@@ -168,6 +168,18 @@ def test_grobid_tei_heads_read_with_depth_and_page():
                    (1, "Acknowledgements", None, None)], got
 
 
+def test_nougat_markdown_heads_read_as_a_tree():
+    tb = load("toc-benchmark.py")
+    mmd = "# A Title\n\ntext\n\n## 1 Introduction\n\n```\n# not a heading\n```\n#### 1.1 Scope\n## 2 Methods\n"
+    with tempfile.TemporaryDirectory() as d:
+        path = os.path.join(d, "x.mmd")
+        with open(path, "w") as f:
+            f.write(mmd)
+        got = [(h.level, h.title, h.number) for h in tb._mmd_headings(path)]
+    assert got == [(1, "A Title", None), (2, "Introduction", "1"), (3, "Scope", "1.1"),
+                   (2, "Methods", "2")], got
+
+
 def test_pdf_structure_records_the_layout_method():
     try:
         import pymupdf

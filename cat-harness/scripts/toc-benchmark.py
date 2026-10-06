@@ -156,6 +156,42 @@ def m_grobid(doc: Doc) -> list[H.Heading]:
     return _tei_headings(tei) if os.path.exists(tei) else []
 
 
+MMD_DIR: str | None = None          # set by --nougat-mmd
+
+
+def _mmd_headings(path: str) -> list[H.Heading]:
+    """Nougat's Markdown (`.mmd`) headings as `Heading`s.
+
+    Depth is the count of `#`. Nougat marks no page boundaries in its default
+    output, so `page` is None and link F1 is not measurable for it; title,
+    level and TEDS are. Fenced code is skipped.
+    """
+    out: list[H.Heading] = []
+    fenced = False
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            if line.lstrip().startswith("```"):
+                fenced = not fenced
+                continue
+            m = None if fenced else re.match(r"^(#{1,6})\s+(.*?)\s*#*\s*$", line)
+            if not m or not m.group(2):
+                continue
+            title = re.sub(r"\*\*|__|\\[()\[\]]", "", m.group(2)).strip()
+            num, t = H.split_number(title)
+            out.append(H.Heading(len(m.group(1)), t, None, num))
+    return H.tree_levels(out)
+
+
+def m_nougat(doc: Doc) -> list[H.Heading]:
+    """Nougat (Blecher et al. 2023), read from saved `<stem>.mmd` files in the
+    directory given by --nougat-mmd; a PDF with no output scores as empty."""
+    if not MMD_DIR:
+        return []
+    stem = os.path.splitext(os.path.basename(doc.path))[0]
+    mmd = os.path.join(MMD_DIR, stem + ".mmd")
+    return _mmd_headings(mmd) if os.path.exists(mmd) else []
+
+
 METHODS = {
     "regex": m_regex,
     "size": m_size,
@@ -163,6 +199,7 @@ METHODS = {
     "contents": m_contents,
     "layout": m_layout,
     "grobid": m_grobid,
+    "nougat": m_nougat,
 }
 
 
@@ -346,16 +383,19 @@ def main() -> int:
     ap.add_argument("--methods", default=",".join(METHODS))
     ap.add_argument("--json", help="write per-document results here")
     ap.add_argument("--grobid-tei", help="directory of Grobid <stem>.tei.xml outputs, for the `grobid` method")
+    ap.add_argument("--nougat-mmd", help="directory of Nougat <stem>.mmd outputs, for the `nougat` method")
     ap.add_argument("--layout-backend", choices=["pymupdf", "pdfminer"], default="pymupdf",
                     help="which library reads font metrics (pdfminer.six is MIT; PyMuPDF is AGPL)")
     args = ap.parse_args()
 
-    global TEI_DIR
-    TEI_DIR = args.grobid_tei
+    global TEI_DIR, MMD_DIR
+    TEI_DIR, MMD_DIR = args.grobid_tei, args.nougat_mmd
     pdfs = args.pdfs or default_corpus(args.root)
     methods = [m for m in args.methods.split(",") if m]
     if "grobid" in methods and not TEI_DIR:
         methods.remove("grobid")             # needs saved output; not run by default
+    if "nougat" in methods and not MMD_DIR:
+        methods.remove("nougat")
     rows = []
     for path in pdfs:
         doc = load(path, args.layout_backend)
