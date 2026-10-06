@@ -1,0 +1,65 @@
+{
+  "$ref": "#/definitions/Anchor",
+  "definitions": {
+    "Anchor": {
+      "type": "object",
+      "properties": {
+        "targetLabel": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "page-line",
+            "page",
+            "caption",
+            "section",
+            "quote",
+            "manual",
+            "unplaced"
+          ]
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "candidates": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "targetLabel",
+        "method",
+        "confidence"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-slice-search-keep-open/folio-assistant-core/schema/zod/public-comment/AnchorSchema.schema.json",
+  "title": "AnchorSchema",
+  "description": "Generated from `AnchorSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/slice-search-keep-open",
+    "sha": "f275866c66e5c70a338670fe3338ab4c3a8ee96c",
+    "pr": "2245/merge",
+    "run": "37393230770"
+  }
+}

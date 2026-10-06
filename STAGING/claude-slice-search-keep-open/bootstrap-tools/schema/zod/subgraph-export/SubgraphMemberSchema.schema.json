@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/SubgraphMember",
+  "definitions": {
+    "SubgraphMember": {
+      "type": "object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "@type": {
+          "type": "string",
+          "pattern": "^bootstrap:[A-Z][A-Za-z]*$"
+        }
+      },
+      "required": [
+        "@id",
+        "@type"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-slice-search-keep-open/bootstrap-tools/schema/zod/subgraph-export/SubgraphMemberSchema.schema.json",
+  "title": "SubgraphMemberSchema",
+  "description": "Generated from `SubgraphMemberSchema` in schemas/subgraph-export.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/slice-search-keep-open",
+    "sha": "f275866c66e5c70a338670fe3338ab4c3a8ee96c",
+    "pr": "2245/merge",
+    "run": "37393230770"
+  }
+}
