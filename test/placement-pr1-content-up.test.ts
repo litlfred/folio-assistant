@@ -12,16 +12,29 @@
  *    in the owner's `scenarios/roles.json` `extensions`, and the role resolved
  *    from the checkout still carries it.
  *
- * @module scripts/tests/placement-pr1-content-up
+ * @module test/placement-pr1-content-up
+ *
+ * Moved here from `cat-harness/scripts/tests/placement-pr1-content-up.test.ts`
+ * to the checkout's own test home `test/` (bean `7zz1`, owner ruling
+ * 2026-10-06 "Top-level instance"): every test in it checks that content-type
+ * packages sit in the instances above cat-harness that own them, which only
+ * the whole checkout holds. Standing alone, cat-harness has none of it, and
+ * `check:cat-harness-standalone` collects every test in that layer. Paths are
+ * composed from ORIGIN_DIR, the directory it was written in, so nothing it
+ * reads changed.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { knownSkills, roleGraphFor } from "../known-skills.js";
-import { packageDirsIn } from "../skill-topics.js";
+import { knownSkills, roleGraphFor } from "../cat-harness/scripts/known-skills.js";
+import { packageDirsIn } from "../cat-harness/scripts/skill-topics.js";
 
-const REPO = resolve(import.meta.dir, "../../..");
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move to the checkout's test home (bean `7zz1`). */
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
+
+
+const REPO = resolve(ORIGIN_DIR, "../../..");
 const PLATFORM = join(REPO, "cat-harness");
 
 /** Package → the instance-relative directory it lives in now. */

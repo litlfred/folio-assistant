@@ -36,16 +36,29 @@
  *   declaration, this test fails and names what to do, so closing `wlqd` is a
  *   deliberate act with the expectation updated, not a green run nobody reads.
  *
- * @module scripts/tests/remote-skill-servable
+ * @module test/remote-skill-servable
+ *
+ * Moved here from `cat-harness/scripts/tests/remote-skill-servable.test.ts` to
+ * the checkout's own test home `test/` (bean `7zz1`, owner ruling 2026-10-06
+ * "Top-level instance"): every test in it compares the checkout's
+ * remote-package declarations with the skills its instances (fhir-harness
+ * among them) serve, which only the whole checkout holds. Standing alone,
+ * cat-harness has none of it, and `check:cat-harness-standalone` collects
+ * every test in that layer. Paths are composed from ORIGIN_DIR, the directory
+ * it was written in, so nothing it reads changed.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { knownSkills, remotePackageDeclarations } from "../known-skills.js";
-import { syncedPackageDir, wrapperSkillsDirs } from "../sync-remote-skills.js";
+import { knownSkills, remotePackageDeclarations } from "../cat-harness/scripts/known-skills.js";
+import { syncedPackageDir, wrapperSkillsDirs } from "../cat-harness/scripts/sync-remote-skills.js";
 
-const ROOT = join(import.meta.dir, "..", "..");
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move to the checkout's test home (bean `7zz1`). */
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
+
+
+const ROOT = join(ORIGIN_DIR, "..", "..");
 
 /**
  * **Empty, and since 2026-09-24 for the right reason** — issue #556.

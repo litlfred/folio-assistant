@@ -11,19 +11,20 @@
  *     repository declares, so a card citing one cannot silently fall back;
  *   - the generator's source names no instance and holds no colour value —
  *     the values arrive from the instance's `themes.ts` at build time.
+ *
+ * The tests of this file that read the whole checkout (reads every instance's
+ * sticky themes) live in `test/gen-themes-css-checkout.test.ts` (bean `7zz1`):
+ * standing alone, cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 
-import { siteDirFor } from "../../schemas/cat-harness.js";
 import { ResolvedThemeSchema, type ResolvedTheme } from "../../schemas/theme.js";
-import { instanceStickyThemes } from "../../schemas/theme-by-ref.js";
 import { THEMES } from "../../schemas/themes.js";
 import { renderThemesCss } from "../gen-themes-css.js";
 
 const ROOT = join(import.meta.dir, "..", "..");
-const REPO = resolve(ROOT, "..");
 
 const L = { minWidth: "13rem", padding: "1rem", fontScale: 1 };
 const note = ResolvedThemeSchema.parse({
@@ -51,26 +52,6 @@ describe("an instance sticky theme passed in is emitted", () => {
     }
     expect(css).not.toContain("declared by instance");
   });
-});
-
-describe("the committed stylesheet carries every instance sticky theme here", () => {
-  const committed = readFileSync(join(ROOT, siteDirFor(ROOT), "assets", "css", "themes.css"), "utf8");
-  const { themes, conflicts } = instanceStickyThemes(REPO, "cat-harness", new Set(THEMES.map((t) => t.id)));
-
-  test("there is at least one to check, and no collision", () => {
-    expect(themes.length).toBeGreaterThan(0);
-    expect(conflicts).toEqual([]);
-  });
-
-  test.each(themes.map((t) => [`${t.instance}:${t.theme.id}`, t] as const))(
-    "%s has a block with its own accent — a card citing it does not fall back to the default",
-    (_, t) => {
-      const start = committed.indexOf(`[data-fa-sticky-theme="${t.theme.id}"] {`);
-      expect(start).toBeGreaterThan(-1);
-      const block = committed.slice(start, committed.indexOf("}", start));
-      expect(block).toContain(`--fa-sticky-accent: ${t.theme.palette.accent};`);
-    },
-  );
 });
 
 describe("the generator holds no instance's name or colour", () => {

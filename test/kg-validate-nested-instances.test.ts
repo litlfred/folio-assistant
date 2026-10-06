@@ -26,16 +26,30 @@
  * A sweep over zero files passes. So the sweep must reach sidecars in several
  * instances OTHER than the auditor's own — the population this bean is about.
  *
- * @module scripts/tests/kg-validate-nested-instances
+ * @module test/kg-validate-nested-instances
+ *
+ * Moved here from
+ * `cat-harness/scripts/tests/kg-validate-nested-instances.test.ts` to the
+ * checkout's own test home `test/` (bean `7zz1`, owner ruling 2026-10-06
+ * "Top-level instance"): every test in it validates the kg-audit sidecars of
+ * every nested instance in the checkout, which only the whole checkout holds.
+ * Standing alone, cat-harness has none of it, and
+ * `check:cat-harness-standalone` collects every test in that layer. Paths are
+ * composed from ORIGIN_DIR, the directory it was written in, so nothing it
+ * reads changed.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { instanceRootsIn, kgQaHomeFor } from "../../schemas/cat-harness.js";
-import { owningInstanceRoot, validatePath } from "../kg-validate.js";
+import { instanceRootsIn, kgQaHomeFor } from "../cat-harness/schemas/cat-harness.js";
+import { owningInstanceRoot, validatePath } from "../cat-harness/scripts/kg-validate.js";
 
-const REPO = resolve(import.meta.dir, "../../..");
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move to the checkout's test home (bean `7zz1`). */
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
+
+
+const REPO = resolve(ORIGIN_DIR, "../../..");
 const HARNESS = join(REPO, "cat-harness");
 
 /** Every committed kg-audit sidecar, keyed by the instance it is ABOUT. */

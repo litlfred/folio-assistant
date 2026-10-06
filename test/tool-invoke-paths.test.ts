@@ -31,18 +31,31 @@
  * against one root would have reported twenty false defects, or none of the nine
  * real ones.
  *
- * @module scripts/tests/tool-invoke-paths.test
+ * @module test/tool-invoke-paths.test
+ *
+ * Moved here from `cat-harness/scripts/tests/tool-invoke-paths.test.ts` to the
+ * checkout's own test home `test/` (bean `7zz1`, owner ruling 2026-10-06
+ * "Top-level instance"): every test in it resolves every Tool node's paths
+ * against the repository and the instance implementing it, cat-harness-tools
+ * among them, which only the whole checkout holds. Standing alone, cat-harness
+ * has none of it, and `check:cat-harness-standalone` collects every test in
+ * that layer. Paths are composed from ORIGIN_DIR, the directory it was written
+ * in, so nothing it reads changed.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { unresolvedPaths } from "../check-tools.ts";
-import { tools, toolsOf } from "../../tools/discover.js";
-import { instanceRootsIn } from "../../schemas/cat-harness.js";
-import { resolveImplementingPath } from "../../schemas/harness-config.js";
+import { unresolvedPaths } from "../cat-harness/scripts/check-tools.ts";
+import { tools, toolsOf } from "../cat-harness/tools/discover.js";
+import { instanceRootsIn } from "../cat-harness/schemas/cat-harness.js";
+import { resolveImplementingPath } from "../cat-harness/schemas/harness-config.js";
 
-const INSTANCE = resolve(import.meta.dir, "../..");
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move to the checkout's test home (bean `7zz1`). */
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
+
+
+const INSTANCE = resolve(ORIGIN_DIR, "../..");
 const REPO = resolve(INSTANCE, "..");
 
 describe("every declared path exists", () => {

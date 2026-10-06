@@ -2,12 +2,16 @@
  * A declared subgraph's content source — one union, one resolver (bean `l4ay`).
  *
  * @module schemas/subgraph-source.test
+ *
+ * The tests of this file that read the whole checkout (resolves every subgraph
+ * every instance in the checkout declares) live in
+ * `test/subgraph-source-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
-import { resolve } from "node:path";
 
 import { ContentDirectorySchema } from "./cat-harness";
-import { HarnessConfigSchema, checkoutDirectories, declaredSubgraph } from "./harness-config";
+import { HarnessConfigSchema } from "./harness-config";
 import {
   SubgraphSourceSchema,
   contentIsOffCheckout,
@@ -15,8 +19,6 @@ import {
   forgeTreeUrl,
   resolveSubgraphSource,
 } from "./subgraph-source";
-
-const REPO = resolve(import.meta.dir, "..", "..");
 const ENTRY = { id: "todos", path: "todos/", graphTypologies: ["todos"] };
 const BRANCH = { kind: "branch", branch: "cat/cat-harness/todos", keyedBy: "tip" } as const;
 
@@ -73,7 +75,6 @@ describe("the presence checks ask one question of either spelling", () => {
   });
 });
 
-
 describe("the JSON-LD form", () => {
   test("a branch on GitHub dereferences to its tree; a directory is a blank node", () => {
     expect(contentSourceJsonLd(resolveSubgraphSource({ ...ENTRY, source: BRANCH }), "litlfred/folio-assistant")).toEqual({
@@ -88,31 +89,6 @@ describe("the JSON-LD form", () => {
   test("an unknown forge gets no @id rather than a guessed one", () => {
     expect(forgeTreeUrl("https://example.org/a/b", "x")).toBeUndefined();
     expect(forgeTreeUrl(undefined, "x")).toBeUndefined();
-  });
-});
-
-describe("THE GATE — every declared subgraph in this checkout resolves", () => {
-  // `declaredSubgraph` is the lookup every consumer uses; this asks it of
-  // every own entry the checkout declares. A contradiction (both fields, a
-  // tip-keyed qa) throws here, and a branch source naming no special branch
-  // is a finding — the name would be a guess at what a mount should fetch.
-  const own = checkoutDirectories(REPO).filter((d) => d.own && d.within === undefined);
-  const ids = [...new Set(own.map((d) => d.id))];
-  test("the checkout declares subgraphs to check", () => {
-    expect(ids.length).toBeGreaterThan(0);
-  });
-  test("each resolves (a branch source needs no table row: the declaration is the authority, bean rva2)", () => {
-    const findings: string[] = [];
-    for (const id of ids) {
-      try {
-        const d = declaredSubgraph(REPO, id);
-        if (d === undefined) findings.push(`${id}: declared, but resolves to nothing`);
-      } catch (e) {
-        if (e instanceof Error && /declared by \d+ instances/.test(e.message)) continue; // ambiguous ids are asked per instance
-        findings.push(`${id}: ${e instanceof Error ? e.message : String(e)}`);
-      }
-    }
-    expect(findings).toEqual([]);
   });
 });
 

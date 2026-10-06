@@ -9,17 +9,30 @@
  * moved: update the slide's note in `content/docs/concepts-harnessed-kg-overview/` and this test
  * together. Do not relax the assertion alone.
  *
- * @module scripts/tests/harnessed-kg-overview
+ * @module test/harnessed-kg-overview
+ *
+ * Moved here from `cat-harness/scripts/tests/harnessed-kg-overview.test.ts` to
+ * the checkout's own test home `test/` (bean `7zz1`, owner ruling 2026-10-06
+ * "Top-level instance"): every test in it checks a claim of the living deck
+ * against the whole checkout — core's diagrams, smart-base's index, the root
+ * `beans/`, which only the whole checkout holds. Standing alone, cat-harness
+ * has none of it, and `check:cat-harness-standalone` collects every test in
+ * that layer. Paths are composed from ORIGIN_DIR, the directory it was written
+ * in, so nothing it reads changed.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { siteDirFor } from "../../schemas/cat-harness.ts";
-import { ActorDefSchema } from "../../schemas/role-graph.ts";
-import { ownKgRoots, workflowFile } from "../known-skills.ts";
+import { siteDirFor } from "../cat-harness/schemas/cat-harness.ts";
+import { ActorDefSchema } from "../cat-harness/schemas/role-graph.ts";
+import { ownKgRoots, workflowFile } from "../cat-harness/scripts/known-skills.ts";
 
-const H = resolve(import.meta.dir, "../..");
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move to the checkout's test home (bean `7zz1`). */
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
+
+
+const H = resolve(ORIGIN_DIR, "../..");
 const REPO = resolve(H, "..");
 const DECK = join(H, "content/docs/concepts-harnessed-kg-overview");
 /** The published site root, from the declaration — never a literal. */

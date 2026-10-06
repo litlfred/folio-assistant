@@ -11,16 +11,29 @@
  * the platform table alone: who-iris's card cites its own `iris-sticky`,
  * which the platform deliberately does not hold, and a platform-only lookup
  * would call that correct reference broken.
+ *
+ * Moved here from `cat-harness/scripts/tests/theme-refs.test.ts` to the
+ * checkout's own test home `test/` (bean `7zz1`, owner ruling 2026-10-06
+ * "Top-level instance"): every test in it resolves every theme reference every
+ * instance in the checkout declares, which only the whole checkout holds.
+ * Standing alone, cat-harness has none of it, and
+ * `check:cat-harness-standalone` collects every test in that layer. Paths are
+ * composed from ORIGIN_DIR, the directory it was written in, so nothing it
+ * reads changed.
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { resolve, join } from "node:path";
 import { Glob } from "bun";
 
-import { declarationPathIn, instanceRootsIn } from "../../schemas/cat-harness.js";
-import { themeByRef } from "../../schemas/theme-by-ref.js";
+import { declarationPathIn, instanceRootsIn } from "../cat-harness/schemas/cat-harness.js";
+import { themeByRef } from "../cat-harness/schemas/theme-by-ref.js";
 
-const REPO = resolve(import.meta.dir, "..", "..", "..");
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move to the checkout's test home (bean `7zz1`). */
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
+
+
+const REPO = resolve(ORIGIN_DIR, "..", "..", "..");
 
 type Ref = { themeId: string; instance?: string };
 type Found = { where: string; ref: Ref; citing?: string };

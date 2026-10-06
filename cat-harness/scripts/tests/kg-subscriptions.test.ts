@@ -3,6 +3,10 @@
  * this instance CONSUMES, and which of its parts it chose to hold. The schema
  * holds the choice and the pin; state lives on each part's materialisation
  * record. These pin the shapes that would blur that.
+ *
+ * The tests of this file that read the whole checkout (derives the staged
+ * instances of the checkout) live in `test/kg-subscriptions-checkout.test.ts`
+ * (bean `7zz1`): standing alone, cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 
@@ -87,14 +91,6 @@ import { resolve } from "node:path";
 
 describe("the known-substrates registry (subscriptions-viz)", () => {
   const REPO = resolve(import.meta.dir, "../../..");
-
-  test("a staged instance is DERIVED as planned — nobody keeps a second list of it", () => {
-    const rows = knownSubstrates(REPO);
-    const core = rows.find((r) => r.name === "folio-assistant-core");
-    expect(core?.status).toBe("planned");
-    expect(core?.source).toBe("staged instance");
-    expect(core?.repository).toBe("litlfred/folio-assistant-core");
-  });
 
   test("an associated harness is derived as exists, its repository read from the URL", () => {
     const ihris = knownSubstrates(REPO).find((r) => r.name === "ihris");

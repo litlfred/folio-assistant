@@ -6,18 +6,31 @@
  * two are checked against each other: a directory that declares a viewer and
  * whose kinds no Tool renders is a viewer with no declared renderer, and a
  * rendered kind no directory declares is a claim about nothing.
+ *
+ * Moved here from `cat-harness/scripts/tests/viewer-tools.test.ts` to the
+ * checkout's own test home `test/` (bean `7zz1`, owner ruling 2026-10-06
+ * "Top-level instance"): every test in it reads every viewer page and every
+ * directory that declares the kind it renders, across the checkout, which only
+ * the whole checkout holds. Standing alone, cat-harness has none of it, and
+ * `check:cat-harness-standalone` collects every test in that layer. Paths are
+ * composed from ORIGIN_DIR, the directory it was written in, so nothing it
+ * reads changed.
  */
 import { describe, expect, it } from "bun:test";
-import { resolve } from "node:path";
+import { resolve, join } from "node:path";
 
-import { instanceRootsIn, instanceDirectories, isPublishedGraphTypology } from "../../schemas/cat-harness.js";
+import { instanceRootsIn, instanceDirectories, isPublishedGraphTypology } from "../cat-harness/schemas/cat-harness.js";
 // Every instance's Tools, as `viewer-declarations` reads them: a viewer Tool
 // may live in a dependency's `tools` graph (fhir-harness's `ig-pages`), and the
 // cat-harness barrel alone would report its pages as naming no renderer.
-import { tools } from "../../tools/discover.js";
-import { viewerPages } from "../viewer-declarations.js";
+import { tools } from "../cat-harness/tools/discover.js";
+import { viewerPages } from "../cat-harness/scripts/viewer-declarations.js";
 
-const REPO = resolve(import.meta.dir, "..", "..", "..");
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move to the checkout's test home (bean `7zz1`). */
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
+
+
+const REPO = resolve(ORIGIN_DIR, "..", "..", "..");
 
 interface Dir { id: string; graphTypologies?: string[]; coverage?: { visualiser?: unknown } }
 
