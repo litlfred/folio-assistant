@@ -4002,6 +4002,13 @@ EntryObjectSchema.reason <span class="fa-gloss-status">candidate, extracted</spa
 <p>Why this placement, in a sentence. For <code>computed</code>, the rule's description will do.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/merge-queue.ts"><code>cat-harness/schemas/merge-queue.ts#EntryObjectSchema.reason</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--merge-queue.entryobjectschema.release" data-fa-state="extracted" data-fa-gloss="">
+EntryObjectSchema.release <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A person's decision to merge, or not — &#123;@link ReleaseSchema}.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/merge-queue.ts"><code>cat-harness/schemas/merge-queue.ts#EntryObjectSchema.release</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--merge-queue.entryobjectschema.repository" data-fa-state="extracted" data-fa-gloss="">
 EntryObjectSchema.repository <span class="fa-gloss-status">candidate, extracted</span>
 </dt>

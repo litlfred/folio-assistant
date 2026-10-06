@@ -1,10 +1,10 @@
 ---
 # folio-assistant-x78e
 title: 'smart-immunizations landing: Summary heading has a wrong feedback link and no section edit link'
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-06T05:56:52Z
-updated_at: 2026-10-06T05:56:52Z
+updated_at: 2026-10-06T15:44:01Z
 parent: folio-assistant-uhkv
 ---
 
@@ -29,3 +29,5 @@ Against mftp's spec (each heading gets ✎ = its source line, blob/<branch>/…#
 - [ ] a test covering a heading like this one (index.md, the IG's first page) fails on the old behaviour
 
 Related: mftp, whose spec defines the ✎ / 📣 heading links.
+
+_2026-10-06T15:44:01Z_ — Claimed by claude/x78e-heading-links — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
