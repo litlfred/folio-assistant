@@ -1,0 +1,51 @@
+{
+  "$ref": "#/definitions/IgMenuGroup",
+  "definitions": {
+    "IgMenuGroup": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "href": {
+          "type": "string",
+          "minLength": 1
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "href": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ]
+          }
+        }
+      },
+      "required": [
+        "label",
+        "items"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-menu/IgMenuGroupSchema.schema.json",
+  "title": "IgMenuGroupSchema",
+  "description": "Generated from `IgMenuGroupSchema` in schemas/ig-menu.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/gifted-fermi-t8k217",
+    "sha": "f117aff606e05262f010ea97aca47c5d8aeefe0a",
+    "pr": "2192/merge",
+    "run": "37430312234"
+  }
+}
