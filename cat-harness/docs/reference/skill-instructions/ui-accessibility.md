@@ -159,7 +159,7 @@ on the region, and a count announced when a filter changes the list.
 `End-to-end + accessibility (hard)` job.
 
 ```sh
-bunx playwright test test/a11y.e2e.ts
+bunx playwright test cat-harness/test/a11y.e2e.ts
 ```
 
 Two halves, deliberately:

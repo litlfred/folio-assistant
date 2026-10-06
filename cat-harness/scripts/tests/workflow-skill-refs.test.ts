@@ -9,6 +9,11 @@
  *
  * The full report (including per-diagram coverage, which is NOT gated here) is
  * `bun run check:workflow-refs`. This test gates only the unambiguous half.
+ *
+ * The tests of this file that read the whole checkout (resolves every
+ * instance's declared diagrams) live in
+ * `test/workflow-skill-refs-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { join, basename } from "node:path";
@@ -45,21 +50,6 @@ function knownSkills(): Set<string> {
 }
 
 describe("declared diagram paths resolve", () => {
-  test("every bpmnDiagrams entry names a file that exists", async () => {
-    // Same failure one layer over. `schemas/translation-tools.ts` listed
-    // `processes/publication-workflow.bpmn`, which has never existed —
-    // `docs/process/publication-workflow.md` is a PAGE embedding three diagrams. The
-    // re-render skipped it silently, and a skipped diagram is
-    // indistinguishable from one that needed no work.
-    const { CONTENT_TYPE_TRANSLATIONS, resolveTranslationPath } = await import("../../schemas/translation-tools.ts");
-    const missing: string[] = [];
-    for (const ct of CONTENT_TYPE_TRANSLATIONS) {
-      for (const rel of ct.bpmnDiagrams ?? []) {
-        if (resolveTranslationPath(ct, rel) === undefined) missing.push(`${ct.contentType} → ${rel}`);
-      }
-    }
-    expect(missing).toEqual([]);
-  });
 
   test("every declared extractModule / injectModule exists", async () => {
     // `bpmn` declared NEITHER while its note described a working re-render,

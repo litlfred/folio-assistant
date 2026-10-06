@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-06T06:42:34Z
-updated_at: 2026-10-06T14:09:28Z
+updated_at: 2026-10-06T14:54:31Z
 parent: folio-assistant-7x5n
 ---
 
@@ -120,3 +120,6 @@ Plan, three PRs:
 2. Switch `CONTENT_CONTEXT` in `jsonld.ts` and the minting sites (`l1-blocks`, `tabular-nodes`, `gen-library-jsonld`) to the new IRIs.
 3. Rewrite `@type` in the committed `.jsonld` files and `folioType` in the block-kind JSONs, one instance per PR.
 Also: the `ns-vocabulary` Tool maintains `folio-assistant-core/ns.jsonld` from cat-harness, an upward path; fix it alongside PR 1.
+
+
+**Amended by owner 2026-10-06: CLEAN BREAK — no deprecated aliases.** The old `folio-assistant-core:` content-model IRIs are dropped, not kept resolvable; no `owl:deprecated`/`isReplacedBy`/equivalence records. PR 1 therefore needs no alias mechanism: define the terms at `layer: "harness"`, rename the clashing `meta`/`fileCount`, and switch `CONTENT_CONTEXT` + minting sites; PR 3 rewrites the committed `.jsonld` `@type`s and block-kind `folioType`s.

@@ -5,6 +5,10 @@
  *
  * Synthetic instances in a temp "repository" for the mechanism, and one test
  * over this repository for the reference that motivated it.
+ *
+ * The tests of this file that read the whole checkout (resolves who-iris's own
+ * themes) live in `test/theme-by-ref-checkout.test.ts` (bean `7zz1`): standing
+ * alone, cat-harness has none of it.
  */
 import { afterAll, describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -102,16 +106,6 @@ describe("each miss is its own repair, and none is silently the platform's", () 
   });
 });
 
-describe("over this repository", () => {
-  test("who-iris's own theme resolves by reference, with no WHO value in the platform", () => {
-    const repoRoot = resolve(import.meta.dir, "..", "..");
-    const r = themeByRef({ instance: "who-iris", themeId: "iris-web" }, repoRoot);
-    expect(r.ok).toBe(true);
-    expect(r.ok && r.theme.kind).toBe("webpage");
-    expect(THEMES.some((t) => t.id === "iris-web")).toBe(false);
-  });
-});
-
 /** A module declaring one webpage theme and one sticky theme with the given id. */
 const stickyModule = (id: string, accent: string): string => `import { ResolvedThemeSchema } from ${JSON.stringify(THEME_TS)};
 const L = { minWidth: "13rem", padding: "1rem", fontScale: 1 };
@@ -167,15 +161,5 @@ describe("instanceStickyThemes — every instance's sticky themes, for the board
     const { themes, conflicts } = instanceStickyThemes(root);
     expect(themes).toEqual([]);
     expect(conflicts).toEqual([{ kind: "duplicate-across-instances", themeId: "shared-note", instances: ["acme", "zeta"] }]);
-  });
-
-  test("over this repository: who-iris's iris-sticky is found, and holds iris-web's accent", () => {
-    const repoRoot = resolve(import.meta.dir, "..", "..");
-    const { themes, conflicts } = instanceStickyThemes(repoRoot, "cat-harness", new Set(THEMES.map((t) => t.id)));
-    expect(conflicts).toEqual([]);
-    const iris = themes.find((t) => t.instance === "who-iris" && t.theme.id === "iris-sticky");
-    expect(iris).toBeDefined();
-    const web = themeByRef({ instance: "who-iris", themeId: "iris-web" }, repoRoot);
-    expect(web.ok && iris!.theme.palette.accent).toBe(web.ok ? web.theme.palette.accent : "");
   });
 });

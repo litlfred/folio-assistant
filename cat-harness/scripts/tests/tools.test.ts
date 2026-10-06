@@ -4,6 +4,10 @@
  * Five Tool nodes were DESCRIBED across four skills and the harness analysis
  * before any existed. This is what makes the skill/Tool separation checkable
  * rather than asserted.
+ *
+ * The tests of this file that read the whole checkout (discovers skills across
+ * every instance in the checkout) live in `test/tools-checkout.test.ts` (bean
+ * `7zz1`): standing alone, cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
@@ -18,7 +22,6 @@ import { knownSkills as canonicalKnownSkills } from "../known-skills.js";
 import { buildExport } from "../kg-export.js";
 import { buildToolTypes, buildToolSchema, buildSkillIoContracts, skillIoIri, staleSkillIoIds } from "../harness-schema-export.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
-
 
 const BASE = "https://example.invalid/fa";
 
@@ -71,12 +74,6 @@ const STAGING_EXPORT = await buildExport({ baseUrl: STAGING_BASE });
 describe("tools", () => {
   test("there are tools to check — otherwise everything below is vacuous", () => {
     expect(tools().length).toBeGreaterThanOrEqual(4);
-  });
-
-  test("every satisfies names a skill that exists", () => {
-    // The constraint a schema cannot express: Zod can require `satisfies` to be
-    // non-empty, but it does not get to read the tree.
-    expect(CHECKED.danglingSatisfies).toEqual([]);
   });
 
   test("every satisfies edge agrees with its skill's own input contract", () => {
@@ -185,15 +182,6 @@ describe("tools", () => {
   test("the generated schemas carry an absolute $id", () => {
     expect(buildToolSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/tool.schema.json`);
     expect(buildToolTypes({ baseUrl: BASE }).$id).toBe(`${BASE}/tool-types.schema.json`);
-  });
-
-  test("skill discovery is not a hardcoded list", () => {
-    // Four hardcoded corpus paths have been wrong in this repo already; this
-    // asserts the check sees the packages a list would have missed.
-    const s = knownSkills();
-    expect(s.has("smart-base-tools")).toBe(true); // smart-base/skills/content/authoring-who-smart-guidelines
-    expect(s.has("lean-formalization")).toBe(true); // schemas/skills/<name>/
-    expect(s.has("kg-export")).toBe(true); // skills/folio-core
   });
 
   test("skill discovery is the ONE definition, not a second scan", () => {

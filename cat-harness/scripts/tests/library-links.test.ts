@@ -1,6 +1,11 @@
 /**
  * `library-links` — where a library reference links (bean `qgjh`, owner
  * 2026-09-30: the viewer, the item's page, and its source).
+ *
+ * The tests of this file that read the whole checkout (reads the library
+ * entries of the content instances) live in
+ * `test/library-links-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, it } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
@@ -20,16 +25,6 @@ const entries = (
 ).entries;
 
 describe("a library reference resolves only where its target exists", () => {
-  it("links every projected item to its viewer page and README", () => {
-    // The premise: a resolver over no entries would pass the loop vacuously.
-    expect(entries.length).toBeGreaterThan(0);
-    for (const e of entries) {
-      const l = r.links(e.id, e.instance);
-      // The key the viewer's honourAnchor matches: `<instance>/<id>`.
-      expect(l?.viewer, e.id).toBe(`cat-harness/library/${e.instance}/#${encodeURIComponent(`${e.instance}/${e.id}`)}`);
-      if (existsSync(join(REPO, e.dir, "README.md"))) expect(l?.readme, e.id).toContain(`/${e.dir}/README.md`);
-    }
-  });
 
   it("gives an arXiv item its arXiv record, and invents none for the rest", () => {
     // An item whose metadata RECORDS its arXiv id: `arxiv-0909.4061v2` is

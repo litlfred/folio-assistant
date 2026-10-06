@@ -375,9 +375,10 @@ export function harnessLayout(topBar: string, tocNav: string, sectionLabel?: str
     '{% if page.ig_edit_url %}<p class="ig-edit"><a href="{{ page.ig_edit_url }}">Edit this page on GitHub</a></p>{% endif %}',
     '{% if page.ig_source_lines %}<script type="application/json" id="ig-source-lines">{"blob": {{ page.ig_source_blob | jsonify }}, "lines": {{ page.ig_source_lines | jsonify }}}</script>',
     `<script>${SOURCE_LINKS_JS}</script>{% endif %}`,
-    // Last on the page, as on the Publisher's. Only on the pages this build
-    // wrote (`ig_footer`): a page copied in that draws its own — an artefact
-    // page — would otherwise carry two.
+    // Last on the page, as on the Publisher's. Only on pages that flag it
+    // (`ig_footer`): the pages this build wrote, and the artefact pages
+    // copied in, whose front matter (`ig_footer`, `ig_root`, `ig_prev`,
+    // `ig_next`) asks for this same include rather than drawing their own.
     `{% if page.ig_footer %}{% include ${IG_FOOTER_INCLUDE} %}{% endif %}`,
     "</main>",
     "</body>",
