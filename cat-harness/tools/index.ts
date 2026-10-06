@@ -174,6 +174,71 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // Bean `l4ay`, owner 2026-10-03: "A sub graph declares where it's getting
     // its content". The ONE resolver, from a shell — `branch-store
     // mount`/`push` call the same function and dispatch on its `kind`.
+    // Bean `mftp`, owner 2026-10-05: "make sure scripts you use go into Tools".
+    defineTool({
+      id: "rail-standalone-pages",
+      title: "Give every page Jekyll did not lay out the folio-assistant navbar",
+      description:
+        "A LAST pass over the finished site: inject the shared navbar (`lib/navbar.ts`, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated instance pages, and each IG site built by `stage-ig-sites`. A page under an `igSite` instance's route is railed as THAT instance's page (its name, mark and graphs); a page may declare its own section (`data-fa-visualiser-nav`) and its label (`fa-visualiser-label`). Mount routes are left to the mount pass, and a page that declines (`folio-navbar: none`) is left bare.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/rail-standalone-pages.ts" },
+      io: {
+        inputs: [
+          { name: "site", schema: t("RepoPath"), required: true, description: "The finished site directory." },
+          { name: "built", schema: t("Slug"), required: true, description: "The instance whose site this is (`cat-harness`)." },
+          { name: "foreign-site", schema: t("Flag"), required: false, arg: { flag: "--foreign-site" }, description: "The site is a folio's, not the platform's: platform links point at the platform's published site." },
+          { name: "instance", schema: t("Slug"), required: false, description: "With `--foreign-site`: the instance whose own site this is. Its name, mark and graphs head the navbar, and Harnesses lists it (linking to this site's root) and the harnesses it is built on." },
+        ],
+        outputs: [
+          { name: "railed", schema: t("Count"), description: "Pages given the navbar, beside those already navigated, redirect stubs, pages that declined, and pages with no <body> — each counted, none silently." },
+        ],
+      },
+      satisfies: ["harness-tiles"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+    defineTool({
+      id: "compose-docs",
+      title: "Compose the site's documentation tree from its declared docs layers",
+      description:
+        "Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` instance under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs instances a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no instance, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome (#2235).",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/compose-docs.ts" },
+      io: {
+        inputs: [
+          { name: "out", schema: t("RepoPath"), required: true, description: "The Jekyll source to write (replaced)." },
+          { name: "staging", schema: t("Flag"), required: false, arg: { flag: "--staging" }, description: "A local build or a staging preview: staging-only visualisations are included." },
+          { name: "changed-files", schema: t("RepoPath"), required: false, description: "The branch's changed paths, one per line: instances it does not reach are stubbed." },
+          { name: "shell", schema: t("Flag"), required: false, arg: { flag: "--shell" }, description: "The chrome only: Jekyll machinery and assets, no page and no composed instance; generated includes written empty." },
+        ],
+        outputs: [
+          { name: "files", schema: t("Count"), description: "Files composed, with every override, merge, withheld file and carried or stubbed instance named." },
+        ],
+      },
+      satisfies: ["harness-tiles"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+    defineTool({
+      id: "navbar-include",
+      title: "Write the site sidebar's harness navbar include",
+      description:
+        "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from (#2235).",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/gen-navbar-include.ts" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if the committed include is stale; write nothing." },
+          { name: "instance", schema: t("Slug"), required: false, description: "The instance whose own site this navbar is for." },
+          { name: "link-root", schema: t("RepoPath"), required: false, description: "With `--instance`: the main site's URL, for every link that is not this instance's own." },
+          { name: "title", schema: t("Slug"), required: false, description: "With `--instance`: the label the navbar's home row carries." },
+          { name: "out", schema: t("RepoPath"), required: false, description: "With `--instance`: where to write the include (the shell's `_includes/generated/navbar-footer.html`)." },
+        ],
+        outputs: [
+          { name: "include", schema: t("RepoPath"), description: "The include written, or `up to date`." },
+        ],
+      },
+      satisfies: ["harness-tiles"],
+      requires: { runtime: ["bun"], network: false },
+    }),
     defineTool({
       id: "subgraph-resolve",
       title: "Resolve a declared subgraph's content source",
@@ -245,7 +310,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "subgraph-readmes",
       title: "Directory READMEs from the Knowledge Graph",
       description:
-        "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
+        "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Typologies, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
       install: { none: true },
       invoke: { shell: "bun run readme:subgraphs" },
       io: {
@@ -1266,7 +1331,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "uml-overview",
       title: "UML overview per named sub-graph",
       description:
-        "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
+        "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph typology's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
       install: { none: true },
       invoke: { shell: "bun run uml:overview" },
       io: {
@@ -1989,12 +2054,12 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "kg-validate",
       title: "Validate a node in the graph",
       description:
-        "Check one file against the schema for its graph kind. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
+        "Check one file against the schema for its graph typology. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
       install: { none: true },
       invoke: { shell: "bun run kg:validate" },
       io: {
         inputs: [
-          { name: "path", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The node to check. Its graph kind is resolved from the declared directory that contains it." },
+          { name: "path", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The node to check. Its graph typology is resolved from the declared directory that contains it." },
           { name: "lenient", schema: t("Flag"), required: false, arg: { flag: "--lenient" }, description: "Accept partial coverage knowingly: downgrade could-not-determine from an error to a warning." },
         ],
         // `Text`, not a bespoke verdict type: the tool's answer is the exit
@@ -2097,7 +2162,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
       downstream: {
         output: "cat-harness/test/results/lsi/",
-        inputs: ["every declared prose graph (graph kinds library, skills, folio, docs, methodology, memory, policies, glossary)"],
+        inputs: ["every declared prose graph (graph typologies library, skills, folio, docs, methodology, memory, policies, glossary)"],
         judgedAt: "checkout",
       },
     }),
@@ -2734,7 +2799,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // served, so a sibling module for the same reason as `sessions.ts`.
     ...vocabMapTools(t),
 
-    // The viewer generators, each declaring the graph kinds it renders
+    // The viewer generators, each declaring the graph typologies it renders
     // (#1168 B7a). A sibling module for the same reason as `sessions.ts`.
     ...viewerTools(t),
 

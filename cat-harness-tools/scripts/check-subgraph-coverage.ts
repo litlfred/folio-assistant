@@ -78,6 +78,7 @@ import {
   resolveCoveragePath,
   type CatHarnessDeclaration,
   visualisationsOf,
+  visualisationResolves,
 } from "../../cat-harness/schemas/cat-harness.js";
 import { withViewers } from "../../cat-harness/scripts/viewer-declarations.js";
 
@@ -505,12 +506,12 @@ export function auditInstance(root: string, repoRoot: string = checkoutRootFor(r
       // names none. Derived skills exist by construction, so there is no
       // "declared and does not resolve" case for this criterion.
       if (criterion === "skill") {
-        if (governingSkills({ instance, id: dir.id, graphKinds: dir.graphKinds }, skills, repoRoot, reach).length > 0) continue;
+        if (governingSkills({ instance, id: dir.id, graphTypologies: dir.graphTypologies }, skills, repoRoot, reach).length > 0) continue;
       }
       // The DOCS page is read from the pages the same way (#1168 B7c): a page
       // says what it documents, and the directory names no page.
       if (criterion === "docs") {
-        if (documentingPages({ instance, id: dir.id, graphKinds: dir.graphKinds }, pages, repoRoot, reach).length > 0) continue;
+        if (documentingPages({ instance, id: dir.id, graphTypologies: dir.graphTypologies }, pages, repoRoot, reach).length > 0) continue;
       }
       const declared = criterion === "skill" || criterion === "docs" ? undefined : dir.coverage?.[criterion];
       if (declared === undefined) {
@@ -536,7 +537,7 @@ export function auditInstance(root: string, repoRoot: string = checkoutRootFor(r
         // is the existence claim.
         const unmetObligation =
           criterion === "serialisations" ||
-          (criterion === "visualiser" && dir.graphKinds.some((g) => owesVisualiser(g)));
+          (criterion === "visualiser" && dir.graphTypologies.some((g) => owesVisualiser(g)));
         findings.push({
           instance,
           directory: dir.id,
@@ -548,7 +549,7 @@ export function auditInstance(root: string, repoRoot: string = checkoutRootFor(r
               ? `no serialisations declared — every declared directory owes json, jsonld and ` +
                 `schema.json at its own URL, and this one is excused nothing`
               : unmetObligation
-                ? `no visualiser declared, and ${dir.graphKinds.filter((g) => owesVisualiser(g)).join(", ")} owes one — ` +
+                ? `no visualiser declared, and ${dir.graphTypologies.filter((g) => owesVisualiser(g)).join(", ")} owes one — ` +
                   `an instance renders what it declares`
                 : `no ${criterion} declared — nobody has said what ${ASKS[criterion]}`,
         });
@@ -559,11 +560,14 @@ export function auditInstance(root: string, repoRoot: string = checkoutRootFor(r
       // second visualisation is broken is reported for that one rather than
       // for the whole declaration: "one of your two viewers is missing" and
       // "your viewer is missing" are different repairs.
+      // A visualisation built at publish (bean 0b8c) resolves by its writer:
+      // its page is never committed, so the disk cannot be the answer.
+      const exists = (r: string) => targetExists(repoRoot, r);
       const refs =
         criterion === "visualiser"
-          ? visualisationsOf(dir.coverage, dir.id).map((v) => v.ref)
-          : [declared as string];
-      const broken = refs.filter((r) => !targetExists(repoRoot, r));
+          ? visualisationsOf(dir.coverage, dir.id).map((v) => ({ ref: v.ref, ok: visualisationResolves(v, exists) }))
+          : [{ ref: declared as string, ok: exists(declared as string) }];
+      const broken = refs.filter((r) => !r.ok).map((r) => r.ref);
       if (broken.length > 0) {
         findings.push({
           instance,

@@ -30,8 +30,8 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
   note — authored content on one page, not chrome — and the forge remains
   reachable from the navbar's Source tile regardless.
 -->
-[البدء](../getting-started.html){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[التثبيت](../installation.html){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[البدء](../start/getting-started.html){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[التثبيت](../start/installation.html){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [عرض على GitHub](https://github.com/litlfred/folio-assistant){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 {% include harness_details.html %}
@@ -41,7 +41,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ## أربعة أمور، بالترتيب
 
 **1. خطة العمل هي المكان الذي تقول فيه ما تفعله.**
-ليست رسالة دردشة ولا تعليقًا، بل [beans]({{ '/beans-and-todos.html' | relative_url }})، وهو مخزن خاضع لإدارة الإصدارات تستطيع أي جلسة أو أي وكيل قراءته. احجز العنصر قبل أن تعمل عليه كي لا تأخذه جلسة موازية؛ والـ bean الذي يتبيّن أنه غير مطلوب يُعلَّم `scrapped` مع أسبابه، ولا يُحذف أبدًا.
+ليست رسالة دردشة ولا تعليقًا، بل [beans]({{ '/guides/beans-and-todos.html' | relative_url }})، وهو مخزن خاضع لإدارة الإصدارات تستطيع أي جلسة أو أي وكيل قراءته. احجز العنصر قبل أن تعمل عليه كي لا تأخذه جلسة موازية؛ والـ bean الذي يتبيّن أنه غير مطلوب يُعلَّم `scrapped` مع أسبابه، ولا يُحذف أبدًا.
 
 ```sh
 cat-harness/scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
@@ -56,9 +56,9 @@ beans <id> --status in-progress     # احجزه، بشكل مرئي
 bun run init-folio --help
 ```
 
-بعد ذلك، يأخذك [البدء]({{ '/getting-started.html' | relative_url }}) مع الكتلة الأولى عبر التحقق والعرض والمراجعة.
+بعد ذلك، يأخذك [البدء]({{ '/start/getting-started.html' | relative_url }}) مع الكتلة الأولى عبر التحقق والعرض والمراجعة.
 
-**3. اعرف نوع ما تكتبه.** *المستند* نثر منظَّم؛ و*الورقة* (paper) هي ذلك بالإضافة إلى أنواع الكتل التي يكون تقريرها ادعاءً رياضيًا صوريًا، مدعومًا بـ Lean ومنضَّدًا عبر LaTeX. يحدد هذا الاختيار الكتل المسموح بها والفحوص التي تُشغَّل: [أنواع المحتوى]({{ '/content-types.html' | relative_url }}).
+**3. اعرف نوع ما تكتبه.** *المستند* نثر منظَّم؛ و*الورقة* (paper) هي ذلك بالإضافة إلى أنواع الكتل التي يكون تقريرها ادعاءً رياضيًا صوريًا، مدعومًا بـ Lean ومنضَّدًا عبر LaTeX. يحدد هذا الاختيار الكتل المسموح بها والفحوص التي تُشغَّل: [أنواع المحتوى]({{ '/concepts/content-types.html' | relative_url }}).
 
 **4. التوثيق الذي لن تقرأه أبدًا.**
 [كله]({{ '/guides/index.html' | relative_url }}) — أدلة التأليف، والبنية، وسير عمل النشر، والمرجع المولَّد للمخططات والمهارات. إنه هنا، وهو شامل، والتوقع الصادق أنك ستصل إليه من محرك بحث في اللحظة نفسها التي يتعطل فيها شيء ما. وهذه طريقة جيدة لاستخدامه. الخطوات الثلاث أعلاه هي التي تستحق القراءة الآن.
@@ -96,35 +96,35 @@ flowchart LR
 
 | نوع المحتوى | المخرجات | حزمة المهارات |
 |-------------|----------|---------------|
-| **الأوراق والكتب العلمية** | الصياغة الرسمية بـ Lean 4 + LaTeX/Markdown | [`authoring-math`](../content-types.html#scientific-papers--books) |
-| **حزم التكيف الرقمي (DAK) لإرشادات منظمة الصحة العالمية SMART** | مخرجات المستوى L2 — مخططات BPMN وDMN وقواميس بيانات Excel وشخصيات المستخدمين | [`authoring-who-smart-guidelines`](../content-types.html#who-smart-guidelines-daks-l2) |
-| **أدلة تطبيق إرشادات منظمة الصحة العالمية SMART** | موارد FHIR للمستوى L3، وFSH، ومخرجات IG Publisher | [`authoring-who-smart-guidelines`](../content-types.html#who-smart-implementation-guides-l3) |
+| **الأوراق والكتب العلمية** | الصياغة الرسمية بـ Lean 4 + LaTeX/Markdown | [`authoring-math`](../concepts/content-types.html#scientific-papers--books) |
+| **حزم التكيف الرقمي (DAK) لإرشادات منظمة الصحة العالمية SMART** | مخرجات المستوى L2 — مخططات BPMN وDMN وقواميس بيانات Excel وشخصيات المستخدمين | [`authoring-who-smart-guidelines`](../concepts/content-types.html#who-smart-guidelines-daks-l2) |
+| **أدلة تطبيق إرشادات منظمة الصحة العالمية SMART** | موارد FHIR للمستوى L3، وFSH، ومخرجات IG Publisher | [`authoring-who-smart-guidelines`](../concepts/content-types.html#who-smart-implementation-guides-l3) |
 | **أخرى** | قابل للتوسيع — أضف محولاً جديدًا + حزمة مهارات | [إضافة نوع محتوى](../guides/new-content-type.html) |
 
-تنطبق الحزمة الشاملة [`content-lifecycle`](../content-types.html#the-content-lifecycle)
+تنطبق الحزمة الشاملة [`content-lifecycle`](../concepts/content-types.html#the-content-lifecycle)
 (تخطيط → تأليف → تحقق → مراجعة → اختبار → نشر → ملاحظات → إحالة للتقاعد)
 على كل نوع محتوى.
-وينمذجها [مسار عمل النشر](../publication-workflow.html) بدقة —
+وينمذجها [مسار عمل النشر](../process/publication-workflow.html) بدقة —
 في مخططات مسارات BPMN، مع تحديد الأدوار، وبوابة التحقق من التفاعل البشري الحاسوبي (HCI)،
 وخطة العمل المشتركة.
 
 ## الخطوات التالية
 
-- **[التثبيت](../installation.html)** — المتطلبات الأساسية، والاستنساخ، و`bun install`، والتحقق من القدرات.
-- **[البدء](../getting-started.html)** — توصيل خادم MCP بنموذجك اللغوي وتشغيل مهاراتك الأولى.
+- **[التثبيت](../start/installation.html)** — المتطلبات الأساسية، والاستنساخ، و`bun install`، والتحقق من القدرات.
+- **[البدء](../start/getting-started.html)** — توصيل خادم MCP بنموذجك اللغوي وتشغيل مهاراتك الأولى.
 - **[درس تعليمي: كتابة ورقة بحثية باستخدام folio-assistant](../guides/writing-a-paper.html)** — دليل تطبيقي كامل مدفوع بالنموذج اللغوي مع جلسة محادثة تجريبية.
-- **[أنواع المحتوى](../content-types.html)** — الصياغة الرسمية لكل مجال من مجالات التأليف.
-- **[مسار عمل النشر](../publication-workflow.html)** — مخططات مسارات BPMN لعمليات التحرير والنشر: بوابة التحقق من التفاعل البشري الحاسوبي (HCI)، وتوزيع مهام المراجعة، وخطة العمل المشتركة.
+- **[أنواع المحتوى](../concepts/content-types.html)** — الصياغة الرسمية لكل مجال من مجالات التأليف.
+- **[مسار عمل النشر](../process/publication-workflow.html)** — مخططات مسارات BPMN لعمليات التحرير والنشر: بوابة التحقق من التفاعل البشري الحاسوبي (HCI)، وتوزيع مهام المراجعة، وخطة العمل المشتركة.
 - **[توجيه الوكيل](../guides/agent-onboarding.html)** — تدريب تمهيدي لوكيل الذكاء الاصطناعي عند دمجه في ملف المحتوى: الخطوات الأولى، واكتشاف المهارات، ونموذج كائنات المحتوى، وملفات ضمان الجودة المرافقة (QA sidecars).
-- **[المهارات والأدوار](../skills.html)** — جميع المهارات والأدوار، وكيفية عملها مع النموذج اللغوي الكبير.
-- **[Beans والمهام (Beans and todos)](../beans-and-todos.html)** — خطة العمل المشتركة، ولماذا هي خاضعة لإدارة الإصدارات ومحفوظة في المستودع.
-- **[استيعاب الوثائق (Document ingestion)](../document-ingestion.html)** — مسار تحويل uploads/ إلى المصادر الأولية L1: استخراج البنية، وتوليد المحتوى المشتق، وبناء رسم المعرفة البياني L1، وبوابة الاكتمال.
-- **[الأدلة (Evidence)](../evidence.html)** — استرجاع الأدلة واستخراجها ومراجعتها من المصادر إلى الادعاءات.
+- **[المهارات والأدوار](../concepts/skills.html)** — جميع المهارات والأدوار، وكيفية عملها مع النموذج اللغوي الكبير.
+- **[Beans والمهام (Beans and todos)](../guides/beans-and-todos.html)** — خطة العمل المشتركة، ولماذا هي خاضعة لإدارة الإصدارات ومحفوظة في المستودع.
+- **[استيعاب الوثائق (Document ingestion)](../guides/document-ingestion.html)** — مسار تحويل uploads/ إلى المصادر الأولية L1: استخراج البنية، وتوليد المحتوى المشتق، وبناء رسم المعرفة البياني L1، وبوابة الاكتمال.
+- **[الأدلة (Evidence)](../process/evidence.html)** — استرجاع الأدلة واستخراجها ومراجعتها من المصادر إلى الادعاءات.
 - **[مرجع مخططات المهارات](../reference/skills/)** — عقود المدخلات والمخرجات المُنشأة لكل مهارة.
 - **[مرجع واجهة برمجة تطبيقات TypeScript](../api/)** — نموذج كائنات المحتوى (`Block` و`Chapter` و`Paper`، وبناة الكائنات، وقيود Zod).
-- **[البنية الهندسية](../architecture.html)** — المحولات، وخادم MCP، والتحكم في الوصول القائم على الأدوار (RBAC)، ونموذج الكتل.
-- **[رسم المعرفة البياني (The Knowledge Graph)](../knowledge-graph.html)** — تصنيف الرسوم البيانية الفرعية، واتجاه المراجع، وكيفية تقسيم العمل بين المستودعات.
-- **[The Harness (منظومة الربط والتسخير)](../harness.html)** — التهيئة، وتتبع التبعيات، والالتزامات المترتبة على تسخير دليل ما.
+- **[البنية الهندسية](../concepts/architecture.html)** — المحولات، وخادم MCP، والتحكم في الوصول القائم على الأدوار (RBAC)، ونموذج الكتل.
+- **[رسم المعرفة البياني (The Knowledge Graph)](../concepts/knowledge-graph.html)** — تصنيف الرسوم البيانية الفرعية، واتجاه المراجع، وكيفية تقسيم العمل بين المستودعات.
+- **[The Harness (منظومة الربط والتسخير)](../concepts/harness.html)** — التهيئة، وتتبع التبعيات، والالتزامات المترتبة على تسخير دليل ما.
 
 يستحق الاطلاع على مهارتين قبل قراءة الصفحات أعلاه، لأن كل ما عداهما يفترضهما مسبقًا:
 توجّه مهارة [`getting-started`](../reference/skill-instructions/getting-started.html)

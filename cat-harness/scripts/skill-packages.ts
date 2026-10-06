@@ -17,7 +17,7 @@ import { basename, join, resolve } from "node:path";
 import { isSkillMd, kgRoots, corpusScopeFor } from "./known-skills.js";
 import { packageDirsIn } from "./skill-topics.js";
 import { resolveSkillDirs } from "../schemas/harness-config.js";
-// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// The `folio` graph typology is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
 // COMMAND that runs carries it — and since #840 every caller does, because

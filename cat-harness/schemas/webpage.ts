@@ -119,8 +119,8 @@ export interface WebPageNode {
 
 export interface WebPage {
   /**
-   * URL stem. `document-ingestion` publishes to `docs/document-ingestion.md`
-   * and thus to `<baseurl>/document-ingestion.html`, which is what existing
+   * URL stem. `document-ingestion` publishes to `docs/guides/document-ingestion.md`
+   * and thus to `<baseurl>/guides/document-ingestion.html`, which is what existing
    * inbound links already use.
    */
   slug: string;
@@ -135,7 +135,7 @@ export interface WebPage {
   /** just-the-docs nav front matter. */
   navOrder?: number;
   /**
-   * What this page documents: graph kinds (`library`), or one directory as
+   * What this page documents: graph typologies (`library`), or one directory as
    * `<instance>/<id>` where the kind is too general. Emitted into the page's
    * front matter, where the coverage check reads it — the page names the
    * directory, and the directory names no page (#1168 B7c).

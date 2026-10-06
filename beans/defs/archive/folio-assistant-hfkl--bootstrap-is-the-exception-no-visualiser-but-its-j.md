@@ -21,7 +21,7 @@ answer free to drift:
 
 ## What this settles
 
-The [harness-instances docs page](../../../cat-harness/docs/architecture/harness-instances.md)
+The [harness-instances docs page](../../../cat-harness/docs/concepts/architecture/harness-instances.md)
 was published with a named, unresolved conflict: `cat-harness-minimum` carries
 *"if it produces something a human looks at, it is not the harness"*, which
 cannot hold literally alongside *"an instance renders by default"*.
@@ -163,7 +163,7 @@ failure. All four instances report `rendered`, 0 failed, 0 undetermined.
 ### The fourth box was already ticked by somebody else
 
 *"The docs page's 'conflict' section is rewritten as the resolved rule"* —
-`cat-harness/docs/architecture/harness-instances.md` already carried
+`cat-harness/docs/concepts/architecture/harness-instances.md` already carried
 §"Where the requirement starts — bootstrap is the exception" with the
 floor-that-rises table. Extended rather than rewritten: a subsection now
 records that the exemption is declared data, why `owes` is required, and why
@@ -204,7 +204,7 @@ this check. Re-derived from the REMOTE, because grepping a checkout answers
 | `bootstrap/render/` declared | `git show FETCH_HEAD:bootstrap/bootstrap.json` → directory ids | `bootstrap-render` present among 8 |
 | exemption where the QA axis reads it | `… :cat-harness/schemas/cat-harness.ts \| grep -c renderExemption` | **13** |
 | `_kg/` contradiction resolved | `… :cat-harness/scripts/kg-export.ts \| grep -c "COMMITTED artefact"` | **1** — and see below |
-| docs "conflict" section rewritten | `… :cat-harness/docs/architecture/harness-instances.md` | §"Where the requirement starts — bootstrap is the exception" present; **zero** occurrences of "conflict" |
+| docs "conflict" section rewritten | `… :cat-harness/docs/concepts/architecture/harness-instances.md` | §"Where the requirement starts — bootstrap is the exception" present; **zero** occurrences of "conflict" |
 
 **The third row is why the obligation is re-derivation and not a count.** A
 bare hit for `"COMMITTED artefact"` reads as the stale comment surviving. It is

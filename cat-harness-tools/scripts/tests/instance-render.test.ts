@@ -84,13 +84,13 @@ describe("declared means TRANSITIVELY declared", () => {
     // Measured before this was written: that mistake gives cat-harness five
     // undeclared kinds where the true figure is one.
     const root = instance(
-      { name: "n", directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }] },
+      { name: "n", directories: [{ id: "beans", path: "beans/", graphTypologies: ["beans"] }] },
       {
         "beans/beans.json": JSON.stringify({
           name: "beans",
           directories: [
-            { id: "defs", path: "defs", graphKinds: ["bean-defs"] },
-            { id: "workflows", path: "workflows", graphKinds: ["workflow-state"] },
+            { id: "defs", path: "defs", graphTypologies: ["bean-defs"] },
+            { id: "workflows", path: "workflows", graphTypologies: ["workflow-state"] },
           ],
         }),
       },
@@ -101,7 +101,7 @@ describe("declared means TRANSITIVELY declared", () => {
 
   test("`kinds` is read as well as `graphs` — the bean graph uses both spellings", () => {
     const root = instance(
-      { name: "n", directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }] },
+      { name: "n", directories: [{ id: "beans", path: "beans/", graphTypologies: ["beans"] }] },
       {
         "beans/beans.json": JSON.stringify({
           name: "beans",
@@ -117,7 +117,7 @@ describe("declared means TRANSITIVELY declared", () => {
     // Understating `declared` would invent a finding. That file's problem is
     // `check:harness-dirs`'s to report, and it does so loudly.
     const root = instance(
-      { name: "n", directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }] },
+      { name: "n", directories: [{ id: "beans", path: "beans/", graphTypologies: ["beans"] }] },
       { "beans/beans.json": "{ not json" },
     );
     const kinds = declaredKinds(root, JSON.parse(readFileSync(declarationPathIn(root)!, "utf-8")));
@@ -255,11 +255,11 @@ describe("this repository's own instances", () => {
     // THIS TEST PREDICTED ITS OWN REPLACEMENT. It read, in #463:
     //
     //   "a check becomes an error once its count is zero. The count is 16
-    //    because `collectGraphKinds()` emits the global registry into every
+    //    because `collectGraphTypologies()` emits the global registry into every
     //    instance ... this test is what will fail, correctly, on the day
     //    somebody makes it fatal without clearing the count."
     //
-    // Bean `3jj9` cleared the count: `collectGraphKinds` now takes a root and
+    // Bean `3jj9` cleared the count: `collectGraphTypologies` now takes a root and
     // filters by `declaredKinds`, so bootstrap publishes the one kind it
     // declares instead of all 16. The finding is fatal from the same change,
     // which is the repository's standing rule applied rather than deferred.

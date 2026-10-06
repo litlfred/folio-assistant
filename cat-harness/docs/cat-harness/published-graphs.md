@@ -142,6 +142,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - folio-assistant-sci — *declared, not published*
 - SMART Base — *declared, not published*
 
+### `doc-group`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
+
 ### `docs`
 
 6 of 6 published.
@@ -174,9 +181,9 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 3 of 3 published.
 {: .fa-hx-dim }
 
-- [SMART Base]({{ '/smart-base/' | relative_url }})
-- [smart-immunizations]({{ '/smart-immunizations/' | relative_url }})
-- [smart-trust]({{ '/smart-trust/' | relative_url }})
+- [SMART Base]({{ '/smart-base/artifacts.html' | relative_url }})
+- [smart-immunizations]({{ '/smart-immunizations/artifacts.html' | relative_url }})
+- [smart-trust]({{ '/smart-trust/artifacts.html' | relative_url }})
 
 ### `folio`
 
@@ -237,16 +244,6 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 {: .fa-hx-dim }
 
 - [Folio Assistant]({{ '/issue-marks/' | relative_url }})
-
-### `kinds`
-
-0 of 4 published.
-{: .fa-hx-dim }
-
-- C@T OpenAPI — *declared, not published*
-- FHIR IG Harness — *declared, not published*
-- folio-assistant-core — *declared, not published*
-- folio-assistant-sci — *declared, not published*
 
 ### `library`
 
@@ -469,6 +466,16 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - folio-assistant-sci — *declared, not published*
 - SMART Base — *declared, not published*
 - WHO IRIS — *declared, not published*
+
+### `typologies`
+
+0 of 4 published.
+{: .fa-hx-dim }
+
+- C@T OpenAPI — *declared, not published*
+- FHIR IG Harness — *declared, not published*
+- folio-assistant-core — *declared, not published*
+- folio-assistant-sci — *declared, not published*
 
 ### `uml`
 

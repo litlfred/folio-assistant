@@ -79,7 +79,7 @@ interface RenderStep extends OrderedStep {
    */
   inputs?: readonly string[];
   /**
-   * Graph KINDS this step reads, resolved from `harness.json`.
+   * Graph TYPOLOGIES this step reads, resolved from `harness.json`.
    *
    * Preferred over `inputs`: `check:declared-paths` rejected the first draft
    * for spelling nine declared directories as literals, and it was right —
@@ -158,8 +158,8 @@ export function pipeline(scratch: string): RenderStep[] {
       needs: ["readme"],
       fatal: false,
       inputGraphs: ["beans", "todos"],
-      // declared-path-literal: the `folio` graph kind is CORE's — registered
-      // by `schemas/folio-graph-kind.ts`, which this layer may not import
+      // declared-path-literal: the `folio` graph typology is CORE's — registered
+      // by `schemas/folio-graph-typology.ts`, which this layer may not import
       // ("a layer that cannot render must not own the renderable kind"). So
       // asking the resolver for it throws, and the authored pages would
       // otherwise go undeclared — which under-declares, the direction bean
@@ -273,7 +273,7 @@ export function runPipeline(
     // the same by returning every step.
     const seed = opts.seedManifest === undefined ? undefined : readManifest(opts.seedManifest);
     const seedMissing = opts.seedManifest !== undefined && seed === undefined;
-    // The resolver turns a declared GRAPH KIND into the directories that hold
+    // The resolver turns a declared GRAPH TYPOLOGY into the directories that hold
     // it, so no step spells a declared path (`check:declared-paths`).
     //
     // **It can fail, and failing is a real state rather than a crash.**
@@ -293,7 +293,7 @@ export function runPipeline(
     // one asked for, and this repository declares a `folio` directory whose
     // kind is core's. So the harness layer cannot resolve any kind in-process
     // without importing core, which `check:partition` rejects and which the
-    // argument on `folio-graph-kind.ts` forbids. One subprocess answers it
+    // argument on `folio-graph-typology.ts` forbids. One subprocess answers it
     // without moving either boundary.
     //
     // A failure is REPORTED and turns every graph-declared step undeclared,
@@ -385,7 +385,7 @@ export function runPipeline(
     );
     if (resolveFailure !== undefined) {
       out.push(
-        `Graph kinds could not be resolved here, so every step that declared only graphs re-rendered: ${resolveFailure}`,
+        `Graph typologies could not be resolved here, so every step that declared only graphs re-rendered: ${resolveFailure}`,
       );
     }
     if (seedMissing) {

@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1835 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1869 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 593 terms and is 339 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 596 terms and is 341 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2118</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2118</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2153</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2153</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">593</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">596</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a></nav>
 
@@ -1856,7 +1856,7 @@ CatHarnessDeclarationSchema.needs <span class="fa-gloss-status">candidate, extra
 CatHarnessDeclarationSchema.nodeSchemas <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The instance's Node Kinds, declared: each <code>$schema</code> tag its files may carry → the JSON Schema that defines it (an IRI, or a path relative to the declaration). Bootstrap's field (<code>graph.ts</code>, owner 2026-09-29: the schema-reference table &quot;should be in bootstrap&quot;), inherited here because this declaration is a Subkind of bootstrap's. The graph-kind registry's <code>nodeSchemas</code> keeps the harness's TypeScript-backed forms (<code>validator</code>, <code>shape</code>); this one names only published schemas, which is all a reader with nothing installed can follow.</p>
+<p>The instance's Node Kinds, declared: each <code>$schema</code> tag its files may carry → the JSON Schema that defines it (an IRI, or a path relative to the declaration). Bootstrap's field (<code>graph.ts</code>, owner 2026-09-29: the schema-reference table &quot;should be in bootstrap&quot;), inherited here because this declaration is a Subkind of bootstrap's. The graph-typology registry's <code>nodeSchemas</code> keeps the harness's TypeScript-backed forms (<code>validator</code>, <code>shape</code>); this one names only published schemas, which is all a reader with nothing installed can follow.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.nodeSchemas</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.remotegraphs" data-fa-state="extracted" data-fa-gloss="">
@@ -1921,6 +1921,13 @@ ChangeProseSchema.concept <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>The authorised concept the corpus now uses.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/term-adjudication.ts"><code>cat-harness/schemas/term-adjudication.ts#ChangeProseSchema.concept</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.changesethistoryschema.url" data-fa-state="extracted" data-fa-gloss="">
+ChangeSetHistorySchema.url <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The GitHub comment, issue or PR it came from.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#ChangeSetHistorySchema.url</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--public-comment.changesetrefschema.before" data-fa-state="extracted" data-fa-gloss="">
 ChangeSetRefSchema.before <span class="fa-gloss-status">candidate, extracted</span>
@@ -2538,6 +2545,13 @@ ContentDirectory.heldEntries <span class="fa-gloss-status">candidate, extracted<
 <p>Entry slugs of a <code>library</code> held back from the summary drain while the rest of it drains. See the schema field (bean <code>j7ql</code>).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectory.heldEntries</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectory.igsite" data-fa-state="extracted" data-fa-gloss="">
+ContentDirectory.igSite <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Built into the instance's own IG site at <code>/&lt;instance&gt;/</code> (bean <code>mftp</code>); see <code>igSite</code> on the shape below.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectory.igSite</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectory.readonly" data-fa-state="extracted" data-fa-gloss="">
 ContentDirectory.readOnly <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2607,6 +2621,13 @@ ContentDirectoryShape.heldEntries <span class="fa-gloss-status">candidate, extra
 <dd>
 <p>Entry slugs (<code>&lt;library&gt;/&lt;slug&gt;/</code>) held back from the summary drain while the rest of this <code>library</code> drains — the per-entry form of <code>summaries: &quot;held&quot;</code>. It exists because a hold is the OWNER's decision about a set of documents, and a set can outlive the directory it was stated on: agent-skills' library was held on 2026-09-24 (bean <code>x80s</code>) and dissolved into cat-harness's on 2026-10-01 (bean <code>j7ql</code>), where the other entries drain. Folding the hold into the directory's would either drop it or extend it to documents the owner never held. Listed, never derived, so a move cannot release it silently.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.heldEntries</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectoryshape.igsite" data-fa-state="extracted" data-fa-gloss="">
+ContentDirectoryShape.igSite <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>This directory is built INTO the instance's own IG site, which is served at <code>/&lt;instance&gt;/</code> — never composed into the main site.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.igSite</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectoryshape.instanceroot" data-fa-state="extracted" data-fa-gloss="">
 ContentDirectoryShape.instanceRoot <span class="fa-gloss-status">candidate, extracted</span>

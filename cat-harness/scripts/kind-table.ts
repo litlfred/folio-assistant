@@ -1,13 +1,13 @@
 #!/usr/bin/env bun
 /**
- * The kinds the graph-kind TABLE names, and every name a row may carry.
+ * The kinds the graph-typology TABLE names, and every name a row may carry.
  *
  * @module scripts/kind-table
  * @graphNode none — a reader over one authored table
  *
  * ## Why this is a module and not two functions in a test
  *
- * It was both functions in `tests/graph-kind-docs.test.ts`, which was the right
+ * It was both functions in `tests/graph-typology-docs.test.ts`, which was the right
  * home while only that test asked. `kind:register` asks the same question — a new
  * kind owes a table ROW, and the row is **authored**, so the command reports it
  * rather than writing it — and a second copy of a parser over a hand-written
@@ -19,11 +19,11 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 
-import { BASE_GRAPH_KINDS, GRAPH_KIND_ALIASES, defaultGraphKinds } from "../schemas/cat-harness.js";
-import { graphKindLayer } from "../schemas/graph-kind-registry.ts";
+import { BASE_GRAPH_TYPOLOGIES, GRAPH_TYPOLOGY_ALIASES, defaultGraphTypologies } from "../schemas/cat-harness.js";
+import { graphTypologyLayer } from "../schemas/graph-typology-registry.ts";
 // `folio` and `glossary` are registered by CORE as a load-time side effect.
-import "../schemas/folio-graph-kind.js";
-import "../schemas/glossary-graph-kind.js";
+import "../schemas/folio-graph-typology.js";
+import "../schemas/glossary-graph-typology.js";
 
 /** The instance root this reader is relative to. */
 export const KIND_TABLE_ROOT = join(import.meta.dir, "..");
@@ -46,7 +46,7 @@ export function documentedKinds(root: string = KIND_TABLE_ROOT): string[] {
   const at = lines.reduce<number[]>((acc, l, i) => (l.trim() === KIND_TABLE_HEADER ? [...acc, i] : acc), []);
   if (at.length !== 1) {
     throw new Error(
-      `${KIND_TABLE_DOC}: expected exactly one graph-kind table header, found ${at.length}. ` +
+      `${KIND_TABLE_DOC}: expected exactly one graph-typology table header, found ${at.length}. ` +
         `Looked for the line: ${KIND_TABLE_HEADER}`,
     );
   }
@@ -67,10 +67,10 @@ export function documentedKinds(root: string = KIND_TABLE_ROOT): string[] {
 /** Every name a table row may legitimately carry. */
 export function validKinds(): Set<string> {
   return new Set([
-    ...defaultGraphKinds.names(),
-    ...Object.keys(BASE_GRAPH_KINDS),
+    ...defaultGraphTypologies.names(),
+    ...Object.keys(BASE_GRAPH_TYPOLOGIES),
     // A deprecated alias still reads, so documenting one is not an error.
-    ...Object.keys(GRAPH_KIND_ALIASES),
+    ...Object.keys(GRAPH_TYPOLOGY_ALIASES),
   ]);
 }
 
@@ -87,30 +87,30 @@ export const KIND_TABLE_END = "<!-- kind-table:end -->";
 
 /** The `declared by` cell: the owning harness for a declared kind, the layer for a listed one. */
 function declaredByCell(kind: string, root: string): string {
-  const file = defaultGraphKinds.declaredBy(kind);
+  const file = defaultGraphTypologies.declaredBy(kind);
   if (file !== undefined) {
     const rel = relative(dirname(root), file).split(sep);
-    const at = rel.indexOf("kinds");
-    return `**${rel.slice(0, at).join("/")}** (\`kinds/${rel.slice(at + 1).join("/")}\`)`;
+    const at = rel.indexOf("typologies");
+    return `**${rel.slice(0, at).join("/")}** (\`typologies/${rel.slice(at + 1).join("/")}\`)`;
   }
-  const def = defaultGraphKinds.get(kind);
-  return `**${graphKindLayer(kind, def)}**${def?.anyLayer ? ", and any layer" : ""}`;
+  const def = defaultGraphTypologies.get(kind);
+  return `**${graphTypologyLayer(kind, def)}**${def?.anyLayer ? ", and any layer" : ""}`;
 }
 
 /** The table, header to last row, from the registry: bootstrap, harness, core, then each declaring harness. */
 export function renderKindTable(root: string = KIND_TABLE_ROOT): string {
-  const names = defaultGraphKinds.names();
+  const names = defaultGraphTypologies.names();
   const group = (k: string): string => {
-    const file = defaultGraphKinds.declaredBy(k);
+    const file = defaultGraphTypologies.declaredBy(k);
     if (file !== undefined) return `4 ${relative(dirname(root), file)}`;
-    return { bootstrap: "1", harness: "2", core: "3" }[graphKindLayer(k, defaultGraphKinds.get(k))];
+    return { bootstrap: "1", harness: "2", core: "3" }[graphTypologyLayer(k, defaultGraphTypologies.get(k))];
   };
   const ordered = names
     .map((k, i) => ({ k, i, g: group(k) }))
     .sort((a, b) => (a.g === b.g ? a.i - b.i : a.g < b.g ? -1 : 1))
     .map((x) => x.k);
   const rows = ordered.map((k) => {
-    const d = defaultGraphKinds.get(k)!;
+    const d = defaultGraphTypologies.get(k)!;
     // Escape a bare pipe; one already escaped in the prose stays as it is.
     const contents = (d.description ?? d.summary).replace(/(?<!\\)\|/g, "\\|");
     const rendered = `${d.renderable ? "**yes**" : "no"}${d.renderableNote ? ` — ${d.renderableNote}` : ""}`;

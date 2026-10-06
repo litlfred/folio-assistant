@@ -17,8 +17,8 @@ package "folio-assistant-core/folio-assistant-core-translations" as pkg_folio_as
     officialRequired [0..1] : boolean
   }
 }
-package "folio-assistant-core/folio-assistant-core-block-kinds" as pkg_folio_assistant_core_folio_assistant_core_block_kinds <<block-kinds>> {
-  class "folio-block-kind/v1" as folio_assistant_core_folio_assistant_core_block_kinds_folio_block_kind_v1_folio_block_kind_v1 <<json: BlockKindNodeSchema>> #f4f4f1 {
+package "folio-assistant-core/folio-assistant-core-block-typologies" as pkg_folio_assistant_core_folio_assistant_core_block_typologies <<block-kinds>> {
+  class "folio-block-kind/v1" as folio_assistant_core_folio_assistant_core_block_typologies_folio_block_kind_v1_folio_block_kind_v1 <<json: BlockKindNodeSchema>> #f4f4f1 {
     $schema [1] : 'folio-block-kind/v1'
     kind [1] : string
     adapter [1] : string
@@ -41,12 +41,13 @@ package "folio-assistant-core/folio-assistant-core-validators" as pkg_folio_assi
     id [1] : string
     validates [1] : object
     schema [1] : string
+    pages [0..1] : string
     rationale [0..1] : string
   }
 }
-package "folio-assistant-core/folio-assistant-core-kinds" as pkg_folio_assistant_core_folio_assistant_core_kinds <<kinds>> {
-  class "folio-graph-kind/v1" as folio_assistant_core_folio_assistant_core_kinds_folio_graph_kind_v1_folio_graph_kind_v1 <<json: GraphKindNodeSchema>> #f4f4f1 {
-    $schema [1] : 'folio-graph-kind/v1'
+package "folio-assistant-core/folio-assistant-core-typologies" as pkg_folio_assistant_core_folio_assistant_core_typologies <<typologies>> {
+  class "folio-graph-typology/v1" as folio_assistant_core_folio_assistant_core_typologies_folio_graph_typology_v1_folio_graph_typology_v1 <<json: GraphTypologyNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-graph-typology/v1'
     kind [1] : string
     title [0..1] : string
     layer [0..1] : 'core'
@@ -311,7 +312,7 @@ package "folio-assistant-core/core-skills" as pkg_folio_assistant_core_core_skil
     id [1] : string
     path [1] : string
     subgraph [1] : true
-    graphKinds [1..*] : string[]
+    graphTypologies [1..*] : string[]
   }
   class "skill-topics/v1" as folio_assistant_core_core_skills_skill_topics_v1_skill_topics_v1 <<json: SkillTopicsSchema>> #e8f0ee {
     $schema [1] : 'skill-topics/v1'
@@ -420,11 +421,11 @@ folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern : patterns
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Terminology : terminology
 folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Rule : rules
-' grid: portrait, 3 column(s) — pkg_folio_assistant_core_folio_assistant_core_translations pkg_folio_assistant_core_folio_assistant_core_block_kinds pkg_folio_assistant_core_folio_assistant_core_validators pkg_folio_assistant_core_folio_assistant_core_kinds pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_glossary pkg_folio_assistant_core_core_tools pkg_folio_assistant_core_core_adapters pkg_folio_assistant_core_core_src pkg_folio_assistant_core_core_scripts pkg_folio_assistant_core_core_library pkg_folio_assistant_core_core_methodologies pkg_folio_assistant_core_core_skills pkg_folio_assistant_core_core_processes pkg_folio_assistant_core_qa pkg_folio_assistant_core_voices
-pkg_folio_assistant_core_folio_assistant_core_translations -[hidden]down- pkg_folio_assistant_core_folio_assistant_core_kinds
-pkg_folio_assistant_core_folio_assistant_core_block_kinds -[hidden]down- pkg_folio_assistant_core_core_schemas
+' grid: portrait, 3 column(s) — pkg_folio_assistant_core_folio_assistant_core_translations pkg_folio_assistant_core_folio_assistant_core_block_typologies pkg_folio_assistant_core_folio_assistant_core_validators pkg_folio_assistant_core_folio_assistant_core_typologies pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_glossary pkg_folio_assistant_core_core_tools pkg_folio_assistant_core_core_adapters pkg_folio_assistant_core_core_src pkg_folio_assistant_core_core_scripts pkg_folio_assistant_core_core_library pkg_folio_assistant_core_core_methodologies pkg_folio_assistant_core_core_skills pkg_folio_assistant_core_core_processes pkg_folio_assistant_core_qa pkg_folio_assistant_core_voices
+pkg_folio_assistant_core_folio_assistant_core_translations -[hidden]down- pkg_folio_assistant_core_folio_assistant_core_typologies
+pkg_folio_assistant_core_folio_assistant_core_block_typologies -[hidden]down- pkg_folio_assistant_core_core_schemas
 pkg_folio_assistant_core_folio_assistant_core_validators -[hidden]down- pkg_folio_assistant_core_folios
-pkg_folio_assistant_core_folio_assistant_core_kinds -[hidden]down- pkg_folio_assistant_core_glossary
+pkg_folio_assistant_core_folio_assistant_core_typologies -[hidden]down- pkg_folio_assistant_core_glossary
 pkg_folio_assistant_core_core_schemas -[hidden]down- pkg_folio_assistant_core_core_tools
 pkg_folio_assistant_core_folios -[hidden]down- pkg_folio_assistant_core_core_adapters
 pkg_folio_assistant_core_glossary -[hidden]down- pkg_folio_assistant_core_core_src

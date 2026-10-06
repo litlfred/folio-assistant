@@ -1,5 +1,5 @@
 /**
- * Every artefact a new graph KIND owes — the chain, and the two a person writes.
+ * Every artefact a new graph TYPOLOGY owes — the chain, and the two a person writes.
  *
  * @module scripts/tests/kind-register.test
  *
@@ -26,7 +26,7 @@ import { KIND_TABLE_DOC, KIND_TABLE_HEADER } from "../../../cat-harness/scripts/
 import { STEPS, authoredGaps, hueReport } from "../kind-register.ts";
 
 /**
- * A root whose graph-kind table has the header and NO rows — built here rather
+ * A root whose graph-typology table has the header and NO rows — built here rather
  * than committed, and never a path outside the test's own temp dir: an absolute
  * fixture path that happens to exist on the author's machine is a test that
  * reddens CI on the first runner.
@@ -39,7 +39,7 @@ const FIXTURE_ROOT = (() => {
   mkdirSync(join(doc, ".."), { recursive: true });
   writeFileSync(
     doc,
-    `# A fixture whose graph-kind table has a header and no rows.\n\n${KIND_TABLE_HEADER}\n|---|---|---|---|\n\nProse after the table, so the reader's "stop at the first non-pipe line" holds.\n`,
+    `# A fixture whose graph-typology table has a header and no rows.\n\n${KIND_TABLE_HEADER}\n|---|---|---|---|\n\nProse after the table, so the reader's "stop at the first non-pipe line" holds.\n`,
   );
   return root;
 })();

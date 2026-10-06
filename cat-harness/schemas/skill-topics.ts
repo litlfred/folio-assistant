@@ -9,7 +9,7 @@
  * parses with it and that is imported by `scripts/known-skills.ts` — a
  * schema file that pulled in `cat-harness.ts` would make the skill walk
  * import the whole declaration reader. Registered as the `skill-topics/v1`
- * family of the `skills` graph kind, so `check:kind-validators` grades the
+ * family of the `skills` graph typology, so `check:kind-validators` grades the
  * committed file against the same schema the reader parses with.
  */
 import { z } from "zod";
@@ -44,7 +44,7 @@ export const SkillsDirectoryEntrySchema = z
      * inheritance became automatic and the per-entry field was retired.
      */
     subgraph: z.literal(true),
-    graphKinds: z.array(z.string().min(1)).min(1),
+    graphTypologies: z.array(z.string().min(1)).min(1),
   })
   .passthrough();
 

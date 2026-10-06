@@ -93,7 +93,7 @@ check instead of shipping a 404.
 
 > *"auto-docs is one declared subgraph, with declared sub-sub-graphs per writer."*
 > *"not sure all that is in assets, but what is not user content goes to auto-docs."*
-> *"it is `derived-content` graph kind."*
+> *"it is `derived-content` graph typology."*
 
 **1. One graph, sub-sub-graphs per writer.** Settles the question §"What the
 ruling does not settle" left open, and in the direction the consolidation
@@ -233,7 +233,7 @@ rather than a result.
   consolidation section argues for per-source `rendersTo`; a reserved prefix is
   compatible with either, and it is the second half of the question, not an
   answer to it.
-- **The graph kind.** Still the question `content-context-and-state-graphs.md`
+- **The graph typology.** Still the question `content-context-and-state-graphs.md`
   says one question settles, still the owner's.
 
 The three-step sequencing in §"Consolidating" is unchanged and now matters more:
@@ -344,7 +344,7 @@ Costs first, because one of these is reader-facing and the others are not.
 The source graph's entry names where its pages land:
 
 ```jsonc
-{ "id": "uml", "path": "uml/", "graphKinds": ["uml"],
+{ "id": "uml", "path": "uml/", "graphTypologies": ["uml"],
   "rendersTo": [{ "path": "docs/uml/overview/", "writer": "scripts/gen-uml-overview.ts" }] }
 ```
 
@@ -469,7 +469,7 @@ cannot be shown to change no verdict is a rewrite.
 
 ## What this does not claim
 
-- **Not a graph-kind ruling.** Whether a rendered page tree is `content`
+- **Not a graph-typology ruling.** Whether a rendered page tree is `content`
   (a process produces it), `context` (read, never written) or `state` is the
   question `content-context-and-state-graphs.md` says one question settles, and
   it is the owner's. A projection whose source of truth is another graph may not
@@ -511,5 +511,5 @@ grep -rh '^generated:' cat-harness/docs/ | sort | uniq -c | sort -rn
   generated family.
 - `skills/kg/kg-core/audit-coverage.md` — the per-kind coverage this would let
   distinguish generated projections from authored pages.
-- `skills/kg/kg-core/content-context-and-state-graphs.md` — where the graph-kind
+- `skills/kg/kg-core/content-context-and-state-graphs.md` — where the graph-typology
   question above is settled.

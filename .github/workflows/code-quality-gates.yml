@@ -96,6 +96,18 @@ on:
 permissions:
   contents: read
 
+# A newer push to a PULL REQUEST supersedes the run of the older one: that
+# run judges a head nobody will merge, and it still holds a runner. On
+# 2026-10-05, 16 of 53 queued runs in this repository were such runs, and
+# the queue they lengthened delayed a fix that main's publish was waiting
+# on (#2233). So a PR's runs share one group and the newer cancels the
+# older. Every other event (a push to main, a dispatch from merge-main) is
+# grouped by its own sha and never cancelled: main's history of verdicts is
+# not thinned.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   hygiene:
     # bpmn-node: Task_Hygiene
@@ -843,7 +855,7 @@ jobs:
       - name: declared directories exist, or say why not
         run: bun run check:declared-dirs
 
-      # A declared directory whose graph kind `holds: "state"` is kept OFF
+      # A declared directory whose graph typology `holds: "state"` is kept OFF
       # `main`, or it is recorded debt that may only go down.
       #
       # RATCHETED, not gated from zero, and the number is the reason: 19 of the
@@ -884,7 +896,7 @@ jobs:
       # assuming: the gate compared bytes, while every property it was
       # protecting is asserted directly in `scripts/tests/bootstrap-graph.test.ts`
       # against `buildCatBootstrapDocument()` — purity, id ordering, no absolute
-      # build paths, skills derived from disk, graph kinds a subset of the
+      # build paths, skills derived from disk, graph typologies a subset of the
       # declaration, and the `omitted` list. Those run in `bun test`, which
       # the TypeScript job above already runs. Removing a check whose
       # coverage lives elsewhere is fine; removing one and saying so is what
@@ -1227,7 +1239,7 @@ jobs:
       - name: every skill is declared, and declares nothing absent
         run: bun run skill:register:check
 
-      # The same obligation one level out, for a graph KIND (bean `uoij`). Added
+      # The same obligation one level out, for a graph TYPOLOGY (bean `uoij`). Added
       # 2026-10-04 with the command, because an unenforced chain is exactly the
       # state it exists to leave: adding `docs-auto` on #2022, six hand-picked
       # `check:*` commands all passed while `bun run gates` found 5 failures
@@ -1236,8 +1248,16 @@ jobs:
       # It is HERE, in the registered-never-run job, for the reason that job
       # exists: a gate no workflow runs cannot fail, which is bean `xom7` one
       # level down.
-      - name: every graph kind's artefacts are current, and its authored two exist
+      - name: every graph typology's artefacts are current, and its authored two exist
         run: bun run kind:register:check
+
+      # Node kinds, found THROUGH the typologies (issue #2195): a family whose
+      # validator node names a `nodeKind()` is a node kind with parents. Fails
+      # on a stale index, on an id two kinds share, and on a NEW family that is
+      # not a node kind -- the families that predate node kinds are a baseline
+      # that only shrinks.
+      - name: node kinds are indexed, and no new family lacks one
+        run: bun run node-kinds:check
 
       # The skills graph's LSI index is written by the registration chain
       # (`lsi:skills`) and read by kg:audit's `tool-downstream-fresh`. Checked on its
@@ -1678,7 +1698,7 @@ jobs:
         run: bun run bootstrap:validate
 
       # bootstrap's vocabulary, `bootstrap/ns.jsonld`: exactly its defined
-      # terms and graph kinds, written by bootstrap-tools and committed, and
+      # terms and graph typologies, written by bootstrap-tools and committed, and
       # copied to the site as-is (owner, 2026-09-30, bean `xsqm`).
       - name: bootstrap vocabulary is current
         run: bun run bootstrap:vocabulary:check
@@ -1897,6 +1917,16 @@ jobs:
       # wiring it, because the PR would go green saying otherwise.
       - name: every claimed locale has a page behind it
         run: bun run check:available-locales
+
+      # ITS OWN STEP, above the drift batch, for the reason the steps above
+      # record: a gate inside that batch never runs. Bean `bejf`, #2217. Every
+      # QA panel linked its result files as `blob/main/` + an instance-relative
+      # path, which was dead twice over. This rejects a `blob/main` link into a
+      # `qa` directory that declares `storage`, or into a `test/results/` path
+      # no declaration holds. The built-site half runs after the build, in
+      # `docs-site.yml` and `feature-staging.yml`.
+      - name: no link addresses a stored QA result on main
+        run: bun run check:qa-result-links
 
       # ITS OWN STEP, above the batch. The reason changed under this gate while it
       # was in review, and the original is recorded because it is why the gate
@@ -2628,6 +2658,9 @@ jobs:
           # Byte-identical regeneration runs wherever the PDF is present.
           bun run smart-base:diig-figure:check
           bun run document-kinds:viz:check
+          # A page per node kind, per harness that holds one, and per node, under
+          # /<locale>/<declaring>/<kind>/ (#2195): stale or orphaned pages fail.
+          bun run node-kind:pages:check
           # P2's refusal record (bean ntyj): every published XML/Turtle
           # representation this pipeline does not render, per IG, generated
           # from the artefact index -- so it goes stale the moment the index
@@ -2638,10 +2671,11 @@ jobs:
           # field added to the Zod without regenerating leaves downstream
           # consumers validating against a stale contract.
           bun run ig-ast:schema:check
-          # The fsh-guts index is generated from the graph, so it goes stale the
-          # moment a file is relocated there -- which is the ONE operation that
-          # graph exists for. Gated here rather than trusted, same as every
-          # other generated page.
+          # The fsh-guts index is derived from a graph kept on a BRANCH, so it
+          # is built at publish (derive:publish) and never committed: a
+          # committed copy went stale on main and every PR when one state:push
+          # moved its input (bean 0b8c, #2230). For such a page this check
+          # judges that the mounted graph renders, not that a copy is current.
           bun run fsh-guts:viz:check
           # The tools index is generated from the Tool nodes, so it goes stale
           # the moment one is added or its `satisfies` changes.
@@ -2796,7 +2830,7 @@ jobs:
           # nothing rather than a clean run. Advisory until an instance
           # declares `publishable`.
           bun run check:version-bump
-          bun run check:graph-kind-work
+          bun run check:graph-typology-work
           # One place says what an asset ROLE is — purpose, layer and
           # delivery. A per-asset restatement of any of the three is a
           # second answer free to disagree, and `KgAssetSchema` strips it

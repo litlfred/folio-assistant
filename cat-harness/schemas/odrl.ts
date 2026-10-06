@@ -6,7 +6,7 @@
  * permissions, can inherit. options for existing json open standards. doensnt
  * necc need to be rooted acyclic graph."* The design is
  * `docs/proposals/odrl-prov-actor-model.md`, and the owner's answers to its
- * open questions: policies are their own **graph kind**; an unauthenticated
+ * open questions: policies are their own **graph typology**; an unauthenticated
  * reader may **visualize and render only**; a relationship engine (OpenFGA)
  * is **later**.
  *
@@ -141,7 +141,7 @@ export const OdrlPolicySchema = z
 export type OdrlPolicy = z.infer<typeof OdrlPolicySchema>;
 export type OdrlRule = z.infer<typeof OdrlRuleSchema>;
 
-/** Where an instance keeps its policies: the `policies` graph kind's directory. */
+/** Where an instance keeps its policies: the `policies` graph typology's directory. */
 export const POLICY_DIR = "policies";
 
 /**

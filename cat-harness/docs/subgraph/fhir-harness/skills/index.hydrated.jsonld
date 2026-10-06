@@ -11,9 +11,9 @@
         "kind": "directory"
       },
       "description": "Two packages. `fhir-client` is SMART on FHIR app launch (`smart-launch`) and FHIR resource operations (`fhir-client-operations`) through the SMARTerFHIR library, authored here against a pinned upstream commit because that repository ships no skill files (issue #556, bean `wlqd`). `fhir-ig-base` is the IG pipeline. `ig-build-pipeline` states what the layer runs and the list of things it refuses to know about, including the deploy phase's assignment. `ig-render-jekyll` states the three render contracts -- JSON only, navigation derived from `sushi-config.yaml`'s own ordered `pages:` and `menu:` maps rather than authored, and the LHS rail with the IG theme captured rather than discarded. `ig-publisher-reduction` is the five-phase transition to an AST-only Publisher, each phase carrying an exit criterion that is a measurement or a diff rather than an impression. `ig-publisher-fork` is the brief for the AST work: built as a library ON TOP of the Publisher (`ast-export/` on `litlfred/fhir-ig-publisher@claude/ast-export`), with the Library/PlanDefinition/Measure edges supplied beside the publisher's own `DependencyAnalyser`, where upstream leaves them empty. Only page-fragment provenance needs `org.hl7.fhir.core`. `ig-ast-delta` is the consumer half: list, check (`compiledValidity` on the AST's inputs), diff and render deltas between ASTs, every page carrying the provisional mark P3 requires.",
-      "fileCount": 22,
+      "fileCount": 23,
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
       "name": "fhir-ig-skills",
@@ -100,14 +100,14 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/content/fhir-ig-authoring",
           "path": "skills/content/fhir-ig-authoring/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/content",
       "path": "skills/content/"
@@ -154,7 +154,7 @@
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/fhir-client",
       "path": "skills/fhir-client/"
@@ -272,6 +272,24 @@
           "title": "ig-render-jekyll"
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-site-links",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "What happens to an IG's links when its pages are rendered on our site rather than by the IG Publisher: which are rewritten (artefact pages, a case-only mismatch, the Publisher's downloads and pages, files of the IG's repository, the OpenAPI index), which are reported as the IG's own dead links, and the two gates that keep a generator from linking a page it does not write. Read before changing build-ig-site's relinking, gen-ig-pages' links, or before concluding an IG page's broken link is ours.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
+          "instructionLines": 68,
+          "instructionsPath": "skills/fhir-ig-base/ig-site-links.md",
+          "name": "ig-site-links",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2a8c0a63f44efad3db4810773e6304d8678c9ebc5b51363334c0bf6897583e99",
+            "bytes": 3784,
+            "sha256": "2a8c0a63f44efad3db4810773e6304d8678c9ebc5b51363334c0bf6897583e99"
+          },
+          "title": "ig-site-links"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-site-theme",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -291,7 +309,7 @@
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/fhir-ig-base",
       "path": "skills/fhir-ig-base/"
@@ -300,7 +318,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/skills/remote-packages/",
       "@type": "bootstrap:Subgraph",
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/remote-packages",
       "path": "skills/remote-packages/"
@@ -309,14 +327,14 @@
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/skills/skill-definitions/",
       "@type": "bootstrap:Subgraph",
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/skill-definitions",
       "path": "skills/skill-definitions/"
     }
   ],
   "holdsGraph": [
-    "bootstrap:graphKind/skills"
+    "bootstrap:graphTypology/skills"
   ],
   "name": "skills",
   "path": "skills/"

@@ -13,7 +13,7 @@ Found 2026-10-03 while measuring PR #1888's merge with `main` for session
 `folio-assistant-a8`: of its 55 conflicts, 53 classified to a declared pattern
 and **2 refused**, and both were the same page in its two forms —
 `cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md`
-(authored source) and `cat-harness/docs/publication-workflow.md` (its generated
+(authored source) and `cat-harness/docs/process/publication-workflow.md` (its generated
 mirror). The mirror's own front matter reads:
 
 ```

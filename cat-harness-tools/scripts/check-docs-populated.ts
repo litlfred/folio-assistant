@@ -3,7 +3,9 @@
  * Every harness owes at least one MEANINGFULLY POPULATED documentation page.
  *
  * @module scripts/check-docs-populated
- * @covers docs
+ * @covers docs, doc-group — the docs graph's named groups (bean `xka5`) are
+ *   folders of docs pages, and `pagesOfExt` walks every folder of the site, so
+ *   their pages are read here exactly as the top-level ones are.
  *
  * Usage: `bun run check:docs-populated [--json] [--strict]`
  * Exit:  0 every harness has one · 1 one is thin · 2 could not determine
@@ -84,7 +86,7 @@
  * **Resolved from the DECLARATIONS, never from a list here.** A list would be
  * a second answer to "what processes does this harness have", free to disagree
  * with the declaration the moment either moves — the failure this repository
- * has paid for repeatedly. `processes` and `scenarios` graph kinds are read off
+ * has paid for repeatedly. `processes` and `scenarios` graph typologies are read off
  * the instance's own declaration, exactly as the `docs` kind already is.
  *
  * **Three states on this half too.** A harness that declares no processes, no
@@ -222,7 +224,7 @@ export function subjectsOf(instanceRoot: string): Subjects {
   if (!decl) return { processes: [], roles: [], tasks: [], unreadable: ["(no declaration)"] };
 
   for (const d of decl.directories ?? []) {
-    const kinds = (d.graphKinds ?? []) as readonly string[];
+    const kinds = (d.graphTypologies ?? []) as readonly string[];
     const abs = join(instanceRoot, d.path);
     if (kinds.includes("processes")) {
       for (const f of pagesOfExt(abs, ".bpmn")) {
@@ -448,7 +450,7 @@ export function assessSubject(subjects: Subjects, pages: Array<{ path: string; t
 
   // Ranked by (score, then length), and NOT short-circuited on the first full
   // hit. The first draft broke on the first page scoring 3 and reported
-  // `cat-harness/docs/ar/architecture.md` — the ARABIC TRANSLATION of a page
+  // `cat-harness/docs/concepts/ar/architecture.md` — the ARABIC TRANSLATION of a page
   // whose English original scores the same. It won on `readdirSync().sort()`
   // order, because `ar/` precedes `architecture/`. A verdict decided by
   // alphabetical order is a verdict about the filesystem, so every eligible
@@ -612,7 +614,7 @@ export function harnessesWithDocs(repoRoot: string): { instance: string; root: s
     const decl = readDeclaration(inst);
     if (!decl) continue;
     const dirs = (decl.directories ?? [])
-      .filter((d) => (d.graphKinds ?? []).includes("docs"))
+      .filter((d) => (d.graphTypologies ?? []).includes("docs"))
       .map((d) => relative(repoRoot, join(inst, d.path)).split("\\").join("/"));
     // `root` is carried rather than re-derived from `instance`: the name is a
     // declared identifier and nothing resolves a path from it, so a consumer

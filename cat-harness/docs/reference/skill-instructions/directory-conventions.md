@@ -37,7 +37,7 @@ None renders as a document and none has a `contentType` in the
 forces the harness to claim one it does not have.
 
 So the general object is **an instance with directories, each holding a
-graph**. `folio` is one graph kind among several.
+graph**. `folio` is one graph typology among several.
 
 ## Node Kinds are declared: `nodeSchemas` (owner, 2026-09-29)
 
@@ -46,13 +46,13 @@ schema that defines it, in its declaration's **`nodeSchemas`** — a path
 relative to the declaration, or an IRI for a published standard. It is
 bootstrap's field (`KnowledgeGraphDeclarationSchema` in `graph.ts`), so a
 reader with nothing installed can go from a file's `$schema` to its Node
-Schema without knowing any harness. The graph-kind registry's `nodeSchemas`
+Schema without knowing any harness. The graph-typology registry's `nodeSchemas`
 is a different, harness-side table: it maps a tag to a TypeScript `validator`
 or `shape`, which only a harness can run. `graph.test.ts` fails on a bootstrap
 file whose `$schema` is not declared, and on a declared local schema that does
 not fix that very tag.
 
-## The graph kinds
+## The graph typologies
 
 The vocabulary is **open**, and split across two layers.
 
@@ -82,9 +82,9 @@ not decided does not compile.
 > reporting a clean run. That is the `dh4f` defect delivered to somebody
 > else's repository.
 >
-> So `GRAPH_KIND_ALIASES` in `schemas/cat-harness.ts` maps `kg` →
+> So `GRAPH_TYPOLOGY_ALIASES` in `schemas/cat-harness.ts` maps `kg` →
 > `cat-harness`, resolved once at the registry boundary and nowhere else.
-> `resolveGraphKind` reports WHICH spelling was used, so a caller can warn —
+> `resolveGraphTypology` reports WHICH spelling was used, so a caller can warn —
 > an alias that resolves silently is an alias nobody ever removes.
 >
 > **A directory `id` of `kg` is untouched.** An id is the instance's own
@@ -101,15 +101,15 @@ not decided does not compile.
 > declaration rather than a way to lose information.
 >
 > Not renamed, deliberately: `kg:audit`, `kg-export`, `kg-qa` sidecars and the
-> `kg` QA family. Those are command and file-format names, not the graph kind,
+> `kg` QA family. Those are command and file-format names, not the graph typology,
 > and churning them would touch hundreds of references for no gain in what a
 > declaration MEANS.
 
 **The column is `contents`, not `holds`.** `holds` is the FIELD on
-`GraphKindDef`, and it carries the content/context/state layer rather than a
+`GraphTypologyDef`, and it carries the content/context/state layer rather than a
 description — one word meaning two things in the same document is a collision
 worth one rename. The layer is deliberately **not** a column here: it is
-`graphKindsOfLayer()` in
+`graphTypologiesOfLayer()` in
 [`content-context-and-state-graphs`](content-context-and-state-graphs.md), and a
 hand-maintained copy of it would be free to drift from the registry that
 decides it.
@@ -123,8 +123,8 @@ decides it.
 | `scenarios` | **bootstrap**, and any layer | Actors, the Roles they take on, and the User Stories those Roles serve. `roles.json` and `stories.json`; a User Story points at its Role (#1168), where it was once free text on the role. Split out of `cat-harness` on 2026-09-21. | no |
 | `schemas` | **bootstrap** | schema definitions, self-declared in the smart-base manner | no |
 | `models` | **bootstrap** | which languages a model is good at, and whether a human checked (`models/models.json`). `context`: READ when a session opens, never written by a process — a person grants a validation, an agent never does, because a model's own claim about its languages is precisely what the validation state exists to distrust. In BOOTSTRAP because an agent reaching for the language it should communicate in has not yet loaded the harness that would otherwise answer. One INPUT to the [`communication-language`](communication-language.md) determination, never the answer. | no |
-| `kinds` | **harness** | the graph kinds a harness declares it OWNS, one `folio-graph-kind/v1` node per file (`schemas/graph-kind-node.ts`), loaded by the registry on first use across every instance; a name two files declare is refused. Owner, 2026-10-04: *"there should not be a central registry for declaring mount tools and subgraph types"*, and a `kinds/` graph rather than a contributions hook or a field in `<instance>.json` (option 1 of 3). The base layer lists only this one kind in code, because a reader needs it to find the rest. Bean `dmx1`. | no |
-| `validators` | **harness** | the validators a harness's code provides, one `folio-validator/v1` node each (`schemas/validator-node.ts`), naming the graph kind and `$schema` family it checks and the Zod export that checks it; the registry joins each onto its kind on first use, and refuses a second answer for one family. Owner, 2026-10-04: validators are KG nodes, and the validator names the family (option 1 of 2). Bean `riit`. | no |
+| `typologies` | **harness** | the graph typologies a harness declares it OWNS, one `folio-graph-typology/v1` node per file (`schemas/graph-typology-node.ts`), loaded by the registry on first use across every instance; a name two files declare is refused. Owner, 2026-10-04: *"there should not be a central registry for declaring mount tools and subgraph types"*, and a `typologies/` graph rather than a contributions hook or a field in `<instance>.json` (option 1 of 3). The base layer lists only this one kind in code, because a reader needs it to find the rest. Bean `dmx1`. | no |
+| `validators` | **harness** | the validators a harness's code provides, one `folio-validator/v1` node each (`schemas/validator-node.ts`), naming the graph typology and `$schema` family it checks and the Zod export that checks it; the registry joins each onto its kind on first use, and refuses a second answer for one family. Owner, 2026-10-04: validators are KG nodes, and the validator names the family (option 1 of 2). Bean `riit`. | no |
 | `qa-checkers` | **harness** | the QA checkers a harness's code provides, one `folio-qa-checker/v1` node each (`schemas/contribution-nodes.ts`): the criterion it answers, and the dispatch table (`path#Export`, keyed by the criterion) that holds the code. `loadContributions` registers them for every folio whose dependency tree includes the harness. Owner, 2026-10-04: every contribution is a node, one graph per type (option 1 of 2), scoped by the dependency tree (option 1 of 3). Bean `riit`, step 3b. | no |
 | `pipeline-plugins` | **harness** | the generic pipeline's slots a harness fills, one `folio-pipeline-plugin/v1` node each (`schemas/contribution-nodes.ts`): the slot (`content/pipeline/pipeline-plugins.ts`), and the table of implementations (`path#Export`, keyed by slot, typed against the slots' contract). `loadContributions` registers them for every folio whose dependency tree includes the harness. Bean `riit`, step 3b; the slots themselves are bean `squu`'s. | no |
 | `block-kinds` | **harness** | the block kinds a harness's content adapter owns, one `folio-block-kind/v1` node each (`schemas/block-kind-node.ts`): the kind string, its adapter and narrowest profile, label prefix, RDF types, builder and English heading. `schemas/block-kinds.ts` discovers them across every instance's declared graph, so no module lists the kinds. Owner, 2026-10-04: *"kinds need to be discoverable … not centrally managed"*; document kinds live in folio-assistant-core and the math kinds in folio-assistant-sci (option 2 of 3). Bean `riit`, step 2; sod4 finding #1. | no |
@@ -136,14 +136,15 @@ decides it.
 | `docs` | **harness** | documentation **about** the knowledge graph — how the harness works, what its directories hold, how a process runs. Distinct from `folio` by its SUBJECT, not its format. Added 2026-09-20: this table carried no renderable harness kind until the harness gained a plain just-the-docs renderer, and the rule reads in its true form — a layer owns the kinds it CAN render. | **yes** — the plain just-the-docs pipeline, no extensions |
 | `proposals` | **harness** | proposals for the harness's own features — initial analysis, MVP, options — argued before they are agreed. A **sub-graph of `docs`** (`within: "docs"`), declared from within by `docs/docs.json`; the navbar folds it under Docs. Issue #1164. | no — its pages are built by `docs` |
 | `requirements` | **harness** | what the harness promises, one page per shipped feature: a proposal MOVED here on ship, its front matter a `Requirement` (`bootstrap/schemas/requirement.schema.json`), checked by `check:requirements`. A **sub-graph of `docs`**, declared from within. Issue #1164. | no — its pages are built by `docs` |
+| `doc-group` | **harness** | a named group of the docs graph's own pages — Start here, Concepts, Authoring guides, Process & methodology, FHIR — one folder each, declared from within by `docs/docs.json`. A **sub-graph of `docs`** (`within: "docs"`): its pages are `docs` pages, grouped by where they live. The Pages list nests a group's pages under it through `_config.yml` `defaults` (one `parent` per folder). Bean `xka5`. | no — its pages are built by `docs` |
 | `auto-docs` | **harness** | derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH that type reaches, written by `scripts/gen-auto-docs.ts` and never by hand. A **sub-graph of `docs`** (`within: "docs"`), declared from within by `docs/docs.json`; its own sub-sub-graphs are named one level further down by `auto-docs.json`, which is GENERATED from that script's `TYPES` because they carry `collect()` functions that cannot live in JSON. `derived`, and the question that settles it against its parent is the same one everywhere: a `docs` page is RE-AUTHORED, an index is REGENERATED. Bean `xsrv`, owner 2026-10-03. | no — its pages are built by `docs` |
 | `external-schema` | **harness** | the specifications this instance depends on (`external-schemas/`) — one record per specification, pinning the EDITION in use, with the operative terms DERIVED from the corpus rather than hand-listed. `content`, and the call goes against the obvious reading: a process DOES write these files (`external-schemas.ts --write` refreshes `terms[]`), which sounds like `state`, but the axis asks what the graph IS and the subject matter here is a DECISION — which specifications we depend on, at which edition, and what each term operatively means. `derived` would be destructive: it says "regenerate it", and regenerating a deleted record recovers neither the authored edition, nor the `usedBy` blast radius, nor a line of the `operative` prose. UNDECLARED until 2026-09-22, which is `dh4f` inverted — a held directory nothing declares, so every consumer fanning out over declared directories skipped a registry pinning four external namespaces. Governed by [`vocabulary-authority`](vocabulary-authority.md) and [`schema-management`](schema-management.md). | no |
 | `code-list` | **harness** | closed sets of codes (`code-lists/`) — one `folio-code-list/v1` file per list, each code with a label, a definition, a source and, where it stands for one, a value; published as SKOS concept schemes. `content`, by the same argument as `external-schema`: the subject matter is a DECISION — which answers an adjudication may give, which namespaces are ours — and a person makes it. Diagrams (`<cat-harness.processes:adjudication list>`) and `schemas/namespaces.ts` READ these. Owner, 2026-09-23. Governed by [`code-lists`](code-lists.md). | no |
 | `vocab-mapping` | **harness** | vocabulary mapping tables (`vocab-mappings/`) — one `folio-vocab-mapping/v1` table per source content type and target node, saying which source field becomes which target predicate and with what relationship. Shaped like a FHIR ConceptMap: an existing ConceptMap is representable here, and a table can be produced as one with every loss reported (`schemas/vocab-mapping-fhir.ts`). `content`, by the `code-list` argument: which predicate a field becomes, and which of two is authoritative, is a DECISION. Generators READ these through the `vocab-map` Tool; nothing writes them. Owner, 2026-10-02 (bean `k74z`). Governed by [`vocabulary-authority`](vocabulary-authority.md). | no |
-| `uml` | **harness** | UML class diagrams of every named sub-graph a harness declares (`uml/overview/<instance>/<sub-graph>.puml` and `.mmd`), written from one model by `scripts/gen-uml-overview.ts` and rendered on `docs/uml/overview/`. The groupings are the declaration entries; the classes are read from each graph kind's registered `validator`, so a kind with none is drawn as *could not determine*. `derived`: regenerated, never authored. | no |
+| `uml` | **harness** | UML class diagrams of every named sub-graph a harness declares (`uml/overview/<instance>/<sub-graph>.puml` and `.mmd`), written from one model by `scripts/gen-uml-overview.ts` and rendered on `docs/uml/overview/`. The groupings are the declaration entries; the classes are read from each graph typology's registered `validator`, so a kind with none is drawn as *could not determine*. `derived`: regenerated, never authored. | no |
 | `qa` | **harness** | QA verdicts and their projections under `test/results/` — **seven `$schema` families**, each named in the kind's `nodeSchemas` (see §"Node schemas, one per `$schema` family"): `kg-qa/v1`, `block-qa/v1` and `folio-test-run/v1` are Zod-validated, `qa-witness/v1`, `qa-results/v1` and `translation-qa/v1` are TypeScript shapes, and `folio-qa-index/v1` has no declared type at all. This row said "one `qa-witness/v1` document per subject" until 2026-09-23, when 591 of the 728 nodes were other families. Generated, never hand-edited. **The checkout holds the WORKING COPY; the record is on the orphan `qa-reports` branch**, keyed `main/<sha>/` or `pr/<n>/<sha>/`, written by the CI job `qa-publish` through `scripts/qa-store.ts` (arc `3fva`) — see §"`storage` — a directory kept on a branch". Judgements are not here: they are the `attestations` kind. Read witnesses with the [`qa-witness`](qa-witness.md) skill. | no |
 | `health` | **harness** | repository health reports — one `"$schema": "health-report/v1"` document per sweep, carrying each check's three-state verdict, the thresholds it applied and the **basis** each threshold was chosen on. A separate kind from `qa` because the SUBJECT differs, not the producer: a QA verdict judges an artefact this instance produced, a health report judges the instance itself — its size, its publish branch, its work plan. Generated by `test/health/run.ts`; never hand-edited. Shape in `schemas/health-report.ts`. | no |
-| `attestations` | **harness** | the JUDGEMENT half of a QA verdict, kept apart from the derived half: one `qa-attestations/v1` file per subject at `test/attestations/<family>/<mirrored subject path>.attestations.json`, where `<family>` is the derived family it sits beside (`kg-qa`, bean `2gst`; `block-qa` and `translation-qa`, bean `8wj1` — whose derived reports keep a projection composed from the store). Split out of `qa` by owner ruling D2 (a), 2026-10-01 (bean `2gst`): derived verdicts move to the `qa-reports` branch, and judgements stay on main, where a `git rm` of derived results cannot reach them. A separate kind because the two answer the deletion question differently: a `qa` file can be regenerated, an attestation cannot. Every entry pins the hash it attested, so a stale one is detectable. `state`, like `review-verdicts`. Reads answer hit / miss / absent / corrupt / unknown. On a miss or an absent store a WRITER moves the judgements a prior derived file still carries into the store as it saves (owner ruling 2, 2026-10-01); a corrupt or unreadable store is `unknown` and refused. Shape in `schemas/qa-attestations.ts`. | no |
+| `attestations` | **harness** | the JUDGEMENT half of a QA verdict, kept apart from the derived half: one `qa-attestations/v1` file per subject at `test/attestations/<family>/<mirrored subject path>.attestations.json`, where `<family>` is the derived family it sits beside (`kg-qa`, bean `2gst`; `block-qa` and `translation-qa`, bean `8wj1` — whose derived reports keep a projection composed from the store; `bib-verification` and `bib-human-review`, the folio's two bibliography judgement ledgers, one file per reference, read and written only through `schemas/bib-attestations.ts`). Split out of `qa` by owner ruling D2 (a), 2026-10-01 (bean `2gst`): derived verdicts move to the `qa-reports` branch, and judgements stay on main, where a `git rm` of derived results cannot reach them. A separate kind because the two answer the deletion question differently: a `qa` file can be regenerated, an attestation cannot. Every entry pins the hash it attested, so a stale one is detectable. `state`, like `review-verdicts`. Reads answer hit / miss / absent / corrupt / unknown. On a miss or an absent store a WRITER moves the judgements a prior derived file still carries into the store as it saves (owner ruling 2, 2026-10-01); a corrupt or unreadable store is `unknown` and refused. Shape in `schemas/qa-attestations.ts`. | no |
 | `code` | **harness**, and any layer | Source code — the modules, scripts and entry points an instance holds. Registered 2026-09-22 (bean `ylj7`) after a measurement: most of this repository's `.ts` files sat in no declared directory — **re-derive it with `bun run check:code-accounting` rather than reading a number here, because it moves every round** — so the one property every checker here depends on — *an undeclared file is one no checker has a reason to look at* (`v8gh`) — did not hold for most of the code. The owner's first proposal was to move everything under `<stub>/src`; the measurement confirmed the **mechanism** and argued against the **destination**, because `schemas/` is already a declared graph, `content/pipeline/` is core's subject, and `scripts/` are entry points named **by path** in `package.json` and CI. So they are declared where they are, and `<stub>/src` is the convention for new instances. `content`: authored with an intention, re-authored rather than regenerated, and it stands on its own. **Not renderable** — `renderable` asks whether the graph is wired to the site build as pages, and the generated references are built from schemas and skills, not from this. Being declared says nothing about whether a Tool node **claims** the code; that is a second axis, and beans `d308` and `ce65` own it. `check:code-accounting` reports both and refuses to average them. | no |
 | `qa-report` | **harness** | QA reports — one `qa-report/v1` document per TOOL RUN, carrying that run's own successes, warnings and errors, the files it processed, the files it **expected** and the ones that were missing, plus the provenance and toolchain versions upstream records nowhere. A third subject beside its two neighbours, and that is the whole reason it is a separate kind: a `qa` witness judges an **artefact**, a `health` report judges the **repository**, a `qa-report` records an **execution**. Registered 2026-09-22 on evidence rather than design — every DAK pre/post script already writes exactly this document and the IG Publisher already writes `qa.json`, and nothing downstream read either. Upstream's snake_case field names are kept deliberately, so an upstream report validates byte for byte and a change upstream fails instead of being quietly re-mapped. `state`: a running process writes it. Three rules are structural rather than left to a checker — a summary may not disagree with the details it counts, `files_missing` must be a subset of `files_expected`, and `running` is never a pass. Shape in `schemas/qa-report.ts`. | no |
 | `test-plan` | **harness** | test plans — one `test-plan/v1` document per plan, shaped after the held FHIR R5 TestPlan source: the system-under-test kind and version range, the `req:` requirements it is evidence for, test cases whose assertion ids are criterion ids, test data that is either FIXED (committed, and evidence once reviewed) or GENERATED (template + params + seed, never stored materialised — bean `vm6m`), and the certification rule as a DMN reference. Strawperson, bean `ygzh`. `content`: a process reads a plan and never writes it, and it still says what is required when detached from every run. The run points at the plan and never the reverse, because a plan listing its runs would be rewritten by every execution. Declared, no directory. Shape in `schemas/test-plan.ts`. | no |
@@ -169,7 +170,7 @@ decides it.
 | `substrate-snapshot` | **harness** | the root declaration of each Knowledge Graph this instance SUBSCRIBES to (`subscriptions/`), one `folio-substrate-snapshot/v1` file per `subscriptions` entry: the upstream bytes at the pinned commit, their sha256, and the harnesses and subgraphs the substrate offers. `derived`: written by `bun run kg:subscribe` from somebody else's bytes and regenerated, never edited; `kg:subscribe:check` re-hashes and re-judges each one offline. It WRAPS the upstream `<name>.json` rather than copying it, because a bare copy carries `name` equal to its stem and would read as an instance declaration to every scanner. Issue #1719. | no |
 | `translation-sources` | **harness** | the gettext side of translation — `.pot` templates, `.po` catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; there is deliberately **no kind for the rendered output**. Read with the [`translation-manager`](translation-manager.md) skill; shape in `schemas/translation.ts`. | no |
 | `todos` | **core** | human actors' outstanding work as a whole (`todos/`); its inner nodes are declared by `todos/todos.json` | no |
-| `todo-items` | **core** | todo nodes — one file each, `"$schema": "folio-todo/v1"`. Authored by people, and by agents on their behalf. | no |
+| `todo-items` | **core** | todo nodes — one file each, `"$schema": "todo/1.0.0"`. Authored by people, and by agents on their behalf. | no |
 | `uploads` | **core** | the incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus. | no |
 | `library` | **core** | L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where scanned, `ocr/page-NNN.txt`. | no |
 | `computation-witness` | **core** | What a folio's computations recorded: one `<name>.witness.json` per producer run, naming the engine, the script and its hash, the commit, and each assertion with its computed and expected values. Written by the producer and regenerated by re-running it; addressable from prose and wired to a content block through `computation.witness`. | no |
@@ -177,15 +178,16 @@ decides it.
 | `voice-vendors` | **core** | a base voice specialised for one agent vendor — `folio-voice/v1` with `extends` naming the base. A **sub-graph of `voices`** (`within: "voices"`), declared from within: `voices/voices.json` names `vendors/`, and `vendors/vendors.json` names each `<id>/`. `loadVoices` descends only where a declaration says to and **refuses** an undeclared voice directory rather than skipping it. Bean `rkqp`, owner 2026-09-30. | no |
 | `todo-feedback` | **core** | feedback items — todos raised against a specific block, carrying the submitter's identity. Read by `todo-review`. | no |
 | `folio` | **core** | authored content an AUTHOR creates using the graph — a note, a visualization, a paper. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`. | **yes** — just-the-docs renders it to a website |
-| `glossary` | **core**, and any layer | Terms and what they mean, as W3C SKOS (`folio-glossary/v1`, `folio-assistant-core/schemas/glossary.ts`): local terms, each `authored`, `candidate` or `could-not-extract`, linked to external SKOS concepts by `exactMatch`/`closeMatch`, and external concepts listed as `members` without being copied. A whole external scheme is a `remoteGraphs` entry with `graphKinds: ["glossary"]`. The `glossary` kind is `perInstance`, so every folio built on core gets one. Rendered on the site's `glossary/` page with SKOS JSON-LD beside it; the swimlane ledger is one more source. Read with the [`glossary-terms`](glossary-terms.md) skill; gated by `check:glossary`. | no |
-| `openapi` | **cat-openapi** (`kinds/openapi.json`) | OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (the cat-openapi harness). Every operation in a document is a node of its own: a page and an IRI under the instance's docs. | no |
-| `fhir-artifact-index` | **fhir-harness** (`kinds/fhir-artifact-index.json`) | The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of. | no |
-| `ig-ast` | **fhir-harness** (`kinds/ig-ast.json`) | The IG Publisher's abstract syntax tree of a FHIR Implementation Guide (its resources, their dependency edges and the build plan), ingested into the folio that uses the IG. One branch per IG package id; the IG's own source need not be materialised. | no |
-| `ig-metadata-index` | **fhir-harness** (`kinds/ig-metadata-index.json`) | The IG Publisher's own metadata exports for one published IG, harvested verbatim — ValueSet→CodeSystem edges, CodeSystem `uses`, and extension/profile usage paths. Each export declares whether it was present, absent or never looked for, and a `uses` field that upstream declared and left empty is recorded as exactly that. | no |
-| `ig-pages` | **fhir-harness** (`kinds/ig-pages.json`) | The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived. | no |
-| `catalogue` | **folio-assistant-core** (`kinds/catalogue.json`) | a remote catalogue modelled BY REFERENCE — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), and there is **no default**. Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is. Shape in `folio-assistant-core/schemas/catalogue.ts`. | no |
-| `review-verdicts` | **folio-assistant-core** (`kinds/review-verdicts.json`) | reviewers' per-block verdicts — one `folio-review-verdict/v1` JSON each, pinned to the block's hash, committed on the feature branch. Not a todo: it asks for nothing. Read by the coverage gate (`folio-review-coverage`, bean `px0t`). | no |
-| `lake-cache` | **folio-assistant-sci** (`kinds/lake-cache.json`) | Prebuilt Lake artefacts for a Lean package, one branch per package and toolchain on the Lean folio's own repository, restored so a build starts warm. Declared by the folio that builds the Lean package; this harness owns the kind and the tool. | no |
+| `glossary` | **core**, and any layer | Terms and what they mean, as W3C SKOS (`folio-glossary/v1`, `folio-assistant-core/schemas/glossary.ts`): local terms, each `authored`, `candidate` or `could-not-extract`, linked to external SKOS concepts by `exactMatch`/`closeMatch`, and external concepts listed as `members` without being copied. A whole external scheme is a `remoteGraphs` entry with `graphTypologies: ["glossary"]`. The `glossary` kind is `perInstance`, so every folio built on core gets one. Rendered on the site's `glossary/` page with SKOS JSON-LD beside it; the swimlane ledger is one more source. Read with the [`glossary-terms`](glossary-terms.md) skill; gated by `check:glossary`. | no |
+| `openapi` | **cat-openapi** (`typologies/openapi.json`) | OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (the cat-openapi harness). Every operation in a document is a node of its own: a page and an IRI under the instance's docs. | no |
+| `fhir-artifact-index` | **fhir-harness** (`typologies/fhir-artifact-index.json`) | The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of. | no |
+| `ig-ast` | **fhir-harness** (`typologies/ig-ast.json`) | The IG Publisher's abstract syntax tree of a FHIR Implementation Guide (its resources, their dependency edges and the build plan), ingested into the folio that uses the IG. One branch per IG package id; the IG's own source need not be materialised. | no |
+| `ig-metadata-index` | **fhir-harness** (`typologies/ig-metadata-index.json`) | The IG Publisher's own metadata exports for one published IG, harvested verbatim — ValueSet→CodeSystem edges, CodeSystem `uses`, and extension/profile usage paths. Each export declares whether it was present, absent or never looked for, and a `uses` field that upstream declared and left empty is recorded as exactly that. | no |
+| `ig-pages` | **fhir-harness** (`typologies/ig-pages.json`) | The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived. | no |
+| `catalogue` | **folio-assistant-core** (`typologies/catalogue.json`) | a remote catalogue modelled BY REFERENCE — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), and there is **no default**. Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is. Shape in `folio-assistant-core/schemas/catalogue.ts`. | no |
+| `public-comments` | **folio-assistant-core** (`typologies/public-comments.json`) | public comments on a document under review, and the change-sets that group them — one JSON each. Written by `public-comment.ts`; a comment is a todo subclass (`public-comment/1.0.0` extends `todo/1.0.0`), a change-set is not. | no |
+| `review-verdicts` | **folio-assistant-core** (`typologies/review-verdicts.json`) | reviewers' per-block verdicts — one `folio-review-verdict/v1` JSON each, pinned to the block's hash, committed on the feature branch. Not a todo: it asks for nothing. Read by the coverage gate (`folio-review-coverage`, bean `px0t`). | no |
+| `lake-cache` | **folio-assistant-sci** (`typologies/lake-cache.json`) | Prebuilt Lake artefacts for a Lean package, one branch per package and toolchain on the Lean folio's own repository, restored so a build starts warm. Declared by the folio that builds the Lean package; this harness owns the kind and the tool. | no |
 
 <!-- kind-table:end -->
 
@@ -202,12 +204,12 @@ decides it.
 > sweep landed under `tests/health/` in #395 because the owner asked for it
 > there. That PR recorded the inconsistency here rather than resolving it, on
 > the grounds that relocating a declared directory as a side effect of adding a
-> graph kind is how a directory quietly goes missing. The owner settled it the
+> graph typology is how a directory quietly goes missing. The owner settled it the
 > same day — bean `auap`, PR #400 — and it moved as its own change, with its
 > own review.
 >
 > **Why `test/` won, and it is the rule for the next one of these.** An id in a
-> declaration is the expensive thing to move: `GRAPH_KIND_ALIASES` exists
+> declaration is the expensive thing to move: `GRAPH_TYPOLOGY_ALIASES` exists
 > because renaming one is a cross-instance breaking change, and a downstream
 > instance overriding a path that is no longer declared scans nothing and
 > reports a clean run over it — the `dh4f` defect. `test/` was the side a
@@ -229,7 +231,7 @@ decides it.
 > `ok` among 11 declared, `bun run health:list` naming all five checks, and
 > Playwright reporting a non-zero spec count.
 
-> **A rendered translation is not its own graph kind — the FILE declares its
+> **A rendered translation is not its own graph typology — the FILE declares its
 > language.** `docs/fr/index.md` carries `lang: fr` and
 > `translation_source: index.md` in its own front matter, so it is the same
 > kind of thing as the page it translates: renderable content, differing by a
@@ -570,8 +572,8 @@ same directory as before; the rest follow in chain order. Existence-filtered
 (the `dh4f` rule); a `repository`-scoped entry has one location by definition
 and gets no members.
 
-**Whether an inherited directory is CREATED is a fact about its graph kind**,
-`GraphKindDef.perInstance`, stated once in the registry rather than per entry:
+**Whether an inherited directory is CREATED is a fact about its graph typology**,
+`GraphTypologyDef.perInstance`, stated once in the registry rather than per entry:
 
 - **`perInstance: true`** — part of the SHAPE a folio has: `uploads`,
   `library`, `docs`, `qa`, `beans`, `todos`, `voices`, `folio`, `glossary`,
@@ -705,7 +707,7 @@ Owner, 2026-09-29/30 (bean `9umr`): eight groups — `sdlc`, `process`,
 location"*, split across *schemas, skills, uml, processes, library, tests*.
 The same from-within rule, one more use of it:
 
-- **Which kinds group** is a fact about the kind: `GraphKindDef.concernGroups`,
+- **Which kinds group** is a fact about the kind: `GraphTypologyDef.concernGroups`,
   with the kind's `declarationFile` as where groups are named —
   `skills/skills.json` (`topics`), `processes/processes.json`,
   `schemas/schemas.json`, `library/library.json`, `uml/uml.json`, a test
@@ -745,7 +747,7 @@ declaration.** It is a node inside the first subdirectory naming the fourteen.
 ### What the owner left open, and it is NOT an agent's to settle
 
 The ruling says *"(Sub?)KGraph node"* — with the question mark. **What that node
-is called, which `graphKinds` it carries, and whether it is a new kind or an
+is called, which `graphTypologies` it carries, and whether it is a new kind or an
 existing one used positionally are undetermined**, and inventing a schema for it
 would be exactly the move `deletion-requires-confirmation` and
 `surprise-to-corpus` both guard against: an agent settling a naming question in
@@ -855,7 +857,7 @@ what it is **computed from**: the declared directory ids of the graphs whose cha
 invalidate it.
 
 ```jsonc
-{ "id": "smart-trust-docs", "path": "docs/", "graphKinds": ["docs"],
+{ "id": "smart-trust-docs", "path": "docs/", "graphTypologies": ["docs"],
   "derivedFrom": ["smart-trust-artifact-index"] }
 ```
 
@@ -885,6 +887,61 @@ layer either names its sources or says why not: a `library/` is derived from an
 *external* publication, which is not a declared graph. Silence is not an answer. The
 gate is `check:derived-from` (bean `nama`, step 2).
 
+### The storage clock — a derived artefact is kept no closer to main than its inputs (STRICT)
+
+Owner, 2026-10-05, after one `state:push` turned every open PR red: *"how to
+fix process so wont fail?"* and *"use dependencies between KG derivations and
+such (caches, auto-docs, etc)"*. Bean `0b8c`, #2230.
+
+**A derived artefact can be current in a commit only if every input it is
+computed from is kept in the commit.** Follow `derivedFrom` upstream; if any
+input is kept on a BRANCH (a `source` that is not a directory, or a
+`storage`), that input moves without a commit, and a committed copy of the
+artefact is stale on main and on every open PR the moment somebody writes
+there. No `:check` gate can hold it current, because the check and the input
+are on different clocks.
+
+**A visualisation is a derived artefact of the directory it shows.** The
+edge is implicit: a viewer of X is computed from X by definition. So the rule
+covers viewer pages as well as derived directories (caches, auto-docs, IG
+pages).
+
+| inputs, transitively | where the artefact is kept | what holds it current |
+|---|---|---|
+| all in the checkout | committed | its `:check` gate, at every commit |
+| any on a branch | **built at publish, never committed** — gitignored | `derive:publish`, which runs its declared `writer` after `state:mount` |
+
+What is declared:
+
+- the visualisation (or derived directory) names its `writer` — the script
+  `derive:publish` runs. A visualisation built at publish with no writer is
+  refused (`publish-without-writer`): nothing would build it;
+- nothing else. Which artefacts are built at publish is DERIVED from the edges
+  and the inputs' storage, never listed — not in a workflow, not here. The
+  next graph moved onto a branch (beans, todos) carries its viewers with it
+  by declaring their writers.
+
+What is checked, by `check:derived-from`:
+
+- a **tracked** artefact with a branch-kept input is refused
+  (`committed-from-branch`), naming the chain to the input;
+- `--list` on `derive:publish` prints what will be built and why.
+
+What the readers do: a visualisation built at publish **resolves by its
+writer**, not by the disk (`visualisationResolves` in `schemas/cat-harness.ts`).
+Subgraph coverage, harness tiles and viewer declarations all ask that one
+function, so the generated `docs/_data/harness.json` is the same whether or not a checkout
+happens to hold a locally built copy. Asking the disk would emit one answer
+locally and another in CI.
+
+**The measured failure.** The fsh-guts viewer was committed on main while
+`fsh-guts/` is kept on `cat/cat-harness/fsh-guts`. On 2026-10-05 a `state:push`
+(bean `rva2`) relocated files there, and `fsh-guts:viz:check` went red on main
+and on every open PR at once, until someone regenerated and committed the page —
+which a sibling then had to repeat on its own PR. Bean `foaq` was the same
+design seen from a dirty local mount. A take-base merge pattern for the page
+(it had one) only made the collision cheap; this removes it.
+
 ### Publishing a subgraph's contents — the declared Subgraph node is the container (STRICT)
 
 Owner, 2026-10-03: *"todos = subgraph node + todo content nodes"*. A generator
@@ -905,8 +962,9 @@ The helpers are `subgraphContainer` and `memberOf` in `scripts/subgraph-node.ts`
 and `subgraphPublicationFindings` is the check: `subgraph-node.test.ts` runs it
 over every adopting publisher. **Converting a publisher adds its row there.**
 The declaring instance's document must be published for the `@id` to
-dereference — `docs-site.yml` exports the checkout root's graph for exactly
-that reason.
+dereference. Which documents are published, and where:
+[`instance-publication`](instance-publication.md) §"What each instance
+publishes".
 
 One trap, measured while building it: do not restate the subgraph's `name` on
 a container written to `<dir>/<id>.json`. A file whose `name` equals its stem
@@ -957,7 +1015,7 @@ enforce this, and neither fails just because a count goes down:
 - **Present but unreadable** → **throws.** A declaration nobody can parse
   leaves every consumer scanning the wrong directories, which is strictly worse
   than not having one.
-- **An unknown graph kind** → rejected, not accepted and ignored.
+- **An unknown graph typology** → rejected, not accepted and ignored.
 
 ## Declare what exists
 
@@ -986,7 +1044,7 @@ the checkout (bean `16ei`, arc `3fva`; schema `DirectoryStorageSchema` in
 `schemas/cat-harness.ts`):
 
 ```jsonc
-{ "id": "qa", "path": "test/results", "graphKinds": ["qa"],
+{ "id": "qa", "path": "test/results", "graphTypologies": ["qa"],
   "storage": { "branch": "qa-reports", "keyedBy": "commit" } }
 ```
 
@@ -1020,7 +1078,7 @@ The rules are argued elsewhere in this skill and its neighbours; this is the
 list to run down when you add or edit a `directories[]` entry, with where each
 one is argued.
 
-1. **`id`, `path`, `graphKinds`** — required. Refer to the entry by `id`
+1. **`id`, `path`, `graphTypologies`** — required. Refer to the entry by `id`
    everywhere else; **ids are stable, paths are not** (§"Declare what exists",
    §"Inheritance"). Pick each kind by what a process does with it
    ([`content-context-and-state-graphs`](content-context-and-state-graphs.md)).
@@ -1096,6 +1154,11 @@ word.
 - **The renderable site lives at `docs/<stub>/`.** Compute it with
   `siteDir(d)` or `siteDirFor(root)`, never by writing the path out.
 
+Where each `<stub>.jsonld` is served, which base its `@id`s are minted
+against, and what is stripped from it are not naming rules:
+[`instance-publication`](instance-publication.md) §"What each instance
+publishes — graph, address, schema, and what is stripped".
+
 ### Identity: `repository` and `livesAt` (owner, 2026-09-30, bean `6rmv`)
 
 `name` is what `needs` edges and filenames resolve against, but it is not an
@@ -1165,7 +1228,7 @@ and there cannot be one:
 | `sushi-config.yaml` | SUSHI reads that exact name, and it is YAML |
 | `dak.config.json` | **ours** — bean `cz17`. Renamed from `dak.json` on 2026-09-22, for consistency with `<name>.config.json`. WHO's `smart-base` still writes and reads `dak.json`, and nothing upstream has been renamed; that divergence is deliberate pre-work, recorded on `DAK_MARKER_FILENAME` |
 | `<name>.json`, `<name>.config.json` | ours |
-| `beans.json`, `todos.json` | ours, and named after the graph KIND |
+| `beans.json`, `todos.json` | ours, and named after the graph TYPOLOGY |
 
 One of those is not ours to rename — `sushi-config.yaml`, whose name SUSHI
 owns — so any rule claiming to cover the set would still be false on arrival.
@@ -1196,7 +1259,7 @@ file agreeing with itself. And the duck-typing worry closes on the same rule:
 `beans`, so it does not match and `beans/` is not an instance root — refused by
 what the file says it is, not by a path exception.
 
-**At the graph-kind level this is `GraphKindDef.declarationFile`**, and it is
+**At the graph-typology level this is `GraphTypologyDef.declarationFile`**, and it is
 already load-bearing rather than decorative. `declaredKinds` computed a nested
 declaration's filename as `${basename(path)}.json` while `bean-graph.ts` held
 that *moving `beans/` to `work/` requires editing nothing inside it*. Both were
@@ -1220,9 +1283,9 @@ than a file-by-file sift, and two layers can be checked out side by side.
 as its **source root** (`source: ./docs/<stub>`), leaving the site's internal
 layout untouched. Verified on `gh-pages` after the move.
 
-**It is not the `folio` graph-kind declaration.** `docs/` still does not appear
+**It is not the `folio` graph-typology declaration.** `docs/` still does not appear
 in `<name>.json`: measured 2026-09-19, adding it makes `harness:dirs`,
-`kg:schema:check` and `docs:harness:check` throw `unknown graph kind "folio"`,
+`kg:schema:check` and `docs:harness:check` throw `unknown graph typology "folio"`,
 because `folio` is contributed by **core** and those readers do not load its
 registration. Packaging is unblocked; the declaration waits. Bean `x4a6`.
 
@@ -1392,13 +1455,13 @@ Decided 2026-09-18 by the repository owner, for the Tools schema and for
 everything else in the `schemas` graph. Worked through in
 `docs/architecture/cat-harness-minimum.md` §"Carrying it".
 
-## Adding a graph kind
+## Adding a graph typology
 
 Decide which layer owns it first — **if it renders, it is not the harness's.**
 
-- A harness kind: one entry in `BASE_GRAPH_KINDS` (`schemas/cat-harness.ts`).
+- A harness kind: one entry in `BASE_GRAPH_TYPOLOGIES` (`schemas/cat-harness.ts`).
 - A kind belonging to a layer above: a module like
-  `schemas/folio-graph-kind.ts` that calls `registry.register(name, def)` at
+  `schemas/folio-graph-typology.ts` that calls `registry.register(name, def)` at
   import, so the harness never learns the name until that layer is loaded.
 
 Either way the definition is `@type` IRI + `renderable` + `holds` + summary,
@@ -1418,7 +1481,7 @@ rendering pipeline depends on.
 
 ### Node schemas, one per `$schema` family
 
-A kind says what shape its nodes have in up to three fields on `GraphKindDef`,
+A kind says what shape its nodes have in up to three fields on `GraphTypologyDef`,
 and they answer different questions:
 
 | field | answers | form |

@@ -27,7 +27,7 @@
  *   tree, `<BASE_URL>/subgraph/<ITS NAME>/…`, by the same containment rule
  *   over its declared directories (bean `ax6r`) — a path outside them falls
  *   to that instance's root.
- * - Everything else — schemas, tools, roles, graph kinds — is a direct member
+ * - Everything else — schemas, tools, roles, graph typologies — is a direct member
  *   of its own harness's ROOT.
  *
  * ## Each instance is framed from its OWN export (bean `4ak5` item 2)
@@ -105,7 +105,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, extname, join, relative, resolve, sep } from "node:path";
 import jsonld from "jsonld";
-import { buildContext, buildExport, graphKindId } from "./kg-export.js";
+import { buildContext, buildExport, graphTypologyId } from "./kg-export.js";
 import { corpusScopeFor, kgDirectories, workflowFiles } from "./known-skills.js";
 import { checkoutRootFor, findInstanceRoot, instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
 import { readKnowledgeGraphDeclaration } from "../../bootstrap-tools/schemas/declaration.ts";
@@ -504,7 +504,7 @@ export function planSubgraphs(
     }
     const decl = declarationOf(inst);
     const entry = decl?.directories.find((x) => x.id === d.id);
-    return [{ ...d, inst: resolve(inst), harness: decl?.name ?? basename(inst), graphKinds: entry?.graphKinds ?? [], title: entry?.title, instTitle: decl?.title }];
+    return [{ ...d, inst: resolve(inst), harness: decl?.name ?? basename(inst), graphTypologies: entry?.graphTypologies ?? [], title: entry?.title, instTitle: decl?.title }];
   });
   // De-duplicated by directory: one directory reached twice is one subgraph.
   const seenDir = new Set<string>();
@@ -526,7 +526,7 @@ export function planSubgraphs(
     const top = relative(d.inst, d.absPath).replace(/\\/g, "/").replace(/\/?$/, "/");
     const rels = gitDirs(d.absPath, top);
     if (rels === undefined) { problems.push(`${d.harness}/${top}: git could not list its files — subgraphs not determined`); continue; }
-    const kinds = [...d.graphKinds].sort();
+    const kinds = [...d.graphTypologies].sort();
     hroot.kinds = [...new Set([...hroot.kinds, ...kinds])].sort();
     for (const rel of rels) {
       const parentRel = rel === top ? "" : rel.replace(/[^/]+\/$/, "");
@@ -664,7 +664,7 @@ function subgraphNode(e: SubgraphEntry): Node {
     name: e.rel === "" ? e.harness : e.rel.replace(/\/$/, ""),
     path: e.rel === "" ? "./" : e.rel,
     ...(e.title ? { title: e.title } : {}),
-    ...(e.kinds.length > 0 ? { holdsGraph: e.kinds.map(graphKindId) } : {}),
+    ...(e.kinds.length > 0 ? { holdsGraph: e.kinds.map(graphTypologyId) } : {}),
     ...(e.members.length > 0 ? { hasMember: e.members } : {}),
     ...(e.children.length > 0 ? { hasSubgraph: e.children } : {}),
   };

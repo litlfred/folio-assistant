@@ -8,7 +8,8 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, contrast, dedupeIds, includeTargets, pageNav, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, composeIgSite, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, relinkOffSite, rubyLiquidStrings, relinkPublisherOutputs, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { copyDocsInto, igSiteDocs, webpagePalette } from "./stage-ig-sites";
 import type { IgReleases } from "../schemas/ig-releases.ts";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
 
@@ -307,5 +308,255 @@ describe("the releases page: pointers to release binaries, never the bytes (bean
     } finally {
       rmSync(d, { recursive: true, force: true });
     }
+  });
+});
+
+// Bean `mftp`: the IG's prose links an artefact at the Publisher's flat path;
+// this site keeps artefact pages under `pagesHref`.
+describe("relinkArtifacts", () => {
+  const names = new Set(["ValueSet-Domains", "CodeSystem-Actors"]);
+  test("rewrites a markdown link and an href to an artefact page, and nothing else", () => {
+    const src = "[d](ValueSet-Domains.html) [a](CodeSystem-Actors.html#x) <a href=\"ValueSet-Domains.html\">v</a> [c](concepts.html) [e](https://x.org/ValueSet-Domains.html) [s](sub/ValueSet-Domains.html)";
+    const r = relinkArtifacts(src, names, "artifact/");
+    expect(r.count).toBe(3);
+    expect(r.text).toBe("[d](artifact/ValueSet-Domains.html) [a](artifact/CodeSystem-Actors.html#x) <a href=\"artifact/ValueSet-Domains.html\">v</a> [c](concepts.html) [e](https://x.org/ValueSet-Domains.html) [s](sub/ValueSet-Domains.html)");
+  });
+  test("is a no-op when the source links no artefact", () => {
+    expect(relinkArtifacts("[c](concepts.html)", names, "../artifact/")).toEqual({ text: "[c](concepts.html)", count: 0 });
+  });
+});
+
+describe("copyDocsInto (an igSite instance's pages built into its IG site)", () => {
+  test("copies every file but the README, and refuses to overwrite one the IG site wrote", () => {
+    const d = mkdtempSync(join(tmpdir(), "ig-docs-"));
+    const docs = join(d, "docs");
+    const site = join(d, "site");
+    mkdirSync(join(docs, "artifact"), { recursive: true });
+    mkdirSync(site, { recursive: true });
+    writeFileSync(join(docs, "README.md"), "repo docs");
+    writeFileSync(join(docs, "artifact", "A.md"), "a");
+    writeFileSync(join(docs, "artifacts.md"), "mine");
+    writeFileSync(join(site, "artifacts.md"), "the IG site's");
+    const c = copyDocsInto(docs, site);
+    expect(c).toEqual({ copied: 1, merged: [], collisions: ["artifacts.md"] });
+    expect(readFileSync(join(site, "artifact", "A.md"), "utf-8")).toBe("a");
+    expect(readFileSync(join(site, "artifacts.md"), "utf-8")).toBe("the IG site's");
+    expect(existsSync(join(site, "README.md"))).toBe(false);
+    rmSync(d, { recursive: true, force: true });
+  });
+});
+
+describe("copyDocsInto: a front-matter-only page declares something ABOUT a generated page", () => {
+  test("its keys land on the generated page's front matter, the page's own keys winning", () => {
+    const d = mkdtempSync(join(tmpdir(), "ig-docs-"));
+    mkdirSync(join(d, "docs"), { recursive: true });
+    mkdirSync(join(d, "site"), { recursive: true });
+    writeFileSync(join(d, "docs", "artifacts.md"), "---\ntitle: mine\nrenders:\n  - x/fhir-artifact-index\nrendered-by: ig-pages\n---\n");
+    writeFileSync(join(d, "site", "artifacts.md"), "---\ntitle: Artifact Index\nparent: Indices\n---\nbody\n");
+    writeFileSync(join(d, "docs", "orphan.md"), "---\nrenders:\n  - y\n---\n");
+    const c = copyDocsInto(join(d, "docs"), join(d, "site"));
+    expect(c.merged).toEqual(["artifacts.md"]);
+    expect(c.collisions).toEqual(["orphan.md (front matter only, and no generated page to lay it on)"]);
+    expect(readFileSync(join(d, "site", "artifacts.md"), "utf-8")).toBe("---\ntitle: Artifact Index\nparent: Indices\nrenders:\n  - x/fhir-artifact-index\nrendered-by: ig-pages\n---\nbody\n");
+    rmSync(d, { recursive: true, force: true });
+  });
+});
+
+describe("igSiteDocs", () => {
+  test("only an instance that DECLARES igSite builds its IG site at its root", () => {
+    expect(igSiteDocs(join(import.meta.dir, "..", "..", "smart-trust"))).toBe(join(import.meta.dir, "..", "..", "smart-trust", "docs/"));
+    // Every smart-* IG with a menu does, the same way (owner: "no drift issues").
+    expect(igSiteDocs(join(import.meta.dir, "..", "..", "smart-base"))).toBe(join(import.meta.dir, "..", "..", "smart-base", "docs/"));
+    // An instance that holds no IG does not.
+    expect(igSiteDocs(join(import.meta.dir, "..", "..", "who-iris"))).toBeUndefined();
+  });
+});
+
+describe("webpagePalette inherits along needs (bean `mftp`)", () => {
+  test("smart-trust declares no theme and wears smart-base's, found through smart-ig", () => {
+    const root = join(import.meta.dir, "..", "..");
+    const t = webpagePalette(root, "smart-trust");
+    expect(t.palette).toBeDefined();
+    expect(t.note).toContain("inherited from smart-base");
+    expect(webpagePalette(root, "smart-base").note).not.toContain("inherited");
+  });
+});
+
+// Bean `mftp`, owner 2026-10-05: the folio-assistant navbar, not just-the-docs'
+// sidebar, and the IG's own top bar preserved.
+describe("every IG site: the IG's top bar, and its TOC declared for the navbar", () => {
+  const menu = { groups: [{ label: "Home", items: [{ label: "Summary", href: "overview.html" }] }, { label: "Indices", items: [{ label: "Artifact Index", href: "artifacts.html" }, { label: "Spec", href: "https://example.org/x" }] }] };
+  test("the TOC is a visualiser declaration the navbar reads, rows under each group, hrefs under the baseurl", () => {
+    const decl = igTocNav(menu, "/b/smart-trust", [{ label: "Table of Contents", href: "toc.html" }]);
+    expect(decl.startsWith('<script type="application/json" data-fa-visualiser-nav>')).toBe(true);
+    const rows = JSON.parse(decl.replace(/^<script[^>]*>/, "").replace(/<\/script>$/, ""));
+    expect(rows).toEqual([
+      { label: "Home", items: [{ label: "Summary", href: "/b/smart-trust/overview.html" }] },
+      { label: "Indices", items: [{ label: "Artifact Index", href: "/b/smart-trust/artifacts.html" }, { label: "Spec", href: "https://example.org/x" }] },
+      { label: "Table of Contents", href: "/b/smart-trust/toc.html" },
+    ]);
+  });
+  test("the top bar is one dropdown per group, and never reads as the folio navbar", () => {
+    const bar = igTopBar(menu, "/b/smart-trust", "WHO SMART Trust");
+    expect(bar).toContain('<summary>Home</summary>');
+    expect(bar).toContain('href="/b/smart-trust/overview.html"');
+    expect(bar).not.toContain("fa-nav");
+    expect(bar).not.toContain('id="site-nav"');
+  });
+  test("a harness-chrome site has a layout with no sidebar of its own", () => {
+    const d = mkdtempSync(join(tmpdir(), "ig-chrome-"));
+    const src = join(d, "src");
+    mkdirSync(join(src, "input", "pagecontent"), { recursive: true });
+    writeFileSync(join(src, "sushi-config.yaml"), "id: x.ig\ntitle: X IG\n");
+    writeFileSync(join(src, "input", "pagecontent", "index.md"), "# Hi\n");
+    stageIgSite(src, join(d, "out"), { menu, baseurl: "/b/x" });
+    const layout = readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8");
+    expect(layout).toContain("data-fa-visualiser-nav");
+    expect(layout).toContain('class="ig-topbar"');
+    expect(layout).not.toContain("site-nav");
+    expect(layout).toContain('<meta name="fa-visualiser-label" content="X IG">');
+    rmSync(d, { recursive: true, force: true });
+  });
+});
+
+describe("edit links to the IG's own source (bean `mftp`)", () => {
+  test("a pagecontent page carries its edit URL, a generated page none", () => {
+    const d = mkdtempSync(join(tmpdir(), "ig-edit-"));
+    const src = join(d, "src");
+    mkdirSync(join(src, "input", "pagecontent"), { recursive: true });
+    writeFileSync(join(src, "sushi-config.yaml"), "id: x.ig\ntitle: X IG\n");
+    writeFileSync(join(src, "input", "pagecontent", "concepts.md"), "# C\n");
+    stageIgSite(src, join(d, "out"), { menu: { groups: [{ label: "Home", items: [{ label: "C", href: "concepts.html" }] }] }, editBase: "https://github.com/o/r/edit/main" });
+    expect(readFileSync(join(d, "out", "concepts.md"), "utf-8")).toContain('ig_edit_url: "https://github.com/o/r/edit/main/input/pagecontent/concepts.md"');
+    expect(readFileSync(join(d, "out", "toc.md"), "utf-8")).not.toContain("ig_edit_url");
+    expect(readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8")).toContain("Edit this page on GitHub");
+    const layout = readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8");
+    // Per-section: a source-line link and a pre-filled feedback issue.
+    expect(layout).toContain('id="ig-source-lines"');
+    expect(layout).toContain("/issues/new?title=");
+    expect(readFileSync(join(d, "out", "concepts.md"), "utf-8")).toContain('ig_source_blob: "https://github.com/o/r/blob/main/input/pagecontent/concepts.md"');
+    rmSync(d, { recursive: true, force: true });
+  });
+});
+
+describe("sourceHeadings: each section's line in the IG's source (bean `mftp`)", () => {
+  test("ATX headings with their 1-based line, text as a reader sees it, fences skipped", () => {
+    const md = ["# Title {#t}", "", "text", "```", "# not a heading", "```", "### A [link](x.html) and **bold**", "## Last ##"].join("\n");
+    expect(sourceHeadings(md)).toEqual([
+      { t: "Title", l: 1 },
+      { t: "A link and bold", l: 7 },
+      { t: "Last", l: 8 },
+    ]);
+  });
+});
+
+// Bean `mftp`, owner 2026-10-05: "Build in main site" — the IG's pages wear the
+// host site's chrome, with the IG's includes and data namespaced per IG.
+describe("composeIgSite: a staged IG moved into a host Jekyll source", () => {
+  test("pages nest under the IG, includes and data are namespaced, chrome is injected", () => {
+    const d = mkdtempSync(join(tmpdir(), "ig-compose-"));
+    const src = join(d, "src");
+    mkdirSync(join(src, "input", "pagecontent"), { recursive: true });
+    mkdirSync(join(src, "input", "includes"), { recursive: true });
+    writeFileSync(join(src, "sushi-config.yaml"), "id: x.ig\ntitle: X IG\n");
+    writeFileSync(join(src, "input", "pagecontent", "index.md"), "# Home\n\n{{ site.data.fhir.packageId }}\n");
+    writeFileSync(join(src, "input", "pagecontent", "concepts.md"), "# C\n\n{% include note.md %}\n");
+    writeFileSync(join(src, "input", "includes", "note.md"), "a note");
+    const staged = join(d, "site");
+    stageIgSite(src, staged, { menu: { groups: [{ label: "Home", items: [{ label: "Summary", href: "index.html" }] }, { label: "Business", items: [{ label: "Concepts", href: "concepts.html" }] }] }, baseurl: "/b/x" });
+    const host = join(d, "host");
+    mkdirSync(host, { recursive: true });
+    const c = composeIgSite(staged, host, "x");
+    expect(c.collisions).toEqual([]);
+    const index = readFileSync(join(host, "x", "index.md"), "utf-8");
+    expect(index).toMatch(/^---\ntitle: "X IG"\nhas_children: true\n/);
+    expect(index).toContain('site.data.ig["x"].fhir.packageId');
+    expect(index).toContain("{% include ig/x/_top.html %}");
+    expect(index).toContain("{% include ig/_bottom.html %}");
+    const concepts = readFileSync(join(host, "x", "concepts.md"), "utf-8");
+    expect(concepts).toContain('parent: "Business"');
+    expect(concepts).toContain('grand_parent: "X IG"');
+    expect(concepts).toContain("layout: default");
+    expect(concepts).toContain("{% include ig/x/note.md %}");
+    const group = readFileSync(join(host, "x", "menu-business.md"), "utf-8");
+    expect(group).toContain('parent: "X IG"');
+    expect(existsSync(join(host, "_includes", "ig", "x", "note.md"))).toBe(true);
+    expect(existsSync(join(host, "_data", "ig", "x", "fhir.json"))).toBe(true);
+    expect(readFileSync(join(host, "_includes", "ig", "x", "_top.html"), "utf-8")).toContain('class="ig-topbar"');
+    expect(existsSync(join(host, "x", "_config.yml"))).toBe(false);
+    expect(existsSync(join(host, "x", "_layouts"))).toBe(false);
+    // A second compose of the same IG is two answers for one URL.
+    expect(composeIgSite(staged, host, "x").collisions.length).toBeGreaterThan(0);
+    // `atRoot` (#2235 F1): the IG IS the site — the same pages at the root.
+    const root = join(d, "root");
+    mkdirSync(root, { recursive: true });
+    expect(composeIgSite(staged, root, "x", { atRoot: true }).collisions).toEqual([]);
+    expect(existsSync(join(root, "index.md"))).toBe(true);
+    expect(existsSync(join(root, "concepts.md"))).toBe(true);
+    expect(existsSync(join(root, "x"))).toBe(false);
+    expect(existsSync(join(root, "_includes", "ig", "x", "_top.html"))).toBe(true);
+    rmSync(d, { recursive: true, force: true });
+  });
+});
+
+describe("relinkPublisherOutputs — the Publisher's downloads live on the published IG", () => {
+  test("points a bare .zip/.tgz link at the canonical site", () => {
+    const r = relinkPublisherOutputs("* [IG Package](package.tgz)\n* [JSON](definitions.json.zip)", "http://example.org/ig/");
+    expect(r.text).toBe("* [IG Package](http://example.org/ig/package.tgz)\n* [JSON](http://example.org/ig/definitions.json.zip)");
+    expect(r.count).toBe(2);
+  });
+  test("leaves pages, paths and absolute URLs alone", () => {
+    const t = "[a](index.html) [b](files/x.zip) [c](https://x.org/y.zip) <a href=\"z.tgz\">";
+    const r = relinkPublisherOutputs(t, "http://c");
+    expect(r.text).toBe("[a](index.html) [b](files/x.zip) [c](https://x.org/y.zip) <a href=\"http://c/z.tgz\">");
+    expect(r.count).toBe(1);
+  });
+});
+
+describe("relinkArtifacts — a case-only mismatch", () => {
+  test("resolves to the one artefact page it can mean", () => {
+    const r = relinkArtifacts("[model](StructureDefinition-hcert.html)", new Set(["StructureDefinition-HCert"]), "artifact/");
+    expect(r.text).toBe("[model](artifact/StructureDefinition-HCert.html)");
+  });
+  test("is left alone when two pages differ only in case", () => {
+    const r = relinkArtifacts("[x](A-b.html)", new Set(["A-B", "a-B"]), "artifact/");
+    expect(r.text).toBe("[x](A-b.html)");
+    expect(r.count).toBe(0);
+  });
+});
+
+describe("relinkOffSite — what this build cannot serve goes where it is served", () => {
+  const src = mkdtempSync(join(tmpdir(), "offsite-"));
+  mkdirSync(join(src, ".github", "skills"), { recursive: true });
+  writeFileSync(join(src, ".github", "skills", "s.yaml"), "x");
+  mkdirSync(join(src, "input", "bpmn"), { recursive: true });
+  writeFileSync(join(src, "input", "bpmn", "D.bpmn"), "x");
+  const o = { canonical: "http://example.org/ig", sourceBlob: "https://github.com/o/r/blob/main", srcRoot: src, isServed: (t: string) => t === "index.html" };
+  test("a Publisher-only page goes to the published IG", () => {
+    expect(relinkOffSite('<a href="qa.html">QA</a>', o).text).toBe('<a href="http://example.org/ig/qa.html">QA</a>');
+  });
+  test("a repository file goes to GitHub, found at its path or under input/", () => {
+    const r = relinkOffSite("[s](.github/skills/s.yaml) [d](bpmn/D.bpmn)", o);
+    expect(r.text).toBe("[s](https://github.com/o/r/blob/main/.github/skills/s.yaml) [d](https://github.com/o/r/blob/main/input/bpmn/D.bpmn)");
+    expect(r.count).toBe(2);
+  });
+  test("a page nothing serves is left as written and REPORTED", () => {
+    const r = relinkOffSite("[v](video_tutorial.html) [i](index.html)", o);
+    expect(r.text).toBe("[v](video_tutorial.html) [i](index.html)");
+    expect(r.dead).toEqual(["video_tutorial.html"]);
+  });
+});
+
+describe("rubyLiquidStrings — a Publisher Liquid string Jekyll can read", () => {
+  test("an escaped-quote assign becomes single-quoted with plain quotes", () => {
+    const src = '{% assign x__link__html = "<a href=\\"V.html\\">V</a>" %}';
+    const r = rubyLiquidStrings(src);
+    expect(r.text).toBe(`{% assign x__link__html = '<a href="V.html">V</a>' %}`);
+    expect(r.count).toBe(1);
+  });
+  test("a plain string, and one holding an apostrophe, are left as written", () => {
+    const plain = '{% assign a = "plain" %}';
+    const apos = '{% assign b = "it\'s <a href=\\"x\\">" %}';
+    expect(rubyLiquidStrings(plain + apos).text).toBe(plain + apos);
   });
 });

@@ -20,6 +20,10 @@ _site/
 # `:pages:check` could pass locally and fail on a clean checkout.
 !fhir-harness/scripts/templates/ig-pages/*.js
 !/*/docs/assets/*.js
+# ...and the rail's SHARED data (bean `lnoy`): generated, content-named, and
+# named by committed pages — untracked, every railed page's rail failed to
+# load on a clean checkout (the 404s the e2e and `*:viz:check` caught).
+!/*/docs/assets/navbar/*.js
 # ...and the OpenAPI harness's one loader (bean `s4ta`), for the same reason:
 # its template, and the copy `gen-openapi-pages` publishes into each
 # instance's openapi graph (`<instance>/<graph>/assets/openapi.js`) — by
@@ -27,6 +31,8 @@ _site/
 # still tracked. Left untracked once: the pages check passed locally and
 # failed on the runner's clean checkout.
 !cat-openapi/scripts/templates/*.js
+# build-folio-site's browser loader is a shipped asset, not compiler output.
+!folio-assistant-core/scripts/folio-site-assets/*.js
 !/*/*/assets/openapi.js
 .env
 .env.*
@@ -251,6 +257,10 @@ cat-harness/ingest-staging/
 # The composed documentation tree (`compose-docs.ts`). A build output: the
 # BASE is `cat-harness/docs/` and the overlay is the root `docs/`, both tracked.
 _docs/
+# The IG staging work tree and its build list (stage-ig-sites --work ./_ig,
+# docs-site.yml): a local production-style build writes both here (#2235).
+/_ig/
+/_ig-list.txt
 
 # The WORKING COPY of every declared `qa` directory (bean `5hox`, arc `3fva`,
 # owner ruling D4). Each of these declares `storage: { branch: qa-reports }`:
@@ -287,3 +297,11 @@ cat-harness/docs/assets/slices/
 
 # paper_preferences (cat-harness-tools/src/tools/preferences.ts)
 .folio-prefs.json
+
+# The fsh-guts viewer is DERIVED from `fsh-guts/`, which is kept on a branch
+# (above), so it cannot be current in a commit: one `state:push` would make a
+# committed copy stale on main and on every open PR at once (2026-10-05).
+# `bun run derive:publish` builds it at site-build time from the mount, after
+# `state:mount`. `check:derived-from` refuses it if it is ever tracked again.
+# Bean `0b8c`, #2230.
+/cat-harness/docs/fsh-guts/index.md

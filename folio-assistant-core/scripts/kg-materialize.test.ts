@@ -39,9 +39,9 @@ const SUBSTRATE = {
   name: "ihris-kb",
   title: "iHRIS Knowledge Base",
   directories: [
-    { id: "kb", path: "kb/", graphKinds: ["folio"] },
-    { id: "kb-skills", path: "skills/", graphKinds: ["skills"] },
-    { id: "library", path: "library/", graphKinds: ["library"] },
+    { id: "kb", path: "kb/", graphTypologies: ["folio"] },
+    { id: "kb-skills", path: "skills/", graphTypologies: ["skills"] },
+    { id: "library", path: "library/", graphTypologies: ["library"] },
   ],
 };
 
@@ -106,7 +106,7 @@ function checkout(sub: Sub = {}, opts: { snapshotRef?: string; substrate?: { fil
       {
         name: "example",
         livesAt: { repository: "litlfred/example", path: "." },
-        directories: [{ id: "subscriptions", path: "subscriptions/", dependents: "skip", graphKinds: ["substrate-snapshot"] }],
+        directories: [{ id: "subscriptions", path: "subscriptions/", dependents: "skip", graphTypologies: ["substrate-snapshot"] }],
         subscriptions: [entry],
       },
       null,
@@ -470,8 +470,8 @@ const NODES_SUBSTRATE = {
   name: "cat-harness",
   title: "C@T Harness",
   directories: [
-    { id: "skills", path: "skills/", graphKinds: ["skills"] },
-    { id: "docs", path: "docs/", graphKinds: ["docs"] },
+    { id: "skills", path: "skills/", graphTypologies: ["skills"] },
+    { id: "docs", path: "docs/", graphTypologies: ["docs"] },
   ],
 };
 const SDLC_HYDRATED_PATH = "docs/subgraph/cat-harness/skills/sdlc/index.hydrated.jsonld";

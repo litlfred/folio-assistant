@@ -68,7 +68,7 @@ const ROOT = resolve(import.meta.dir, "../../../..");
  *     cat-harness/schemas     182 here,       54 nested  -> depth
  *     bootstrap/skills          9 here,        0 nested  -> depth
  *
- * `bootstrap/skills` is the entry that kills every simpler rule: same graph kind
+ * `bootstrap/skills` is the entry that kills every simpler rule: same graph typology
  * as `cat-harness/skills`, opposite answer, so the depth cannot come from the
  * kind. And `cat-harness/skills` kills "no files at all" — it holds one stray
  * `kg-qa.manifest.json` beside its 21 packages, which is why that file appears

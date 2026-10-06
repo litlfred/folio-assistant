@@ -137,7 +137,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "build-ig-site",
       title: "Stage one IG as its own just-the-docs Jekyll site",
       description:
-        "Turn an IG source repository into ONE Jekyll source for just-the-docs, as the IG Publisher builds one IG per site: `input/pagecontent` pages with title, parent and order from `sushi-config.yaml` `pages:`, the files the Publisher resolves `{% include %}` against, images, `_data/fhir.json` from `ig-site-data`, and a `_config.yml`. The pages render unchanged, `{{ site.data.fhir.* }}` included (bean `bamf`, owner's choice of one site per IG).",
+        "Turn an IG source repository into ONE Jekyll source for just-the-docs, as the IG Publisher builds one IG per site: `input/pagecontent` pages with title, parent and order from `sushi-config.yaml` `pages:`, the files the Publisher resolves `{% include %}` against, images, `_data/fhir.json` from `ig-site-data`, and a `_config.yml`. The pages render unchanged, `{{ site.data.fhir.* }}` included (bean `bamf`, owner's choice of one site per IG). With the IG's menu, the layout is the one every IG site wears (bean `mftp`): the IG's own top bar, the IG's TOC declared as the folio-assistant navbar's section (added by `rail-standalone-pages`), no sidebar of its own, an edit link per page, and per heading a source-line link and a pre-filled feedback issue.",
       install: { none: true },
       invoke: { shell: "bun run fhir-harness/scripts/build-ig-site.ts" },
       io: {
@@ -162,10 +162,65 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
     }),
     defineTool({
+      id: "stage-ig-sites",
+      title: "Stage every IG whose instance records its source, one Jekyll site each",
+      description:
+        "For every instance holding `fhir-artifact-index/menu.json` with a sushi-config source, clone the IG at the recorded commit and stage it with `build-ig-site`: the instance's webpage theme (inherited along `needs` when it declares none), its artefact pages and `artifacts` page, its post-processing fills, and an edit link to the IG's default branch. An instance whose docs directory declares `igSite` is staged to be served AT `/<instance>/` with its artefact pages copied in (a collision is refused); otherwise beside it at `/<instance>/ig/`. Prints one `<instance> <jekyll source> <at>` line per IG for the caller's `jekyll build` (beans `bamf`, `mftp`).",
+      install: { none: true },
+      invoke: { shell: "bun run fhir-harness/scripts/stage-ig-sites.ts" },
+      io: {
+        inputs: [
+          { name: "work", schema: t("RepoPath"), required: true, description: "Scratch directory: each IG's clone and its Jekyll source." },
+          { name: "baseurl", schema: t("RepoPath"), required: true, description: "The site's base URL; each IG is served under it at `/<instance>/` or `/<instance>/ig/`." },
+          { name: "plantuml-jar", schema: t("RepoPath"), required: false, description: "Render `input/images-source/*.plantuml` as the Publisher does." },
+          { name: "changed-files", schema: t("RepoPath"), required: false, description: "Build only the IGs a changed file reaches (the staging cone, bean `4j86`)." },
+          { name: "compose-into", schema: t("RepoPath"), required: false, description: "Move each staged IG into this host Jekyll source at `<instance>/`, so the host's build renders it with the host's chrome (sidebar, search, language selector)." },
+          { name: "compose-at-root", schema: t("Flag"), required: false, arg: { flag: "--compose-at-root" }, description: "With `--compose-into` and `--only`: the IG IS the site — compose it at the host's ROOT, based at `--baseurl` itself. An IG repository's own site uses this with a `compose-docs --shell` host, so it wears the main site's chrome (#2235)." },
+          { name: "only", schema: t("Slug"), required: false, description: "Build one IG instance." },
+          { name: "source", schema: t("RepoPath"), required: false, description: "With `--only`: a local checkout of the IG's source to build from instead of cloning the recorded commit — an IG repository building its own site in CI." },
+        ],
+        outputs: [
+          { name: "sites", schema: t("Count"), description: "IGs staged, one stdout line each; an instance with no recorded source is skipped and reported, never silently." },
+        ],
+      },
+      satisfies: ["ig-build-pipeline"],
+      selection: {
+        when: "Building the docs site or a staging preview: every IG with a recorded source gets its own site.",
+        limits: "Needs network to clone each IG at its pinned commit, and to ask its default branch for edit links (absent, pages carry none and the run says so).",
+        cost: "Seconds per IG plus the clone; the Jekyll build is the caller's.",
+      },
+      requires: { runtime: ["bun", "git"], network: true },
+    }),
+    defineTool({
+      id: "ingest-ig-menu",
+      title: "Ingest an IG's navigation from its sushi-config",
+      description:
+        "Read `menu:` (and the page tree) out of an IG source repository's `sushi-config.yaml` into `fhir-artifact-index/menu.json`, recording the repository and commit it was read at — the declared source `stage-ig-sites` clones. `--check` re-derives it against a checkout; with no `--source` it reports COULD NOT DETERMINE and exits 2, never 0.",
+      install: { none: true },
+      invoke: { shell: "bun run fhir-harness/scripts/ingest-ig-menu.ts" },
+      io: {
+        inputs: [
+          { name: "source", schema: t("RepoPath"), required: false, description: "A checkout of the IG source repository." },
+          { name: "out", schema: t("RepoPath"), required: true, description: "The instance's `fhir-artifact-index/` directory." },
+          { name: "check", schema: t("Flag"), required: false, description: "Write nothing; exit 1 when stale, 2 when it cannot compare." },
+        ],
+        outputs: [
+          { name: "groups", schema: t("Count"), description: "Menu groups read, each with its items." },
+        ],
+      },
+      satisfies: ["ig-build-pipeline"],
+      selection: {
+        when: "An IG instance gains, or re-pins, the source repository its site is built from.",
+        limits: "Reads the config only: a menu item the Publisher generates (a page with no source) is listed, and the site build reports it.",
+        cost: "Milliseconds.",
+      },
+      requires: { runtime: ["bun"], network: false },
+    }),
+    defineTool({
       id: "ig-pages",
       title: "Generate an IG instance's reader-facing pages from its artefact index",
       description:
-        "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved down to this layer because nothing in it was one IG's own (#1767); with `--summary` it writes an instance's landing page, opening with that instance's harness section. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published.",
+        "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved down to this layer because nothing in it was one IG's own (#1767); with `--summary` it writes an instance's landing page, opening with that instance's harness section. For an instance whose docs declare `igSite` (bean `mftp`) it writes no index, menu or category pages — the IG site's own replace them — and only a front-matter `artifacts.md` carrying the viewer declaration. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published.",
       install: { none: true },
       invoke: { shell: "bun run fhir-harness/scripts/gen-ig-pages.ts" },
       // The viewer for this kind: each instance's index page declares

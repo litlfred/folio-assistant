@@ -119,7 +119,7 @@ describe("classify", () => {
     // `generated: scripts/gen-docs-pages.ts — do not hand-edit` in their own
     // front matter, and NONE was named by a pattern, so `merge:main` returned
     // `refuse / — none —` and handed back for hand-editing the files that
-    // forbid it. `docs/publication-workflow.md` was one of the 2 refusals that
+    // forbid it. `docs/process/publication-workflow.md` was one of the 2 refusals that
     // blocked #1888 after 53 of its 55 conflicts had resolved.
     const pages = generatedDocsPages();
     expect(pages.length).toBeGreaterThanOrEqual(17);
@@ -127,7 +127,7 @@ describe("classify", () => {
     // `content/docs/` lands here and fails until the glob names its slug.
     const unmatched = pages.filter((p) => classify(p).pattern?.id !== "docs-pages");
     expect(unmatched).toEqual([]);
-    expect(classify("cat-harness/docs/publication-workflow.md").pattern?.id).toBe("docs-pages");
+    expect(classify("cat-harness/docs/process/publication-workflow.md").pattern?.id).toBe("docs-pages");
     expect(classify("cat-harness/docs/guides/writing-a-paper.md").pattern?.id).toBe("docs-pages");
   });
 
@@ -139,11 +139,11 @@ describe("classify", () => {
     // ones in the SAME directory — `cat-harness/docs/*.md` is a mix, which is
     // why the 17 slugs are enumerated instead of globbed.
     expect(
-      classify("cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md").strategy,
+      classify("cat-harness/content/docs/process-publication-workflow/every-workflow-in-the-repo.md").strategy,
     ).toBe("refuse");
     for (const authored of [
-      "cat-harness/docs/architecture.md",
-      "cat-harness/docs/getting-started.md",
+      "cat-harness/docs/concepts/architecture.md",
+      "cat-harness/docs/start/getting-started.md",
       "cat-harness/docs/index.md",
       "cat-harness/docs/guides/agent-onboarding.md",
       "cat-harness/docs/guides/voices.md",
@@ -195,8 +195,11 @@ describe("classify", () => {
     expect(classify("cat-harness/docs/processes/merge-base.md").pattern?.id).toBe("viewer-pages");
     expect(classify("cat-harness/docs/translation-status/index.html").pattern?.id).toBe("viewer-pages");
     expect(classify("cat-harness/docs/methodologies/index.md").pattern?.id).toBe("viewer-pages");
-    expect(classify("cat-harness/docs/fsh-guts/index.md").pattern?.id).toBe("viewer-pages");
-    // ...but not the archive it renders: fsh-guts/ holds authored, kept content.
+    // The fsh-guts viewer is no longer committed (built at publish, bean 0b8c),
+    // so no pattern takes it: a merge cannot meet it, and if one ever did the
+    // file would be a tracked copy check:derived-from refuses.
+    expect(classify("cat-harness/docs/fsh-guts/index.md").pattern).toBeUndefined();
+    // ...and not the archive it renders: fsh-guts/ holds authored, kept content.
     expect(classify("fsh-guts/uploads/Home-_-folio-assistant.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/fsh-guts/other.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/cat-harness/published-graphs.md").pattern?.id).toBe("handler-index");
@@ -211,7 +214,7 @@ describe("classify", () => {
     expect(classify("cat-harness/translations/ar/publication-workflow.po").strategy).toBe("refuse");
     // The unsafe neighbours: authored translations, and a locale no generator writes.
     expect(classify("cat-harness/docs/ar/index.md").strategy).toBe("refuse");
-    expect(classify("cat-harness/docs/fr/getting-started.md").strategy).toBe("refuse");
+    expect(classify("cat-harness/docs/start/fr/getting-started.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/de/glossary/index.md").strategy).toBe("refuse");
   });
 

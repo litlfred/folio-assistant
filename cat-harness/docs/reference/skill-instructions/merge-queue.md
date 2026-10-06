@@ -48,6 +48,12 @@ steward's, and not on an issue such as #1800. Measured 2026-10-03/04 (bean
 merged, and the pokes on #1800 changed none of the three facts that kept
 #1968 out of the queue.
 
+### Ask the user before submitting
+
+**When you finish your work and are ready to merge, ask the user before submitting to the merge queue.** Do not apply `ready-to-merge` or post the `ready:` marker autonomously without asking the user if you should submit. Submitting to the queue requests landing the code on `main`; the user or owner confirms the submission.
+
+### Submitting to the queue
+
 To submit, do all of these on YOUR PR:
 
 1. **Owed CI is green on the head.** See §"Admission asks which runs are OWED".
@@ -62,6 +68,10 @@ To submit, do all of these on YOUR PR:
    `main` by hand, remove the label, and say why in a comment.
 6. **The body has no unticked box**, and there is no open question to the
    owner or the steward.
+
+### Watch status after submitting — never fire-and-forget
+
+**When you submit something to the merge queue, you need to watch what its status is.** Submitting is not the end of your turn. Watch the GitHub Actions runs on the head (`check:head-has-run`), evaluate `merge-guard`, and monitor whether the PR is admitted into a train or whether it is refused, held, or failing checks. If CI fails, diagnose and repair the failure immediately rather than leaving a failing PR in the queue.
 
 **Merge order goes on the PR, and setting an order is the owner's call.**
 - Write it in the `ready:` comment, on every PR it concerns ("merge before #N").
@@ -193,7 +203,9 @@ them in your PR body so the steward can copy them. That list is the
 association between a PR and its beans.
 
 **Where to read it depends on the state-branch cutover** (arc `fs43`, bean
-`9ofm`):
+`9ofm`). Bean `ugxd` moves the queue to its OWN branch,
+`cat/cat-harness/merge-queue`, ahead of `fs43` — §"Where the queue is GOING"
+below — and where the two disagree, that section is the newer plan:
 - **Before the cutover**, `main` is authoritative. Entries reach it only through
   the steward's own PRs, a PR cycle late, so the edited-in-place status comment
   on your PR is the live answer.
@@ -218,6 +230,58 @@ signal either way: the bean is where the conversation is kept.
 repository (bean `1hjm`). The `merge-guard` commit status (bean `uoob`) checks
 the six submission points mechanically; once it lands, run it against your own
 PR before you announce.
+
+## Where the queue is GOING, and the tool that will write it (bean `najo`)
+
+**Not cut over yet.** The queue is still on `main` under `beans/queue/`
+(owner, 2026-10-05: *"Land code now, switch later"*). The store and CLI below
+landed first; the cutover to its own branch, `cat/cat-harness/merge-queue`, is
+bean `ugxd`, a separate small PR during which the steward pauses queue writes.
+Until it lands, `merge:queue:read` reads the checkout and `merge:queue:record`
+**refuses** — keep committing entries to `main` as §"The steward answers in the
+queue" describes. The branch's `manifest.json` says which state it is in.
+
+Why the queue comes off `main` at all is structural: an entry on `main` arrives
+only through a pull request, and **the steward does no development work** — it
+must not open PRs of its own, which would have it setting its own priority in
+the queue it manages, spending the CI the queue is starved of, and judging its
+own head. For the two days after the graph was declared it therefore held **no
+entry at all**: the one actor whose decisions it records was the one actor that
+could not write to it.
+
+After the cutover:
+
+```sh
+bun run state:mount                  # the queue on disk at its declared path
+bun run merge:queue:read             # the recorded decisions
+bun run merge:queue:record --pr <n> --class <c> --rank <r> --rule <id> \
+    --reason "<why>" --by <your session URL>          # ...or --position <n> for an owner override
+```
+
+- **`record` pushes by default**, as a splice onto the branch tip carrying the
+  blob each file was read at. So the entry is live for every sibling at once,
+  and a steward who edited the same entry since gets this write stopped as a
+  **`conflict`** with the path named rather than overwritten. On a conflict,
+  re-mount and decide again; nothing was pushed and the local edit is the only
+  copy. `--no-push` leaves it in the mount, where **nobody else can see it**.
+- **`--reason` and `--by` are required.** A placement nobody can explain cannot
+  be honoured or safely undone by the next steward, and every session here acts
+  with the owner's token, so the session link is the only thing that says which
+  steward decided.
+- **An unreachable queue is not an empty one.** `merge:queue:read` exits 4 and
+  `readQueueEntries` THROWS when the branch is not mounted, because "no
+  decisions recorded, all clear" printed over a graph nobody read is `dh4f`.
+  Exit 1 — declared-but-absent — is a different answer with a different remedy.
+- **The decisions are read back.** `merge:steward` feeds recorded overrides into
+  the table's `ownerOverride` input and their positions into the order, treats
+  an un-cleared ejection as refused, and prints a live hold. Until 2026-10-04 it
+  passed none of them: a decision nobody reads back is a decision nobody took.
+
+**The pairing with `workflows/` is what this cost.** The queue held the
+decisions and a finished train run next door held the evidence they met, in one
+store. `beans/` is still on `main` until arc `fs43` lands (beans `9ofm`,
+`p3ny`), so for now the two are one `state:mount` apart. That trade was made
+knowingly: the pairing was costing the graph every one of its nodes.
 
 ## Placement is computed, not chosen
 
@@ -551,7 +615,7 @@ them:**
 | no `workflow_dispatch`, re-run, empty commit or close/reopen | the same budget, and a dispatched run is not an owed run (above) |
 | merge commits only: no rebase, amend or force-push | it is somebody else's branch |
 | authored conflict → resolve only dead code, or a pure addition carried over verbatim; otherwise quote both sides and stand down | choosing between two behaviours is the author's call |
-| `git submodule update --init` and `bun run state:mount` before `regen` | without the submodules `merge:steward` cannot load. Without the mount, `fsh-guts:viz` exits non-zero and `audit:coverage:strict` goes red |
+| `git submodule update --init` and `bun run state:mount` before `regen` | without the submodules `merge:steward` cannot load. Without the mount, `fsh-guts:viz:check` exits non-zero (it judges that the mounted graph renders; the page itself is built at publish, bean `0b8c`) and `audit:coverage:strict` goes red |
 | delete the worktree's `node_modules` at the end | four parallel installs run out of the container's disk |
 | one comment per PR: root cause, the commit it pushed or the reason it stood down | the author comes back to an explanation, not a mystery commit |
 

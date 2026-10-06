@@ -102,7 +102,7 @@ describe("the visualiser axis attaches PER GRAPH", () => {
   const dir = (extra: Record<string, unknown> = {}) => ({
     id: "lib",
     path: "library/",
-    graphKinds: ["library"],
+    graphTypologies: ["library"],
     ...extra,
   });
 

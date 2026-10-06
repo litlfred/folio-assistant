@@ -13,7 +13,7 @@
       "description": "The skills core owns. `skills/voices/` is declared separately above as the `voices` kind: a voice partitions how prose READS and is a different graph from an instruction body, so the nesting is two kinds in one place rather than one kind declared twice.",
       "fileCount": 80,
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
       "name": "core-skills",
@@ -67,7 +67,7 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/content/content-lifecycle-ext",
           "path": "skills/content/content-lifecycle-ext/"
@@ -151,26 +151,26 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-              "instructionLines": 182,
+              "instructionLines": 301,
               "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
               "name": "public-comment",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4ba962274fb249c70481964191f2a11075d51ae9558341db4eb38899d112425e",
-                "bytes": 9691,
-                "sha256": "4ba962274fb249c70481964191f2a11075d51ae9558341db4eb38899d112425e"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/80e75a970ea46e36ff307e37db1c608277df38961dc8262929926e9b22899a0e",
+                "bytes": 16504,
+                "sha256": "80e75a970ea46e36ff307e37db1c608277df38961dc8262929926e9b22899a0e"
               },
               "title": "public-comment"
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/content/folio-document-adapter",
           "path": "skills/content/folio-document-adapter/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/content",
       "path": "skills/content/"
@@ -203,7 +203,7 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/library/catalogue",
           "path": "skills/library/catalogue/"
@@ -224,9 +224,9 @@
               "instructionsPath": "skills/library/cataloguing/archiving-arxiv.md",
               "name": "archiving-arxiv",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a17b8616e2875119cfbc985a78bd2ed8dae794ee45c505f6006a624627e25fe6",
-                "bytes": 9380,
-                "sha256": "a17b8616e2875119cfbc985a78bd2ed8dae794ee45c505f6006a624627e25fe6"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c3c362c6c6f20ee4ce4d6b2085a90bb1b87c9423ca548b9338b38770f1f3e2d4",
+                "bytes": 9387,
+                "sha256": "c3c362c6c6f20ee4ce4d6b2085a90bb1b87c9423ca548b9338b38770f1f3e2d4"
               },
               "title": "Materializing from arXiv"
             },
@@ -314,9 +314,9 @@
               "instructionsPath": "skills/library/cataloguing/filing-dublin-core.md",
               "name": "filing-dublin-core",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e065b8bdb342fbfc04f8b855325307aa0df2f61f69a9eb75312cbe64f999a044",
-                "bytes": 5160,
-                "sha256": "e065b8bdb342fbfc04f8b855325307aa0df2f61f69a9eb75312cbe64f999a044"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/342d517bc40a858e33e91392204da9797fbb3bd6670b338ab663a90a2fe9b21a",
+                "bytes": 5174,
+                "sha256": "342d517bc40a858e33e91392204da9797fbb3bd6670b338ab663a90a2fe9b21a"
               },
               "title": "Filing a source: what Dublin Core carries, and what it does not"
             },
@@ -361,14 +361,14 @@
               "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/cataloguing/bib-qa/",
               "@type": "bootstrap:Subgraph",
               "holdsGraph": [
-                "bootstrap:graphKind/skills"
+                "bootstrap:graphTypology/skills"
               ],
               "name": "skills/library/cataloguing/bib-qa",
               "path": "skills/library/cataloguing/bib-qa/"
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/library/cataloguing",
           "path": "skills/library/cataloguing/"
@@ -407,9 +407,9 @@
               "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
               "name": "l1-document-ingestion",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3c972336ccb2bc502cda9d4c49265ece176af7c06dda4748599555cf0221970f",
-                "bytes": 40894,
-                "sha256": "3c972336ccb2bc502cda9d4c49265ece176af7c06dda4748599555cf0221970f"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/595cd9ac6001248e19fe239c398bfbca140ab1b21ebba044174800c4e192167d",
+                "bytes": 40904,
+                "sha256": "595cd9ac6001248e19fe239c398bfbca140ab1b21ebba044174800c4e192167d"
               },
               "title": "L1 document ingestion"
             },
@@ -433,14 +433,14 @@
             }
           ],
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/library/ingestion",
           "path": "skills/library/ingestion/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/library",
       "path": "skills/library/"
@@ -449,7 +449,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/skill-definitions/",
       "@type": "bootstrap:Subgraph",
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/skill-definitions",
       "path": "skills/skill-definitions/"
@@ -462,7 +462,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-adjudicator/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-adjudicator",
           "path": "skills/voices/address-adjudicator/"
@@ -471,7 +471,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-administrator/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-administrator",
           "path": "skills/voices/address-administrator/"
@@ -480,7 +480,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-author/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-author",
           "path": "skills/voices/address-author/"
@@ -489,7 +489,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-authoring-agent/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-authoring-agent",
           "path": "skills/voices/address-authoring-agent/"
@@ -498,7 +498,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-business-analyst/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-business-analyst",
           "path": "skills/voices/address-business-analyst/"
@@ -507,7 +507,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-clinical-sme/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-clinical-sme",
           "path": "skills/voices/address-clinical-sme/"
@@ -516,7 +516,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-code-reviewer/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-code-reviewer",
           "path": "skills/voices/address-code-reviewer/"
@@ -525,7 +525,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-compute-authoring-agent/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-compute-authoring-agent",
           "path": "skills/voices/address-compute-authoring-agent/"
@@ -534,7 +534,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-deep-researcher/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-deep-researcher",
           "path": "skills/voices/address-deep-researcher/"
@@ -543,7 +543,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-docs-authoring-agent/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-docs-authoring-agent",
           "path": "skills/voices/address-docs-authoring-agent/"
@@ -552,7 +552,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-editor/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-editor",
           "path": "skills/voices/address-editor/"
@@ -561,7 +561,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-editorial-authoring-agent/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-editorial-authoring-agent",
           "path": "skills/voices/address-editorial-authoring-agent/"
@@ -570,7 +570,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-evidence-agent/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-evidence-agent",
           "path": "skills/voices/address-evidence-agent/"
@@ -579,7 +579,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-feedback-provider/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-feedback-provider",
           "path": "skills/voices/address-feedback-provider/"
@@ -588,7 +588,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-fhir-modeller/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-fhir-modeller",
           "path": "skills/voices/address-fhir-modeller/"
@@ -597,7 +597,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-ingestion-agent/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-ingestion-agent",
           "path": "skills/voices/address-ingestion-agent/"
@@ -606,7 +606,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-integration-watcher/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-integration-watcher",
           "path": "skills/voices/address-integration-watcher/"
@@ -615,7 +615,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-lean-authoring-agent/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-lean-authoring-agent",
           "path": "skills/voices/address-lean-authoring-agent/"
@@ -624,7 +624,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-librarian/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-librarian",
           "path": "skills/voices/address-librarian/"
@@ -633,7 +633,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-narrative-reviewer/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-narrative-reviewer",
           "path": "skills/voices/address-narrative-reviewer/"
@@ -642,7 +642,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-onboarding-agent/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-onboarding-agent",
           "path": "skills/voices/address-onboarding-agent/"
@@ -651,7 +651,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-platform-authoring-agent/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-platform-authoring-agent",
           "path": "skills/voices/address-platform-authoring-agent/"
@@ -660,7 +660,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-programme-manager/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-programme-manager",
           "path": "skills/voices/address-programme-manager/"
@@ -669,7 +669,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-proof-review-agent/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-proof-review-agent",
           "path": "skills/voices/address-proof-review-agent/"
@@ -678,7 +678,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-publication-manager/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-publication-manager",
           "path": "skills/voices/address-publication-manager/"
@@ -687,7 +687,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-qc-reviewer/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-qc-reviewer",
           "path": "skills/voices/address-qc-reviewer/"
@@ -696,7 +696,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-review-coordinator/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-review-coordinator",
           "path": "skills/voices/address-review-coordinator/"
@@ -705,7 +705,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-reviewer/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-reviewer",
           "path": "skills/voices/address-reviewer/"
@@ -714,7 +714,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-session-coordinator/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-session-coordinator",
           "path": "skills/voices/address-session-coordinator/"
@@ -723,7 +723,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-sibling-session/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-sibling-session",
           "path": "skills/voices/address-sibling-session/"
@@ -732,7 +732,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-stakeholder/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-stakeholder",
           "path": "skills/voices/address-stakeholder/"
@@ -741,7 +741,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-terminologist/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-terminologist",
           "path": "skills/voices/address-terminologist/"
@@ -750,7 +750,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-translation-adjudicator/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-translation-adjudicator",
           "path": "skills/voices/address-translation-adjudicator/"
@@ -759,7 +759,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-translation-coordinator/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-translation-coordinator",
           "path": "skills/voices/address-translation-coordinator/"
@@ -768,7 +768,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-translator/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-translator",
           "path": "skills/voices/address-translator/"
@@ -777,7 +777,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/address-user/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/address-user",
           "path": "skills/voices/address-user/"
@@ -786,7 +786,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/linked-data/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/linked-data",
           "path": "skills/voices/linked-data/"
@@ -795,21 +795,21 @@
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/technical-writer/",
           "@type": "bootstrap:Subgraph",
           "holdsGraph": [
-            "bootstrap:graphKind/skills"
+            "bootstrap:graphTypology/skills"
           ],
           "name": "skills/voices/technical-writer",
           "path": "skills/voices/technical-writer/"
         }
       ],
       "holdsGraph": [
-        "bootstrap:graphKind/skills"
+        "bootstrap:graphTypology/skills"
       ],
       "name": "skills/voices",
       "path": "skills/voices/"
     }
   ],
   "holdsGraph": [
-    "bootstrap:graphKind/skills"
+    "bootstrap:graphTypology/skills"
   ],
   "name": "skills",
   "path": "skills/"

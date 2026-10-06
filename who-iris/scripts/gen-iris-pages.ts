@@ -144,7 +144,7 @@ const declNameOf = (root: string, fallback: string): string =>
 const HANDLER = declNameOf(HARNESS_ROOT, "cat-harness");
 const SUBJECT = declNameOf(INSTANCE, "who-iris");
 /**
- * The graph kind this viewer renders, taken from the declaration entry that
+ * The graph typology this viewer renders, taken from the declaration entry that
  * declares it rather than written down again.
  *
  * `who-iris.json`'s `who-iris-catalogue` entry is the one place that says this
@@ -156,10 +156,10 @@ const SUBJECT = declNameOf(INSTANCE, "who-iris");
 const CATALOGUE_KIND = ((): string => {
   const dirs = readDeclaration(INSTANCE)?.directories ?? [];
   const entry = dirs.find((d) => d.id === "who-iris-catalogue");
-  const kind = (entry?.graphKinds ?? [])[0];
+  const kind = (entry?.graphTypologies ?? [])[0];
   if (kind === undefined) {
     throw new Error(
-      "who-iris.json declares no graphKinds on `who-iris-catalogue`, so the catalogue " +
+      "who-iris.json declares no graphTypologies on `who-iris-catalogue`, so the catalogue " +
         "viewer has no conventional route to be published at. Declare the kind, or " +
         "this generator is publishing to a path no tile will look at (bean `ha78`).",
     );
@@ -765,7 +765,7 @@ function page(
    */
   side: "site" | "docs" | "harness",
   /**
-   * The graph kinds this page documents, as `<meta name="documents">` — the
+   * The graph typologies this page documents, as `<meta name="documents">` — the
    * page names what it is about, so the directory need not name the page
    * (#1168 B7c). Only the docs index carries one.
    */
@@ -963,16 +963,75 @@ function page(
   .searchbar input {
     flex: 1; padding: 0.7rem 0.9rem; font-size: 1rem; font-family: inherit;
     border: 1px solid var(--iris-edge); border-right: none; border-radius: 4px 0 0 4px;
-    background: #fff; color: var(--iris-muted);
+    background: #fff; color: var(--iris-ink);
   }
   .searchbar button {
     padding: 0.7rem 1.4rem; font-size: 1rem; font-family: inherit; font-weight: 600;
     border: 1px solid var(--iris-accent); border-radius: 0 4px 4px 0;
-    background: var(--iris-accent); color: #fff;
+    background: var(--iris-accent); color: #fff; cursor: pointer;
   }
-  /* The disabled attribute already communicates this to a pointer; the cursor
-     says it to a reader who hovers before clicking. */
-  .searchbar input[disabled], .searchbar button[disabled] { cursor: not-allowed; opacity: 1; }
+  .searchbar button:hover, .searchbar button:focus {
+    background: var(--iris-dark);
+  }
+  .search-results-panel {
+    margin: 1rem 0 1.5rem;
+    border: 1px solid var(--iris-edge);
+    border-radius: 4px;
+    background: var(--iris-surface);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 1rem;
+  }
+  .search-results-panel h3 {
+    margin: 0 0 0.8rem;
+    font-size: 1.05rem;
+    color: var(--iris-dark);
+  }
+  .search-results-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .search-result-item {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--iris-edge);
+    border-radius: 4px;
+    background: var(--iris-wash);
+  }
+  .search-result-item a {
+    font-weight: 600;
+    font-size: 1.02rem;
+  }
+  .search-result-meta {
+    font-size: 0.88rem;
+    color: var(--iris-muted);
+    margin-top: 0.25rem;
+  }
+  .search-result-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    background: var(--iris-accent);
+    color: #fff;
+    margin-right: 0.5rem;
+  }
+  .search-remote-box {
+    border-top: 1px solid var(--iris-edge);
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+    font-size: 0.92rem;
+  }
+  mark.search-mark {
+    background: #ffeb3b;
+    color: inherit;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
   .searchnote { font-size: 0.88rem; color: var(--iris-muted); margin: 0.4rem 0 2rem; }
   .ordering { font-size: 0.88rem; color: var(--iris-muted); margin: 0.2rem 0 1.4rem; }
 
@@ -1470,7 +1529,7 @@ const LIBRARY_LINKS = libraryResolver(repoRootFor(HARNESS_ROOT), HARNESS_ROOT);
 /** The replica's route from the site root (no slashes), as `withRoutes` gives it. */
 const REPLICA_ROUTE = (() => {
   const declared = (readDeclaration(INSTANCE)?.directories ?? []).flatMap((d) =>
-    (d.graphKinds ?? []).map((kind) => ({ name: SUBJECT, kind, dir: d.path, instanceRoot: (d as { instanceRoot?: boolean }).instanceRoot === true })),
+    (d.graphTypologies ?? []).map((kind) => ({ name: SUBJECT, kind, dir: d.path, instanceRoot: (d as { instanceRoot?: boolean }).instanceRoot === true })),
   );
   const { candidates } = withRoutes(declared);
   const root = candidates.find((c) => c.instanceRoot && c.route === SUBJECT);
@@ -1870,13 +1929,14 @@ ${
  * the file. The publication's TITLE is untouched where it contains "WHO" —
  * that names the work and is not branding this page wears.
  *
- * ## The numbers are real and the search box is not
+ * ## Search across held items and referenced identifier lookup
  *
  * The placeholder reads `Search through the repository's 273559 items`,
  * transcribed from the capture, because that is the sentence IRIS shows and it
- * is where this repository's item count came from at all. The form does
- * nothing: there is no index behind it, and a box that looks like it searches
- * and silently returns nothing is worse than one that says it is a replica.
+ * is where this repository's item count came from at all. The form actively
+ * searches across the held catalogue items, collections and communities, and
+ * links onward to the prefix-sharded identifier lookup for referenced nodes
+ * (`id-lookup`).
  */
 function landingPage(all: Node[]): string {
   const items = all.filter((n) => n.flavour === "item");
@@ -1889,6 +1949,45 @@ function landingPage(all: Node[]): string {
 
   const itemsUpstream = cat.totalItemsUpstream;
   const filesUpstream = cat.totalFilesUpstream;
+
+  const searchEntries = all
+    .map((n) => {
+      if (n.flavour === "item") {
+        const authors = dc(n, "contributor", "author");
+        const issued = day(dc(n, "date", "issued")[0]);
+        const abstract = dc(n, "description", "abstract")[0] ?? "";
+        const cite = dc(n, "identifier", "citation")[0] ?? dc(n, "identifier", "govdoc")[0] ?? "";
+        const meta = [authors.join("; "), cite, issued].filter(Boolean).join(" · ");
+        const text = [n.title, n.id, n.libraryId ?? "", authors.join(" "), cite, issued, abstract].join(" ").toLowerCase();
+        return {
+          title: n.title,
+          href: `item-${slug(n.id)}.html`,
+          badge: "Item",
+          meta,
+          abstract: abstract.slice(0, 240),
+          text,
+        };
+      }
+      if (n.flavour === "collection") {
+        return {
+          title: n.title,
+          href: `collection-${slug(n.id)}.html`,
+          badge: "Collection",
+          meta: n.id,
+          abstract: n.materialization?.note ?? "",
+          text: [n.title, n.id, n.materialization?.note ?? ""].join(" ").toLowerCase(),
+        };
+      }
+      return {
+        title: n.title,
+        href: "community-list.html",
+        badge: "Community",
+        meta: n.id,
+        abstract: "",
+        text: [n.title, n.id].join(" ").toLowerCase(),
+      };
+    })
+    .sort((a, b) => a.title.localeCompare(b.title, "en"));
 
   return `
 <section class="hero">
@@ -1905,17 +2004,20 @@ function landingPage(all: Node[]): string {
   from the <code>iris-web</code> theme measured off the site&rsquo;s own stylesheet.</p>
 </section>
 
-<div class="searchbar">
-  <input type="text" disabled
+<form class="searchbar" id="iris-search-form" action="../id-lookup/" method="get">
+  <input type="hidden" name="index" value="who-iris/">
+  <input type="text" id="iris-search-input" name="q"
     placeholder="Search through the repository&rsquo;s ${itemsUpstream !== undefined ? itemsUpstream.toLocaleString("en-US").replace(/,/g, "") : "?"} items"
-    aria-label="Search (disabled in this replica)">
-  <button type="button" disabled>Search</button>
-</div>
-<p class="searchnote">Disabled. ${itemsUpstream !== undefined ? `<strong>${itemsUpstream.toLocaleString("en-US")}</strong> items` : "The item count"}${
+    aria-label="Search through the repository items and referenced identifier lookup"
+    autocomplete="off" spellcheck="false">
+  <button type="submit" id="iris-search-btn">Search</button>
+</form>
+<div id="iris-search-results" class="search-results-panel" role="region" aria-live="polite" style="display:none"></div>
+<p class="searchnote" id="iris-search-note">Search across <strong>${held.length}</strong> items held by value and referenced communities/collections.
+To look up any of the <strong>10</strong> referenced nodes by identifier, search here or open the <a href="../id-lookup/?index=who-iris/">identifier lookup</a>.
+Upstream IRIS reports ${itemsUpstream !== undefined ? `<strong>${itemsUpstream.toLocaleString("en-US")}</strong> items` : "items"}${
     filesUpstream !== undefined ? ` across <strong>${filesUpstream.toLocaleString("en-US")}</strong> files` : ""
-  } is what IRIS reports; this catalogue holds <strong>${items.length}</strong> of them by
-reference and <strong>${held.length}</strong> by value. There is no index behind the box,
-and a box that returned nothing quietly would be worse than one that says so.</p>
+  }.</p>
 
 <h2>Recent Submissions</h2>
 <p class="ordering">Ordered by <code>dc.date.accessioned</code>, latest first &mdash; the key
@@ -1946,6 +2048,107 @@ ${collections
   instantiates a directory gets a visualiser mounted under that directory&rsquo;s
   kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.</p>
 </div>
+
+<script>
+(function() {
+  var index = ${JSON.stringify(searchEntries)};
+  var form = document.getElementById("iris-search-form");
+  var input = document.getElementById("iris-search-input");
+  var results = document.getElementById("iris-search-results");
+  if (!form || !input || !results) return;
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+
+  function highlight(text, terms) {
+    if (!terms.length) return escapeHtml(text);
+    var escaped = escapeHtml(text);
+    for (var i = 0; i < terms.length; i++) {
+      var t = terms[i];
+      if (!t) continue;
+      var regex = new RegExp("(" + t.replace(/[.*+?^\${}()|[\\]\\\\]/g, "\\\\$&") + ")", "gi");
+      escaped = escaped.replace(regex, "<mark class=\\"search-mark\\">$1</mark>");
+    }
+    return escaped;
+  }
+
+  function update() {
+    var raw = input.value.trim();
+    if (!raw) {
+      results.style.display = "none";
+      results.replaceChildren();
+      return;
+    }
+    var terms = raw.toLowerCase().split(/\\s+/).filter(Boolean);
+    var matches = [];
+    for (var i = 0; i < index.length; i++) {
+      var entry = index[i];
+      var ok = true;
+      for (var t = 0; t < terms.length; t++) {
+        if (entry.text.indexOf(terms[t]) < 0) {
+          ok = false;
+          break;
+        }
+      }
+      if (ok) matches.push(entry);
+    }
+
+    var lookupUrl = "../id-lookup/?index=who-iris/&q=" + encodeURIComponent(raw);
+    var html = "";
+
+    if (matches.length > 0) {
+      html += "<h3 style=\\"margin:0 0 0.8rem;font-size:1.05rem;color:var(--iris-dark);\\">Matching catalogue nodes (" + matches.length + "):</h3>";
+      html += "<ul class=\\"search-results-list\\" style=\\"list-style:none;padding:0;margin:0 0 1rem;display:flex;flex-direction:column;gap:0.75rem;\\">";
+      for (var m = 0; m < matches.length; m++) {
+        var it = matches[m];
+        html += "<li class=\\"search-result-item\\" style=\\"padding:0.6rem 0.8rem;border:1px solid var(--iris-edge);border-radius:4px;background:var(--iris-wash);\\">";
+        html += "<div><span class=\\"search-result-badge\\" style=\\"display:inline-block;font-size:0.75rem;font-weight:600;text-transform:uppercase;padding:0.15rem 0.45rem;border-radius:3px;background:var(--iris-accent);color:#fff;margin-right:0.5rem;\\">" + escapeHtml(it.badge) + "</span>";
+        html += "<a href=\\"" + it.href + "\\" style=\\"font-weight:600;font-size:1.02rem;\\">" + highlight(it.title, terms) + "</a></div>";
+        if (it.meta) {
+          html += "<div class=\\"search-result-meta\\" style=\\"font-size:0.88rem;color:var(--iris-muted);margin-top:0.25rem;\\">" + highlight(it.meta, terms) + "</div>";
+        }
+        if (it.abstract) {
+          var snip = it.abstract.length > 180 ? it.abstract.slice(0, 180) + "…" : it.abstract;
+          html += "<div class=\\"search-result-meta\\" style=\\"font-size:0.88rem;color:var(--iris-ink);margin-top:0.35rem;\\">" + highlight(snip, terms) + "</div>";
+        }
+        html += "</li>";
+      }
+      html += "</ul>";
+      html += "<div class=\\"search-remote-box\\" style=\\"border-top:1px solid var(--iris-edge);padding-top:0.75rem;margin-top:0.75rem;font-size:0.92rem;\\">";
+      html += "Also search identifier lookup: <a href=\\"" + lookupUrl + "\\" class=\\"search-remote-link\\">Look up &ldquo;" + escapeHtml(raw) + "&rdquo; in referenced nodes &rarr;</a>";
+      html += "</div>";
+    } else {
+      html += "<p style=\\"margin:0 0 0.5rem;\\">No materialized items or collections matched &ldquo;<strong>" + escapeHtml(raw) + "</strong>&rdquo;.</p>";
+      html += "<div class=\\"search-remote-box\\" style=\\"border-top:1px solid var(--iris-edge);padding-top:0.75rem;margin-top:0.75rem;font-size:0.92rem;\\">";
+      html += "<a href=\\"" + lookupUrl + "\\" class=\\"search-remote-link\\" style=\\"font-weight:600;\\">Search for &ldquo;" + escapeHtml(raw) + "&rdquo; in the referenced identifier lookup (10 nodes) &rarr;</a>";
+      html += "</div>";
+    }
+
+    results.innerHTML = html;
+    results.style.display = "block";
+  }
+
+  input.addEventListener("input", update);
+  form.addEventListener("submit", function(e) {
+    var raw = input.value.trim();
+    if (!raw) { e.preventDefault(); return; }
+    var hasLocal = results.querySelector(".search-result-item");
+    var firstLink = results.querySelector(".search-result-item a");
+    if (hasLocal && firstLink) {
+      e.preventDefault();
+      firstLink.focus();
+    }
+  });
+
+  var urlParams = new URLSearchParams(window.location.search);
+  var initQ = urlParams.get("q");
+  if (initQ) {
+    input.value = initQ;
+    update();
+  }
+})();
+</script>
 `;
 }
 

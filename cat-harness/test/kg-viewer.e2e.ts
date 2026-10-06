@@ -41,7 +41,7 @@ import { artefactStubFor } from "../schemas/cat-harness.js";
 //  1. `import.meta.dir` is a BUN extension and is `undefined` under Playwright.
 //     `a11y.e2e.ts` beside this already used the portable form.
 //  2. `readDeclaration` validates the whole declaration and throws when any
-//     directory names an unregistered graph kind — the hazard `siteDirFor`
+//     directory names an unregistered graph typology — the hazard `siteDirFor`
 //     documents. `artefactStubFor` is the raw read, added for this.
 const STUB = artefactStubFor(join(dirname(fileURLToPath(import.meta.url)), ".."));
 
@@ -433,6 +433,28 @@ test.describe("kg viewer", () => {
     await expect(page.locator("#langs-why-t")).toBeHidden();
     await page.keyboard.press("Space");
     await expect(page.locator("#langs-why-t")).toBeVisible();
+  });
+
+  /**
+   * The switcher is drawn before the document arrives and redrawn after it.
+   * A key pressed in between used to land on a node the redraw discarded, so
+   * the reason opened and focus fell to <body> -- the intermittent CI failure
+   * of the test above on a slow runner. Hold the fetch to make the window
+   * certain rather than lucky.
+   */
+  test("a redraw when the document arrives keeps the keyboard's place", async ({ page }) => {
+    let release!: () => void;
+    const held = new Promise<void>((r) => (release = r));
+    await page.route(`**/${STUB}.jsonld`, async (r) => { await held; await r.continue(); });
+    await page.goto(PAGE);
+    await page.locator('.lang.planned[lang="fr"]').focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#langs-why-s")).toBeFocused();
+    release();
+    await expect(page.locator("#list-h")).toHaveText("Nodes");
+    await expect(page.locator("#list li button").first()).toBeVisible();
+    await expect(page.locator("#langs-why-t")).toBeVisible();
+    await expect(page.locator("#langs-why-s")).toBeFocused();
   });
 
   test("the disabled switcher's targets clear 24px, and a tap opens the reason", async ({ page }) => {

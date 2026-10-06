@@ -34,7 +34,7 @@ example `bootstrap/processes`. The generator never invents a grouping. Owner,
 
 **A class comes from a node schema,** resolved in this order:
 
-1. the graph kind's `nodeSchemas`, keeping only the `$schema` tags actually
+1. the graph typology's `nodeSchemas`, keeping only the `$schema` tags actually
    present under that directory (see
    [`directory-conventions`](directory-conventions.md) §"Node schemas, one per
    `$schema` family");
@@ -87,7 +87,7 @@ empty shape. Close it by registering a node schema, not by editing the diagram.
   process, skill, task, test", plus Actor.
 
 **Colours are declared once, in `docs/assets/css/uml.css`**, one CSS class per
-graph kind in five families: schema, scenario, process, state and test. The
+graph typology in five families: schema, scenario, process, state and test. The
 Mermaid pages take them from CSS directly. The `.puml` files write the same
 colour onto each class, read from that stylesheet by `scripts/uml-palette.ts`,
 because PlantUML's SVG has no CSS hooks and ELK drops package colours. To

@@ -3,8 +3,8 @@ title: "IMMZ.D21.Generate verifiable digital certificate — WHO SMART Immunizat
 description: "StructureDefinition/IMMZD21 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/smart-immunizations/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-immunizations/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/immunizations">smart.who.int.immunizations</a></div>
@@ -14,7 +14,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/immunizations">http://smart.who.int/immunizations</a>.</p>
 </div>
 
-[← all 748 artefacts](../)
+[← all 748 artefacts](../artifacts.html)
 
 ## IMMZ.D21.Generate verifiable digital certificate
 
@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D21_Generate_verifiable_digital_certificate.schema.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D21_Generate_verifiable_digital_certificate.schema.json` · [view](StructureDefinition-IMMZ_D21_Generate_verifiable_digital_certificate.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D21_Generate_verifiable_digital_certificate.schema.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D21_Generate_verifiable_digital_certificate.schema.json` |
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D21_Generate_verifiable_digital_certificate.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D21_Generate_verifiable_digital_certificate.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
 
 <footer id="ig-footer" data-prev="StructureDefinition-IMMZD20.html" data-next="StructureDefinition-IMMZD5.html" class="st-ig"></footer>
-<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

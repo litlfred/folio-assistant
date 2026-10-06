@@ -4,7 +4,7 @@
  * Owner, 2026-09-21: **"keep tools and skills separate!"**
  *
  * They were not. `cat-harness.json`'s `tools` entry declared its documentation
- * as `cat-harness/docs/skills.md` — a page titled *"Skills & roles"* with no
+ * as `cat-harness/docs/concepts/skills.md` — a page titled *"Skills & roles"* with no
  * tools section in it. The tools graph had no documentation of its own and
  * named a page about something else.
  *
@@ -49,9 +49,9 @@ const REPO = resolve(import.meta.dir, "..", "..", "..");
 const DOCS = docsLayers(REPO).layers.find((l) => !l.repositoryScoped)!.dir;
 
 const decl = JSON.parse(readFileSync(declarationPathIn(join(REPO, "cat-harness"))!, "utf-8")) as {
-  directories?: { id?: string; graphKinds?: string[]; coverage?: { docs?: string; visualiser?: unknown } }[];
+  directories?: { id?: string; graphTypologies?: string[]; coverage?: { docs?: string; visualiser?: unknown } }[];
 };
-const entryFor = (kind: string) => (decl.directories ?? []).find((e) => (e.graphKinds ?? []).includes(kind));
+const entryFor = (kind: string) => (decl.directories ?? []).find((e) => (e.graphTypologies ?? []).includes(kind));
 
 // Since #1168 B7c the PAGE declares what it documents (`documents:`), so the
 // tools graph's page is found by asking the pages, not the directory entry.
@@ -59,7 +59,7 @@ const docsPagesFor = (kind: string): string[] => {
   const e = entryFor(kind)!;
   const tracked = Bun.spawnSync(["git", "ls-files", "*.md", "*.html"], { cwd: REPO }).stdout.toString().split("\n").filter(Boolean);
   return documentingPages(
-    { instance: "cat-harness", id: e.id ?? "", graphKinds: e.graphKinds ?? [] },
+    { instance: "cat-harness", id: e.id ?? "", graphTypologies: e.graphTypologies ?? [] },
     docsPages(REPO, tracked),
     REPO,
     [join(REPO, "cat-harness")],
@@ -83,7 +83,7 @@ describe("the tools graph is not documented by the skills page", () => {
    * A CHECK THAT IS NOT HERE, AND WHY — so it is not built a third time.
    *
    * While fixing this defect I recorded a hypothesis on bean `yunp`: *"a `docs`
-   * page shared by two entries whose graph kinds are disjoint is at least
+   * page shared by two entries whose graph typologies are disjoint is at least
    * suspicious, and that is computable."* It was written as the weaker,
    * mechanisable form of "is this page about this graph".
    *
@@ -100,7 +100,7 @@ describe("the tools graph is not documented by the skills page", () => {
    * it was written for either, because `skills.md` was never another entry's
    * DECLARED docs. `tools` pointed at a page that merely describes skills.
    *
-   * So "disjoint graph kinds" does not imply "unrelated subjects", and a check
+   * So "disjoint graph typologies" does not imply "unrelated subjects", and a check
    * that fires only on legitimate cases is worse than none: it trains a reader
    * to skip it. The guard that does work is the vocabulary approximation
    * below, which is honest about approximating.

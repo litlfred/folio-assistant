@@ -114,7 +114,7 @@ One Python script (≈900 lines, kept out of the tree because it is not small; t
 |---|---|---|
 | PR2: `sample-import` → `large-datasets/skills/` | **stays in cat-harness** | owner ruling 2026-10-01: large-datasets is a cat-harness subgraph, so the move is now inside one instance |
 | PR5: materialization state vocabulary and `extraction.ts` / `extract-assets.ts` move down **into cat-harness**; `sample-import-run.ts` → large-datasets | they move down **into cat-harness-tools** (`schemas/library/`, `scripts/`), and so does `sample-import-run.ts` | D1 + "tools below core": they are Zod and code, and large-datasets is now a cat-harness subgraph. The heuristic alone found them OK in core (none imports upward), so these rows carry the ruling, not a measurement |
-| split plan blocker 1: `graph-kind-registry.ts` validators in core must be registered on load because tools must not reach up | unchanged, and now **mandatory** rather than tidy | with tools below core, a tools → core reference is a cycle, not a style issue |
+| split plan blocker 1: `graph-typology-registry.ts` validators in core must be registered on load because tools must not reach up | unchanged, and now **mandatory** rather than tidy | with tools below core, a tools → core reference is a cycle, not a style issue |
 | arc C1: core → tools while tools → core is a cycle needing a ruling | **resolved** | owner ruling "tools below core" (relayed 2026-10-01); see finding 1 |
 | PR1 finished the content-type packages | **34 more cat-harness skills point at sci** (2 MOVE, 22 SPLIT, 10 AMBIGUOUS) | they link into sci skills or carry its vocabulary; none is in any PR list. Most sit in `authoring/authoring-core` (one-voice, Milnor exposition, the integration watchers, scientific-accuracy) and `sdlc/sdlc-core` |
 | §1.3 / PR3: content-type processes up, harness processes regroup in place | agreed, plus **2 more SPLITs** | `graph-detanglement.bpmn` cites `smart-base/methodologies/diig.md`; `ig-ast-delta-review.bpmn` binds an fhir-harness skill. Both stay and invert |
@@ -167,7 +167,7 @@ Each question gives the context, the options, and a recommendation, so it can be
 
 **Q7. Core's `schemas/{catalogue,dublin-core,fhir-artifact-index}.ts`**
 
-- *Context:* Core's catalogue and Dublin Core schemas carry IRIS vocabulary and `fhir-artifact-index.ts` FHIR vocabulary, but cat-harness users read them (they are in `graph-kind-registry.ts`). They are SPLIT rows here.
+- *Context:* Core's catalogue and Dublin Core schemas carry IRIS vocabulary and `fhir-artifact-index.ts` FHIR vocabulary, but cat-harness users read them (they are in `graph-typology-registry.ts`). They are SPLIT rows here.
 - *Options:* (a) generic shape stays in core, the IRIS/FHIR specifics move to who-iris / fhir-harness and register on load (split plan blocker 1); (b) move whole; (c) keep.
 - *Recommendation:* **(a)**.
 

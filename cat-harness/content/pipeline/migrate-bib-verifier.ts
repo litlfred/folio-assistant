@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 /**
  * migrate-bib-verifier.ts — Convert legacy free-text `verified_by` strings
- * in `content/bib-qa-verifications.json` to the discriminated `Verifier`
+ * in the source ledger (`schemas/bib-attestations.ts`) to the discriminated `Verifier`
  * union defined in `folio-assistant/schemas/bib-verification.ts`.
  *
  * The legacy shape was:
@@ -22,17 +22,14 @@
  *   bun run cat-harness/content/pipeline/migrate-bib-verifier.ts --dry-run
  */
 
-import { readFileSync, writeFileSync, existsSync } from "fs";
-import { join } from "path";
+import { readSourceLedger, writeSourceLedger } from "../../schemas/bib-attestations";
 import { findContentRepoRoot } from "./repo-root";
 
-// Was rooted at this file's own location, which is the PLATFORM — but every
-// path below is folio content. `findContentRepoRoot()` walks up from cwd;
-// it must not use `import.meta.dir`, which resolves back through a folio's
+// Was rooted at this file's own location, which is the PLATFORM — but the
+// ledger is folio content. `findContentRepoRoot()` walks up from cwd; it must
+// not use `import.meta.dir`, which resolves back through a folio's
 // `folio-assistant/` symlink to the platform.
 const REPO_ROOT = findContentRepoRoot();
-// declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-const TARGET = join(REPO_ROOT, "folio/bib-qa-verifications.json");
 
 /** Parse legacy "Claude (model-name)" pattern → `{ kind: "agent", model }`. */
 function parseLegacyVerifier(s: string): { kind: "agent"; model: string } | null {
@@ -50,20 +47,17 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   const dryRun = args.includes("--dry-run");
 
-  if (!existsSync(TARGET)) {
-    console.error(`ERROR: ${TARGET} not found`);
+  // The ONE reader of the source ledger (store, or legacy before migration); it says which.
+  const read = readSourceLedger(REPO_ROOT);
+  console.log(read.note);
+  if (read.from === "none") {
+    console.error("ERROR: this folio has no source ledger");
     process.exit(1);
   }
-
-  // The file is hand-edited JSON, so `verified_by` is either the legacy
-  // string or the `Verifier` union this script migrates it to.
-  interface VerificationEntry { id?: string; verified_by?: unknown }
-  const raw = JSON.parse(readFileSync(TARGET, "utf-8")) as {
-    entries?: VerificationEntry[];
-    _verified_by_caveat?: unknown;
-    _schema?: string;
-  };
-  const entries: VerificationEntry[] = raw.entries ?? [];
+  // `verified_by` is either the legacy string or the `Verifier` union this
+  // script migrates it to.
+  interface VerificationEntry { id?: string | null; verified_by?: unknown }
+  const entries = read.ledger.entries as unknown as VerificationEntry[];
 
   let migrated = 0;
   let alreadyStructured = 0;
@@ -87,21 +81,10 @@ if (import.meta.main) {
     }
   }
 
-  // Update the schema comment to drop the obsolete caveat (the discriminated
-  // union now encodes what the caveat was warning about) but keep a brief
-  // migration note.
-  if (raw._verified_by_caveat) {
-    delete raw._verified_by_caveat;
-  }
-  raw._schema =
-    "Per-paper verification status for QOU bibliography. Consumed by " +
-    "content/pipeline/bib-qa.ts (tags has_local_pdf, verification_status). " +
-    "Hand-edited; one entry per reference id in references.ts that has been " +
-    "examined. Absence = pending. Status values: verified-clean, partial, " +
-    "fixed, uncited, paper-mismatch, unfetchable, pending-placement. " +
-    "Verified_by is a Verifier discriminated union: " +
-    "{ kind: 'agent', model } or { kind: 'human', name, agent_assistance? }. " +
-    "See folio-assistant/schemas/bib-verification.ts for the typed contract.";
+  // This script once also rewrote `_schema` to a free-text description and
+  // dropped `_verified_by_caveat`. The ledger's header is now the constant
+  // `source-ledger/v1` (`schemas/bib-attestations.ts`), and rewriting it would
+  // regress every reader, so the header is left alone.
 
   console.log(`Migrated:           ${migrated}`);
   console.log(`Already structured: ${alreadyStructured}`);
@@ -113,6 +96,5 @@ if (import.meta.main) {
     process.exit(0);
   }
 
-  writeFileSync(TARGET, JSON.stringify(raw, null, 2) + "\n");
-  console.log(`\nWrote: ${TARGET}`);
+  console.log(`\n${writeSourceLedger(REPO_ROOT, read.ledger).note}`);
 }

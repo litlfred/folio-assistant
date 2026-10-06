@@ -4,7 +4,7 @@
 
 # folio-assistant-core-validators
 
-The validators folio-assistant-core's code provides, one folio-validator/v1 node each naming the graph kind and $schema family it checks (bean riit).
+The validators folio-assistant-core's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit).
 
 Part of [folio-assistant-core](../README.md) 0.1.0, declared as `folio-assistant-core-validators`, holding `validators`.
 
@@ -16,6 +16,8 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `folio-assistant
 | [`extraction.json`](extraction.json) | data |  |
 | [`glossary.json`](glossary.json) | data |  |
 | [`intake.json`](intake.json) | data |  |
+| [`public-comment-changeset.json`](public-comment-changeset.json) | data |  |
+| [`public-comment.json`](public-comment.json) | data |  |
 | [`review-verdict.json`](review-verdict.json) | data |  |
 | [`uploads-dublin-core-record.json`](uploads-dublin-core-record.json) | data |  |
 <!-- kg:subgraph:end -->

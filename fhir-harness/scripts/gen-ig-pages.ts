@@ -22,7 +22,7 @@
  * `fhir-artifact-index` is registered `renderable: false`, so an instance
  * whose only declared graph of that kind is the index publishes its artefacts
  * at no URL. The owner found it by asking where `/smart-trust` was. Only two
- * of this repository's graph kinds are renderable (`docs` and `folio`); this
+ * of this repository's graph typologies are renderable (`docs` and `folio`); this
  * generator writes an instance's `docs/` from its index.
  *
  * **The URL the owner expected is the right one.** `withRoutes` in
@@ -90,7 +90,7 @@ import {
   type IgChrome,
 } from "../schemas/ig-chrome.js";
 import { readIgIdentity, statusOf, type IgIdentity } from "../schemas/ig-identity.js";
-import { renderedPath, withRendersFrontMatter } from "../../cat-harness/scripts/viewer-declarations.js";
+import { renderedPath, rendersFrontMatter, withRendersFrontMatter } from "../../cat-harness/scripts/viewer-declarations.js";
 import {
   declarationPathIn,
   directoriesForGraph,
@@ -166,6 +166,30 @@ const AST_LOADER = join(import.meta.dir, "templates", "ig-pages", "ast-resource.
 /** `--out` writes the pages somewhere other than the instance's committed `docs/`. */
 const OUT_ARG = arg("--out");
 const OUT = OUT_ARG ? resolve(process.cwd(), OUT_ARG) : join(INSTANCE, "docs");
+/**
+ * Whether these pages build INTO the instance's own IG site, served at
+ * `/<instance>/` (`igSite` on the docs directory, bean `mftp`), rather than
+ * composed into the main site. Read off the declaration, never inferred.
+ */
+const IG_SITE = readDeclaration(INSTANCE)?.directories?.find((d) => resolve(INSTANCE, d.path).replace(/\/+$/, "") === OUT.replace(/\/+$/, ""))?.igSite === true;
+/**
+ * The site-absolute path of this instance's docs root, for `relative_url`:
+ * the instance's own route in the main site, or the IG site's root, whose
+ * `baseurl` already ends in `/<instance>`.
+ */
+const SITE_PREFIX = IG_SITE ? "" : `/${INSTANCE_NAME}`;
+/**
+ * Where an artefact page's "all artefacts" link goes: the IG site's own
+ * Artifact Index (`artifacts.html`, written by `build-ig-site`) when the pages
+ * build into it, else this generator's index at the docs root.
+ */
+const ALL_ARTEFACTS_HREF = IG_SITE ? "../artifacts.html" : "../";
+/**
+ * The front-matter-only page an `igSite` instance commits so its artefact
+ * index keeps a viewer declaration; its body is the IG site's own generated
+ * `artifacts` page (`FRONT_MATTER_ONLY` in `stage-ig-sites.ts`).
+ */
+const ARTIFACTS_FRONT_MATTER_PAGE = "artifacts.md";
 /** The pages' shared stylesheets, under the docs root (one copy each, linked from every page). */
 const PAGES_CSS = "assets/ig-pages.css";
 const CHROME_CSS = "assets/ig-chrome.css";
@@ -617,7 +641,12 @@ function shell(
   // page renders as an ordinary folio page: a mirror nobody could build is
   // reported by the build, never faked with a hand-typed palette.
   const wearsChrome = chrome === "fixture" && CHROME !== undefined;
-  const link = (file: string) => `<link rel="stylesheet" href="{{ '/${INSTANCE_NAME}/${file}' | relative_url }}">`;
+  // An igSite instance's pages all sit one level down (`artifact/`), and are
+  // built either inside the host site at `/<instance>/` or as the IG's own
+  // site at its root (bean `mftp`); a RELATIVE href is right in both, where a
+  // site-absolute one is right in only one.
+  const assetHref = (file: string) => (IG_SITE ? `../${file}` : `{{ '${SITE_PREFIX}/${file}' | relative_url }}`);
+  const link = (file: string) => `<link rel="stylesheet" href="${assetHref(file)}">`;
   const links = `${link(PAGES_CSS)}${wearsChrome ? `\n${link(CHROME_CSS)}` : ""}`;
   const banner = wearsChrome ? `${igBanner(IX)}\n\n` : "";
   // The footer is drawn by its loader from the IG's own metadata; the page
@@ -631,7 +660,7 @@ function shell(
       ? // In the chrome's scope when the page wears it, which is where the
         // mirrored `--footer-*` tokens are defined.
         `\n\n${FOOTER_TAG}${wearsChrome ? ` class="${CHROME_SCOPE.slice(1)}"` : ""}></footer>\n` +
-        `<script src="{{ '/${INSTANCE_NAME}/${IG_FOOTER_SCRIPT}' | relative_url }}" defer></script>`
+        `<script src="${assetHref(IG_FOOTER_SCRIPT)}" defer></script>`
       : "";
   return `${fm}${links}\n\n${banner}${body.trim()}${footer}\n`;
 }
@@ -885,7 +914,7 @@ function artifactTable(list: FhirArtifact[], base: string): string[] {
 function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: FhirArtifact[], order: number): string {
   const name = label ?? UNCATEGORISED;
   const body = [
-    `[← all ${ix.count} artefacts](../)`,
+    `[← all ${ix.count} artefacts](${ALL_ARTEFACTS_HREF})`,
     ``,
     `## ${name}`,
     ``,
@@ -962,7 +991,10 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
     const r = a.sidecars?.[k];
     const label = { schema: "JSON Schema", displays: "Displays", openapi: "OpenAPI", jsonld: "JSON-LD" }[k];
     if (!r) return `| ${label} | *not published for this artefact* | |`;
-    const view = (k === "schema" || k === "jsonld") && r.localPath ? ` · [view](${mdCell(r.localPath.split("/").pop()!)}.html)` : "";
+    // `view` only where the view page IS written: the same condition as the
+    // IG API VIEW PAGES loop below. smart-immunizations' index is not served,
+    // so 388 of its artefact pages linked a page that did not exist.
+    const view = (k === "schema" || k === "jsonld") && r.localPath && igApiServable().ok ? ` · [view](${mdCell(r.localPath.split("/").pop()!)}.html)` : "";
     const held = r.localPath ? `\`${mdCell(r.localPath)}\`${view}` : "*by reference*";
     return `| ${label} | <${mdCell(r.url)}> | ${held} |`;
   });
@@ -982,7 +1014,7 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
   const body = [
     // `../` from `artifact/Name.html` is the mount root, which the server
     // resolves to its `index.html`.
-    `[← all ${ix.count} artefacts](../)`,
+    `[← all ${ix.count} artefacts](${ALL_ARTEFACTS_HREF})`,
     ``,
     `## ${name}`,
     ``,
@@ -1358,6 +1390,32 @@ for (const [label, list] of byCategory(ix.artifacts)) {
   }
 }
 
+// AN IG-SITE INSTANCE'S OWN NAVIGATION IS THE IG'S (bean `mftp`). Its index,
+// toc and artifacts pages, its menu sections and its DAK hub page are written
+// by `build-ig-site` from the IG's source and menu, so the copies above would
+// be a second index, a second menu and a second hub at the same URLs. Built
+// above and dropped here, rather than not built, so the footer's reading
+// order and every link computed from them are the same in both layouts.
+// The CSS, scripts and artefact pages stay: the IG site carries them.
+if (IG_SITE) {
+  for (const k of [...pages.keys()]) {
+    if (k === "index.md" || k.startsWith("menu/") || k.startsWith("category/") || (ix.igApiHub?.localPath && k === `${hubPage(ix)}.md`)) pages.delete(k);
+  }
+  // THE VIEWER DECLARATION MOVES WITH THE INDEX. The index page carried it;
+  // in the IG site the artefact index is the IG's own `artifacts` page, which
+  // `build-ig-site` writes from data and nothing commits. So this writes
+  // front matter only — the declaration — and `stage-ig-sites` lays it onto
+  // that generated page (`copyDocsInto`), so `harness-tiles` still finds a
+  // committed viewer for `fhir-artifact-index`, at `/<instance>/artifacts.html`.
+  const rendered = directoriesForGraph(INSTANCE, "fhir-artifact-index").map((d) => renderedPath(repoRootFor(INSTANCE), d));
+  if (rendered.length > 0) {
+    pages.set(
+      ARTIFACTS_FRONT_MATTER_PAGE,
+      `${["---", `title: ${yamlScalar(`${LABEL} — artefact index`)}`, ...rendersFrontMatter(rendered), "rendered-by: ig-pages", "---"].join("\n")}\n`,
+    );
+  }
+}
+
 function committed(): Map<string, string> {
   const out = new Map<string, string>();
   const walk = (dir: string, prefix = ""): void => {
@@ -1385,6 +1443,33 @@ function committed(): Map<string, string> {
 function docsDirectoryId(): string | undefined {
   const norm = (p: string) => resolve(p).replace(/\/+$/, "");
   return readDeclaration(INSTANCE)?.directories?.find((d) => norm(join(INSTANCE, d.path)) === norm(OUT))?.id;
+}
+
+// EVERY SAME-DIRECTORY LINK A GENERATED PAGE MAKES IS TO A PAGE THIS RUN
+// WRITES. A generator that links a page it decided not to write ships a dead
+// link on every artefact page — 388 on smart-immunizations, measured on its
+// published site, 2026-10-05 — and nothing downstream says so: the IG's own
+// pages are not this generator's, so only links within `artifact/` (and the
+// root) are judged here, where every target is one of `pages`.
+{
+  const written = new Set([...pages.keys()].map((k) => k.split(sep).join("/").replace(/\.md$/, ".html")));
+  const dangling: string[] = [];
+  for (const [rel, text] of pages) {
+    if (!/\.(md|html)$/.test(rel)) continue;
+    const dir = rel.split(sep).slice(0, -1).join("/");
+    for (const m of text.matchAll(/(?:\]\(|href=")([^)"#?\s]+\.html)(?:[#?][^)"\s]*)?[)"]/g)) {
+      const target = m[1]!;
+      if (/^[a-z]+:|^\/|^\.\.\//.test(target) || target.includes("{")) continue;
+      const resolved = posix.normalize(dir ? `${dir}/${target}` : target);
+      if (!written.has(resolved)) dangling.push(`${rel.split(sep).join("/")} → ${target}`);
+    }
+  }
+  if (dangling.length > 0) {
+    console.error(`✗ ${dangling.length} link(s) to a page this run does not write:`);
+    for (const d of dangling.slice(0, 10)) console.error(`    ${d}`);
+    if (dangling.length > 10) console.error(`    …and ${dangling.length - 10} more`);
+    process.exit(1);
+  }
 }
 
 if (CHECK) {

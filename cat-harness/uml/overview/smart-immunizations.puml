@@ -55,6 +55,23 @@ package "smart-immunizations/smart-immunizations-artifact-index" as pkg_smart_im
     count [1] : integer
     artifacts [0..*] : Artifact[]
   }
+  class "Item" as smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Item <<json: IgMenuSchema>> #f4f4f1 {
+    label [1] : string
+    href [1] : string
+  }
+  class "Group" as smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Group <<json: IgMenuSchema>> #f4f4f1 {
+    label [1] : string
+    href [0..1] : string
+    items [0..*] : Item[]
+  }
+  class "folio-ig-menu/v1" as smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 <<json: IgMenuSchema>> #f4f4f1 {
+    $schema [1] : 'folio-ig-menu/v1'
+    id [1] : string
+    canonical [1] : string<uri>
+    version [0..1] : string
+    source [1] : object
+    groups [0..*] : Group[]
+  }
   class "IMMZ.C4.Create client record" as smart_immunizations_smart_immunizations_artifact_index_dak_StructureDefinition_IMMZ_C4_Create_client_record_schema_json_IMMZ_C4_Create_client_record <<schema: dak/StructureDefinition-IMMZ_C4_Create_client_record.schema.json>> #f4f4f1 {
     resourceType [1] : 'IMMZC4'
     @context [0..1] : string<uri> | object | list<string<uri> | object>
@@ -973,7 +990,7 @@ package "smart-immunizations/smart-immunizations-artifact-index" as pkg_smart_im
   }
 }
 package "smart-immunizations/smart-immunizations-docs" as pkg_smart_immunizations_smart_immunizations_docs <<docs, ig-pages>> {
-  note "docs: no node schema declared\n(no node here carries a $schema family docs names (12 named): could not determine)" as n_smart_immunizations_smart_immunizations_docs_docs
+  note "docs: no node schema declared\n(no node here carries a $schema family docs names (13 named): could not determine)" as n_smart_immunizations_smart_immunizations_docs_docs
   note "ig-pages: no node schema declared\n(no validator registered: could not determine)" as n_smart_immunizations_smart_immunizations_docs_ig_pages
 }
 package "smart-immunizations/qa" as pkg_smart_immunizations_qa <<qa>> {
@@ -995,6 +1012,8 @@ package "smart-immunizations/qa" as pkg_smart_immunizations_qa <<qa>> {
 smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Context : contexts
 smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound : sidecarsUnbound
 smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Artifact : artifacts
+smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Group *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Item : items
+smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Group : groups
 ' grid: portrait, 2 column(s) — pkg_smart_immunizations_smart_immunizations_artifact_index pkg_smart_immunizations_smart_immunizations_docs pkg_smart_immunizations_qa
 pkg_smart_immunizations_smart_immunizations_artifact_index -[hidden]down- pkg_smart_immunizations_qa
 @enduml

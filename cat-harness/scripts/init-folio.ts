@@ -281,7 +281,7 @@ function instanceDeclaration(o: MaybeFolio): string {
           // This line IS the declaration being written; there is nothing to
           // read it from in a repository that does not exist yet.
           path: "folio/",
-          graphKinds: ["folio"],
+          graphTypologies: ["folio"],
           description: `The content of ${o.title} — its document, chapters and blocks.`,
         },
       ],
@@ -847,14 +847,14 @@ function repoSlug(url: string): string {
  * The folio's todos graph: people's outstanding items, and FEEDBACK raised
  * against a block. Bean `423d`.
  *
- * `feedback` (graph kind `todo-feedback`) is where a review-process task
+ * `feedback` (graph typology `todo-feedback`) is where a review-process task
  * commits a reviewer's comment when it decides what happens to it
  * (`folio-review-comment-move`, on the edit-set's feature branch, per the
  * owner's ruling). Without the declaration the first recorded decision on a
- * new folio stops with "declares no directory of graph kind todo-feedback",
+ * new folio stops with "declares no directory of graph typology todo-feedback",
  * so a folio gets it from the start.
  *
- * `verdicts` (graph kind `review-verdicts`) is where the review coordinator
+ * `verdicts` (graph typology `review-verdicts`) is where the review coordinator
  * commits reviewers' per-block verdicts (`folio-review-coverage --commit`,
  * bean `px0t`). Declared from the start for the same reason.
  *
@@ -869,20 +869,20 @@ function todosGraph(slug: string): string {
         {
           id: "items",
           path: "items",
-          graphKinds: ["todo-items"],
-          description: "One Markdown file per todo, carrying `$schema: folio-todo/v1` in its front matter: a person's outstanding item.",
+          graphTypologies: ["todo-items"],
+          description: "One Markdown file per todo, carrying `$schema: todo/1.0.0` in its front matter: a person's outstanding item.",
         },
         {
           id: "feedback",
           path: "feedback",
-          graphKinds: ["todo-feedback"],
+          graphTypologies: ["todo-feedback"],
           description:
-            "Todos raised against a specific block. Review comments land here as `folio-review-comment/v1` JSON, committed on the edit-set's feature branch by the review-process task that decided them (the `review-comments` skill).",
+            "Todos raised against a specific block. Review comments land here as `review-comment/1.0.0` JSON, committed on the edit-set's feature branch by the review-process task that decided them (the `review-comments` skill).",
         },
         {
           id: "verdicts",
           path: "verdicts",
-          graphKinds: ["review-verdicts"],
+          graphTypologies: ["review-verdicts"],
           description:
             "Reviewers' per-block verdicts, one `folio-review-verdict/v1` JSON each, pinned to the block's hash and committed on the edit-set's feature branch by the review coordinator (`folio-review-coverage --commit`).",
         },

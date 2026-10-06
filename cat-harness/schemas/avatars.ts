@@ -35,7 +35,7 @@
  *
  * ## `kind` is open, so there is a fallback and it is reported
  *
- * `BASE_GRAPH_KINDS` is an open registry and `fsh-guts` node kinds are open
+ * `BASE_GRAPH_TYPOLOGIES` is an open registry and `fsh-guts` node kinds are open
  * by design. An unknown kind gets {@link GENERIC} and shows up as a QA
  * finding — never as a blank, which is the third-state rule applied to art.
  *
@@ -47,7 +47,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { defaultGraphKinds } from "./graph-kind-registry";
+import { defaultGraphTypologies } from "./graph-typology-registry";
 import { findDeclarationFile, instanceRootsIn } from "./instance-roots";
 
 /** The platform checkout this module sits in — where instances are scanned from. */
@@ -77,7 +77,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // Owner: *"bootstrap has avatar, so does cat-harness, folio-asst"*.
   //
   // THIS TABLE SERVES TWO KEY SPACES, and the entries below are the second
-  // one. `kind-fan` and `gen-avatars-css` key by GRAPH KIND; `harness-tiles`
+  // one. `kind-fan` and `gen-avatars-css` key by GRAPH TYPOLOGY; `harness-tiles`
   // calls `avatarFor(decl.name)` — an INSTANCE's declared name. Most entries
   // are kinds; these three are instances, which is why `check-avatar-coverage`
   // reports them as "an avatar for a kind this instance does not declare" and
@@ -151,8 +151,8 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
 
   // THE ONE RENDERABLE KIND, and the one this whole platform exists for.
   //
-  // Registered by `schemas/folio-graph-kind.ts` ON IMPORT rather than sitting
-  // in `BASE_GRAPH_KINDS`, which is why it was missing from the first draft
+  // Registered by `schemas/folio-graph-typology.ts` ON IMPORT rather than sitting
+  // in `BASE_GRAPH_TYPOLOGIES`, which is why it was missing from the first draft
   // of this registry and why `check-avatar-coverage` now seeds from the base
   // table explicitly: a check that reads only the live registry reports a
   // clean run whenever the module that registers a kind was not imported.
@@ -275,12 +275,12 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 132,
     reads: "a shield with a tick — a validator, declared by the harness whose code it is",
   },
-  kinds: {
+  typologies: {
     // A stack of three cards, the top one tagged: a graph whose nodes are the
     // KINDS of the other graphs. Bean dmx1.
     glyph: "M5 8h12v11H5zM7 5h12v11M9 2h12v11M8 12h6M8 15h4",
     tone: 300,
-    reads: "a stack of type cards — the graph kinds a harness declares it owns",
+    reads: "a stack of type cards — the graph typologies a harness declares it owns",
   },
   tools: {
     glyph: "M14 4a4 4 0 00-5 5l-5 5 2 2 5-5a4 4 0 005-5l-2 2-2-2 2-2z",
@@ -524,6 +524,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 38,
     reads: "a lightbulb — an idea being argued, not yet a promise",
   },
+  "doc-group": {
+    // A folder holding lined pages — one named group of the docs graph's own
+    // pages (bean `xka5`). The docs family's tone: its pages ARE docs pages.
+    glyph: "M3 6h6l2 2h10v11H3zM7 12h10M7 15h7",
+    tone: 212,
+    reads: "a folder of pages — one named group of the documentation",
+  },
   requirements: {
     // A page with two ticked lines — what was agreed, each line checkable.
     // A proposal is MOVED here when its feature ships (issue #1164).
@@ -606,7 +613,7 @@ export const GENERIC: Avatar = {
  * is not a second central registry for kinds it does not list.
  */
 function declaredAvatar(kind: string): Avatar | undefined {
-  return defaultGraphKinds.get(kind)?.avatar;
+  return defaultGraphTypologies.get(kind)?.avatar;
 }
 
 /**
@@ -653,7 +660,7 @@ export function avatarFor(kind: string): Avatar {
  */
 export function avatarKinds(): string[] {
   const listed = Object.keys(AVATARS);
-  const kinds = defaultGraphKinds.names().filter((k) => !listed.includes(k) && declaredAvatar(k) !== undefined);
+  const kinds = defaultGraphTypologies.names().filter((k) => !listed.includes(k) && declaredAvatar(k) !== undefined);
   const insts = [...instanceAvatars().keys()].filter((k) => !listed.includes(k) && !kinds.includes(k));
   return [...listed, ...kinds, ...insts];
 }

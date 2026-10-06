@@ -77,7 +77,8 @@ import {
   readDeclaration,
   siteDirFor,
   visualisationsOf,
-  defaultGraphKinds,
+  visualisationResolves,
+  defaultGraphTypologies,
   instanceDirectories,
   nestedDirectories,
 } from "../schemas/cat-harness.js";
@@ -85,7 +86,7 @@ import { withViewers } from "./viewer-declarations.js";
 import { subscribedHarnesses, subscribedTile } from "./subscribed-harnesses.js";
 import { labelVisualisations, nameInstanceRoot } from "./lib/nav-label.js";
 import type { HarnessMark } from "./lib/harness-mark.js";
-// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// The `folio` graph typology is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
 // COMMAND that runs carries it — and since #840 every caller does, because
@@ -111,7 +112,7 @@ export type HarnessStat = {
 
 /** One viewer a tile can open, or one it cannot. */
 export type HarnessVisualisation = {
-  /** The declared graph kind this shows. */
+  /** The declared graph typology this shows. */
   kind: string;
   /**
    * What every surface CALLS this row — set by `labelVisualisations` in
@@ -359,18 +360,18 @@ export type HarnessSubgraph =
  */
 export function subgraphsOf(
   decl: Pick<CatHarnessDeclaration, "remoteGraphs" | "subscriptions">,
-  dirs: readonly { id: string; path: string; graphKinds?: readonly string[] }[],
+  dirs: readonly { id: string; path: string; graphTypologies?: readonly string[] }[],
 ): HarnessSubgraph[] {
   const local: HarnessSubgraph[] = dirs.map((d) => ({
     id: d.id,
-    kinds: [...(d.graphKinds ?? [])],
+    kinds: [...(d.graphTypologies ?? [])],
     where: "local" as const,
     path: d.path,
   }));
   const remote: HarnessSubgraph[] = [
     ...(decl.remoteGraphs ?? []).map((g) => ({
       id: g.id,
-      kinds: [...g.graphKinds],
+      kinds: [...g.graphTypologies],
       where: "remote" as const,
       url: g.url,
       via: "remote-graph" as const,
@@ -481,7 +482,7 @@ function siteDirMount(
   const entry = (decl.directories ?? []).find(
     (d) => (d.path ?? "").replace(/\/$/, "") === site,
   );
-  const kind = entry?.graphKinds?.[0];
+  const kind = entry?.graphTypologies?.[0];
   return kind === undefined ? undefined : `/${kind}/${decl.name}/`;
 }
 
@@ -625,9 +626,9 @@ function tileFor(
   // kind is the second thing.
   const byId = new Map((decl.directories ?? []).map((d) => [d.id, d]));
   const listedSubgraphs = nestedDirectories(instanceDir, decl).filter((n) => {
-    const parentKinds = byId.get(n.parentId)?.graphKinds ?? [];
-    return n.graphKinds.some((g) => {
-      const w = defaultGraphKinds.get(g)?.within;
+    const parentKinds = byId.get(n.parentId)?.graphTypologies ?? [];
+    return n.graphTypologies.some((g) => {
+      const w = defaultGraphTypologies.get(g)?.within;
       return w !== undefined && parentKinds.includes(w);
     });
   });
@@ -643,7 +644,7 @@ function tileFor(
   for (const d of instanceDirectories(instanceDir, decl)) {
     if (!dirs.some((x) => x.id === d.id)) dirs.push(d as Dir);
   }
-  const kinds = [...new Set(dirs.flatMap((d) => d.graphKinds ?? []))].sort();
+  const kinds = [...new Set(dirs.flatMap((d) => d.graphTypologies ?? []))].sort();
   const findings: string[] = [];
 
   // WHERE THE SITE IS, repo-relative, computed once. `siteDir` arrives
@@ -685,7 +686,8 @@ function tileFor(
   // names. #1767, stage C3.
   const instanceRel = relative(repoRoot, instanceDir).split(sep).join("/");
   const composedPrefixes = (decl.directories ?? [])
-    .filter((d) => (d as { composed?: boolean }).composed === true && typeof d.path === "string")
+    // An `igSite` directory is served at the same `/<name>/` route, inside the IG's own site (bean `mftp`).
+    .filter((d) => ((d as { composed?: boolean }).composed === true || (d as { igSite?: boolean }).igSite === true) && typeof d.path === "string")
     .map((d) => `${instanceRel}/${d.path!.replace(/^\.?\/+/, "").replace(/\/*$/, "/")}`);
   const publishedRefOf = (ref: string): string | undefined => {
     if (ref.startsWith(sitePrefix)) return publishedUrlOf(ref.slice(sitePrefix.length));
@@ -696,10 +698,12 @@ function tileFor(
   const declared = new Map<string, string>();
   for (const d of dirs) {
     for (const v of visualisationsOf(d.coverage, d.id)) {
-      if (!existsSync(join(repoRoot, v.ref))) continue;
+      // Built at publish (bean 0b8c) counts as present: its page is never
+      // committed, and the answer must not depend on a local copy.
+      if (!visualisationResolves(v, (p) => existsSync(join(repoRoot, p)))) continue;
       const page = publishedRefOf(v.ref);
       if (page === undefined) continue;
-      for (const kind of d.graphKinds ?? []) {
+      for (const kind of d.graphTypologies ?? []) {
         if (!declared.has(kind)) declared.set(kind, page);
       }
     }
@@ -724,7 +728,7 @@ function tileFor(
    */
   const readOnlyFor = (kind: string): boolean | undefined => {
     const said = dirs
-      .filter((d) => (d.graphKinds ?? []).includes(kind))
+      .filter((d) => (d.graphTypologies ?? []).includes(kind))
       .map((d) => d.readOnly)
       .filter((v): v is boolean => v !== undefined);
     if (said.length === 0) return undefined;
@@ -740,7 +744,7 @@ function tileFor(
     // `ownsSite` alone rendered that tile "no viewer yet".
     // …but `/<kind>/` is the SITE OWNER's whenever it declares that kind too:
     // the root's `uploads` would otherwise open cat-harness's `/uploads/`.
-    const ownerHolds = (owner?.decl.directories ?? []).some((d) => (d.graphKinds ?? []).includes(kind));
+    const ownerHolds = (owner?.decl.directories ?? []).some((d) => (d.graphTypologies ?? []).includes(kind));
     const candidates = ownsSite || (isRepoRoot && !ownerHolds)
       ? [ownStatePage(kind), subjectPage(handler, kind, decl.name)]
       : [subjectPage(handler, kind, decl.name)];
@@ -770,10 +774,10 @@ function tileFor(
     // `HarnessVisualisation.stagingOnly` for what its absence cost.
     const withheld = dirs.some(
       (d) =>
-        (d.graphKinds ?? []).includes(kind) &&
+        (d.graphTypologies ?? []).includes(kind) &&
         visualisationsOf(d.coverage, d.id).some((v) => v.publish === "staging-only"),
     );
-    const within = defaultGraphKinds.get(kind)?.within;
+    const within = defaultGraphTypologies.get(kind)?.within;
     visualisations.push({
       kind,
       ...(within ? { within } : {}),
@@ -811,10 +815,10 @@ function tileFor(
   // and tells whoever does the routing work which gap they are closing.
   const declaredFor = (kind: string, stagingOnly: boolean): string | undefined => {
     for (const d of dirs) {
-      if (!(d.graphKinds ?? []).includes(kind)) continue;
+      if (!(d.graphTypologies ?? []).includes(kind)) continue;
       for (const v of visualisationsOf(d.coverage, d.id)) {
         if ((v.publish === "staging-only") !== stagingOnly) continue;
-        if (existsSync(join(siteDir, "..", "..", v.ref))) return v.ref;
+        if (visualisationResolves(v, (p) => existsSync(join(siteDir, "..", "..", p)))) return v.ref;
       }
     }
     return undefined;
@@ -945,7 +949,7 @@ function tileFor(
     // then has a title)"* — and checking only the first would report a clean
     // directory whose second viewer is missing.
     for (const v of visualisationsOf(d.coverage, d.id)) {
-      if (!existsSync(join(siteDir, "..", "..", v.ref))) {
+      if (!visualisationResolves(v, (p) => existsSync(join(siteDir, "..", "..", p)))) {
         findings.push(
           `${decl.name}/${d.id}: declares visualiser "${v.title}" at "${v.ref}", ` +
             `which does not resolve on disk.`,
@@ -1307,7 +1311,7 @@ function tileFor(
         }),
     stats: [
       { id: "directories", label: "declared directories", value: dirs.length },
-      { id: "kinds", label: "declared graph kinds", value: kinds.length },
+      { id: "kinds", label: "declared graph typologies", value: kinds.length },
       { id: "views", label: "visualisations you can open", value: visualisations.filter((v) => v.path).length },
     ],
     visualisations,
@@ -1448,7 +1452,7 @@ export function harnessTiles(
  * | source | served at | measured |
  * |---|---|---|
  * | `processes/index.md` | `/processes/` | 200 |
- * | `tool-graph.md` | `/tool-graph.html` | 200 |
+ * | `tool-graph.md` | `/concepts/tool-graph.html` | 200 |
  * | `tool-graph.md` | ~~`/tool-graph/`~~ | **404** |
  *
  * So an `index` leaf addresses as its directory and every other page addresses

@@ -16,7 +16,7 @@
  * rule on harnesses that instantiate a director like fsh-guts, docs/ library/
  * need to create a visualize for them."*
  *
- * So a mount point is keyed on the **graph kind**: a harness that instantiates
+ * So a mount point is keyed on the **graph typology**: a harness that instantiates
  * a directory gets a visualiser for it, and that visualiser lives at
  *
  *     <base-url>/<kind>/<instance>/
@@ -108,9 +108,11 @@ import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js"
 import { instanceDirectories, declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
 import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js";
 import { navMarkFields, type HarnessMark } from "./lib/harness-mark.js";
-import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
+import { graphTypologyRowDecor } from "./lib/graph-typology-nav.js";
 import { kindTitle } from "./lib/nav-label.js";
+import { withSavedScheme } from "./lib/scheme-css.js";
 import { viewersOf } from "./viewer-declarations.js";
+import { translationMetaBlock, withTranslationMeta } from "./lib/translation-meta.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -262,6 +264,20 @@ export function toRootFor(route: string, fileUnder: string): string {
 }
 
 /**
+ * Write a rail's shared data into the built site, once per content — bean
+ * `lnoy`. The file is named by its content's hash, so a second page with the
+ * same rail finds it already there.
+ */
+export function railDataWriter(siteAbs: string): (file: string, body: string) => void {
+  return (file, body) => {
+    const abs = join(siteAbs, file);
+    if (existsSync(abs)) return;
+    mkdirSync(dirname(abs), { recursive: true });
+    writeFileSync(abs, body);
+  };
+}
+
+/**
  * Where the Jekyll-built pages come from, repo-relative — e.g. `cat-harness/docs`.
  *
  * Read off the built instance's own declaration (its non-repository-scoped
@@ -279,14 +295,14 @@ export function toRootFor(route: string, fileUnder: string): string {
 export function publishedDocsPrefix(repo: string, built: string): string | undefined {
   const decl = declarationPathIn(join(repo, built));
   if (decl === undefined || !existsSync(decl)) return undefined;
-  let d: { directories?: { path?: string; graphKinds?: string[]; scope?: string }[] };
+  let d: { directories?: { path?: string; graphTypologies?: string[]; scope?: string }[] };
   try {
     d = JSON.parse(readFileSync(decl, "utf-8"));
   } catch {
     return undefined;
   }
   const entry = (d.directories ?? []).find(
-    (x) => x.path && x.scope !== "repository" && (x.graphKinds ?? []).includes("docs"),
+    (x) => x.path && x.scope !== "repository" && (x.graphTypologies ?? []).includes("docs"),
   );
   return entry === undefined ? undefined : join(built, entry.path!);
 }
@@ -389,7 +405,7 @@ export function declaredGraphs(
 ): NavItem[] {
   const decl = declarationPathIn(join(REPO, instanceDirName));
   if (decl === undefined || !existsSync(decl)) return [];
-  let d: { directories?: { graphKinds?: string[] }[] };
+  let d: { directories?: { graphTypologies?: string[] }[] };
   try {
     // Own entries AND those declared from within (bean `cmsl`): `voices` is
     // declared in `skills/skills.json` now, and the raw file dropped it from
@@ -408,7 +424,7 @@ export function declaredGraphs(
   // finding 6. Read from the same `harness.json` as the rows' hrefs.
   const who = harnessName ?? instanceDirName;
   for (const entry of d.directories ?? []) {
-    for (const kind of entry.graphKinds ?? []) {
+    for (const kind of entry.graphTypologies ?? []) {
       if (seen.has(kind)) continue;
       seen.add(kind);
       const fallback = site.get(kind);
@@ -426,7 +442,7 @@ export function declaredGraphs(
       // clicked the wrong one.
       out.push({
         label: fallback?.label ?? kindTitle(kind),
-        ...graphKindRowDecor(kind, who),
+        ...graphTypologyRowDecor(kind, who),
         ...(href ? { href } : {}),
         ...(note ? { note } : {}),
       });
@@ -657,7 +673,10 @@ export function withPlatformUi(html: string, platformBase: string): string {
   const tags =
     `<link rel="stylesheet" href="${platformBase}/assets/css/docs-ui.css" ${PLATFORM_UI_ATTR}>` +
     `<script src="${platformBase}/assets/js/docs-ui.js" defer ${PLATFORM_UI_ATTR}></script>`;
-  return html.slice(0, head) + tags + html.slice(head);
+  // And the reader's saved scheme, before first paint: the light bulb sets it
+  // on any page of the site, and without this a folio's page painted in the
+  // OS scheme and flipped once `docs-ui.js` arrived (issue #2208).
+  return withSavedScheme(html.slice(0, head) + tags + html.slice(head));
 }
 
 /**
@@ -743,7 +762,7 @@ export function instanceMark(
  * rail links pointed at a directory that does not exist. Caught by resolving
  * every emitted href against the built tree, not by reading the code.
  */
-function injectRails<T extends { name: string; kind: string; route: string; visualiser?: string }>(
+function injectRails<T extends { name: string; kind: string; route: string; visualiser?: string; instanceDir?: string }>(
   siteAbs: string,
   mounts: readonly T[],
   docsPrefix: string | undefined,
@@ -838,12 +857,14 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
         links,
         ...(harnesses ? { harnesses } : {}),
         navbarRow: navbarRowData(built),
+        emitRailData: railDataWriter(siteAbs),
       });
       if (after === undefined) {
         skipped.push(file.slice(siteAbs.length + 1));
         continue;
       }
-      writeFileSync(file, after);
+      // The docs pages' own locale chrome, on a page Jekyll never laid out (#2219).
+      writeFileSync(file, m.instanceDir ? withTranslationMeta(after, translationMetaBlock(m.instanceDir)) : after);
       injected++;
     }
   }
@@ -949,6 +970,54 @@ export interface ForeignSiteRail {
   platformBase: string;
   /** What the home row is called — the folio's name, not the platform's. */
   homeLabel?: string;
+  /**
+   * The instance whose OWN site this is — an IG repository that instantiates
+   * a harness and builds its own site (bean `mftp`, owner 2026-10-05:
+   * "harnesses in bottom LHS navbar link back to folio-assist, not
+   * smart-immz"). Given, the navbar is that instance's: its name and mark in
+   * the header, its graphs, and a Harnesses list of IT and the harnesses it
+   * is built on (its `needs`, transitively) — itself linking to this site's
+   * root, the others to their own pages. Absent, the rail is the platform's.
+   */
+  instance?: string;
+}
+
+/**
+ * An instance and the harnesses it is built on, as navbar rows: the instance
+ * first, linking to `ownHref`, then every harness reachable through `needs`,
+ * in `harness.json`'s order, each linking to its own page re-based on
+ * `linkRoot`. A harness with no page is listed without a link rather than
+ * dropped. Undefined when `harness.json` cannot be read.
+ */
+export function instanceHarnesses(built: string, instance: string, linkRoot: string, ownHref: string): NavItem[] | undefined {
+  const prefix = publishedDocsPrefix(REPO, built);
+  if (prefix === undefined) return undefined;
+  const data = join(REPO, prefix, "_data", "harness.json");
+  if (!existsSync(data)) return undefined;
+  let d: { harnesses?: { name?: string; label?: string; title?: string; href?: string | null; tone?: number; mark?: HarnessMark | null; needs?: string[] }[] };
+  try {
+    d = JSON.parse(readFileSync(data, "utf-8"));
+  } catch {
+    return undefined;
+  }
+  const rows = d.harnesses ?? [];
+  const byName = new Map(rows.map((h) => [h.name, h]));
+  const reach = new Set<string>([instance]);
+  for (const queue = [instance]; queue.length > 0; ) {
+    for (const n of byName.get(queue.shift()!)?.needs ?? []) {
+      if (reach.has(n)) continue;
+      reach.add(n);
+      queue.push(n);
+    }
+  }
+  return rows
+    .filter((h) => h.name !== undefined && reach.has(h.name))
+    .sort((a, b) => (a.name === instance ? -1 : b.name === instance ? 1 : 0))
+    .map((h) => {
+      const label = h.label ?? h.title ?? h.name ?? "?";
+      const href = h.name === instance ? ownHref : h.href ? `${linkRoot}${h.href}` : undefined;
+      return { label, ...(href ? { href } : {}), ...navMarkFields(h.mark, h.tone, (src) => `${linkRoot}${src}`) };
+    });
 }
 
 export function railStandalonePages(
@@ -1004,15 +1073,18 @@ export function railStandalonePages(
       // `..` per directory the page sits under; the filename is not one.
       const depth = rel.split("/").length - 1;
       const toRoot = depth === 0 ? "." : new Array(depth).fill("..").join("/");
-      const named = railNames(built, instanceName);
+      // A page of an `igSite` instance's own IG site (bean `mftp`) is THAT
+      // instance's page: its name, mark and graphs, not the platform's.
+      const owner = foreign ? (foreign.instance ?? instanceName) : (igSiteOwner(rel.split("/")[0]!) ?? instanceName);
+      const named = railNames(built, owner);
       // The platform's links resolve against the platform's site; only home is this site's.
       const linkRoot = foreign?.platformBase ?? toRoot;
-      const links = declaredGraphs(instanceName, new Map(), publishedGraphs(built, instanceName, linkRoot), named.harness);
-      const harnesses = instantiatedHarnesses(built, linkRoot);
-      const mark = instanceMark(built, instanceName, linkRoot);
+      const links = declaredGraphs(owner, new Map(), publishedGraphs(built, owner, linkRoot), named.harness);
+      const harnesses = foreign?.instance ? instanceHarnesses(built, foreign.instance, linkRoot, `${toRoot}/`) : instantiatedHarnesses(built, linkRoot);
+      const mark = instanceMark(built, owner, linkRoot);
       const homeLabel = foreign ? foreign.homeLabel : named.site;
       const after = injectRail(before, {
-        instance: named.harness ?? instanceName,
+        instance: named.harness ?? owner,
         ...(homeLabel ? { homeLabel } : {}),
         toRoot,
         // The row's files and its site-root hrefs are the PLATFORM's (bean `lhvt`).
@@ -1021,6 +1093,7 @@ export function railStandalonePages(
         links,
         ...(harnesses ? { harnesses } : {}),
         navbarRow: foreign ? rebaseNavbarRow(navbarRowData(built), foreign.platformBase) : navbarRowData(built),
+        emitRailData: railDataWriter(siteAbs),
       });
       if (after === undefined) {
         skipped.push(rel);
@@ -1032,6 +1105,23 @@ export function railStandalonePages(
   };
   if (existsSync(siteAbs)) walk(siteAbs);
   return { injected, alreadyNavigated, redirects, declined, skipped };
+}
+
+/**
+ * The instance whose own IG site is served at `/<segment>/`, when that
+ * directory's declaration marks a docs directory `igSite` (bean `mftp`):
+ * its IG pages are built by `stage-ig-sites`, and railed here as ITS pages.
+ */
+export function igSiteOwner(segment: string): string | undefined {
+  if (!segment || segment.includes(".")) return undefined;
+  const at = declarationPathIn(join(REPO, segment));
+  if (at === undefined || !existsSync(at)) return undefined;
+  try {
+    const d = JSON.parse(readFileSync(at, "utf-8")) as { directories?: { igSite?: boolean }[] };
+    return d.directories?.some((x) => x.igSite === true) ? segment : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 /**
@@ -1061,10 +1151,11 @@ export function mountRoutes(built: string): string[] {
 interface DeclaredEntry {
   id?: string;
   path?: string;
-  graphKinds?: string[];
+  graphTypologies?: string[];
   instanceRoot?: boolean;
   kindRouteRedirect?: boolean;
   composed?: boolean;
+  igSite?: boolean;
   served?: boolean;
   scope?: string;
   coverage?: Parameters<typeof visualisationsOf>[0];
@@ -1145,13 +1236,15 @@ function mountable(): Mountable[] {
     // composed directory that happened to carry an `index.html` would be
     // double-published while looking fine.
     if (entry.composed === true) continue;
+    // Built into the instance's own IG site by `stage-ig-sites.ts` (bean `mftp`); mounting it too would publish it twice.
+    if (entry.igSite === true) continue;
     if (!existsSync(abs) || !statSync(abs).isDirectory()) continue;
     if (!existsSync(join(abs, "index.html"))) continue;
     // The directory's own declared visualiser, if it has one. Read here
     // rather than re-derived later: the declaration is the only place that
     // knows, and a second answer is free to disagree with it.
     const visualiser = viewerOf({ instanceDir, entry });
-    for (const kind of entry.graphKinds ?? []) {
+    for (const kind of entry.graphTypologies ?? []) {
       out.push({
         name,
         kind,
@@ -1383,7 +1476,7 @@ export function kindRouteRedirects(docsPrefix: string | undefined): { redirects:
       );
       continue;
     }
-    for (const kind of x.entry.graphKinds ?? []) redirects.push({ route: `${kind}/${x.name}`, target });
+    for (const kind of x.entry.graphTypologies ?? []) redirects.push({ route: `${kind}/${x.name}`, target });
   }
   return { redirects: redirects.sort((a, b) => a.route.localeCompare(b.route)), problems };
 }

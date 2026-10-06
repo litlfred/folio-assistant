@@ -74,7 +74,7 @@ const DECL = `{
     {
       "id": "schemas",
       "path": "schemas/",
-      "graphKinds": [
+      "graphTypologies": [
         "schemas",
         "cat-harness"
       ]
@@ -269,7 +269,7 @@ describe("a malformed sticky is repaired, not fatal", () => {
   });
 
   /** A declaration carrying a folio entry at `path`, spelled with `key`. */
-  function withFolioAt(path: string, key: "graphKinds" | "graphs"): string {
+  function withFolioAt(path: string, key: "graphTypologies" | "graphs"): string {
     return DECL.replace(
       '"directories": [',
       `"directories": [\n    {\n      "id": "content",\n      "path": "${path}",\n      \n      "${key}": [\n        "folio"\n      ]\n    },`,
@@ -277,9 +277,9 @@ describe("a malformed sticky is repaired, not fatal", () => {
   }
 
   test("a declaration that already declares a folio elsewhere is respected", () => {
-    // Matched on the GRAPH KIND, not on id or path: an instance may keep its
+    // Matched on the GRAPH TYPOLOGY, not on id or path: an instance may keep its
     // folio anywhere and call the entry what it likes.
-    const root = instance(withFolioAt("authored/", "graphKinds"));
+    const root = instance(withFolioAt("authored/", "graphTypologies"));
     mkdirSync(join(root, "authored"), { recursive: true });
     const report = ensureLandingSticky(root, "2026-09-20T00:00:00Z");
     expect(report.declaredFolio).toBe("already");
@@ -317,7 +317,7 @@ describe("a nested instance contributes its own stickies", () => {
           // so `harness.json` is not in the directory named here. That is what
           // `bootstrap/skills/` looks like, and a composer that looked for a
           // declaration inside the declared directory would find nothing.
-          directories: [{ id: "inner", path: "inner/skills/", graphKinds: ["cat-harness"] }],
+          directories: [{ id: "inner", path: "inner/skills/", graphTypologies: ["cat-harness"] }],
         },
         null,
         2,
@@ -354,7 +354,7 @@ describe("a nested instance contributes its own stickies", () => {
     // stickies would collide with themselves.
     const root = mkdtempSync(join(tmpdir(), "landing-plain-"));
     writeDeclaration(root, JSON.stringify(
-        { name: "only", directories: [{ id: "s", path: "sub/", graphKinds: ["cat-harness"] }] },
+        { name: "only", directories: [{ id: "s", path: "sub/", graphTypologies: ["cat-harness"] }] },
         null,
         2,
       ));

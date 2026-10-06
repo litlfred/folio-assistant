@@ -12,14 +12,14 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 125 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 23 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 3 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 129 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 3 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 162 terms and is 114 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 168 terms and is 121 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>162</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>162</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>168</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>168</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">162</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">168</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -120,6 +120,13 @@ Complete a step <span class="fa-gloss-status">candidate, extracted</span>
 <p>Record an enabled step as done — or supply the facts a decision gateway is computed from — and advance the instance. Refuses a step that is not enabled.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#workflow-complete</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--compose-docs" data-fa-state="extracted" data-fa-gloss="">
+Compose the site's documentation tree from its declared docs layers <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's <code>_config.yml</code> merged, every override reported), and each <code>composed</code> instance under its own name. <code>--staging</code> keeps staging-only visualisations; <code>--changed-files</code> stubs instances a branch does not reach. <code>--shell</code> writes the CHROME only — the layers' Jekyll machinery and assets, no page, no instance, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome (#2235).</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#compose-docs</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--content-graph-build" data-fa-state="extracted" data-fa-gloss="">
 Content graph <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -170,7 +177,7 @@ Dependency probe <span class="fa-gloss-status">candidate, extracted</span>
 Directory READMEs from the Knowledge Graph <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in <code>tools/templates/readme/</code>, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between <code>&lt;!-- kg:subgraph:begin --&gt;</code> and <code>:end</code>; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in <code>test/results/subgraph-readmes.qa-results.json</code>.</p>
+<p>Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Typologies, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in <code>tools/templates/readme/</code>, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between <code>&lt;!-- kg:subgraph:begin --&gt;</code> and <code>:end</code>; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in <code>test/results/subgraph-readmes.qa-results.json</code>.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#subgraph-readmes</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--discuss" data-fa-state="extracted" data-fa-gloss="">
@@ -297,7 +304,7 @@ Folio ChangeSet <span class="fa-gloss-status">candidate, extracted</span>
 Folio review comments <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Ingest a pull request's tagged conversation comments (<code>block: &lt;label&gt;</code> on the first line) into <code>folio-review-comment/v1</code> todos, and write them as <code>review-comments.json</code>. Idempotent over its previous output, whose statuses it keeps. Re-anchors every comment against the head's blocks, following <code>renamedFrom</code>, and orphans a comment whose block is gone rather than dropping it.</p>
+<p>Ingest a pull request's tagged conversation comments (<code>block: &lt;label&gt;</code> on the first line) into <code>review-comment/1.0.0</code> todos, and write them as <code>review-comments.json</code>. Idempotent over its previous output, whose statuses it keeps. Re-anchors every comment against the head's blocks, following <code>renamedFrom</code>, and orphans a comment whose block is gone rather than dropping it.</p>
 <p class="fa-gloss-meta">Tools of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/index.ts"><code>folio-assistant-core/tools/index.ts#folio-review-comments</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-tools--folio-review-coverage" data-fa-state="extracted" data-fa-gloss="">
@@ -343,7 +350,7 @@ Gates on the merged tree <span class="fa-gloss-status">candidate, extracted</spa
 Generate an IG instance's reader-facing pages from its artefact index <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Write <code>&lt;instance&gt;/docs/</code> — an index page, one page per artefact, a page per over-large category and per menu group — from <code>fhir-artifact-index/index.json</code> (and <code>menu.json</code> when ingested), styled by the template chrome an owning instance ingested. Moved down to this layer because nothing in it was one IG's own (#1767); with <code>--summary</code> it writes an instance's landing page, opening with that instance's harness section. For an IG whose SOURCE is at hand, <a href="#fhir-harness--kg-tools--build-ig-site"><code>build-ig-site</code></a> renders the IG's own pages instead; this is for an IG known only by what it published.</p>
+<p>Write <code>&lt;instance&gt;/docs/</code> — an index page, one page per artefact, a page per over-large category and per menu group — from <code>fhir-artifact-index/index.json</code> (and <code>menu.json</code> when ingested), styled by the template chrome an owning instance ingested. Moved down to this layer because nothing in it was one IG's own (#1767); with <code>--summary</code> it writes an instance's landing page, opening with that instance's harness section. For an instance whose docs declare <code>igSite</code> (bean <code>mftp</code>) it writes no index, menu or category pages — the IG site's own replace them — and only a front-matter <code>artifacts.md</code> carrying the viewer declaration. For an IG whose SOURCE is at hand, <a href="#fhir-harness--kg-tools--build-ig-site"><code>build-ig-site</code></a> renders the IG's own pages instead; this is for an IG known only by what it published.</p>
 <p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ig-pages</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--auto-docs-viewer" data-fa-state="extracted" data-fa-gloss="">
@@ -373,6 +380,13 @@ GitHub Pages publish <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Push a built directory to the <a href="#cat-harness--kg-tools--gh-pages"><code>gh-pages</code></a> branch, where it is served. How the knowledge graph and its schema reach a URL.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pages-publish</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--rail-standalone-pages" data-fa-state="extracted" data-fa-gloss="">
+Give every page Jekyll did not lay out the folio-assistant navbar <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A LAST pass over the finished site: inject the shared navbar (<code>lib/navbar.ts</code>, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated instance pages, and each IG site built by <code>stage-ig-sites</code>. A page under an <code>igSite</code> instance's route is railed as THAT instance's page (its name, mark and graphs); a page may declare its own section (<code>data-fa-visualiser-nav</code>) and its label (<code>fa-visualiser-label</code>). Mount routes are left to the mount pass, and a page that declines (<code>folio-navbar: none</code>) is left bare.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#rail-standalone-pages</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--glossary-build" data-fa-state="extracted" data-fa-gloss="">
 Glossary build <span class="fa-gloss-status">candidate, extracted</span>
@@ -409,6 +423,13 @@ IG metadata → Liquid variables <span class="fa-gloss-status">candidate, extrac
 <dd>
 <p>Scan the Publisher's <code>output/</code> for <code>&#123;ResourceType}-&#123;id}.json</code> and emit a Liquid include assigning <code>smart__&lt;ResourceType&gt;__&lt;id&gt;__&lt;category&gt;__&lt;key&gt;</code> for each published resource.</p>
 <p class="fa-gloss-meta">Tools of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/tools/index.ts"><code>smart-base/tools/index.ts#smart-liquid-variables</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-tools--ingest-ig-menu" data-fa-state="extracted" data-fa-gloss="">
+Ingest an IG's navigation from its sushi-config <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Read <code>menu:</code> (and the page tree) out of an IG source repository's <code>sushi-config.yaml</code> into <code>fhir-artifact-index/menu.json</code>, recording the repository and commit it was read at — the declared source <a href="#fhir-harness--kg-tools--stage-ig-sites"><code>stage-ig-sites</code></a> clones. <code>--check</code> re-derives it against a checkout; with no <code>--source</code> it reports COULD NOT DETERMINE and exits 2, never 0.</p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ingest-ig-menu</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--ingest-stdlib" data-fa-state="extracted" data-fa-gloss="">
 Ingest, standard library only <span class="fa-gloss-status">candidate, extracted</span>
@@ -682,7 +703,7 @@ Mirror FHIR packages from packages.fhir.org into a git repository <span class="f
 Move a review comment's status <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A review-process task moves one <code>folio-review-comment/v1</code> todo's status (address, send back, resolve, adjudicate, withdraw) through <code>transition()</code>, which refuses any move the named BPMN task may not make. The comment is written to the folio's todos graph (its declared <code>todo-feedback</code> directory) and, with <code>--commit</code>, committed to the edit-set's FEATURE branch. Refused on the base branch and on a detached HEAD.</p>
+<p>A review-process task moves one <code>review-comment/1.0.0</code> todo's status (address, send back, resolve, adjudicate, withdraw) through <code>transition()</code>, which refuses any move the named BPMN task may not make. The comment is written to the folio's todos graph (its declared <code>todo-feedback</code> directory) and, with <code>--commit</code>, committed to the edit-set's FEATURE branch. Refused on the base branch and on a detached HEAD.</p>
 <p class="fa-gloss-meta">Tools of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/index.ts"><code>folio-assistant-core/tools/index.ts#folio-review-comment-move</code></a></p>
 </dd>
 </dl>
@@ -695,6 +716,13 @@ Namespace vocabulary <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#ns-vocabulary</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--node-kind-pages" data-fa-state="extracted" data-fa-gloss="">
+Node kind pages <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render a page for every node kind, every harness holding nodes of it, and every node, under /&lt;locale&gt;/&lt;declaring&gt;/&lt;kind&gt;/ (issue #2195).</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#node-kind-pages</code></a></p>
 </dd>
 </dl>
 
@@ -975,11 +1003,18 @@ Stage a branch's preview <span class="fa-gloss-status">candidate, extracted</spa
 <p>Publish a branch's built site to <code>STAGING/&lt;slug&gt;/</code> on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#feature-staging</code></a></p>
 </dd>
+<dt id="fhir-harness--kg-tools--stage-ig-sites" data-fa-state="extracted" data-fa-gloss="">
+Stage every IG whose instance records its source, one Jekyll site each <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>For every instance holding <code>fhir-artifact-index/menu.json</code> with a sushi-config source, clone the IG at the recorded commit and stage it with <a href="#fhir-harness--kg-tools--build-ig-site"><code>build-ig-site</code></a>: the instance's webpage theme (inherited along <code>needs</code> when it declares none), its artefact pages and <code>artifacts</code> page, its post-processing fills, and an edit link to the IG's default branch. An instance whose docs directory declares <code>igSite</code> is staged to be served AT <code>/&lt;instance&gt;/</code> with its artefact pages copied in (a collision is refused); otherwise beside it at <code>/&lt;instance&gt;/ig/</code>. Prints one <code>&lt;instance&gt; &lt;jekyll source&gt; &lt;at&gt;</code> line per IG for the caller's <code>jekyll build</code> (beans <code>bamf</code>, <code>mftp</code>).</p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#stage-ig-sites</code></a></p>
+</dd>
 <dt id="fhir-harness--kg-tools--build-ig-site" data-fa-state="extracted" data-fa-gloss="">
 Stage one IG as its own just-the-docs Jekyll site <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Turn an IG source repository into ONE Jekyll source for just-the-docs, as the IG Publisher builds one IG per site: <code>input/pagecontent</code> pages with title, parent and order from <code>sushi-config.yaml</code> <code>pages:</code>, the files the Publisher resolves <code>&#123;% include %}</code> against, images, <code>_data/fhir.json</code> from <a href="#fhir-harness--kg-tools--ig-site-data"><code>ig-site-data</code></a>, and a <code>_config.yml</code>. The pages render unchanged, <code>&#123;&#123; site.data.fhir.* }}</code> included (bean <code>bamf</code>, owner's choice of one site per IG).</p>
+<p>Turn an IG source repository into ONE Jekyll source for just-the-docs, as the IG Publisher builds one IG per site: <code>input/pagecontent</code> pages with title, parent and order from <code>sushi-config.yaml</code> <code>pages:</code>, the files the Publisher resolves <code>&#123;% include %}</code> against, images, <code>_data/fhir.json</code> from <a href="#fhir-harness--kg-tools--ig-site-data"><code>ig-site-data</code></a>, and a <code>_config.yml</code>. The pages render unchanged, <code>&#123;&#123; site.data.fhir.* }}</code> included (bean <code>bamf</code>, owner's choice of one site per IG). With the IG's menu, the layout is the one every IG site wears (bean <code>mftp</code>): the IG's own top bar, the IG's TOC declared as the folio-assistant navbar's section (added by <code>rail-standalone-pages</code>), no sidebar of its own, an edit link per page, and per heading a source-line link and a pre-filled feedback issue.</p>
 <p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#build-ig-site</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--stakeholder-map" data-fa-state="extracted" data-fa-gloss="">
@@ -1141,7 +1176,7 @@ Translation status viewer <span class="fa-gloss-status">candidate, extracted</sp
 UML overview per named sub-graph <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.</p>
+<p>Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph typology's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#uml-overview</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--uploads-viewer" data-fa-state="extracted" data-fa-gloss="">
@@ -1159,7 +1194,7 @@ Uploads viewer <span class="fa-gloss-status">candidate, extracted</span>
 Validate a node in the graph <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Check one file against the schema for its graph kind. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.</p>
+<p>Check one file against the schema for its graph typology. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#kg-validate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--translation-validate" data-fa-state="extracted" data-fa-gloss="">
@@ -1256,6 +1291,13 @@ Witness reproduction check <span class="fa-gloss-status">candidate, extracted</s
 <dd>
 <p>Re-run a computation witness's producer and say whether it reproduces the committed witness. Reads the command from <code>invocation.reproduce</code> (else <code>python3 &lt;scriptFile&gt;</code>) and the recorded package versions from <code>environment</code>; on a version mismatch it stops at <code>unknown</code>, since a different environment is not a reproduction test. Otherwise it runs the COMMITTED producer in a scratch git worktree, so the folio's own checkout is never written, and compares the result with the committed witness with run-specific fields (commit, timing, environment) masked at every depth. <code>pass</code>, <code>fail</code> (with the differing JSON paths), or <code>unknown</code> (mismatch, non-zero exit, timeout, no witness written).</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#witness-parity</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--navbar-include" data-fa-state="extracted" data-fa-gloss="">
+Write the site sidebar's harness navbar include <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render <code>_includes/generated/navbar-footer.html</code> from <code>docs/_data/harness.json</code> with the same renderer every railed page uses. With <code>--instance</code>, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at <code>--link-root</code> — into the shell that site is built from (#2235).</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#navbar-include</code></a></p>
 </dd>
 </dl>
 

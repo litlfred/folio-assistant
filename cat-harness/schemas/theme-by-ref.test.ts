@@ -28,7 +28,7 @@ function repo(opts: { themesDir?: boolean; module?: string }): string {
   mkdirSync(join(root, ".git"));
   const inst = join(root, "acme");
   mkdirSync(inst, { recursive: true });
-  const directories = opts.themesDir ? [{ id: "acme-themes", path: "themes/", graphKinds: ["themes"] }] : [];
+  const directories = opts.themesDir ? [{ id: "acme-themes", path: "themes/", graphTypologies: ["themes"] }] : [];
   writeFileSync(join(inst, "acme.json"), JSON.stringify({ name: "acme", version: "0.1.0", directories }, null, 2));
   if (opts.themesDir) mkdirSync(join(inst, "themes"), { recursive: true });
   if (opts.module !== undefined) writeFileSync(join(inst, "themes", "themes.ts"), opts.module);
@@ -139,7 +139,7 @@ function multiRepo(instances: Record<string, string>): string {
     mkdirSync(join(inst, "themes"), { recursive: true });
     writeFileSync(
       join(inst, `${name}.json`),
-      JSON.stringify({ name, version: "0.1.0", directories: [{ id: `${name}-themes`, path: "themes/", graphKinds: ["themes"] }] }),
+      JSON.stringify({ name, version: "0.1.0", directories: [{ id: `${name}-themes`, path: "themes/", graphTypologies: ["themes"] }] }),
     );
     writeFileSync(join(inst, "themes", "themes.ts"), stickyModule(themeId, "#aa0000"));
   }

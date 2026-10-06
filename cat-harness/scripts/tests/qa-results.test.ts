@@ -37,7 +37,7 @@ describe("the results directory is DECLARED, not merely created", () => {
     expect(decl).toBeDefined();
     const entry = decl!.directories.find((d) => d.path.replace(/\/+$/, "") === QA_RESULTS_DIR);
     expect(entry).toBeDefined();
-    expect(entry!.graphKinds).toContain("qa");
+    expect(entry!.graphTypologies).toContain("qa");
   });
 
   it("...and the directory it declares exists — or is a kind that leaves `main`", () => {
@@ -49,7 +49,7 @@ describe("the results directory is DECLARED, not merely created", () => {
     // nothing and reporting clean. So absence is allowed only for that kind.
     const entry = readDeclaration(ROOT)!.directories.find((d) => d.path.replace(/\/+$/, "") === QA_RESULTS_DIR)!;
     if (!existsSync(join(ROOT, QA_RESULTS_DIR))) {
-      expect(mayLeaveMain(entry as { graphKinds?: string[] })).toBe(true);
+      expect(mayLeaveMain(entry as { graphTypologies?: string[] })).toBe(true);
       return;
     }
     expect(existsSync(join(ROOT, QA_RESULTS_DIR))).toBe(true);
@@ -182,7 +182,7 @@ describe("the witnesses are committed in one place and published in another", ()
     // Where a file LIVES and where it is SERVED FROM are different questions.
     // Moving the URL as well would have rewritten every badge in every
     // generated page and the browser code that fetches them, for no gain.
-    const page = readFileSync(join(ROOT, siteDirFor(ROOT), "agentic-harness.md"), "utf-8");
+    const page = readFileSync(join(ROOT, siteDirFor(ROOT), "concepts/agentic-harness.md"), "utf-8");
     expect(page).toContain("data-qa-src=\"{{ '/assets/qa/");
   });
 });

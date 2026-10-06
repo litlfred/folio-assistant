@@ -215,7 +215,7 @@
    change is the media query on these two rules -- the mechanism is the same. */
 @media (min-width: 50rem) {
   /* WAS `z-index: auto`, AND THAT BROKE THE NAV ON EVERY PAGE WITH A WIDE
-     FIGURE -- bean `vfr8`, owner's screenshot of `/document-ingestion.html`.
+     FIGURE -- bean `vfr8`, owner's screenshot of `/guides/document-ingestion.html`.
 
      Removing the stacking context also removed the sidebar's own ability to
      paint above `.main`, and it did so IN EVERY STATE rather than only where
@@ -226,7 +226,7 @@
      against `.side-bar:hover`'s (0,2,0) -- so on such a page the nav opened
      behind the page whether or not anything was actually in full-width mode.
 
-     MEASURED on `/document-ingestion.html`, which auto-expands 4 of its 5
+     MEASURED on `/guides/document-ingestion.html`, which auto-expands 4 of its 5
      figures: with the nav open, `elementFromPoint` inside the opened column
      returned page content (`SPAN.fa-qa-glyph`, `P`, `A`) at x=120, and the
      nav only within the original 56px strip.
@@ -792,7 +792,7 @@
     overflow-x: hidden;
   }
 
-  /* FOLDED, THE GRAPHS HEADING STAYS IN SIGHT. It comes after the page list,
+  /* FOLDED, THE FOLDERS HEADING STAYS IN SIGHT. It comes after the page list,
    * which is the ruling's order and the rail's, and the page list runs to
    * thousands of pixels -- so in flow the heading would sit at the very end
    * of the one scroller, where nobody finds it. Pinned to the scroller's
@@ -812,7 +812,7 @@
      * screen, a second column's worth of content hanging off it. */
     position: relative;
   }
-  .fa-nav-middle > .fa-nav-graphs-group:not([open]),
+  .fa-nav-middle > .fa-nav-folders:not([open]),
   .fa-nav-middle > .fa-nav-harness-group:not([open]) {
     position: sticky;
     bottom: 0;
@@ -821,10 +821,10 @@
   }
   /* ▦ Harnesses is the LAST row of the scroller and the lowest pinned
    * heading (the viewer rail's order: graphs, then harnesses, then home), so
-   * a folded Graphs heading stands on top of it rather than under it. The
+   * a folded Folders heading stands on top of it rather than under it. The
    * height is measured by `mountSidebarRail`, because ▦'s row is one height
    * in the strip and another in the open bar. */
-  .fa-nav-middle:has(> .fa-nav-harness-group:not([open])) > .fa-nav-graphs-group:not([open]) {
+  .fa-nav-middle:has(> .fa-nav-harness-group:not([open])) > .fa-nav-folders:not([open]) {
     bottom: var(--fa-nav-harness-rest, 0px);
   }
   /* AT THE BOTTOM EVEN WHEN THE LIST IS SHORT. `sticky` holds a heading at
@@ -835,11 +835,11 @@
    * The middle's bottom edge does not move when the strip opens, so a
    * heading pushed against it stays under the pointer, as it did in the
    * footer. */
-  .side-bar > .fa-nav-middle > .fa-nav-graphs-group,
+  .side-bar > .fa-nav-middle > .fa-nav-folders,
   .side-bar > .fa-nav-middle > .fa-nav-harness-group {
     margin-top: auto;
   }
-  .side-bar > .fa-nav-middle > .fa-nav-graphs-group + .fa-nav-harness-group {
+  .side-bar > .fa-nav-middle > .fa-nav-folders + .fa-nav-harness-group {
     margin-top: 0;
   }
 
@@ -935,7 +935,6 @@
   .side-bar .site-nav,
   .side-bar .fa-doc-index,
   .side-bar .fa-nav-folders,
-  .side-bar .fa-nav-graphs-group,
   .side-bar .fa-nav-pages,
   .side-bar .fa-harness-tabs__heading,
   .side-bar .fa-harness-tab__label,
@@ -1783,6 +1782,55 @@ a.fa-lang-tab:hover:not(.is-current) {
 .fa-page-lang-globe {
   font-size: 1.1em;
   margin-right: 2px;
+}
+
+/* IN THE BAND, A DISCLOSURE — issue #2201. The bar is the band's
+   inline-start item: the field's height, no margin of its own (the band
+   spaces it), and the six tabs shown only while it is open. The toggle names
+   the page's language so a closed bar still says which one you are reading. */
+.fa-glass-band .fa-page-lang-bar {
+  box-sizing: border-box;
+  min-height: 2.25rem;
+  margin: 0;
+  padding: 0 4px;
+  flex-wrap: wrap;
+}
+.fa-page-lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 2rem;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.fa-page-lang-toggle:hover { background: var(--fa-langbar-hover-bg); }
+.fa-page-lang-toggle:focus-visible {
+  outline: 2px solid var(--fa-langbar-link);
+  outline-offset: 1px;
+}
+.fa-page-lang-current { font-weight: bold; }
+.fa-page-lang-caret { font-size: 0.8em; }
+.fa-page-lang-list { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px; }
+
+/* CLOSED UNTIL THE GLOBE IS PRESSED, AT EVERY WIDTH — owner, 2026-10-05:
+   *"make globe click open and closed the desktop view of the locale
+   selector. start closed too."* This replaces #2210's split, where the six
+   tabs were always shown above 40rem and the toggle was not drawn there.
+
+   WIDE: the toggle is the globe alone; pressed, the six tabs open inline
+   beside it in the band, one click each. NARROW (40rem and below): the
+   toggle also names the page's language and carries the caret, the phone
+   dropdown #2210 kept. While the tabs are open the Folio handle steps aside
+   (`data-fa-band-active`), so they never meet it. */
+.fa-page-lang-bar[data-open="false"] .fa-page-lang-list { display: none; }
+@media (min-width: 40.0625rem) {
+  .fa-page-lang-current,
+  .fa-page-lang-caret { display: none; }
 }
 
 .fa-page-lang-tab {
@@ -4299,6 +4347,18 @@ html:has(script[data-fa-folio-mount]) body:has(> .fa-glass-handle) {
 html:has(body > .fa-glass-handle) {
   scroll-padding-top: calc(var(--fa-staging-offset, 0px) + 2.25rem);
 }
+/* WITH CONTROLS IN THE BAND, THE PADDING MOVES ONTO THE CONTENT — #2201.
+   A stuck band's own controls sit INSIDE a scroll-padding that clears the
+   band, so the browser read each one as obscured and scrolled it into view
+   the moment it took focus: measured in Chromium, focusing the magnifier at
+   scrollY 1500 jumped the page to 1076, and Enter then to 228. So the root
+   pads nothing, and every element of the content column carries the margin
+   instead — an anchor jump or a focus scroll still lands below the band,
+   which is 2.5rem plus its padding. */
+html:has(.fa-glass-band[data-fa-band-tools]) { scroll-padding-top: 0; }
+html:has(.fa-glass-band[data-fa-band-tools]) .main-content * {
+  scroll-margin-top: calc(var(--fa-staging-offset, 0px) + 3rem);
+}
 
 /* A pinned sticky sits OVER page content, so it must be opaque — and which
  * opaque colour depends on the scheme.
@@ -5564,23 +5624,18 @@ html:has(body > .fa-glass-handle) {
  * same timing, keyed on the element's own open state rather than on a class a
  * script has to keep in step. */
 .fa-doc-index__heading,
-.fa-nav-graphs-group__heading,
 .fa-nav-folders__heading { list-style: none; }
 .fa-doc-index__heading::-webkit-details-marker,
-.fa-nav-graphs-group__heading::-webkit-details-marker,
 .fa-nav-folders__heading::-webkit-details-marker { display: none; }
 .fa-doc-index__heading::before,
-.fa-nav-graphs-group__heading::before,
 .fa-nav-folders__heading::before {
   content: "\25be";
   display: inline-block;
   transition: transform .12s ease;
 }
 .fa-doc-index:not([open]) > .fa-doc-index__heading::before,
-.fa-nav-graphs-group:not([open]) > .fa-nav-graphs-group__heading::before,
 .fa-nav-folders:not([open]) > .fa-nav-folders__heading::before { transform: rotate(-90deg); }
 .fa-doc-index__heading:focus-visible,
-.fa-nav-graphs-group__heading:focus-visible,
 .fa-nav-folders__heading:focus-visible {
   outline: 2px solid var(--link-color, #7253ed);
   outline-offset: -2px;
@@ -5725,6 +5780,9 @@ a.fa-nav-folders__link:focus-visible {
  * declares no icons and `mountNavIconRow` deliberately draws nothing — this
  * selector does not match and the three controls stay exactly where they are.
  * A reader never loses a control to a row that failed to arrive.
+ *
+ * LANGUAGE is the glass band's globe (#2211); the owner kept that one globe
+ * rather than a second in the row (2026-10-05, bean `82qs`).
  */
 @media (min-width: 50rem) {
   .side-bar:has(.fa-nav-icons) .fa-scheme-mini,
@@ -5942,40 +6000,22 @@ a.fa-nav-folders__link:focus-visible {
  * The middle scrolls; nothing inside it shrinks. */
 .fa-nav-middle > .fa-doc-index { flex: 0 0 auto; }
 
-.fa-nav-graphs-group {
-  /* Published the way `.fa-nav-folders` publishes it — read by the strip. */
-  --fa-nav-rest-pad: 0.5rem;
-  flex: 0 0 auto;
-  padding: var(--fa-nav-rest-pad) 0;
+/* FOLDERS AT THE FOOT OF THE SCROLLER (#2150): it sits where the "Graphs"
+   wrapper sat, so it takes that wrapper's divider -- a rule ABOVE it, against
+   the page list -- rather than its own one below, against ▦. */
+.fa-nav-middle > .fa-nav-folders {
   border-top: 1px solid rgba(128, 128, 128, 0.25);
-  /* The footer's size, which the harness group had before it moved here. */
-  font-size: 0.75rem;
-}
-
-/* The same heading the other disclosures in this column wear, so the four
-   read as one set. 24px floor for the reason `.fa-doc-index__heading` gives. */
-.fa-nav-graphs-group__heading {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  min-height: 1.5rem;
-  padding: 0.25rem var(--fa-nav-pad, 1rem);
-  cursor: pointer;
-  user-select: none;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  border-bottom: 0;
 }
 
 /* The group no longer sits in a capped footer, so the scroll box the footer
    rule gave it would be a second scroller inside the first. */
-.fa-nav-graphs-group > .fa-nav-group,
 .fa-nav-middle > .fa-nav-harness-group {
   max-height: none;
   overflow: visible;
 }
 
-/* The harness group beside Graphs: the footer's size it had before the move,
+/* The harness group beside Folders: the footer's size it had before the move,
    and the same divider, so the two pinned headings read as one set. */
 .fa-nav-middle > .fa-nav-harness-group {
   flex: 0 0 auto;
@@ -6064,6 +6104,22 @@ a.fa-nav-folders__link:focus-visible {
   padding-left: calc(var(--fa-nav-pad) + var(--fa-nav-mark) + 0.5rem);
   opacity: 0.7;
 }
+
+/* THE SUB-SECTIONS' FOLD (bean `r2ld`), under its section's link and at the
+ * sub-items' indent, so the summary reads as the first row of what it hides.
+ * Sized like the folders' "Sub-graphs of …" fold: a 1.75rem target. */
+.fa-doc-index__fold-heading {
+  display: list-item;
+  min-height: 1.75rem;
+  line-height: 1.75rem;
+  padding-left: calc(var(--fa-nav-pad) + var(--fa-nav-mark) + 0.5rem);
+  cursor: pointer;
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+.fa-doc-index__fold-heading:hover,
+.fa-doc-index__fold-heading:focus-visible { opacity: 1; }
+.fa-doc-index__list--sub { margin: 0; }
 
 /* ═══ THE TONE IS A HUE, AND IT WAS BEING SPENT AS A COLOUR ════════════════
  *
@@ -6528,7 +6584,7 @@ a.fa-harness-tab__body:focus-visible {
 
 .side-bar .fa-nav-kids .fa-nav-label { flex: 0 1 auto; min-width: 0; }
 
-/* A graph kind's SVG glyph (bean `yag0`) — distinct per kind, so `docs` and
+/* A graph typology's SVG glyph (bean `yag0`) — distinct per kind, so `docs` and
  * `library` are no longer two adjacent initials. Fills the chip above and
  * strokes in the inherited ink. */
 .side-bar .fa-nav-glyph svg {
@@ -7376,101 +7432,70 @@ a.fa-harness-tab__body:focus-visible {
   background: rgba(128, 128, 128, 0.22);
 }
 
-/* ── Search: a magnifier at the top of the display window ─────────────────
+/* ── The band: the page's own controls, in one row ────────────────────────
  *
- * Owner, 2026-09-30: *"search that should be a collsaible icon/avatar on top
- * of display window... that when open is full span width of all avaioblae"*
- * (issue #1715). Replaces the navbar/corner pair of 2026-09-21 (`rx6k`);
- * `docs-ui.js` records what that design measured and why it went.
+ * Owner, 2026-10-05 (issue #2201): the search and the locale selector both
+ * live in the `fa-glass-band`, *"so they are always on the page, at least
+ * partially"*, and the Folio tab hides while one of them is in use.
+ * `glassBandSlot` in `docs-ui.js` says why the band moves into the display
+ * panel when the first control arrives, and why a page with no controls keeps
+ * the bare strip (`.fa-glass-band` above, unchanged).
  *
- * ONE NODE, TWO STATES, switched by `data-open`, because the field must never
- * leave the document — just-the-docs finds its input by id and
- * `getElementById` does not see a detached node. Closing is `display: none`
- * on the holder, never a move of the input.
+ * STICKY AT THE HANDLE'S OFFSET. At rest it is the display panel's first line,
+ * below the theme header the handle sits in. Scrolled, it sticks where the
+ * handle is, so it is still the opaque strip text scrolls under (#1693), and
+ * both controls are on screen at every scroll position (#1732, which had the
+ * magnifier sticky on its own 2.5rem lower).
  *
- *   data-open="false"  the magnifier alone, FLOATED to the inline-end of the
- *                      display panel's first line. Content flows beside it,
- *                      so it costs no vertical space of its own. Floated to
- *                      the logical end, so on an RTL page it sits top-left.
- *   data-open="true"   the magnifier, then the field across the full width of
- *                      the panel, and results the same full width beneath.
+ * `align-items: flex-start`, not `center`: an open search hangs its status
+ * lines BELOW the field, and nothing in the row may move when it does — the
+ * owner's *"opening search must not force the locale selector onto the next
+ * line"* is held as "same line, same top" by `search-band.e2e.ts`.
  *
- * STICKY, BELOW THE HANDLE'S ROW — issue #1732. The owner decided
- * (2026-10-01) the magnifier must ALWAYS be on screen. #1720 had it in plain
- * flow, so it scrolled away: measured on a local build it could be pressed at
- * 1 of 14 sampled positions on a long page at 1280px and 2 of 25 at 390px.
- *
- * Sticky rather than fixed, because sticky keeps everything #1720 measured
- * at rest — same place, same zero vertical cost, same full-width row — and
- * only changes what happens once the page scrolls. It sticks at the staging
- * banner's offset plus 2.5rem: the Folio handle and PR #1709's
- * `.fa-glass-band` (z 89) are `position: fixed` at that offset and at most
- * 2rem tall (28px at 1280, 25px at 390), so 2.5rem clears both with a gap.
- * It is at the far inline end from the handle, which is centred, and z 88
- * keeps it under the band and the glass layer (90) should either ever reach
- * it. The phone header's menu button is in the side bar, which scrolls away
- * on a phone, and sits ~300px above the panel at rest.
- *
- * Text scrolls UNDER it, so the magnifier and the open row paint the page's
- * own background — per scheme, from tokens here, never from script
- * (`inline-colour.test.ts`).
- */
-/* ## The page's ink; only opaque surfaces name their own
- *
- * The first version of the navbar search gave `.fa-search-home` a per-scheme
- * foreground the way `.fa-tiles` has one, and axe caught it immediately:
- * `#e6e9ee on #ffffff, 1.21:1`. The search paints no background — it sits in
- * page content — so any colour it named would be a guess about a surface it
- * does not own. It inherits. The BORDER cannot inherit, so it takes one that
- * clears 3:1 on every background it can land on:
- *
- *   #737d8c   on #ffffff 4.17:1   on #27262b 3.60:1   on #f5f6fa 3.86:1
- *
- * The results list IS opaque (it drops over body text), so it keeps its own
- * per-scheme pair below. */
-.fa-search-home {
+ * Opaque, from the same per-scheme pair the magnifier row used, because text
+ * scrolls under it: #27262b / #e6e9ee 12.34:1, #ffffff / #1f2933 14.76:1. */
+.fa-glass-band[data-fa-band-tools] {
   --fa-search-border: #737d8c;
-  /* The page's own background, for the two surfaces that now sit over text.
-     The same pair `head_custom.html` gives `html`. */
   --fa-search-page-bg: #27262b;
 
   position: sticky;
-  top: calc(var(--fa-staging-offset, 0px) + 2.5rem);
-  z-index: 88;
-  /* NOW OPAQUE, SO IT NAMES ITS INK — the rule at the top of this block,
-     applied the other way round. Inheriting was right while the search
-     painted nothing; once it paints the scheme's background it must name the
-     scheme's foreground, or a page whose own text does not follow the scheme
-     gets #000 on #27262b (1.39:1, caught by `a11y.e2e.ts`).
-     #e6e9ee on #27262b 12.34:1; #1f2933 on #ffffff 14.76:1. */
+  top: var(--fa-staging-offset, 0px);
+  right: auto;
+  z-index: 89;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  box-sizing: border-box;
+  min-height: 2.5rem;
+  padding: 0.125rem 0;
+  margin: 0 0 0.75rem;
+  box-shadow: none;
+  background: var(--fa-search-page-bg);
   color: #e6e9ee;
 }
-:root[data-fa-scheme="light"] .fa-search-home {
+:root[data-fa-scheme="light"] .fa-glass-band[data-fa-band-tools] {
   --fa-search-page-bg: #ffffff;
   color: #1f2933;
 }
-
-/* CLOSED — the magnifier, floated. The z-index above also keeps a heading's
-   own box, which runs under a float, from taking the click meant for it. */
-.fa-search-home[data-open="false"] {
-  float: inline-end;
-  margin-block: 0 0.25rem;
-  margin-inline: 0.75rem 0;
-}
-.fa-search-home[data-open="false"] .fa-search-holder { display: none; }
-
-/* OPEN — a full-width row: magnifier attached to the field, everything the
-   field's height, top-aligned so a preview's notice under the field grows the
-   row downwards and never pulls the magnifier off the field's line. */
-.fa-search-home[data-open="true"] {
+.fa-band-slot {
   display: flex;
   align-items: flex-start;
-  width: 100%;
-  clear: both;
-  margin: 0 0 0.75rem;
-  /* Opaque: pinned mid-page, body text scrolls under the row, and the field
-     itself is transparent. */
-  background: var(--fa-search-page-bg);
+  min-width: 0;
+}
+.fa-band-start { flex: 0 0 auto; }
+/* The end slot takes the rest of the row, so an open field can grow into it;
+   closed, its one child sits at the far end. */
+.fa-band-end {
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
+
+/* THE FOLIO TAB STEPS ASIDE while a band item is open. `visibility`, not
+   `display`, so the handle keeps its box and nothing shifts; hidden is also
+   out of the tab order, and it comes back the moment the item closes. Never
+   while the glass is OPEN: there the handle is the way back out. */
+:root[data-fa-band-active] .fa-glass-handle:not([aria-expanded="true"]) {
+  visibility: hidden;
 }
 
 /* KEEP THE PAGE WHERE IT IS WHILE SEARCHING. just-the-docs sets
@@ -7486,12 +7511,60 @@ a.fa-harness-tab__body:focus-visible {
     right: auto;
   }
 }
+
+/* ── Search: a magnifier at the band's inline-end ─────────────────────────
+ *
+ * Owner, 2026-09-30 (issue #1715): one magnifier that opens the field across
+ * the display panel; 2026-10-05 (issue #2201): the magnifier *"stays on the
+ * right always, in both states, with the closed-state styling"*, one click
+ * opens and one click closes, and the text is kept.
+ *
+ * ONE NODE, TWO STATES, switched by `data-open`, because the field must never
+ * leave the document — just-the-docs finds its input by id and
+ * `getElementById` does not see a detached node. Closing is `display: none`
+ * on the holder, never a move of the input, which is also why the typed text
+ * survives a close.
+ *
+ *   data-open="false"  the magnifier alone, at the band's inline-end.
+ *   data-open="true"   the field, then the magnifier — still at the
+ *                      inline-end, same box, same look. The field takes the
+ *                      band's remaining width; what is not the field drops
+ *                      below it.
+ *
+ * Inline-END, so on an RTL page it is at the left: the owner's "right" is
+ * the end of the line, and mirroring is what every other control here does.
+ *
+ * The search paints no background of its own — the band does — so it
+ * inherits the band's ink. Its BORDER cannot inherit, so it takes one that
+ * clears 3:1 on every background it can land on:
+ *
+ *   #737d8c   on #ffffff 4.17:1   on #27262b 3.60:1   on #f5f6fa 3.86:1
+ */
+.fa-search-home {
+  --fa-search-border: #737d8c;
+  --fa-search-page-bg: #27262b;
+
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  min-width: 0;
+  color: inherit;
+}
+:root[data-fa-scheme="light"] .fa-search-home { --fa-search-page-bg: #ffffff; }
+
+.fa-search-home[data-open="false"] .fa-search-holder { display: none; }
+.fa-search-home[data-open="true"] { flex: 1 1 auto; }
 .fa-search-home[data-open="true"] .fa-search-holder { flex: 1 1 auto; min-width: 0; }
+/* The drop hangs from the FIELD, not from field-and-magnifier: its lines
+   start and end under the field, and the magnifier is never covered. Named
+   here because the theme positions the holder on some pages and not others. */
+.fa-search-home .fa-search-holder { position: relative; }
 
 /* The magnifier. 2.25rem — the field's own height — rather than to the glyph,
-   because this instance's interaction profile is low-dexterity; the owner's
-   *"maginfyingglass avatar/braadning should be visibile always"* (2026-09-23)
-   holds, it is on screen in both states. */
+   because this instance's interaction profile is low-dexterity. ONE LOOK in
+   both states (#2201): the round, ringed button the owner saw closed. Its
+   state is `aria-expanded`, which is what a screen reader announces. */
 .fa-search-peek {
   flex: 0 0 auto;
   display: inline-flex;
@@ -7502,7 +7575,6 @@ a.fa-harness-tab__body:focus-visible {
   padding: 0;
   border: 1px solid var(--fa-search-border);
   border-radius: 50%;
-  /* Opaque, pinned over text (#1732). */
   background: var(--fa-search-page-bg, transparent);
   color: inherit;
   cursor: pointer;
@@ -7510,25 +7582,9 @@ a.fa-harness-tab__body:focus-visible {
 }
 .fa-search-peek svg { width: 1.1rem; height: 1.1rem; fill: currentColor; }
 
-/* Open, it becomes the field's own leading edge: shared border, outer
-   corners rounded, inner ones square, so it reads as the field's icon. */
-.fa-search-home[data-open="true"] .fa-search-peek {
-  border-inline-end: 0;
-  border-radius: 4px;
-  border-start-end-radius: 0;
-  border-end-end-radius: 0;
-}
-.fa-search-home[data-open="true"] .search-input {
-  border-start-start-radius: 0;
-  border-end-start-radius: 0;
-}
-
 .fa-search-peek:hover,
 .fa-search-peek:focus-visible {
   border-color: var(--link-color, #7253ed);
-}
-.fa-search-peek[aria-expanded="true"] {
-  background: rgba(128, 128, 128, 0.18);
 }
 /* Never left to the user agent: the default ring is invisible on one scheme. */
 .fa-search-peek:focus-visible {
@@ -7543,10 +7599,9 @@ a.fa-harness-tab__body:focus-visible {
  * it (a hit test at the field's centre once returned the preview notice).
  * Here the wrap is in flow, so `.search` has the field's height by itself.
  *
- * `.search` is `position: static` so the results list positions against
- * `.fa-search-home` — the WHOLE row, magnifier included — which is what makes
- * the results as wide as the panel rather than as wide as the field. Static,
- * with this specificity, also beats the theme's below-50rem
+ * `.search` is `position: static` so the drop below positions against
+ * the holder, which is the field's own width. Static, with this
+ * specificity, also beats the theme's below-50rem
  * `.search-active .search { position: fixed }` full-screen takeover; the
  * padding, heights and shadow of the theme's mobile box are undone here too.
  *
@@ -7579,7 +7634,7 @@ a.fa-harness-tab__body:focus-visible {
   border: 1px solid var(--fa-search-border);
   border-radius: 4px;
   background: transparent;
-  /* Inherits the page's ink, for the reason at the top of this block. */
+  /* Inherits the band's ink, for the reason at the top of this block. */
   color: inherit;
   font-size: 0.85rem;
 }
@@ -7588,23 +7643,69 @@ a.fa-harness-tab__body:focus-visible {
   outline-offset: 1px;
 }
 
-/* RESULTS: THE FULL WIDTH OF THE ROW, dropped below it.
+/* EVERYTHING THAT IS NOT THE FIELD, BELOW IT — issue #2201.
  *
- * Opaque, because hits render over body text. `Canvas` was rejected for the
- * reason the pinned-sticky rule records — a SYSTEM colour follows the OS
- * scheme while the text follows the page's. Taller than the old 16rem: at
- * full width each hit is two short lines rather than five narrow ones, and
- * the list is what the reader came for. */
-.fa-search-home .search-results {
+ * `.fa-search-drop` holds the results list, the theme's "Search everywhere"
+ * button, its identifier-lookup links and a preview's index notice
+ * (`docs-ui.js` says how they get there). It hangs from the bottom of the
+ * row, the row's full width, so none of them can share the field's box — the
+ * owner's *"the status/count line must never overlap the input text"*.
+ *
+ * The status lines come FIRST, directly under the field where the reader is
+ * looking, and the results after them. Each line is its own opaque strip
+ * because the drop sits over page text; the drop itself paints nothing and
+ * takes no clicks, so the gaps between strips do not swallow a click meant
+ * for the page. */
+.fa-search-drop {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
   z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+  pointer-events: none;
+}
+.fa-search-drop > * { pointer-events: auto; }
+.fa-search-drop > .search-results { order: 2; }
+
+.fa-search-home .search-everywhere,
+.fa-search-home .search-remote,
+.fa-search-home .fa-search-notice {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--fa-search-border);
+  border-radius: 4px;
+  background: var(--fa-search-page-bg);
+  color: inherit;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  text-align: start;
+  white-space: normal;
+}
+/* The theme's `.btn` gives the button a fixed height and a centred label. */
+.fa-search-home .search-everywhere {
+  height: auto;
+  width: 100%;
+  box-shadow: none;
+  color: var(--link-color, #7253ed);
+}
+.fa-search-home .search-remote { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
+
+/* RESULTS: THE FULL WIDTH OF THE ROW, after the status lines.
+ *
+ * Opaque, because hits render over body text. `Canvas` was rejected for the
+ * reason the pinned-sticky rule records — a SYSTEM colour follows the OS
+ * scheme while the text follows the page's. */
+.fa-search-home .search-results {
+  position: static;
   width: auto;
   max-width: none;
   max-height: min(70vh, 32rem);
-  margin-top: 0.25rem;
   overflow-y: auto;
   border: 1px solid var(--fa-search-border);
   border-radius: 4px;
@@ -7615,9 +7716,6 @@ a.fa-harness-tab__body:focus-visible {
   background: #ffffff;
   color: #1f2933;
 }
-
-/* The notice belongs to the field, so it starts under the field's own edge. */
-.fa-search-home .fa-search-notice { margin-top: 0.25rem; }
 
 /* ── A board nested in the sticky panel has no chrome of its own ──────────
  *

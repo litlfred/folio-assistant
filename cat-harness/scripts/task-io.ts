@@ -142,7 +142,7 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "check:escaped-markup:source": READ_ONLY,
   "check:fallback-roles": READ_ONLY,
   "check:folio-mount": READ_ONLY,
-  "check:graph-kind-work": READ_ONLY,
+  "check:graph-typology-work": READ_ONLY,
   "check:harness-dirs": READ_ONLY,
   "check:harness-state:check": READ_ONLY,
   "check:image-roles": READ_ONLY,
@@ -295,6 +295,7 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "check:wireframes:check": READ_ONLY,
   "dc:render:check": READ_ONLY, //                 returns before `writeFileSync`
   "document-kinds:viz:check": READ_ONLY, //        its one `rmSync` is in the not-`check` arm
+  "node-kind:pages:check": READ_ONLY, //           its one `rmSync` is in the not-`check` arm
   "ig-ast:schema:check": READ_ONLY,
   "kg:materialize:check": READ_ONLY, //            `checkMaterializations` is offline and reads
   "p2:refusals:check": READ_ONLY,

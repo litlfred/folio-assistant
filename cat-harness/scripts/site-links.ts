@@ -205,7 +205,7 @@ if (import.meta.main) {
   const decl = readDeclaration(root);
   if (!decl) {
     // Names the file it actually looked for. This said "cat-harness.json",
-    // which is the GRAPH KIND, not the filename — so the message sent a
+    // which is the GRAPH TYPOLOGY, not the filename — so the message sent a
     // reader looking for a file that has never existed under that name.
     console.error(`site-links: no declaration at ${root}; nothing to resolve.`);
     process.exit(2);

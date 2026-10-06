@@ -707,7 +707,7 @@ Bean `p67i`.
 ## Related
 
 - [`library-ingestion`](library-ingestion.md) — the basic flow this refines: the two entry points, the upload's retirement, the remote half
-- [`directory-conventions`](directory-conventions.md) — the graph kinds and who declares them
+- [`directory-conventions`](directory-conventions.md) — the graph typologies and who declares them
 - [`bib-qa`](bib-qa.md) — auditing what is already in `library/`
 - [`tabular-metadata`](tabular-metadata.md) — the CSVW model behind the dataset arm
 - `processes/library/l1-document-ingestion.bpmn` — this method, executable; it calls the harness's `Process_Ingestion` first

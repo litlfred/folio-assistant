@@ -4,7 +4,7 @@
  *
  * > **A version governs a surface.** For a code library that is the exported
  * > API. For an instance it is the **declared** surface, and this repository
- * > already knows how to enumerate it: graph kinds, skill ids, tool ids, block
+ * > already knows how to enumerate it: graph typologies, skill ids, tool ids, block
  * > kinds, asset roles, declared directories — everything `kg-export` walks.
  *
  * | bump | when |
@@ -92,7 +92,7 @@ function key(s: SurfaceSubject): string {
  * The consumer-visible surface of an exported graph.
  *
  * Every `@graph` node with an `@id`. Deliberately NOT a hand-picked subset of
- * types: §4 lists "graph kinds, skill ids, tool ids, block kinds, asset roles,
+ * types: §4 lists "graph typologies, skill ids, tool ids, block kinds, asset roles,
  * declared directories" as examples of the declared surface rather than as its
  * definition, and a list maintained here would silently stop covering a type
  * added to the exporter. The falsifier measured the whole surface and found it

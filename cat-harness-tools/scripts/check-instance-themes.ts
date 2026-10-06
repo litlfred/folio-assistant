@@ -60,7 +60,7 @@ import {
 import {
   explainThemeRefMiss,
   instanceThemes,
-  THEMES_GRAPH_KIND,
+  THEMES_GRAPH_TYPOLOGY,
 } from "../../cat-harness/schemas/theme-by-ref.js";
 import { ResolvedThemeSchema } from "../../cat-harness/schemas/theme.js";
 import { instanceDirectoriesForGraph } from "../../cat-harness/schemas/cat-harness.js";
@@ -105,7 +105,7 @@ function main(): number {
     }
     if (name === undefined) continue;
 
-    const dirs = instanceDirectoriesForGraph(root, THEMES_GRAPH_KIND);
+    const dirs = instanceDirectoriesForGraph(root, THEMES_GRAPH_TYPOLOGY);
     if (dirs.length === 0) continue; // declares no themes graph — not a finding
 
     let got: ReturnType<typeof instanceThemes>;

@@ -124,8 +124,8 @@ describe("compare — a baseline line that describes nothing also fails", () => 
 describe("stateDirectories reads the declaration, not the disk", () => {
   test("a directory holding a state kind is listed; a content kind is not", () => {
     const root = instance([
-      { id: "beans", path: "beans/", graphKinds: ["beans"] },
-      { id: "skills", path: "skills/", graphKinds: ["skills"] },
+      { id: "beans", path: "beans/", graphTypologies: ["beans"] },
+      { id: "skills", path: "skills/", graphTypologies: ["skills"] },
     ]);
     const got = stateDirectories(root);
     expect(got.map((d) => d.id)).toEqual(["beans"]);
@@ -134,8 +134,8 @@ describe("stateDirectories reads the declaration, not the disk", () => {
 
   test("`source: branch` reads as off the checkout; a bare directory does not", () => {
     const root = instance([
-      { id: "beans", path: "beans/", graphKinds: ["beans"], source: { kind: "branch", branch: "cat/cat-harness/beans", keyedBy: "tip" } },
-      { id: "todos", path: "todos/", graphKinds: ["todos"] },
+      { id: "beans", path: "beans/", graphTypologies: ["beans"], source: { kind: "branch", branch: "cat/cat-harness/beans", keyedBy: "tip" } },
+      { id: "todos", path: "todos/", graphTypologies: ["todos"] },
     ]);
     const by = new Map(stateDirectories(root).map((d) => [d.id, d.offCheckout]));
     expect(by.get("beans")).toBe(true);
@@ -144,7 +144,7 @@ describe("stateDirectories reads the declaration, not the disk", () => {
 
   test("the legacy `storage` spelling counts too", () => {
     const root = instance([
-      { id: "qa", path: "test/results/", graphKinds: ["qa"], storage: { branch: "qa-reports", keyedBy: "commit" } },
+      { id: "qa", path: "test/results/", graphTypologies: ["qa"], storage: { branch: "qa-reports", keyedBy: "commit" } },
     ]);
     expect(stateDirectories(root).map((d) => d.offCheckout)).toEqual([true]);
   });
@@ -153,12 +153,12 @@ describe("stateDirectories reads the declaration, not the disk", () => {
     // A one-level read reported `beans` and missed `defs`, `notes` and
     // `workflows` underneath it — most of the real list.
     const root = instance(
-      [{ id: "beans", path: "beans/", graphKinds: ["beans"] }],
+      [{ id: "beans", path: "beans/", graphTypologies: ["beans"] }],
       {
         beans: [
-          { id: "defs", path: "defs", graphKinds: ["bean-defs"] },
-          { id: "notes", path: "notes", graphKinds: ["bean-notes"] },
-          { id: "workflows", path: "workflows", graphKinds: ["workflow-state"] },
+          { id: "defs", path: "defs", graphTypologies: ["bean-defs"] },
+          { id: "notes", path: "notes", graphTypologies: ["bean-notes"] },
+          { id: "workflows", path: "workflows", graphTypologies: ["workflow-state"] },
         ],
       },
     );
@@ -174,7 +174,7 @@ describe("stateDirectories reads the declaration, not the disk", () => {
     // `state:mount` must not read as a state directory appearing on main,
     // which is bean `dh4f`'s clean-run-over-nothing in this gate's shape.
     const root = instance([
-      { id: "beans", path: "beans/", graphKinds: ["beans"], source: { kind: "branch", branch: "cat/cat-harness/beans", keyedBy: "tip" } },
+      { id: "beans", path: "beans/", graphTypologies: ["beans"], source: { kind: "branch", branch: "cat/cat-harness/beans", keyedBy: "tip" } },
     ]);
     expect(compare(stateDirectories(root), { onMain: [] })).toHaveLength(0);
   });

@@ -44,7 +44,7 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
   class "Directory" as bootstrap_schemas_graph_schema_json_Directory <<schema: graph.schema.json>> #e9edf3 {
     id [1] : string
     path [1] : string
-    graphKinds [1..*] : list<'skills' | 'schemas' | 'scenarios' | 'processes' | 'models' | string>
+    graphTypologies [1..*] : list<'skills' | 'schemas' | 'scenarios' | 'processes' | 'models' | string>
     title [0..1] : string
     description [0..1] : string
   }

@@ -7,13 +7,14 @@ classDiagram
       id [1] string
       validates [1] object
       schema [1] string
+      pages [0..1] string
       rationale [0..1] string
     }
   }
-  namespace cat_openapi__cat_openapi_kinds {
-    class cat_openapi_cat_openapi_kinds_folio_graph_kind_v1_folio_graph_kind_v1["folio-graph-kind/v1"] {
-      <<json: GraphKindNodeSchema>>
-      $schema [1] 'folio-graph-kind/v1'
+  namespace cat_openapi__cat_openapi_typologies {
+    class cat_openapi_cat_openapi_typologies_folio_graph_typology_v1_folio_graph_typology_v1["folio-graph-typology/v1"] {
+      <<json: GraphTypologyNodeSchema>>
+      $schema [1] 'folio-graph-typology/v1'
       kind [1] string
       title [0..1] string
       layer [0..1] 'core'
@@ -51,7 +52,7 @@ classDiagram
     }
   }
   cssClass "cat_openapi_cat_openapi_validators_folio_validator_v1_folio_validator_v1" fa_uml_kind_validators
-  cssClass "cat_openapi_cat_openapi_kinds_folio_graph_kind_v1_folio_graph_kind_v1" fa_uml_kind_kinds
+  cssClass "cat_openapi_cat_openapi_typologies_folio_graph_typology_v1_folio_graph_typology_v1" fa_uml_kind_typologies
   cssClass "n_cat_openapi_cat_openapi_schemas_schemas" fa_uml_kind_schemas
   cssClass "n_cat_openapi_cat_openapi_schemas_schemas" fa_uml_undetermined
   cssClass "n_cat_openapi_cat_openapi_scripts_code" fa_uml_kind_code

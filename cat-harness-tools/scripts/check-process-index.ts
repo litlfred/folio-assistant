@@ -60,7 +60,7 @@ const ROOT = HARNESS_ROOT;
 const REPO = repoRootFor(ROOT);
 const SITE = join(ROOT, siteDirFor(ROOT));
 const OUT = join(ROOT, subgraphOutDir(ROOT));
-const PAGE = join(ROOT, "content", "docs", "publication-workflow", "every-workflow-in-the-repo.md");
+const PAGE = join(ROOT, "content", "docs", "process-publication-workflow", "every-workflow-in-the-repo.md");
 
 type Doc = Record<string, unknown>;
 const list = (v: unknown): unknown[] => (v == null ? [] : Array.isArray(v) ? v : [v]);
@@ -139,7 +139,7 @@ export function publishedProcesses(outDir: string = OUT): { processes: Published
     for (const topIri of list(root.hasSubgraph).map(String)) {
       const topFile = fileOf(topIri, SUBGRAPH_INDEX_FILE);
       const top = topFile ? read(topFile, SubgraphIndexSchema) : undefined;
-      if (!top || !list(top.holdsGraph).some((k) => /graphKind\/processes$/.test(String(k)))) continue;
+      if (!top || !list(top.holdsGraph).some((k) => /graphTypology\/processes$/.test(String(k)))) continue;
       const hydFile = fileOf(topIri, SUBGRAPH_HYDRATED_FILE);
       const hyd = hydFile ? read(hydFile, SubgraphHydratedSchema) : undefined;
       if (!hyd) continue;

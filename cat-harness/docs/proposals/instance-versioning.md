@@ -234,13 +234,13 @@ earns its keep.
 
 **A version governs a surface.** For a code library that is the exported API.
 For an instance it is the **declared** surface, and this repository already
-knows how to enumerate it: graph kinds, skill ids, tool ids, block kinds,
+knows how to enumerate it: graph typologies, skill ids, tool ids, block kinds,
 asset roles, declared directories — everything `kg-export` walks.
 
 | bump | when |
 |---|---|
-| **major** | a consumer must change something: a graph kind, skill id, tool id, block kind or asset role **removed or renamed**; a schema field made required; a declared directory withdrawn |
-| **minor** | something **added** that a consumer may use: a new skill, graph kind, tool, block kind |
+| **major** | a consumer must change something: a graph typology, skill id, tool id, block kind or asset role **removed or renamed**; a schema field made required; a declared directory withdrawn |
+| **minor** | something **added** that a consumer may use: a new skill, graph typology, tool, block kind |
 | **patch** | everything else, prose included |
 
 ### 4.1 The bump is COMPUTED, not asserted

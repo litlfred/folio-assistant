@@ -238,12 +238,12 @@ classDiagram
   }
   namespace folio_assistant__items {
     class folio_assistant_items_AlsoAbout["AlsoAbout"] {
-      <<json: TodoNodeSchema>>
+      <<json: TodoNodeKind>>
       kind [1] 'block'
       label [1] string
     }
-    class folio_assistant_items_TodoNode["TodoNode"] {
-      <<json: TodoNodeSchema>>
+    class folio_assistant_items_TodoNodeKind["TodoNodeKind"] {
+      <<json: TodoNodeKind>>
       id [1] string
       summary [1] string
       comment [0..1] string
@@ -258,7 +258,7 @@ classDiagram
       status [1] string
       priority [1] string
       origin [1] string
-      $schema [1] 'folio-todo/v1'
+      $schema [1] string
     }
   }
   namespace folio_assistant__feedback {
@@ -329,9 +329,9 @@ classDiagram
   folio_assistant_surveys_folio_session_survey_v1_folio_session_survey_v1 *-- "1..*" folio_assistant_surveys_folio_session_survey_v1_Axe : axes
   cssClass "folio_assistant_surveys_folio_session_survey_v1_Axe" fa_uml_kind_session_survey
   cssClass "folio_assistant_surveys_folio_session_survey_v1_folio_session_survey_v1" fa_uml_kind_session_survey
-  folio_assistant_items_TodoNode *-- "0..*" folio_assistant_items_AlsoAbout : alsoAbout
+  folio_assistant_items_TodoNodeKind *-- "0..*" folio_assistant_items_AlsoAbout : alsoAbout
   cssClass "folio_assistant_items_AlsoAbout" fa_uml_kind_todo_items
-  cssClass "folio_assistant_items_TodoNode" fa_uml_kind_todo_items
+  cssClass "folio_assistant_items_TodoNodeKind" fa_uml_kind_todo_items
   cssClass "folio_assistant_feedback_FeedbackItem" fa_uml_kind_todo_feedback
   cssClass "folio_assistant_boards_Board" fa_uml_kind_boards
   cssClass "folio_assistant_positions_BoardPositions" fa_uml_kind_board_positions

@@ -12,14 +12,14 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 219 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 13 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 19 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 219 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 14 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 19 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 327 terms and is 249 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 328 terms and is 250 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>327</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>327</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>328</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>328</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">327</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">328</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -903,7 +903,7 @@ graph-detanglement <span class="fa-gloss-status">candidate, extracted</span>
 graph-rendering <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph kind here applies them.</p>
+<p>Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph typology here applies them.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/graph-rendering.md"><code>cat-harness/skills/kg/graph-management/graph-rendering.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--groebner-basis" data-fa-state="extracted" data-fa-gloss="">
@@ -928,7 +928,7 @@ handover-report <span class="fa-gloss-status">candidate, extracted</span>
 harness-requirements <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading <code>check:subgraph-coverage</code>. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is &quot;is this the static knowledge graph&quot;, and which single obligation a harness may never waive.</p>
+<p>What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph typology, and when reading <code>check:subgraph-coverage</code>. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is &quot;is this the static knowledge graph&quot;, and which single obligation a harness may never waive.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/harness-requirements.md"><code>cat-harness/skills/kg/kg-core/harness-requirements.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--harness-tiles" data-fa-state="extracted" data-fa-gloss="">
@@ -1026,6 +1026,13 @@ ig-render-jekyll <span class="fa-gloss-status">candidate, extracted</span>
 <p>Rendering a FHIR IG's content through the just-the-docs pipeline instead of mounting the IG Publisher's finished HTML — the JSON-only representation contract, navigation derived from sushi-config.yaml, and the LHS rail. Read before adding a representation, a menu entry, or a page kind.</p>
 <p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md"><code>fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md</code></a></p>
 </dd>
+<dt id="fhir-harness--kg-skills--ig-site-links" data-fa-state="extracted" data-fa-gloss="">
+ig-site-links <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What happens to an IG's links when its pages are rendered on our site rather than by the IG Publisher: which are rewritten (artefact pages, a case-only mismatch, the Publisher's downloads and pages, files of the IG's repository, the OpenAPI index), which are reported as the IG's own dead links, and the two gates that keep a generator from linking a page it does not write. Read before changing build-ig-site's relinking, gen-ig-pages' links, or before concluding an IG page's broken link is ours.</p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-site-links.md"><code>fhir-harness/skills/fhir-ig-base/ig-site-links.md</code></a></p>
+</dd>
 <dt id="fhir-harness--kg-skills--ig-site-theme" data-fa-state="extracted" data-fa-gloss="">
 ig-site-theme <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1037,7 +1044,7 @@ ig-site-theme <span class="fa-gloss-status">candidate, extracted</span>
 incremental-render <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH KINDS rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.</p>
+<p>Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH TYPOLOGIES rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/incremental-render.md"><code>cat-harness/skills/ui/ui-core/incremental-render.md</code></a></p>
 </dd>
 <dt id="bootstrap--kg-skills--initialization-steps" data-fa-state="extracted" data-fa-gloss="">
@@ -1058,14 +1065,14 @@ injection-boundaries <span class="fa-gloss-status">candidate, extracted</span>
 instance-kinds <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH kind must declare. Read before naming a new instance, before adding a value to the graph-kind registry, and before building a visualiser. Carries the test that usually says &quot;this is not a new kind&quot;.</p>
+<p>How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH typology must declare. Read before naming a new instance, before adding a value to the graph-typology registry, and before building a visualiser. Carries the test that usually says &quot;this is not a new kind&quot;.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/instance-kinds.md"><code>cat-harness/skills/kg/kg-core/instance-kinds.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--instance-publication" data-fa-state="extracted" data-fa-gloss="">
 instance-publication <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and <code>published</code> is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft.</p>
+<p>Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and <code>published</code> is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft. Also the one home for which graph each instance publishes, where, under which IRI and schema, and what is stripped from it.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/instance-publication.md"><code>cat-harness/skills/kg/kg-core/instance-publication.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--integration-audit" data-fa-state="extracted" data-fa-gloss="">
@@ -1860,7 +1867,7 @@ retry-backoff <span class="fa-gloss-status">candidate, extracted</span>
 review-comments <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into <code>folio-review-comment/v1</code> todos, where the published <code>review-comments.json</code> comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.</p>
+<p>Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into <code>review-comment/1.0.0</code> todos, where the published <code>review-comments.json</code> comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/review-comments.md"><code>cat-harness/skills/authoring/authoring-core/review-comments.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--review-heatmap" data-fa-state="extracted" data-fa-gloss="">

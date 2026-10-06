@@ -79,6 +79,14 @@
       "status": "candidate"
     },
     {
+      "id": "compose-docs",
+      "prefLabel": "Compose the site's documentation tree from its declared docs layers",
+      "definition": "Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` instance under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs instances a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no instance, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome (#2235).",
+      "notation": "compose-docs",
+      "source": "cat-harness/tools/index.ts#compose-docs",
+      "status": "candidate"
+    },
+    {
       "id": "content-context",
       "prefLabel": "Content JSON-LD context",
       "definition": "Emit the published JSON-LD `@context` that both populations share — authored block siblings and ingested `library/**` nodes reference it by URL — generated from its TypeScript definition rather than hand-kept.",
@@ -281,7 +289,7 @@
     {
       "id": "kg-validate",
       "prefLabel": "Validate a node in the graph",
-      "definition": "Check one file against the schema for its graph kind. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
+      "definition": "Check one file against the schema for its graph typology. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
       "notation": "kg-validate",
       "source": "cat-harness/tools/index.ts#kg-validate",
       "status": "candidate"
@@ -439,6 +447,22 @@
       "status": "candidate"
     },
     {
+      "id": "navbar-include",
+      "prefLabel": "Write the site sidebar's harness navbar include",
+      "definition": "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from (#2235).",
+      "notation": "navbar-include",
+      "source": "cat-harness/tools/index.ts#navbar-include",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-pages",
+      "prefLabel": "Node kind pages",
+      "definition": "Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195).",
+      "notation": "node-kind-pages",
+      "source": "cat-harness/tools/viewers.ts#node-kind-pages",
+      "status": "candidate"
+    },
+    {
       "id": "ns-vocabulary",
       "prefLabel": "Namespace vocabulary",
       "definition": "Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets.",
@@ -564,6 +588,14 @@
       "definition": "Run every registered criterion over the blocks under a path and write a per-block QA sidecar. A sidecar rather than a console report, because a printed verdict cannot distinguish \"never checked\" from \"checked and clean\".",
       "notation": "qa-sweep",
       "source": "cat-harness/tools/index.ts#qa-sweep",
+      "status": "candidate"
+    },
+    {
+      "id": "rail-standalone-pages",
+      "prefLabel": "Give every page Jekyll did not lay out the folio-assistant navbar",
+      "definition": "A LAST pass over the finished site: inject the shared navbar (`lib/navbar.ts`, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated instance pages, and each IG site built by `stage-ig-sites`. A page under an `igSite` instance's route is railed as THAT instance's page (its name, mark and graphs); a page may declare its own section (`data-fa-visualiser-nav`) and its label (`fa-visualiser-label`). Mount routes are left to the mount pass, and a page that declines (`folio-navbar: none`) is left bare.",
+      "notation": "rail-standalone-pages",
+      "source": "cat-harness/tools/index.ts#rail-standalone-pages",
       "status": "candidate"
     },
     {
@@ -705,7 +737,7 @@
     {
       "id": "subgraph-readmes",
       "prefLabel": "Directory READMEs from the Knowledge Graph",
-      "definition": "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
+      "definition": "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Typologies, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
       "notation": "subgraph-readmes",
       "source": "cat-harness/tools/index.ts#subgraph-readmes",
       "status": "candidate"
@@ -881,7 +913,7 @@
     {
       "id": "uml-overview",
       "prefLabel": "UML overview per named sub-graph",
-      "definition": "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
+      "definition": "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph typology's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
       "notation": "uml-overview",
       "source": "cat-harness/tools/index.ts#uml-overview",
       "status": "candidate"

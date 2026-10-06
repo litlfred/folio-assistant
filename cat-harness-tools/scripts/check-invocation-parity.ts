@@ -41,7 +41,7 @@
  * neighbour and a separate build. This is the cheap guard, not the answer.
  *
  * @module scripts/check-invocation-parity
- * @covers none — .github/workflows/ is not a declared graph kind
+ * @covers none — .github/workflows/ is not a declared graph typology
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";

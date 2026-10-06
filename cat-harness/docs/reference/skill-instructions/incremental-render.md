@@ -56,7 +56,7 @@ both, and the distinction lives in what a human reads there.
 pipeline, and a step whose dependency re-ran must re-run too. One edge, two
 uses.
 
-## A step declares GRAPH KINDS, not paths
+## A step declares GRAPH TYPOLOGIES, not paths
 
 `RenderStep` carries two ways to say what it reads, and the second is the one
 to use:
@@ -75,10 +75,10 @@ under-declaration.
 
 ### The subprocess, and why there is one
 
-`render-pipeline.ts` is in the **harness** layer. Resolving a graph kind means
+`render-pipeline.ts` is in the **harness** layer. Resolving a graph typology means
 `readDeclaration`, which validates **every** kind in the declaration — and this
 repository declares a `folio` directory whose kind is registered by **core**,
-on the argument (written on `schemas/folio-graph-kind.ts`) that a layer which
+on the argument (written on `schemas/folio-graph-typology.ts`) that a layer which
 cannot render must not own the renderable kind. So the harness layer cannot
 resolve *any* kind in-process without importing core, which `check:partition`
 rejects.
@@ -93,7 +93,7 @@ line of JSON on stdout, `{graph: [dirs]}`.
 read *could not resolve* as *declares nothing* — the distinction this whole
 skill turns on. The pipeline reports it:
 
-> `Graph kinds could not be resolved here, so every step that declared only
+> `Graph typologies could not be resolved here, so every step that declared only
 > graphs re-rendered: <reason>`
 
 and every graph-declared step becomes undeclared, which always re-renders. Safe
@@ -137,7 +137,7 @@ Four states send a step to the "run it" pile, and **none of them is an error**:
 
 And three at the build level: **no manifest at all** is a full render; a
 manifest that is unparseable or carries the wrong schema tag is treated as
-absent; and **graph kinds that could not be resolved** turn every
+absent; and **graph typologies that could not be resolved** turn every
 graph-declared step into the fourth row above. **A corrupt manifest is never
 partially believed** — half a cache is worse than none, because the half that
 is wrong is invisible.
@@ -206,8 +206,8 @@ so use `--seed` only where the previous output is already in place.
 ## Related
 
 - `scripts/render-selection.ts` — the selection, the manifest, and the hash.
-- `scripts/declared-dirs.ts` — the graph-kind resolver, and why it is a process.
-- [`directory-conventions`](directory-conventions.md) — what a graph kind is
+- `scripts/declared-dirs.ts` — the graph-typology resolver, and why it is a process.
+- [`directory-conventions`](directory-conventions.md) — what a graph typology is
   and where `<name>.json` declares it.
 - [`ci-health`](ci-health.md) — the same third-state discipline one level out.
 - Bean `9c34`.

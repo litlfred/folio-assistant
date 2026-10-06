@@ -10,8 +10,8 @@ classDiagram
       officialRequired [0..1] boolean
     }
   }
-  namespace folio_assistant_core__folio_assistant_core_block_kinds {
-    class folio_assistant_core_folio_assistant_core_block_kinds_folio_block_kind_v1_folio_block_kind_v1["folio-block-kind/v1"] {
+  namespace folio_assistant_core__folio_assistant_core_block_typologies {
+    class folio_assistant_core_folio_assistant_core_block_typologies_folio_block_kind_v1_folio_block_kind_v1["folio-block-kind/v1"] {
       <<json: BlockKindNodeSchema>>
       $schema [1] 'folio-block-kind/v1'
       kind [1] string
@@ -36,13 +36,14 @@ classDiagram
       id [1] string
       validates [1] object
       schema [1] string
+      pages [0..1] string
       rationale [0..1] string
     }
   }
-  namespace folio_assistant_core__folio_assistant_core_kinds {
-    class folio_assistant_core_folio_assistant_core_kinds_folio_graph_kind_v1_folio_graph_kind_v1["folio-graph-kind/v1"] {
-      <<json: GraphKindNodeSchema>>
-      $schema [1] 'folio-graph-kind/v1'
+  namespace folio_assistant_core__folio_assistant_core_typologies {
+    class folio_assistant_core_folio_assistant_core_typologies_folio_graph_typology_v1_folio_graph_typology_v1["folio-graph-typology/v1"] {
+      <<json: GraphTypologyNodeSchema>>
+      $schema [1] 'folio-graph-typology/v1'
       kind [1] string
       title [0..1] string
       layer [0..1] 'core'
@@ -344,7 +345,7 @@ classDiagram
       id [1] string
       path [1] string
       subgraph [1] true
-      graphKinds [1..*] string[]
+      graphTypologies [1..*] string[]
     }
     class folio_assistant_core_core_skills_skill_topics_v1_skill_topics_v1["skill-topics/v1"] {
       <<json: SkillTopicsSchema>>
@@ -448,9 +449,9 @@ classDiagram
     }
   }
   cssClass "folio_assistant_core_folio_assistant_core_translations_TranslationConfig" fa_uml_kind_translation_sources
-  cssClass "folio_assistant_core_folio_assistant_core_block_kinds_folio_block_kind_v1_folio_block_kind_v1" fa_uml_kind_block_kinds
+  cssClass "folio_assistant_core_folio_assistant_core_block_typologies_folio_block_kind_v1_folio_block_kind_v1" fa_uml_kind_block_kinds
   cssClass "folio_assistant_core_folio_assistant_core_validators_folio_validator_v1_folio_validator_v1" fa_uml_kind_validators
-  cssClass "folio_assistant_core_folio_assistant_core_kinds_folio_graph_kind_v1_folio_graph_kind_v1" fa_uml_kind_kinds
+  cssClass "folio_assistant_core_folio_assistant_core_typologies_folio_graph_typology_v1_folio_graph_typology_v1" fa_uml_kind_typologies
   folio_assistant_core_core_schemas_skills_document_publishing_output_schema_json_Document_Publishing_Output *-- "0..*" folio_assistant_core_core_schemas_skills_document_publishing_output_schema_json_Issue : issues
   folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Quality_Control_Output *-- "0..*" folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Finding : findings
   cssClass "folio_assistant_core_core_schemas_skills_document_authoring_input_schema_json_Document_Authoring_Input" fa_uml_kind_schemas

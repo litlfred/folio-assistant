@@ -10,7 +10,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 
-import { declarationPathIn, instanceRootsIn } from "../../schemas/cat-harness.js";
+import { declarationPathIn, instanceRootsIn, visualisationResolves } from "../../schemas/cat-harness.js";
 import { tools } from "../../tools/discover.js";
 import {
   metaRenders,
@@ -159,10 +159,12 @@ describe("the corpus: viewers are read from the pages (#1168 B7a-2b)", () => {
     expect(resolveFor("folio-assistant", "fsh-guts")).toBe("cat-harness/docs/fsh-guts/index.md");
   });
 
-  test("every resolved page exists", () => {
+  // "Exists" includes a page BUILT AT PUBLISH (bean 0b8c): never committed,
+  // so it resolves by its declared writer rather than by the disk.
+  test("every resolved page exists, or is built at publish by a writer that exists", () => {
     const missing = dirs.flatMap(({ root, instance, dir }) =>
       viewersOf(dir, root, REPO)
-        .filter((v) => !existsSync(join(REPO, v.ref)))
+        .filter((v) => !visualisationResolves(v, (p) => existsSync(join(REPO, p))))
         .map((v) => `${instance}/${dir.id} → ${v.ref}`),
     );
     expect(missing).toEqual([]);

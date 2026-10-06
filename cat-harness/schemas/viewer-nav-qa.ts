@@ -40,6 +40,9 @@ export const VIEWER_NAV_QA_SCHEMA = "viewer-nav-qa/v1";
  * - `railed` — the fixture is on the page.
  * - `declined` — the page declares `<meta name="folio-navbar" content="none">`.
  *   A decision, recorded where a reader of the page can see it.
+ * - `linked` — the page declares `<meta name="folio-navbar" content="linked">`:
+ *   the build's rail pass gives it the rail with its style linked rather than
+ *   inlined (a thin page, bean `lnoy`). Not railed in the commit, by design.
  * - `missing` — a standalone page with neither. The finding this exists for.
  *
  * There is no `could-not-determine`, and that is a claim rather than an
@@ -48,7 +51,7 @@ export const VIEWER_NAV_QA_SCHEMA = "viewer-nav-qa/v1";
  * from the audit, not a verdict about a page — the distinction
  * `instantiatedHarnesses` makes with `undefined`, for the same reason.
  */
-export const ViewerNavVerdictSchema = z.enum(["railed", "declined", "missing"]);
+export const ViewerNavVerdictSchema = z.enum(["railed", "declined", "linked", "missing"]);
 export type ViewerNavVerdict = z.infer<typeof ViewerNavVerdictSchema>;
 
 /**
@@ -108,6 +111,8 @@ export const ViewerNavQaSchema = z.object({
     pages: z.number().int().nonnegative(),
     railed: z.number().int().nonnegative(),
     declined: z.number().int().nonnegative(),
+    /** Thin pages railed at build with linked style (bean `lnoy`). Absent in sidecars written before it existed. */
+    linked: z.number().int().nonnegative().optional(),
     missing: z.number().int().nonnegative(),
     /** Railed pages failing at least one layout flag. */
     flagged: z.number().int().nonnegative().optional(),

@@ -69,16 +69,16 @@ function put(root: string, rel: string, body: unknown): void {
 function checkout(extra: (root: string) => void = () => {}): string {
   const root = mkdtempSync(join(tmpdir(), "pr0-"));
   made.push(root);
-  put(root, "top.json", { name: "top", needs: ["a", "b", "base"], directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }] });
+  put(root, "top.json", { name: "top", needs: ["a", "b", "base"], directories: [{ id: "beans", path: "beans/", graphTypologies: ["beans"] }] });
   mkdirSync(join(root, "beans"), { recursive: true });
   put(root, "base/base.json", {
     name: "base",
     needs: [],
     directories: [
-      { id: "library", path: "library/", graphKinds: ["library"] },
-      { id: "skills", path: "skills/", graphKinds: ["skills"] },
-      { id: "scenarios", path: "scenarios/", graphKinds: ["scenarios"] },
-      { id: "processes", path: "processes/", graphKinds: ["processes"] },
+      { id: "library", path: "library/", graphTypologies: ["library"] },
+      { id: "skills", path: "skills/", graphTypologies: ["skills"] },
+      { id: "scenarios", path: "scenarios/", graphTypologies: ["scenarios"] },
+      { id: "processes", path: "processes/", graphTypologies: ["processes"] },
     ],
   });
   for (const d of ["library", "skills", "scenarios", "processes"]) mkdirSync(join(root, "base", d), { recursive: true });
@@ -131,7 +131,7 @@ describe("0a — the checkout aggregates", () => {
       put(r, "base/base.json", {
         name: "base",
         needs: [],
-        directories: [{ id: "a-library", path: "a/library/", scope: "repository", graphKinds: ["library"] }],
+        directories: [{ id: "a-library", path: "a/library/", scope: "repository", graphTypologies: ["library"] }],
       }),
     );
     expect(repositoryMirrors(root)).toEqual(["base#a-library"]);
@@ -150,7 +150,7 @@ describe("0a — the checkout aggregates", () => {
       put(r, "a/skills/skills.json", {
         $schema: "skill-topics/v1",
         topics: [],
-        directories: [{ id: "lean-skills", path: "lean", subgraph: true, graphKinds: ["skills"] }],
+        directories: [{ id: "lean-skills", path: "lean", subgraph: true, graphTypologies: ["skills"] }],
       });
     });
     const inA = resolveDirectories(declarationChain(join(root, "a")));
@@ -210,7 +210,7 @@ describe("0b — roles, actors and capabilities extended by id", () => {
   test("on a checkout: the platform's role graph gains a dependent's extension; identical without one", () => {
     const root = checkout((r) => {
       put(r, "base/scenarios/roles.json", { name: "base", roles: BASE_ROLES.roles });
-      put(r, "a/a.json", { name: "a", needs: ["base"], directories: [{ id: "scenarios", path: "scenarios/", graphKinds: ["scenarios"] }] });
+      put(r, "a/a.json", { name: "a", needs: ["base"], directories: [{ id: "scenarios", path: "scenarios/", graphTypologies: ["scenarios"] }] });
       put(r, "a/scenarios/roles.json", { name: "a", roles: [], extensions: [{ role: "librarian", skills: ["filing-dublin-core"] }] });
     });
     const own = readRoleGraph(join(root, "base", "scenarios"))!;
@@ -223,7 +223,7 @@ describe("0b — roles, actors and capabilities extended by id", () => {
   test("actors: an extension adds roles and capabilities; a new id is a new actor; a redeclared id is refused", () => {
     const root = checkout((r) => {
       put(r, "base/scenarios/actors/claude.json", { id: "claude", title: "Claude", kind: "agent", roles: ["reviewer"], capabilities: ["git-read"] });
-      put(r, "a/a.json", { name: "a", needs: ["base"], directories: [{ id: "scenarios", path: "scenarios/", graphKinds: ["scenarios"] }] });
+      put(r, "a/a.json", { name: "a", needs: ["base"], directories: [{ id: "scenarios", path: "scenarios/", graphTypologies: ["scenarios"] }] });
       put(r, "a/scenarios/actors/claude.json", { extends: "claude", roles: ["proof-reviewer"], capabilities: ["lean-toolchain"] });
       put(r, "a/scenarios/actors/lean-mcp.json", { id: "lean-mcp", title: "Lean MCP", kind: "system" });
     });
@@ -241,7 +241,7 @@ describe("0b — roles, actors and capabilities extended by id", () => {
   test("an actor extension may not carry anything but roles and capabilities", () => {
     const root = checkout((r) => {
       put(r, "base/scenarios/actors/claude.json", { id: "claude", title: "Claude", kind: "agent" });
-      put(r, "a/a.json", { name: "a", needs: ["base"], directories: [{ id: "scenarios", path: "scenarios/", graphKinds: ["scenarios"] }] });
+      put(r, "a/a.json", { name: "a", needs: ["base"], directories: [{ id: "scenarios", path: "scenarios/", graphTypologies: ["scenarios"] }] });
       put(r, "a/scenarios/actors/claude.json", { extends: "claude", kind: "person" });
     });
     expect(() => checkoutActors(join(root, "base"), join(root, "base", "scenarios", "actors"))).toThrow(/may not carry kind/);
@@ -250,7 +250,7 @@ describe("0b — roles, actors and capabilities extended by id", () => {
   test("capabilities: a new probe is added, an extension adds `requires`, a redeclared id is refused", () => {
     const root = checkout((r) => {
       put(r, "base/scenarios/capabilities/python3.json", { id: "python3", requires: [] });
-      put(r, "a/a.json", { name: "a", needs: ["base"], directories: [{ id: "scenarios", path: "scenarios/", graphKinds: ["scenarios"] }] });
+      put(r, "a/a.json", { name: "a", needs: ["base"], directories: [{ id: "scenarios", path: "scenarios/", graphTypologies: ["scenarios"] }] });
       put(r, "a/scenarios/capabilities/lean-toolchain.json", { id: "lean-toolchain", requires: ["python3"] });
       put(r, "a/scenarios/capabilities/python3.json", { extends: "python3", requires: ["pip"] });
     });

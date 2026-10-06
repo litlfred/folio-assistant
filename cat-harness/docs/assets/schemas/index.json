@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 227,
+      "count": 232,
       "unit": "modules"
     }
   },
@@ -114,11 +114,19 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/bib-attestations.ts",
+      "instance": "cat-harness",
+      "name": "bib-attestations",
+      "graphNode": "schema",
+      "summary": "BIBLIOGRAPHY ATTESTATIONS — the ONE reader and the ONE writer for a folio's",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/bib-verification.ts",
       "instance": "cat-harness",
       "name": "bib-verification",
       "graphNode": "schema",
-      "summary": "Bibliography verification schema — `content/bib-qa-verifications.json`.",
+      "summary": "Bibliography verification schema — the source ledger.",
       "isTest": false
     },
     {
@@ -353,7 +361,7 @@
       "name": "declared-nodes",
       "graphNode": "none",
       "reason": "a function library over the declared directories; it defines no schema",
-      "summary": "The files of every declared directory of one graph kind, across the",
+      "summary": "The files of every declared directory of one graph typology, across the",
       "isTest": false
     },
     {
@@ -485,11 +493,11 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/folio-graph-kind.ts",
+      "module": "cat-harness/schemas/folio-graph-typology.ts",
       "instance": "cat-harness",
-      "name": "folio-graph-kind",
+      "name": "folio-graph-typology",
       "graphNode": "schema",
-      "summary": "The `folio` graph kind — registered by **core**, not declared by the harness.",
+      "summary": "The `folio` graph typology — registered by **core**, not declared by the harness.",
       "isTest": false
     },
     {
@@ -542,11 +550,11 @@
       "isTest": true
     },
     {
-      "module": "cat-harness/schemas/glossary-graph-kind.ts",
+      "module": "cat-harness/schemas/glossary-graph-typology.ts",
       "instance": "cat-harness",
-      "name": "glossary-graph-kind",
+      "name": "glossary-graph-typology",
       "graphNode": "schema",
-      "summary": "The `glossary` graph kind — registered by **core**, not declared by the harness.",
+      "summary": "The `glossary` graph typology — registered by **core**, not declared by the harness.",
       "isTest": false
     },
     {
@@ -558,27 +566,27 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/graph-kind-node.test.ts",
+      "module": "cat-harness/schemas/graph-typology-node.test.ts",
       "instance": "cat-harness",
-      "name": "graph-kind-node.test",
+      "name": "graph-typology-node.test",
       "graphNode": "undeclared",
-      "summary": "Graph kinds declared as nodes (bean dmx1): loaded from each instance's",
+      "summary": "Graph typologies declared as nodes (bean dmx1): loaded from each instance's",
       "isTest": true
     },
     {
-      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "module": "cat-harness/schemas/graph-typology-node.ts",
       "instance": "cat-harness",
-      "name": "graph-kind-node",
+      "name": "graph-typology-node",
       "graphNode": "schema",
-      "summary": "A GRAPH KIND as a node of the knowledge graph, declared by the harness that",
+      "summary": "A GRAPH TYPOLOGY as a node of the knowledge graph, declared by the harness that",
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
       "instance": "cat-harness",
-      "name": "graph-kind-registry",
+      "name": "graph-typology-registry",
       "graphNode": "schema",
-      "summary": "The graph-kind registry — **a leaf, and that is its whole job**.",
+      "summary": "The graph-typology registry — **a leaf, and that is its whole job**.",
       "isTest": false
     },
     {
@@ -722,7 +730,7 @@
       "instance": "cat-harness",
       "name": "kind-validator",
       "graphNode": "schema",
-      "summary": "Resolving a graph kind's **validator** — the one parameter that turns",
+      "summary": "Resolving a graph typology's **validator** — the one parameter that turns",
       "isTest": false
     },
     {
@@ -839,6 +847,40 @@
       "graphNode": "undeclared",
       "summary": "The navbar icon row — WHICH icons, and whose answer it is.",
       "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/node-kind-index.test.ts",
+      "instance": "cat-harness",
+      "name": "node-kind-index.test",
+      "graphNode": "undeclared",
+      "summary": "Issue #2195: node kinds are found THROUGH the typologies. A module of kinds",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "instance": "cat-harness",
+      "name": "node-kind-index",
+      "graphNode": "none",
+      "reason": "a function library over the typology registry; it defines no schema",
+      "summary": "Every node kind a checkout declares, found THROUGH the graph typologies —",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/node-kind-nodes.test.ts",
+      "instance": "cat-harness",
+      "name": "node-kind-nodes.test",
+      "graphNode": "undeclared",
+      "summary": "Issue #2195: a kind's nodes are the files its typologies' directories hold",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/node-kind-nodes.ts",
+      "instance": "cat-harness",
+      "name": "node-kind-nodes",
+      "graphNode": "none",
+      "reason": "a reader over declared directories; it defines no schema",
+      "summary": "The NODES of a node kind, found where its typologies say they are — issue",
+      "isTest": false
     },
     {
       "module": "cat-harness/schemas/node-kind.test.ts",
@@ -1491,7 +1533,7 @@
       "instance": "cat-harness",
       "name": "test-preload",
       "graphNode": "schema",
-      "summary": "Register core's graph kinds before any test reads a declaration.",
+      "summary": "Register core's graph typologies before any test reads a declaration.",
       "isTest": false
     },
     {
@@ -2035,7 +2077,7 @@
       "instance": "folio-assistant-core",
       "name": "glossary",
       "graphNode": "schema",
-      "summary": "`folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph kind",
+      "summary": "`folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph typology",
       "isTest": false
     },
     {
@@ -4290,6 +4332,277 @@
       "unresolved": [],
       "external": [],
       "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/bib-attestations.ts#BibFamily",
+      "name": "BibFamily",
+      "module": "cat-harness/schemas/bib-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/bib-attestations.ts#BibReview",
+      "name": "BibReview",
+      "module": "cat-harness/schemas/bib-attestations.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "status",
+          "type": "BibReviewStatus",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "date",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "page",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "entryHash",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/bib-attestations.ts#BibReviewStatus"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/bib-attestations.ts#BibReviewStatus",
+      "name": "BibReviewStatus",
+      "module": "cat-harness/schemas/bib-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/bib-attestations.ts#LedgerRead",
+      "name": "LedgerRead",
+      "module": "cat-harness/schemas/bib-attestations.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "from",
+          "type": "ReadOrigin",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ledger",
+          "type": "SourceLedger",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "One line for the caller to print: which home answered."
+        },
+        {
+          "name": "legacyPresent",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "Store reads only: a legacy file is still there beside the store."
+        },
+        {
+          "name": "files",
+          "type": "number",
+          "optional": true,
+          "array": false,
+          "doc": "Store reads only: how many store files were read."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/bib-attestations.ts#ReadOrigin",
+        "cat-harness/schemas/bib-verification.ts#SourceLedger"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/bib-attestations.ts#ReadOrigin",
+      "name": "ReadOrigin",
+      "module": "cat-harness/schemas/bib-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "store",
+        "legacy",
+        "none"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/bib-attestations.ts#ReviewRead",
+      "name": "ReviewRead",
+      "module": "cat-harness/schemas/bib-attestations.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "from",
+          "type": "ReadOrigin",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reviews",
+          "type": "Record<string, BibReview>",
+          "optional": false,
+          "array": false,
+          "doc": "Reference id → review, in recorded order."
+        },
+        {
+          "name": "meta",
+          "type": "unknown",
+          "optional": true,
+          "array": false,
+          "doc": "The legacy file's `_meta`, when that is where the read came from."
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "legacyPresent",
+          "type": "boolean",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "files",
+          "type": "number",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/bib-attestations.ts#BibReview",
+        "cat-harness/schemas/bib-attestations.ts#ReadOrigin"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/bib-attestations.ts#StoreFile",
+      "name": "StoreFile",
+      "module": "cat-harness/schemas/bib-attestations.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "abs",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "rel",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "json",
+          "type": "Record<string, unknown>",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/bib-attestations.ts#WriteResult",
+      "name": "WriteResult",
+      "module": "cat-harness/schemas/bib-attestations.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "to",
+          "type": "\"store\" | \"legacy\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "written",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Paths written (store) or the legacy path."
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/bib-verification.ts#KeyResult",
@@ -6886,7 +7199,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#AssetDelivery",
-        "cat-harness/schemas/graph-kind-registry.ts#GraphLayer"
+        "cat-harness/schemas/graph-typology-registry.ts#GraphLayer"
       ],
       "unresolved": [],
       "external": [],
@@ -7249,7 +7562,7 @@
         "cat-harness/schemas/cat-harness.ts#RenderExemption",
         "cat-harness/schemas/cat-harness.ts#Subscription",
         "cat-harness/schemas/cat-harness.ts#Topology",
-        "cat-harness/schemas/graph-kind-node.ts#KindAvatar",
+        "cat-harness/schemas/graph-typology-node.ts#KindAvatar",
         "cat-harness/schemas/kg-node.ts#KgAsset",
         "cat-harness/schemas/kg-node.ts#KgImage",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels",
@@ -7494,7 +7807,7 @@
         "cat-harness/schemas/cat-harness.ts#RenderExemptionSchema",
         "cat-harness/schemas/cat-harness.ts#SubscriptionSchema",
         "cat-harness/schemas/cat-harness.ts#TopologySchema",
-        "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
+        "cat-harness/schemas/graph-typology-node.ts#KindAvatarSchema",
         "cat-harness/schemas/kg-node.ts#KgAssetSchema",
         "cat-harness/schemas/kg-node.ts#KgImageSchema",
         "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
@@ -7603,6 +7916,13 @@
           "optional": true,
           "array": false,
           "doc": "What makes this subgraph reachable — a renderer, a documentation entry,"
+        },
+        {
+          "name": "igSite",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "Built into the instance's own IG site at `/<instance>/` (bean `mftp`); see `igSite` on the shape below."
         },
         {
           "name": "readOnly",
@@ -7795,6 +8115,13 @@
           "doc": "This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the"
         },
         {
+          "name": "igSite",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This directory is built INTO the instance's own IG site, which is served"
+        },
+        {
           "name": "served",
           "type": "z.boolean().optional()",
           "optional": true,
@@ -7849,8 +8176,8 @@
           "array": false
         },
         {
-          "name": "graphKinds",
-          "type": "GraphKind[]",
+          "name": "graphTypologies",
+          "type": "GraphTypology[]",
           "optional": false,
           "array": true
         },
@@ -7880,7 +8207,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
+        "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels"
       ],
       "unresolved": [],
@@ -8063,8 +8390,8 @@
           "doc": "Which root `path` is relative to. Absent means this instance's."
         },
         {
-          "name": "graphKinds",
-          "type": "GraphKind[]",
+          "name": "graphTypologies",
+          "type": "GraphTypology[]",
           "optional": false,
           "array": true,
           "doc": "Which parts of the knowledge graph this directory holds — an ARRAY,"
@@ -8075,7 +8402,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
+        "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
         "cat-harness/schemas/kg-node.ts#DeclarationScope",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels"
       ],
@@ -8089,7 +8416,7 @@
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "undetermined",
       "note": "z.preprocess(acceptLegacyGraphsKey, GraphNodeDirectoryShape)",
-      "doc": "The directory schema callers use — legacy `graphs` accepted, `graphKinds` canonical.",
+      "doc": "The directory schema callers use — legacy `graphs` accepted, `graphTypologies` canonical.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -8117,7 +8444,7 @@
           "array": false
         },
         {
-          "name": "graphKinds",
+          "name": "graphTypologies",
           "type": "z.array(z.string().min(1)).min(1)",
           "optional": false,
           "array": true
@@ -8128,11 +8455,34 @@
           "optional": true,
           "array": false,
           "doc": "This directory is DECLARED and deliberately not on disk, with the reason."
+        },
+        {
+          "name": "subgraph",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This entry is an instance SUBGRAPH, not a part of its parent's graph."
+        },
+        {
+          "name": "source",
+          "type": "SubgraphSourceSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where this entry's content comes from, when it is not the checkout."
+        },
+        {
+          "name": "storage",
+          "type": "z.lazy(() => DirectoryStorageSchema).optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema",
+        "cat-harness/schemas/subgraph-source.ts#SubgraphSourceSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -8448,6 +8798,84 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/cat-harness.ts#NestedDirectory",
+      "name": "NestedDirectory",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "interface",
+      "doc": "One entry a declaration names FROM WITHIN another — {@link nestedDirectories}'s row.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "`<parent id>/<own id>` — unique across the instance, and says who declares it."
+        },
+        {
+          "name": "ownId",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The entry's OWN id, as `resolveDirectories` and a mount marker spell it."
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "graphTypologies",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "absent",
+          "type": "{ reason: string }",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "storage",
+          "type": "unknown",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "unknown",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "subgraph",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "`true` when the entry declares itself an instance subgraph (bean `cmsl`)."
+        },
+        {
+          "name": "parentId",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/cat-harness.ts#NetworkReach",
       "name": "NetworkReach",
       "module": "cat-harness/schemas/cat-harness.ts",
@@ -8554,8 +8982,8 @@
           "doc": "Where it is. A reader may follow this; a consumer wanting its bytes may not, without the gates."
         },
         {
-          "name": "graphKinds",
-          "type": "GraphKind[]",
+          "name": "graphTypologies",
+          "type": "GraphTypology[]",
           "optional": false,
           "array": true,
           "doc": "Which parts of the knowledge graph live there."
@@ -8566,7 +8994,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
+        "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels"
       ],
       "unresolved": [],
@@ -8592,7 +9020,7 @@
           "array": false
         },
         {
-          "name": "graphKinds",
+          "name": "graphTypologies",
           "type": "z.array(z.string().min(1)).min(1)",
           "optional": false,
           "array": true
@@ -9216,6 +9644,13 @@
           "optional": true,
           "array": false,
           "doc": "WHERE this visualisation may be published. Absent means everywhere, which"
+        },
+        {
+          "name": "writer",
+          "type": "z .array(z.string().min(1)) .min(1) .refine((ps) => new Set(ps).size === ps.length, { message: \"writer names a path twi…",
+          "optional": true,
+          "array": true,
+          "doc": "The GENERATOR that writes this page: repo-relative script files, run with"
         }
       ],
       "extendsNames": [],
@@ -9809,7 +10244,7 @@
         },
         {
           "name": "directories",
-          "type": "z .array( z .object({ id: z.string().min(1), path: z.string().min(1), subgraph: z.literal(true), graphKinds: z.array(z.…",
+          "type": "z .array( z .object({ id: z.string().min(1), path: z.string().min(1), subgraph: z.literal(true), graphTypologies: z.arr…",
           "optional": true,
           "array": true,
           "doc": "Instance directories declared from within, as in `skills.json`."
@@ -18341,9 +18776,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph-kind-node.ts#_EveryDefFieldIsDeclarable",
+      "id": "cat-harness/schemas/graph-typology-node.ts#_EveryDefFieldIsDeclarable",
       "name": "_EveryDefFieldIsDeclarable",
-      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "module": "cat-harness/schemas/graph-typology-node.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -18354,9 +18789,9 @@
       "exported": false
     },
     {
-      "id": "cat-harness/schemas/graph-kind-node.ts#GraphKindNode",
-      "name": "GraphKindNode",
-      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "id": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNode",
+      "name": "GraphTypologyNode",
+      "module": "cat-harness/schemas/graph-typology-node.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -18367,14 +18802,14 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema",
-      "name": "GraphKindNodeSchema",
-      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "id": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema",
+      "name": "GraphTypologyNodeSchema",
+      "module": "cat-harness/schemas/graph-typology-node.ts",
       "kind": "zod-object",
       "fields": [
         {
           "name": "$schema",
-          "type": "z.literal(GRAPH_KIND_NODE_TAG)",
+          "type": "z.literal(GRAPH_TYPOLOGY_NODE_TAG)",
           "optional": false,
           "array": false
         },
@@ -18383,7 +18818,7 @@
           "type": "z.string().regex(/^[a-z][a-z0-9-]*$/, \"a lower-case kind word, e.g. ig-ast\")",
           "optional": false,
           "array": false,
-          "doc": "The kind's word, as a directory's `graphKinds` names it. `kind`, NOT"
+          "doc": "The kind's word, as a directory's `graphTypologies` names it. `kind`, NOT"
         },
         {
           "name": "title",
@@ -18533,20 +18968,20 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
-        "cat-harness/schemas/graph-kind-node.ts#NodeSchemaRefSchema"
+        "cat-harness/schemas/graph-typology-node.ts#KindAvatarSchema",
+        "cat-harness/schemas/graph-typology-node.ts#NodeSchemaRefSchema"
       ],
       "unresolved": [],
       "external": [
-        "GRAPH_KIND_NODE_TAG",
+        "GRAPH_TYPOLOGY_NODE_TAG",
         "z"
       ],
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph-kind-node.ts#KindAvatar",
+      "id": "cat-harness/schemas/graph-typology-node.ts#KindAvatar",
       "name": "KindAvatar",
-      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "module": "cat-harness/schemas/graph-typology-node.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -18557,9 +18992,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
+      "id": "cat-harness/schemas/graph-typology-node.ts#KindAvatarSchema",
       "name": "KindAvatarSchema",
-      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "module": "cat-harness/schemas/graph-typology-node.ts",
       "kind": "zod-object",
       "doc": "A kind's mark: SVG path data in a 24×24 box, a hue angle, and why. As `schemas/avatars.ts` `Avatar`.",
       "fields": [
@@ -18592,9 +19027,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph-kind-node.ts#NodeSchemaRefSchema",
+      "id": "cat-harness/schemas/graph-typology-node.ts#NodeSchemaRefSchema",
       "name": "NodeSchemaRefSchema",
-      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "module": "cat-harness/schemas/graph-typology-node.ts",
       "kind": "zod-union",
       "fields": [],
       "extendsNames": [],
@@ -18605,11 +19040,30 @@
       "exported": false
     },
     {
-      "id": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
-      "name": "GraphKind",
-      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "id": "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
+      "name": "GraphLayer",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
       "kind": "type-alias",
-      "doc": "A graph kind name. Open, not a closed union — downstream layers add kinds.",
+      "doc": "What a running process does with a graph of this kind.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "content",
+        "context",
+        "state",
+        "derived"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
+      "name": "GraphTypology",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
+      "kind": "type-alias",
+      "doc": "A graph typology name. Open, not a closed union — downstream layers add kinds.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -18619,9 +19073,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef",
-      "name": "GraphKindDef",
-      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "id": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef",
+      "name": "GraphTypologyDef",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
       "kind": "interface",
       "doc": "never at its dependents (data-modelling step 8; checked by `arrow-direction`).",
       "fields": [
@@ -18782,38 +19236,19 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
-        "cat-harness/schemas/graph-kind-registry.ts#NodeSchemaRef"
+        "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
+        "cat-harness/schemas/graph-typology-registry.ts#NodeSchemaRef"
       ],
       "unresolved": [],
       "external": [],
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
-      "name": "GraphLayer",
-      "module": "cat-harness/schemas/graph-kind-registry.ts",
-      "kind": "type-alias",
-      "doc": "What a running process does with a graph of this kind.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [
-        "content",
-        "context",
-        "state",
-        "derived"
-      ],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/graph-kind-registry.ts#NodeSchemaRef",
+      "id": "cat-harness/schemas/graph-typology-registry.ts#NodeSchemaRef",
       "name": "NodeSchemaRef",
-      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "module": "cat-harness/schemas/graph-typology-registry.ts",
       "kind": "type-alias",
-      "doc": "Where ONE `$schema` family of a graph kind is defined. Bean `rdkm`.",
+      "doc": "Where ONE `$schema` family of a graph typology is defined. Bean `rdkm`.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -23309,6 +23744,226 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry",
+      "name": "NodeKindEntry",
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "kind": "interface",
+      "doc": "One node kind, as the index records it.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "`nodeKind()`'s id — a `$schema` tag for a tagged kind, a name for a mixin."
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "SemVer, for a kind whose nodes are files; absent for a mixin."
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`<id>/<version>`: the `$schema` a current node carries."
+        },
+        {
+          "name": "parents",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Direct parents, by id, in declared order."
+        },
+        {
+          "name": "subclasses",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Direct subclasses, by id, sorted: the kinds that name this one as a parent."
+        },
+        {
+          "name": "declaredBy",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The instance that declares it: the one whose code holds the `nodeKind()`."
+        },
+        {
+          "name": "module",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where, repo-relative, and under which export. Absent for an ancestor reached only as a parent."
+        },
+        {
+          "name": "exportName",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "holdings",
+          "type": "{ typology: string; family?: string }[]",
+          "optional": false,
+          "array": true,
+          "doc": "The graph typologies that hold nodes of this kind, and the families they file it under."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind-index.ts#NodeKindIndex",
+      "name": "NodeKindIndex",
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "kinds",
+          "type": "NodeKindEntry[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unkinded",
+          "type": "Unkinded[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "collisions",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Two different kinds sharing one id — always a finding."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/node-kind-index.ts#NodeKindEntry",
+        "cat-harness/schemas/node-kind-index.ts#Unkinded"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind-index.ts#NodeKindIndexFileKind",
+      "name": "NodeKindIndexFileKind",
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "kind": "zod-object",
+      "doc": "The committed index file, `cat-harness/docs/_data/node-kinds.json`, as a",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind-index.ts#Unkinded",
+      "name": "Unkinded",
+      "module": "cat-harness/schemas/node-kind-index.ts",
+      "kind": "interface",
+      "doc": "A family (or a typology's nodes as a whole) that no node kind validates yet.",
+      "fields": [
+        {
+          "name": "typology",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "family",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The `$schema` family; absent when it is the typology's kind-level validator."
+        },
+        {
+          "name": "reason",
+          "type": "\"zod-schema\" | \"no-validator\" | \"unresolvable\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind-nodes.ts#KindNode",
+      "name": "KindNode",
+      "module": "cat-harness/schemas/node-kind-nodes.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The kind the node IS — the kind asked for, or one of its subclasses."
+        },
+        {
+          "name": "harness",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The instance that holds it."
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Relative to that instance's root, extension dropped: the node's address."
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Repo-relative, for a reader who wants the source."
+        },
+        {
+          "name": "node",
+          "type": "Record<string, unknown>",
+          "optional": false,
+          "array": false,
+          "doc": "The parsed node: a JSON object, or a Markdown file's front matter."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/node-kind.test.ts#base",
       "name": "base",
       "module": "cat-harness/schemas/node-kind.test.ts",
@@ -23379,6 +24034,19 @@
       "exported": false
     },
     {
+      "id": "cat-harness/schemas/node-kind.ts#IsVersioned",
+      "name": "IsVersioned",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/node-kind.ts#NodeKind",
       "name": "NodeKind",
       "module": "cat-harness/schemas/node-kind.ts",
@@ -23389,7 +24057,22 @@
           "name": "id",
           "type": "string",
           "optional": false,
-          "array": false
+          "array": false,
+          "doc": "The kind's NAME — its identity and its URL segment (`changeset`). Never versioned."
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "SemVer, for a kind whose nodes are files (issue #2195). Absent for a mixin"
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`<id>/<version>`: what a writer stamps in `$schema`. Absent when unversioned."
         },
         {
           "name": "parents",
@@ -23434,6 +24117,42 @@
         "z"
       ],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#OwnOf",
+      "name": "OwnOf",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#SchemaField",
+      "name": "SchemaField",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "doc": "The `$schema` a versioned kind generates: a string, checked by {@link acceptsSchemaTag}.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.ZodType<string>",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/node-kind.ts#ShapeOf",
@@ -25204,6 +25923,194 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#BibHumanReviewAttestations",
+      "name": "BibHumanReviewAttestations",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#BibHumanReviewAttestationsSchema",
+      "name": "BibHumanReviewAttestationsSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-object",
+      "doc": "The `bib-human-review` family: at most one review per reference; `[]` records a retraction.",
+      "fields": [
+        {
+          "name": "family",
+          "type": "z.literal(\"bib-human-review\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reviews",
+          "type": "z.array(BibReviewRecordSchema).max(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [
+        "QaAttestationsBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-attestations.ts#BibReviewRecordSchema",
+        "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#BibLedgerRowSchema",
+      "name": "BibLedgerRowSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-record",
+      "doc": "One source-ledger row, opaque but for the three fields every reader keys on.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#BibReviewRecordSchema",
+      "name": "BibReviewRecordSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "position",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "review",
+          "type": "BibReviewSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-attestations.ts#BibReviewSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#BibReviewSchema",
+      "name": "BibReviewSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-record",
+      "doc": "One human review, opaque but for its status.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#BibVerificationAttestations",
+      "name": "BibVerificationAttestations",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#BibVerificationAttestationsSchema",
+      "name": "BibVerificationAttestationsSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-object",
+      "doc": "The `bib-verification` family: one reference's (or one orphan source's) ledger rows.",
+      "fields": [
+        {
+          "name": "family",
+          "type": "z.literal(\"bib-verification\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verifications",
+          "type": "z.array(BibVerificationRecordSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [
+        "QaAttestationsBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-attestations.ts#BibVerificationRecordSchema",
+        "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#BibVerificationRecordSchema",
+      "name": "BibVerificationRecordSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "position",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verifier",
+          "type": "z.literal(\"unknown\").optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "entry",
+          "type": "BibLedgerRowSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-attestations.ts#BibLedgerRowSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -32169,7 +33076,7 @@
           "doc": "Marks the entry as a subgraph of the INSTANCE rather than a part of the"
         },
         {
-          "name": "graphKinds",
+          "name": "graphTypologies",
           "type": "z.array(z.string().min(1)).min(1)",
           "optional": false,
           "array": true
@@ -34176,7 +35083,7 @@
           "type": "z.array(z.string().min(1)).optional()",
           "optional": true,
           "array": true,
-          "doc": "Links to the GraphKind nodes this subgraph holds."
+          "doc": "Links to the GraphTypology nodes this subgraph holds."
         }
       ],
       "extendsNames": [
@@ -34504,7 +35411,7 @@
           "array": false
         },
         {
-          "name": "graphKinds",
+          "name": "graphTypologies",
           "type": "readonly string[]",
           "optional": true,
           "array": false
@@ -40055,7 +40962,7 @@
           "type": "z.array(z.string().min(1)).optional()",
           "optional": true,
           "array": true,
-          "doc": "The graph KINDS this Tool draws a viewer for — one page per declared"
+          "doc": "The graph TYPOLOGIES this Tool draws a viewer for — one page per declared"
         },
         {
           "name": "subprocesses",
@@ -43539,7 +44446,7 @@
           "type": "z .object({ kind: z.string().min(1), family: z.string().min(1).optional(), }) .strict()",
           "optional": false,
           "array": false,
-          "doc": "What it validates: a graph kind, and the `$schema` family within it when the kind has several."
+          "doc": "What it validates: a graph typology, and the `$schema` family within it when the kind has several."
         },
         {
           "name": "schema",
@@ -44437,6 +45344,7 @@
       "values": [
         "railed",
         "declined",
+        "linked",
         "missing"
       ],
       "refs": [],
@@ -46408,7 +47316,7 @@
           "type": "string",
           "optional": false,
           "array": false,
-          "doc": "URL stem. `document-ingestion` publishes to `docs/document-ingestion.md`"
+          "doc": "URL stem. `document-ingestion` publishes to `docs/guides/document-ingestion.md`"
         },
         {
           "name": "title",
@@ -46435,7 +47343,7 @@
           "type": "string[]",
           "optional": true,
           "array": true,
-          "doc": "What this page documents: graph kinds (`library`), or one directory as"
+          "doc": "What this page documents: graph typologies (`library`), or one directory as"
         },
         {
           "name": "parent",
@@ -46818,7 +47726,7 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "The `<instance>.json` directory id of graph kind `openapi` the documents are ingested into."
+          "doc": "The `<instance>.json` directory id of graph typology `openapi` the documents are ingested into."
         },
         {
           "name": "documents",
@@ -52096,6 +53004,75 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/public-comment.ts#ChangeSet",
+      "name": "ChangeSet",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#ChangeSetFields",
+      "name": "ChangeSetFields",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "undetermined",
+      "note": "{ /** \"CS-001\". */ id: z.string().regex(/^CS-\\d{3,}$/), title: z.string().min(1), /** What the change should do, in the editor's terms: the issue's requirement…",
+      "doc": "One change to the document, answering a group of comments (issue #2183).",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#ChangeSetHistorySchema",
+      "name": "ChangeSetHistorySchema",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "at",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "what",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "url",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The GitHub comment, issue or PR it came from."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema",
       "name": "ChangeSetRefSchema",
       "module": "folio-assistant-core/schemas/public-comment.ts",
@@ -52141,6 +53118,36 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#ChangeSetSchema",
+      "name": "ChangeSetSchema",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "ChangeSetKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ChangeSetKind"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#ChangeSetStatus",
+      "name": "ChangeSetStatus",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -54940,6 +55947,46 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/bib-attestations.ts#BibReview",
+      "to": "cat-harness/schemas/bib-attestations.ts#BibReviewStatus",
+      "via": "status",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bib-attestations.ts#LedgerRead",
+      "to": "cat-harness/schemas/bib-attestations.ts#ReadOrigin",
+      "via": "from",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bib-attestations.ts#LedgerRead",
+      "to": "cat-harness/schemas/bib-verification.ts#SourceLedger",
+      "via": "ledger",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bib-attestations.ts#ReviewRead",
+      "to": "cat-harness/schemas/bib-attestations.ts#BibReview",
+      "via": "reviews",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bib-attestations.ts#ReviewRead",
+      "to": "cat-harness/schemas/bib-attestations.ts#ReadOrigin",
+      "via": "from",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/bib-verification.ts#LedgerEntry",
       "to": "cat-harness/schemas/bib-verification.ts#RelevanceAssessment",
       "via": "relevance",
@@ -55293,7 +56340,7 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#AssetRoleDef",
-      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
+      "to": "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
       "via": "layer",
       "kind": "field",
       "optional": false,
@@ -55405,7 +56452,7 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
-      "to": "cat-harness/schemas/graph-kind-node.ts#KindAvatar",
+      "to": "cat-harness/schemas/graph-typology-node.ts#KindAvatar",
       "via": "avatar",
       "kind": "field",
       "optional": true,
@@ -55557,7 +56604,7 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
-      "to": "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
+      "to": "cat-harness/schemas/graph-typology-node.ts#KindAvatarSchema",
       "via": "avatar",
       "kind": "field",
       "optional": true,
@@ -55685,8 +56732,8 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#DeclaredGraph",
-      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
-      "via": "graphKinds",
+      "to": "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
+      "via": "graphTypologies",
       "kind": "field",
       "optional": false,
       "array": true
@@ -55717,8 +56764,8 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectory",
-      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
-      "via": "graphKinds",
+      "to": "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
+      "via": "graphTypologies",
       "kind": "field",
       "optional": false,
       "array": true
@@ -55737,6 +56784,22 @@
       "via": "",
       "kind": "extends",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
+      "to": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema",
+      "via": "storage",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
+      "to": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
@@ -55805,8 +56868,8 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#RemoteGraph",
-      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
-      "via": "graphKinds",
+      "to": "cat-harness/schemas/graph-typology-registry.ts#GraphTypology",
+      "via": "graphTypologies",
       "kind": "field",
       "optional": false,
       "array": true
@@ -57268,32 +58331,32 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema",
-      "to": "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
+      "from": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema",
+      "to": "cat-harness/schemas/graph-typology-node.ts#KindAvatarSchema",
       "via": "avatar",
       "kind": "field",
       "optional": true,
       "array": false
     },
     {
-      "from": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema",
-      "to": "cat-harness/schemas/graph-kind-node.ts#NodeSchemaRefSchema",
+      "from": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema",
+      "to": "cat-harness/schemas/graph-typology-node.ts#NodeSchemaRefSchema",
       "via": "nodeSchemas",
       "kind": "field",
       "optional": true,
       "array": false
     },
     {
-      "from": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef",
-      "to": "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
+      "from": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef",
+      "to": "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
       "via": "holds",
       "kind": "field",
       "optional": false,
       "array": false
     },
     {
-      "from": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef",
-      "to": "cat-harness/schemas/graph-kind-registry.ts#NodeSchemaRef",
+      "from": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef",
+      "to": "cat-harness/schemas/graph-typology-registry.ts#NodeSchemaRef",
       "via": "nodeSchemas",
       "kind": "field",
       "optional": true,
@@ -58052,6 +59115,22 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/node-kind-index.ts#NodeKindIndex",
+      "to": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry",
+      "via": "kinds",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/node-kind-index.ts#NodeKindIndex",
+      "to": "cat-harness/schemas/node-kind-index.ts#Unkinded",
+      "via": "unkinded",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/note-anchor.ts#Anchored",
       "to": "cat-harness/schemas/note-anchor.ts#NoteAnchor",
       "via": "anchor",
@@ -58191,6 +59270,54 @@
       "from": "cat-harness/schemas/qa-attestations.ts#AttestationKey",
       "to": "cat-harness/schemas/qa-attestations.ts#CriteriaFamily",
       "via": "family",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#BibHumanReviewAttestationsSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#BibReviewRecordSchema",
+      "via": "reviews",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#BibHumanReviewAttestationsSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#BibReviewRecordSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#BibReviewSchema",
+      "via": "review",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#BibVerificationAttestationsSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#BibVerificationRecordSchema",
+      "via": "verifications",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#BibVerificationAttestationsSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#BibVerificationRecordSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#BibLedgerRowSchema",
+      "via": "entry",
       "kind": "field",
       "optional": false,
       "array": false

@@ -48,10 +48,10 @@ const ingestOne = (body = "block: prose:overview\nkind: defect\nrole: clinical-s
 
 describe("the kind", () => {
   it("is a todo: its parent is the harness todo, and a todo reader accepts it", () => {
-    expect(ReviewCommentKind.order).toEqual(["carried-note", "themed", "folio-todo/v1", "folio-review-comment/v1"]);
+    expect(ReviewCommentKind.order).toEqual(["carried-note", "themed", "todo", "review-comment"]);
     const c = ingestOne();
     // A reader that knows only todos still parses it — bar the tag itself.
-    expect(TodoNodeSchema.safeParse({ ...c, $schema: "folio-todo/v1" }).success).toBe(true);
+    expect(TodoNodeSchema.safeParse({ ...c, $schema: "todo/1.0.0" }).success).toBe(true);
   });
 
   it("is more structured: targetLabel is required, status is closed", () => {

@@ -121,7 +121,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Draft, review and publish](draft-to-publication.html) | 12 | — |
 | [Editing and HCI validation](editing-hci-validation.html) | 17 | — |
 | [Evidence for a recommendation](evidence-retrieval.html) | 10 | — |
-| [Public comment on a review draft](public-comment.html) | 9 | — |
+| [Public comment on a review draft](public-comment.html) | 11 | — |
 | [Deep document research](deep-document-research.html) | 4 | — |
 | [Ingestion subprocess — build the L1 knowledge graph](ingest-build-l1-kg.html) | 5 | — |
 | [Ingestion subprocess — derive content from the assets](ingest-derive-content.html) | 6 | — |
