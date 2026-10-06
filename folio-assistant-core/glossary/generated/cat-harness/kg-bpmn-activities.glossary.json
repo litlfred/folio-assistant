@@ -1962,11 +1962,59 @@
       "status": "candidate"
     },
     {
+      "id": "process_mountdependency.task_checkagainstlock",
+      "prefLabel": "Check disk against lock against declaration",
+      "definition": "`mount:remote:check`, with no network: the lock's pins are the declaration's, and every locked directory is on disk and hashes to its digest. Could-not-determine outranks missing, which outranks mounted.",
+      "notation": "Task_CheckAgainstLock",
+      "source": "cat-harness/processes/kg/mount-dependency.bpmn#Task_CheckAgainstLock",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mountdependency.task_declaremount",
+      "prefLabel": "Declare the mount: harness, repository, pin",
+      "definition": "`remoteMounts: [{ harness, repository, ref }]` on the downstream's own declaration. `ref` is a full 40-character commit. Overrides, if any, are keyed by instance name and then by directory id — never by path. Decide first whether you want a remote mount at all: reading another graph without holding its code is a SUBSCRIPTION, not a mount.",
+      "notation": "Task_DeclareMount",
+      "source": "cat-harness/processes/kg/mount-dependency.bpmn#Task_DeclareMount",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mountdependency.task_mountinstances",
+      "prefLabel": "Mount each instance at its declared path",
+      "definition": "Sparse checkout of the declaration and the chosen directories, copied to the mount path (by default the instance's home path, so relative imports and sibling discovery hold). Never onto tracked bytes; never onto a directory no lock says this mount made; never over edits to a previous mount — those are left untouched and reported.",
+      "notation": "Task_MountInstances",
+      "source": "cat-harness/processes/kg/mount-dependency.bpmn#Task_MountInstances",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mountdependency.task_resolveclosure",
+      "prefLabel": "Resolve the closure at the pin",
+      "definition": "Fetch the pinned tree (shallow, blobless). Read the harness's declaration from it; for each `needs` name, find that instance in the same tree, else follow a GITLINK at that tree as a pin into its own repository. A need found in neither is missing; one the downstream already holds is local. Paths and directories come from `mountDefaults` unless overridden.",
+      "notation": "Task_ResolveClosure",
+      "source": "cat-harness/processes/kg/mount-dependency.bpmn#Task_ResolveClosure",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mountdependency.task_writelock",
+      "prefLabel": "Write the lock",
+      "definition": "`<instance>.mount-lock.json` beside the downstream's declaration: the pins it was written for, each instance's repository, SHA and how the pin was found, each directory's tree digest — and what was NOT mounted, with why, so an offline check cannot read a gap as clean.",
+      "notation": "Task_WriteLock",
+      "source": "cat-harness/processes/kg/mount-dependency.bpmn#Task_WriteLock",
+      "status": "candidate"
+    },
+    {
       "id": "process_mountsubgraph.task_mountbranchtip",
       "prefLabel": "Mount the branch tip at the declared path",
       "definition": "A `branch` source keyed by `tip`: `branch-store mount --id <dir-id>` writes the tip's files at the declared path, so every reader finds the directory where it always was; `push` splices edits back onto the tip, never forcing, and a same-file race is a conflict. The branch's NAME is the declaring directory's `storage` (or `source`) — a branch no declaration names is refused rather than guessed. A `commit`-keyed branch is read per commit through its own store (`qa-store`), not mounted.",
       "notation": "Task_MountBranchTip",
       "source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountBranchTip",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mountsubgraph.task_mountremotepin",
+      "prefLabel": "Mount the remote tree at its pin",
+      "definition": "A `remote` source (bean `0mpw`): another repository's tree at a full 40-character commit. `bun run mount:remote` lays it down at the declared path and locks its tree digest; it is never written back, because the bytes are somebody else's at somebody else's pin. Usually reached through `remoteMounts`, which expands a whole harness and its closure — `Process_MountDependency`.",
+      "notation": "Task_MountRemotePin",
+      "source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountRemotePin",
       "status": "candidate"
     },
     {

@@ -4889,6 +4889,106 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountdependency.task_checkagainstlock",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check disk against lock against declaration"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`mount:remote:check`, with no network: the lock's pins are the declaration's, and every locked directory is on disk and hashes to its digest. Could-not-determine outranks missing, which outranks mounted."
+        }
+      ],
+      "skos:notation": "Task_CheckAgainstLock",
+      "dcterms:source": "cat-harness/processes/kg/mount-dependency.bpmn#Task_CheckAgainstLock",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountdependency.task_declaremount",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Declare the mount: harness, repository, pin"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`remoteMounts: [{ harness, repository, ref }]` on the downstream's own declaration. `ref` is a full 40-character commit. Overrides, if any, are keyed by instance name and then by directory id — never by path. Decide first whether you want a remote mount at all: reading another graph without holding its code is a SUBSCRIPTION, not a mount."
+        }
+      ],
+      "skos:notation": "Task_DeclareMount",
+      "dcterms:source": "cat-harness/processes/kg/mount-dependency.bpmn#Task_DeclareMount",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountdependency.task_mountinstances",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Mount each instance at its declared path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Sparse checkout of the declaration and the chosen directories, copied to the mount path (by default the instance's home path, so relative imports and sibling discovery hold). Never onto tracked bytes; never onto a directory no lock says this mount made; never over edits to a previous mount — those are left untouched and reported."
+        }
+      ],
+      "skos:notation": "Task_MountInstances",
+      "dcterms:source": "cat-harness/processes/kg/mount-dependency.bpmn#Task_MountInstances",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountdependency.task_resolveclosure",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Resolve the closure at the pin"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Fetch the pinned tree (shallow, blobless). Read the harness's declaration from it; for each `needs` name, find that instance in the same tree, else follow a GITLINK at that tree as a pin into its own repository. A need found in neither is missing; one the downstream already holds is local. Paths and directories come from `mountDefaults` unless overridden."
+        }
+      ],
+      "skos:notation": "Task_ResolveClosure",
+      "dcterms:source": "cat-harness/processes/kg/mount-dependency.bpmn#Task_ResolveClosure",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountdependency.task_writelock",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write the lock"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`<instance>.mount-lock.json` beside the downstream's declaration: the pins it was written for, each instance's repository, SHA and how the pin was found, each directory's tree digest — and what was NOT mounted, with why, so an offline check cannot read a gap as clean."
+        }
+      ],
+      "skos:notation": "Task_WriteLock",
+      "dcterms:source": "cat-harness/processes/kg/mount-dependency.bpmn#Task_WriteLock",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountsubgraph.task_mountbranchtip",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -4906,6 +5006,26 @@
       ],
       "skos:notation": "Task_MountBranchTip",
       "dcterms:source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountBranchTip",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountsubgraph.task_mountremotepin",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Mount the remote tree at its pin"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A `remote` source (bean `0mpw`): another repository's tree at a full 40-character commit. `bun run mount:remote` lays it down at the declared path and locks its tree digest; it is never written back, because the bytes are somebody else's at somebody else's pin. Usually reached through `remoteMounts`, which expands a whole harness and its closure — `Process_MountDependency`."
+        }
+      ],
+      "skos:notation": "Task_MountRemotePin",
+      "dcterms:source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountRemotePin",
       "skos:note": "candidate"
     },
     {
