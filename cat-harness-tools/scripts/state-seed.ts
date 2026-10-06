@@ -78,11 +78,45 @@
  * `-f`, the server's ref lock as the concurrency primitive — rather than
  * widening `write()` into two shapes.
  *
- * Exit codes: 0 refreshed or already current · 1 pushed and still not verified
- * · 4 could not determine · 5 refused.
+ * ## `--cutover` is the MAIN half, and it never pushes (bean `hp54`)
+ *
+ * After `--authoritative`, the cutover still needed a hand-run `git rm -r`,
+ * a `.gitignore` line and a commit — measured 2026-10-06 cutting a folio's
+ * `beans/` and `todos/` over. {@link cutoverMain} is that half. It REFUSES
+ * unless:
+ *
+ * - the branch's manifest says `authoritative: true` (the branch is the store);
+ * - the directory is declared on that branch (`source` / `storage`, read
+ *   through `tipLocations`) — flipping the declaration and removing the files
+ *   are one change (bean `9ofm`), so the declaration comes first;
+ * - the checkout has no uncommitted change under the path;
+ * - `HEAD:<path>` and the branch's `<path>` are the SAME tree id — byte-
+ *   identical, every file, mode and name, so nothing is removed from `main`
+ *   that the branch does not hold.
+ *
+ * It is a DRY RUN unless `--commit` is passed: it reports the files and bytes
+ * it would remove. With `--commit` it stages `git rm -r <path>` and a
+ * `/<path>/**` ignore line (the `/fsh-guts/**` precedent: a mount must never be
+ * committed) as ONE commit naming the branch and the tree id. It never pushes —
+ * the caller reviews and pushes. `deletion-requires-confirmation`: the dry run
+ * is the report, `--commit` is the person saying go.
+ *
+ * ## Which repository — the cwd's, not the platform's (bean `hp54`)
+ *
+ * Every default here resolves through `defaultRepoRoot()`: the git toplevel of
+ * the directory the command is run from. It used to be the platform checkout
+ * unconditionally, so a folio linking the platform as a submodule refreshed
+ * the PLATFORM's branch. `--repo-root <dir>` overrides it.
+ *
+ * Exit codes: 0 refreshed or already current (or cut over / would cut over)
+ * · 1 pushed and still not verified · 4 could not determine · 5 refused.
  */
-import { BranchStore, MANIFEST_FILE, MANIFEST_SCHEMA, type TreeEntry } from "../../cat-harness/scripts/branch-store.ts";
-import { candidatesOf, observedRows, type SpecialBranch } from "../../cat-harness/scripts/state-drift.ts";
+import { spawnSync } from "node:child_process";
+import { appendFileSync, existsSync, readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
+
+import { BranchStore, MANIFEST_FILE, MANIFEST_SCHEMA, tipLocations, type TreeEntry } from "../../cat-harness/scripts/branch-store.ts";
+import { candidatesOf, defaultRepoRoot, observedRows, type SpecialBranch } from "../../cat-harness/scripts/state-drift.ts";
 
 /** What the manifest says, as far as a refresh needs it. */
 interface SeedManifest {
@@ -297,6 +331,142 @@ export function refreshSeed(row: SpecialBranch, opts: SeedOptions = {}): SeedRes
   };
 }
 
+export interface CutoverOptions {
+  repoRoot?: string;
+  remote?: string;
+  storeDir?: string;
+  /** Make the commit. Without it, a dry run. Never pushes either way. */
+  commit?: boolean;
+}
+
+export type CutoverResult =
+  | {
+      state: "would-cut-over" | "cut-over";
+      branch: string;
+      paths: Array<{ path: string; tree: string; files: number; bytes: number }>;
+      /** The commit made, with `commit: true`. Not pushed. */
+      commit?: string;
+      reason: string;
+    }
+  | { state: "refused" | "unknown"; branch: string; reason: string };
+
+/** The MAIN half of a cutover. See the module docblock, §"`--cutover`". */
+export function cutoverMain(row: SpecialBranch, opts: CutoverOptions = {}): CutoverResult {
+  const repoRoot = opts.repoRoot ?? defaultRepoRoot();
+  const candidates = candidatesOf(row);
+  if (!candidates) return { state: "refused", branch: row.name, reason: `${row.id} is a branch FAMILY, not a single branch` };
+  const store = BranchStore.open(candidates, { repoRoot, remote: opts.remote, storeDir: opts.storeDir, log: () => {} });
+  const tip = store.fetchTip();
+  if (tip.state !== "ok") {
+    return { state: "unknown", branch: row.name, reason: `could not resolve ${row.name}: ${tip.state === "absent" ? "no such branch on the remote" : tip.reason}` };
+  }
+  const rootTree = store.must(["rev-parse", `${tip.tip}^{tree}`]).trim();
+  const entry = store.lookup(rootTree, MANIFEST_FILE);
+  if (!entry || entry.type !== "blob" || !store.ensureBlobs(rootTree, [entry.sha])) {
+    return { state: "refused", branch: tip.branch, reason: `${tip.branch} carries no readable ${MANIFEST_FILE}` };
+  }
+  let m: SeedManifest;
+  try {
+    m = JSON.parse(store.blobText(entry.sha)) as SeedManifest;
+  } catch (e) {
+    return { state: "unknown", branch: tip.branch, reason: `${MANIFEST_FILE} does not parse: ${(e as Error).message}` };
+  }
+  if (m.$schema !== MANIFEST_SCHEMA) return { state: "refused", branch: tip.branch, reason: `root manifest is ${m.$schema ?? "untyped"}, not ${MANIFEST_SCHEMA}` };
+  if (m.authoritative !== true) {
+    return {
+      state: "refused",
+      branch: tip.branch,
+      reason: `${tip.branch} is not \`authoritative: true\` — main is still the store. Run \`state:seed --id ${row.id} --authoritative\` first.`,
+    };
+  }
+  // `branch-store` reads a tip-keyed branch only if its manifest SAYS tip, so a
+  // cutover onto one that does not would leave main empty and the mount
+  // `corrupt` — measured end to end on a hand-made seed (bean hp54).
+  if (m.keyedBy !== "tip") {
+    return { state: "refused", branch: tip.branch, reason: `${tip.branch}'s manifest says keyedBy ${String(m.keyedBy)}, not tip, so state:mount would refuse it; fix the manifest before removing anything from main` };
+  }
+  const paths = (m.graphs?.length ? m.graphs.map((g) => g.path) : m.subgraph ? [m.subgraph] : []).filter(Boolean);
+  if (!paths.length) return { state: "refused", branch: tip.branch, reason: `${MANIFEST_FILE} names no graph path` };
+
+  const git = (args: string[]) => spawnSync("git", args, { cwd: repoRoot, encoding: "utf-8", maxBuffer: 256 * 1024 * 1024 });
+  let declared: ReturnType<typeof tipLocations>;
+  try {
+    declared = tipLocations(repoRoot, "tip");
+  } catch (e) {
+    return { state: "unknown", branch: tip.branch, reason: `could not read the declarations under ${repoRoot}: ${(e as Error).message}` };
+  }
+  const out: Array<{ path: string; tree: string; files: number; bytes: number }> = [];
+  for (const path of paths) {
+    const clean = path.replace(/\/+$/, "");
+    if (!declared.some((d) => d.path === clean && d.branch === tip.branch)) {
+      return {
+        state: "refused",
+        branch: tip.branch,
+        reason: `no declaration in ${repoRoot} keeps ${clean}/ on ${tip.branch} at its tip. Declare \`source: { kind: "branch", branch: "${tip.branch}", keyedBy: "tip" }\` first — the declaration and the removal are one change (bean 9ofm).`,
+      };
+    }
+    const dirty = git(["status", "--porcelain", "--", clean]);
+    if (dirty.status !== 0) return { state: "unknown", branch: tip.branch, reason: `git status failed in ${repoRoot}: ${dirty.stderr.trim()}` };
+    if (dirty.stdout.trim()) return { state: "refused", branch: tip.branch, reason: `${clean}/ has uncommitted changes in ${repoRoot}; commit or push them to the branch first` };
+    const local = git(["rev-parse", "--verify", "--quiet", `HEAD:${clean}`]);
+    if (local.status !== 0 || !local.stdout.trim()) {
+      return { state: "refused", branch: tip.branch, reason: `HEAD does not track ${clean}/ — already cut over, or never on main` };
+    }
+    const want = store.lookup(rootTree, clean);
+    if (!want || want.sha !== local.stdout.trim()) {
+      return {
+        state: "refused",
+        branch: tip.branch,
+        reason:
+          `${clean}/ on HEAD is tree ${local.stdout.trim().slice(0, 12)} and on ${tip.branch} is ${want ? `tree ${want.sha.slice(0, 12)}` : "absent"} — ` +
+          `not byte-identical, so removing it from main could lose work. Refresh the branch (or push main's edits to it) first.`,
+      };
+    }
+    const ls = git(["ls-tree", "-r", "-l", "HEAD", "--", clean]);
+    const rows = ls.stdout.split("\n").filter(Boolean);
+    const bytes = rows.reduce((n, l) => n + (Number(l.split(/\s+/)[3]) || 0), 0);
+    out.push({ path: clean, tree: want.sha, files: rows.length, bytes });
+  }
+
+  const summary = out.map((p) => `${p.path}/ (${p.files} file(s), ${p.bytes} bytes, tree ${p.tree.slice(0, 12)})`).join(", ");
+  if (opts.commit !== true) {
+    return { state: "would-cut-over", branch: tip.branch, paths: out, reason: `dry run: would remove ${summary} from main and ignore the mount path. Re-run with --commit to stage it as one commit (nothing is pushed).` };
+  }
+
+  for (const p of out) {
+    const rm = git(["rm", "-r", "-q", "--", p.path]);
+    if (rm.status !== 0) return { state: "unknown", branch: tip.branch, reason: `git rm -r ${p.path} failed: ${rm.stderr.trim()}` };
+  }
+  const ignorePath = join(repoRoot, ".gitignore");
+  const existing = existsSync(ignorePath) ? readFileSync(ignorePath, "utf-8") : "";
+  const lines = out.map((p) => `/${p.path}/**`).filter((l) => !existing.split("\n").includes(l));
+  if (lines.length) {
+    appendFileSync(
+      ignorePath,
+      `${existing && !existing.endsWith("\n") ? "\n" : ""}# Kept on ${tip.branch}; mounted here by state:mount, never committed to main\n${lines.join("\n")}\n`,
+    );
+  }
+  const add = git(["add", "--", ".gitignore"]);
+  if (add.status !== 0) return { state: "unknown", branch: tip.branch, reason: `git add .gitignore failed: ${add.stderr.trim()}` };
+  const message =
+    `state(${row.id}): cut ${out.map((p) => `${p.path}/`).join(", ")} over to ${tip.branch} — the main half\n\n` +
+    out.map((p) => `${p.path}/ is tree ${p.tree} on ${tip.branch}@${tip.tip.slice(0, 12)}, byte-identical to HEAD:${p.path}; ${p.files} file(s), ${p.bytes} bytes removed from main.`).join("\n") +
+    `\n\nThe branch manifest says authoritative: true. Mount it with state:mount.`;
+  const commit = git(["commit", "-q", "-m", message]);
+  if (commit.status !== 0) return { state: "unknown", branch: tip.branch, reason: `git commit failed: ${commit.stderr.trim() || commit.stdout.trim()}` };
+  const sha = git(["rev-parse", "HEAD"]).stdout.trim();
+  return { state: "cut-over", branch: tip.branch, paths: out, commit: sha, reason: `committed ${sha.slice(0, 12)} removing ${summary}; NOT pushed — review it, then push` };
+}
+
+export function cutoverReport(r: CutoverResult): string {
+  // Narrowed by naming the arm it KEEPS, as `report` below does: typescript7
+  // declines to narrow this union by excluding the other arm's literals.
+  if (r.state !== "would-cut-over" && r.state !== "cut-over") return `${r.state === "refused" ? "·" : "✗"} ${r.branch}: ${r.state} — ${r.reason}`;
+  const L = [`${r.state === "cut-over" ? "✓" : "·"} ${r.branch}: ${r.state} — ${r.reason}`];
+  for (const p of r.paths) L.push(`    - ${p.path}/: ${p.files} file(s), ${p.bytes} bytes, tree ${p.tree}`);
+  return L.join("\n");
+}
+
 export function report(r: SeedResult): string {
   // Narrowed by naming the arm it KEEPS: `typescript7` declines to narrow this
   // union by excluding three of the other arm's literals.
@@ -336,15 +506,29 @@ if (import.meta.main) {
   };
   const id = named("--id");
   if (!id) {
-    console.error("usage: bun run state:seed --id <directory id or branch> [--from-manifest] [--authoritative] [--dry-run] [--json]");
+    console.error(
+      "usage: bun run state:seed --id <directory id or branch> [--repo-root <dir>] [--from-manifest] [--authoritative] [--dry-run] [--json]\n" +
+        "       bun run state:seed --id <id> --cutover [--commit] [--repo-root <dir>] [--json]",
+    );
     process.exit(5);
   }
-  const row = rowFor(id);
+  // The repository the run is ABOUT: the cwd's git toplevel unless told
+  // otherwise — never the platform's own checkout by default (bean hp54).
+  const repoRoot = named("--repo-root") !== undefined ? resolve(named("--repo-root")!) : defaultRepoRoot();
+  const rows = observedRows({ repoRoot }) ?? [];
+  const row = rowFor(id, rows);
   if (!row) {
-    console.error(`state-seed: no declared directory or remote branch is named ${id}; the branches are ${(observedRows() ?? []).map((r) => r.name).join(", ")}`);
+    console.error(`state-seed: no declared directory or remote branch in ${repoRoot} is named ${id}; the branches are ${rows.map((r) => r.name).join(", ")}`);
     process.exit(5);
+  }
+  if (argv.includes("--cutover")) {
+    const c = cutoverMain(row, { repoRoot, commit: argv.includes("--commit") });
+    if (argv.includes("--json")) console.log(JSON.stringify(c, null, 2));
+    else console.log(cutoverReport(c));
+    process.exit(c.state === "refused" ? 5 : c.state === "unknown" ? 4 : 0);
   }
   const r = refreshSeed(row, {
+    repoRoot,
     authoritative: argv.includes("--authoritative"),
     dryRun: argv.includes("--dry-run"),
     message: named("--message"),

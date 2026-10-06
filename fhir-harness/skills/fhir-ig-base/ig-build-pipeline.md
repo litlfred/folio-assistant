@@ -38,6 +38,10 @@ sushi-config.yaml   ┘  →  IG Publisher (JVM, Docker)  →  output/
 Four stages, and the only one that is not a straight invocation is the last: a
 pages branch is a deployment target, and which one is the instance's to declare.
 
+SUSHI and the Publisher both need `packages.fhir.org`. Where it is refused,
+see [`fhir-validation`](../content/fhir-ig-authoring/fhir-validation.md)
+§"When a package host refuses you" before concluding either cannot run.
+
 ## What the Publisher run emits
 
 Stated in [`ig-publication`](../content/fhir-ig-authoring/ig-publication.md)
@@ -144,12 +148,14 @@ then this question:
 >    (and any out-of-repository target) in the work plan.
 > 4. **Tell me more.**
 >
-> **Default if you do not answer: 3.** I change no workflow until you choose.
+> **Default if you do not answer: 1.**
 
-The default is "no change" and the recommendation is 1 on purpose. Disabling
-a trigger is reversible, but it changes what the owner's repository does, so
-it is not done on silence; and 1 is recommended because an IG fork's owner
-has, so far, never wanted every push published.
+The default is 1, manual only, by the owner's ruling of 2026-10-06: *"i dont
+want github tools implemented, only defined."* A build workflow is kept
+**defined**, so it can be started from the Actions tab, but it does not run
+on its own. Disabling a trigger is reversible, and an IG fork's owner has, so
+far, never wanted every push published. Option 3 stays available to an owner
+who says so; it is no longer what silence means.
 
 Rules that hold whichever option is chosen:
 

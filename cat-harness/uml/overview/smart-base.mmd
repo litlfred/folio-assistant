@@ -642,6 +642,13 @@ classDiagram
     }
   }
   namespace smart_base__tools {
+    class smart_base_tools_Remedy["Remedy"] {
+      <<json: ToolDefinitionSchema>>
+      host [1] string
+      error [0..1] string
+      tool [0..1] string
+      none [0..1] string
+    }
     class smart_base_tools_Maintain["Maintain"] {
       <<json: ToolDefinitionSchema>>
       source [1] string
@@ -659,6 +666,7 @@ classDiagram
       satisfies [1..*] string[]
       selection [0..1] object
       requires [0..1] object
+      remedies [0..*] Remedy[]
       maintains [0..*] Maintain[]
       downstream [0..1] object
       renders [0..*] string[]
@@ -947,7 +955,9 @@ classDiagram
   cssClass "smart_base_smart_base_artifact_index_dak_ValueSet_SGAuthoringSkillsVS_displays_json_SMART_Guidelines_Authoring_Skills_ValueSet_Display_Values" fa_uml_kind_fhir_artifact_index
   cssClass "smart_base_smart_base_artifact_index_dak_ValueSet_SGPersonaTypesVS_displays_json_Smart_Guidelines_Persona_Types_Value_Set_Display_Values" fa_uml_kind_fhir_artifact_index
   cssClass "smart_base_smart_base_artifact_index_https___json_schema_org_draft_2020_12_schema_listed" fa_uml_kind_fhir_artifact_index
+  smart_base_tools_ToolDefinition *-- "0..*" smart_base_tools_Remedy : remedies
   smart_base_tools_ToolDefinition *-- "0..*" smart_base_tools_Maintain : maintains
+  cssClass "smart_base_tools_Remedy" fa_uml_kind_tools
   cssClass "smart_base_tools_Maintain" fa_uml_kind_tools
   cssClass "smart_base_tools_ToolDefinition" fa_uml_kind_tools
   cssClass "smart_base_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa

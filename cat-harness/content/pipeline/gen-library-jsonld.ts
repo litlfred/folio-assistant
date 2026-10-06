@@ -69,7 +69,9 @@
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "fs";
 import { basename, dirname, join } from "path";
-import { CONTENT_DOCUMENT_CONTEXT, typesForKind } from "../../schemas/jsonld";
+import { typesForKind } from "../../schemas/jsonld";
+import { documentContext } from "../../schemas/content-context.ts";
+import { termCurie } from "../../schemas/namespaces.ts";
 import { LABEL_PREFIXES } from "../../schemas/constraints";
 import { findContentRepoRoot } from "./repo-root";
 import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.ts";
@@ -451,7 +453,7 @@ export function buildDocumentNodes(
     path: "manifest.jsonld",
     content: node({
       "@id": iri("manifest"),
-      "@type": ["folio-assistant-core:SourceDocument"],
+      "@type": [termCurie("SourceDocument")],
       // NEVER the unverified `structure.metadata.title` — the page-1 parse
       // (#1794, ruling of 2026-10-01). An editor's `title_correction` and a
       // corroborated extraction (bean `w6fu`, ruling of 2026-10-02 on #1838)
@@ -483,7 +485,7 @@ export function buildDocumentNodes(
 
 /** Serialise, dropping undefined so output is byte-stable. */
 function node(doc: Record<string, unknown>): string {
-  const clean: Record<string, unknown> = { "@context": CONTENT_DOCUMENT_CONTEXT };
+  const clean: Record<string, unknown> = { "@context": documentContext((doc["@type"] as string[] | undefined) ?? []) };
   for (const [k, v] of Object.entries(doc)) {
     if (v === undefined) continue;
     if (Array.isArray(v) && v.length === 0) continue;
@@ -746,9 +748,9 @@ export function buildEntryNodes(docId: string, dir: string, locatedAt: string = 
     }, locatedAt);
     if (!titled) return { state: "unreadable", rung };
     const manifest = {
-      "@context": CONTENT_DOCUMENT_CONTEXT,
+      "@context": documentContext([termCurie("SourceDocument")]),
       "@id": iri("manifest"),
-      "@type": ["folio-assistant-core:SourceDocument"],
+      "@type": [termCurie("SourceDocument")],
       title: titled.title,
       // EMPTY on purpose: the entry holds no content nodes. The manifest says
       // the source exists and that none of it is held here.

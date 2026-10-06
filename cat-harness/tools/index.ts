@@ -170,6 +170,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "Free for a public repository: Pages and the Actions minutes its workflow uses. A deploy takes a minute or two to be served.",
       },
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "Publishing IS a push to the gh-pages branch; there is no offline arm. To look at a page, build it locally with `bun run preview:site`." }],
     }),
     // Bean `l4ay`, owner 2026-10-03: "A sub graph declares where it's getting
     // its content". The ONE resolver, from a shell — `branch-store
@@ -287,6 +288,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "A clone plus an install plus the gates: minutes for a small repository.",
       },
       requires: { runtime: ["bun", "git"], network: true },
+      remedies: [{ host: "github.com", none: "It verifies a clone of the new repository; with GitHub refused there is nothing to clone." }],
     }),
     // Bean `qou-qb6t`, owner 2026-10-04: "all witnesses tools will need to go
     // into the KG". The reader of the `computation-witness` kind: which
@@ -440,6 +442,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "One install step per container, and it wants network to fetch. Nothing at runtime after that.",
       },
       requires: { runtime: ["go"], network: true },
+      remedies: [{ host: "github.com", tool: "beans-manual" }],
     }),
 
     defineTool({
@@ -547,6 +550,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       install: { none: true },
       invoke: { shell: "bun run cat-harness/scripts/pdf-viewer.ts" },
       requires: { runtime: ["bun", "unzip"], network: true },
+      remedies: [{ host: "github.com", none: "pdf.js is fetched from its GitHub release and no copy is vendored; the site builds without the viewer." }],
       io: {
         inputs: [
           { name: "site", schema: t("RepoPath"), required: true, arg: { flag: "--site" }, description: "The built site directory, `_site` in both site workflows." },
@@ -714,6 +718,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["prepare-merge-auto", "pickup", "watch", "coordinate"],
       requires: { network: true },
+      remedies: [{ host: "api.github.com", none: "No declared Tool reaches the GitHub API another way. A session that provides the GitHub MCP server can use it instead." }],
     }),
 
     defineTool({
@@ -735,6 +740,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // developer's machine — two Tools, one skill.
       satisfies: ["kg-export", "docs-generation"],
       requires: { network: true },
+      remedies: [{ host: "github.com", none: "It is a GitHub Actions workflow; it runs on GitHub or not at all." }],
     }),
 
     defineTool({
@@ -789,6 +795,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["feature-staging"],
       requires: { network: true },
+      remedies: [{ host: "github.com", none: "It is a GitHub Actions workflow; to look at a branch's pages locally, use `bun run preview:site`." }],
       selection: {
         when:
           "On a pull request touching the docs, schemas, content or skills it fires on its own — reach for the dispatch arm only to stage a branch that has no open pull request, or to remove a preview the close event could not reach.",
@@ -1162,6 +1169,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // It is the build half of that skill's loop, not the whole loop.
       satisfies: ["lean-build-fix"],
       requires: { runtime: ["bash", "lean", "lake"], network: true },
+      remedies: [
+        { host: "release.lean-lang.org", error: "Host not in allowlist", tool: "lean-toolchain-setup" },
+        { host: "github.com", none: "Lake fetches the declared dependencies from GitHub; with it refused they cannot resolve." },
+      ],
     }),
 
     defineTool({
@@ -1183,6 +1194,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // which is what breaks `elan toolchain install` and why this script exists
       // at all. An agent reading only `network: true` would retry elan.
       requires: { runtime: ["bash", "curl", "elan"], network: true },
+      remedies: [{ host: "github.com", none: "It fetches the toolchain from the GitHub release because release.lean-lang.org is refused; with GitHub refused too there is no source." }],
     }),
 
     // ── The Lean audit half, and the one skill still without a mechanism ──
@@ -1720,6 +1732,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["prepare-merge"],
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "It merges against the remote's current base; with the remote refused, the base cannot be fetched." }],
       selection: {
         when:
           "Immediately before asking for a merge, and again if the base has moved since. Not on every push: it is the full gate set, on a second tree.",
@@ -1755,6 +1768,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["merge-conflict-patterns", "prepare-merge"],
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "It composes from the remote's open pull requests." }],
       selection: {
         when: "The steward has chosen a batch of green, mutually independent PRs (see merge-overlap) and wants one branch that carries them all, regenerated once.",
         limits: "Each member's merge commit is not proved on its own; the train is proved at its end by one regen. A refused member is left out and reported — handing it back to its owner is the steward's step. It does not push: CI on the train runs only after the steward pushes it.",
@@ -1777,6 +1791,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["merge-conflict-patterns", "coordinate"],
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "It compares the remote's open pull requests." }],
       selection: {
         when: "Before composing a merge train, and whenever deciding which PRs can land together or must be ordered.",
         limits: "Paths, not semantics (requirements T3): two PRs that change different files can still interact, which the shared-declaration list only partly covers. A README counts as authored when its prose changed, as a region when only generated regions did.",
@@ -1799,6 +1814,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["merge-conflict-patterns"],
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "It reads the remote's pull requests after a train lands." }],
       selection: {
         when: "After a train lands, for each member PR still open, before the steward decides whether to close it.",
         limits: "An authored path whose lines the base rewrote after the train reads `not-landed`: the reverse patch no longer applies, and only a person can say whether the rewrite kept the intent.",
@@ -2042,6 +2058,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // `network: true` is the unusual part, and it is what makes the third
       // state load-bearing rather than decorative — see `selection.limits`.
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "api.github.com", none: "Workflow outcomes are held by GitHub, not the checkout. It reports 'could not check', which is never green." }],
       selection: {
         when:
           "Before trusting ANY workflow's outcome, and at session start. A workflow's result is invisible from a checkout, which is how `docs-site.yml` failed 30 consecutive runs over two months with nothing in the repository saying so (bean `xom7`).",
@@ -2829,6 +2846,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       install: { cli: "npm install -g release-please (or the GitHub Action googleapis/release-please-action@v4)" },
       invoke: { shell: "release-please release-pr" },
       requires: { runtime: ["node", "release-please"], network: true },
+      remedies: [
+        { host: "api.github.com", none: "It opens release pull requests on GitHub." },
+        { host: "registry.npmjs.org", none: "It installs from npm; no other source is declared." },
+      ],
       // The same I/O as `package-release-manual`, stated at the level of the
       // RELEASE (owner, 2026-09-30: "Align I/O, pair"): a package in, its tag
       // out. So `deriveAlternatives` pairs the two (#1168, B9a). The release PR
@@ -2906,6 +2927,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       install: { cli: "pip install faster-whisper (model weights download on first use)" },
       invoke: { shell: "python3 -m faster_whisper" },
       requires: { runtime: ["python3", "faster-whisper"], network: true },
+      remedies: [
+        { host: "huggingface.co", tool: "transcribe-whisper-cpp" },
+        { host: "pypi.org", tool: "transcribe-whisper-cpp" },
+      ],
       io: {
         inputs: [
           { name: "file", schema: t("RepoPath"), required: true, arg: { positional: 0 } },

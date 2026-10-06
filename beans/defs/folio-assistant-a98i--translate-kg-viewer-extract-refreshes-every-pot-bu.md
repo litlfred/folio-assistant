@@ -1,10 +1,10 @@
 ---
 # folio-assistant-a98i
 title: translate-kg-viewer --extract refreshes every .pot but never syncs the .po stubs
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-19T08:11:21Z
-updated_at: 2026-09-19T08:11:21Z
+updated_at: 2026-10-06T19:56:02Z
 parent: folio-assistant-bzyu
 ---
 
@@ -24,3 +24,5 @@ Synced all five by hand: rebuilt each `.po` from its `.pot`, preserving the file
 - [ ] it NEVER overwrites an existing `msgstr` — a filled catalogue must survive
 - [ ] it reports what it added per locale, rather than exiting 0 silently
 - [ ] removing a string from the table is handled too, or the tool says it does not handle it
+
+_2026-10-06T19:56:02Z_ — Claimed by claude/a98i-translate-kg-viewer-sync-po — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

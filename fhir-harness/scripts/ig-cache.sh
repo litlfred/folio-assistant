@@ -432,16 +432,30 @@ cmd_doctor() {
     warn "maven not found"
   fi
   
-  if curl -sI https://packages.fhir.org | grep -q '200 OK'; then
-    info "network: packages.fhir.org reachable"
+  probe_host packages.fhir.org
+  probe_host tx.fhir.org
+}
+
+# Is a host reachable, and if not, what to do about it? Bean `6mk7`: a refused
+# packages.fhir.org once left an agent concluding SUSHI could not run, while
+# the seeder for exactly that refusal sat in the Tool graph. The answer is the
+# graph's (`remedies` on each network Tool), not text kept here.
+#
+# The status is read as a CODE: the old `grep '200 OK'` never matches an
+# HTTP/2 status line (`HTTP/2 200`), so a reachable host read as unreachable.
+probe_host() {
+  local host="$1" code
+  code="$(curl -s -o /dev/null -I -w '%{http_code}' --max-time 15 "https://$host" 2>/dev/null || true)"
+  case "$code" in
+    2??|3??) info "network: $host reachable ($code)"; return 0 ;;
+  esac
+  warn "network: $host UNREACHABLE (${code:-no response})"
+  local root
+  root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+  if command -v bun >/dev/null 2>&1 && [ -f "$root/package.json" ]; then
+    (cd "$root" && bun run --silent tools:remedy "$host" 2>/dev/null) | sed 's/^/    → /' >&2 || true
   else
-    warn "network: packages.fhir.org UNREACHABLE"
-  fi
-  
-  if curl -sI https://tx.fhir.org | grep -q '200 OK'; then
-    info "network: tx.fhir.org reachable"
-  else
-    warn "network: tx.fhir.org UNREACHABLE"
+    warn "  what to do instead: bun run tools:remedy $host"
   fi
 }
 
