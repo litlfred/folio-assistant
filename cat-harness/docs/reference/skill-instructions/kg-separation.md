@@ -172,6 +172,19 @@ the moved paths from `ORIGIN_DIR` (the directory the test was written in), and
 move a corpus describe whole when it carries a vacuity guard: a sibling left
 behind passes standalone over nothing.
 
+**A test that reads the checkout's GIT asks which of two things it is (owner,
+2026-10-06, "Throwaway repository, plus moving the real-repo checks").** A
+standalone layer is a fresh clone with no `origin` and one commit, so a test
+handed this checkout's remote, `HEAD` or `origin/main` fails there on a missing
+input. A test of LOGIC that merely reads git — address derivation, an upload
+URL's shape, a commit IRI, resolving a short sha — builds a throwaway repository
+whose facts it sets (`gitFixtureRepo` in cat-harness's
+`test/support/git-fixture.ts`) and passes that root, with every assertion
+exactly as strict; a function that resolves its root internally gains an
+optional root parameter defaulting to today's. A check that THIS repository is
+configured right — its own Pages address, its committed pages' banners — keeps
+its assertion verbatim and moves to the top-level test home above.
+
 **`upward paths` replaced `sibling discovery` (owner, 2026-10-04).** The old
 criterion counted dependents that discovery could not find in a workspace of
 sibling clones. Discovery is checkout-local on purpose (`cmsl`), so that count
