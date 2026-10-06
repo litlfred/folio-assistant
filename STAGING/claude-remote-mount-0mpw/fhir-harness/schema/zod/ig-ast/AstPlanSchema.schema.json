@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/AstPlan",
+  "definitions": {
+    "AstPlan": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "ig-ast-plan/v1"
+        },
+        "decision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "coneFraction": {
+          "type": "number"
+        },
+        "rebuild": {
+          "type": "array",
+          "items": {}
+        },
+        "fullBuildBecause": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "decision"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-ast/AstPlanSchema.schema.json",
+  "title": "AstPlanSchema",
+  "description": "Generated from `AstPlanSchema` in schemas/ig-ast.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/remote-mount-0mpw",
+    "sha": "471d5b03620baa0cc64b2a5c92239b4d206bb3be",
+    "pr": "2326/merge",
+    "run": "37539240525"
+  }
+}

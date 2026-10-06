@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Public Comment Output",
+  "description": "Output schema for the public-comment skill.",
+  "type": "object",
+  "properties": {
+    "changed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Comment refs written by the operation."
+    },
+    "unplaced": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "import: refs whose citation resolved to no block, kept for triage."
+    },
+    "refused": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "What was not done, and why: a tag from someone not in config.json, a transition the lifecycle does not allow."
+    },
+    "comments": {
+      "type": "array",
+      "description": "list: the matching public-comment/1.0.0 records."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-remote-mount-0mpw/folio-assistant-core/schema/skills/public-comment/output.schema.json",
+  "staging": {
+    "branch": "claude/remote-mount-0mpw",
+    "sha": "471d5b03620baa0cc64b2a5c92239b4d206bb3be",
+    "pr": "2326/merge",
+    "run": "37539240525"
+  }
+}
