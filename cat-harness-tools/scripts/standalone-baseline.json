@@ -2,7 +2,7 @@
   "_comment": "Tests that fail when a layer runs alone beside its declared closure (bean `ho66`), keyed `<test file> > <test>`, with `bun test`'s own fail count, which also counts errors between tests. A RATCHET: a failure not listed here is red; a listed one that now passes is reported, with this command, so the list only goes down. WRITTEN by `bun run standalone:baseline`; a longer list is a diff somebody reviews. See the module header of cat-harness-tools/scripts/check-standalone.ts.",
   "layers": {
     "cat-harness": {
-      "failed": 195,
+      "failed": 192,
       "failing": [
         "schemas/bootstrap-reading.test.ts > every declaration in this repository is a Knowledge Graph declaration > there are declarations to check",
         "schemas/document-structure.test.ts > structureOf reads every committed structure, each as its own variant > every variant is present in the corpus, so none is vacuous",
@@ -45,7 +45,6 @@
         "scripts/tests/gen-default-boards.test.ts > who owes a board > bootstrap is excluded BY ITS DECLARATION, not by its name",
         "scripts/tests/gen-default-boards.test.ts > who owes a board > the real checkout: the instantiated harnesses, minus the floor",
         "scripts/tests/gen-lsi-viz.test.ts > the LSI viewer page > the committed page carries no value an index's content moves",
-        "scripts/tests/gen-slice-sqlite.test.ts > gen-slice-sqlite — kg > the whole-repo KG slices green, its pointers resolve to the COMMITTED payloads, and it stays under the budget",
         "scripts/tests/gen-themes-css.test.ts > the committed stylesheet carries every instance sticky theme here > there is at least one to check, and no collision",
         "scripts/tests/generated-banner-commands.test.ts > a command a generated page names is a command that exists > `docs:pages:check` in particular — the one this bean was opened for",
         "scripts/tests/generated-banner-commands.test.ts > a command a generated page names is a command that exists > every named command resolves to a package.json script",
@@ -107,8 +106,6 @@
         "scripts/tests/processes-viz.test.ts > the committed page is current > and matches what the generator produces now",
         "scripts/tests/prov-qaqc.test.ts > prov-qaqc: the real repository > the committed page and logs are current (what check:prov-qaqc gates)",
         "scripts/tests/prov-qaqc.test.ts > prov-qaqc: the real repository > vacuity guard: the committed instances yield more than zero activities, all valid",
-        "scripts/tests/prov-record.test.ts > complete() writes the activity as it records the step > an allowed step under a GitHub principal carries a valid prov:Activity",
-        "scripts/tests/prov-record.test.ts > the after-check reads the engine's record > it re-checks the recorded principal, not a login in `actor`, and emits the recorded activity",
         "scripts/tests/readme-sections.test.ts > cat-harness:instances — both entries, per instance (issue #592) > a declared `scope: \"repository\"` directory is linked at the REPOSITORY root",
         "scripts/tests/readme-sections.test.ts > isSubmoduleRoot — `--all` skips a README another repository owns (bean kye5) > this checkout's bootstrap-tools is one (the case the skip exists for)",
         "scripts/tests/regen-writers.test.ts > every writer regen pairs for these gates turns a STALED artefact's check green (bean i1q7) > bat:sync:check: red on a staled artefact, green after regen runs `bat:sync`",

@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 233,
+      "count": 234,
       "unit": "modules"
     }
   },
@@ -651,6 +651,14 @@
       "graphNode": "schema",
       "summary": "The `owner/repo ↔ instance` map — DERIVED, never kept by hand (bean `6rmv`).",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/instance-root-named.test.ts",
+      "instance": "cat-harness",
+      "name": "instance-root-named.test",
+      "graphNode": "undeclared",
+      "summary": "`instanceRootNamed` — one rule for both layouts (bean `uxn1`).",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/instance-roots.ts",
