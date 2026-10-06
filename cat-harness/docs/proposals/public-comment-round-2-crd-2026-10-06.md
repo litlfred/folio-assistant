@@ -38,9 +38,9 @@ Uploaded as [litlfred/smart-ra@9eb6ad3](https://github.com/litlfred/smart-ra/com
 | `uploads/Quick touchbase re_ Ref arc feedback and Assured AI WS1.docx` | Teams transcript export: speaker, `m:ss`, paragraph. 85 of its 86 images are the two speakers' avatar icons, plus one more icon; **no screen content**. |
 | `uploads/Quick touchbase re_ Ref arc feedback and Assured AI WS1.vtt` | WebVTT captions: 275 cues, 00:00:05.8 to 00:17:03.7. |
 
-The **video recording is forthcoming**. Screenshots are to be added where the
-speakers refer to the screen; the moments are listed in [§Screenshots
-pending](#screenshots-pending).
+The **video** followed as [litlfred/smart-ra@5a3d655](https://github.com/litlfred/smart-ra/commit/5a3d655c55d037f36671b7c6f1b4afc9deacefef)
+(`uploads/output.mp4`: 17 min 9 s, 1920×1080, 16 fps, mono 16 kHz audio).
+It gave an independent transcript and the [screenshots](#screenshots).
 
 ### The two transcripts are one transcript
 
@@ -58,6 +58,29 @@ Neither carries a statement the other lacks. Both are the **same Teams speech
 recognition**, so they share its errors. Comparing them cannot catch those
 errors; an independent transcription of the video can, and the video is the
 arbiter wherever the two disagree with it.
+
+### An independent transcript, from the video
+
+The video's audio was transcribed offline with Vosk (small English model) and
+compared with the Teams `.vtt`: **2,610 words against 2,474, similarity
+0.802.** That is lower than the two Teams exports agree with each other, as a
+smaller model should be, and most differences are Vosk's own errors. What
+matters is where it **disagrees with Teams on a name or a term**:
+
+| at | Teams | Vosk | reading used here |
+|---|---|---|---|
+| 0:05 | "Lightner" | "leitner" | Leitner (Vosk right) |
+| 14:16 | "philtres" | "the filters" | filters (Vosk right) |
+| 2:21, 8:49 | "change sets", "chain sets" | "chain such", "chain says" | change sets |
+| 3:45, 14:49 | "Saroop", "Swarupu" | "through for", "so report" | unresolved: **ask** |
+| 16:11 | "Nat shared" | "not shed" | unresolved: **ask** |
+| 7:53 | "reviewed by the editorial team in terms of WHO" | "reviewed by the it team in terms of the beach" | Teams' reading, **to confirm** (it is REQ-02) |
+
+On the passages that carry requirements (the categories at 5:30–6:50,
+deduplication at 10:40–12:20, editor-only change sets at 12:20, the review
+threshold at 14:40), Vosk says the same as Teams. No requirement below
+changes. Both comparisons are reproducible with
+`cat-harness/scripts/meeting-recording.py compare`.
 
 Speech-recognition errors read through in this document:
 
@@ -135,7 +158,9 @@ technical one has at least one committee; the dashboard filters on both.
 **REQ-02: Who reviews each type.** (M)
 `editorial` SHALL route to the editorial team, `general` to the WHO editorial
 team, and `technical` to the named committees.
-*Source:* 7:30–7:55. *Accept:* the routing table is configuration in the folio
+*Source:* 7:30–7:55. At 7:53 the independent transcript hears "the it team"
+where Teams hears "the editorial team in terms of WHO": **to confirm** with
+the chief editor. *Accept:* the routing table is configuration in the folio
 (`config.json`), not code, and the dashboard shows each change set's
 reviewing group.
 
@@ -208,8 +233,11 @@ are on every comment (`public.reviewer.acknowledge`); no list is generated.
 A person SHALL be able to select comments and propose a new change set from
 them, or split an existing one. **Only an editor** SHALL be able to do so.
 Delegating it to committees is explicitly *later*.
-*Source:* 12:21–12:51. *Today:* change sets are proposed by the agent;
-`cs-*` commands exist on a change set's issue. *Accept:* a non-editor's
+*Source:* 12:21–12:51. *Today:* **half built**, as the video shows
+([screenshot 8](#screenshots), 12:30, and [9](#screenshots), 12:41): ticking
+comments opens a prefilled "New change-set" issue whose form says *"Only the
+review committee and the editor can create a change-set"*. The requirement is
+narrower: **the editor only**, committees later. *Accept:* a non-editor's
 proposal is refused and says why; an editor's creates a `proposed` change set
 with its history.
 
@@ -280,31 +308,50 @@ handbook a colleague (Nat) shared earlier. The BA is to send the link.
 
 ## Defects observed in the demo
 
-Recorded for triage. Each one is to be reproduced before it is fixed; none is
-reproduced yet.
+Each was reproduced in headless Chromium against the published dashboard and
+then fixed on this branch (`folio-assistant-core/scripts/public-comment-site.ts`,
+`public-comment-changesets.ts`). The fixes were checked in the browser on a
+dashboard rebuilt from smart-ra's 2,632 comments, with no page errors, and by a
+test. They are **defect fixes, not requirements**, and wait for the same
+sign-off before they merge.
 
-| id | what was seen | when |
-|---|---|---|
-| D-1 | Some comments show as **closed** that nobody asked to close (*"2629 are open… Why some are closed?"*, 2:08). Today's data has 2,619 `received`, 10 `triaged`, 2 `incorporated`, 1 `decided`; to check which state the dashboard counts as closed. | 2:08 |
-| D-2 | The **type dropdown** (editorial / general / technical) *"seemed to be working before, but doesn't work now"*. | 7:21 |
-| D-3 | **Back navigation** does not work (*"oh, the back things don't work"*). | 8:42 |
-| D-4 | Not a broken control: the agent's handling of the template's new columns could not be explained. Covered by REQ-14. | 13:51 |
+| id | what was seen | cause | fix |
+|---|---|---|---|
+| D-1 (2:08) | *"2629 are open… Why some are closed?"* | The counts were right: 2,632 comments, 2,629 open, and the 3 others are 1 decided and 2 incorporated. "Closed" lumps incorporated, duplicate and withdrawn without saying so. **The real defect** was elsewhere: a merged PR marked its whole change-set `incorporated` and closed its issue while most of its comments were undecided (CS-236 and CS-237 in smart-ra, 13 of 15 comments still `received`). | A merge settles a change-set only when every comment in it is settled; otherwise it stays open, its issue stays open, and the log says how many are undecided (test added). The dashboard says what "closed" means. |
+| D-2 (7:21) | The type dropdown *"seemed to be working before, but doesn't work now"* | "Show its comments" set a hidden filter that only the Status box cleared, so every later Type or Section choice was applied inside one change-set (often 0 shown). It arrived with "show its comments" on 2026-10-05, which fits "worked before". | Any Status, Type, Section or tile choice replaces it; "show its comments" clears the other filters, so it always shows all of them. |
+| D-2b (owner, 2026-10-06) | *"changing filters does not seem to change displayed contents"* | The filters moved only the comment table, about 17,000 px below an open change-set table that never changed. | The change-set table follows the same filters: a change-set shows when any of its comments match, its count reads "10 of 18", and the summary says "Showing 4 of 284". |
+| D-3 (8:42) | *"the back things don't work"* | No filter change made a history entry, so Back left the dashboard. | Every filter change is a history entry with the filters in the query string; Back restores the previous view, and a link to a filtered view can be shared. |
+| D-4 (13:51) | The agent's handling of the template's new columns could not be explained. | Not a broken control. | Covered by REQ-14. |
 
-## Screenshots pending
+## Screenshots
 
-To be cut from the video when it arrives, at the moments the speakers point at
-the screen:
+Cut from the video at the moments the speakers point at the screen, cropped to
+the shared screen (no camera tiles), with
+`meeting-recording.py frames`. Where they were cut, and why, is in the skill
+[`crdm-recorded-walkthrough`](../reference/skill-instructions/crdm-recorded-walkthrough.html).
 
-| time | what is on screen |
-|---|---|
-| 1:50, 2:08 | the staging dashboard: comment counts, open against closed (D-1) |
-| 2:21–2:28 | the change-set list; CS-001 with its 14 comments and requirements |
-| 2:55 | a change set's comments expanded: commenter, decision, committee |
-| 3:12 | links from the document to a section's comments |
-| 3:34–3:54 | CS-164 and its **Discuss** link |
-| 7:21 | the type dropdown (D-2) |
-| 8:42 | the back navigation failing (D-3) |
-| 12:25 | selecting comments to make a new change set (REQ-10) |
+1. **1:52, the dashboard** (D-1): 2,632 comments, 2,629 open.
+   ![The staging dashboard's counts and filters](../assets/img/proposals/public-comment-round-2/01-dashboard-counts.webp)
+2. **2:26, change-sets**: CS-001's 14 comments and its requirements.
+   ![The change-set table with CS-001 expanded](../assets/img/proposals/public-comment-round-2/02-change-sets-cs001.webp)
+3. **3:12, a change-set's comments**: commenter, decision and committee.
+   ![A change-set's comments, expanded](../assets/img/proposals/public-comment-round-2/03-change-set-comments.webp)
+4. **3:24, the document**: every comment on the executive summary, beside it.
+   ![The document page with comments beside the section](../assets/img/proposals/public-comment-round-2/04-document-section-comments.webp)
+5. **3:59, Discuss on CS-164**: the issue form it opens.
+   ![The Discuss issue form for CS-164](../assets/img/proposals/public-comment-round-2/05-cs164-discuss-issue-form.webp)
+6. **4:26, the CS-164 issue** (#22), where an agent can be assigned (REQ-11).
+   ![The created CS-164 issue](../assets/img/proposals/public-comment-round-2/06-cs164-issue-created.webp)
+7. **7:22, the Type filter** (D-2, D-2b): "12 of 2632 shown", and the
+   change-set table above it unchanged.
+   ![The Type dropdown open, with the change-set table unchanged](../assets/img/proposals/public-comment-round-2/07-type-dropdown.webp)
+8. **12:30, three comments ticked**, and "New change-set from the selected
+   comments" (REQ-10).
+   ![Three comments selected for a new change-set](../assets/img/proposals/public-comment-round-2/08-select-comments-new-change-set.webp)
+9. **12:41, the "New change-set" issue form**, prefilled with PC-0127 to
+   PC-0129; it allows the committee and the editor (REQ-10 asks for the
+   editor only).
+   ![The new change-set issue form](../assets/img/proposals/public-comment-round-2/09-new-change-set-issue-form.webp)
 
 ## For approval
 

@@ -168,7 +168,7 @@ export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: 
   const sets = (meta.changeSets ?? []).filter((c) => c.status !== "merged");
   const csRows = sets
     .map(
-      (c) => `<tr id="${esc(c.id)}" data-cs-status="${esc(c.status)}"><td>${esc(c.id)}</td><td>${esc(c.title)}<details><summary class="muted">requirements</summary><p>${esc(c.requirements).replace(/\n/g, "<br>")}</p></details></td><td>${esc(c.status)}</td><td>${c.refs.length}</td>` +
+      (c) => `<tr id="${esc(c.id)}" data-cs-status="${esc(c.status)}"><td>${esc(c.id)}</td><td>${esc(c.title)}<details><summary class="muted">requirements</summary><p>${esc(c.requirements).replace(/\n/g, "<br>")}</p></details></td><td>${esc(c.status)}</td><td class="cs-n">${c.refs.length}</td>` +
         `<td>${c.issue ? issueLink(c.issue) + (c.issues.length > 1 ? ` <span class="muted">+${c.issues.length - 1} more</span>` : "") : meta.repo ? `<a class="discuss" href="${esc(discussUrl(meta.repo, c))}">Discuss</a>` : "—"}</td>` +
         `<td>${c.pr && meta.repo ? `<a href="https://github.com/${esc(meta.repo)}/pull/${c.pr.number}">#${c.pr.number}</a>` : ""}</td>` +
         `<td><a href="#" class="show-cs" data-refs="${esc(c.refs.join(" "))}">show its comments</a></td></tr>`,
@@ -223,7 +223,7 @@ export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: 
 <main>
 <p><a href="../${esc(meta.slug)}/index.html">← ${esc(meta.title)}</a></p>
 <h1>Public comments</h1>
-<p class="muted">Generated ${esc(meta.generated)} from the comment store. Open = not yet decided. Editing = decided, and the change is being made on a feature branch.</p>
+<p class="muted">Generated ${esc(meta.generated)} from the comment store. Open = not yet decided. Editing = decided, and the change is being made on a feature branch. Closed = incorporated, duplicate or withdrawn.</p>
 <div class="tiles" role="group" aria-label="Filter by count">
 ${[
   tile(rows.length, "comments", "all"),
@@ -244,7 +244,7 @@ ${[
 </form>
 ${
   sets.length
-    ? `<details id="change-sets"><summary><b>Change-sets (${sets.length})</b>: ${["proposed", "discussing", "editing", "incorporated", "closed"].map((st) => `${sets.filter((c) => c.status === st).length} ${st}`).join(", ")}. A change-set gets its GitHub issue the first time somebody discusses it, recommends on it or decides it.</summary>
+    ? `<details id="change-sets"><summary><b>Change-sets (${sets.length})</b>: ${["proposed", "discussing", "editing", "incorporated", "closed"].map((st) => `${sets.filter((c) => c.status === st).length} ${st}`).join(", ")}. A change-set gets its GitHub issue the first time somebody discusses it, recommends on it or decides it. <span id="cs-count" class="muted" aria-live="polite"></span></summary>
 <div class="table-wrap"><table><thead><tr><th>Id</th><th>Change</th><th>Status</th><th>Comments</th><th>Issue</th><th>PR</th><th></th></tr></thead><tbody>
 ${csRows}
 </tbody></table></div></details>`
@@ -265,6 +265,7 @@ ${body}
   const REPO = ${JSON.stringify(meta.repo ?? "")};
   const $ = (id) => document.getElementById(id);
   const rows = [...document.querySelectorAll("#comments tbody tr")];
+  const csTrs = [...document.querySelectorAll("#change-sets tbody tr")];
   const tiles = [...document.querySelectorAll(".tile[data-tile]")];
   // Tiles that ARE a Status value set the select; the other two are extra filters.
   const PHASE_TILES = ["open", "editing", "decided"];
@@ -285,23 +286,59 @@ ${body}
       r.hidden = !ok; if (ok) n++;
     }
     $("f-count").textContent = n + " of " + rows.length + " shown";
+    // The change-sets follow the same filters (smart-ra walkthrough
+    // 2026-10-06, bean uphx): a change-set shows when any of its comments
+    // does, and its count says how many of them match. Before this the
+    // filters moved only the comment table, thousands of pixels below.
+    const shown = new Set(rows.filter((r) => !r.hidden).map((r) => r.id));
+    let m = 0;
+    for (const tr of csTrs) {
+      const refs = tr.querySelector("a.show-cs").dataset.refs.split(" ");
+      const k = refs.filter((x) => shown.has(x)).length;
+      tr.hidden = k === 0; if (k) m++;
+      tr.querySelector(".cs-n").textContent = k === refs.length ? String(k) : k + " of " + refs.length;
+    }
+    if ($("cs-count")) $("cs-count").textContent = "Showing " + m + " of " + csTrs.length + ", by the filters below.";
     const on = active();
     for (const t of tiles) t.setAttribute("aria-pressed", String(t.dataset.tile === on));
   };
+  // BACK WORKS (D-3 of the 2026-10-06 walkthrough): every filter change is a
+  // history entry whose query string holds the filters, so Back restores the
+  // previous view instead of leaving the page. Typing in Search replaces the
+  // entry rather than adding one per keystroke.
+  const save = (push = true) => {
+    const q = new URLSearchParams();
+    const put = (k, v) => { if (v) q.set(k, v); };
+    q.set("status", $("f-phase").value);
+    put("type", $("f-type").value); put("section", $("f-section").value); put("q", $("f-text").value);
+    put("tile", extra); put("only", only ? [...only].join(" ") : "");
+    const url = "?" + q + location.hash;
+    if (url !== location.search + location.hash) history[push ? "pushState" : "replaceState"](null, "", url);
+  };
+  function load() {
+    const q = new URLSearchParams(location.search);
+    if (!q.has("status")) return;
+    $("f-phase").value = q.get("status"); $("f-type").value = q.get("type") ?? "";
+    $("f-section").value = q.get("section") ?? ""; $("f-text").value = q.get("q") ?? "";
+    extra = q.get("tile"); only = q.get("only") ? new Set(q.get("only").split(" ")) : null;
+    apply();
+  }
   for (const t of tiles) t.addEventListener("click", () => {
     const key = t.dataset.tile;
     // Pressing the tile that is on clears it: back to every comment.
     const clear = key === active() || key === "all";
     extra = !clear && !PHASE_TILES.includes(key) ? key : null;
     $("f-phase").value = !clear && PHASE_TILES.includes(key) ? key : "";
-    apply();
+    only = null;
+    apply(); save();
   });
-  $("f-phase").addEventListener("input", () => { extra = null; only = null; });
+  $("f-phase").addEventListener("input", () => { extra = null; });
   for (const a of document.querySelectorAll("a.show-cs")) a.addEventListener("click", (e) => {
     e.preventDefault();
     only = new Set(a.dataset.refs.split(" "));
-    extra = null; $("f-phase").value = "";
-    apply();
+    // Every one of its comments, whatever was filtered before.
+    extra = null; for (const id of ["f-phase", "f-type", "f-section", "f-text"]) $(id).value = "";
+    apply(); save();
     document.getElementById("comments").scrollIntoView();
   });
   // GROUPING (issue #2183): tick comments, open the "new change-set" issue
@@ -329,7 +366,14 @@ ${body}
   // #CS-012 opens the change-sets list there.
   if (location.hash.startsWith("#PC-")) $("f-phase").value = "";
   if (location.hash.startsWith("#CS-") && $("change-sets")) { $("change-sets").open = true; document.getElementById(location.hash.slice(1))?.scrollIntoView(); }
-  for (const id of ["f-phase", "f-type", "f-section", "f-text"]) $(id).addEventListener("input", apply);
+  // A select replaces "show its comments" (it used to stay on, hidden, and
+  // made every later filter look broken: D-2 of the 2026-10-06 walkthrough);
+  // the search box narrows within it.
+  for (const id of ["f-phase", "f-type", "f-section"]) $(id).addEventListener("input", () => { only = null; apply(); save(); });
+  $("f-text").addEventListener("input", () => { apply(); save(false); });
+  addEventListener("popstate", load);
+  addEventListener("hashchange", () => { if (location.hash.startsWith("#PC-")) { $("f-phase").value = ""; only = null; extra = null; apply(); } });
+  load();
   apply();
 })();
 </script>

@@ -680,13 +680,23 @@ function onPullRequest(x: Ctx, pr: { number: number; body: string; branch: strin
         x.out.log.push(`✗ ${ref}: ${(e as Error).message}`);
       }
     }
-    const status: ChangeSetStatus = pr.merged ? "incorporated" : cs.status === "proposed" || cs.status === "discussing" ? "editing" : cs.status;
+    // A merge settles the change-set only when every comment in it is settled
+    // (decided, incorporated, duplicate or withdrawn). Before this, a merge
+    // marked the whole set incorporated and closed its issue while most of
+    // its comments were still undecided: CS-236 and CS-237 in smart-ra, 13 of
+    // 15 comments `received` (D-1 of the 2026-10-06 walkthrough, bean uphx).
+    const unsettled = cs.refs.filter((r) => { const st = x.store.get(r).status; return OPEN_STATUSES.includes(st) || st === "editing"; });
+    const settled = unsettled.length === 0;
+    if (pr.merged && !settled) x.out.log.push(`· ${cs.id}: PR #${pr.number} merged, but ${unsettled.length} of ${cs.refs.length} comment(s) are not decided; the change-set stays open`);
+    const status: ChangeSetStatus = pr.merged
+      ? settled ? "incorporated" : cs.status === "proposed" ? "discussing" : cs.status === "editing" ? "discussing" : cs.status
+      : cs.status === "proposed" || cs.status === "discussing" ? "editing" : cs.status;
     if (cs.status !== status || cs.pr?.number !== pr.number) {
       cs = put(x, noted({ ...cs, pr: { number: pr.number, branch: pr.branch }, status }, x.login, x.at, pr.merged ? `PR #${pr.number} merged` : `PR #${pr.number} is making the change`, x.url));
       x.out.log.push(`✓ ${cs.id}: ${status} (PR #${pr.number})`);
     }
     engage(x, cs, `PR #${pr.number} is making this change.`);
-    if (pr.merged && cs.issue) x.out.actions.push({ kind: "state", issue: cs.issue, state: "closed", reason: "completed" });
+    if (pr.merged && settled && cs.issue) x.out.actions.push({ kind: "state", issue: cs.issue, state: "closed", reason: "completed" });
   }
 }
 

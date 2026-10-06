@@ -291,8 +291,32 @@ what they mention.
 4. The staging preview is published to `STAGING/<branch>/`. The dashboard links
    each comment's anchor on `main` (before) and on the preview (after). See
    [`staging-review`](staging-review.md).
-5. Merging moves them to *incorporated* and closes the primary issue. A PR
-   closed without merging puts the change-set back to *discussing*.
+5. Merging moves the accepted comments to *incorporated*. The change-set is
+   *incorporated*, and its primary issue closed, only when **every** comment in
+   it is settled (decided, incorporated, duplicate or withdrawn). If any is
+   still undecided, the change-set stays open and so does its issue, and the
+   workflow log says how many are left. Before 2026-10-06 a merge closed the
+   whole set regardless, which closed CS-236 and CS-237 in smart-ra with 13 of
+   their 15 comments undecided (bean `uphx`, D-1). A PR closed without merging
+   puts the change-set back to *discussing*.
+
+## The dashboard's filters
+
+Status, Type, Section, Search and the count tiles filter **both** tables: the
+comments, and the change-sets above them. A change-set shows when any of its
+comments match, and its count then reads "10 of 18". Before 2026-10-06 they
+moved only the comment table, about 17,000 px below an open change-set table,
+so the chief editor saw filters that "did not change anything".
+
+- **Show its comments** clears every other filter and shows all of that
+  change-set's comments. Any later Status, Type, Section or tile choice
+  replaces it; the search box narrows within it. (It used to persist hidden,
+  which made the Type filter look broken: D-2.)
+- **Every filter change is a history entry**, with the filters in the query
+  string (`?status=open&section=1.1.3`). Back restores the previous view, and
+  the URL of a filtered view can be pasted into an issue or a chat.
+- **Closed** in the Status box means incorporated, duplicate or withdrawn; the
+  page says so above the tiles.
 
 This is the same review loop as any content change
 (`content-change-review.bpmn`), with a different intake. Reuse it rather than

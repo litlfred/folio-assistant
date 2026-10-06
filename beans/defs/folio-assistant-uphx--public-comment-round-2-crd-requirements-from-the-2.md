@@ -5,17 +5,20 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-06T12:31:42Z
-updated_at: 2026-10-06T14:13:47Z
+updated_at: 2026-10-06T14:29:26Z
 parent: folio-assistant-q4jm
 ---
 
 Source: litlfred/smart-ra@9eb6ad3 (Teams transcript .docx + .vtt of the 2026-10-06 walkthrough with the DPI-H RA chief editor). CRD: cat-harness/docs/proposals/public-comment-round-2-crd-2026-10-06.md. Issue #197. Status: drafted for owner review BEFORE approval; no implementation until approved.
 
 ## Done when
-- [ ] CRD drafted with REQ-### entries, each traced to a transcript timestamp
-- [ ] the two transcripts compared and the result recorded
-- [ ] screenshots from the video at the moments the speakers refer to the screen (video forthcoming)
+- [x] CRD drafted with REQ-### entries, each traced to a transcript timestamp
+- [x] the two transcripts compared and the result recorded
+- [x] screenshots from the video at the moments the speakers refer to the screen
 - [ ] owner approves, amends or rejects each requirement
 
 
 _2026-10-06T14:20Z_ — Owner: no merging; the chief editor (Chinemerem Eyetan) signs off first. REQ-12 ruled: out of scope = existing `not-accepted` decision with a reason, committee reviews first, no new state. PR #2282 back to draft, ready marker withdrawn.
+
+
+_2026-10-06T14:40Z_ — Video arrived (smart-ra@5a3d655). Done on this branch: independent Vosk transcript compared (0.802 vs Teams; corrects Leitner, filters; requirement passages agree), 9 screenshots cut and cropped (webp, 476 KB), CRD updated. Defects D-1, D-2, D-2b (owner: filters change nothing visible), D-3 reproduced and fixed in public-comment-site.ts / public-comment-changesets.ts, browser-verified on a rebuilt dashboard, test added. New tool cat-harness/scripts/meeting-recording.py and skill crdm-recorded-walkthrough; public-comment skill updated. Owner: wait to merge main into the branch until the chief editor signs off.

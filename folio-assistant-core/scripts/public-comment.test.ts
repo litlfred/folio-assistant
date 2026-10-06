@@ -537,6 +537,19 @@ describe("change-sets and their issues (issue #2183)", () => {
     expect(m.actions).toContainEqual({ kind: "state", issue: 100, state: "closed", reason: "completed" });
   });
 
+  test("a merge with comments still undecided leaves the change-set open and its issue open (D-1, bean uphx)", async () => {
+    const s = store();
+    const f = fake();
+    await run(s, comment(50, "ed", "pc: PC-0001\ndecide: accepted\n\nYes."), f);
+    const merged: GithubEvent = { action: "closed", sender: { login: "au" }, pull_request: { number: 12, body: "Closes #50", head: { ref: "cs-001" }, merged: true, state: "closed", html_url: "https://github.com/o/r/pull/12" } };
+    const m = await run(s, merged, f);
+    expect(s.get("PC-0001").status).toBe("incorporated");
+    expect(s.get("PC-0002").status).not.toBe("incorporated");
+    expect(getChangeSet(s, "CS-001").status).not.toBe("incorporated");
+    expect(m.actions.filter((a) => a.kind === "state")).toEqual([]);
+    expect(m.log.join("\n")).toContain("1 of 2 comment(s) are not decided");
+  });
+
   test("a primary issue closed by hand: reopened while comments still need a change; closed when none do", async () => {
     const s = store();
     const f = fake();
