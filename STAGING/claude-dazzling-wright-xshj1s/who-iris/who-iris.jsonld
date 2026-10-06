@@ -1,0 +1,720 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "bootstrap": "https://litlfred.github.io/bootstrap/0.1.0/ns#",
+    "cat-harness": "https://litlfred.github.io/cat-harness/0.1.0/ns#",
+    "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "id": "@id",
+    "type": "@type",
+    "graph": "@graph",
+    "name": "rdfs:label",
+    "title": "http://purl.org/dc/terms/title",
+    "description": "http://purl.org/dc/terms/description",
+    "summary": "rdfs:comment",
+    "prefLabel": "http://www.w3.org/2004/02/skos/core#prefLabel",
+    "notation": "http://www.w3.org/2004/02/skos/core#notation",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "sourceCommit": {
+      "@id": "http://www.w3.org/ns/prov#wasDerivedFrom",
+      "@type": "@id"
+    },
+    "sourceCommitSha": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceCommitSha",
+    "sourceCommitAt": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceCommitAt",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "sourceTreeDirty": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceTreeDirty",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "sourceCommitUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceCommitUnavailable",
+    "dependsOn": "https://litlfred.github.io/cat-harness/0.1.0/ns#dependsOn",
+    "packageId": "https://litlfred.github.io/cat-harness/0.1.0/ns#packageId",
+    "uri": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#uri",
+      "@type": "@id"
+    },
+    "dependsOnGaps": "https://litlfred.github.io/cat-harness/0.1.0/ns#dependsOnGaps",
+    "dependsOnUnavailable": "https://litlfred.github.io/cat-harness/0.1.0/ns#dependsOnUnavailable",
+    "partOf": {
+      "@id": "http://purl.org/dc/terms/isPartOf",
+      "@type": "@id"
+    },
+    "inSubgraph": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inSubgraph",
+      "@type": "@id"
+    },
+    "implementedBy": {
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#skill",
+      "@type": "@id"
+    },
+    "performedBy": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#performedBy",
+      "@type": "@id"
+    },
+    "declaresSkill": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#declaresSkill",
+      "@type": "@id"
+    },
+    "inPackage": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inPackage",
+      "@type": "@id"
+    },
+    "providesCapability": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#providesCapability",
+      "@type": "@id"
+    },
+    "requiresCapability": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#requiresCapability",
+      "@type": "@id"
+    },
+    "fallbackToCapability": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#fallbackToCapability",
+      "@type": "@id"
+    },
+    "satisfies": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#satisfies",
+      "@type": "@id"
+    },
+    "hasSkill": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasSkill",
+      "@type": "@id"
+    },
+    "bindsRole": {
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#role",
+      "@type": "@id"
+    },
+    "inLane": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inLane",
+      "@type": "@id"
+    },
+    "maintains": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#maintains",
+      "@type": "@id"
+    },
+    "maintainsFrom": "https://litlfred.github.io/cat-harness/0.1.0/ns#maintainsFrom",
+    "maintainedBy": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#maintainedBy",
+      "@type": "@id"
+    },
+    "module": "https://litlfred.github.io/cat-harness/0.1.0/ns#module",
+    "holdsGraph": {
+      "@id": "http://purl.org/dc/terms/type",
+      "@type": "@id"
+    },
+    "startNode": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#startNode",
+      "@type": "@id"
+    },
+    "incoming": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#incoming",
+      "@type": "@id"
+    },
+    "outgoing": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#outgoing",
+      "@type": "@id"
+    },
+    "from": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#sourceRef",
+      "@type": "@id"
+    },
+    "to": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#targetRef",
+      "@type": "@id"
+    },
+    "alternateOf": {
+      "@id": "http://www.w3.org/ns/prov#alternateOf",
+      "@type": "@id"
+    },
+    "canonicalDocument": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#canonicalDocument",
+      "@type": "@id"
+    },
+    "deprecated": {
+      "@id": "http://www.w3.org/2002/07/owl#deprecated",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "isReplacedBy": {
+      "@id": "http://purl.org/dc/terms/isReplacedBy",
+      "@type": "@id"
+    },
+    "conformsTo": {
+      "@id": "http://purl.org/dc/terms/conformsTo",
+      "@type": "@id"
+    },
+    "validator": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#validator",
+      "@type": "@id"
+    },
+    "validatorRef": "https://litlfred.github.io/cat-harness/0.1.0/ns#validatorRef",
+    "validatorNotApplicable": "https://litlfred.github.io/cat-harness/0.1.0/ns#validatorNotApplicable",
+    "authority": "https://litlfred.github.io/cat-harness/0.1.0/ns#authority",
+    "specVersion": "https://litlfred.github.io/cat-harness/0.1.0/ns#specVersion",
+    "specUse": "https://litlfred.github.io/cat-harness/0.1.0/ns#specUse",
+    "specUrl": "https://litlfred.github.io/cat-harness/0.1.0/ns#specUrl",
+    "namespace": "https://litlfred.github.io/cat-harness/0.1.0/ns#namespace",
+    "inputSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inputSchema",
+      "@type": "@id"
+    },
+    "outputSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#outputSchema",
+      "@type": "@id"
+    },
+    "localId": "https://litlfred.github.io/cat-harness/0.1.0/ns#localId",
+    "actorKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKind",
+    "actorKinds": "https://litlfred.github.io/cat-harness/0.1.0/ns#actorKinds",
+    "reach": "https://litlfred.github.io/cat-harness/0.1.0/ns#reach",
+    "actedUpon": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "judgementOnly": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#judgementOnly",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "bpmnType": "https://litlfred.github.io/cat-harness/0.1.0/ns#bpmnType",
+    "statement": "https://litlfred.github.io/cat-harness/0.1.0/ns#statement",
+    "rationale": "https://litlfred.github.io/cat-harness/0.1.0/ns#rationale",
+    "applies": "https://litlfred.github.io/cat-harness/0.1.0/ns#applies",
+    "nodeKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#nodeKind",
+    "enforcement": "https://litlfred.github.io/cat-harness/0.1.0/ns#enforcement",
+    "workPlanOp": "https://litlfred.github.io/cat-harness/0.1.0/ns#workPlanOp",
+    "touchesWorkPlan": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#touchesWorkPlan",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "relaxable": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#relaxable",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "nodeCount": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#nodeCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "flowCount": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#flowCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "decisionRef": "https://litlfred.github.io/cat-harness/0.1.0/ns#decisionRef",
+    "decidedBy": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#decidedBy",
+      "@type": "@id"
+    },
+    "hitPolicy": "https://litlfred.github.io/cat-harness/0.1.0/ns#hitPolicy",
+    "calledElement": {
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#calledElement",
+      "@type": "@id"
+    },
+    "depiction": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#depiction",
+      "@type": "@id"
+    },
+    "sourceUrl": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceUrl",
+      "@type": "@id"
+    },
+    "sourcePath": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourcePath",
+    "sourceKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceKind",
+    "instructionsPath": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionsPath",
+    "readmePath": "https://litlfred.github.io/cat-harness/0.1.0/ns#readmePath",
+    "contentSource": {
+      "@id": "http://purl.org/dc/terms/source",
+      "@context": {
+        "kind": "https://litlfred.github.io/cat-harness/0.1.0/ns#contentSourceKind",
+        "branch": "http://purl.org/dc/terms/identifier",
+        "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
+        "keyFrom": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyFrom",
+        "familyRepository": "https://litlfred.github.io/cat-harness/0.1.0/ns#familyRepository",
+        "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
+      }
+    },
+    "instructionLines": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionLines",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "fileCount": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#fileCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "hasInstructions": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasInstructions",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "hasIOContract": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasIOContract",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "ambiguous": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#ambiguous",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "hasManifest": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasManifest",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "renderable": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#renderable",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "path": "https://litlfred.github.io/cat-harness/0.1.0/ns#path",
+    "assetRole": "https://litlfred.github.io/cat-harness/0.1.0/ns#assetRole",
+    "version": "https://schema.org/softwareVersion",
+    "hasCapability": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasCapability",
+      "@type": "@id"
+    },
+    "roleName": "https://litlfred.github.io/cat-harness/0.1.0/ns#roleName",
+    "mayTakeRole": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#mayTakeRole",
+      "@type": "@id"
+    },
+    "satisfiesStatement": "https://litlfred.github.io/cat-harness/0.1.0/ns#satisfiesStatement",
+    "permissionName": "https://litlfred.github.io/cat-harness/0.1.0/ns#permissionName",
+    "io": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#io",
+      "@type": "@json"
+    },
+    "invoke": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#invoke",
+      "@type": "@json"
+    },
+    "install": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#install",
+      "@type": "@json"
+    },
+    "detection": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#detection",
+      "@type": "@json"
+    },
+    "meta": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#meta",
+      "@type": "@json"
+    },
+    "assignments": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#assignments",
+      "@type": "@json"
+    },
+    "requirements": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#requirements",
+      "@type": "@json"
+    },
+    "staging": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#staging",
+      "@context": {
+        "branch": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingBranch",
+        "sha": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingSha",
+        "pr": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingRef",
+        "run": "https://litlfred.github.io/cat-harness/0.1.0/ns#stagingRun"
+      }
+    },
+    "repository": {
+      "@id": "https://schema.org/codeRepository",
+      "@type": "@id"
+    },
+    "counts": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#counts",
+      "@type": "@json"
+    },
+    "omitted": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#omitted",
+      "@container": "@set"
+    },
+    "sourceLanguage": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceLanguage"
+    }
+  },
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld",
+  "conformsTo": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/schema/who-iris.schema.json",
+  "@type": [
+    "http://www.w3.org/ns/prov#Entity",
+    "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#PreviewGraph"
+  ],
+  "canonicalDocument": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld",
+  "repository": "who-iris",
+  "omitted": [
+    "registry",
+    "packages",
+    "tools"
+  ],
+  "generatedAt": "2026-10-06T13:19:44.390Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/816aeedf86e41fe6683fe2c2d688fd7f334d796a",
+  "sourceCommitSha": "816aeedf86e41fe6683fe2c2d688fd7f334d796a",
+  "sourceCommitAt": "2026-10-06T12:59:57Z",
+  "sourceTreeDirty": true,
+  "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
+  "counts": {
+    "Skill": 1,
+    "GraphTypology": 12,
+    "Subgraph": 13,
+    "Asset": 2
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#skill/iris-dspace",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "iris-dspace",
+      "title": "IRIS, DSpace and Dublin Core",
+      "description": "How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path. What a later tool needs from a record, stated as requirements it can be checked against.",
+      "instructionsPath": "skills/iris-dspace.md",
+      "instructionLines": 257,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#skill/iris-dspace"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/skills",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "skills",
+      "renderable": false,
+      "summary": "A Subgraph of Skills: the instructions an Actor follows to carry out a Task."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "docs",
+      "renderable": true,
+      "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/schemas",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "schemas",
+      "renderable": false,
+      "summary": "A Subgraph of Node Schemas: files that state the shape other files must have."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "qa",
+      "renderable": false,
+      "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "code",
+      "renderable": false,
+      "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/uploads",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "uploads",
+      "renderable": false,
+      "summary": "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus: a document here reads as absent to every consumer."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "library",
+      "renderable": false,
+      "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/voices",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "voices",
+      "renderable": false,
+      "summary": "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. Every rule cites the ingested source or KG node it was derived from. Opt-in per folio."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/themes",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "themes",
+      "renderable": false,
+      "summary": "Themes derived from an instance's own sources — one Theme node each, carrying `kind: sticky | webpage | publication`. The palette vocabulary is shared across every kind and only the geometry varies; every value cites where it was measured."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/translation-sources",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "translation-sources",
+      "renderable": false,
+      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/glossary",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "glossary",
+      "renderable": false,
+      "summary": "SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS schemes by exactMatch rather than copied. Rendered on the glossary/ page."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/catalogue",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "catalogue",
+      "renderable": false,
+      "summary": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-translations",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "who-iris-translations",
+      "path": "translations/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/translation-sources"
+      ],
+      "description": "The gettext side of who-iris's own strings, one directory per target locale: the `glossary/who-iris--who-terms` catalogues that translate this instance's WHO terms. Moved here from cat-harness/translations/ on the owner's ruling of 2026-10-04, \"move things to semantically appropriate place\" (bean riit): a scheme's translations sit with the instance whose terms they translate.",
+      "readmePath": "translations/README.md",
+      "fileCount": 21,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-translations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-translations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "library",
+      "path": "library/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/library"
+      ],
+      "description": "The three IRIS items this instance holds rather than merely names: `wpr-rdo-2020-003-eng` (the WPRO publication style guide, and the worked example whose full DSpace item record drives the `iris-dspace` skill), `who-pub-tps-931` and `9789241548960-eng`. They are the `materialized` end of the catalogue -- every other node under `catalogue/nodes/` is `referenced`, and the three here are what a materialization actually looks like. `milnorlink` is NOT here and never was an IRIS item; it went to folio-assistant-sci (bean r1lz). The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
+      "readmePath": "library/README.md",
+      "fileCount": 1375,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/library",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/library"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-site",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "who-iris-site",
+      "path": "site/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs"
+      ],
+      "description": "The IRIS REPLICA: the home page, the community list, and one page per collection and per item, themed as IRIS and generated from `catalogue/` by `scripts/gen-iris-pages.ts` (gated by `bun run iris:pages:check`). It is what `/who-iris/` serves. Moved out of `library/` on 2026-09-30 (bean 2b5s) so that the corpus and its rendering are separate directories: before, the mount copied the corpus along with the pages. A page shows an item's cover by referencing `../library/<slug>-cover.png`; the build publishes exactly the files a page embeds, beside the replica, and not the directory they sit in.",
+      "readmePath": "site/README.md",
+      "fileCount": 49,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-site",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-site"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-catalogue",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "who-iris-catalogue",
+      "path": "catalogue/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/catalogue"
+      ],
+      "description": "The catalogue itself: `catalogue.json` declares the corpus and its measured size; `nodes/` holds one `folio-catalogue-node/v1` per community, collection or item; `records/` holds the `folio-dublin-core/v1` metadata an item node points at through `metadataRef`. TWELVE nodes today — 9 referenced, 3 materialized, 0 unknown — against 1,057,223 files upstream, and that gap IS the point. `bun run check:catalogue` verifies every node validates and every metadataRef, libraryId and parent path resolves; a Zod schema can require the reference and structurally cannot check the file is there.",
+      "readmePath": "catalogue/README.md",
+      "fileCount": 18,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-catalogue",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-catalogue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-uploads",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "who-iris-uploads",
+      "path": "uploads/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/uploads"
+      ],
+      "description": "The incoming queue — raw captures as dropped, before ingestion. NOT L1 and not greppable as corpus. Holds the IRIS capture for the worked example: the saved DSpace item page, its asset zip (which carries the IRIS web theme), the full item record in qualified Dublin Core, and the item page printed to PDF — the last recorded with role `none`, because 'we looked and it is not what it appears to be' is a different fact from 'nobody looked'.",
+      "readmePath": "uploads/README.md",
+      "fileCount": 19,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-uploads",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-uploads"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-skills",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "who-iris-skills",
+      "path": "skills/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/skills"
+      ],
+      "description": "Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill package: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assist-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool. Since 2026-10-01 it also holds the WHO STYLE GUIDE's three house voices under `voices/`, declared from within by `skills.json` (bean `cmsl`) -- they were the separate staged instance `who-style-guide` until the owner's 2026-09-30 ruling, 'who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.' (bean `qsx4`).",
+      "readmePath": "skills/README.md",
+      "fileCount": 11,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/glossary",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "glossary",
+      "path": "glossary/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/glossary"
+      ],
+      "description": "The WHO glossary: folio-glossary/v1 schemes of terms the WHO publications use under more than one name -- a HOUSE rule about wording, like the style-guide voices under skills/voices/ (bean ftu0). An alternative label is recorded only where a publication STATES the equivalence, and each term cites that sentence in this instance's own library; a count or a latent-semantic cosine is never the evidence. The scheme's source is the who-guideline-development voice, so its terms are minted in this instance's namespace. Rendered on the glossary/ page and checked by check:glossary, both of which read every instance's declared glossary directory.",
+      "readmePath": "glossary/README.md",
+      "fileCount": 2,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/glossary",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/glossary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-themes",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "who-iris-themes",
+      "path": "themes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/themes"
+      ],
+      "readmePath": "themes/README.md",
+      "fileCount": 3,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-themes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-themes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-docs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "who-iris-docs",
+      "path": "docs/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs"
+      ],
+      "description": "The viewer for this instance's docs, BUILT BY cat-harness — the owner's rule that a harness which instantiates a directory makes a visualiser for it. Declared HERE, in this instance's own file, rather than in the root's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a COMPOSITION LAYER, so declaring this directory there would overlay this instance's `index.md` onto the site's own. Measured — `compose-docs.test.ts` failed exactly that way when tried. The ref resolves because `injectRails` measures against the BUILT instance's docs prefix (cat-harness's), not the declaring instance's, which is the same reason `who-iris-library`'s cat-harness-built ref resolves today. This directory IS mounted verbatim at `/docs/who-iris/` as well, and the two are different things: the mount is a byte-for-byte copy of the directory, this is an index OF it. The rail links here, which is what `visualiserHref` exists to make happen.",
+      "readmePath": "docs/README.md",
+      "fileCount": 7,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-docs",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-docs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-scripts",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "who-iris-scripts",
+      "path": "scripts/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
+      ],
+      "description": "The catalogue checker, the cover generator and `gen-iris-pages.ts` -- the instance-local generator `wjfu` cites as the precedent for every other one here (*\"instance-local generator, static HTML, committed, gated\"*). Cited as a model by another instance's bean while being undeclared itself, which is the sharpest form of the `ylj7` defect: a directory can be the corpus's own worked example and still be invisible to every consumer that walks declarations.",
+      "readmePath": "scripts/README.md",
+      "fileCount": 4,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-scripts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-scripts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-sources",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "who-iris-sources",
+      "path": "sources/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/schemas"
+      ],
+      "description": "Source descriptors (`folio-source-descriptor/v1`): how to ENUMERATE WHO IRIS and ask it for a SUBSET, so an agent asked for part of it is not told the API by a human every time. Moved here from large-datasets' `sources/` on 2026-10-01 (owner ruling: large-datasets dissolves into cat-harness; bean `j7ql`), because a descriptor is ABOUT one corpus and the instance that holds or catalogues that corpus owns it — the schema stays in cat-harness. Its far-apart sibling, Lean mathlib, is in folio-assistant-sci: IRIS items stand alone (`subsetIsSelfContained: true`), three identifier systems, paged REST.",
+      "readmePath": "sources/README.md",
+      "fileCount": 2,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/who-iris-sources",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-sources"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/id-lookup",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "id-lookup",
+      "path": "id-lookup/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
+      ],
+      "description": "The GENERATED prefix-sharded identifier lookup over this catalogue's REFERENCED nodes: `manifest.json` plus JSON shards keyed by id prefix, each under 64 KiB. Written by `cat-harness-tools/scripts/gen-id-lookup.ts` (`bun run id-lookup`, gated by `id-lookup:check`), which finds this directory by its id `id-lookup` and never by this instance's name; read by `cat-harness-tools/id-lookup/lookup.js`. Here rather than beside the generator because an instance hosts its own generated outputs (D3, bean `j7ql`, 2026-10-01). Edit the catalogue, never the shards: the generator replaces this directory whole.",
+      "readmePath": "id-lookup/README.md",
+      "fileCount": 4,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/id-lookup",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/id-lookup"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/qa",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "qa",
+      "path": "test/results/",
+      "contentSource": {
+        "@id": "https://github.com/litlfred/who-iris/tree/cat/cat-harness/qa-reports",
+        "kind": "branch",
+        "branch": "cat/cat-harness/qa-reports",
+        "keyedBy": "commit",
+        "declaredIn": "storage"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/qa"
+      ],
+      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 2 files across scenarios (1), skills (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. `qa` is a `perInstance` graph typology (graph-typology-registry.ts), because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#directory/qa",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — who-iris",
+      "description": "Cold start for work in this layer. The gap between twelve modelled nodes and a million upstream files is the POINT rather than a backlog, so it is never work to be done; every node declares its state with no default, because \"the author did not say\" and \"the author said they could not tell\" are different facts.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#asset/agent-instructions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/who-iris/who-iris.jsonld#asset/readme",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
+      "name": "readme",
+      "path": "README.md",
+      "assetRole": "instance-readme",
+      "title": "who-iris",
+      "description": "What is here, what is only referenced, and how to tell.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#asset/readme"
+    }
+  ],
+  "staging": {
+    "branch": "claude/dazzling-wright-xshj1s",
+    "sha": "8ce8fe65b4dadbe2e3b7f8f439fee4767c66d69b",
+    "pr": "2272/merge",
+    "run": "37467420662"
+  }
+}
