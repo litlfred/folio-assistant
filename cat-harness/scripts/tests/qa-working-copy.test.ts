@@ -75,6 +75,20 @@ describe("the stamp says which tree the copy was built from", () => {
     }
   });
 
+  test("COMMITTING does not stale the copy — the digest is of content, not of git's bookkeeping", () => {
+    const f = fixture();
+    try {
+      writeFileSync(join(f.dir, "src.txt"), "two\n");
+      writeFileSync(join(f.dir, "new.txt"), "x\n");
+      ensureWorkingCopy(f.dir, f.opts);
+      sh(f.dir, "git", "add", "-A");
+      sh(f.dir, "git", "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qm", "merge");
+      expect(workingCopyState(f.dir, ["qa"]).state).toBe("current");
+    } finally {
+      f.cleanup();
+    }
+  });
+
   test("an untracked, non-ignored file is part of the tree too", () => {
     const f = fixture();
     try {

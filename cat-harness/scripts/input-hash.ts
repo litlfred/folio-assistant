@@ -83,7 +83,7 @@ import { readQaManifest, type QaStoreOptions } from "./qa-store.ts";
 export const CACHE_FILE = join("build", "regen-cache", "input-hashes.json");
 
 /** Bump to invalidate every recorded hash when the fingerprint's recipe changes. */
-export const RECIPE_VERSION = 2;
+export const RECIPE_VERSION = 3;
 
 export type Fingerprint = { hash: string; files: number; wholeTree?: boolean } | { undetermined: string };
 
@@ -309,15 +309,27 @@ export const TRACKED = "{tracked}";
 /**
  * A digest of the working tree's tracked and untracked-but-not-ignored files.
  *
- * Cheap because unmodified tracked files are identified by the blob id the
- * index already holds; only files that differ from the index, and untracked
- * ones, are read and hashed. Submodules appear as their recorded commit; a
- * submodule with changes in its own tree cannot be hashed from here, so it
- * makes the digest UNDETERMINED rather than silently omitted.
+ * The digest is of CONTENT, not of git's bookkeeping: every file present is
+ * entered as its path and its git blob id. An unmodified tracked file's id is
+ * the one the index already holds; a modified or untracked file's is computed
+ * by `git hash-object` in the checkout, so the checkout's attributes apply
+ * exactly as they would on `git add`. Committing a file therefore does not
+ * change the digest — measured 2026-10-06 (bean `7how`): the previous recipe
+ * hashed a modified file as a sha256 and a clean one as its blob id, so the
+ * merge commit `merge:main` makes turned a tree regen had just settled into
+ * a "changed" one, and every `{tracked}` skip and the QA working copy's stamp
+ * after it were lost. Submodules appear as their recorded commit; a submodule
+ * with changes in its own tree cannot be hashed from here, so it makes the
+ * digest UNDETERMINED rather than silently omitted.
  */
-export function trackedTreeDigest(root: string, digests: FileDigests): { hash: string } | { undetermined: string } {
-  const git = (args: string[]): string | undefined => {
-    const r = Bun.spawnSync(["git", ...args], { cwd: root, stdout: "pipe", stderr: "pipe" });
+export function trackedTreeDigest(root: string, _digests?: FileDigests): { hash: string } | { undetermined: string } {
+  const git = (args: string[], stdin?: string): string | undefined => {
+    const r = Bun.spawnSync(["git", ...args], {
+      cwd: root,
+      stdout: "pipe",
+      stderr: "pipe",
+      stdin: stdin === undefined ? undefined : new TextEncoder().encode(stdin),
+    });
     return r.exitCode === 0 ? r.stdout.toString() : undefined;
   };
   const staged = git(["ls-files", "-s", "-z"]);
@@ -330,36 +342,35 @@ export function trackedTreeDigest(root: string, digests: FileDigests): { hash: s
   const split = (s: string) => s.split("\0").filter(Boolean);
   const gone = new Set(split(deleted));
   const changed = new Set(split(modified).filter((p) => !gone.has(p)));
-  const h = createHash("sha256");
+  const ids = new Map<string, string>();
+  const toHash: string[] = [];
   for (const line of split(staged)) {
     // "<mode> <blob> <stage>\t<path>"
     const tab = line.indexOf("\t");
     const path = line.slice(tab + 1);
     const [mode, blob] = line.slice(0, tab).split(" ");
-    if (gone.has(path)) {
-      h.update(`gone ${path}\n`);
-    } else if (changed.has(path)) {
+    if (gone.has(path)) continue;
+    if (changed.has(path)) {
       if (mode === "160000") return { undetermined: `submodule ${path} has changes in its own tree` };
-      try {
-        h.update(`file ${path} ${digests.digest(path)}\n`);
-      } catch {
-        return { undetermined: `could not read ${path}` };
-      }
+      toHash.push(path);
     } else {
-      h.update(`blob ${path} ${blob}\n`);
+      ids.set(path, `${mode === "160000" ? "commit" : "blob"} ${blob}`);
     }
   }
-  for (const path of split(untracked).sort()) {
-    try {
-      h.update(`new ${path} ${digests.digest(path)}\n`);
-    } catch {
-      return { undetermined: `could not read untracked ${path}` };
+  toHash.push(...split(untracked));
+  if (toHash.length > 0) {
+    const out = git(["hash-object", "--stdin-paths"], toHash.join("\n") + "\n");
+    const got = out?.trim().split("\n") ?? [];
+    if (out === undefined || got.length !== toHash.length) {
+      return { undetermined: `could not hash ${toHash.length} modified or untracked file(s)` };
     }
+    toHash.forEach((p, i) => ids.set(p, `blob ${got[i]}`));
   }
+  const h = createHash("sha256");
+  for (const p of [...ids.keys()].sort()) h.update(`${p} ${ids.get(p)}\n`);
   return { hash: h.digest("hex") };
 }
 
-/** Memoised per-file content digests, keyed by path + size + mtime. */
 export class FileDigests {
   private memo = new Map<string, { key: string; digest: string }>();
   /** The tracked-tree digest, computed at most once per instance. */
