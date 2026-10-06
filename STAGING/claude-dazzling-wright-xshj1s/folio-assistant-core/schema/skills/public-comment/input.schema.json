@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Public Comment Input",
+  "description": "Input schema for the public-comment skill: one operation on the public-review comment store of a document folio.",
+  "type": "object",
+  "required": [
+    "operation"
+  ],
+  "properties": {
+    "operation": {
+      "type": "string",
+      "enum": [
+        "import",
+        "import-narrative",
+        "list",
+        "triage",
+        "reassign",
+        "assign",
+        "recommend",
+        "decide",
+        "incorporate",
+        "duplicate",
+        "withdraw",
+        "github",
+        "summary"
+      ],
+      "description": "One task of public-comment.bpmn, or a read (list, summary)."
+    },
+    "file": {
+      "type": "string",
+      "description": "For import / import-narrative: the comment matrix (.xlsx), form export (.csv) or narrative text."
+    },
+    "ref": {
+      "type": "string",
+      "pattern": "^PC-\\d{4,}$",
+      "description": "The comment the operation acts on."
+    },
+    "to": {
+      "type": "string",
+      "description": "reassign/triage: a block or section label. assign: GitHub login(s), comma-separated."
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "accepted",
+        "accepted-modified",
+        "not-accepted",
+        "noted",
+        "deferred"
+      ],
+      "description": "recommend / decide: the decision code."
+    },
+    "reason": {
+      "type": "string",
+      "description": "decide: required for every code but accepted."
+    },
+    "branch": {
+      "type": "string",
+      "description": "decide / incorporate: the change-set branch."
+    },
+    "pr": {
+      "type": "integer",
+      "description": "decide / incorporate: the change-set pull request."
+    },
+    "filter": {
+      "type": "object",
+      "description": "list: narrow by status (or 'open'), page, line, block, section, or unplaced.",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "page": {
+          "type": "integer"
+        },
+        "line": {
+          "type": "integer"
+        },
+        "block": {
+          "type": "string"
+        },
+        "section": {
+          "type": "string"
+        },
+        "unplaced": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/folio-assistant-core/schema/skills/public-comment/input.schema.json",
+  "staging": {
+    "branch": "claude/dazzling-wright-xshj1s",
+    "sha": "4d3083d79a01b5167137af4649a89ef2145c8746",
+    "pr": "2307/merge",
+    "run": "37505866091"
+  }
+}
