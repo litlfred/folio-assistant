@@ -1,0 +1,82 @@
+{
+  "$ref": "#/definitions/AdjudicationOutcome",
+  "definitions": {
+    "AdjudicationOutcome": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-adjudication/v1"
+        },
+        "request": {
+          "type": "string",
+          "minLength": 1
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "codes": {
+          "minItems": 2,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "reasoning": {
+          "type": "string",
+          "minLength": 1
+        },
+        "by": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "person",
+                "agent"
+              ]
+            },
+            "model": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+            }
+          },
+          "required": [
+            "id",
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        "at": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "$schema",
+        "request",
+        "code",
+        "codes",
+        "reasoning",
+        "by",
+        "at"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bold-brahmagupta-c8eoku/folio-assistant-core/schema/zod/adjudication/AdjudicationOutcomeSchema.schema.json",
+  "title": "AdjudicationOutcomeSchema",
+  "description": "Generated from `AdjudicationOutcomeSchema` in schemas/adjudication.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/bold-brahmagupta-c8eoku",
+    "sha": "0e7803b5bffb81a243ddfcdad05f88c0532ec624",
+    "pr": "2296/merge",
+    "run": "37492905037"
+  }
+}
