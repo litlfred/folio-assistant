@@ -26,8 +26,31 @@ import { join } from "node:path";
 /** The environment variable naming the trace file of the run being recorded. */
 export const TRACE_ENV = "INPUT_HASH_TRACE";
 
+let quiet = 0;
+
+/**
+ * Run `fn` with {@link inputSiteReached} silenced — for a reader that has
+ * ALREADY reported, more precisely than its parts could, what it reads:
+ * `qa-store`'s snapshot reports `qa-ref <ref>`, then reads through
+ * `branch-store`, whose every git call would otherwise report the store.
+ */
+export function quietly<T>(fn: () => T): T {
+  quiet++;
+  try {
+    return fn();
+  } finally {
+    quiet--;
+  }
+}
+
+/** The trace line for a read of the `qa-reports` store by `ref` — tolerated when `ref` is a hashed `--against` baseline. */
+export function qaRefLine(ref: string): string {
+  return `qa-ref ${ref}`;
+}
+
 /** Say that a `traced` input site is about to read something the input hash cannot see. */
 export function inputSiteReached(what: string): void {
+  if (quiet > 0) return;
   // input-site: inert #aff7f52b — names the trace file of the recording run; what is written there is never part of an answer
   const path = process.env[TRACE_ENV];
   if (path) appendFileSync(path, `${what}\n`);
@@ -40,18 +63,24 @@ let traceSeq = 0;
  * directory — which the tree digest leaves out, so writing it moves no
  * fingerprint. Returns the environment to run with and a probe to ask after.
  */
-export function openTrace(root: string): { env: Record<string, string | undefined>; reached: () => string | undefined } {
+export function openTrace(root: string): {
+  env: Record<string, string | undefined>;
+  /** What the run reached that its fingerprint does not cover, or `undefined`. `hashedRefs`: the `--against` refs whose baseline identity the fingerprint hashed. */
+  reached: (hashedRefs?: readonly string[]) => string | undefined;
+} {
   const dir = join(root, "build", "regen-cache", "traces");
   mkdirSync(dir, { recursive: true });
   const path = join(dir, `${process.pid}-${++traceSeq}.log`);
   rmSync(path, { force: true });
   return {
+    // input-site: inert #f435314a — hands the whole environment on to a child; the child's own reads are its own sites
     env: { ...process.env, [TRACE_ENV]: path },
-    reached: () => {
+    reached: (hashedRefs = []) => {
       if (!existsSync(path)) return undefined;
-      const what = readFileSync(path, "utf-8").trim().split("\n")[0];
+      const lines = readFileSync(path, "utf-8").split("\n").filter(Boolean);
       rmSync(path, { force: true });
-      return what || "a traced input site";
+      const allowed = new Set(hashedRefs.map(qaRefLine));
+      return lines.find((l) => !allowed.has(l));
     },
   };
 }

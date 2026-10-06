@@ -168,6 +168,7 @@ import { loadGates, type Gate } from "./gates.ts";
 import {
   FileDigests,
   cacheEnabled,
+  againstRefsOf,
   checkFingerprint,
   decide,
   decideCheck,
@@ -1085,7 +1086,7 @@ if (import.meta.main) {
   const asyncRun = async (script: string): Promise<boolean> => {
     const trace = checks.has(script) && useCache ? openTrace(repoRoot) : undefined;
     const ok = (await runCaptured(["bun", "run", script], repoRoot, trace?.env)).code === 0;
-    const reached = trace?.reached();
+    const reached = trace?.reached(againstRefsOf(scripts, script));
     if (reached !== undefined) traced.set(script, reached);
     // A writer changed files: digests computed before it are of a tree that
     // no longer exists. (The fixpoint would catch a stale skip one pass later;

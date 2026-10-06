@@ -40,6 +40,7 @@
  * same tree print the same lines in the same order.
  */
 import { availableParallelism, cpus } from "node:os";
+import { inputSiteReached } from "./input-trace.ts";
 
 /** The default pool size: one core left for the person (and the other sessions) on the box. */
 export function defaultJobs(): number {
@@ -47,6 +48,7 @@ export function defaultJobs(): number {
   try {
     n = availableParallelism();
   } catch {
+    // input-site: inert #aefe5702 — the default worker count; it changes scheduling, never an answer
     n = cpus().length;
   }
   return Math.max(1, n - 1);
@@ -285,7 +287,10 @@ export async function runCaptured(
   cwd: string,
   env?: Record<string, string | undefined>,
 ): Promise<{ code: number; output: string; ms: number }> {
+  // input-site: inert #c1aef090 — a duration for the log
   const t0 = performance.now();
+  // input-site: traced #9cbc2f4e — the gate/regen runner; a check that only imports it does not run commands
+  inputSiteReached("task-pool: runCaptured spawns a command");
   const child = Bun.spawn([...argv], { cwd, stdout: "pipe", stderr: "pipe", ...(env ? { env } : {}) });
   const chunks: string[] = [];
   const pump = async (stream: ReadableStream<Uint8Array>): Promise<void> => {
@@ -294,5 +299,6 @@ export async function runCaptured(
   };
   await Promise.all([pump(child.stdout), pump(child.stderr)]);
   const code = await child.exited;
+  // input-site: inert #81ea4375 — a duration for the log
   return { code, output: chunks.join(""), ms: performance.now() - t0 };
 }

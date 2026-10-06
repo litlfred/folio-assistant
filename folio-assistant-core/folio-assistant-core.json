@@ -268,6 +268,7 @@
       "because": "39 s — exits before writing; compares without the POT timestamp — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     },
     "check:catalogue": {
+      "inputs": ["{tracked}"],
       "outputs": [],
       "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     },
@@ -276,10 +277,12 @@
       "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     },
     "check:voices": {
+      "inputs": ["{tracked}"],
       "outputs": [],
       "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     },
     "dc:render:check": {
+      "inputs": ["{tracked}"],
       "outputs": [],
       "because": "returns before `writeFileSync` — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     },

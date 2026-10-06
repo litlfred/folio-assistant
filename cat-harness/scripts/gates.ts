@@ -79,6 +79,7 @@ import { jobsFromArgv, orderedEmitter, runCaptured, runPool } from "./task-pool.
 import { gateReadsOnly, pairIO } from "./task-io.ts";
 import {
   FileDigests,
+  againstRefsOf,
   cacheEnabled,
   checkFingerprint,
   decideCheck,
@@ -93,6 +94,7 @@ import {
   type SkipDecision,
 } from "./input-hash.ts";
 import { openTrace } from "./input-trace.ts";
+import { inputSiteReached } from "./input-trace.ts";
 
 // The REPOSITORY root. `GATES_WORKFLOW` is `.github/workflows/…`, which
 // belongs to the repository rather than to this instance, and the gates
@@ -1633,6 +1635,8 @@ export function undeterminedReport(e: unknown, root: string): string[] {
  * the summary can quote the failing lines back at the end.
  */
 async function runTee(cmd: string, args: string[], env?: Record<string, string | undefined>): Promise<{ code: number; output: string }> {
+  // input-site: traced #562a3d19 — the gate runner; a check that imports gates.ts to read the gate list runs nothing
+  inputSiteReached("gates: runTee spawns a gate");
   const child = Bun.spawn([cmd, ...args], { cwd: ROOT, stdout: "pipe", stderr: "pipe", ...(env ? { env } : {}) });
   const chunks: string[] = [];
   const pump = async (stream: ReadableStream<Uint8Array>, to: NodeJS.WriteStream): Promise<void> => {
@@ -2033,7 +2037,7 @@ if (import.meta.main) {
         process.stdout.write(`  ↳ ${((performance.now() - started) / 1000).toFixed(1)}s, exit ${r.code}: ${g.command}\n`);
         if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
         if (t.script !== undefined && t.fp !== undefined) {
-          skipper.record(t.script, r.code === 0 && !tracedReport(t.script, trace?.reached()), t.fp, new FileDigests(ROOT));
+          skipper.record(t.script, r.code === 0 && !tracedReport(t.script, trace?.reached(againstRefsOf(pkgScripts, t.script))), t.fp, new FileDigests(ROOT));
         }
         seen = snapshot(seen, g.command);
       }
@@ -2063,7 +2067,7 @@ if (import.meta.main) {
     const after = new FileDigests(ROOT);
     run.forEach((t, i) => {
       if (t.script !== undefined && t.fp !== undefined) {
-        skipper.record(t.script, codes[i] === 0 && !tracedReport(t.script, traces[i]?.reached()), t.fp, after);
+        skipper.record(t.script, codes[i] === 0 && !tracedReport(t.script, traces[i]?.reached(againstRefsOf(pkgScripts, t.script))), t.fp, after);
       }
     });
     seen = snapshot(seen, `one of the parallel read-only gates: ${run.map((t) => t.gate.command).join(", ")}`);

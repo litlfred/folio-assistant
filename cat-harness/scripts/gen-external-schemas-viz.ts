@@ -67,6 +67,7 @@ const KIND = "external-schema";
 
 /** Every declared user of every spec, read from the users (bean `u63y`). */
 export function declaredUsers(specs: readonly ExternalSchema[], repoRoot = REPO): SpecUsers {
+  // input-site: tree #a397b180 — ls-files: the index
   const ls = Bun.spawnSync(["git", "ls-files"], { cwd: repoRoot });
   const files = new TextDecoder().decode(ls.stdout).split("\n").filter(Boolean);
   // BASE's kinds, read THROUGH the registry: since bean riit (step 1c) a

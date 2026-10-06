@@ -35,11 +35,19 @@
  * like any other input, and a baseline that cannot be resolved — offline, no
  * branch, a corrupt entry — is undetermined, so the pair runs.
  *
- * What it does NOT see, and why that is acceptable only because every entry in
- * `task-io.ts` was read first: files outside the declaration that the script
- * reads anyway, ignored files, environment variables, the clock, the network,
- * and modules a script SPAWNS rather than imports (declare those, or use
- * {@link TRACKED}).
+ * ## What it cannot see is AUDITED, not assumed (bean `f017`)
+ *
+ * Every fingerprint also walks the script's import closure through
+ * `input-sites.ts`: a line that reads the environment, the network, the
+ * clock, git history, a spawned process or a computed module must carry a
+ * pinned `// input-site:` annotation, or the fingerprint is undetermined.
+ * What an annotation names is then hashed here — environment VALUES, the
+ * `HEAD` / ref commit ids and the shallow boundary — and every fingerprint
+ * carries the `bun` and `git` versions and the variables that change how they
+ * run. Under {@link TRACKED} the digest covers IGNORED files too (path, size,
+ * mtime), since a directory walk reads them whether or not git does. A site no
+ * check is known to reach may instead be `traced` (`input-trace.ts`): a run
+ * that reaches it records nothing.
  *
  * ## "Could not determine" is never "clean"
  *
@@ -79,6 +87,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { dirname, join, relative, resolve } from "node:path";
 import { readQaManifest, type QaStoreOptions } from "./qa-store.ts";
 import { auditClosure, SiteMemo } from "./input-sites.ts";
+import { inputSiteReached } from "./input-trace.ts";
 
 /** Where the cache lives, relative to the repository root. `build/` is git-ignored. */
 export const CACHE_FILE = join("build", "regen-cache", "input-hashes.json");
@@ -318,6 +327,7 @@ export const TRACKED = "{tracked}";
  */
 export function trackedTreeDigest(root: string, digests: FileDigests): { hash: string } | { undetermined: string } {
   const git = (args: string[]): string | undefined => {
+    // input-site: tree #46d900d5 — ls-files listings of the index, the untracked and the ignored files
     const r = Bun.spawnSync(["git", ...args], { cwd: root, stdout: "pipe", stderr: "pipe" });
     return r.exitCode === 0 ? r.stdout.toString() : undefined;
   };
@@ -418,6 +428,8 @@ function ignoredDigest(root: string, entry: string, h: ReturnType<typeof createH
  * not resolve is hashed as missing, which is itself an answer the check sees.
  */
 function historyLine(root: string, head: boolean, refs: readonly string[]): { line: string } | { undetermined: string } {
+  // input-site: traced #b9c60d41 — the fingerprint machinery
+  inputSiteReached("input-hash: history ids");
   const git = (args: string[]) => Bun.spawnSync(["git", ...args], { cwd: root, stdout: "pipe", stderr: "pipe" });
   let line = "";
   const names = [...(head ? ["HEAD"] : []), ...refs];
@@ -438,8 +450,11 @@ const RUNTIME_ENV = ["BUN_OPTIONS", "NODE_OPTIONS", "GIT_DIR", "GIT_WORK_TREE", 
 let toolVersions: string | undefined;
 function toolsLine(): string {
   if (toolVersions === undefined) {
+    // input-site: traced #69cae5db — the fingerprint machinery
+    inputSiteReached("input-hash: git --version");
     const git = Bun.spawnSync(["git", "--version"], { stdout: "pipe", stderr: "pipe" });
     // The variables that change how bun or git behave for EVERY script, whatever it reads itself.
+    // input-site: env BUN_OPTIONS,NODE_OPTIONS,GIT_DIR,GIT_WORK_TREE,GIT_INDEX_FILE,TZ,LANG,LC_ALL #841ddb83 — RUNTIME_ENV, hashed into every fingerprint
     const runtimeEnv = RUNTIME_ENV.map((n) => `${n}=${JSON.stringify(process.env[n] ?? null)}`).join(" ");
     toolVersions = `tools bun ${Bun.version} ${Bun.revision} ${git.exitCode === 0 ? git.stdout.toString().trim() : "git?"} ${runtimeEnv}\n`;
   }
@@ -520,15 +535,14 @@ export function fingerprint(
   // input. A non-TypeScript script cannot be audited, so it is undetermined.
   const foreign = entries.find((e) => !/\.(m?[jt]sx?)$/.test(e));
   if (foreign !== undefined) return { undetermined: `${foreign} is not TypeScript/JavaScript, so its reads cannot be audited` };
-  const audit = auditClosure(root, entries, digests.sites);
+  const audit = auditClosure(root, entries, digests.sites, undefined, (name) => entryFiles(root, scripts, name));
   if ("undetermined" in audit) return audit;
   if (audit.needsTree && !wholeTree) {
     return { undetermined: "a source reads the working tree through git (`tree` site), which only a {tracked} declaration covers" };
   }
-  if (audit.needsBaseline && refs.length === 0) {
-    return { undetermined: "a source reads the qa-reports store, and the command names no --against baseline whose identity could be hashed" };
-  }
   for (const name of audit.envUnset) {
+    // input-site: traced #87c9a17e — the fingerprint machinery
+    inputSiteReached("input-hash: fingerprint reads env-unset names");
     if ((process.env[name] ?? "") !== "") return { undetermined: `$${name} is set, and names something outside the tree` };
   }
   const closure = { files: wholeTree ? ([] as string[]) : audit.files };
@@ -536,6 +550,8 @@ export function fingerprint(
   const h = createHash("sha256");
   h.update(`recipe ${RECIPE_VERSION}\n`);
   h.update(toolsLine());
+  // input-site: traced #44be6c16 — the fingerprint machinery; a check that only imports this module computes no fingerprint
+  inputSiteReached("input-hash: fingerprint reads audited env");
   for (const name of audit.env) h.update(`env ${name} = ${JSON.stringify(process.env[name] ?? null)}\n`);
   if (audit.needsHead || audit.refs.length > 0) {
     const hist = historyLine(root, audit.needsHead, audit.refs);

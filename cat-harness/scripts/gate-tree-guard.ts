@@ -159,6 +159,7 @@ export function isUntracked(code: string): boolean {
 export function readTree(root: string): TreeReading {
   let r: ReturnType<typeof spawnSync>;
   try {
+    // input-site: tree #e96df6b1 — git status --porcelain: the working tree against the index
     r = spawnSync("git", ["status", "--porcelain"], {
       cwd: root,
       encoding: "utf-8",

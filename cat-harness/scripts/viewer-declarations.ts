@@ -216,6 +216,7 @@ let cache: { repoRoot: string; pages: ViewerPage[]; kindsByTool: Map<string, rea
  */
 function index(repoRoot: string): NonNullable<typeof cache> {
   if (cache?.repoRoot === repoRoot) return cache;
+  // input-site: tree #866bc4e1 — ls-files: the index
   const files = Bun.spawnSync(["git", "ls-files", "*.md", "*.html"], { cwd: repoRoot })
     .stdout.toString().split("\n").filter(Boolean);
   const kindsByTool = new Map(

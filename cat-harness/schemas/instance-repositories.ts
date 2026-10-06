@@ -144,6 +144,7 @@ export function locationMismatch(entry: InstanceRepository, checkoutRoot: string
 
 /** Is `dir` the top of its own git work tree (a repository, or a submodule of one)? */
 function ownWorkTreeRoot(dir: string): boolean {
+  // input-site: tree #1c1a3465 — rev-parse --show-toplevel: a fact about the checkout
   const r = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd: dir, encoding: "utf-8" });
   return r.status === 0 && resolve(r.stdout.trim()) === resolve(dir);
 }

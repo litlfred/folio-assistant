@@ -37,6 +37,7 @@ import { authorizeTask, describeVerdict, type TaskAuthVerdict } from "./authoriz
 import { provActivityFor } from "./prov-record.js";
 import type { ProvActivity } from "../../schemas/prov.js";
 import type { AccessContext, Principal } from "../core/access.js";
+import { inputSiteReached } from "../../scripts/input-trace.ts";
 
 export interface HistoryEntry {
   at: string;
@@ -209,7 +210,11 @@ export type Enabled = EnabledActivity | EnabledDecision;
 
 export class WorkflowError extends Error {}
 
-const now = (): string => new Date().toISOString();
+const now = (): string => {
+  // input-site: traced #6203122b — stamps a workflow instance being written
+  inputSiteReached("workflow instance: clock");
+  return new Date().toISOString();
+};
 
 /**
  * Push a token out of `from` and let it settle.

@@ -124,6 +124,7 @@
   "_name_comment": "THE NAME IS NOT AN INSTANTIATION CLAIM. `fhir-harness` is DECLARED here and is not instantiated: instantiation is a `<name>.config.json` at the REPOSITORY root (`harness-tiles`, bean `6n23`), and there is no `fhir-harness.config.json`. It also declares no `coverage.visualiser` on either directory, so by the tile rule it owes no tile and gets none — making it, measured 2026-09-23, the least harness-like thing in this repository that carries the word in its name. That is not a defect: this repository stages future instances as siblings, and `description` above says so (\"What a non-WHO implementation guide instantiates\") — a downstream IG instantiates it, this checkout does not. Written down because the name says otherwise to anyone who has not read the declaration, and `check:harness-claims` reports the pairing rather than leaving the next reader to re-derive it.",
   "taskIo": {
     "check:artifact-index": {
+      "inputs": ["{tracked}"],
       "outputs": [],
       "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     },
@@ -132,6 +133,7 @@
       "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     },
     "p2:refusals:check": {
+      "inputs": ["{tracked}"],
       "outputs": [],
       "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     }

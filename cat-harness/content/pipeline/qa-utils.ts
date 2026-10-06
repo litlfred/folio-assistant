@@ -109,6 +109,7 @@ export function gitHeadSha(repoRoot?: string): string {
     const args = repoRoot
       ? ["-C", repoRoot, "rev-parse", "HEAD"]
       : ["rev-parse", "HEAD"];
+    // input-site: head #0901bc77 — rev-parse HEAD
     return execFileSync("git", args, {
       stdio: ["ignore", "pipe", "ignore"],
     })
@@ -146,6 +147,7 @@ function isShallowRepo(repoRoot: string): boolean {
   let value: boolean;
   try {
     value =
+      // input-site: head #78047794 — rev-parse --is-shallow-repository: the shallow boundary, hashed with HEAD
       execFileSync("git", ["-C", repoRoot, "rev-parse", "--is-shallow-repository"], {
         stdio: ["ignore", "pipe", "ignore"],
       })
@@ -168,6 +170,7 @@ function graftBoundary(repoRoot: string): Set<string> {
   let value: Set<string>;
   try {
     value = new Set(
+      // input-site: head #a7c85737 — rev-list --max-parents=0 HEAD
       execFileSync("git", ["-C", repoRoot, "rev-list", "--max-parents=0", "HEAD"], {
         stdio: ["ignore", "pipe", "ignore"],
       })
@@ -231,6 +234,7 @@ export function gitFileCommitSha(relPath: string, repoRoot: string): string {
 /** The uncached body — every `git` call this function ever made lives here. */
 function computeFileCommitSha(relPath: string, repoRoot: string): string {
   try {
+    // input-site: head #99683ba2 — git log -1 -- <path>: history reachable from HEAD
     const out = execFileSync(
       "git",
       ["-C", repoRoot, "log", "-n", "1", "--format=%H", "--", relPath],
@@ -1660,6 +1664,7 @@ export const CI_SWEEP_ACTOR = "ci-pipeline";
 export const LOCAL_SWEEP_ACTOR = "local-sweep";
 
 /** Which of the two declared sweep actors is running. Takes `env` so it is testable. */
+// input-site: env CI,GITHUB_ACTIONS #eddec1a1 — which sweep actor is named in a sidecar
 export function sweepActor(env: Record<string, string | undefined> = process.env): string {
   return env.CI === "true" || env.GITHUB_ACTIONS === "true" ? CI_SWEEP_ACTOR : LOCAL_SWEEP_ACTOR;
 }

@@ -87,6 +87,7 @@ import { SkillNameSchema } from "./tool-types";
 
 import { RequirementRefSchema } from "../../bootstrap-tools/schemas/requirement.ts";
 import { NETWORK_REACHES, REACH_UNKNOWN } from "./actor-reach";
+import { inputSiteReached } from "../scripts/input-trace.ts";
 
 /** The `$schema` tag every test run carries. */
 export const TEST_RUN_SCHEMA_ID = "folio-test-run/v1";
@@ -303,6 +304,9 @@ export function buildTestRun(args: {
   const process = hashBasis(args.root, args.processInputs);
   const overlap = basisOverlap(data, process);
   if (overlap.length) throw new TestRunBasisError(overlap);
+  // input-site: traced #da3af1f9 — stamps a test-run record when the caller gives no time
+  inputSiteReached("test-run: clock");
+  const updatedAt = (args.now ?? new Date()).toISOString();
   return {
     $schema: TEST_RUN_SCHEMA_ID,
     skill: args.skill,
@@ -311,7 +315,7 @@ export function buildTestRun(args: {
     process,
     outcome: args.outcome,
     ...(args.cases === undefined ? {} : { cases: args.cases }),
-    updated_at: (args.now ?? new Date()).toISOString(),
+    updated_at: updatedAt,
     ...(args.plan === undefined ? {} : { plan: args.plan }),
     ...(args.sut === undefined ? {} : { sut: args.sut }),
   };

@@ -81,6 +81,7 @@ import "../schemas/folio-graph-typology.js";
 import { waitFor } from "../src/core/retry.js";
 import { PUSH_BASE_MS, PUSH_CAP_MS } from "./backoff-sleep.js";
 import { TreeStore } from "./branch-store.js";
+import { inputSiteReached, qaRefLine, quietly } from "./input-trace.ts";
 
 // ── Constants ────────────────────────────────────────────────────────────
 
@@ -306,7 +307,7 @@ export function pickQaBranch(candidates: readonly string[], present: ReadonlySet
 // is left here is only what locates the checkout it runs in.
 
 function gitTopLevel(cwd = process.cwd()): string {
-  // input-site: baseline #128d75cd — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+  // input-site: store #128d75cd — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
   const r = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd, encoding: "utf-8" });
   if (r.status !== 0) throw new QaUsageError(`not inside a git checkout: ${cwd}`);
   return r.stdout.trim();
@@ -348,12 +349,12 @@ class Store extends TreeStore {
 
 /** The checkout's own `http.*.extraheader` lines, carried in env (never argv). */
 function authEnvFrom(repoRoot: string): Record<string, string> {
-  // input-site: baseline #d6d10161 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+  // input-site: store #d6d10161 — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
   const r = spawnSync("git", ["config", "--get-regexp", "^http\\..*extraheader$"], { cwd: repoRoot, encoding: "utf-8" });
   if (r.status !== 0 || !r.stdout.trim()) return {};
   const env: Record<string, string> = {};
   const lines = r.stdout.trim().split("\n");
-  // input-site: baseline #d641fe25 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+  // input-site: store #d641fe25 — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
   const base = Number(process.env.GIT_CONFIG_COUNT ?? 0) || 0;
   lines.forEach((line, i) => {
     const sp = line.indexOf(" ");
@@ -368,10 +369,10 @@ const stores = new Map<string, Store>();
 
 function openStore(opts: QaStoreOptions = {}): { store: Store; repoRoot: string } {
   const repoRoot = opts.repoRoot ?? gitTopLevel();
-  // input-site: baseline #82ec2164 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+  // input-site: store #82ec2164 — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
   let remote = opts.remote ?? process.env.QA_STORE_REMOTE;
   if (!remote) {
-    // input-site: baseline #68c082a4 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+    // input-site: store #68c082a4 — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
     const r = spawnSync("git", ["remote", "get-url", "origin"], { cwd: repoRoot, encoding: "utf-8" });
     if (r.status !== 0) throw new QaUsageError(`no remote: ${repoRoot} has no \`origin\`; pass --remote or QA_STORE_REMOTE`);
     remote = r.stdout.trim();
@@ -385,10 +386,10 @@ function openStore(opts: QaStoreOptions = {}): { store: Store; repoRoot: string 
       branch = DEFAULT_QA_BRANCH;
     }
   }
-  // input-site: baseline #ed418525 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+  // input-site: store #ed418525 — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
   let storeDir = opts.storeDir ?? process.env.QA_STORE_DIR;
   if (!storeDir) {
-    // input-site: baseline #f48bd6b7 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+    // input-site: store #f48bd6b7 — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
     const c = spawnSync("git", ["rev-parse", "--path-format=absolute", "--git-common-dir"], { cwd: repoRoot, encoding: "utf-8" });
     if (c.status !== 0) throw new QaUsageError(`cannot find the git directory of ${repoRoot}`);
     storeDir = join(c.stdout.trim(), "qa-store.git");
@@ -491,7 +492,19 @@ function verifyEntry(store: Store, entry: string, key: string): { state: "ok"; m
   return { state: "ok", manifest };
 }
 
+/**
+ * Every by-ref read of the store comes through here, so it is where a read is
+ * reported to the input-hash trace (`input-trace.ts`, bean `f017`): as the REF,
+ * which a recording run tolerates exactly when its fingerprint hashed that
+ * ref's baseline (`--against`). The store's own git calls are silenced inside
+ * it — the ref says more than "the store was read".
+ */
 function snapshot(ref: string, opts: QaStoreOptions): SnapshotResult {
+  inputSiteReached(qaRefLine(ref));
+  return quietly(() => snapshotUntraced(ref, opts));
+}
+
+function snapshotUntraced(ref: string, opts: QaStoreOptions): SnapshotResult {
   const spec = parseQaRef(ref);
   const { store } = openStore(opts);
   const memo = `${store.dir}|${store.remote}|${store.candidates.join(",")}|${ref}`;
@@ -711,7 +724,7 @@ function buildEntry(
   roots: string[],
   extra: Partial<QaManifest>,
 ): { entry: string; manifest: QaManifest } | undefined {
-  // input-site: baseline #66be449e — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+  // input-site: store #66be449e — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
   const tmp = mkdtempSync(join(tmpdir(), "qa-store-index-"));
   try {
     const env = { GIT_INDEX_FILE: join(tmp, "index") };
@@ -740,7 +753,7 @@ function buildEntry(
       payloadTree: payload,
       files,
       bytes,
-      // input-site: baseline #18c2fdfe — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+      // input-site: store #18c2fdfe — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
       written_at: extra.written_at ?? new Date().toISOString(),
     };
     const mblob = store.hashBlob(JSON.stringify(manifest, null, 2) + "\n");
@@ -853,7 +866,7 @@ export function publishQa(
     else skipped.push(rel);
   }
   if (skipped.length) store.log(`qa-store: not in the checkout, skipped: ${skipped.join(", ")}`);
-  // input-site: baseline #0a597796 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+  // input-site: store #0a597796 — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
   const writtenAt = args.writtenAt ?? new Date().toISOString();
   const built = roots.length
     ? buildEntry(store, repoRoot, key, roots, {
@@ -1044,7 +1057,7 @@ export function pruneQa(
   opts: QaStoreOptions = {},
 ): PruneResult {
   const { store } = openStore(opts);
-  // input-site: baseline #2f3d53ee — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+  // input-site: store #2f3d53ee — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
   const now = args.now ?? new Date();
   const prState = args.prState ?? (() => ({ state: "unknown" }) as PrState);
   let lastPlan: PrunePlan | undefined;
@@ -1186,12 +1199,12 @@ export function main(argv: string[]): number {
       if (f.has("github")) {
         let event: unknown;
         try {
-          // input-site: baseline #d7f91bed — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+          // input-site: store #d7f91bed — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
           event = process.env.GITHUB_EVENT_PATH ? JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, "utf-8")) : undefined;
         } catch {
           event = undefined;
         }
-        // input-site: baseline #9cc42cff — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+        // input-site: store #9cc42cff — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
         const d = githubPublishDecision(process.env, event);
         if (!d.publish) {
           // A notice in the run summary, and exit 0: a skipped publish is a
@@ -1228,7 +1241,7 @@ export function main(argv: string[]): number {
         completeness = c.completeness;
       }
       const roots = f.many("root").length ? f.many("root") : resolveQaLocation(repoRoot).directories.filter((d) => d.present).map((d) => d.path);
-      // input-site: baseline #f79bad10 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+      // input-site: store #f79bad10 — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
       const run = process.env.GITHUB_RUN_ID ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}` : undefined;
       const gates = f.one("gates-result");
       const r = publishQa(
@@ -1239,7 +1252,7 @@ export function main(argv: string[]): number {
       return r.state === "published" || r.state === "present" ? 0 : r.state === "empty" ? QA_EXIT.miss : QA_EXIT.unknown;
     }
     case "prune": {
-      // input-site: baseline #ec29a4c5 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
+      // input-site: store #ec29a4c5 — configures or performs a qa-reports store read; every by-ref read is reported by snapshot(), every other git call by TreeStore.git()
       const now = f.one("now") ? new Date(f.one("now")!) : new Date();
       if (Number.isNaN(now.getTime())) throw new QaUsageError(`--now is not a date: ${f.one("now")}`);
       const prState = f.one("pr-states") ? readPrStates(f.one("pr-states")!) : undefined;

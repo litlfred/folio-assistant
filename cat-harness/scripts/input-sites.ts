@@ -40,11 +40,12 @@
  * | `env-unset A` | the variable names something outside the tree (a path, a URL) | is undetermined unless `A` is unset or empty |
  * | `tree` | the answer is a function of the working tree and index — `git ls-files`, `git rev-parse --show-toplevel` | is undetermined unless the declaration is `{tracked}` |
  * | `head` | the answer reads commit history reachable from `HEAD` — `git log`, `git rev-list HEAD` | hashes the `HEAD` commit id and the shallow boundary: a commit id names its whole history |
- * | `baseline` | the site is the `qa-reports` store's machinery (remote, bare store, auth) | is undetermined unless the command passes `--against`, whose entry identity `input-hash.ts` hashes |
+ * | `store` | configures or performs a branch-store read (`branch-store.ts`, `qa-store.ts`), whose every git call is reported to the trace — by `qa-store`'s snapshot as the ref it reads, by `TreeStore.git()` otherwise | nothing; a recording run tolerates only `qa-ref` lines for the `--against` refs whose identity it hashed |
  * | `refs A,B` | the answer reads these refs (`origin/main`) and the history they reach | hashes what each resolves to, missing included |
  * | `traced` | a read no check is known to reach, behind a call to `inputSiteReached()` on the line directly above it (`input-trace.ts`) | nothing — a run that reaches it records no hash |
  * | `inert` | the value read never reaches the exit code: a timestamp in a message, a duration, a temp dir removed before exit | nothing |
  * | `imports <glob>,…` | a computed `import()` / `require()` whose targets all lie under these globs | adds the globs' files to the closure as IMPORTED modules |
+ * | `scripts <name>,…` | a spawned `bun run <name>` of these package.json scripts, with this process's environment | adds each script's entry files (`entryFiles`) as ENTRIES; a name that does not resolve is undetermined |
  * | `runs <glob>,…` | a spawned `bun` script whose entry files all lie under these globs, run with this process's environment | adds the globs' files to the closure as ENTRIES — their `import.meta.main` blocks run |
  *
  * The PIN is the first 8 hex digits of the sha-256 of the site's STATEMENT
@@ -79,7 +80,7 @@ export const RISKS: Readonly<Record<string, RegExp>> = {
   network: /\bfetch\s*\(|["']node:(?:https?|http2|net|dns|tls|dgram)["']|\bWebSocket\b|\bBun\.connect\b|\bXMLHttpRequest\b/,
   clock: /\bDate\.now\s*\(|\bnew Date\s*\(\s*\)|\bperformance\.now\s*\(|\bprocess\.hrtime\b|\bBun\.nanoseconds\b/,
   random: /\bMath\.random\s*\(|\brandomUUID\s*\(|\brandomBytes\s*\(|\bgetRandomValues\s*\(/,
-  spawn: /\bspawnSync\b|(?<!\w)spawn\s*\(|\bexecSync\b|\bexecFileSync\b|(?<!\w)execFile\s*\(|(?<![\w.])exec\s*\(|\bBun\.spawn(?:Sync)?\b|\bBun\.\$|\bnew Worker\s*\(/,
+  spawn: /(?<!typeof\s)\bspawnSync\b|(?<!\w)spawn\s*\(|\bexecSync\b|\bexecFileSync\b|(?<!\w)execFile\s*\(|(?<![\w.])exec\s*\(|\bBun\.spawn(?:Sync)?\b|\bBun\.\$|\bnew Worker\s*\(/,
   host: /\bhomedir\s*\(|\btmpdir\s*\(|\bhostname\s*\(|\buserInfo\s*\(|\bcpus\s*\(|\bnetworkInterfaces\s*\(/,
   computed: /(?:^|[^\w$.])import\s*\(\s*(?!["'][^"'`$]*["']\s*\))|\brequire\s*\(\s*(?!["'][^"'`$]*["']\s*\))|\beval\s*\(|\bnew Function\s*\(/,
   outside: /["'`]\/(?:home|root|tmp|etc|usr|var|proc)\//,
@@ -91,12 +92,13 @@ export type SiteVerdict =
   | { kind: "env-unset"; names: string[] }
   | { kind: "tree" }
   | { kind: "head" }
-  | { kind: "baseline" }
+  | { kind: "store" }
   | { kind: "traced" }
   | { kind: "refs"; names: string[] }
   | { kind: "inert" }
   | { kind: "imports"; globs: string[] }
-  | { kind: "runs"; globs: string[] };
+  | { kind: "runs"; globs: string[] }
+  | { kind: "scripts"; names: string[] };
 
 /** A line of a source file that matched a risk. */
 export interface Site {
@@ -117,6 +119,21 @@ export interface Site {
   inMain?: boolean;
 }
 
+/**
+ * Annotations for files this repository cannot edit — the `bootstrap` and
+ * `bootstrap-tools` submodules, whose source is pinned by commit. Keyed by
+ * file, then by the statement's PIN, so a submodule bump that changes the
+ * statement leaves the site unannotated, exactly as an inline pin would. Each
+ * value is the verdict text an inline annotation would carry, then ` — why`.
+ * Inline annotations are preferred; an entry here moves upstream with the file.
+ */
+export const SUBMODULE_SITES: Readonly<Record<string, Readonly<Record<string, string>>>> = {
+  "bootstrap-tools/scripts/git-files.ts": {
+    "7e7c88ec": "tree — ls-files --cached --others --exclude-standard: the index and the untracked files",
+    "481c0381": "tree — ls-files: the index and the untracked files",
+  },
+};
+
 const ANNOTATION_RE = /^\s*\/\/\s*input-site:\s*(.+?)\s*#([0-9a-f]{8})\b/;
 
 /** Parse `env A,B; tree` into verdicts, or say what is wrong with it. */
@@ -133,6 +150,10 @@ export function parseVerdicts(text: string): SiteVerdict[] | { error: string } {
         }
         out.push({ kind: word, names: args });
         break;
+      case "scripts":
+        if (args.length === 0 || !args.every((a) => /^[A-Za-z0-9:_-]+$/.test(a))) return { error: "`scripts` needs package script names" };
+        out.push({ kind: "scripts", names: args });
+        break;
       case "refs":
         if (args.length === 0 || !args.every((a) => /^[A-Za-z0-9_./-]+$/.test(a))) return { error: "`refs` needs ref names" };
         out.push({ kind: "refs", names: args });
@@ -144,7 +165,7 @@ export function parseVerdicts(text: string): SiteVerdict[] | { error: string } {
         break;
       case "tree":
       case "head":
-      case "baseline":
+      case "store":
       case "traced":
       case "inert":
         if (args.length > 0) return { error: `\`${word}\` takes no arguments` };
@@ -381,6 +402,12 @@ export function scanSource(file: string, text: string): Site[] {
       } else verdicts = m[2] === pin ? parsed : "stale";
       break;
     }
+    const side = verdicts === undefined && malformed === undefined ? SUBMODULE_SITES[file]?.[pin] : undefined;
+    if (side !== undefined) {
+      const parsed = parseVerdicts(side.split(" — ")[0]!);
+      if ("error" in parsed) malformed = `SUBMODULE_SITES: ${parsed.error}`;
+      else verdicts = parsed;
+    }
     sites.push({ file, line: i + 1, risks: [...risks], pin, verdicts, ...(malformed ? { malformed } : {}), ...(main.has(i) ? { inMain: true } : {}) });
   }
   return sites;
@@ -413,8 +440,6 @@ export interface AuditedClosure {
   needsTree: boolean;
   /** Whether some site reads history reachable from `HEAD` (`head`). */
   needsHead: boolean;
-  /** Whether some site reads the qa-reports store (`baseline`). */
-  needsBaseline: boolean;
   /** Refs some site reads (`refs`). */
   refs: string[];
 }
@@ -477,6 +502,8 @@ export function auditClosure(
   memo: SiteMemo = new SiteMemo(),
   /** Report: gather EVERY problem instead of stopping at the first (`input-hash:coverage`). */
   problems?: string[],
+  /** Resolves a `scripts` verdict's package script to its entry files; absent, such a site is undetermined. */
+  scriptEntries?: (name: string) => string[] | undefined,
 ): AuditedClosure | { undetermined: string } {
   // A file is visited at most twice: once IMPORTED (its `import.meta.main`
   // block does not run) and once as an ENTRY (it does). Entry subsumes import.
@@ -485,7 +512,6 @@ export function auditClosure(
   const envUnset = new Set<string>();
   let needsTree = false;
   let needsHead = false;
-  let needsBaseline = false;
   const refs = new Set<string>();
   const stack: { file: string; entry: boolean }[] = entries.map((e) => ({ file: resolve(root, e), entry: true }));
   const pushGlobs = (globs: readonly string[], entry: boolean) => {
@@ -520,10 +546,21 @@ export function auditClosure(
         else if (v.kind === "env-unset") v.names.forEach((n) => envUnset.add(n));
         else if (v.kind === "tree") needsTree = true;
         else if (v.kind === "head") needsHead = true;
-        else if (v.kind === "baseline") needsBaseline = true;
         else if (v.kind === "refs") v.names.forEach((n) => refs.add(n));
         else if (v.kind === "imports") pushGlobs(v.globs, false);
         else if (v.kind === "runs") pushGlobs(v.globs, true);
+        else if (v.kind === "scripts") {
+          for (const name of v.names) {
+            const files = scriptEntries?.(name);
+            if (files === undefined) {
+              const why = `input-site at ${s.file}:${s.line} runs package script ${name}, which does not resolve to script files`;
+              if (problems === undefined) return { undetermined: why };
+              problems.push(why);
+              continue;
+            }
+            for (const f of files) stack.push({ file: resolve(root, f), entry: true });
+          }
+        }
       }
     }
     if (prior === "import") continue; // its imports were followed on the first visit
@@ -541,7 +578,6 @@ export function auditClosure(
     envUnset: [...envUnset].sort(),
     needsTree,
     needsHead,
-    needsBaseline,
     refs: [...refs].sort(),
   };
 }

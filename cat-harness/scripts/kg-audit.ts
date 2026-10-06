@@ -1722,6 +1722,7 @@ function arrowDirection(): KgCriterionEntry {
  */
 function proseNamesResolve(): KgCriterionEntry {
   const repo = REPO_ROOT;
+  // input-site: tree #af526755 — ls-files: the index
   const ls = Bun.spawnSync(["git", "ls-files"], { cwd: repo });
   if (ls.exitCode !== 0) {
     return { result: "unknown", findings: [{ where: "—", detail: "`git ls-files` failed, so a bare file name cannot be looked up." }] };

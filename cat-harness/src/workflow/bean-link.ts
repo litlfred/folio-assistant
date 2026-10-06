@@ -32,6 +32,7 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { inputSiteReached } from "../../scripts/input-trace.ts";
 
 export type WorkPlanOp = "claim" | "note" | "resolve";
 
@@ -49,6 +50,8 @@ const BEANS_DIR = "beans";
 /** Run the beans CLI; `undefined` when it is not installed or the call fails. */
 function cli(repoRoot: string, args: string[]): string | undefined {
   try {
+    // input-site: traced #5457f2e6 — the beans CLI, a binary outside the tree
+    inputSiteReached("bean-link: beans CLI");
     return execFileSync("beans", args, {
       cwd: repoRoot,
       encoding: "utf8",
@@ -104,9 +107,12 @@ function setStatusInFile(bean: BeanRef, status: string): void {
   if (!/^status:\s*.+$/m.test(body)) {
     throw new Error(`${bean.path} has no \`status:\` in its front matter`);
   }
+  // input-site: traced #1f19f8e1 — stamps a bean being written
+  inputSiteReached("bean-link: clock");
+  const stamp = new Date().toISOString().replace(/\.\d+Z$/, "Z");
   const next = body
     .replace(/^status:\s*.+$/m, `status: ${status}`)
-    .replace(/^updated_at:\s*.+$/m, `updated_at: ${new Date().toISOString().replace(/\.\d+Z$/, "Z")}`);
+    .replace(/^updated_at:\s*.+$/m, `updated_at: ${stamp}`);
   writeFileSync(bean.path, next, "utf8");
 }
 

@@ -28,6 +28,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 
 import { expectedInstanceConfigPath } from "../../schemas/harness-config";
+import { inputSiteReached } from "../../scripts/input-trace.ts";
 
 /**
  * Run a git command in `root`, or `undefined` if it fails.
@@ -41,6 +42,8 @@ import { expectedInstanceConfigPath } from "../../schemas/harness-config";
  */
 function git(root: string, args: string[]): string | undefined {
   try {
+    // input-site: traced #3bd90e7e — a generic git wrapper over refs and history
+    inputSiteReached("git-refs: git");
     return execFileSync("git", ["-C", root, ...args], {
       encoding: "utf-8",
       stdio: ["ignore", "pipe", "ignore"],

@@ -32,7 +32,8 @@ if (argv[0] === "--sites") {
   const rel = relative(root, resolve(file));
   for (const s of scanSource(rel, readFileSync(join(root, rel), "utf-8"))) {
     const state = s.verdicts === undefined ? "UNANNOTATED" : s.verdicts === "stale" ? "STALE" : "ok";
-    console.log(`${rel}:${s.line}  #${s.pin}  ${s.risks.join(",")}  ${state}${s.malformed ? ` (${s.malformed})` : ""}`);
+    const main = s.inMain ? "  (import.meta.main block: reached only as an entry)" : "";
+    console.log(`${rel}:${s.line}  #${s.pin}  ${s.risks.join(",")}  ${state}${s.malformed ? ` (${s.malformed})` : ""}${main}`);
   }
   process.exit(0);
 }
@@ -45,7 +46,12 @@ const rows: { task: string; state: string; why: string }[] = [];
 for (const [task, io] of Object.entries(TASK_IO).sort(([a], [b]) => a.localeCompare(b))) {
   const entries = entryFiles(root, scripts, task);
   const problems: string[] = [];
-  const audit = entries === undefined ? { undetermined: "does not resolve to script files" } : auditClosure(root, entries, memo, problems);
+  const foreign = entries?.find((e) => !/\.(m?[jt]sx?)$/.test(e));
+  const audit = entries === undefined
+    ? { undetermined: "does not resolve to script files" }
+    : foreign !== undefined
+      ? { undetermined: `${foreign} is not TypeScript/JavaScript, so its reads cannot be audited` }
+      : auditClosure(root, entries, memo, problems, (name) => entryFiles(root, scripts, name));
   for (const p of problems) {
     const site = /at (\S+:\d+)/.exec(p)?.[1] ?? p;
     (blockers.get(site) ?? blockers.set(site, new Set()).get(site)!).add(task);

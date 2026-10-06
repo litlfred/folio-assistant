@@ -206,6 +206,7 @@ export function tipPresence(
   markerId: string = loc.id,
 ): { state: "mounted"; into: string } | { state: "not-cut-over" | "unmounted"; detail: string } {
   const rel = relative(repoRoot, abs).split(sep).join("/") || ".";
+  // input-site: tree #55f6272d — ls-files: the index
   const tracked = spawnSync("git", ["ls-files", "--", rel], { cwd: repoRoot, encoding: "utf-8" });
   if (tracked.status === 0 && tracked.stdout.trim()) {
     const n = tracked.stdout.trim().split("\n").length;
@@ -279,6 +280,7 @@ export function routePresence(
   repoRoot: string,
 ): { state: "off-checkout" } | { state: "not-cut-over"; detail: string } {
   const rel = relative(repoRoot, abs).split(sep).join("/") || ".";
+  // input-site: tree #55f6272d — ls-files: the index
   const tracked = spawnSync("git", ["ls-files", "--", rel], { cwd: repoRoot, encoding: "utf-8" });
   if (!(tracked.status === 0 && tracked.stdout.trim())) return { state: "off-checkout" };
   const n = tracked.stdout.trim().split("\n").length;

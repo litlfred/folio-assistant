@@ -148,6 +148,7 @@ function derivedStored(): boolean {
  * `undefined` falls back to the cwd, which is the previous behaviour.
  */
 function instanceCheckout(): string | undefined {
+  // input-site: tree #bea6eb90 — rev-parse --show-toplevel: a fact about the checkout
   const r = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd: INSTANCE_ROOT, encoding: "utf-8" });
   return r.status === 0 ? r.stdout.trim() : undefined;
 }
@@ -499,6 +500,7 @@ function entry(
     field_hash: fieldHash,
     result,
     reviewer: reviewer(),
+    // input-site: inert #1cab269c — reviewed_at; --check compares substantive(), which drops timestamps
     reviewed_at: new Date().toISOString(),
     reviewed_sha: gitHeadSha(INSTANCE_ROOT),
     ...extra,
@@ -704,6 +706,7 @@ export function buildReport(
     po: poRel,
     source_hashes: hashes,
     criteria,
+    // input-site: inert #66ee6012 — updated_at; --check compares substantive(), which drops timestamps
     updated_at: new Date().toISOString(),
   };
 }

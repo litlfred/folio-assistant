@@ -596,6 +596,7 @@ export function missingScripts(instance: string = INSTANCE_ROOT): string[] {
  * generator WROTE files.
  */
 function run(args: readonly string[]): number {
+  // input-site: scripts skill:commands:check,skills:docs:check,check:glossary,auto:docs:check,lsi:skills:check,lsi:viz:check,kg:audit:check,kg:detangle:check,uml:overview:check,subgraph:jsonld:check #87cfacc6 — the verify half of every STEP (the write half runs only without --check, in the main block's write mode); input-sites.test.ts holds this list to STEPS
   const r = spawnSync("bun", ["run", ...args], {
     stdio: "inherit",
     cwd: resolve(INSTANCE_ROOT, ".."),
@@ -615,6 +616,7 @@ function run(args: readonly string[]): number {
  * the chain.
  */
 async function verifyQuietly(args: readonly string[]): Promise<number> {
+  // input-site: scripts skill:commands:check,skills:docs:check,check:glossary,auto:docs:check,lsi:skills:check,lsi:viz:check,kg:audit:check,kg:detangle:check,uml:overview:check,subgraph:jsonld:check #7ede2ecc — the verify half of every STEP; input-sites.test.ts holds this list to STEPS
   const p = Bun.spawn(["bun", "run", ...args], {
     cwd: resolve(INSTANCE_ROOT, ".."),
     stdout: "pipe",

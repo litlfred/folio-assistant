@@ -45,6 +45,7 @@ import { parseManifestStringArray } from "./qa-checkers-extended";
 import { readBlockManifest, walkBlocks } from "./qa-utils";
 import { findContentRepoRoot } from "./repo-root";
 import { parseStringField } from "./uses-field";
+import { inputSiteReached } from "../../scripts/input-trace.ts";
 
 // ── Corpus label index (built once per process) ─────────────────
 
@@ -139,11 +140,14 @@ export function checkIdUnique(paths: CheckerPaths): CheckerResult {
 
 /** The ref a block's label must be stable against. */
 export function idBaseRef(): string {
+  // input-site: env QA_ID_BASE_REF #af4f5d54 — names the base ref; the ref itself is read behind the traced git wrapper
   return process.env.QA_ID_BASE_REF || "origin/main";
 }
 
 function git(cwd: string, args: string[]): string | undefined {
   try {
+    // input-site: traced #6c307a64 — a generic git wrapper; its callers read the base ref
+    inputSiteReached("qa-checkers-ids: git");
     return execFileSync("git", args, { cwd, encoding: "utf-8", stdio: ["ignore", "pipe", "ignore"] });
   } catch {
     return undefined;

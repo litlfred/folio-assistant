@@ -55,6 +55,7 @@ import {
   type AdjudicationStatus,
 } from "../schemas/term-adjudication.ts";
 import { againstOrUsage, buildQaResult, judgeQaResult, judgeUsage, writeQaResult } from "./qa-results.ts";
+import { inputSiteReached } from "./input-trace.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const STEM = "term-mapping";
@@ -551,9 +552,12 @@ function main(): number {
   if (badRef !== undefined) return badRef;
   const { mappings, scope } = run(ROOT);
 
+  // input-site: traced #4492df34 — checked_at of the mappings it writes; main() runs only as an entry
+  inputSiteReached("check-term-mapping: clock");
+  const checkedAt = new Date().toISOString().slice(0, 10);
   const file = {
     $schema: "folio-term-mappings/v1" as const,
-    checked_at: new Date().toISOString().slice(0, 10),
+    checked_at: checkedAt,
     scope,
     mappings,
   };

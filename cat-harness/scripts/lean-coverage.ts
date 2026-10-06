@@ -49,6 +49,7 @@ import { readdirSync, readFileSync, existsSync, writeFileSync } from "fs";
 import { join, resolve, relative, dirname, basename } from "path";
 import { findContentRepoRoot } from "../content/pipeline/repo-root";
 import { requirePaper } from "../content/pipeline/repo-root";
+import { inputSiteReached } from "./input-trace.ts";
 
 // Was `import.meta.dir`-relative, i.e. the PLATFORM — but every path below is
 // folio content (`content/**`, `computations/**`), and this is used as the cwd
@@ -351,9 +352,12 @@ function computeStats(paperDir: string, contentRoot: string): Stats {
 
   const pct = (n: number, d: number) => d === 0 ? 0 : Math.round((n / d) * 1000) / 10;
 
+  // input-site: traced #1d2d5d8a — generated_at of a coverage report
+  inputSiteReached("lean-coverage: clock");
+  const generatedAt = new Date().toISOString();
   return {
     paper: paperDir,
-    generated_at: new Date().toISOString(),
+    generated_at: generatedAt,
     total_blocks: blocks.length,
     by_kind: byKind,
     provable: {

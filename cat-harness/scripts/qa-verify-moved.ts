@@ -93,6 +93,7 @@ export interface VerifyResult {
 }
 
 function gitTopLevel(cwd = process.cwd()): string {
+  // input-site: tree #128d75cd — rev-parse --show-toplevel: a fact about the checkout
   const r = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd, encoding: "utf-8" });
   if (r.status !== 0) throw new QaUsageError(`not a git checkout: ${cwd}`);
   return r.stdout.trim();
@@ -134,6 +135,7 @@ export function movedInventory(repoRoot: string, roots?: string[]): MovedInvento
 export function hashWorkingFiles(repoRoot: string, paths: string[]): Map<string, string> {
   const out = new Map<string, string>();
   if (paths.length === 0) return out;
+  // input-site: tree #b95bbdbf — hash-object of named working-tree files
   const r = spawnSync("git", ["hash-object", "--stdin-paths"], { cwd: repoRoot, input: paths.join("\n") + "\n", maxBuffer: 1 << 28 });
   if (r.status !== 0) throw new Error(`git hash-object failed: ${r.stderr?.toString().trim()}`);
   const ids = r.stdout.toString().trim().split("\n");

@@ -53,6 +53,7 @@ import { writeFileSync, rmSync } from "node:fs";
 import { createRequire } from "node:module";
 import { join, dirname, basename } from "node:path";
 import { ALL_BLOCK_KINDS } from "../../schemas/block-kinds";
+import { inputSiteReached } from "../../scripts/input-trace.ts";
 
 /** A block as the pipeline sees it, plus where it came from. */
 export interface LoadedBlock {
@@ -88,6 +89,8 @@ export async function loadBlockModule(
   tsPath: string,
   contributedKinds?: ReadonlySet<string>,
 ): Promise<LoadedBlock | undefined> {
+  // input-site: traced #9589922f — a content block's manifest, loaded by path
+  inputSiteReached("block-module: loadBlockModule loads a computed block file");
   const mod = (await import(tsPath)) as { default?: unknown };
   return asLoadedBlock(mod.default, tsPath, contributedKinds);
 }
@@ -252,7 +255,11 @@ export async function verifyEditedBlock(
   const probe = join(dir, `.${base}.prune-verify.${process.pid}.${++probeSeq}.ts`);
   try {
     writeFileSync(probe, newContent);
+    // input-site: traced #dd90738b — loads the block being edited; an editing path, not a check's
+    inputSiteReached("block-module: verifyEditedBlock loads a computed module");
     const before = await import(tsPath);
+    // input-site: traced #ec672866 — loads a probe written beside a block; an editing path, not a check's
+    inputSiteReached("block-module: verifyEditedBlock loads a computed module");
     const after = await import(probe);
     const b = before.default as Record<string, unknown>;
     const a = after.default as Record<string, unknown>;
