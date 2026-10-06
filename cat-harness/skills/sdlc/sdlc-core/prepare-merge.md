@@ -60,6 +60,13 @@ in [`kg-export`](../../kg/kg-core/kg-export.md) §"`fsh-guts` NEVER reaches a pu
    judgement and has none. See §"Conflicts in `test/results/` and
    `test/attestations/`" below before resolving either by hand.
 
+   **Merge with `bun run merge:main`, never a plain `git merge` followed by
+   regen.** It resolves every conflict a declared pattern covers (glossaries,
+   translated glossaries, UML, viewer pages, site data, QA sidecars), refuses
+   the rest with the tree restored, and runs regen on the result. A plain
+   `git merge` stops on those same generated files, one by one (measured
+   2026-10-06, bean `xpcu`).
+
    **And after EVERY base merge, conflicted or not, run `bun run regen`.**
    A clean merge is not evidence that the generated artefacts are right — see
    §"A clean merge can produce a wrong artefact" below. **If you merged with
@@ -319,6 +326,18 @@ bun run regen --dry-run         # report what is stale, change nothing
 bun run regen --changed <base>  # ask only the pairs whose inputs changed since <base>
 bun run regen --explain         # say, per pair, why it was asked or not
 ```
+
+**The QA working copy is part of the run — do not build it by hand around
+regen** (bean `7how`, issue #2319). Generators such as `uml:overview` and
+`readme:subgraphs` read the computed, ignored `*/test/results/` tree. Before
+every pass regen asks the copy's stamp
+(`bun run qa:working-copy -- --status`) whether it was built from the tree as
+it stands, and rebuilds it if not. The paths that rebuild changed join the
+pass's change set, so any pair that reads them is asked again. A failed build
+exits 2, and regen never grades a pass over a half-built copy. The recipe that
+grew around the gap (`regen → qa:working-copy → kg:detangle → regen`) is
+therefore one `regen`, or one `merge:main`. `gates` uses the same stamp, so the
+`gates` that follows a regen on the same tree builds nothing.
 
 It reports four states, and **`unrepaired` is the one to read**: a check that
 still fails after its writer ran is a real defect, not staleness, and the

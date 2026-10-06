@@ -54,6 +54,7 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`local-path.test.ts`](local-path.test.ts) | a file |  |
 | [`materialized-fixity.test.ts`](materialized-fixity.test.ts) | a file |  |
 | [`pdf-line-map.py`](pdf-line-map.py) | a file |  |
+| [`platform.ts`](platform.ts) | a file |  |
 | [`public-comment-changesets.ts`](public-comment-changesets.ts) | a file |  |
 | [`public-comment-pages.test.ts`](public-comment-pages.test.ts) | a file |  |
 | [`public-comment-pages.ts`](public-comment-pages.ts) | a file |  |
