@@ -68,7 +68,7 @@ Both fields are optional, and each absence has a meaning:
 
 ```json
 "remoteMounts": [
-  { "harness": "folio-assistant-core", "repository": "litlfred/folio-assistant",
+  { "harness": "<harness>", "repository": "<owner>/<repo>",
     "ref": "<40-character sha>",
     "overrides": { "cat-harness": { "directories": ["schemas", "skills"] }, "bootstrap": { "skip": true } } }
 ]
@@ -153,7 +153,7 @@ These are tracked on bean `0mpw`:
 - `init-folio --link remote`;
 - pinning `skill_fetch`'s `REFERENCE_PACKAGES`;
 - the pilot (smart-ra drops its submodule);
-- the who-iris cutover (bean `g8jp`), which is the first real consumer.
+- the first real consumer, the cutover tracked by bean `g8jp`.
 {% endraw %}
 
 ## Processes that run this skill
