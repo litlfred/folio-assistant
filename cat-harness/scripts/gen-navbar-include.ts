@@ -67,7 +67,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-import { siteDirFor } from "../schemas/cat-harness.js";
+import { instanceRootFor, siteDirFor } from "../schemas/cat-harness.js";
 import { graphTypologyRowDecor } from "./lib/graph-typology-nav.js";
 import { kindTitle } from "./lib/nav-label.js";
 import { navMarkFields, type HarnessMark } from "./lib/harness-mark.js";
@@ -79,12 +79,13 @@ import {
   type NavbarModel,
 } from "./lib/navbar.js";
 
-const ROOT = join(dirname(new URL(import.meta.url).pathname), "..", "..");
 // THE SITE ROOT IS ASKED FOR, never written down. `site-dir-single-answer`
 // refuses the literal in source, and rightly: this generator writes into the
 // site and a second copy of that string is a second answer to where the site
 // is. It caught this file on its first run.
-const INSTANCE = join(ROOT, "cat-harness");
+// The instance this generator belongs to, found by its declaration: in the
+// monorepo `<repo>/cat-harness`, standalone the repository root (bean `uxn1`).
+const INSTANCE = instanceRootFor(dirname(new URL(import.meta.url).pathname));
 const SITE = join(INSTANCE, siteDirFor(INSTANCE));
 const DATA = join(SITE, "_data", "harness.json");
 const OUT = join(SITE, "_includes", "generated", "navbar-footer.html");

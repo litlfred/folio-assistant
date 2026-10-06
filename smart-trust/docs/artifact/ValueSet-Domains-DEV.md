@@ -3,6 +3,10 @@ title: "WHO GDHCN Trust Domains - DEV — WHO SMART Trust artefact"
 description: "ValueSet/Domains-DEV in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ig_api_openapi: {"src":"../fhir-artifact-index/dak/ValueSet-Domains-DEV.openapi.json","script":"../assets/ig-api-openapi.js"}
+ig_footer: true
+ig_root: "../"
+ig_prev: "ValueSet-Domains.html"
+ig_next: "ValueSet-Domains-UAT.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -58,6 +62,3 @@ artefact page, and a whitespace-stripping opening tag ate the blank line after t
 <div class="ig-api-openapi-host" data-ig-api-openapi-src="{{ page.ig_api_openapi.src }}"><p>Loading the API information…</p></div>
 <noscript><p>The API information needs JavaScript; the <a href="{{ page.ig_api_openapi.src }}">OpenAPI file</a> does not.</p></noscript>
 <script src="{{ page.ig_api_openapi.script }}" defer></script>
-
-<footer id="ig-footer" data-prev="ValueSet-Domains.html" data-next="ValueSet-Domains-UAT.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

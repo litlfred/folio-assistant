@@ -2,6 +2,10 @@
 title: "Scheme Information — WHO SMART Trust artefact"
 description: "StructureDefinition/SchemeInformation in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureDefinition-HCert.html"
+ig_next: "ValueSet-KeyUsage.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://litlfred.github.io/smart-trust/StructureDefinition-SchemeInformation.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-SchemeInformation.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
-
-<footer id="ig-footer" data-prev="StructureDefinition-HCert.html" data-next="ValueSet-KeyUsage.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

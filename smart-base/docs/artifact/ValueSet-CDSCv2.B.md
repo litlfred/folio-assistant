@@ -3,6 +3,10 @@ title: "Services and Application Types: Health System/Provider Administration â€
 description: "ValueSet/CDSCv2.B in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ig_api_openapi: {"src":"../fhir-artifact-index/dak/ValueSet-CDSCv2.B.openapi.json","script":"../assets/ig-api-openapi.js"}
+ig_footer: true
+ig_root: "../"
+ig_prev: "ValueSet-CDSCv2.A.html"
+ig_next: "ValueSet-CDSCv2.C.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -58,6 +62,3 @@ artefact page, and a whitespace-stripping opening tag ate the blank line after t
 <div class="ig-api-openapi-host" data-ig-api-openapi-src="{{ page.ig_api_openapi.src }}"><p>Loading the API informationâ€¦</p></div>
 <noscript><p>The API information needs JavaScript; the <a href="{{ page.ig_api_openapi.src }}">OpenAPI file</a> does not.</p></noscript>
 <script src="{{ page.ig_api_openapi.script }}" defer></script>
-
-<footer id="ig-footer" data-prev="ValueSet-CDSCv2.A.html" data-next="ValueSet-CDSCv2.C.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -3,6 +3,8 @@ title: "Retrieve PKI material via API — testing"
 description: "Requirements: Retrieve PKI material via API - Testing (Experimental)."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Requirements-RetrievePKIMaterialAPI.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Requirements-RetrievePKIMaterialAPI.xml","active":false},{"label":"JSON","href":"Requirements-RetrievePKIMaterialAPI.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Requirements-RetrievePKIMaterialAPI.ttl","active":false}],"heading":"Requirements: Retrieve PKI material via API - Testing (Experimental)","status":"Active as of 2026-10-01","sections":[{"heading":"Test Plans","text":"No test plans are currently available for the Requirements."},{"heading":"Test Scripts","text":"No test scripts are currently available for the Requirements."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

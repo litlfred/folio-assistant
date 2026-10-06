@@ -731,3 +731,31 @@ test.describe("the unverified-translation notice", () => {
     await expect(page.locator(".fa-translation-warning")).toHaveCount(0);
   });
 });
+
+test.describe("on a folio's site the sweep badge is the folio's or says why — #2263 follow-up", () => {
+  // `compose-docs --shell` no longer ships the platform's
+  // `_data/translation-qa.json` into a folio's site, so the sweep there is
+  // absent. `head_custom.html` then passes `foreignSite.absent.translationQa`
+  // as `sweep.absent`. "Swept 49/689" on every page of an IG folio's site was the
+  // platform's sweep, and "QA: not run" would be a claim about the folio
+  // that nobody made.
+  const note = "ig-folio publishes no translation QA sweep on this site";
+
+  test("absent: inert, in words, with no ratio and no 'not run'", async ({ page }) => {
+    await serve(page, { lang: "en", availableLocales: [], sweep: { absent: note, run: false, totalPages: 0, pagesWithTranslations: 0, complete: false } });
+    const badge = page.locator(".fa-sweep-badge");
+    await expect(badge).toHaveText("– QA: not published");
+    await expect(badge).toHaveClass(/is-idle/);
+    await expect(badge).toHaveAttribute("title", "Translation QA: " + note + ".");
+  });
+
+  test("a site that publishes a sweep shows it, note or no note", async ({ page }) => {
+    await serve(page, { lang: "en", availableLocales: [], sweep: { absent: null, run: true, sweptAt: "t", totalPages: 12, pagesWithTranslations: 3, complete: true } });
+    await expect(page.locator(".fa-sweep-badge")).toContainText("Swept 3/12");
+  });
+
+  test("with no note the platform's own wording stands", async ({ page }) => {
+    await serve(page, { lang: "en", availableLocales: [], sweep: { run: false } });
+    await expect(page.locator(".fa-sweep-badge")).toContainText("QA: not run");
+  });
+});

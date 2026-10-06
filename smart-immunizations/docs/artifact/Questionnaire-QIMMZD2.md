@@ -2,6 +2,10 @@
 title: "IMMZ.D2.Determine required vaccination(s) — WHO SMART Immunizations artefact"
 description: "Questionnaire/QIMMZD2 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Questionnaire-QIMMZD18.html"
+ig_next: "Questionnaire-QIMMZD20.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Questionnaire for IMMZ.D2.Determine required vaccination(s)
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="Questionnaire-QIMMZD18.html" data-next="Questionnaire-QIMMZD20.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

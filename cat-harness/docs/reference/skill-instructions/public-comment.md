@@ -298,6 +298,15 @@ This is the same review loop as any content change
 (`content-change-review.bpmn`), with a different intake. Reuse it rather than
 building a parallel review.
 
+## Change-sets beyond public comment
+
+Since 2026-10-06 (owner, issue #971) the change-set is the Change Set for ANY
+change to a folio: one that answers no comment has empty `refs`. It applies to
+the materialised `folio/`, never to the `library/` source it was materialised
+from. Its PR carries `rendered`, one list per renderer of the rendered files
+the change alters, and review approves against those lists (skill
+`rendered-impact`).
+
 ## What not to do
 
 - Do not answer a comment by editing the review version in `library/`. It is

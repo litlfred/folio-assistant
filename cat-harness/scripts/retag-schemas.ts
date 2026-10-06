@@ -31,6 +31,18 @@ export const RENAMES_2026_10_05: Readonly<Record<string, string>> = {
   "folio-node-kind-index/v1": "node-kind-index/1.0.0",
 };
 
+/**
+ * Old tag → new tag for document kinds, made node kinds on 2026-10-06 (owner:
+ * every node kind gets pages). The same rename rule as above.
+ */
+export const RENAMES_2026_10_06: Readonly<Record<string, string>> = {
+  "folio-document-kind/v1": "document-kind/1.0.0",
+  "folio-document-kind-coverage/v1": "document-kind-coverage/1.0.0",
+};
+
+/** Every rename this script has shipped, so `--check` catches a file any of them missed. */
+export const RENAMES: Readonly<Record<string, string>> = { ...RENAMES_2026_10_05, ...RENAMES_2026_10_06 };
+
 const JSON_TAG = /("\$schema"\s*:\s*")([^"]+)(")/;
 const FRONT_MATTER_TAG = /^(\$schema:\s*["']?)([^"'\s]+)(["']?\s*)$/m;
 
@@ -70,7 +82,7 @@ if (import.meta.main) {
   let n = 0;
   for (const dir of dirs) {
     for (const f of files(dir)) {
-      const next = retag(readFileSync(f, "utf-8"), f, RENAMES_2026_10_05);
+      const next = retag(readFileSync(f, "utf-8"), f, RENAMES);
       if (next === undefined) continue;
       n++;
       if (check) console.error(`  ✗ ${f} carries a renamed tag`);

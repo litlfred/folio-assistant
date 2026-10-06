@@ -259,6 +259,35 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       satisfies: ["directory-conventions"],
       requires: { runtime: ["bun"], network: false },
     }),
+    // Bean `3tza`, owner ruling 2 (2026-10-06): stage 11 of `sub-kg-lifecycle`
+    // ("Verify on a fresh clone") is a command, as `seed:ready` became one.
+    defineTool({
+      id: "sub-kg-verify-clone",
+      title: "Verify a separated repository from a fresh clone",
+      description:
+        "Clone a separated sub-KG's repository (with submodules, and any sibling checkouts it needs) into an empty scratch directory, install, and run its gates: its `gates` script, else its `test` script (a person may pass `--gate` on the command line instead; it is not part of this contract because it is a shell command). Reports `green`, `red` or `unknown`; an empty tree, a failed clone or a repository with no gate is `unknown`, never green. Catches what a rehearsal inside this checkout cannot, because a rehearsal shares this checkout's `node_modules` and environment (#2082). Writes only inside the scratch directory.",
+      install: { none: true },
+      invoke: { shell: "bun run sub-kg:verify-clone" },
+      io: {
+        inputs: [
+          { name: "repo", schema: t("RepoFullName"), required: true, arg: { flag: "--repo" }, description: "The separated repository, `owner/name`. (The script also takes a git URL or a local path, for tests.)" },
+          { name: "ref", schema: t("Branch"), required: false, arg: { flag: "--ref" }, description: "The branch or tag to clone, e.g. the seeding PR's branch." },
+          { name: "sibling", schema: t("RepoFullName"), required: false, arg: { flag: "--sibling" }, description: "A repository to clone beside it, for a platform linked as a sibling checkout. Repeatable." },
+          { name: "work", schema: t("RepoPath"), required: false, arg: { flag: "--work" }, description: "Scratch directory, kept afterwards. Absent: a temporary directory, removed afterwards." },
+          { name: "text", schema: t("Flag"), required: false, arg: { flag: "--text" }, description: "A report for a person instead of JSON." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "`sub-kg-verify-clone/v1`: the commit cloned, each step with its status and output tail, and the verdict. Exit 0 green, 1 red, 2 unknown." },
+        ],
+      },
+      satisfies: ["sub-kg-lifecycle"],
+      selection: {
+        when: "After a sub-KG's staged contents are seeded into its new repository and re-pointed, before asking the owner about the cutover.",
+        limits: "Runs the repository's own gates as written; a gate that needs credentials or a service the clone cannot reach fails as it would for any new contributor.",
+        cost: "A clone plus an install plus the gates: minutes for a small repository.",
+      },
+      requires: { runtime: ["bun", "git"], network: true },
+    }),
     // Bean `qou-qb6t`, owner 2026-10-04: "all witnesses tools will need to go
     // into the KG". The reader of the `computation-witness` kind: which
     // witnesses meet the producer contract, and which are malformed.
@@ -701,8 +730,33 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         ],
         outputs: [{ name: "url", schema: t("Url"), description: "Where the tree is served.", render: { as: "url", reason: "a reader opens it; the scheme is checked before it reaches an href" } }],
       },
-      satisfies: ["kg-export"],
+      // `docs-generation` too (owner, 2026-10-05, bean lehh): this is the CI
+      // build of the site, and `site-build-local` is the same build on a
+      // developer's machine — two Tools, one skill.
+      satisfies: ["kg-export", "docs-generation"],
       requires: { network: true },
+    }),
+
+    defineTool({
+      id: "site-build-local",
+      title: "Build the docs site locally",
+      description:
+        "Build the published site on this machine, so a page can be looked at rather than described: the same Jekyll build `pages-publish` runs in CI, into a directory of your choosing, and never pushed. The local half of the two site builds (owner, 2026-10-05: local and GitHub builds are two Tools for one skill).",
+      install: { none: true },
+      invoke: { shell: "cat-harness/scripts/preview-site.sh" },
+      io: {
+        inputs: [
+          { name: "dest", schema: t("RepoPath"), required: false, arg: { positional: 0 }, description: "Where to write the built site. Default: a temporary directory." },
+        ],
+        outputs: [{ name: "site", schema: t("RepoPath"), description: "The built site, as `pages-publish` would publish it." }],
+      },
+      satisfies: ["docs-generation"],
+      selection: {
+        when: "Looking at a rendered page before pushing it: a layout, an anchor, a generated index.",
+        limits: "Not what CI builds: it uses the installed just-the-docs gem rather than the pinned remote theme, so chrome can differ, while Liquid and kramdown do not. It runs the cheap post-Jekyll steps and names the rest it skipped. Read a layout question off the staging preview.",
+        cost: "Local Ruby and Jekyll; a minute or two.",
+      },
+      requires: { runtime: ["bash"], network: false },
     }),
 
     // ── The preview host: one STAGING/<slug> per open pull request ─────────
@@ -1108,25 +1162,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // It is the build half of that skill's loop, not the whole loop.
       satisfies: ["lean-build-fix"],
       requires: { runtime: ["bash", "lean", "lake"], network: true },
-    }),
-
-    defineTool({
-      id: "lean-cache",
-      title: "Lake olean cache",
-      description:
-        "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
-      install: { none: true },
-      invoke: { shell: "cat-harness/scripts/lake-cache.sh" },
-      io: {
-        inputs: [
-          { name: "action", schema: t("LakeCacheAction"), required: true, arg: { positional: 0 }, description: "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked." },
-          { name: "lakeRoot", schema: t("RepoPath"), required: false, arg: { flag: "--lake-root" }, description: "The package whose `.lake/` is acted on." },
-          { name: "package", schema: t("PackageName"), required: false, arg: { flag: "--package" } },
-        ],
-        outputs: [{ name: "result", schema: t("Text"), description: "A real hit, a miss, or a diagnosis — never a miss that reads as a hit." }],
-      },
-      satisfies: ["lean-cache-restore"],
-      requires: { runtime: ["bash", "git", "lake"], network: true },
     }),
 
     defineTool({
@@ -1690,7 +1725,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "merge-train",
       title: "Merge train",
       description:
-        "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, `extract-smart-kg-l1.ts --entry` for each stale entry, and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR.",
+        "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, every check an instance declares `afterMerge` (its declared writer run when red), and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR.",
       install: { none: true },
       invoke: { shell: "bun run merge:train" },
       io: {

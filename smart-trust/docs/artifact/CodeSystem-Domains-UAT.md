@@ -2,6 +2,10 @@
 title: "WHO GDHCN Trust Domains - UAT — WHO SMART Trust artefact"
 description: "CodeSystem/Domains-UAT in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "CodeSystem-Domains-DEV.html"
+ig_next: "CodeSystem-Participants-DEV.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ CodeSystem for define WHO GDHCN Trust Domains for User Acceptance Testing enviro
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 19 of 678 carry one.
-
-<footer id="ig-footer" data-prev="CodeSystem-Domains-DEV.html" data-next="CodeSystem-Participants-DEV.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

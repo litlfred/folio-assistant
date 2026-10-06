@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>who-iris — ingested IRIS replica</title>
 <meta name="description" content="A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.">
+<link rel="alternate" hreflang="ar" href="ar/index.html">
+<link rel="alternate" hreflang="zh" href="zh/index.html">
+<link rel="alternate" hreflang="en" href="index.html">
+<link rel="alternate" hreflang="fr" href="fr/index.html">
+<link rel="alternate" hreflang="ru" href="ru/index.html">
+<link rel="alternate" hreflang="es" href="es/index.html">
+<script type="application/json" id="fa-translation-meta">{"lang":"en","translationStatus":"","translationSource":"","supportedLocales":["ar","zh","en","fr","ru","es"],"availableLocales":["ar","zh","en","fr","ru","es"]}</script>
 <style>
   :root {
     /* Measured in who-iris/themes/themes.ts from the captured client-theme.css. */
@@ -48,6 +55,10 @@
   .ingested strong { letter-spacing: 0.02em; }
   .ingested .wrap { padding: 0; }
   .ingested a { color: #fff; text-decoration: underline; }
+  /* The language row and, on a translated page, where its translation stops. */
+  .ingested .langs { margin: 0.45rem 0 0; display: flex; flex-wrap: wrap; gap: 0.25rem 0.9rem; font-size: 0.9rem; }
+  .ingested .langs [aria-current] { font-weight: 700; }
+  .ingested .langnote { margin: 0.45rem 0 0; font-size: 0.88rem; }
 
   /* ── Masthead. NO WHO logo, by instruction — a wordmark in type. ────── */
   header.mast { background: #fff; border-bottom: 1px solid var(--iris-edge); }
@@ -66,8 +77,8 @@
   /* The CDN link is secondary to the one that is known to work. */
   .cdn { font-size: 0.88em; color: var(--iris-ingested); }
   .nologo {
-    margin-left: auto; font-size: 0.78rem; color: var(--iris-muted);
-    text-align: right; max-width: 16rem;
+    margin-inline-start: auto; font-size: 0.78rem; color: var(--iris-muted);
+    text-align: end; max-width: 16rem;
   }
 
   /* ── Navbar. Solid accent, white links, as the source page. ─────────── */
@@ -91,8 +102,8 @@
   .row { display: flex; align-items: baseline; gap: 0.7rem; }
   .chev { color: var(--iris-ink); font-size: 1.05rem; line-height: 1; }
   .row .title { font-size: 1.32rem; }
-  .note { color: var(--iris-muted); font-size: 0.95rem; margin: 0.2rem 0 0 1.9rem; }
-  .kids { margin: 0.35rem 0 0.5rem 1.9rem; padding: 0; list-style: none; }
+  .note { color: var(--iris-muted); font-size: 0.95rem; margin: 0.2rem 0 0; margin-inline-start: 1.9rem; }
+  .kids { margin: 0.35rem 0 0.5rem; margin-inline-start: 1.9rem; padding: 0; list-style: none; }
   .kids li { padding: 0.3rem 0; }
 
   /* ── Materialisation state. A WORD, never a colour alone (SC 1.4.1). ── */
@@ -109,13 +120,13 @@
      this page is ABOUT the catalogue rather than a mock of IRIS, and dressing
      it as IRIS would invite a reader to take its counts for IRIS's. */
   .kg { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
-  .kg th, .kg td { text-align: left; padding: .4rem .55rem; border-bottom: 1px solid var(--iris-edge); vertical-align: top; }
+  .kg th, .kg td { text-align: start; padding: .4rem .55rem; border-bottom: 1px solid var(--iris-edge); vertical-align: top; }
   .kg th { font-weight: 600; white-space: nowrap; }
   .dim { opacity: .65; font-size: .85em; }
 
   table.items { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.97rem; }
   table.items th, table.items td {
-    text-align: left; padding: 0.7rem 0.6rem; border-bottom: 1px solid var(--iris-edge);
+    text-align: start; padding: 0.7rem 0.6rem; border-bottom: 1px solid var(--iris-edge);
     vertical-align: top;
   }
   table.items th { font-weight: 700; background: var(--iris-wash); }
@@ -166,12 +177,14 @@
   .searchbar { display: flex; gap: 0; margin: 1.8rem 0 0.5rem; }
   .searchbar input {
     flex: 1; padding: 0.7rem 0.9rem; font-size: 1rem; font-family: inherit;
-    border: 1px solid var(--iris-edge); border-right: none; border-radius: 4px 0 0 4px;
+    border: 1px solid var(--iris-edge); border-inline-end: none;
+    border-radius: 0; border-start-start-radius: 4px; border-end-start-radius: 4px;
     background: #fff; color: var(--iris-ink);
   }
   .searchbar button {
     padding: 0.7rem 1.4rem; font-size: 1rem; font-family: inherit; font-weight: 600;
-    border: 1px solid var(--iris-accent); border-radius: 0 4px 4px 0;
+    border: 1px solid var(--iris-accent);
+    border-radius: 0; border-start-end-radius: 4px; border-end-end-radius: 4px;
     background: var(--iris-accent); color: #fff; cursor: pointer;
   }
   .searchbar button:hover, .searchbar button:focus {
@@ -272,7 +285,7 @@
 
   table.reqs { width: 100%; border-collapse: collapse; margin-top: 0.9rem; font-size: 0.95rem; }
   table.reqs th, table.reqs td {
-    text-align: left; padding: 0.65rem 0.7rem; border-bottom: 1px solid var(--iris-edge);
+    text-align: start; padding: 0.65rem 0.7rem; border-bottom: 1px solid var(--iris-edge);
     vertical-align: top;
   }
   table.reqs thead th { background: var(--iris-wash); font-weight: 700; }
@@ -294,7 +307,7 @@
   figure.arch figcaption { font-size: 0.88rem; color: var(--iris-muted); margin-top: 0.6rem; }
 
   .caveat {
-    border-left: 4px solid var(--iris-current); background: var(--iris-wash);
+    border-inline-start: 4px solid var(--iris-current); background: var(--iris-wash);
     padding: 0.9rem 1.1rem; margin: 1.6rem 0; font-size: 0.95rem;
   }
   .caveat p { margin: 0.4rem 0; }
@@ -328,7 +341,7 @@
     table.reqs tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
     .hero h1 { font-size: 2.6rem; }
     .searchbar { flex-direction: column; }
-    .searchbar input { border-right: 1px solid var(--iris-edge); border-radius: 4px 4px 0 0; }
+    .searchbar input { border-inline-end: 1px solid var(--iris-edge); border-radius: 4px 4px 0 0; }
     .searchbar button { border-radius: 0 0 4px 4px; }
     .sub { flex-direction: column; }
   }
@@ -337,12 +350,8 @@
 <body>
 
 <div class="ingested"><div class="wrap">
-  <strong>INGESTED COPY — not WHO, and not live.</strong>
-  This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a>
-  from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled
-  <em>by reference</em>: 13 nodes of a 273,559-item 361.55 GiB repository, of which <strong>3 items</strong> are held here. The WHO logo is deliberately omitted, and the
-  rendered covers are withheld from display for the same reason — they carry the
-  emblem printed on the publications.
+  <strong>INGESTED COPY — not WHO, and not live.</strong> This page is rendered by <a href="https://github.com/litlfred/folio-assistant">folio-assistant</a> from its own catalogue of <a href="https://iris.who.int/">WHO IRIS</a>, modelled <em>by reference</em>: 13 nodes of a 273,559-item 361.55 GiB repository, of which <strong>3 items</strong> are held here. The WHO logo is deliberately omitted, and the rendered covers are withheld from display for the same reason — they carry the emblem printed on the publications.
+  <nav class="langs" aria-label="Interface language"><a href="ar/index.html" lang="ar" hreflang="ar">العربية</a><a href="zh/index.html" lang="zh" hreflang="zh">中文</a><span lang="en" aria-current="page">English</span><a href="fr/index.html" lang="fr" hreflang="fr">Français</a><a href="ru/index.html" lang="ru" hreflang="ru">Русский</a><a href="es/index.html" lang="es" hreflang="es">Español</a></nav>
 </div></div>
 
 <header class="mast"><div class="wrap">
@@ -388,34 +397,25 @@
 <section class="hero">
   <div class="hero-in">
     <h1>IRIS</h1>
-    <p>The primary objective of the Institutional Repository for Information Sharing
-    (IRIS) is to provide free digital access to the scientific and technical
-    publications of the World Health Organization (WHO), including contributions from
-    its Country Offices, Regional Offices, and Headquarters. Additionally, IRIS
-    encompasses the mandates established by the Organization&rsquo;s Governing Bodies in
-    collaboration with its Member States.</p>
+    <p>The primary objective of the Institutional Repository for Information Sharing (IRIS) is to provide free digital access to the scientific and technical publications of the World Health Organization (WHO), including contributions from its Country Offices, Regional Offices, and Headquarters. Additionally, IRIS encompasses the mandates established by the Organization’s Governing Bodies in collaboration with its Member States.</p>
   </div>
-  <p class="hero-note">Replica. No WHO emblem, no photograph &mdash; colour only,
-  from the <code>iris-web</code> theme measured off the site&rsquo;s own stylesheet.</p>
+  <p class="hero-note">Replica. No WHO emblem, no photograph — colour only, from the <code>iris-web</code> theme measured off the site’s own stylesheet.</p>
 </section>
 
 <form class="searchbar" id="iris-search-form" action="../id-lookup/" method="get">
   <input type="hidden" name="index" value="who-iris/">
   <input type="text" id="iris-search-input" name="q"
-    placeholder="Search through the repository&rsquo;s 273559 items"
+    placeholder="Search through the repository’s 273559 items"
     aria-label="Search through the repository items and referenced identifier lookup"
     autocomplete="off" spellcheck="false">
   <button type="submit" id="iris-search-btn">Search</button>
 </form>
 <div id="iris-search-results" class="search-results-panel" role="region" aria-live="polite" style="display:none"></div>
-<p class="searchnote" id="iris-search-note">Search across <strong>3</strong> items held by value and referenced communities/collections.
-To look up any of the <strong>10</strong> referenced nodes by identifier, search here or open the <a href="../id-lookup/?index=who-iris/">identifier lookup</a>.
+<p class="searchnote" id="iris-search-note">Search across <strong>3</strong> items held by value and referenced communities/collections. To look up any of the <strong>10</strong> referenced nodes by identifier, search here or open the <a href="../id-lookup/?index=who-iris/">identifier lookup</a>.
 Upstream IRIS reports <strong>273,559</strong> items across <strong>1,057,223</strong> files.</p>
 
 <h2>Recent Submissions</h2>
-<p class="ordering">Ordered by <code>dc.date.accessioned</code>, latest first &mdash; the key
-IRIS&rsquo;s own list sorts on. Where a record carries several accessions the latest is
-used; the WPRO item has two, five days apart, the second being the regional-IRIS merge.</p>
+<p class="ordering">Ordered by <code>dc.date.accessioned</code>, latest first — the key IRIS’s own list sorts on. Where a record carries several accessions the latest is used; the WPRO item has two, five days apart, the second being the regional-IRIS merge.</p>
 
 <div class="subs">
 <article class="sub">
@@ -449,28 +449,22 @@ used; the WPRO item has two, five days apart, the second being the regional-IRIS
 </div>
 
 <h2>Browse</h2>
-<ul class="kids" style="margin-left:0">
-  <li><a href="community-list.html">List of Communities</a> &mdash; the replica of
-      <code>iris.who.int/community-list</code>, with every node&rsquo;s materialisation state
-      (8 communities, 2 collections)</li>
-  <li><a href="collection-collection-hq-publications.html">Publications</a> &mdash; collection</li>
-  <li><a href="collection-collection-wpro-information-products.html">Information products</a> &mdash; collection</li>
+<ul class="kids" style="margin-inline-start:0">
+  <li><a href="community-list.html">List of Communities</a> — the replica of <code>iris.who.int/community-list</code>, with every node’s materialisation state (8 communities, 2 collections)</li>
+  <li><a href="collection-collection-hq-publications.html">Publications</a> — collection</li>
+  <li><a href="collection-collection-wpro-information-products.html">Information products</a> — collection</li>
 </ul>
 
 <div class="caveat">
-  <p><strong>This is the front door, not the library visualiser.</strong> The
-  full <code>library/</code> visualiser is bean <code>jbx2</code> and is being
-  built separately. This page mocks the IRIS home page and links onward rather
-  than becoming a second answer to the same question.</p>
-  <p>Addressing follows the owner&rsquo;s rule &mdash;
-  <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> &mdash; so an instance that
-  instantiates a directory gets a visualiser mounted under that directory&rsquo;s
-  kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.</p>
+  <p><strong>This is the front door, not the library visualiser.</strong> The full <code>library/</code> visualiser is bean <code>jbx2</code> and is being built separately. This page mocks the IRIS home page and links onward rather than becoming a second answer to the same question.</p>
+  <p>Addressing follows the owner’s rule — <code>&lt;base-url&gt;/&lt;path-to-kind-or-node&gt;</code> — so an instance that instantiates a directory gets a visualiser mounted under that directory’s kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.</p>
 </div>
 
 <script>
 (function() {
   var index = [{"title":"1. Headquarters","href":"community-list.html","badge":"Community","meta":"community/5bff2c18-6c2b-4658-9087-93811d2399c0","abstract":"","text":"1. headquarters community/5bff2c18-6c2b-4658-9087-93811d2399c0"},{"title":"2. Regional Office for Africa","href":"community-list.html","badge":"Community","meta":"community/e1b206b7-fd4c-4b93-972a-be07850a1cdd","abstract":"","text":"2. regional office for africa community/e1b206b7-fd4c-4b93-972a-be07850a1cdd"},{"title":"3. Regional Office for the Americas","href":"community-list.html","badge":"Community","meta":"community/270bee8e-d535-4512-86a2-b01850407a23","abstract":"","text":"3. regional office for the americas community/270bee8e-d535-4512-86a2-b01850407a23"},{"title":"4. Regional Office for the Eastern Mediterranean","href":"community-list.html","badge":"Community","meta":"community/f005d7fc-da21-4f55-9e06-9f65c49b2184","abstract":"","text":"4. regional office for the eastern mediterranean community/f005d7fc-da21-4f55-9e06-9f65c49b2184"},{"title":"5. Regional Office for Europe","href":"community-list.html","badge":"Community","meta":"community/fb66a624-a5dc-4576-8b6b-929639e552d8","abstract":"","text":"5. regional office for europe community/fb66a624-a5dc-4576-8b6b-929639e552d8"},{"title":"6. Regional Office for South-East Asia","href":"community-list.html","badge":"Community","meta":"community/8f327840-b0f3-4769-a1c2-270b2b5ce7da","abstract":"","text":"6. regional office for south-east asia community/8f327840-b0f3-4769-a1c2-270b2b5ce7da"},{"title":"7. Regional Office for the Western Pacific","href":"community-list.html","badge":"Community","meta":"community/ebd3b191-c322-4754-9415-469a1a0eb0c3","abstract":"","text":"7. regional office for the western pacific community/ebd3b191-c322-4754-9415-469a1a0eb0c3"},{"title":"8. WHO Framework Convention on Tobacco Control (FCTC)","href":"community-list.html","badge":"Community","meta":"community/28b22be0-5864-409c-9b83-0442e2a7ca0e","abstract":"","text":"8. who framework convention on tobacco control (fctc) community/28b22be0-5864-409c-9b83-0442e2a7ca0e"},{"title":"Information products","href":"collection-collection-wpro-information-products.html","badge":"Collection","meta":"collection/wpro-information-products","abstract":"Measured from the breadcrumb on the captured item page: 'Home > 7. Regional Office for the ... > Regional Office for the W... > Information products'. FOUR levels, of which the middle two are communities -- which is why `parents` is a list of PATHS rather than a single id. The collection's own UUID is NOT in anything captured and iris.who.int is egress-blocked from this environment (CONNECT tunnel failed, response 403 -- the same block bean r1lz recorded on 2026-09-19), so the node is keyed by its path rather than by an invented identifier.","text":"information products collection/wpro-information-products measured from the breadcrumb on the captured item page: 'home > 7. regional office for the ... > regional office for the w... > information products'. four levels, of which the middle two are communities -- which is why `parents` is a list of paths rather than a single id. the collection's own uuid is not in anything captured and iris.who.int is egress-blocked from this environment (connect tunnel failed, response 403 -- the same block bean r1lz recorded on 2026-09-19), so the node is keyed by its path rather than by an invented identifier."},{"title":"Publication and information products style guide","href":"item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html","badge":"Item","meta":"World Health Organization. Regional Office for the Western Pacific · WPR/RDO/2020/003 · 2020-05-12","abstract":"This is the style guide for WPRO publications and information products. All designers working on WHO WPRO publication and information products should use this as reference for design and layout. Templates and further guidelines are also ava","text":"publication and information products style guide item/18892cf3-5a4f-42a4-923c-a93f4a594dec wpr-rdo-2020-003-eng world health organization. regional office for the western pacific wpr/rdo/2020/003 2020-05-12 this is the style guide for wpro publications and information products. all designers working on who wpro publication and information products should use this as reference for design and layout. templates and further guidelines are also available. for more information on wpro publications guidelines, please contact wpropuballstaff@who.int"},{"title":"Publications","href":"collection-collection-hq-publications.html","badge":"Collection","meta":"collection/hq-publications","abstract":"Established by TWO independent statements in the source, 2026-09-20. The breadcrumb on both captured full item records reads 'Home > 1. Headquarters > Publications', and the handbook's record additionally carries an explicit 'Collections: Publications' block. One reading of one page would have been weaker evidence than this is. THE COLLECTION'S OWN UUID IS NOT IN EITHER CAPTURE -- only its name and its place in the hierarchy are -- and iris.who.int is egress-blocked from this environment, so the node is keyed by its PATH exactly as `collection/wpro-information-products` is, and for the same stated reason: inventing a UUID to fill the slot produces an identifier that resolves to nothing while looking authoritative. The collection's item count is likewise UNKNOWN; neither capture states one, and it is not interpolated.","text":"publications collection/hq-publications established by two independent statements in the source, 2026-09-20. the breadcrumb on both captured full item records reads 'home > 1. headquarters > publications', and the handbook's record additionally carries an explicit 'collections: publications' block. one reading of one page would have been weaker evidence than this is. the collection's own uuid is not in either capture -- only its name and its place in the hierarchy are -- and iris.who.int is egress-blocked from this environment, so the node is keyed by its path exactly as `collection/wpro-information-products` is, and for the same stated reason: inventing a uuid to fill the slot produces an identifier that resolves to nothing while looking authoritative. the collection's item count is likewise unknown; neither capture states one, and it is not interpolated."},{"title":"WHO editorial style manual","href":"item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html","badge":"Item","meta":"World Health Organization. Technical Publications Unit · WHO/PUB/TPS/93.1 · 1993-12-31","abstract":"","text":"who editorial style manual item/b08c6c19-315a-41a4-a9cb-8edabdbc6791 who-pub-tps-931 world health organization. technical publications unit who/pub/tps/93.1 1993-12-31 "},{"title":"WHO handbook for guideline development","href":"item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html","badge":"Item","meta":"World Health Organization · 2014-12-18","abstract":"This handbook provides comprehensive guidance on the planning, development, publication, implementation, adaptation and updating of WHO guidelines. Intended for WHO technical units, guideline developers, members of guideline development and","text":"who handbook for guideline development item/63e14c27-7448-41ec-be08-a96a25a47db6 9789241548960-eng world health organization  2014-12-18 this handbook provides comprehensive guidance on the planning, development, publication, implementation, adaptation and updating of who guidelines. intended for who technical units, guideline developers, members of guideline development and external review groups, and other contributors, it describes the principles, methods and governance processes required to produce transparent, evidence-informed recommendations for clinical practice and public health policy that meet who standards."}];
+  var T = {"matching":"Matching catalogue nodes ({n}):","also":"Also search identifier lookup:","lookUp":"Look up “{q}” in referenced nodes →","none":"No materialized items or collections matched “<strong>{q}</strong>”.","searchFor":"Search for “{q}” in the referenced identifier lookup (10 nodes) →"};
+  function fill(s, q, n) { return s.split("{q}").join(q).split("{n}").join(n); }
   var form = document.getElementById("iris-search-form");
   var input = document.getElementById("iris-search-input");
   var results = document.getElementById("iris-search-results");
@@ -517,7 +511,7 @@ used; the WPRO item has two, five days apart, the second being the regional-IRIS
     var html = "";
 
     if (matches.length > 0) {
-      html += "<h3 style=\"margin:0 0 0.8rem;font-size:1.05rem;color:var(--iris-dark);\">Matching catalogue nodes (" + matches.length + "):</h3>";
+      html += "<h3 style=\"margin:0 0 0.8rem;font-size:1.05rem;color:var(--iris-dark);\">" + fill(T.matching, "", String(matches.length)) + "</h3>";
       html += "<ul class=\"search-results-list\" style=\"list-style:none;padding:0;margin:0 0 1rem;display:flex;flex-direction:column;gap:0.75rem;\">";
       for (var m = 0; m < matches.length; m++) {
         var it = matches[m];
@@ -535,12 +529,12 @@ used; the WPRO item has two, five days apart, the second being the regional-IRIS
       }
       html += "</ul>";
       html += "<div class=\"search-remote-box\" style=\"border-top:1px solid var(--iris-edge);padding-top:0.75rem;margin-top:0.75rem;font-size:0.92rem;\">";
-      html += "Also search identifier lookup: <a href=\"" + lookupUrl + "\" class=\"search-remote-link\">Look up &ldquo;" + escapeHtml(raw) + "&rdquo; in referenced nodes &rarr;</a>";
+      html += T.also + " <a href=\"" + lookupUrl + "\" class=\"search-remote-link\">" + fill(T.lookUp, escapeHtml(raw), "") + "</a>";
       html += "</div>";
     } else {
-      html += "<p style=\"margin:0 0 0.5rem;\">No materialized items or collections matched &ldquo;<strong>" + escapeHtml(raw) + "</strong>&rdquo;.</p>";
+      html += "<p style=\"margin:0 0 0.5rem;\">" + fill(T.none, escapeHtml(raw), "") + "</p>";
       html += "<div class=\"search-remote-box\" style=\"border-top:1px solid var(--iris-edge);padding-top:0.75rem;margin-top:0.75rem;font-size:0.92rem;\">";
-      html += "<a href=\"" + lookupUrl + "\" class=\"search-remote-link\" style=\"font-weight:600;\">Search for &ldquo;" + escapeHtml(raw) + "&rdquo; in the referenced identifier lookup (10 nodes) &rarr;</a>";
+      html += "<a href=\"" + lookupUrl + "\" class=\"search-remote-link\" style=\"font-weight:600;\">" + fill(T.searchFor, escapeHtml(raw), "") + "</a>";
       html += "</div>";
     }
 
@@ -572,13 +566,9 @@ used; the WPRO item has two, five days apart, the second being the regional-IRIS
 </main>
 
 <footer class="mast"><div class="wrap">
-  <p><strong>Ingested replica.</strong> Rendered from
-  <code>who-iris/catalogue/</code> by <code>who-iris/scripts/gen-iris-pages.ts</code>.
-  Layout after <a href="https://iris.who.int/community-list">iris.who.int</a>; every
-  figure on this page is read out of the catalogue, not copied from a screenshot.</p>
+  <p><strong>Ingested replica.</strong> Rendered from <code>who-iris/catalogue/</code> by <code>who-iris/scripts/gen-iris-pages.ts</code>. Layout after <a href="https://iris.who.int/community-list">iris.who.int</a>; every figure on this page is read out of the catalogue, not copied from a screenshot.</p>
   <div class="rule"></div>
-  <p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO.
-  This copy asserts no endorsement and carries no WHO mark.</p>
+  <p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO. This copy asserts no endorsement and carries no WHO mark.</p>
 </div></footer>
 <script data-fa-folio-mount>(function(){
 var m=location.pathname.match(new RegExp("^(.*?)(?:docs\\/)?who-iris\\/"));

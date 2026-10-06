@@ -13,6 +13,7 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-schemas`, 
 | [`adjudication.test.ts`](adjudication.test.ts) | a file |  |
 | [`adjudication.ts`](adjudication.ts) | a file |  |
 | [`catalogue.ts`](catalogue.ts) | a file |  |
+| [`change-set-general.test.ts`](change-set-general.test.ts) | a file |  |
 | [`changeset.test.ts`](changeset.test.ts) | a file |  |
 | [`changeset.ts`](changeset.ts) | a file |  |
 | [`dublin-core-render.test.ts`](dublin-core-render.test.ts) | a file |  |

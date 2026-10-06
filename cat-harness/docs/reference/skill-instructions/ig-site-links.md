@@ -66,4 +66,32 @@ These are found by link-checking the BUILT pages, not by reading the
 generator: a full main-site build or the fork's site, and a check over every
 relative link in the IG sections. The stage log's `DEAD` line is the start,
 not the whole — it cannot see what a later step (the mount pass) serves.
+
+## An IG's diagrams get the platform's figure viewer
+
+An IG page embeds a diagram in three ways: inline (`{% include x.svg %}`), as
+`<object data="x.svg">`, or as an `<img>`, often a `.drawio.png`. All three get
+the same pan, zoom, full-width and export viewer as the platform's BPMN
+figures. Every IG page carries the `data-fa-figure-images` stamp
+(`IG_FIGURE_IMAGES_STAMP` in `build-ig-site.ts`, written by the standalone
+layout and by the composed pages' top include), so a raster
+drawing that the column has shrunk also gets the viewer. Which embed is
+taken, the opt-in, and the keyboard controls are covered in
+[`graph-rendering`](graph-rendering.md)
+rule 9 (bean `n7f8`). Do not give IG pages a viewer of their own.
+
+## The chrome's links are not the IG's, and are scoped to the IG's site
+
+The harness rail, the tiles, the navbar icon row and the folders around an IG
+page are the PLATFORM's chrome, so none of the rows above covers them. On an
+IG repository's own site they come from the platform's `_data/harness.json`,
+which `compose-docs --shell --instance <ig>` scopes to that IG: its own paths
+resolve under its baseurl, the platform's graphs link to the platform's site,
+and no other instance's state graph or count is shown. Owner, 2026-10-06, on
+smart-trust: *"the beans and todos badges seems to be countts from
+folio-assistant and not litlfred/smart-trust as expected. links to beans and
+todos dont work."* The rule, and why an undeclared graph shows no number
+rather than zero, is in
+[`harness-tiles`](harness-tiles.md)
+§"On a folio's own site, a tile describes the FOLIO" (issue #2263).
 {% endraw %}

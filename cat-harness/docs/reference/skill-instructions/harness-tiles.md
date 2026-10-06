@@ -457,6 +457,95 @@ derived, so no tile can be authored legible in one mode and invisible in the
 other. A per-instance palette would be a second colour vocabulary beside
 `theme.ts` — the drift that file exists to have ended.
 
+## On a folio's own site, a tile describes the FOLIO (issue #2263)
+
+Owner, 2026-10-06, on https://litlfred.github.io/smart-trust/, verbatim:
+
+> the beans and todos badges seems to be countts from folio-assistant and not
+> litlfred/smart-trust as expected. links to beans and todos dont work. why
+> not? fix process and skills.
+
+**A page's tiles describe the instance whose site the page is on.** A folio's
+own Pages site (an IG repository's `folio-site.yml`, a document folio's
+`folio-staging.yml`) wears the platform's chrome, and the platform's
+`_data/harness.json` came with it: the platform's tiles with the platform's
+counts baked in (beans 916, todos 3), its icon row, its rail scopes and its
+title, every path root-relative to the **platform's** site. The icon row's
+badges fetched `assets/beans/count.json` from the page's own site, where the
+shell had copied the platform's. So smart-trust showed folio-assistant's 537
+open beans, and 109 rail and tile links on one page resolved to 404s.
+
+`cat-harness/scripts/lib/foreign-site-scope.ts` applies the rule to the data,
+once, for both passes (`compose-docs --shell --instance`, and
+`rail-standalone-pages --foreign-site`):
+
+| the link points at | on a folio's site it | count |
+|---|---|---|
+| the folio's own root (`/<instance>/…`) | resolves inside the folio's baseurl | kept |
+| another instance's **`state`** graph (beans, todos, QA, health, uploads …) | **is not linked**; the icon says why in words | **none** |
+| a platform content, context or derived graph (skills, processes, tools, schemas, docs …) | is re-based, absolute, onto `DOCS_SITE_BASE`, with its qualifier shown | **none** |
+| a kind nothing classifies | is treated as state | none |
+
+**Why the state row is unlinked rather than shown at zero or re-based.**
+`schemas/tile-count.ts` and §"A TILE IS ONE OF TWO KINDS" already settle it:
+absent is a third state, never `0`. A folio that declares no `beans` graph has
+not said it has no beans; it has said nothing. Showing `0` would be a claim,
+and showing the platform's number, or a link to the platform's work plan
+under a bare "Beans" icon, answers *"where are smart-trust's beans"* with
+somebody else's. The icon keeps its place and its accessible name says
+*"smart-trust declares no beans graph"*, per §"An inert row SAYS why".
+
+**Ownership is decided by where the link points, never by a kind of the same
+name.** smart-trust declares a `qa` directory; the platform's QA tile
+(`/lsi/`, 1,002 items) is still the platform's QA, and borrowing it because
+the word matched would put the platform's number back on the folio's page.
+
+**A count beside a borrowed link is dropped too.** "Library · C@T Harness 42"
+linking to the platform is accurate as a link, but the number still sits on
+the folio's page next to the folio's own. The qualifier is shown instead, so
+the tile reads as the platform's.
+
+**The host's count projections are not chrome.** `compose-docs --shell` now
+leaves out every `assets/**.json` that declares a headline `tile` count, the
+same way it already blanked `_includes/generated/` (#2235 F1). A badge whose
+file 404s renders as ABSENT, with no number, which is the honest answer.
+
+**A figure that is not a tile follows the same rule.** Two outlived the
+first fix, both found on the same smart-trust page: the title's translation
+badge read *"Swept 49/689"*, which is the platform's sweep of its own 689
+pages, and the fsh-guts fish read *"?"*. Each is in the table below with what
+the folio's site shows instead.
+
+| figure | it came from | on a folio's site it | count |
+|---|---|---|---|
+| the translation sweep badge | `_data/translation-qa.json`, the platform's | the shell leaves the file out; the badge stays, inert, reading *"QA: not published"*, and says why: *"smart-trust publishes no translation QA sweep on this site"* | **none**, and not *"not run"*, which would be a claim about the folio |
+| the navbar's locale swap | `_data/translations.json`, the platform's index of its own pages | the shell leaves the file out; the index reads as `null`, *"could not determine"*, and the navbar stays as built (it had rewritten the folio's Home to `/<folio>/fr/`, a 404) | n/a |
+| the fsh-guts fish | a button whose count is fetched from **this** site's `/fsh-guts.json` | the button is drawn only when the folio links its OWN fsh-guts; otherwise the fish is the row's re-based link, named *"the platform's: smart-trust declares no fsh-guts graph"*, or an inert icon with the note | **none**, never *"?"*: `?` means the read failed, and nothing was there to read |
+
+A folio that publishes its own sweep, or its own fsh-guts document, gets its
+own figure back with no further change: the chrome reads whatever the site
+carries, and `foreignSite.absent` (written by `scopeHarnessData`) only supplies
+the words for when it carries nothing. The two `_data/` files are named in
+`HOST_DATA_PROJECTIONS` rather than recognised by shape, since neither
+declares what it describes. `foreign-site-scope.test.ts` fails on a shell
+that carries a `_data/` file nobody has classified as chrome or projection.
+
+**The pinned rail reserves its width.** On the same page the open rail covered
+the IG's breadcrumb, menu bar and heading (*"…s Requirements"*). Hover and
+focus still open the bar over the page, because they are a peek. Pinning is a
+choice to keep it open, so `.main` moves over (`docs-ui.css`).
+
+**The gate is `foreign-site-scope.test.ts`.** It runs both foreign-site passes
+over a folio and asserts (a) no tile carries another instance's count or
+links its state graph, (b) no href is left root-relative unless it is
+the folio's own path, (c) the platform's translation sweep and index are
+not shipped and the rendered `head_custom.html` hands the badge its words,
+and (d) the fish fetches no count from a site that has no fsh-guts. The
+client halves are in `translation-badges.e2e.ts` and `navbar-row.e2e.ts`. Nothing caught this earlier because every check ran on
+the platform's own site, where the platform's tiles are right by
+construction. **A check of a page's chrome has to run on a site that is not
+the platform's.**
+
 ## The glass strip — pinned first, and "+N more" counts the rest
 
 **No tile may be silently off-screen.** That is the rule, and the owner's

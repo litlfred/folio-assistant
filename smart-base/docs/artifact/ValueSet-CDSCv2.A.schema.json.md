@@ -3,6 +3,8 @@ title: "Services and Application Types: Point of Service — JSON Schema"
 description: "The JSON Schema sidecar of ValueSet/CDSCv2.A, from the IG's DAK API."
 nav_exclude: true
 ig_api: {"label":"JSON Schema","file":"ValueSet-CDSCv2.A.schema.json","src":"../fhir-artifact-index/dak/ValueSet-CDSCv2.A.schema.json","artifact":{"title":"Services and Application Types: Point of Service","page":"ValueSet-CDSCv2.A.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-CDSCv2.A.html","active":false},{"label":"XML","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.A.xml","active":false},{"label":"JSON","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.A.json","active":false},{"label":"TTL","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.A.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-CDSCv2.A.schema.json.html","active":true},{"label":"JSON-LD","href":"ValueSet-CDSCv2.A.jsonld.html","active":false}],"script":"../assets/ig-api-view.js"}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -34,6 +36,3 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <pre><code class="language-json" data-ig-api-src="{{ page.ig_api.src }}">Loading…</code></pre>
 <noscript><p>This view needs JavaScript; the <a href="{{ page.ig_api.src }}">raw file</a> does not.</p></noscript>
 <script src="{{ page.ig_api.script }}" defer></script>
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

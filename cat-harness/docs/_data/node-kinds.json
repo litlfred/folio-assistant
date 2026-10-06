@@ -2,12 +2,48 @@
   "$schema": "node-kind-index/1.0.0",
   "kinds": [
     {
+      "id": "basic-cdn-site",
+      "version": "1.0.0",
+      "tag": "basic-cdn-site/1.0.0",
+      "parents": [],
+      "subclasses": [
+        "cdn-site"
+      ],
+      "declaredBy": "cat-harness",
+      "module": "cat-harness/schemas/site.ts",
+      "exportName": "BasicCdnSiteKind",
+      "holdings": [
+        {
+          "typology": "basic-cdn-site",
+          "family": "basic-cdn-site/1.0.0"
+        }
+      ]
+    },
+    {
       "id": "carried-note",
       "parents": [],
       "subclasses": [
         "todo"
       ],
       "holdings": []
+    },
+    {
+      "id": "cdn-site",
+      "version": "1.0.0",
+      "tag": "cdn-site/1.0.0",
+      "parents": [
+        "basic-cdn-site"
+      ],
+      "subclasses": [],
+      "declaredBy": "cat-harness",
+      "module": "cat-harness/schemas/site.ts",
+      "exportName": "CdnSiteKind",
+      "holdings": [
+        {
+          "typology": "cdn-site",
+          "family": "cdn-site/1.0.0"
+        }
+      ]
     },
     {
       "id": "changeset",
@@ -28,6 +64,38 @@
         "module": "folio-assistant-core/scripts/public-comment-pages.ts",
         "exportName": "ChangeSetPages"
       }
+    },
+    {
+      "id": "document-kind",
+      "version": "1.0.0",
+      "tag": "document-kind/1.0.0",
+      "parents": [],
+      "subclasses": [],
+      "declaredBy": "cat-harness",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "exportName": "DocumentKindKind",
+      "holdings": [
+        {
+          "typology": "document-kinds",
+          "family": "document-kind/1.0.0"
+        }
+      ]
+    },
+    {
+      "id": "document-kind-coverage",
+      "version": "1.0.0",
+      "tag": "document-kind-coverage/1.0.0",
+      "parents": [],
+      "subclasses": [],
+      "declaredBy": "cat-harness",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "exportName": "DocumentKindCoverageKind",
+      "holdings": [
+        {
+          "typology": "document-kinds",
+          "family": "document-kind-coverage/1.0.0"
+        }
+      ]
     },
     {
       "id": "node-kind-index",
@@ -243,18 +311,6 @@
       "family": "folio-voices-index/v1",
       "reason": "zod-schema",
       "ref": "schemas/site-indexes.ts#VoicesIndexSchema"
-    },
-    {
-      "typology": "document-kinds",
-      "family": "folio-document-kind-coverage/v1",
-      "reason": "zod-schema",
-      "ref": "schemas/document-kind.ts#DocumentKindCoverageSchema"
-    },
-    {
-      "typology": "document-kinds",
-      "family": "folio-document-kind/v1",
-      "reason": "zod-schema",
-      "ref": "schemas/document-kind.ts#DocumentKindSchema"
     },
     {
       "typology": "external-schema",

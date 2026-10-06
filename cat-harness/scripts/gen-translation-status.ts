@@ -265,20 +265,60 @@ function pct(v: number | null): string {
   return v === null ? '<span class="ts-none">no basis</span>' : `${v}%`;
 }
 
-export function statusPage(doc: {
-  locales: LocaleStatus[];
-  changedAt: string;
-  /** The ONE declared directory measured, repo-relative. See the page note. */
+/**
+ * Another instance's `translation-sources` directory, measured the same way.
+ *
+ * Added for issue #2228: an instance's catalogues moved out of cat-harness's
+ * directory into the instance's own on 2026-10-04 (bean `riit`), and from
+ * then on this page, which measured one directory, no longer counted them. The move was
+ * right and the page went quietly blind to it, which is the gap its own note
+ * warned about. Each instance is a SEPARATE table, never summed into the
+ * first: two instances' catalogues answer two questions.
+ */
+export interface InstanceStatus {
+  /** The instance's declared name. */
+  instance: string;
+  /** Its `translation-sources` directory, repo-relative. */
   scope: string;
-}): string {
-  const rows = doc.locales
+  locales: LocaleStatus[];
+}
+
+/**
+ * Every OTHER instance in the checkout that declares a `translation-sources`
+ * directory, sorted by name. Found the way `mount-instance-docs.ts` finds
+ * instances — a top-level directory carrying a declaration — so cat-harness
+ * names none of them.
+ */
+export function otherInstances(repoRoot: string, except: string): InstanceStatus[] {
+  const out: InstanceStatus[] = [];
+  for (const e of readdirSync(repoRoot, { withFileTypes: true })) {
+    if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
+    const dir = join(repoRoot, e.name);
+    if (resolve(dir) === resolve(except)) continue;
+    let tdir: string | undefined;
+    let name = e.name;
+    try {
+      tdir = translationsDirOf(dir);
+      name = readDeclaration(dir)?.name ?? e.name;
+    } catch {
+      // A declaration that does not parse is `kg:schema:check`'s finding, not this page's.
+      continue;
+    }
+    if (tdir === undefined || !existsSync(tdir)) continue;
+    out.push({ instance: name, scope: relative(repoRoot, tdir), locales: localeStatuses(tdir) });
+  }
+  return out.sort((a, b) => a.instance.localeCompare(b.instance, "en"));
+}
+
+function localeTable(locales: LocaleStatus[], idPrefix: string): string {
+  const rows = locales
     .map((l) => {
       const unread =
         l.unreadable.length === 0
           ? ""
           : `<div class="ts-warn">${l.unreadable.length} catalogue(s) unreadable: ` +
             `${esc(l.unreadable.join(", "))}</div>`;
-      return `<tr id="locale-${esc(l.locale)}">
+      return `<tr id="${esc(idPrefix)}locale-${esc(l.locale)}">
   <th scope="row"><code>${esc(l.locale)}</code></th>
   <td>${l.catalogues} / ${l.templates}<br><span class="ts-dim">${pct(share(l.catalogues, l.templates))}</span></td>
   <td>${l.entries}</td>
@@ -287,6 +327,39 @@ export function statusPage(doc: {
   <td>${l.untranslated}${unread}</td>
 </tr>`;
     })
+    .join("\n");
+  return `<table>
+<thead>
+<tr>
+  <th scope="col">locale</th>
+  <th scope="col">catalogues / templates</th>
+  <th scope="col">entries</th>
+  <th scope="col">translated</th>
+  <th scope="col">fuzzy</th>
+  <th scope="col">untranslated</th>
+</tr>
+</thead>
+<tbody>
+${rows}
+</tbody>
+</table>`;
+}
+
+export function statusPage(doc: {
+  locales: LocaleStatus[];
+  changedAt: string;
+  /** The declared directory measured first, repo-relative. See the page note. */
+  scope: string;
+  /** Every other instance's declared directory, each its own table. */
+  instances?: InstanceStatus[];
+}): string {
+  const others = (doc.instances ?? [])
+    .map(
+      (i) => `
+<h2 id="instance-${esc(i.instance)}">${esc(i.instance)}</h2>
+<p class="ts-sub">Measured from <code>${esc(i.scope)}</code>, that instance's own <code>translation-sources</code> directory.</p>
+${localeTable(i.locales, `${i.instance}-`)}`,
+    )
     .join("\n");
 
   return `<!doctype html>
@@ -332,21 +405,8 @@ ${visualiserNavDeclaration(doc.locales.map((l) => ({ label: l.locale, href: `#lo
 <code>${esc(doc.scope)}</code>. Every number here is derived on each run; none is written down. These
 numbers last <strong>changed</strong> on ${esc(doc.changedAt)}.</p>
 
-<table>
-<thead>
-<tr>
-  <th scope="col">locale</th>
-  <th scope="col">catalogues / templates</th>
-  <th scope="col">entries</th>
-  <th scope="col">translated</th>
-  <th scope="col">fuzzy</th>
-  <th scope="col">untranslated</th>
-</tr>
-</thead>
-<tbody>
-${rows}
-</tbody>
-</table>
+${localeTable(doc.locales, "")}
+${others}
 
 <p class="ts-note"><strong>Two questions, not one.</strong> <em>catalogues / templates</em> asks whether a
 <code>.po</code> exists at all for each extractable <code>.pot</code>; the string columns ask how much of
@@ -356,11 +416,12 @@ while most of its templates have none — which is why the first column is not f
 <p class="ts-note"><strong>&ldquo;no basis&rdquo; is not zero.</strong> A share over an empty denominator is
 undefined, and rendering it as 0% would report a measurement this run did not make.</p>
 
-<p class="ts-note"><strong>One directory, named above.</strong> <code>translation-sources</code> is a graph
-KIND, and more than one instance may declare it; this page measures the one directory named in the subtitle
-and says nothing about any other. A catalogue sitting in an instance that has not declared it is invisible
-here — which is a gap in that declaration rather than a locale with no work done, and the two must not read
-the same.</p>
+<p class="ts-note"><strong>One directory per table, each named.</strong> <code>translation-sources</code> is a graph
+KIND, and more than one instance may declare it; the first table measures the directory named in the subtitle,
+and each instance below it gets its own table for its own declared directory. They are never summed: two
+instances' catalogues answer two questions. A catalogue sitting in an instance that has not declared the
+directory is invisible here — which is a gap in that declaration rather than a locale with no work done, and
+the two must not read the same.</p>
 
 <p class="ts-note"><strong>Fuzzy is counted apart from translated.</strong> A fuzzy entry has a translation
 and needs review; adding it to <em>translated</em> would flatter exactly the entries a reviewer must look at.</p>
@@ -384,6 +445,7 @@ function main(): void {
   }
 
   const locales = localeStatuses(translationsDir);
+  const instances = otherInstances(REPO_ROOT, ROOT);
   const site = join(ROOT, siteDirFor(ROOT));
 
   // The projection first, the page second: the page is a rendering OF the
@@ -417,6 +479,7 @@ function main(): void {
       "translation-sources": [locales.length, locales.length === 1 ? "locale" : "locales"],
     }),
     locales,
+    instances,
   };
 
   const assetDir = join(site, "assets", "translation-status");
@@ -431,7 +494,11 @@ function main(): void {
   const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
   const page = (changedAt: string) => {
     // The page says which directory it draws (#1168 B7a-2).
-    const html = withRenders(statusPage({ locales, changedAt, scope: doc.scope }), [renderedPath(repoRootFor(ROOT), translationsDir)], VIEWER_TOOL);
+    const html = withRenders(
+      statusPage({ locales, changedAt, scope: doc.scope, instances }),
+      [renderedPath(repoRootFor(ROOT), translationsDir), ...instances.map((i) => renderedPath(repoRootFor(ROOT), join(REPO_ROOT, i.scope)))],
+      VIEWER_TOOL,
+    );
     return withViewerNav(html, pagePath, nav) ?? html;
   };
   const json = (changedAt: string) => `${JSON.stringify({ ...doc, changedAt }, null, 2)}\n`;

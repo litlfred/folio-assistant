@@ -550,6 +550,11 @@ function targets(): GraphTarget[] {
     console.error(`no prose graph matches --instance ${inst ?? "*"} --graph ${gid ?? "*"}`);
     process.exit(2);
   }
+  // `--needed`: only the graphs `needOf` says need an index — the set `lsi
+  // audit` judges, computed from the instances present rather than listed by
+  // a caller that cannot know which instances sit above it (bean `0r7u`). An
+  // empty selection here is a determined "none needs one", not a miss.
+  if (process.argv.includes("--needed")) return all.filter((t) => needOf(t).needed);
   return all;
 }
 

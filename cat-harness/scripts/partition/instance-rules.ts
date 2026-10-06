@@ -181,6 +181,7 @@ export const RULES: Rule[] = [
       "scripts/word-diff.ts",            // the word diff those renderers run, embedded by toString (bean `d903`)
       "scripts/review-heat.ts",          // the review page heat map, embedded by toString (bean `qbfi`)
       "scripts/review-nav.ts",           // the review page outline, breadcrumb and minimap, embedded by toString (bean `eb4l`)
+      "scripts/review-rendered.ts",      // the review page's rendered-pages list, embedded by toString (bean `bnjs`)
       "scripts/publish-block-qa.ts",     // a folio's QA verdicts summarised for the heat map (bean `qbfi`)
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
       "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)
@@ -273,6 +274,12 @@ export const RULES: Rule[] = [
       // surface that draws a harness's mark calls it, so a folio owning it
       // would let one instance decide how every other instance's mark is read.
       "scripts/lib/harness-mark.ts",
+      // What that chrome's data says on a FOLIO's own site (#2263): its tiles,
+      // icon row and rail scopes scoped to the folio, the platform's graphs
+      // re-based onto the platform. HARNESS beside `harness-rail.ts`: it is the
+      // platform deciding how its own chrome reads elsewhere, and a folio
+      // owning it would let one instance decide what every other shows.
+      "scripts/lib/foreign-site-scope.ts",
       // How a GRAPH-TYPOLOGY row in that navbar is marked and named (bean `yag0`):
       // the kind's avatar glyph and hue, and the head of its registered
       // summary as the accessible name. HARNESS beside `navbar.ts` for the
@@ -397,9 +404,9 @@ export const RULES: Rule[] = [
       // The seeds' own freshness check (bean `9ofm`): it reads each special
       // branch's `manifest.json`, resolves the ref that manifest names, and
       // compares the two TREES. Harness-level for the same reason as its
-      // neighbours, and one more: the branches it reads are declared in
-      // `scripts/special-branches.json`, which is the harness's table — a
-      // folio's subject matter cannot add a row to it or change what a tree
+      // neighbours, and one more: the branches it reads are the ones the
+      // instances' declarations name (special-branches.json is gone, owner
+      // 2026-10-05) — a folio's subject matter cannot change what a tree
       // comparison concludes.
       "scripts/state-drift.ts",               // a seeded state branch still matches the ref it was seeded from
       // What every reader of a moved graph needs, written once (bean `9ofm`

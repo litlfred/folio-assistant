@@ -3,6 +3,8 @@ title: "Health Certificate — JSON Schema"
 description: "The JSON Schema sidecar of StructureDefinition/HCert, from the IG's DAK API."
 nav_exclude: true
 ig_api: {"label":"JSON Schema","file":"StructureDefinition-HCert.schema.json","src":"../fhir-artifact-index/dak/StructureDefinition-HCert.schema.json","artifact":{"title":"Health Certificate","page":"StructureDefinition-HCert.html"},"tabs":[{"label":"Narrative Content","href":"StructureDefinition-HCert.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert.xml","active":false},{"label":"JSON","href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert.json","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-HCert.schema.json.html","active":true}],"script":"../assets/ig-api-view.js"}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -34,6 +36,3 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <pre><code class="language-json" data-ig-api-src="{{ page.ig_api.src }}">Loading…</code></pre>
 <noscript><p>This view needs JavaScript; the <a href="{{ page.ig_api.src }}">raw file</a> does not.</p></noscript>
 <script src="{{ page.ig_api.script }}" defer></script>
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

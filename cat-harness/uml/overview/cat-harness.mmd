@@ -977,6 +977,12 @@ classDiagram
       untranslated [1] integer
       unreadable [0..*] string[]
     }
+    class cat_harness_docs_folio_translation_status_v1_Instance["Instance"] {
+      <<json: TranslationStatusSchema>>
+      instance [1] string
+      scope [1] string
+      locales [0..*] Locale[]
+    }
     class cat_harness_docs_folio_translation_status_v1_folio_translation_status_v1["folio-translation-status/v1"] {
       <<json: TranslationStatusSchema>>
       $schema [1] 'folio-translation-status/v1'
@@ -984,6 +990,7 @@ classDiagram
       changedAt [1] string
       scope [1] string
       locales [0..*] Locale[]
+      instances [0..*] Instance[]
     }
     class cat_harness_docs_folio_schema_graph_v1_Module["Module"] {
       <<json: SchemaGraphIndexSchema>>
@@ -1234,6 +1241,11 @@ classDiagram
       sha256 [1] string
       bytes [1] integer
       mediaType [1] string
+    }
+  }
+  namespace cat_harness__site {
+    class n_cat_harness_site_basic_cdn_site["basic-cdn-site: no node schema"] {
+      <<could not determine>>
     }
   }
   namespace cat_harness__swimlane_glossary {
@@ -1766,6 +1778,8 @@ classDiagram
   cat_harness_docs_node_kind_index_1_0_0_node_kind_index_1_0_0 *-- "0..*" cat_harness_docs_node_kind_index_1_0_0_Kind : kinds
   cat_harness_docs_node_kind_index_1_0_0_node_kind_index_1_0_0 *-- "0..*" cat_harness_docs_node_kind_index_1_0_0_Unkinded : unkinded
   cat_harness_docs_folio_translation_status_v1_folio_translation_status_v1 *-- "0..*" cat_harness_docs_folio_translation_status_v1_Locale : locales
+  cat_harness_docs_folio_translation_status_v1_Instance *-- "0..*" cat_harness_docs_folio_translation_status_v1_Locale : locales
+  cat_harness_docs_folio_translation_status_v1_folio_translation_status_v1 *-- "0..*" cat_harness_docs_folio_translation_status_v1_Instance : instances
   cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Module : modules
   cat_harness_docs_folio_schema_graph_v1_Decl *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Field : fields
   cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Decl : decls
@@ -1799,6 +1813,7 @@ classDiagram
   cssClass "cat_harness_docs_node_kind_index_1_0_0_Unkinded" fa_uml_kind_docs
   cssClass "cat_harness_docs_node_kind_index_1_0_0_node_kind_index_1_0_0" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_translation_status_v1_Locale" fa_uml_kind_docs
+  cssClass "cat_harness_docs_folio_translation_status_v1_Instance" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_translation_status_v1_folio_translation_status_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_schema_graph_v1_Module" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_schema_graph_v1_Field" fa_uml_kind_docs
@@ -1824,6 +1839,8 @@ classDiagram
   cssClass "cat_harness_docs_folio_graph_projection_v1_Node" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_folio_graph_projection_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_cat_harness_payload_v1_cat_harness_payload_v1" fa_uml_kind_docs
+  cssClass "n_cat_harness_site_basic_cdn_site" fa_uml_kind_basic_cdn_site
+  cssClass "n_cat_harness_site_basic_cdn_site" fa_uml_undetermined
   cssClass "cat_harness_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0" fa_uml_kind_swimlane_glossary
   cssClass "n_cat_harness_cat_harness_scripts_code" fa_uml_kind_code
   cssClass "n_cat_harness_cat_harness_scripts_code" fa_uml_undetermined

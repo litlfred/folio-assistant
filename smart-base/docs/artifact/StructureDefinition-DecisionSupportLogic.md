@@ -2,6 +2,10 @@
 title: "Decision-Support Logic (DAK) — WHO SMART Base artefact"
 description: "StructureDefinition/DecisionSupportLogic in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureDefinition-DAK.html"
+ig_next: "StructureDefinition-DecisionSupportLogicSource.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-DecisionSupportLogic.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-DecisionSupportLogic.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
-
-<footer id="ig-footer" data-prev="StructureDefinition-DAK.html" data-next="StructureDefinition-DecisionSupportLogicSource.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

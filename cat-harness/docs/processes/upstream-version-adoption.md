@@ -23,7 +23,7 @@ Shaped after `crdm-requirements.bpmn` because the question is the same one: some
 
 - **Called by:** [A knowledge graph leaves for its own repositories](kg-separation.html), [Watching a pinned upstream dependency](upstream-pin-watch.html)
 - **Calls:** [Options analysis](options-analysis.html)
-- **Names the `upstream-version-adoption` skill without calling this process:** [Watching a pinned upstream dependency](upstream-pin-watch.html) — `activity-calls-skill-process` asks whether each should be a call activity.
+- **Names the `upstream-version-adoption` skill without calling this process:** [A sub-KG is staged in place, then leaves for its own repository](sub-kg-lifecycle.html), [Watching a pinned upstream dependency](upstream-pin-watch.html) — `activity-calls-skill-process` asks whether each should be a call activity.
 - **Presented on:** no docs page section shows this diagram
 - **Skill:** [`upstream-version-adoption`](../reference/skill-instructions/upstream-version-adoption.html)
 

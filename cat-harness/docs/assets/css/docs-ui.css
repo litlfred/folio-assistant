@@ -374,17 +374,33 @@
  * here is computed and then ignored. `height: auto` with the SVG's own
  * viewBox is what makes it scale rather than stretch. */
 .fa-figure-scope img,
-.fa-figure-scope svg {
+.fa-figure-scope svg,
+.fa-figure-scope object {
   width: calc(var(--fa-zoom, 1) * 100%) !important;
   min-width: calc(var(--fa-zoom, 1) * 1200px);
   max-width: none !important;
   height: auto !important;
 }
 
-/* A non-BPMN figure has no 1200px floor to scale -- it is whatever size it is. */
+/* A non-BPMN figure has no 1200px floor to scale -- it is whatever size it is.
+ *
+ * And 100% is the drawing's OWN width, capped at the column (bean `n7f8`):
+ * `--fa-natural` is set by `mountFigure` from the viewBox, or from an image's
+ * natural width. Without it a small diagram was stretched to the full column,
+ * text and all. Where no natural width is known the fallback is the column,
+ * which is what every plain figure got before. */
 .fa-figure-scope.fa-plain img,
-.fa-figure-scope.fa-plain svg {
+.fa-figure-scope.fa-plain svg,
+.fa-figure-scope.fa-plain object {
   min-width: 0;
+  width: calc(var(--fa-zoom, 1) * min(100%, var(--fa-natural, 100%))) !important;
+}
+
+/* The figure takes keyboard focus so it can be panned without a drag
+ * (bean `n7f8`, `board-windows` §"The floor"); focus has to be seen. */
+.fa-figure-scope:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 2px;
 }
 
 /* The wrapper this script puts around a non-BPMN figure.
@@ -494,6 +510,11 @@
 .fa-figure-scope.is-fullwidth {
   max-width: none;
   border-radius: 0;
+  /* The JS sets `width` to the viewport's client width. Under content-box the
+   * card's padding and border were added on top, so every full-width figure
+   * ran 18px past the right edge of the window and was clipped there (found by
+   * the n7f8 e2e spec, which measures it). */
+  box-sizing: border-box;
 }
 
 /* ── Narrow viewports ──────────────────────────────────────────────────── */
@@ -890,6 +911,15 @@
   }
 
   .side-bar + .main { margin-left: var(--fa-nav-collapsed); }
+
+  /* PINNED OPEN, THE BAR RESERVES ITS WIDTH (#2263). Owner, 2026-10-06, with a
+   * screenshot of smart-trust's `menu-business-requirements.html`: the open
+   * rail sat over the IG's breadcrumb, menu bar and heading ("…s Requirements").
+   * Hover and focus still open the bar OVER the page, because they are a peek
+   * and reflowing the page under a passing pointer would move what the reader
+   * is looking at. Pinning is a choice to keep the bar open, so the page makes
+   * room for it rather than being covered for as long as it stays pinned. */
+  .side-bar:has(.fa-nav-open:checked) + .main { margin-left: var(--fa-nav-open); }
 
   /* AT REST THE STRIP CARRIES MARKS AND NOTHING ELSE.
    *
@@ -7476,6 +7506,25 @@ a.fa-harness-tab__body:focus-visible {
 :root[data-fa-scheme="light"] .fa-glass-band[data-fa-band-tools] {
   --fa-search-page-bg: #ffffff;
   color: #1f2933;
+}
+/* ON A REPLICA THE BAND IS AN OVERLAY — bean `uvt0`, owner 2026-10-06:
+   "Overlay, no shift". A replica already reserves 2.25rem at the top of body
+   for the handle (`g9r2`, the padding above), so the band is fixed over
+   exactly that strip: the controls sit beside the handle, the replica keeps
+   its layout, and `folio-mount.e2e` compares a TRANSLATED page again. In the
+   flow, as a sticky row, it moved the replica's <main> down 52px. Its height
+   is the reservation's, so it covers nothing below it; an open locale list
+   or search hangs over the page only while it is open. */
+.fa-glass-band[data-fa-band-tools][data-fa-band-overlay] {
+  position: fixed;
+  top: var(--fa-staging-offset, 0px);
+  left: 0;
+  right: 0;
+  align-items: center;
+  min-height: 0;
+  height: 2.25rem;
+  padding: 0 0.5rem;
+  margin: 0;
 }
 .fa-band-slot {
   display: flex;

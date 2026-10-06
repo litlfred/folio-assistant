@@ -8,6 +8,12 @@
  * same function object".
  *
  * @module scripts/tests/qa-checker-discovery.test
+ *
+ * The tests here whose subject is folio-assistant-sci's contribution (the
+ * checkers this instance contributes for criteria declared
+ * `checker_contributed`) live in
+ * `folio-assistant-sci/scripts/tests/qa-checker-discovery.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such contribution to read.
  */
 import { describe, test, expect } from "bun:test";
 
@@ -83,21 +89,6 @@ describe("subject partition", () => {
 });
 
 describe("every automated criterion resolves, from the module the registry names", () => {
-  // This replaced an equivalence check against the merged `AUTOMATED_CHECKERS`
-  // table. That assertion was TRANSITIONAL — it proved the migration faithful
-  // at the commit that made it — and keeping it meant keeping a six-way
-  // aggregation alive with no production caller, purely as a fixture. The
-  // durable invariant is the one below: each criterion resolves, and it
-  // resolves from the file the registry declares, which is also the file whose
-  // hash invalidates its verdicts.
-
-  test("every automated block criterion resolves", () => {
-    const automated = QA_CRITERIA_REGISTRY.filter(
-      (c) => c.automated && criterionSubject(c) === "block",
-    ).map((c) => c.id);
-    expect(automated.length).toBeGreaterThan(50);
-    expect(automated.filter((id) => !block.checkers.has(id))).toEqual([]);
-  });
 
   test("each checker comes from the module the registry DECLARES", async () => {
     // Not merely "a function by that name exists somewhere". `source_file` is
@@ -125,10 +116,6 @@ describe("every automated criterion resolves, from the module the registry names
 });
 
 describe("the two disagreements are reported, not swallowed", () => {
-  test("nothing automated is unimplemented right now", () => {
-    expect(block.unimplemented).toEqual([]);
-    expect(script.unimplemented).toEqual([]);
-  });
 
   test("a checker for a criterion declared automated: false is an orphan", () => {
     // Found on the first run. It has never executed: the sweep short-circuits

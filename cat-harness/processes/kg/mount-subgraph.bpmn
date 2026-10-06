@@ -78,8 +78,8 @@ The gateway is on the source KIND, and its flows are the only places the kinds d
         writes the tip's files at the declared path, so every reader finds the
         directory where it always was; `push` splices edits back onto the tip,
         never forcing, and a same-file race is a conflict. The branch's NAME is
-        the special-branches row the resolver attached — a branch no row
-        declares is refused rather than guessed. A `commit`-keyed branch is read
+        the declaring directory's `storage` (or `source`) — a branch no
+        declaration names is refused rather than guessed. A `commit`-keyed branch is read
         per commit through its own store (`qa-store`), not mounted.
       </bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="directory-conventions"/><bootstrap.processes:skill ref="content-context-and-state-graphs"/></bpmn:extensionElements>

@@ -3,6 +3,8 @@ title: "WHO GDHCN Key Usage ValueSet — change history"
 description: "KeyUsage - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"ValueSet-KeyUsage.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-KeyUsage.xml","active":false},{"label":"JSON","href":"ValueSet-KeyUsage.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-KeyUsage.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-KeyUsage.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-KeyUsage.jsonld.html","active":false}],"heading":"KeyUsage - Change History","sections":[{"text":"History of changes for KeyUsage ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

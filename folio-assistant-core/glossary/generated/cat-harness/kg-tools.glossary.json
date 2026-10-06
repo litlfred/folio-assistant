@@ -327,14 +327,6 @@
       "status": "candidate"
     },
     {
-      "id": "lean-cache",
-      "prefLabel": "Lake olean cache",
-      "definition": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
-      "notation": "lean-cache",
-      "source": "cat-harness/tools/index.ts#lean-cache",
-      "status": "candidate"
-    },
-    {
       "id": "lean-coverage",
       "prefLabel": "Lean coverage",
       "definition": "Count how many provable blocks — theorem, lemma, proposition, corollary — carry a full Lean proof rather than a sorry, per paper. The completeness half of the Lean audit: what is formalised, and what is still a gap.",
@@ -417,7 +409,7 @@
     {
       "id": "merge-train",
       "prefLabel": "Merge train",
-      "definition": "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, `extract-smart-kg-l1.ts --entry` for each stale entry, and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR.",
+      "definition": "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, every check an instance declares `afterMerge` (its declared writer run when red), and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR.",
       "notation": "merge-train",
       "source": "cat-harness/tools/index.ts#merge-train",
       "status": "candidate"
@@ -663,6 +655,14 @@
       "status": "candidate"
     },
     {
+      "id": "site-build-local",
+      "prefLabel": "Build the docs site locally",
+      "definition": "Build the published site on this machine, so a page can be looked at rather than described: the same Jekyll build `pages-publish` runs in CI, into a directory of your choosing, and never pushed. The local half of the two site builds (owner, 2026-10-05: local and GitHub builds are two Tools for one skill).",
+      "notation": "site-build-local",
+      "source": "cat-harness/tools/index.ts#site-build-local",
+      "status": "candidate"
+    },
+    {
       "id": "site-search-index",
       "prefLabel": "Site search index",
       "definition": "The just-the-docs search index, `assets/js/search-data.json`, which the theme writes as part of the Jekyll site build: one entry per page section, searched by every page's search box. Built implicitly by the build rather than by a command of its own.",
@@ -724,6 +724,14 @@
       "definition": "Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in.",
       "notation": "state-viewer",
       "source": "cat-harness/tools/viewers.ts#state-viewer",
+      "status": "candidate"
+    },
+    {
+      "id": "sub-kg-verify-clone",
+      "prefLabel": "Verify a separated repository from a fresh clone",
+      "definition": "Clone a separated sub-KG's repository (with submodules, and any sibling checkouts it needs) into an empty scratch directory, install, and run its gates: its `gates` script, else its `test` script (a person may pass `--gate` on the command line instead; it is not part of this contract because it is a shell command). Reports `green`, `red` or `unknown`; an empty tree, a failed clone or a repository with no gate is `unknown`, never green. Catches what a rehearsal inside this checkout cannot, because a rehearsal shares this checkout's `node_modules` and environment (#2082). Writes only inside the scratch directory.",
+      "notation": "sub-kg-verify-clone",
+      "source": "cat-harness/tools/index.ts#sub-kg-verify-clone",
       "status": "candidate"
     },
     {
