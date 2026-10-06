@@ -331,7 +331,7 @@ jobs:
             echo "this platform has no document renderer ($R): rendered-impact.json not written"
             exit 0
           fi
-          bun run "$R" --root . --base "origin/$BASE_REF" --head HEAD \
+          bun run "$PLATFORM_DIR/folio-assistant-core/scripts/document-rendered-impact.ts" --root . --base "origin/$BASE_REF" --head HEAD \
             --changeset "$SITE_DIR/changeset.json" --outline "$SITE_DIR/outline.json" \
             --out "$SITE_DIR/rendered-impact.json"
 
