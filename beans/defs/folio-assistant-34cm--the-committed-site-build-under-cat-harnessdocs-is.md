@@ -3,8 +3,9 @@
 title: The committed site build under cat-harness/docs/ is 44% of all merge conflicts, and the publish workflow rebuilds it anyway
 status: todo
 type: bug
+priority: normal
 created_at: 2026-10-03T08:34:21Z
-updated_at: 2026-10-03T08:34:21Z
+updated_at: 2026-10-04T13:29:55Z
 parent: folio-assistant-hfag
 ---
 
@@ -191,3 +192,15 @@ this long: the files are cheap to move and the gates are not.
 - [ ] `docs-site.yml` still publishes a complete site (it already regenerates
       all of this, so this should be a no-op — verify rather than assume)
 - [ ] The conflict distribution is re-measured; the 44 % should drop toward 0
+
+
+
+## 2026-10-04: re-measured, and routed to `xsrv`
+
+**Re-measured** against main `f8f329a` (18 open non-draft PRs), classified with main's `merge-conflict-patterns.ts`:
+- 279 conflicting path-instances across 17 PRs.
+- `cat-harness/docs/` is **61%** (169), up from 44%; `test/results/` 25%; `beans/` 1%.
+- By class: `take-base` 228, `refuse` 21 (8%), `qa-sidecar` 18, `generated-regions` 12.
+- Within `docs/`, **`cat-harness/auto-docs/` alone is 118**; then `lsi/` and `glossary/` (with its locales), `reference/skill-instructions/`, and the site data (`assets/`, `_data`, `qa/`).
+
+**The decision this bean asked for already exists:** the owner's 2026-10-03 ruling, *"auto-docs is one declared subgraph, with declared sub-sub-graphs per writer"*, is implemented by `xsrv` (route-keyed branch storage). On 2026-10-04 the owner said *"take the auto-docs part and coordinate on the beans"*. The auto-docs family is held by session_01Jf39Vh4B8EQT6TBYzTtMCA; see `xsrv`. This bean's Done-when boxes stay open until the cutover lands and the re-measurement after it is taken.
