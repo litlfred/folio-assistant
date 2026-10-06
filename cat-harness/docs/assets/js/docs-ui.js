@@ -5620,6 +5620,16 @@
     return glassBandEl;
   }
 
+  /**
+   * Is this a REPLICA, which reserves the handle's 2.25rem strip at the top of
+   * body? The marker `docs-ui.css` keys that padding on (`g9r2`), so the
+   * overlay and the space it sits in cannot disagree. Viewers reserve the same
+   * strip by another marker but are out of this bean's scope (`uvt0`).
+   */
+  function reservesHandleBand() {
+    return !!document.querySelector("script[data-fa-folio-mount]");
+  }
+
   /** The band's `start` or `end` slot, moving the band into the panel the first time. */
   function glassBandSlot(which) {
     var band = glassBand();
@@ -5637,7 +5647,15 @@
       band.removeAttribute("data-fa-band-fallback");
       var panelTop = firstMatch([".main-content-wrap", ".main-header", "#main-header"]);
       if (panelTop) panelTop.insertBefore(band, panelTop.firstChild);
-      else {
+      else if (reservesHandleBand()) {
+        // A REPLICA: an OVERLAY, never a row in the flow
+        // (bean `uvt0`, owner 2026-10-06: "Overlay, no shift"). These pages
+        // already reserve a 2.25rem strip at the top of body for the handle
+        // (`g9r2`, `015u`); the band's controls sit in that strip, fixed,
+        // beside the handle. In the flow it pushed a replica's <main> 52px down.
+        if (!band.parentNode || band.parentNode !== document.body) document.body.insertBefore(band, document.body.firstChild);
+        band.setAttribute("data-fa-band-overlay", "");
+      } else {
         var mainEl = firstMatch(["#main-content", ".main-content", "main"]);
         if (mainEl && mainEl.parentNode) mainEl.parentNode.insertBefore(band, mainEl);
         else document.body.insertBefore(band, document.body.firstChild);
