@@ -144,8 +144,13 @@ export const VIEWER_CSS = `/* The block content panel — bean lrmo. Tokens only
    and dark themes above rather than hardcoding either. */
 #document .seg { margin: .2rem 0 .8rem; }
 #document .seg button[aria-selected="true"] { font-weight: 600; }
-#document ol.toc { list-style: none; padding: 0; margin: 0; }
-#document ol.toc li { margin: .15rem 0; }
+#document .docbody { padding: 0 16px 8px; }
+#document ul.toc, #document ul.toc ul { list-style: none; margin: 0; padding-left: 1.1rem; }
+#document ul.toc { padding-left: 0; }
+#document ul.toc li { margin: .15rem 0; }
+#document ul.toc li.leaf { padding-left: 1rem; }
+#document ul.toc summary { cursor: pointer; }
+#document td ul { margin: .3rem 0 0; padding-left: 1.1rem; }
 #document .docsec { margin: 0 0 1rem; }
 #document .docsec h3 { margin: .2rem 0 .3rem; font-size: 1rem; }
 #document .sum { padding: .55rem .7rem; border: 1px dashed var(--line); border-radius: 6px; }
@@ -1325,6 +1330,9 @@ if (import.meta.main) {
   // 404 the viewer would have to tell apart from a failure.
   for (const e of g.entries) {
     const doc = readEntryDocument(join(repoRoot, e.dir), e.id, { withheld: !!e.withheld });
+    // The entry's resolved title, not the page-1 guess in structure.json
+    // (issue #1794: the guess is never a library entry's title).
+    if (doc && e.title) doc.title = e.title;
     emit(
       join(dataDir, "entries", `${e.id}.doc.json`),
       JSON.stringify(doc ?? { $schema: "folio-library-document/v1", id: e.id, absent: true }, null, 2) + "\n",

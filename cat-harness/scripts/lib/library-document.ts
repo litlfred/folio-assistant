@@ -32,8 +32,9 @@
  *   — the key is ABSENT from the projection, and the viewer says "not
  *   recorded for this entry" rather than drawing an empty table.
  *
- * A WITHHELD entry (bean `cw35`) publishes no verbatim text: its extracts are
- * omitted and say so; its structure, labels and our summaries stay.
+ * A WITHHELD entry (bean `cw35`) publishes no verbatim BODY text: its section
+ * extracts are omitted and say so. Its structure, page labels, figure and
+ * table captions (labels, like TOC titles) and our own summaries stay.
  */
 
 import { existsSync, readFileSync } from "node:fs";
@@ -215,7 +216,10 @@ export function readEntryDocument(dir: string, id: string, opts: { withheld?: bo
   }
   if (Array.isArray(s.figures)) {
     view.figures = s.figures.map((f) => ({
-      kind: f.kind, number: f.number, title: withheld ? "" : f.title, page: f.page,
+      // A caption is shown even for a withheld entry (owner, 2026-10-06:
+      // "why caption on table/figure withheld? add them"): it is a label of a
+      // dozen words, like the TOC titles already shown, not the work's text.
+      kind: f.kind, number: f.number, title: f.title, page: f.page,
       pageLabel: f.page_label ?? null, confidence: f.confidence, evidence: f.evidence ?? [],
     }));
   }
@@ -253,14 +257,43 @@ function notRecorded(what){
 }
 function docContents(d){
   if (!d.toc.length) return '<p class="empty">No table of contents: the PDF carries no outline and none could be inferred.</p>';
-  var how = d.tocSource === "outline" ? "the PDF’s own outline"
-    : "inferred (" + esc(d.tocMethod || "unknown") + "); each entry’s confidence and the evidence behind it are shown";
-  return '<p class="note">Source: ' + how + '.</p><ol class="toc">' + d.toc.map(function(e){
+  var how = d.tocSource === "outline" ? "the PDF\u2019s own outline"
+    : "inferred (" + esc(d.tocMethod || "unknown") + "); each entry\u2019s confidence and the evidence behind it are shown";
+  /* A TREE OF <details>, collapsed to the top level so the document's shape
+     is visible at a glance (owner, 2026-10-06: "TOC collapsible and start
+     collapsed - hard to see overview"). Native <details>: keyboard and
+     screen-reader behaviour with no script. */
+  function line(e){
     var t = (e.number ? esc(e.number) + ' ' : '') + esc(e.title);
     var link = e.section ? '<a href="#sec-' + esc(e.section) + '" data-sec="' + esc(e.section) + '">' + t + '</a>' : t;
-    return '<li style="margin-left:' + ((e.level - 1) * 1.2) + 'rem">' + link +
-      ' <span class="note">' + pageText(e.page, e.pageLabel) + '</span> ' + confPill(e.confidence, e.evidence) + '</li>';
-  }).join("") + '</ol>';
+    return link + ' <span class="note">' + pageText(e.page, e.pageLabel) + '</span> ' + confPill(e.confidence, e.evidence);
+  }
+  /* Build a node list first, so a level can see how many siblings it has.
+     A node that is the ONLY one at its level starts open: an outline whose
+     single root is the book's title would otherwise collapse to one line
+     (9789241548960-eng). The tree opens down to the first level that
+     branches — the chapters — and no further. */
+  var i = 0;
+  function nodes(level){
+    var out = [];
+    while (i < d.toc.length && d.toc[i].level >= level) {
+      var e = d.toc[i++];
+      out.push({ e: e, kids: (i < d.toc.length && d.toc[i].level > e.level) ? nodes(e.level + 1) : [] });
+    }
+    return out;
+  }
+  function render(ns){
+    var only = ns.length === 1;
+    return ns.map(function(n){
+      return n.kids.length
+        ? '<li><details' + (only ? ' open' : '') + '><summary>' + line(n.e) + '</summary><ul>' + render(n.kids) + '</ul></details></li>'
+        : '<li class="leaf">' + line(n.e) + '</li>';
+    }).join("");
+  }
+  var tree = render(nodes(d.toc[0].level));
+  return '<p class="note">Source: ' + how + '. ' + d.toc.length + ' entries.</p>' +
+    '<p><button type="button" data-toc="open">Expand all</button> <button type="button" data-toc="close">Collapse all</button></p>' +
+    '<ul class="toc">' + tree + '</ul>';
 }
 function docPages(d){
   if (!d.pageLabels) return notRecorded("Page labels");
@@ -302,19 +335,23 @@ function docSections(d){
   }).join("");
 }
 function docChecks(d){
-  var c = d.checks, out = [];
-  if (c.tocAlignment) {
-    var names = { listed_not_found: "Listed on the contents page, not found in the body",
-      found_not_listed: "Numbered in the body, missing from the contents page", page_mismatch: "Page differs from the contents page" };
-    Object.keys(names).forEach(function(k){
-      var v = c.tocAlignment[k]; if (!v) return;
-      out.push('<h4>' + names[k] + ' — ' + v.count + '</h4>' + (v.items.length ? '<ul>' + v.items.map(function(i){ return '<li>' + esc(i) + '</li>'; }).join("") + '</ul>' : ''));
-    });
+  var c = d.checks, rows = [];
+  function row(name, n, items){
+    var cell = !items || !items.length ? '<span class="note">none</span>'
+      : '<details><summary>' + items.length + (n > items.length ? ' of ' + n : '') + ' shown</summary><ul>' +
+        items.map(function(i){ return '<li>' + esc(i) + '</li>'; }).join("") + '</ul></details>';
+    rows.push('<tr><td>' + esc(name) + '</td><td class="num">' + n + '</td><td>' + cell + '</td></tr>');
   }
-  if (c.figureSequenceGaps) out.push('<h4>Figure and table numbering gaps — ' + c.figureSequenceGaps.length + '</h4>' + (c.figureSequenceGaps.length ? '<p>' + esc(c.figureSequenceGaps.join(", ")) + '</p>' : ''));
-  if (c.pageLabelConflicts) out.push('<h4>Page-label conflicts — ' + c.pageLabelConflicts.count + '</h4>' + (c.pageLabelConflicts.items.length ? '<ul>' + c.pageLabelConflicts.items.map(function(i){ return '<li>' + esc(i) + '</li>'; }).join("") + '</ul>' : ''));
-  return out.length ? '<p class="note">Findings about the DOCUMENT, reported and never corrected — drafts drift.</p>' + out.join("")
-    : '<p class="empty">No checks recorded for this entry.</p>';
+  if (c.tocAlignment) {
+    var names = { listed_not_found: "On the contents page, not found in the body",
+      found_not_listed: "Numbered in the body, missing from the contents page", page_mismatch: "Page differs from the contents page" };
+    Object.keys(names).forEach(function(k){ var v = c.tocAlignment[k]; if (v) row(names[k], v.count, v.items); });
+  }
+  if (c.figureSequenceGaps) row("Figure and table numbering gaps", c.figureSequenceGaps.length, c.figureSequenceGaps);
+  if (c.pageLabelConflicts) row("Page-label conflicts (built-in label vs printed)", c.pageLabelConflicts.count, c.pageLabelConflicts.items);
+  if (!rows.length) return '<p class="empty">No checks recorded for this entry.</p>';
+  return '<p class="note">Findings about the DOCUMENT, reported and never corrected \u2014 drafts drift.</p>' +
+    '<table><thead><tr><th>check</th><th>count</th><th>items</th></tr></thead><tbody>' + rows.join("") + '</tbody></table>';
 }
 var DOC_TABS = [["contents","Contents",docContents],["pages","Pages",docPages],["figures","Figures & tables",docFigures],["sections","Sections",docSections],["checks","Checks",docChecks]];
 function renderDocument(id, d, err){
@@ -332,6 +369,12 @@ function renderDocument(id, d, err){
     }).join("") + '</div><div class="docbody" role="tabpanel">' + tab[2](d) + '</div>';
   Array.prototype.forEach.call(el.querySelectorAll("[data-tab]"), function(b){
     b.addEventListener("click", function(){ DOC_TAB = b.getAttribute("data-tab"); renderDocument(id, DOC, null); });
+  });
+  Array.prototype.forEach.call(el.querySelectorAll("[data-toc]"), function(b){
+    b.addEventListener("click", function(){
+      var open = b.getAttribute("data-toc") === "open";
+      Array.prototype.forEach.call(el.querySelectorAll("ul.toc details"), function(x){ x.open = open; });
+    });
   });
   /* A section link from any tab opens the Sections tab at that section. */
   Array.prototype.forEach.call(el.querySelectorAll("[data-sec]"), function(a){
