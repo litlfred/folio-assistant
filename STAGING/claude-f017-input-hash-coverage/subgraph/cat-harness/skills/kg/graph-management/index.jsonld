@@ -1,0 +1,94 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/kg/graph-management/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+      "@type": "cat-harness:SkillPackage",
+      "name": "graph-management"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/domain-fencing",
+      "@type": "bootstrap:Skill",
+      "name": "domain-fencing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/97d85eb52db9209d16fde9b9346c9eedd22ed88093e4238d3395f0a19b4a1fcc",
+        "bytes": 11674,
+        "sha256": "97d85eb52db9209d16fde9b9346c9eedd22ed88093e4238d3395f0a19b4a1fcc"
+      },
+      "title": "Domain fencing — keeping one folio's rules out of everybody's platform"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/edge-kinds-and-blast-radius",
+      "@type": "bootstrap:Skill",
+      "name": "edge-kinds-and-blast-radius",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7d622e90e88f16c5e3a9bb88bbe439940f207e93bc6b436d227b4231c133973b",
+        "bytes": 7530,
+        "sha256": "7d622e90e88f16c5e3a9bb88bbe439940f207e93bc6b436d227b4231c133973b"
+      },
+      "title": "consulted: reference material nobody performs — a PRINCIPLE about graph semantics. Zero imperative markers and every heading is a claim — \"Not every edge is a dependency\", \"Provenance is three-valued\", \"Taint propagates down the dependency graph\". It is read before deciding how to traverse a graph; nobody performs it as a task."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-detanglement",
+      "@type": "bootstrap:Skill",
+      "name": "graph-detanglement",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2d75040daf6b0978bfd66c299538d8b4850852231a3b9e27053849efd862f560",
+        "bytes": 17961,
+        "sha256": "2d75040daf6b0978bfd66c299538d8b4850852231a3b9e27053849efd862f560"
+      },
+      "title": "Graph detanglement — the practice, not the migration"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-rendering",
+      "@type": "bootstrap:Skill",
+      "name": "graph-rendering",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/eab87eba224a4ee1316735cdeafc9f9d72617f1351f9ef82ee79cb07d5fda1cf",
+        "bytes": 11400,
+        "sha256": "eab87eba224a4ee1316735cdeafc9f9d72617f1351f9ef82ee79cb07d5fda1cf"
+      },
+      "title": "Graph rendering: one set of rules for every drawn graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation",
+      "@type": "bootstrap:Skill",
+      "name": "kg-separation",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2dadeb3a72eff4564c53fec88ca3366a21c37e2a42f21353879f68dc056518fa",
+        "bytes": 21113,
+        "sha256": "2dadeb3a72eff4564c53fec88ca3366a21c37e2a42f21353879f68dc056518fa"
+      },
+      "title": "Knowledge Graph separation — the method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lsi-indexing",
+      "@type": "bootstrap:Skill",
+      "name": "lsi-indexing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0fc1a338debc2461ae060e8f52bb35197e79f3fd4fac6e261efa71e27929d47e",
+        "bytes": 15443,
+        "sha256": "0fc1a338debc2461ae060e8f52bb35197e79f3fd4fac6e261efa71e27929d47e"
+      },
+      "title": "LSI indexing — the platform's application of `methodologies/lsi.md`"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sub-kg-lifecycle",
+      "@type": "bootstrap:Skill",
+      "name": "sub-kg-lifecycle",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/316ed3badb20921b3f582059faec0005ff565184af44211ca98ba93b96d90b26",
+        "bytes": 17501,
+        "sha256": "316ed3badb20921b3f582059faec0005ff565184af44211ca98ba93b96d90b26"
+      },
+      "title": "Sub-KG lifecycle — staged here, separated later"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/kg/graph-management",
+  "path": "skills/kg/graph-management/"
+}

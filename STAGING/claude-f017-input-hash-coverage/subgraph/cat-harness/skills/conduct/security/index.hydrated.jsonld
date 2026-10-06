@@ -1,0 +1,84 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/conduct/security/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security",
+      "@type": "cat-harness:SkillPackage",
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/injection-boundaries",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/path-containment",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/security"
+      ],
+      "description": "The security sub-KG, split on WHERE A VALUE CROSSES A BOUNDARY rather than on attack name. The owner asked for it on 2026-09-25 — \"bean as ceybeesquity sub KG in tools. first is injection et. related skills already man y in folio and smart-base. consolidate\" — and chose scope 2+3: consolidate the scattered pieces AND audit every I/O site. The axis matters: an attack-name split (\"XSS\", \"path traversal\", \"command injection\") files one rule in three places, because the same value crossing the same boundary is all three depending on the sink. A boundary split asks the question a reader actually has at the call site: this value came from outside, what may I do with it? Every entry here existed before the package did and was stranded — `check-workflow-injection.ts` in scripts, `resolveWithin` in one server script, `translation_security.py` in the translation tooling, and the XSS rules in a bean. Beans `6bhf`, `1wef`, `fuzm`, `q2wm`.",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "name": "security",
+      "path": "skills/conduct/security",
+      "version": "0.1.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/injection-boundaries",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the gate covers, why a step output carries a severity rather than having one, and the argv rule.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 187,
+      "instructionsPath": "skills/conduct/security/injection-boundaries.md",
+      "name": "injection-boundaries",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d3939c998f87646babc885c97ad3e0b7848e4985c8a2e5005ebb6ac83d80d2b2",
+        "bytes": 9768,
+        "sha256": "d3939c998f87646babc885c97ad3e0b7848e4985c8a2e5005ebb6ac83d80d2b2"
+      },
+      "title": "Injection — the value became program"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/path-containment",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 101,
+      "instructionsPath": "skills/conduct/security/path-containment.md",
+      "name": "path-containment",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1e0e2a96525a36ca6a550efe5285bc6e77e2dde9a6811d01a8aacb362c41f36b",
+        "bytes": 5541,
+        "sha256": "1e0e2a96525a36ca6a550efe5285bc6e77e2dde9a6811d01a8aacb362c41f36b"
+      },
+      "title": "Path containment — two questions that look like one"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/security",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The security sub-KG's entry point. What the boundaries are, which machinery already guards each one, and the single rule that unifies them — refuse, never repair. Read this before adding a check, so the answer that already exists is reused rather than rebuilt in a fourth place.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 72,
+      "instructionsPath": "skills/conduct/security/security.md",
+      "name": "security",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/021f0ad87d6822ae91502f267679cb0727b1509eed4f45482c540d461066959c",
+        "bytes": 4758,
+        "sha256": "021f0ad87d6822ae91502f267679cb0727b1509eed4f45482c540d461066959c"
+      },
+      "title": "Security — one question, asked at every boundary"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/conduct/security",
+  "path": "skills/conduct/security/"
+}
