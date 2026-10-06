@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Quality Control Output",
+  "description": "Output schema for quality control results.",
+  "type": "object",
+  "required": [
+    "overallResult"
+  ],
+  "properties": {
+    "overallResult": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "pass-with-warnings",
+        "fail"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "severity",
+          "category",
+          "message"
+        ],
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "category": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "remediation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "checklistResults": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "enum": [
+          "pass",
+          "fail",
+          "not-applicable"
+        ]
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-exciting-ptolemy-se2d2a/folio-assistant-core/schema/skills/quality-control/output.schema.json",
+  "staging": {
+    "branch": "claude/exciting-ptolemy-se2d2a",
+    "sha": "e9914d36a8d389947daa94b83988a0cdb1a8d9e2",
+    "pr": "2282/merge",
+    "run": "37544755265"
+  }
+}

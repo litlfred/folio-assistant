@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Document Publishing Output",
+  "type": "object",
+  "required": [
+    "outputPath",
+    "blockCount"
+  ],
+  "properties": {
+    "outputPath": {
+      "type": "string"
+    },
+    "engine": {
+      "type": "string",
+      "description": "The engine actually used, or absent for md/html."
+    },
+    "blockCount": {
+      "type": "integer"
+    },
+    "chapterCount": {
+      "type": "integer"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warn"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-exciting-ptolemy-se2d2a/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
+  "staging": {
+    "branch": "claude/exciting-ptolemy-se2d2a",
+    "sha": "e9914d36a8d389947daa94b83988a0cdb1a8d9e2",
+    "pr": "2282/merge",
+    "run": "37544755265"
+  }
+}

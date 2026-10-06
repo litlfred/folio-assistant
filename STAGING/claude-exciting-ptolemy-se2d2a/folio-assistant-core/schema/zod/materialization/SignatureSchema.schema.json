@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/Signature",
+  "definitions": {
+    "Signature": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "signer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verifiedAt": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "format",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-exciting-ptolemy-se2d2a/folio-assistant-core/schema/zod/materialization/SignatureSchema.schema.json",
+  "title": "SignatureSchema",
+  "description": "Generated from `SignatureSchema` in schemas/materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/exciting-ptolemy-se2d2a",
+    "sha": "e9914d36a8d389947daa94b83988a0cdb1a8d9e2",
+    "pr": "2282/merge",
+    "run": "37544755265"
+  }
+}

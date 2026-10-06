@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-exciting-ptolemy-se2d2a/skills/content-plan/input.schema.json",
+  "title": "Content Plan Input",
+  "description": "Input schema for content planning — scope, team, timeline, governance.",
+  "type": "object",
+  "required": [
+    "projectName"
+  ],
+  "properties": {
+    "projectName": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "description": "Description of the content scope."
+    },
+    "targetDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "teamSize": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "sprintDuration": {
+      "type": "string",
+      "enum": [
+        "1w",
+        "2w",
+        "3w",
+        "4w"
+      ],
+      "default": "2w"
+    }
+  },
+  "staging": {
+    "branch": "claude/exciting-ptolemy-se2d2a",
+    "sha": "e9914d36a8d389947daa94b83988a0cdb1a8d9e2",
+    "pr": "2282/merge",
+    "run": "37544755265"
+  }
+}
