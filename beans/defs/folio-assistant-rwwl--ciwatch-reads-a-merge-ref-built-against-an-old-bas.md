@@ -29,15 +29,15 @@ GitHub reports #2197 as `mergeable_state: dirty`. #2088 gives the same result. S
 The 52cz fix covered "new head, stale ref" but not "same head, base moved".
 
 ## Done when
-- [ ] a merge ref whose first parent is not the base's current tip is not read as `mergeable`; when the base is the default branch, the answer is computed with `git merge-tree` (clean = mergeable, conflict = conflicted), and anything that cannot be established is `unknown`
-- [ ] tests in head-has-run.test.ts fail on the old code
-- [ ] live: `ci:watch --pr 2197` (or another conflicted PR) does not report pass
+- [x] a merge ref whose first parent is not the base's current tip is not read as `mergeable`; when the base is the default branch, the answer is computed with `git merge-tree` (clean = mergeable, conflict = conflicted), and anything that cannot be established is `unknown`
+- [x] tests in head-has-run.test.ts fail on the old code
+- [x] live: `ci:watch --pr 2197` (or another conflicted PR) does not report pass
 
 ## Progress 2026-10-06 (claude/bold-brahmagupta-c8eoku)
-- [x] mergeStateForHead checks the merge ref's FIRST parent against the default branch's tip. When the base has moved, the merge is re-decided with git merge-tree. A stacked PR's base, a shallow history and a merge-tree error are all `unknown`.
-- [x] 4 new tests in head-has-run.test.ts. 3 fail on the old code. The fourth (old base, still merges clean) passes on both, as it should.
-- [x] live: `ci:watch --pr 2197` and `--pr 2088` now print UNDETERMINED, exit 2 (they were PASS, exit 0).
-- [ ] full `bun run gates`, then push
+- mergeStateForHead checks the merge ref's FIRST parent against the default branch's tip. When the base has moved, the merge is re-decided with git merge-tree. A stacked PR's base, a shallow history and a merge-tree error are all `unknown`.
+- 4 new tests in head-has-run.test.ts. 3 fail on the old code. The fourth (old base, still merges clean) passes on both, as it should.
+- live: `ci:watch --pr 2197` and `--pr 2088` now print UNDETERMINED, exit 2 (they were PASS, exit 0).
+- remaining: CI green on #2250
 
 ### Found, deliberately NOT fixed here
 An already-MERGED PR whose head is still served at refs/pull/N/head has no merge ref, so it reads as `conflicted`. Seen live on #2249 right after it merged. This is the old 'no merge ref => conflicted' rule, not this change. The fix would be to check, before reading the merge ref, whether the head is an ancestor of the default branch tip. It is left for its own bean so this PR stays one defect.
