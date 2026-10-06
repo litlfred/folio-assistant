@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SPolioBirthDoseVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SPolioBirthDoseVS.schema.json` · [view](ValueSet-IMMZD18SPolioBirthDoseVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SPolioBirthDoseVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SPolioBirthDoseVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SPolioBirthDoseVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SPolioBirthDoseVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SPolioBirthDoseVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SPolioBirthDoseVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SPolioBirthDoseVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SPolioBirthDoseVS.jsonld` · [view](ValueSet-IMMZD18SPolioBirthDoseVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SPolioBirthDoseVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SPolioBirthDoseVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD18SPneumococcal3DosesVS.html" data-next="ValueSet-IMMZD18SPolioBOPVPlusIPVVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

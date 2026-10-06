@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.schema.json` · [view](ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.jsonld` · [view](ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD18SMeaslesMCVDose0VS.html" data-next="ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

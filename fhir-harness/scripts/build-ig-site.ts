@@ -148,6 +148,8 @@ export interface StageResult {
   unparseable: string[];
   /** Links the IG's source writes to an artefact's flat Publisher page (`ValueSet-X.html`), pointed at this site's artefact page instead. */
   relinked: number;
+  /** Links a page makes to a `.html` page no source or build serves: the IG's own dead links, REPORTED (#2235). */
+  deadLinks: string[];
   /** The colour scheme written from the instance's palette; undefined when none was declared. */
   scheme: ColourScheme | undefined;
   siteData: IgSiteDataResult;
@@ -166,10 +168,106 @@ export interface StageResult {
  */
 export function relinkArtifacts(text: string, pageNames: ReadonlySet<string>, pagesHref: string): { text: string; count: number } {
   let count = 0;
+  // A CASE-ONLY mismatch resolves to the one page it can mean. smart-trust's
+  // `hcert_spec.md` links `StructureDefinition-hcert.html` where the artefact
+  // is `HCert`: dead on any case-sensitive host, the IG's own included (6 links,
+  // #2235). Only a UNIQUE case-insensitive match is taken; two candidates
+  // differing only in case leave the link as written.
+  const byLower = new Map<string, string | null>();
+  for (const n of pageNames) byLower.set(n.toLowerCase(), byLower.has(n.toLowerCase()) ? null : n);
   const out = text.replace(/(\]\(|href=["'])([A-Za-z0-9][A-Za-z0-9._-]*)\.html(?=[#)"'?])/g, (whole, pre: string, name: string) => {
-    if (!pageNames.has(name)) return whole;
+    const page = pageNames.has(name) ? name : byLower.get(name.toLowerCase());
+    if (!page) return whole;
     count++;
-    return `${pre}${pagesHref}${name}.html`;
+    return `${pre}${pagesHref}${page}.html`;
+  });
+  return { text: out, count };
+}
+
+/**
+ * Point a page's links to the IG Publisher's DOWNLOADS at the IG's published
+ * site. `downloads.md` links `package.tgz` and `definitions.json.zip` beside
+ * itself because the Publisher writes them there; this build renders pages,
+ * not packages, so those links resolved to nothing (7 per IG, measured on
+ * litlfred/smart-immunizations' site, 2026-10-05). The published IG at the
+ * sushi `canonical` serves the same files. Only a bare relative `.zip`/`.tgz`
+ * name is touched: an archive is a Publisher output by construction here,
+ * and a path, a query or an absolute URL is the author's and is left alone.
+ */
+export function relinkPublisherOutputs(text: string, publishedBase: string): { text: string; count: number } {
+  let count = 0;
+  const base = publishedBase.replace(/\/$/, "");
+  const out = text.replace(/(\]\(|href=["'])([A-Za-z0-9][A-Za-z0-9._-]*\.(?:zip|tgz))(?=[)"'])/g, (_w, pre: string, file: string) => {
+    count++;
+    return `${pre}${base}/${file}`;
+  });
+  return { text: out, count };
+}
+
+/**
+ * Pages only the IG Publisher writes, beside the IG's own (its QA report, the
+ * full TOC, the search form). This build does not produce them; the published
+ * IG at the sushi `canonical` does, so a link to one goes there (#2235:
+ * smart-trust's `support.md` links `qa.html`).
+ */
+export const PUBLISHER_PAGES: ReadonlySet<string> = new Set(["qa.html", "qa-tx.html", "qa-ipreview.html", "qa-eslintcompare.html", "toc.html", "searchform.html"]);
+
+/**
+ * Point a page's links that THIS build cannot serve somewhere that can:
+ *
+ * - a Publisher-only page ({@link PUBLISHER_PAGES}) → the published IG;
+ * - a FILE of the IG's repository that is not published as a page (smart-base
+ *   links `.github/skills/bpmn_layout/skills.yaml` and `bpmn/<name>.bpmn`,
+ *   the latter from `input/bpmn/`) → that file on GitHub, at `sourceBlob`.
+ *   A target is looked for at `<path>` and `input/<path>` in the checkout.
+ *
+ * A link nothing can serve (smart-trust's `video_tutorial.html`, in no
+ * source) is left as written and RETURNED, so the stage reports an upstream
+ * dead link rather than hiding it.
+ */
+export function relinkOffSite(
+  text: string,
+  o: { canonical?: string; sourceBlob?: string; srcRoot: string; isServed: (target: string) => boolean },
+): { text: string; count: number; dead: string[] } {
+  let count = 0;
+  const dead: string[] = [];
+  const out = text.replace(/(\]\(|href=["'])([^)"'\s#?]+)([#?][^)"'\s]*)?(?=[)"'])/g, (whole, pre: string, target: string, tail = "") => {
+    if (/^([a-z][a-z0-9+.-]*:|\/|\.\.\/|\{)/i.test(target) || target.includes("{")) return whole;
+    if (o.isServed(target) || o.isServed(target.replace(/^\.\//, ""))) return whole;
+    if (PUBLISHER_PAGES.has(target) && o.canonical) {
+      count++;
+      return `${pre}${o.canonical.replace(/\/$/, "")}/${target}${tail}`;
+    }
+    if (!/\.(html|md)$/.test(target) && o.sourceBlob) {
+      const at = [target, `input/${target}`].find((p) => existsSync(join(o.srcRoot, p)) && statSync(join(o.srcRoot, p)).isFile());
+      if (at) {
+        count++;
+        return `${pre}${o.sourceBlob.replace(/\/$/, "")}/${at}${tail}`;
+      }
+    }
+    if (/\.html$/.test(target)) dead.push(target);
+    return whole;
+  });
+  return { text: out, count, dead };
+}
+
+/**
+ * Rewrite a Liquid string the IG Publisher accepts and Jekyll does not.
+ *
+ * The Publisher's Liquid (Java) reads `"<a href=\\"x.html\\">X</a>"` as one
+ * string with escaped quotes; Ruby Liquid has no escapes, ends the string at
+ * the first `\\"`, and the page shows `<a href=\\` (smart-base's
+ * `smart.liquid`, every `…__link__html` value, #2235). A double-quoted
+ * `{% assign %}` value holding `\\"` and no `'` is written single-quoted,
+ * with plain `"` inside — the same string in both engines. One that also
+ * holds a `'` has no faithful Ruby form and is left as written.
+ */
+export function rubyLiquidStrings(text: string): { text: string; count: number } {
+  let count = 0;
+  const out = text.replace(/(\{%-?\s*assign\s+[\w.-]+\s*=\s*)"((?:[^"\\]|\\.)*)"/g, (whole, pre: string, body: string) => {
+    if (!body.includes('\\"') || body.includes("'")) return whole;
+    count++;
+    return `${pre}'${body.replace(/\\"/g, '"')}'`;
   });
   return { text: out, count };
 }
@@ -783,11 +881,32 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   const usedMarkers = new Set<string>();
   const artifactPages = new Set((opts.artifacts?.list ?? []).map((a) => artifactPageName(a)));
   let relinked = 0;
+  const canonical = typeof sushi.canonical === "string" ? sushi.canonical : undefined;
+  const sourceBlob = opts.editBase?.replace(/\/$/, "").replace(/\/edit\//, "/blob/");
+  // What THIS site serves at a bare relative name: the IG's pages, its
+  // `input/images/*` (published at the root), the artefact pages, and the
+  // artefact index page.
+  const pageHtml = new Set(files(pagecontent).filter((f) => f.endsWith(".md")).map((f) => `${basename(f, ".md")}.html`));
+  const rootImages = new Set(files(join(src, "input", "images")));
+  const isServed = (t: string): boolean =>
+    pageHtml.has(t) || rootImages.has(t) || t === "artifacts.html" || (opts.artifacts !== undefined && t.startsWith(opts.artifacts.pagesHref));
+  const dead = new Set<string>();
   const relink = (text: string): string => {
-    if (!opts.artifacts) return text;
-    const r = relinkArtifacts(text, artifactPages, opts.artifacts.pagesHref);
-    relinked += r.count;
-    return r.text;
+    let t = text;
+    if (canonical) {
+      const p = relinkPublisherOutputs(t, canonical);
+      relinked += p.count;
+      t = p.text;
+    }
+    if (opts.artifacts) {
+      const r = relinkArtifacts(t, artifactPages, opts.artifacts.pagesHref);
+      relinked += r.count;
+      t = r.text;
+    }
+    const o = relinkOffSite(t, { canonical, sourceBlob, srcRoot: src, isServed });
+    relinked += o.count;
+    for (const d of o.dead) dead.add(d);
+    return o.text;
   };
   for (const f of files(pagecontent).filter((f) => f.endsWith(".md"))) {
     const name = basename(f, ".md");
@@ -864,6 +983,7 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
     for (const f of files(dir)) {
       // A transcluded page carries the same flat artefact links as a page does.
       if (dir === pagecontent && f.endsWith(".md")) writeFileSync(join(out, "_includes", f), relink(readFileSync(join(dir, f), "utf-8")));
+      else if (/\.(liquid|html|md)$/.test(f)) writeFileSync(join(out, "_includes", f), rubyLiquidStrings(readFileSync(join(dir, f), "utf-8")).text);
       else copyFileSync(join(dir, f), join(out, "_includes", f));
       includes++;
     }
@@ -956,7 +1076,7 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
     ].join("\n"),
   );
   const fillsResult = opts.fills?.length ? { filled, unused: opts.fills.map((x) => x.marker).filter((m) => !usedMarkers.has(m)) } : undefined;
-  return { pages: pages.sort(), generated, fills: fillsResult, variables: lifted ? { artifacts: Object.keys(lifted.vars.artifacts).length, notSourced: lifted.notSourced } : undefined, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, relinked, scheme, siteData };
+  return { pages: pages.sort(), generated, fills: fillsResult, variables: lifted ? { artifacts: Object.keys(lifted.vars.artifacts).length, notSourced: lifted.notSourced } : undefined, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, relinked, deadLinks: [...dead].sort(), scheme, siteData };
 }
 
 /**
@@ -1008,7 +1128,8 @@ export function describeStage(r: StageResult): string {
     ...(r.fills?.filled.length ? [`post-processing filled: ${r.fills.filled.join(", ")}`] : []),
     ...(r.fills?.unused.length ? [`post-processing fill with no marker in any page (NOT applied): ${r.fills.unused.join(", ")}`] : []),
     ...(r.variables ? [`site.data.fhir.artifacts: ${r.variables.artifacts} artefact(s); elements not sourced (not written): ${r.variables.notSourced.join(", ") || "none"}`] : []),
-    ...(r.relinked ? [`artefact links pointed at this site's artefact pages: ${r.relinked}`] : []),
+    ...(r.relinked ? [`links pointed where they resolve (artefact pages, the published IG, the source repository): ${r.relinked}`] : []),
+    ...(r.deadLinks.length ? [`DEAD in the IG's own source — no page anywhere serves: ${r.deadLinks.join(", ")}`] : []),
     ...(r.notRendered.length ? [`NOT RENDERED (a visible marker stands in): ${r.notRendered.join(", ")}`] : []),
     ...(r.unparseable.length ? [`NOT PUBLISHED (not valid JSON in the IG source): ${r.unparseable.join("; ")}`] : []),
     r.scheme

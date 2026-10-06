@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.schema.json` · [view](ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.jsonld` · [view](ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD2DTHepatitisALiveAttenuatedHAV1DoseVS.html" data-next="ValueSet-IMMZD2DTHib3DosesVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

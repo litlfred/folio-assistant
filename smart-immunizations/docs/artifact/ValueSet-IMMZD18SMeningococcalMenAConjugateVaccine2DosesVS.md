@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.schema.json` · [view](ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.jsonld` · [view](ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine1DoseVS.html" data-next="ValueSet-IMMZD18SMeningococcalMonovalentMenCConjugateVaccineVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

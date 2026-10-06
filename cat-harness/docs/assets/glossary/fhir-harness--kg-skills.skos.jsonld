@@ -184,6 +184,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/ig-site-links",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ig-site-links"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What happens to an IG's links when its pages are rendered on our site rather than by the IG Publisher: which are rewritten (artefact pages, a case-only mismatch, the Publisher's downloads and pages, files of the IG's repository, the OpenAPI index), which are reported as the IG's own dead links, and the two gates that keep a generator from linking a page it does not write. Read before changing build-ig-site's relinking, gen-ig-pages' links, or before concluding an IG page's broken link is ours."
+        }
+      ],
+      "skos:notation": "ig-site-links",
+      "dcterms:source": "fhir-harness/skills/fhir-ig-base/ig-site-links.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/ig-site-theme",
       "@type": "skos:Concept",
       "skos:inScheme": {

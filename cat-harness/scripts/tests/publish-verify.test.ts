@@ -21,7 +21,7 @@ import { buildCodeListsDoc } from "../code-lists";
 import { PROV_JSONLD_CONTEXT_URL } from "../../schemas/prov-jsonld.ts";
 import { SCOPES_DIR, render } from "../search-split.ts";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
-import { HTML_UNIQUE_IDS, JSONLD_EXPAND, JSONLD_OBJECT_LINKS, JSONLD_OWN_BASE, SEARCH_INDEX, SEARCH_INDEX_PATH, SEARCH_SCOPES, VERIFIERS, declaredBase, expandFindings, isOurs, localLoader, verify } from "../publish-verify";
+import { HTML_UNIQUE_IDS, JSONLD_EXPAND, JSONLD_OBJECT_LINKS, JSONLD_OWN_BASE, SEARCH_EXCLUDE_MARKER, SEARCH_INDEX, SEARCH_INDEX_PATH, SEARCH_SCOPES, VERIFIERS, declaredBase, expandFindings, isOurs, localLoader, verify } from "../publish-verify";
 
 const site = (files: Record<string, unknown>): string => {
   const dir = mkdtempSync(join(tmpdir(), "publish-verify-"));
@@ -132,6 +132,23 @@ describe("the search-index verifier — bean fq5u", () => {
     const { exit, results } = await run(files);
     expect(exit).toBe(1);
     expect(results[0]!.findings[0]!.detail).toContain("below the 0.5 floor");
+  });
+
+  // #2233: 2,800 IG artefact pages excluded on purpose blocked a production
+  // publish as "truncated". The marker separates intent from truncation.
+  const excludedBox = `<!doctype html><html><head>${SEARCH_EXCLUDE_MARKER}</head><body><input id="search-input" type="text"></body></html>`;
+  test("pages excluded from search ON PURPOSE are not counted against the index", async () => {
+    const files: Record<string, unknown> = { "a.html": boxed, [SEARCH_INDEX_PATH]: { 0: entry("/a.html") } };
+    for (let i = 0; i < 10; i++) files[`artifact/p${i}.html`] = excludedBox;
+    expect((await run(files)).exit).toBe(0);
+  });
+  test("...and a real truncation still fails, naming how many were excluded", async () => {
+    const files: Record<string, unknown> = { [SEARCH_INDEX_PATH]: { 0: entry("/p0.html") } };
+    for (let i = 0; i < 4; i++) files[`p${i}.html`] = boxed;
+    for (let i = 0; i < 3; i++) files[`x${i}.html`] = excludedBox;
+    const { exit, results } = await run(files);
+    expect(exit).toBe(1);
+    expect(results[0]!.findings[0]!.detail).toContain("3 more are excluded from search on purpose");
   });
 
   test("BORROWED (a staging preview): a declared-empty index is presence and parsing only", async () => {

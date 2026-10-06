@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.schema.json` · [view](ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.jsonld` · [view](ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD2DTDengue3DosesWithPreVaccinationScreeningVS.html" data-next="ValueSet-IMMZD2DTDTPOnTimeStartVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>
