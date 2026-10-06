@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-06T12:31:42Z
-updated_at: 2026-10-06T14:29:26Z
+updated_at: 2026-10-06T15:06:54Z
 parent: folio-assistant-q4jm
 ---
 
@@ -22,3 +22,6 @@ _2026-10-06T14:20Z_ — Owner: no merging; the chief editor (Chinemerem Eyetan) 
 
 
 _2026-10-06T14:40Z_ — Video arrived (smart-ra@5a3d655). Done on this branch: independent Vosk transcript compared (0.802 vs Teams; corrects Leitner, filters; requirement passages agree), 9 screenshots cut and cropped (webp, 476 KB), CRD updated. Defects D-1, D-2, D-2b (owner: filters change nothing visible), D-3 reproduced and fixed in public-comment-site.ts / public-comment-changesets.ts, browser-verified on a rebuilt dashboard, test added. New tool cat-harness/scripts/meeting-recording.py and skill crdm-recorded-walkthrough; public-comment skill updated. Owner: wait to merge main into the branch until the chief editor signs off.
+
+
+_2026-10-06T15:15Z_ — Added the TWG Coordinator's categorisation-skill specification (smart-ra@bcd7e92, owner on #197: 'please add to requirements') to the CRD as CAT-01..30, mapped to REQ-xx and to what the platform does today. It settles the committee names (8 categories); new open decision: master log vs comment store as the system of record.

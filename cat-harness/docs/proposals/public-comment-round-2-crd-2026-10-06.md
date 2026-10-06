@@ -7,7 +7,10 @@ summary: >-
   Reference Architecture public-comment dashboard with its chief editor. Change
   sets get a type axis and a committee axis, new comments are ingested
   incrementally with duplicate detection, only an editor proposes or splits a
-  change set, and human and agent categorisation are compared. Nothing is built.
+  change set, and human and agent categorisation are compared. It also carries
+  the TWG Coordinator's 30-requirement specification for the categorisation
+  skill (CAT-01 to CAT-30), mapped against both. Requirements are not built;
+  the demo's defects are fixed.
 ---
 
 # Public comment, round 2: requirements from the chief-editor walkthrough
@@ -306,6 +309,133 @@ handbook a colleague (Nat) shared earlier. The BA is to send the link.
   2026-10-07** to trial it as a workflow (9:15–9:35). REQ-01 to REQ-03 are the
   ones that trial exercises.
 
+## The categorisation skill (TWG Coordinator's specification)
+
+**Source:** *Requirements Specification: AI Comment Categorisation and
+Ingestion Skill*, v0.1, 6 October 2026, owner **TWG Coordinator**, status
+"Draft for review". Posted by the owner on #197 with *"please add to
+requirements"*, and committed as
+`uploads/DPI-H_comment_categorisation_skill_requirements.docx` in [litlfred/smart-ra@bcd7e92](https://github.com/litlfred/smart-ra/commit/bcd7e92ab5b841eb8cec96d259bd7597f50df3bd)
+(SHA-256 `85d076d6…cd83f`, the same bytes as the issue attachment).
+
+It is the written form of what the chief editor asked for in the
+walkthrough, and more precise. Its own numbering (REQ-01 to REQ-30)
+collides with this document's, so its requirements are cited here as
+**CAT-01 to CAT-30**, in its order. Its MoSCoW priorities are kept. The
+requirement text is the specification's; the *Here* column says what it
+refines in this document and what the platform already does, **measured**
+on smart-ra `main` (2,632 comments).
+
+### What it settles
+
+- **The committee names** (this document's open question on REQ-01/02).
+  The specification fixes **eight routing categories**: Core architects,
+  Metadata registries, Supply chain, Financial systems, Clinical, WHO,
+  Editorial and No, each defined by what it owns. "HWF" is not a category; it
+  is a **source tab** (CAT-10). Measured: all 764 master-log comments with an
+  AI category already use exactly these eight values (Core architects 412,
+  i.e. 54%, which matches the specification's "more than half").
+- **One primary category per comment** (CAT-04), with any secondary groups
+  in the rationale. This refines REQ-01: a **change-set's** committees are
+  still the union of its comments' primaries (REQ-03), but a comment has
+  one.
+- **Consistency is the primary acceptance gate** (§2, §12): two runs on the
+  same input agree on at least 95% (suggested), and a re-run never changes
+  a decided or human-overridden routing. This is REQ-04 made measurable.
+- **Adjudication is out of scope** for the skill (§3): it routes; the
+  sub-groups and the editor decide. This agrees with REQ-12 and the
+  editor-decides lifecycle.
+
+### Where it conflicts with the platform: one decision
+
+The specification says **the master log (the spreadsheet) is the system of
+record**, and the skill writes its routing back into it without disturbing
+formulas or validations (CAT-14, §10). On the platform, the spreadsheet is
+an **intake**: it is imported into the comment store
+(`review/public-comment/`), the store is the record, and the dashboard and
+the GitHub workflow read and write the store. Both cannot be the record.
+Its own open decision ("runs from the workbook, or as a callable classifier
+that a pipeline writes back") is the same question. **For the chief editor
+and the owner**; see [§For approval](#for-approval).
+
+### The requirements
+
+**5.1 Taxonomy and decision rules**
+
+| id | pri | requirement | here |
+|---|---|---|---|
+| CAT-01 | Must | Use the fixed category set (§4), version-controlled; never invent or infer new categories at runtime. | Refines REQ-01. Today the categories are free-text labels copied from the log. |
+| CAT-02 | Must | Each category carries a definition naming the components and section areas it owns. | New. The §4 table is that definition. |
+| CAT-03 | Must | An explicit precedence order for overlaps (e.g. a terminology point inside a financing section routes to Metadata registries by rule). | New. Refines REQ-04. |
+| CAT-04 | Must | Exactly one primary category per comment; secondary groups named in the rationale. | Refines REQ-01/03 (see above). |
+| CAT-05 | Should | Three to five worked examples per category as anchors, including the named borderline cases. | New. |
+| CAT-06 | Could | The taxonomy extends only through a versioned change with a migration note. | New. |
+
+**5.2 Ingestion of new comments**
+
+| id | pri | requirement | here |
+|---|---|---|---|
+| CAT-07 | Must | Accept the comment-matrix template, the online form export and off-template returns (Word, PDF, email) without manual reshaping, mapped to one comment schema (contributor, affiliation, country, section, page, line, comment type, comment, suggestion, channel). | Refines REQ-06. **Today:** the importer reads the matrix .xlsx, the form .csv and narrative letters into that schema (round 1). |
+| CAT-08 | Must | Preserve comment text verbatim; never rewrite or summarise it. | **Today:** done (`public.text` is verbatim; the summary is a separate field). |
+| CAT-09 | Must | De-duplicate on ingest with a content signature; flag, never drop, a same-contributor different-content case. | Same as REQ-07. **Today:** a re-sent file imports without duplicates (round 1, #2173); near-duplicates are not detected. |
+| CAT-10 | Should | Route high-volume single-source sets to their own tab, as for the EY, CAT and HWF submissions, with a documented size threshold. | **Today:** the tabs exist and are imported per sheet (EY review 1,693, HWF review 110, CAT (WHO-FIC) 64, master log 764); no threshold is documented. |
+| CAT-11 | Must | Stamp each comment with its channel and source. | **Today:** done (`public.source`: channel, batch, sheet, row, sha256). |
+
+**5.3 Classification output**
+
+| id | pri | requirement | here |
+|---|---|---|---|
+| CAT-12 | Must | Return the primary category and a one-sentence rationale naming the signal. | New. |
+| CAT-13 | Must | Fixed rationale format: one sentence of about 25 words; for No or Editorial, why no domain review is needed. | New. |
+| CAT-14 | Must | Write to the defined columns without disturbing existing content, formulas or validations; repair dependent formulas in the same pass. | **Conflicts** with the store as record (see above). |
+| CAT-15 | Should | A confidence signal (high, medium, low), so low-confidence routings surface for review. | Feeds REQ-15. **Today:** placement already carries a confidence; categorisation does not. |
+
+**6. Consistency and determinism**
+
+| id | pri | requirement | here |
+|---|---|---|---|
+| CAT-16 | Must | Per-item alignment: each decision provably tied to its comment (e.g. an echo of the comment's opening words), checked before writing. | New. Addresses the drift failure the specification observed. |
+| CAT-17 | Must | Idempotent re-runs: a classified comment is not silently reclassified unless flagged; only new and changed rows are default targets. | Refines REQ-04. |
+| CAT-18 | Should | Bounded batches of a documented size, identical rules across batches, a self-check at each boundary. | New. |
+| CAT-19 | Should | Low-variance generation settings; prompt and taxonomy byte-identical between runs. | New. |
+| CAT-20 | Could | Record the taxonomy version against each decision. | New. Refines REQ-04's "who or what assigned it". |
+
+**7. Quality assurance and validation**
+
+| id | pri | requirement | here |
+|---|---|---|---|
+| CAT-21 | Must | Before any write: full coverage, valid categories only, and the CAT-16 alignment check. | New. |
+| CAT-22 | Should | A golden set of about fifty hand-verified comments across all categories; report agreement (percent, or Cohen's kappa) each run. | Refines REQ-13. **Today:** 100 comments carry the editor's hand categorisation, a starting point for the golden set; her AI agreed with her on 48 of them. |
+| CAT-23 | Should | A review threshold: low-confidence and cross-cutting comments go to a human queue. | Same as REQ-15; the specification recommends the confidence-gated queue as the default. |
+| CAT-24 | Could | Track inter-run agreement over time. | New. |
+
+**8. Governance, audit and safe operation**
+
+| id | pri | requirement | here |
+|---|---|---|---|
+| CAT-25 | Must | A decision log: input signature, taxonomy version, category, rationale, confidence, timestamp. | New. Refines REQ-04. |
+| CAT-26 | Must | Never overwrite a human override; a coordinator's change does not revert on the next run. | New. |
+| CAT-27 | Should | Fail safe: on unreadable input or a failed validation, stop and report, never write partial or misaligned results. | New. |
+
+**9. Non-functional**
+
+| id | pri | requirement | here |
+|---|---|---|---|
+| CAT-28 | Should | A full batch of several hundred comments in one working session; an incremental batch in minutes. | New. |
+| CAT-29 | Should | Portable across runs and operators: depends only on the versioned taxonomy, rules and examples, not on a session's memory. | New. On the platform this is a skill plus versioned data, not a prompt. |
+| CAT-30 | Could | Degrade gracefully with volume (batches rather than failure). | New. |
+
+**Acceptance (its §12):** coverage (one valid category and a rationale per
+comment); alignment (zero rationales on the wrong comment); consistency (two
+independent runs agree on at least an agreed threshold, 95% suggested);
+accuracy (golden-set agreement meets an agreed threshold); non-regression (a
+re-run changes no decided or overridden routing); integrity (the write-back
+leaves existing content intact and the counts reconcile).
+
+**Its open decisions (§11)**, carried into [§For approval](#for-approval):
+the deployment model; the degree of human-in-the-loop (the specification
+recommends the confidence-gated queue); and whether to split Core architects.
+
 ## Defects observed in the demo
 
 Each was reproduced in headless Chromium against the published dashboard and
@@ -364,7 +494,25 @@ Ruled:
 - **REQ-12** (owner, 2026-10-06): out of scope is the existing `not-accepted`
   decision with a reason, reviewed by a committee first. No new state.
 
-Still open, for the chief editor:
+Settled by the TWG Coordinator's specification:
 
-1. **REQ-01 and REQ-02:** are the committee names exactly the five she
-   named, with `who` as a sixth? Her own log also has "HWF team".
+- **The committee names**: eight routing categories, fixed and versioned
+  (Core architects, Metadata registries, Supply chain, Financial systems,
+  Clinical, WHO, Editorial, No). "HWF" is a source tab, not a category.
+
+Still open, for the chief editor and the owner:
+
+1. **Where the routing is recorded.** The specification makes the master
+   log (spreadsheet) the system of record, written back by the skill
+   (CAT-14). The platform imports the log into the comment store, and the
+   store is the record that the dashboard and the GitHub workflow use. The
+   recommendation is **the store is the record, and the spreadsheet is
+   regenerated from it** for those who work in Excel, so there is one record
+   and the workbook still exists. The alternative writes into the workbook
+   and re-imports it, which keeps two copies that can disagree.
+2. **Human in the loop**: the confidence-gated review queue (CAT-23, REQ-15)
+   as the default, as the specification recommends?
+3. **Split Core architects** (54% of routed comments) into, for example, AI
+   and Governance sub-categories, or not yet?
+4. **REQ-02 wording** (7:53): who reviews `general` comments, which the
+   independent transcript heard as "the it team".
