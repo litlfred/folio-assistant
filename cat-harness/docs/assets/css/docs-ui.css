@@ -1396,9 +1396,14 @@
 }
 
 /* RTL overrides */
+/* `start`, not `right` (bean `giiw`). `text-align` INHERITS, and `right` is a
+   physical value, so every English island inside an Arabic page — the
+   unverified notice, a badge, anything `docs-ui.js` marks `dir="ltr"` — was
+   pushed to the right edge of its own box. `start` resolves against each
+   element's own direction: right on the Arabic, left on the English. */
 [dir="rtl"] {
   direction: rtl;
-  text-align: right;
+  text-align: start;
 }
 
 /* Sidebar moves to right in RTL */
@@ -1409,9 +1414,25 @@
   border-right: none;
 }
 
-[dir="rtl"] .main {
-  margin-left: 0;
-  margin-right: 264px; /* matches just-the-docs sidebar width */
+/* THE MIRROR OF THE LTR RESERVATION, not a width of its own (bean `giiw`).
+   This read `margin-right: 264px` — the theme's OPEN sidebar — long after
+   the sidebar came to rest as a `--fa-nav-collapsed` strip. Measured on the
+   Arabic home page at 1400px: the strip at x 1344-1400 and the content
+   column ending at 1104, a 240px dead band beside the rail that the LTR page
+   (column from 88px) does not have. Same breakpoint and the same two
+   variables as `.side-bar + .main` above, so the two sides cannot drift. */
+@media (min-width: 50rem) {
+  [dir="rtl"] .side-bar + .main {
+    margin-left: 0;
+    margin-right: var(--fa-nav-collapsed);
+  }
+  [dir="rtl"] .side-bar:has(.fa-nav-open:checked) + .main {
+    margin-right: var(--fa-nav-open);
+  }
+}
+
+@media print {
+  [dir="rtl"] .side-bar + .main { margin-right: 0; }
 }
 
 @media (max-width: 799.98px) {
@@ -2304,6 +2325,26 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 }
 
 .fa-translation-warning__line::-webkit-details-marker { display: none; }
+
+/* The sentence is ONE flex item, so it can truncate rather than overflow
+   (bean `giiw`). As loose text and <strong>s each piece was its own flex item
+   at min-content width; on an Arabic page the overflow ran off the LEFT edge
+   and took the sentence's START with it. `min-width: 0` lets the item shrink
+   below its content, and the ellipsis falls at the logical END because the
+   notice carries `dir="ltr"` from `docs-ui.js` — the attribute, not a
+   `direction` rule here, so bidi is right even if this sheet fails. Opened,
+   the line wraps: the reader asked to see all of it. */
+.fa-translation-warning__text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.fa-translation-warning[open] .fa-translation-warning__text {
+  white-space: normal;
+}
 
 /* Never left to the user agent: the notice's fill differs per scheme and the
    default ring is invisible on one of them. */

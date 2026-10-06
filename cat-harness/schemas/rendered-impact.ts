@@ -37,6 +37,17 @@
  *    sees only the data file. `comparePrediction` therefore never counts a
  *    predicted content page that is missing from the build diff as a defect.
  *
+ * ## A PIN: what a review of a rendered file is a review OF
+ *
+ * The coverage gate counts a page as reviewed only against the version a
+ * reviewer saw, as a block verdict is pinned to the block's hash. A page's
+ * built bytes are no pin: a staging build injects a banner naming the commit,
+ * so every page would reopen on every push. So `hash` pins a predicted file
+ * to the git blobs of the changed inputs on its `via` ({@link pinImpact}),
+ * and an undetermined input to its own blob. An edit after review moves the
+ * pin of exactly the files and inputs it touched. A build diff pins a file to
+ * its content hash, taken before the banner is added.
+ *
  * @graphNode schema
  * @module cat-harness/schemas/rendered-impact
  */
@@ -70,6 +81,12 @@ export const RenderedFileSchema = z.object({
    * or when a build diff cannot say which part changed.
    */
   anchors: z.array(z.string().min(1)).optional(),
+  /**
+   * What a review of this file is pinned to (see "A PIN"): for a `cone` file,
+   * a hash of the blobs of the changed inputs on `via`; for a `build-diff`
+   * file, its content hash. Absent when nothing pinned it.
+   */
+  hash: z.string().min(1).optional(),
 });
 export type RenderedFile = z.infer<typeof RenderedFileSchema>;
 
@@ -78,6 +95,8 @@ export const UndeterminedSchema = z.object({
   reason: z.string().min(1),
   /** `all`: the input can re-render anything (a site config, a shared include). */
   scope: z.enum(["unknown", "all"]).default("unknown"),
+  /** The input's blob at head, so a waiver of it is pinned to this version. */
+  hash: z.string().min(1).optional(),
 });
 
 export const RenderedImpactSchema = z.object({
@@ -95,6 +114,28 @@ export const RenderedImpactSchema = z.object({
   undetermined: z.array(UndeterminedSchema).default([]),
 });
 export type RenderedImpact = z.infer<typeof RenderedImpactSchema>;
+
+/**
+ * Pin every file and undetermined input of a prediction (see "A PIN").
+ * `blob(input)` returns the input's blob id at head, or undefined when it is
+ * absent there (a removed input pins as `absent`). Pure: the caller supplies
+ * the lookup, so a renderer's CLI pins with git and a test with a table.
+ */
+export function pinImpact(impact: RenderedImpact, blob: (input: string) => string | undefined): RenderedImpact {
+  const inputs = new Set(impact.inputs);
+  const pinOf = (paths: string[]) =>
+    createHash("sha256")
+      .update(paths.sort().map((p) => `${p}\0${blob(p) ?? "absent"}`).join("\n"))
+      .digest("hex");
+  return {
+    ...impact,
+    files: impact.files.map((f) => {
+      const on = [...new Set(f.via.filter((v) => inputs.has(v)))];
+      return on.length ? { ...f, hash: pinOf(on) } : f;
+    }),
+    undetermined: impact.undetermined.map((u) => ({ ...u, hash: pinOf([u.input]) })),
+  };
+}
 
 /** The files a reviewer should open: everything but indexes, in path order. */
 export function reviewList(impact: RenderedImpact): RenderedFile[] {
@@ -132,17 +173,26 @@ function walk(root: string): Map<string, string> {
 export function diffBuiltSites(
   before: string,
   after: string,
-  opts: { renderer: string; site?: string; base?: string; head?: string; isIndex?: (path: string) => boolean } = { renderer: "build-diff" },
+  opts: {
+    renderer: string;
+    site?: string;
+    base?: string;
+    head?: string;
+    isIndex?: (path: string) => boolean;
+    /** Only paths this keeps are compared, on both sides (a shared publish root holds other sites too). */
+    keep?: (path: string) => boolean;
+  } = { renderer: "build-diff" },
 ): RenderedImpact {
-  const a = walk(before);
-  const b = walk(after);
+  const kept = (m: Map<string, string>) => (opts.keep ? new Map([...m].filter(([p]) => opts.keep!(p))) : m);
+  const a = kept(walk(before));
+  const b = kept(walk(after));
   const isIndex = opts.isIndex ?? isGenericIndex;
   const role = (p: string): RenderedRole => (isIndex(p) ? "index" : p.endsWith(".html") ? "content" : "data");
   const files: RenderedFile[] = [];
   for (const [p, h] of b) {
     const old = a.get(p);
-    if (old === undefined) files.push({ path: p, change: "added", role: role(p), via: [] });
-    else if (old !== h) files.push({ path: p, change: "changed", role: role(p), via: [] });
+    if (old === undefined) files.push({ path: p, change: "added", role: role(p), via: [], hash: h });
+    else if (old !== h) files.push({ path: p, change: "changed", role: role(p), via: [], hash: h });
   }
   for (const p of a.keys()) if (!b.has(p)) files.push({ path: p, change: "removed", role: role(p), via: [] });
   files.sort((x, y) => x.path.localeCompare(y.path));
@@ -175,4 +225,36 @@ export function comparePrediction(predicted: RenderedImpact, measured: RenderedI
     confirmed: [...got].filter((p) => want.has(p)).sort(),
     unconfirmed: [...want.values()].filter((f) => !got.has(f.path)).map((f) => ({ path: f.path, role: f.role })).sort((a, b) => a.path.localeCompare(b.path)),
   };
+}
+
+export const RENDERED_MEASURED_TAG = "rendered-measured/v1" as const;
+
+/**
+ * A staging build's measurement of a prediction: the build diff against the
+ * published before side, and what the prediction missed. `status` says
+ * whether the before side was built from the PR's BASE: when it was not
+ * (`not-base`, main moved after it was published), the diff also holds
+ * main's own changes, so `check.missed` is not a cone defect and the
+ * coverage gate does not count it. No measurement at all is no file.
+ */
+export const RenderedMeasuredSchema = z.object({
+  $schema: z.literal(RENDERED_MEASURED_TAG),
+  status: z.enum(["known", "not-base"]),
+  /** The commit the PR's change is measured against. */
+  baseCommit: z.string().min(1),
+  /** The commit the before side was built from, as its publish manifest records it. */
+  beforeCommit: z.string().nullable(),
+  measured: RenderedImpactSchema,
+  check: z.object({
+    missed: z.array(z.string()),
+    confirmed: z.array(z.string()),
+    unconfirmed: z.array(z.object({ path: z.string(), role: z.enum(RENDERED_ROLES) })),
+  }),
+});
+export type RenderedMeasured = z.infer<typeof RenderedMeasuredSchema>;
+
+/** Measured files the prediction missed, with their roles and content pins: what a reviewer still owes. */
+export function missedFiles(m: RenderedMeasured): RenderedFile[] {
+  const missed = new Set(m.check.missed);
+  return m.measured.files.filter((f) => missed.has(f.path));
 }

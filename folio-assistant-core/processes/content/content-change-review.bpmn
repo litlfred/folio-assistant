@@ -392,8 +392,8 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
       <bpmn:outgoing>c10</bpmn:outgoing>
     </bpmn:callActivity>
 
-    <bpmn:exclusiveGateway id="GW_Covered" name="Every changed block reviewed?">
-      <bpmn:documentation>Computed, not chosen: `decisions/review-coverage-gate.dmn` reads `uncoveredBlocks` (changed blocks with neither a verdict nor a reasoned waiver) and `openDefects`. Resolved comments are not coverage, and coverage is not approval — that is GW_Approved.</bpmn:documentation>
+    <bpmn:exclusiveGateway id="GW_Covered" name="Every changed block and page reviewed?">
+      <bpmn:documentation>Computed, not chosen: `decisions/review-coverage-gate.dmn` reads `uncoveredBlocks` (changed blocks with neither a verdict nor a reasoned waiver) and `openDefects`, and, where the build published a rendered impact, `unreviewedPages`, `undeterminedInputs` and `missedPages` with their `rendered` and `measured` statuses (skill rendered-impact). Resolved comments are not coverage, and coverage is not approval — that is GW_Approved.</bpmn:documentation>
       <bpmn:extensionElements>
         <cat-harness.processes:decision ref="decisions/review-coverage-gate.dmn#Decision_ReviewCoverageGate" />
       </bpmn:extensionElements>

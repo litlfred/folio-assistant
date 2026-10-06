@@ -7,7 +7,18 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
-import { comparePrediction, diffBuiltSites, RENDERED_IMPACT_TAG, RenderedImpactSchema, reviewList, type RenderedImpact } from "./rendered-impact";
+import {
+  comparePrediction,
+  diffBuiltSites,
+  missedFiles,
+  pinImpact,
+  RENDERED_IMPACT_TAG,
+  RENDERED_MEASURED_TAG,
+  RenderedImpactSchema,
+  RenderedMeasuredSchema,
+  reviewList,
+  type RenderedImpact,
+} from "./rendered-impact";
 
 const T = mkdtempSync(join(tmpdir(), "rendered-impact-"));
 afterAll(() => rmSync(T, { recursive: true, force: true }));
@@ -39,6 +50,16 @@ describe("diffBuiltSites", () => {
       ["page.html", "changed", "content"],
     ]);
   });
+  test("each changed file is pinned to its content; a removed file has nothing to pin", () => {
+    const by = new Map(d.files.map((f) => [f.path, f.hash]));
+    expect(by.get("page.html")).toMatch(/^[0-9a-f]{64}$/);
+    expect(by.get("new.html")).toMatch(/^[0-9a-f]{64}$/);
+    expect(by.get("gone.html")).toBeUndefined();
+  });
+  test("`keep` limits BOTH sides, so another site under a shared root is neither removed nor added", () => {
+    const k = diffBuiltSites(join(T, "a"), join(T, "b"), { renderer: "jekyll", keep: (p) => p !== "gone.html" && p !== "new.html" });
+    expect(k.files.map((f) => f.path)).toEqual(["assets/js/search-data.json", "data/r.json", "page.html"]);
+  });
   test("the review list drops index files and nothing else", () => {
     expect(reviewList(d).map((f) => f.path)).toEqual(["data/r.json", "gone.html", "new.html", "page.html"]);
   });
@@ -61,5 +82,59 @@ describe("comparePrediction", () => {
     const p = RenderedImpactSchema.parse({ $schema: RENDERED_IMPACT_TAG, renderer: "r", method: "cone", files: [], undetermined: [{ input: "sushi-config.yaml", reason: "site-wide", scope: "all" }] });
     expect(p.files).toEqual([]);
     expect(p.undetermined).toHaveLength(1);
+  });
+});
+
+describe("pinImpact", () => {
+  const base = RenderedImpactSchema.parse({
+    $schema: RENDERED_IMPACT_TAG,
+    renderer: "r",
+    method: "cone",
+    inputs: ["a.md", "b.md", "cfg.yaml"],
+    files: [
+      { path: "p.html", change: "changed", role: "content", via: ["a.md", "prose:a"] },
+      { path: "q.html", change: "changed", role: "content", via: ["a.md", "b.md"] },
+      { path: "idx.json", change: "changed", role: "index", via: [] },
+    ],
+    undetermined: [{ input: "cfg.yaml", reason: "site-wide", scope: "all" }],
+  });
+  const blobs = new Map([["a.md", "1"], ["b.md", "2"], ["cfg.yaml", "3"]]);
+  const pinned = pinImpact(base, (p) => blobs.get(p));
+  const pin = (i: RenderedImpact, path: string) => i.files.find((f) => f.path === path)!.hash;
+
+  test("a file is pinned to the changed inputs on its via, and nothing else on it", () => {
+    expect(pin(pinned, "p.html")).toMatch(/^[0-9a-f]{64}$/);
+    const relabelled = pinImpact({ ...base, files: base.files.map((f) => (f.path === "p.html" ? { ...f, via: ["a.md", "prose:renamed"] } : f)) }, (p) => blobs.get(p));
+    expect(pin(relabelled, "p.html")).toBe(pin(pinned, "p.html"));
+  });
+  test("an edit moves the pin of exactly the files and inputs it touched", () => {
+    const after = pinImpact(base, (p) => (p === "b.md" ? "2b" : blobs.get(p)));
+    expect(pin(after, "p.html")).toBe(pin(pinned, "p.html"));
+    expect(pin(after, "q.html")).not.toBe(pin(pinned, "q.html"));
+    expect(after.undetermined[0]!.hash).toBe(pinned.undetermined[0]!.hash);
+  });
+  test("a file reached by no changed input is left unpinned rather than pinned to nothing", () => {
+    expect(pin(pinned, "idx.json")).toBeUndefined();
+  });
+  test("a removed input pins as absent, which differs from any version of it", () => {
+    const gone = pinImpact(base, (p) => (p === "a.md" ? undefined : blobs.get(p)));
+    expect(pin(gone, "p.html")).not.toBe(pin(pinned, "p.html"));
+  });
+});
+
+describe("RenderedMeasuredSchema", () => {
+  test("missedFiles returns the measured files the prediction did not name, with their pins", () => {
+    const m = RenderedMeasuredSchema.parse({
+      $schema: RENDERED_MEASURED_TAG,
+      status: "known",
+      baseCommit: "b",
+      beforeCommit: "b",
+      measured: { $schema: RENDERED_IMPACT_TAG, renderer: "build-diff", method: "build-diff", files: [
+        { path: "x.html", change: "changed", role: "content", hash: "h1" },
+        { path: "y.html", change: "changed", role: "content", hash: "h2" },
+      ] },
+      check: { missed: ["y.html"], confirmed: ["x.html"], unconfirmed: [] },
+    });
+    expect(missedFiles(m)).toEqual([{ path: "y.html", change: "changed", role: "content", via: [], hash: "h2" }]);
   });
 });

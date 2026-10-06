@@ -224,6 +224,30 @@
     return node;
   }
 
+  /* THE CHROME'S OWN LANGUAGE, declared where it is written (bean `giiw`).
+   *
+   * Every string this file injects is authored in English, and none of it
+   * goes through the page's translation pipeline. On an Arabic page that
+   * English inherits `dir="rtl"` from <html>, and the bidi algorithm lays an
+   * English sentence out right-to-left: its first words land at the RIGHT
+   * end, and wherever the line is clipped the clip takes the sentence's
+   * BEGINNING off the left edge. Measured on the unverified-translation
+   * notice, from an owner screenshot of the Arabic staging preview.
+   *
+   * `lang` is the half a screen reader needs (it picks the voice), `dir` the
+   * half the layout needs. Both are ATTRIBUTES rather than a CSS `direction`
+   * rule, because the bidi algorithm reads `dir` and a stylesheet that fails
+   * to load must not reverse a sentence. Applied to the element that holds
+   * the English, never to a container whose ORDER should follow the page —
+   * a row of badges still runs right-to-left on an Arabic page; each badge's
+   * own text does not. */
+  var CHROME_LANG = "en";
+  function chromeText(node) {
+    node.setAttribute("lang", CHROME_LANG);
+    node.setAttribute("dir", "ltr");
+    return node;
+  }
+
   /* ── Language switcher ────────────────────────────────────────────────── */
 
   // Globe glyph for the toggle button
@@ -10465,6 +10489,9 @@
           : "Available in " + (available[0] || meta.lang || "its source language") +
             " only; not yet translated"
     }, "\uD83C\uDF10 " + availLangs + "/" + totalLangs + " languages");
+    // English text and an English tooltip: `lang`/`dir` on the badge, never on
+    // the row, so the row's ORDER still follows the page (bean `giiw`).
+    chromeText(langBadge);
     container.appendChild(langBadge);
 
     // The round-trip QA badge that stood here is gone, and the data behind it
@@ -10507,6 +10534,7 @@
       class: "fa-translation-badge fa-sweep-badge " + sweepState,
       title: sweepTitle
     }, sweepIcon + " " + sweepLabel);
+    chromeText(sweepBadge);
     container.appendChild(sweepBadge);
 
     /* Unverified translation notice — ONE LINE, opening to the detail.
@@ -10544,20 +10572,49 @@
      * rather than drawn dead (`pb04`).
      */
     if (meta.translationStatus === "unverified" && !document.querySelector(".fa-translation-warning")) {
-      var warning = el("details", { class: "fa-translation-warning" });
+      // The WHOLE notice is English, so the `<details>` carries `lang`/`dir`
+      // and the summary, the drawer and the report button all inherit it
+      // (bean `giiw`). Built from nodes rather than innerHTML: the drawer
+      // used to interpolate `meta.translationSource` into markup.
+      var warning = chromeText(el("details", { class: "fa-translation-warning" }));
       var warnSummary = el("summary", { class: "fa-translation-warning__line" });
-      warnSummary.innerHTML =
-        "\u26A0\uFE0F <strong>Unverified translation</strong> \u2014 " +
-        "This page has been translated automatically and has <strong>not been reviewed</strong> by a subject-matter expert.";
+      // ONE flex item holding the whole sentence. As loose text and <strong>s
+      // each piece was its own flex item at min-content width, so the line
+      // overflowed instead of truncating \u2014 and under an inherited `rtl` it
+      // overflowed off the LEFT edge, taking the sentence's start with it.
+      // One item can carry `text-overflow: ellipsis`, which with `dir="ltr"`
+      // falls at the logical end.
+      var warnText = el("span", { class: "fa-translation-warning__text" });
+      var warnLine = [
+        "\u26A0\uFE0F ", ["strong", "Unverified translation"], " \u2014 ",
+        "This page has been translated automatically and has ",
+        ["strong", "not been reviewed"], " by a subject-matter expert."
+      ];
+      warnLine.forEach(function (part) {
+        warnText.appendChild(typeof part === "string"
+          ? document.createTextNode(part)
+          : el(part[0], null, part[1]));
+      });
+      // The full sentence on hover, for the width at which the ellipsis bites.
+      warnSummary.setAttribute("title", warnText.textContent);
+      warnSummary.appendChild(warnText);
       warning.appendChild(warnSummary);
 
       var warnBody = el("div", { class: "fa-translation-warning__body" });
-      warnBody.innerHTML =
-        (meta.translationSource
-          ? "<p><strong>Source:</strong> " + meta.translationSource + " (English)</p>"
-          : "") +
-        "<p><strong>How to verify:</strong> Run <code>translation_signoff</code> after SME review, " +
-        "or use <code>translation_validate</code> to check for staleness and coverage.</p>";
+      if (meta.translationSource) {
+        var srcP = el("p");
+        srcP.appendChild(el("strong", null, "Source:"));
+        srcP.appendChild(document.createTextNode(" " + meta.translationSource + " (English)"));
+        warnBody.appendChild(srcP);
+      }
+      var howP = el("p");
+      howP.appendChild(el("strong", null, "How to verify:"));
+      howP.appendChild(document.createTextNode(" Run "));
+      howP.appendChild(el("code", null, "translation_signoff"));
+      howP.appendChild(document.createTextNode(" after SME review, or use "));
+      howP.appendChild(el("code", null, "translation_validate"));
+      howP.appendChild(document.createTextNode(" to check for staleness and coverage."));
+      warnBody.appendChild(howP);
       warning.appendChild(warnBody);
 
       if (meta.translationQa && meta.translationQa.src) {
