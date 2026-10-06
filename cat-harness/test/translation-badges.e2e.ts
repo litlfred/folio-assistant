@@ -724,6 +724,75 @@ test.describe("the unverified-translation notice", () => {
     await expect(page.locator(".fa-translation-warning__report")).toBeVisible();
   });
 
+  /* ── On an Arabic page the notice is still ENGLISH, laid out as English ──
+   *
+   * Bean `giiw`, from an owner screenshot of the Arabic staging preview: the
+   * notice read "…matically and has — Unverified translation ⚠" — the English
+   * sentence had inherited `dir="rtl"` from <html>, so its START sat at the
+   * right end and the one-line overflow took the beginning off the LEFT edge.
+   * The harness below sets `dir="rtl"` itself (as `init()` does for `ar`), so
+   * these fail on the old markup rather than passing over an LTR page. */
+  const AR = { lang: "ar", translationStatus: "unverified", translationSource: "index.md" } as const;
+
+  test("carries lang=en and dir=ltr, and computes ltr, on an RTL page", async ({ page }) => {
+    await serve(page, AR);
+    expect(await page.evaluate(() => document.documentElement.dir)).toBe("rtl");
+    const notice = page.locator(".fa-translation-warning");
+    await expect(notice).toHaveAttribute("lang", "en");
+    await expect(notice).toHaveAttribute("dir", "ltr");
+    for (const sel of ["summary", ".fa-translation-warning__body"]) {
+      const d = await notice.locator(sel).evaluate((e) => ({
+        dir: getComputedStyle(e).direction,
+        lang: e.closest("[lang]")!.getAttribute("lang"),
+      }));
+      expect(d).toEqual({ dir: "ltr", lang: "en" });
+    }
+  });
+
+  test("its first word is visible and the clip falls at the logical END", async ({ page }) => {
+    // Narrow enough that the sentence cannot fit on one line, which is the
+    // case the screenshot showed. The ⚠ must sit at the summary's LEFT edge
+    // and inside it; the line must truncate with an ellipsis rather than
+    // overflow (scrollWidth > clientWidth on the text, not on the summary).
+    await page.setViewportSize({ width: 480, height: 800 });
+    await serve(page, AR);
+    const r = await page.locator(".fa-translation-warning summary").evaluate((s) => {
+      const text = s.querySelector(".fa-translation-warning__text") as HTMLElement;
+      const tn = document.createTreeWalker(s, NodeFilter.SHOW_TEXT).nextNode()!;
+      const range = document.createRange();
+      range.setStart(tn, 0);
+      range.setEnd(tn, 1);
+      const first = range.getBoundingClientRect();
+      const box = s.getBoundingClientRect();
+      const cs = getComputedStyle(text);
+      return {
+        firstLeft: first.left - box.left,
+        firstInside: first.left >= box.left && first.right <= box.right,
+        overflow: cs.textOverflow,
+        truncated: text.scrollWidth > text.clientWidth,
+        summaryOverflows: s.scrollWidth > s.clientWidth + 1,
+        height: box.height,
+      };
+    });
+    expect(r.firstInside).toBe(true);
+    expect(r.firstLeft).toBeLessThan(24);
+    expect(r.overflow).toBe("ellipsis");
+    expect(r.truncated).toBe(true);
+    expect(r.summaryOverflows).toBe(false);
+    expect(r.height).toBeLessThan(40);
+  });
+
+  test("the coverage and sweep badges are marked English too", async ({ page }) => {
+    await serve(page, { ...AR, availableLocales: ["ar", "en"] });
+    for (const sel of [".fa-lang-coverage-badge", ".fa-sweep-badge"]) {
+      await expect(page.locator(sel)).toHaveAttribute("lang", "en");
+      await expect(page.locator(sel)).toHaveAttribute("dir", "ltr");
+    }
+    // ...but the ROW keeps the page's direction: its order is the page's.
+    const rowDir = await page.locator(".fa-translation-badges").evaluate((e) => getComputedStyle(e).direction);
+    expect(rowDir).toBe("rtl");
+  });
+
   test("and a verified page gets no notice at all", async ({ page }) => {
     // The control that makes the rest mean something: every assertion above
     // would pass over a notice injected onto every page.
