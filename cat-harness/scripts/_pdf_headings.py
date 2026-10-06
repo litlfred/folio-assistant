@@ -73,6 +73,8 @@ class Heading(NamedTuple):
 
 # ---------------------------------------------------------------- backends
 
+RE_HAS_WORD = re.compile(r"[^\W\d_]{2,}")
+
 RE_BOLD_FONT = re.compile(
     r"bold|black|heavy|semibold|demi|extrabold|(?:^|[-,+])b(?:d|old)?$|cmbx|cmssbx|sfbx|"
     r"\.b$|-b$|medi",
@@ -199,9 +201,38 @@ def lines_pdfminer(path: str) -> list[Line]:
     return _join_same_baseline(out)
 
 
+RE_BARE_NUMBER = re.compile(r"^(?:\d{1,2}(?:\.\d{1,2}){0,4}|[IVX]{1,5}|[A-Z])\.?$")
+
+
 def _join_same_baseline(lines: list[Line]) -> list[Line]:
-    """Sort into reading order. Lines are left as the backend split them."""
-    return sorted(lines, key=lambda l: (l.page, round(l.y0), l.x0))
+    """Backend order, with a bare section number re-joined to its title.
+
+    Backends often emit "2.1" and "Autonomous Agent" as two lines when the
+    number is set in its own box. Left apart, the number is lost and with it
+    the depth it states. Only a BARE NUMBER on the left is joined, and only
+    across a small gap on the same baseline, so two text columns never are.
+    The joined line takes the title's style: the number's own type is often
+    different and is not what marks the heading.
+    """
+    # The backend's own order is kept: PyMuPDF and pdfminer both emit text
+    # column by column, while a sort on y would interleave two columns.
+    ordered = list(lines)
+    out: list[Line] = []
+    i = 0
+    while i < len(ordered):
+        l = ordered[i]
+        if RE_BARE_NUMBER.match(l.text) and i + 1 < len(ordered):
+            n = ordered[i + 1]
+            if (n.page == l.page and abs(n.y0 - l.y0) < 0.4 * max(n.size, 1, l.size)
+                    and 0 <= n.x0 - l.x1 < 4 * max(n.size, 1) and RE_HAS_WORD.search(n.text)):
+                out.append(Line(n.page, f"{l.text} {n.text}", n.size, n.bold, n.italic, n.caps, n.font,
+                                n.uniform, l.x0, min(l.y0, n.y0), n.x1, max(l.y1, n.y1),
+                                n.page_height, n.page_width))
+                i += 2
+                continue
+        out.append(l)
+        i += 1
+    return out
 
 
 def extract_lines(path: str, backend: str = "auto") -> list[Line]:
@@ -230,7 +261,6 @@ RE_NOT_SECTION = re.compile(
     r"(?:\s*[\dA-Z.:]*\s*$|\s*\d)",
     re.I,
 )
-RE_HAS_WORD = re.compile(r"[^\W\d_]{2,}")
 
 
 def norm_title(s: str) -> str:
@@ -305,6 +335,12 @@ def font_headings(lines: list[Line], max_levels: int = 4) -> list[Heading]:
     n_pages = max(l.page for l in lines)
     body = body_size(lines)
     furniture = furniture_keys(lines, n_pages)
+    # A printed contents page is a list of every heading, set in heading
+    # styles; read as headings it would put the whole document on that page.
+    by_page: dict[int, list[Line]] = defaultdict(list)
+    for l in lines:
+        by_page[l.page].append(l)
+    skip_pages = set(contents_pages(by_page, max_scan=n_pages, every_run=True))
 
     # Page 1's front matter (title, byline, affiliations) is set prominently
     # and is not a section. Skip it up to the first line that opens one.
@@ -322,7 +358,7 @@ def font_headings(lines: list[Line], max_levels: int = 4) -> list[Heading]:
         t = l.text.strip()
         if l.uniform < 0.85 or not RE_HAS_WORD.search(t) or not (2 <= len(t) <= 160):
             continue
-        if _furniture_key(l) in furniture:
+        if _furniture_key(l) in furniture or l.page in skip_pages:
             continue
         # Margins: running heads and folios live in the outer 6% of the page.
         if l.y1 < 0.06 * l.page_height or l.y0 > 0.94 * l.page_height:
@@ -402,6 +438,10 @@ def font_headings(lines: list[Line], max_levels: int = 4) -> list[Heading]:
         num, title = split_number(l.text.strip())
         level = _depth(num) or learned.get(l.style) or rank[l.style]
         out.append(Heading(min(level, max_levels + 2), title.strip(), l.page, num))
+    # Levels are ranks, not sizes: renumber the ones in use from 1 so that a
+    # document whose two largest styles were front matter does not start at 3.
+    used = {lv: i + 1 for i, lv in enumerate(sorted({h.level for h in out}))}
+    out = [h._replace(level=used[h.level]) for h in out]
     # Keep the first occurrence of an identical heading (a repeated chapter
     # title on a part page, say).
     seen: set[str] = set()
@@ -450,8 +490,14 @@ def _parse_entry(t: str) -> tuple[str, str] | None:
     return title, m.group("page")
 
 
-def contents_pages(by_page: dict[int, list[Line]], max_scan: int = 20) -> list[int]:
-    """Pages near the front that are mostly entries ending in a page number."""
+def contents_pages(by_page: dict[int, list[Line]], max_scan: int = 20,
+                   every_run: bool = False) -> list[int]:
+    """Pages that are mostly entries ending in a page number.
+
+    By default the first contiguous run within the first `max_scan` pages —
+    the document's contents (Wu et al. 2013 search min(20, N/5)). With
+    `every_run`, every such page anywhere: the font method must skip an
+    appendix's own contents page too."""
     found: list[int] = []
     for p in sorted(by_page)[:max_scan]:
         rows = _rows(by_page[p])
@@ -461,7 +507,7 @@ def contents_pages(by_page: dict[int, list[Line]], max_scan: int = 20) -> list[i
         has_title = any(RE_CONTENTS_TITLE.match(r.text) for r in rows)
         if entries >= 5 and (entries >= 0.4 * len(rows) or has_title and entries >= 0.25 * len(rows)):
             found.append(p)
-        elif found:
+        elif found and not every_run:
             break                     # contents pages are contiguous
     return found
 

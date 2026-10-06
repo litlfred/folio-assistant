@@ -16,9 +16,13 @@ Metrics, per document and then averaged (macro) over documents:
   normalised titles are similar (ratio >= 0.85, see `_pdf_headings.similar`);
   one-to-one, in document order.
 * link F1  — matched AND on the same physical page (ICDAR "matching links").
-* level F1 — matched AND at the same depth, both sides re-based so their
-  shallowest matched level is 1 (ICDAR "matching levels").
+* level F1 — matched AND at the same depth, up to one constant shift (the
+  commonest among matched pairs), so an outline that omits the chapter level
+  is not scored zero for it (ICDAR "matching levels", relative form).
 * full F1  — matched with both page and level right ("complete entries").
+* capped F1 — title F1 after dropping predictions deeper than the outline's
+  deepest level: an outline that stops at level 2 otherwise makes every real
+  level-3 heading a false positive.
 * TEDS     — 1 - TED(T_pred, T_gold) / max(|T_pred|, |T_gold|), the tree-edit
   similarity of Wang, Gui & He (2023), labels compared with the same rule.
 
@@ -42,6 +46,7 @@ import json
 import os
 import sys
 import time
+from collections import Counter
 from dataclasses import dataclass
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -120,10 +125,16 @@ METHODS = {
 # ---------------------------------------------------------------- scoring
 
 
+def in_page_order(entries: list[H.Heading]) -> list[H.Heading]:
+    """Stable sort by page. Outlines are not always in document order — one
+    WHO handbook lists 1.3 before 1.2 — and the matcher below is an LCS."""
+    return sorted(entries, key=lambda e: e.page if e.page is not None else 10**9)
+
+
 def match(gold: list[H.Heading], pred: list[H.Heading]) -> list[tuple[int, int]]:
     """One-to-one fuzzy title matching that respects document order (an LCS
     over the similarity relation), so a repeated title pairs with its own
-    occurrence rather than the first one."""
+    occurrence rather than the first one. Both lists must be in page order."""
     g = [H.norm_title(x.title) for x in gold]
     p = [H.norm_title(x.title) for x in pred]
     n, m = len(g), len(p)
@@ -219,20 +230,33 @@ def teds(gold: list[H.Heading], pred: list[H.Heading]) -> float | None:
 
 
 def score(gold: list[H.Heading], pred: list[H.Heading]) -> dict:
+    gold_tree, pred_tree = gold, pred          # TEDS reads the nesting as given
+    gold, pred = in_page_order(gold), in_page_order(pred)
     pairs = match(gold, pred)
-    gmin = min((gold[i].level for i, _ in pairs), default=1)
-    pmin = min((pred[j].level for _, j in pairs), default=1)
+    # Levels are compared up to one constant shift, the commonest one among
+    # matched pairs: an outline that omits the chapter level (bookmarks
+    # starting at "1.1") or adds the title above everything is still the same
+    # hierarchy, and an absolute comparison would score it zero.
+    shift = Counter(pred[j].level - gold[i].level for i, j in pairs).most_common(1)
+    k = shift[0][0] if shift else 0
+    lv_ok = lambda i, j: pred[j].level - gold[i].level == k  # noqa: E731
     link = sum(1 for i, j in pairs if gold[i].page is not None and gold[i].page == pred[j].page)
-    lev = sum(1 for i, j in pairs if gold[i].level - gmin == pred[j].level - pmin)
-    full = sum(1 for i, j in pairs if gold[i].page == pred[j].page and gold[i].level - gmin == pred[j].level - pmin)
+    lev = sum(1 for i, j in pairs if lv_ok(i, j))
+    full = sum(1 for i, j in pairs if gold[i].page == pred[j].page and lv_ok(i, j))
     t = prf(len(pairs), len(pred), len(gold))
+    # Depth-capped: an outline that stops at level 2 makes every true level-3
+    # heading a false positive. Drop predictions deeper than the outline goes
+    # (under the same shift) and score the titles again.
+    gmax = max((e.level for e in gold), default=0)
+    capped = [e for e in pred if e.level - k <= gmax]
+    tc = prf(len(match(gold, capped)), len(capped), len(gold))
     return {
         "n_gold": len(gold), "n_pred": len(pred),
-        "title_p": t[0], "title_r": t[1], "title_f1": t[2],
+        "title_p": t[0], "title_r": t[1], "title_f1": t[2], "capped_f1": tc[2],
         "link_f1": prf(link, len(pred), len(gold))[2],
         "level_f1": prf(lev, len(pred), len(gold))[2],
         "full_f1": prf(full, len(pred), len(gold))[2],
-        "teds": teds(gold, pred),
+        "teds": teds(gold_tree, pred_tree),
     }
 
 
@@ -298,13 +322,13 @@ def main() -> int:
                   f"TEDS={ted_s}  {rel}", file=sys.stderr)
 
     print("\nMacro average over", len(pdfs), "documents")
-    print(f"{'method':9s} {'title P':>8s} {'title R':>8s} {'title F1':>8s} {'link F1':>8s} "
+    print(f"{'method':9s} {'title P':>8s} {'title R':>8s} {'title F1':>8s} {'capped':>8s} {'link F1':>8s} "
           f"{'level F1':>8s} {'full F1':>8s} {'TEDS':>6s}")
     for m in methods:
         rs = [r for r in rows if r["method"] == m]
         avg = lambda k: sum(r[k] for r in rs) / len(rs)  # noqa: E731
         tv = [r["teds"] for r in rs if r["teds"] is not None]
-        print(f"{m:9s} {avg('title_p'):8.2f} {avg('title_r'):8.2f} {avg('title_f1'):8.2f} "
+        print(f"{m:9s} {avg('title_p'):8.2f} {avg('title_r'):8.2f} {avg('title_f1'):8.2f} {avg('capped_f1'):8.2f} "
               f"{avg('link_f1'):8.2f} {avg('level_f1'):8.2f} {avg('full_f1'):8.2f} "
               f"{(sum(tv) / len(tv) if tv else float('nan')):6.2f}")
     if args.json:
