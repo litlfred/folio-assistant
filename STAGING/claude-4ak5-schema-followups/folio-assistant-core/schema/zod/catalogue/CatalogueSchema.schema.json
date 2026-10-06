@@ -1,0 +1,94 @@
+{
+  "$ref": "#/definitions/Catalogue",
+  "definitions": {
+    "Catalogue": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-catalogue/v1"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "system": {
+          "type": "string",
+          "minLength": 1
+        },
+        "baseUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "totalItemsUpstream": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "totalFilesUpstream": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "totalBytesUpstream": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "sizeBasis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nodesDir": {
+          "default": "nodes",
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceLoss": {
+          "type": "object",
+          "properties": {
+            "container": {
+              "type": "string",
+              "minLength": 1
+            },
+            "referencedItem": {
+              "type": "string",
+              "minLength": 1
+            },
+            "materializedItem": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "container",
+            "referencedItem",
+            "materializedItem"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "id",
+        "title",
+        "system",
+        "baseUrl"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4ak5-schema-followups/folio-assistant-core/schema/zod/catalogue/CatalogueSchema.schema.json",
+  "title": "CatalogueSchema",
+  "description": "Generated from `CatalogueSchema` in schemas/catalogue.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/4ak5-schema-followups",
+    "sha": "ba4e1773ef98f942f451d72fe3b1381e8d352b16",
+    "pr": "2224/merge",
+    "run": "37419678584"
+  }
+}
