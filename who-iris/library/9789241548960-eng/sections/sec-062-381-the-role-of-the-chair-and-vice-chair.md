@@ -7,6 +7,7 @@ section_number: 3.8.1
 pages: 47-47
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 During meetings, the chair must ensure that GDG members can present their 
 viewpoints and that all relevant issues are discussed in a respectful and efficient 

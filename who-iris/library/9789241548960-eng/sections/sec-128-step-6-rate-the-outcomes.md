@@ -7,6 +7,7 @@ section_number: null
 pages: 103-103
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The GDG and/or other stakeholders, such as service users and others directly 
 affected by the recommendations, then rate or rank the listed outcomes using 

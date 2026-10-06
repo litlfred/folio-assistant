@@ -7,6 +7,7 @@ section_number: 11.11
 pages: 164-165
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Peer review of the draft of the final guideline document by key individuals, 
 both internal and external to WHO, is important for all guidelines produced by WHO, including those produced rapidly. In the context of a rapid 

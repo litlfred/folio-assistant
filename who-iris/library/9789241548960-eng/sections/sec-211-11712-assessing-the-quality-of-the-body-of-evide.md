@@ -7,6 +7,7 @@ section_number: 11.7.12
 pages: 160-162
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 GRADE
 The quality of the body of evidence pertaining to each outcome should be 

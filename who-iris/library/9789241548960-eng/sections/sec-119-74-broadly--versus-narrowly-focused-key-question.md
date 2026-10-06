@@ -7,6 +7,7 @@ section_number: 7.4
 pages: 98-99
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Questions based on the PICO format may be broad or narrow in scope. A 
 broad question will lead to a comprehensive summary of a larger body of evidence and more generalizable findings, but it may also require significantly 

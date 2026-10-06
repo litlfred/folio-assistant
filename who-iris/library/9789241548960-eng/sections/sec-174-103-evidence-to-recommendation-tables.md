@@ -7,6 +7,7 @@ section_number: 10.3
 pages: 140-140
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Evidence-to-recommendation tables depict how the factors that determine 
 the direction and strength of a recommendation inform the process of developing the recommendation. These tables enhance the transparency of the 

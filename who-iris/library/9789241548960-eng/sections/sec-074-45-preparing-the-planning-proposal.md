@@ -7,6 +7,7 @@ section_number: 4.5
 pages: 52-53
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 close collaboration with other members of the steering group. Broad input 
 must be obtained, however, to ensure a useful product. The GDG, or at least 

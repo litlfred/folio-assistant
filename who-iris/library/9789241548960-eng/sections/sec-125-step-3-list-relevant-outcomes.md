@@ -7,6 +7,7 @@ section_number: null
 pages: 101-101
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The steering group should list relevant outcomes, including both the potential benefits and harms of the intervention or exposure. The GDG then 
 reviews this list and may add additional outcomes considered important.

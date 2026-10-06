@@ -7,6 +7,7 @@ section_number: 11.7.4
 pages: 156-157
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Several common eligibility restrictions should be considered when developing search strategies in the context of a rapid review (Box 11.1) (1). Potential 
 restrictions should be discussed among steering group members and with 

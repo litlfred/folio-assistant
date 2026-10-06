@@ -7,6 +7,7 @@ section_number: 9.7
 pages: 133-133
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Confusion and concerns exist as to whether GRADE is applicable to all situations in which a GDG issues a recommendation regarding an intervention. 
 The strength of the GRADE approach rests on the use of a structured framework for the assessment of the quality of the evidence and on the requirements that processes be explicit and judgements transparent. GRADE has 

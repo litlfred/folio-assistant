@@ -1,5 +1,14 @@
 /* The block content panel — bean lrmo. Tokens only, so it follows the light
    and dark themes above rather than hardcoding either. */
+#document .seg { margin: .2rem 0 .8rem; }
+#document .seg button[aria-selected="true"] { font-weight: 600; }
+#document ol.toc { list-style: none; padding: 0; margin: 0; }
+#document ol.toc li { margin: .15rem 0; }
+#document .docsec { margin: 0 0 1rem; }
+#document .docsec h3 { margin: .2rem 0 .3rem; font-size: 1rem; }
+#document .sum { padding: .55rem .7rem; border: 1px dashed var(--line); border-radius: 6px; }
+#document .sum p { margin: .35rem 0 0; }
+#document td { white-space: normal; vertical-align: top; }
 #blocks details > summary { cursor: pointer; }
 #blocks .block-body { margin: .4rem 0 .2rem; }
 #blocks .block-body pre {

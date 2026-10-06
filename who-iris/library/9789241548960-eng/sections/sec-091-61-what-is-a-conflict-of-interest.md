@@ -7,6 +7,7 @@ section_number: 6.1
 pages: 69-70
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 A conflict of interest is an important potential source of bias and diminished 
 credibility in the development of WHO guidelines. “A conflict of interest is a 

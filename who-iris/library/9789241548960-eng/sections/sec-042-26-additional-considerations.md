@@ -7,6 +7,7 @@ section_number: 2.6
 pages: 31-32
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Once you are certain that a guideline is needed by its intended end-users 
 and will benefit the service users or other recipients of the recommended 

@@ -7,6 +7,7 @@ section_number: 8.4
 pages: 115-116
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Qualitative data can address certain types of key questions that cannot be 
 answered by quantitative research methods, such as “how” and “why” a given 

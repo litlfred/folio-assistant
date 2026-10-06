@@ -7,6 +7,7 @@ section_number: 1.7.3
 pages: 19-20
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Interim guidelines are produced when WHO is asked to provide guidance when 
 the available data and information are most certainly incomplete, especially if 

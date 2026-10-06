@@ -7,6 +7,7 @@ section_number: 7.5
 pages: 99-99
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The number of key questions for a guideline varies greatly, depending on the 
 scope of the guideline (the number of areas of uncertainty) and the available 

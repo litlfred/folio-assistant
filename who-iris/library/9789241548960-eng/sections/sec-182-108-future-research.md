@@ -7,6 +7,7 @@ section_number: 10.8
 pages: 144-144
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 When gaps in the evidence are such that significant uncertainty exists with 
 respect to the balance of an intervention’s benefits and harms, such knowledge gaps should be described and questions and methods for addressing the 

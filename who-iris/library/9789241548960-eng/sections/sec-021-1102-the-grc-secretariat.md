@@ -7,6 +7,7 @@ section_number: 1.10.2
 pages: 25-25
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The GRC Secretariat has several important roles. In addition to supporting 
 the GRC, it provides WHO staff with technical advice on guideline development, sets benchmarks, and evaluates guideline development processes, 

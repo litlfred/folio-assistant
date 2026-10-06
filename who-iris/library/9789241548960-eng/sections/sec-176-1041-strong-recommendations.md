@@ -7,6 +7,7 @@ section_number: 10.4.1
 pages: 141-141
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Strong recommendations communicate the message that the guideline is 
 based on the confidence that the desirable effects of adherence to the recommendation outweigh the undesirable consequences. Strong recommendations are uncommon because the balance between the benefits and harms 

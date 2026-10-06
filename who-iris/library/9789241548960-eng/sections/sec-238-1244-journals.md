@@ -7,6 +7,7 @@ section_number: 12.4.4
 pages: 174-174
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The systematic reviews commissioned for the guideline may be submitted for 
 publication in the Bulletin of the World Health Organization or other journals. Cochrane reviews are published in the Cochrane Library. To increase 

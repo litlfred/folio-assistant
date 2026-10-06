@@ -7,6 +7,7 @@ section_number: null
 pages: 2-11
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 1.Guidelines as Topic – standards. 2.Review. 3.Meta-Analysis. 4.Peer Review. 5.Evidence-Based 
 Medicine. 6.World Health Organization. I.World Health Organization. 

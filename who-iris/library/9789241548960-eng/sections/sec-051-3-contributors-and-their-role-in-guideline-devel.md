@@ -7,6 +7,7 @@ section_number: 3
 pages: 37-37
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 25
 The members of the GDG are not commissioned and do not receive any 

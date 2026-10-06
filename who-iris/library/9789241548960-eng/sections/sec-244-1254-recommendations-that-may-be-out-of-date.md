@@ -7,6 +7,7 @@ section_number: 12.5.4
 pages: 176-176
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Occasionally guideline developers may want to update guidelines before the 
 “review-by” date, particularly if new evidence is published. This new evidence 

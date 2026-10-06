@@ -7,6 +7,7 @@ section_number: 11.9.2
 pages: 164-164
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The GRADE approach for formulating recommendations should be followed 
 when developing rapid advice guidelines (see Chapter 10). The tools used 

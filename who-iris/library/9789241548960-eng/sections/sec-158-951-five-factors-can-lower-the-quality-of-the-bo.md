@@ -7,6 +7,7 @@ section_number: 9.5.1
 pages: 125-131
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 each outcome
 A body of evidence based on RCTs is rated as being of high quality at the 
@@ -168,7 +169,8 @@ In formulating a recommendation, all outcomes are considered
 together, with attention to whether they are critical, or important but not 
 critical for decision-making. The decision to downgrade the quality of the 
 evidence for imprecision depends on the threshold established as the basis 
-for a decision or a recommendation and on the trade-off between desirWHO handbook for guideline development
+for a decision or a recommendation and on the trade-off between desir
+WHO handbook for guideline development
 118
 able and undesirable consequences. Determining the acceptable threshold 
 involves an explicit judgement.

@@ -7,6 +7,7 @@ section_number: 8.1
 pages: 105-105
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 A systematic review is “a review of a clearly formulated question that uses 
 systematic and explicit methods to identify, select, and critically appraise 

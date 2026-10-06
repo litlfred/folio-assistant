@@ -7,6 +7,7 @@ section_number: 1.7.4
 pages: 20-21
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Certain circumstances preclude the development of a standard guideline. This is 
 the case when WHO must provide guidance in response to public health emergencies. Depending on the type of event or situation, such guidelines may need to 

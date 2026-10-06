@@ -7,6 +7,7 @@ section_number: 6.9.2
 pages: 81-82
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Declarations of interests should be collected from all peer reviewers. When 
 reviewers are affiliated with organizations that clearly have a vested interest in the outcome of specific recommendations, a declaration of interests is 

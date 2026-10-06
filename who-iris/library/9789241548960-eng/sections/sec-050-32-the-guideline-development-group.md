@@ -7,6 +7,7 @@ section_number: 3.2
 pages: 36-37
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The GDG is made up of external experts whose central task is to develop evidence-based recommendations. The GDG also performs the important task 
 of finalizing the scope and key questions of the guideline in PICO format. 

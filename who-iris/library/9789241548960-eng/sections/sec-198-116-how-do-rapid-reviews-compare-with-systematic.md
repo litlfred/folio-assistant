@@ -7,6 +7,7 @@ section_number: 11.6
 pages: 153-153
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 reviews?
 The core principles of evidence searching and retrieval, including transparency and reproducible and explicit methods, apply to rapid reviews. There are 

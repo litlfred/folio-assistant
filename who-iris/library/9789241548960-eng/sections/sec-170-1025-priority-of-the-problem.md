@@ -7,6 +7,7 @@ section_number: 10.2.5
 pages: 139-139
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 GDGs should consider − and be provided with − evidence about the burden 
 of disease and the baseline risk, prevalence or incidence of the problem that 

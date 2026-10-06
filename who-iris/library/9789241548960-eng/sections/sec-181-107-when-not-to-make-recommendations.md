@@ -7,6 +7,7 @@ section_number: 10.7
 pages: 143-144
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 In rare situations, a GDG may decide that the evidence is not sufficient to be 
 able to formulate a recommendation. For instance, it may not be appropriate 

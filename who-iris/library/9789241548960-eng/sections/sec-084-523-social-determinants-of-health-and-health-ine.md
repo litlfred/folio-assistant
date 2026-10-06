@@ -7,6 +7,7 @@ section_number: 5.2.3
 pages: 59-62
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The social determinants of health are the conditions in which people grow, 
 live, work and age (6). Health inequities are differences in health that are 

@@ -7,6 +7,7 @@ section_number: 5.2
 pages: 57-59
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The WHO Constitution (2) states that:
 “Health is a state of complete physical, mental and social well-being 

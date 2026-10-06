@@ -7,6 +7,7 @@ section_number: 12.5.3
 pages: 175-176
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Technical units are responsible for keeping their guidelines up to date. As 
 guidelines near their “review-by” date, they should be carefully examined 

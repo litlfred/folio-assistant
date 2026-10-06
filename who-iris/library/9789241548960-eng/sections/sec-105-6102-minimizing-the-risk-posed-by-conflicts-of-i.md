@@ -7,6 +7,7 @@ section_number: 6.10.2
 pages: 84-86
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 guideline development process
 Appropriate management of disclosures and conflicts of interest does not 

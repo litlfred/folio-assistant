@@ -7,6 +7,7 @@ section_number: 10
 pages: 135-136
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 123
 WHO handbook for guideline development

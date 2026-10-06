@@ -7,6 +7,7 @@ section_number: 1.8.2
 pages: 22-22
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Guidelines that serve WHO’s purpose may already exist and WHO may consider adopting, adapting or incorporating all or part of a guideline developed 
 by an external organization. In order to adopt or endorse such a guideline, 

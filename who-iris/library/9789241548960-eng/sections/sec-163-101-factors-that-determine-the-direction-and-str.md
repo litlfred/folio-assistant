@@ -7,6 +7,7 @@ section_number: 10.1
 pages: 135-135
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 of recommendations
 Four main factors determine the direction and strength of a recommendation in public health (1–5):

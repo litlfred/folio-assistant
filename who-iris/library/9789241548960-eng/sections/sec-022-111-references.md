@@ -7,6 +7,7 @@ section_number: 1.11
 pages: 25-27
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 1.	
 Twelfth General Programme of Work: not merely the absence of disease. Geneva: World 

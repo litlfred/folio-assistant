@@ -7,6 +7,7 @@ section_number: 6.9.1
 pages: 79-81
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 At the level of the individual potential GDG member, management options 
 represent a spectrum that includes:

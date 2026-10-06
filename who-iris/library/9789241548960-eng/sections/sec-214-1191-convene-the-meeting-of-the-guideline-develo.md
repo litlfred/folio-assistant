@@ -7,6 +7,7 @@ section_number: 11.9.1
 pages: 163-164
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 At the very beginning of the guideline development process, the responsible 
 technical officer and the steering group need to plan for the GDG meeting where recommendations will be formulated. Because of the compressed 

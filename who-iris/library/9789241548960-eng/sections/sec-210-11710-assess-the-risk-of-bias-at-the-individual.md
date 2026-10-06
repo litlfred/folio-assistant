@@ -7,6 +7,7 @@ section_number: 11.7.10
 pages: 159-160
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The review team should assess the risk of bias for individual studies, just as in 
 a standard systematic review. This step is necessary to properly interpret the 

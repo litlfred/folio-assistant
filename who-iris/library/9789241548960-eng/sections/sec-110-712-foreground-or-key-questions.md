@@ -7,6 +7,7 @@ section_number: 7.1.2
 pages: 90-90
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 These questions form the basis of the search for the evidence that will underpin the recommendations. They will be of various types, depending on the 
 nature of the guideline and the specific topics it will cover. When a potential 

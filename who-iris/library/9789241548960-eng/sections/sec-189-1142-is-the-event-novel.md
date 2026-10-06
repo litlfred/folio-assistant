@@ -7,6 +7,7 @@ section_number: 11.4.2
 pages: 147-148
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 WHO staff may consider producing a rapid advice guideline primarily in the 
 face of one of two types of events:

@@ -7,6 +7,7 @@ section_number: 11.8
 pages: 162-163
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The review team needs to produce a concise report that succinctly yet methodically summarizes the methods used and the results of the review. Suggested 
 components of the rapid review report are listed in Box 11.2. All components 

@@ -7,6 +7,7 @@ section_number: 11.7.2
 pages: 155-156
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Concepts need to be well defined with search terms that include both medical subject headings (MeSH) and text words. It is important that the draft 
 search strategy be reviewed by:

@@ -7,6 +7,7 @@ section_number: 3.10
 pages: 50-51
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 1.	
 WHO eManual /III - Human Resources/III.1 Duties, Obligations and Privileges/III.1.2 

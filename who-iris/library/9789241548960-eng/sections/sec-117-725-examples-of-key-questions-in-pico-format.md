@@ -7,6 +7,7 @@ section_number: 7.2.5
 pages: 94-95
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The following are well-formulated key questions:
 ■■

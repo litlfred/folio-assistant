@@ -7,6 +7,7 @@ section_number: 11.14
 pages: 166-166
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 All guidelines need to be kept up to date and consistent with the best available evidence. This is particularly important and difficult to achieve in the 
 context of a public health emergency, when new data are constantly emerging and experience is continually accruing. The technical unit with primary 

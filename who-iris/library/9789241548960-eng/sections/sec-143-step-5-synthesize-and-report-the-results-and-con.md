@@ -7,6 +7,7 @@ section_number: null
 pages: 114-115
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The findings of the systematic review may be synthesized in a narrative 
 manner or quantitatively with a pooled estimate of effect for certain outcomes 

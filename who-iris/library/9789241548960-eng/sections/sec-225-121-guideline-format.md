@@ -7,6 +7,7 @@ section_number: 12.1
 pages: 169-171
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 All guidelines should have an executive summary, a main body and appendices. The executive summary should contain the key recommendations of the 
 guideline. As executive summaries are often read as stand-alone documents, 

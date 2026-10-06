@@ -7,6 +7,7 @@ section_number: 8.6
 pages: 116-117
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Updating an existing systematic review can be a less expensive and more efficient 
 way to obtain the synthesis of the evidence required to underpin a recommendation. Updating a systematic review is a complex process, however. Like all the 

@@ -7,6 +7,7 @@ section_number: 9.1
 pages: 122-122
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Once the evidence has been retrieved and synthesized through a well conducted systematic review, its quality needs to be assessed. In the context of 
 evidence syntheses, the GRADE working group defines the quality of the 

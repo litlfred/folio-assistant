@@ -7,6 +7,7 @@ section_number: 10.6
 pages: 142-143
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Recommendations need to be clear and actionable, reflect the PICO format 
 and contain an indication of their strength and of the quality of the evidence 

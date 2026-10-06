@@ -7,6 +7,7 @@ section_number: 12.3.2
 pages: 172-172
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 WHO guidelines should avoid specifying proprietary products when at all 
 possible. Devices and diagnostics used in interventions should be described 

@@ -7,6 +7,7 @@ section_number: 6
 pages: 71-71
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 59
 The declaration of one or more secondary interests (declaration of 

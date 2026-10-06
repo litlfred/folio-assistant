@@ -7,6 +7,7 @@ section_number: 6.12
 pages: 86-86
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 guidelines?
 WHO guidelines cannot be funded, in whole or in part, by private sector 

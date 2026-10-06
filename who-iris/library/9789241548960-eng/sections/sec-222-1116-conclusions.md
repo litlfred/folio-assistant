@@ -7,6 +7,7 @@ section_number: 11.16
 pages: 167-168
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 This chapter outlines the processes and methods used to develop a rapid 
 advice guideline within one to three months in the context of a public health 

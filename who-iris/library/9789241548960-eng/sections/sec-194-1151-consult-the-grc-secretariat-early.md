@@ -7,6 +7,7 @@ section_number: 11.5.1
 pages: 149-149
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 It is particularly important for the responsible technical officer of a rapid 
 advice guideline to contact the GRC Secretariat early in the guideline development process. The GRC and the Secretariat will provide guidance as to 

@@ -7,6 +7,7 @@ section_number: 10.4.2
 pages: 141-142
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Recommendations that are conditional or weak are made when a GDG is less 
 certain about the balance between the benefits and harms or disadvantages 

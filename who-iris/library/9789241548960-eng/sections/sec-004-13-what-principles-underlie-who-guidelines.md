@@ -7,6 +7,7 @@ section_number: 1.3
 pages: 13-13
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The Twelfth General Programme of Work (GPW) of WHO (2014) specifies 
 that in its normative and standard-setting work, WHO is and will remain 

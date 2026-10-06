@@ -7,6 +7,7 @@ section_number: 2.7
 pages: 32-33
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Scoping is the process of defining what the guideline will and will not include. 
 To establish the scope, you need to determine:

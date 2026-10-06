@@ -7,6 +7,7 @@ section_number: 2.2.3
 pages: 29-29
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Guidelines must have a clearly defined target audience (end-user) which is 
 identified early in the guideline development process, and the recommendations need to be tailored to that audience. (Note that the end-users are those 

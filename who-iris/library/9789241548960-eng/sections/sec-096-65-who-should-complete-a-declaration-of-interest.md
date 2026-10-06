@@ -7,6 +7,7 @@ section_number: 6.5
 pages: 72-75
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 According to WHO rules and regulations, a declaration of interests form and an 
 analysis of all declarations must be performed whenever an individual provides 

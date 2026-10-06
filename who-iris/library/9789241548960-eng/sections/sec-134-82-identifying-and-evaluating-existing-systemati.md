@@ -7,6 +7,7 @@ section_number: 8.2
 pages: 106-106
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 After scoping the proposed guideline (see Chapter 2) and crafting the key 
 questions (see Chapter 7), the next step in guideline development is to identify 

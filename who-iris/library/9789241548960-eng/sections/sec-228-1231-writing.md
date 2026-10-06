@@ -7,6 +7,7 @@ section_number: 12.3.1
 pages: 171-172
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Identify a writer early in the process and make sure this person is engaged 
 throughout the guideline’s development. The writer can be a WHO staff 

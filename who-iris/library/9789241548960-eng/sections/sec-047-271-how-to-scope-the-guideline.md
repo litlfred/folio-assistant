@@ -7,6 +7,7 @@ section_number: 2.7.1
 pages: 33-34
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Scoping a guideline involves a series of steps, generally performed or coordinated by the responsible technical officer.
 ■■

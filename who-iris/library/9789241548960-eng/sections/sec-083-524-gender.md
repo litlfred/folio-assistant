@@ -7,5 +7,6 @@ section_number: 5.2.4
 pages: 59-59
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 47

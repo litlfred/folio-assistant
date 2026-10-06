@@ -7,6 +7,7 @@ section_number: 11.2
 pages: 145-146
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Because recommendations issued by WHO need to be based on the best 
 available evidence, guidelines typically draw on evidence from well conducted and reported systematic reviews, whether they exist already or are 

@@ -7,6 +7,7 @@ section_number: 3.6
 pages: 46-46
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The funder(s) of a guideline can play no role in the guideline development 
 process and should not influence the recommendations. Private funders, 

@@ -7,6 +7,7 @@ section_number: 1.7
 pages: 15-18
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 It is important to consider what type of guideline will best fit the intended 
 purpose, as this will determine the methods, resources and time frame for 

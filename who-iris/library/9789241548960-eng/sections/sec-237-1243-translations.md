@@ -7,6 +7,7 @@ section_number: 12.4.3
 pages: 174-174
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Because WHO guidelines target a global audience, it is often necessary to 
 provide the guideline in one or several languages, particularly the six official languages; Arabic, Chinese, English, French, Russian and Spanish. To 

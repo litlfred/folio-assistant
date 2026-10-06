@@ -7,6 +7,7 @@ section_number: 10.2
 pages: 137-138
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 moving from evidence to recommendations
 10.2.1 Quality of the evidence

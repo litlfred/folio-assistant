@@ -7,6 +7,7 @@ section_number: 9.3
 pages: 122-124
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Assessing the evidence and developing evidence summaries are specialized 
 tasks that should be performed by a methodological expert with experience 

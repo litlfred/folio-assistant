@@ -7,6 +7,7 @@ section_number: 1.6
 pages: 15-15
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 This handbook follows the entire development of a WHO guideline − from determining if a guideline is needed through to eventual publication. The guideline 
 development process and its primary contributors are summarized in Table 1.1.

@@ -7,6 +7,7 @@ section_number: 3.5.2
 pages: 45-45
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Additional commissioned experts are sometimes involved in the development of a guideline. These individuals have expertise in other essential areas, 
 such as decision analysis (modelling), economics or epidemiology. They 

@@ -7,6 +7,7 @@ section_number: 13
 pages: 177-178
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 guideline development process. The implementation of new guidance gives 
 rise to new evidence of impact and new research questions. Practice needs to 

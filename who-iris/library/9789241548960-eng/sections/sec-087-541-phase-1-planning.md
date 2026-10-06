@@ -7,6 +7,7 @@ section_number: 5.4.1
 pages: 62-64
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 5.4.1.1 Request for guidance on a topic (Chapter 1)
 In their request for guidance, Member States or other stakeholders might 

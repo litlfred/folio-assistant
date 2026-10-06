@@ -7,6 +7,7 @@ section_number: 3.4
 pages: 41-45
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Systematic reviews of the evidence are the basis for most types of recommendations (see Chapter 8). Because WHO staff usually lack the time to perform 
 these reviews, they normally commission them from external contractors. 

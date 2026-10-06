@@ -7,6 +7,7 @@ section_number: 2.6.2
 pages: 32-32
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 What level of detail and format will your target audience find most useful? 
 Guideline users are not generally interested in a detailed description of how 

@@ -7,6 +7,7 @@ section_number: 1.9
 pages: 23-23
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 guidelines
 Certain types of documents are not considered guidelines and do not need 

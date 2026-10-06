@@ -7,6 +7,7 @@ section_number: 2.5.1
 pages: 31-31
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 You will need your director’s formal approval before your planning proposal or 
 your final guideline can be considered by the GRC. In addition, your ADG will 

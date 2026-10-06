@@ -7,6 +7,7 @@ section_number: 6.6
 pages: 75-76
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Relevant financial as well as nonfinancial interests should be disclosed and 
 subsequently assessed and managed in order to minimize bias in guideline 

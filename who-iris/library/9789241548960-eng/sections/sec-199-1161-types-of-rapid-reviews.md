@@ -7,6 +7,7 @@ section_number: 11.6.1
 pages: 153-155
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The reviews that underpin rapid advice guidelines may be categorized into 
 four basic types: a full, standard systematic review performed rapidly; a 

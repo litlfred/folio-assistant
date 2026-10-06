@@ -7,6 +7,7 @@ section_number: 11.12
 pages: 165-165
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Most evidence stemming from research is generated in settings and populations that differ from those affected by a public health emergency. Thus, the 
 degree to which such evidence may be directly applied to the current context may be limited. It is important to consider how contextual factors can 

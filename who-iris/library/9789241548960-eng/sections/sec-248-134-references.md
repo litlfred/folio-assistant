@@ -7,10 +7,8 @@ section_number: 13.4
 pages: 179-179
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
-related to guideline implementation. The guideline should propose a specific 
-set of indicators to be monitored and evaluated, including relevant disaggregation of data.
-13.4 References
 1.	
 Bryce J, Victora CG, Habicht JP, Vaughan JP, Black RE. The multi-country evaluation of the 
 integrated management of childhood illness strategy: lessons for the evaluation of public 

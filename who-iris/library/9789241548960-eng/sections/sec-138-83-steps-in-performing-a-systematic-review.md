@@ -7,6 +7,7 @@ section_number: 8.3
 pages: 109-110
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 There are six basic steps in the systematic review process (see Fig. 8.2) (as 
 distinct from the guideline development process described in Chapter 1). 

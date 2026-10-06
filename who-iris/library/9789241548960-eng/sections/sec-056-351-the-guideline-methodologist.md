@@ -7,6 +7,7 @@ section_number: 3.5.1
 pages: 45-45
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 At least one methodologist – an expert in guideline development processes 
 and methods − should be involved in the development of WHO guidelines. 

@@ -7,6 +7,7 @@ section_number: 12.3.6
 pages: 172-173
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 12.3.5 Layout
 Once you have an edited and carefully checked manuscript that has received 

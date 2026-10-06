@@ -7,6 +7,7 @@ section_number: 6.10.1
 pages: 82-84
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 constituting guideline development groups
 There is scant evidence upon which to base recommendations on the optimal composition of GDGs to minimize the risk that intellectual conflicts of 

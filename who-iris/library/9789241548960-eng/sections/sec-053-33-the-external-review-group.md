@@ -7,6 +7,7 @@ section_number: 3.3
 pages: 40-41
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The external review group is composed of persons interested in the subject of 
 the guideline as well as individuals who will be affected by the recommendations (often referred to as “stakeholders”). Thus, the external review group 
