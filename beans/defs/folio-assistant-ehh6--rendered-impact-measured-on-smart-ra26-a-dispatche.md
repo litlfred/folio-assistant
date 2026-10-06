@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ehh6
 title: 'RENDERED IMPACT, measured on smart-ra#26: a dispatched staging run finds its PR; a file the site reads nothing from reaches no page; the review page shows the measurement'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-06T18:25:34Z
-updated_at: 2026-10-06T19:52:38Z
+updated_at: 2026-10-06T21:25:11Z
 parent: folio-assistant-q4jm
 ---
 
@@ -35,4 +35,10 @@ The confirming re-run on smart-ra#26 (submodule past 9452bc6) is the folio's bea
 
 smart-ra#26 run 37517493046 (folio-assistant 9452bc6): A worked (PR 26 found, comments ingested; the comment POST got a GitHub 500). B did not: smart-ra's dpi-h-ra.json now DECLARES beans/ and todos/, and 'declared' was the test for 'may be read', so the bean stayed 'any page'. The site reads todos/ (gen-node-kind-pages renders todo pages) and not beans/. Owner, 2026-10-06, option 1 of 3: each site builder declares what it reads.
 
-- [ ] build-document-site, public-comment-site and gen-node-kind-pages export siteReads(repoRoot, args); the predictor finds the builders in the folio's build command and unions their reads; a builder with no siteReads excludes nothing.
+- [x] build-document-site, public-comment-site and gen-node-kind-pages export siteReads(repoRoot, args); the predictor finds the builders in the folio's build command and unions their reads; a builder with no siteReads excludes nothing.
+
+## Closed 2026-10-06 on evidence
+
+- #2318 (merge 8604cf2): builders declare siteReads; predictor asks the folio's build command. CI green.
+- smart-ra#26 run on b9bf022 (folio-assistant 8604cf2): A confirmed (bot comment posted by the dispatched run), C confirmed (review page reads rendered-measured.json; status not-base, 11 measured). 'Not known' lists only the submodule.
+- B was NOT exercised by that run: the branch had dropped its beans/ file, so no bean was an input. B's evidence is the unit tests (site-reads.test.ts, document-rendered-impact.test.ts) and a local run on smart-ra's branch with its real build command (beans/, README.md, library/, input/, uploads/ reach no page; todos/ and the submodule stay any page). The first PR on smart-ra that touches an undeclared-read file is the live check.
