@@ -1,0 +1,206 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/folio-assistant-core.schema.json",
+  "title": "folio-assistant-core schemas",
+  "description": "The schemas instance `folio-assistant-core` publishes: its declaration, which is a CatHarness declaration and is validated by the shared schema this `$ref`s, and its skills' I/O contracts and its public Zod schemas — every exported Zod `*Schema` const (owner ruling 2026-10-05) — listed in `$defs` by `$id`.",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/cat-harness.schema.json"
+    }
+  ],
+  "$defs": {
+    "skills/document-authoring/input": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/skills/document-authoring/input.schema.json"
+    },
+    "skills/document-authoring/output": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/skills/document-authoring/output.schema.json"
+    },
+    "skills/document-publishing/input": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/skills/document-publishing/input.schema.json"
+    },
+    "skills/document-publishing/output": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/skills/document-publishing/output.schema.json"
+    },
+    "skills/document-structure/input": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/skills/document-structure/input.schema.json"
+    },
+    "skills/document-structure/output": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/skills/document-structure/output.schema.json"
+    },
+    "skills/normative-statements/input": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/skills/normative-statements/input.schema.json"
+    },
+    "skills/normative-statements/output": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/skills/normative-statements/output.schema.json"
+    },
+    "skills/public-comment/input": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/skills/public-comment/input.schema.json"
+    },
+    "skills/public-comment/output": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/skills/public-comment/output.schema.json"
+    },
+    "skills/quality-control/input": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/skills/quality-control/input.schema.json"
+    },
+    "skills/quality-control/output": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/skills/quality-control/output.schema.json"
+    },
+    "zod/adjudication/AdjudicationAssetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/adjudication/AdjudicationAssetSchema.schema.json"
+    },
+    "zod/adjudication/AdjudicationOutcomeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/adjudication/AdjudicationOutcomeSchema.schema.json"
+    },
+    "zod/adjudication/AdjudicationRequestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/adjudication/AdjudicationRequestSchema.schema.json"
+    },
+    "zod/adjudication/JudgementCodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/adjudication/JudgementCodeSchema.schema.json"
+    },
+    "zod/catalogue/BitstreamSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/catalogue/BitstreamSchema.schema.json"
+    },
+    "zod/catalogue/CatalogueNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/catalogue/CatalogueNodeSchema.schema.json"
+    },
+    "zod/catalogue/CatalogueSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/catalogue/CatalogueSchema.schema.json"
+    },
+    "zod/catalogue/HandleSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/catalogue/HandleSchema.schema.json"
+    },
+    "zod/catalogue/MaskedRegionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/catalogue/MaskedRegionSchema.schema.json"
+    },
+    "zod/changeset/BlockAtSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/changeset/BlockAtSchema.schema.json"
+    },
+    "zod/changeset/BlockChangeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/changeset/BlockChangeSchema.schema.json"
+    },
+    "zod/changeset/BlockSideTextSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/changeset/BlockSideTextSchema.schema.json"
+    },
+    "zod/changeset/ChangeSetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/changeset/ChangeSetSchema.schema.json"
+    },
+    "zod/changeset/ChangeSetTextSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/changeset/ChangeSetTextSchema.schema.json"
+    },
+    "zod/changeset/RefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/changeset/RefSchema.schema.json"
+    },
+    "zod/dublin-core/DcFieldSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/dublin-core/DcFieldSchema.schema.json"
+    },
+    "zod/dublin-core/DcValueSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/dublin-core/DcValueSchema.schema.json"
+    },
+    "zod/dublin-core/DublinCoreRecordSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/dublin-core/DublinCoreRecordSchema.schema.json"
+    },
+    "zod/glossary/GlossarySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/glossary/GlossarySchema.schema.json"
+    },
+    "zod/glossary/LangTextSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/glossary/LangTextSchema.schema.json"
+    },
+    "zod/glossary/TermSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/glossary/TermSchema.schema.json"
+    },
+    "zod/kg-materialization/KgDecisionsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/kg-materialization/KgDecisionsSchema.schema.json"
+    },
+    "zod/kg-materialization/KgFileRecordSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/kg-materialization/KgFileRecordSchema.schema.json"
+    },
+    "zod/kg-materialization/KgMaterializationRecordSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/kg-materialization/KgMaterializationRecordSchema.schema.json"
+    },
+    "zod/kg-materialization/KgNodesRecordSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/kg-materialization/KgNodesRecordSchema.schema.json"
+    },
+    "zod/kg-materialization/KgPartSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/kg-materialization/KgPartSchema.schema.json"
+    },
+    "zod/kg-materialization/KgRefusalSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/kg-materialization/KgRefusalSchema.schema.json"
+    },
+    "zod/materialization/CompiledInputsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/materialization/CompiledInputsSchema.schema.json"
+    },
+    "zod/materialization/FixitySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/materialization/FixitySchema.schema.json"
+    },
+    "zod/materialization/GateSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/materialization/GateSchema.schema.json"
+    },
+    "zod/materialization/GatesSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/materialization/GatesSchema.schema.json"
+    },
+    "zod/materialization/MaterializationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/materialization/MaterializationSchema.schema.json"
+    },
+    "zod/materialization/SignatureSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/materialization/SignatureSchema.schema.json"
+    },
+    "zod/materialization/SourceProvenanceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/materialization/SourceProvenanceSchema.schema.json"
+    },
+    "zod/public-comment/AnchorSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/public-comment/AnchorSchema.schema.json"
+    },
+    "zod/public-comment/ChangeSetHistorySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/public-comment/ChangeSetHistorySchema.schema.json"
+    },
+    "zod/public-comment/ChangeSetRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/public-comment/ChangeSetRefSchema.schema.json"
+    },
+    "zod/public-comment/ChangeSetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/public-comment/ChangeSetSchema.schema.json"
+    },
+    "zod/public-comment/CitationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/public-comment/CitationSchema.schema.json"
+    },
+    "zod/public-comment/DecisionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/public-comment/DecisionSchema.schema.json"
+    },
+    "zod/public-comment/HistoryEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/public-comment/HistoryEntrySchema.schema.json"
+    },
+    "zod/public-comment/PublicCommentSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/public-comment/PublicCommentSchema.schema.json"
+    },
+    "zod/public-comment/PublicFieldsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/public-comment/PublicFieldsSchema.schema.json"
+    },
+    "zod/public-comment/RecommendationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/public-comment/RecommendationSchema.schema.json"
+    },
+    "zod/public-comment/ReviewerSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/public-comment/ReviewerSchema.schema.json"
+    },
+    "zod/public-comment/SourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/public-comment/SourceSchema.schema.json"
+    },
+    "zod/review-comment/ReviewCommentSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/review-comment/ReviewCommentSchema.schema.json"
+    },
+    "zod/review-comment/ReviewCommentsFileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/review-comment/ReviewCommentsFileSchema.schema.json"
+    },
+    "zod/review-comment/ReviewFieldsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/review-comment/ReviewFieldsSchema.schema.json"
+    },
+    "zod/review-verdict/ReviewVerdictSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/review-verdict/ReviewVerdictSchema.schema.json"
+    }
+  },
+  "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/laughing-ramanujan-uripip",
+    "sha": "068375632f8a833eb3ca1b13da0ce27b1b5b70dc",
+    "pr": "2261/merge",
+    "run": "37470280150"
+  }
+}
