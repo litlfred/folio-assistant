@@ -116,9 +116,18 @@ describe("a record set against the check's current answer", () => {
 });
 
 describe("check:term-mapping reads the files beside the schemes", () => {
+  // The glossary is found through its DECLARATION, as in a real checkout: an
+  // instance that declares a `glossary` graph. The fixture used to plant files
+  // at the literal `folio-assistant-core/glossary`, the upward path the reader
+  // no longer follows (bean `0r7u` step 0).
+  const GLOSSARY = join("acme", "glossary");
   const root = () => {
     const r = mkdtempSync(join(tmpdir(), "adj-"));
-    mkdirSync(join(r, "folio-assistant-core", "glossary"), { recursive: true });
+    mkdirSync(join(r, GLOSSARY), { recursive: true });
+    writeFileSync(
+      join(r, "acme", "acme.json"),
+      JSON.stringify({ name: "acme", version: "0.1.0", directories: [{ id: "glossary", path: "glossary/", graphTypologies: ["glossary"] }] }),
+    );
     return r;
   };
 
@@ -129,7 +138,7 @@ describe("check:term-mapping reads the files beside the schemes", () => {
   test("an invalid record is reported with its path", () => {
     const r = root();
     writeFileSync(
-      join(r, "folio-assistant-core", "glossary", "x.term-adjudications.json"),
+      join(r, GLOSSARY, "x.term-adjudications.json"),
       JSON.stringify({ $schema: TERM_ADJUDICATIONS_SCHEMA_ID, adjudications: [{ ...wrong, reason: "" }] }),
     );
     const got = adjudications(r, []);
@@ -140,7 +149,7 @@ describe("check:term-mapping reads the files beside the schemes", () => {
   test("a valid record is set against the mappings this run produced", () => {
     const r = root();
     writeFileSync(
-      join(r, "folio-assistant-core", "glossary", "x.term-adjudications.json"),
+      join(r, GLOSSARY, "x.term-adjudications.json"),
       JSON.stringify({ $schema: TERM_ADJUDICATIONS_SCHEMA_ID, adjudications: [wrong] }),
     );
     const got = adjudications(r, [

@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-06T06:42:34Z
-updated_at: 2026-10-06T07:07:13Z
+updated_at: 2026-10-06T07:15:08Z
 parent: folio-assistant-7x5n
 ---
 
@@ -58,3 +58,12 @@ Generated files conflict across lanes by design; each lane merges main and runs 
    - Whatever must name every layer belongs to the top-level folio-assistant instance, which may name any layer.
 2. **Stale measured lists:** `qa-refresh` hardcodes `[cat-harness, smart-base, who-iris]` as the libraries that need an LSI index. Asked today, `lsi.needOf` also flags smart-trust and smart-immunizations, so the literal is out of date. Proposal: derive the writers from `proseGraphs()` + `needOf()` at run time (cost measured at about 2.9 s).
 3. **Content-specific:** `translation-tools.ts` points at a core BPMN; `vocabulary` maintains `folio-assistant-core/ns.jsonld`; `schemas/jsonld.ts` holds core's (and sci's) vocabulary. These follow the contribution pattern: each harness contributes its own entries (as `riit` and `dmx1` did for kinds).
+
+## Owner ruling 2026-10-06: repo-wide orchestration — EACH INSTANCE DECLARES ITS OWN TASKS
+
+Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze with three options (recommended first): each instance declares its own tasks; move the orchestration tables to the top-level instance; a hybrid. **The owner chose "Each instance declares its own tasks".**
+
+- Each instance declares its own tasks in its declaration: the IO class (`task-io`), any repair hook (`merge-train`), CI gate steps (`gates`), and scan roots (`check-secret-leaks`).
+- cat-harness-tools aggregates whatever instances are present through `instanceRootsIn`, so no lower layer names a higher one. The same code runs in the monorepo, in a standalone repo, and in the parent.
+- This is the pattern `riit`/`dmx1` used for block kinds and graph typologies.
+- Built after G's and H's content-split moves, as its own PR.
