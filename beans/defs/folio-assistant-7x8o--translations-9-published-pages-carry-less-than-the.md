@@ -5,10 +5,8 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T08:57:09Z
-updated_at: 2026-09-26T13:22:34Z
+updated_at: 2026-10-06T19:40:00Z
 parent: folio-assistant-bzyu
-blocked_by:
-    - folio-assistant-lvk9
 ---
 
 Found while deriving `.po` catalogues for #206 (bean `tbdg`). Measured
@@ -131,8 +129,8 @@ so the `zh` question may survive in smaller form — but it is now **4 of 8 rath
 than 5 of 5**, and it is not established as a content problem at all until `lvk9`
 lands and the remainder is re-measured.
 
-**Blocked on `lvk9`**, and no translation should be corrected or re-translated
-before it: on the evidence so far, most of what looked like missing content is the
+**Not blocked on `lvk9`** since 2026-10-06, when it completed (withdrawal note at the end). While it
+was open, no translation was to be corrected or re-translated before it: on the evidence so far, most of what looked like missing content is the
 extractor's wrap sensitivity, and re-translating against it would change good
 translations to match a defect.
 
@@ -201,3 +199,9 @@ Whether `zh/getting-started` is corrected, re-translated, or recorded — #206
 reserves translation adjudication to a human, and an agent re-translating a page to
 clear the last gate finding would manufacture exactly the sign-off the issue
 protects. **Blocked on the owner**, with one pair named rather than nine.
+
+## 2026-10-06 — blocker `lvk9` withdrawn: it landed
+
+`lvk9` was closed `completed` on 2026-10-06 (7x5n bookkeeping, PR #2317), on re-run evidence: `bun run translation:obsolete:check` exits 0 on main. Its fix is the list-item and blockquote extraction plus the 41 obsoleted msgids. The `blocked_by` edge is removed because it can never lift on its own (`check:bean-bodies` dead-blocker).
+
+**Nothing else changes.** The section above ("down to ONE pair") already records the re-measurement that `lvk9` was blocking, and what remains is **blocked on the owner's** call on that one pair, not on a bean. Status stays `todo`.
