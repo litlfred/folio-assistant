@@ -47,3 +47,27 @@ Local feature branch `claude/test-bcg-schedule-c65n` of litlfred/smart-immunizat
 `fsh-cone.ts` now blanks a declaration's `Title:` / `Description:` value (single-line or `"""` multi-line) before scanning for edges. On smart-immunizations: 3329 → 3203 edges, **126 removed, 0 added**, every one `<Table>VS -> <Table>` (a value set pointing at the decision table its Description names). The BCG schedule's forward cone is now the PlanDefinition alone (was 2), and the checkout is 16 files (was 19). The test in `fsh-cone.test.ts` fails without the fix and passes with it.
 
 Not changed, on purpose: prose inside `insert` arguments and `* ^description = …` rules is still scanned, because an argument may be substituted into a canonical-valued rule.
+
+## Round 2 (2026-10-06): an FSH source change carried through to a rendered page
+
+Owner: "do a test that involves fsh source change". Same FSH-only commit (`a4b4cc4`, IMMZD18SBCG trigger text) against `37f6f24`.
+
+**How it was compiled without packages.fhir.org.** The fork's `seed-fhir-cache-from-npm.py` installed 4 of 13 packages from trust anchors (hl7.fhir.r4.core 4.0.1 from npm `@hl7`, smart.who.int.base 0.2.0, hl7.fhir.uv.cpg 2.0.0, hl7.fhir.us.cqfmeasures 5.0.0). The other 9 (cql, crmi, sdc, extensions, terminology) are on no reachable source. SUSHI 3.20.1 compiled 721 resources with 15 errors, all from those missing packages (5 load failures, 10 SDC Questionnaires); IMMZD18SBCG had none. **No IG Publisher run**, so this is a SUSHI-only stand-in for the Publisher AST: a local shim wrote `output-ast/` in the `ig-ast/v1` layout, labelled `"ig-publisher": null`, with fsh-cone edges as `dependencies.json` (origin says so). The real pipeline then ran on it: `ig-ast.ts validity` / `diff`, `ast-to-artifact-index.ts`, `gen-ig-pages.ts --compiled-data`, jekyll.
+
+| step | time |
+|---|---|
+| SUSHI, whole IG (not incremental) | 161 s before, 170 s after; includes timed-out registry attempts |
+| shim → AST | 1.0 s |
+| `ig-ast.ts diff` | 0.23 s: **1 changed, 721 unchanged**, matching the fixed cone (PlanDefinition only) |
+| artefact index + 730 pages | 1.0 s |
+| jekyll, all 2324 files (IG pages + AST pages + resource JSON) | 12.0 s; no-op incremental 3.0 s |
+| **jekyll incremental, timing independent of restamping (owner)**: only the changed resource JSON | **2.8 s** (+1.4 s for a checksum copy over 2324 files) |
+| jekyll incremental as the pipeline is today | 7.0 s, because 723 pages are rewritten |
+
+The rendered page loads the compiled resource in the browser (`ast-resource.js`), so the FSH change shows on `ast/artifact/PlanDefinition-IMMZD18SBCG.html` after re-rendering and nowhere else. Screenshots were checked in Chromium: loaded state, no page errors.
+
+## Findings, round 2
+
+6. **`ast-to-artifact-index.ts` crashed on any resource whose `name` is not a string**: a Patient's `name` is HumanName[]. Fixed in this PR, with a test that fails without the fix.
+7. **Restamping (design question, not fixed):** every artefact page prints the source commit ("compiled copy of `<sha>`"), so any commit rewrites all 722 artefact pages even when one resource changed. Jekyll incremental then does 7.0 s of work instead of 2.8 s. Moving the stamp into one shared data file (or stamping each page with its resource's own `builtAt`) would make the re-render proportional to the cone. Owner to decide.
+8. The old cone's false edge was confirmed by compiling: the ValueSet it listed as a dependent did not change.
