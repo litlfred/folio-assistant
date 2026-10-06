@@ -1,0 +1,59 @@
+{
+  "$ref": "#/definitions/KgPart",
+  "definitions": {
+    "KgPart": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "subgraph"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "id",
+            "path"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "asset"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "path"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-search-exclude-marker/folio-assistant-core/schema/zod/kg-materialization/KgPartSchema.schema.json",
+  "title": "KgPartSchema",
+  "description": "Generated from `KgPartSchema` in schemas/kg-materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/search-exclude-marker",
+    "sha": "1a9f5023c389ce39e53a12611d037d8bab2b6b3e",
+    "pr": "2234/merge",
+    "run": "37390748071"
+  }
+}
