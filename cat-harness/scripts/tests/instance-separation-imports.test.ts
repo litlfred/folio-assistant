@@ -115,10 +115,13 @@ const PLATFORM_LAYERS = new Set([
  * entry when it reaches zero. who-iris was 18 on 2026-10-04 and is 19 as
  * re-measured when this guard reached `main` on 2026-10-05: `main` added
  * `gen-iris-pages.ts → cat-harness/scripts/pdf-viewer.ts` before the guard
- * was there to refuse it. From here it may only fall.
+ * was there to refuse it. From here it may only fall. It fell to 7 on
+ * 2026-10-05 (issue #2228, bean `lffo`): `who-iris/platform.ts` now carries
+ * every climb `gen-iris-pages.ts` made, and the seven left are the theme
+ * module and three tests.
  */
 const NOT_YET_SHIMMED: Record<string, number> = {
-  "who-iris": 19,
+  "who-iris": 7,
 };
 
 // Every subject here is ANOTHER instance's code (smart-base, smart-trust,

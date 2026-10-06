@@ -248,7 +248,9 @@ And what it does **not** entitle, each with what it costs:
   `check:*` scripts all passed and CI went red twice — first on
   `check:partition` (a new script must be classified in
   `scripts/partition/instance-rules.ts`), then on `no check script is unrun` (a
-  new `check:*` needs a `SCRIPT_EXEMPTIONS` entry when no workflow runs it).
+  new `check:*` needs a `SCRIPT_EXEMPTIONS` entry when no workflow runs it —
+  or, for a script owned by an instance above cat-harness, a
+  `gateExemptions.scripts` row in that instance's `<instance>.json`, bean `0r7u`).
   Neither is visible to any of the three. `bun run gates` derives its list from
   the workflow, which is why it cannot drift from what CI runs.
 - **"Nothing is failing, so nothing is wrong."** A *conflicted* head produces no
@@ -330,7 +332,10 @@ current if the fork point, the branch tip or the base tip was current.
 `merge:main -- --full-regen` asks every pair. Separately, every pass after
 the first asks only the pairs whose inputs the previous pass actually changed
 (measured from `git`, not declared). Both cuts are only as good as the
-`task-io.ts` declarations. The whole-tree pairs (`kg:audit:all:check`,
+`task-io.ts` declarations — and, for a task owned by an instance above
+cat-harness, that instance's own `taskIo` block in its `<instance>.json`
+(bean `0r7u`). `task-io.ts` collects them and **refuses a task declared
+twice**, so declare a row where its script lives, never in both places. The whole-tree pairs (`kg:audit:all:check`,
 `skill:register:check`, `kg:audit:check`) still run after every merge.
 
 ### Submodules: check the pointers BEFORE you stage the merge (STRICT)

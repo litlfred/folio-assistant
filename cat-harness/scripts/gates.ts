@@ -48,10 +48,12 @@
  *   bun run gates --all        # plus the jobs that need a browser
  *   bun run gates --list       # print them and exit, running nothing
  *   bun run gates --jobs 3     # pool size for read-only gates (default: CPUs - 1)
+ *   bun run gates --no-cache   # ask every gate; neither read nor update the input-hash cache
  *
  * Gates whose script declares `outputs: []` in `task-io.ts` run in a worker
  * pool, output printed in workflow order; every other gate runs alone, as it
- * always did (bean `xpcu`).
+ * always did (bean `xpcu`). A gate whose declared inputs are unchanged since it
+ * last passed is SKIPPED and reported as such (bean `f017`, {@link GateSkipper}).
  *
  * @module scripts/gates
  */
@@ -59,7 +61,8 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { join, resolve } from "node:path";
 
-import { repoRootFor } from "../schemas/cat-harness.js";
+import { checkoutRootFor, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
+import { instanceRootsIn } from "../schemas/instance-roots.ts";
 import { parse } from "yaml";
 
 import { distortions } from "./check-environment.ts";
@@ -73,7 +76,22 @@ import {
   type GateMutation,
 } from "./gate-tree-guard.js";
 import { jobsFromArgv, orderedEmitter, runCaptured, runPool } from "./task-pool.ts";
-import { gateReadsOnly } from "./task-io.ts";
+import { gateReadsOnly, pairIO } from "./task-io.ts";
+import {
+  FileDigests,
+  cacheEnabled,
+  checkFingerprint,
+  decideCheck,
+  loadCache,
+  qaBaselineIdentity,
+  recordCheckRun,
+  saveCache,
+  type BaselineResolver,
+  type Fingerprint,
+  type HashCache,
+  type PairIO,
+  type SkipDecision,
+} from "./input-hash.ts";
 
 // The REPOSITORY root. `GATES_WORKFLOW` is `.github/workflows/…`, which
 // belongs to the repository rather than to this instance, and the gates
@@ -161,6 +179,22 @@ export const WORKFLOW_DIR = join(".github", "workflows");
  * and `workflow-policy.json` require one: an exemption nobody can review is
  * one somebody added to get to green.
  */
+/**
+ * Every present instance's declared `gateExemptions`. Read from the CHECKOUT
+ * (`checkoutRootFor`), not `ROOT`: `repoRootFor` climbs out of a standalone
+ * checkout whose root IS cat-harness (bean `g43f`).
+ */
+function declaredExemptions(root: string = checkoutRootFor(resolve(import.meta.dir, ".."))): { steps: StepExemption[]; scripts: ScriptExemption[] } {
+  const steps: StepExemption[] = [];
+  const scripts: ScriptExemption[] = [];
+  for (const instance of instanceRootsIn(root)) {
+    const g = readDeclaration(instance)?.gateExemptions;
+    steps.push(...(g?.steps ?? []));
+    scripts.push(...(g?.scripts ?? []));
+  }
+  return { steps, scripts };
+}
+
 export interface StepExemption {
   /** Matched against the command as a substring — a script path, usually. */
   match: string;
@@ -177,7 +211,7 @@ export interface StepExemption {
  */
 export const PRECONDITION_STEPS: readonly string[] = ["bun run qa:working-copy"];
 
-export const STEP_EXEMPTIONS: StepExemption[] = [
+const OWN_STEP_EXEMPTIONS: StepExemption[] = [
   {
     // Bean `9c7h`: fsh-guts is kept on `cat/cat-harness/fsh-guts`, so every
     // job that reads the repository mounts it after `bun install`. A SETUP
@@ -204,16 +238,6 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "kept on a branch; check:derived-from and each writer's own :check (fsh-guts:viz:check) are its verdict",
   },
   {
-    // Bean `wnhh`: each IG whose repository carries a seeded `fhir-ast/*`
-    // cache is rendered from it into the preview at `/<instance>/ast/`. The
-    // lister asks each IG repository over the network (`git ls-remote`).
-    match: "fhir-harness/scripts/stage-ast-sites.ts",
-    kind: "ci-only",
-    reason:
-      "a BUILD step, not a check: it lists the IGs whose repositories carry an AST cache by asking " +
-      "each repository over the network; best effort (continue-on-error), its output only feeds the preview",
-  },
-  {
     // Bean `q8ar`. The deploy-time BUILD of each SQLite slice (beans, todos,
     // library, kg; one line per slice) and its payloads, written straight into
     // `./_site`. None is committed, because their sources move on most merges.
@@ -238,29 +262,6 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason:
       "a DEPLOY build into ./_site over the exports only the deploy writes, with no committed copy to check; " +
       "it exits 1 rather than publish a shorter map, and root-index.test.ts pins both the map and that refusal",
-  },
-  {
-    // Bean `bamf`: each IG's own just-the-docs site, staged from the source
-    // repository its menu.json records. A BUILD step: it clones and copies,
-    // and has no verdict a contributor could run without the network and a
-    // built `_site/`. The staging logic is asserted by
-    // stage-ig-sites.test.ts and build-ig-site.test.ts in `bun test`.
-    match: "fhir-harness/scripts/stage-ig-sites.ts",
-    kind: "ci-only",
-    reason:
-      "a BUILD step, not a check: it clones each IG's recorded source and stages a Jekyll source; " +
-      "its logic is covered by stage-ig-sites.test.ts and build-ig-site.test.ts in `bun test`",
-  },
-  {
-    // Its post-build sibling: repairs repeated ids in a BUILT IG site and
-    // reports each. Writes into `./_site`, which only the staging job has;
-    // `dedupeIds` is covered by build-ig-site.test.ts, and the result is
-    // judged by `check:duplicate-ids` in the same job.
-    match: "fhir-harness/scripts/build-ig-site.ts --dedupe-ids",
-    kind: "ci-only",
-    reason:
-      "a DEPLOY step: it rewrites ids in ./_site, which only the staging job produces; dedupeIds is " +
-      "covered by build-ig-site.test.ts, and check:duplicate-ids judges the result",
   },
   {
     // Bean `oi1y`. Rails the pages Jekyll copies through verbatim — wireframe
@@ -899,6 +900,18 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
   },
 ];
 
+/**
+ * {@link OWN_STEP_EXEMPTIONS} plus each present instance's declared
+ * `gateExemptions.steps`. An instance above this layer declares the steps of
+ * its own that CI runs and the gate set does not (bean `0r7u`): naming them
+ * here broke this layer standalone, where those steps do not exist and the
+ * stale-exemption test would refuse them.
+ */
+export const STEP_EXEMPTIONS: StepExemption[] = [
+  ...OWN_STEP_EXEMPTIONS,
+  ...declaredExemptions().steps,
+];
+
 /** The exemption covering this command, if any. */
 export function exemptionFor(command: string): StepExemption | undefined {
   return STEP_EXEMPTIONS.find((e) => command.includes(e.match));
@@ -1233,7 +1246,7 @@ export interface ScriptExemption {
  * a place a test can compare against the actual script list — which is the
  * whole difference, since the comment silently covered six of nine.
  */
-export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
+const OWN_SCRIPT_EXEMPTIONS: ScriptExemption[] = [
   {
     script: "skill:register:declarations:check",
     kind: "covered-by",
@@ -1335,18 +1348,6 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "covered-by",
     reason:
       "SUBSUMED by `check:reference-direction:check`, which CI runs with `--against main`: the same script with `--check`, which writes nothing and fails on a graded state that is NEW against the `qa-reports` baseline \u2014 above all A.10's `wrong-direction` family (owner Q-B 2026-10-01), one entry per file and per instance above it that the file names, so a new file naming ONE higher instance fails as well as one naming several, and a known file naming a further instance fails too; plus an unlisted multi-destination file, a `PENDING` entry newly no longer qualifying, an instance newly declaring no `needs`. The inherited backlog is not graded: a gate that refused every push until the backlog drained would be switched off. This plain form is kept as the WRITER of `cat-harness/test/results/reference-direction.qa-results.json` (`qa:refresh` runs it, and that copy is what the next `main` entry on `qa-reports` publishes), and it still exits 1 on the stale-`PENDING` and unlisted-multi-destination states \u2014 recording a state is not resolving it. Fix a finding by REWORDING in place (Q1), not by moving the file. Beans `1bvx`, `vzo5`, `zhg2`",
-  },
-  {
-    script: "ingest:ig-menu:check",
-    kind: "report",
-    reason:
-      "CI CANNOT OBTAIN ITS INPUT. It compares the committed `menu.json` against the IG's OWN `sushi-config.yaml`, which lives in the upstream source repository — not in this checkout, and not reachable from a runner: `worldhealthorganization.github.io:443` and `litlfred.github.io:443` both answer 403 CONNECT from this environment (measured 2026-09-23, and `wjfu` recorded the same denial on the 21st). Wired as a gate it would exercise nothing on every run. It is built so that CANNOT be mistaken for a pass: with no `--source` it exits **2**, printing `could not determine`, rather than the 0 a silent skip would give. What IS gated, on every run and without the network, is the committed menu's effect: `smart-trust:pages:check` regenerates the 5 left-hand-nav sections FROM `menu.json` and compares them byte for byte, and `check:kind-validators` parses the file against `folio-ig-menu/v1`. Run this one by hand after cloning the IG, or from `/prepare-merge`. Bean `0818`",
-  },
-  {
-    script: "ingest:ig-chrome:check",
-    kind: "report",
-    reason:
-      "CI CANNOT OBTAIN ITS INPUT, and here it needs THREE checkouts rather than one. It compares the committed `chrome.json` against the `fhir.template` chain the IG's `ig.ini` names — `fhir.base.template` and `who.template.root`, which are separate repositories (`HL7/ig-template-base`, `WorldHealthOrganization/smart-ig-template`) that this checkout does not contain and a runner cannot fetch. Same wall as `ingest:ig-menu:check`, one layer worse: an IG's appearance is declared in no file the IG owns. Built so a skip CANNOT be mistaken for a pass — with no `--ig`/`--layer` it exits **2**, printing `could not determine`, rather than the 0 a silent skip would give. What IS gated, on every run and without the network, is the committed chrome's EFFECT: `smart-trust:pages:check` regenerates all 681 pages from it and compares them byte for byte, and `check:kind-validators` parses the file against `folio-ig-chrome/v1`. Run this one by hand after cloning the IG and its templates, or from `/prepare-merge`. Bean `ajx9`",
   },
   {
     script: "check:session-staleness",
@@ -1469,17 +1470,17 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "runs the WHOLE gate set on this branch merged with the current base (bean `nytj`), so wiring it into the workflow the gate set is read from would run the gates inside the gates. In CI the same question is answered by the merge queue: `merge_group:` on the gating workflows tests exactly the commit that will land. `check:merged` is the agent's half, run from `/prepare-merge` before asking for a merge",
   },
   {
-    script: "ingest:ig:check",
-    kind: "covered-by",
-    reason:
-      "re-derives an IG's artefact index from its PUBLISHED OUTPUT, which this repository does not carry — smart-trust's `gh-pages` is 342,656 files, so no runner here can supply the subject. `check:artifact-index` is wired and covers the half that needs only the repository: that every committed index is a valid `folio-fhir-artifact-index/v1` document, with `count` agreeing with its array and no DAK overlay on an index declaring `dakApi: \"absent\"`. That is DELIBERATELY less than this check would catch — an index that validates can still be stale against an IG that has moved on — and the difference is stated rather than papered over. The script itself exits 2 (\"could not determine\") when the source is absent, never 0, so wiring it would redden CI over a missing clone rather than over a regression. Run it by hand, or from `/prepare-merge`, with the IG checkout as its argument",
-  },
-  {
     script: "health:check",
     kind: "covered-by",
     reason:
       "`health-check.yml` runs `test/health/run.ts` directly rather than through this script name — daily, and it commits its results",
   },
+];
+
+/** {@link OWN_SCRIPT_EXEMPTIONS} plus each present instance's declared `gateExemptions.scripts` (bean `0r7u`). */
+export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
+  ...OWN_SCRIPT_EXEMPTIONS,
+  ...declaredExemptions().scripts,
 ];
 
 /** Thrown when the script scan finds nothing — never reported as full coverage. */
@@ -1621,6 +1622,95 @@ async function runTee(cmd: string, args: string[]): Promise<{ code: number; outp
   };
   await Promise.all([pump(child.stdout, process.stdout), pump(child.stderr, process.stderr)]);
   return { code: await child.exited, output: chunks.join("") };
+}
+
+/**
+ * Skipping a gate whose inputs have not changed since it last passed — bean `f017`.
+ *
+ * ## Why gates may skip at all
+ *
+ * The merge cycle is `regen` then `gates`, on the same tree. `regen` has just
+ * asked every verify/write pair, and `gates` asks each of those checks again —
+ * and `skill:register:check` twice in one run, because two CI jobs run it.
+ * A check whose DECLARED inputs (`task-io.ts`) hash to what they were when it
+ * last passed cannot answer differently, so asking again buys nothing.
+ *
+ * ## What may be skipped, and what never is
+ *
+ * Only a gate that is exactly `bun run <script>` whose script declares
+ * `inputs`, and only when the input-hash cache holds a hash for THAT SCRIPT
+ * equal to its fingerprint now — recorded by a real run that exited 0 (by
+ * `gates`, or by `regen`'s check). Everything else runs: undeclared scripts,
+ * inputs that cannot be determined, a moved `--against` baseline, `CI`, or
+ * `--no-cache`. A skipped gate is reported as SKIPPED, by name and with its
+ * reason, and counted apart from the gates that passed — never as a pass.
+ *
+ * ## Recording
+ *
+ * A gate's hash is recorded only when it exited 0 AND its fingerprint was the
+ * same just before and just after it ran (`recordCheckRun`): a gate whose
+ * inputs moved while it read them — a writer, a person editing, the gate
+ * itself — records nothing.
+ *
+ * **The falsifier** is a script that reads something its declaration does not
+ * name; `task-io.ts` carries the rule (declare by reading, `{tracked}` for
+ * whole-tree walkers, nothing for environment, network or clock readers).
+ */
+export class GateSkipper {
+  private readonly touched = new Set<string>();
+  constructor(
+    private readonly root: string,
+    private readonly scripts: Readonly<Record<string, string>>,
+    /** `undefined`: the cache is off (`--no-cache`, `CI`) — nothing is skipped or recorded. */
+    readonly cache: HashCache | undefined,
+    private readonly baseline: BaselineResolver | undefined,
+    private readonly ioOf: (script: string) => PairIO | undefined = pairIO,
+  ) {}
+
+  /** The script a gate runs, when it is exactly one script that declares its inputs. */
+  scriptOf(command: string): string | undefined {
+    const m = /^bun run ([A-Za-z0-9:_-]+)\s*$/.exec(command.trim());
+    if (m === null) return undefined;
+    return this.ioOf(m[1]!)?.inputs === undefined ? undefined : m[1]!;
+  }
+
+  /** The script's fingerprint over `digests` (fresh per moment: before, after). */
+  fingerprint(script: string, digests: FileDigests): Fingerprint {
+    return checkFingerprint(this.root, this.scripts, script, this.ioOf(script), digests, this.baseline);
+  }
+
+  /** Whether to skip `command` now; `fp` is what to hand {@link GateSkipper.record} if it runs. */
+  decide(command: string, digests: FileDigests): (SkipDecision & { script: string; fp: Fingerprint }) | undefined {
+    if (this.cache === undefined) return undefined;
+    const script = this.scriptOf(command);
+    if (script === undefined) return undefined;
+    const fp = this.fingerprint(script, digests);
+    return { ...decideCheck(this.cache, script, fp), script, fp };
+  }
+
+  /** Record (or forget) one run, comparing the fingerprint before it with one after it. */
+  record(script: string, passed: boolean, before: Fingerprint, digestsAfter: FileDigests): void {
+    if (this.cache === undefined) return;
+    recordCheckRun(this.cache, script, passed, before, this.fingerprint(script, digestsAfter));
+    this.touched.add(script);
+  }
+
+  /**
+   * Write what this run learned, over whatever is on disk NOW — `regen` may
+   * have recorded since this run loaded the cache. Only scripts this run ran
+   * are touched; every other entry is left as it is on disk.
+   */
+  save(): void {
+    if (this.cache === undefined || this.touched.size === 0) return;
+    const disk = loadCache(this.root);
+    disk.checks ??= {};
+    for (const s of this.touched) {
+      const h = this.cache.checks?.[s];
+      if (h === undefined) delete disk.checks[s];
+      else disk.checks[s] = h;
+    }
+    saveCache(this.root, disk);
+  }
 }
 
 /** A run of consecutive gates: either all read-only (may share the pool) or one that runs alone. */
@@ -1871,29 +1961,69 @@ if (import.meta.main) {
   const failed: { gate: Gate; why: string[] }[] = [];
   const t0 = performance.now();
   const parallelCount = segments.filter((s) => s.parallel).reduce((n, s) => n + s.gates.length, 0);
+
+  // ── Input-hash skipping (bean `f017`) — see `GateSkipper` ──────────────
+  const useCache = cacheEnabled(process.argv, process.env);
+  const pkgScripts =
+    (JSON.parse(readFileSync(join(ROOT, "package.json"), "utf-8")) as { scripts?: Record<string, string> }).scripts ?? {};
+  const skipper = new GateSkipper(
+    ROOT,
+    pkgScripts,
+    useCache ? loadCache(ROOT) : undefined,
+    qaBaselineIdentity({ repoRoot: ROOT }),
+  );
+  const skippedGates: { gate: Gate; why: string }[] = [];
   console.log(
     `${jobs} worker(s): ${parallelCount} read-only gate(s) run in parallel, ` +
-      `${gates.length - parallelCount} one at a time (undeclared or writing)\n`,
+      `${gates.length - parallelCount} one at a time (undeclared or writing); ` +
+      `input-hash skip ${useCache ? "ON" : "OFF (--no-cache or CI)"}\n`,
   );
+  /** Decide each gate of a run-list now; the skipped ones are reported, the rest returned with their "before" fingerprints. */
+  const triage = (list: readonly Gate[]): { gate: Gate; script?: string; fp?: Fingerprint }[] => {
+    const digests = new FileDigests(ROOT);
+    const out: { gate: Gate; script?: string; fp?: Fingerprint }[] = [];
+    for (const g of list) {
+      const d = skipper.decide(g.command, digests);
+      if (d?.skip === true) {
+        process.stdout.write(`▸ ${g.command}   SKIPPED — ${d.why}\n`);
+        skippedGates.push({ gate: g, why: d.why });
+        continue;
+      }
+      out.push(d === undefined ? { gate: g } : { gate: g, script: d.script, fp: d.fp });
+    }
+    return out;
+  };
   for (const seg of segments) {
     if (!seg.parallel || jobs === 1) {
       for (const g of seg.gates) {
+        // One at a time, so a gate's "before" is taken after the gate ahead of
+        // it ran — the second `skill:register:check` sees the first's record.
+        const [t] = triage([g]);
+        if (t === undefined) continue;
         process.stdout.write(`▸ ${g.command}\n`);
         const [cmd, ...args] = g.command.split(/\s+/);
+        const started = performance.now();
         const r = await runTee(cmd!, args);
+        // Timed like the parallel lines, so a slow serial gate is visible in
+        // the log rather than inferred from the total.
+        process.stdout.write(`  ↳ ${((performance.now() - started) / 1000).toFixed(1)}s, exit ${r.code}: ${g.command}\n`);
         if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
+        if (t.script !== undefined && t.fp !== undefined) skipper.record(t.script, r.code === 0, t.fp, new FileDigests(ROOT));
         seen = snapshot(seen, g.command);
       }
       continue;
     }
+    const run = triage(seg.gates);
+    const codes: number[] = [];
     const emitter = orderedEmitter<{ code: number; output: string; ms: number }>((i, r) => {
-      const g = seg.gates[i]!;
+      const g = run[i]!.gate;
+      codes[i] = r.code;
       process.stdout.write(`▸ ${g.command}   (${(r.ms / 1000).toFixed(1)}s, parallel)\n`);
       process.stdout.write(r.output);
       if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
     });
     await runPool(
-      seg.gates.map((g) => ({
+      run.map(({ gate: g }) => ({
         id: g.command,
         outputs: [],
         run: () => runCaptured(g.command.split(/\s+/), ROOT),
@@ -1901,8 +2031,15 @@ if (import.meta.main) {
       jobs,
       (i, r) => emitter.push(i, r),
     );
-    seen = snapshot(seen, `one of the parallel read-only gates: ${seg.gates.map((g) => g.command).join(", ")}`);
+    // "After" for the whole batch: a gate's inputs moving under ANY member of
+    // it means its fingerprints disagree, and it records nothing.
+    const after = new FileDigests(ROOT);
+    run.forEach((t, i) => {
+      if (t.script !== undefined && t.fp !== undefined) skipper.record(t.script, codes[i] === 0, t.fp, after);
+    });
+    seen = snapshot(seen, `one of the parallel read-only gates: ${run.map((t) => t.gate.command).join(", ")}`);
   }
+  skipper.save();
   console.log(`\n(${((performance.now() - t0) / 1000).toFixed(0)}s wall for the gate run)`);
 
   /** Compare the tree with the last snapshot and attribute any change to `who`. */
@@ -1932,7 +2069,21 @@ if (import.meta.main) {
     // Every gate passed AND nothing moved underneath them. Only this pair earns
     // the clean line.
     if (mutations.length === 0) {
-      console.log(`✓ ${gates.length} gate(s) pass — the ${all ? "whole" : "fast"} set.`);
+      if (skippedGates.length === 0) {
+        console.log(`✓ ${gates.length} gate(s) pass — the ${all ? "whole" : "fast"} set.`);
+      } else {
+        // Never folded into the pass count (bean `f017`): a skipped gate was
+        // not asked. Its inputs hash to a run that passed, which is a
+        // different statement, and the reader is told which gates it covers.
+        console.log(
+          `✓ ${gates.length - skippedGates.length} gate(s) pass and ${skippedGates.length} were SKIPPED — ` +
+            `the ${all ? "whole" : "fast"} set.`,
+        );
+        console.log(
+          "  Skipped: inputs unchanged since each last passed (input-hash cache; `--no-cache` asks them):",
+        );
+        for (const { gate } of skippedGates) console.log(`    - ${gate.command}`);
+      }
       reportUnresolved(ROOT, { all });
       if (!all) console.log("  `bun run gates --all` adds the browser jobs before you push.");
       process.exit(0);
@@ -1954,6 +2105,9 @@ if (import.meta.main) {
     process.exit(1);
   }
   reportUnresolved(ROOT, { all });
+  if (skippedGates.length > 0) {
+    console.log(`  (${skippedGates.length} gate(s) SKIPPED — inputs unchanged since each last passed; \`--no-cache\` asks them)`);
+  }
   console.log(`✗ ${failed.length} of ${gates.length} failed:`);
   for (const { gate, why } of failed) {
     console.log(`  · ${gate.command}   (${gate.job} / ${gate.step})`);

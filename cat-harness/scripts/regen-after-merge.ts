@@ -98,7 +98,10 @@
  *   is not asked again — it cannot answer differently. A pair with no
  *   declaration, or whose inputs cannot be determined, is ALWAYS asked. The
  *   cache is local (`build/regen-cache/`, ignored by version control) and is
- *   off under `CI`, so CI asks every pair exactly as before.
+ *   off under `CI`, so CI asks every pair exactly as before. Each check that
+ *   RAN and passed in a settled run is also recorded on its own, which is
+ *   what lets the `gates` run that follows skip it — and a check `gates` saw
+ *   pass on these inputs is skipped here too (bean `f017`, `pairSkip`).
  * - **A worker pool** (`task-pool.ts`). A pair whose CHECK declares
  *   `outputs: []` (it only reads) is asked beside other such pairs. Every
  *   WRITER runs alone — no check reading and no other writer writing — and
@@ -108,8 +111,9 @@
  *
  * Why concurrency cannot change a verdict: a pass that ran a writer is always
  * followed by another, and the run is reported settled only after a pass in
- * which NO writer ran — so the final verdicts were all read from a tree no
- * writer was touching (bean `14ve`'s fixpoint does the work).
+ * which NO writer ran, or whose writers repaired nothing and left the tree
+ * measurably unchanged — so the final verdicts were all read from a tree no
+ * writer changed (bean `14ve`'s fixpoint does the work).
  *
  * ## Asking only what a change can have affected — bean `94zs`
  *
@@ -164,7 +168,9 @@ import { loadGates, type Gate } from "./gates.ts";
 import {
   FileDigests,
   cacheEnabled,
+  checkFingerprint,
   decide,
+  decideCheck,
   fingerprint,
   loadCache,
   qaBaselineIdentity,
@@ -184,7 +190,7 @@ import {
   type Affected,
 } from "./changed-paths.ts";
 import { ReadWriteGate, jobsFromArgv, orderedEmitter, runCaptured, runPool } from "./task-pool.ts";
-import { pairIO } from "./task-io.ts";
+import { TASK_IO, pairIO } from "./task-io.ts";
 import { foldable, settleCovered } from "./pair-cover.ts";
 import { repoRootFor } from "../schemas/cat-harness.ts";
 
@@ -231,7 +237,7 @@ export function writerFor(scripts: Record<string, string>, check: string): strin
  *   convention never offered them; `audit:coverage` rewrites the sidecar both
  *   compare against.
  */
-export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
+const OWN_WRITER_OVERRIDES: Readonly<Record<string, string>> = {
   "translate-bpmn:check": "translate-bpmn:extract",
   "audit:coverage:strict": "audit:coverage",
   "audit:coverage:require-all": "audit:coverage",
@@ -274,11 +280,27 @@ export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
   // single `regen` called the tree current and CI then went red (trains 2 and
   // 3, #1876, #1883). `check:l1-complete -- --check` was not a bare script,
   // so regen never saw it; it is now the named `check:l1-complete:check`,
-  // whose writer is `--write`. `smart-kg-l1`'s only writer took one
-  // `--entry` at a time; `--all` rewrites every entry `--check` examines.
+  // whose writer is `--write`. (Its sibling gate, which took one `--entry`
+  // at a time, is declared by its own instance under `taskIo` since bean
+  // `0r7u`.)
   "check:l1-complete:check": "l1-complete:write",
-  "smart-base:smart-kg-l1:check": "smart-base:smart-kg-l1:all",
 };
+
+/**
+ * {@link OWN_WRITER_OVERRIDES} plus each present instance's declared
+ * `taskIo[check].writer` (bean `0r7u`): a layer above declares the writer of
+ * its own check rather than this table naming it. A check given a writer in
+ * both places throws — two answers to one question.
+ */
+export const WRITER_OVERRIDES: Readonly<Record<string, string>> = (() => {
+  const out: Record<string, string> = { ...OWN_WRITER_OVERRIDES };
+  for (const [check, io] of Object.entries(TASK_IO)) {
+    if (io.writer === undefined) continue;
+    if (out[check] !== undefined) throw new Error(`the writer of "${check}" is declared twice — in regen-after-merge.ts and by its instance`);
+    out[check] = io.writer;
+  }
+  return out;
+})();
 
 /**
  * Verify/write pairs that are NOT gates but whose artefacts something gated
@@ -411,6 +433,12 @@ export interface Result {
    * coverer that decided a non-`current` outcome.
    */
   coveredBy?: string;
+  /**
+   * The check itself was NOT run this pass: its verdict was derived through
+   * `pair-cover.ts` (its residual, if any, ran in its place). Such a verdict
+   * records no check-level hash, because no run of the check stands behind it.
+   */
+  derived?: boolean;
 }
 
 /** One verify/write pair, with what it declares about its files (`task-io.ts`). */
@@ -514,7 +542,11 @@ export async function regenPass(
         ? decision?.why
         : `${decision?.why ?? "asked"}; verdict DERIVED from ${fold.residual ?? "no residual"} + ` +
           `${fold.covers.length} covering pair(s) (pair-cover.ts)`;
-    const done = (result: Result) => ({ result, why, ms: performance.now() - t0 });
+    const done = (result: Result) => ({
+      result: fold === undefined ? result : { ...result, derived: true },
+      why,
+      ms: performance.now() - t0,
+    });
     // A folded check runs its residual in its place, or nothing at all.
     const ask = fold === undefined ? check : fold.residual;
     if (ask === undefined) return done({ check, writer, outcome: "current" });
@@ -552,7 +584,8 @@ export async function regenPass(
 }
 
 /**
- * Passes until one runs NO writer, at most `maxPasses` — bean `14ve`.
+ * Passes until one runs NO writer — or a BARREN one, whose writers repaired
+ * nothing and measurably changed nothing — at most `maxPasses` — bean `14ve`.
  *
  * One pass asks each check once, in workflow order. When writer B's output is
  * an INPUT to check A and A comes first, A reads current before B runs, B then
@@ -620,6 +653,22 @@ export async function regenToFixpoint(
       settled = true;
       break;
     }
+    // A BARREN pass (bean `xpcu`, measured 2026-10-06): writers ran, but none
+    // repaired anything and — measured, not declared — the tree is exactly
+    // as it was before the pass. The next pass would read that same tree and
+    // run the same writers to the same effect, so this pass IS the fixed
+    // point. Without this a writer that exits non-zero (`writer-failed`)
+    // counted as "a writer ran" on every pass: measured, `fsh-guts:viz` took
+    // a run to the pass cap re-asking ~80-106 undeclared pairs per pass, then
+    // reported NOT SETTLED and recorded no hash at all. Only with the
+    // measurement: a change set that could not be read (`undefined`) settles
+    // nothing.
+    const repaired = results.some((r) => r.outcome === "regenerated");
+    if (lastChange !== undefined && lastChange.size === 0 && !repaired) {
+      opts.onBarren?.(passes, writerRan);
+      settled = true;
+      break;
+    }
   }
   return { results: pairs.map((p) => final.get(p.check)!), passes, settled };
 }
@@ -652,6 +701,8 @@ export interface FixpointOptions {
   };
   /** Called for each pair a pass does not ask, before the pass runs. */
   onNotAsked?: (pair: Pair, why: string, pass: number) => void;
+  /** Called when a pass settles as BARREN: its writers repaired nothing and changed nothing measured. */
+  onBarren?: (pass: number, writers: readonly string[]) => void;
 }
 
 /** Why a run exited as it did — one of these, never a bare number. */
@@ -896,6 +947,25 @@ export function cacheKey(pair: Pair): string {
   return `${pair.check} -> ${pair.writer ?? "(none)"}`;
 }
 
+/**
+ * Whether a pair may be skipped: its own record (check AND writer, at a green
+ * run), or failing that a record of its CHECK ALONE having passed on these
+ * inputs — written by `gates` or by an earlier regen (bean `f017`). A passing
+ * check is all a pair needs to be `current`, so either is enough; neither is
+ * consulted when the cache is off.
+ */
+export function pairSkip(
+  cache: HashCache | undefined,
+  pair: Pair,
+  fp: (pair: Pair) => ReturnType<typeof fingerprint>,
+  fpCheck: (check: string) => ReturnType<typeof fingerprint>,
+): SkipDecision {
+  const own = decide(cache, cacheKey(pair), fp(pair));
+  if (own.skip || cache === undefined) return own;
+  const alone = decideCheck(cache, pair.check, fpCheck(pair.check));
+  return alone.skip ? alone : own;
+}
+
 /** The npm scripts a pair runs, check first. */
 function scriptsOf(pair: Pair): string[] {
   return pair.writer === undefined ? [pair.check] : [pair.check, pair.writer];
@@ -907,6 +977,16 @@ function scriptsOf(pair: Pair): string[] {
  * still holds), only when the run SETTLED, and only where the fingerprint
  * could be computed. Everything else is dropped from the cache, so it is
  * asked next time.
+ *
+ * `fpCheck`, when given, also records the CHECK SCRIPT ALONE (bean `f017`) —
+ * the entry `gates` reads, so the gate run that follows a regen does not ask
+ * again what regen just asked on the same tree. Stricter than the pair entry,
+ * because `gates` will treat it as "this script passed on these inputs": it is
+ * recorded only for a check that was actually RUN and came back green in a
+ * settled run — never for a skipped pair (no run stands behind it now), an
+ * assumed one (`--changed`), or a derived one (`pair-cover.ts`: the check
+ * itself never ran). Those leave whatever a real run recorded, which still
+ * holds while its hash matches. A red or unsettled check's entry is dropped.
  */
 export function hashesToRecord(
   pairs: readonly Pair[],
@@ -914,8 +994,10 @@ export function hashesToRecord(
   settled: boolean,
   fp: (pair: Pair) => ReturnType<typeof fingerprint>,
   previous: HashCache,
+  fpCheck?: (check: string) => ReturnType<typeof fingerprint>,
 ): HashCache {
-  const next: HashCache = { version: previous.version, pairs: { ...previous.pairs } };
+  const next: HashCache = { version: previous.version, pairs: { ...previous.pairs }, checks: { ...previous.checks } };
+  const checks = next.checks!;
   pairs.forEach((pair, i) => {
     const key = cacheKey(pair);
     const r = results[i];
@@ -926,11 +1008,16 @@ export function hashesToRecord(
     const green = r !== undefined && (r.outcome === "current" || r.outcome === "regenerated");
     if (!settled || !green) {
       delete next.pairs[key];
+      if (fpCheck !== undefined && r?.derived !== true) delete checks[pair.check];
       return;
     }
     const f = fp(pair);
     if ("undetermined" in f) delete next.pairs[key];
     else next.pairs[key] = f.hash;
+    if (fpCheck === undefined || r.skipped === true || r.derived === true) return;
+    const c = fpCheck(pair.check);
+    if ("undetermined" in c) delete checks[pair.check];
+    else checks[pair.check] = c.hash;
   });
   return next;
 }
@@ -977,7 +1064,13 @@ if (import.meta.main) {
   // Resolved once per run: a baseline that moves DURING a run is the next run's input.
   const baseline = qaBaselineIdentity({ repoRoot });
   const fp = (pair: Pair) => fingerprint(repoRoot, scripts, scriptsOf(pair), pair.io, digests, baseline);
-  const skip = (pair: Pair): SkipDecision => decide(cache, cacheKey(pair), fp(pair));
+  const fpCheck = (check: string) =>
+    checkFingerprint(repoRoot, scripts, check, pairIO(check), digests, baseline);
+  // The pair's own record first; failing that, a record of the CHECK alone
+  // having passed on these inputs — written by `gates` or by an earlier regen
+  // (bean `f017`). Either way the check would answer exactly as it did then,
+  // and a passing check is all a pair needs to be `current`.
+  const skip = (pair: Pair): SkipDecision => pairSkip(cache, pair, fp, fpCheck);
 
   const checks = new Set(repairable.map((p) => p.check));
   const asyncRun = async (script: string): Promise<boolean> => {
@@ -1050,6 +1143,11 @@ if (import.meta.main) {
       firstPass,
       narrow,
       onNotAsked,
+      onBarren: (n, writers) =>
+        console.log(
+          `  pass ${n} was BARREN — its writer(s) (${writers.join(", ")}) repaired nothing and changed ` +
+            "nothing in the tree (measured), so the next pass would repeat it: settled here",
+        ),
       onPass: (n) => {
         digests = new FileDigests(repoRoot);
         if (explain) console.log(`  pass ${n}:`);
@@ -1069,7 +1167,12 @@ if (import.meta.main) {
   }
   if (cache !== undefined && !dryRun) {
     digests = new FileDigests(repoRoot);
-    saveCache(repoRoot, hashesToRecord(repairable, results, settled, fp, cache));
+    // Another process (`gates`) may have recorded checks since this run
+    // loaded the cache. Keep them: an entry names the inputs it passed on, so
+    // one recorded from a real run stays true whoever wrote it.
+    const onDisk = loadCache(repoRoot);
+    const base: HashCache = { ...cache, checks: { ...onDisk.checks, ...cache.checks } };
+    saveCache(repoRoot, hashesToRecord(repairable, results, settled, fp, base, fpCheck));
   }
   for (const r of results) {
     if (r.coveredBy !== undefined) {

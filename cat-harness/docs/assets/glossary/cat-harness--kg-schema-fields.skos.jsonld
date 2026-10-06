@@ -6227,6 +6227,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.gateexemptions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.gateExemptions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The CI steps and check scripts of THIS instance that the local gate set deliberately does not run, each with its reason — the rows `cat-harness/scripts/gates.ts` holds as `STEP_EXEMPTIONS` and `SCRIPT_EXEMPTIONS` for the harness's own. Same contract: a reason is required, a step `match` is a substring of the workflow command, a script name is matched exactly. Declared by the owner so the harness need not name a layer above itself (bean `0r7u` step 0)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.gateExemptions",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.glassstrip",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6607,6 +6626,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.taskio",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.taskIo"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What this instance's own package tasks read and write, keyed by task name — the same {@link ScriptIO}-shaped facts `cat-harness/scripts/task-io.ts` holds for the harness's own tasks: `outputs: []` (measured to write nothing, so it may run in the pool) and `inputs` (what can change the answer, so `regen` may skip it on an unchanged tree; `\"{tracked}\"` is the whole working tree). `because` keeps the measurement that justified it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.taskIo",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.topology",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6984,6 +7022,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.summary",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.taskio",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.taskIo"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What this instance's own package tasks read and write, keyed by task name — the same {@link ScriptIO}-shaped facts `cat-harness/scripts/task-io.ts` holds for the harness's own tasks: `outputs: []` (measured to write nothing, so it may run in the pool) and `inputs` (what can change the answer, so `regen` may skip it on an unchanged tree; `\"{tracked}\"` is the whole working tree). `because` keeps the measurement that justified it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.taskIo",
       "skos:note": "candidate"
     },
     {
@@ -25281,6 +25338,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.changedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.translationstatusschema.instances",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslationStatusSchema.instances"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every OTHER instance's declared `translation-sources` directory, each measured on its own (issue #2228). Optional: an index written before the field existed is still a valid index."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.instances",
       "skos:note": "candidate"
     },
     {

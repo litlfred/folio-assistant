@@ -107,6 +107,7 @@ import { dirname, isAbsolute, join, posix, relative, resolve, sep } from "path";
 import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
 import { instanceDirectories, declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
 import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js";
+import { foreignScopeFor, scopeNavbarRow } from "./lib/foreign-site-scope.ts";
 import { navMarkFields, type HarnessMark } from "./lib/harness-mark.js";
 import { graphTypologyRowDecor } from "./lib/graph-typology-nav.js";
 import { kindTitle } from "./lib/nav-label.js";
@@ -637,23 +638,21 @@ export function navbarRowData(built: string): unknown {
 }
 
 /**
- * The icon row's destinations, made absolute on the platform's site.
+ * The icon row on a FOLIO's site — its destinations scoped to that folio.
  *
  * The row's hrefs and folder paths are site-absolute (`/todos/`). On a FOLIO's
  * site the same path names the folio's own root, where none of them exists
  * (owner, 2026-10-05: "still missing navbar icons on upper left" on smart-ra).
- * `docs-ui.js`'s `withBase` leaves an absolute URL alone, so this holds
- * whatever base the script works out for itself.
+ * Re-basing them all onto the platform fixed the 404 and created the next
+ * defect (#2263, owner 2026-10-06: *"the beans and todos badges seems to be
+ * countts from folio-assistant and not litlfred/smart-trust"*): a beans icon
+ * on smart-trust's site opened the PLATFORM's work plan. So the row is scoped
+ * by the one rule `lib/foreign-site-scope.ts` states: a state graph the folio
+ * does not publish here gets no link and SAYS so, and a platform graph is
+ * re-based, absolute, onto the platform's site.
  */
-export function rebaseNavbarRow(row: unknown, platformBase: string): unknown {
-  if (!row || typeof row !== "object") return row;
-  const at = (v: unknown) => (typeof v === "string" && v.startsWith("/") ? `${platformBase}${v}` : v);
-  const r = row as { hrefs?: Record<string, unknown>; folders?: Array<Record<string, unknown>> };
-  return {
-    ...r,
-    ...(r.hrefs ? { hrefs: Object.fromEntries(Object.entries(r.hrefs).map(([k, v]) => [k, at(v)])) } : {}),
-    ...(Array.isArray(r.folders) ? { folders: r.folders.map((f) => ("path" in f ? { ...f, path: at(f.path) } : f)) } : {}),
-  };
+export function rebaseNavbarRow(row: unknown, platformBase: string, instance?: string): unknown {
+  return scopeNavbarRow(row, foreignScopeFor(REPO, { platformBase, ...(instance ? { instance } : {}) }));
 }
 
 /** The attribute marking the platform UI a foreign page loads, so a second pass adds none. */
@@ -1092,7 +1091,7 @@ export function railStandalonePages(
         ...(mark ? { mark } : {}),
         links,
         ...(harnesses ? { harnesses } : {}),
-        navbarRow: foreign ? rebaseNavbarRow(navbarRowData(built), foreign.platformBase) : navbarRowData(built),
+        navbarRow: foreign ? rebaseNavbarRow(navbarRowData(built), foreign.platformBase, foreign.instance) : navbarRowData(built),
         emitRailData: railDataWriter(siteAbs),
       });
       if (after === undefined) {
