@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T21:36:29Z
-updated_at: 2026-10-05T15:13:08Z
+updated_at: 2026-10-05T18:24:50Z
 parent: folio-assistant-whlc
 ---
 
@@ -113,3 +113,12 @@ Still open, so the item 1 box stays unticked: no instance publishes its own sche
 The export links to the index, and a gate checks that each instance publishes them.
 
 Which Zod exports are public: exactly the schema nodes the instance's own export already lists (schema-nodes.ts), so there is one answer, not two.
+
+
+
+## Schema follow-ups (2026-10-05, session_01BccmnVFbtRpKxM39kyVw9q, branch claude/4ak5-schema-followups)
+The owner chose all four:
+1. Foreign exports no longer list "schemas" as omitted; they link their schema index instead.
+2. Foreign skill nodes link their published I/O contracts (inputSchema/outputSchema).
+3. The host's cat-harness.jsonld gets conformsTo to its own schema.
+4. The Zod gate also sees re-exported *Schema consts.

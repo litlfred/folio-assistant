@@ -1,11 +1,11 @@
 ---
 # folio-assistant-82qs
 title: Locale selector back in the LHS navbar's top row
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T14:39:33Z
-updated_at: 2026-10-05T17:19:54Z
+updated_at: 2026-10-06T05:55:27Z
 parent: folio-assistant-9rq1
 ---
 
@@ -22,3 +22,6 @@ Measured 2026-10-05: a globe IN the row does not fit — eight controls open to 
 Owner 2026-10-05 (later): 'language globe with rest of icons (beans, todos, processes). drop the processes graph icon' then '1 2' to which icon to drop -> both processes and kg dropped. Row is now todos, beans, language, fsh-guts, launcher (+ bulb). New 'language' slot in NAVBAR_ICONS, FULL-only like launcher; line-1 mini hidden again.
 
 Owner, 2026-10-05 (later, after #2211 landed a globe in the glass band): 'Keep only the band globe' / 'i only want the content bar globe, not the LHS navbar'. Row language slot removed entirely (NAVBAR_ICONS back to 7, no GLOBE in navbar-row.js, no docs-ui hook). Row stays todos, beans, fsh-guts, launcher + bulb.
+
+## Summary of Changes — closed on evidence, 2026-10-06
+The Done-when boxes above were superseded by the owner's final ruling ('i only want the content bar globe, not the LHS navbar'). Measured on gh-pages build.json sha f4f5910 (built 2026-10-06T05:36Z), served from git and rendered in Chromium at 1280x800 and 390x844, session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92: the navbar row on the theme sidebar is Todos, Beans, fsh-guts, More actions, scheme, with NO language control. The language control is the content band's `.fa-page-lang-bar` globe, on both the landing page and /todos/.
