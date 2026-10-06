@@ -1821,6 +1821,13 @@ remark-audit <span class="fa-gloss-status">candidate, extracted</span>
 <p>Audit remarks for provable content. Every remark must interpret a mathematical statement that can be formalized in Lean. Detects dangling remarks (no <code>interprets</code> link), ambiguous domain terms, and missing formalization.</p>
 <p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/remark-audit.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/remark-audit.md</code></a></p>
 </dd>
+<dt id="cat-harness--kg-skills--remote-mount" data-fa-state="extracted" data-fa-gloss="">
+remote-mount <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: <code>remoteMounts</code> on the downstream and <code>mountDefaults</code> on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no <code>.deps/</code>, the transitive closure through <code>needs</code> and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/remote-mount.md"><code>cat-harness/skills/kg/kg-core/remote-mount.md</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--render-kg-to-cdn" data-fa-state="extracted" data-fa-gloss="">
 render-kg-to-cdn <span class="fa-gloss-status">candidate, extracted</span>
 </dt>

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: mount-subgraph\n"
-"POT-Creation-Date: 2026-10-05T17:56:36.765Z\n"
+"POT-Creation-Date: 2026-10-06T19:44:45.360Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -14,37 +14,42 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/kg/mount-subgraph.bpmn:51
+#: processes/kg/mount-subgraph.bpmn:52
 #. Diagram element documentation
 msgid "`declaredSubgraph(start, id)`: the declaring instance, the entry, and the resolved source with `declaredIn` saying which layer answered. Never read `source` off the declaration directly — the config override and the legacy `storage` field are folded in by the resolver and nowhere else. A contradiction (both `source` and `storage`; a `qa` subgraph keyed by tip) throws here, before anything is mounted."
 msgstr ""
 
-#: processes/kg/mount-subgraph.bpmn:76
+#: processes/kg/mount-subgraph.bpmn:77
 #. Diagram element documentation
 msgid "A `branch` source keyed by `tip`: `branch-store mount --id <dir-id>` writes the tip's files at the declared path, so every reader finds the directory where it always was; `push` splices edits back onto the tip, never forcing, and a same-file race is a conflict. The branch's NAME is the declaring directory's `storage` (or `source`) — a branch no declaration names is refused rather than guessed. A `commit`-keyed branch is read per commit through its own store (`qa-store`), not mounted."
 msgstr ""
 
-#: processes/kg/mount-subgraph.bpmn:67
+#: processes/kg/mount-subgraph.bpmn:68
 #. Diagram element documentation
 msgid "A `directory` source IS its declared path. Nothing is mounted; a write is an ordinary commit on the working branch, which is why `branch-store push` answers \"commit through git\" for it rather than pushing anything."
 msgstr ""
 
-#: processes/kg/mount-subgraph.bpmn:89
+#: processes/kg/mount-subgraph.bpmn:90
+#. Diagram element documentation
+msgid "A `remote` source (bean `0mpw`): another repository's tree at a full 40-character commit. `bun run mount:remote` lays it down at the declared path and locks its tree digest; it is never written back, because the bytes are somebody else's at somebody else's pin. Usually reached through `remoteMounts`, which expands a whole harness and its closure — `Process_MountDependency`."
+msgstr ""
+
+#: processes/kg/mount-subgraph.bpmn:102
 #. Diagram element documentation
 msgid "A kind added to the union (a graph database, say) before this diagram and the mount tool learn it. Refused with its own exit code — reading it as a directory would scan an empty path and report it clean, the `dh4f` defect."
 msgstr ""
 
-#: processes/kg/mount-subgraph.bpmn:48
+#: processes/kg/mount-subgraph.bpmn:49
 #. Diagram label
 msgid "A step needs a declared subgraph"
 msgstr ""
 
-#: processes/kg/mount-subgraph.bpmn:107
+#: processes/kg/mount-subgraph.bpmn:120
 #. Diagram label
 msgid "any other kind"
 msgstr ""
 
-#: processes/kg/mount-subgraph.bpmn:106
+#: processes/kg/mount-subgraph.bpmn:119
 #. Diagram label
 msgid "branch"
 msgstr ""
@@ -54,14 +59,14 @@ msgstr ""
 msgid "Build pipeline"
 msgstr ""
 
-#: processes/kg/mount-subgraph.bpmn:105
+#: processes/kg/mount-subgraph.bpmn:118
 #. Diagram label
 msgid "directory"
 msgstr ""
 
 #: processes/kg/mount-subgraph.bpmn:26
 #. Diagram element documentation
-msgid "Making a declared subgraph's content available at its declared path, whatever its content source. You are in this process whenever a step is about to read or write the contents of a declared subgraph — beans, todos, fsh-guts, or any directory a declaration names. The source is resolved once, by `declaredSubgraph` (`schemas/harness-config.ts`) through `resolveSubgraphSource` (`schemas/subgraph-source.ts`): the instance config's `subgraphSources` override by id, then the entry's `source`, then a legacy `storage`, then the `directory` default. The gateway is on the source KIND, and its flows are the only places the kinds differ. A `directory` subgraph is already where its path says, and writing it is an ordinary commit. A `branch` subgraph is mounted from the declared branch's tip into its path, and written back by splicing onto the tip without force. A kind with no flow here is refused."
+msgid "Making a declared subgraph's content available at its declared path, whatever its content source. You are in this process whenever a step is about to read or write the contents of a declared subgraph — beans, todos, fsh-guts, or any directory a declaration names. The source is resolved once, by `declaredSubgraph` (`schemas/harness-config.ts`) through `resolveSubgraphSource` (`schemas/subgraph-source.ts`): the instance config's `subgraphSources` override by id, then the entry's `source`, then a legacy `storage`, then the `directory` default. The gateway is on the source KIND, and its flows are the only places the kinds differ. A `directory` subgraph is already where its path says, and writing it is an ordinary commit. A `branch` subgraph is mounted from the declared branch's tip into its path, and written back by splicing onto the tip without force. A `remote` subgraph is another repository's tree at a pinned commit, laid down by `Process_MountDependency` and read-only here. A kind with no flow here is refused."
 msgstr ""
 
 #: processes/kg/mount-subgraph.bpmn:34
@@ -74,42 +79,52 @@ msgstr ""
 msgid "Mount a declared subgraph"
 msgstr ""
 
-#: processes/kg/mount-subgraph.bpmn:75
+#: processes/kg/mount-subgraph.bpmn:76
 #. Diagram label
 msgid "Mount the branch tip at the declared path"
 msgstr ""
 
-#: processes/kg/mount-subgraph.bpmn:88
+#: processes/kg/mount-subgraph.bpmn:89
 #. Diagram label
-msgid "Refuse: no flow for this source kind"
+msgid "Mount the remote tree at its pin"
 msgstr ""
 
 #: processes/kg/mount-subgraph.bpmn:101
 #. Diagram label
+msgid "Refuse: no flow for this source kind"
+msgstr ""
+
+#: processes/kg/mount-subgraph.bpmn:114
+#. Diagram label
 msgid "Refused, with the reason"
 msgstr ""
 
-#: processes/kg/mount-subgraph.bpmn:50
+#: processes/kg/mount-subgraph.bpmn:125
+#. Diagram label
+msgid "remote"
+msgstr ""
+
+#: processes/kg/mount-subgraph.bpmn:51
 #. Diagram label
 msgid "Resolve the subgraph's content source"
 msgstr ""
 
-#: processes/kg/mount-subgraph.bpmn:100
+#: processes/kg/mount-subgraph.bpmn:113
 #. Diagram label
 msgid "Subgraph content at its declared path"
 msgstr ""
 
-#: processes/kg/mount-subgraph.bpmn:63
+#: processes/kg/mount-subgraph.bpmn:64
 #. Diagram element documentation
-msgid "The resolved source's `kind`: `directory`, `branch`, or a kind this diagram has no flow for."
+msgid "The resolved source's `kind`: `directory`, `branch`, `remote`, or a kind this diagram has no flow for."
 msgstr ""
 
-#: processes/kg/mount-subgraph.bpmn:66
+#: processes/kg/mount-subgraph.bpmn:67
 #. Diagram label
 msgid "Use the checkout path in place"
 msgstr ""
 
-#: processes/kg/mount-subgraph.bpmn:62
+#: processes/kg/mount-subgraph.bpmn:63
 #. Diagram label
 msgid "Which source kind?"
 msgstr ""

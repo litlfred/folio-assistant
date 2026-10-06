@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/f-l/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1902 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1908 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 417 terms and is 237 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 424 terms and is 241 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2195</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2195</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2201</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2201</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">417</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">424</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a></nav>
 
@@ -329,7 +329,7 @@ FolioAssistantDependency.derivedFromNeeds <span class="fa-gloss-status">candidat
 FolioAssistantDependency.git <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Git clone URL for the dependency. Used when <code>path</code> is absent or the directory does not exist. The agent should clone to a deterministic location (e.g. <code>.deps/&lt;name&gt;/</code>).</p>
+<p>Git clone URL for the dependency. Used when <code>path</code> is absent or the directory does not exist. Not cloned into <code>.deps/</code> (owner, 2026-10-06): a remote dependency is a REMOTE MOUNT — <code>remoteMounts</code> on the declaration, laid down by <code>bun run mount:remote</code> (bean <code>0mpw</code>).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/harness-config.ts"><code>cat-harness/schemas/harness-config.ts#FolioAssistantDependency.git</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--harness-config.folioassistantdependency.id" data-fa-state="extracted" data-fa-gloss="">
@@ -2826,6 +2826,55 @@ LocalTermSchema.reason <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Why the authority's concept does not serve, so the next reader need not re-derive it.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/term-adjudication.ts"><code>cat-harness/schemas/term-adjudication.ts#LocalTermSchema.reason</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--remote-mount.lockeddirectoryschema.path" data-fa-state="extracted" data-fa-gloss="">
+LockedDirectorySchema.path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Relative to the downstream instance's root, no trailing slash.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/remote-mount.ts"><code>cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.path</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--remote-mount.lockeddirectoryschema.treedigest" data-fa-state="extracted" data-fa-gloss="">
+LockedDirectorySchema.treeDigest <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>SHA-256 over the sorted <code>&lt;sha256&gt; &lt;file&gt;</code> listing — <code>treeDigest</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/remote-mount.ts"><code>cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.treeDigest</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--remote-mount.lockeddirectoryschema.upstreampath" data-fa-state="extracted" data-fa-gloss="">
+LockedDirectorySchema.upstreamPath <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where the bytes are in the upstream repository.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/remote-mount.ts"><code>cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.upstreamPath</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--remote-mount.lockedinstanceschema.path" data-fa-state="extracted" data-fa-gloss="">
+LockedInstanceSchema.path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where its root landed downstream.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/remote-mount.ts"><code>cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.path</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--remote-mount.lockedinstanceschema.pinnedby" data-fa-state="extracted" data-fa-gloss="">
+LockedInstanceSchema.pinnedBy <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How the pin was found: the declared ref, the same tree, or a gitlink in a parent's tree.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/remote-mount.ts"><code>cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.pinnedBy</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--remote-mount.lockedinstanceschema.upstreamroot" data-fa-state="extracted" data-fa-gloss="">
+LockedInstanceSchema.upstreamRoot <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The instance's root in the upstream repository; <code>&quot;&quot;</code> is that repository's root.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/remote-mount.ts"><code>cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.upstreamRoot</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--remote-mount.lockedinstanceschema.via" data-fa-state="extracted" data-fa-gloss="">
+LockedInstanceSchema.via <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The <code>remoteMounts</code> entry that brought it in.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/remote-mount.ts"><code>cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.via</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--log-entry.logentryschema.actor" data-fa-state="extracted" data-fa-gloss="">
 LogEntrySchema.actor <span class="fa-gloss-status">candidate, extracted</span>

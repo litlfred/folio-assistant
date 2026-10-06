@@ -2944,6 +2944,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/remote-mount",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "remote-mount"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: `remoteMounts` on the downstream and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw."
+        }
+      ],
+      "skos:notation": "remote-mount",
+      "dcterms:source": "cat-harness/skills/kg/kg-core/remote-mount.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/render-kg-to-cdn",
       "@type": "skos:Concept",
       "skos:inScheme": {
