@@ -213,7 +213,7 @@ the corpus-grep checklist reads.
 
 | script | writes | notes |
 |---|---|---|
-| [`cat-harness/scripts/pdf-structure.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (a page-1 title GUESS, authors, arXiv/DOI from the page-1 stamp, and the PDF Info dictionary as `docinfo`), TOC from the PDF outline or inferred from heading patterns, per-section text split. The page-1 guess is **never** the entry's title: [`l1-document-ingestion`](l1-document-ingestion.md) §"A manifest's title" gives the order (catalogue record → `referenced.json` → PDF `/Title` → slug) |
+| [`cat-harness/scripts/pdf-structure.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (a page-1 title GUESS, authors, arXiv/DOI from the page-1 stamp, and the PDF Info dictionary as `docinfo`), TOC from the PDF outline, or else inferred from the layout (see the note below), per-section text split. The page-1 guess is **never** the entry's title: [`l1-document-ingestion`](l1-document-ingestion.md) §"A manifest's title" gives the order (catalogue record → `referenced.json` → PDF `/Title` → slug) |
 | [`cat-harness/scripts/pdf-ocr.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/pdf-ocr.py) | `library/<doc-id>/ocr/page-NNN.txt` | `pdftoppm -r 300 -png` then `tesseract`; per-page cache; script auto-detected via Tesseract's own OSD |
 | [`cat-harness/scripts/extract-candidates.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/extract-candidates.py) | `library/<doc-id>/candidates.json` | pure regex, imports no PDF library; **proposals, never content** — nothing here writes to `content/` and nothing here creates Lean |
 
@@ -243,6 +243,19 @@ someone time:
   falls back to `pypdf`; the Dockerfile ships `pypdf` only, deliberately, so the
   image stays BSD-licensed against PyMuPDF's AGPL. Check with
   `python3 cat-harness/scripts/pdf-ocr.py --check`.
+* **With no outline, the TOC is inferred from the LAYOUT, and the artefact
+  says how.** `diagnostics.toc_inferred_method` is `contents` (a printed
+  contents page, its page labels moved to physical pages by finding the titles
+  in the body), `font` (lines set in a heading style: larger, bold, capitals or
+  italic, numbered or not) or `regex` (text patterns — the last resort, used
+  for OCR'd text, which has no fonts). Weight a `regex` TOC lowest. Measured
+  over the 13 corpus PDFs that carry an outline, hidden and used as the answer
+  key: title F1 0.86 for the layout methods against 0.30 for text patterns
+  alone (issue #2302). Before changing `cat-harness/scripts/_pdf_headings.py`,
+  run `python3 cat-harness/scripts/toc-benchmark.py` before and after: a rule
+  that fixes one document and costs two is visible only there. The numbers,
+  the methods compared and what could not be run are in
+  `cat-harness/docs/research-and-analysis/toc-extraction.md`.
 
 #### For academic papers:
 Same as paper-importer Phase 2 — detect theorem/definition/lemma

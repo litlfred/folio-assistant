@@ -7959,6 +7959,13 @@
       "status": "candidate"
     },
     {
+      "id": "pdf-structure.pdfdiagnosticsschema.toc_inferred_method",
+      "prefLabel": "PdfDiagnosticsSchema.toc_inferred_method",
+      "definition": "Which inference produced an inferred TOC (issue #2302): a printed contents page, heading styles read from font metrics, or the text-pattern heuristic that OCR'd text falls back to.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.toc_inferred_method",
+      "status": "candidate"
+    },
+    {
       "id": "pdf-structure.pdfmetadataschema.title_correction",
       "prefLabel": "PdfMetadataSchema.title_correction",
       "definition": "An EDITORIAL correction, outranking every extracted title (bean `w6fu`, step b). Authored, never produced by a rung, and carried over by a re-ingest. `basis` says what the title was read from, so it can be checked rather than trusted.",
