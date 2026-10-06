@@ -1,11 +1,11 @@
 ---
 # folio-assistant-y7b3
 title: 'VOLATILE FIELDS: a timestamp or total in a committed generated file turns every pair of concurrent changes into a conflict'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T22:25:16Z
-updated_at: 2026-10-01T07:33:12Z
+updated_at: 2026-10-04T13:34:40Z
 parent: folio-assistant-o3xy
 ---
 
@@ -54,3 +54,13 @@ The `N files` count per subdirectory in generated directory READMEs (`beans/READ
 The GOAL 2 handover (issue #1260) names the same class again: the beans README, the LSI index and page, and the detangle, kg-qa, kg-export and source-licence sidecars go stale on main after merges, so every open PR then conflicts on them, and a conflicting PR runs no CI. It asked for a bean; this one, `cflw` and `do70` already hold it, so the evidence is recorded here rather than in a fourth.
 
 Measured on main at aeeb6bab: `readme:subgraphs:check` 0 stale; `kg:audit:all:check` 17 of 17 clean. So the drift reported on 663ce6d had cleared by the time it was re-checked, which is the intermittent shape this bean describes.
+
+
+
+## Closed 2026-10-04, at the owner's instruction ("close y7b3")
+
+Every box is ticked, and both parts have landed on `main`:
+- **part 1:** QA results carry no `updated_at` (#1714);
+- **part 2:** answered by bean `ba9e` (completed). bootstrap-tools#8 made the generated README rows independent of file counts; folio-assistant#2044 publishes the counts as `fileCount` in the KG JSON-LD, and the viewer shows them; #2075 closed `ba9e` with the live-site evidence.
+
+Closed by session_01Jf39Vh4B8EQT6TBYzTtMCA.
