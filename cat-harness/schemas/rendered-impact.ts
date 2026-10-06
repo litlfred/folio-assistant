@@ -37,6 +37,7 @@
  *    sees only the data file. `comparePrediction` therefore never counts a
  *    predicted content page that is missing from the build diff as a defect.
  *
+ * @graphNode schema
  * @module cat-harness/schemas/rendered-impact
  */
 import { createHash } from "node:crypto";
