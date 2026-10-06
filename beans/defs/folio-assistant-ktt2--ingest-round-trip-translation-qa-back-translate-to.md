@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-06T06:33:19Z
+updated_at: 2026-10-06T06:38:24Z
 parent: folio-assistant-slw1
 ---
 
@@ -96,3 +96,15 @@ bean asks for exists structurally, not as a note in a report.
 ## Handover 2026-10-06 — PAUSED until the repo separation lands (Session F, GOAL 5)
 
 Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vXhze): repo separation is the primary goal, content authoring/review/publication goes to folio-assistant-core while cat-harness keeps the methods, and that 'needs to be done before F'. This bean resumes AFTER the split. **The code it touches may have moved to folio-assistant-core by then — re-locate it before editing, and re-measure.** Open questions on it are being put to the owner by the coordinating session, one at a time; the answer will be recorded here, not assumed.
+
+## Owner ruling 2026-10-06: an agent back-translates, and that mechanism already exists
+
+Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze. **The owner chose the agent back-translator** and added, verbatim: *"should already be ethe skill."*
+
+**Verified: it is.** `cat-harness/content/pipeline/translation-roundtrip.ts` records an agentic semantic round trip as witnesses on a block's translation sidecar, with two parties kept apart:
+- the **back-translator** sees only the target-language text;
+- the **adjudicator** sees the original and the back-translation, and rules.
+
+Both are recorded, and they are governed by the `untainted-verification` skill (`UntaintedDispatch`, `mergeUntainted`). `translation-manager.md` §5 documents the criterion. This bean's 2026-09-19 entry predates that code, which is why it read as unbuilt.
+
+**What is left:** run it over the translations that now exist (who-iris in the six UN languages, #2229), and wire the L1 completeness gate's `Task_RoundTrip` to it. Then close this bean on that evidence. This waits until after the content split.

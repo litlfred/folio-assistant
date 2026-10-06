@@ -153,7 +153,7 @@ bun run seed:ready --layer cat-harness --rehearse --text   # exit 0 settled, 1 n
 | heavy movers | an open PR labelled `heavy-mover` touches the layer or the next one up |
 | next layer | any open PR touches the next layer up, which imports this one |
 | layer load | more than five open PRs touch the layer |
-| moves | an open PR deletes a file in the layer, or renames one into or out of it |
+| moves | an open PR deletes a file in the layer, or renames one into or out of it. A generator's own names do not count: an `owned-tree` path in `merge-conflict-patterns.ts` (content-hashed payloads, rail data) is renamed by every regen, so moving one changes what no seeded path means (owner, 2026-10-06) |
 | standalone | `bun test` is red with only the layer and what it `needs` beside it, as sibling directories |
 | upward paths | a path DECLARED in the layer — a Tool module, a QA criterion source, a render target — resolves only in an instance above it, so it breaks the day the layer stands alone |
 

@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-10-06T06:33:19Z
+updated_at: 2026-10-06T06:36:50Z
 parent: folio-assistant-slw1
 ---
 
@@ -266,3 +266,15 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 ## Handover 2026-10-06 — PAUSED until the repo separation lands (Session F, GOAL 5)
 
 Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vXhze): repo separation is the primary goal, content authoring/review/publication goes to folio-assistant-core while cat-harness keeps the methods, and that 'needs to be done before F'. This bean resumes AFTER the split. **The code it touches may have moved to folio-assistant-core by then — re-locate it before editing, and re-measure.** Open questions on it are being put to the owner by the coordinating session, one at a time; the answer will be recorded here, not assumed.
+
+## Owner ruling 2026-10-06: extract, then agent drafts for human confirmation
+
+Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, with three options (recommended first): extract + agent drafts; extract only, humans describe; defer. **The owner chose "Extract + agent drafts".**
+
+After the content split, in this order:
+1. Extract images from PDFs. The area-ratio test separates page scans (skipped) from figures (kept); measured 140 scans against 24 figures.
+2. Record each figure in `manifest.jsonld`.
+3. An agent drafts one description per configured language, stamped with its author and **model version** (`iqim`).
+4. Each draft goes to the review queue for human confirmation.
+
+The work lands in folio-assistant-core.

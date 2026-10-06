@@ -5,15 +5,20 @@
     "id": "public-comment",
     "path": "skills/content/folio-document-adapter/public-comment.md"
   },
-  "source_hash": "4ba962274fb2",
+  "source_hash": "80e75a970ea4",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
       "findings": []
     },
     "skill-is-brief": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/content/folio-document-adapter/public-comment.md",
+          "detail": "301 lines; p75 of the skill corpus is 279."
+        }
+      ]
     },
     "skill-not-a-document": {
       "result": "pass",
@@ -42,8 +47,8 @@
     }
   },
   "totals": {
-    "pass": 4,
-    "fail": 1,
+    "pass": 3,
+    "fail": 2,
     "n/a": 2,
     "unknown": 0
   }
