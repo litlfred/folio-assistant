@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-10-06T06:17:40Z
-updated_at: 2026-10-06T06:17:40Z
+updated_at: 2026-10-06T06:27:41Z
 parent: folio-assistant-uhkv
 ---
 
@@ -24,3 +24,16 @@ Reported by the owner, 2026-10-06 (session https://claude.ai/code/session_012qoy
 - [ ] the cause is named (stale build, older pin, or a missing workflow step), with evidence
 - [ ] smart-trust and smart-base Pages show the same harness chrome as smart-immunizations, checked by screenshots of all three sites (`rendered-verification`) sent to the owner
 - [ ] a check or the publish workflow stops the drift from coming back silently (`generalise-the-fix`)
+
+## Root cause, measured 2026-10-06 06:25Z by session_01EcBv3uwKYcnNbCC6BcPG92 (blob-less clones of the three IG repositories)
+
+| repo | branch the site is built from | folio-site.yml | folio-assistant pin | gh-pages |
+|---|---|---|---|---|
+| smart-immunizations | `claude/seed-smart-base` @7cc04e1 | **yes** | 418ff15 (#2194) | a8a8c48 (10-05 20:24Z), deployed by folio-site |
+| smart-trust | seed branch @006bf36 | **no** | f8f329a | 8e86d15 (10-04), "Deploy candidate branch" (IG Publisher ghbuild) |
+| smart-base | no seed branch | **no** | — | 78464a7 (10-02), IG Publisher |
+
+- The two drifted sites serve raw IG Publisher output. The chrome comes only from `fhir-harness/templates/ig-repo-site/folio-site.yml` (#2235 / `mftp`).
+- **#2237 is NOT the cause.** Even smart-immunizations is pinned before it, so all three need a pin bump past #2237 to match.
+- **Fix (outside folio-assistant):** add folio-site.yml and a pin bump to smart-trust's seed branch; seed smart-base; bump smart-immunizations' pin.
+- That writes to three other repositories and replaces their public gh-pages, so it waits for the owner's go. Session C has put the question to the owner.
