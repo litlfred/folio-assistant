@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/Ref",
+  "definitions": {
+    "Ref": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string"
+        },
+        "commit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "ref",
+        "commit"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tdi0-latex-known-macros/folio-assistant-core/schema/zod/changeset/RefSchema.schema.json",
+  "title": "RefSchema",
+  "description": "Generated from `RefSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/tdi0-latex-known-macros",
+    "sha": "5e473d688a52d8a372fae28d8fc010553a030f16",
+    "pr": "2313/merge",
+    "run": "37515101308"
+  }
+}
