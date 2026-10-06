@@ -41,3 +41,9 @@ Local feature branch `claude/test-bcg-schedule-c65n` of litlfred/smart-immunizat
 3. **Incremental re-render only pays when unchanged files keep their mtime.** Jekyll incremental is mtime- and absolute-path-keyed; `stage-ig-sites` rewrites every file, so wiring incremental mode in needs a checksum-preserving copy into a stable source dir.
 4. Control (page-content) edit to the BCG row in `decision-logic.md`: impacted rendered output = `decision-logic.html` + `assets/js/search-data.json` (index). No other page includes it, so incremental missed nothing.
 5. Cosmetic: artefact-page footer "Package ⬜ based on FHIR 4.0.1" — the package name renders as a blank white pill in the local gem build.
+
+## Fix for finding 2 (owner: "Fix it with a test and add it to the same PR")
+
+`fsh-cone.ts` now blanks a declaration's `Title:` / `Description:` value (single-line or `"""` multi-line) before scanning for edges. On smart-immunizations: 3329 → 3203 edges, **126 removed, 0 added**, every one `<Table>VS -> <Table>` (a value set pointing at the decision table its Description names). The BCG schedule's forward cone is now the PlanDefinition alone (was 2), and the checkout is 16 files (was 19). The test in `fsh-cone.test.ts` fails without the fix and passes with it.
+
+Not changed, on purpose: prose inside `insert` arguments and `* ^description = …` rules is still scanned, because an argument may be substituted into a canonical-valued rule.
