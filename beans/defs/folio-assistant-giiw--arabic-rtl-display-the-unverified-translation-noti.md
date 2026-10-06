@@ -1,10 +1,10 @@
 ---
 # folio-assistant-giiw
 title: 'ARABIC (RTL) DISPLAY: the unverified-translation notice is English set right-to-left — reordered and clipped; audit the rest of the chrome under dir=rtl'
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-06T07:58:59Z
-updated_at: 2026-10-06T07:58:59Z
+updated_at: 2026-10-06T14:11:01Z
 parent: folio-assistant-bzyu
 ---
 
@@ -23,3 +23,5 @@ Owner, 2026-10-06, from a screenshot of the staging preview of #2261 (Arabic sel
 - [ ] check layout under dir=rtl: content column alignment, sidebar side, the right-hand tile rail (counts 3 / 529 / ?), the green banner's link order and the ↗ arrows
 - [ ] e2e: extend `cat-harness/test/translation-badges.e2e.ts` to load an Arabic page and assert the notice's computed direction is ltr (or the text is Arabic) and that its first word is visible
 - [ ] screenshot before/after in Arabic and one LTR language (rendered-verification)
+
+_2026-10-06T14:10:58Z_ — Claimed by claude/laughing-ramanujan-uripip — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
