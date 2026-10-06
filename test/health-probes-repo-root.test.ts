@@ -5,19 +5,25 @@
  * `merge-guard-workflows.test.ts` was: a standalone cat-harness layer has no
  * such root, and `check:cat-harness-standalone` collects every test in that
  * layer. The rest of that file's tests stay there.
+ *
+ * Moved again, from `cat-harness-tools/scripts/tests/` to the checkout's own
+ * test home `test/` (bean `7zz1`, owner ruling 2026-10-06 "Top-level
+ * instance"): what it reads belongs to the whole checkout, which the root
+ * instance declares, not to any one layer — so cat-harness-tools stays green
+ * standing alone too.
  */
 import { rmSync } from "node:fs";
 import { join } from "node:path";
 
 import { afterAll, describe, expect, it } from "bun:test";
 
-import { probeBeans } from "../../../cat-harness/test/health/probes.ts";
+import { probeBeans } from "../cat-harness/test/health/probes.ts";
 
 /**
  * The directory this test was written in (`cat-harness/test/health/`): every path below
  * is composed from it exactly as it was before the move, so nothing it reads changed.
  */
-const ORIGIN_DIR = join(import.meta.dir, "../../../cat-harness/test/health");
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/test/health");
 
 const made: string[] = [];
 afterAll(() => {
@@ -44,7 +50,7 @@ describe("the root the sweep is given", () => {
     // throughout.
     const { existsSync } = await import("node:fs");
     const { join, resolve } = await import("node:path");
-    const { repoRootFor } = await import("../../../cat-harness/schemas/cat-harness.ts");
+    const { repoRootFor } = await import("../cat-harness/schemas/cat-harness.ts");
 
     const instanceRoot = resolve(ORIGIN_DIR, "..", "..");
     const repoRoot = repoRootFor(instanceRoot);
@@ -64,7 +70,7 @@ describe("countConsideredOptions — the parse the MADR criterion rests on", () 
     // Asserted against the real bean store rather than a fixture, for the same
     // reason the staging test above is: the failure mode is the detector matching
     // nothing in practice, and every fixture in this file would pass throughout.
-    const { repoRootFor } = await import("../../../cat-harness/schemas/cat-harness.ts");
+    const { repoRootFor } = await import("../cat-harness/schemas/cat-harness.ts");
     const { resolve } = await import("node:path");
     const p = probeBeans(repoRootFor(resolve(ORIGIN_DIR, "..", "..")));
     expect(p.state).toBe("ok");

@@ -24,6 +24,12 @@
  * repository's own root — `.gitattributes` and the CI workflow that gates it —
  * which a standalone cat-harness layer does not have, and
  * `check:cat-harness-standalone` collects every test in that layer.
+ *
+ * Moved again, from `cat-harness-tools/scripts/tests/` to the checkout's own
+ * test home `test/` (bean `7zz1`, owner ruling 2026-10-06 "Top-level
+ * instance"): what it reads belongs to the whole checkout, which the root
+ * instance declares, not to any one layer — so cat-harness-tools stays green
+ * standing alone too.
  */
 import { describe, expect, test } from "bun:test";
 import { execFileSync } from "node:child_process";
@@ -31,7 +37,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 /** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move. */
-const ORIGIN_DIR = join(import.meta.dir, "../../../cat-harness/scripts/tests");
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
 
 const REPO = resolve(ORIGIN_DIR, "..", "..", "..");
 const ATTRS = join(REPO, ".gitattributes");

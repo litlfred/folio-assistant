@@ -18,7 +18,7 @@
  *
  * The tests here that read the aggregate repository's own root
  * (`.github/workflows/docs-site.yml`) live in
- * `cat-harness-tools/scripts/tests/site-links-workflows.test.ts` (bean
+ * `test/site-links-workflows.test.ts` (bean
  * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";

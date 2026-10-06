@@ -7,19 +7,25 @@
  * test in that layer. Every test there that read the real corpus moved,
  * including the ones that passed standalone only because they iterated over
  * nothing. The rest of that file's tests stay there.
+ *
+ * Moved again, from `cat-harness-tools/scripts/tests/` to the checkout's own
+ * test home `test/` (bean `7zz1`, owner ruling 2026-10-06 "Top-level
+ * instance"): what it reads belongs to the whole checkout, which the root
+ * instance declares, not to any one layer — so cat-harness-tools stays green
+ * standing alone too.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { readDeclaration, repoRootFor } from "../../../cat-harness/schemas/cat-harness.js";
-import { BEAN_GRAPH_FILE, parseBeanGraph } from "../../../cat-harness/schemas/bean-graph.js";
-import { contentIsOffCheckout, resolveSubgraphSource } from "../../../cat-harness/schemas/subgraph-source.js";
-import { TODO_GRAPH_FILE, parseTodoGraph } from "../../../cat-harness/schemas/todo-graph.js";
-import { ROOT, TODO_ROOT, readTodos, todoDirs } from "../../../cat-harness/scripts/todos.js";
-import { siteDirFor } from "../../../cat-harness/schemas/cat-harness.ts";
-import { workflowFiles } from "../../../cat-harness/scripts/known-skills.js";
-import { loadProcessModel } from "../../../cat-harness/src/workflow/process-model.js";
+import { readDeclaration, repoRootFor } from "../cat-harness/schemas/cat-harness.js";
+import { BEAN_GRAPH_FILE, parseBeanGraph } from "../cat-harness/schemas/bean-graph.js";
+import { contentIsOffCheckout, resolveSubgraphSource } from "../cat-harness/schemas/subgraph-source.js";
+import { TODO_GRAPH_FILE, parseTodoGraph } from "../cat-harness/schemas/todo-graph.js";
+import { ROOT, TODO_ROOT, readTodos, todoDirs } from "../cat-harness/scripts/todos.js";
+import { siteDirFor } from "../cat-harness/schemas/cat-harness.ts";
+import { workflowFiles } from "../cat-harness/scripts/known-skills.js";
+import { loadProcessModel } from "../cat-harness/src/workflow/process-model.js";
 
 describe("the declaration and the directory agree", () => {
   test("the checkout's root declaration declares a `todos` graph", () => {

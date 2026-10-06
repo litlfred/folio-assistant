@@ -5,13 +5,19 @@
  * as `merge-guard-workflows.test.ts` was: a standalone cat-harness layer has
  * no such root, and `check:cat-harness-standalone` collects every test in that
  * layer. The rest of that file's tests stay there.
+ *
+ * Moved again, from `cat-harness-tools/scripts/tests/` to the checkout's own
+ * test home `test/` (bean `7zz1`, owner ruling 2026-10-06 "Top-level
+ * instance"): what it reads belongs to the whole checkout, which the root
+ * instance declares, not to any one layer — so cat-harness-tools stays green
+ * standing alone too.
  */
 import { describe, test, expect } from "bun:test";
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
-import { INSTANCE_ROOT, REPO_ROOT } from "../../../cat-harness/scripts/tests/helpers";
-import { repoRootFor } from "../../../cat-harness/schemas/cat-harness.js";
-import { folioTemplates } from "../../../cat-harness/scripts/init-folio";
+import { INSTANCE_ROOT, REPO_ROOT } from "../cat-harness/scripts/tests/helpers";
+import { repoRootFor } from "../cat-harness/schemas/cat-harness.js";
+import { folioTemplates } from "../cat-harness/scripts/init-folio";
 
 /**
  * The workflows that run in the paper-assistant container: the platform's

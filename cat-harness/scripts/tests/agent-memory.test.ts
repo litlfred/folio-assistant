@@ -10,7 +10,7 @@
  * The tests here that read the aggregate repository's own root (the
  * root-declared `memory/` graph and the generated `.claude/agent-memory/`
  * files) live in
- * `cat-harness-tools/scripts/tests/agent-memory-repo-root.test.ts` (bean
+ * `test/agent-memory-repo-root.test.ts` (bean
  * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";

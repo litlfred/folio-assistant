@@ -28,7 +28,7 @@
  *
  * The tests here that read the aggregate repository's own root (the root
  * instance declaration) live in
- * `cat-harness-tools/scripts/tests/kg-audit-root-instance-repo-root.test.ts`
+ * `test/kg-audit-root-instance-repo-root.test.ts`
  * (bean `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
