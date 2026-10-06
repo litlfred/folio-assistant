@@ -110,6 +110,7 @@ from _pdf_title import BROWSER_RE, apply as resolve_title, evidence_from_pdf  # 
 # `toc-benchmark.py`; see docs/research-and-analysis/toc-extraction.md.
 import _pdf_headings  # noqa: E402
 import _pdf_figures  # noqa: E402
+import _pdf_page_labels  # noqa: E402
 
 SCHEMA = "pdf-structure/v1"
 
@@ -401,6 +402,9 @@ class TocEntry:
     # the document's own answer and is not scored.
     confidence: float | None = None
     evidence: list[str] | None = None
+    # The printed label of `page` ("iv", "23") where one is known — what a
+    # reader cites. `page` stays the physical index.
+    page_label: str | None = None
 
 
 @dataclass
@@ -414,6 +418,9 @@ class Section:
     n_chars: int
     n_words: int
     text: str = field(repr=False, default="")
+    # Printed labels of page_start / page_end, where known.
+    label_start: str | None = None
+    label_end: str | None = None
 
 
 def _tech_meta(path: str) -> dict:
@@ -641,6 +648,20 @@ def layout_lines(path: str, ocr_used: bool) -> list | None:
         return _pdf_headings.extract_lines(path) or None
     except Exception:                           # no layout-capable backend
         return None
+
+
+def infer_page_labels(path: str, lines: list | None, n_pages: int) -> tuple[list[dict[str, Any]], dict]:
+    """The printed label of every physical page, and where sources disagree."""
+    try:
+        pdf = _pdf_page_labels.pdf_labels(path)
+    except Exception:                           # pypdf only: no /PageLabels read
+        pdf = {}
+    if not lines and not pdf:
+        return [{"physical": p, "label": None, "source": None, "confidence": 0.0, "evidence": []}
+                for p in range(1, n_pages + 1)], {"count": 0, "items": []}
+    labels = _pdf_page_labels.page_labels(lines or [], n_pages, pdf=pdf)
+    rows = [pl._asdict() | {"evidence": list(pl.evidence)} for pl in labels]
+    return rows, _pdf_page_labels.label_conflicts(lines or [], n_pages, pdf)
 
 
 def infer_figures(path: str, lines: list | None) -> tuple[list[dict[str, Any]], list[str]]:
@@ -1409,6 +1430,15 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
     meta = parse_front_matter(pages)
     sections = split_sections(pages, toc)
     figures, figure_gaps = infer_figures(path, lines)
+    page_rows, label_conflicts = infer_page_labels(path, lines, len(pages))
+    label_of = {r["physical"]: r["label"] for r in page_rows if r["label"]}
+    for e in toc:
+        e.page_label = label_of.get(e.page) if e.page else None
+    for f in figures:
+        f["page_label"] = label_of.get(f["page"])
+    for s in sections:
+        s.label_start = label_of.get(s.page_start) if s.page_start else None
+        s.label_end = label_of.get(s.page_end) if s.page_end else None
     # A printed contents page and the body can disagree — drafts drift. Asked
     # whether or not the PDF has an outline, since the printed contents is
     # what a reader sees either way. Reported, never corrected.
@@ -1482,6 +1512,10 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
         # that agreed: cited in the text, in its numbering run, a graphic on
         # its page, a printed list naming it (`_pdf_figures`, issue #2302).
         "figures": figures,
+        # Every physical page with the label a reader sees on it, and which
+        # sources agreed: the PDF's /PageLabels, the number printed in its
+        # header or footer, a run's interpolation, a contents page.
+        "pages": page_rows,
         "sections": [
             {k: v for k, v in asdict(s).items() if k != "text"} for s in sections
         ],
@@ -1502,6 +1536,9 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
             # Numbers missing from a caption run ("table 2.1" when there is a
             # Table 2.2): a finding about the DOCUMENT — usually a draft's.
             "figure_sequence_gaps": figure_gaps,
+            # Pages where the sources give different labels — e.g. /PageLabels
+            # says "3" where the page prints "iii".
+            "page_label_conflicts": label_conflicts,
             **({"toc_alignment": toc_alignment} if toc_alignment else {}),
             "sections": len(sections),
             "chars_total": sum(s.n_chars for s in sections),

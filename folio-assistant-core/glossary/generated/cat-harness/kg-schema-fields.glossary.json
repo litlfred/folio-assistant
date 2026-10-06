@@ -7973,6 +7973,13 @@
       "status": "candidate"
     },
     {
+      "id": "pdf-structure.pdfdiagnosticsschema.page_label_conflicts",
+      "prefLabel": "PdfDiagnosticsSchema.page_label_conflicts",
+      "definition": "Pages where label sources disagree, e.g. /PageLabels \"3\" against a printed \"iii\".",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.page_label_conflicts",
+      "status": "candidate"
+    },
+    {
       "id": "pdf-structure.pdfdiagnosticsschema.toc_alignment",
       "prefLabel": "PdfDiagnosticsSchema.toc_alignment",
       "definition": "Where a printed contents page and the body disagree (issue #2302) — drafts drift. Present only when the document has a contents page. Each list is capped; `count` is the full number.",
@@ -8022,6 +8029,13 @@
       "status": "candidate"
     },
     {
+      "id": "pdf-structure.pdfsectionschema.label_start",
+      "prefLabel": "PdfSectionSchema.label_start",
+      "definition": "Printed labels of page_start / page_end, where known (issue #2302).",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfSectionSchema.label_start",
+      "status": "candidate"
+    },
+    {
       "id": "pdf-structure.pdfstructureschema.figures",
       "prefLabel": "PdfStructureSchema.figures",
       "definition": "The list of figures and tables, cross-checked (issue #2302).",
@@ -8033,6 +8047,13 @@
       "prefLabel": "PdfStructureSchema.granularity",
       "definition": "`page`: written by `pdf-pages.py`, one section per page. `slide`: written by `slides-structure.py`, one section per slide (bean `scfh`).",
       "source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.granularity",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfstructureschema.pages",
+      "prefLabel": "PdfStructureSchema.pages",
+      "definition": "Every physical page with its printed label (issue #2302).",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.pages",
       "status": "candidate"
     },
     {
@@ -8054,6 +8075,13 @@
       "prefLabel": "PdfTocEntrySchema.confidence",
       "definition": "Inferred entries only (issue #2302): how sure the inference is, 0..1, and which independent evidence agreed — a printed contents page, the entry found in the body, a heading style, a section number, another extractor. Null on an outline entry, which is not scored.",
       "source": "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema.confidence",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdftocentryschema.page_label",
+      "prefLabel": "PdfTocEntrySchema.page_label",
+      "definition": "The printed label of `page` (\"iv\", \"23\"), where known; `page` is physical.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema.page_label",
       "status": "candidate"
     },
     {

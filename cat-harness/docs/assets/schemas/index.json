@@ -25205,6 +25205,13 @@
           "doc": "Numbers missing from a caption run, e.g. \"table 2.1\" beside a Table 2.2."
         },
         {
+          "name": "page_label_conflicts",
+          "type": "PdfAlignmentListSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Pages where label sources disagree, e.g. /PageLabels \"3\" against a printed \"iii\"."
+        },
+        {
           "name": "toc_alignment",
           "type": "z .object({ listed_not_found: PdfAlignmentListSchema, found_not_listed: PdfAlignmentListSchema, page_mismatch: PdfAlign…",
           "optional": true,
@@ -25277,6 +25284,12 @@
           "type": "z.array(z.string())",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "page_label",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -25353,6 +25366,53 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/pdf-structure.ts#PdfPageLabelSchema",
+      "name": "PdfPageLabelSchema",
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "kind": "zod-object",
+      "doc": "One physical page and the label a reader sees on it (issue #2302).",
+      "fields": [
+        {
+          "name": "physical",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "z.enum([\"pdf-labels\", \"printed\", \"interpolated\", \"contents\"]).nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "confidence",
+          "type": "z.number().min(0).max(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "evidence",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/pdf-structure.ts#PdfSectionSchema",
       "name": "PdfSectionSchema",
       "module": "cat-harness/schemas/pdf-structure.ts",
@@ -25405,6 +25465,19 @@
           "name": "n_words",
           "type": "z.number().int().min(0)",
           "optional": false,
+          "array": false
+        },
+        {
+          "name": "label_start",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Printed labels of page_start / page_end, where known (issue #2302)."
+        },
+        {
+          "name": "label_end",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
           "array": false
         }
       ],
@@ -25560,6 +25633,13 @@
           "doc": "The list of figures and tables, cross-checked (issue #2302)."
         },
         {
+          "name": "pages",
+          "type": "z.array(PdfPageLabelSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Every physical page with its printed label (issue #2302)."
+        },
+        {
           "name": "sections",
           "type": "z.array(PdfSectionSchema)",
           "optional": false,
@@ -25592,6 +25672,7 @@
         "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema",
         "cat-harness/schemas/pdf-structure.ts#PdfFigureEntrySchema",
         "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema",
+        "cat-harness/schemas/pdf-structure.ts#PdfPageLabelSchema",
         "cat-harness/schemas/pdf-structure.ts#PdfSectionSchema",
         "cat-harness/schemas/pdf-structure.ts#PdfSourceSchema",
         "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema"
@@ -25653,6 +25734,13 @@
           "type": "z.array(z.string()).nullable().optional()",
           "optional": true,
           "array": true
+        },
+        {
+          "name": "page_label",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The printed label of `page` (\"iv\", \"23\"), where known; `page` is physical."
         }
       ],
       "extendsNames": [],
@@ -60582,6 +60670,14 @@
     {
       "from": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema",
       "to": "cat-harness/schemas/pdf-structure.ts#PdfAlignmentListSchema",
+      "via": "page_label_conflicts",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#PdfAlignmentListSchema",
       "via": "toc_alignment",
       "kind": "field",
       "optional": true,
@@ -60618,6 +60714,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#PdfPageLabelSchema",
+      "via": "pages",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",

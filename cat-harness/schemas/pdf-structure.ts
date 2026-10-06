@@ -82,6 +82,8 @@ export const PdfTocEntrySchema = z
      */
     confidence: z.number().min(0).max(1).nullable().optional(),
     evidence: z.array(z.string()).nullable().optional(),
+    /** The printed label of `page` ("iv", "23"), where known; `page` is physical. */
+    page_label: z.string().nullable().optional(),
   })
   .strict();
 
@@ -96,6 +98,9 @@ export const PdfSectionSchema = z
     page_end: z.number().int().min(1),
     n_chars: z.number().int().min(0),
     n_words: z.number().int().min(0),
+    /** Printed labels of page_start / page_end, where known (issue #2302). */
+    label_start: z.string().nullable().optional(),
+    label_end: z.string().nullable().optional(),
   })
   .strict()
   .refine((s) => s.page_end >= s.page_start, { message: "page_end is before page_start" });
@@ -180,6 +185,24 @@ export const PdfFigureEntrySchema = z
     page: z.number().int().min(1),
     confidence: z.number().min(0).max(1),
     evidence: z.array(z.string()),
+    page_label: z.string().nullable().optional(),
+  })
+  .strict();
+
+/**
+ * One physical page and the label a reader sees on it (issue #2302).
+ * `source` is where the label was taken from — the PDF's /PageLabels, the
+ * number printed in its header or footer, a run's interpolation, a contents
+ * page — and `evidence` every source that agreed. `label` is null when no
+ * source gives one.
+ */
+export const PdfPageLabelSchema = z
+  .object({
+    physical: z.number().int().min(1),
+    label: z.string().nullable(),
+    source: z.enum(["pdf-labels", "printed", "interpolated", "contents"]).nullable(),
+    confidence: z.number().min(0).max(1),
+    evidence: z.array(z.string()),
   })
   .strict();
 
@@ -202,6 +225,8 @@ export const PdfDiagnosticsSchema = z
     figure_entries: z.number().int().min(0).optional(),
     /** Numbers missing from a caption run, e.g. "table 2.1" beside a Table 2.2. */
     figure_sequence_gaps: z.array(z.string()).optional(),
+    /** Pages where label sources disagree, e.g. /PageLabels "3" against a printed "iii". */
+    page_label_conflicts: PdfAlignmentListSchema.optional(),
     /**
      * Where a printed contents page and the body disagree (issue #2302) —
      * drafts drift. Present only when the document has a contents page.
@@ -232,6 +257,8 @@ export const PdfStructureSchema = z
     toc_undetermined_reason: z.string().nullable().optional(),
     /** The list of figures and tables, cross-checked (issue #2302). */
     figures: z.array(PdfFigureEntrySchema).optional(),
+    /** Every physical page with its printed label (issue #2302). */
+    pages: z.array(PdfPageLabelSchema).optional(),
     sections: z.array(PdfSectionSchema),
     diagnostics: PdfDiagnosticsSchema.optional(),
     /**

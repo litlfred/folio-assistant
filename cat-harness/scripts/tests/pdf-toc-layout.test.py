@@ -32,6 +32,9 @@ used as the answer key (`toc-benchmark.py`), title F1 went from 0.30 to 0.90.
     the text, its numbering run, a graphic on its page; gaps are reported.
 12. Contents vs body: a draft's contents may list a section it no longer has,
     omit one it does, or point at the wrong page — all three are reported.
+13. Page labels: printed folios fitted into roman and arabic runs, a stray
+    number rejected, an unnumbered page interpolated, and a /PageLabels value
+    that disagrees with the print reported as a conflict.
 10. The consensus TOC: a contents entry the body confirms is near certain, one
     it never finds is kept but flagged; in a numbered document a stray
     unnumbered style is dropped.
@@ -252,6 +255,34 @@ def test_contents_alignment_reports_draft_drift():
     assert a["listed_not_found"]["items"] == ["Old Section"], a
     assert a["found_not_listed"]["items"] == ["4 Added Section"], a
     assert a["page_mismatch"]["items"] == ["Methods: listed p6, found p9"], a
+
+
+def test_page_labels_from_printed_folios_and_conflicts():
+    import _pdf_page_labels as P
+    assert P.roman_to_int("xiv") == 14 and P.int_to_roman(14) == "xiv" and P.roman_to_int("vx") is None
+    assert P.clean_label("<FEFF0065>213") == "e213"
+    lines = []
+    # Physical 1: cover, no folio. 2-4: roman ii-iv in the footer. 5-12:
+    # arabic 1-8, except 8 (a full-page figure) prints nothing, and page 6
+    # also carries a stray "2024" in its footer.
+    for p in range(1, 13):
+        lines += body(p, 200, 2)
+        if 2 <= p <= 4:
+            lines.append(ln(p, 760, P.int_to_roman(p)))
+        elif p >= 5 and p != 8:
+            lines.append(ln(p, 760, str(p - 4)))
+        if p == 6:
+            lines.append(ln(p, 775, "2024"))
+    got = {pl.physical: pl for pl in P.page_labels(lines, 12)}
+    assert got[1].label is None
+    assert [got[p].label for p in (2, 3, 4)] == ["ii", "iii", "iv"], got
+    assert [got[p].label for p in range(5, 13)] == [str(n) for n in range(1, 9)], got
+    assert got[8].source == "interpolated" and got[6].source == "printed"
+    # The PDF's own labels disagree on page 3 ("3" against a printed "iii"):
+    # the printed label wins, and the conflict is reported.
+    pdf = {p: str(p) for p in range(1, 13)}
+    assert {pl.physical: pl for pl in P.page_labels(lines, 12, pdf=pdf)}[3].label == "iii"
+    assert "p3: pdf-labels 3, printed iii" in P.label_conflicts(lines, 12, pdf)["items"]
 
 
 def test_pdf_structure_records_the_layout_method():

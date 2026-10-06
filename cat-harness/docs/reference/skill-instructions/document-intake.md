@@ -261,7 +261,12 @@ someone time:
   `diagnostics.figure_sequence_gaps`; and, when the document has a printed
   contents page, `diagnostics.toc_alignment`: entries the body no longer
   carries, numbered sections the contents omits, and page mismatches. On a
-  draft, read these as findings about the document. Before changing `cat-harness/scripts/_pdf_headings.py`,
+  draft, read these as findings about the document. Every page also has a
+  printed label: `pages[]` (physical index, the label a reader sees, which
+  sources agreed), `page_label` on TOC entries and figures, and
+  `label_start`/`label_end` on sections. **Cite the label, not the physical
+  index**; `diagnostics.page_label_conflicts` lists pages where the PDF's
+  own labels disagree with what is printed. Before changing `cat-harness/scripts/_pdf_headings.py`,
   run `python3 cat-harness/scripts/toc-benchmark.py` before and after: a rule
   that fixes one document and costs two is visible only there. The numbers,
   the methods compared and what could not be run are in

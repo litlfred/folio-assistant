@@ -288,6 +288,39 @@ a sentence ("3.1 describes the modelling approach"); and a number that
 every appendix component). It reports and never corrects: which side is right
 is the author's call.
 
+## Page labels — the number a reader sees
+
+Every page reference above is a **physical** index. A reader, a citation and
+a contents page use the **printed** label — "iv", "23", "p. 177" — and the two
+differ whenever there is a cover, roman front matter, an unnumbered plate, or
+an article that starts mid-volume. `_pdf_page_labels.page_labels` writes a
+`pages` array (`physical`, `label`, `source`, `confidence`, `evidence`), adds
+`page_label` beside every TOC entry and figure and `label_start` /
+`label_end` to every section, and reports disagreements in
+`diagnostics.page_label_conflicts`. Four sources:
+
+| source | how |
+|---|---|
+| `printed` | the number in the page's header or footer, fitted into runs of constant offset (physical − printed), so roman and arabic runs each hold; a number fits only a run of ≥3 pages, so a stray "2024" never becomes a page (Wu et al. 2013's "legal page number") |
+| `pdf-labels` | the PDF's own /PageLabels (19 of 77 corpus PDFs), decoded — one producer writes `<FEFF0065>213` for "e213" |
+| `interpolated` | an unnumbered page inside a run (chapter opener, full-page figure) takes the run's value |
+| `contents` | a contents entry confirmed in the body pairs a printed label with a physical page |
+
+**Measured** (`cat-harness/scripts/page-label-benchmark.py`): hide each PDF's
+/PageLabels and predict from the content alone. Over the 15 PDFs whose labels
+are informative: **arabic-labelled pages 0.98 correct**, all labelled pages
+0.88 (the remainder is mostly cover labels such as "A", "B", "Cover Page",
+which are not printed on the page), coverage 0.88. Three PDFs are set aside
+because their /PageLabels merely repeat the physical index — a producer's
+default; one of them prints "3" on its physical page 4.
+
+**When the sources disagree, the printed number wins** and the conflict is
+reported. `9789241548960_eng` prints "iii", "iv" … on its front matter while
+its /PageLabels say "3", "4" — nine pages running; a reader cites the print.
+The first run found the search band too narrow: LaTeX folios sit 9.1% from
+the page edge, outside a 9% margin (2508.21620v2 0.00 → 0.97; 2607.20636v1
+0.53 → 0.99).
+
 ## The PDF-library question
 
 PyMuPDF is AGPL-3.0; pdfminer.six is MIT. `_pdf_headings.py` reads font

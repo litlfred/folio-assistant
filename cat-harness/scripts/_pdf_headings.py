@@ -581,7 +581,9 @@ def contents_pages(by_page: dict[int, list[Line]], max_scan: int = 20,
     return found
 
 
-def contents_headings(lines: list[Line]) -> list[Heading]:
+def contents_headings(lines: list[Line], with_labels: bool = False) -> list:
+    """Entries of a printed contents page, page labels moved to physical
+    pages. With `with_labels`, (Heading, printed label) pairs instead."""
     by_page: dict[int, list[Line]] = defaultdict(list)
     for l in lines:
         by_page[l.page].append(l)
@@ -628,14 +630,15 @@ def contents_headings(lines: list[Line]) -> list[Heading]:
     offset = offsets.most_common(1)[0][0] if offsets else 0
     n_pages = max(by_page)
 
-    out: list[Heading] = []
+    out: list = []
     for title, label, x0, r in raw:
         num, t = split_number(title)
         level = _depth(num) or indent_rank[round(x0 / 6)]
         page = int(label) + offset if label.isdigit() else None
         if page is not None and not (1 <= page <= n_pages):
             page = None
-        out.append(Heading(level, t, page, num))
+        h = Heading(level, t, page, num)
+        out.append((h, label) if with_labels else h)
     return out
 
 

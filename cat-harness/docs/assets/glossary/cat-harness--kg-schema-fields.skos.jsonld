@@ -21636,6 +21636,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfdiagnosticsschema.page_label_conflicts",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfDiagnosticsSchema.page_label_conflicts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Pages where label sources disagree, e.g. /PageLabels \"3\" against a printed \"iii\"."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.page_label_conflicts",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfdiagnosticsschema.toc_alignment",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -21769,6 +21788,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfsectionschema.label_start",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfSectionSchema.label_start"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Printed labels of page_start / page_end, where known (issue #2302)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfSectionSchema.label_start",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfstructureschema.figures",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -21804,6 +21842,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.granularity",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfstructureschema.pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfStructureSchema.pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every physical page with its printed label (issue #2302)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.pages",
       "skos:note": "candidate"
     },
     {
@@ -21861,6 +21918,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema.confidence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdftocentryschema.page_label",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfTocEntrySchema.page_label"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The printed label of `page` (\"iv\", \"23\"), where known; `page` is physical."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema.page_label",
       "skos:note": "candidate"
     },
     {
