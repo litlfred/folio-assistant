@@ -15,6 +15,12 @@
  * Picking a single subtree would have made exactly one kind of spec possible
  * and quietly ruled out the rest. Override with `TEST_SERVER_ROOT`.
  *
+ * The file itself lives in `cat-harness/test/` beside the specs it serves
+ * (moved off the repository root 2026-10-06, bean `ar1s`, phase 3), so the
+ * default root is TWO levels up from here, not this directory. Serving
+ * `cat-harness/test/` would have made every spec's `/cat-harness/...` fetch a
+ * 404 that reads as a broken page rather than a misplaced server.
+ *
  * Port 8080 matches `playwright.config.ts`'s `baseURL` and the viewer port in
  * `folio.config.example.json`. Override with `PORT`.
  *
@@ -38,7 +44,7 @@ import { fileURLToPath } from "node:url";
 // to admit one file is a worse trade than writing the file in the module
 // system everything else here already uses.
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(process.env.TEST_SERVER_ROOT || HERE);
+const ROOT = path.resolve(process.env.TEST_SERVER_ROOT || path.join(HERE, "..", ".."));
 const PORT = Number(process.env.PORT || 8080);
 const HOST = process.env.HOST || "127.0.0.1";
 

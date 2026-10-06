@@ -143,7 +143,8 @@ folio-assistant) and adjust it for your content type:
 ```sh
 # The DESTINATION is named for your instance -- `my-folio.config.json`, not a
 # fixed word. The example file keeps its own name: that is what it is called.
-cp harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
+# It lives in the harness's docs, beside the reference it illustrates.
+cp cat-harness/docs/reference/harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
 ```
 
 ```json

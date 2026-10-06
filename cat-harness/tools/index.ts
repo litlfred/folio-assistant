@@ -672,7 +672,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // from it — it already omitted `cryptography`, which the declaration's
       // own checker caught. `requirements.txt` is generated from the
       // declaration; the apt packages are not pip-installable and stay named.
-      install: { cli: "pip install -r requirements.txt -r requirements-extended.txt && apt-get install -y tesseract-ocr poppler-utils" },
+      install: { cli: "pip install -r cat-harness-tools/python/requirements.txt -r cat-harness-tools/python/requirements-extended.txt && apt-get install -y tesseract-ocr poppler-utils" },
       invoke: { shell: "bun run cat-harness/scripts/ingest-document.ts" },
       requires: { runtime: ["python3", "pymupdf", "tesseract"], network: false },
       io: {

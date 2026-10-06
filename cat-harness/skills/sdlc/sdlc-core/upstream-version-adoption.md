@@ -31,7 +31,9 @@ thing in different words.
 
 ## The registry is the tenant list, and it does not hold the version
 
-`upstream-pins.json` at the repository root declares each pinned dependency:
+`upstream/upstream-pins.json` — in this harness's declared `upstream/`
+directory, and at the repository root until 2026-10-06 (bean `ar1s`) — declares
+each pinned dependency, with each `pinnedIn` resolved against the harness root:
 the upstream repo, **the file the pin literal actually lives in**, the pattern
 that reads it, what of ours binds to it, and the commands that constitute its
 MVP.
