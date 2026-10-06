@@ -1350,6 +1350,8 @@ export const RULES: Rule[] = [
       "scripts/pair-cover.ts",              // ...and which regen pairs FOLD into one another's check (bean `8qyc`): a gate whose chain the pool already asks is replaced by its residual. Scheduling only, beside the pool for the same reason
       "scripts/input-hash.ts",              // ...and `regen`'s input-hash skip: a local cache over the declared inputs, harness for the same reason `regen` is
       "scripts/changed-paths.ts",           // ...and `regen --changed` / the narrowed fixpoint (bean `94zs`): which pairs a set of changed paths can reach, over the same declarations
+      "scripts/qa-working-copy.ts",         // ...and the QA working copy's stamp (bean `7how`): which tree the computed QA tree was built from, rebuilt by `regen`/`gates` when stale
+      "scripts/measure-merge-round.ts",     // ...and the merge-round yardstick (bean `xpcu`): times the recipe in a scratch worktree, judges nothing
       "scripts/decisions-named-not-asked.ts", // the `Stop` layer of `interaction-modality` §4.1 (bean `ahvw`). Harness: it reads a transcript and enforces how a QUESTION is put, which no content type varies
       "scripts/kind-table.ts",              // the reader over the graph-typology TABLE in `directory-conventions.md`, which `kind-register` and `graph-typology-docs.test.ts` both ask. Harness: the table is the harness's own documentation of its own registry
       "scripts/route-authority.ts",         // WHICH COPY a route-keyed generator's --check compares against — the checkout, the branch, or both. Harness: it reads a declaration and a branch manifest and knows nothing about any content type. Its `unknown` state is the point (bean `xsrv` Done-when 3: a branch it cannot fetch is never a pass)
