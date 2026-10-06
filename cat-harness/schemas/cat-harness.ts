@@ -68,6 +68,7 @@ import { isAbsolute, join, relative, resolve, basename } from "node:path";
 import { z } from "zod";
 import { RepoFullNameSchema, type RepoFullName } from "./repo-full-name.js";
 import { SubscriptionKindSchema, type SubscriptionKind } from "./substrate-snapshot.js";
+import { MountDefaultsSchema, RemoteMountsSchema, type MountDefaults, type RemoteMount } from "./remote-mount.js";
 
 import {
   KgAssetSchema,
@@ -716,6 +717,10 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   subscriptions?: Subscription[];
   /** Substrates known to exist or planned that NO declaration here names — {@link KnownSubstrate}. Issue #1719. */
   knownSubstrates?: KnownSubstrate[];
+  /** What a downstream remote-mounts of this instance by default — `schemas/remote-mount.ts`, bean `0mpw`. */
+  mountDefaults?: MountDefaults;
+  /** Harnesses this instance remote-mounts at a pin, transitively — `schemas/remote-mount.ts`, bean `0mpw`. */
+  remoteMounts?: RemoteMount[];
   /**
    * Sticky notes this layer contributes to the landing board.
    *
@@ -3166,6 +3171,21 @@ export const CatHarnessDeclarationSchema = z.object({
     .array(SubscriptionSchema)
     .refine((xs) => new Set(xs.map((x) => x.id)).size === xs.length, { message: "subscriptions: an id appears twice" })
     .optional(),
+  /**
+   * What a DOWNSTREAM mounts of this instance by default, and where — see
+   * `schemas/remote-mount.ts` (bean `0mpw`). Owner, 2026-10-06: the defaults
+   * live in the harness's own declaration, so a downstream names only the
+   * harness and its pin and never restates the paths. Absent is the stated
+   * default (home path, every in-checkout directory), not "unmountable".
+   */
+  mountDefaults: MountDefaultsSchema.optional(),
+  /**
+   * Harnesses this instance REMOTE-MOUNTS — each a repository and a 40-char
+   * pin, resolved transitively through the harness's `needs` (bean `0mpw`).
+   * Not a submodule and not `.deps/`: the mounted directories are declared,
+   * locked by tree digest, and checked by `mount:remote:check`.
+   */
+  remoteMounts: RemoteMountsSchema.optional(),
   /** See {@link KnownSubstrate}. Names are unique. */
   knownSubstrates: z
     .array(KnownSubstrateSchema)

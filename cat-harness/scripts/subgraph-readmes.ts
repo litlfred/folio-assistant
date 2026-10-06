@@ -51,6 +51,7 @@ import { instanceDirectories, declaredAssetPath, INSTANCE_README_ROLE, instanceR
 import { defaultGraphTypologies, type GraphTypologyRegistry } from "../schemas/graph-typology-registry.ts";
 import { contentIsOffCheckout } from "../schemas/subgraph-source.ts";
 import { forDirectory, processIndex, resolveProcess, type ProcessIndex } from "./governing-process.ts";
+import { requireCurrentWorkingCopy } from "./qa-working-copy.ts";
 import { againstOrUsage, buildQaResult, judgeQaResult, judgeUsage, mayLeaveMain, writeQaResult } from "./qa-results.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -243,6 +244,8 @@ if (import.meta.main) {
   }
   const { against, exit: badRef } = againstOrUsage(GATE, argv);
   if (badRef !== undefined) process.exit(badRef);
+  // Bean `7how`: a `qa` directory's README is drawn from the copy on disk.
+  requireCurrentWorkingCopy(REPO, GATE);
   const p = await harnessPlan(REPO);
   const { stale: staleFiles, wrote } = apply(p, check, REPO);
   for (const f of staleFiles) console.error(`  ✗ ${f} is stale`);

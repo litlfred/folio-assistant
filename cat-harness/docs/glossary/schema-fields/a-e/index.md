@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1897 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1908 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 599 terms and is 344 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 603 terms and is 347 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2190</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2190</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2201</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2201</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">599</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">603</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a></nav>
 
@@ -1677,6 +1677,13 @@ CatHarnessDeclaration.livesAt <span class="fa-gloss-status">candidate, extracted
 <p>Where the instance lives TODAY when that is not the root of &#123;@link repository} — the host repository and the directory within it. Absent means it already lives at the root of its own repository.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.livesAt</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.mountdefaults" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.mountDefaults <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What a downstream remote-mounts of this instance by default — <code>schemas/remote-mount.ts</code>, bean <code>0mpw</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.mountDefaults</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.name" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.name <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1718,6 +1725,13 @@ CatHarnessDeclaration.remoteGraphs <span class="fa-gloss-status">candidate, extr
 <dd>
 <p>Graphs known but not held — &#123;@link RemoteGraph}.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.remoteGraphs</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.remotemounts" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.remoteMounts <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Harnesses this instance remote-mounts at a pin, transitively — <code>schemas/remote-mount.ts</code>, bean <code>0mpw</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.remoteMounts</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.renderexemption" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.renderExemption <span class="fa-gloss-status">candidate, extracted</span>
@@ -1859,6 +1873,13 @@ CatHarnessDeclarationSchema.liquid <span class="fa-gloss-status">candidate, extr
 <p>See &#123;@link CatHarnessDeclaration.liquid}.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.liquid</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.mountdefaults" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclarationSchema.mountDefaults <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What a DOWNSTREAM mounts of this instance by default, and where — see <code>schemas/remote-mount.ts</code> (bean <code>0mpw</code>). Owner, 2026-10-06: the defaults live in the harness's own declaration, so a downstream names only the harness and its pin and never restates the paths. Absent is the stated default (home path, every in-checkout directory), not &quot;unmountable&quot;.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.mountDefaults</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.navbaricons" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.navbarIcons <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1886,6 +1907,13 @@ CatHarnessDeclarationSchema.remoteGraphs <span class="fa-gloss-status">candidate
 <dd>
 <p>Graphs this instance knows about and does not hold — see &#123;@link RemoteGraph}. A SEPARATE array from <code>directories</code>, not a variant of one, because a remote graph has no directory.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteGraphs</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.remotemounts" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclarationSchema.remoteMounts <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Harnesses this instance REMOTE-MOUNTS — each a repository and a 40-char pin, resolved transitively through the harness's <code>needs</code> (bean <code>0mpw</code>). Not a submodule and not <code>.deps/</code>: the mounted directories are declared, locked by tree digest, and checked by <code>mount:remote:check</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteMounts</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.seedswith" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.seedsWith <span class="fa-gloss-status">candidate, extracted</span>

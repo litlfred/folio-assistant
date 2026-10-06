@@ -2359,6 +2359,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.mountdefaults",
+      "prefLabel": "CatHarnessDeclaration.mountDefaults",
+      "definition": "What a downstream remote-mounts of this instance by default — `schemas/remote-mount.ts`, bean `0mpw`.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.mountDefaults",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.name",
       "prefLabel": "CatHarnessDeclaration.name",
       "definition": "The instance's name, e.g. `\"agentic-harness\"`.",
@@ -2398,6 +2405,13 @@
       "prefLabel": "CatHarnessDeclaration.remoteGraphs",
       "definition": "Graphs known but not held — {@link RemoteGraph}.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.remoteGraphs",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclaration.remotemounts",
+      "prefLabel": "CatHarnessDeclaration.remoteMounts",
+      "definition": "Harnesses this instance remote-mounts at a pin, transitively — `schemas/remote-mount.ts`, bean `0mpw`.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.remoteMounts",
       "status": "candidate"
     },
     {
@@ -2541,6 +2555,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclarationschema.mountdefaults",
+      "prefLabel": "CatHarnessDeclarationSchema.mountDefaults",
+      "definition": "What a DOWNSTREAM mounts of this instance by default, and where — see `schemas/remote-mount.ts` (bean `0mpw`). Owner, 2026-10-06: the defaults live in the harness's own declaration, so a downstream names only the harness and its pin and never restates the paths. Absent is the stated default (home path, every in-checkout directory), not \"unmountable\".",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.mountDefaults",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclarationschema.navbaricons",
       "prefLabel": "CatHarnessDeclarationSchema.navbarIcons",
       "definition": "Which icons this instance's navbar row shows.",
@@ -2566,6 +2587,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.remoteGraphs",
       "definition": "Graphs this instance knows about and does not hold — see {@link RemoteGraph}. A SEPARATE array from `directories`, not a variant of one, because a remote graph has no directory.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteGraphs",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.remotemounts",
+      "prefLabel": "CatHarnessDeclarationSchema.remoteMounts",
+      "definition": "Harnesses this instance REMOTE-MOUNTS — each a repository and a 40-char pin, resolved transitively through the harness's `needs` (bean `0mpw`). Not a submodule and not `.deps/`: the mounted directories are declared, locked by tree digest, and checked by `mount:remote:check`.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteMounts",
       "status": "candidate"
     },
     {
@@ -6463,7 +6491,7 @@
     {
       "id": "harness-config.folioassistantdependency.git",
       "prefLabel": "FolioAssistantDependency.git",
-      "definition": "Git clone URL for the dependency. Used when `path` is absent or the directory does not exist. The agent should clone to a deterministic location (e.g. `.deps/<name>/`).",
+      "definition": "Git clone URL for the dependency. Used when `path` is absent or the directory does not exist. Not cloned into `.deps/` (owner, 2026-10-06): a remote dependency is a REMOTE MOUNT — `remoteMounts` on the declaration, laid down by `bun run mount:remote` (bean `0mpw`).",
       "source": "cat-harness/schemas/harness-config.ts#FolioAssistantDependency.git",
       "status": "candidate"
     },
@@ -8628,6 +8656,90 @@
       "prefLabel": "PublishedSourceSchema.url",
       "definition": "Where a reader goes to read it — the publisher's own address.",
       "source": "cat-harness/schemas/referenced-source.ts#PublishedSourceSchema.url",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockeddirectoryschema.path",
+      "prefLabel": "LockedDirectorySchema.path",
+      "definition": "Relative to the downstream instance's root, no trailing slash.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockeddirectoryschema.treedigest",
+      "prefLabel": "LockedDirectorySchema.treeDigest",
+      "definition": "SHA-256 over the sorted `<sha256> <file>` listing — `treeDigest`.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.treeDigest",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockeddirectoryschema.upstreampath",
+      "prefLabel": "LockedDirectorySchema.upstreamPath",
+      "definition": "Where the bytes are in the upstream repository.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.upstreamPath",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockedinstanceschema.path",
+      "prefLabel": "LockedInstanceSchema.path",
+      "definition": "Where its root landed downstream.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockedinstanceschema.pinnedby",
+      "prefLabel": "LockedInstanceSchema.pinnedBy",
+      "definition": "How the pin was found: the declared ref, the same tree, or a gitlink in a parent's tree.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.pinnedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockedinstanceschema.upstreamroot",
+      "prefLabel": "LockedInstanceSchema.upstreamRoot",
+      "definition": "The instance's root in the upstream repository; `\"\"` is that repository's root.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.upstreamRoot",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockedinstanceschema.via",
+      "prefLabel": "LockedInstanceSchema.via",
+      "definition": "The `remoteMounts` entry that brought it in.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.via",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.mountdefaultsschema.directories",
+      "prefLabel": "MountDefaultsSchema.directories",
+      "definition": "Directory ids, in this instance's own declaration.",
+      "source": "cat-harness/schemas/remote-mount.ts#MountDefaultsSchema.directories",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.mountlockschema.mounts",
+      "prefLabel": "MountLockSchema.mounts",
+      "definition": "The `remoteMounts` it was written for, so a changed pin reads as stale.",
+      "source": "cat-harness/schemas/remote-mount.ts#MountLockSchema.mounts",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.mountlockschema.unmounted",
+      "prefLabel": "MountLockSchema.unmounted",
+      "definition": "What the closure reached and did NOT mount, with why — so the check, which reads the lock and never the network, cannot report clean over an instance the mount never laid down. `local` and `skipped` are recorded too: they are answers, and a reader should see them as such.",
+      "source": "cat-harness/schemas/remote-mount.ts#MountLockSchema.unmounted",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.remotemountschema.harness",
+      "prefLabel": "RemoteMountSchema.harness",
+      "definition": "The harness's instance name, as its own declaration states it.",
+      "source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.harness",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.remotemountschema.overrides",
+      "prefLabel": "RemoteMountSchema.overrides",
+      "definition": "Per-instance overrides across the closure, keyed by instance name.",
+      "source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.overrides",
       "status": "candidate"
     },
     {

@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/s-z/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1897 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1908 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 616 terms and is 343 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 611 terms and is 339 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2190</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2190</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2201</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2201</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">616</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">611</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1312,13 +1312,6 @@ Subscription.id <span class="fa-gloss-status">candidate, extracted</span>
 <p>Local name for the subscription; unique within this list. The substrate's own name, unless two pins of one substrate are ever needed.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Subscription.id</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.subscription.kind" data-fa-state="extracted" data-fa-gloss="">
-Subscription.kind <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p><code>content</code> for a Knowledge Graph with Subgraphs and no harness (owner, 2026-10-06); absent: <code>substrate</code>. See &#123;@link SubscriptionSchema}.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Subscription.kind</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.subscription.note" data-fa-state="extracted" data-fa-gloss="">
 Subscription.note <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1347,40 +1340,12 @@ Subscription.subgraphs <span class="fa-gloss-status">candidate, extracted</span>
 <p>Subgraph ids (the substrate's <code>directories[].id</code>) CHOSEN for materialisation. Everything else stays referenced.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Subscription.subgraphs</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.subscription.upstreampath" data-fa-state="extracted" data-fa-gloss="">
-Subscription.upstreamPath <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The repository-relative directory holding the substrate's declaration; absent: the root. See &#123;@link SubscriptionSchema}.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Subscription.upstreamPath</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.subscriptionschema.kind" data-fa-state="extracted" data-fa-gloss="">
-SubscriptionSchema.kind <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>What kind of Knowledge Graph this subscribes to — <code>substrate</code> (absent) or <code>content</code> (owner, 2026-10-06): a declaration with Subgraphs and NO harness, such as a FHIR IG. Bootstrap's definition of a substrate is unchanged; a content subscription is a separate kind, written explicitly, and contributes no skills, processes or roles — so it may choose no <code>harnesses</code>. <code>SUBSCRIPTION_KINDS</code> in <code>schemas/substrate-snapshot.ts</code> carries the rule once.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#SubscriptionSchema.kind</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.subscriptionschema.upstreampath" data-fa-state="extracted" data-fa-gloss="">
-SubscriptionSchema.upstreamPath <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The repository-relative DIRECTORY holding the substrate's declaration, when that is not the root — <code>shared</code> for a fork whose declaration is <code>shared/&lt;name&gt;.json</code> (bean <code>437w</code>). Absent: the root. The same name and meaning as <code>upstreamPath</code> on a remote subgraph source (<code>schemas/subgraph-source.ts</code>, PR #2326), so one word means one thing across both, and the same pattern (a trailing slash is admitted and means nothing). Recorded so <code>kg:subscribe:check</code> and a re-subscribe judge the same subtree that was judged the first time.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#SubscriptionSchema.upstreamPath</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--substrate-snapshot.substratesnapshotschema.file" data-fa-state="extracted" data-fa-gloss="">
 SubstrateSnapshotSchema.file <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The upstream file, relative to the substrate's repository root: <code>&lt;name&gt;.json</code> at the root, or <code>&lt;upstreamPath&gt;/&lt;name&gt;.json</code> when the declaration is nested (bean <code>437w</code>). Its directory is the subscription's <code>upstreamPath</code>, and <code>kg:subscribe:check</code> holds the two equal.</p>
+<p>The upstream file, relative to the substrate's repository root: <code>&lt;name&gt;.json</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/substrate-snapshot.ts"><code>cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.file</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--substrate-snapshot.substratesnapshotschema.kind" data-fa-state="extracted" data-fa-gloss="">
-SubstrateSnapshotSchema.kind <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>See &#123;@link SUBSCRIPTION_KINDS}. Absent: <code>substrate</code>. Written only as <code>content</code>.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/substrate-snapshot.ts"><code>cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.kind</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--substrate-snapshot.substratesnapshotschema.raw" data-fa-state="extracted" data-fa-gloss="">
 SubstrateSnapshotSchema.raw <span class="fa-gloss-status">candidate, extracted</span>
