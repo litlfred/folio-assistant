@@ -76,6 +76,7 @@
  * @covers translation-sources, qa
  */
 
+import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, sep } from "node:path";
 
@@ -132,7 +133,23 @@ const RERUN_COMMAND = "bun run translation:block-qa";
  */
 let derivedStoredMemo: boolean | undefined;
 function derivedStored(): boolean {
-  return (derivedStoredMemo ??= qaStorageOf(translationQaPath(INSTANCE_ROOT, join(INSTANCE_ROOT, "content", "x"), "fr")) !== undefined);
+  return (derivedStoredMemo ??=
+    qaStorageOf(translationQaPath(INSTANCE_ROOT, join(INSTANCE_ROOT, "content", "x"), "fr"), instanceCheckout()) !== undefined);
+}
+
+/**
+ * The checkout this INSTANCE sits in, asked from the instance rather than from
+ * the caller's working directory. They agree in the monorepo; they part when
+ * the instance stands alone (`check:cat-harness-standalone` lays each layer out
+ * as its own repository with no checkout at the root), where asking from the
+ * cwd found no checkout, read the declared `storage` as absent, and turned an
+ * absent working-copy sidecar into a gated "stale in an unstored tree" (bean
+ * `5hox`: once the results left `main`, nothing committed stood in for it).
+ * `undefined` falls back to the cwd, which is the previous behaviour.
+ */
+function instanceCheckout(): string | undefined {
+  const r = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd: INSTANCE_ROOT, encoding: "utf-8" });
+  return r.status === 0 ? r.stdout.trim() : undefined;
 }
 
 /** The criteria this sweep writes, and the one it deliberately leaves open. */
