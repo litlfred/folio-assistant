@@ -4165,8 +4165,10 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
    whole panel fits between the zoom bar and the dock with no scrolling: one
    column it is ~910 px tall, three it is about half that. `columns` rather
    than a grid so the buttons and the note flow on after the fieldsets
-   without a cell each. A phone gets one column, and the body scrolls. */
-.fa-glass-panel[data-fa-panel="glass-settings"] { max-width: 64rem; }
+   without a cell each. A phone gets one column, and the body scrolls.
+   60rem, not wider: at 1280 it leaves empty glass either side to grab and
+   pan the folio by (`glass-pop-outs.e2e.ts` presses at x = 1150). */
+.fa-glass-panel[data-fa-panel="glass-settings"] { max-width: 60rem; }
 .fa-glass-panel[data-fa-panel="glass-settings"] .fa-glass-panel-body {
   columns: 17rem 3;
   column-gap: 1rem;

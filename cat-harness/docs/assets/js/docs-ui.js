@@ -3212,6 +3212,12 @@
         // away exactly when it is surprising.
         if (badge.count === 0) b.setAttribute("data-fa-empty", "true");
         tile.appendChild(b);
+        // WHAT THE NUMBER COUNTS, on hover too (bean `v215`): the unit was in
+        // the accessible name only, so a sighted reader saw a bare "943" with
+        // no word saying what it counted, beside an icon-row "541" whose tip
+        // said "open". The icon row's tip names its count; so does this.
+        tile.setAttribute("title", (tile.getAttribute("title") || t.title) +
+          " — " + badge.count + " " + badge.unit);
       }
       tile.setAttribute("data-fa-tile", t.id);
       tile.setAttribute("data-fa-surface", surface);
