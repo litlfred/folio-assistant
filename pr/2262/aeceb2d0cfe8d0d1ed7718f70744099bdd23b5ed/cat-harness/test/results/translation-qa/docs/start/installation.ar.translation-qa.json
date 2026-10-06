@@ -1,0 +1,96 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:ar/installation",
+  "block": "Installation",
+  "locale": "ar",
+  "paths": {
+    "md": "docs/start/installation.md"
+  },
+  "po": "translations/ar/start/installation.po",
+  "source_hashes": {
+    "md": "1d9819bbaecc",
+    "po": "c82fdf371982"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "1d9819bbaecc",
+          "po": "c82fdf371982"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "dd72b48d7344",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-06T08:50:20.900Z",
+        "reviewed_sha": "7c6987eeebc36750db172b8bf7b185e965d33a76",
+        "severity": "minor",
+        "metrics": {
+          "translated": 56,
+          "total": 58,
+          "pct": 97
+        },
+        "notes": "2 of 58 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "1d9819bbaecc",
+          "po": "c82fdf371982"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "dd72b48d7344",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-06T08:50:20.903Z",
+        "reviewed_sha": "7c6987eeebc36750db172b8bf7b185e965d33a76",
+        "metrics": {
+          "checked": 56,
+          "missing": 0,
+          "missing_strict": 0,
+          "missing_acronyms": 0,
+          "glossary_broken": 0,
+          "glossary_resolved": 0
+        }
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "1d9819bbaecc",
+          "po": "c82fdf371982"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "dd72b48d7344",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-06T08:50:20.906Z",
+        "reviewed_sha": "7c6987eeebc36750db172b8bf7b185e965d33a76",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 10,
+          "translated": 56
+        },
+        "notes": "10 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-10-06T08:50:20.907Z"
+}
